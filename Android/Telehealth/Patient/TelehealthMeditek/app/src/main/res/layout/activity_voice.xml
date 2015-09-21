@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fox.telehealthmeditek.VoiceActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/face_receiver"/>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="180dp"
+        android:background="@drawable/face_caller"
+        android:id="@+id/imageView" />
+
+    <Button
+        android:id="@+id/btHold"
+        android:background="@drawable/round_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/relativeLayout"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:drawableLeft="@drawable/pause"
+        android:padding="12dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:id="@+id/relativeLayout">
+
+        <Button
+            android:id="@+id/btShareImage"
+            android:background="@drawable/round_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/btDeclineVoice"
+            android:drawableLeft="@drawable/image_file"
+            android:padding="13dp"/>
+
+        <Button
+            android:id="@+id/btDeclineVoice"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/end_call_button"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:drawableLeft="@drawable/end_call_voice"
+            android:padding="13dp"/>
+
+        <Button
+            android:id="@+id/btMute"
+            android:background="@drawable/round_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="40dp"
+            android:gravity="center"
+            android:layout_toStartOf="@+id/btDeclineVoice"
+            android:drawableLeft="@drawable/mute"
+            android:padding="16dp"/>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

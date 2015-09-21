@@ -1,3 +1,3 @@
-# serverapp
+# RedimedProject
 
 a [Sails](http://sailsjs.org) application

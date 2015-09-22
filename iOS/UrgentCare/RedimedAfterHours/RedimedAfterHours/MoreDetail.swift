@@ -7,6 +7,9 @@
 //
 
 import UIKit
+protocol moreDetailDelegate{
+    func tranferDataController(copntroller:MoreDetail,moreData :Dictionary<String, String>)
+}
 class MoreDetail: UIViewController,UITextViewDelegate,UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource {
     
     @IBOutlet weak var stateTextField: DesignableTextField!
@@ -20,11 +23,14 @@ class MoreDetail: UIViewController,UITextViewDelegate,UITextFieldDelegate,UIPick
     @IBOutlet weak var dobTextFiled: DesignableTextField!
     var colors = ["Victoria","New South Wales","Queensland ","Australia Capital Territory","Northern Territory","Western Australia ","South Australia ","Tasmania"]
     
+    var informationData: Dictionary<String, String> = [:]
+     var delegateInfor : moreDetailDelegate? = nil
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-         datepickerMode()
+        
+        datepickerMode()
         pickerviewMode()
         dobTextFiled.delegate = self
         mailTextField.delegate = self
@@ -37,23 +43,36 @@ class MoreDetail: UIViewController,UITextViewDelegate,UITextFieldDelegate,UIPick
         addressTextField.autocapitalizationType  = UITextAutocapitalizationType(rawValue: 1)!
         surburbTextField.autocapitalizationType = UITextAutocapitalizationType(rawValue: 1)!
         
+        //load data 
+        dobTextFiled.text = informationData["DOB"]
+        mailTextField.text = informationData["email"]
+        addressTextField.text = informationData["address1"]
+        Address1TextField.text = informationData["address2"]
+        surburbTextField.text = informationData["surburb"]
+        postCodeTextField.text = informationData["postCode"]
+        stateTextField.text = informationData["state"]
+        
+        //end load data
     }
     
     @IBAction func submitMakeAppointment(sender: AnyObject) {
         if(!mailTextField.text.isEmpty && !isValidEmail(mailTextField.text)){
-             AlertShow("Notification",message: "Success",addButtonWithTitle: "OK")
+            changeBorderColor(mailTextField)
+            AlertShow("Notification",message: "Email is invalid",addButtonWithTitle: "OK")
+        }else{
+            var alert: UIAlertView = UIAlertView(title: "Make Appointment", message:"Please wait...", delegate: nil, cancelButtonTitle: "Cancel", otherButtonTitles: "OK")
+            var loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
+            loadingIndicator.center = self.view.center;
+            loadingIndicator.hidesWhenStopped = true
+            loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+            loadingIndicator.startAnimating();
+            
+            alert.setValue(loadingIndicator, forKey: "accessoryView")
+            loadingIndicator.startAnimating()
+            alert.show();
         }
         
-        var alert: UIAlertView = UIAlertView(title: "Make Appointment", message:"Please wait...", delegate: nil, cancelButtonTitle: "Cancel", otherButtonTitles: "OK")
-        var loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
-        loadingIndicator.center = self.view.center;
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        loadingIndicator.startAnimating();
         
-        alert.setValue(loadingIndicator, forKey: "accessoryView")
-        loadingIndicator.startAnimating()
-        alert.show();
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -186,5 +205,24 @@ class MoreDetail: UIViewController,UITextViewDelegate,UITextFieldDelegate,UIPick
         alert.message = message
         alert.addButtonWithTitle(addButtonWithTitle)
         alert.show()
+    }
+
+    @IBAction func backButton(sender: UIBarButtonItem) {
+        if(!mailTextField.text.isEmpty && !isValidEmail(mailTextField.text)){
+            
+            AlertShow("Notification",message: "Email is invalid",addButtonWithTitle: "OK")
+            
+        }else{
+            informationData["DOB"] = dobTextFiled.text
+            informationData["email"] = mailTextField.text
+            informationData["address1"] = addressTextField.text
+            informationData["address2"] = Address1TextField.text
+            informationData["surburb"] = surburbTextField.text
+            informationData["postCode"] = postCodeTextField.text
+            informationData["state"] = stateTextField.text
+            delegateInfor?.tranferDataController(self, moreData: informationData)
+            dismissViewControllerAnimated(true, completion: nil)
+        }
+        
     }
 }

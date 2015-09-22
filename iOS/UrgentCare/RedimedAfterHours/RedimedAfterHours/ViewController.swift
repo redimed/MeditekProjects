@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var urgentCareLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        // UI settings
         urgentCareLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
        

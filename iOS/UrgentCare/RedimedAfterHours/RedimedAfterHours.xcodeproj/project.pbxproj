@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		543EE8221BA984A300386D59 /* MoreDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543EE8211BA984A300386D59 /* MoreDetail.swift */; };
+		5450394C1BABF2FA000D3167 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5450394B1BABF2FA000D3167 /* ApiManager.swift */; };
 		546149CC1BA7AFB700C1F1D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546149CB1BA7AFB700C1F1D6 /* AppDelegate.swift */; };
 		546149CF1BA7AFB700C1F1D6 /* RedimedAfterHours.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 546149CD1BA7AFB700C1F1D6 /* RedimedAfterHours.xcdatamodeld */; };
 		546149D11BA7AFB700C1F1D6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546149D01BA7AFB700C1F1D6 /* ViewController.swift */; };
@@ -49,6 +50,9 @@
 		54614A361BA82B1000C1F1D6 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54614A301BA82B1000C1F1D6 /* TPKeyboardAvoidingScrollView.m */; };
 		54614A371BA82B1000C1F1D6 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54614A321BA82B1000C1F1D6 /* TPKeyboardAvoidingTableView.m */; };
 		54614A381BA82B1000C1F1D6 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 54614A341BA82B1000C1F1D6 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
+		54D7340C1BAC122800ECBEA7 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 54D734081BAC122800ECBEA7 /* LICENSE */; };
+		54D7340D1BAC122800ECBEA7 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 54D734091BAC122800ECBEA7 /* README.md */; };
+		54D7340E1BAC122800ECBEA7 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D7340B1BAC122800ECBEA7 /* SwiftyJSON.swift */; };
 		54DEECCD1BABB90D00847893 /* MakeAppointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DEECCC1BABB90D00847893 /* MakeAppointment.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +68,7 @@
 
 /* Begin PBXFileReference section */
 		543EE8211BA984A300386D59 /* MoreDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreDetail.swift; sourceTree = "<group>"; };
+		5450394B1BABF2FA000D3167 /* ApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		546149C61BA7AFB700C1F1D6 /* RedimedAfterHours.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedimedAfterHours.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		546149CA1BA7AFB700C1F1D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		546149CB1BA7AFB700C1F1D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +119,9 @@
 		54614A321BA82B1000C1F1D6 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
 		54614A331BA82B1000C1F1D6 /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
 		54614A341BA82B1000C1F1D6 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
+		54D734081BAC122800ECBEA7 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		54D734091BAC122800ECBEA7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		54D7340B1BAC122800ECBEA7 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		54DEECCC1BABB90D00847893 /* MakeAppointment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakeAppointment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -248,9 +256,28 @@
 			path = TPKeyboardAvoiding;
 			sourceTree = "<group>";
 		};
+		54D734071BAC122800ECBEA7 /* SwiftyJSON */ = {
+			isa = PBXGroup;
+			children = (
+				54D734081BAC122800ECBEA7 /* LICENSE */,
+				54D734091BAC122800ECBEA7 /* README.md */,
+				54D7340A1BAC122800ECBEA7 /* Source */,
+			);
+			path = SwiftyJSON;
+			sourceTree = "<group>";
+		};
+		54D7340A1BAC122800ECBEA7 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				54D7340B1BAC122800ECBEA7 /* SwiftyJSON.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 		54DEECC71BABA79600847893 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				54D734071BAC122800ECBEA7 /* SwiftyJSON */,
 				546149EE1BA7CBB400C1F1D6 /* Spring */,
 				54614A2C1BA82B0F00C1F1D6 /* TPKeyboardAvoiding */,
 			);
@@ -260,6 +287,7 @@
 		54DEECC91BABA7D500847893 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				5450394B1BABF2FA000D3167 /* ApiManager.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -362,6 +390,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54D7340C1BAC122800ECBEA7 /* LICENSE in Resources */,
 				54614A191BA7CBB400C1F1D6 /* Info.plist in Resources */,
 				546149D41BA7AFB700C1F1D6 /* Main.storyboard in Resources */,
 				546149D91BA7AFB700C1F1D6 /* LaunchScreen.xib in Resources */,
@@ -387,6 +416,7 @@
 				54614A131BA7CBB400C1F1D6 /* DesignableLabel.swift in Sources */,
 				54614A221BA7CBB400C1F1D6 /* SpringImageView.swift in Sources */,
 				54614A0F1BA7CBB400C1F1D6 /* AutoTextView.swift in Sources */,
+				54D7340E1BAC122800ECBEA7 /* SwiftyJSON.swift in Sources */,
 				54614A181BA7CBB400C1F1D6 /* ImageLoader.swift in Sources */,
 				54614A1D1BA7CBB400C1F1D6 /* Misc.swift in Sources */,
 				543EE8221BA984A300386D59 /* MoreDetail.swift in Sources */,
@@ -414,7 +444,9 @@
 				54614A161BA7CBB400C1F1D6 /* DesignableTextView.swift in Sources */,
 				54614A261BA7CBB400C1F1D6 /* SpringView.swift in Sources */,
 				54614A251BA7CBB400C1F1D6 /* SpringTextView.swift in Sources */,
+				54D7340D1BAC122800ECBEA7 /* README.md in Sources */,
 				54614A361BA82B1000C1F1D6 /* TPKeyboardAvoidingScrollView.m in Sources */,
+				5450394C1BABF2FA000D3167 /* ApiManager.swift in Sources */,
 				54614A1A1BA7CBB400C1F1D6 /* KeyboardLayoutConstraint.swift in Sources */,
 				54614A211BA7CBB400C1F1D6 /* SpringButton.swift in Sources */,
 				54614A201BA7CBB400C1F1D6 /* SpringAnimation.swift in Sources */,

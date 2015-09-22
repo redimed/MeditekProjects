@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Background Color-->
+    <color name="lightBackground">#FFFFFF</color>
+    <color name="darkBackground">#000000</color>
+    <color name="callBackground">#1E3262</color>
+
+    <!-- Font Color-->
+    <color name="lightFont">#FFFFFF</color>
+    <color name="darkFont">#000000</color>
+    <color name="greyFont">#ff9e9e9e</color>
+    <color name="redFont">#B51E46</color>
+</resources>

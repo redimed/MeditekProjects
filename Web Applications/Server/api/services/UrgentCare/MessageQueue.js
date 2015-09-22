@@ -4,7 +4,7 @@ module.exports = {
 	input: UIDUR - urgent request UID, UIDMQ - message queue UID
 	output: resend 3rd email if send failed
 	*/
-	Create: function(UIDUR, UIDMQ){
+	Create: function(UIDUR, UIDMQ, fn){
 		setTimeout(function(){
 			//update status completed for message queue
 			MessageQueue.update({status: 'spending',completedTime: null},{status: 'completed', completedTime: new Date()})
@@ -23,7 +23,7 @@ module.exports = {
 					var locals = {
 			                email: UR.email,
 			                subject: 'Resend confirm',
-			                confirmed: 'http://localhost:3000/api/confirm/' + UR.UID
+			                confirmed: APIServices.UrgentCareConfirm + UR.UID
 			            };
 		            var CallBackSendMail = function(err, responseStatus, html, text){
 		                if(err){
@@ -37,7 +37,10 @@ module.exports = {
 					UrgentRequest.findOne()
 					.where({UID: UIDUR})
 					.exec(function(err, urgentRequest){
-						if(err) throw new Error(err);
+						if(err) {
+							console.log(err);
+							return fn(err);
+						}
 						else {
 							var dataMQ = {
 				                UID: UUID.Create(),
@@ -58,7 +61,10 @@ module.exports = {
 				                startTime: dataMQ.startTime
 							})
 							.exec(function(err, MQCreated){
-								if(err) throw new Error(err);
+								if(err) {
+									console.log(err);
+									return fn(err);
+								}
 								else {
 									UrgentRequest.update({tried: UR.tried}, {tried: UR.tried + 1})
 									.exec(function(URUpdated){
@@ -72,7 +78,8 @@ module.exports = {
 						}
 					})
 					.catch(function(err){
-						throw new Error(err);
+						console.log(err);
+						return fn(err);
 					});
 		},Services.MessageQueue.GetMSecond(5));
 	},

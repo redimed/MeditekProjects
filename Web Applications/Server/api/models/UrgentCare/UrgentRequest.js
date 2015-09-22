@@ -44,12 +44,12 @@ module.exports = {
         },
 
         address1: {
-            type: 'datetime',
+            type: 'string',
             columnName: 'Address1'
         },
 
         address2: {
-            type: 'datetime',
+            type: 'string',
             columnName: 'Address2'
         },
 

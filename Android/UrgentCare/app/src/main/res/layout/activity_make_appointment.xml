@@ -1,0 +1,87 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:id="@+id/relativeLayoutMakeAppointment"
+    tools:context="com.redimed.urgentcare.MakeAppointmentActivity">
+    <!--Toolbar-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarMakeAppointment"
+        android:minHeight="?attr/actionBarSize"
+        android:background="#12355B"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/btnCloseMakeAppointmentPage"
+            android:background="@drawable/ic_close_page"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Sport Injury Clinic Booking"
+            android:id="@+id/textViewNamePage"
+            android:layout_marginLeft="40dp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="sans-serif-light"/>
+    </android.support.v7.widget.Toolbar>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/toolbarMakeAppointment">
+            <!--FirstName-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativeLayoutFirstName"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/boder_edittext">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lblFirstName"
+                    android:text="First Name"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="15sp"
+                    />
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_toRightOf="@+id/lblFirstName"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/editTextFirstName"
+                    android:hint="First Name"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:layout_marginLeft="15dp"
+                    android:inputType="textCapSentences"
+                    android:imeOptions="actionDone"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:layout_centerInParent="true"
+                    android:textColor="#F44336"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+    </RelativeLayout>
+    <!--Button Make appoinment-->
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="fill_parent"
+        android:layout_height="55dp"
+        android:background="@drawable/btn_make_appointment"
+        android:text="Make Appointment"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:textSize="22sp"
+        android:textColor="#FFFFFF"/>
+</RelativeLayout>

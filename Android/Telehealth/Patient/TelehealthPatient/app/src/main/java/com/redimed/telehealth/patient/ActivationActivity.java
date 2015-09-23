@@ -1,8 +1,11 @@
 package com.redimed.telehealth.patient;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +37,8 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
         Picasso.with(getApplicationContext()).load(R.drawable.bg_activation).transform(new BlurTransformation(getApplicationContext(),15)).into(imgEnterPhone);
         btnEnterPhone.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -60,25 +65,25 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_activation, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    //Get country zip code from array
+    public String GetCountryZipCode(){
+        String CountryID="";
+        String CountryZipCode="";
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        TelephonyManager manager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        //getNetworkCountryIso
+        CountryID= manager.getSimCountryIso().toUpperCase();
+        String[] rl=this.getResources().getStringArray(R.array.CountryCodes);
+        for(int i=0;i<rl.length;i++){
+            String[] g=rl[i].split(",");
+            if(g[1].trim().equals(CountryID.trim())){
+                CountryZipCode=g[0];
+                break;
+            }
         }
-
-        return super.onOptionsItemSelected(item);
+        Log.d("ZipCode",CountryZipCode);
+        return CountryZipCode;
     }
+
 }

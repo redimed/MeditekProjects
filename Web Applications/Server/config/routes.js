@@ -1,10 +1,10 @@
 module.exports.routes = {
-    'post /api/request': {
-        controller: 'UrgentCare/UrgentCareController',
-        action: 'ReceiveRequest'
-    },
-    'get /api/confirm/:id': {
-    	controller: 'UrgentCare/UrgentCareController',
-    	action: 'ConfirmRequest'
-    }
+	'post /api/urgent-care/urgent-request': {
+		controller: 'UrgentCare/UrgentCareController',
+		action: 'ReceiveRequest'
+	},
+	'get /api/urgent-care/urgent-confirm': {
+		controller: 'UrgentCare/UrgentCareController',
+		action: 'ConfirmRequest'
+	}
 };

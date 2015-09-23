@@ -7,6 +7,16 @@ module.exports = {
 */
     ReceiveRequest: function(req, res) {
         var data = req.body.data;
+
+        try {
+            return JSON.parse(data);
+        }
+        catch(err) {
+            console.log(err);
+            res.json(400, {error: err}); 
+            return;
+        }
+
         //get client's IP
         data.ip = req.headers['X-Client-IP'] ||
             req.headers['X-Forwarded-For'] ||
@@ -19,7 +29,6 @@ module.exports = {
             req.socket.remoteAddress ||
             req.connection.socket.remoteAddress;
         data.UID = UUID.Create();
-
         //save information patient
         UrgentRequest.create({
             UID: data.UID,
@@ -45,13 +54,13 @@ module.exports = {
              var locals = {
                 email: data.email,
                 subject: 'Confirm receive email',
-                confirmed: 'http://localhost:3000/api/confirm/' + data.UID
+                confirmed: APIServices.UrgentCareConfirm + data.UID
             };
 
             /*
             CallBackSendMail: callback from function sendmail
             input: err, responseStatus, html, text
-            output: theow error
+            output: throw error
             */
             var CallBackSendMail = function(err, responseStatus, html, text){
                 if(err){
@@ -64,7 +73,7 @@ module.exports = {
 
             //get urgent request id
             var UrgentRequestID = UrgentRequest.findOne()
-                    .where({ UID: data.UID})
+                    .where({UID: data.UID})
                     .then(function(URID){
                         return URID;
                     });
@@ -93,15 +102,22 @@ module.exports = {
                 startTime: dataMQ.startTime
             })
             .exec(function(err, MQCreated){
-                if(err) res.json(500, {error: err});
+                if(err) {
+                    console.log(err);
+                    res.json(500, {error: err});
+                }
                 else {
+                    var CallBackMessageQueue = function(err){
+                        res.json(500, {error: err});
+                    };
                 //created and start message queue
-                Services.MessageQueue.Create(data.UID, dataMQ.UID);
+                Services.MessageQueue.Create(data.UID, dataMQ.UID, CallBackMessageQueue);
                     res.json(200, {data: 'success'});
                 }  
             });
         })
         .catch(function(err){
+            console.log(err);
             res.json(500, {error: err});
         });
     },

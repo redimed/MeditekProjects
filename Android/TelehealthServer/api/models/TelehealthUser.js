@@ -1,65 +1,63 @@
 module.exports = {
-	tableName: 'TelehealthUser',
-	autoCreatedAt: false,
-	autoUpdatedAt: false,
     attributes: {
         ID: {
-			type: 'integer',
-			columnName: 'ID'
+			type: Sequelize.INTEGER,
+			field: 'ID',
+			primaryKey: true, 
+			autoIncrement: true
 		},
 		UID: {
-			type: 'string',
-			columnName: 'UID'
+			type: Sequelize.STRING,
+			field: 'UID'
 		},
 		userAccountID: {
-			type: 'integer',
-			columnName: 'UserAccountID'
+			type: Sequelize.INTEGER,
+			field: 'UserAccountID'
 		},
 		firstName: {
-			type: 'string',
-			columnName: 'FirstName'
+			type: Sequelize.STRING,
+			field: 'FirstName'
 		},
 		lastName: {
-			type: 'string',
-			columnName: 'LastName'
+			type: Sequelize.STRING,
+			field: 'LastName'
 		},
 		dob: {
-			type: 'datetime',
-			columnName: 'DOB'
+			type: Sequelize.DATE,
+			field: 'DOB'
 		},
 		address1: {
-			type: 'string',
-			columnName: 'Address1',
+			type: Sequelize.STRING,
+			field: 'Address1',
 		},
 		address2: {
-			type: 'string',
-			columnName: 'Address2'
+			type: Sequelize.STRING,
+			field: 'Address2'
 		},
 		creationDate: {
-            type: 'datetime',
-            columnName: 'CreationDate'
+            type: Sequelize.DATE,
+            field: 'CreationDate'
         },
         createdBy: {
-            type: 'integer',
-            columnName: 'CreatedBy'
+            type: Sequelize.INTEGER,
+            field: 'CreatedBy'
         },
         modifiedDate: {
-            type: 'datetime',
-            columnName: 'ModifiedDate'
+            type: Sequelize.DATE,
+            field: 'ModifiedDate'
         },
         modifiedBy: {
-            type: 'integer',
-            columnName: 'ModifiedBy'
+            type: Sequelize.INTEGER,
+            field: 'ModifiedBy'
         }
     },
-
-    beforeCreate: function(values, callback){
-        	values.creationDate = new Date();
-        	callback();
-        },
-
-    beforeUpdate: function(values, callback){
-        	values.modifiedDate = new Date();
-        	callback();
-        } 
+    options: {
+	    tableName: 'TelehealthUser',
+	    timestamps: true,
+	    createdAt: 'creationDate',
+	    updatedAt: 'modifiedDate',
+	    classMethods: {},
+	    instanceMethods: {},
+	    hooks: {}
+  	}
 };

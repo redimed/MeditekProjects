@@ -5,80 +5,146 @@
     android:background="@color/lightBackground"
     tools:context=".ActivationActivity">
 
+    <include android:id="@+id/tbActivation" layout="@layout/toolbar"/>
 
     <ImageView
         android:id="@+id/imgViewLogo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/logo_redimed" />
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/logo_redimed"
+        android:layout_below="@+id/tbActivation"/>
+
+    <RelativeLayout
+        android:id="@+id/relLayoutActivation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imgViewLogo">
 
     <ImageView
         android:id="@+id/imgEnterPhone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/imageViewLogo" />
+        android:layout_height="match_parent"/>
 
-    <ViewFlipper
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
-
-        <RelativeLayout
+        <ViewFlipper
+            android:id="@+id/vfChangeLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
 
-            <Button
-                android:id="@+id/btnPostCode"
-                android:layout_width="100dp"
-                android:layout_height="35dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toLeftOf="@+id/txtPhoneNumber"
-                android:layout_toStartOf="@+id/txtPhoneNumber"
-                android:background="@drawable/txt_border"
-                android:drawableLeft="@drawable/phone"
-                android:gravity="center"
-                android:padding="6dp"
-                android:text="(+61)"
-                android:textColor="@color/greyFont"
-                android:textSize="20dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/txtPhoneNumber"
-                android:layout_width="220dp"
-                android:layout_height="35dp"
-                android:layout_alignLeft="@+id/btnEnterPhone"
-                android:layout_alignStart="@+id/btnEnterPhone"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="30dp"
-                android:background="@drawable/txt_border"
-                android:gravity="center"
-                android:hint="Please enter your phone!"
-                android:inputType="number"
-                android:maxLength="8" />
+                <Button
+                    android:id="@+id/btnPostCode"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toLeftOf="@+id/txtPhoneNumber"
+                    android:layout_toStartOf="@+id/txtPhoneNumber"
+                    android:background="@drawable/txt_border"
+                    android:drawableLeft="@drawable/phone"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:text="(+61)"
+                    android:textColor="@color/greyFont"
+                    android:textSize="20dp" />
 
-            <Button
-                android:id="@+id/btnEnterPhone"
-                android:layout_width="170dp"
-                android:layout_height="40dp"
-                android:layout_below="@+id/txtPhoneNumber"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/btn_radius"
-                android:gravity="center"
-                android:text="Enter"
-                android:textColor="@color/lightFont" />
+                <EditText
+                    android:id="@+id/txtPhoneNumber"
+                    android:layout_width="250dp"
+                    android:layout_height="50dp"
+                    android:layout_alignLeft="@+id/btnEnterPhone"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/txt_border"
+                    android:gravity="center"
+                    android:hint="Please enter your phone!"
+                    android:inputType="number"
+                    android:maxLength="8" />
 
-        </RelativeLayout>
+                <Button
+                    android:id="@+id/btnEnterPhone"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/txtPhoneNumber"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="120dp"
+                    android:gravity="center"
+                    android:text="Register"
+                    android:textColor="@color/lightFont" />
+            </RelativeLayout>
 
-    </ViewFlipper>
+            <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="250dp">
 
+                <LinearLayout
+                    android:id="@+id/linearLayoutVerify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true">
+
+                    <EditText
+                        android:id="@+id/txtCode1"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:maxLength="1"
+                        android:inputType="number"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/txt_border"/>
+
+                    <EditText
+                        android:id="@+id/txtCode2"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:maxLength="1"
+                        android:inputType="number"
+                        android:layout_marginRight="20dp"
+
+                        android:background="@drawable/txt_border"/>
+
+                    <EditText
+                        android:id="@+id/txtCode3"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:maxLength="1"
+                        android:inputType="number"
+                        android:layout_marginRight="20dp"
+
+                        android:background="@drawable/txt_border"/>
+
+                    <EditText
+                        android:id="@+id/txtCode4"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:maxLength="1"
+                        android:inputType="number"
+                        android:background="@drawable/txt_border"/>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnVerifyPhone"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:text="Verify"
+                    android:textColor="@color/lightFont"
+                    android:layout_below="@+id/linearLayoutVerify"/>
+            </RelativeLayout>
+
+        </ViewFlipper>
+
+    </RelativeLayout>
 
 </RelativeLayout>

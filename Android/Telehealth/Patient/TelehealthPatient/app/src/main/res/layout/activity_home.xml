@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/lightBackground"
     tools:context="com.redimed.telehealth.patient.HomeActivity">
 
@@ -10,31 +9,51 @@
         android:id="@+id/imgViewLogo"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:src="@drawable/logo_redimed"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"/>
+        android:layout_marginTop="10dp"
+        android:src="@drawable/logo_redimed"/>
 
-    <TextView
-        android:id="@+id/txtHomeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_remote"
-        android:textSize="@dimen/size_title"
-        android:textColor="@color/redFont"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/imgViewLogo"/>
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/patientDrawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imgHome"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/logo_bg_redimed"
-        android:layout_below="@+id/txtHomeTitle"/>
+        <LinearLayout
+            android:id="@+id/leftLayout"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|start">
 
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rvImageCategories">
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txtHomeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_remote"
+                android:textSize="@dimen/size_title"
+                android:textColor="@color/redFont"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="80dp" />
+
+            <ImageView
+                android:id="@+id/imgHome"
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/logo_bg_redimed"
+                android:layout_below="@+id/txtHomeTitle"/>
+        </RelativeLayout>
+    </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>

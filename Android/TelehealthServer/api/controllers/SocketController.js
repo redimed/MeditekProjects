@@ -1,4 +1,4 @@
-module.exports = {
+ module.exports = {
 	JoinRoom: function(req,res){
 		if(!req.isSocket)
 			res.json({status:'error', message: 'Socket Request Only!'});

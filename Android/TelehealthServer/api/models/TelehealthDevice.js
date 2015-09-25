@@ -1,7 +1,7 @@
 module.exports = {
     attributes: {
         ID: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.BIGINT(20),
             field: 'ID',
             primaryKey: true,
             autoIncrement: true
@@ -10,36 +10,28 @@ module.exports = {
             type: Sequelize.STRING,
             field: 'UID'
         },
-        userAccountID: {
-            type: Sequelize.INTEGER,
-            field: 'UserAccountID'
+        telehealthUserID: {
+            type: Sequelize.BIGINT(20),
+            field: 'TelehealthUserID'
         },
-        firstName: {
+        deviceToken: {
+            type: Sequelize.TEXT,
+            field: 'DeviceToken'
+        },
+        deviceId: {
+            type: Sequelize.TEXT,
+            field: 'DeviceID'
+        },
+        type: {
             type: Sequelize.STRING,
-            field: 'FirstName'
-        },
-        lastName: {
-            type: Sequelize.STRING,
-            field: 'LastName'
-        },
-        dob: {
-            type: Sequelize.DATE,
-            field: 'DOB'
-        },
-        address1: {
-            type: Sequelize.STRING,
-            field: 'Address1',
-        },
-        address2: {
-            type: Sequelize.STRING,
-            field: 'Address2'
+            field: 'Type'
         },
         creationDate: {
             type: Sequelize.DATE,
             field: 'CreationDate'
         },
         createdBy: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.BIGINT(20),
             field: 'CreatedBy'
         },
         modifiedDate: {
@@ -47,22 +39,17 @@ module.exports = {
             field: 'ModifiedDate'
         },
         modifiedBy: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.BIGINT(20),
             field: 'ModifiedBy'
         }
     },
-    associations: function() {
-        TelehealthUser.belongsTo(UserAccount, {
-            foreignKey: 'userAccountID'
-        });
-    },
     options: {
-        tableName: 'TelehealthUser',
+        tableName: 'TelehealthDevice',
         timestamps: true,
         createdAt: 'creationDate',
         updatedAt: 'modifiedDate',
         classMethods: {},
         instanceMethods: {},
         hooks: {}
-    }
+    },
 };

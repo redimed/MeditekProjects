@@ -5,7 +5,7 @@ module.exports = {
 		verificationCode: {type: Sequelize.STRING, field: 'VerificationCode'},
 		type: {type: Sequelize.STRING, field: 'Type'},
 		verificationToken: {type: Sequelize.STRING, field: 'VerificationToken'},
-		deviceToken: {type: Sequelize.TEXT, field: 'DeviceToken'},
+		deviceID: {type: Sequelize.TEXT, field: 'DeviceID'},
 		creationDate: {type: Sequelize.DATE, field: 'CreationDate'},
         createdBy: {type: Sequelize.BIGINT(20), field: 'CreatedBy' },
         modifiedDate: {type: Sequelize.DATE, field: 'ModifiedDate'},

@@ -1,7 +1,9 @@
 package com.redimed.telehealth.patient;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.telephony.TelephonyManager;
 
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
 
@@ -21,6 +23,9 @@ public class MyApplication extends Application{
         myApplication = this;
         Intent intent = new Intent(this, RegistrationIntentService.class);
         startService(intent);
+
+
+
     }
 
     @Override

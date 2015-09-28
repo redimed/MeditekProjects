@@ -10,111 +10,55 @@ public class UrgentRequestModel {
     public String firstName;
     public String lastName;
     @SerializedName("phoneNumber")
-    public String phoneNumber;
-    public String gender;
-    public String description;
-    public String email;
-    public String DOB;
-    public String address1;
-    public String address2;
+    public String contactPhone;
     public String suburb;
-    public String postCode;
+    public String DOB;
+    public String email;
+    public String description;
+    @SerializedName("GPReferal")
+    public String gpReferral;
+    @SerializedName("serviceType")
+    public String UrgentRequestType;
+    @SerializedName("urgentRequestType")
+    public String serviceType;
 
-    public String getFirstName() {
-        return firstName;
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getDOB() {
-        return DOB;
-    }
-
-    public void setDOB(String DOB) {
-        this.DOB = DOB;
-    }
-
-    public String getAddress1() {
-        return address1;
-    }
-
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
-
-    public String getAddress2() {
-        return address2;
-    }
-
-    public void setAddress2(String address2) {
-        this.address2 = address2;
-    }
-
-    public String getSuburb() {
-        return suburb;
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
     }
 
     public void setSuburb(String suburb) {
         this.suburb = suburb;
     }
 
-    public String getPostCode() {
-        return postCode;
+    public void setDOB(String DOB) {
+        this.DOB = DOB;
     }
 
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getState() {
-        return state;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setGpReferral(String gpReferral) {
+        this.gpReferral = gpReferral;
     }
 
-    public String state;
+    public void setUrgentRequestType(String urgentRequestType) {
+        UrgentRequestType = urgentRequestType;
+    }
 }

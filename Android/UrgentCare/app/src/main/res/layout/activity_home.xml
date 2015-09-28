@@ -8,21 +8,55 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scaleType="fitXY"
-        android:id="@+id/imgBackgroundHome" />
+        android:id="@+id/imgBackgroundHome"
+        android:background="@drawable/bg_home"/>
 
     <ImageView
         android:layout_width="300dp"
         android:layout_height="59dp"
         android:id="@+id/imgLogoRedimed"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="20dp"
+        android:background="@drawable/img_logo_redimed"/>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/imgBackgroundLogo"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"/>
+        android:layout_centerVertical="true">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/linearLayout1">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imgLogoBtn"
+                    android:background="@drawable/img_logo_btn" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnSportInjury"
+                    android:background="@drawable/img_sport_injury"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/linearLayout1">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnWorkInjury"
+                    android:background="@drawable/img_work_injury"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnFAQ"
+                    android:background="@drawable/img_faq"/>
+            </LinearLayout>
+    </RelativeLayout>
 
     <Button
         android:layout_width="wrap_content"
@@ -52,7 +86,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/textView2"
-        android:text="The standard in specialised health services"
+        android:text="Sport Injury"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

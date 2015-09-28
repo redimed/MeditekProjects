@@ -16,6 +16,7 @@ public class RetrofitClient {
     public static <S> S createService(Class<S> serviceClass) {
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(Config.API_ULR)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setClient(new OkClient(new OkHttpClient()));
         RestAdapter adapter = builder.build();
         return adapter.create(serviceClass);

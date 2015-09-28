@@ -5,7 +5,7 @@
     android:background="@color/lightBackground"
     tools:context=".ActivationActivity">
 
-    <include android:id="@+id/tbActivation" layout="@layout/toolbar"/>
+    <include android:id="@+id/tbActivation" layout="@layout/custom_toolbar"/>
 
     <ImageView
         android:id="@+id/imgViewLogo"
@@ -48,7 +48,7 @@
                     android:drawableLeft="@drawable/phone"
                     android:gravity="center"
                     android:padding="6dp"
-                    android:text="(+61)"
+                    android:text="+61"
                     android:textColor="@color/greyFont"
                     android:textSize="20dp" />
 
@@ -64,7 +64,7 @@
                     android:gravity="center"
                     android:hint="Please enter your phone!"
                     android:inputType="number"
-                    android:maxLength="8" />
+                    android:maxLength="11" />
 
                 <Button
                     android:id="@+id/btnEnterPhone"
@@ -82,54 +82,27 @@
                  android:layout_width="match_parent"
                  android:layout_height="250dp">
 
-                <LinearLayout
-                    android:id="@+id/linearLayoutVerify"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/linerVerifyCode"
+                    android:layout_width="270dp"
+                    android:layout_height="60dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true">
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/txt_border">
 
                     <EditText
-                        android:id="@+id/txtCode1"
-                        android:layout_width="50dp"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:maxLength="1"
+                        android:id="@+id/txtVerifyCode"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
                         android:inputType="number"
-                        android:layout_marginRight="20dp"
-                        android:background="@drawable/txt_border"/>
+                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:textSize="@dimen/size_txt"
+                        android:maxLength="6"/>
 
-                    <EditText
-                        android:id="@+id/txtCode2"
-                        android:layout_width="50dp"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:maxLength="1"
-                        android:inputType="number"
-                        android:layout_marginRight="20dp"
+                </RelativeLayout>
 
-                        android:background="@drawable/txt_border"/>
-
-                    <EditText
-                        android:id="@+id/txtCode3"
-                        android:layout_width="50dp"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:maxLength="1"
-                        android:inputType="number"
-                        android:layout_marginRight="20dp"
-
-                        android:background="@drawable/txt_border"/>
-
-                    <EditText
-                        android:id="@+id/txtCode4"
-                        android:layout_width="50dp"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:maxLength="1"
-                        android:inputType="number"
-                        android:background="@drawable/txt_border"/>
-                </LinearLayout>
 
                 <Button
                     android:id="@+id/btnVerifyPhone"
@@ -140,7 +113,7 @@
                     android:layout_marginTop="30dp"
                     android:text="Verify"
                     android:textColor="@color/lightFont"
-                    android:layout_below="@+id/linearLayoutVerify"/>
+                    android:layout_below="@+id/linerVerifyCode"/>
             </RelativeLayout>
 
         </ViewFlipper>

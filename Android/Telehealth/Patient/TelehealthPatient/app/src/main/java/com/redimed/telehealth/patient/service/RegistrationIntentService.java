@@ -20,19 +20,14 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
-import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.utils.Config;
 
-import java.io.IOException;
 
 public class RegistrationIntentService extends IntentService {
 
@@ -55,11 +50,12 @@ public class RegistrationIntentService extends IntentService {
             String deviceId = ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
 
             editor.putBoolean("sendToken", true);
-            editor.putString("deviceType","Android");
+            editor.putString("deviceType", "Android");
             editor.putString("deviceToken", token);
             editor.apply();
+
             Log.i(TAG, "GCM Registration Token: " + token);
-            Log.i(TAG, "Device ID: "+deviceId);
+            Log.i(TAG, "Device ID: " + deviceId);
 
         } catch (Exception e) {
             editor.putBoolean("sendToken", false);

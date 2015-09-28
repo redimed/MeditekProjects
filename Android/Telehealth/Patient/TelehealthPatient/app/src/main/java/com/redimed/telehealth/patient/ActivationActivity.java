@@ -3,8 +3,8 @@ package com.redimed.telehealth.patient;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,46 +21,46 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
-import com.redimed.telehealth.patient.service.RegistrationIntentService;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.redimed.telehealth.patient.api.RegisterApi;
+import com.redimed.telehealth.patient.models.TelehealthUser;
+import com.redimed.telehealth.patient.models.UserAccount;
+import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
+import com.redimed.telehealth.patient.utils.CustomDialog;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
-public class ActivationActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
+public class ActivationActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Intent i;
-    @Bind(R.id.vfChangeLayout)
-    ViewFlipper vfChangeLayout;
-    @Bind(R.id.imgEnterPhone)
-    ImageView imgEnterPhone;
-    @Bind(R.id.btnEnterPhone)
-    Button btnEnterPhone;
-    @Bind(R.id.btnPostCode)
-    Button btnPostCode;
-    @Bind(R.id.btnVerifyPhone)
-    Button btnVerifyPhone;
-    @Bind(R.id.txtPhoneNumber)
-    EditText txtPhoneNumber;
-    @Bind(R.id.txtCode1)
-    EditText txtCode1;
-    @Bind(R.id.txtCode2)
-    EditText txtCode2;
-    @Bind(R.id.txtCode3)
-    EditText txtCode3;
-    @Bind(R.id.txtCode4)
-    EditText txtCode4;
-    @Bind(R.id.tbActivation)
-    Toolbar tbActivation;
-    int count = 0;
-    boolean flagBackActivationLayout = true;
+    @Bind(R.id.vfChangeLayout) ViewFlipper vfChangeLayout;
+    @Bind(R.id.imgEnterPhone) ImageView imgEnterPhone;
+
+    @Bind(R.id.btnEnterPhone) Button btnEnterPhone;
+    @Bind(R.id.btnPostCode) Button btnPostCode;
+    @Bind(R.id.btnVerifyPhone) Button btnVerifyPhone;
+
+    @Bind(R.id.txtPhoneNumber) EditText txtPhoneNumber;
+    @Bind(R.id.txtVerifyCode) EditText txtVerifyCode;
+    @Bind(R.id.tbActivation) Toolbar tbActivation;
+
+    private Intent i;
+
+    private boolean flagBackActivationLayout = true;
+    private RegisterApi registerApi = RESTClient.getRegisterApi();
+    private Gson gson = new Gson();
+    private TelehealthUser telehealthUser;
+    private JsonObject patientJSON;
+    private SharedPreferences spDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +76,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         btnEnterPhone.setOnClickListener(this);
         btnPostCode.setOnClickListener(this);
         btnVerifyPhone.setOnClickListener(this);
-
-        txtCode1.addTextChangedListener(this);
-        txtCode2.addTextChangedListener(this);
-        txtCode3.addTextChangedListener(this);
-        txtCode4.addTextChangedListener(this);
     }
 
     //Event click to call function
@@ -91,7 +86,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                 CheckPhoneNumber();
                 break;
             case R.id.btnVerifyPhone:
-                CheckVerifyCode();
+                LoginByVerifyCode();
                 break;
             case R.id.btnPostCode:
                 i = new Intent(this, CountryCodeActivity.class);
@@ -110,14 +105,22 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    //Validated phone number 8 digits (XXXXXXXX)
+    //Validated phone number match 10-15 digit numbers
     private void CheckPhoneNumber() {
-        String phoneExpression = "^[0-9]{2}(\\ |-){0,1}[0-9]{2}(\\ |-){0,1}[0-9]{1}(\\ |-){0,1}[0-9]{3}$";
+        String phoneExpression = "^[0-9][0-9]{9,14}$";
         Pattern patternPhoneExpression = Pattern.compile(phoneExpression);
         Matcher matcherPhoneExpression = patternPhoneExpression.matcher(txtPhoneNumber.getText());
 
         if (matcherPhoneExpression.matches()) {
-            vfChangeLayout.showNext();
+            char subPhone = txtPhoneNumber.getText().charAt(0);
+            String phoneNumber;
+            if(subPhone == '0'){
+                phoneNumber = btnPostCode.getText().toString() +  txtPhoneNumber.getText().toString().substring(1);
+            }
+            else {
+                phoneNumber = btnPostCode.getText().toString() +  txtPhoneNumber.getText().toString();
+            }
+            GetDeviceInfo(phoneNumber);
             flagBackActivationLayout = false;
             if (!flagBackActivationLayout) {
                 if (tbActivation != null) {
@@ -136,7 +139,43 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    //Return layout when click back icon in toolbar
+    //Register phone number with get token device
+    private void GetDeviceInfo(String phoneNumber) {
+        spDevice = getApplicationContext().getSharedPreferences("DeviceInfo", MODE_PRIVATE);
+        boolean sendToken = spDevice.getBoolean("sendToken", false);
+        String deviceToken = spDevice.getString("deviceToken", null);
+        String deviceType = spDevice.getString("deviceType", null);
+
+        telehealthUser = new TelehealthUser();
+        telehealthUser.setPhone(phoneNumber);
+        telehealthUser.setDeviceID(deviceToken);
+        telehealthUser.setDeviceType(deviceType);
+
+        patientJSON = new JsonObject();
+        patientJSON.addProperty("data", gson.toJson(telehealthUser));
+
+        if (sendToken == true) {
+            registerApi.activation(patientJSON, new Callback<JsonObject>() {
+                @Override
+                public void success(JsonObject jsonObject, Response response) {
+                    String status = jsonObject.get("status").getAsString();
+                    String message = jsonObject.get("message").getAsString();
+                    if (status.equalsIgnoreCase("success")) {
+                        vfChangeLayout.showNext();
+                    } else {
+                        new CustomDialog(ActivationActivity.this, CustomDialog.State.Error, message).show();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    new CustomDialog(ActivationActivity.this, CustomDialog.State.Error, error.getLocalizedMessage()).show();
+                }
+            });
+        }
+    }
+
+    //Return layout when click back icon in custom_toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -149,67 +188,37 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    //Get country zip code from array
-//    public String GetCountryZipCode(){
-//        String CountryID="";
-//        String CountryZipCode="";
-//
-//        TelephonyManager manager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-//        //getNetworkCountryIso
-//        CountryID= manager.getSimCountryIso().toUpperCase();
-//        String[] rl=this.getResources().getStringArray(R.array.CountryCodes);
-//        for(int i=0; i < rl.length;i++){
-//            String[] g=rl[i].split(",");
-//            if(g[1].trim().equals(CountryID.trim())){
-//                CountryZipCode=g[0];
-//                break;
-//            }
-//        }
-//        Log.d("ZipCode",CountryZipCode);
-//        return CountryZipCode;
-//    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    //Next other Edit Text when written
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (txtCode1.getText().toString().length() == 1) {
-            txtCode2.requestFocus();
-            if (txtCode2.getText().toString().length() == 1) {
-                txtCode3.requestFocus();
-                if (txtCode3.getText().toString().length() == 1) {
-                    txtCode4.requestFocus();
-                }
-            }
-        }
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-
-    }
-
     //Compare code input with code receive from server
-    private void CheckVerifyCode() {
-        String verifyCode = txtCode1.getText().toString() + txtCode2.getText().toString() + txtCode3.getText().toString() + txtCode4.getText().toString();
-        if (verifyCode.equals("1234")) {
-            Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(i);
-        } else {
-            count++;
-            Toast.makeText(getApplicationContext(), R.string.code_invalid, Toast.LENGTH_SHORT).show();
-            txtCode1.getText().clear();
-            txtCode2.getText().clear();
-            txtCode3.getText().clear();
-            txtCode4.getText().clear();
-            txtCode1.setFocusableInTouchMode(true);
-            txtCode1.requestFocus();
-            if (count == 2) {
-                Toast.makeText(getApplicationContext(), R.string.code_sent_request_again, Toast.LENGTH_LONG).show();
+    private void LoginByVerifyCode() {
+        String verifyCode = txtVerifyCode.getText().toString();
+        if(spDevice != null){
+            Boolean sendToken = spDevice.getBoolean("sendToken", false);
+            telehealthUser.setCode(verifyCode);
+            patientJSON.addProperty("data", gson.toJson(telehealthUser));
+            if (sendToken == true) {
+                registerApi.verify(patientJSON, new Callback<JsonObject>() {
+                    @Override
+                    public void success(JsonObject jsonObject, Response response) {
+                        String status = jsonObject.get("status").getAsString();
+                        String message = jsonObject.get("message").getAsString();
+                        if (status.equalsIgnoreCase("success")){
+                            SharedPreferences.Editor dataUserAccount = getSharedPreferences("DataUser", MODE_PRIVATE).edit();
+                            dataUserAccount.putInt("ID", jsonObject.getAsJsonObject("data").get("ID").getAsInt());
+                            dataUserAccount.putString("UserName", jsonObject.getAsJsonObject("data").get("userName").getAsString());
+                            dataUserAccount.putString("PhoneNumber", jsonObject.getAsJsonObject("data").get("phoneNumber").getAsString());
+                            dataUserAccount.putString("Email", jsonObject.getAsJsonObject("data").get("email").getAsString());
+                            dataUserAccount.apply();
+                            Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                            startActivity(i);
+                        }else {
+                            new CustomDialog(ActivationActivity.this, CustomDialog.State.Error, message).show();
+                        }
+                    }
+                    @Override
+                    public void failure(RetrofitError error) {
+                        new CustomDialog(ActivationActivity.this, CustomDialog.State.Error, error.getLocalizedMessage()).show();
+                    }
+                });
             }
         }
     }

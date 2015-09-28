@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient.network;
 
+import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.utils.Config;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -19,7 +20,7 @@ public class RESTClient {
 
     private static void setupRestClient() {
         restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(Config.apiURL)
                 .setClient(new OkClient(new OkHttpClient()))
                 .setRequestInterceptor(new SessionRequestInterceptor())
@@ -34,6 +35,10 @@ public class RESTClient {
             paramRequestFacade.addHeader("Content-Type", "application/json");
             paramRequestFacade.addHeader("Accept", "application/json");
         }
+    }
+
+    public static RegisterApi getRegisterApi(){
+        return restAdapter.create(RegisterApi.class);
     }
 
 }

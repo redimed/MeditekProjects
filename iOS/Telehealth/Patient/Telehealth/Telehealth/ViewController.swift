@@ -7,27 +7,84 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController,UITextFieldDelegate {
+    
+    @IBOutlet weak var phoneTextField: DesignableTextField!
+    
+    let config = ConfigurationSystem()
+   
+    let colorCustom = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
+    
+    //-------------------------------------------------------------------------------//
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        phoneTextField.delegate = self
+        let api = VerifyPhoneNumberController()
+
+        api.GetDataAPI(UrlAPI.checkPhoneNumber.rawValue){
+            quest in
+           print("aaaa\(quest)")
+            
         }
+            
+                      
+        }
+    override func viewWillAppear(animated: Bool) {
+        print("will\(device)")
+    }
+
+ 
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+     
+        
     }
-
+    //Validate email and change view
     @IBAction func btnCheckPhoneAction(sender: DesignableButton) {
-        performSegueWithIdentifier("phoneRegisterSegue", sender: self)
+        //Check email if email is valid return message
+        if (phoneTextField.text == ""){
+            config.animationTexfield(phoneTextField)
+            config.borderTextFieldValid(phoneTextField, color: colorCustom)
+        }else if validate(phoneTextField.text!) == false {
+            config.animationTexfield(phoneTextField)
+            config.borderTextFieldValid(phoneTextField, color: colorCustom)
+        }else{
+            phoneTextField.layer.borderWidth = 0
+            phoneTextField.text = ""
+            performSegueWithIdentifier("phoneRegisterSegue", sender: self)
+        }
     }
+    
+    // Close keyboard if touch out textfield
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        view.endEditing(true)
+        
+    }
+    
+    
+    //Hide navigation bar
     override func viewWillDisappear(animated: Bool) {
         self.navigationController?.navigationBarHidden = false
     }
-
-      
+    //Regex check valid phone number
+    //EX: (02)12341234 | (03)12341234 | (05)12341234
+      func validate(value: String) -> Bool {
+        
+        let PHONE_REGEX = "^\\(0[1-9]{1}\\)[0-9]{8}$"
+        
+        let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
+        
+        let result =  phoneTest.evaluateWithObject(value)
+        
+        return result
+        
+    }
+    
   
     
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="V2j-tZ-hHw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="V2j-tZ-hHw">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -15,44 +15,29 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Default" translatesAutoresizingMaskIntoConstraints="NO" id="vmS-lM-sVU">
-                                <rect key="frame" x="10" y="28" width="299" height="86"/>
+                                <rect key="frame" x="14" y="28" width="571" height="86"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="86" id="BDF-Di-iWu"/>
-                                    <constraint firstAttribute="width" constant="299" id="CX9-Un-m2C"/>
+                                    <constraint firstAttribute="height" constant="86" id="xlq-M3-3mQ"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="(+61)" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="972-BG-8ES" customClass="DesignableTextField" customModule="Telehealth" customModuleProvider="target">
-                                <rect key="frame" x="2" y="212" width="97" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="9HZ-Ha-bLH"/>
-                                    <constraint firstAttribute="height" constant="30" id="cy9-C0-QBP"/>
-                                </constraints>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your phone number" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="XIX-hF-pti" customClass="DesignableTextField" customModule="Telehealth" customModuleProvider="target">
+                                <rect key="frame" x="68" y="285" width="466" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
-                                        <real key="value" value="37"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="shake"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="curve" value="easeIn"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <real key="value" value="0.5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your phone number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XIX-hF-pti">
-                                <rect key="frame" x="107" y="212" width="201" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
-                            </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Phone-100" translatesAutoresizingMaskIntoConstraints="NO" id="Bll-vg-of6">
-                                <rect key="frame" x="16" y="217" width="21" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="oTe-je-2Gw"/>
-                                    <constraint firstAttribute="width" constant="21" id="pTD-PQ-V3q"/>
-                                </constraints>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="09i-yD-QP0" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
-                                <rect key="frame" x="68" y="268" width="184" height="34"/>
+                                <rect key="frame" x="72" y="341" width="456" height="34"/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.25490196078431371" blue="0.41176470588235292" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Next"/>
                                 <userDefinedRuntimeAttributes>
@@ -67,30 +52,27 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="09i-yD-QP0" firstAttribute="top" secondItem="XIX-hF-pti" secondAttribute="bottom" constant="26" id="E65-bG-loT"/>
-                            <constraint firstItem="09i-yD-QP0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="52" id="EeI-3U-Zhj"/>
-                            <constraint firstItem="972-BG-8ES" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="192" id="GeI-oT-MpD"/>
-                            <constraint firstItem="972-BG-8ES" firstAttribute="leading" secondItem="Bll-vg-of6" secondAttribute="trailing" constant="-35" id="NGN-FQ-cIc"/>
-                            <constraint firstItem="XIX-hF-pti" firstAttribute="leading" secondItem="972-BG-8ES" secondAttribute="trailing" constant="8" symbolic="YES" id="QSN-tQ-Yy5"/>
-                            <constraint firstItem="972-BG-8ES" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-14" id="YQO-FW-ZL0"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="XIX-hF-pti" secondAttribute="trailing" constant="-4" id="Yw1-p2-LD4"/>
-                            <constraint firstItem="vmS-lM-sVU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="a5L-rR-Aay"/>
-                            <constraint firstItem="Bll-vg-of6" firstAttribute="centerY" secondItem="972-BG-8ES" secondAttribute="centerY" id="g5a-u4-uEs"/>
-                            <constraint firstItem="XIX-hF-pti" firstAttribute="top" secondItem="vmS-lM-sVU" secondAttribute="bottom" constant="98" id="keh-qF-oZz"/>
-                            <constraint firstAttribute="trailing" secondItem="vmS-lM-sVU" secondAttribute="trailing" constant="11" id="prB-df-ypR"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="09i-yD-QP0" secondAttribute="trailing" constant="52" id="t1n-vq-tjY"/>
-                            <constraint firstItem="vmS-lM-sVU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="utF-as-QRb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XIX-hF-pti" secondAttribute="trailing" constant="46" id="4Fz-0x-8ze"/>
+                            <constraint firstItem="vmS-lM-sVU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="7Ux-b2-R3A"/>
+                            <constraint firstItem="vmS-lM-sVU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-6" id="C4g-S1-0Fu"/>
+                            <constraint firstItem="09i-yD-QP0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="52" id="EtH-Hr-GPW"/>
+                            <constraint firstItem="09i-yD-QP0" firstAttribute="top" secondItem="XIX-hF-pti" secondAttribute="bottom" constant="26" id="Fea-ra-pBe"/>
+                            <constraint firstItem="vmS-lM-sVU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="JHe-Fa-mRf"/>
+                            <constraint firstItem="XIX-hF-pti" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="48" id="Ngg-xF-KHU"/>
+                            <constraint firstItem="XIX-hF-pti" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="bD6-Dd-ydl"/>
+                            <constraint firstItem="vmS-lM-sVU" firstAttribute="centerX" secondItem="09i-yD-QP0" secondAttribute="centerX" id="sKt-Dj-Jgt"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Aat-2Z-fNP"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <segue destination="JzN-Ol-caw" kind="push" identifier="phoneRegisterSegue" id="3UN-Bl-ZEj"/>
+                        <outlet property="phoneTextField" destination="XIX-hF-pti" id="79M-e1-TIH"/>
+                        <segue destination="JzN-Ol-caw" kind="show" identifier="phoneRegisterSegue" id="3UN-Bl-ZEj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-27" y="327"/>
+            <point key="canvasLocation" x="-50.625" y="345.42253521126759"/>
         </scene>
         <!--Verify Code-->
         <scene sceneID="Ggn-9g-pjU">
@@ -101,69 +83,63 @@
                         <viewControllerLayoutGuide type="bottom" id="NxQ-Ra-vSC"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="skZ-qk-m9A">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Default" translatesAutoresizingMaskIntoConstraints="NO" id="Oxk-Hy-pTf">
-                                <rect key="frame" x="0.0" y="74" width="320" height="77"/>
+                                <rect key="frame" x="140" y="74" width="320" height="77"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="GUb-Oj-Y0h"/>
-                                    <constraint firstAttribute="height" constant="77" id="SDo-Fe-IQb"/>
+                                    <constraint firstAttribute="width" constant="320" id="16t-aJ-Bwf"/>
+                                    <constraint firstAttribute="height" constant="77" id="HKK-c7-JZJ"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fpz-vf-Wca" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
-                                <rect key="frame" x="72" y="217" width="176" height="34"/>
-                                <color key="backgroundColor" red="0.20000000000000001" green="0.25490196079999999" blue="0.41176470590000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Submit"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="VerifyButtonAction:" destination="JzN-Ol-caw" eventType="touchDown" id="6qg-Sm-k3V"/>
-                                    <action selector="btnCheckPhoneAction:" destination="BYZ-38-t0r" eventType="touchDown" id="MBh-hI-X5L"/>
-                                    <segue destination="Xm6-Wi-wMU" kind="modal" id="ybe-ad-ExK"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypA-R8-oAv">
-                                <rect key="frame" x="35" y="159" width="250" height="50"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypA-R8-oAv" customClass="SpringView" customModule="Telehealth" customModuleProvider="target">
+                                <rect key="frame" x="175" y="275" width="250" height="50"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rsk-y1-Jzm">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rsk-y1-Jzm" customClass="DesignableTextField" customModule="Telehealth" customModuleProvider="target">
                                         <rect key="frame" x="8" y="10" width="50" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="cFJ-dN-K9f"/>
                                             <constraint firstAttribute="width" constant="50" id="tRR-nI-4Do"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                        <connections>
+                                            <action selector="textFieldAction1:" destination="JzN-Ol-caw" eventType="editingChanged" id="o0o-Ir-1rE"/>
+                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ec1-o5-3hq">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ec1-o5-3hq" customClass="DesignableTextField" customModule="Telehealth" customModuleProvider="target">
                                         <rect key="frame" x="66" y="10" width="50" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Hhg-NB-Z6H"/>
                                             <constraint firstAttribute="width" constant="50" id="e83-D8-NFj"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                        <connections>
+                                            <action selector="textFieldAction2:" destination="JzN-Ol-caw" eventType="editingChanged" id="YAm-sn-42V"/>
+                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IlB-uS-Io2">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IlB-uS-Io2" customClass="DesignableTextField" customModule="Telehealth" customModuleProvider="target">
                                         <rect key="frame" x="124" y="10" width="50" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Xas-PG-32f"/>
                                             <constraint firstAttribute="width" constant="50" id="yDw-x4-R5x"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                        <connections>
+                                            <action selector="textFieldAction3:" destination="JzN-Ol-caw" eventType="editingChanged" id="hjs-Mi-zOE"/>
+                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8MZ-m9-Q89">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8MZ-m9-Q89" customClass="DesignableTextField" customModule="Telehealth" customModuleProvider="target">
                                         <rect key="frame" x="182" y="10" width="50" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="4sv-1c-hqQ"/>
                                             <constraint firstAttribute="height" constant="30" id="Y3K-I1-Bf4"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                                     </textField>
                                 </subviews>
                                 <constraints>
@@ -180,31 +156,53 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you do not recive your access code within 60 second, Click here" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Z7R-HI-T3L">
-                                <rect key="frame" x="7" y="259" width="299" height="40"/>
+                                <rect key="frame" x="150" y="375" width="299" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="2bP-kl-1mt"/>
+                                    <constraint firstAttribute="width" constant="299" id="uTu-2d-dbO"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fpz-vf-Wca" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
+                                <rect key="frame" x="72" y="333" width="456" height="34"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.25490196079999999" blue="0.41176470590000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Submit"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="VerifyButtonAction:" destination="JzN-Ol-caw" eventType="touchDown" id="6qg-Sm-k3V"/>
+                                    <action selector="btnCheckPhoneAction:" destination="BYZ-38-t0r" eventType="touchDown" id="MBh-hI-X5L"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Z7R-HI-T3L" firstAttribute="top" secondItem="fpz-vf-Wca" secondAttribute="bottom" constant="8" id="4SW-2e-M8k"/>
-                            <constraint firstAttribute="trailing" secondItem="Oxk-Hy-pTf" secondAttribute="trailing" id="KlY-fd-Xbb"/>
+                            <constraint firstItem="Oxk-Hy-pTf" firstAttribute="top" secondItem="KRc-x2-iZk" secondAttribute="bottom" constant="10" id="9EN-bS-NoA"/>
                             <constraint firstItem="fpz-vf-Wca" firstAttribute="leading" secondItem="skZ-qk-m9A" secondAttribute="leading" constant="72" id="Kxg-C0-6sk"/>
-                            <constraint firstItem="ypA-R8-oAv" firstAttribute="centerX" secondItem="skZ-qk-m9A" secondAttribute="centerX" id="OLP-xM-x2l"/>
-                            <constraint firstItem="Oxk-Hy-pTf" firstAttribute="leading" secondItem="skZ-qk-m9A" secondAttribute="leading" id="SPV-zv-3db"/>
-                            <constraint firstItem="Z7R-HI-T3L" firstAttribute="leading" secondItem="skZ-qk-m9A" secondAttribute="leading" constant="7" id="VDD-e2-zEK"/>
+                            <constraint firstItem="ypA-R8-oAv" firstAttribute="centerY" secondItem="skZ-qk-m9A" secondAttribute="centerY" id="PYY-B5-v5c"/>
+                            <constraint firstItem="Oxk-Hy-pTf" firstAttribute="centerX" secondItem="skZ-qk-m9A" secondAttribute="centerX" id="Qaq-L0-uHC"/>
                             <constraint firstItem="fpz-vf-Wca" firstAttribute="top" secondItem="ypA-R8-oAv" secondAttribute="bottom" constant="8" id="YFC-A6-0Gi"/>
-                            <constraint firstAttribute="trailing" secondItem="Z7R-HI-T3L" secondAttribute="trailing" constant="14" id="ZSi-fh-WQZ"/>
-                            <constraint firstItem="ypA-R8-oAv" firstAttribute="top" secondItem="Oxk-Hy-pTf" secondAttribute="bottom" constant="8" id="bi6-tp-cUB"/>
                             <constraint firstAttribute="trailing" secondItem="fpz-vf-Wca" secondAttribute="trailing" constant="72" id="eEv-aL-K1D"/>
-                            <constraint firstItem="Oxk-Hy-pTf" firstAttribute="top" secondItem="KRc-x2-iZk" secondAttribute="bottom" constant="10" id="ov3-cp-txb"/>
+                            <constraint firstItem="Z7R-HI-T3L" firstAttribute="centerX" secondItem="skZ-qk-m9A" secondAttribute="centerX" id="eMB-Ak-3bZ"/>
+                            <constraint firstItem="Z7R-HI-T3L" firstAttribute="top" secondItem="fpz-vf-Wca" secondAttribute="bottom" constant="8" id="gR3-3i-yx8"/>
+                            <constraint firstItem="ypA-R8-oAv" firstAttribute="centerX" secondItem="skZ-qk-m9A" secondAttribute="centerX" id="uDc-Ja-k5p"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Verify Code" id="n3a-fx-LW5"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="dC6-GC-MvJ" id="0XT-YB-NcJ"/>
+                        <outlet property="textFieldVerifyCode1" destination="Rsk-y1-Jzm" id="Vdh-sp-jb0"/>
+                        <outlet property="textFieldVerifyCode2" destination="Ec1-o5-3hq" id="Tra-ju-U8q"/>
+                        <outlet property="textFieldVerifyCode3" destination="IlB-uS-Io2" id="1HZ-99-hYy"/>
+                        <outlet property="textFieldVerifyCode4" destination="8MZ-m9-Q89" id="Plf-sh-UJu"/>
+                        <outlet property="verifyView" destination="ypA-R8-oAv" id="f7U-zE-kiS"/>
+                        <segue destination="NY9-hg-Fsp" kind="modal" identifier="VerifyToHomeSegue" id="j4s-Wh-U0Q"/>
                     </connections>
                 </viewController>
                 <searchDisplayController id="dC6-GC-MvJ">
@@ -217,7 +215,7 @@
                 </searchDisplayController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nHD-hL-Nm4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="320" y="327"/>
+            <point key="canvasLocation" x="600" y="345.42253521126759"/>
         </scene>
         <!--Information View Controller-->
         <scene sceneID="KHh-Dn-bIP">
@@ -228,11 +226,11 @@
                         <viewControllerLayoutGuide type="bottom" id="3fx-Tl-qtg"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="hcf-sf-FmQ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MiX-Gg-NGd">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="65"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="65" id="118-5w-wh4"/>
                                 </constraints>
@@ -245,7 +243,7 @@
                                 </items>
                             </navigationBar>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="07X-jS-P2y" customClass="TPKeyboardAvoidingScrollView">
-                                <rect key="frame" x="-4" y="65" width="330" height="503"/>
+                                <rect key="frame" x="0.0" y="65" width="602" height="535"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iVt-br-gMy">
                                         <rect key="frame" x="8" y="50" width="50" height="20.5"/>
@@ -272,22 +270,22 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zuD-IJ-yFN">
-                                        <rect key="frame" x="127" y="96" width="195" height="30"/>
+                                        <rect key="frame" x="123" y="96" width="475" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wrG-TB-bK0">
-                                        <rect key="frame" x="123" y="46" width="199" height="30"/>
+                                        <rect key="frame" x="123" y="46" width="471" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fNn-Td-aQI">
-                                        <rect key="frame" x="127" y="145" width="195" height="30"/>
+                                        <rect key="frame" x="127" y="145" width="467" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JqG-sX-b1I">
-                                        <rect key="frame" x="127" y="193" width="195" height="30"/>
+                                        <rect key="frame" x="127" y="193" width="467" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -309,7 +307,7 @@
                                         </segments>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kog-jZ-WtM" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
-                                        <rect key="frame" x="4" y="308" width="320" height="34"/>
+                                        <rect key="frame" x="30" y="308" width="540" height="34"/>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.25490196079999999" blue="0.41176470590000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Make appointment"/>
                                         <userDefinedRuntimeAttributes>
@@ -317,11 +315,6 @@
                                                 <real key="value" value="8"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="VerifyButtonAction:" destination="JzN-Ol-caw" eventType="touchDown" id="jgu-S3-hmI"/>
-                                            <action selector="btnCheckPhoneAction:" destination="BYZ-38-t0r" eventType="touchDown" id="7UB-fO-W40"/>
-                                            <segue destination="RXR-kO-U4m" kind="modal" id="Eea-yJ-7zb"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -336,7 +329,7 @@
                                     <constraint firstItem="W0u-SG-Ost" firstAttribute="top" secondItem="sZ4-5g-jlZ" secondAttribute="bottom" constant="30" id="Mh3-LK-IDs"/>
                                     <constraint firstItem="sZ4-5g-jlZ" firstAttribute="top" secondItem="5BD-sZ-ebV" secondAttribute="bottom" constant="28" id="N7V-Z5-Z8E"/>
                                     <constraint firstItem="fNn-Td-aQI" firstAttribute="leading" secondItem="5BD-sZ-ebV" secondAttribute="trailing" constant="18" id="NE1-wY-YCR"/>
-                                    <constraint firstItem="zuD-IJ-yFN" firstAttribute="leading" secondItem="hPn-bn-3cp" secondAttribute="trailing" constant="8" id="ObW-YU-bvG"/>
+                                    <constraint firstItem="zuD-IJ-yFN" firstAttribute="leading" secondItem="hPn-bn-3cp" secondAttribute="trailing" constant="4" id="ObW-YU-bvG"/>
                                     <constraint firstItem="zuD-IJ-yFN" firstAttribute="top" secondItem="wrG-TB-bK0" secondAttribute="bottom" constant="20" id="OdC-eR-wtO"/>
                                     <constraint firstAttribute="trailing" secondItem="iVt-br-gMy" secondAttribute="trailing" constant="270" id="QUY-gK-6CV"/>
                                     <constraint firstAttribute="bottom" secondItem="iVt-br-gMy" secondAttribute="bottom" constant="432" id="RSi-HX-YMP"/>
@@ -353,16 +346,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="07X-jS-P2y" secondAttribute="trailing" constant="-22" id="2Mp-Ia-dme"/>
-                            <constraint firstItem="Kog-jZ-WtM" firstAttribute="leading" secondItem="hcf-sf-FmQ" secondAttribute="leadingMargin" constant="-16" id="ANg-GT-nqW"/>
+                            <constraint firstItem="Kog-jZ-WtM" firstAttribute="leading" secondItem="hcf-sf-FmQ" secondAttribute="leadingMargin" constant="10" id="ANg-GT-nqW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fNn-Td-aQI" secondAttribute="trailing" constant="-14" id="BPB-fP-4kS"/>
                             <constraint firstItem="07X-jS-P2y" firstAttribute="bottom" secondItem="3fx-Tl-qtg" secondAttribute="top" id="EtM-GW-brb"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wrG-TB-bK0" secondAttribute="trailing" constant="-14" id="FxA-Gu-zuQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JqG-sX-b1I" secondAttribute="trailing" constant="-14" id="L9A-U6-HyC"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="zuD-IJ-yFN" secondAttribute="trailing" constant="-14" id="Odp-KO-MGj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zuD-IJ-yFN" secondAttribute="trailing" constant="-18" id="Odp-KO-MGj"/>
                             <constraint firstItem="07X-jS-P2y" firstAttribute="leading" secondItem="hcf-sf-FmQ" secondAttribute="leadingMargin" constant="-20" id="PTh-Ct-qu4"/>
                             <constraint firstItem="MiX-Gg-NGd" firstAttribute="top" secondItem="hcf-sf-FmQ" secondAttribute="top" id="Xsd-cc-1Ss"/>
                             <constraint firstAttribute="trailing" secondItem="MiX-Gg-NGd" secondAttribute="trailing" id="dLw-Cm-Mhx"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Kog-jZ-WtM" secondAttribute="trailing" constant="-16" id="pNe-BM-9Xc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Kog-jZ-WtM" secondAttribute="trailing" constant="10" id="pNe-BM-9Xc"/>
                             <constraint firstItem="MiX-Gg-NGd" firstAttribute="leading" secondItem="hcf-sf-FmQ" secondAttribute="leading" id="ptA-cs-SQH"/>
                             <constraint firstItem="wrG-TB-bK0" firstAttribute="leading" secondItem="hcf-sf-FmQ" secondAttribute="leadingMargin" constant="103" id="snj-sc-kZq"/>
                             <constraint firstItem="07X-jS-P2y" firstAttribute="top" secondItem="MiX-Gg-NGd" secondAttribute="bottom" id="wux-BS-2kl"/>
@@ -372,23 +365,27 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJy-PC-ANB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="674" y="327"/>
+            <point key="canvasLocation" x="895" y="-329"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="t1P-Eg-F1Y">
+        <!--Pop Over View Controller-->
+        <scene sceneID="9hm-5o-PSf">
             <objects>
-                <navigationController id="RXR-kO-U4m" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="919-I3-r9m">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="jnA-7d-oUT" kind="relationship" relationship="rootViewController" id="vDs-nG-jHv"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="P1S-jK-QVD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="d2T-Ne-BXd" customClass="PopOverViewController" customModule="Telehealth" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zcv-7c-YrL"/>
+                        <viewControllerLayoutGuide type="bottom" id="MEi-99-nrc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PWj-hq-aD3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ukl-ZY-X1X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1021" y="327"/>
+            <point key="canvasLocation" x="1782" y="-396"/>
         </scene>
         <!--Home-->
         <scene sceneID="YUG-cu-cy5">
@@ -399,71 +396,38 @@
                         <viewControllerLayoutGuide type="bottom" id="R9d-Dz-HF3"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ygn-aj-Efw">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Default" translatesAutoresizingMaskIntoConstraints="NO" id="opT-fk-Ljd">
-                                <rect key="frame" x="11" y="74" width="299" height="86"/>
+                                <rect key="frame" x="151" y="74" width="299" height="86"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="86" id="XUw-wN-FcA"/>
-                                    <constraint firstAttribute="width" constant="299" id="aDx-39-5Fi"/>
+                                    <constraint firstAttribute="width" constant="299" id="1bE-u3-wCS"/>
+                                    <constraint firstAttribute="height" constant="86" id="XwZ-bk-Fkv"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Commercial Health Services" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="wwS-AO-9BY">
-                                <rect key="frame" x="52" y="168" width="216" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="216" id="SbA-ed-QnP"/>
-                                    <constraint firstAttribute="height" constant="21" id="ZIo-0u-Rca"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <color key="textColor" red="0.71372549019607845" green="0.20000000000000001" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Telehealth Services" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aNF-PD-PPm">
-                                <rect key="frame" x="52" y="197" width="255" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="255" id="JMN-Wp-liB"/>
-                                    <constraint firstAttribute="height" constant="21" id="Uxy-Nh-3DJ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <color key="textColor" red="0.71372549019607845" green="0.20000000000000001" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vLj-71-48u">
-                                <rect key="frame" x="9" y="231" width="299" height="67"/>
-                                <string key="text">Our Telehealth service forms one part of an integrated Injury Management system allowing instant access to a Doctor via IPad from remote locations 24/7.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="opT-fk-Ljd" firstAttribute="top" secondItem="ptP-dq-TjH" secondAttribute="bottom" constant="10" id="5Lm-oe-dAq"/>
-                            <constraint firstItem="opT-fk-Ljd" firstAttribute="top" secondItem="ptP-dq-TjH" secondAttribute="bottom" constant="10" id="5XN-ud-oTx"/>
-                            <constraint firstAttribute="trailing" secondItem="opT-fk-Ljd" secondAttribute="trailing" constant="10" id="6S0-Lj-eNv"/>
-                            <constraint firstItem="vLj-71-48u" firstAttribute="top" secondItem="aNF-PD-PPm" secondAttribute="bottom" constant="13" id="EMt-pm-ZeR"/>
-                            <constraint firstItem="opT-fk-Ljd" firstAttribute="leading" secondItem="Ygn-aj-Efw" secondAttribute="leading" constant="11" id="M4Y-4M-wkZ"/>
-                            <constraint firstItem="wwS-AO-9BY" firstAttribute="top" secondItem="opT-fk-Ljd" secondAttribute="bottom" constant="8" id="bTz-pe-b9u"/>
-                            <constraint firstItem="vLj-71-48u" firstAttribute="leading" secondItem="Ygn-aj-Efw" secondAttribute="leading" constant="9" id="biR-wj-I2i"/>
-                            <constraint firstAttribute="trailing" secondItem="vLj-71-48u" secondAttribute="trailing" constant="12" id="cat-we-9hD"/>
-                            <constraint firstItem="wwS-AO-9BY" firstAttribute="centerX" secondItem="Ygn-aj-Efw" secondAttribute="centerX" id="dJD-6Z-rKf"/>
-                            <constraint firstItem="aNF-PD-PPm" firstAttribute="top" secondItem="wwS-AO-9BY" secondAttribute="bottom" constant="8" id="jxj-aT-cY0"/>
-                            <constraint firstItem="aNF-PD-PPm" firstAttribute="leading" secondItem="wwS-AO-9BY" secondAttribute="leading" id="lnH-o9-LK4"/>
-                            <constraint firstAttribute="trailing" secondItem="opT-fk-Ljd" secondAttribute="trailing" constant="10" id="rOx-gI-HuF"/>
+                            <constraint firstItem="opT-fk-Ljd" firstAttribute="centerX" secondItem="Ygn-aj-Efw" secondAttribute="centerX" id="4bX-1R-cKp"/>
+                            <constraint firstItem="opT-fk-Ljd" firstAttribute="top" secondItem="ptP-dq-TjH" secondAttribute="bottom" constant="10" id="bU3-oP-TuD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="joc-Ax-BEZ">
-                        <barButtonItem key="rightBarButtonItem" title="Call" id="wL8-w2-d9c">
+                        <barButtonItem key="leftBarButtonItem" title="Options" id="7UW-Zl-Fvd">
                             <connections>
-                                <segue destination="U57-eM-tRy" kind="modal" id="Tu2-DY-iLm"/>
+                                <action selector="OptionsAction:" destination="jnA-7d-oUT" id="wjB-Jb-cE2"/>
+                                <segue destination="d2T-Ne-BXd" kind="popoverPresentation" popoverAnchorBarButtonItem="7UW-Zl-Fvd" id="Y22-ws-IWq">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Call" id="wL8-w2-d9c"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Aj-ws-ccg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1337" y="340"/>
+            <point key="canvasLocation" x="2005" y="345"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="8DT-0E-SVp">
@@ -474,14 +438,14 @@
                         <viewControllerLayoutGuide type="bottom" id="LRv-so-37j"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="otY-eP-jDO">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2c1-fF-2hS">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="A1a Copy 2" translatesAutoresizingMaskIntoConstraints="NO" id="a7O-i4-9Z0">
-                                        <rect key="frame" x="40" y="169" width="240" height="230"/>
+                                        <rect key="frame" x="180" y="185" width="240" height="230"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="230" id="1kA-kl-jan"/>
                                             <constraint firstAttribute="width" constant="240" id="5lR-y6-uMY"/>
@@ -507,7 +471,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ofU-sw-gSv" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
-                                        <rect key="frame" x="5" y="515" width="150" height="37"/>
+                                        <rect key="frame" x="5" y="547" width="150" height="37"/>
                                         <color key="backgroundColor" red="0.71372549019607845" green="0.20000000000000001" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36.5" id="WdJ-6X-Zuj"/>
@@ -531,7 +495,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aG8-7x-fOm" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
-                                        <rect key="frame" x="165" y="515" width="150" height="38"/>
+                                        <rect key="frame" x="445" y="547" width="150" height="38"/>
                                         <color key="backgroundColor" red="0.23529411764705882" green="0.56470588235294117" blue="0.30196078431372547" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="37.5" id="1c0-me-8Uy"/>
@@ -550,19 +514,16 @@
                                                 <real key="value" value="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <segue destination="Bjr-7W-fq1" kind="modal" id="qvU-BU-gVC"/>
-                                        </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="End Call-50" translatesAutoresizingMaskIntoConstraints="NO" id="9mF-pd-mzJ">
-                                        <rect key="frame" x="23" y="523" width="29" height="21"/>
+                                        <rect key="frame" x="23" y="555" width="29" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="J9a-4g-RKM"/>
                                             <constraint firstAttribute="width" constant="29" id="nWf-3o-g59"/>
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Phone-50" translatesAutoresizingMaskIntoConstraints="NO" id="jOh-7b-a7N">
-                                        <rect key="frame" x="189" y="522" width="22" height="22"/>
+                                        <rect key="frame" x="469" y="554" width="22" height="22"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.25490196078431371" blue="0.41176470588235292" alpha="1" colorSpace="calibratedRGB"/>
@@ -596,7 +557,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vZS-8y-Uli" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="5hj-K2-G9A" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1685" y="340"/>
+            <point key="canvasLocation" x="2719" y="329"/>
         </scene>
         <!--Screen Calling View Controller-->
         <scene sceneID="bKK-we-3Nk">
@@ -607,14 +568,14 @@
                         <viewControllerLayoutGuide type="bottom" id="JDv-eX-tV9"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Oja-4n-Fql">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vyc-eA-fZV">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5G9-Yz-hOo" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
-                                <rect key="frame" x="125" y="488" width="70" height="70"/>
+                                <rect key="frame" x="265" y="520" width="70" height="70"/>
                                 <color key="backgroundColor" red="0.83529411764705885" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="Zds-Yo-0mv"/>
@@ -633,7 +594,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRH-hO-Ugj" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
-                                <rect key="frame" x="134" y="426" width="52" height="52"/>
+                                <rect key="frame" x="274" y="458" width="52" height="52"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="eQR-mT-Xs3"/>
                                     <constraint firstAttribute="width" constant="52" id="fWy-HQ-tC3"/>
@@ -649,7 +610,7 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ezf-As-Lc1" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
-                                <rect key="frame" x="248" y="496" width="52" height="52"/>
+                                <rect key="frame" x="388" y="528" width="52" height="52"/>
                                 <state key="normal" image="Image File-32" backgroundImage="Oval 98">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -663,7 +624,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HqE-dm-SQU" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
-                                <rect key="frame" x="20" y="496" width="52" height="52"/>
+                                <rect key="frame" x="160" y="528" width="52" height="52"/>
                                 <state key="normal" image="Mute-50" backgroundImage="Oval 98">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -690,13 +651,10 @@
                             <constraint firstItem="Vyc-eA-fZV" firstAttribute="leading" secondItem="Oja-4n-Fql" secondAttribute="leading" id="yNc-lV-dr4"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <segue destination="RXR-kO-U4m" kind="modal" identifier="EndCallSegue" id="Q52-4R-NdW"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tcz-p4-dxA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2087" y="345"/>
+            <point key="canvasLocation" x="3426" y="345"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="25O-6w-7T5">
@@ -718,7 +676,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v1h-hG-574" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-378" y="327"/>
+            <point key="canvasLocation" x="-708.75" y="345.42253521126759"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="cyk-ZL-LTT">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NY9-hg-Fsp" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="t3Y-I1-6i3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="jnA-7d-oUT" kind="relationship" relationship="rootViewController" id="MAK-Ty-EKi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n2P-z6-tGB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1268" y="340"/>
         </scene>
     </scenes>
     <resources>
@@ -729,10 +705,6 @@
         <image name="Mute-50" width="25" height="25"/>
         <image name="Oval 98" width="52" height="52"/>
         <image name="Pause-50" width="19" height="21"/>
-        <image name="Phone-100" width="100" height="100"/>
         <image name="Phone-50" width="22" height="22"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="Eea-yJ-7zb"/>
-    </inferredMetricsTieBreakers>
 </document>

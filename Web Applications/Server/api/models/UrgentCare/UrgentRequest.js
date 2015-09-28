@@ -10,67 +10,74 @@ module.exports = {
 
         UID: {
             type: 'string',
-            columnName: 'UID'
+            columnName: 'UID',
+            required: true
+        },
+
+        userAccountID: {
+            type: 'integer',
+            columnName: 'UserAccountID'
         },
 
         firstName: {
             type: 'string',
-            columnName: 'FirstName'
+            columnName: 'FirstName',
+            required: true,
+            maxLength: 50
         },
 
         lastName: {
             type: 'string',
-            columnName: 'LastName'
+            columnName: 'LastName',
+            required: true,
+            maxLength: 255
         },
 
         phoneNumber: {
             type: 'string',
-            columnName: 'PhoneNumber'
+            columnName: 'PhoneNumber',
+            required: true,
+            maxLength: 20
         },
 
         gender: {
             type: 'string',
-            columnName: 'Gender' 
+            columnName: 'Gender',
+            maxLength: 100
         },
 
         email: {
             type: 'string',
-            columnName: 'Email'
+            columnName: 'Email',
+            maxLength: 255
         },
 
         DOB: {
             type: 'datetime',
             columnName: 'DOB'
         },
-
-        address1: {
-            type: 'datetime',
-            columnName: 'Address1'
-        },
-
-        address2: {
-            type: 'datetime',
-            columnName: 'Address2'
-        },
-
         suburb: {
             type: 'string',
-            columnName: 'Suburb'
-        },
-
-        postCode: {
-            type: 'string',
-            columnName: 'PostCode'
-        },
-
-        state: {
-            type: 'string',
-            columnName: 'State'
+            columnName: 'Suburb',
+            maxLength: 100
         },
 
         IP: {
             type: 'string',
-            columnName: 'IP'
+            columnName: 'IP',
+            maxLength: 20
+        },
+
+        GPReferal: {
+            type: 'string',
+            columnName: 'GPReferal',
+            maxLength: 1
+        },
+
+        serviceType: {
+            type: 'string',
+            columnName: 'ServiceType',
+            maxLength: 3
         },
 
         requestDate: {
@@ -83,9 +90,9 @@ module.exports = {
             columnName: 'Tried'
         },
 
-        confirmed: {
-            type: 'integer',
-            columnName: 'Confirmed'
+        status: {
+            type: 'string',
+            columnName: 'Status'
         },
 
         interval: {
@@ -96,6 +103,21 @@ module.exports = {
         further: {
             type: 'string',
             columnName: 'Further'
+        },
+
+        urgentRequestType: {
+            type: 'string',
+            columnName: 'UrgentRequestType'
+        },
+
+        confirmUserName: {
+            type: 'string',
+            columnName: 'ConfirmUserName'
+        },
+
+        enable: {
+            type: 'string',
+            columnName: 'Enable'
         },
 
         description: {
@@ -123,19 +145,19 @@ module.exports = {
             columnName: 'ModifiedBy'
         },
 
-        MessageQueues:{
+        MessageQueues: {
             collection: 'MessageQueue',
             via: 'urgentRequestID'
         }
     },
 
     beforeCreate: function(values, callback) {
-            values.creationDate = new Date;
-            callback();
-        },
+        values.creationDate = new Date;
+        callback();
+    },
 
-    beforeUpdate: function(values, callback){
-            values.modifiedDate = new Date;
-            callback();
-        }
+    beforeUpdate: function(values, callback) {
+        values.modifiedDate = new Date;
+        callback();
+    }
 };

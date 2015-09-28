@@ -10,14 +10,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.redimed.telehealth.patient.models.UserAccount;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Bind(R.id.txtHomeTitle) TextView txtHomeTitle;
-    @Bind(R.id.patientDrawer) DrawerLayout patientDrawer;
-    ActionBarDrawerToggle actionDrawerToggle;
+//    @Bind(R.id.patientDrawer) DrawerLayout patientDrawer;
+//    ActionBarDrawerToggle actionDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,26 +29,26 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         txtHomeTitle.setOnClickListener(this);
 
-        actionDrawerToggle = new ActionBarDrawerToggle(this, patientDrawer, null, R.string.drawer_open, R.string.drawer_close){
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, slideOffset);
-                patientDrawer.bringChildToFront(drawerView);
-                drawerView.requestLayout();
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
-        };
-        patientDrawer.setDrawerListener(actionDrawerToggle);
-        actionDrawerToggle.syncState();
+//        actionDrawerToggle = new ActionBarDrawerToggle(this, patientDrawer, null, R.string.drawer_open, R.string.drawer_close){
+//            @Override
+//            public void onDrawerSlide(View drawerView, float slideOffset) {
+//                super.onDrawerSlide(drawerView, slideOffset);
+//                patientDrawer.bringChildToFront(drawerView);
+//                drawerView.requestLayout();
+//            }
+//
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                super.onDrawerOpened(drawerView);
+//            }
+//
+//            @Override
+//            public void onDrawerClosed(View drawerView) {
+//                super.onDrawerClosed(drawerView);
+//            }
+//        };
+//        patientDrawer.setDrawerListener(actionDrawerToggle);
+//        actionDrawerToggle.syncState();
     }
 
     @Override

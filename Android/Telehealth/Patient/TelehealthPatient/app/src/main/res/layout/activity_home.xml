@@ -12,24 +12,24 @@
         android:layout_marginTop="10dp"
         android:src="@drawable/logo_redimed"/>
 
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/patientDrawer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<android.support.v4.widget.DrawerLayout-->
+        <!--android:id="@+id/patientDrawer"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
-        <LinearLayout
-            android:id="@+id/leftLayout"
-            android:layout_width="280dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left|start">
+        <!--<LinearLayout-->
+            <!--android:id="@+id/leftLayout"-->
+            <!--android:layout_width="280dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="left|start">-->
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/rvImageCategories">
-            </android.support.v7.widget.RecyclerView>
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:id="@+id/rvImageCategories">-->
+            <!--</android.support.v7.widget.RecyclerView>-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
 
         <RelativeLayout
@@ -55,5 +55,5 @@
                 android:background="@drawable/logo_bg_redimed"
                 android:layout_below="@+id/txtHomeTitle"/>
         </RelativeLayout>
-    </android.support.v4.widget.DrawerLayout>
+    <!--</android.support.v4.widget.DrawerLayout>-->
 </RelativeLayout>

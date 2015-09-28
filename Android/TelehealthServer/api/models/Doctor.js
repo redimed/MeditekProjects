@@ -10,49 +10,41 @@ module.exports = {
             type: Sequelize.STRING,
             field: 'UID'
         },
-        userName: {
-            type: Sequelize.STRING,
-            field: 'UserName'
+        siteID: {
+            type: Sequelize.BIGINT(20),
+            field: 'SiteID'
+        },
+        userAccountID: {
+            type: Sequelize.INTEGER,
+            field: 'UserAccountID'
+        },
+        firstName: {
+            type: Sequelize.STRING(50),
+            field: 'FirstName'
+        },
+        middleName: {
+            type: Sequelize.STRING(100),
+            field: 'MiddleName'
+        },
+        lastName: {
+            type: Sequelize.STRING(50),
+            field: 'LastName'
+        },
+        dob: {
+            type: Sequelize.DATE,
+            field: 'Dob'
         },
         email: {
             type: Sequelize.STRING,
             field: 'Email'
         },
-        phoneNumber: {
-            type: Sequelize.STRING,
-            field: 'PhoneNumber'
-        },
-        password: {
-            type: Sequelize.STRING,
-            field: 'Password'
-        },
-        passwordSalt: {
-            type: Sequelize.STRING,
-            field: 'PasswordSalt'
-        },
-        passwordHashAlgorithm: {
-            type: Sequelize.STRING,
-            field: 'PasswordHashAlgorithm'
-        },
-        activated: {
-            type: Sequelize.STRING,
-            field: 'Activated'
+        phone: {
+            type: Sequelize.STRING(12),
+            field: 'Phone'
         },
         enable: {
-            type: Sequelize.STRING,
+            type: Sequelize.STRING(1),
             field: 'Enable'
-        },
-        userType: {
-            type: Sequelize.STRING,
-            field: 'UserType'
-        },
-        token: {
-            type: Sequelize.STRING,
-            field: 'Token'
-        },
-        tokenExpired: {
-            type: Sequelize.STRING,
-            field: 'TokenExpired'
         },
         creationDate: {
             type: Sequelize.DATE,
@@ -72,15 +64,12 @@ module.exports = {
         }
     },
     associations: function() {
-        UserAccount.hasOne(TelehealthUser, {
-            foreignKey: 'userAccountID'
-        });
-        UserAccount.hasOne(Doctor, {
+        Doctor.belongsTo(UserAccount, {
             foreignKey: 'userAccountID'
         });
     },
     options: {
-        tableName: 'UserAccount',
+        tableName: 'Doctor',
         timestamps: true,
         createdAt: 'creationDate',
         updatedAt: 'modifiedDate',

@@ -19,6 +19,14 @@ module.exports.routes = {
     //================Telehealth Socket Routes==========================
     '/telehealth/socket/joinRoom': {
         controller: 'SocketController',
-        action: 'JoinRoom'
+        action: 'JoinConferenceRoom'
+    },
+    '/telehealth/socket/messageTransfer': {
+        controller: 'SocketController',
+        action: 'MessageTransfer'
+    },
+    'GET /telehealth/socket/generateSession': {
+        controller: 'SocketController',
+        action: 'GenerateConferenceSession'
     }
 };

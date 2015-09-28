@@ -9,27 +9,37 @@ module.exports = {
 		},
 		UID: {
 			type: 'string',
-			columnName: 'UID'
+			columnName: 'UID',
+			required: true,
+			maxLength: 255
 		},
 		urgentRequestID: {
 			type: 'integer',
-			columnName: 'UrgentRequestID'
+			columnName: 'UrgentRequestID',
+			required: true
 		},
 		source: {
 			type: 'string',
-			columnName: 'Source'
+			columnName: 'Source',
+			required: true,
+			maxLength: 100
 		},
 		sourceID: {
 			type: 'string',
-			columnName: 'SourceID'
+			columnName: 'SourceID',
+			required: true
 		},
 		job: {
 			type: 'string',
-			columnName: 'Job'
+			columnName: 'Job',
+			maxLength: 100,
 		},
 		status: {
 			type: 'string',
 			columnName: 'Status',
+			required: true,
+			maxLength: 100
+
 		},
 		startTime: {
 			type: 'datetime',

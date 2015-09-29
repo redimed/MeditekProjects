@@ -1,16 +1,11 @@
 package com.redimed.telehealth.patient;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
@@ -31,42 +26,89 @@ import butterknife.ButterKnife;
 
 public class VoiceActivity extends AppCompatActivity implements View.OnClickListener, Session.SessionListener, PublisherKit.PublisherListener, SubscriberKit.VideoListener {
 
-    Intent i;
-
-    private static final int RESULT_LOAD_IMAGES = 1313;
-    private static final int CAMERA_PIC_REQUEST = 1337;
-    private static final String LOGTAG = "OpenTok";
-//    @Bind(R.id.btnShareImage) Button btnShareImage;
-//    @Bind(R.id.btnDeclineVoice) Button btnDeclineVoice;
-//    @Bind(R.id.btnMute) Button btnMute;
-//    @Bind(R.id.btnHold) Button btnHold;
-    @Bind(R.id.publisherView) RelativeLayout publisherView;
-    @Bind(R.id.subscriberView) RelativeLayout subscriberView;
-    @Bind(R.id.loadingSpinner) ProgressBar loadingBar;
-    Boolean listenBtnHold = true;
-    Boolean listenBtnMute = true;
-
+    private Intent i;
     private Session sessionOpenTok;
     private Publisher publisher;
     private Subscriber subscriber;
     private ArrayList<Stream> streamOpenTok;
+    private static final String LOGTAG = "OpenTok";
+
+    @Bind(R.id.fabHold) FloatingActionButton fabHold;
+    @Bind(R.id.fabEndCall) FloatingActionButton fabEndCall;
+    @Bind(R.id.fabMute) FloatingActionButton fabMute;
+
+    @Bind(R.id.publisherView) RelativeLayout publisherView;
+    @Bind(R.id.subscriberView) RelativeLayout subscriberView;
+    @Bind(R.id.loadingSpinner) ProgressBar loadingBar;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voice);
-
         ButterKnife.bind(this);
 
-//        btnShareImage.setOnClickListener(this);
-//        btnDeclineVoice.setOnClickListener(this);
-//        btnMute.setOnClickListener(this);
-//        btnHold.setOnClickListener(this);
-
         streamOpenTok = new ArrayList<Stream>();
+        fabEndCall.setOnClickListener(this);
+        fabHold.setOnClickListener(this);
+        fabMute.setOnClickListener(this);
+
         SessionConnect();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (sessionOpenTok != null){
+            EndCommunication();
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.fabHold:
+                HoldCommunication();
+                break;
+            case R.id.fabMute:
+                MuteCommunication();
+                break;
+            case R.id.fabEndCall:
+                EndCommunication();
+                break;
+        }
+    }
+
+    //Click button hold on a call
+    private void HoldCommunication() {
+        publisher.setPublishVideo(!publisher.getPublishVideo());
+        if (publisher.getPublishVideo() == false){
+            publisher.setPublishAudio(false);
+            subscriber.setSubscribeToAudio(false);
+        }else {
+            publisher.setPublishAudio(true);
+            publisher.setPublishAudio(true);
+        }
+    }
+
+    //Click button mute sound when call
+    private void MuteCommunication() {
+        publisher.setPublishAudio(!publisher.getPublishAudio());
+        fabMute.setImageResource(publisher.getPublishAudio() ? R.drawable.icon_unmute : R.drawable.icon_mute);
+    }
+
+    //Stop appointment
+    private void EndCommunication() {
+        publisher = null;
+        subscriber = null;
+        streamOpenTok.clear();
+        sessionOpenTok.disconnect();
+        i = new Intent(this, HomeActivity.class);
+        startActivity(i);
+    }
+
+    //Initialize session to make connect between application and Open Tok
     private void SessionConnect() {
         if (sessionOpenTok == null){
             sessionOpenTok = new Session(VoiceActivity.this, OpenTokConfig.API_KEY, OpenTokConfig.SESSION_ID);
@@ -75,101 +117,7 @@ public class VoiceActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_voice, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onClick(View v) {
-//        switch (v.getId()){
-//            case R.id.btnShareImage:
-//                DisplayDialog();
-//                break;
-//            case R.id.btnHold:
-//                HoldCommunication();
-//                break;
-//            case R.id.btnMute:
-//                MuteCommunication();
-//                break;
-//            case R.id.btnDeclineVoice:
-//                DeclineVoiceCall();
-//                break;
-//        }
-    }
-
-    private void HoldCommunication() {
-        if (listenBtnHold){
-
-        }
-    }
-
-    private void MuteCommunication() {
-        if (listenBtnMute){
-//            btnMute.setBackgroundResource(R.drawable.icon_mute);
-            listenBtnMute = false;
-        }else {
-//            btnMute.setBackgroundResource(R.drawable.icon_speaker);
-            listenBtnMute = true;
-        }
-    }
-
-    private void DeclineVoiceCall() {
-        i = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(i);
-    }
-
-    //Display dialog choose open action Photo Library or Camera
-    private void DisplayDialog() {
-        AlertDialog.Builder alertDialogChooseImageResource = new AlertDialog.Builder(this);
-        alertDialogChooseImageResource.setTitle(R.string.title_dialog);
-        alertDialogChooseImageResource.setMessage("");
-
-        alertDialogChooseImageResource.setNegativeButton(R.string.title_photo, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, RESULT_LOAD_IMAGES);
-            }
-        });
-
-        alertDialogChooseImageResource.setPositiveButton(R.string.title_camera, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(i, CAMERA_PIC_REQUEST);
-            }
-        });
-        alertDialogChooseImageResource.show();
-    }
-
-    @Override
-    public void onConnected(Session session) {
-        if (publisher == null){
-            publisher = new Publisher(VoiceActivity.this, "publisher");
-            publisher.setPublisherListener(this);
-            AttachPublisherView(publisher);
-            sessionOpenTok.publish(publisher);
-        }
-    }
-
+    //Initialize view Publisher (Patient)
     private void AttachPublisherView(Publisher paramPublisher) {
         publisher.setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE, BaseVideoRenderer.STYLE_VIDEO_FILL);
         RelativeLayout.LayoutParams layoutPublisher = new RelativeLayout.LayoutParams(500, 500);
@@ -180,12 +128,45 @@ public class VoiceActivity extends AppCompatActivity implements View.OnClickList
         publisherView.addView(publisher.getView(), layoutPublisher);
     }
 
+    //Initialize view Subscriber (Clinic)
     public void AttachSubscriberView(Subscriber paramSubscriber){
         RelativeLayout.LayoutParams layoutSubscriber = new RelativeLayout.LayoutParams(
                 getResources().getDisplayMetrics().widthPixels,
                 getResources().getDisplayMetrics().heightPixels);
         subscriberView.addView(subscriber.getView(), layoutSubscriber);
         paramSubscriber.setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE, BaseVideoRenderer.STYLE_VIDEO_FILL);
+    }
+
+    //Initialize connect with subscribe
+    private void SubscribeToStream(Stream stream) {
+        subscriber = new Subscriber(VoiceActivity.this, stream);
+        subscriber.setVideoListener(this);
+        sessionOpenTok.subscribe(subscriber);
+        if (subscriber.getSubscribeToVideo()){
+            loadingBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    //Disconnect with subscribe
+    private void UnsubscribeFromStream(Stream stream) {
+        streamOpenTok.remove(stream);
+        if (subscriber.getStream().getStreamId().equals(stream.getStreamId())){
+            subscriberView.removeView(subscriber.getView());
+            subscriber = null;
+            if (!streamOpenTok.isEmpty()){
+                SubscribeToStream(streamOpenTok.get(0));
+            }
+        }
+    }
+
+    @Override
+    public void onConnected(Session session) {
+        if (publisher == null){
+            publisher = new Publisher(VoiceActivity.this, "publisher");
+            publisher.setPublisherListener(this);
+            AttachPublisherView(publisher);
+            sessionOpenTok.publish(publisher);
+        }
     }
 
     @Override
@@ -202,25 +183,6 @@ public class VoiceActivity extends AppCompatActivity implements View.OnClickList
         subscriber = null;
         streamOpenTok.clear();
         sessionOpenTok = null;
-    }
-
-    private void SubscribeToStream(Stream stream) {
-        subscriber = new Subscriber(VoiceActivity.this, stream);
-        subscriber.setVideoListener(this);
-    }
-
-    @Override
-    public void onStreamDropped(Session session, Stream stream) {
-        if (!OpenTokConfig.SUBSCRIBE_TO_SELF) {
-            if (subscriber != null) {
-                UnsubscribeFromStream(stream);
-            }
-        }
-    }
-
-    @Override
-    public void onError(Session session, OpentokError opentokError) {
-        Log.i(LOGTAG, "Publisher exception: " + opentokError.getMessage());
     }
 
     @Override
@@ -244,22 +206,26 @@ public class VoiceActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    public void onStreamDropped(Session session, Stream stream) {
+        if (!OpenTokConfig.SUBSCRIBE_TO_SELF) {
+            if (subscriber != null) {
+                UnsubscribeFromStream(stream);
+            }
+        }
+    }
+
+    @Override
     public void onStreamDestroyed(PublisherKit publisherKit, Stream stream) {
         if (OpenTokConfig.SUBSCRIBE_TO_SELF && subscriber != null){
             UnsubscribeFromStream(stream);
         }
     }
 
-    private void UnsubscribeFromStream(Stream stream) {
-        streamOpenTok.remove(stream);
-        if (subscriber.getStream().getStreamId().equals(stream.getStreamId())){
-            subscriberView.removeView(subscriber.getView());
-            subscriber = null;
-            if (!streamOpenTok.isEmpty()){
-                SubscribeToStream(streamOpenTok.get(0));
-            }
-        }
+    @Override
+    public void onError(Session session, OpentokError opentokError) {
+        Log.i(LOGTAG, "Session exception: " + opentokError.getMessage());
     }
+
 
     @Override
     public void onError(PublisherKit publisherKit, OpentokError opentokError) {

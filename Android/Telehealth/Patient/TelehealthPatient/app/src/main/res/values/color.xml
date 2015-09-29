@@ -13,6 +13,7 @@
 
     <!-- -->
     <color name="darkLine">#000000</color>
+    <color name="declineFone">#B51E46</color>
 
     <!-- Status Bar Color-->
     <color name="colorPrimaryDark">#1565C0</color>

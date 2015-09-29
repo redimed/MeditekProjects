@@ -1,3 +1,4 @@
+var bcrypt = require('bcrypt');
 module.exports = {
     attributes: {
         ID: {
@@ -74,6 +75,23 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'UserAccount',
-        timestamps: false
-    }
+        timestamps: false,
+        hooks:{
+            beforeCreate: function(user, options, cb) {
+                bcrypt.genSalt(10, function(err, salt) {
+                    bcrypt.hash(user.Password, salt, function(err, hash) {
+                        if (err) {
+                            console.log(err);
+                            cb(err);
+                        } else {
+                            user.Password = hash;
+                            cb();
+                        }
+                    });
+                });
+            }
+        }
+    },
+    
+    
 };

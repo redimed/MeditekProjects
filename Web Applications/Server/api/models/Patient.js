@@ -82,6 +82,12 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'Patient',
-        timestamps: false
+        timestamps: false,
+        hooks:{
+            beforeCreate : function(field, create){
+                console.log("aaaaas");
+                //trigger
+            }
+        }
     }
 };

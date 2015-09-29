@@ -25,11 +25,11 @@
             android:background="@color/lightBackground"
             android:layout_gravity="left|start">
 
-            <!--<android.support.v7.widget.RecyclerView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:id="@+id/rvImageCategories">-->
-            <!--</android.support.v7.widget.RecyclerView>-->
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rvImageCategories">
+            </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
 
@@ -57,6 +57,7 @@
                 android:background="@drawable/logo_bg_redimed"
                 android:layout_below="@+id/txtHomeTitle"/>
         </RelativeLayout>
+
     </android.support.v4.widget.DrawerLayout>
 
 </RelativeLayout>

@@ -2,7 +2,7 @@ var bcrypt = require('bcryptjs');
 var config = sails.config.myconf;
 //****Twilio Client for sending SMS
 var twilioClient = require('twilio')(config.twilioSID, config.twilioToken);
-//****Check and parse string to JSON object also lower case all keys******
+//****Check and parse string to JSON object also lower case all object keys******
 function toJson(str) {
     var obj;
     try {
@@ -39,8 +39,8 @@ module.exports = {
         var info = toJson(req.body.data);
         var username = typeof info.username != 'undefined' ? info.username : null;
         var password = typeof info.password != 'undefined' ? info.password : null;
-        if(username == null || password == null){
-             res.json(500, {
+        if (username == null || password == null) {
+            res.json(500, {
                 status: 'error',
                 message: 'Invalid Parameters!'
             });
@@ -48,12 +48,7 @@ module.exports = {
         }
         UserAccount.find({
             where: {
-                userName: {
-                    $like: username.indexOf('@') > -1 ? '%' : username
-                },
-                email: {
-                    $like: username.indexOf('@') > -1 ? username : '%'
-                }
+                [username.indexOf('@') > -1 ? 'email' : 'userName']: username
             }
         }).then(function(user) {
             if (user) {

@@ -188,6 +188,16 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    //Receive data Country Code
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            String countryCode = data.getStringExtra(CountryCodeActivity.RESULT_COUNTRY_CODE);
+            btnPostCode.setText("(" + countryCode + ")");
+        }
+    }
+
     //Validated phone number match 10-15 digit numbers
     private void RequestCode() {
         txtVerifyCode.setText("");

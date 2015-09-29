@@ -84,7 +84,6 @@
                             android:textColorHint="@android:color/white"
                             android:textSize="17sp" />
                     </LinearLayout>
-
                 </RelativeLayout>
 
             </LinearLayout>
@@ -115,6 +114,22 @@
                 android:background="#41000000"
                 android:descendantFocusability="beforeDescendants"
                 android:focusableInTouchMode="true">
+
+                <Button
+                    android:id="@+id/btnPostCode"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toLeftOf="@+id/txtPhoneNumber"
+                    android:layout_toStartOf="@+id/txtPhoneNumber"
+                    android:background="@drawable/txt_border"
+                    android:drawableLeft="@drawable/phone"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:text="(+61)"
+                    android:textColor="@color/greyFont"
+                    android:textSize="20dp" />
 
                 <EditText
                     android:id="@+id/txtVerifyCode"
@@ -153,7 +168,6 @@
                         android:text="@string/material_icon_back"
                         android:textColor="@android:color/white"
                         android:textSize="30sp" />
-
                 </RelativeLayout>
 
                 <Button
@@ -168,7 +182,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="17sp"
                     android:textStyle="bold" />
-
             </LinearLayout>
 
         </LinearLayout>

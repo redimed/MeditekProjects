@@ -30,7 +30,7 @@
     <string name="fontello_heart_empty">&#xe80b;</string>
     <string name="fontello_heart_full">&#xe80a;</string>
     <string name="fontello_drag_and_drop">&#xe821;</string>
-
+    
     <!-- Material Design Icons -->
     <string name="material_icon_bike">&#xe915;</string>
     <string name="material_icon_go">&#xea04;</string>

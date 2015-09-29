@@ -101,7 +101,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             String countryCode = data.getStringExtra(CountryCodeActivity.RESULT_COUNTRY_CODE);
-            btnPostCode.setText(countryCode);
+            btnPostCode.setText("(" + countryCode + ")");
         }
     }
 
@@ -110,15 +110,17 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         String phoneExpression = "^[0-9][0-9]{9,14}$";
         Pattern patternPhoneExpression = Pattern.compile(phoneExpression);
         Matcher matcherPhoneExpression = patternPhoneExpression.matcher(txtPhoneNumber.getText());
+        String postCode = btnPostCode.getText().toString();
+        postCode = postCode.substring(1, postCode.length() - 1);
 
         if (matcherPhoneExpression.matches()) {
             char subPhone = txtPhoneNumber.getText().charAt(0);
             String phoneNumber;
             if(subPhone == '0'){
-                phoneNumber = btnPostCode.getText().toString() +  txtPhoneNumber.getText().toString().substring(1);
+                phoneNumber = postCode +  txtPhoneNumber.getText().toString().substring(1);
             }
             else {
-                phoneNumber = btnPostCode.getText().toString() +  txtPhoneNumber.getText().toString();
+                phoneNumber = postCode +  txtPhoneNumber.getText().toString();
             }
             GetDeviceInfo(phoneNumber);
             flagBackActivationLayout = false;

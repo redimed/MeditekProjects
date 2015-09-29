@@ -48,7 +48,7 @@
                     android:drawableLeft="@drawable/phone"
                     android:gravity="center"
                     android:padding="6dp"
-                    android:text="+61"
+                    android:text="(+61)"
                     android:textColor="@color/greyFont"
                     android:textSize="20dp" />
 

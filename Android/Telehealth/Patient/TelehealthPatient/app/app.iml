@@ -99,6 +99,7 @@
 
     <orderEntry type="library" exported="" name="okhttp-ws-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="butterknife-7.0.1" level="project" />
+    <orderEntry type="library" exported="" name="okhttp-ws-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="opentol-x86" level="project" />
 
     <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />

@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 =======
 		543EE8221BA984A300386D59 /* MoreDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543EE8211BA984A300386D59 /* MoreDetail.swift */; };
 >>>>>>> commit
+=======
+		543EE8221BA984A300386D59 /* MoreDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543EE8211BA984A300386D59 /* MoreDetail.swift */; };
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 		5450394C1BABF2FA000D3167 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5450394B1BABF2FA000D3167 /* ApiManager.swift */; };
 		546149CC1BA7AFB700C1F1D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546149CB1BA7AFB700C1F1D6 /* AppDelegate.swift */; };
 		546149CF1BA7AFB700C1F1D6 /* RedimedAfterHours.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 546149CD1BA7AFB700C1F1D6 /* RedimedAfterHours.xcdatamodeld */; };
@@ -48,11 +52,15 @@
 		54614A271BA7CBB400C1F1D6 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54614A0A1BA7CBB400C1F1D6 /* TransitionManager.swift */; };
 		54614A281BA7CBB400C1F1D6 /* TransitionZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54614A0B1BA7CBB400C1F1D6 /* TransitionZoom.swift */; };
 		54614A291BA7CBB400C1F1D6 /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54614A0C1BA7CBB400C1F1D6 /* UnwindSegue.swift */; };
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 		54614A2B1BA7EAA700C1F1D6 /* PatientDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54614A2A1BA7EAA700C1F1D6 /* PatientDetailViewController.swift */; };
 =======
 		54614A2B1BA7EAA700C1F1D6 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54614A2A1BA7EAA700C1F1D6 /* InformationViewController.swift */; };
 >>>>>>> commit
+=======
+		54614A2B1BA7EAA700C1F1D6 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54614A2A1BA7EAA700C1F1D6 /* InformationViewController.swift */; };
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 		54614A351BA82B1000C1F1D6 /* TPKeyboardAvoidingCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54614A2E1BA82B1000C1F1D6 /* TPKeyboardAvoidingCollectionView.m */; };
 		54614A361BA82B1000C1F1D6 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54614A301BA82B1000C1F1D6 /* TPKeyboardAvoidingScrollView.m */; };
 		54614A371BA82B1000C1F1D6 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54614A321BA82B1000C1F1D6 /* TPKeyboardAvoidingTableView.m */; };
@@ -74,10 +82,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 =======
 		543EE8211BA984A300386D59 /* MoreDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreDetail.swift; sourceTree = "<group>"; };
 >>>>>>> commit
+=======
+		543EE8211BA984A300386D59 /* MoreDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreDetail.swift; sourceTree = "<group>"; };
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 		5450394B1BABF2FA000D3167 /* ApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		546149C61BA7AFB700C1F1D6 /* RedimedAfterHours.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedimedAfterHours.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		546149CA1BA7AFB700C1F1D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -120,11 +132,15 @@
 		54614A0A1BA7CBB400C1F1D6 /* TransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
 		54614A0B1BA7CBB400C1F1D6 /* TransitionZoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionZoom.swift; sourceTree = "<group>"; };
 		54614A0C1BA7CBB400C1F1D6 /* UnwindSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwindSegue.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 		54614A2A1BA7EAA700C1F1D6 /* PatientDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientDetailViewController.swift; sourceTree = "<group>"; };
 =======
 		54614A2A1BA7EAA700C1F1D6 /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
 >>>>>>> commit
+=======
+		54614A2A1BA7EAA700C1F1D6 /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 		54614A2D1BA82B1000C1F1D6 /* TPKeyboardAvoidingCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingCollectionView.h; sourceTree = "<group>"; };
 		54614A2E1BA82B1000C1F1D6 /* TPKeyboardAvoidingCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingCollectionView.m; sourceTree = "<group>"; };
 		54614A2F1BA82B1000C1F1D6 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
@@ -317,12 +333,17 @@
 		54DEECCB1BABA7E700847893 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 				54614A2A1BA7EAA700C1F1D6 /* PatientDetailViewController.swift */,
 =======
 				54614A2A1BA7EAA700C1F1D6 /* InformationViewController.swift */,
 				543EE8211BA984A300386D59 /* MoreDetail.swift */,
 >>>>>>> commit
+=======
+				54614A2A1BA7EAA700C1F1D6 /* InformationViewController.swift */,
+				543EE8211BA984A300386D59 /* MoreDetail.swift */,
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -371,10 +392,13 @@
 		546149BE1BA7AFB700C1F1D6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 				LastSwiftUpdateCheck = 0700;
 =======
 >>>>>>> commit
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = DucManh;
 				TargetAttributes = {
@@ -441,10 +465,14 @@
 				54D7340E1BAC122800ECBEA7 /* SwiftyJSON.swift in Sources */,
 				54614A181BA7CBB400C1F1D6 /* ImageLoader.swift in Sources */,
 				54614A1D1BA7CBB400C1F1D6 /* Misc.swift in Sources */,
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 =======
 				543EE8221BA984A300386D59 /* MoreDetail.swift in Sources */,
 >>>>>>> commit
+=======
+				543EE8221BA984A300386D59 /* MoreDetail.swift in Sources */,
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 				54614A101BA7CBB400C1F1D6 /* BlurView.swift in Sources */,
 				54614A291BA7CBB400C1F1D6 /* UnwindSegue.swift in Sources */,
 				54614A1B1BA7CBB400C1F1D6 /* LoadingView.swift in Sources */,
@@ -453,11 +481,15 @@
 				546149D11BA7AFB700C1F1D6 /* ViewController.swift in Sources */,
 				54614A1E1BA7CBB400C1F1D6 /* SoundPlayer.swift in Sources */,
 				54614A171BA7CBB400C1F1D6 /* DesignableView.swift in Sources */,
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 				54614A2B1BA7EAA700C1F1D6 /* PatientDetailViewController.swift in Sources */,
 =======
 				54614A2B1BA7EAA700C1F1D6 /* InformationViewController.swift in Sources */,
 >>>>>>> commit
+=======
+				54614A2B1BA7EAA700C1F1D6 /* InformationViewController.swift in Sources */,
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 				54614A141BA7CBB400C1F1D6 /* DesignableTabBarController.swift in Sources */,
 				54614A111BA7CBB400C1F1D6 /* DesignableButton.swift in Sources */,
 				546149CC1BA7AFB700C1F1D6 /* AppDelegate.swift in Sources */,

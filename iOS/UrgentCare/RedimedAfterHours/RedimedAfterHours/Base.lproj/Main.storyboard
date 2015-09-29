@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Frq-R7-iqH">
     <dependencies>
@@ -9,6 +10,11 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
 >>>>>>> commit
+=======
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Frq-R7-iqH">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -23,6 +29,7 @@
                         <viewControllerLayoutGuide type="bottom" id="rUb-Uu-BGL"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fDD-Lj-8Nv">
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -140,6 +147,8 @@
                             <constraint firstItem="oYi-YK-wKy" firstAttribute="centerY" secondItem="jSo-WH-DLC" secondAttribute="centerY" id="zMA-la-pUn"/>
                         </constraints>
 =======
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -218,16 +227,23 @@
                                 <exclude reference="nzj-qT-XWw"/>
                             </mask>
                         </variation>
+<<<<<<< HEAD
 >>>>>>> commit
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
                     </view>
                     <navigationItem key="navigationItem" id="7TP-de-GVc"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
 =======
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
 >>>>>>> commit
+=======
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
                     <connections>
                         <outlet property="coverImageView" destination="oYi-YK-wKy" id="R6a-vS-LTq"/>
                         <outlet property="urgentCareLabel" destination="UHf-Cn-ztJ" id="T9z-g5-4Ka"/>
@@ -235,6 +251,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LGx-8c-HYL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
             <point key="canvasLocation" x="-746" y="378"/>
         </scene>
@@ -588,6 +605,8 @@ For general enquiries please contact our friendly staff on:</string>
                                             <connections>
                                                 <segue destination="pbU-JH-bHK" kind="unwind" unwindAction="unwindToViewController:" id="Kxu-s1-mrE"/>
 =======
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
             <point key="canvasLocation" x="266" y="371"/>
         </scene>
         <!--Information View Controller-->
@@ -882,7 +901,10 @@ For general enquiries please contact our friendly staff on:</string>
                                         <barButtonItem key="leftBarButtonItem" title="Urgent Care" id="WkS-r6-SBF">
                                             <connections>
                                                 <segue destination="rfu-iq-qfI" kind="unwind" unwindAction="unwindToViewController:" id="Dn0-o3-sgR"/>
+<<<<<<< HEAD
 >>>>>>> commit
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -891,6 +913,7 @@ For general enquiries please contact our friendly staff on:</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
                             <constraint firstItem="RON-9v-jSZ" firstAttribute="top" secondItem="U6Y-w3-68M" secondAttribute="bottom" id="Qb3-ZF-BVH"/>
                             <constraint firstAttribute="bottomMargin" secondItem="C5V-hj-gky" secondAttribute="bottom" constant="-2" id="RJa-lk-dxn"/>
@@ -931,6 +954,8 @@ For general enquiries please contact our friendly staff on:</string>
                                             <connections>
                                                 <action selector="backButton:" destination="Gir-qO-YDw" id="KOv-Ce-efu"/>
 =======
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
                             <constraint firstItem="hBm-b3-ykD" firstAttribute="top" secondItem="nhH-qq-nVi" secondAttribute="topMargin" constant="19" id="4XV-Am-GQ2"/>
                             <constraint firstAttribute="bottomMargin" secondItem="vKF-RF-OaU" secondAttribute="bottom" constant="-20" id="6JF-Op-1Pe"/>
                             <constraint firstItem="vKF-RF-OaU" firstAttribute="leading" secondItem="hBm-b3-ykD" secondAttribute="leading" id="Dds-4M-6DQ"/>
@@ -981,12 +1006,16 @@ For general enquiries please contact our friendly staff on:</string>
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="IF9-A3-7Wl">
                                             <connections>
                                                 <action selector="backButton:" destination="3ds-mw-1g3" id="uhH-aE-ERw"/>
+<<<<<<< HEAD
 >>>>>>> commit
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vKF-RF-OaU" customClass="TPKeyboardAvoidingScrollView">
                                 <rect key="frame" x="0.0" y="63" width="375" height="624"/>
@@ -1275,6 +1304,8 @@ For general enquiries please contact our friendly staff on:</string>
                                     <constraint firstAttribute="bottom" secondItem="XWU-7N-S9Q" secondAttribute="bottom" constant="38" id="xvi-bi-zvj"/>
                                     <constraint firstItem="n5T-Wp-pC1" firstAttribute="leading" secondItem="ifc-Bd-1jS" secondAttribute="leading" id="yQr-9i-gMB"/>
 =======
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSY-se-qCY" customClass="TPKeyboardAvoidingScrollView">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <subviews>
@@ -1457,12 +1488,16 @@ For general enquiries please contact our friendly staff on:</string>
                                     <constraint firstItem="TxB-yz-eXA" firstAttribute="leading" secondItem="rxi-Vz-gCc" secondAttribute="leading" id="wcO-qb-z7h"/>
                                     <constraint firstItem="mlW-7M-V67" firstAttribute="top" secondItem="TxB-yz-eXA" secondAttribute="bottom" constant="25" id="x5B-1a-R2n"/>
                                     <constraint firstItem="TxB-yz-eXA" firstAttribute="centerY" secondItem="JRA-kD-iBh" secondAttribute="centerY" id="yh1-PD-T2W"/>
+<<<<<<< HEAD
 >>>>>>> commit
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
                             <constraint firstAttribute="bottomMargin" secondItem="vKF-RF-OaU" secondAttribute="bottom" constant="-20" id="00J-XK-LBZ"/>
                             <constraint firstAttribute="trailing" secondItem="hBm-b3-ykD" secondAttribute="trailing" id="EVb-k2-uhV"/>
@@ -1501,6 +1536,8 @@ For general enquiries please contact our friendly staff on:</string>
             </objects>
             <point key="canvasLocation" x="48.5" y="955.5"/>
 =======
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
                             <constraint firstItem="Kjc-5K-BYe" firstAttribute="top" secondItem="T0e-Qz-eBo" secondAttribute="bottom" id="3dc-ec-JNS"/>
                             <constraint firstItem="Kjc-5K-BYe" firstAttribute="leading" secondItem="NSY-se-qCY" secondAttribute="leading" id="5x2-iq-ZQu"/>
                             <constraint firstItem="NSY-se-qCY" firstAttribute="trailing" secondItem="Kjc-5K-BYe" secondAttribute="trailing" id="DFQ-FD-rZ1"/>
@@ -1526,13 +1563,17 @@ For general enquiries please contact our friendly staff on:</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k6J-rV-4vh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1031" y="371"/>
+<<<<<<< HEAD
 >>>>>>> commit
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
         </scene>
     </scenes>
     <resources>
         <image name="**" width="512" height="512"/>
         <image name="2_02" width="141" height="148"/>
         <image name="6" width="331" height="503"/>
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
         <image name="A1a-3" width="333" height="333"/>
         <image name="Back-25" width="25" height="25"/>
@@ -1545,6 +1586,8 @@ For general enquiries please contact our friendly staff on:</string>
         <segue reference="qWb-5b-lj1"/>
     </inferredMetricsTieBreakers>
 =======
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
         <image name="A1a" width="242" height="227"/>
         <image name="Calendar" width="50" height="50"/>
         <image name="Gender-black" width="50" height="50"/>
@@ -1557,5 +1600,8 @@ For general enquiries please contact our friendly staff on:</string>
         <image name="person-black" width="50" height="50"/>
         <image name="unchecked" width="24" height="24"/>
     </resources>
+<<<<<<< HEAD
 >>>>>>> commit
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 </document>

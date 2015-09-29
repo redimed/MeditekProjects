@@ -18,6 +18,17 @@ public class MyApplication extends Application{
 
     private static MyApplication myApplication;
 
+    private UserAccount currUser;
+
+    public UserAccount getCurrUser() {
+        return currUser;
+    }
+
+    public void setCurrUser(UserAccount currUser) {
+        this.currUser = currUser;
+    }
+
+
     public static MyApplication getInstance(){
         return myApplication;
     }

@@ -7,6 +7,7 @@
       "scale" : "2x"
     },
     {
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
       "idiom" : "iphone",
       "size" : "29x29",
@@ -15,12 +16,15 @@
     {
 =======
 >>>>>>> commit
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
       "size" : "40x40",
       "idiom" : "iphone",
       "filename" : "icon-60@2x.png",
       "scale" : "2x"
     },
     {
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
       "idiom" : "iphone",
       "size" : "40x40",
@@ -29,6 +33,8 @@
     {
 =======
 >>>>>>> commit
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
       "size" : "60x60",
       "idiom" : "iphone",
       "filename" : "icon-60@2x-1.png",

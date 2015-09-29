@@ -11,8 +11,11 @@ import Foundation
 class RestApiManager: NSObject {
     static let sharedInstance = RestApiManager()
     
+<<<<<<< HEAD
 <<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 =======
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
     let baseURL = "http://192.168.1.70:3000/api/"
     
     
@@ -124,5 +127,8 @@ class RestApiManager: NSObject {
 //        task.resume()
 //        print(task.resume())
     }
+<<<<<<< HEAD
 >>>>>>> commit
+=======
+>>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 }

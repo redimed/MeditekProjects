@@ -89,11 +89,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return false;

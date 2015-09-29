@@ -3,85 +3,98 @@
     android:layout_height="match_parent"
     tools:context="com.redimed.telehealth.patient.VoiceActivity">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/img_face_receiver"/>
+    <RelativeLayout
+        android:id="@+id/subscriberView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:keepScreenOn="true">
 
-    <ImageView
-        android:id="@+id/imgView"
-        android:layout_width="150dp"
-        android:layout_height="180dp"
-        android:background="@drawable/img_face_caller"/>
-
-    <Button
-        android:id="@+id/btnHold"
-        android:background="@drawable/btn_oval"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        android:layout_above="@+id/relativeLayout"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
-        android:drawableLeft="@drawable/icon_pause"
-        android:padding="12dp"/>
+        <ProgressBar
+            android:id="@+id/loadingSpinner"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="false"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
+        android:id="@+id/publisherView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:gravity="bottom">
-
-
-            <!--<android.support.design.widget.FloatingActionButton-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="bottom|right"-->
-                <!--android:src="@drawable/icon_mute"-->
-                <!--android:layout_margin="16dp" />-->
-
-
-        <Button
-            android:id="@+id/btnShareImage"
-            android:background="@drawable/btn_oval"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_toEndOf="@+id/btnDeclineVoice"
-            android:layout_toRightOf="@+id/btnDeclineVoice"
-            android:drawableLeft="@drawable/icon_image_file"
-            android:padding="13dp"/>
-
-        <Button
-            android:id="@+id/btnDeclineVoice"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/btn_end_call_voice_oval"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:drawableLeft="@drawable/end_call_voice"
-            android:padding="16dp"/>
-
-        <Button
-            android:id="@+id/btnMute"
-            android:background="@drawable/btn_oval"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="40dp"
-            android:gravity="center"
-            android:layout_toStartOf="@+id/btnDeclineVoice"
-            android:layout_toLeftOf="@+id/btnDeclineVoice"
-            android:drawableLeft="@drawable/icon_speaker"
-            android:padding="13dp"/>
+        android:keepScreenOn="true">
     </RelativeLayout>
+
+    <!--<Button-->
+        <!--android:id="@+id/btnHold"-->
+        <!--android:background="@drawable/btn_oval"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_marginBottom="20dp"-->
+        <!--android:layout_above="@+id/relativeLayout"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:drawableLeft="@drawable/icon_pause"-->
+        <!--android:padding="12dp"/>-->
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/relativeLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:gravity="bottom">-->
+
+
+            <!--&lt;!&ndash;<android.support.design.widget.FloatingActionButton&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_gravity="bottom|right"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:src="@drawable/icon_mute"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_margin="16dp" />&ndash;&gt;-->
+
+
+        <!--<Button-->
+            <!--android:id="@+id/btnShareImage"-->
+            <!--android:background="@drawable/btn_oval"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_marginLeft="40dp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:layout_toEndOf="@+id/btnDeclineVoice"-->
+            <!--android:layout_toRightOf="@+id/btnDeclineVoice"-->
+            <!--android:drawableLeft="@drawable/icon_image_file"-->
+            <!--android:padding="13dp"/>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btnDeclineVoice"-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:background="@drawable/btn_end_call_voice_oval"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:gravity="center"-->
+            <!--android:drawableLeft="@drawable/end_call_voice"-->
+            <!--android:padding="16dp"/>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btnMute"-->
+            <!--android:background="@drawable/btn_oval"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_marginRight="40dp"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_toStartOf="@+id/btnDeclineVoice"-->
+            <!--android:layout_toLeftOf="@+id/btnDeclineVoice"-->
+            <!--android:drawableLeft="@drawable/icon_speaker"-->
+            <!--android:padding="13dp"/>-->
+    <!--</RelativeLayout>-->
 
 </RelativeLayout>

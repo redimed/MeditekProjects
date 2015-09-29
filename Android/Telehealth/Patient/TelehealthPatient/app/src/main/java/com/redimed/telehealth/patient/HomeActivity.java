@@ -5,10 +5,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.redimed.telehealth.patient.models.UserAccount;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,6 +19,7 @@ import butterknife.ButterKnife;
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Bind(R.id.txtHomeTitle) TextView txtHomeTitle;
+
     @Bind(R.id.patientDrawer) DrawerLayout patientDrawer;
     ActionBarDrawerToggle actionDrawerToggle;
 
@@ -83,5 +87,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private void DisplayCall() {
         Intent i = new Intent(getApplicationContext(), CallActivity.class);
         startActivity(i);
+    }
+
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return false;
     }
 }

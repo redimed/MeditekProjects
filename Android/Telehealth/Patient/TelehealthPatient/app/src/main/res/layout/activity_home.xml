@@ -21,6 +21,8 @@
             android:id="@+id/leftLayout"
             android:layout_width="280dp"
             android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@color/lightBackground"
             android:layout_gravity="left|start">
 
             <android.support.v7.widget.RecyclerView
@@ -55,5 +57,7 @@
                 android:background="@drawable/logo_bg_redimed"
                 android:layout_below="@+id/txtHomeTitle"/>
         </RelativeLayout>
+
     </android.support.v4.widget.DrawerLayout>
+
 </RelativeLayout>

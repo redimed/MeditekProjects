@@ -20,4 +20,9 @@
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
+
+    <!-- Dialog Color-->
+    <color name="success">#2196f3</color>
+    <color name="error">#F44336</color>
+    <color name="warning">#FFB300</color>
 </resources>

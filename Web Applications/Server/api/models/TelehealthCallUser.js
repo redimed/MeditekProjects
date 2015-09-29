@@ -10,7 +10,7 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: TelehealthCallLog,
+                model: 'TelehealthCallLog',
                 key: 'ID'
             }
         },
@@ -18,7 +18,7 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: TelehealthUser,
+                model: 'TelehealthUser',
                 key: 'ID'
             }
         },

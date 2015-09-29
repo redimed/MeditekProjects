@@ -14,7 +14,7 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: UrgentRequest,
+                model: 'UrgentRequest',
                 key: 'ID'
             }
         },

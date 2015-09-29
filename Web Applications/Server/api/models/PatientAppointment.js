@@ -10,19 +10,11 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: false
         },
-        SiteID: {
+        TelehealthAppointmentID: {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: 'Site',
-                key: 'ID'
-            }
-        },
-        UserAccountID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: false,
-            references: {
-                model: 'UserAccount',
+                model: 'TelehealthAppointment',
                 key: 'ID'
             }
         },
@@ -38,35 +30,39 @@ module.exports = {
             type: Sequelize.STRING(50),
             allowNull: true
         },
-        Dob: {
+        DOB: {
             type: Sequelize.DATE,
             allowNull: true
         },
-        Sex: {
-            type: Sequelize.STRING(1),
-            allowNull: true
-        },
         Address: {
-            type: Sequelize.STRING(500),
+            type: Sequelize.STRING(255),
             allowNull: true
         },
-        CountryID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: false,
-            references: {
-                model: 'Country',
-                key: 'ID'
-            }
+        Suburb: {
+            type: Sequelize.STRING(100),
+            allowNull: true
         },
-        Enable: {
-            type: Sequelize.STRING(1),
+        Postcode: {
+            type: Sequelize.STRING(100),
+            allowNull: true
+        },
+        Email: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
+        PhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true
+        },
+        HomePhoneNumber: {
+            type: Sequelize.STRING(20),
             allowNull: true
         },
         CreationDate: {
             type: Sequelize.DATE,
             allowNull: true
         },
-        CreatedBy: {
+        CreationBy: {
             type: Sequelize.BIGINT(20),
             allowNull: true
         },
@@ -81,7 +77,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'Patient',
+        tableName: 'PatientAppointment',
         timestamps: false
     }
 };

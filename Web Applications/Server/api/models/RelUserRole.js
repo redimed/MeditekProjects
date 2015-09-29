@@ -4,7 +4,7 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: UserAccount,
+                model: 'UserAccount',
                 key: 'ID'
             }
         },
@@ -12,7 +12,7 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: Role,
+                model: 'Role',
                 key: 'ID'
             }
         },
@@ -20,7 +20,7 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: Module,
+                model: 'Module',
                 key: 'ID'
             }
         },
@@ -28,7 +28,7 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: Site,
+                model: 'Site',
                 key: 'ID'
             }
         },

@@ -1,77 +1,122 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/lightBackground"
     tools:context=".ActivationActivity">
 
+    <include android:id="@+id/tbActivation" layout="@layout/custom_toolbar"/>
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
         android:id="@+id/imgViewLogo"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/logo_redimed"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"/>
+        android:layout_below="@+id/tbActivation"/>
+
+    <RelativeLayout
+        android:id="@+id/relLayoutActivation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imgViewLogo">
 
     <ImageView
         android:id="@+id/imgEnterPhone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/imageViewLogo"/>
+        android:layout_height="match_parent"/>
 
-    <RelativeLayout
-        android:layout_width="700dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
+        <ViewFlipper
+            android:id="@+id/vfChangeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
 
-        <Button
-            android:id="@+id/btnPostCode"
-            android:layout_width="100dp"
-            android:layout_height="35dp"
-            android:text="(+61)"
-            android:textSize="20dp"
-            android:textColor="@color/greyFont"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/phone"
-            android:padding="6dp"
-            android:background="@drawable/txt_border"
-            android:layout_toStartOf="@+id/txtPhoneNumber"
-            android:layout_toLeftOf="@+id/txtPhoneNumber"
-            android:layout_marginLeft="10dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/txtPhoneNumber"
-            android:layout_width="220dp"
-            android:layout_height="35dp"
-            android:hint="Please enter your phone!"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="8"
-            android:background="@drawable/txt_border"
-            android:layout_centerVertical="true"
-            android:layout_alignStart="@+id/btnEnterPhone"
-            android:layout_alignLeft="@+id/btnEnterPhone"
-            android:layout_marginLeft="30dp"/>
+                <Button
+                    android:id="@+id/btnPostCode"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toLeftOf="@+id/txtPhoneNumber"
+                    android:layout_toStartOf="@+id/txtPhoneNumber"
+                    android:background="@drawable/txt_border"
+                    android:drawableLeft="@drawable/phone"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:text="+61"
+                    android:textColor="@color/greyFont"
+                    android:textSize="20dp" />
 
-        <Button
-            android:id="@+id/btnEnterPhone"
-            android:layout_width="170dp"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:layout_marginTop="50dp"
-            android:layout_centerHorizontal="true"
-            android:text="Enter"
-            android:textColor="@color/lightFont"
-            android:background="@drawable/btn_radius"
-            android:layout_below="@+id/txtPhoneNumber"/>
+                <EditText
+                    android:id="@+id/txtPhoneNumber"
+                    android:layout_width="250dp"
+                    android:layout_height="50dp"
+                    android:layout_alignLeft="@+id/btnEnterPhone"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/txt_border"
+                    android:gravity="center"
+                    android:hint="Please enter your phone!"
+                    android:inputType="number"
+                    android:maxLength="11" />
+
+                <Button
+                    android:id="@+id/btnEnterPhone"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/txtPhoneNumber"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="120dp"
+                    android:gravity="center"
+                    android:text="Register"
+                    android:textColor="@color/lightFont" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="250dp">
+
+                <RelativeLayout
+                    android:id="@+id/linerVerifyCode"
+                    android:layout_width="270dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/txt_border">
+
+                    <EditText
+                        android:id="@+id/txtVerifyCode"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:textSize="@dimen/size_txt"
+                        android:maxLength="6"/>
+
+                </RelativeLayout>
+
+
+                <Button
+                    android:id="@+id/btnVerifyPhone"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:text="Verify"
+                    android:textColor="@color/lightFont"
+                    android:layout_below="@+id/linerVerifyCode"/>
+            </RelativeLayout>
+
+        </ViewFlipper>
 
     </RelativeLayout>
 

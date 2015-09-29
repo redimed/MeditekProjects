@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

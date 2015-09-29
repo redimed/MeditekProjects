@@ -9,12 +9,12 @@
 import UIKit
 
 var device : String?
+let config = ConfigurationSystem()
 
 class ConfigurationSystem: UIViewController {
-    
-    
-    var deviceID  = String()
-    
+    let Http = "http://192.168.1.130:3000"
+   
+    let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
   
 
 

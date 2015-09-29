@@ -8,8 +8,8 @@
 
 import UIKit
 
-class HomeViewController: UIViewController,UIPopoverPresentationControllerDelegate {
-
+class HomeViewController: UIViewController,UIPopoverPresentationControllerDelegate{
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,6 +29,10 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return .None
     }
+    
+   
+
+
  
 
 }

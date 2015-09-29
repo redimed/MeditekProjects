@@ -8,7 +8,10 @@
 
 import UIKit
 
-enum UrlAPI : String {
-    case checkPhoneNumber = "http://jsonplaceholder.typicode.com/posts"
+
+
+enum UrlAPICheckPhoneNumber : String {
+    case SendVerifyCodePhoneNumber =  "/telehealth/user/requestActivationCode"
+    case CheckVerifyCode = "/telehealth/user/verifyActivationCode"
 }
 

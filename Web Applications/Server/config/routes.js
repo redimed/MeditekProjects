@@ -29,4 +29,22 @@ routes['post /api/patient/search-patient'] = {
 
 //end module patient
 
+//module user account
+routes['get /api/user-account/test']={
+	controller:'UserAccount/UserAccountController',
+	action:'Test'
+};
+routes['post /createUser']={
+	controller:'UserAccount/UserAccountController',
+	action:'createUser'
+};
+routes['post /login']={
+    controller:'UserAccount/AuthController',
+    action:'login'
+};
+routes['get /user-account/find-by-phone']={
+    controller:'UserAccount/UserAccountController',
+    action:'FindByPhoneNumber'
+};
+
 module.exports.routes = routes;

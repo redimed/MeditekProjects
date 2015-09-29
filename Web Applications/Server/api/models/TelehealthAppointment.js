@@ -6,67 +6,58 @@ module.exports = {
             allowNull: false,
             primaryKey: true
         },
-        UID: {
+        AppointmentID: {
+            type: Sequelize.BIGINT(20),
+            allowNull: false,
+            references: {
+                model: 'Appointment',
+                key: 'ID'
+            }
+        },
+        Description: {
+            type: Sequelize.TEXT
+        },
+        RefName: {
             type: Sequelize.STRING(255),
-            allowNull: false
-        },
-        SiteID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: false,
-            references: {
-                model: 'Site',
-                key: 'ID'
-            }
-        },
-        UserAccountID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: false,
-            references: {
-                model: 'UserAccount',
-                key: 'ID'
-            }
-        },
-        FirstName: {
-            type: Sequelize.STRING(50),
             allowNull: true
         },
-        MiddleName: {
-            type: Sequelize.STRING(100),
+        RefHealthLink: {
+            type: Sequelize.STRING(255),
             allowNull: true
         },
-        LastName: {
-            type: Sequelize.STRING(50),
+        RefAddress: {
+            type: Sequelize.STRING(255),
             allowNull: true
         },
-        Dob: {
+        RefTelePhone: {
+            type: Sequelize.STRING(20),
+            allowNull: true
+        },
+        RefPostCode: {
+            type: Sequelize.STRING(45),
+            allowNull: true
+        },
+        RefSignature: {
+            type: Sequelize.STRING(45),
+            allowNull: true
+        },
+        RefDate: {
             type: Sequelize.DATE,
             allowNull: true
         },
-        Sex: {
-            type: Sequelize.STRING(1),
+        RefProviderNumber: {
+            type: Sequelize.STRING(45),
             allowNull: true
         },
-        Address: {
-            type: Sequelize.STRING(500),
-            allowNull: true
-        },
-        CountryID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: false,
-            references: {
-                model: 'Country',
-                key: 'ID'
-            }
-        },
-        Enable: {
-            type: Sequelize.STRING(1),
+        RefDurationOfReferal: {
+            type: Sequelize.STRING(2),
             allowNull: true
         },
         CreationDate: {
             type: Sequelize.DATE,
             allowNull: true
         },
-        CreatedBy: {
+        CreationBy: {
             type: Sequelize.BIGINT(20),
             allowNull: true
         },
@@ -81,7 +72,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'Patient',
+        tableName: 'TelehealthAppointment',
         timestamps: false
     }
 };

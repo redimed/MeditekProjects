@@ -20,7 +20,6 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-sails-linker": "~0.9.5",
     "grunt-sync": "~0.0.4",
-    "guid": "0.0.12",
     "include-all": "~0.1.3",
     "moment": "^2.10.6",
     "mysql": "^2.9.0",

@@ -10,7 +10,7 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: UserAccount,
+                model: 'UserAccount',
                 key: 'ID'
             }
         },
@@ -26,7 +26,7 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: true
         },
-        DiviceID: {
+        DeviceID: {
             type: Sequelize.TEXT
         },
         CreationDate: {

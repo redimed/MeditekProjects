@@ -6,30 +6,46 @@ module.exports = {
             allowNull: false,
             primaryKey: true
         },
-        UID: {
-            type: Sequelize.STRING(255),
-            allowNull: false
-        },
-        TelehealthUserID: {
+        TelehealthAppointmentID: {
             type: Sequelize.BIGINT(20),
-            allowNull: true,
+            allowNull: false,
             references: {
-                model: 'TelehealthUser',
+                model: 'TelehealthAppointment',
                 key: 'ID'
             }
         },
-        DeviceToken: {
-            type: Sequelize.TEXT
+        ModuleID: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true
+        },
+        SectionID: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true
+        },
+        CategoryID: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true
+        },
+        Name: {
+            type: Sequelize.STRING(255),
+            allowNull: true
         },
         Type: {
             type: Sequelize.STRING(45),
             allowNull: true
         },
+        Values: {
+            type: Sequelize.STRING(45),
+            allowNull: true
+        },
+        Description: {
+            type: Sequelize.TEXT
+        },
         CreationDate: {
             type: Sequelize.DATE,
             allowNull: true
         },
-        CreatedBy: {
+        CreationBy: {
             type: Sequelize.BIGINT(20),
             allowNull: true
         },
@@ -40,14 +56,11 @@ module.exports = {
         ModifiedBy: {
             type: Sequelize.BIGINT(20),
             allowNull: true
-        },
-        DeviceID: {
-            type: Sequelize.TEXT
         }
     },
     associations: function() {},
     options: {
-        tableName: 'TelehealthDevice',
+        tableName: 'ClinicalDetail',
         timestamps: false
     }
 };

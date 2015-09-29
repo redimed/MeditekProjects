@@ -14,7 +14,7 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: Site,
+                model: 'Site',
                 key: 'ID'
             }
         },
@@ -22,7 +22,7 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: Doctor,
+                model: 'Doctor',
                 key: 'ID'
             }
         },
@@ -30,7 +30,7 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: Patient,
+                model: 'Patient',
                 key: 'ID'
             }
         },
@@ -40,6 +40,10 @@ module.exports = {
         },
         ToTime: {
             type: Sequelize.DATE,
+            allowNull: true
+        },
+        Status: {
+            type: Sequelize.STRING(45),
             allowNull: true
         },
         Enable: {

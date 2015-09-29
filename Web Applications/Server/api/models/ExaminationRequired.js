@@ -6,21 +6,33 @@ module.exports = {
             allowNull: false,
             primaryKey: true
         },
-        UserAccountID: {
+        TelehealthAppointmentID: {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: UserAccount,
+                model: 'TelehealthAppointment',
                 key: 'ID'
             }
         },
-        FileUploadID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: false,
-            references: {
-                model: FileUpload,
-                key: 'ID'
-            }
+        Private: {
+            type: Sequelize.STRING(1),
+            allowNull: true
+        },
+        Public: {
+            type: Sequelize.STRING(1),
+            allowNull: true
+        },
+        DVA: {
+            type: Sequelize.STRING(1),
+            allowNull: true
+        },
+        WorkersComp: {
+            type: Sequelize.STRING(1),
+            allowNull: true
+        },
+        MVIT: {
+            type: Sequelize.STRING(1),
+            allowNull: true
         },
         CreationDate: {
             type: Sequelize.DATE,
@@ -41,7 +53,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'UserFileUpload',
+        tableName: 'ExaminationRequired',
         timestamps: false
     }
 };

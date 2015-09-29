@@ -10,6 +10,14 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: true
         },
+        UserAccountID: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            references: {
+                model: 'UserAccount',
+                key: 'ID'
+            }
+        },
         FileLocation: {
             type: Sequelize.STRING(255),
             allowNull: true

@@ -258,7 +258,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
                 }
             });
         }
@@ -297,7 +296,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
                     }
                 });
             }

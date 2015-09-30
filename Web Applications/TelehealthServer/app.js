@@ -20,6 +20,16 @@
 
 // Ensure we're in the project directory, so relative paths work as expected
 // no matter where we actually lift from.
+// require("appdynamics").profile({
+//     controllerHostName: 'telehealthvietnam.com.vn',
+//     controllerPort: 8090, // If SSL, be sure to enable the next line  
+//     accountName: 'customer1',
+//     accountAccessKey: '9136a453-138c-4076-993d-d94a1ac83104',
+//     applicationName: 'TestApp Australia Monitor',
+//     tierName: 'Telehealth Server Monitor',
+//     nodeName: 'process' // The controller will automatically append the node name with a unique number
+// });
+
 process.chdir(__dirname);
 
 // Ensure a "sails" can be located:

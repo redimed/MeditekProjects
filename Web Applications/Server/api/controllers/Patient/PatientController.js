@@ -96,7 +96,7 @@ module.exports = {
 			return;
 
 		})
-		.catch(function*(err){
+		.catch(function(err){
 
 			console.log("***ERROR***: ",err);
 			res.json({

@@ -10,7 +10,7 @@ module.exports = {
 		});
 	},
 
-	CreateUserAccount:function(userInfo)
+	CreateUserAccount:function(userInfo,transaction)
 	{
 		function Validate()
 		{
@@ -19,10 +19,10 @@ module.exports = {
 				//email validation
 				var emailPattern = new RegExp(HelperService.regexPattern.email);
 				// if(userInfo.Email && emailPattern.test(userInfo.Email))
-				if(userInfo.Email && emailPattern.test(userInfo.Email))
-				{
-					throw new Error('invalid email');
-				}
+				// if(userInfo.Email && emailPattern.test(userInfo.Email))
+				// {
+				// 	throw new Error('invalid email');
+				// }
 				//Phone number validation
 				var fullPhoneNumberPattern= new RegExp(HelperService.regexPattern.fullPhoneNumber);
 				if(userInfo.PhoneNumber && fullPhoneNumberPattern.test(userInfo.PhoneNumber))
@@ -46,7 +46,7 @@ module.exports = {
 
 		return Validate()
 		.then(function(data){
-			return UserAccount.create(userInfo);
+			return UserAccount.create(userInfo,{transaction:transaction});
 		},function(err){
 			throw err;
 		})

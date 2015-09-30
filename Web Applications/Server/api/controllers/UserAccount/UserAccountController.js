@@ -1,23 +1,9 @@
 var regexp = require('node-regexp');
 var $q = require('q');
-// var TestController=require('../TestController');
 module.exports = {
 	Test:function(req,res)
 	{
-		// var rePattern = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
-		// console.log(">>>>>>>>>"+rePattern.test('mysite@ ourearth.com.vn'));
-		console.log(sails.controllers.test.Test());
-		var phonePattern= new RegExp(HelperService.regexPattern.fullPhoneNumber);
-		console.log(">>>>>>>>>"+phonePattern.test('442071111111'));
-		res.json({status:'finish'});
-		// UserAccount.findOne({
-		// 	where :{UserName: u}
-		// })
-		// .then(function(user){
-		// 	res.json(200,user);
-		// },function(err){
-		// 	res.json(500,err);
-		// })
+		res.json({status:"OK"})
 	},
 	
 	createUser:function(req,res){
@@ -29,14 +15,33 @@ module.exports = {
 			Activated:'Y',
 			Enable:'Y'
 		}
-
 		userInfo.UID=UUIDService.Create();
-		UserAccountService.CreateUserAccount(userInfo)
-		.then(function(data){
-			res.ok(data);
-		},function(err){
-			res.serverError({message:err.message});
+		
+		//Cách 1: Managed transaction (auto-callback)
+		/*sequelize.transaction(function (t) {
+			return UserAccountService.CreateUserAccount(userInfo)
 		})
+		.then(function(success){
+			res.ok(success);
+		})
+		.catch(function(err){
+			res.serverError({message:err.message});
+		})*/
+		
+
+		//cách 2: Unmanaged transaction (then-callback)
+		sequelize.transaction().then(function(t){
+			return UserAccountService.CreateUserAccount(userInfo,t)
+			.then(function (data) {
+				t.commit();
+				res.ok(data);
+			})
+			.catch(function (err) {
+				t.rollback();
+				res.serverError(err);
+			});
+		});	
+
 	},
 
 	/**

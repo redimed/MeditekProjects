@@ -4,6 +4,11 @@
     <string name="app_name">TelehealthPatient</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="confirm_exit">Press Back button again to exit</string>
+    <string name="alert_wrong_phone">Phone Number Invalid</string>
+
+    <string name="code_invalid">Code Invalid</string>
+    <string name="code_sent_request_again">Code will sent request again. Please wail a minutes</string>
+
     <string name="title_activity_call">CallActivity</string>
 
     <!-- Error-->

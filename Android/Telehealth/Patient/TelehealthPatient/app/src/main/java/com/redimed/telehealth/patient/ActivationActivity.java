@@ -230,6 +230,9 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                     String status = jsonObject.get("status").getAsString();
                     if (status.equalsIgnoreCase("success")) {
                         switchView(R.anim.in_from_left, R.anim.out_to_right, findViewById(R.id.layoutVerifyCode));
+                        vfChangeLayout.showNext();
+                    } else {
+                        new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, message).show();
                     }
                 }
 
@@ -243,6 +246,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
                 }
             });
         }
@@ -281,6 +285,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
                     }
                 });
             }

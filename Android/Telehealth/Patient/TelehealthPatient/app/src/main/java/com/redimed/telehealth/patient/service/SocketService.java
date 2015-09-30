@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient.service;
 
+import android.app.IntentService;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -42,6 +43,10 @@ public class SocketService extends Service {
         initializeSocket();
     }
 
+    public SocketService() {
+        super(SocketService.class.getName());
+    }
+
     private static void initializeSocket() {
         try {
             IO.Options opts = new IO.Options();
@@ -52,12 +57,6 @@ public class SocketService extends Service {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-    }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
     }
 
     @Override

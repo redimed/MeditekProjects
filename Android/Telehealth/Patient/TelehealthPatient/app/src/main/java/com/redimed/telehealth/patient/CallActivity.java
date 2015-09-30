@@ -22,14 +22,17 @@ import com.opentok.android.Subscriber;
 import com.opentok.android.SubscriberKit;
 import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
+import com.redimed.telehealth.patient.utils.Config;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.socket.client.IO;
 
 public class CallActivity extends AppCompatActivity implements View.OnClickListener, PublisherKit.PublisherListener, SubscriberKit.VideoListener, Session.SessionListener {
 
@@ -338,7 +341,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onVideoEnabled(SubscriberKit subscriberKit, String s) {
 
-    }
 
     @Override
     public void onVideoDisableWarning(SubscriberKit subscriberKit) {

@@ -3,7 +3,10 @@ package com.redimed.telehealth.patient;
 import android.app.Application;
 import android.content.Intent;
 
+<<<<<<< HEAD
 import com.redimed.telehealth.patient.models.TelehealthUser;
+=======
+>>>>>>> commit
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
 
 /**
@@ -31,7 +34,15 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         myApplication = this;
+<<<<<<< HEAD
         startService(new Intent(getApplicationContext(), RegistrationIntentService.class));
+=======
+
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
+
+
+>>>>>>> commit
     }
 
     @Override

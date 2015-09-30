@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -41,10 +42,8 @@ public class VoiceActivity extends AppCompatActivity implements View.OnClickList
     @Bind(R.id.subscriberView) RelativeLayout subscriberView;
     @Bind(R.id.loadingSpinner) ProgressBar loadingBar;
 
-
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voice);
         ButterKnife.bind(this);

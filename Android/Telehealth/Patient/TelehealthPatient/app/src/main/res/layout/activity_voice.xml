@@ -6,9 +6,15 @@
     tools:context="com.redimed.telehealth.patient.VoiceActivity">
 
     <RelativeLayout
+        android:id="@+id/publisherView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:keepScreenOn="true"/>
+
+    <RelativeLayout
         android:id="@+id/subscriberView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:keepScreenOn="true">
 
@@ -22,13 +28,7 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/publisherView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:keepScreenOn="true">
-
-        <LinearLayout
+    <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -57,9 +57,6 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/icon_unmute"/>
-
-        </LinearLayout>
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

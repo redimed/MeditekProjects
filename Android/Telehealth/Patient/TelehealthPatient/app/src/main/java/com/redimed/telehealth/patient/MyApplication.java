@@ -1,14 +1,8 @@
 package com.redimed.telehealth.patient;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 
-import com.redimed.telehealth.patient.models.UserAccount;
-import com.redimed.telehealth.patient.service.MyInstanceIDListenerService;
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
 
 /**
@@ -29,6 +23,8 @@ public class MyApplication extends Application{
 
         Intent intent = new Intent(this, RegistrationIntentService.class);
         startService(intent);
+
+
     }
 
     @Override

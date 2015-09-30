@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient.service;
 
+import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,12 +23,23 @@ import io.socket.emitter.Emitter;
 /**
  * Created by luann on 9/23/2015.
  */
-public class SocketService extends Service {
+public class SocketService extends IntentService {
+
     private static String TAG = "SocketService";
     private static Socket socket;
+    private Intent i;
 
     static {
         initializeSocket();
+    }
+
+    public SocketService() {
+        super(SocketService.class.getName());
+    }
+
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        Log.d(TAG, "Service Started!");
     }
 
     private static void initializeSocket() {
@@ -55,6 +67,7 @@ public class SocketService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        socket.on("receiveMessage", onReceiveMessage);
         socket.on(Socket.EVENT_CONNECT, onConnect);
         socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
         socket.on(Socket.EVENT_RECONNECT, onReconnect);
@@ -98,4 +111,15 @@ public class SocketService extends Service {
             Log.d(TAG, "====Socket Disconnect====");
         }
     };
+
+    private Emitter.Listener onReceiveMessage = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            JSONObject data = (JSONObject) args[0];
+            i = new Intent("android.intent.action.MessageSocket").putExtra("messageTransfer", data.toString());
+            getApplicationContext().sendBroadcast(i);
+            Log.d(TAG, "====Socket Receive Message====" + data.toString());
+        }
+    };
+
 }

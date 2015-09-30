@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,10 +23,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.models.TelehealthUser;
-import com.redimed.telehealth.patient.models.UserAccount;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
-import com.redimed.telehealth.patient.utils.CustomDialog;
+import com.redimed.telehealth.patient.utils.CustomAlertDialog;
 import com.squareup.picasso.Picasso;
 
 import java.util.regex.Matcher;
@@ -127,13 +124,8 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
             if (!flagBackActivationLayout) {
                 if (tbActivation != null) {
                     setSupportActionBar(tbActivation);
-                    final ActionBar ab = getSupportActionBar();
-
-                    ab.setDisplayShowHomeEnabled(true);
-                    ab.setDisplayHomeAsUpEnabled(true);
-                    ab.setDisplayShowCustomEnabled(true);
-                    ab.setDisplayShowTitleEnabled(true);
-                    ab.setHomeButtonEnabled(true);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    getSupportActionBar().setHomeButtonEnabled(true);
                 }
             }
         } else {
@@ -165,13 +157,13 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                     if (status.equalsIgnoreCase("success")) {
                         vfChangeLayout.showNext();
                     } else {
-                        new CustomDialog(ActivationActivity.this, CustomDialog.State.Error, message).show();
+                        new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, message).show();
                     }
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    new CustomDialog(ActivationActivity.this, CustomDialog.State.Error, error.getLocalizedMessage()).show();
+                    new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
                 }
             });
         }
@@ -213,12 +205,12 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                             Intent i = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(i);
                         }else {
-                            new CustomDialog(ActivationActivity.this, CustomDialog.State.Error, message).show();
+                            new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, message).show();
                         }
                     }
                     @Override
                     public void failure(RetrofitError error) {
-                        new CustomDialog(ActivationActivity.this, CustomDialog.State.Error, error.getLocalizedMessage()).show();
+                        new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
                     }
                 });
             }

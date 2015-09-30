@@ -4,58 +4,56 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 
 import com.redimed.telehealth.patient.models.UserAccount;
+import com.redimed.telehealth.patient.service.SocketService;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    private SharedPreferences dataUser;
     public UserAccount userAccount;
-    Intent intent;
+
+    private SharedPreferences dataUser;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+        intent = new Intent(this, SocketService.class);
+        startService(intent);
         dataUser = getSharedPreferences("DataUser", MODE_PRIVATE);
         File xmlUser = new File("/data/data/" + getApplicationContext().getPackageName() + "/shared_prefs/DataUser.xml");
         if (xmlUser.exists()){
             userAccount = new UserAccount();
             userAccount.setID(dataUser.getInt("ID", 0));
             userAccount.setUserName(dataUser.getString("UserName", null));
-            userAccount.setPhoneNumber(dataUser.getString("Phone", null));
+            userAccount.setPhoneNumber(dataUser.getString("PhoneNumber", null));
             userAccount.setEmail(dataUser.getString("Email", null));
+            JoinRoom();
             intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
+            this.finish();
         }else {
             intent = new Intent(this, ActivationActivity.class);
             startActivity(intent);
+            this.finish();
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_loading, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private void JoinRoom() {
+        try {
+            Map<String, Object> params = new HashMap<String, Object>();
+//            params.put("phone", userAccount.getPhoneNumber());
+            params.put("phone", "+84908618694");
+            SocketService.sendData("/telehealth/socket/joinRoom", params);
+            Log.i("=======Join Room======", params.toString());
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

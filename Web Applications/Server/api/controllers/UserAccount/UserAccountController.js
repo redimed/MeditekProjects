@@ -27,11 +27,10 @@ module.exports = {
 		.catch(function(err){
 			res.serverError({message:err.message});
 		})*/
-		
 
 		//cách 2: Unmanaged transaction (then-callback)
 		sequelize.transaction().then(function(t){
-			return UserAccountService.CreateUserAccount(userInfo,t)
+			return Services.UserAccount.CreateUserAccount(userInfo,t)
 			.then(function (data) {
 				t.commit();
 				res.ok(data);
@@ -51,7 +50,7 @@ module.exports = {
 	 */
 	FindByPhoneNumber:function(req,res)
 	{
-		UserAccountService.FindByPhoneNumber(req,res)
+		Services.UserAccount.FindByPhoneNumber(req,res)
 		.then(function(data){
 			res.ok(data[0]);
 		},function(err){

@@ -16,6 +16,19 @@ routes['get /api/appointment-telehealth-request'] = {
     action: 'RequestAppointment'
 };
 
+//module patient
+routes['post /api/patient/create-patient'] = {
+	controller: 'Patient/PatientController',
+	action :'CreatePatient'
+};
+
+routes['post /api/patient/search-patient'] = {
+	controller: 'Patient/PatientController',
+	action :'SearchPatient'
+};
+
+//end module patient
+
 //module user account
 routes['get /api/user-account/test']={
 	controller:'UserAccount/UserAccountController',
@@ -33,4 +46,5 @@ routes['get /user-account/find-by-phone']={
     controller:'UserAccount/UserAccountController',
     action:'FindByPhoneNumber'
 };
+
 module.exports.routes = routes;

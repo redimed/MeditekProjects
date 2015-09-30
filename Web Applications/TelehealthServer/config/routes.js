@@ -16,6 +16,10 @@ module.exports.routes = {
         controller: 'TelehealthController',
         action: 'TelehealthLogin'
     },
+    'POST /telehealth/sendSMS' : {
+        controller: 'TelehealthController',
+        action: 'SendSMS'
+    },
     //================Telehealth Socket Routes==========================
     '/telehealth/socket/joinRoom': {
         controller: 'SocketController',

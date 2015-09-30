@@ -1,0 +1,9 @@
+module.exports={
+	Test:function()
+	{
+		console.log(">>>>>>>aaa");
+		console.log(">>>>>>>aaa");
+		console.log(">>>>>>>aaa");
+		console.log(">>>>>>>aaa");
+	}
+}

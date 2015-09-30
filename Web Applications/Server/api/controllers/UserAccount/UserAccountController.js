@@ -1,14 +1,23 @@
+var regexp = require('node-regexp');
+var $q = require('q');
+// var TestController=require('../TestController');
 module.exports = {
 	Test:function(req,res)
 	{
-		UserAccount.findOne({
-			where :{UserName: u}
-		})
-		.then(function(user){
-			res.json(200,user);
-		},function(err){
-			res.json(500,err);
-		})
+		// var rePattern = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+		// console.log(">>>>>>>>>"+rePattern.test('mysite@ ourearth.com.vn'));
+		console.log(sails.controllers.test.Test());
+		var phonePattern= new RegExp(HelperService.regexPattern.fullPhoneNumber);
+		console.log(">>>>>>>>>"+phonePattern.test('442071111111'));
+		res.json({status:'finish'});
+		// UserAccount.findOne({
+		// 	where :{UserName: u}
+		// })
+		// .then(function(user){
+		// 	res.json(200,user);
+		// },function(err){
+		// 	res.json(500,err);
+		// })
 	},
 	
 	createUser:function(req,res){
@@ -20,47 +29,31 @@ module.exports = {
 			Activated:'Y',
 			Enable:'Y'
 		}
-		userInfo.UID=UUIDService.Create();
-		try {
-			if(userInfo.UserName || userInfo.Email || userInfo.PhoneNumber)
-			{
-				UserAccount.create(userInfo)
-				.then(function(data){
-					res.ok(data);
-				},function(err){
-					throw err;
-				})
-				.catch(function(err){
-					console.log(err);
-					res.serverError({message:err.message});
-				});
-			}
-			else
-			{
-				throw new Error('Must enter User Name or Email or Phone Number');
-			}
-		}
-		catch(err) {			
-		    res.serverError({message:err.message});
-		}
-	},
 
-	FindByPhoneNumber:function(req,res)
-	{
-		var PhoneNumber=req.query.PhoneNumber;
-		UserAccount.findAll({
-			where :{
-				PhoneNumber:PhoneNumber
-			}
-		})
-		.then(function(rows){
-			if(rows.length>0)
-				res.ok(rows[0]);
-			else
-				res.notFound();
+		userInfo.UID=UUIDService.Create();
+		UserAccountService.CreateUserAccount(userInfo)
+		.then(function(data){
+			res.ok(data);
 		},function(err){
 			res.serverError({message:err.message});
 		})
+	},
 
+	/**
+	 * FindByPhoneNumber: Search user by Phone number
+	 * Input: req.query.PhoneNumber
+	 * Output: 
+	 */
+	FindByPhoneNumber:function(req,res)
+	{
+		UserAccountService.FindByPhoneNumber(req,res)
+		.then(function(data){
+			res.ok(data[0]);
+		},function(err){
+			if(err.status==404)
+				res.notFound({message:err.message});
+			else
+				res.serverError({message:err.message});
+		})
 	}
 }

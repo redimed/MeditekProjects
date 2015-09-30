@@ -50,7 +50,8 @@ module.exports = {
 	 */
 	FindByPhoneNumber:function(req,res)
 	{
-		Services.UserAccount.FindByPhoneNumber(req,res)
+		var PhoneNumber=req.query.PhoneNumber;
+		Services.UserAccount.FindByPhoneNumber(PhoneNumber,['UserName','Email'])
 		.then(function(data){
 			res.ok(data[0]);
 		},function(err){

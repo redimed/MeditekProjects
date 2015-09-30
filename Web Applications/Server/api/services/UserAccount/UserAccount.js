@@ -2,14 +2,17 @@ var $q = require('q');
 var regexp = require('node-regexp');
 module.exports = {
 
-	FindByPhoneNumber:function(PhoneNumber)
+	FindByPhoneNumber:function(PhoneNumber,attributes)
 	{
+		// console.log(attributes)
 		return UserAccount.findAll({
 			where :{
 				PhoneNumber:PhoneNumber
-			}
+			},
+			attributes:attributes
 		});
 	},
+
 
 	CreateUserAccount:function(userInfo,transaction)
 	{

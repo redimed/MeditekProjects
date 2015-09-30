@@ -1,4 +1,5 @@
 var $q = require('q');
+var regexp = require('node-regexp');
 module.exports = {
 
 	FindByPhoneNumber:function(PhoneNumber)
@@ -27,7 +28,9 @@ module.exports = {
 				var fullPhoneNumberPattern= new RegExp(HelperService.regexPattern.fullPhoneNumber);
 				if(userInfo.PhoneNumber && !fullPhoneNumberPattern.test(userInfo.PhoneNumber))
 				{
+					
 					throw new Error('invalid phone number');
+
 				}
 				if(userInfo.UserName || userInfo.Email || userInfo.PhoneNumber)
 				{

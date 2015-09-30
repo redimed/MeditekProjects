@@ -9,6 +9,8 @@ module.exports.myconf = {
     OpentokAPISecret: 'ea8881fbc747db405422ff4c879f4be78a979d81',
     //============ GCM Push Notification =============
     GCMApiKey: 'AIzaSyChaE4-AETpWum-4-TOoxM7HZg3NvaFL6I',
+    //============ Token Secret ======================
+    TokenSecret: 'ewfn09qu43f09qfj94qf*&H#(R',
     //============ Generate Random UUID ==============
     GenerateUUID: function(){
     	return uuid.v4();

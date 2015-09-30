@@ -12,11 +12,8 @@ module.exports = {
             return;
         }
         var phoneNumber = typeof req.param('phone') != 'undefined' ? req.param('phone') : null;
-        if (phoneNumber != null) {
-            console.log("====Join Rooms====: ", phoneNumber);
-            sails.sockets.join(req.socket, phoneNumber);
-            console.log("===All Rooms====: ", JSON.stringify(sails.sockets.rooms()));
-        }
+        var phoneRegex = /^\+[0-9]{9,15}$/;
+        if (phoneNumber != null && phoneNumber.match(phoneRegex)) sails.sockets.join(req.socket, phoneNumber);
     },
     MessageTransfer: function(req, res) {
         if (!req.isSocket) {

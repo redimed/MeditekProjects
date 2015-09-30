@@ -1,3 +1,5 @@
+var passport = require('passport');
+var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var config = sails.config.myconf;
 //****Twilio Client for sending SMS
@@ -28,7 +30,7 @@ function sendSMS(toNumber, content, callback) {
     }, callback());
 };
 module.exports = {
-    TelehealthLogin: function(req, res) {
+    SendSMS: function(req, res) {
         if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
             res.json(500, {
                 status: 'error',
@@ -37,55 +39,59 @@ module.exports = {
             return;
         }
         var info = toJson(req.body.data);
-        var username = typeof info.username != 'undefined' ? info.username : null;
-        var password = typeof info.password != 'undefined' ? info.password : null;
-        if (username == null || password == null) {
-            res.json(500, {
-                status: 'error',
-                message: 'Invalid Parameters!'
-            });
-            return;
-        }
-        UserAccount.find({
-            where: {
-                [username.indexOf('@') > -1 ? 'email' : 'userName']: username
-            }
-        }).then(function(user) {
-            if (user) {
-                bcrypt.compare(password.toString(), user.password, function(err, check) {
-                    if (check) {
-                        user.getDoctor().then(function(doctor) {
-                            if (doctor) {
-                                user.dataValues.Doctor = doctor;
-                                res.json(200, {
-                                    status: 'success',
-                                    data: user
-                                })
-                            } else res.json(500, {
-                                status: 'error',
-                                message: 'Wrong Username Or Password!'
-                            })
-                        }).catch(function(err) {
-                            res.json(500, {
-                                status: 'error',
-                                message: err
-                            });
-                        })
-                    } else res.json(500, {
+        var phoneNumber = typeof info.phone != 'undefined' ? info.phone : null;
+        var content = typeof info.content != 'undefined' ? info.content : null;
+        var phoneRegex = /^\+[0-9]{9,15}$/;
+        if (phoneNumber != null && phoneNumber.match(phoneRegex) && content != null) {
+            sendSMS(phoneNumber, content, function(err, message) {
+                if (err) {
+                    res.json(500, {
                         status: 'error',
-                        message: 'Wrong Username Or Password!'
-                    })
+                        message: err
+                    });
+                    return;
+                }
+                res.json(200, {
+                    status: 'success',
+                    message: 'Send SMS Successfully!'
                 });
-            } else res.json(500, {
-                status: 'error',
-                message: 'User Is Not Exist!'
-            })
-        }).catch(function(err) {
-            res.json(500, {
-                status: 'error',
-                message: err
             });
+        } else res.json(500, {
+            status: 'error',
+            message: 'Invalid Parameters!'
         })
+    },
+    TelehealthLogout: function(req, res) {
+        req.logout();
+        res.json(200, {
+            status: "success"
+        });
+    },
+    TelehealthLogin: function(req, res) {
+        passport.authenticate('local', function(err, user, info) {
+            if ((err) || (!user)) {
+                if (err) console.log(err);
+                res.json(401, {
+                    status: 'error',
+                    message: 'Login Failed!'
+                });
+                return;
+            }
+            req.logIn(user, function(err) {
+                if (err) res.status(401).send(err);
+                else {
+                    var token = jwt.sign(user, config.TokenSecret, {
+                        expiresInMinutes: 60 * 24
+                    });
+                    res.json(200, {
+                        status: 'success',
+                        message: info.message,
+                        user: user,
+                        token: token
+                    });
+                }
+            });
+        })(req, res);
     },
     UpdateDeviceToken: function(req, res) {
         if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
@@ -175,10 +181,9 @@ module.exports = {
                         }).then(function() {
                             sendSMS(phoneNumber, "Your verification code is " + verificationCode, function(err, message) {
                                 if (err) {
-                                    sails.log.error("=====SMS Error=====: ", err);
                                     res.json(500, {
                                         status: 'error',
-                                        message: 'Error!'
+                                        message: err
                                     });
                                     return;
                                 }

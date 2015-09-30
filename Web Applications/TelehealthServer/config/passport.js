@@ -1,25 +1,45 @@
-/**
- * Passport configuration
- *
- * This is the configuration for your Passport.js setup and where you
- * define the authentication strategies you want your application to employ.
- *
- * I have tested the service with all of the providers listed below - if you
- * come across a provider that for some reason doesn't work, feel free to open
- * an issue on GitHub.
- *
- * Also, authentication scopes can be set through the `scope` property.
- *
- * For more information on the available providers, check out:
- * http://passportjs.org/guide/providers/
- */
-
-module.exports.passport = {
-  local: {
-    strategy: require('passport-local').Strategy
-  },
-
-  bearer: {
-    strategy: require('passport-http-bearer').Strategy
-  }
-};
+var passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy,
+    bcrypt = require('bcryptjs');
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+passport.deserializeUser(function(user, done) {
+    done(null, user);
+});
+passport.use(new LocalStrategy({
+    usernameField: 'username',
+    passwordField: 'password',
+    passReqToCallback: true
+}, function(req, u, p, done) {
+    UserAccount.find({
+        where: {
+            [u.indexOf('@') > -1 ? 'email' : 'userName']: u
+        }
+    }).then(function(user) {
+        if (user) {
+            bcrypt.compare(p.toString(), user.password, function(err, check) {
+                if (check) {
+                    user.getDoctor().then(function(doctor) {
+                        if (doctor) {
+                            user.dataValues.Doctor = doctor;
+                            return done(null, user, {
+                                message: 'Logged In Successfully!'
+                            });
+                        } else return done(null, false, {
+                            message: 'Wrong Username Or Password!'
+                        });
+                    }).catch(function(err) {
+                        return done(err);
+                    })
+                } else return done(null, false, {
+                    message: 'Wrong Username Or Password!'
+                });
+            });
+        } else return done(null, false, {
+            message: 'User Is Not Exist!'
+        });
+    }).catch(function(err) {
+        return done(err);
+    })
+}));

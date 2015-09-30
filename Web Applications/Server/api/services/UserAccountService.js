@@ -19,15 +19,15 @@ module.exports = {
 				//email validation
 				var emailPattern = new RegExp(HelperService.regexPattern.email);
 				// if(userInfo.Email && emailPattern.test(userInfo.Email))
-				// if(userInfo.Email && emailPattern.test(userInfo.Email))
-				// {
-				// 	throw new Error('invalid email');
-				// }
+				if(userInfo.Email && !emailPattern.test(userInfo.Email))
+				{
+					throw new Error('invalid email');
+				}
 				//Phone number validation
 				var fullPhoneNumberPattern= new RegExp(HelperService.regexPattern.fullPhoneNumber);
-				if(userInfo.PhoneNumber && fullPhoneNumberPattern.test(userInfo.PhoneNumber))
+				if(userInfo.PhoneNumber && !fullPhoneNumberPattern.test(userInfo.PhoneNumber))
 				{
-					//check autralian phone number
+					throw new Error('invalid phone number');
 				}
 				if(userInfo.UserName || userInfo.Email || userInfo.PhoneNumber)
 				{

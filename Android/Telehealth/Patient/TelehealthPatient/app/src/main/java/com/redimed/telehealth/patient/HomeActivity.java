@@ -10,9 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+import com.redimed.telehealth.patient.api.RegisterApi;
+import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.SocketService;
 
 import java.util.HashMap;
@@ -20,15 +24,20 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static String TAG ="HOME";
     private ActionBarDrawerToggle actionDrawerToggle;
     private boolean shouldFinish = false;
-    private SocketService socketOpenTok;
     private BroadcastReceiver receiverDataSocketService;
-
-    @Bind(R.id.txtHomeTitle) TextView txtHomeTitle;
+    private RegisterApi restClient = RESTClient.getRegisterApi();
+    private String sessionID;
+    @Bind(R.id.testSocket) Button testSocket;
+    @Bind(R.id.testSession) Button testSession;
     @Bind(R.id.patientDrawer) DrawerLayout patientDrawer;
 
     @Override
@@ -37,7 +46,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-        txtHomeTitle.setOnClickListener(this);
+        testSocket.setOnClickListener(this);
+        testSession.setOnClickListener(this);
 
         DisplayDrawer();
 
@@ -45,8 +55,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         receiverDataSocketService = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                String messageSocket = intent.getStringExtra("messageTransfer");
-                Log.i("====MessageTransfer====", messageSocket);
+                String messageSocket = intent.getStringExtra("Message");
+                Log.i("====Message====", messageSocket);
             }
         };
         this.registerReceiver(receiverDataSocketService, intentFilter);
@@ -86,10 +96,32 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.txtHomeTitle:
+            case R.id.testSocket:
                 DisplayCall();
                 break;
+            case R.id.testSession:
+                TestSession();
+                break;
         }
+    }
+
+    private void TestSession() {
+        restClient.generateSession(new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                String status = jsonObject.get("status").getAsString();
+                Log.d("OK", jsonObject.toString());
+                if (status.equalsIgnoreCase("success")){
+                    sessionID = jsonObject.getAsJsonObject("data").get("sessionId").getAsString();
+                    Log.d(TAG, sessionID);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Error", error.toString());
+            }
+        });
     }
 
     private void DisplayCall() {
@@ -98,15 +130,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 //        this.finish();
 
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("from", "+841234567890");
-        params.put("to", "+84908618694");
+        params.put("from", "+84908618694");
+        params.put("to", "+841267146714");
         params.put("message", "call");
+        params.put("sessionId", sessionID);
         try {
-            SocketService.sendData("/telehealth/socket/messageTransfer", params);
+            SocketService.sendData("socket/messageTransfer", params);
+            Toast.makeText(this, "Clinic: " + params.toString(), Toast.LENGTH_LONG).show();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
-        Log.i("Transfer",params.toString());
     }
 
     @Override

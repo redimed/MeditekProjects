@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
+import com.redimed.telehealth.patient.service.SocketService;
 
 /**
  * Created by luann on 9/23/2015.
@@ -20,11 +21,7 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         myApplication = this;
-
-        Intent intent = new Intent(this, RegistrationIntentService.class);
-        startService(intent);
-
-
+        startService(new Intent(getApplicationContext(), RegistrationIntentService.class));
     }
 
     @Override

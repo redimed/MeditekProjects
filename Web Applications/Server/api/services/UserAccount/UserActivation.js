@@ -19,6 +19,20 @@ module.exports = {
 			mobileSystems.push(HelperService.const.systemType.ios);
 			mobileSystems.push(HelperService.const.systemType.android);
 			try{
+				//Code mẫu demo trả về error với nhiều chi tiết lỗi
+				/*if(activationInfo.VerificationCode.length>2)
+				{
+					var errors=[];
+					var err=new Error('Validate.VerificationCode');
+					// err.errors=[];
+					// err.errors.push({field: 'from_date', message: 'From Date must be smaller than or equal To Date'});
+					// err.errors.push({field: 'to_date', message: 'To Date must be larger than or equal From Date'});
+					errors.push({field: 'from_date', message: 'From Date must be smaller than or equal To Date'});
+					errors.push({field: 'to_date', message: 'To Date must be larger than or equal From Date'});
+					err.pushErrors(errors);
+					throw err;
+					
+				}*/
 				//Check UserAccountId
 				if(!activationInfo.UserAccountID)
 				{

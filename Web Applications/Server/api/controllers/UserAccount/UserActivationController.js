@@ -14,6 +14,7 @@ module.exports = {
 				res.ok(data);
 			},function(err){
 				t.rollback();
+				console.log(err);
 				res.serverError(ErrorWrap(err));
 			})
 			// .catch(function(err){

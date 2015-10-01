@@ -9,15 +9,23 @@ module.exports=function(err)
 	{
 		//Kiem tra co phai kieu Error khong, neu la kieu Error thi tra ve stack error
 		if(err.stack)
-			return {error:err.stack};
+			return {message:err.message,errors:err.errors,error:err.stack};
 		else
 			return err;
 	}
 	else
 	{
-		if(err.message)
-			return {message:err.message};
+		if(err.stack)
+		{
+			if(err.message)
+				return {message:err.message,errors:err.errors};
+			else
+				return {message:'server error'};
+		}
 		else
-			return {message:'server error'};
+		{
+			return err;
+		}
+		
 	}
 }

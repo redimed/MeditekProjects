@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">UrgentCare</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_make_appointment">MakeAppointmentActivity</string>
+    
+    <string name="progressMakeAppointmentTitle">Make Appointment</string>
+    <string name="progressMakeAppointmentContent">Please wait..</string>
+    <string name="jsonTitleSendAppointment">data</string>
+    <string name="contentDialogErrorAppointment">Error! please check your connection and try again</string>
+    <string name="contentDialogSuccessAppointment">Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.</string>
+    <string name="australiaFormatPhone">+61</string>
+    <string name="serviceFAQ">FAQ</string>
+    <string name="serviceSportInjury">SportInjury</string>
+    <string name="serviceWorkInjury">WorkInjury</string>
+    <string name="serviceUrgentCare">UrgentCare</string>
+    <string name="phoneRedimed"><u> 08 9230 0900</u></string>
+    <string name="phoneBold"><b>Phone: </b></string>
+    <string name="emailBold"><b>Email: </b></string>
+    <string name="faxBold"><b>Fax: </b></string>
+    <string name="addressBold"><b>Address: </b></string>
+    <string name="openingHoursBold"><b>Opening hours: </b></string>
+
+    <string name="emailRedimed"><u> reception@redimed.com.au</u></string>
+    <string name="joondalupPhone"><u> 08 9300 3835</u></string>
+    <string name="joondalupAddress"><u> 81 McLarty Avenue, Joondalup WA 6027</u></string>
+    <string name="belmontPhone"><u> 08 9230 0900</u></string>
+    <string name="belmontAddress"><u> 1 Frederick Street, Belmont WA 6104</u></string>
+    <string name="rockinghamAddress"><u> Unit 1/23 Chalgrove Avenue, Rockingham WA 6168</u></string>
+    <string name="rockinghamPhone"><u> 08 9527 1585</u></string>
+
+
+
+
+
+    <string name="state_prompt">Choose State</string>
+
+    <string-array name="state_arrays">
+        <item>Select State</item>
+        <item>Victoria</item>
+        <item>New South Wales</item>
+        <item>Queensland</item>
+        <item>Australian Capital Territory</item>
+        <item>Northern Territory</item>
+        <item>Western Australia</item>
+        <item>South Australia</item>
+        <item>Tasmania</item>
+    </string-array>
+    <string name="title_activity_faq">FAQ</string>
+    <string name="title_activity_sport_injury">SportInjuryActivity</string>
+    <string name="title_activity_work_injury">WorkInjuryActivity</string>
+</resources>

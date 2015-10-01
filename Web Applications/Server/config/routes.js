@@ -85,5 +85,9 @@ routes['get /api/user-account/find-by-phone']={
     controller:'UserAccount/UserAccountController',
     action:'FindByPhoneNumber'
 };
+route['post /api/user-activation/create-user-activation']={
+    controller:'UserAccount/UserActivationController',
+    action:'CreateUserActivation'
+}
 
 module.exports.routes = routes;

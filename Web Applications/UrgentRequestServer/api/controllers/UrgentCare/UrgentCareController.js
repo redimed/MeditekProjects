@@ -84,19 +84,6 @@ module.exports = {
                             var CallBackSendMailPatient = function(err, responseStatus, html, text) {
                                 if (err) {
                                     console.log(err);
-                                } else {
-                                    //send sms
-                                    var dataSMS = {
-                                        phone: data.phoneNumber,
-                                        content: 'Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.'
-                                    };
-                                    var CallBackSendSMS = function(err) {
-                                        if (err) {
-                                            console.log(err);
-                                        } else {
-                                            console.log('send sms successfully');
-                                        }
-                                    }
                                 }
                             };
                             //send email and sms to customer
@@ -110,6 +97,18 @@ module.exports = {
                                 phoneNumber: data.phoneNumber
                             };
                             SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
+                        }
+                        //send sms
+                        var dataSMS = {
+                            phone: data.phoneNumber,
+                            content: 'Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.'
+                        };
+                        var CallBackSendSMS = function(err) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log('send sms successfully');
+                            }
                         }
                         SendSMSService.Send(dataSMS, CallBackSendSMS);
                     }

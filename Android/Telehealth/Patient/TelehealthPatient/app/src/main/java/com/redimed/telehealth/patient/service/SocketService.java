@@ -1,6 +1,5 @@
 package com.redimed.telehealth.patient.service;
 
-import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
@@ -23,7 +22,7 @@ import io.socket.emitter.Emitter;
 /**
  * Created by luann on 9/23/2015.
  */
-public class SocketService extends IntentService {
+public class SocketService extends Service {
 
     private static String TAG = "SocketService";
     private static Socket socket;
@@ -31,15 +30,6 @@ public class SocketService extends IntentService {
 
     static {
         initializeSocket();
-    }
-
-    public SocketService() {
-        super(SocketService.class.getName());
-    }
-
-    @Override
-    protected void onHandleIntent(Intent intent) {
-        Log.d(TAG, "Service Started!");
     }
 
     private static void initializeSocket() {
@@ -71,20 +61,24 @@ public class SocketService extends IntentService {
         socket.on(Socket.EVENT_CONNECT, onConnect);
         socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
         socket.on(Socket.EVENT_RECONNECT, onReconnect);
+        socket.on(Socket.EVENT_ERROR, onError);
+        socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
         return START_STICKY;
     }
 
     public static void sendData(String url, Map<String, Object> params) throws Throwable {
-        if (url.isEmpty() || params.isEmpty())
-            throw new Throwable("Missing Required Data");
         JSONObject obj = new JSONObject();
         try {
             Uri.Builder builder = new Uri.Builder();
+            builder.appendPath("telehealth");
             builder.appendPath(url);
             for (String key : params.keySet()) {
                 builder.appendQueryParameter(key, String.valueOf(params.get(key)));
             }
-            obj.put("url", builder.build().toString().replace("%2F", "/"));
+            String emitUrl = builder.build().toString();
+            emitUrl = emitUrl.replaceAll("(?i)%2F", "/");
+            Log.d(TAG, Config.socketURL + emitUrl);
+            obj.put("url", emitUrl);
             socket.emit("get", obj);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -94,7 +88,7 @@ public class SocketService extends IntentService {
     private Emitter.Listener onConnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            Log.d(TAG, "====Socket Connected====");
+           Log.d(TAG, "====Socket Connected====");
         }
     };
 
@@ -112,14 +106,26 @@ public class SocketService extends IntentService {
         }
     };
 
+    private Emitter.Listener onError = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.d("Socket Error", args[0].toString());
+        }
+    };
+    private Emitter.Listener onConnectError = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.d("Socket Connect Error", args[0].toString());
+        }
+    };
+
     private Emitter.Listener onReceiveMessage = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             JSONObject data = (JSONObject) args[0];
-            i = new Intent("android.intent.action.MessageSocket").putExtra("messageTransfer", data.toString());
+            i = new Intent("android.intent.action.MessageSocket").putExtra("Message", data.toString());
             getApplicationContext().sendBroadcast(i);
-            Log.d(TAG, "====Socket Receive Message====" + data.toString());
+            Log.d("Socket Receive Message", data.toString());
         }
     };
-
 }

@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.accessibility.AccessibilityManager;
+import android.widget.Toast;
 
 import com.redimed.telehealth.patient.models.UserAccount;
 import com.redimed.telehealth.patient.service.SocketService;
@@ -18,14 +20,12 @@ public class LoadingActivity extends AppCompatActivity {
     public UserAccount userAccount;
 
     private SharedPreferences dataUser;
-    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
-        intent = new Intent(this, SocketService.class);
-        startService(intent);
+        startService(new Intent(getApplicationContext(), SocketService.class));
         dataUser = getSharedPreferences("DataUser", MODE_PRIVATE);
         File xmlUser = new File("/data/data/" + getApplicationContext().getPackageName() + "/shared_prefs/DataUser.xml");
 
@@ -45,17 +45,19 @@ public class LoadingActivity extends AppCompatActivity {
             JoinRoom();
             intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
+            JoinRoom();
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             this.finish();
         }
     }
 
-    private void JoinRoom() {
+    public void JoinRoom() {
         try {
             Map<String, Object> params = new HashMap<String, Object>();
-//            params.put("phone", userAccount.getPhoneNumber());
-            params.put("phone", "+84908618694");
-            SocketService.sendData("/telehealth/socket/joinRoom", params);
-            Log.i("=======Join Room======", params.toString());
+            params.put("phone", userAccount.getPhoneNumber());
+//            params.put("phone", "+84908618694");
+            SocketService.sendData("socket/joinRoom", params);
+            Toast.makeText(getApplicationContext(), "Join Room: " + params.toString(), Toast.LENGTH_LONG).show();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }

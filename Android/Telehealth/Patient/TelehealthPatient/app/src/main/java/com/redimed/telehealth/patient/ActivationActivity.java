@@ -51,7 +51,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     @Bind(R.id.tbActivation) Toolbar tbActivation;
 
     private Intent i;
-
     private boolean flagBackActivationLayout = true;
     private RegisterApi registerApi = RESTClient.getRegisterApi();
     private Gson gson = new Gson();

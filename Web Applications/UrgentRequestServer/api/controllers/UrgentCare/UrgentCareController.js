@@ -65,8 +65,7 @@ module.exports = {
                     urgentRequestType: data.urgentRequestType,
                     patientName: data.lastName + ' ' + data.firstName,
                     requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
-                    phoneNumber: data.phoneNumber,
-                    bcc: 'thanh1101681@gmail.com, pnguyen@redimed.com.au'
+                    phoneNumber: data.phoneNumber
                 };
 
                 /*
@@ -89,7 +88,7 @@ module.exports = {
                             //send email and sms to customer
                             var emailInfoPatient = {
                                 from: 'Health Screenings <HealthScreenings@redimed.com.au>',
-                                email: data.email,
+                                email: data.email.toLowerCase(),
                                 subject: 'Request Received',
                                 urgentRequestType: data.urgentRequestType,
                                 patientName: data.lastName + ' ' + data.firstName,
@@ -106,8 +105,6 @@ module.exports = {
                         var CallBackSendSMS = function(err) {
                             if (err) {
                                 console.log(err);
-                            } else {
-                                console.log('send sms successfully');
                             }
                         }
                         SendSMSService.Send(dataSMS, CallBackSendSMS);

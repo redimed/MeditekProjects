@@ -33,16 +33,15 @@ module.exports = {
                         var emailInfo = {
                             from: 'Health Screenings <HealthScreenings@redimed.com.au>',
                             email: 'HealthScreenings@redimed.com.au',
-                            subject: '[Testing] -[UrgentCare Request] - [' + (UR.tried === 2 ? '2th' : '3rd') + '] - [' +
+                            subject: '[Testing] -[UrgentCare Request] - [' + (UR.tried === 1 ? '2nd' : '3rd') + '] - [' +
                                 Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                                 '] - [' + UR.lastName + ' ' +
                                 UR.firstName + '] - [' + UR.phoneNumber + ']',
                             confirmed: APIService.UrgentCareConfirmURL + '/' + UR.UID,
-                            urgentCareType: 'UrgentCare Request',
+                            urgentRequestType: 'UrgentCare Request',
                             patientName: UR.lastName + ' ' + UR.firstName,
                             requestDate: Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss'),
-                            phoneNumber: UR.phoneNumber,
-                            bcc: 'thanh1101681@gmail.com, pnguyen@redimed.com.au'
+                            phoneNumber: UR.phoneNumber
                         };
                         var CallBackSendMail = function(err, responseStatus, html, text) {
                                 if (err) {
@@ -71,7 +70,6 @@ module.exports = {
                                         status: 'spending',
                                         startTime: Services.moment().format('YYYY-MM-DD HH:mm:ss')
                                     };
-                                    console.log(dataMQ);
                                     MessageQueue.create({
                                             UID: dataMQ.UID,
                                             urgentRequestID: dataMQ.urgentRequestID,

@@ -60,7 +60,6 @@ var SendMailService = {
                     html: html,
                     text: text,
                     cc: emailInfo.cc
-                        // cc: emailInfo.cc
                 }, function(err, responseStatus) {
                     if (err) {
                         return fn(err);

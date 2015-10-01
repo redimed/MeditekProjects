@@ -1,3 +1,6 @@
 module.exports = {
-	MessageQueue: require('./UrgentCare/MessageQueue.js')
+    _: require('underscore'),
+    moment: require('moment'),
+    UserAccount:require('./UserAccount/UserAccount'),
+    Patient:require('./Patient/Patient')
 };

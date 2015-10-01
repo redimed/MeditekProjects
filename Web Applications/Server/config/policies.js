@@ -19,6 +19,28 @@
 
 module.exports.policies = {
 
+  '*': true,
+
+  // 'AuthController': {
+  //   'test': 'isAuthenticated'
+  // },
+
+  // '*': "hasToken",
+  // 'UserAccount/UserAccountController': {
+  //     "createUser": true,
+  //     "Test":true
+  // },
+  // 'UserAccount/AuthController': {
+  //     '*': true,
+  // },
+  
+  // 'TestController':{
+  //     'test':['hasToken'],
+  //     'testAdmin':['hasToken','isAdmin'],
+  //     'testAssistant':['hasToken','isAssistant'],
+  //     'testGp':['hasToken','isGp']
+  // }
+
   /***************************************************************************
   *                                                                          *
   * Default policy for all controllers and actions (`true` allows public     *

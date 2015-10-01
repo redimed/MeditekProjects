@@ -5,37 +5,7 @@ module.exports = {
 		output: insert Patient's information into table Patient 
 	*/
 	CreatePatient : function(data) {
-		console.log(data);
-		//var data = req.body.data;
-		//data.UID = UUIDService.Create();
-		//sails.controllers.userAccount.FindByPhoneNumber(req, res);
-		// Patient.create({
-		// 	UID           : data.UID,
-		// 	SiteID        : data.SiteID,
-		// 	UserAccountID : data.UserAccountID,
-		// 	FirstName     : data.FirstName,
-		// 	MiddleName    : data.MiddleName,
-		// 	LastName      : data.LastName,
-		// 	Dob           : data.Dob,
-		// 	Sex           : data.Sex,
-		// 	Address       : data.Address,
-		// 	CountryID     : data.CountryID
-		// 	Enable        : data.Enable,
-		// 	CreationDate  : data.CreationDate,
-		// 	CreatedBy     : data.CreatedBy,
-		// 	ModifiedDate  : data.ModifiedDate,
-		// 	ModifiedBy    : data.ModifiedBy
-		// })
-		// .then(function(result){
-		// 	res.json("success");
-		// })
-		// .catch(function(err){
-		// 	console.log("***ERROR***: ",err);
-		// 	res.json({
-		// 		status:"error",
-		// 	});
-		// 	return;
-		// });
+		return Patient.create(data);
 	},
 
 	SearchPatient : function(data) {
@@ -67,6 +37,22 @@ module.exports = {
 		return Patient.update(data,{
 			where:{
 				ID : data.ID
+			}
+		});
+	},
+
+	GetPatient : function(patientID) {
+		return Patient.find({
+			where: {
+				ID : patientID
+			}
+		});
+	},
+
+	DeletePatient : function(patientID) {
+		return Patient.destroy({
+			where : {
+				ID : patientID
 			}
 		});
 	}

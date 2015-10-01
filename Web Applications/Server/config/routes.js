@@ -18,16 +18,29 @@ routes['get /api/appointment-telehealth-request'] = {
 
 //module patient
 routes['post /api/patient/create-patient'] = {
-	controller: 'Patient/PatientController',
-	action :'CreatePatient'
+    controller: 'Patient/PatientController',
+    action :'CreatePatient'
 };
 
 routes['post /api/patient/search-patient'] = {
-	controller: 'Patient/PatientController',
-	action :'SearchPatient'
+    controller: 'Patient/PatientController',
+    action :'SearchPatient'
 };
 
-//end module patient
+routes['post /api/patient/update-patient'] = {
+    controller: 'Patient/PatientController',
+    action :'UpdatePatient'
+};
+
+routes['post /api/patient/get-patient'] = {
+    controller: 'Patient/PatientController',
+    action :'GetPatient'
+};
+
+routes['post /api/patient/delete-patient'] = {
+    controller: 'Patient/PatientController',
+    action :'DeletePatient'
+};
 
 //module user account
 routes['get /api/user-account/test']={

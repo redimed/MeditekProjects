@@ -1,3 +1,5 @@
 module.exports = {
-    associations: function() {}
+    associations: function() {
+    	UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
+    }
 };

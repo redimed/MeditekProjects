@@ -47,7 +47,7 @@ module.exports = {
         },
 
         email: {
-            type: 'string',
+            type: 'email',
             columnName: 'Email',
             maxLength: 255
         },

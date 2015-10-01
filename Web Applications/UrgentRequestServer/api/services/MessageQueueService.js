@@ -8,7 +8,7 @@ module.exports = {
         setTimeout(function() {
             //update status completed for message queue
             MessageQueue.update({
-                    status: 'spending',
+                    status: 'queueing',
                     completedTime: null
                 }, {
                     status: 'completed',
@@ -29,7 +29,7 @@ module.exports = {
                 })
                 .spread(function(UR) {
                     //check tried and confirmed urgent request
-                    if (UR.tried < 3 && UR.confirmed === 0) {
+                    if (UR.tried < 3 && UR.status === 'pending') {
                         var emailInfo = {
                             from: 'Health Screenings <HealthScreenings@redimed.com.au>',
                             email: 'HealthScreenings@redimed.com.au',
@@ -41,7 +41,8 @@ module.exports = {
                             urgentCareType: 'UrgentCare Request',
                             patientName: UR.lastName + ' ' + UR.firstName,
                             requestDate: Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss'),
-                            phoneNumber: UR.phoneNumber
+                            phoneNumber: UR.phoneNumber,
+                            bcc: 'thanh1101681@gmail.com, pnguyen@redimed.com.au'
                         };
                         var CallBackSendMail = function(err, responseStatus, html, text) {
                                 if (err) {

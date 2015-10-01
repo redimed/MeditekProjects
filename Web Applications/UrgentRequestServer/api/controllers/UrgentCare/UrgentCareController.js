@@ -19,6 +19,7 @@ module.exports = {
                 return;
             }
         }
+
         //get client's IP
         data.ip = req.headers['X-Client-IP'] ||
             req.headers['X-Forwarded-For'] ||
@@ -48,7 +49,7 @@ module.exports = {
                 GPReferal: data.GPReferal,
                 urgentRequestType: data.urgentRequestType,
                 tried: 1,
-                status: 'spending',
+                status: 'pending',
                 interval: 5,
                 description: data.description,
                 enable: 1
@@ -64,7 +65,8 @@ module.exports = {
                     urgentRequestType: data.urgentRequestType,
                     patientName: data.lastName + ' ' + data.firstName,
                     requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
-                    phoneNumber: data.phoneNumber
+                    phoneNumber: data.phoneNumber,
+                    bcc: 'thanh1101681@gmail.com, pnguyen@redimed.com.au'
                 };
 
                 /*
@@ -76,36 +78,40 @@ module.exports = {
                     if (err) {
                         console.log(err);
                     } else {
-                        var CallBackSendMailPatient = function(err, responseStatus, html, text) {
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                //send sms
-                                var dataSMS = {
-                                    phone: data.phoneNumber,
-                                    content: 'Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.'
-                                };
-                                var CallBackSendSMS = function(err) {
-                                    if (err) {
-                                        console.log(err);
-                                    } else {
-                                        console.log('send sms successfully');
+                        if (!_.isUndefined(data.email) &&
+                            !_.isNull(data.email) &&
+                            data.email.length !== 0) {
+                            var CallBackSendMailPatient = function(err, responseStatus, html, text) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    //send sms
+                                    var dataSMS = {
+                                        phone: data.phoneNumber,
+                                        content: 'Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.'
+                                    };
+                                    var CallBackSendSMS = function(err) {
+                                        if (err) {
+                                            console.log(err);
+                                        } else {
+                                            console.log('send sms successfully');
+                                        }
                                     }
                                 }
-                                SendSMSService.Send(dataSMS, CallBackSendSMS);
-                            }
-                        };
-                        //send email and sms to customer
-                        var emailInfoPatient = {
-                            from: 'Health Screenings <HealthScreenings@redimed.com.au>',
-                            email: data.email,
-                            subject: 'Request Received',
-                            urgentRequestType: data.urgentRequestType,
-                            patientName: data.lastName + ' ' + data.firstName,
-                            requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
-                            phoneNumber: data.phoneNumber
-                        };
-                        SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
+                            };
+                            //send email and sms to customer
+                            var emailInfoPatient = {
+                                from: 'Health Screenings <HealthScreenings@redimed.com.au>',
+                                email: data.email,
+                                subject: 'Request Received',
+                                urgentRequestType: data.urgentRequestType,
+                                patientName: data.lastName + ' ' + data.firstName,
+                                requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
+                                phoneNumber: data.phoneNumber
+                            };
+                            SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
+                        }
+                        SendSMSService.Send(dataSMS, CallBackSendSMS);
                     }
                 };
 
@@ -130,7 +136,7 @@ module.exports = {
                     source: 'Urgent Request',
                     sourceID: 1,
                     job: 'Receive email urgent request',
-                    status: 'spending',
+                    status: 'queueing',
                     startTime: Services.moment().format('YYYY-MM-DD HH:mm:ss')
                 };
 
@@ -185,7 +191,7 @@ module.exports = {
     ConfirmRequest: function(req, res) {
         require('getmac').getMac(function(err, macaddr) {
             UrgentRequest.update({
-                    status: 'spending',
+                    status: 'queueing',
                     confirmUserName: null
                 }, {
                     status: 'confirmed',

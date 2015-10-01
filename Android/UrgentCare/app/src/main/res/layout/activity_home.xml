@@ -16,8 +16,7 @@
         android:layout_height="59dp"
         android:id="@+id/imgLogoRedimed"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/img_logo_redimed"/>
+        android:layout_marginTop="20dp" />
 
     <RelativeLayout
         android:layout_width="wrap_content"

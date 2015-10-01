@@ -1,0 +1,35 @@
+.page-content{background-color: #eee;}
+
+.page-header {background-color: white;}
+.page-header .navbar{ 
+	background: #FFF url('../img/bk-header.png') !important;
+	background-size: 100% 46px !important;
+}
+
+.page-header .navbar .page-logo{
+
+}
+.page-header .navbar .page-logo .logo-default{ 
+	margin-top: 0 !important; 
+	width: 200px;
+	height: 46px;
+}
+
+.app-modal-window .modal-dialog{
+	width: 85%;
+}
+
+.my-modal-header{
+	background-color: #3598dc !important;
+    color: #fff !important;
+}
+
+.my-select{
+    background: #d9edf7 !important;
+    color: blue !important;
+    text-shadow:0 1px 0 rgba(0,0,0,0.4);
+}
+.my-select option:not(:checked) { 
+    background-color: white; 
+    color:black;
+}

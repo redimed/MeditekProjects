@@ -9,8 +9,8 @@
     <string name="progressMakeAppointmentTitle">Make Appointment</string>
     <string name="progressMakeAppointmentContent">Please wait..</string>
     <string name="jsonTitleSendAppointment">data</string>
-    <string name="contentDialogErrorAppointment">Send make appointment error!</string>
-    <string name="contentDialogSuccessAppointment">Send make appointment success!</string>
+    <string name="contentDialogErrorAppointment">Error! please check your connection and try again</string>
+    <string name="contentDialogSuccessAppointment"> Your request has been successfully. \r\n Please wait for out staff to contact you</string>
     <string name="australiaFormatPhone">+61</string>
     <string name="serviceFAQ">FAQ</string>
     <string name="serviceSportInjury">SportInjury</string>

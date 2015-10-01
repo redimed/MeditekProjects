@@ -2,6 +2,7 @@ package com.redimed.urgentcare.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
 import android.support.v8.renderscript.RenderScript;
@@ -10,76 +11,73 @@ import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import com.squareup.picasso.Transformation;
 
 /**
- * Picasso Transformation for applying Blurring effect to an image
- * this code is supposed to work in conjuction with the V8 Renderscript
- * Support library
- *
- * @author Saul Diaz <sefford@gmail.com>
+ * @author Marcin Koziński
  */
 public class BlurTransformation implements Transformation {
 
-    /**
-     * Max blur radius supported by the Renderscript library
-     **/
-    protected static final int MAX_RADIUS = 25;
-    /**
-     * Min blur radius supported by the Renderscript library
-     **/
-    protected static final int MIN_RADIUS = 1;
-    /**
-     * Application context to instantiate the Renderscript
-     **/
-    protected final Context context;
-    /**
-     * Selected radius
-     **/
-    protected final int radius;
+    private Context context;
+    private float radius;
 
-    /**
-     * Creates a new Blur transformation
-     *
-     * @param context Application context to instantiate the Renderscript
-     **/
-    public BlurTransformation(Context context, int radius) {
+    public BlurTransformation(Context context, float radius) {
         this.context = context;
-        this.radius = radius < MIN_RADIUS ? MIN_RADIUS :
-                radius > MAX_RADIUS ? MAX_RADIUS : radius;
+        this.radius = radius;
     }
 
     @Override
-    public Bitmap transform(Bitmap source) {
-        long startTime = System.currentTimeMillis();
-        // Load a clean bitmap and work from that.
-        Bitmap originalBitmap = source;
+    public Bitmap transform(Bitmap bitmap) {
+        bitmap = cropBitmapWidthToMultipleOfFour(bitmap);
+        Bitmap argbBitmap = convertBitmap(bitmap, Config.ARGB_8888);
 
-        // Create another bitmap that will hold the results of the filter.
-        Bitmap blurredBitmap;
-        blurredBitmap = Bitmap.createBitmap(originalBitmap);
-
-        // Create the Renderscript instance that will do the work.
-        RenderScript rs = RenderScript.create(context);
-
+        Bitmap blurredBitmap = Bitmap.createBitmap(argbBitmap.getWidth(), argbBitmap.getHeight(),
+                Config.ARGB_8888);
+        // Initialize RenderScript and the script to be used
+        RenderScript renderScript = RenderScript.create(context);
+        ScriptIntrinsicBlur script = ScriptIntrinsicBlur
+                .create(renderScript, Element.U8_4(renderScript));
         // Allocate memory for Renderscript to work with
-        Allocation input = Allocation.createFromBitmap(rs, originalBitmap, Allocation.MipmapControl.MIPMAP_FULL, Allocation.USAGE_SHARED);
-        Allocation output = Allocation.createTyped(rs, input.getType());
+        Allocation input = Allocation.createFromBitmap(renderScript, argbBitmap);
+        Allocation output = Allocation.createFromBitmap(renderScript, blurredBitmap);
 
-        // Load up an instance of the specific script that we want to use.
-        ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
         script.setInput(input);
-        // Set the blur radius
         script.setRadius(radius);
-
-        // Start the ScriptIntrinisicBlur
         script.forEach(output);
-        // Copy the output to the blurred bitmap
         output.copyTo(blurredBitmap);
 
-        source.recycle();
+        renderScript.destroy();
+        argbBitmap.recycle();
         return blurredBitmap;
     }
 
     @Override
     public String key() {
-        return "blurred";
+        return "blur(" + String.valueOf(radius) + ")";
+    }
+
+    private static Bitmap cropBitmapWidthToMultipleOfFour(Bitmap bitmap) {
+        int bitmapWidth = bitmap.getWidth();
+        if (bitmapWidth % 4 != 0) {
+            // This is the place to actually crop the bitmap,
+            // but I don't have the necessary method in this demo project
+
+            // bitmap = BitmapUtils.resize(bitmap, bitmapWidth - (bitmapWidth % 4), bitmap.getHeight(),
+            //         ScaleType.CENTER);
+        }
+        return bitmap;
+    }
+
+    private static Bitmap convertBitmap(Bitmap bitmap, Config config) {
+        if (bitmap.getConfig() == config) {
+            return bitmap;
+        } else {
+            Bitmap argbBitmap;
+            argbBitmap = bitmap.copy(config, false);
+            bitmap.recycle();
+            if (argbBitmap == null) {
+                throw new UnsupportedOperationException(
+                        "Couldn't convert bitmap from config " + bitmap.getConfig() + " to "
+                                + config);
+            }
+            return argbBitmap;
+        }
     }
 }

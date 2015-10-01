@@ -1,0 +1,621 @@
+
+<h3 class="page-title">Telehealth Appointments Request</h3>
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<a href="" ui-sref="loggedIn.appointment.list">Telehealth Appointments</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<b>Telehealth Appointments Request</b>
+			<i class="fa fa-angle-right"></i>
+		</li>
+	</ul>
+</div>
+
+									
+<div class="row form-group form-md-checkboxes">
+	<div class="col-md-12">
+		<div class="md-checkbox-inline">
+			<label>Duration of referral :</label>&nbsp;&nbsp;&nbsp;
+			<div class="md-checkbox">
+				<input type="checkbox" id="three_months" class="md-check">
+				<label for="three_months">
+				<span></span>
+				<span class="check"></span>
+				<span class="box"></span>
+				3 months </label>
+			</div>
+			<div class="md-checkbox">
+				<input type="checkbox" id="twelve_months" class="md-check" checked="">
+				<label for="twelve_months">
+				<span></span>
+				<span class="check"></span>
+				<span class="box"></span>
+				12 months </label>
+			</div>
+			<div class="md-checkbox">
+				<input type="checkbox" id="indefinite" class="md-check">
+				<label for="indefinite">
+				<span></span>
+				<span class="check"></span>
+				<span class="box"></span>
+				indefinite </label>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- BEGIN Patient details (Affix Patient Label Here)-->
+<div class="portlet box blue bordered">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-gift "></i> Patient details (Affix Patient Label Here)
+		</div>
+		<div class="tools">
+			<a href="" class="collapse"></a>
+		</div>
+	</div>
+	<div class="portlet-body form">
+        <form role="form">
+            <div class="form-body">
+				<div class="row">
+					<!-- begin firstname -->
+					<div class="col-md-4">
+						<div class="form-group form-md-line-input form-md-floating-label has-info">
+							<input type="text" class="form-control" id="form_control_1">
+							<label for="form_control_1">Firstname</label>
+							<div class="form-control-focus">
+							</div>
+						</div>
+					</div>
+					<!-- end firstname -->
+					<!-- begin lastname -->
+					<div class="col-md-4">
+						<div class="form-group form-md-line-input form-md-floating-label has-info">
+							<input type="text" class="form-control" id="form_control_1">
+							<label for="form_control_1">Lastname</label>
+							<div class="form-control-focus">
+							</div>
+						</div>
+					</div>
+					<!-- end lastname -->
+					<!-- begin dob -->
+					<div class="col-md-4">
+						<div class="form-group form-md-line-input form-md-floating-label has-info">
+							<input type="text" class="form-control" id="form_control_1">
+							<label for="form_control_1">DOB</label>
+							<div class="form-control-focus">
+							</div>
+						</div>
+					</div>
+					<!-- end dob -->
+				</div>
+
+				<div class="row">
+					<!-- begin address -->
+					<div class="col-md-12">
+						<div class="form-group form-md-line-input form-md-floating-label has-info">
+							<input type="text" class="form-control" id="form_control_1">
+							<label for="form_control_1">Address</label>
+							<div class="form-control-focus">
+							</div>
+						</div>
+					</div>
+					<!-- end address -->
+				</div>
+
+				<div class="row">
+					<!-- begin suburd -->
+					<div class="col-md-8">
+						<div class="form-group form-md-line-input form-md-floating-label has-info">
+							<input type="text" class="form-control" id="form_control_1">
+							<label for="form_control_1">Suburd</label>
+							<div class="form-control-focus">
+							</div>
+						</div>
+					</div>
+					<!-- end suburd -->
+					<!-- begin postcode -->
+					<div class="col-md-4">
+						<div class="form-group form-md-line-input form-md-floating-label has-info">
+							<input type="text" class="form-control" id="form_control_1">
+							<label for="form_control_1">Postcode</label>
+							<div class="form-control-focus">
+							</div>
+						</div>
+					</div>
+					<!-- end postcode -->
+				</div>
+				<div class="row">
+					<!-- begin contact number -->
+					<div class="col-md-4">
+						<div class="form-group form-md-line-input form-md-floating-label has-info">
+							<input type="text" class="form-control" id="form_control_1">
+							<label for="form_control_1">Contact Number (M)</label>
+							<div class="form-control-focus">
+							</div>
+						</div>
+					</div>
+					<!-- end contact number -->
+					<!-- begin contact number H-->
+					<div class="col-md-4">
+						<div class="form-group form-md-line-input form-md-floating-label has-info">
+							<input type="text" class="form-control" id="form_control_1">
+							<label for="form_control_1">Contact Number (H)</label>
+							<div class="form-control-focus">
+							</div>
+						</div>
+					</div>
+					<!-- begin contact number H-->
+					<!-- begin email -->
+					<div class="col-md-4">
+						<div class="form-group form-md-line-input form-md-floating-label has-info">
+							<input type="text" class="form-control" id="form_control_1">
+							<label for="form_control_1">Email</label>
+							<div class="form-control-focus">
+							</div>
+						</div>
+					</div>
+					<!-- end email -->
+				</div>
+            </div>
+        </form>
+	</div>
+</div>
+<!-- END Patient details (Affix Patient Label Here)-->
+
+<!-- BEGIN Examination Requested (Please Tick)-->
+<div class="portlet box blue bordered">
+	<div class="portlet-title">
+		<div class="caption ">
+			<i class="fa fa-gift "></i> Examination Requested (Please Tick)
+		</div>
+		<div class="tools">
+			<a href="" class="collapse"></a>
+		</div>
+	</div>
+	<div class="portlet-body form">
+        <form role="form">
+            <div class="form-body">
+            	<div class="form-group form-md-checkboxes">
+					<div class="md-checkbox-inline">
+						<div class="md-checkbox">
+							<input type="checkbox" id="private" class="md-check">
+							<label for="private">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Private </label>
+						</div>
+						<div class="md-checkbox">
+							<input type="checkbox" id="public" class="md-check" checked="">
+							<label for="public">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Public </label>
+						</div>
+						<div class="md-checkbox">
+							<input type="checkbox" id="DVA" class="md-check">
+							<label for="DVA">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							DVA </label>
+						</div>
+						<div class="md-checkbox">
+							<input type="checkbox" id="workers_comp" class="md-check">
+							<label for="workers_comp">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Workers comp </label>
+						</div>
+						<div class="md-checkbox">
+							<input type="checkbox" id="mvit" class="md-check">
+							<label for="mvit">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							MVIT </label>
+						</div>
+					</div>
+				</div>
+
+            </div>
+        </form>
+	</div>
+</div>
+<!-- END Examination Requested (Please Tick)-->
+
+<!-- BEGIN Referred Plastic Surgeon-->
+<div class="portlet box blue bordered">
+	<div class="portlet-title">
+		<div class="caption ">
+			<i class="fa fa-gift "></i> Referred Plastic Surgeon
+		</div>
+		<div class="tools">
+			<a href="" class="collapse"></a>
+		</div>
+	</div>
+	<div class="portlet-body form">
+        <form role="form">
+            <div class="form-body">
+
+            	<div class="form-group form-md-checkboxes">
+					<div class="md-checkbox-inline">
+						<div class="md-checkbox">
+							<input type="checkbox" id="checkbox6" class="md-check">
+							<label for="checkbox6">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							First Surgeon Available </label>
+						</div>
+						<div class="md-checkbox">
+							<input type="checkbox" id="checkbox7" class="md-check" checked="">
+							<label for="checkbox7">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Mr Hanh Nguyen </label>
+						</div>
+						<div class="md-checkbox">
+							<input type="checkbox" id="checkbox8" class="md-check">
+							<label for="checkbox8">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Mr Adrian Brooks </label>
+						</div>
+						<div class="md-checkbox">
+							<input type="checkbox" id="checkbox9" class="md-check">
+							<label for="checkbox9">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Mr Dan Luo </label>
+						</div>
+						<div class="md-checkbox">
+							<input type="checkbox" id="checkbox10" class="md-check">
+							<label for="checkbox10">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Ms Sharon Chu </label>
+						</div>
+					</div>
+				</div>
+
+            </div>
+        </form>
+	</div>
+</div>
+<!-- END Referred Plastic Surgeon-->
+
+<!-- BEGIN Clinical Details & Relevant Medical History -->
+<div class="portlet box blue bordered">
+	<div class="portlet-title">
+		<div class="caption ">
+			<i class="fa fa-gift "></i> Clinical Details & Relevant Medical History
+		</div>
+		<div class="tools">
+			<a href="" class="collapse"></a>
+		</div>
+	</div>
+	<div class="portlet-body form">
+        <form role="form">
+            <div class="form-body">
+
+            	<!-- begin column 1 -->
+            	<div class="form-group col-xs-12 col-lg-4">
+
+            		<textarea class="form-control" rows="10">...</textarea>
+            		<p>&nbsp;</p>
+
+
+
+            		<label for="form_control_1">Attach Detailed Letter</label>
+            		<br>
+            		<!-- <input type="file" nv-file-select="" uploader="uploader" multiple="" > -->
+            		<span class="btn red fileinput-button">
+					<i class="fa fa-plus"></i>
+					<span>
+					Add files... </span>
+					<input type="file" name="files[]"  nv-file-select="" uploader="uploader" multiple="">
+					</span>
+            		<p>&nbsp;</p>
+					<div ng-repeat="item in uploader.queue">
+						<div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, width: 200, height: 150 }"></div>
+					</div>
+				</div>
+				
+				<!-- end column 1 -->
+
+				<!-- begin column 2 -->
+				<div class="form-group form-md-checkboxes col-xs-12 col-lg-4">
+
+					<div class="caption">
+            			<h4><b>Trauma</b></h4>
+            		</div>
+
+					<div class="md-checkbox-inline">
+						<div class="md-checkbox">
+							<input type="checkbox" id="dislocation" class="md-check">
+							<label for="dislocation">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Dislocation </label>
+						</div>
+					</div>
+
+					<div class="form-group form-md-line-input form-md-floating-label has-info">
+						<input type="text" class="form-control" id="form_control_1">
+						<label for="form_control_1">Fracture</label>
+						<div class="form-control-focus">
+						</div>
+					</div>
+
+					<div class="form-group form-md-checkboxes">
+						<div class="md-checkbox-inline">
+
+							<div class="md-checkbox">
+								<input type="checkbox" id="open" class="md-check">
+								<label for="open">
+								<span></span>
+								<span class="check"></span>
+								<span class="box"></span>
+								Open </label>
+							</div>
+
+							<div class="md-checkbox">
+								<input type="checkbox" id="closed" class="md-check">
+								<label for="closed">
+								<span></span>
+								<span class="check"></span>
+								<span class="box"></span>
+								Closed </label>
+							</div>
+
+							<div class="md-checkbox">
+								<input type="checkbox" id="displaced" class="md-check">
+								<label for="displaced">
+								<span></span>
+								<span class="check"></span>
+								<span class="box"></span>
+								Displaced </label>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="caption">
+            			<label><b>Lacerations</b></label>
+            		</div>
+
+            		<div class="form-group form-md-checkboxes">
+						<div class="md-checkbox-inline">
+
+							<div class="md-checkbox">
+								<input type="checkbox" id="hand" class="md-check">
+								<label for="hand">
+								<span></span>
+								<span class="check"></span>
+								<span class="box"></span>
+								Hand </label>
+							</div>
+
+							<div class="md-checkbox">
+								<input type="checkbox" id="nerve" class="md-check">
+								<label for="nerve">
+								<span></span>
+								<span class="check"></span>
+								<span class="box"></span>
+								Nerve </label>
+							</div>
+
+							<div class="md-checkbox">
+								<input type="checkbox" id="tendon_muscle" class="md-check">
+								<label for="tendon_muscle">
+								<span></span>
+								<span class="check"></span>
+								<span class="box"></span>
+								Tendon/ muscle </label>
+							</div>
+
+							<div class="md-checkbox">
+								<input type="checkbox" id="facial" class="md-check">
+								<label for="facial">
+								<span></span>
+								<span class="check"></span>
+								<span class="box"></span>
+								Facial </label>
+							</div>
+
+							<div class="md-checkbox">
+								<input type="checkbox" id="others" class="md-check">
+								<label for="others">
+								<span></span>
+								<span class="check"></span>
+								<span class="box"></span>
+								Others </label>
+								<input type="text" placeholder="Others ..">
+							</div>
+
+							<div class="md-checkbox">
+								<input type="checkbox" id="skin_loss" class="md-check">
+								<label for="skin_loss">
+								<span></span>
+								<span class="check"></span>
+								<span class="box"></span>
+								Skin loss </label>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- end column 2 -->
+
+				<!-- begin column 3 -->
+				<div class="form-group form-md-checkboxes col-xs-12 col-lg-4">
+
+					<div class="caption">
+            			<h4><b>Elective</b></h4>
+            		</div>
+
+            		<div class="caption">
+            			<label><b>Skin cancer</b></label>
+            		</div>
+
+            		<div class="md-checkbox-inline">
+						<div class="md-checkbox">
+							<input type="checkbox" id="bcc_scc" class="md-check">
+							<label for="bcc_scc">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							BCC / SCC </label>
+						</div>
+						<div class="md-checkbox">
+							<input type="checkbox" id="melanoma" class="md-check">
+							<label for="melanoma">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Melanoma </label>
+						</div>
+
+						<div class="md-checkbox">
+							<input type="checkbox" id="elective_other" class="md-check">
+							<label for="elective_other">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Other </label>
+						</div>
+					</div>
+
+					<div class="caption">
+            			<label><b>Hand condition</b></label>
+            		</div>
+
+            		<div class="md-checkbox-inline">
+						<div class="md-checkbox">
+							<input type="checkbox" id="ganglion" class="md-check">
+							<label for="ganglion">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Ganglion </label>
+						</div>
+						<div class="md-checkbox">
+							<input type="checkbox" id="arthritis" class="md-check">
+							<label for="arthritis">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Arthritis </label>
+						</div>
+
+						<div class="md-checkbox">
+							<input type="checkbox" id="deQuervains_trigger" class="md-check">
+							<label for="deQuervains_trigger">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							DeQuervains/Trigger </label>
+						</div>
+
+						<div class="md-checkbox">
+							<input type="checkbox" id="contracture" class="md-check">
+							<label for="contracture">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Contracture </label>
+						</div>
+					</div>
+
+					<div class="caption">
+            			<label><b>PNS</b></label>
+            		</div>
+
+            		<div class="md-checkbox-inline">
+						<div class="md-checkbox">
+							<input type="checkbox" id="carpal_tunnel" class="md-check">
+							<label for="carpal_tunnel">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Carpal Tunnel </label>
+						</div>
+						<div class="md-checkbox">
+							<input type="checkbox" id="cupital_tunnel" class="md-check">
+							<label for="cupital_tunnel">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Cubital Tunnel </label>
+						</div>
+
+						<div class="md-checkbox">
+							<input type="checkbox" id="tarsal_tunnel" class="md-check">
+							<label for="tarsal_tunnel">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Tarsal Tunnel </label>
+						</div>
+
+						<div class="md-checkbox">
+							<input type="checkbox" id="pns_other" class="md-check">
+							<label for="pns_other">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Other </label>
+						</div>
+
+						<div class="md-checkbox">
+							<input type="checkbox" id="complex_reconstructive_case" class="md-check">
+							<label for="complex_reconstructive_case">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Complex Reconstructive Case </label>
+						</div>
+					</div>
+
+					<p class="text-warning">
+						<b>*Please call for advise on fasting status for urgent surgical intervention</b>
+					</p>
+
+            	</div>
+				<!-- end column 3 -->
+
+	            <div class="row">
+	            </div>
+
+            </div>
+        </form>
+	</div>
+</div>
+<!-- END Clinical Details & Relevant Medical History -->
+
+<!-- Button send request -->
+<div class="modal-footer">
+	<a class="btn btn-default" ui-sref="loggedIn.appointment.list"><i class="icon-arrow-left"></i> Back</a>
+	<a class="btn btn-primary"><i class="glyphicon glyphicon-save"></i> Send request</a>
+</div>
+<!-- end button -->
+<!-- CSS -->
+<style type="text/css">
+	.margin-checkbox{
+		margin-right : 4px !important;
+	}
+</style>
+<!-- END CSS -->

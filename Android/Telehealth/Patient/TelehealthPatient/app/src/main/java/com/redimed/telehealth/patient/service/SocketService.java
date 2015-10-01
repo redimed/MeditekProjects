@@ -1,6 +1,5 @@
 package com.redimed.telehealth.patient.service;
 
-import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
@@ -31,15 +30,6 @@ public class SocketService extends Service {
 
     static {
         initializeSocket();
-    }
-
-    public SocketService() {
-        super(SocketService.class.getName());
-    }
-
-    @Override
-    protected void onHandleIntent(Intent intent) {
-        Log.d(TAG, "Service Started!");
     }
 
     private static void initializeSocket() {

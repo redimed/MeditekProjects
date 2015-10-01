@@ -21,13 +21,15 @@ import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.SocketService;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import com.google.gson.JsonObject;
+
+import com.redimed.telehealth.patient.api.RegisterApi;
+import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.SocketService;
 
 import java.util.HashMap;
@@ -47,17 +49,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private BroadcastReceiver receiverDataSocketService;
     private RegisterApi restClient = RESTClient.getRegisterApi();
     private String sessionID;
-    MyApplication mApplication;
-    JsonObject jsonObjectGlobal;
-
     @Bind(R.id.testSocket) Button testSocket;
     @Bind(R.id.testSession) Button testSession;
-    private ActionBarDrawerToggle actionDrawerToggle;
-    private boolean shouldFinish = false;
-    private SocketService socketOpenTok;
-    private BroadcastReceiver receiverDataSocketService;
-
-    @Bind(R.id.txtHomeTitle) TextView txtHomeTitle;
     @Bind(R.id.patientDrawer) DrawerLayout patientDrawer;
 
     @Override
@@ -163,6 +156,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(TAG, sessionID);
                 }
             }
+                    Log.d(TAG, sessionID);
+                }
+            }
+
             @Override
             public void failure(RetrofitError error) {
                 Log.d("Error", error.toString());
@@ -175,6 +172,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         params.put("from", "+84908618694");
         //params.put("to", "+841267146714");
         params.put("to", "+84988880682");
+        params.put("to", "+841267146714");
         params.put("message", "call");
         params.put("sessionId", sessionID);
         try {

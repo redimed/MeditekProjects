@@ -22,7 +22,6 @@ public class LoadingActivity extends AppCompatActivity {
     public UserAccount userAccount;
 
     private SharedPreferences dataUser;
-    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +29,6 @@ public class LoadingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_loading);
         mApplication = (MyApplication) getApplicationContext();
         startService(new Intent(getApplicationContext(), SocketService.class));
-        intent = new Intent(this, SocketService.class);
-        startService(intent);
         dataUser = getSharedPreferences("DataUser", MODE_PRIVATE);
         File xmlUser = new File("/data/data/" + getApplicationContext().getPackageName() + "/shared_prefs/DataUser.xml");
         if (xmlUser.exists()) {
@@ -57,23 +54,11 @@ public class LoadingActivity extends AppCompatActivity {
             SocketService.sendData("socket/joinRoom", params);
             Toast.makeText(getApplicationContext(), "Join Room: " + params.toString(), Toast.LENGTH_LONG).show();
             startActivity(intent);
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             this.finish();
         }else {
-            intent = new Intent(this, ActivationActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(getApplicationContext(), ActivationActivity.class));
             this.finish();
-        }
-    }
-
-    private void JoinRoom() {
-        try {
-            Map<String, Object> params = new HashMap<String, Object>();
-//            params.put("phone", userAccount.getPhoneNumber());
-            params.put("phone", "+84908618694");
-            SocketService.sendData("/telehealth/socket/joinRoom", params);
-            Log.i("=======Join Room======", params.toString());
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
         }
     }
 }

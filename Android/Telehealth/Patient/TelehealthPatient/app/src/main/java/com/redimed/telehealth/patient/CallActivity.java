@@ -33,9 +33,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
-import com.redimed.telehealth.patient.utils.Config;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -43,10 +41,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import io.socket.client.IO;
 
 public class CallActivity extends AppCompatActivity implements View.OnClickListener, PublisherKit.PublisherListener, SubscriberKit.VideoListener, Session.SessionListener {
 

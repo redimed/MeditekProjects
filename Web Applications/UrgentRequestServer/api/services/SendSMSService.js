@@ -1,23 +1,6 @@
 var config = sails.config.myconf;
 //****Twilio Client for sending SMS
 var twilioClient = require('twilio')(config.twilioSID, config.twilioToken);
-//****Check and parse string to JSON object also lower case all object keys******
-function toJson(str) {
-    var obj;
-    try {
-        obj = JSON.parse(str);
-    } catch (e) {
-        obj = str;
-    }
-    var key, keys = Object.keys(obj);
-    var n = keys.length;
-    var newobj = {}
-    while (n--) {
-        key = keys[n];
-        newobj[key.toLowerCase()] = obj[key];
-    }
-    return newobj;
-};
 //****Send SMS function******
 function SendSMS(toNumber, content, callback) {
     twilioClient.messages.create({
@@ -37,8 +20,9 @@ module.exports = {
                 if (err) {
                     console.log(err);
                     fn(err);
+                } else {
+                    fn(null);
                 }
-                fn(null);
             });
         } else fn(err);
     }

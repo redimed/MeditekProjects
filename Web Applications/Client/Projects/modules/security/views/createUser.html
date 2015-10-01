@@ -1,0 +1,93 @@
+<form role="form">
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="txtFirstName">First Name</label>
+            <input type="input" class="form-control" id="txtFirstName" placeholder="First Name">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="txtEmail">Email address</label>
+            <input type="input" class="form-control" id="txtEmail" placeholder="Enter email">
+        </div>
+    </div> 
+  
+  
+<!--  <div class="form-group">
+   <label for="txtLastName">Last Name</label>
+   <input type="input" class="form-control" id="txtLastName" placeholder="Last Name">
+ </div> -->
+  
+  
+   <div class="form-group">
+   <label for="txtEmail">Email address</label>
+   <input type="input" class="form-control" id="txtEmail" placeholder="Enter email">
+ </div>
+  
+<div class="row">  
+    <div class="form-group col-md-6">
+       <label for="txtHealthlinkID">Healthlink ID</label>
+       <input type="input" class="form-control" id="txtHealthlinkID" placeholder="Healthlink ID">
+    </div>
+    <div class="form-group col-md-6">
+        <label for="txtPostcode">Postcode</label>
+        <input type="input" class="form-control" id="txtPostcode" placeholder="Postcode">
+    </div>
+</div>
+  
+  <div class="form-group">
+   <label for="txtAddress">Address</label>
+   <input type="input" class="form-control" id="txtAddress" placeholder="Address">
+</div>
+
+<div class="row">
+    <div class="form-group col-md-6">
+       <label for="txtTelephone">Telephone</label>
+       <input type="input" class="form-control" id="txtTelephone" placeholder="Telephone">
+    </div>
+    <div class="form-group col-md-6">
+        <label for="txtProviderNumber">Provider Number</label>
+       <input type="input" class="form-control" id="txtProviderNumber" placeholder="Provider Number">
+    </div>
+</div>
+  
+
+<div class="form-group">
+   <label for="txtSignature">Signature</label>
+  
+<input id="input-ficons-3" multiple type="file" class="file-loading">
+<script>
+$("#input-ficons-3").fileinput({
+    uploadUrl: "/file-upload-batch/2",
+    previewFileIcon: '<i class="fa fa-file"></i>',
+    allowedPreviewTypes: ['image', 'text'], // allow only preview of image & text files
+    previewFileIconSettings: {
+        'docx': '<i class="fa fa-file-word-o text-primary"></i>',
+        'xlsx': '<i class="fa fa-file-excel-o text-success"></i>',
+        'pptx': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+        'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
+        'zip': '<i class="fa fa-file-archive-o text-muted"></i>',
+    }
+});
+</script>
+</div>
+  
+<div class="row">&nbsp;</div>
+<div class="row">&nbsp;</div>
+
+    <div class="form-actions">
+        <a href="" id="register-back-btn" class="btn btn-default pull" ui-sref="security.login">
+            <i class="m-icon-swapleft"></i> Cancel 
+        </a>
+         <button type="submit" id="register-submit-btn" class="btn blue pull-right">
+            Register <i class="m-icon-swapright m-icon-white"></i>
+        </button>
+        
+    </div>
+
+</form>
+
+<style type="text/css">
+    .login .content{
+        width: 35% !important; 
+    }
+</style>

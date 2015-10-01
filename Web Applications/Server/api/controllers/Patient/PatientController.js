@@ -1,3 +1,7 @@
+
+//generator Password
+var generatePassword = require('password-generator');
+
 module.exports = {
 	/*
 		func: CreatePatient
@@ -5,105 +9,165 @@ module.exports = {
 		output: insert Patient's information into table Patient 
 	*/
 	CreatePatient : function(req, res) {
-		console.log(req.body);
 		var data = req.body.data;
-		data.UID = UUIDService.Create();
-		Patient.create({
-			UID           : data.UID,
-			SiteID        : data.SiteID,
-			UserAccountID : data.UserAccountID,
-			FirstName     : data.FirstName,
-			MiddleName    : data.MiddleName,
-			LastName      : data.LastName,
-			//Dob           : data.Dob,
-			Sex           : data.Sex,
-			Address       : data.Address,
-			CountryID     : data.CountryID
-			//Enable        : data.Enable,
-			//CreationDate  : data.CreationDate,
-			//CreatedBy     : data.CreatedBy,
-			//ModifiedDate  : data.ModifiedDate,
-			//ModifiedBy    : data.ModifiedBy
+		var info = {
+			FirstName  : data.FirstName,
+			MiddleName : data.MiddleName,
+			LastName   : data.LastName,
+			Dob        : data.Dob,
+			Gender        : data.Gender,
+			Address    : data.Address,
+			Enable     : data.Enable
+		};
+		info.UID = UUIDService.Create();
+		info.SiteID = 1;
+		info.CountryID = 84;
+		//check is patient have UserAccount by Phone Number
+		Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
+		.then(function(user){
+			//if patient has user account, get UserAccountID to create patient
+			if(user.length > 0) {
+				info.UserAccountID = user[0].ID;
+				Services.Patient.CreatePatient(info)
+				.then(function(result){
+					res.ok({status:200,message:"success"});
+				})
+				.catch(function(err){
+					res.serverError({status:500,message:err.message});
+				});
+			}
+			//if patient doesn't have UserAccount, create UserAccount before create patient
+			else {
+				var pas = generatePassword(12, false);
+				var userInfo = {
+					UserName: data.PhoneNumber,
+					Email: data.Email,
+					PhoneNumber:data.PhoneNumber,
+					Password: pas
+				};
+				userInfo.UID = UUIDService.Create();
+				//create UserAccount
+				Services.UserAccount.CreateUserAccount(userInfo)
+				.then(function(user){
+					//call createPatient function from model UserAccount
+					user.createPatient(info)
+					.then(function(result){
+						res.ok({status:200,message:"success"});
+					})
+					.catch(function(err){
+						res.serverError({status:500,message:err.message});
+					});
+				})
+				.catch(function(err){
+					res.serverError({status:500,message:err.message});
+				});
+			}
 		})
-		.then(function(result){
-			res.json("success");
-		})
-		.catch(function(err){
-			console.log("***ERROR***: ",err);
-			res.json({
-				status:"error",
-			});
-			return;
+		.catch(function(err) {
+			res.serverError({status:500,message:err.message});
 		});
 	},
 
-	UpdatePatient : function(req, res) {
-		var data = req.body.data;
-		Patient.update({
-			UID           : data.UID,
-			SiteID        : data.SiteID,
-			UserAccountID : data.UserAccountID,
-			FirstName     : data.FirstName,
-			MiddleName    : data.MiddleName,
-			LastName      : data.LastName,
-			//Dob           : data.Dob,
-			Sex           : data.Sex,
-			Address       : data.Address,
-			CountryID     : data.CountryID
-			//Enable        : data.Enable,
-			//CreationDate  : data.CreationDate,
-			//CreatedBy     : data.CreatedBy,
-			//ModifiedDate  : data.ModifiedDate,
-			//ModifiedBy    : data.ModifiedBy
-		},{
-			where:{
-
-			}
-		})
-	},
-
+	/*
+		func : SearchPatient
+		input: Patient's name or PhoneNumber
+		output: get patient's list which was found in client 
+	*/
 	SearchPatient : function(req, res) {
 		var data = req.body.data;
-		Patient.findAll({
-			where: {
-				$or :[
-
-					{
-						FirstName:{
-							$like: '%'+data.Name+'%'
-						}
-					},
-
-					{
-						LastName:{
-							$like: '%'+data.Name+'%'
-						}
-					}
-		  		]
-		  	}
-		})
-		.then(function(result){
-			console.log(result);
-			var info = [];
-			for(var i = 0; i < result.length; i++){
-				info.push(result[i].dataValues);
-			}
-			console.log(info);
-			res.json({
-				status:"success",
-				data:info
-			});
-			return;
-
+		Services.Patient.SearchPatient(data)
+		.then(function(info){
+			if(info!==undefined && info!==null)
+				res.ok({status:200, message:"success", data:info});
+			else
+				res.notFound({status:404,message:"not Found"});
 		})
 		.catch(function(err){
+			res.serverError({status:500,message:err});
+		});
+	},
 
-			console.log("***ERROR***: ",err);
-			res.json({
-				status:"error",
-			});
-			return;
+
+	/*
+		func : UpdatePatient
+		input: patient's information updated
+		output: update patient'infomation into table Patient 
+	*/
+	UpdatePatient : function(req, res) {
+		var data = req.body.data;
+		//get data not required
+		var patientInfo={
+				ID           : data.ID,
+				FirstName    : data.FirstName,
+				MiddleName   : data.MiddleName,
+				LastName     : data.LastName,
+				Dob          : data.Dob,
+				Gender       : data.Gender,
+				Address      : data.Address,
+				Enable       : data.Enable,
+				CreationDate : data.CreationDate,
+				CreatedBy    : data.CreatedBy,
+				ModifiedDate : data.ModifiedDate,
+				ModifiedBy   : data.ModifiedBy
+		};
+
+		//get data required ( if data has value, get it)
+		if(data.SiteID)  patientInfo.SiteID=data.SiteID;
+		if(data.UserAccountID)  patientInfo.UserAccountID = data.UserAccountID;
+		if(data.CountryID)  patientInfo.CountryID = data.CountryID;
+		if(data.UID)  patientInfo.UID = data.UID;
+
+		Services.Patient.UpdatePatient(patientInfo)
+		.then(function(result){
+			res.ok({status:200,message:"success"});
+		})
+		.catch(function(err){
+			return res.serverError({status:500,message:err});
+		});
+	},
+
+	/*
+		func : GetPatient
+		input:  Patient's ID
+		output: Patient's information of Patient's ID if patient has data.
+	*/
+	GetPatient : function(req, res) {
+		var ID = req.body.data;
+		Services.Patient.GetPatient(ID)
+		.then(function(info){
+			console.log(info);
+			if(info!==null && info!==undefined){
+				res.ok({status:200, message:"success", data:info});
+			} else {
+				res.notFound({status:404, message:"not Found"});
+			}
+		})
+		.catch(function(err){
+			res.serverError({status:500,message:err});
+		});
+	},
+
+	/*
+		func : DeletePatient
+		input: Patient's ID
+		output: delete Patient's information into table Patient
+	*/
+	DeletePatient : function(req, res) {
+		console.log("1");
+		var ID = req.body.data;
+		Services.Patient.DeletePatient(ID)
+		.then(function(result){
+			console.log(result);
+			if(result===0)
+				res.notFound({status:404, message:"not Found"});
+			else
+				res.ok({status:200,message:"success"});
+		})
+		.catch(function(err){
+			res.serverError({status:500, message:err});
 		});
 	}
 
 };
+
+

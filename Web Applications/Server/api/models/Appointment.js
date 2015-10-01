@@ -18,22 +18,6 @@ module.exports = {
                 key: 'ID'
             }
         },
-        DoctorID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: false,
-            references: {
-                model: 'Doctor',
-                key: 'ID'
-            }
-        },
-        PatientID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: false,
-            references: {
-                model: 'Patient',
-                key: 'ID'
-            }
-        },
         FromTime: {
             type: Sequelize.DATE,
             allowNull: true

@@ -58,9 +58,7 @@ var SendMailService = {
                     to: emailInfo.email,
                     subject: emailInfo.subject,
                     html: html,
-                    text: text,
-                    cc: emailInfo.cc
-                        // cc: emailInfo.cc
+                    text: text
                 }, function(err, responseStatus) {
                     if (err) {
                         return fn(err);

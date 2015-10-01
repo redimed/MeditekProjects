@@ -7,7 +7,7 @@ module.exports = {
     */
     ReceiveRequest: function(req, res) {
         var data = req.body.data;
-        if (!_.isObject(data)) {
+        if (!Services._.isObject(data)) {
             try {
                 data = JSON.parse(data);
             } catch (err) {
@@ -64,8 +64,7 @@ module.exports = {
                     urgentRequestType: data.urgentRequestType,
                     patientName: data.lastName + ' ' + data.firstName,
                     requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
-                    phoneNumber: data.phoneNumber,
-                    cc: 'khuongphan@telehealthvietnam.com.vn'
+                    phoneNumber: data.phoneNumber
                 };
 
                 /*
@@ -84,7 +83,7 @@ module.exports = {
                                 //send sms
                                 var dataSMS = {
                                     phone: data.phoneNumber,
-                                    content: 'Your request has been successfully Please wait for out staff to contact you'
+                                    content: 'Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.'
                                 };
                                 var CallBackSendSMS = function(err) {
                                     if (err) {
@@ -202,7 +201,7 @@ module.exports = {
                             status: 500
                         });
                     } else {
-                        if (!_.isUndefined(URUpdated[0])) {
+                        if (!Services._.isUndefined(URUpdated[0])) {
                             var htmlConfirmed =
                                 '<table><tr><td><b>Confirmed Success</b></td></tr>' +
                                 '<tr><td>UrgentCare Type: ' + (URUpdated[0].urgentRequestType === null ? '' : URUpdated[0].urgentRequestType) + '</td></tr>' +

@@ -1,5 +1,6 @@
 var $q = require('q');
 var regexp = require('node-regexp');
+var generatePassword = require("password-generator");
 module.exports = {
 
 	FindByPhoneNumber:function(PhoneNumber,attributes)
@@ -13,9 +14,12 @@ module.exports = {
 		});
 	},
 
-
+	/**
+	 * CreateUserAccount: create user account
+	 */
 	CreateUserAccount:function(userInfo,transaction)
 	{
+		userInfo.UID=UUIDService.Create();
 		function Validate()
 		{
 			var q=$q.defer();
@@ -28,13 +32,15 @@ module.exports = {
 					throw new Error('invalid email');
 				}
 				//Phone number validation
-				var fullPhoneNumberPattern= new RegExp(HelperService.regexPattern.fullPhoneNumber);
-				if(userInfo.PhoneNumber && !fullPhoneNumberPattern.test(userInfo.PhoneNumber))
+				//autralian phone number regex
+				var auPhoneNumberPattern=new RegExp(HelperService.regexPattern.auPhoneNumber);
+				//remove (,),whitespace,- from phone number
+				userInfo.PhoneNumber=userInfo.PhoneNumber.replace(HelperService.regexPattern.phoneExceptChars,'');
+				if(userInfo.PhoneNumber && !auPhoneNumberPattern.test(userInfo.PhoneNumber))
 				{
-					
 					throw new Error('invalid phone number');
-
 				}
+				//UserName or Email or PhoneNumber must not null
 				if(userInfo.UserName || userInfo.Email || userInfo.PhoneNumber)
 				{
 					q.resolve({result:'success'});
@@ -45,7 +51,7 @@ module.exports = {
 				}
 			}
 			catch(err) {			
-			    q.reject({message:err.message});
+			    q.reject(err);
 			}
 			return q.promise;
 		}

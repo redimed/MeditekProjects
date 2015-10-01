@@ -20,7 +20,7 @@ module.exports = {
 			mobileSystems.push(HelperService.const.systemType.android);
 			try{
 				//Code mẫu demo trả về error với nhiều chi tiết lỗi
-				/*if(activationInfo.VerificationCode.length>2)
+				if(activationInfo.VerificationCode.length>2)
 				{
 					var errors=[];
 					var err=new Error('Validate.VerificationCode');
@@ -32,7 +32,7 @@ module.exports = {
 					err.pushErrors(errors);
 					throw err;
 					
-				}*/
+				}
 				//Check UserAccountId
 				if(!activationInfo.UserAccountID)
 				{

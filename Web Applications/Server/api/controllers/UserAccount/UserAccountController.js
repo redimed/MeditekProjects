@@ -3,7 +3,22 @@ var $q = require('q');
 module.exports = {
 	Test:function(req,res)
 	{
-		res.json({status:"OK"})
+		// var re=regexp()
+		// 	.start('http')
+		// 	.either('+61','0061','0')
+		// 	.must('aaa')
+		// 	.somethingBut(' ')
+		// 	.end('.com')
+		// 	.toRegExp();
+		var phoneNumber=req.query.phoneNumber;
+		// var phoneTemplate = new RegExp(/^[0-9]{10}$|^\(0[1-9]{1}\)[0-9]{8}$|^[0-9]{8}$|^[0-9]{4}[ ][0-9]{3}[ ][0-9]{3}$|^\(0[1-9]{1}\)[ ][0-9]{4}[ ][0-9]{4}$|^[0-9]{4}[ ][0-9]{4}$/);
+		// phoneNumber=phoneNumber.replace('+','%2B');
+		console.log(phoneNumber);
+		phoneNumber=phoneNumber.replace(/[\(\)\s\-]/,'');
+		console.log(phoneNumber);	
+		var phoneTemplate = new RegExp(/^(\+61|0061|0)?[0-9]{9}$/);
+		console.log(">>>>>>>>>>>>>>"+phoneTemplate.test(phoneNumber));
+		res.ok({status:phoneTemplate.test(phoneNumber)});
 	},
 	
 	createUser:function(req,res){

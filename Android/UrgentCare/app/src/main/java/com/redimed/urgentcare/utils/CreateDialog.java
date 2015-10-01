@@ -34,7 +34,7 @@ public class CreateDialog {
             public void onClick(View v) {
             if(funSuccess){
                 dialog.dismiss();
-//                activity.finish();
+                activity.finish();
             }else {
                 dialog.dismiss();
             }

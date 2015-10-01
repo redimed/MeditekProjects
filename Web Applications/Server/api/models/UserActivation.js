@@ -50,5 +50,10 @@ module.exports = {
     options: {
         tableName: 'UserActivation',
         timestamps: false
-    }
+    },
+    // {
+    //     validate:{
+
+    //     }
+    // }
 };

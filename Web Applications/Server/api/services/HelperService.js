@@ -90,7 +90,7 @@ module.exports = {
     const:{
         systemType:{
             ios:'IOS',
-            website:'Website',
+            website:'WEB',
             android:'ARD'
         }
     }

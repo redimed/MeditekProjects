@@ -11,6 +11,7 @@ module.exports = {
 	 */
 	CreateUserActivation:function(activationInfo,transaction)
 	{
+		console.log(activationInfo);
 		function Validation()
 		{
 			var q=$q.defer();
@@ -35,7 +36,7 @@ module.exports = {
 						throw new Error("System type is website but VerificationToken is not provided");
 					}
 				}
-				else if(mobileSystems.indexOf(activationInfo.Type))
+				else if(mobileSystems.indexOf(activationInfo.Type)>=0)
 				{
 					if(!activationInfo.VerificationCode || !activationInfo.DeviceID)
 					{

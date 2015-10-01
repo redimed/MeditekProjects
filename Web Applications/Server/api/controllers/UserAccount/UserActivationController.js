@@ -16,6 +16,9 @@ module.exports = {
 				t.rollback();
 				res.serverError(ErrorWrap(err));
 			})
+			// .catch(function(err){
+				
+			// })
 		})
 		
 	}

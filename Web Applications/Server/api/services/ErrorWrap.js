@@ -7,10 +7,17 @@ module.exports=function(err)
 {
 	if(ENV)
 	{
-		return err;
+		//Kiem tra co phai kieu Error khong, neu la kieu Error thi tra ve stack error
+		if(err.stack)
+			return {error:err.stack};
+		else
+			return err;
 	}
 	else
 	{
-		return {message:err.message};
+		if(err.message)
+			return {message:err.message};
+		else
+			return {message:'server error'};
 	}
 }

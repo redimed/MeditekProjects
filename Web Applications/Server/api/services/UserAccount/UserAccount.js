@@ -32,6 +32,10 @@ module.exports = {
 				if(userInfo.PhoneNumber && !fullPhoneNumberPattern.test(userInfo.PhoneNumber))
 				{
 					
+					// var re=regexp()
+					// .either('+61','0061','0')
+					// .must('[0-9]{7}')
+
 					throw new Error('invalid phone number');
 
 				}

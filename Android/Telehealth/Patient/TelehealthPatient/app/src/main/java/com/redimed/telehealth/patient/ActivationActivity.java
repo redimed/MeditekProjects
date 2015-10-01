@@ -87,6 +87,8 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     private String phoneCode;
     private RegisterApi registerApi;
     private Gson gson;
+    private Intent i;
+    private boolean flagBackActivationLayout = true;
     private TelehealthUser telehealthUser;
     private JsonObject patientJSON;
     private SharedPreferences spDevice;

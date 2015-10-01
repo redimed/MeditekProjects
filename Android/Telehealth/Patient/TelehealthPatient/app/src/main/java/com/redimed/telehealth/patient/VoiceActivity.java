@@ -105,6 +105,7 @@ public class VoiceActivity extends AppCompatActivity implements View.OnClickList
         sessionOpenTok.disconnect();
         i = new Intent(this, HomeActivity.class);
         startActivity(i);
+        this.finish();
     }
 
     //Initialize session to make connect between application and Open Tok
@@ -156,6 +157,7 @@ public class VoiceActivity extends AppCompatActivity implements View.OnClickList
                 SubscribeToStream(streamOpenTok.get(0));
             }
         }
+        EndCommunication();
     }
 
     @Override

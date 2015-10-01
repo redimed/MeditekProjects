@@ -7,7 +7,7 @@ module.exports = {
     */
     ReceiveRequest: function(req, res) {
         var data = req.body.data;
-        if (!Services._.isObject(data)) {
+        if (!_.isObject(data)) {
             try {
                 data = JSON.parse(data);
             } catch (err) {
@@ -201,7 +201,7 @@ module.exports = {
                             status: 500
                         });
                     } else {
-                        if (!Services._.isUndefined(URUpdated[0])) {
+                        if (!_.isUndefined(URUpdated[0])) {
                             var htmlConfirmed =
                                 '<table><tr><td><b>Confirmed Success</b></td></tr>' +
                                 '<tr><td>UrgentCare Type: ' + (URUpdated[0].urgentRequestType === null ? '' : URUpdated[0].urgentRequestType) + '</td></tr>' +

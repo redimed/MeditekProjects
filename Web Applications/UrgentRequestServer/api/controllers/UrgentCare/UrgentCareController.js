@@ -56,8 +56,7 @@ module.exports = {
             .then(function(URCreated) {
                 var emailInfo = {
                     from: 'Health Screenings <HealthScreenings@redimed.com.au>',
-                    // email: 'HealthScreenings@redimed.com.au',
-                    email: data.email,
+                    email: 'HealthScreenings@redimed.com.au',
                     subject: '[Testing] - [UrgentCare Request] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                         '] - [' + data.lastName + ' ' +
                         data.firstName + '] - [' + data.phoneNumber + ']',
@@ -66,7 +65,7 @@ module.exports = {
                     patientName: data.lastName + ' ' + data.firstName,
                     requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                     phoneNumber: data.phoneNumber,
-                    cc: 'HealthScreenings@redimed.com.au'
+                    cc: 'khuongphan@telehealthvietnam.com.vn'
                 };
 
                 /*
@@ -88,7 +87,11 @@ module.exports = {
                                     content: 'Your request has been successfully Please wait for out staff to contact you'
                                 };
                                 var CallBackSendSMS = function(err) {
-                                    console.log(err);
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+                                        console.log('send sms successfully');
+                                    }
                                 }
                                 SendSMSService.Send(dataSMS, CallBackSendSMS);
                             }
@@ -101,8 +104,7 @@ module.exports = {
                             urgentRequestType: data.urgentRequestType,
                             patientName: data.lastName + ' ' + data.firstName,
                             requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
-                            phoneNumber: data.phoneNumber,
-                            cc: 'HealthScreenings@redimed.com.au'
+                            phoneNumber: data.phoneNumber
                         };
                         SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
                     }

@@ -5,105 +5,137 @@ module.exports = {
 		output: insert Patient's information into table Patient 
 	*/
 	CreatePatient : function(req, res) {
-		console.log(req.body);
+		// UserAccount.create({
+		// 	UID:"UID.004",
+		// 	UserName:"asdv",
+		// 	Email:"gaas@gasa.com",
+		// 	PhoneNumber:"0907738377",
+		// 	Password:"asdasdasdasd"	
+		// })
+		// .then(function(user){
+		// 	console.log(user);
+		// 	user.createPatient(info)
+		// 	.then(function(result){
+		// 		console.log("yes");
+		// 	})
+		// 	.catch(function(err){
+		// 		console.log("err");
+		// 	});
+		// })
+		// .catch(function(err){
+		// 	console.log("as");
+		// 	console.log(err.message);
+		// });
+
 		var data = req.body.data;
-		data.UID = UUIDService.Create();
-		Patient.create({
-			UID           : data.UID,
-			SiteID        : data.SiteID,
-			UserAccountID : data.UserAccountID,
-			FirstName     : data.FirstName,
-			MiddleName    : data.MiddleName,
-			LastName      : data.LastName,
-			//Dob           : data.Dob,
-			Sex           : data.Sex,
-			Address       : data.Address,
-			CountryID     : data.CountryID
-			//Enable        : data.Enable,
-			//CreationDate  : data.CreationDate,
-			//CreatedBy     : data.CreatedBy,
-			//ModifiedDate  : data.ModifiedDate,
-			//ModifiedBy    : data.ModifiedBy
+		var info = {
+			FirstName  : data.FirstName,
+			MiddleName : data.MiddleName,
+			LastName   : data.LastName,
+			Dob        : data.Dob,
+			Sex        : data.Sex,
+			Address    : data.Address,
+			Enable     : data.Enable
+		};
+		info.UID = UUIDService.Create();
+		info.SiteID = 1;
+		info.CountryID = 84;
+		
+		UserAccountService.FindByPhoneNumber(data.PhoneNumber)
+		.then(function(user){
+			if(user.length > 0) {
+				data.UserAccountID = result.dataValues.ID;
+				Patient.create(info)
+				.then(function(result){
+					res.ok({status:200,message:"success"});
+				})
+				.catch(function(err){
+					res.serverError({status:500,message:err.message});
+				});
+			}
+			else {
+				var userInfo = {
+					UserName: data.PhoneNumber,
+					Email: data.Email,
+					PhoneNumber:data.PhoneNumber,
+					Password: data.Password
+				};
+				userInfo.UID = UUIDService.Create();
+				UserAccountService.CreateUserAccount(userInfo)
+				.then(function(user){
+					user.createPatient(info)
+					.then(function(result){
+						res.ok({status:200,message:"success"});
+					})
+					.catch(function(err){
+						res.serverError({status:500,message:err.message});
+					});
+				})
+				.catch(function(err){
+					res.serverError({status:500,message:err.message});
+				});
+			}
 		})
+		.catch(function(err) {
+			res.serverError({status:500,message:err.message});
+		});
+	},
+
+	SearchPatient : function(req, res) {
+		var data = req.body.data;
+		PatientService.SearchPatient(data)
 		.then(function(result){
-			res.json("success");
+			console.log(result);
+			if(result.length > 0) {
+				var info = [];
+				for(var i = 0; i < result.length; i++){
+					info.push(result[i].dataValues);
+				}
+				//console.log(info);
+				res.ok(info);
+				return;
+			}
+			else {
+				res.notFound({status:404,message:"notFound"});
+			}
+
 		})
 		.catch(function(err){
-			console.log("***ERROR***: ",err);
-			res.json({
-				status:"error",
-			});
-			return;
+			res.serverError({status:500,message:err.message});
 		});
 	},
 
 	UpdatePatient : function(req, res) {
 		var data = req.body.data;
-		Patient.update({
-			UID           : data.UID,
-			SiteID        : data.SiteID,
-			UserAccountID : data.UserAccountID,
-			FirstName     : data.FirstName,
-			MiddleName    : data.MiddleName,
-			LastName      : data.LastName,
-			//Dob           : data.Dob,
-			Sex           : data.Sex,
-			Address       : data.Address,
-			CountryID     : data.CountryID
-			//Enable        : data.Enable,
-			//CreationDate  : data.CreationDate,
-			//CreatedBy     : data.CreatedBy,
-			//ModifiedDate  : data.ModifiedDate,
-			//ModifiedBy    : data.ModifiedBy
-		},{
-			where:{
+		var patientInfo={
+				FirstName    : data.FirstName,
+				MiddleName   : data.MiddleName,
+				LastName     : data.LastName,
+				Dob          : data.Dob,
+				Sex          : data.Sex,
+				Address      : data.Address,
+				Enable       : data.Enable,
+				CreationDate : data.CreationDate,
+				CreatedBy    : data.CreatedBy,
+				ModifiedDate : data.ModifiedDate,
+				ModifiedBy   : data.ModifiedBy
+		};
 
-			}
-		})
-	},
 
-	SearchPatient : function(req, res) {
-		var data = req.body.data;
-		Patient.findAll({
-			where: {
-				$or :[
+		if(data.SiteID)  patientInfo.SiteID=data.SiteID;
+		if(data.UserAccountID)  patientInfo.UserAccountID = data.UserAccountID;
+		if(data.CountryID)  patientInfo.CountryID = data.CountryID;
+		if(data.UID)  patientInfo.UID = data.UID;
 
-					{
-						FirstName:{
-							$like: '%'+data.Name+'%'
-						}
-					},
-
-					{
-						LastName:{
-							$like: '%'+data.Name+'%'
-						}
-					}
-		  		]
-		  	}
-		})
+		PatientService.UpdatePatient(patientInfo)
 		.then(function(result){
-			console.log(result);
-			var info = [];
-			for(var i = 0; i < result.length; i++){
-				info.push(result[i].dataValues);
-			}
-			console.log(info);
-			res.json({
-				status:"success",
-				data:info
-			});
-			return;
-
+			res.ok({status:200,message:"success"});
 		})
 		.catch(function(err){
-
-			console.log("***ERROR***: ",err);
-			res.json({
-				status:"error",
-			});
-			return;
+			return res.serverError({status:500,message:err.message});
 		});
 	}
 
 };
+
+

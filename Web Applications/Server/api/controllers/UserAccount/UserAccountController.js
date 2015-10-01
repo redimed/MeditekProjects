@@ -1,27 +1,21 @@
 var regexp = require('node-regexp');
-var $q = require('q');
 module.exports = {
 	Test:function(req,res)
 	{
-		// var re=regexp()
-		// 	.start('http')
-		// 	.either('+61','0061','0')
-		// 	.must('aaa')
-		// 	.somethingBut(' ')
-		// 	.end('.com')
-		// 	.toRegExp();
 		var phoneNumber=req.query.phoneNumber;
-		// var phoneTemplate = new RegExp(/^[0-9]{10}$|^\(0[1-9]{1}\)[0-9]{8}$|^[0-9]{8}$|^[0-9]{4}[ ][0-9]{3}[ ][0-9]{3}$|^\(0[1-9]{1}\)[ ][0-9]{4}[ ][0-9]{4}$|^[0-9]{4}[ ][0-9]{4}$/);
-		// phoneNumber=phoneNumber.replace('+','%2B');
-		console.log(phoneNumber);
-		phoneNumber=phoneNumber.replace(/[\(\)\s\-]/,'');
+		phoneNumber=phoneNumber.replace(/[\(\)\s\-]/g,'');
 		console.log(phoneNumber);	
-		var phoneTemplate = new RegExp(/^(\+61|0061|0)?[0-9]{9}$/);
+		var phoneTemplate = new RegExp(/^(\+61|0061|0)?4[0-9]{8}$/);
 		console.log(">>>>>>>>>>>>>>"+phoneTemplate.test(phoneNumber));
 		res.ok({status:phoneTemplate.test(phoneNumber)});
 	},
 	
-	createUser:function(req,res){
+	/**
+	 * Create Uses Account Controller
+	 * Input: req.body: UserName, Email, PhoneNumber,Password
+	 * Output: new User Info
+	 */
+	CreateUserAccount:function(req,res){
 		var userInfo={
 			UserName:req.body.UserName,
 			Email:req.body.Email,
@@ -30,7 +24,6 @@ module.exports = {
 			Activated:'Y',
 			Enable:'Y'
 		}
-		userInfo.UID=UUIDService.Create();
 		
 		//Cách 1: Managed transaction (auto-callback)
 		/*sequelize.transaction(function (t) {
@@ -52,7 +45,7 @@ module.exports = {
 			})
 			.catch(function (err) {
 				t.rollback();
-				res.serverError(err);
+				res.serverError(ErrorWrap(err));
 			});
 		});	
 
@@ -61,19 +54,19 @@ module.exports = {
 	/**
 	 * FindByPhoneNumber: Search user by Phone number
 	 * Input: req.query.PhoneNumber
-	 * Output: 
+	 * Output: user info folowing phone number
 	 */
 	FindByPhoneNumber:function(req,res)
 	{
 		var PhoneNumber=req.query.PhoneNumber;
-		Services.UserAccount.FindByPhoneNumber(PhoneNumber,['UserName','Email'])
+		Services.UserAccount.FindByPhoneNumber(PhoneNumber)
 		.then(function(data){
 			res.ok(data[0]);
 		},function(err){
 			if(err.status==404)
-				res.notFound({message:err.message});
+				res.notFound(ErrorWrap(err));
 			else
-				res.serverError({message:err.message});
+				res.serverError(ErrorWrap(err));
 		})
 	}
 }

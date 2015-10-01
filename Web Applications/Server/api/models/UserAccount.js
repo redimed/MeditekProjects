@@ -13,15 +13,15 @@ module.exports = {
         },
         UserName: {
             type: Sequelize.STRING(50),
-            allowNull: false
+            allowNull: true
         },
         Email: {
             type: Sequelize.STRING(250),
-            allowNull: false
+            allowNull: true
         },
         PhoneNumber: {
             type: Sequelize.STRING(20),
-            allowNull: false
+            allowNull: true
         },
         Password: {
             type: Sequelize.STRING(256),

@@ -7,43 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		002053431BBBBE2B00679E10 /* JSSAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002053421BBBBE2B00679E10 /* JSSAlertView.swift */; settings = {ASSET_TAGS = (); }; };
+		002C6F9A1BBCD13C006F4FA6 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002C6F991BBCD13C006F4FA6 /* OpenTok.framework */; settings = {ASSET_TAGS = (); }; };
+		004F6D191BB9A02200242CE9 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004F6D181BB9A02200242CE9 /* CustomViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		008FB2351BB93E3A00684968 /* TOPVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008FB2341BB93E3A00684968 /* TOPVCViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		008FB2371BB93F4500684968 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2361BB93F4500684968 /* AudioToolbox.framework */; };
+		008FB2391BB93F4B00684968 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2381BB93F4B00684968 /* AVFoundation.framework */; };
+		008FB23B1BB93F5300684968 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB23A1BB93F5300684968 /* CoreGraphics.framework */; };
+		008FB23D1BB93F5B00684968 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB23C1BB93F5B00684968 /* CoreMedia.framework */; };
+		008FB23F1BB93F6700684968 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB23E1BB93F6700684968 /* CoreTelephony.framework */; };
+		008FB2411BB93FC800684968 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2401BB93FC800684968 /* CoreVideo.framework */; };
+		008FB2431BB93FD100684968 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2421BB93FD100684968 /* Foundation.framework */; };
+		008FB2451BB93FD700684968 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2441BB93FD700684968 /* GLKit.framework */; };
+		008FB2471BB93FE700684968 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2461BB93FE700684968 /* libc++.tbd */; };
+		008FB2491BB93FF000684968 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2481BB93FF000684968 /* libsqlite3.tbd */; };
+		008FB24B1BB93FF800684968 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB24A1BB93FF800684968 /* OpenGLES.framework */; };
+		008FB24D1BB9400000684968 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB24C1BB9400000684968 /* QuartzCore.framework */; };
+		008FB24F1BB9400800684968 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB24E1BB9400800684968 /* SystemConfiguration.framework */; };
+		008FB2511BB9401000684968 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2501BB9401000684968 /* UIKit.framework */; };
+		008FB2531BB9401900684968 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2521BB9401900684968 /* VideoToolbox.framework */; };
+		00D512771BB4E6100068942D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D512761BB4E6100068942D /* ProfileViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		00D512791BB4E63E0068942D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D512781BB4E63E0068942D /* HomeViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		00D5127B1BB4E6560068942D /* MakeCallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D5127A1BB4E6560068942D /* MakeCallController.swift */; settings = {ASSET_TAGS = (); }; };
+		00D5127D1BB4E7610068942D /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D5127C1BB4E7610068942D /* GlobalConstants.swift */; settings = {ASSET_TAGS = (); }; };
+		00ED27A71BB8E58F006586C8 /* KeyNSUserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ED27A61BB8E58F006586C8 /* KeyNSUserDefault.swift */; settings = {ASSET_TAGS = (); }; };
+		60350A33EBFF3BA69C0DDD73 /* Pods_Telehealth_Doctor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1F17DC5B312EB9B2723910E /* Pods_Telehealth_Doctor.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		AFF21D7D1BB12D8B006A190E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D7C1BB12D8B006A190E /* AppDelegate.swift */; };
-		AFF21D7F1BB12D8B006A190E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D7E1BB12D8B006A190E /* ViewController.swift */; };
+		AFF21D7F1BB12D8B006A190E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D7E1BB12D8B006A190E /* LoginViewController.swift */; };
 		AFF21D821BB12D8B006A190E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFF21D801BB12D8B006A190E /* Main.storyboard */; };
 		AFF21D851BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D831BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld */; };
 		AFF21D871BB12D8B006A190E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFF21D861BB12D8B006A190E /* Assets.xcassets */; };
 		AFF21D8A1BB12D8B006A190E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFF21D881BB12D8B006A190E /* LaunchScreen.storyboard */; };
 		AFF21D951BB12D8B006A190E /* Telehealth_DoctorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D941BB12D8B006A190E /* Telehealth_DoctorTests.swift */; };
 		AFF21DA01BB12D8B006A190E /* Telehealth_DoctorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D9F1BB12D8B006A190E /* Telehealth_DoctorUITests.swift */; };
-		AFF21DCC1BB131F7006A190E /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DAE1BB131F7006A190E /* AsyncButton.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DCD1BB131F7006A190E /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DAF1BB131F7006A190E /* AsyncImageView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DCE1BB131F7006A190E /* AutoTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DB01BB131F7006A190E /* AutoTextView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DCF1BB131F7006A190E /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DB11BB131F7006A190E /* BlurView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DD01BB131F7006A190E /* DesignableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DB21BB131F7006A190E /* DesignableButton.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DD11BB131F7006A190E /* DesignableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DB31BB131F7006A190E /* DesignableImageView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DD21BB131F7006A190E /* DesignableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DB41BB131F7006A190E /* DesignableLabel.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DD31BB131F7006A190E /* DesignableTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DB51BB131F7006A190E /* DesignableTabBarController.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DD41BB131F7006A190E /* DesignableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DB61BB131F7006A190E /* DesignableTextField.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DD51BB131F7006A190E /* DesignableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DB71BB131F7006A190E /* DesignableTextView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DD61BB131F7006A190E /* DesignableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DB81BB131F7006A190E /* DesignableView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DD71BB131F7006A190E /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DB91BB131F7006A190E /* ImageLoader.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DD81BB131F7006A190E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AFF21DBA1BB131F7006A190E /* Info.plist */; settings = {ASSET_TAGS = (); }; };
-		AFF21DD91BB131F7006A190E /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DBB1BB131F7006A190E /* KeyboardLayoutConstraint.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DDA1BB131F7006A190E /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DBC1BB131F7006A190E /* LoadingView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DDB1BB131F7006A190E /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF21DBD1BB131F7006A190E /* LoadingView.xib */; settings = {ASSET_TAGS = (); }; };
-		AFF21DDC1BB131F7006A190E /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DBE1BB131F7006A190E /* Misc.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DDD1BB131F7006A190E /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DBF1BB131F7006A190E /* SoundPlayer.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DDE1BB131F7006A190E /* Spring.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DC11BB131F7006A190E /* Spring.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DDF1BB131F7006A190E /* SpringAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DC21BB131F7006A190E /* SpringAnimation.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DE01BB131F7006A190E /* SpringButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DC31BB131F7006A190E /* SpringButton.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DE11BB131F7006A190E /* SpringImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DC41BB131F7006A190E /* SpringImageView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DE21BB131F7006A190E /* SpringLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DC51BB131F7006A190E /* SpringLabel.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DE31BB131F7006A190E /* SpringTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DC61BB131F7006A190E /* SpringTextField.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DE41BB131F7006A190E /* SpringTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DC71BB131F7006A190E /* SpringTextView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DE51BB131F7006A190E /* SpringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DC81BB131F7006A190E /* SpringView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DE61BB131F7006A190E /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DC91BB131F7006A190E /* TransitionManager.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DE71BB131F7006A190E /* TransitionZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DCA1BB131F7006A190E /* TransitionZoom.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21DE81BB131F7006A190E /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DCB1BB131F7006A190E /* UnwindSegue.swift */; settings = {ASSET_TAGS = (); }; };
 		AFF21DEA1BB145B1006A190E /* AppointmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DE91BB145B1006A190E /* AppointmentListViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		AFF21DEC1BB15558006A190E /* ImageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DEB1BB15558006A190E /* ImageListViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -66,9 +62,35 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		002053421BBBBE2B00679E10 /* JSSAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSSAlertView.swift; path = "Telehealth Doctor/JSSAlertView.swift"; sourceTree = "<group>"; };
+		002C6F991BBCD13C006F4FA6 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = "Telehealth Doctor/OpenTok.framework"; sourceTree = "<group>"; };
+		004F6D181BB9A02200242CE9 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
+		008FB2341BB93E3A00684968 /* TOPVCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOPVCViewController.swift; sourceTree = "<group>"; };
+		008FB2361BB93F4500684968 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		008FB2381BB93F4B00684968 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		008FB23A1BB93F5300684968 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		008FB23C1BB93F5B00684968 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		008FB23E1BB93F6700684968 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		008FB2401BB93FC800684968 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		008FB2421BB93FD100684968 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		008FB2441BB93FD700684968 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		008FB2461BB93FE700684968 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		008FB2481BB93FF000684968 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		008FB24A1BB93FF800684968 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		008FB24C1BB9400000684968 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		008FB24E1BB9400800684968 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		008FB2501BB9401000684968 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		008FB2521BB9401900684968 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		009398E41BBA9384005481E2 /* Telehealth Doctor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Telehealth Doctor-Bridging-Header.h"; sourceTree = "<group>"; };
+		00D512761BB4E6100068942D /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		00D512781BB4E63E0068942D /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		00D5127A1BB4E6560068942D /* MakeCallController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakeCallController.swift; sourceTree = "<group>"; };
+		00D5127C1BB4E7610068942D /* GlobalConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
+		00ED27A61BB8E58F006586C8 /* KeyNSUserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyNSUserDefault.swift; sourceTree = "<group>"; };
+		7EC46F2286C519B19F81976E /* Pods-Telehealth Doctor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth Doctor.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth Doctor/Pods-Telehealth Doctor.debug.xcconfig"; sourceTree = "<group>"; };
 		AFF21D791BB12D8B006A190E /* Telehealth Doctor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Telehealth Doctor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFF21D7C1BB12D8B006A190E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AFF21D7E1BB12D8B006A190E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AFF21D7E1BB12D8B006A190E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AFF21D811BB12D8B006A190E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AFF21D841BB12D8B006A190E /* Telehealth_Doctor.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Telehealth_Doctor.xcdatamodel; sourceTree = "<group>"; };
 		AFF21D861BB12D8B006A190E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -80,38 +102,10 @@
 		AFF21D9B1BB12D8B006A190E /* Telehealth DoctorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Telehealth DoctorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFF21D9F1BB12D8B006A190E /* Telehealth_DoctorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Telehealth_DoctorUITests.swift; sourceTree = "<group>"; };
 		AFF21DA11BB12D8B006A190E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AFF21DAE1BB131F7006A190E /* AsyncButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
-		AFF21DAF1BB131F7006A190E /* AsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImageView.swift; sourceTree = "<group>"; };
-		AFF21DB01BB131F7006A190E /* AutoTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoTextView.swift; sourceTree = "<group>"; };
-		AFF21DB11BB131F7006A190E /* BlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
-		AFF21DB21BB131F7006A190E /* DesignableButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableButton.swift; sourceTree = "<group>"; };
-		AFF21DB31BB131F7006A190E /* DesignableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableImageView.swift; sourceTree = "<group>"; };
-		AFF21DB41BB131F7006A190E /* DesignableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableLabel.swift; sourceTree = "<group>"; };
-		AFF21DB51BB131F7006A190E /* DesignableTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableTabBarController.swift; sourceTree = "<group>"; };
-		AFF21DB61BB131F7006A190E /* DesignableTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableTextField.swift; sourceTree = "<group>"; };
-		AFF21DB71BB131F7006A190E /* DesignableTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableTextView.swift; sourceTree = "<group>"; };
-		AFF21DB81BB131F7006A190E /* DesignableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableView.swift; sourceTree = "<group>"; };
-		AFF21DB91BB131F7006A190E /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
-		AFF21DBA1BB131F7006A190E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AFF21DBB1BB131F7006A190E /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
-		AFF21DBC1BB131F7006A190E /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		AFF21DBD1BB131F7006A190E /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
-		AFF21DBE1BB131F7006A190E /* Misc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
-		AFF21DBF1BB131F7006A190E /* SoundPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
-		AFF21DC01BB131F7006A190E /* Spring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spring.h; sourceTree = "<group>"; };
-		AFF21DC11BB131F7006A190E /* Spring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spring.swift; sourceTree = "<group>"; };
-		AFF21DC21BB131F7006A190E /* SpringAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringAnimation.swift; sourceTree = "<group>"; };
-		AFF21DC31BB131F7006A190E /* SpringButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringButton.swift; sourceTree = "<group>"; };
-		AFF21DC41BB131F7006A190E /* SpringImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringImageView.swift; sourceTree = "<group>"; };
-		AFF21DC51BB131F7006A190E /* SpringLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringLabel.swift; sourceTree = "<group>"; };
-		AFF21DC61BB131F7006A190E /* SpringTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringTextField.swift; sourceTree = "<group>"; };
-		AFF21DC71BB131F7006A190E /* SpringTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringTextView.swift; sourceTree = "<group>"; };
-		AFF21DC81BB131F7006A190E /* SpringView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringView.swift; sourceTree = "<group>"; };
-		AFF21DC91BB131F7006A190E /* TransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
-		AFF21DCA1BB131F7006A190E /* TransitionZoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionZoom.swift; sourceTree = "<group>"; };
-		AFF21DCB1BB131F7006A190E /* UnwindSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwindSegue.swift; sourceTree = "<group>"; };
 		AFF21DE91BB145B1006A190E /* AppointmentListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListViewController.swift; sourceTree = "<group>"; };
 		AFF21DEB1BB15558006A190E /* ImageListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageListViewController.swift; sourceTree = "<group>"; };
+		C1F17DC5B312EB9B2723910E /* Pods_Telehealth_Doctor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Telehealth_Doctor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5C98F90639AD6152CB17AAF /* Pods-Telehealth Doctor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth Doctor.release.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth Doctor/Pods-Telehealth Doctor.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +113,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				008FB2531BB9401900684968 /* VideoToolbox.framework in Frameworks */,
+				008FB2511BB9401000684968 /* UIKit.framework in Frameworks */,
+				008FB24F1BB9400800684968 /* SystemConfiguration.framework in Frameworks */,
+				008FB24D1BB9400000684968 /* QuartzCore.framework in Frameworks */,
+				008FB24B1BB93FF800684968 /* OpenGLES.framework in Frameworks */,
+				008FB2491BB93FF000684968 /* libsqlite3.tbd in Frameworks */,
+				008FB2471BB93FE700684968 /* libc++.tbd in Frameworks */,
+				008FB2451BB93FD700684968 /* GLKit.framework in Frameworks */,
+				008FB2431BB93FD100684968 /* Foundation.framework in Frameworks */,
+				008FB2411BB93FC800684968 /* CoreVideo.framework in Frameworks */,
+				002C6F9A1BBCD13C006F4FA6 /* OpenTok.framework in Frameworks */,
+				008FB23F1BB93F6700684968 /* CoreTelephony.framework in Frameworks */,
+				008FB23D1BB93F5B00684968 /* CoreMedia.framework in Frameworks */,
+				008FB23B1BB93F5300684968 /* CoreGraphics.framework in Frameworks */,
+				008FB2391BB93F4B00684968 /* AVFoundation.framework in Frameworks */,
+				008FB2371BB93F4500684968 /* AudioToolbox.framework in Frameworks */,
+				60350A33EBFF3BA69C0DDD73 /* Pods_Telehealth_Doctor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,20 +150,98 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0020533F1BBBBDEC00679E10 /* JSSAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				002053421BBBBE2B00679E10 /* JSSAlertView.swift */,
+			);
+			name = JSSAlertView;
+			sourceTree = "<group>";
+		};
+		004F6D171BB99FE300242CE9 /* CustomUI */ = {
+			isa = PBXGroup;
+			children = (
+				004F6D181BB9A02200242CE9 /* CustomViewController.swift */,
+			);
+			name = CustomUI;
+			sourceTree = "<group>";
+		};
+		00D5127E1BB4E7810068942D /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				AFF21D7C1BB12D8B006A190E /* AppDelegate.swift */,
+			);
+			name = Delegate;
+			sourceTree = "<group>";
+		};
+		00D5127F1BB4E8150068942D /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				00D5127C1BB4E7610068942D /* GlobalConstants.swift */,
+				00ED27A61BB8E58F006586C8 /* KeyNSUserDefault.swift */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
+		00D512801BB4E82F0068942D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AFF21D881BB12D8B006A190E /* LaunchScreen.storyboard */,
+				AFF21D8B1BB12D8B006A190E /* Info.plist */,
+				AFF21D831BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld */,
+				009398E41BBA9384005481E2 /* Telehealth Doctor-Bridging-Header.h */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		815AB998E3077CB4DFDF1600 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7EC46F2286C519B19F81976E /* Pods-Telehealth Doctor.debug.xcconfig */,
+				F5C98F90639AD6152CB17AAF /* Pods-Telehealth Doctor.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		854898B15C0460C15C6AB91F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				002C6F991BBCD13C006F4FA6 /* OpenTok.framework */,
+				0020533F1BBBBDEC00679E10 /* JSSAlertView */,
+				008FB2521BB9401900684968 /* VideoToolbox.framework */,
+				008FB2501BB9401000684968 /* UIKit.framework */,
+				008FB24E1BB9400800684968 /* SystemConfiguration.framework */,
+				008FB24C1BB9400000684968 /* QuartzCore.framework */,
+				008FB24A1BB93FF800684968 /* OpenGLES.framework */,
+				008FB2481BB93FF000684968 /* libsqlite3.tbd */,
+				008FB2461BB93FE700684968 /* libc++.tbd */,
+				008FB2441BB93FD700684968 /* GLKit.framework */,
+				008FB2421BB93FD100684968 /* Foundation.framework */,
+				008FB2401BB93FC800684968 /* CoreVideo.framework */,
+				008FB23E1BB93F6700684968 /* CoreTelephony.framework */,
+				008FB23C1BB93F5B00684968 /* CoreMedia.framework */,
+				008FB23A1BB93F5300684968 /* CoreGraphics.framework */,
+				008FB2381BB93F4B00684968 /* AVFoundation.framework */,
+				008FB2361BB93F4500684968 /* AudioToolbox.framework */,
+				C1F17DC5B312EB9B2723910E /* Pods_Telehealth_Doctor.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AFF10DF51BB279FE005E9838 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				004F6D171BB99FE300242CE9 /* CustomUI */,
+				00D5127F1BB4E8150068942D /* Constants */,
+				AFF21DE91BB145B1006A190E /* AppointmentListViewController.swift */,
+				AFF21DEB1BB15558006A190E /* ImageListViewController.swift */,
+				AFF21D7E1BB12D8B006A190E /* LoginViewController.swift */,
+				00D512761BB4E6100068942D /* ProfileViewController.swift */,
+				00D512781BB4E63E0068942D /* HomeViewController.swift */,
+				00D5127A1BB4E6560068942D /* MakeCallController.swift */,
+				008FB2341BB93E3A00684968 /* TOPVCViewController.swift */,
 			);
 			name = Controllers;
-			sourceTree = "<group>";
-		};
-		AFF10DF61BB27A0B005E9838 /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				AFF21DAD1BB131F7006A190E /* Spring */,
-			);
-			name = Library;
-			path = "Telehealth Doctor";
 			sourceTree = "<group>";
 		};
 		AFF10DF71BB27A17005E9838 /* API */ = {
@@ -169,39 +258,23 @@
 			name = Resource;
 			sourceTree = "<group>";
 		};
-		AFF10E001BB286CB005E9838 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				AFF21DE91BB145B1006A190E /* AppointmentListViewController.swift */,
-				AFF21DEB1BB15558006A190E /* ImageListViewController.swift */,
-				AFF21D7E1BB12D8B006A190E /* ViewController.swift */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		AFF10E011BB286E1005E9838 /* Modal */ = {
+		AFF10E011BB286E1005E9838 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = Modal;
-			sourceTree = "<group>";
-		};
-		AFF10E021BB286FD005E9838 /* Config */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Config;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		AFF21D701BB12D8B006A190E = {
 			isa = PBXGroup;
 			children = (
 				AFF10DF81BB27A39005E9838 /* Resource */,
-				AFF10DF61BB27A0B005E9838 /* Library */,
 				AFF21D7B1BB12D8B006A190E /* Telehealth Doctor */,
 				AFF21D931BB12D8B006A190E /* Telehealth DoctorTests */,
 				AFF21D9E1BB12D8B006A190E /* Telehealth DoctorUITests */,
 				AFF21D7A1BB12D8B006A190E /* Products */,
+				815AB998E3077CB4DFDF1600 /* Pods */,
+				854898B15C0460C15C6AB91F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -218,17 +291,13 @@
 		AFF21D7B1BB12D8B006A190E /* Telehealth Doctor */ = {
 			isa = PBXGroup;
 			children = (
-				AFF10E021BB286FD005E9838 /* Config */,
-				AFF10E001BB286CB005E9838 /* Views */,
+				00D5127E1BB4E7810068942D /* Delegate */,
 				AFF10DF51BB279FE005E9838 /* Controllers */,
-				AFF10E011BB286E1005E9838 /* Modal */,
+				AFF10E011BB286E1005E9838 /* Model */,
 				AFF10DF71BB27A17005E9838 /* API */,
-				AFF21D7C1BB12D8B006A190E /* AppDelegate.swift */,
 				AFF21D801BB12D8B006A190E /* Main.storyboard */,
 				AFF21D861BB12D8B006A190E /* Assets.xcassets */,
-				AFF21D881BB12D8B006A190E /* LaunchScreen.storyboard */,
-				AFF21D8B1BB12D8B006A190E /* Info.plist */,
-				AFF21D831BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld */,
+				00D512801BB4E82F0068942D /* Supporting Files */,
 			);
 			path = "Telehealth Doctor";
 			sourceTree = "<group>";
@@ -251,43 +320,6 @@
 			path = "Telehealth DoctorUITests";
 			sourceTree = "<group>";
 		};
-		AFF21DAD1BB131F7006A190E /* Spring */ = {
-			isa = PBXGroup;
-			children = (
-				AFF21DAE1BB131F7006A190E /* AsyncButton.swift */,
-				AFF21DAF1BB131F7006A190E /* AsyncImageView.swift */,
-				AFF21DB01BB131F7006A190E /* AutoTextView.swift */,
-				AFF21DB11BB131F7006A190E /* BlurView.swift */,
-				AFF21DB21BB131F7006A190E /* DesignableButton.swift */,
-				AFF21DB31BB131F7006A190E /* DesignableImageView.swift */,
-				AFF21DB41BB131F7006A190E /* DesignableLabel.swift */,
-				AFF21DB51BB131F7006A190E /* DesignableTabBarController.swift */,
-				AFF21DB61BB131F7006A190E /* DesignableTextField.swift */,
-				AFF21DB71BB131F7006A190E /* DesignableTextView.swift */,
-				AFF21DB81BB131F7006A190E /* DesignableView.swift */,
-				AFF21DB91BB131F7006A190E /* ImageLoader.swift */,
-				AFF21DBA1BB131F7006A190E /* Info.plist */,
-				AFF21DBB1BB131F7006A190E /* KeyboardLayoutConstraint.swift */,
-				AFF21DBC1BB131F7006A190E /* LoadingView.swift */,
-				AFF21DBD1BB131F7006A190E /* LoadingView.xib */,
-				AFF21DBE1BB131F7006A190E /* Misc.swift */,
-				AFF21DBF1BB131F7006A190E /* SoundPlayer.swift */,
-				AFF21DC01BB131F7006A190E /* Spring.h */,
-				AFF21DC11BB131F7006A190E /* Spring.swift */,
-				AFF21DC21BB131F7006A190E /* SpringAnimation.swift */,
-				AFF21DC31BB131F7006A190E /* SpringButton.swift */,
-				AFF21DC41BB131F7006A190E /* SpringImageView.swift */,
-				AFF21DC51BB131F7006A190E /* SpringLabel.swift */,
-				AFF21DC61BB131F7006A190E /* SpringTextField.swift */,
-				AFF21DC71BB131F7006A190E /* SpringTextView.swift */,
-				AFF21DC81BB131F7006A190E /* SpringView.swift */,
-				AFF21DC91BB131F7006A190E /* TransitionManager.swift */,
-				AFF21DCA1BB131F7006A190E /* TransitionZoom.swift */,
-				AFF21DCB1BB131F7006A190E /* UnwindSegue.swift */,
-			);
-			path = Spring;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -295,9 +327,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AFF21DA41BB12D8B006A190E /* Build configuration list for PBXNativeTarget "Telehealth Doctor" */;
 			buildPhases = (
+				973B25D18A7CF760214B4246 /* Check Pods Manifest.lock */,
 				AFF21D751BB12D8B006A190E /* Sources */,
 				AFF21D761BB12D8B006A190E /* Frameworks */,
 				AFF21D771BB12D8B006A190E /* Resources */,
+				BD2E320F7F006BE6D4D8CB9F /* Embed Pods Frameworks */,
+				8963F1BCBAC8402C51D5661A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -350,6 +385,7 @@
 		AFF21D711BB12D8B006A190E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Giap Vo Duc";
 				TargetAttributes = {
@@ -391,11 +427,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AFF21DD81BB131F7006A190E /* Info.plist in Resources */,
 				AFF21D8A1BB12D8B006A190E /* LaunchScreen.storyboard in Resources */,
 				AFF21D871BB12D8B006A190E /* Assets.xcassets in Resources */,
 				AFF21D821BB12D8B006A190E /* Main.storyboard in Resources */,
-				AFF21DDB1BB131F7006A190E /* LoadingView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,42 +449,71 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8963F1BCBAC8402C51D5661A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Telehealth Doctor/Pods-Telehealth Doctor-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		973B25D18A7CF760214B4246 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BD2E320F7F006BE6D4D8CB9F /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Telehealth Doctor/Pods-Telehealth Doctor-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AFF21D751BB12D8B006A190E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AFF21DD21BB131F7006A190E /* DesignableLabel.swift in Sources */,
-				AFF21DE11BB131F7006A190E /* SpringImageView.swift in Sources */,
-				AFF21DCE1BB131F7006A190E /* AutoTextView.swift in Sources */,
-				AFF21DD71BB131F7006A190E /* ImageLoader.swift in Sources */,
-				AFF21DDC1BB131F7006A190E /* Misc.swift in Sources */,
-				AFF21DCF1BB131F7006A190E /* BlurView.swift in Sources */,
-				AFF21DE81BB131F7006A190E /* UnwindSegue.swift in Sources */,
-				AFF21DDA1BB131F7006A190E /* LoadingView.swift in Sources */,
+				002053431BBBBE2B00679E10 /* JSSAlertView.swift in Sources */,
 				AFF21DEA1BB145B1006A190E /* AppointmentListViewController.swift in Sources */,
-				AFF21DE31BB131F7006A190E /* SpringTextField.swift in Sources */,
-				AFF21DDE1BB131F7006A190E /* Spring.swift in Sources */,
-				AFF21D7F1BB12D8B006A190E /* ViewController.swift in Sources */,
-				AFF21DDD1BB131F7006A190E /* SoundPlayer.swift in Sources */,
-				AFF21DD61BB131F7006A190E /* DesignableView.swift in Sources */,
-				AFF21DD31BB131F7006A190E /* DesignableTabBarController.swift in Sources */,
-				AFF21DD01BB131F7006A190E /* DesignableButton.swift in Sources */,
+				00D5127D1BB4E7610068942D /* GlobalConstants.swift in Sources */,
+				AFF21D7F1BB12D8B006A190E /* LoginViewController.swift in Sources */,
+				004F6D191BB9A02200242CE9 /* CustomViewController.swift in Sources */,
 				AFF21D851BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld in Sources */,
-				AFF21DE71BB131F7006A190E /* TransitionZoom.swift in Sources */,
-				AFF21DD41BB131F7006A190E /* DesignableTextField.swift in Sources */,
-				AFF21DE61BB131F7006A190E /* TransitionManager.swift in Sources */,
-				AFF21DE21BB131F7006A190E /* SpringLabel.swift in Sources */,
-				AFF21DCC1BB131F7006A190E /* AsyncButton.swift in Sources */,
+				00D512791BB4E63E0068942D /* HomeViewController.swift in Sources */,
 				AFF21DEC1BB15558006A190E /* ImageListViewController.swift in Sources */,
-				AFF21DCD1BB131F7006A190E /* AsyncImageView.swift in Sources */,
-				AFF21DD51BB131F7006A190E /* DesignableTextView.swift in Sources */,
-				AFF21DE51BB131F7006A190E /* SpringView.swift in Sources */,
-				AFF21DE41BB131F7006A190E /* SpringTextView.swift in Sources */,
-				AFF21DD91BB131F7006A190E /* KeyboardLayoutConstraint.swift in Sources */,
-				AFF21DE01BB131F7006A190E /* SpringButton.swift in Sources */,
-				AFF21DDF1BB131F7006A190E /* SpringAnimation.swift in Sources */,
-				AFF21DD11BB131F7006A190E /* DesignableImageView.swift in Sources */,
+				008FB2351BB93E3A00684968 /* TOPVCViewController.swift in Sources */,
+				00D5127B1BB4E6560068942D /* MakeCallController.swift in Sources */,
+				00D512771BB4E6100068942D /* ProfileViewController.swift in Sources */,
+				00ED27A71BB8E58F006586C8 /* KeyNSUserDefault.swift in Sources */,
 				AFF21D7D1BB12D8B006A190E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -542,12 +605,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 2;
+				VALID_ARCHS = "arm6 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -581,38 +645,93 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm6 armv7 armv7s";
 			};
 			name = Release;
 		};
 		AFF21DA51BB12D8B006A190E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EC46F2286C519B19F81976E /* Pods-Telehealth Doctor.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+				);
 				INFOPLIST_FILE = "Telehealth Doctor/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kreatived.Telehealth-Doctor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Telehealth Doctor/Telehealth Doctor-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
 		AFF21DA61BB12D8B006A190E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5C98F90639AD6152CB17AAF /* Pods-Telehealth Doctor.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+				);
 				INFOPLIST_FILE = "Telehealth Doctor/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kreatived.Telehealth-Doctor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Telehealth Doctor/Telehealth Doctor-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};
 		AFF21DA81BB12D8B006A190E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EC46F2286C519B19F81976E /* Pods-Telehealth Doctor.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = "Telehealth DoctorTests/Info.plist";
@@ -625,6 +744,7 @@
 		};
 		AFF21DA91BB12D8B006A190E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5C98F90639AD6152CB17AAF /* Pods-Telehealth Doctor.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = "Telehealth DoctorTests/Info.plist";
@@ -637,6 +757,7 @@
 		};
 		AFF21DAB1BB12D8B006A190E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EC46F2286C519B19F81976E /* Pods-Telehealth Doctor.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "Telehealth DoctorUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -649,6 +770,7 @@
 		};
 		AFF21DAC1BB12D8B006A190E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5C98F90639AD6152CB17AAF /* Pods-Telehealth Doctor.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "Telehealth DoctorUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

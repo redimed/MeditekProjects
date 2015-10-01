@@ -16,6 +16,32 @@ routes['get /api/appointment-telehealth-request'] = {
     action: 'RequestAppointment'
 };
 
+routes['post /api/appointment-update-appointment'] = {
+    controller: 'Appointment/AppointmentController',
+    action: 'UpdateAppointment'
+};
+routes['post /api/appointment-delete-appointment'] = {
+    controller: 'Appointment/AppointmentController',
+    action: 'DeleteAppointment'
+};
+routes['post /api/appointment-getone-appointment'] = {
+    controller: 'Appointment/AppointmentController',
+    action: 'DetailOneAppointment'
+};
+//module redoctorappointment
+routes['post /api/redoctorappointment-setdoctor'] = {
+    controller: 'ReDoctocAppointment/ReDoctocAppointmentController',
+    action: 'SetDoctorForAppointment'
+};
+//end module redoctorAppointment
+
+//module repatientappointment
+routes['post /api/repatientappointment-setpatient'] = {
+    controller: 'RePatientAppointment/RelPatientAppointmentController',
+    action: 'SetPatientForAppointment'
+};
+//end module repatientappointment
+
 //module patient
 routes['post /api/patient/create-patient'] = {
     controller: 'Patient/PatientController',

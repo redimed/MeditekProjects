@@ -34,15 +34,15 @@ routes['get /api/user-account/test']={
 	controller:'UserAccount/UserAccountController',
 	action:'Test'
 };
-routes['post /createUser']={
+routes['post /api/user-account/CreateUserAccount']={
 	controller:'UserAccount/UserAccountController',
-	action:'createUser'
+	action:'CreateUserAccount'
 };
 routes['post /login']={
     controller:'UserAccount/AuthController',
     action:'login'
 };
-routes['get /user-account/find-by-phone']={
+routes['get /api/user-account/find-by-phone']={
     controller:'UserAccount/UserAccountController',
     action:'FindByPhoneNumber'
 };

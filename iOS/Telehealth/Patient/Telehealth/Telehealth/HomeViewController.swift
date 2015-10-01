@@ -8,8 +8,8 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
-
+class HomeViewController: UIViewController,UIPopoverPresentationControllerDelegate{
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,6 +20,17 @@ class HomeViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+
+    @IBAction func OptionsAction(sender: UIBarButtonItem) {
+              
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
+    }
+    
+   
 
 
  

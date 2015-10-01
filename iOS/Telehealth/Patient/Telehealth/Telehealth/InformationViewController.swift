@@ -10,7 +10,7 @@ import UIKit
 
 class InformationViewController: UIViewController {
 
-    @IBOutlet var scrollView: UIScrollView!
+  
     override func viewDidLoad() {
         super.viewDidLoad()
        

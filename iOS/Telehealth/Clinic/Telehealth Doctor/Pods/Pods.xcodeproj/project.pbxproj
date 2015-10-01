@@ -1,0 +1,633 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		084A26CC6355487E7392E536B44D91A7 /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644DF8F1DD47151F078FE505B9287BE4 /* AsyncImageView.swift */; };
+		0C926B1D844554EFAF143C26682CB608 /* SpringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB550BFBDE25FD73B2CAF77A9F8FBBD /* SpringView.swift */; };
+		27156FA2EE58423E96F91E849944DE33 /* DesignableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17786A103C8CD0AAB191C5A9353EBBFC /* DesignableView.swift */; };
+		276887C3869F383DA42BC7A4D2DBEF3C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB15F19ED9C1E6AF23DABA462D9E3D0D /* Foundation.framework */; };
+		281ACA5F324A1A67F397E55FC273EDD0 /* AutoTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91059726DC94563BC9E3159625138DBE /* AutoTextView.swift */; };
+		3B15962FE6CDF703F7517DBAF87AD6E4 /* DesignableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714B835B557B3F72D89945095C23B1A4 /* DesignableLabel.swift */; };
+		4AC63369F44D2E1FF5754F4817036BE9 /* SpringButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9CC2BB93470648CCEE42F06CF16EF1 /* SpringButton.swift */; };
+		4AEC16254AB33CD52714CBF96CB8A50D /* SpringTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47A46C4CDA26763F8A89977615BA750 /* SpringTextField.swift */; };
+		6898D00A17F0B59B9FB7D020642B0FE7 /* DesignableTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243BD3D3C3D5BDAF745916587420D963 /* DesignableTabBarController.swift */; };
+		7480D7F88F7D6C491AC709D6A2485553 /* DesignableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747EC9F42A32387A595E40BE8E658168 /* DesignableTextField.swift */; };
+		7784ABE02E493AE3288BA2467DED9485 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6106FA0626AF6849CC0B8FA5321C5814 /* Images.xcassets */; };
+		78054845576BD105C4505ACCB26C9A77 /* DesignableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A10C62583F50B571B0FEE47047D3D8 /* DesignableButton.swift */; };
+		858ED576E4AADE88999137E0AA25F219 /* Spring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B11326E117F16B77C4601D8FF6FC0B /* Spring.swift */; };
+		860E6166BDD6C7A2AF796EE6D7729971 /* DesignableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B639C1CF665CE74FBD6494B9A6633AC /* DesignableImageView.swift */; };
+		898D4E31759FB047AE22A1DC0AB765C8 /* DesignableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28517CF1749DF981B83A9F1D8542FF5 /* DesignableTextView.swift */; };
+		8AC90AA4994A6B17D0C52A0BA584FE07 /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108AA2994D7815017CD629C1646FFF61 /* Misc.swift */; };
+		A2D220B63C6991C9B926AFDD5D7D97A4 /* Pods-Telehealth Doctor-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BC07DC509E66F2E3BA837EEF9703E686 /* Pods-Telehealth Doctor-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AFC0905E8B9FD7BD96E3305BEC6A408F /* SpringAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9876D10625C1E9006562055D3BF119 /* SpringAnimation.swift */; };
+		B1526F737F8754B9637038A81C19492A /* SpringImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017820BFEFFA04C8392724C5BE0810A8 /* SpringImageView.swift */; };
+		B1664C2A7B68F30DCC26EF19E9C86DD8 /* Pods-Telehealth Doctor-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7DCEC7DD8D14479374D7F4BEBC6BB3 /* Pods-Telehealth Doctor-dummy.m */; };
+		B3006549161976151BA776A6BD4F81F8 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C55DE6BD2C60A6FC893D8DB339FC4553 /* LoadingView.xib */; };
+		B37AD3E2F87A47B9EB5F0D023F33FF1D /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D313E70FABD3B63D31116FC62DDD68 /* TransitionManager.swift */; };
+		B5733524751399DED1A701C15EF79176 /* SpringLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2834662A3665BDF7D2F61BA3631A66AD /* SpringLabel.swift */; };
+		C0D2C01A6C49699CFCDF22D7AEFE93AF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF1373004EE5CF38BDD54B6746887D0 /* LoadingView.swift */; };
+		CEA7DA76414B19CD1DF071D5250CA67E /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AB8DC0029F616AC6A34A74FDAFD750 /* KeyboardLayoutConstraint.swift */; };
+		D9098E669199273B2BD82EB82BE303A6 /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96B6E188B9C19B02F7A48882B460FF1 /* AsyncButton.swift */; };
+		DA8ABA13298C7710C0415705CF15A95F /* Spring-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5FA4219C27344F5A01D3CDD86C3EAB /* Spring-dummy.m */; };
+		DDF575AD6B47BCAFEB4BE7BF8B8F498D /* Spring-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4ACF5E472382B95FBDED0550E24C18DB /* Spring-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E445E02BAE699D3CD97213973DCDC5FE /* TransitionZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4A04412784B2B3A8735C7186E1AE16 /* TransitionZoom.swift */; };
+		E6D355B8760661369050BD92BA9CBC5E /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0B4A3C8430E8D9BAC52FE90BB00CF2 /* UnwindSegue.swift */; };
+		E9D54407268E0C066760E9A3A283F8FC /* SpringTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DD0FB30CDB217927C27FE7D04F75EE /* SpringTextView.swift */; };
+		EA99C5E65D55AA9CEF09E17D00546D5F /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F2691BBD99CF1196A45A047DB048B5 /* ImageLoader.swift */; };
+		F25A1F5BF7035884B330E4CED131AD64 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F3D3BA73F633688D4B0A041AFDFEFF /* BlurView.swift */; };
+		F39824D2823427D9ACE98317A75D7993 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB15F19ED9C1E6AF23DABA462D9E3D0D /* Foundation.framework */; };
+		FDD11A163E0E272D38230B50C4202AEE /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C0F51565A5346A442CC17CBFEE3FBD /* SoundPlayer.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		28BC7DF6BBD8E05E2055B539D2019B9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4ADDC830F1F3957A877DC0A28F0CBD4E;
+			remoteInfo = Spring;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		017820BFEFFA04C8392724C5BE0810A8 /* SpringImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpringImageView.swift; path = Spring/SpringImageView.swift; sourceTree = "<group>"; };
+		02A2A9F69204DF15683FD25B62B9D6CE /* Pods-Telehealth Doctor-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Telehealth Doctor-acknowledgements.plist"; sourceTree = "<group>"; };
+		0F7DCEC7DD8D14479374D7F4BEBC6BB3 /* Pods-Telehealth Doctor-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Telehealth Doctor-dummy.m"; sourceTree = "<group>"; };
+		108AA2994D7815017CD629C1646FFF61 /* Misc.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Misc.swift; path = Spring/Misc.swift; sourceTree = "<group>"; };
+		17786A103C8CD0AAB191C5A9353EBBFC /* DesignableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DesignableView.swift; path = Spring/DesignableView.swift; sourceTree = "<group>"; };
+		21C0F51565A5346A442CC17CBFEE3FBD /* SoundPlayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SoundPlayer.swift; path = Spring/SoundPlayer.swift; sourceTree = "<group>"; };
+		243BD3D3C3D5BDAF745916587420D963 /* DesignableTabBarController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DesignableTabBarController.swift; path = Spring/DesignableTabBarController.swift; sourceTree = "<group>"; };
+		268556FBFAA8FDF1C969B4D7E7D43F88 /* Pods_Telehealth_Doctor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Telehealth_Doctor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2834662A3665BDF7D2F61BA3631A66AD /* SpringLabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpringLabel.swift; path = Spring/SpringLabel.swift; sourceTree = "<group>"; };
+		32B7421817307CB5A3469963226E2A46 /* Pods-Telehealth Doctor-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Telehealth Doctor-frameworks.sh"; sourceTree = "<group>"; };
+		3777E2A4FE672FDBFF8F0C87F0D6F5B5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		37F3D3BA73F633688D4B0A041AFDFEFF /* BlurView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BlurView.swift; path = Spring/BlurView.swift; sourceTree = "<group>"; };
+		3F9CC2BB93470648CCEE42F06CF16EF1 /* SpringButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpringButton.swift; path = Spring/SpringButton.swift; sourceTree = "<group>"; };
+		451746300E823F97EB2F05F955A14B46 /* Spring.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spring.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4ACF5E472382B95FBDED0550E24C18DB /* Spring-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Spring-umbrella.h"; sourceTree = "<group>"; };
+		4DF1373004EE5CF38BDD54B6746887D0 /* LoadingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = Spring/LoadingView.swift; sourceTree = "<group>"; };
+		50AB8DC0029F616AC6A34A74FDAFD750 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyboardLayoutConstraint.swift; path = Spring/KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
+		5C053239576A8C7FB72E419C24E5BEC8 /* Spring.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Spring.xcconfig; sourceTree = "<group>"; };
+		60B11326E117F16B77C4601D8FF6FC0B /* Spring.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Spring.swift; path = Spring/Spring.swift; sourceTree = "<group>"; };
+		6106FA0626AF6849CC0B8FA5321C5814 /* Images.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SpringApp/Images.xcassets; sourceTree = "<group>"; };
+		62C66499798ACA3600B554547DD11E8A /* Pods-Telehealth Doctor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Telehealth Doctor.release.xcconfig"; sourceTree = "<group>"; };
+		6413902EE4081DE12CCDBF423224684C /* Spring.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Spring.modulemap; sourceTree = "<group>"; };
+		644DF8F1DD47151F078FE505B9287BE4 /* AsyncImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AsyncImageView.swift; path = Spring/AsyncImageView.swift; sourceTree = "<group>"; };
+		6F5FA4219C27344F5A01D3CDD86C3EAB /* Spring-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Spring-dummy.m"; sourceTree = "<group>"; };
+		714B835B557B3F72D89945095C23B1A4 /* DesignableLabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DesignableLabel.swift; path = Spring/DesignableLabel.swift; sourceTree = "<group>"; };
+		73DD0FB30CDB217927C27FE7D04F75EE /* SpringTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpringTextView.swift; path = Spring/SpringTextView.swift; sourceTree = "<group>"; };
+		747EC9F42A32387A595E40BE8E658168 /* DesignableTextField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DesignableTextField.swift; path = Spring/DesignableTextField.swift; sourceTree = "<group>"; };
+		7B639C1CF665CE74FBD6494B9A6633AC /* DesignableImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DesignableImageView.swift; path = Spring/DesignableImageView.swift; sourceTree = "<group>"; };
+		83D313E70FABD3B63D31116FC62DDD68 /* TransitionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TransitionManager.swift; path = Spring/TransitionManager.swift; sourceTree = "<group>"; };
+		91059726DC94563BC9E3159625138DBE /* AutoTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AutoTextView.swift; path = Spring/AutoTextView.swift; sourceTree = "<group>"; };
+		936EA872CF8E0965EED1956E3083186F /* Spring-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Spring-Private.xcconfig"; sourceTree = "<group>"; };
+		9E4A04412784B2B3A8735C7186E1AE16 /* TransitionZoom.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TransitionZoom.swift; path = Spring/TransitionZoom.swift; sourceTree = "<group>"; };
+		9F9876D10625C1E9006562055D3BF119 /* SpringAnimation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpringAnimation.swift; path = Spring/SpringAnimation.swift; sourceTree = "<group>"; };
+		ABD1996A464C2BCB78880895270D3A15 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B47A46C4CDA26763F8A89977615BA750 /* SpringTextField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpringTextField.swift; path = Spring/SpringTextField.swift; sourceTree = "<group>"; };
+		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BC07DC509E66F2E3BA837EEF9703E686 /* Pods-Telehealth Doctor-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Telehealth Doctor-umbrella.h"; sourceTree = "<group>"; };
+		C28517CF1749DF981B83A9F1D8542FF5 /* DesignableTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DesignableTextView.swift; path = Spring/DesignableTextView.swift; sourceTree = "<group>"; };
+		C55DE6BD2C60A6FC893D8DB339FC4553 /* LoadingView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = LoadingView.xib; path = Spring/LoadingView.xib; sourceTree = "<group>"; };
+		C96B6E188B9C19B02F7A48882B460FF1 /* AsyncButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AsyncButton.swift; path = Spring/AsyncButton.swift; sourceTree = "<group>"; };
+		D86D089BB9CAD9AE5EC31C5E44C25D92 /* Pods-Telehealth Doctor-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Telehealth Doctor-acknowledgements.markdown"; sourceTree = "<group>"; };
+		DAB550BFBDE25FD73B2CAF77A9F8FBBD /* SpringView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpringView.swift; path = Spring/SpringView.swift; sourceTree = "<group>"; };
+		DAF6A47E3B034D70B6167D87F109E2D3 /* Spring-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Spring-prefix.pch"; sourceTree = "<group>"; };
+		DBA3288E2152B81E61509946D50E192F /* Pods-Telehealth Doctor.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Telehealth Doctor.modulemap"; sourceTree = "<group>"; };
+		E5A10C62583F50B571B0FEE47047D3D8 /* DesignableButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DesignableButton.swift; path = Spring/DesignableButton.swift; sourceTree = "<group>"; };
+		E6F2691BBD99CF1196A45A047DB048B5 /* ImageLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageLoader.swift; path = Spring/ImageLoader.swift; sourceTree = "<group>"; };
+		F5D02733A736F5D6CDF44E6F6DBA0AB2 /* Pods-Telehealth Doctor-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Telehealth Doctor-resources.sh"; sourceTree = "<group>"; };
+		FB15F19ED9C1E6AF23DABA462D9E3D0D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		FE0B4A3C8430E8D9BAC52FE90BB00CF2 /* UnwindSegue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UnwindSegue.swift; path = Spring/UnwindSegue.swift; sourceTree = "<group>"; };
+		FEABF834080B4192EF1737E5EA67ED2F /* Pods-Telehealth Doctor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Telehealth Doctor.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9FFB4AB7FA3CFA312FB717C670DD1985 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F39824D2823427D9ACE98317A75D7993 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA7956F2792C1B62882F7A0B02BFC5FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				276887C3869F383DA42BC7A4D2DBEF3C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1921EF05F19853DACB4C9A0618694647 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6106FA0626AF6849CC0B8FA5321C5814 /* Images.xcassets */,
+				C55DE6BD2C60A6FC893D8DB339FC4553 /* LoadingView.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		1AC31D153712963296C384E7A8F76E0D /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3777E2A4FE672FDBFF8F0C87F0D6F5B5 /* Info.plist */,
+				6413902EE4081DE12CCDBF423224684C /* Spring.modulemap */,
+				5C053239576A8C7FB72E419C24E5BEC8 /* Spring.xcconfig */,
+				936EA872CF8E0965EED1956E3083186F /* Spring-Private.xcconfig */,
+				6F5FA4219C27344F5A01D3CDD86C3EAB /* Spring-dummy.m */,
+				DAF6A47E3B034D70B6167D87F109E2D3 /* Spring-prefix.pch */,
+				4ACF5E472382B95FBDED0550E24C18DB /* Spring-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Spring";
+			sourceTree = "<group>";
+		};
+		415BA603BC5DC1BB61751DC4A4D675A1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				98195BE3AE0229D66A4925FEB3E88AD0 /* Spring */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		53F661C0CA7190D2CF05023FB33D61E4 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				FB15F19ED9C1E6AF23DABA462D9E3D0D /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		58A683D3B2B6A7AE4F31DAFC03ED66D8 /* Pods-Telehealth Doctor */ = {
+			isa = PBXGroup;
+			children = (
+				ABD1996A464C2BCB78880895270D3A15 /* Info.plist */,
+				DBA3288E2152B81E61509946D50E192F /* Pods-Telehealth Doctor.modulemap */,
+				D86D089BB9CAD9AE5EC31C5E44C25D92 /* Pods-Telehealth Doctor-acknowledgements.markdown */,
+				02A2A9F69204DF15683FD25B62B9D6CE /* Pods-Telehealth Doctor-acknowledgements.plist */,
+				0F7DCEC7DD8D14479374D7F4BEBC6BB3 /* Pods-Telehealth Doctor-dummy.m */,
+				32B7421817307CB5A3469963226E2A46 /* Pods-Telehealth Doctor-frameworks.sh */,
+				F5D02733A736F5D6CDF44E6F6DBA0AB2 /* Pods-Telehealth Doctor-resources.sh */,
+				BC07DC509E66F2E3BA837EEF9703E686 /* Pods-Telehealth Doctor-umbrella.h */,
+				FEABF834080B4192EF1737E5EA67ED2F /* Pods-Telehealth Doctor.debug.xcconfig */,
+				62C66499798ACA3600B554547DD11E8A /* Pods-Telehealth Doctor.release.xcconfig */,
+			);
+			name = "Pods-Telehealth Doctor";
+			path = "Target Support Files/Pods-Telehealth Doctor";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				415BA603BC5DC1BB61751DC4A4D675A1 /* Pods */,
+				CCA510CFBEA2D207524CDA0D73C3B561 /* Products */,
+				FCE88B8DD0D6B228A4CCD7A61ECAF526 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		98195BE3AE0229D66A4925FEB3E88AD0 /* Spring */ = {
+			isa = PBXGroup;
+			children = (
+				C96B6E188B9C19B02F7A48882B460FF1 /* AsyncButton.swift */,
+				644DF8F1DD47151F078FE505B9287BE4 /* AsyncImageView.swift */,
+				91059726DC94563BC9E3159625138DBE /* AutoTextView.swift */,
+				37F3D3BA73F633688D4B0A041AFDFEFF /* BlurView.swift */,
+				E5A10C62583F50B571B0FEE47047D3D8 /* DesignableButton.swift */,
+				7B639C1CF665CE74FBD6494B9A6633AC /* DesignableImageView.swift */,
+				714B835B557B3F72D89945095C23B1A4 /* DesignableLabel.swift */,
+				243BD3D3C3D5BDAF745916587420D963 /* DesignableTabBarController.swift */,
+				747EC9F42A32387A595E40BE8E658168 /* DesignableTextField.swift */,
+				C28517CF1749DF981B83A9F1D8542FF5 /* DesignableTextView.swift */,
+				17786A103C8CD0AAB191C5A9353EBBFC /* DesignableView.swift */,
+				E6F2691BBD99CF1196A45A047DB048B5 /* ImageLoader.swift */,
+				50AB8DC0029F616AC6A34A74FDAFD750 /* KeyboardLayoutConstraint.swift */,
+				4DF1373004EE5CF38BDD54B6746887D0 /* LoadingView.swift */,
+				108AA2994D7815017CD629C1646FFF61 /* Misc.swift */,
+				21C0F51565A5346A442CC17CBFEE3FBD /* SoundPlayer.swift */,
+				60B11326E117F16B77C4601D8FF6FC0B /* Spring.swift */,
+				9F9876D10625C1E9006562055D3BF119 /* SpringAnimation.swift */,
+				3F9CC2BB93470648CCEE42F06CF16EF1 /* SpringButton.swift */,
+				017820BFEFFA04C8392724C5BE0810A8 /* SpringImageView.swift */,
+				2834662A3665BDF7D2F61BA3631A66AD /* SpringLabel.swift */,
+				B47A46C4CDA26763F8A89977615BA750 /* SpringTextField.swift */,
+				73DD0FB30CDB217927C27FE7D04F75EE /* SpringTextView.swift */,
+				DAB550BFBDE25FD73B2CAF77A9F8FBBD /* SpringView.swift */,
+				83D313E70FABD3B63D31116FC62DDD68 /* TransitionManager.swift */,
+				9E4A04412784B2B3A8735C7186E1AE16 /* TransitionZoom.swift */,
+				FE0B4A3C8430E8D9BAC52FE90BB00CF2 /* UnwindSegue.swift */,
+				1921EF05F19853DACB4C9A0618694647 /* Resources */,
+				1AC31D153712963296C384E7A8F76E0D /* Support Files */,
+			);
+			path = Spring;
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				53F661C0CA7190D2CF05023FB33D61E4 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CCA510CFBEA2D207524CDA0D73C3B561 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				268556FBFAA8FDF1C969B4D7E7D43F88 /* Pods_Telehealth_Doctor.framework */,
+				451746300E823F97EB2F05F955A14B46 /* Spring.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FCE88B8DD0D6B228A4CCD7A61ECAF526 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				58A683D3B2B6A7AE4F31DAFC03ED66D8 /* Pods-Telehealth Doctor */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		6A9108A9C7CE1AC8883FB4ADE72255D8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2D220B63C6991C9B926AFDD5D7D97A4 /* Pods-Telehealth Doctor-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98DC239BCE4043C788B606F584C2E747 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDF575AD6B47BCAFEB4BE7BF8B8F498D /* Spring-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4ADDC830F1F3957A877DC0A28F0CBD4E /* Spring */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61544AA60217E4B4BA54112FF8563B1E /* Build configuration list for PBXNativeTarget "Spring" */;
+			buildPhases = (
+				F6B8408D5CBE56BBC1C0DC03998D76CB /* Sources */,
+				BA7956F2792C1B62882F7A0B02BFC5FB /* Frameworks */,
+				21F0D8FA20A0BFC40C66582B29294976 /* Resources */,
+				98DC239BCE4043C788B606F584C2E747 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Spring;
+			productName = Spring;
+			productReference = 451746300E823F97EB2F05F955A14B46 /* Spring.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		AA74D57685EE9ACCE460A3FEA8BF5BD1 /* Pods-Telehealth Doctor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7754E6C03764ECAA18FA9B583855B5E9 /* Build configuration list for PBXNativeTarget "Pods-Telehealth Doctor" */;
+			buildPhases = (
+				E6D80748B22985F30B9360086D582D0C /* Sources */,
+				9FFB4AB7FA3CFA312FB717C670DD1985 /* Frameworks */,
+				6A9108A9C7CE1AC8883FB4ADE72255D8 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8012057FD690ED461EAFC483168D7D60 /* PBXTargetDependency */,
+			);
+			name = "Pods-Telehealth Doctor";
+			productName = "Pods-Telehealth Doctor";
+			productReference = 268556FBFAA8FDF1C969B4D7E7D43F88 /* Pods_Telehealth_Doctor.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = CCA510CFBEA2D207524CDA0D73C3B561 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA74D57685EE9ACCE460A3FEA8BF5BD1 /* Pods-Telehealth Doctor */,
+				4ADDC830F1F3957A877DC0A28F0CBD4E /* Spring */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		21F0D8FA20A0BFC40C66582B29294976 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7784ABE02E493AE3288BA2467DED9485 /* Images.xcassets in Resources */,
+				B3006549161976151BA776A6BD4F81F8 /* LoadingView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E6D80748B22985F30B9360086D582D0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1664C2A7B68F30DCC26EF19E9C86DD8 /* Pods-Telehealth Doctor-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6B8408D5CBE56BBC1C0DC03998D76CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9098E669199273B2BD82EB82BE303A6 /* AsyncButton.swift in Sources */,
+				084A26CC6355487E7392E536B44D91A7 /* AsyncImageView.swift in Sources */,
+				281ACA5F324A1A67F397E55FC273EDD0 /* AutoTextView.swift in Sources */,
+				F25A1F5BF7035884B330E4CED131AD64 /* BlurView.swift in Sources */,
+				78054845576BD105C4505ACCB26C9A77 /* DesignableButton.swift in Sources */,
+				860E6166BDD6C7A2AF796EE6D7729971 /* DesignableImageView.swift in Sources */,
+				3B15962FE6CDF703F7517DBAF87AD6E4 /* DesignableLabel.swift in Sources */,
+				6898D00A17F0B59B9FB7D020642B0FE7 /* DesignableTabBarController.swift in Sources */,
+				7480D7F88F7D6C491AC709D6A2485553 /* DesignableTextField.swift in Sources */,
+				898D4E31759FB047AE22A1DC0AB765C8 /* DesignableTextView.swift in Sources */,
+				27156FA2EE58423E96F91E849944DE33 /* DesignableView.swift in Sources */,
+				EA99C5E65D55AA9CEF09E17D00546D5F /* ImageLoader.swift in Sources */,
+				CEA7DA76414B19CD1DF071D5250CA67E /* KeyboardLayoutConstraint.swift in Sources */,
+				C0D2C01A6C49699CFCDF22D7AEFE93AF /* LoadingView.swift in Sources */,
+				8AC90AA4994A6B17D0C52A0BA584FE07 /* Misc.swift in Sources */,
+				FDD11A163E0E272D38230B50C4202AEE /* SoundPlayer.swift in Sources */,
+				DA8ABA13298C7710C0415705CF15A95F /* Spring-dummy.m in Sources */,
+				858ED576E4AADE88999137E0AA25F219 /* Spring.swift in Sources */,
+				AFC0905E8B9FD7BD96E3305BEC6A408F /* SpringAnimation.swift in Sources */,
+				4AC63369F44D2E1FF5754F4817036BE9 /* SpringButton.swift in Sources */,
+				B1526F737F8754B9637038A81C19492A /* SpringImageView.swift in Sources */,
+				B5733524751399DED1A701C15EF79176 /* SpringLabel.swift in Sources */,
+				4AEC16254AB33CD52714CBF96CB8A50D /* SpringTextField.swift in Sources */,
+				E9D54407268E0C066760E9A3A283F8FC /* SpringTextView.swift in Sources */,
+				0C926B1D844554EFAF143C26682CB608 /* SpringView.swift in Sources */,
+				B37AD3E2F87A47B9EB5F0D023F33FF1D /* TransitionManager.swift in Sources */,
+				E445E02BAE699D3CD97213973DCDC5FE /* TransitionZoom.swift in Sources */,
+				E6D355B8760661369050BD92BA9CBC5E /* UnwindSegue.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8012057FD690ED461EAFC483168D7D60 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Spring;
+			target = 4ADDC830F1F3957A877DC0A28F0CBD4E /* Spring */;
+			targetProxy = 28BC7DF6BBD8E05E2055B539D2019B9E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		308B7CF434A52C620EE8348D8CFF2340 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 936EA872CF8E0965EED1956E3083186F /* Spring-Private.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1.0.3;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Spring/Spring-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Spring/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Spring/Spring.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Spring;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		5E07DD7BB990B4F0E266EB3EC391CECE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 936EA872CF8E0965EED1956E3083186F /* Spring-Private.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1.0.3;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Spring/Spring-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Spring/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Spring/Spring.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = Spring;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		68D3A50DF399D5A2C83CB60934C139A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62C66499798ACA3600B554547DD11E8A /* Pods-Telehealth Doctor.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-Telehealth Doctor/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Pods-Telehealth Doctor/Pods-Telehealth Doctor.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = Pods_Telehealth_Doctor;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		A70CDAD61F90AC503C7D04CC22DA2923 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		C63828BBBBDBEB1B94BCAD9AE8D10426 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FEABF834080B4192EF1737E5EA67ED2F /* Pods-Telehealth Doctor.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-Telehealth Doctor/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Pods-Telehealth Doctor/Pods-Telehealth Doctor.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = Pods_Telehealth_Doctor;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FB45FFD90572718D82AB9092B750F0CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A70CDAD61F90AC503C7D04CC22DA2923 /* Debug */,
+				FB45FFD90572718D82AB9092B750F0CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		61544AA60217E4B4BA54112FF8563B1E /* Build configuration list for PBXNativeTarget "Spring" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E07DD7BB990B4F0E266EB3EC391CECE /* Debug */,
+				308B7CF434A52C620EE8348D8CFF2340 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7754E6C03764ECAA18FA9B583855B5E9 /* Build configuration list for PBXNativeTarget "Pods-Telehealth Doctor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C63828BBBBDBEB1B94BCAD9AE8D10426 /* Debug */,
+				68D3A50DF399D5A2C83CB60934C139A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

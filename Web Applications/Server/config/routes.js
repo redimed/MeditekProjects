@@ -89,5 +89,35 @@ routes['post /api/user-activation/create-user-activation']={
     controller:'UserAccount/UserActivationController',
     action:'CreateUserActivation'
 }
+// module doctor
+routes['post /api/getDoctor']={
+    controller:'Doctor/DoctorController',
+    action:'GetDoctor'
+};
+routes['post /api/getbyidDoctor']={
+    controller:'Doctor/DoctorController',
+    action:'GetByIdDoctor'
+};
+routes['post /api/createDoctor']={
+    controller:'Doctor/DoctorController',
+    action:'CreateDoctor'
+};
+routes['post /api/createDoctors']={
+    controller:'Doctor/DoctorController',
+    action:'CreateDoctors'
+};
+routes['post /api/updateDoctor']={
+    controller:'Doctor/DoctorController',
+    action:'UpdateDoctor'
+};
+routes['post /api/searchDoctor']={
+    controller:'Doctor/DoctorController',
+    action:'SearchDoctor'
+};
+routes['post /api/deleteDoctor']={
+    controller:'Doctor/DoctorController',
+    action:'DeleteDoctor'
+};
+//end module doctor
 
 module.exports.routes = routes;

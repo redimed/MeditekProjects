@@ -28,27 +28,75 @@ module.exports = {
         },
         FirstName: {
             type: Sequelize.STRING(50),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                max: {
+                    args: 50,
+                    msg: 'First Name is too long'
+                }
+            }
         },
         MiddleName: {
             type: Sequelize.STRING(100),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                max: {
+                    args: 100,
+                    msg: 'Middle Name is too long'
+                }
+            }
         },
         LastName: {
             type: Sequelize.STRING(50),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                max: {
+                    args: 50,
+                    msg: 'Last Name is too long'
+                }
+            }
         },
         Dob: {
             type: Sequelize.DATE,
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Dob Invalid'
+                }
+            }
         },
         Email: {
             type: Sequelize.STRING(256),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isEmail: {
+                    msg: 'Email Invalid!'
+                },
+                max: {
+                    args: 256,
+                    msg: 'Email is too long'
+                }
+            }
         },
         Phone: {
             type: Sequelize.STRING(12),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isNumeric: {
+                    msg: 'Phone Invalid'
+                }
+
+            }
+        },
+        Enable: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            validate: {
+                isIn: {
+                    args: [['Y', 'N']],
+                    msg: 'Must be Y or N'
+                }
+            }
         },
         CreationDate: {
             type: Sequelize.DATE,
@@ -70,6 +118,8 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'Doctor',
-        timestamps: false
+        timestamps: false,
+        createdAt: false,
+        updatedAt: false
     }
 };

@@ -28,27 +28,39 @@ module.exports = {
         },
         FirstName: {
             type: Sequelize.STRING(50),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len:[0,50]
+            }
         },
         MiddleName: {
             type: Sequelize.STRING(100),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len:[0,50]
+            }
         },
         LastName: {
             type: Sequelize.STRING(50),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len:[0,50]
+            }
         },
         Dob: {
             type: Sequelize.DATE,
             allowNull: true
         },
-        Sex: {
+        Gender: {
             type: Sequelize.STRING(1),
             allowNull: true
         },
         Address: {
-            type: Sequelize.STRING(500),
-            allowNull: true
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len:[0,255]
+            }
         },
         CountryID: {
             type: Sequelize.BIGINT(20),

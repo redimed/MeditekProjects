@@ -18,15 +18,14 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate:{
-                len:[0,2]
+                len:[0,255]
             }
         },
         Type: {
             type: Sequelize.STRING(45),
             allowNull: true,
             validate:{
-                len:[0,45],
-                equals:'11'
+                len:[0,45]  
             }
         },
         VerificationToken: {

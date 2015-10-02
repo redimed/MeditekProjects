@@ -41,7 +41,8 @@ module.exports = {
                             urgentRequestType: 'UrgentCare Request',
                             patientName: UR.lastName + ' ' + UR.firstName,
                             requestDate: Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss'),
-                            phoneNumber: UR.phoneNumber
+                            phoneNumber: UR.phoneNumber,
+                            bcc: 'pnguyen@redimed.com.au'
                         };
                         var CallBackSendMail = function(err, responseStatus, html, text) {
                                 if (err) {
@@ -67,7 +68,7 @@ module.exports = {
                                         source: 'Urgent Request',
                                         sourceID: 1,
                                         job: 'Receive email urgent request',
-                                        status: 'spending',
+                                        status: 'pending',
                                         startTime: Services.moment().format('YYYY-MM-DD HH:mm:ss')
                                     };
                                     MessageQueue.create({

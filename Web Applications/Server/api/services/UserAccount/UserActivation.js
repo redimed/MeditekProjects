@@ -11,7 +11,7 @@ module.exports = {
 	 */
 	CreateUserActivation:function(activationInfo,transaction)
 	{
-		console.log(activationInfo);
+
 		function Validation()
 		{
 			var q=$q.defer();
@@ -87,6 +87,54 @@ module.exports = {
 		},function(err){
 			throw err;
 		});
+	},
+
+	/**
+	 * ActivationWeb: Activation User through Web
+	 */
+	//
+	ActivationWeb:function(activationInfo,transaction)
+	{
+		var a=moment();
+		console.log(a);
+		var useruid=activationInfo.useruid;
+		var verificationToken=activationInfo.verificationToken;
+		var userInfo={};
+		return UserAccount.findOne({
+			where:{UID:useruid}
+		},{transaction:transaction})
+		.then(function(user){
+			if(user)
+			{
+				userInfo=user;
+				return UserActivation.findOne({
+						where:{
+							UserAccountID:userInfo.ID,
+							VerificationToken:verificationToken
+						}},{transaction:transaction});
+			}
+			else
+			{
+				var err=new Error("User not found");
+				throw err;
+			}
+		},function(err){
+			throw err;
+		})
+		.then(function(userActivation){
+			if(userActivation)
+			{
+				return userInfo.updateAttributes({Activated:"Y"},{transaction:transaction});
+			}	
+			else
+			{
+				var err=new Error('User Activation info not exist');
+				throw err;
+			}
+		},function(err){
+			throw err;
+		})
+
 	}
 
 }

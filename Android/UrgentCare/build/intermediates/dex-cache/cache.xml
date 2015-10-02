@@ -2,88 +2,88 @@
 <items version="2" >
 
     <item
-        jar="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jar="C:\Users\phanq\.gradle\caches\modules-2\files-2.1\com.mobsandgeeks\android-saripaar\2.0.0\3d4f5f783279b50c03e8f67a3b1290c493af9ec1\android-saripaar-2.0.0.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\classes-f7729007d4b32a8110f9fd91a163b812bc1dafcb.jar" />
-    </item>
-    <item
-        jar="C:\Users\phanq\AppData\Local\Android\sdk\build-tools\23.0.1\renderscript\lib\renderscript-v8.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="762016371811e15a66e97cf27f3e852bf287aaf3">
-        <dex dex="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\renderscript-v8-4285f2109839c1e933934c29eeaaaa28fae787e8.jar" />
-    </item>
-    <item
-        jar="C:\Users\phanq\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\picasso-2.5.2-862ca1331a224d9483d3a1e85fbb7c9c791077bb.jar" />
-    </item>
-    <item
-        jar="C:\Users\phanq\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp\okhttp\2.4.0\40340c0748190fe897baf7bffbc1b282734294e5\okhttp-2.4.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="40340c0748190fe897baf7bffbc1b282734294e5">
-        <dex dex="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\okhttp-2.4.0-aacc6c9061d486c8edc52434cfa7af6fcb02bba3.jar" />
-    </item>
-    <item
-        jar="C:\Users\phanq\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\gson-2.3.1-d87c6c4aef966703053ff235263950dcdd1a96b8.jar" />
-    </item>
-    <item
-        jar="C:\Users\phanq\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit\retrofit\1.9.0\a681c044244d9fc375198588297a39ba78028423\retrofit-1.9.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="a681c044244d9fc375198588297a39ba78028423">
-        <dex dex="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\retrofit-1.9.0-d0a11e04c2fe40ffd85dcd14885650933f3164eb.jar" />
-    </item>
-    <item
-        jar="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-d57d1ef84311c0944bf03ac0c8e4a51a681ec6a8.jar" />
-    </item>
-    <item
-        jar="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\classes-73e28fa3c3ee48e6134e9f3066efb48be30b6414.jar" />
-    </item>
-    <item
-        jar="C:\Users\phanq\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-e414f8d7ae00c5b9339d60bcd5cff42c40740fdc.jar" />
-    </item>
-    <item
-        jar="C:\Users\phanq\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.4.0\5b72bf48563ea8410e650de14aa33ff69a3e8c35\okio-1.4.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="5b72bf48563ea8410e650de14aa33ff69a3e8c35">
-        <dex dex="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\okio-1.4.0-1e01190bce4a1e3e51c00f3e02f52946ce5603df.jar" />
+        sha1="3d4f5f783279b50c03e8f67a3b1290c493af9ec1">
+        <dex dex="D:\Project\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\android-saripaar-2.0.0-7878f84d115cb91afedfc525fe36fc4601e7e953.jar" />
     </item>
     <item
         jar="C:\Users\phanq\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife\7.0.1\d5d13ea991eab0252e3710e5df3d6a9d4b21d461\butterknife-7.0.1.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
-        <dex dex="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\butterknife-7.0.1-b4b9e31c50513bc16a0b09528bcf16976fbccf67.jar" />
+        <dex dex="D:\Project\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\butterknife-7.0.1-b4b9e31c50513bc16a0b09528bcf16976fbccf67.jar" />
     </item>
     <item
-        jar="C:\Users\phanq\.gradle\caches\modules-2\files-2.1\com.mobsandgeeks\android-saripaar\2.0.0\3d4f5f783279b50c03e8f67a3b1290c493af9ec1\android-saripaar-2.0.0.jar"
+        jar="C:\Users\phanq\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp\okhttp\2.4.0\40340c0748190fe897baf7bffbc1b282734294e5\okhttp-2.4.0.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="3d4f5f783279b50c03e8f67a3b1290c493af9ec1">
-        <dex dex="D:\MeditekProjects\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\android-saripaar-2.0.0-7878f84d115cb91afedfc525fe36fc4601e7e953.jar" />
+        sha1="40340c0748190fe897baf7bffbc1b282734294e5">
+        <dex dex="D:\Project\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\okhttp-2.4.0-aacc6c9061d486c8edc52434cfa7af6fcb02bba3.jar" />
+    </item>
+    <item
+        jar="C:\Users\phanq\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.4.0\5b72bf48563ea8410e650de14aa33ff69a3e8c35\okio-1.4.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5b72bf48563ea8410e650de14aa33ff69a3e8c35">
+        <dex dex="D:\Project\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\okio-1.4.0-1e01190bce4a1e3e51c00f3e02f52946ce5603df.jar" />
+    </item>
+    <item
+        jar="D:\Project\Android\UrgentCare\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="D:\Project\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\classes-ae54edc9045b3733964c84ed26b07bf04adf6716.jar" />
+    </item>
+    <item
+        jar="C:\Users\phanq\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="D:\Project\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\gson-2.3.1-d87c6c4aef966703053ff235263950dcdd1a96b8.jar" />
+    </item>
+    <item
+        jar="C:\Users\phanq\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="D:\Project\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-e414f8d7ae00c5b9339d60bcd5cff42c40740fdc.jar" />
+    </item>
+    <item
+        jar="C:\Users\phanq\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit\retrofit\1.9.0\a681c044244d9fc375198588297a39ba78028423\retrofit-1.9.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a681c044244d9fc375198588297a39ba78028423">
+        <dex dex="D:\Project\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\retrofit-1.9.0-d0a11e04c2fe40ffd85dcd14885650933f3164eb.jar" />
+    </item>
+    <item
+        jar="D:\Project\Android\UrgentCare\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="D:\Project\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\classes-4eab7d0b2d27dea021a4618064fe57660d783fa8.jar" />
+    </item>
+    <item
+        jar="C:\Users\phanq\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="D:\Project\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\picasso-2.5.2-862ca1331a224d9483d3a1e85fbb7c9c791077bb.jar" />
+    </item>
+    <item
+        jar="C:\Users\phanq\AppData\Local\Android\sdk\build-tools\23.0.1\renderscript\lib\renderscript-v8.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="762016371811e15a66e97cf27f3e852bf287aaf3">
+        <dex dex="D:\Project\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\renderscript-v8-4285f2109839c1e933934c29eeaaaa28fae787e8.jar" />
+    </item>
+    <item
+        jar="D:\Project\Android\UrgentCare\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="D:\Project\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-8e72cbf6fdeb03422026886560d12e42c5ab9dbc.jar" />
     </item>
 
 </items>

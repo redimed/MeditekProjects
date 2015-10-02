@@ -41,8 +41,26 @@ module.exports = {
         Doctor.belongsToMany(GeneralPractitioner, {
             through: 'RefGeneralPractitionerDoctor',
             foreignKey: 'DoctorID'
+        });
+
+		/* Doctor */
+    	Site.hasMany(Doctor, {
+    		foreignKey: 'SiteID'
+    	});
+		UserAccount.hasOne(Doctor, {
+    		foreignKey: 'UserAccountID'
+    	});
+    	/* End Doctor */
+
+	   
+        //UserAccount
+	    UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
+        UserAccount.hasMany(UserActivation,{
+            foreignKey:'UserAccountID'
+        });
+        UserActivation.belongsTo(UserAccount,{
+            foreignKey:'UserAccountID'
         })
-	
-	UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
+
     }
 };

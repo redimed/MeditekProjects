@@ -65,7 +65,8 @@ module.exports = {
                     urgentRequestType: data.urgentRequestType,
                     patientName: data.lastName + ' ' + data.firstName,
                     requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
-                    phoneNumber: data.phoneNumber
+                    phoneNumber: data.phoneNumber,
+                    bcc: 'pnguyen@redimed.com.au'
                 };
 
                 /*

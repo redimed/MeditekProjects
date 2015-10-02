@@ -44,5 +44,8 @@ module.exports = {
         })
 	
 	UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
+
+    //Patient - UserAccount
+    UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
     }
 };

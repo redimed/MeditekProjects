@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,16 +12,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.SocketService;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,6 +44,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private BroadcastReceiver receiverDataSocketService;
     private RegisterApi restClient = RESTClient.getRegisterApi();
     private String sessionID;
+    MyApplication mApplication;
+    JsonObject jsonObjectGlobal;
+
     @Bind(R.id.testSocket) Button testSocket;
     @Bind(R.id.testSession) Button testSession;
     @Bind(R.id.patientDrawer) DrawerLayout patientDrawer;
@@ -48,15 +59,37 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         testSocket.setOnClickListener(this);
         testSession.setOnClickListener(this);
+        mApplication = (MyApplication) getApplicationContext();
 
         DisplayDrawer();
+        ListenSocket();
+    }
 
+    //Listen action response when clinic make a call
+    private void ListenSocket() {
         IntentFilter intentFilter = new IntentFilter("android.intent.action.MessageSocket");
         receiverDataSocketService = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                String messageSocket = intent.getStringExtra("Message");
-                Log.i("====Message====", messageSocket);
+                String message = "";
+                String strSocket = intent.getStringExtra("Message");
+                try {
+                    JSONObject jsonSocket = new JSONObject(strSocket);
+                    message = jsonSocket.get("message").toString();
+                    Log.i("====Message====", message);
+                    if (message.equalsIgnoreCase("call")){
+                        intent = new Intent(HomeActivity.this, CallActivity.class);
+                        intent.putExtra("apiKey", jsonSocket.get("apiKey").toString());
+                        intent.putExtra("sessionId", jsonSocket.get("sessionId").toString());
+                        intent.putExtra("token", jsonSocket.get("token").toString());
+                        intent.putExtra("to", jsonSocket.get("from").toString());
+                        intent.putExtra("from", mApplication.getUserAccount().getPhoneNumber());
+                        startActivity(intent);
+                        HomeActivity.this.finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         this.registerReceiver(receiverDataSocketService, intentFilter);
@@ -113,10 +146,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("OK", jsonObject.toString());
                 if (status.equalsIgnoreCase("success")){
                     sessionID = jsonObject.getAsJsonObject("data").get("sessionId").getAsString();
+                    jsonObjectGlobal = jsonObject.getAsJsonObject("data");
                     Log.d(TAG, sessionID);
                 }
             }
-
             @Override
             public void failure(RetrofitError error) {
                 Log.d("Error", error.toString());
@@ -125,17 +158,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void DisplayCall() {
-//        Intent i = new Intent(getApplicationContext(), CallActivity.class);
-//        startActivity(i);
-//        this.finish();
-
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("from", "+84908618694");
-        params.put("to", "+841267146714");
+        //params.put("to", "+841267146714");
+        params.put("to", "+84988880682");
         params.put("message", "call");
         params.put("sessionId", sessionID);
         try {
             SocketService.sendData("socket/messageTransfer", params);
+            SharedPreferences.Editor editor = (SharedPreferences.Editor) getApplicationContext().getSharedPreferences("Clinic", MODE_PRIVATE).edit();
+            editor.putString("apiKey", jsonObjectGlobal.get("apiKey").toString());
+            editor.putString("sessionId", jsonObjectGlobal.get("sessionId").toString());
+            editor.putString("token", jsonObjectGlobal.get("token").toString());
+            editor.commit();
+            startActivity(new Intent(HomeActivity.this, CallActivity.class));
+            HomeActivity.this.finish();
             Toast.makeText(this, "Clinic: " + params.toString(), Toast.LENGTH_LONG).show();
         } catch (Throwable throwable) {
             throwable.printStackTrace();

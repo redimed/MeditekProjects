@@ -112,6 +112,7 @@ public class SocketService extends Service {
             Log.d("Socket Error", args[0].toString());
         }
     };
+
     private Emitter.Listener onConnectError = new Emitter.Listener() {
         @Override
         public void call(Object... args) {

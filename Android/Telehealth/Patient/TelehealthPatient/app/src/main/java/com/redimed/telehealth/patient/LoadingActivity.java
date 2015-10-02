@@ -17,23 +17,24 @@ import java.util.Map;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    public UserAccount userAccount;
-
     private SharedPreferences dataUser;
+    MyApplication mApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+        mApplication = (MyApplication) getApplicationContext();
         startService(new Intent(getApplicationContext(), SocketService.class));
         dataUser = getSharedPreferences("DataUser", MODE_PRIVATE);
         File xmlUser = new File("/data/data/" + getApplicationContext().getPackageName() + "/shared_prefs/DataUser.xml");
         if (xmlUser.exists()){
-            userAccount = new UserAccount();
-            userAccount.setID(dataUser.getInt("ID", 0));
-            userAccount.setUserName(dataUser.getString("UserName", null));
-            userAccount.setPhoneNumber(dataUser.getString("PhoneNumber", null));
-            userAccount.setEmail(dataUser.getString("Email", null));
+            UserAccount user = new UserAccount();
+            user.setID(dataUser.getInt("ID", 0));
+            user.setUserName(dataUser.getString("UserName", null));
+            user.setPhoneNumber(dataUser.getString("PhoneNumber", null));
+            user.setEmail(dataUser.getString("Email", null));
+            mApplication.setUserAccount(user);
             JoinRoom();
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             this.finish();
@@ -46,8 +47,7 @@ public class LoadingActivity extends AppCompatActivity {
     public void JoinRoom() {
         try {
             Map<String, Object> params = new HashMap<String, Object>();
-            params.put("phone", userAccount.getPhoneNumber());
-//            params.put("phone", "+84908618694");
+            params.put("phone", mApplication.getUserAccount().getPhoneNumber());
             SocketService.sendData("socket/joinRoom", params);
             Toast.makeText(getApplicationContext(), "Join Room: " + params.toString(), Toast.LENGTH_LONG).show();
         } catch (Throwable throwable) {

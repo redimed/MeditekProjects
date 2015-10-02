@@ -66,7 +66,7 @@ module.exports = {
                     patientName: data.lastName + ' ' + data.firstName,
                     requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                     phoneNumber: data.phoneNumber,
-                    bcc: 'thanh1101681@gmail.com, pnguyen@redimed.com.au'
+                    bcc: 'pnguyen@redimed.com.au'
                 };
 
                 /*
@@ -84,25 +84,12 @@ module.exports = {
                             var CallBackSendMailPatient = function(err, responseStatus, html, text) {
                                 if (err) {
                                     console.log(err);
-                                } else {
-                                    //send sms
-                                    var dataSMS = {
-                                        phone: data.phoneNumber,
-                                        content: 'Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.'
-                                    };
-                                    var CallBackSendSMS = function(err) {
-                                        if (err) {
-                                            console.log(err);
-                                        } else {
-                                            console.log('send sms successfully');
-                                        }
-                                    }
                                 }
                             };
                             //send email and sms to customer
                             var emailInfoPatient = {
                                 from: 'Health Screenings <HealthScreenings@redimed.com.au>',
-                                email: data.email,
+                                email: data.email.toLowerCase(),
                                 subject: 'Request Received',
                                 urgentRequestType: data.urgentRequestType,
                                 patientName: data.lastName + ' ' + data.firstName,
@@ -110,6 +97,16 @@ module.exports = {
                                 phoneNumber: data.phoneNumber
                             };
                             SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
+                        }
+                        //send sms
+                        var dataSMS = {
+                            phone: data.phoneNumber,
+                            content: 'Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.'
+                        };
+                        var CallBackSendSMS = function(err) {
+                            if (err) {
+                                console.log(err);
+                            }
                         }
                         SendSMSService.Send(dataSMS, CallBackSendSMS);
                     }

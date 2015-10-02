@@ -1,4 +1,3 @@
-
 //generator Password
 var generatePassword = require('password-generator');
 
@@ -15,9 +14,9 @@ module.exports = {
 			MiddleName : data.MiddleName,
 			LastName   : data.LastName,
 			Dob        : data.Dob,
-			Gender        : data.Gender,
+			Gender     : data.Gender,
 			Address    : data.Address,
-			Enable     : data.Enable
+			Enable     : "Y"
 		};
 		info.UID = UUIDService.Create();
 		info.SiteID = 1;
@@ -33,38 +32,39 @@ module.exports = {
 					res.ok({status:200,message:"success"});
 				})
 				.catch(function(err){
-					res.serverError({status:500,message:err.message});
+					res.serverError({status:500,message:ErrorWrap(err)});
 				});
 			}
 			//if patient doesn't have UserAccount, create UserAccount before create patient
 			else {
 				var pas = generatePassword(12, false);
 				var userInfo = {
-					UserName: data.PhoneNumber,
-					Email: data.Email,
-					PhoneNumber:data.PhoneNumber,
-					Password: pas
+					UserName    : data.PhoneNumber,
+					Email       : data.Email,
+					PhoneNumber : data.PhoneNumber,
+					Password    : pas
 				};
 				userInfo.UID = UUIDService.Create();
 				//create UserAccount
 				Services.UserAccount.CreateUserAccount(userInfo)
 				.then(function(user){
 					//call createPatient function from model UserAccount
-					user.createPatient(info)
-					.then(function(result){
-						res.ok({status:200,message:"success"});
-					})
-					.catch(function(err){
-						res.serverError({status:500,message:err.message});
-					});
+					return user.createPatient(info);
 				})
 				.catch(function(err){
-					res.serverError({status:500,message:err.message});
+					res.serverError({status:500,message:ErrorWrap(err)});
+				})
+				//after call function createPatient, this code runs
+				.then(function(result){
+					res.ok({status:200,message:"success"});
+				})
+				.catch(function(err){
+					res.serverError({status:500,message:ErrorWrap(err)});
 				});
 			}
 		})
 		.catch(function(err) {
-			res.serverError({status:500,message:err.message});
+			res.serverError({status:500,message:ErrorWrap(err)});
 		});
 	},
 
@@ -77,13 +77,13 @@ module.exports = {
 		var data = req.body.data;
 		Services.Patient.SearchPatient(data)
 		.then(function(info){
-			if(info!==undefined && info!==null)
+			if(info!==undefined && info!==null && info.length > 0)
 				res.ok({status:200, message:"success", data:info});
 			else
 				res.notFound({status:404,message:"not Found"});
 		})
 		.catch(function(err){
-			res.serverError({status:500,message:err});
+			res.serverError({status:500,message:ErrorWrap(err)});
 		});
 	},
 
@@ -119,10 +119,13 @@ module.exports = {
 
 		Services.Patient.UpdatePatient(patientInfo)
 		.then(function(result){
-			res.ok({status:200,message:"success"});
+			if(result[0] > 0)
+				res.ok({status:200,message:"success"});
+			else
+				res.notFound({status:404,message:"not Found"});
 		})
 		.catch(function(err){
-			return res.serverError({status:500,message:err});
+			return res.serverError({status:500,message:ErrorWrap(err)});
 		});
 	},
 
@@ -135,7 +138,6 @@ module.exports = {
 		var ID = req.body.data;
 		Services.Patient.GetPatient(ID)
 		.then(function(info){
-			console.log(info);
 			if(info!==null && info!==undefined){
 				res.ok({status:200, message:"success", data:info});
 			} else {
@@ -143,7 +145,7 @@ module.exports = {
 			}
 		})
 		.catch(function(err){
-			res.serverError({status:500,message:err});
+			res.serverError({status:500,message:ErrorWrap(err)});
 		});
 	},
 
@@ -153,18 +155,20 @@ module.exports = {
 		output: delete Patient's information into table Patient
 	*/
 	DeletePatient : function(req, res) {
-		console.log("1");
 		var ID = req.body.data;
-		Services.Patient.DeletePatient(ID)
+		var patientInfo = {
+			ID     : ID,
+			Enable : "N"
+		}
+		Services.Patient.UpdatePatient(patientInfo)
 		.then(function(result){
-			console.log(result);
 			if(result===0)
 				res.notFound({status:404, message:"not Found"});
 			else
 				res.ok({status:200,message:"success"});
 		})
 		.catch(function(err){
-			res.serverError({status:500, message:err});
+			res.serverError({status:500, message:ErrorWrap(err)});
 		});
 	}
 

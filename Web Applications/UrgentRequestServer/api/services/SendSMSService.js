@@ -24,6 +24,6 @@ module.exports = {
                     fn(null);
                 }
             });
-        } else fn(err);
+        } else fn('error');
     }
 };

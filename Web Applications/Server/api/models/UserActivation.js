@@ -16,15 +16,24 @@ module.exports = {
         },
         VerificationCode: {
             type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,255]
+            }
         },
         Type: {
             type: Sequelize.STRING(45),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,45]  
+            }
         },
         VerificationToken: {
             type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,255]
+            }
         },
         DeviceID: {
             type: Sequelize.TEXT

@@ -1,3 +1,4 @@
+var _= require('underscore');
 var routes = {};
 //mdule urgent care
 routes['post /api/urgent-care/urgent-request'] = {
@@ -120,4 +121,11 @@ routes['post /api/deleteDoctor']={
 };
 //end module doctor
 
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+var userAccountRoutes = require('./routes/userAccountRoutes');
+_.extend(routes, userAccountRoutes);
 module.exports.routes = routes;

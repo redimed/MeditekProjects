@@ -1,8 +1,6 @@
 module.exports = {
 	/**
 	 * Create UserActivation
-	 * @param {[type]} req [description]
-	 * @param {[type]} res [description]
 	 */
 	CreateUserActivation:function(req,res)
 	{
@@ -17,10 +15,22 @@ module.exports = {
 				console.log(err);
 				res.serverError(ErrorWrap(err));
 			})
-			// .catch(function(err){
-				
-			// })
 		})
+	},
+
+	ActivationWeb:function(req,res){
+		var useruid=req.query.useruid;
+		var verificationToken=req.query.verificationToken;
+		sequelize.transaction().then(function(t){
+			Services.UserActivation.ActivationWeb({useruid:useruid,verificationToken:verificationToken},t)
+			.then(function(data){
+				t.commit();
+				res.ok(data);
+			},function(err){
+				t.rollback();
+				res.serverError(ErrorWrap(err));
+			})
+		});
 		
-	}
+	},
 }

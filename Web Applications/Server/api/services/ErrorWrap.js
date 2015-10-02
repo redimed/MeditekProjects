@@ -9,7 +9,7 @@ module.exports=function(err)
 	{
 		//Kiem tra co phai kieu Error khong, neu la kieu Error thi tra ve stack error
 		if(err.stack)
-			return {message:err.message,errors:err.errors,error:err.stack};
+			return {message:err.message,errors:err.errors,stack:err.stack};
 		else
 			return err;
 	}

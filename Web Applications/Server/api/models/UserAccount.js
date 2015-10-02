@@ -13,15 +13,25 @@ module.exports = {
         },
         UserName: {
             type: Sequelize.STRING(50),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,50]
+            }
         },
         Email: {
             type: Sequelize.STRING(250),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,255],
+                isEmail: true
+            }
         },
         PhoneNumber: {
             type: Sequelize.STRING(20),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,20]
+            }
         },
         Password: {
             type: Sequelize.STRING(256),
@@ -37,15 +47,24 @@ module.exports = {
         },
         Activated: {
             type: Sequelize.STRING(1),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,1]
+            }
         },
         Enable: {
             type: Sequelize.STRING(1),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,1]
+            }
         },
         UserType: {
             type: Sequelize.STRING(3),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,3]
+            }
         },
         Token: {
             type: Sequelize.STRING(256),

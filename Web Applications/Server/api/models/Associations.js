@@ -42,6 +42,7 @@ module.exports = {
             through: 'RefGeneralPractitionerDoctor',
             foreignKey: 'DoctorID'
         })
+<<<<<<< HEAD
 
 		//Patient - UserAccount
 		UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
@@ -54,6 +55,17 @@ module.exports = {
     		foreignKey: 'UserAccountID'
     	});
     	/* End Doctor */
+=======
+	   
+        //UserAccount
+	    UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
+        UserAccount.hasMany(UserActivation,{
+            foreignKey:'UserAccountID'
+        });
+        UserActivation.belongsTo(UserAccount,{
+            foreignKey:'UserAccountID'
+        })
+>>>>>>> update route config
 
     }
 };

@@ -57,6 +57,7 @@ module.exports = {
         //  mysite@you.me.net
         //reference from: http://www.w3resource.com/javascript/form/email-validation.php
         email:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        date: /^(\d{4})-(\d{1,2})-(\d{1,2})$/,
 
         //fullPhonePattern example:
         //  (+351) 282 43 50 50

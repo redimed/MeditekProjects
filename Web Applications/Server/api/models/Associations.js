@@ -42,10 +42,18 @@ module.exports = {
             through: 'RefGeneralPractitionerDoctor',
             foreignKey: 'DoctorID'
         })
-	
-	UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
 
-    //Patient - UserAccount
-    UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
+		//Patient - UserAccount
+		UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
+
+		/* Doctor */
+    	Site.hasMany(Doctor, {
+    		foreignKey: 'SiteID'
+    	});
+		UserAccount.hasOne(Doctor, {
+    		foreignKey: 'UserAccountID'
+    	});
+    	/* End Doctor */
+
     }
 };

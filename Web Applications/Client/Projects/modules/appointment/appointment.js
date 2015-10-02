@@ -1,5 +1,6 @@
 var app = angular.module('app.loggedIn.appointment',[
-	'app.loggedIn.appointment.controller'
+	'app.loggedIn.appointment.controller',
+	'app.loggedIn.appointment.services'
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider){

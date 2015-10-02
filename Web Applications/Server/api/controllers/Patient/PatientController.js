@@ -1,4 +1,3 @@
-
 //generator Password
 var generatePassword = require('password-generator');
 
@@ -33,7 +32,7 @@ module.exports = {
 					res.ok({status:200,message:"success"});
 				})
 				.catch(function(err){
-					res.serverError({status:500,message:err.message});
+					res.serverError({status:500,message:ErrorWrap(err)});
 				});
 			}
 			//if patient doesn't have UserAccount, create UserAccount before create patient
@@ -55,16 +54,16 @@ module.exports = {
 						res.ok({status:200,message:"success"});
 					})
 					.catch(function(err){
-						res.serverError({status:500,message:err.message});
+						res.serverError({status:500,message:ErrorWrap(err)});
 					});
 				})
 				.catch(function(err){
-					res.serverError({status:500,message:err.message});
+					res.serverError({status:500,message:ErrorWrap(err)});
 				});
 			}
 		})
 		.catch(function(err) {
-			res.serverError({status:500,message:err.message});
+			res.serverError({status:500,message:ErrorWrap(err)});
 		});
 	},
 
@@ -77,13 +76,13 @@ module.exports = {
 		var data = req.body.data;
 		Services.Patient.SearchPatient(data)
 		.then(function(info){
-			if(info!==undefined && info!==null)
+			if(info!==undefined && info!==null && info.length > 0)
 				res.ok({status:200, message:"success", data:info});
 			else
 				res.notFound({status:404,message:"not Found"});
 		})
 		.catch(function(err){
-			res.serverError({status:500,message:err});
+			res.serverError({status:500,message:ErrorWrap(err)});
 		});
 	},
 
@@ -119,10 +118,13 @@ module.exports = {
 
 		Services.Patient.UpdatePatient(patientInfo)
 		.then(function(result){
-			res.ok({status:200,message:"success"});
+			if(result[0] > 0)
+				res.ok({status:200,message:"success"});
+			else
+				res.notFound({status:404,message:"not Found"});
 		})
 		.catch(function(err){
-			return res.serverError({status:500,message:err});
+			return res.serverError({status:500,message:ErrorWrap(err)});
 		});
 	},
 
@@ -135,7 +137,6 @@ module.exports = {
 		var ID = req.body.data;
 		Services.Patient.GetPatient(ID)
 		.then(function(info){
-			console.log(info);
 			if(info!==null && info!==undefined){
 				res.ok({status:200, message:"success", data:info});
 			} else {
@@ -143,7 +144,7 @@ module.exports = {
 			}
 		})
 		.catch(function(err){
-			res.serverError({status:500,message:err});
+			res.serverError({status:500,message:ErrorWrap(err)});
 		});
 	},
 
@@ -153,18 +154,28 @@ module.exports = {
 		output: delete Patient's information into table Patient
 	*/
 	DeletePatient : function(req, res) {
-		console.log("1");
 		var ID = req.body.data;
 		Services.Patient.DeletePatient(ID)
 		.then(function(result){
-			console.log(result);
 			if(result===0)
 				res.notFound({status:404, message:"not Found"});
 			else
 				res.ok({status:200,message:"success"});
 		})
 		.catch(function(err){
-			res.serverError({status:500, message:err});
+			res.serverError({status:500, message:ErrorWrap(err)});
+		});
+	},
+
+	Test : function(req, res){
+		Test.create({
+			test2:"s"
+		})
+		.then(function(a){
+			res.json(a);
+		})
+		.catch(function(e){
+			res.json(e);
 		});
 	}
 

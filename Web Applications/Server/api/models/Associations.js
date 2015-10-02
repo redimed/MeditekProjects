@@ -41,11 +41,7 @@ module.exports = {
         Doctor.belongsToMany(GeneralPractitioner, {
             through: 'RefGeneralPractitionerDoctor',
             foreignKey: 'DoctorID'
-        })
-<<<<<<< HEAD
-
-		//Patient - UserAccount
-		UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
+        });
 
 		/* Doctor */
     	Site.hasMany(Doctor, {
@@ -55,7 +51,7 @@ module.exports = {
     		foreignKey: 'UserAccountID'
     	});
     	/* End Doctor */
-=======
+
 	   
         //UserAccount
 	    UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
@@ -65,7 +61,6 @@ module.exports = {
         UserActivation.belongsTo(UserAccount,{
             foreignKey:'UserAccountID'
         })
->>>>>>> update route config
 
     }
 };

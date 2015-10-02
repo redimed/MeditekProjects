@@ -14,9 +14,9 @@ module.exports = {
 			MiddleName : data.MiddleName,
 			LastName   : data.LastName,
 			Dob        : data.Dob,
-			Gender        : data.Gender,
+			Gender     : data.Gender,
 			Address    : data.Address,
-			Enable     : data.Enable
+			Enable     : "Y"
 		};
 		info.UID = UUIDService.Create();
 		info.SiteID = 1;
@@ -39,23 +39,24 @@ module.exports = {
 			else {
 				var pas = generatePassword(12, false);
 				var userInfo = {
-					UserName: data.PhoneNumber,
-					Email: data.Email,
-					PhoneNumber:data.PhoneNumber,
-					Password: pas
+					UserName    : data.PhoneNumber,
+					Email       : data.Email,
+					PhoneNumber : data.PhoneNumber,
+					Password    : pas
 				};
 				userInfo.UID = UUIDService.Create();
 				//create UserAccount
 				Services.UserAccount.CreateUserAccount(userInfo)
 				.then(function(user){
 					//call createPatient function from model UserAccount
-					user.createPatient(info)
-					.then(function(result){
-						res.ok({status:200,message:"success"});
-					})
-					.catch(function(err){
-						res.serverError({status:500,message:ErrorWrap(err)});
-					});
+					return user.createPatient(info);
+				})
+				.catch(function(err){
+					res.serverError({status:500,message:ErrorWrap(err)});
+				})
+				//after call function createPatient, this code runs
+				.then(function(result){
+					res.ok({status:200,message:"success"});
 				})
 				.catch(function(err){
 					res.serverError({status:500,message:ErrorWrap(err)});
@@ -155,7 +156,11 @@ module.exports = {
 	*/
 	DeletePatient : function(req, res) {
 		var ID = req.body.data;
-		Services.Patient.DeletePatient(ID)
+		var patientInfo = {
+			ID     : ID,
+			Enable : "N"
+		}
+		Services.Patient.UpdatePatient(patientInfo)
 		.then(function(result){
 			if(result===0)
 				res.notFound({status:404, message:"not Found"});
@@ -164,18 +169,6 @@ module.exports = {
 		})
 		.catch(function(err){
 			res.serverError({status:500, message:ErrorWrap(err)});
-		});
-	},
-
-	Test : function(req, res){
-		Test.create({
-			test2:"s"
-		})
-		.then(function(a){
-			res.json(a);
-		})
-		.catch(function(e){
-			res.json(e);
 		});
 	}
 

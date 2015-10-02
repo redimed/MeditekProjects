@@ -43,31 +43,31 @@ routes['post /api/repatientappointment-setpatient'] = {
 };
 //end module repatientappointment
 
-//module patient
-routes['post /api/patient/create-patient'] = {
-    controller: 'Patient/PatientController',
-    action :'CreatePatient'
-};
+// //module patient
+// routes['post /api/patient/create-patient'] = {
+//     controller: 'Patient/PatientController',
+//     action :'CreatePatient'
+// };
 
-routes['post /api/patient/search-patient'] = {
-    controller: 'Patient/PatientController',
-    action :'SearchPatient'
-};
+// routes['post /api/patient/search-patient'] = {
+//     controller: 'Patient/PatientController',
+//     action :'SearchPatient'
+// };
 
-routes['post /api/patient/update-patient'] = {
-    controller: 'Patient/PatientController',
-    action :'UpdatePatient'
-};
+// routes['post /api/patient/update-patient'] = {
+//     controller: 'Patient/PatientController',
+//     action :'UpdatePatient'
+// };
 
-routes['post /api/patient/get-patient'] = {
-    controller: 'Patient/PatientController',
-    action :'GetPatient'
-};
+// routes['post /api/patient/get-patient'] = {
+//     controller: 'Patient/PatientController',
+//     action :'GetPatient'
+// };
 
-routes['post /api/patient/delete-patient'] = {
-    controller: 'Patient/PatientController',
-    action :'DeletePatient'
-};
+// routes['post /api/patient/delete-patient'] = {
+//     controller: 'Patient/PatientController',
+//     action :'DeletePatient'
+// };
 
 //module user account
 routes['get /api/user-account/test']={
@@ -128,4 +128,8 @@ routes['post /api/deleteDoctor']={
 //-----------------------------------------------------------------------
 var userAccountRoutes = require('./routes/userAccountRoutes');
 _.extend(routes, userAccountRoutes);
+
+var PatientRoutes = require('./routes/PatientRoutes');
+_.extend(routes, PatientRoutes);
+
 module.exports.routes = routes;

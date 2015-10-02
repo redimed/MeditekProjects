@@ -1,6 +1,7 @@
 var app = angular.module("app", [
     "ui.router",
     "ui.bootstrap", 
+    "restangular", // RESTANGULAR
     // "oc.lazyLoad",  
     // "ngSanitize",
     "app.security",
@@ -9,7 +10,9 @@ var app = angular.module("app", [
 ]);
 
 
-app.config(function($stateProvider, $urlRouterProvider){
+app.config(function($stateProvider, $urlRouterProvider, RestangularProvider){
+    // RESTANGULAR DEFAULT
+    RestangularProvider.setBaseUrl("http://localhost:1337");
     $urlRouterProvider.otherwise('');
     $stateProvider
         .state('init', {

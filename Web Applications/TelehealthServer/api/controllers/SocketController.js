@@ -11,8 +11,10 @@ module.exports = {
             });
             return;
         }
+
         var phoneNumber = typeof req.param('phone') != 'undefined' ? req.param('phone') : null;
         var phoneRegex = /^\+[0-9]{9,15}$/;
+        console.log("===Join Room===: ",phoneNumber);
         if (phoneNumber != null && phoneNumber.match(phoneRegex)) sails.sockets.join(req.socket, phoneNumber);
     },
     MessageTransfer: function(req, res) {
@@ -33,6 +35,7 @@ module.exports = {
         if (message.toLowerCase() == 'call') {
             var sessionId = typeof req.param('sessionId') != 'undefined' ? req.param('sessionId') : null;
             if (sessionId == null) return;
+            var sessionId = req.param('sessionId');
             var tokenOptions = {
                 role: 'moderator'
             };
@@ -41,6 +44,7 @@ module.exports = {
             data.sessionId = sessionId;
             data.token = token;
         }
+        console.log("=======data======: ",data);
         sails.sockets.broadcast(toUser, 'receiveMessage', data);
     },
     GenerateConferenceSession: function(req, res) {

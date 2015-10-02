@@ -5,8 +5,8 @@ module.exports.myconf = {
     twilioToken: '53f0c830cc61f052a5f238fd73f76321',
     twilioPhone: '+61439558227',
     //============ OpenTok Key =======================
-    OpentokAPIKey: '45356362',
-    OpentokAPISecret: 'ea8881fbc747db405422ff4c879f4be78a979d81',
+    OpentokAPIKey: '45185002',
+    OpentokAPISecret: 'b73a1fee03a4da8d01340986312b41e5126d89a5',
     //============ GCM Push Notification =============
     GCMApiKey: 'AIzaSyChaE4-AETpWum-4-TOoxM7HZg3NvaFL6I',
     //============ Token Secret ======================

@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import ReachabilitySwift
+import Socket_IO_Client_Swift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let userDefaultsLogin = NSUserDefaults.standardUserDefaults()
     let reachability = Reachability.reachabilityForInternetConnection()
-    
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         //        let userName = userDefaultsLogin.valueForKey(KeyNSUserDefault.userNameKey) as? String

@@ -11,7 +11,6 @@ import Alamofire
 import Spring
 import SwiftyJSON
 import ReachabilitySwift
-import Socket_IO_Client_Swift
 
 class LoginViewController: UIViewController,UITextFieldDelegate {
     
@@ -26,15 +25,13 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     let customUIViewController : CustomViewController = CustomViewController()
     let appDelegate : AppDelegate = AppDelegate()
     let reachability = Reachability.reachabilityForInternetConnection()
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         customUIViewController.TextFieldLogin(usernameTextField, active: false, imageTextField: doctorImage)
         customUIViewController.TextFieldLogin(passwordTextField, active: false, imageTextField: lockImage)
         customUIViewController.BlurLayer(backgroundImage)
-        customUIViewController.HandlerSocket()
-        customUIViewController.socket.connect()
         usernameTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         passwordTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         viewModal.layer.cornerRadius = 15
@@ -151,21 +148,22 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         //        }
         //
         //        if (flag == true) {
-        //            let username : String = usernameTextField.text!
-        //            let password : String = passwordTextField.text!
-        //            let paramester = ["data" : ["username": username, "password": password]]
-        //
-        //            Alamofire.request(.POST, AUTHORIZATION, parameters: paramester).responseJSON() { data in
-        //                print(JSON(data.2.value!))
-        //            }
+        let username : String = usernameTextField.text!
+        let password : String = passwordTextField.text!
+        let paramester = ["username": username, "password": password]
+        
+        Alamofire.request(.POST, AUTHORIZATION, parameters: paramester).responseJSON() { data in
+            let response = JSON(data.2.value!) as JSON
+            print("response - ", data)
+            if(response["status"] != "error") {
+                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let initViewController : UIViewController = storyBoard.instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
+                self.presentViewController(initViewController, animated: true, completion: nil)
+                
+                
+            }
+        }
         //        }
-        
-        let controllerId = "navigation"
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let initViewController : UIViewController = storyBoard.instantiateViewControllerWithIdentifier(controllerId) as! UINavigationController
-        self.presentViewController(initViewController, animated: true, completion: nil)
-        
-        
         //
         // viewModal.animation = "pop"
         // viewModal.duration = 1

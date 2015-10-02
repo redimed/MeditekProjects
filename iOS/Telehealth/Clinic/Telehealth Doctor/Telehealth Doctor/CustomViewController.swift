@@ -14,19 +14,10 @@ class CustomViewController {
     /// color button login check
     let colorButtonLoginEnable : UIColor = UIColor(red: 0/255, green: 55/255, blue: 102/255, alpha: 1)
     let colorButtonLoginDisable : UIColor = UIColor(red: 0/255, green: 51/255, blue: 102/255, alpha: 0.65)
-    let socket = SocketIOClient(socketURL: "http://192.168.1.154:3000")
-    
-    func HandlerSocket() {
-        socket.on("connectSuccess") {[weak self] data, ack in
-            print("hello")
-        }
-    }
     
     /**
-    set border bottom for uitextfield
-    
-    - parameter textField: UITextField Object
-    
+        set border bottom for uitextfield
+        - parameter textField: UITextField Object
     */
     func TextFieldLogin(textField: UITextField!, active: Bool, imageTextField: UIImageView) {
         let bottomBorder = CALayer()

@@ -190,12 +190,12 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="img-allied-healthinjury-manager" translatesAutoresizingMaskIntoConstraints="NO" id="1IH-y2-8UV">
                                 <rect key="frame" x="256" y="218" width="512" height="332"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRQ-SL-RvH">
-                                <rect key="frame" x="125" y="137" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UBb-NZ-pCd">
+                                <rect key="frame" x="93" y="124" width="46" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.36144848880000002" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Emit"/>
                                 <connections>
-                                    <action selector="testEmit:" destination="2c3-mA-TQx" eventType="touchDown" id="Y40-oD-79h"/>
+                                    <action selector="testEmit:" destination="2c3-mA-TQx" eventType="touchDown" id="LKf-cF-XwS"/>
                                 </connections>
                             </button>
                         </subviews>

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		002053431BBBBE2B00679E10 /* JSSAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002053421BBBBE2B00679E10 /* JSSAlertView.swift */; settings = {ASSET_TAGS = (); }; };
-		002C6F9A1BBCD13C006F4FA6 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002C6F991BBCD13C006F4FA6 /* OpenTok.framework */; settings = {ASSET_TAGS = (); }; };
+		002C6F9E1BBD1403006F4FA6 /* Singleton_SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002C6F9D1BBD1403006F4FA6 /* Singleton_SocketManager.swift */; settings = {ASSET_TAGS = (); }; };
 		004F6D191BB9A02200242CE9 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004F6D181BB9A02200242CE9 /* CustomViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		008FB2351BB93E3A00684968 /* TOPVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008FB2341BB93E3A00684968 /* TOPVCViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		008FB2371BB93F4500684968 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2361BB93F4500684968 /* AudioToolbox.framework */; };
@@ -26,6 +26,7 @@
 		008FB24F1BB9400800684968 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB24E1BB9400800684968 /* SystemConfiguration.framework */; };
 		008FB2511BB9401000684968 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2501BB9401000684968 /* UIKit.framework */; };
 		008FB2531BB9401900684968 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2521BB9401900684968 /* VideoToolbox.framework */; };
+		00A1992A1BBE7EDD000004E0 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A199291BBE7EDD000004E0 /* OpenTok.framework */; settings = {ASSET_TAGS = (); }; };
 		00D512771BB4E6100068942D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D512761BB4E6100068942D /* ProfileViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		00D512791BB4E63E0068942D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D512781BB4E63E0068942D /* HomeViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		00D5127B1BB4E6560068942D /* MakeCallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D5127A1BB4E6560068942D /* MakeCallController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -63,7 +64,7 @@
 
 /* Begin PBXFileReference section */
 		002053421BBBBE2B00679E10 /* JSSAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSSAlertView.swift; path = "Telehealth Doctor/JSSAlertView.swift"; sourceTree = "<group>"; };
-		002C6F991BBCD13C006F4FA6 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = "Telehealth Doctor/OpenTok.framework"; sourceTree = "<group>"; };
+		002C6F9D1BBD1403006F4FA6 /* Singleton_SocketManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton_SocketManager.swift; sourceTree = "<group>"; };
 		004F6D181BB9A02200242CE9 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		008FB2341BB93E3A00684968 /* TOPVCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOPVCViewController.swift; sourceTree = "<group>"; };
 		008FB2361BB93F4500684968 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -82,6 +83,7 @@
 		008FB2501BB9401000684968 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		008FB2521BB9401900684968 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		009398E41BBA9384005481E2 /* Telehealth Doctor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Telehealth Doctor-Bridging-Header.h"; sourceTree = "<group>"; };
+		00A199291BBE7EDD000004E0 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = "Telehealth Doctor/OpenTok.framework"; sourceTree = "<group>"; };
 		00D512761BB4E6100068942D /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		00D512781BB4E63E0068942D /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		00D5127A1BB4E6560068942D /* MakeCallController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakeCallController.swift; sourceTree = "<group>"; };
@@ -123,7 +125,7 @@
 				008FB2451BB93FD700684968 /* GLKit.framework in Frameworks */,
 				008FB2431BB93FD100684968 /* Foundation.framework in Frameworks */,
 				008FB2411BB93FC800684968 /* CoreVideo.framework in Frameworks */,
-				002C6F9A1BBCD13C006F4FA6 /* OpenTok.framework in Frameworks */,
+				00A1992A1BBE7EDD000004E0 /* OpenTok.framework in Frameworks */,
 				008FB23F1BB93F6700684968 /* CoreTelephony.framework in Frameworks */,
 				008FB23D1BB93F5B00684968 /* CoreMedia.framework in Frameworks */,
 				008FB23B1BB93F5300684968 /* CoreGraphics.framework in Frameworks */,
@@ -206,7 +208,7 @@
 		854898B15C0460C15C6AB91F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				002C6F991BBCD13C006F4FA6 /* OpenTok.framework */,
+				00A199291BBE7EDD000004E0 /* OpenTok.framework */,
 				0020533F1BBBBDEC00679E10 /* JSSAlertView */,
 				008FB2521BB9401900684968 /* VideoToolbox.framework */,
 				008FB2501BB9401000684968 /* UIKit.framework */,
@@ -240,6 +242,7 @@
 				00D512781BB4E63E0068942D /* HomeViewController.swift */,
 				00D5127A1BB4E6560068942D /* MakeCallController.swift */,
 				008FB2341BB93E3A00684968 /* TOPVCViewController.swift */,
+				002C6F9D1BBD1403006F4FA6 /* Singleton_SocketManager.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				AFF21D7F1BB12D8B006A190E /* LoginViewController.swift in Sources */,
 				004F6D191BB9A02200242CE9 /* CustomViewController.swift in Sources */,
 				AFF21D851BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld in Sources */,
+				002C6F9E1BBD1403006F4FA6 /* Singleton_SocketManager.swift in Sources */,
 				00D512791BB4E63E0068942D /* HomeViewController.swift in Sources */,
 				AFF21DEC1BB15558006A190E /* ImageListViewController.swift in Sources */,
 				008FB2351BB93E3A00684968 /* TOPVCViewController.swift in Sources */,
@@ -677,6 +681,14 @@
 					Doctor,
 					"$(PROJECT_DIR)/Telehealth",
 					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
 				);
 				INFOPLIST_FILE = "Telehealth Doctor/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -703,6 +715,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
+					"$(PROJECT_DIR)/Telehealth",
+					Doctor,
 					"$(PROJECT_DIR)/Telehealth",
 					Doctor,
 					"$(PROJECT_DIR)/Telehealth",

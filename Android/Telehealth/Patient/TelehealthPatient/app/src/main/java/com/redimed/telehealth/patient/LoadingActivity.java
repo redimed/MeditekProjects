@@ -19,9 +19,6 @@ public class LoadingActivity extends AppCompatActivity {
 
     private SharedPreferences dataUser;
     MyApplication mApplication;
-    public UserAccount userAccount;
-
-    private SharedPreferences dataUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

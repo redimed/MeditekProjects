@@ -15,25 +15,21 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.SocketService;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import com.google.gson.JsonObject;
-
-import com.redimed.telehealth.patient.api.RegisterApi;
-import com.redimed.telehealth.patient.network.RESTClient;
-import com.redimed.telehealth.patient.service.SocketService;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -49,6 +45,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private BroadcastReceiver receiverDataSocketService;
     private RegisterApi restClient = RESTClient.getRegisterApi();
     private String sessionID;
+    MyApplication mApplication;
+    JsonObject jsonObjectGlobal;
+
     @Bind(R.id.testSocket) Button testSocket;
     @Bind(R.id.testSession) Button testSession;
     @Bind(R.id.patientDrawer) DrawerLayout patientDrawer;
@@ -69,8 +68,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     //Listen action response when clinic make a call
     private void ListenSocket() {
-        DisplayDrawer();
-
         IntentFilter intentFilter = new IntentFilter("android.intent.action.MessageSocket");
         receiverDataSocketService = new BroadcastReceiver() {
             @Override
@@ -156,10 +153,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(TAG, sessionID);
                 }
             }
-                    Log.d(TAG, sessionID);
-                }
-            }
-
             @Override
             public void failure(RetrofitError error) {
                 Log.d("Error", error.toString());
@@ -172,7 +165,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         params.put("from", "+84908618694");
         //params.put("to", "+841267146714");
         params.put("to", "+84988880682");
-        params.put("to", "+841267146714");
         params.put("message", "call");
         params.put("sessionId", sessionID);
         try {

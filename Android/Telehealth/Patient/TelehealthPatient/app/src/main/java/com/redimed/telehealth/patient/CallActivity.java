@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

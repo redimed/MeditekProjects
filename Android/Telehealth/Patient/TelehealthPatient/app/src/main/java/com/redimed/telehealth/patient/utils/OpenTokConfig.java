@@ -6,10 +6,10 @@ package com.redimed.telehealth.patient.utils;
 public class OpenTokConfig {
 
     // Replace with a generated Session ID
-    public static final String SESSION_ID = "2_MX40NTM1NjM2Mn5-MTQ0MzQ5OTg1MjM4NX5nZTIwQlY1SFFJNVRTTU41cmY5eHFsb3V-UH4";
+    public static final String SESSION_ID = "1_MX40NTM1NjM2Mn5-MTQ0Mzc3OTAzMzExMX5weDIxUHltOVlYYkpNcTRHOUk3VXBURWJ-UH4";
 
     // Replace with a generated token (from the dashboard or using an OpenTok server SDK)
-    public static final String TOKEN = "T1==cGFydG5lcl9pZD00NTM1NjM2MiZzaWc9YjExOGU4MWY4MzIwY2FkY2ZmMWUxMGMwNmUxZGM5YWNmZjdjZjVhYzpyb2xlPW1vZGVyYXRvciZzZXNzaW9uX2lkPTJfTVg0ME5UTTFOak0yTW41LU1UUTBNelE1T1RnMU1qTTROWDVuWlRJd1FsWTFTRkZKTlZSVFRVNDFjbVk1ZUhGc2IzVi1VSDQmY3JlYXRlX3RpbWU9MTQ0MzU3NjgxMyZub25jZT0wLjYwMjE0OTcyNjkyNDAxNjcmZXhwaXJlX3RpbWU9MTQ0NjE2ODc1OCZjb25uZWN0aW9uX2RhdGE9";
+    public static final String TOKEN = "T1==cGFydG5lcl9pZD00NTM1NjM2MiZzaWc9NTcxY2FjYTIyM2JjZWNmOWZlNjg4MTZmZjI0NjQ2NGI3NWI5ZTcwMzpyb2xlPW1vZGVyYXRvciZzZXNzaW9uX2lkPTFfTVg0ME5UTTFOak0yTW41LU1UUTBNemMzT1RBek16RXhNWDV3ZURJeFVIbHRPVmxZWWtwTmNUUkhPVWszVlhCVVJXSi1VSDQmY3JlYXRlX3RpbWU9MTQ0Mzc3OTE3NiZub25jZT0wLjMzNTgwMDY0NTk5MTg0NTY3JmV4cGlyZV90aW1lPTE0NDYzNzEwMjYmY29ubmVjdGlvbl9kYXRhPQ==";
 
     // Replace with your OpenTok API key
     public static final String API_KEY = "45356362";

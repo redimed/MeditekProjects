@@ -17,14 +17,14 @@ import java.util.Map;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    public UserAccount userAccount;
-
     private SharedPreferences dataUser;
+    MyApplication mApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+        mApplication = (MyApplication) getApplicationContext();
         startService(new Intent(getApplicationContext(), SocketService.class));
         dataUser = getSharedPreferences("DataUser", MODE_PRIVATE);
         File xmlUser = new File("/data/data/" + getApplicationContext().getPackageName() + "/shared_prefs/DataUser.xml");
@@ -36,7 +36,6 @@ public class LoadingActivity extends AppCompatActivity {
             userAccount.setUserName(dataUser.getString("UserName", null));
             userAccount.setPhoneNumber(dataUser.getString("PhoneNumber", null));
             userAccount.setEmail(dataUser.getString("Email", null));
-
             MyApplication mApplication = (MyApplication) getApplicationContext();
             mApplication.setCurrUser(userAccount);
             intent = new Intent(this, HomeActivity.class);
@@ -45,17 +44,12 @@ public class LoadingActivity extends AppCompatActivity {
             JoinRoom();
             intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
-            JoinRoom();
-            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            this.finish();
-        }
     }
 
     public void JoinRoom() {
         try {
             Map<String, Object> params = new HashMap<String, Object>();
-            params.put("phone", userAccount.getPhoneNumber());
-//            params.put("phone", "+84908618694");
+            params.put("phone", mApplication.getUserAccount().getPhoneNumber());
             SocketService.sendData("socket/joinRoom", params);
             Toast.makeText(getApplicationContext(), "Join Room: " + params.toString(), Toast.LENGTH_LONG).show();
         } catch (Throwable throwable) {

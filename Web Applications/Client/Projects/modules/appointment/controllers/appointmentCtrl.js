@@ -3,7 +3,11 @@ var app = angular.module('app.loggedIn.appointment.controller', [
 	'app.loggedIn.appointment.request.controller'
 ]);
 
-app.controller('appointmentCtrl', function($scope, $modal, $state){
+app.controller('appointmentCtrl', function($scope, $modal, $state, AppointmentService){
+
+	AppointmentService.getList().then(function (data) {
+		console.log("data",data.data);
+	})
 	// $scope.sendRequest = function(){
 	// 	// var modalInstance = $modal.open({
 	// 	// 	animation: true,

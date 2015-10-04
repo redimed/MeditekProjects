@@ -13,6 +13,8 @@ module.exports = {
         }
 
         var phoneNumber = typeof req.param('phone') != 'undefined' ? req.param('phone') : null;
+        if(phoneNumber.indexOf('+') == -1)
+            phoneNumber = '+'+phoneNumber;
         var phoneRegex = /^\+[0-9]{9,15}$/;
         console.log("===Join Room===: ",phoneNumber);
         if (phoneNumber != null && phoneNumber.match(phoneRegex)) sails.sockets.join(req.socket, phoneNumber);

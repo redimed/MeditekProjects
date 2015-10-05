@@ -1,8 +1,13 @@
 module.exports = function(req, res, next) {
-   if (req.user.role=='admin') {
+	var isAdmin=false;
+	_.each(req.user.roles,function(role){
+		if(role.RoleCode=='ADMIN')
+			isAdmin=true;
+	});
+    if (isAdmin) {
         return next();
     }
     else{
-        return res.redirect('/login');
+        return res.unauthor();
     }
 };

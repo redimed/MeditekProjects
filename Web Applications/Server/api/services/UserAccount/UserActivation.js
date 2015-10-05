@@ -7,7 +7,9 @@ module.exports = {
 	 * 		activationInfo:UserAccountID,Type,VerificationToken
 	 * 	if mobile system:
 	 * 		activationInfo: UserAccountID,Type, VerificationCode, DeviceID
-	 * output: new UserActivation
+	 * output: 
+	 * 	if success return promise.resolve(user Activation Info)
+	 * 	if error throw error
 	 */
 	CreateUserActivation:function(activationInfo,transaction)
 	{
@@ -20,19 +22,16 @@ module.exports = {
 			mobileSystems.push(HelperService.const.systemType.android);
 			try{
 				//Code mẫu demo trả về error với nhiều chi tiết lỗi
-				if(activationInfo.VerificationCode.length>2)
+				/*if(activationInfo.VerificationCode.length>2)
 				{
 					var errors=[];
 					var err=new Error('Validate.VerificationCode');
-					// err.errors=[];
-					// err.errors.push({field: 'from_date', message: 'From Date must be smaller than or equal To Date'});
-					// err.errors.push({field: 'to_date', message: 'To Date must be larger than or equal From Date'});
 					errors.push({field: 'from_date', message: 'From Date must be smaller than or equal To Date'});
 					errors.push({field: 'to_date', message: 'To Date must be larger than or equal From Date'});
 					err.pushErrors(errors);
 					throw err;
 					
-				}
+				}*/
 				//Check UserAccountId
 				if(!activationInfo.UserAccountID)
 				{
@@ -91,15 +90,18 @@ module.exports = {
 
 	/**
 	 * ActivationWeb: Activation User through Web
+	 * Input:
+	 * 	activationInfo: useruid, verificationToken
+	 * 	output: 
+	 * 		if success return promise.resolve(user Info) 
+	 * 		if error throw error
 	 */
-	//
 	ActivationWeb:function(activationInfo,transaction)
 	{
-		var a=moment();
-		console.log(a);
 		var useruid=activationInfo.useruid;
 		var verificationToken=activationInfo.verificationToken;
 		var userInfo={};
+		//Check user exist or not
 		return UserAccount.findOne({
 			where:{UID:useruid}
 		},{transaction:transaction})
@@ -107,6 +109,7 @@ module.exports = {
 			if(user)
 			{
 				userInfo=user;
+				//check userActivation exist or not
 				return UserActivation.findOne({
 						where:{
 							UserAccountID:userInfo.ID,
@@ -124,6 +127,7 @@ module.exports = {
 		.then(function(userActivation){
 			if(userActivation)
 			{
+				//Update user activative attribute
 				return userInfo.updateAttributes({Activated:"Y"},{transaction:transaction});
 			}	
 			else
@@ -134,7 +138,76 @@ module.exports = {
 		},function(err){
 			throw err;
 		})
+	},
 
+	/**
+	 * DeactivationUserAccount (for admin role) 
+	 * deactivation thông qua các tiêu chí ID, UID , UserName, Email, Phone,
+	 * chỉ cần 1 trong 5 tiêu chí được cung cấp thì user tương ứng sẽ bị deactivation
+	 * Input:
+	 * 	criteria: là json chứa 1 trong các thuộc tính [ID, UID, UserName, Email, Phone]
+	 * 	transaction: nếu được cung cấp thì sẽ áp dụng transaction vào các câu truy vấn
+	 * Output:
+	 * 	if success return promise update UserAccount
+	 * 	if error throw err;
+	 */
+	DeactivationUserAccount:function(criteria,transaction)
+	{
+		var whereClause={};
+		if(criteria.ID)
+			whereClause.ID=criteria.ID;
+		else if(criteria.UID)
+			whereClause.UID=criteria.UID;
+		else if(criteria.UserName)
+			whereClause.UserName=criteria.UserName;
+		else if(criteria.Email)
+			whereClause.Email=criteria.Email;
+		else if(criteria.PhoneNumber)
+			whereClause.PhoneNumber=criteria.PhoneNumber;
+		else
+		{
+			var err=new Error('DeactivationUserAccount.Error');
+			err.pushError('DeactivationUserAccount.criteriaNotFound');
+			throw err;
+		}
+		return UserAccount.update({Activated:'N'},{
+			where:whereClause
+		},{transaction:transaction});
+	},
+
+	/**
+	 * ActivationUserAccount (for admin role)
+	 * activation thông qua các tiêu chí ID, UID, UserName, Email, Phone,
+	 * chỉ cần 1 trong 5 tiêu chí được cung cấp thì user tương ứng sẽ được activation
+	 * Input:
+	 * 	criteria: là json chứa 1 trong các thuộc tính [ID, UID, UserName, Email, Phone]
+	 * 	transaction: nếu được cung cấp thì sẽ áp dụng transaction vào các câu truy vấn
+	 * Output:
+	 * 	if success return promise update UserAccount
+	 * 	if error throw err;
+	 */
+	ActivationUserAccount:function(criteria,transaction)
+	{
+		var whereClause={};
+		if(criteria.ID)
+			whereClause.ID=criteria.ID;
+		else if(criteria.UID)
+			whereClause.UID=criteria.UID;
+		else if(criteria.UserName)
+			whereClause.UserName=criteria.UserName;
+		else if(criteria.Email)
+			whereClause.Email=criteria.Email;
+		else if(criteria.PhoneNumber)
+			whereClause.PhoneNumber=criteria.PhoneNumber;
+		else
+		{
+			var err=new Error('ActivationUserAccount.Error');
+			err.pushError('ActivationUserAccount.criteriaNotFound');
+			throw err;
+		}
+		return UserAccount.update({Activated:'Y'},{
+			where:whereClause
+		},{transaction:transaction});
 	}
 
 }

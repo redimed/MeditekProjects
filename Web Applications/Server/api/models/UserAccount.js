@@ -16,8 +16,12 @@ module.exports = {
             allowNull: true
         },
         Email: {
-            type: Sequelize.STRING(255),
-            allowNull: true
+            type: Sequelize.STRING(250),
+            allowNull: true,
+            validate:{
+                len:[0,255],
+                // isEmail: true
+            }
         },
         PhoneNumber: {
             type: Sequelize.STRING(20),
@@ -90,8 +94,11 @@ module.exports = {
                     });
                 });
             }
-        }
+        },
     },
+    
+   
+    
     
     
 };

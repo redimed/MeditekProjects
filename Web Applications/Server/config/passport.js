@@ -1,6 +1,7 @@
 var passport = require('passport'),
 LocalStrategy = require('passport-local').Strategy,
-bcrypt = require('bcrypt');
+bcrypt = require('bcrypt'),
+_= require('underscore');
 
 
 passport.serializeUser(function(user, done) {
@@ -20,7 +21,15 @@ passport.use(new LocalStrategy({
 	},
 	function(u, p, done) {
 		UserAccount.findOne({
-			where :{UserName: u}
+			where :{UserName: u},
+			include:{
+				model:RelUserRole,
+				attributes:['ID','UserAccountId','RoleId'],
+				include:{
+					model:Role,
+					attributes:['ID','UID','RoleCode','RoleName']
+				}
+			}
 		})
 		.then(function(user){
 			if (!user) {
@@ -32,10 +41,19 @@ passport.use(new LocalStrategy({
 							{
 								message: 'Invalid Password'
 							});
+				
+				var listRoles=[];
+				_.each(user.RelUserRoles,function(item){
+					listRoles.push(item.Role);
+				});
+
+
 				var returnUser = {
+					ID:user.ID,
 					UserName: user.UserName,
-					role:user.role
+					roles:listRoles
 				};
+				console.log("Login success")
 				return done(null, returnUser, {
 					message: 'Logged In Successfully'
 					});

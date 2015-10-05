@@ -1,10 +1,10 @@
 module.exports = function(req, res, next) {
-	var isGp=false;
+	var isPatient=false;
 	_.each(req.user.roles,function(role){
-		if(role.RoleCode=='GP')
-			isGp=true;
+		if(role.RoleCode=='PATIENT')
+			isPatient=true;
 	});
-    if (isGp) {
+    if (isPatient) {
         return next();
     }
     else{

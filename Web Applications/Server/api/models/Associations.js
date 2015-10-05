@@ -69,9 +69,40 @@ module.exports = {
         });
         UserAccount.hasMany(UserActivation, {
             foreignKey: 'UserAccountID'
+        })
+        
+		//Patient - UserAccount
+		UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
+
+		/* Doctor */
+    	Site.hasMany(Doctor, {
+    		foreignKey: 'SiteID'
+    	});
+		UserAccount.hasOne(Doctor, {
+    		foreignKey: 'UserAccountID'
+    	});
+    	/* End Doctor */
+	   
+        //UserAccount
+        UserAccount.hasMany(UserActivation,{
+            foreignKey:'UserAccountID'
         });
         UserActivation.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
+        })
+
+
+        UserAccount.hasMany(RelUserRole,{
+            foreignKey:'UserAccountId'
+        })
+        RelUserRole.belongsTo(UserAccount,{
+            foreignKey:'UserAccountId'
+        })
+        Role.hasMany(RelUserRole,{
+            foreignKey:'RoleId'
+        })
+        RelUserRole.belongsTo(Role,{
+            foreignKey:'RoleId'
         })
 
     }

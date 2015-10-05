@@ -85,11 +85,19 @@ module.exports = {
 
     checkListData: checkListData,
 
-    const: {
-        systemType: {
-            ios: 'IOS',
-            website: 'WEB',
-            android: 'ARD'
+    const:{
+        systemType:{
+            ios:'IOS',
+            website:'WEB',
+            android:'ARD'
+        },
+
+        roles:{
+            admin:1,
+            assistant:2,
+            doctor:3,
+            gp:4,
+            patient:5
         }
     }
 

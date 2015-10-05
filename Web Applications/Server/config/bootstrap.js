@@ -17,6 +17,25 @@ module.exports.bootstrap = function(cb) {
 	Error.prototype.pushErrors=function(errors){
 		this.errors=errors;
 	}
+	Error.prototype.pushError=function(err)
+	{
+		if(this.errors)
+		{
+			this.errors.push(err);
+		}
+		else
+		{
+			this.errors=[];
+			this.errors.push(err);
+		}
+	}
+	Error.prototype.getErrors=function()
+	{
+		if(this.errors)
+			return this.errors;
+		else
+			return [];
+	}
   // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
   cb();

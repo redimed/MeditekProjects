@@ -54,27 +54,6 @@ routes['post /api/repatientappointment-setpatient'] = {
 //     action :'DeletePatient'
 // };
 
-//module user account
-routes['get /api/user-account/test'] = {
-    controller: 'UserAccount/UserAccountController',
-    action: 'Test'
-};
-routes['post /api/user-account/CreateUserAccount'] = {
-    controller: 'UserAccount/UserAccountController',
-    action: 'CreateUserAccount'
-};
-routes['post /login'] = {
-    controller: 'UserAccount/AuthController',
-    action: 'login'
-};
-routes['get /api/user-account/find-by-phone'] = {
-    controller: 'UserAccount/UserAccountController',
-    action: 'FindByPhoneNumber'
-};
-routes['post /api/user-activation/create-user-activation'] = {
-        controller: 'UserAccount/UserActivationController',
-        action: 'CreateUserActivation'
-    }
     // module doctor
 routes['post /api/getDoctor'] = {
     controller: 'Doctor/DoctorController',
@@ -103,6 +82,36 @@ routes['post /api/searchDoctor'] = {
 routes['post /api/deleteDoctor'] = {
     controller: 'Doctor/DoctorController',
     action: 'DeleteDoctor'
+
+// module doctor
+routes['post /api/getDoctor']={
+    controller:'Doctor/DoctorController',
+    action:'GetDoctor'
+};
+routes['post /api/getbyidDoctor']={
+    controller:'Doctor/DoctorController',
+    action:'GetByIdDoctor'
+};
+routes['post /api/createDoctor']={
+    controller:'Doctor/DoctorController',
+    action:'CreateDoctor'
+};
+routes['post /api/createDoctors']={
+    controller:'Doctor/DoctorController',
+    action:'CreateDoctors'
+};
+routes['post /api/updateDoctor']={
+    controller:'Doctor/DoctorController',
+    action:'UpdateDoctor'
+};
+routes['post /api/searchDoctor']={
+    controller:'Doctor/DoctorController',
+    action:'SearchDoctor'
+};
+routes['post /api/deleteDoctor']={
+    controller:'Doctor/DoctorController',
+    action:'DeleteDoctor'
+>>>>>>> update user account
 };
 //end module doctor
 
@@ -111,6 +120,9 @@ routes['post /api/deleteDoctor'] = {
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
+
+
+//Begin Module User Account 
 var userAccountRoutes = require('./routes/userAccountRoutes');
 _.extend(routes, userAccountRoutes);
 
@@ -120,4 +132,6 @@ _.extend(routes, PatientRoutes);
 var AppointmentRoutes = require('./routes/AppointmentRoutes');
 _.extend(routes, AppointmentRoutes);
 
+//End Module User Account
+//
 module.exports.routes = routes;

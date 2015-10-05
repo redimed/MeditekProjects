@@ -19,13 +19,14 @@
 
 module.exports.policies = {
 
-  '*': true,
+  '*': true,//bật lên khi ở chế độ develop không cần login phân quyền
 
   // 'AuthController': {
   //   'test': 'isAuthenticated'
   // },
 
-  // '*': "hasToken",
+  // '*': "hasToken", //bật lên khi relase, hầu hết tất cả api đều phải có token
+  
   // 'UserAccount/UserAccountController': {
   //     "createUser": true,
   //     "Test":true
@@ -34,12 +35,18 @@ module.exports.policies = {
   //     '*': true,
   // },
   
-  // 'TestController':{
-  //     'test':['hasToken'],
-  //     'testAdmin':['hasToken','isAdmin'],
-  //     'testAssistant':['hasToken','isAssistant'],
-  //     'testGp':['hasToken','isGp']
-  // }
+  'UserAccount/UserAccountController':{
+    'Test':true
+  },
+  
+  'TestController':{
+      'test':['hasToken'],
+      'testAdmin':['hasToken','isAdmin'],
+      'testAssistant':['hasToken','isAssistant'],
+      'testGp':['hasToken','isGp'],
+      'testDoctor':['hasToken','isDoctor'],
+      'testPatient':['hasToken','isPatient']
+  }
 
   /***************************************************************************
   *                                                                          *

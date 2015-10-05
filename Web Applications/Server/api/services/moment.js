@@ -1,1 +1,1 @@
-module.exports=require('moment');
+module.exports = require('moment');

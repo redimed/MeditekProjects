@@ -1,5 +1,11 @@
 module.exports = {
     attributes: {
+        ID: {
+            type: Sequelize.BIGINT(20),
+            autoIncrement: true,
+            allowNull: false,
+            primaryKey: true
+        },
         UserAccountId: {
             type: Sequelize.BIGINT(20),
             allowNull: false,
@@ -16,17 +22,9 @@ module.exports = {
                 key: 'ID'
             }
         },
-        ModuleId: {
-            type: Sequelize.BIGINT(20),
-            allowNull: false,
-            references: {
-                model: 'Module',
-                key: 'ID'
-            }
-        },
         SiteId: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'Site',
                 key: 'ID'

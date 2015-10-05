@@ -10,6 +10,10 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: false
         },
+        RoleCode: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
         RoleName: {
             type: Sequelize.STRING(256),
             allowNull: false
@@ -17,7 +21,7 @@ module.exports = {
         Description: {
             type: Sequelize.TEXT
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },

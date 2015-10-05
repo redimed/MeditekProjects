@@ -12,7 +12,7 @@ module.exports = {
         },
         SiteID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'Site',
                 key: 'ID'
@@ -41,7 +41,7 @@ module.exports = {
             }
         },
         LastName: {
-            type: Sequelize.STRING(50),
+            type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
                 len:[0,50]
@@ -74,7 +74,7 @@ module.exports = {
             type: Sequelize.STRING(1),
             allowNull: true
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },

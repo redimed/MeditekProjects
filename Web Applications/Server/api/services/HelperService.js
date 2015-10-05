@@ -8,21 +8,17 @@ output: false: if data miss or parse failed
 /**
  * Kiem tra xem bien hop le hay khong
  */
-function checkData(value)
-{
-    return (value!==undefined && value!==null && value!=='' && value!={});
+function checkData(value) {
+    return (value !== undefined && value !== null && value !== '' && value != {});
 }
 
 /**
  * Kiem tra danh sach data truyen vao hop le hay kkhong
  */
-function checkListData()
-{
-    for (var i = 0; i < arguments.length; i++) 
-    {
-        if(arguments[i]===undefined || arguments[i]===null || arguments[i]==='' ||arguments[i]=={})
-        {
-            console.log(">>>>>>>> Vi tri data truyen den bi loi:",i);
+function checkListData() {
+    for (var i = 0; i < arguments.length; i++) {
+        if (arguments[i] === undefined || arguments[i] === null || arguments[i] === '' || arguments[i] == {}) {
+            console.log(">>>>>>>> Vi tri data truyen den bi loi:", i);
             return false;
         }
     }
@@ -30,14 +26,15 @@ function checkListData()
 }
 
 module.exports = {
-    CheckPostRequest:function(request) {
+    CheckPostRequest: function(request) {
         var data;
         if (!_.isUndefined(request) &&
             !_.isUndefined(request.body) &&
             !_.isUndefined(request.body.data)) {
-            if (!_.isObject(request.body.data)) {
+            data = request.body.data;
+            if (!_.isObject(data)) {
                 try {
-                    data = JSON.parse(request.body.data);
+                    data = JSON.parse(data);
                 } catch (err) {
                     console.log(err);
                     return false;
@@ -50,13 +47,13 @@ module.exports = {
     },
 
     //define regex pattern
-    regexPattern:{
+    regexPattern: {
         //emailPattern example :
         //  mysite@ourearth.com
         //  my.ownsite@ourearth.org
         //  mysite@you.me.net
         //reference from: http://www.w3resource.com/javascript/form/email-validation.php
-        email:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        email: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         date: /^(\d{4})-(\d{1,2})-(\d{1,2})$/,
 
         //fullPhonePattern example:
@@ -73,27 +70,27 @@ module.exports = {
         //  (123)8575973
         //  (0055)(123)8575973
         //reference from: http://stackoverflow.com/questions/14639973/javascript-regex-what-to-use-to-validate-a-phone-number
-        
+
         //international phone number
-        fullPhoneNumber:/^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i,
+        fullPhoneNumber: /^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i,
 
         //autralian phone number
-        auPhoneNumber:/^(\+61|0061|0)?4[0-9]{8}$/,
+        auPhoneNumber: /^(\+61|0061|0)?4[0-9]{8}$/,
 
         //except (,),whitespace,- in phone number
-        phoneExceptChars:/[\(\)\s\-]/g,
+        phoneExceptChars: /[\(\)\s\-]/g,
     },
-    
-    checkData:checkData,
 
-    checkListData:checkListData,
+    checkData: checkData,
 
-    const:{
-        systemType:{
-            ios:'IOS',
-            website:'WEB',
-            android:'ARD'
+    checkListData: checkListData,
+
+    const: {
+        systemType: {
+            ios: 'IOS',
+            website: 'WEB',
+            android: 'ARD'
         }
     }
-    
+
 }

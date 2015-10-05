@@ -14,19 +14,11 @@ module.exports = {
                 key: 'ID'
             }
         },
-        ModuleID: {
-            type: Sequelize.BIGINT(20),
+        Section: {
+            type: Sequelize.STRING(255),
             allowNull: true
         },
-        SectionID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: true
-        },
-        CategoryID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: true
-        },
-        Name: {
+        Category: {
             type: Sequelize.STRING(255),
             allowNull: true
         },
@@ -34,18 +26,25 @@ module.exports = {
             type: Sequelize.STRING(45),
             allowNull: true
         },
-        Values: {
+        Name: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
+        Value: {
             type: Sequelize.STRING(45),
             allowNull: true
+        },
+        ClinicalNote: {
+            type: Sequelize.TEXT
         },
         Description: {
             type: Sequelize.TEXT
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },
-        CreationBy: {
+        CreatedBy: {
             type: Sequelize.BIGINT(20),
             allowNull: true
         },

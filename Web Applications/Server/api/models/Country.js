@@ -10,7 +10,7 @@ module.exports = {
             allowNull: false
         },
         CountryName: {
-            type: Sequelize.STRING(256),
+            type: Sequelize.STRING(255),
             allowNull: true
         },
         Description: {
@@ -20,7 +20,7 @@ module.exports = {
             type: Sequelize.STRING(1),
             allowNull: true
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },

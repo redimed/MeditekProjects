@@ -58,11 +58,11 @@ module.exports = {
             type: Sequelize.STRING(20),
             allowNull: true
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },
-        CreationBy: {
+        CreatedBy: {
             type: Sequelize.BIGINT(20),
             allowNull: true
         },
@@ -79,5 +79,20 @@ module.exports = {
     options: {
         tableName: 'PatientAppointment',
         timestamps: false
+    },
+    hooks: {
+        beforeCreate: function(patientAppt, options, callback) {
+            options.CreationDate = new Date();
+            callback();
+        },
+        beforeUpdate: function(patientAppt, options, callback) {
+            options.ModifiedDate = new Date();
+            callback();
+        }
+    },
+    getterMethods: {
+        FullName: function() {
+            return this.getDataValue('FirstName') + this.getDataValue('LastName');
+        }
     }
 };

@@ -17,27 +17,21 @@ module.exports = {
         Name: {
             type: Sequelize.STRING(255),
             allowNull: true
-        },
-        CreationDate: {
-            type: Sequelize.DATE,
-            allowNull: true
-        },
-        CreationBy: {
-            type: Sequelize.BIGINT(20),
-            allowNull: true
-        },
-        ModifiedDate: {
-            type: Sequelize.DATE,
-            allowNull: true
-        },
-        ModifiedBy: {
-            type: Sequelize.BIGINT(20),
-            allowNull: true
         }
     },
     associations: function() {},
     options: {
         tableName: 'PreferedPlasticSurgeon',
-        timestamps: false
+        timestamps: false,
+        hooks: {
+            beforeCreate: function(refPlasSurgon, options, callback) {
+                options.CreationDate = new Date();
+                callback();
+            },
+            beforeUpdate: function(refPlasSurgon, options, callback) {
+                options.ModifiedDate = new Date();
+                callback();
+            }
+        }
     }
 };

@@ -21,11 +21,14 @@ module.exports = {
         DeviceToken: {
             type: Sequelize.TEXT
         },
+        DeviceID: {
+            type: Sequelize.TEXT
+        },
         Type: {
             type: Sequelize.STRING(45),
             allowNull: true
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },
@@ -40,9 +43,6 @@ module.exports = {
         ModifiedBy: {
             type: Sequelize.BIGINT(20),
             allowNull: true
-        },
-        DeviceID: {
-            type: Sequelize.TEXT
         }
     },
     associations: function() {},

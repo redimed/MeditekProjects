@@ -38,7 +38,7 @@ module.exports = {
         DeviceID: {
             type: Sequelize.TEXT
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },

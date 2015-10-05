@@ -23,13 +23,23 @@ module.exports = {
             foreignKey: 'TelehealthAppointmentID'
         });
 
-        // TelehealthAppointment - TelehealthClinicalDetail
-        TelehealthAppointment.hasOne(TelehealthClinicalDetail, {
+        // TelehealthAppointment - ClinicalDetail
+        TelehealthAppointment.hasOne(ClinicalDetail, {
             foreignKey: 'TelehealthAppointmentID'
         });
-         // TelehealthAppointment - TelehealthClinicalDetail
+        // TelehealthAppointment - ClinicalDetail
         TelehealthAppointment.hasMany(GeneralPractitioner, {
             foreignKey: 'TelehealthAppointmentID'
+        });
+
+        //association Appointment - Doctor
+        Appointment.belongsToMany(Doctor, {
+            through: 'RelDoctorAppointment',
+            foreignKey: 'AppointmentID'
+        });
+        Doctor.belongsToMany(Appointment, {
+            through: 'RelDoctorAppointment',
+            foreignKey: 'DoctorID'
         });
 
 
@@ -43,23 +53,25 @@ module.exports = {
             foreignKey: 'DoctorID'
         });
 
-		/* Doctor */
-    	Site.hasMany(Doctor, {
-    		foreignKey: 'SiteID'
-    	});
-		UserAccount.hasOne(Doctor, {
-    		foreignKey: 'UserAccountID'
-    	});
-    	/* End Doctor */
-
-	   
-        //UserAccount
-	    UserAccount.hasOne(Patient,{foreignKey:'UserAccountID'});
-        UserAccount.hasMany(UserActivation,{
-            foreignKey:'UserAccountID'
+        /* Doctor */
+        Site.hasMany(Doctor, {
+            foreignKey: 'SiteID'
         });
-        UserActivation.belongsTo(UserAccount,{
-            foreignKey:'UserAccountID'
+        UserAccount.hasOne(Doctor, {
+            foreignKey: 'UserAccountID'
+        });
+        /* End Doctor */
+
+
+        //UserAccount
+        UserAccount.hasOne(Patient, {
+            foreignKey: 'UserAccountID'
+        });
+        UserAccount.hasMany(UserActivation, {
+            foreignKey: 'UserAccountID'
+        });
+        UserActivation.belongsTo(UserAccount, {
+            foreignKey: 'UserAccountID'
         })
 
     }

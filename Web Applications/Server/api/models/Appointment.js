@@ -12,7 +12,7 @@ module.exports = {
         },
         SiteID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'Site',
                 key: 'ID'
@@ -26,6 +26,14 @@ module.exports = {
             type: Sequelize.DATE,
             allowNull: true
         },
+        RequestDate: {
+            type: Sequelize.DATE,
+            allowNull: true
+        },
+        ApprovalDate: {
+            type: Sequelize.DATE,
+            allowNull: true
+        },
         Status: {
             type: Sequelize.STRING(45),
             allowNull: true
@@ -34,7 +42,7 @@ module.exports = {
             type: Sequelize.STRING(1),
             allowNull: true
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },
@@ -54,6 +62,16 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'Appointment',
-        timestamps: false
+        timestamps: false,
+        hooks: {
+            // beforeCreate: function(appt, options, callback) {
+            //     appt.CreationDate = new Date();
+            //     callback();
+            // },
+            // beforeUpdate: function(appt, options, callback) {
+            //     appt.ModifiedDate = new Date();
+            //     callback();
+            // }
+        }
     }
 };

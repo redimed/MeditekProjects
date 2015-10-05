@@ -42,7 +42,7 @@ module.exports = {
             type: Sequelize.DATE,
             allowNull: true
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },

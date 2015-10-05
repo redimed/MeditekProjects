@@ -27,7 +27,7 @@ module.exports = {
             allowNull: true
         },
         Gender: {
-            type: Sequelize.STRING(100),
+            type: Sequelize.STRING(1),
             allowNull: true
         },
         Email: {
@@ -81,6 +81,18 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: true
         },
+        CompanyName: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
+        CompanyPhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true
+        },
+        ContactPerson: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
         Description: {
             type: Sequelize.TEXT
         },
@@ -92,7 +104,7 @@ module.exports = {
             type: Sequelize.STRING(50),
             allowNull: true
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },

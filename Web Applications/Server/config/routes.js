@@ -1,22 +1,7 @@
-var _= require('underscore');
+var _ = require('underscore');
 var routes = {};
-//mdule urgent care
-routes['post /api/urgent-care/urgent-request'] = {
-    controller: 'UrgentCare/UrgentCareController',
-    action: 'ReceiveRequest'
-};
-
-routes['get /api/urgent-care/urgent-confirm/:id'] = {
-    controller: 'UrgentCare/UrgentCareController',
-    action: 'ConfirmRequest'
-};
 
 //module appointment
-routes['get /api/appointment-telehealth-request'] = {
-    controller: 'Appointment/AppointmentController',
-    action: 'RequestAppointment'
-};
-
 routes['post /api/appointment-update-appointment'] = {
     controller: 'Appointment/AppointmentController',
     action: 'UpdateAppointment'
@@ -70,54 +55,54 @@ routes['post /api/repatientappointment-setpatient'] = {
 // };
 
 //module user account
-routes['get /api/user-account/test']={
-	controller:'UserAccount/UserAccountController',
-	action:'Test'
+routes['get /api/user-account/test'] = {
+    controller: 'UserAccount/UserAccountController',
+    action: 'Test'
 };
-routes['post /api/user-account/CreateUserAccount']={
-	controller:'UserAccount/UserAccountController',
-	action:'CreateUserAccount'
+routes['post /api/user-account/CreateUserAccount'] = {
+    controller: 'UserAccount/UserAccountController',
+    action: 'CreateUserAccount'
 };
-routes['post /login']={
-    controller:'UserAccount/AuthController',
-    action:'login'
+routes['post /login'] = {
+    controller: 'UserAccount/AuthController',
+    action: 'login'
 };
-routes['get /api/user-account/find-by-phone']={
-    controller:'UserAccount/UserAccountController',
-    action:'FindByPhoneNumber'
+routes['get /api/user-account/find-by-phone'] = {
+    controller: 'UserAccount/UserAccountController',
+    action: 'FindByPhoneNumber'
 };
-routes['post /api/user-activation/create-user-activation']={
-    controller:'UserAccount/UserActivationController',
-    action:'CreateUserActivation'
-}
-// module doctor
-routes['post /api/getDoctor']={
-    controller:'Doctor/DoctorController',
-    action:'GetDoctor'
+routes['post /api/user-activation/create-user-activation'] = {
+        controller: 'UserAccount/UserActivationController',
+        action: 'CreateUserActivation'
+    }
+    // module doctor
+routes['post /api/getDoctor'] = {
+    controller: 'Doctor/DoctorController',
+    action: 'GetDoctor'
 };
-routes['post /api/getbyidDoctor']={
-    controller:'Doctor/DoctorController',
-    action:'GetByIdDoctor'
+routes['post /api/getbyidDoctor'] = {
+    controller: 'Doctor/DoctorController',
+    action: 'GetByIdDoctor'
 };
-routes['post /api/createDoctor']={
-    controller:'Doctor/DoctorController',
-    action:'CreateDoctor'
+routes['post /api/createDoctor'] = {
+    controller: 'Doctor/DoctorController',
+    action: 'CreateDoctor'
 };
-routes['post /api/createDoctors']={
-    controller:'Doctor/DoctorController',
-    action:'CreateDoctors'
+routes['post /api/createDoctors'] = {
+    controller: 'Doctor/DoctorController',
+    action: 'CreateDoctors'
 };
-routes['post /api/updateDoctor']={
-    controller:'Doctor/DoctorController',
-    action:'UpdateDoctor'
+routes['post /api/updateDoctor'] = {
+    controller: 'Doctor/DoctorController',
+    action: 'UpdateDoctor'
 };
-routes['post /api/searchDoctor']={
-    controller:'Doctor/DoctorController',
-    action:'SearchDoctor'
+routes['post /api/searchDoctor'] = {
+    controller: 'Doctor/DoctorController',
+    action: 'SearchDoctor'
 };
-routes['post /api/deleteDoctor']={
-    controller:'Doctor/DoctorController',
-    action:'DeleteDoctor'
+routes['post /api/deleteDoctor'] = {
+    controller: 'Doctor/DoctorController',
+    action: 'DeleteDoctor'
 };
 //end module doctor
 
@@ -131,5 +116,8 @@ _.extend(routes, userAccountRoutes);
 
 var PatientRoutes = require('./routes/PatientRoutes');
 _.extend(routes, PatientRoutes);
+
+var AppointmentRoutes = require('./routes/AppointmentRoutes');
+_.extend(routes, AppointmentRoutes);
 
 module.exports.routes = routes;

@@ -6,26 +6,26 @@ module.exports = {
             allowNull: false,
             primaryKey: true
         },
-        PatientID: {
+        GeneralPractitionerID: {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: 'Patient',
+                model: 'GeneralPractitioner',
                 key: 'ID'
             }
         },
-        AppointmentID: {
+        DoctorID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
-                model: 'Appointment',
+                model: 'Doctor',
                 key: 'ID'
             }
         }
     },
     associations: function() {},
     options: {
-        tableName: 'RelPatientAppointment',
+        tableName: 'RelGeneralPractitionerDoctor',
         timestamps: false
     }
 };

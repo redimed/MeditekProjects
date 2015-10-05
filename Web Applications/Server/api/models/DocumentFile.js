@@ -1,25 +1,27 @@
 module.exports = {
     attributes: {
-        GeneralPractitionerID: {
+        ID: {
+            type: Sequelize.BIGINT(20),
+            autoIncrement: true,
+            allowNull: false,
+            primaryKey: true
+        },
+        FileUploadID: {
             type: Sequelize.BIGINT(20),
             allowNull: false,
             references: {
-                model: 'GeneralPractitioner',
+                model: 'FileUpload',
                 key: 'ID'
             }
         },
-        DoctorID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: true,
-            references: {
-                model: 'Doctor',
-                key: 'ID'
-            }
+        DocType: {
+            type: Sequelize.STRING(45),
+            allowNull: true
         }
     },
     associations: function() {},
     options: {
-        tableName: 'RefGeneralPractitionerDoctor',
+        tableName: 'DocumentFile',
         timestamps: false
     }
 };

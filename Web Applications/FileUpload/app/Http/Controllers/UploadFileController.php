@@ -24,14 +24,17 @@ class UploadFileController extends Controller
 
         $files = Input::file('images');
 
+        // Encrypt and upload multi files
         foreach($files as $file)
         {
+            // Save file to upload folder
             $uid = Uuid::uuid4();
             $fileLocation = 'uploadfiles/'.$uid;
             $fileType = $file->getClientOriginalExtension();
             $fileName = $file->getClientOriginalName();
             Storage::put($fileLocation, Crypt::encrypt(File::get($file)));
 
+            // populate FileUpload record to DB
             $fileupload = new FileUpload();
             $fileupload->FileLocation = $fileLocation;
             $fileupload->FileType = $fileType;
@@ -40,7 +43,6 @@ class UploadFileController extends Controller
             $fileupload->uid = $uid;
             $fileupload->CreatedDate = Carbon::now();
             $fileupload->ModifiedDate = Carbon::now();
-
             $fileupload->save();
         }
 
@@ -49,25 +51,25 @@ class UploadFileController extends Controller
 
     }
 
+    /**
+     * GetUploadFile: get UploadFile test page
+     * @return \Illuminate\View\View
+     */
     public function GetUploadFile()
     {
         return view('UploadFile');
     }
 
 
+    /**
+     * GetLoadFile: Load uploaded file content
+     * @param $Id
+     * @return Response
+     */
     public function GetLoadFile($Id)
     {
         $file = FileUpload::findOrFail($Id);
-
         $fileLocation = $file->FileLocation;
-        $fileExtension = $file->FileExtension;
-        $uid = $file->UID;
-        $fileTempLocation = 'temp/'.$uid.'.'.$fileExtension;
-
-
-//        Storage::put($fileTempLocation, Crypt::decrypt(Storage::get($fileLocation)));
-//        return $fileTempLocation;
-
         $response  = new Response(Crypt::decrypt(Storage::get($fileLocation)), '200');
         $response->header('Content-Type', '');
 

@@ -1,7 +1,6 @@
 var $q = require('q');
 var regexp = require('node-regexp');
 var generatePassword = require("password-generator");
-_= require('underscore');
 module.exports = {
 
 
@@ -181,9 +180,12 @@ module.exports = {
 			return q.promise;
 		}
 
+
 		var userAccount={};
 		var userAccountDetail={};
-		//Lấy thông tin user tương ứng với id
+		
+		//---------------------------------------------
+ 		//Lấy thông tin user tương ứng với id
 		return UserAccount.findOne({
 			where:{ID:userInfo.ID}
 		},{transaction:transaction})
@@ -194,6 +196,8 @@ module.exports = {
 				userAccountDetail=_.clone(u.dataValues);
 				//merge thông tin client gửi lên vào userAccountDetail
 				_.extend(userAccountDetail,userInfo);
+				//Không được cập nhật password theo quy trình này
+				delete userAccountDetail.Password;
 				return Validation(userAccountDetail);
 			}
 			else

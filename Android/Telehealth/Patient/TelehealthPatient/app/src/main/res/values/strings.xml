@@ -2,6 +2,7 @@
     <string name="welcome">Welcome to REDiMED</string>
     <string name="title_activity_launcher">Telehealth Patient</string>
     <string name="app_name">TelehealthPatient</string>
+
     <string name="title_activity_main">MainActivity</string>
     <string name="confirm_exit">Press Back button again to exit</string>
     <string name="alert_wrong_phone">Phone Number Invalid</string>
@@ -30,7 +31,7 @@
     <string name="fontello_heart_empty">&#xe80b;</string>
     <string name="fontello_heart_full">&#xe80a;</string>
     <string name="fontello_drag_and_drop">&#xe821;</string>
-    
+
     <!-- Material Design Icons -->
     <string name="material_icon_bike">&#xe915;</string>
     <string name="material_icon_go">&#xea04;</string>

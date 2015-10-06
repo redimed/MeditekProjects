@@ -17,6 +17,7 @@
     <color name="answerFone">#009688</color>
     <color name="darkLine">#000000</color>
     <color name="declineFone">#B51E46</color>
+    <color name="answerFone">#009688</color>
 
     <!-- Status Bar Color-->
     <color name="colorPrimaryDark">#87b4f3</color>

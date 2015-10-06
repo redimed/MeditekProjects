@@ -1,4 +1,3 @@
-_= require('underscore');
 module.exports={
 	test:function(req,res)
     {
@@ -12,7 +11,7 @@ module.exports={
             address:'thuan an',
             school:'thu dau mot'
         }
-        _.extendOwn(a,b);
+        _.extend(a,b);
         console.log(a);
 
 

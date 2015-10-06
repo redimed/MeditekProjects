@@ -1,10 +1,9 @@
 var regexp = require('node-regexp');
-_= require('underscore');
 module.exports = {
 	Test:function(req,res)
 	{
 		HelperService.exlog(req.user);
-		res.ok({status:'hehehe'});
+		res.ok({status:'hehehe',user:req.user});
 	},
 	
 	/**
@@ -19,7 +18,8 @@ module.exports = {
 			PhoneNumber:req.body.PhoneNumber,
 			Password:req.body.Password,
 			Activated:'Y',
-			Enable:'Y'
+			Enable:'Y',
+			CreatedBy:req.user?req.user.ID:null,
 		}
 		
 		//Cách 1: Managed transaction (auto-callback)
@@ -78,6 +78,7 @@ module.exports = {
 	UpdateUserAccount:function(req,res)
 	{
 		var userInfo=req.body;
+		userInfo.ModifiedBy=req.user?req.user.ID:null;
 		if(_.isEmpty(userInfo))
 		{
 			return res.badRequest({message:'user info null'});

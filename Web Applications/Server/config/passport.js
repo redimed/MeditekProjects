@@ -1,8 +1,6 @@
 var passport = require('passport'),
 LocalStrategy = require('passport-local').Strategy,
-bcrypt = require('bcrypt'),
-_= require('underscore');
-
+bcrypt = require('bcrypt');
 
 passport.serializeUser(function(user, done) {
 	done(null, user.UserName);

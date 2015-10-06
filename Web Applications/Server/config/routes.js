@@ -1,6 +1,5 @@
-var _ = require('underscore');
 var routes = {};
-
+var _=require('lodash');
 //module appointment
 routes['post /api/appointment-update-appointment'] = {
     controller: 'Appointment/AppointmentController',

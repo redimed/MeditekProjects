@@ -64,6 +64,7 @@ module.exports = {
 		output: insert Patient's information into table Patient 
 	*/
 	CreatePatient : function(data) {
+		data.CreatedDate = new Date();
 		return Services.Patient.validation(data)
 		.then(function(success){
 			return Patient.create(data);
@@ -126,6 +127,7 @@ module.exports = {
 		output:update patient into table Patient
 	*/
 	UpdatePatient : function(data) {
+		data.ModifiedDate = new Date();
 		return Services.Patient.validation(data)
 		.then(function(success){
 			return Patient.update(data,{

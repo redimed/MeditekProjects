@@ -26,7 +26,7 @@ public class CountryCodeActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        CountryList();
+//        CountryList();
         ArrayAdapter<Country> countryArrayAdapter = new CountryListArrayAdapter(this, countryList);
         setListAdapter(countryArrayAdapter);
 
@@ -45,15 +45,15 @@ public class CountryCodeActivity extends ListActivity {
     }
 
     //Generate list country
-    private void CountryList() {
-        countryList = new ArrayList<Country>();
-        listCountryNames = getResources().getStringArray(R.array.country_names);
-        listCountryCodes = getResources().getStringArray(R.array.country_codes);
-        arrImg = getResources().obtainTypedArray(R.array.country_flags);
-        for(int i = 0; i < listCountryCodes.length; i++){
-            countryList.add(new Country(listCountryNames[i], listCountryCodes[i], arrImg.getDrawable(i)));
-        }
-    }
+//    private void CountryList() {
+//        countryList = new ArrayList<Country>();
+//        listCountryNames = getResources().getStringArray(R.array.country_names);
+//        listCountryCodes = getResources().getStringArray(R.array.country_codes);
+//        arrImg = getResources().obtainTypedArray(R.array.country_flags);
+//        for(int i = 0; i < listCountryCodes.length; i++){
+//            countryList.add(new Country(listCountryNames[i], listCountryCodes[i], arrImg.getDrawable(i)));
+//        }
+//    }
 
     //Initialize object Country storage name, code, image
     public class Country {

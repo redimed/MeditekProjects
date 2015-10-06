@@ -3,6 +3,7 @@ package com.redimed.telehealth.patient;
 import android.app.Application;
 import android.content.Intent;
 
+import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.models.UserAccount;
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
 import com.redimed.telehealth.patient.service.SocketService;
@@ -12,30 +13,19 @@ import com.redimed.telehealth.patient.service.SocketService;
  */
 public class MyApplication extends Application{
 
-    private UserAccount userAccount;
+    private TelehealthUser telehealthUser;
     private static MyApplication myApplication;
-
-    private UserAccount currUser;
-
-    public UserAccount getCurrUser() {
-        return currUser;
-    }
-
-    public void setCurrUser(UserAccount currUser) {
-        this.currUser = currUser;
-    }
-
 
     public static MyApplication getInstance(){
         return myApplication;
     }
 
-    public UserAccount getUserAccount() {
-        return userAccount;
+    public TelehealthUser getTelehealthUser() {
+        return telehealthUser;
     }
 
-    public void setUserAccount(UserAccount userAccount) {
-        this.userAccount = userAccount;
+    public void setTelehealthUser(TelehealthUser telehealthUser) {
+        this.telehealthUser = telehealthUser;
     }
 
     @Override

@@ -14,6 +14,7 @@
     <!-- -->
     <color name="darkLine">#000000</color>
     <color name="declineFone">#B51E46</color>
+    <color name="answerFone">#009688</color>
 
     <!-- Status Bar Color-->
     <color name="colorPrimaryDark">#1565C0</color>
@@ -21,6 +22,7 @@
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
+    <color name="colorAccent">#B42047</color>
 
     <!-- Dialog Color-->
     <color name="success">#2196f3</color>

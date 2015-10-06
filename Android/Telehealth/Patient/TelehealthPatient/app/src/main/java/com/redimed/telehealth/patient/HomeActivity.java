@@ -39,14 +39,13 @@ import retrofit.client.Response;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static String TAG ="HOME";
+    private String TAG ="HOME";
     private ActionBarDrawerToggle actionDrawerToggle;
     private boolean shouldFinish = false;
     private BroadcastReceiver receiverDataSocketService;
     private RegisterApi restClient = RESTClient.getRegisterApi();
-    private String sessionID;
+    private String sessionID, token, apiKey;
     MyApplication mApplication;
-    JsonObject jsonObjectGlobal;
 
     @Bind(R.id.testSocket) Button testSocket;
     @Bind(R.id.testSession) Button testSession;
@@ -57,52 +56,52 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-
+        SocketService.JoinRoom();
         testSocket.setOnClickListener(this);
         testSession.setOnClickListener(this);
         mApplication = (MyApplication) getApplicationContext();
-
         DisplayDrawer();
-        ListenSocket();
+        
+        // ListenSocket();
     }
 
     //Listen action response when clinic make a call
-    private void ListenSocket() {
-        IntentFilter intentFilter = new IntentFilter("android.intent.action.MessageSocket");
-        receiverDataSocketService = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String message = "";
-                String strSocket = intent.getStringExtra("Message");
-                try {
-                    JSONObject jsonSocket = new JSONObject(strSocket);
-                    message = jsonSocket.get("message").toString();
-                    Log.i("====Message====", message);
-                    if (message.equalsIgnoreCase("call")){
-                        intent = new Intent(HomeActivity.this, CallActivity.class);
-                        intent.putExtra("apiKey", jsonSocket.get("apiKey").toString());
-                        intent.putExtra("sessionId", jsonSocket.get("sessionId").toString());
-                        intent.putExtra("token", jsonSocket.get("token").toString());
-                        intent.putExtra("to", jsonSocket.get("from").toString());
-                        intent.putExtra("from", mApplication.getUserAccount().getPhoneNumber());
-                        startActivity(intent);
-                        HomeActivity.this.finish();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                String messageSocket = intent.getStringExtra("messageTransfer");
-                Log.i("====MessageTransfer====", messageSocket);
-            }
-        };
-        this.registerReceiver(receiverDataSocketService, intentFilter);
-    }
+    // private void ListenSocket() {
+    //     IntentFilter intentFilter = new IntentFilter("android.intent.action.MessageSocket");
+    //     receiverDataSocketService = new BroadcastReceiver() {
+    //         @Override
+    //         public void onReceive(Context context, Intent intent) {
+    //             String message = "";
+    //             String strSocket = intent.getStringExtra("Message");
+    //             try {
+    //                 JSONObject jsonSocket = new JSONObject(strSocket);
+    //                 message = jsonSocket.get("message").toString();
+    //                 Log.i("====Message====", message);
+    //                 if (message.equalsIgnoreCase("call")){
+    //                     intent = new Intent(HomeActivity.this, CallActivity.class);
+    //                     intent.putExtra("apiKey", jsonSocket.get("apiKey").toString());
+    //                     intent.putExtra("sessionId", jsonSocket.get("sessionId").toString());
+    //                     intent.putExtra("token", jsonSocket.get("token").toString());
+    //                     intent.putExtra("to", jsonSocket.get("from").toString());
+    //                     intent.putExtra("from", mApplication.getUserAccount().getPhoneNumber());
+    //                     startActivity(intent);
+    //                     HomeActivity.this.finish();
+    //                 }
+    //             } catch (JSONException e) {
+    //                 e.printStackTrace();
+    //             }
+    //             String messageSocket = intent.getStringExtra("messageTransfer");
+    //             Log.i("====MessageTransfer====", messageSocket);
+    //         }
+    //     };
+    //     this.registerReceiver(receiverDataSocketService, intentFilter);
+    // }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        this.unregisterReceiver(this.receiverDataSocketService);
-    }
+    // @Override
+    // protected void onPause() {
+    //     super.onPause();
+    //     this.unregisterReceiver(this.receiverDataSocketService);
+    // }
 
     //Initialize Drawer
     private void DisplayDrawer() {
@@ -128,29 +127,28 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         actionDrawerToggle.syncState();
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.testSocket:
-                DisplayCall();
+                CallActivity();
                 break;
             case R.id.testSession:
-                TestSession();
+                GenerationSession();
                 break;
         }
     }
 
-    private void TestSession() {
+    private void GenerationSession() {
         restClient.generateSession(new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 String status = jsonObject.get("status").getAsString();
-                Log.d("OK", jsonObject.toString());
                 if (status.equalsIgnoreCase("success")){
                     sessionID = jsonObject.getAsJsonObject("data").get("sessionId").getAsString();
-                    jsonObjectGlobal = jsonObject.getAsJsonObject("data");
-                    Log.d(TAG, sessionID);
+                    token = jsonObject.getAsJsonObject("data").get("token").getAsString();
+                    apiKey = jsonObject.getAsJsonObject("data").get("apiKey").getAsString();
+                    Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG);
                 }
             }
             @Override
@@ -160,23 +158,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void DisplayCall() {
+    private void CallActivity() {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("from", "+84908618694");
-        //params.put("to", "+841267146714");
-        params.put("to", "+84988880682");
+        params.put("from", "0f77bd78-f674-41a6-8f9c-255721b4a3bd");
+        params.put("to", "7674468e-6593-4974-9f86-a2addcc59507");
+//        params.put("to", "b65266b4-d5a9-4769-85a7-c30cdab0ceea");
         params.put("message", "call");
         params.put("sessionId", sessionID);
         try {
             SocketService.sendData("socket/messageTransfer", params);
-            SharedPreferences.Editor editor = (SharedPreferences.Editor) getApplicationContext().getSharedPreferences("Clinic", MODE_PRIVATE).edit();
-            editor.putString("apiKey", jsonObjectGlobal.get("apiKey").toString());
-            editor.putString("sessionId", jsonObjectGlobal.get("sessionId").toString());
-            editor.putString("token", jsonObjectGlobal.get("token").toString());
-            editor.commit();
-            startActivity(new Intent(HomeActivity.this, CallActivity.class));
-            HomeActivity.this.finish();
+            startActivity(new Intent(this, CallActivity.class));
             Toast.makeText(this, "Clinic: " + params.toString(), Toast.LENGTH_LONG).show();
+            finish();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }

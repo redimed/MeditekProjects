@@ -1,4 +1,7 @@
 <resources>
+    <string name="welcome">Welcome to REDiMED</string>
+    <string name="title_activity_launcher">Telehealth Patient</string>
+
     <string name="app_name">TelehealthPatient</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="action_settings">Settings</string>
@@ -24,26 +27,54 @@
     <string name="error_network">Network Error</string>
     <string name="error_no_response">No Response From Server</string>
 
-    <string-array name="country_codes">
-        <item>+84</item>
-        <item>+61</item>
-        <item>+81</item>
-        <item>+1</item>
-    </string-array>
+    <!-- Fontello icons -->
+    <string name="fontello_search">&#xe816;</string>
+    <string name="fontello_x_mark">&#xe81f;</string>
+    <string name="fontello_x_mark_masked">&#xe806;</string>
+    <string name="fontello_microfon">&#xe80f;</string>
+    <string name="fontello_user">&#xe81b;</string>
+    <string name="fontello_password">&#xe823;</string>
+    <string name="fontello_upload">&#xe81a;</string>
+    <string name="fontello_play">&#xe813;</string>
+    <string name="fontello_heart_empty">&#xe80b;</string>
+    <string name="fontello_heart_full">&#xe80a;</string>
+    <string name="fontello_drag_and_drop">&#xe821;</string>
 
-    <string-array name="country_names">
-        <item>(+84) Viet Nam</item>
-        <item>(+61) Australia</item>
-        <item>(+81) Japan</item>
-        <item>(+1) USA</item>
-    </string-array>
-
-    <string-array name="country_flags">
-        <item>@drawable/icon_flag_vn</item>
-        <item>@drawable/icon_flag_au</item>
-        <item>@drawable/icon_flag_jp</item>
-        <item>@drawable/icon_flag_us</item>
-    </string-array>
+    <!-- Material Design Icons -->
+    <string name="material_icon_bike">&#xe915;</string>
+    <string name="material_icon_go">&#xea04;</string>
+    <string name="material_icon_sleep">&#xe9c2;</string>
+    <string name="material_icon_eat">&#xeac6;</string>
+    <string name="material_icon_play">&#xe831;</string>
+    <string name="material_icon_drink">&#xea08;</string>
+    <string name="material_icon_party">&#xe937;</string>
+    <string name="material_icon_shop">&#xe858;</string>
+    <string name="material_icon_account">&#xe800;</string>
+    <string name="material_icon_account_multiple">&#xe8dc;</string>
+    <string name="material_icon_message">&#xea12;</string>
+    <string name="material_icon_image_box">&#xe952;</string>
+    <string name="material_icon_video">&#xeb39;</string>
+    <string name="material_icon_clock">&#xe881;</string>
+    <string name="material_icon_star_outline">&#xeade;</string>
+    <string name="material_icon_star">&#xeadf;</string>
+    <string name="material_icon_share">&#xeac0;</string>
+    <string name="material_icon_plus_box">&#xea7f;</string>
+    <string name="material_icon_check">&#xe867;</string>
+    <string name="material_icon_undo">&#xeb2c;</string>
+    <string name="material_icon_friends">&#xe8d5;</string>
+    <string name="material_icon_email">&#xe99c;</string>
+    <string name="material_icon_password">&#xe9fa;</string>
+    <string name="material_icon_flag">&#xe96a;</string>
+    <string name="material_icon_city">&#xe878;</string>
+    <string name="material_icon_unfold_more">&#xeb2f;</string>
+    <string name="material_icon_home_variant">&#xe9bd;</string>
+    <string name="material_icon_home">&#xe9be;</string>
+    <string name="material_icon_hotels">&#xeae3;</string>
+    <string name="material_icon_date">&#xe848;</string>
+    <string name="material_icon_like">&#xeb03;</string>
+    <string name="material_icon_bookmark">&#xe921;</string>
+    <string name="material_icon_back">&#xe875;</string>
+    <string name="search">Search Country</string>
 
     <!-- Drawer Layout-->
     <string name="drawer_open">Open</string>
@@ -52,6 +83,6 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_country_code">Select your country</string>
+    <string name="title_activity_profile_patient">ProfilePatientActivity</string>
 
-    <string name="title_activity_loading">LoadingActivity</string>
 </resources>

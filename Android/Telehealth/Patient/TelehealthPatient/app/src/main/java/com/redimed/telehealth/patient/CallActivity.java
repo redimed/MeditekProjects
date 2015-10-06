@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -33,10 +34,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.redimed.telehealth.patient.utils.BlurTransformation;
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,13 +45,15 @@ import butterknife.ButterKnife;
 
 public class CallActivity extends AppCompatActivity implements View.OnClickListener, PublisherKit.PublisherListener, SubscriberKit.VideoListener, Session.SessionListener {
 
-    private Intent i;
+//    private Intent i;
     private Session sessionOpenTok;
     private Publisher publisher;
     private Subscriber subscriber;
     private ArrayList<Stream> streamOpenTok;
     private static final String LOGTAG = "OpenTok";
     private String sessionId, token, apiKey, to, from;
+    private BroadcastReceiver receiverDataSocketService;
+    private MyApplication myApplication;
 
     @Bind(R.id.fabHold)FloatingActionButton fabHold;
     @Bind(R.id.fabEndCall) FloatingActionButton fabEndCall;
@@ -64,17 +64,17 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.loadingSpinner) ProgressBar loadingBar;
 
     @Bind(R.id.imgLogoCall) ImageView imgLogoCall;
-    @Bind(R.id.btnDecline) Button btnDecline;
-    @Bind(R.id.btnAnswer) Button btnAnswer;
+    @Bind(R.id.btnDecline) FloatingActionButton btnDecline;
+    @Bind(R.id.btnAnswer) FloatingActionButton btnAnswer;
     @Bind(R.id.vfCall) ViewFlipper vfCall;
 
-    private BroadcastReceiver receiverDataSocketService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        myApplication = (MyApplication) getApplicationContext();
         ButterKnife.bind(this);
 
         streamOpenTok = new ArrayList<Stream>();
@@ -88,26 +88,75 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         fabHold.setOnClickListener(this);
         fabMute.setOnClickListener(this);
 
-        GetDataFromHome();
-        SessionConnect();
         ListenSocket();
     }
 
-    private void GetDataFromHome() {
-        i = getIntent();
-        if (i.getExtras() != null){
-            sessionId = i.getExtras().getString("sessionId");
-            token = i.getExtras().getString("token");
-            apiKey = i.getExtras().getString("apiKey");
-            to = i.getExtras().getString("to");
-            from = i.getExtras().getString("from");
-        }
+//    Initialize Session ID, API Key, Token
+//    private void ListenSocket() {
+//        i = getIntent();
+//        if (i.getExtras() != null){
+//            if (i.getExtras().getString("message").equalsIgnoreCase("call")) {
+//                sessionId = i.getExtras().getString("sessionId");
+//                token = i.getExtras().getString("token");
+//                apiKey = i.getExtras().getString("apiKey");
+//                to = i.getExtras().getString("to");
+//                from = i.getExtras().getString("from");
+//                SessionConnect();
+//            }
+//            if (i.getExtras().getString("message").equalsIgnoreCase("answer")){
+//                SessionConnect();
+//                vfCall.showNext();
+//            }
+//            if (i.getExtras().getString("message").equalsIgnoreCase("endcall")){
+//                DeclineCommunication();
+//            }
+//        }
+//    }
+
+    //    Listen action response when clinic make a call
+    private void ListenSocket() {
+        IntentFilter intentFilter = new IntentFilter("android.intent.action.MessageSocket");
+        receiverDataSocketService = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String message = "";
+                String strSocket = intent.getStringExtra("Message");
+                try {
+                    JSONObject jsonSocket = new JSONObject(strSocket);
+                    message = jsonSocket.get("message").toString();
+                    Log.i("====Message====", message);
+                    if (message.equalsIgnoreCase("call")){
+                        apiKey = jsonSocket.get("apiKey").toString();
+                        sessionId = jsonSocket.get("sessionId").toString();
+                        token = jsonSocket.get("token").toString();
+                        to = jsonSocket.get("from").toString();
+                        from = myApplication.getTelehealthUser().getUID();
+                    }
+                    if (message.equalsIgnoreCase("answer")){
+                        vfCall.showNext();
+                    }
+                    if (message.equalsIgnoreCase("decline")) {
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        this.registerReceiver(receiverDataSocketService, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.unregisterReceiver(this.receiverDataSocketService);
     }
 
     @Override
     public void onBackPressed() {
         if (sessionOpenTok != null){
-            EndCommunication();
+            DeclineCommunication();
         }
         super.onBackPressed();
     }
@@ -116,7 +165,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case (R.id.btnDecline):
-                BackHome();
+                DeclineCommunication();
                 break;
             case (R.id.btnAnswer):
                 AnswerCommunication();
@@ -128,12 +177,19 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 MuteCommunication();
                 break;
             case R.id.fabEndCall:
-                EndCommunication();
+                DeclineCommunication();
                 break;
         }
     }
 
     private void AnswerCommunication() {
+//        SharedPreferences data = getApplicationContext().getSharedPreferences("Clinic", MODE_PRIVATE);
+//        apiKey = data.getString("apiKey", null);
+//        sessionId = data.getString("sessionId", null);
+//        token = data.getString("token", null);
+//        to = data.getString("to", null);
+//        from = data.getString("from", null);
+
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("from", from);
         params.put("to", to);
@@ -141,6 +197,8 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         params.put("sessionId", sessionId);
         try {
             SocketService.sendData("socket/messageTransfer", params);
+            SessionConnect();
+            vfCall.showNext();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -149,10 +207,13 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
     }
 
-    private void BackHome() {
-        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(i);
-        this.finish();
+    private void DeclineCommunication() {
+        publisher = null;
+        subscriber = null;
+        streamOpenTok.clear();
+        sessionOpenTok = null;
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 
     //Click button hold on a call
@@ -173,23 +234,12 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         fabMute.setImageResource(publisher.getPublishAudio() ? R.drawable.icon_unmute : R.drawable.icon_mute);
     }
 
-    //Stop appointment
-    private void EndCommunication() {
-        publisher = null;
-        subscriber = null;
-        streamOpenTok.clear();
-        sessionOpenTok.disconnect();
-        i = new Intent(this, HomeActivity.class);
-        startActivity(i);
-        this.finish();
-    }
-
     //Initialize session to make connect between application and Open Tok
     private void SessionConnect() {
         if (sessionOpenTok == null){
-            sessionOpenTok = new Session(CallActivity.this, OpenTokConfig.API_KEY, OpenTokConfig.SESSION_ID);
+            sessionOpenTok = new Session(CallActivity.this, apiKey, sessionId);
             sessionOpenTok.setSessionListener(this);
-            sessionOpenTok.connect(OpenTokConfig.TOKEN);
+            sessionOpenTok.connect(token);
         }
     }
 
@@ -233,7 +283,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 SubscribeToStream(streamOpenTok.get(0));
             }
         }
-        EndCommunication();
+        DeclineCommunication();
     }
 
     @Override
@@ -344,36 +394,5 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onVideoDisableWarningLifted(SubscriberKit subscriberKit) {
 
-    }
-
-    private void ListenSocket() {
-        IntentFilter intentFilter = new IntentFilter("android.intent.action.MessageSocket");
-        receiverDataSocketService = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String message = "";
-                String strSocket = intent.getStringExtra("Message");
-                try {
-                    JSONObject jsonSocket = new JSONObject(strSocket);
-                    message = jsonSocket.get("message").toString();
-                    if (message.equalsIgnoreCase("answer")){
-                        SharedPreferences data = getApplicationContext().getSharedPreferences("Clinic", MODE_PRIVATE);
-                        apiKey = data.getString("apiKey", null);
-                        sessionId = data.getString("sessionId", null);
-                        token = data.getString("token", null);
-                        vfCall.showNext();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        this.registerReceiver(receiverDataSocketService, intentFilter);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        this.unregisterReceiver(this.receiverDataSocketService);
     }
 }

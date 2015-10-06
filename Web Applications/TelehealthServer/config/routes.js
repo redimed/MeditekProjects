@@ -29,6 +29,10 @@ module.exports.routes = {
         controller: 'SocketController',
         action: 'MessageTransfer'
     },
+    '/telehealth/socket/onlineList': {
+        controller: 'SocketController',
+        action: 'OnlineUserList'
+    },
     'GET /telehealth/socket/generateSession': {
         controller: 'SocketController',
         action: 'GenerateConferenceSession'

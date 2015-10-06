@@ -11,7 +11,7 @@ module.exports.connections = {
         // port: 3306,
         // user: 'root',
         // password: 'root',
-        // database: 'sakila',
+        // database: 'Redimed',
         // charset: 'utf8',
         // collation: 'utf8-general_ci'
 

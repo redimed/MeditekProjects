@@ -1,9 +1,12 @@
+//moment
+var moment = require('moment');
+
 //generator Password
 var generatePassword = require('password-generator');
 
 module.exports = {
 	/*
-		func: CreatePatient
+		CreatePatient : create a new patient
 		input: Patient's information
 		output: insert Patient's information into table Patient 
 	*/
@@ -13,13 +16,14 @@ module.exports = {
 			FirstName  : data.FirstName,
 			MiddleName : data.MiddleName,
 			LastName   : data.LastName,
-			Dob        : data.Dob,
+			Dob        : moment(data.Dob,'YYYY-MM-DD HH:mm:ss ZZ').toDate(),
 			Gender     : data.Gender,
 			Address    : data.Address,
 			Enable     : "Y"
 		};
 		info.UID = UUIDService.Create();
 		info.SiteID = 1;
+		//hien tai thi CountryID chua co nen tu set 1 CountryID trong bang? Country de test.
 		info.CountryID = 84;
 		//check is patient have UserAccount by Phone Number
 		Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
@@ -37,19 +41,20 @@ module.exports = {
 			}
 			//if patient doesn't have UserAccount, create UserAccount before create patient
 			else {
-				var pas = generatePassword(12, false);
+				data.password = generatePassword(12, false);
 				var userInfo = {
 					UserName    : data.PhoneNumber,
 					Email       : data.Email,
 					PhoneNumber : data.PhoneNumber,
-					Password    : pas
+					Password    : data.password
 				};
 				userInfo.UID = UUIDService.Create();
 				//create UserAccount
 				Services.UserAccount.CreateUserAccount(userInfo)
 				.then(function(user){
+					info.UserAccountID = user.ID;
 					//call createPatient function from model UserAccount
-					return user.createPatient(info);
+					return Services.Patient.CreatePatient(info);
 				})
 				.catch(function(err){
 					res.serverError({status:500,message:ErrorWrap(err)});
@@ -69,7 +74,7 @@ module.exports = {
 	},
 
 	/*
-		func : SearchPatient
+		SearchPatient : find patient with condition
 		input: Patient's name or PhoneNumber
 		output: get patient's list which was found in client 
 	*/
@@ -89,23 +94,24 @@ module.exports = {
 
 
 	/*
-		func : UpdatePatient
+		UpdatePatient : update patient's information
 		input: patient's information updated
 		output: update patient'infomation into table Patient 
 	*/
 	UpdatePatient : function(req, res) {
 		var data = req.body.data;
+		var Dob = moment(data.Dob,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
 		//get data not required
 		var patientInfo={
 				ID           : data.ID,
 				FirstName    : data.FirstName,
 				MiddleName   : data.MiddleName,
 				LastName     : data.LastName,
-				Dob          : data.Dob,
+				Dob          : Dob,
 				Gender       : data.Gender,
 				Address      : data.Address,
 				Enable       : data.Enable,
-				CreationDate : data.CreationDate,
+				CreatedDate  : data.CreatedDate,
 				CreatedBy    : data.CreatedBy,
 				ModifiedDate : data.ModifiedDate,
 				ModifiedBy   : data.ModifiedBy
@@ -130,7 +136,7 @@ module.exports = {
 	},
 
 	/*
-		func : GetPatient
+		GetPatient get a patient with condition
 		input:  Patient's ID
 		output: Patient's information of Patient's ID if patient has data.
 	*/
@@ -150,9 +156,9 @@ module.exports = {
 	},
 
 	/*
-		func : DeletePatient
+		DeletePatient : disable patient who was deleted.
 		input: Patient's ID
-		output: delete Patient's information into table Patient
+		output: attribute Enable of Patient will receive value "N" in table Patient 
 	*/
 	DeletePatient : function(req, res) {
 		var ID = req.body.data;
@@ -170,8 +176,27 @@ module.exports = {
 		.catch(function(err){
 			res.serverError({status:500, message:ErrorWrap(err)});
 		});
+	},
+
+	/*
+		LoadListPatient: load list patient
+		input: amount patient
+		output: get list patient from table Patient
+	*/
+	LoadListPatient : function(req, res) {
+		var data = req.body.data;
+		var limit = data.limit;
+		var offset = data.offset;
+		Services.Patient.LoadListPatient(limit, offset)
+		.then(function(result){
+			if(result!==undefined && result!==null && result!=='')
+				res.ok({status:200,message:"success",data:result});
+			else
+				res.notFound({status:404,message:"not found"});
+		})
+		.catch(function(err){
+			res.serverError({status:500,message:ErrorWrap(err)});
+		});
 	}
 
 };
-
-

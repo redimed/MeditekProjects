@@ -29,6 +29,11 @@ module.exports={
 	'post /api/patient/delete-patient': {
 	    controller: 'Patient/PatientController',
 	    action :'DeletePatient'
+	},
+
+	'post /api/patient/loadlist-patient': {
+	    controller: 'Patient/PatientController',
+	    action :'LoadListPatient'
 	}
 
 }

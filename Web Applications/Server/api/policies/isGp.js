@@ -1,8 +1,13 @@
 module.exports = function(req, res, next) {
-   if (req.user.role=='gp') {
+	var isGp=false;
+	_.each(req.user.roles,function(role){
+		if(role.RoleCode=='GP')
+			isGp=true;
+	});
+    if (isGp) {
         return next();
     }
     else{
-        return res.redirect('/login');
+        return res.unauthor();
     }
 };

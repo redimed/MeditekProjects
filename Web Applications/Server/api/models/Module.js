@@ -7,17 +7,17 @@ module.exports = {
             primaryKey: true
         },
         UID: {
-            type: Sequelize.STRING(100),
+            type: Sequelize.STRING(255),
             allowNull: false
         },
         ModuleName: {
-            type: Sequelize.STRING(256),
+            type: Sequelize.STRING(255),
             allowNull: true
         },
         Description: {
             type: Sequelize.TEXT
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },

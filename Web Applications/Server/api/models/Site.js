@@ -11,11 +11,27 @@ module.exports = {
             allowNull: false
         },
         SiteName: {
-            type: Sequelize.STRING(256),
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
+        Address: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
+        PhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true
+        },
+        FaxNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true
+        },
+        Email: {
+            type: Sequelize.STRING(255),
             allowNull: true
         },
         Location: {
-            type: Sequelize.STRING(256),
+            type: Sequelize.STRING(255),
             allowNull: true
         },
         Description: {
@@ -25,7 +41,7 @@ module.exports = {
             type: Sequelize.STRING(1),
             allowNull: true
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },

@@ -20,7 +20,6 @@ module.exports = {
      * login: function xử lý login
      */
     login: function(req, res) {
-
         passport.authenticate('local', function(err, user, info) 
         {
             if ((err) || (!user)) 
@@ -62,7 +61,7 @@ module.exports = {
      */
     logout: function(req, res) {
         req.logout();
-        res.status(200).json({status:"success"});
+        res.ok({status:'success'});
     },
     
 

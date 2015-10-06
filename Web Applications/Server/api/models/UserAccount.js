@@ -13,25 +13,19 @@ module.exports = {
         },
         UserName: {
             type: Sequelize.STRING(50),
-            allowNull: true,
-            validate:{
-                len:[0,50]
-            }
+            allowNull: true
         },
         Email: {
             type: Sequelize.STRING(250),
             allowNull: true,
             validate:{
                 len:[0,255],
-                isEmail: true
+                // isEmail: true
             }
         },
         PhoneNumber: {
             type: Sequelize.STRING(20),
-            allowNull: true,
-            validate:{
-                len:[0,20]
-            }
+            allowNull: true
         },
         Password: {
             type: Sequelize.STRING(256),
@@ -47,24 +41,15 @@ module.exports = {
         },
         Activated: {
             type: Sequelize.STRING(1),
-            allowNull: true,
-            validate:{
-                len:[0,1]
-            }
+            allowNull: true
         },
         Enable: {
             type: Sequelize.STRING(1),
-            allowNull: true,
-            validate:{
-                len:[0,1]
-            }
+            allowNull: true
         },
         UserType: {
             type: Sequelize.STRING(3),
-            allowNull: true,
-            validate:{
-                len:[0,3]
-            }
+            allowNull: true
         },
         Token: {
             type: Sequelize.STRING(256),
@@ -74,7 +59,7 @@ module.exports = {
             type: Sequelize.DATE,
             allowNull: true
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },
@@ -97,6 +82,7 @@ module.exports = {
         timestamps: false,
         hooks:{
             beforeCreate: function(user, options, cb) {
+                user.CreatedDate=new Date();
                 bcrypt.genSalt(10, function(err, salt) {
                     bcrypt.hash(user.Password, salt, function(err, hash) {
                         if (err) {
@@ -108,9 +94,17 @@ module.exports = {
                         }
                     });
                 });
-            }
-        }
+            },
+            beforeUpdate:function(user,options,cb)
+            {
+                user.ModifiedDate=new Date();
+                cb();
+            },
+        },
     },
+    
+   
+    
     
     
 };

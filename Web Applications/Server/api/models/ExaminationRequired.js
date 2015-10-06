@@ -34,11 +34,11 @@ module.exports = {
             type: Sequelize.STRING(1),
             allowNull: true
         },
-        CreationDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },
-        CreationBy: {
+        CreatedBy: {
             type: Sequelize.BIGINT(20),
             allowNull: true
         },
@@ -54,6 +54,16 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'ExaminationRequired',
-        timestamps: false
+        timestamps: false,
+        hooks: {
+            beforeCreate: function(examRequired, options, callback) {
+                options.CreationDate = new Date();
+                callback();
+            },
+            beforeUpdate: function(examRequired, options, callback) {
+                options.ModifiedDate = new Date();
+                callback();
+            }
+        }
     }
 };

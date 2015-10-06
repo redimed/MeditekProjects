@@ -18,15 +18,30 @@ module.exports = {
                 key: 'ID'
             }
         },
+        FileName: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
         FileLocation: {
             type: Sequelize.STRING(255),
             allowNull: true
         },
-        CreationDate: {
+        FileType: {
+            type: Sequelize.STRING(45),
+            allowNull: true
+        },
+        FileExtension: {
+            type: Sequelize.STRING(45),
+            allowNull: true
+        },
+        Description: {
+            type: Sequelize.TEXT
+        },
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },
-        CreationBy: {
+        CreatedBy: {
             type: Sequelize.BIGINT(20),
             allowNull: true
         },

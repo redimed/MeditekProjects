@@ -5,30 +5,19 @@ var templateDirs = path.resolve(__dirname, 'GenerateTemplateEmail');
 var emailTemplates = require('email-templates');
 var emailAddressRequiredError = new Error('email address required');
 
-var transport, isTestApp = 1;
-if (isTestApp === 1) {
-    transport = nodemailer.createTransport(smtpTransport({
-        host: "mail.redimed.com.au",
-        secure: false,
-        port: 25,
-        auth: {
-            user: "programmer2",
-            pass: "Hello8080"
-        },
-        tls: {
-            rejectUnauthorized: false
-        },
-        debug: true
-    }));
-} else {
-    transport = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-            user: 'timesheetnotification@gmail.com',
-            pass: 'timesheet1234'
-        }
-    });
-}
+var transport = nodemailer.createTransport(smtpTransport({
+    host: "mail.redimed.com.au",
+    secure: false,
+    port: 25,
+    auth: {
+        user: "programmer2",
+        pass: "Hello8080"
+    },
+    tls: {
+        rejectUnauthorized: false
+    },
+    debug: true
+}));
 
 var SendMailService = {
     /*

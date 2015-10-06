@@ -17,6 +17,10 @@ module.exports = {
         Description: {
             type: Sequelize.TEXT
         },
+        Fund: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
         RefName: {
             type: Sequelize.STRING(255),
             allowNull: true
@@ -53,11 +57,17 @@ module.exports = {
             type: Sequelize.STRING(2),
             allowNull: true
         },
-        CreationDate: {
+        PresentComplain: {
+            type: Sequelize.TEXT
+        },
+        Allergy: {
+            type: Sequelize.TEXT
+        },
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },
-        CreationBy: {
+        CreatedBy: {
             type: Sequelize.BIGINT(20),
             allowNull: true
         },
@@ -73,6 +83,16 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'TelehealthAppointment',
-        timestamps: false
+        timestamps: false,
+        hooks: {
+            beforeCreate: function(telehealthAppt, options, callback) {
+                options.CreationDate = new Date();
+                callback();
+            },
+            beforeUpdate: function(telehealthAppt, options, callback) {
+                options.ModifiedDate = new Date();
+                callback();
+            }
+        }
     }
 };

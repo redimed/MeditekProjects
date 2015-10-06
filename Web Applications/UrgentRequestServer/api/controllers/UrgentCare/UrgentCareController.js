@@ -48,6 +48,9 @@ module.exports = {
                 serviceType: data.serviceType,
                 GPReferal: data.GPReferal,
                 urgentRequestType: data.urgentRequestType,
+                companyName: data.companyName,
+                companyPhoneNumber: data.companyPhoneNumber,
+                contactPerson: data.contactPerson,
                 tried: 1,
                 status: 'pending',
                 interval: 5,
@@ -98,18 +101,19 @@ module.exports = {
                             };
                             SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
                         }
-                        //send sms
-                        var dataSMS = {
-                            phone: data.phoneNumber,
-                            content: 'Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.'
-                        };
-                        var CallBackSendSMS = function(err) {
-                            if (err) {
-                                console.log(err);
-                            }
-                        }
-                        SendSMSService.Send(dataSMS, CallBackSendSMS);
                     }
+                    //send sms
+                    var dataSMS = {
+                        phone: data.phoneNumber,
+                        content: 'Hi ' + data.firstName + ' ' + data.lastName + ', \nPlease note that your request has been received. ' + 'Someone from our REDIMED team will contact you shortly.' + '\nThank you for request.'
+
+                    };
+                    var CallBackSendSMS = function(err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                    SendSMSService.Send(dataSMS, CallBackSendSMS);
                 };
 
                 //send email
@@ -136,7 +140,6 @@ module.exports = {
                     status: 'queueing',
                     startTime: Services.moment().format('YYYY-MM-DD HH:mm:ss')
                 };
-
                 //save message queue to database
                 MessageQueue.create({
                         UID: dataMQ.UID,
@@ -221,5 +224,59 @@ module.exports = {
                     }
                 });
         });
+    },
+    /*
+    GetPostCode: get list post code with latitude, longitude and radius 2km
+    input: latitude, longtitude
+    output: list post code with  received condition
+     */
+    GetPostCode: function(req, res) {
+        var latitude = req.params.lat;
+        var longitude = req.params.long;
+        var radius = 5;
+        PostCode.query('SELECT * FROM PostCode WHERE POWER(Lat - ?, 2) + POWER(Lon - ?,2) <= ?*?', [latitude, longitude, radius, radius], function(err, postcode) {
+            if (err) {
+                console.log(err);
+                res.json(500, {
+                    status: 500
+                });
+            } else {
+                res.json(400, {
+                    data: postcode
+                });
+            }
+        });
+    },
+
+    /*
+    GetSuburb: get all list suburb
+    input: 
+    output: list suburb
+    */
+    GetSuburb: function(req, res) {
+        PostCode.find({
+                select: ['Suburb']
+            })
+            .sort({
+                Suburb: 'ASC'
+            })
+            .exec(function(err, suburbs) {
+                if (err) {
+                    console.log(err);
+                    res.json(500, {
+                        status: 500
+                    });
+                } else {
+                    //distinct suburb and parse array object to array string
+                    var uniqueSuburb = _.map(_.groupBy(suburbs, function(sub) {
+                        return sub.Suburb;
+                    }), function(subGrouped) {
+                        return subGrouped[0].Suburb;
+                    });
+                    res.json(200, {
+                        data: uniqueSuburb
+                    });
+                }
+            })
     }
 };

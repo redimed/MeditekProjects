@@ -5,18 +5,21 @@ module.exports = {
     attributes: {
         ID: {
             type: 'integer',
-            columnName: 'ID'
+            columnName: 'ID',
+            maxLength: 20
         },
 
         UID: {
             type: 'string',
             columnName: 'UID',
+            maxLength: 255,
             required: true
         },
 
         userAccountID: {
             type: 'integer',
-            columnName: 'UserAccountID'
+            columnName: 'UserAccountID',
+            maxLength: 20
         },
 
         firstName: {
@@ -56,6 +59,7 @@ module.exports = {
             type: 'datetime',
             columnName: 'DOB'
         },
+
         suburb: {
             type: 'string',
             columnName: 'Suburb',
@@ -87,12 +91,16 @@ module.exports = {
 
         tried: {
             type: 'integer',
-            columnName: 'Tried'
+            columnName: 'Tried',
+            required: true,
+            maxLength: 11
         },
 
         status: {
             type: 'string',
-            columnName: 'Status'
+            columnName: 'Status',
+            required: true,
+            maxLength: 50
         },
 
         interval: {
@@ -112,7 +120,26 @@ module.exports = {
 
         confirmUserName: {
             type: 'string',
-            columnName: 'ConfirmUserName'
+            columnName: 'ConfirmUserName',
+            maxLength: 255
+        },
+
+        companyName: {
+            type: 'string',
+            columnName: 'CompanyName',
+            maxLength: 255
+        },
+
+        companyPhoneNumber: {
+            type: 'string',
+            columnName: 'CompanyPhoneNumber',
+            maxLength: 20
+        },
+
+        contactPerson: {
+            type: 'string',
+            columnName: 'ContactPerson',
+            maxLength: 255
         },
 
         enable: {
@@ -125,9 +152,9 @@ module.exports = {
             columnName: 'Description'
         },
 
-        creationDate: {
+        createdDate: {
             type: 'datetime',
-            columnName: 'CreationDate'
+            columnName: 'CreatedDate'
         },
 
         createdBy: {
@@ -152,7 +179,7 @@ module.exports = {
     },
 
     beforeCreate: function(values, callback) {
-        values.creationDate = new Date;
+        values.createdDate = new Date;
         callback();
     },
 

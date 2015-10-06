@@ -20,8 +20,35 @@ passport.use(new LocalStrategy({
 		passwordField: 'Password'
 	},
 	function(u, p, done) {
+		//Kiểm tra user đang login bằng email hay phoneNumber hay username
+		var whereClause={};
+		var emailPattern = new RegExp(HelperService.regexPattern.email);
+		if(emailPattern.test(u))
+		{
+			console.log("Login with email");
+			whereClause.Email=u;
+		}
+		else
+		{
+			var auPhoneNumberPattern=new RegExp(HelperService.regexPattern.auPhoneNumber);
+			var phoneTest=u.replace(HelperService.regexPattern.phoneExceptChars,'');
+			console.log(u);
+			if(auPhoneNumberPattern.test(phoneTest))
+			{
+				console.log("Login with phone number");
+				phoneTest=phoneTest.slice(-9);
+				phoneTest='+61'+phoneTest;
+				whereClause.PhoneNumber=phoneTest;
+			}
+			else
+			{
+				console.log("Login with username");
+				whereClause.UserName=u;
+			}
+		}
+		console.log(whereClause);
 		UserAccount.findOne({
-			where :{UserName: u},
+			where :whereClause,
 			include:{
 				model:RelUserRole,
 				attributes:['ID','UserAccountId','RoleId'],
@@ -50,10 +77,11 @@ passport.use(new LocalStrategy({
 
 				var returnUser = {
 					ID:user.ID,
+					UID:user.UID,
 					UserName: user.UserName,
 					roles:listRoles
 				};
-				console.log("Login success")
+				console.log("Login success");
 				return done(null, returnUser, {
 					message: 'Logged In Successfully'
 					});

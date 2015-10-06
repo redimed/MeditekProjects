@@ -68,11 +68,14 @@ module.exports = {
 				//Phone number validation
 				//autralian phone number regex
 				var auPhoneNumberPattern=new RegExp(HelperService.regexPattern.auPhoneNumber);
-				//remove (,),whitespace,- from phone number
-				userInfo.PhoneNumber=userInfo.PhoneNumber.replace(HelperService.regexPattern.phoneExceptChars,'');
-				if(userInfo.PhoneNumber && !auPhoneNumberPattern.test(userInfo.PhoneNumber))
+				if(userInfo.PhoneNumber)
 				{
-					err.pushError('PhoneNumber.invalid');
+					//remove (,),whitespace,- from phone number
+					userInfo.PhoneNumber=userInfo.PhoneNumber.replace(HelperService.regexPattern.phoneExceptChars,'');
+					if(!auPhoneNumberPattern.test(userInfo.PhoneNumber))
+					{
+						err.pushError('PhoneNumber.invalid');
+					}
 				}
 				
 				if(err.getErrors().length>0)
@@ -92,9 +95,14 @@ module.exports = {
 
 		return Validate()
 		.then(function(data){
+			//Định dạng lại kiểu phoneNumber lưu vào database. Có dạng: +61412345678
+			if(userInfo.PhoneNumber)
+			{
+				userInfo.PhoneNumber=userInfo.PhoneNumber.slice(-9);
+				userInfo.PhoneNumber='+61'+userInfo.PhoneNumber;
+			}
 			//Kiem tra neu khong co UserName nhung co Email hoac PhoneNumber
 			//thi lay Email hoac PhoneNumber lam UserName
-			
 			if(!userInfo.UserName)
 			{
 				if(userInfo.Email)
@@ -102,8 +110,11 @@ module.exports = {
 				if(userInfo.PhoneNumber)
 					userInfo.UserName=userInfo.PhoneNumber;
 			}
+			//Kiểm tra nếu Email và PhoneNumber là chuỗi rỗng thì không được đưa vào database
 			if(!userInfo.Email) delete userInfo.Email;
 			if(!userInfo.PhoneNumber) delete userInfo.PhoneNumber;
+			//-----
+
 			return UserAccount.create(userInfo,{transaction:transaction});
 		},function(err){
 			throw err;
@@ -310,7 +321,16 @@ module.exports = {
 	},
 
 
-
+	/**
+	 * GetListUsers
+	 * Input:
+	 * 	clause:
+	 * 		-criteria: chứa các key và value để filter dữ liệu
+	 * 		-attributes: tên các trường sẽ trả về
+	 * 		-limit: trả về bao nhiêu dòng dữ liệu
+	 * 		-offset: bỏ qua bao nhiêu dữ liệu đầu tiên
+	 * 		-order: ví dụ { UserName:'ASC',Email:'DESC' }
+	 */
 	GetListUsers:function(clause,transaction)
 	{
 		var criteria=clause.criteria;
@@ -319,9 +339,10 @@ module.exports = {
 		var offset=clause.offset;
 		var order=_.pairs(clause.order);
 		var whereClause={};
+
+		//Tạo điều kiện lọc tương ứng cho từng field
 		if(criteria.UID)
 		{
-
 			whereClause.UID={
 				like:'%'+criteria.UID+'%'
 			}
@@ -359,6 +380,7 @@ module.exports = {
 			whereClause.UserType=criteria.UserType;
 		}
 
+		//Tính tổng số kết quả tương ứng điều kiện whereClause
 		var totalRows=0;
 		return UserAccount.count({
 			where:whereClause

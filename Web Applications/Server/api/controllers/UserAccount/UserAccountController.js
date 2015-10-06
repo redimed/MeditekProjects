@@ -3,15 +3,8 @@ _= require('underscore');
 module.exports = {
 	Test:function(req,res)
 	{
-		UserAccount.count({
-			where:
-			{
-					ID:{gt:500}
-			}
-		})
-		.then(function(data){
-			res.json(data);
-		})
+		HelperService.exlog(req.user);
+		res.ok({status:'hehehe'});
 	},
 	
 	/**

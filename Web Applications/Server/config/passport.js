@@ -77,6 +77,7 @@ passport.use(new LocalStrategy({
 
 				var returnUser = {
 					ID:user.ID,
+					UID:user.UID,
 					UserName: user.UserName,
 					roles:listRoles
 				};

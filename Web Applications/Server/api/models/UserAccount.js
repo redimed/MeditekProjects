@@ -82,6 +82,7 @@ module.exports = {
         timestamps: false,
         hooks:{
             beforeCreate: function(user, options, cb) {
+                user.CreatedDate=new Date();
                 bcrypt.genSalt(10, function(err, salt) {
                     bcrypt.hash(user.Password, salt, function(err, hash) {
                         if (err) {
@@ -93,7 +94,12 @@ module.exports = {
                         }
                     });
                 });
-            }
+            },
+            beforeUpdate:function(user,options,cb)
+            {
+                user.ModifiedDate=new Date();
+                cb();
+            },
         },
     },
     

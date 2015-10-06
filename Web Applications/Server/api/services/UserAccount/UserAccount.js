@@ -113,6 +113,8 @@ module.exports = {
 			//Kiểm tra nếu Email và PhoneNumber là chuỗi rỗng thì không được đưa vào database
 			if(!userInfo.Email) delete userInfo.Email;
 			if(!userInfo.PhoneNumber) delete userInfo.PhoneNumber;
+			//-----
+
 			return UserAccount.create(userInfo,{transaction:transaction});
 		},function(err){
 			throw err;

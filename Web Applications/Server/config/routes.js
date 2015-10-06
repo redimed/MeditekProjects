@@ -82,7 +82,7 @@ routes['post /api/searchDoctor'] = {
 routes['post /api/deleteDoctor'] = {
     controller: 'Doctor/DoctorController',
     action: 'DeleteDoctor'
-
+};
 // module doctor
 routes['post /api/getDoctor']={
     controller:'Doctor/DoctorController',
@@ -111,7 +111,6 @@ routes['post /api/searchDoctor']={
 routes['post /api/deleteDoctor']={
     controller:'Doctor/DoctorController',
     action:'DeleteDoctor'
->>>>>>> update user account
 };
 //end module doctor
 

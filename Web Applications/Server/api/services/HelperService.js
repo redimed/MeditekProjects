@@ -25,6 +25,27 @@ function checkListData() {
     return true;
 }
 
+function exlog()
+{
+    console.log("\n\nBEGIN REDIMED LOG-------------------------------");
+    for (var i = 0; i < arguments.length; i++) 
+    {
+        console.log(arguments[i]);
+    }
+    console.log("END REDIMED LOG---------------------------------\n\n");
+}
+
+function exFileJSON(data,fileName)
+{
+    
+    var file = './temp/'+fileName;
+    var obj = {name: 'JP'}
+     
+    jf.writeFile(file, data, function(err) {
+      console.log(err);
+    })
+}
+
 module.exports = {
     CheckPostRequest: function(request) {
         var data;
@@ -99,6 +120,10 @@ module.exports = {
             gp:4,
             patient:5
         }
-    }
+    },
+
+    exlog:exlog,
+
+    exFileJSON: exFileJSON,
 
 }

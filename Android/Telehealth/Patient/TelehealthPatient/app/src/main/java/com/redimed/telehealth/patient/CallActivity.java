@@ -203,7 +203,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             throwable.printStackTrace();
         }
         vfCall.showNext();
-        Intent i = new Intent(getApplicationContext(), VoiceActivity.class);
+        Intent i = new Intent(getApplicationContext(), CallActivity.class);
         startActivity(i);
     }
 

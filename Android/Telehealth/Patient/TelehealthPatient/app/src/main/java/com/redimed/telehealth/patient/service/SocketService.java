@@ -35,6 +35,7 @@ public class SocketService extends Service {
     private static String TAG = "SocketService";
     private static Socket socket;
     private static MyApplication mApplication;
+    private Intent i;
 
     static {
         initializeSocket();
@@ -175,6 +176,4 @@ public class SocketService extends Service {
             Log.d("Socket Receive Message", data.toString());
         }
     };
-
-
 }

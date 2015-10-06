@@ -33,8 +33,8 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ import butterknife.ButterKnife;
 
 public class CallActivity extends AppCompatActivity implements View.OnClickListener, PublisherKit.PublisherListener, SubscriberKit.VideoListener, Session.SessionListener {
 
-//    private Intent i;
+    private Intent i;
     private Session sessionOpenTok;
     private Publisher publisher;
     private Subscriber subscriber;
@@ -66,8 +66,11 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.imgLogoCall) ImageView imgLogoCall;
     @Bind(R.id.btnDecline) FloatingActionButton btnDecline;
     @Bind(R.id.btnAnswer) FloatingActionButton btnAnswer;
-    @Bind(R.id.vfCall) ViewFlipper vfCall;
 
+    @Bind(R.id.vfCall) ViewFlipper vfCall;
+    @Bind(R.id.btnDecline) Button btnDecline;
+    @Bind(R.id.btnAnswer) Button btnAnswer;
+    @Bind(R.id.vfCall) ViewFlipper vfCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +160,25 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
         if (sessionOpenTok != null){
             DeclineCommunication();
+
+        ListenSocket();
+    }
+
+    private void GetDataFromHome() {
+        i = getIntent();
+        if (i.getExtras() != null){
+            sessionId = i.getExtras().getString("sessionId");
+            token = i.getExtras().getString("token");
+            apiKey = i.getExtras().getString("apiKey");
+            to = i.getExtras().getString("to");
+            from = i.getExtras().getString("from");
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (sessionOpenTok != null){
+            EndCommunication();
         }
         super.onBackPressed();
     }
@@ -189,7 +211,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 //        token = data.getString("token", null);
 //        to = data.getString("to", null);
 //        from = data.getString("from", null);
-
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("from", from);
         params.put("to", to);
@@ -216,6 +237,12 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         finish();
     }
 
+    private void BackHome() {
+        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(i);
+        this.finish();
+    }
+
     //Click button hold on a call
     private void HoldCommunication() {
         publisher.setPublishVideo(!publisher.getPublishVideo());
@@ -240,6 +267,23 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             sessionOpenTok = new Session(CallActivity.this, apiKey, sessionId);
             sessionOpenTok.setSessionListener(this);
             sessionOpenTok.connect(token);
+    //Stop appointment
+    private void EndCommunication() {
+        publisher = null;
+        subscriber = null;
+        streamOpenTok.clear();
+        sessionOpenTok.disconnect();
+        i = new Intent(this, HomeActivity.class);
+        startActivity(i);
+        this.finish();
+    }
+
+    //Initialize session to make connect between application and Open Tok
+    private void SessionConnect() {
+        if (sessionOpenTok == null){
+            sessionOpenTok = new Session(CallActivity.this, OpenTokConfig.API_KEY, OpenTokConfig.SESSION_ID);
+            sessionOpenTok.setSessionListener(this);
+            sessionOpenTok.connect(OpenTokConfig.TOKEN);
         }
     }
 
@@ -393,6 +437,5 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onVideoDisableWarningLifted(SubscriberKit subscriberKit) {
-
     }
 }

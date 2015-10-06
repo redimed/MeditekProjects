@@ -49,9 +49,9 @@ module.exports = {
 			type: 'datetime',
 			columnName: 'CompletedTime'
 		},
-		creationDate: {
+		createdDate: {
             type: 'datetime',
-            columnName: 'CreationDate'
+            columnName: 'CreatedDate'
         },
 
         createdBy: {

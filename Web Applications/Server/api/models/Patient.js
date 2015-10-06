@@ -97,8 +97,7 @@ module.exports = {
         timestamps: false,
         hooks:{
             beforeCreate : function(field, create){
-                // console.log("aaaaas");
-                //trigger
+                //trigger before create
             }
         }
     }

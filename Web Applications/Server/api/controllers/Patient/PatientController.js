@@ -1,3 +1,6 @@
+//moment
+var moment = require('moment');
+
 //generator Password
 var generatePassword = require('password-generator');
 
@@ -13,7 +16,7 @@ module.exports = {
 			FirstName  : data.FirstName,
 			MiddleName : data.MiddleName,
 			LastName   : data.LastName,
-			Dob        : data.Dob,
+			Dob        : moment(data.Dob,'YYYY-MM-DD HH:mm:ss ZZ').toDate(),
 			Gender     : data.Gender,
 			Address    : data.Address,
 			Enable     : "Y"
@@ -97,13 +100,14 @@ module.exports = {
 	*/
 	UpdatePatient : function(req, res) {
 		var data = req.body.data;
+		var Dob = moment(data.Dob,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
 		//get data not required
 		var patientInfo={
 				ID           : data.ID,
 				FirstName    : data.FirstName,
 				MiddleName   : data.MiddleName,
 				LastName     : data.LastName,
-				Dob          : data.Dob,
+				Dob          : Dob,
 				Gender       : data.Gender,
 				Address      : data.Address,
 				Enable       : data.Enable,
@@ -138,7 +142,7 @@ module.exports = {
 	*/
 	GetPatient : function(req, res) {
 		var ID = req.body.data;
-		Services.Patient.GetPatient(25)
+		Services.Patient.GetPatient(ID)
 		.then(function(info){
 			if(info!==null && info!==undefined){
 				res.ok({status:200, message:"success", data:info});
@@ -196,5 +200,3 @@ module.exports = {
 	}
 
 };
-
-

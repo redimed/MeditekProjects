@@ -54,7 +54,6 @@
             android:name=".CallActivity"
             android:label="@string/title_activity_call"
             android:screenOrientation="portrait" />
-
         <receiver android:name=".receiver.BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

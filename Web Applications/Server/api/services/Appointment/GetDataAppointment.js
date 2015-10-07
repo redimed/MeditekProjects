@@ -16,7 +16,7 @@ module.exports = {
             RefTelePhone: data.RefTelePhone,
             RefPostCode: data.RefPostCode,
             RefSignature: data.RefSignature,
-            // RefDate: data.RefDate,
+            RefDate: data.RefDate,
             RefProviderNumber: data.RefProviderNumber,
             RefDurationOfReferal: data.RefDurationOfReferal
         };
@@ -26,7 +26,7 @@ module.exports = {
             UID: data.UIDPatientAppt,
             FirstName: data.FirstName,
             LastName: data.LastName,
-            // DOB: data.DOB,
+            DOB: data.DOB,
             Address: data.Address,
             Suburb: data.Suburb,
             Postcode: data.Postcode,

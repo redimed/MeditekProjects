@@ -82,17 +82,12 @@ module.exports = {
     },
     hooks: {
         beforeCreate: function(patientAppt, options, callback) {
-            options.CreationDate = new Date();
+            patientAppt.CreationDate = new Date();
             callback();
         },
         beforeUpdate: function(patientAppt, options, callback) {
-            options.ModifiedDate = new Date();
+            patientAppt.ModifiedDate = new Date();
             callback();
-        }
-    },
-    getterMethods: {
-        FullName: function() {
-            return this.getDataValue('FirstName') + this.getDataValue('LastName');
         }
     }
 };

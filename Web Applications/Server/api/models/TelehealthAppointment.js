@@ -86,11 +86,11 @@ module.exports = {
         timestamps: false,
         hooks: {
             beforeCreate: function(telehealthAppt, options, callback) {
-                options.CreationDate = new Date();
+                telehealthAppt.CreationDate = new Date();
                 callback();
             },
             beforeUpdate: function(telehealthAppt, options, callback) {
-                options.ModifiedDate = new Date();
+                telehealthAppt.ModifiedDate = new Date();
                 callback();
             }
         }

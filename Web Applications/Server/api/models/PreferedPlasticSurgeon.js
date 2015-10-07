@@ -25,11 +25,11 @@ module.exports = {
         timestamps: false,
         hooks: {
             beforeCreate: function(refPlasSurgon, options, callback) {
-                options.CreationDate = new Date();
+                refPlasSurgon.CreationDate = new Date();
                 callback();
             },
             beforeUpdate: function(refPlasSurgon, options, callback) {
-                options.ModifiedDate = new Date();
+                refPlasSurgon.ModifiedDate = new Date();
                 callback();
             }
         }

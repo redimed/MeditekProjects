@@ -12,7 +12,7 @@
     <color name="redFont">#B51E46</color>
 
     <!-- -->
-    <color name="darkLine">#000000</color>
+    <color name="colorLine">#4d000000</color>
     <color name="declineFone">#B51E46</color>
     <color name="answerFone">#009688</color>
 

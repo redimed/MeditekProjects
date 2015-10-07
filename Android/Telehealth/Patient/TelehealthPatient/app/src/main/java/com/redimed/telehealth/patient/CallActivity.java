@@ -1,21 +1,15 @@
 package com.redimed.telehealth.patient;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.opentok.android.BaseVideoRenderer;
@@ -28,17 +22,11 @@ import com.opentok.android.Subscriber;
 import com.opentok.android.SubscriberKit;
 import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
-import com.redimed.telehealth.patient.utils.OpenTokConfig;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -52,6 +40,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Stream> streamOpenTok;
     private static final String LOGTAG = "OpenTok";
     private String sessionId, token, apiKey, to, from;
+    private static final boolean SUBSCRIBE_TO_SELF = false;
 
 //    private BroadcastReceiver receiverDataSocketService;
 //    private MyApplication myApplication;
@@ -322,7 +311,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onStreamCreated(PublisherKit publisherKit, Stream stream) {
-        if (OpenTokConfig.SUBSCRIBE_TO_SELF){
+        if (SUBSCRIBE_TO_SELF){
             streamOpenTok.add(stream);
             if (subscriber == null){
                 SubscribeToStream(stream);
@@ -332,7 +321,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onStreamReceived(Session session, Stream stream) {
-        if (!OpenTokConfig.SUBSCRIBE_TO_SELF) {
+        if (!SUBSCRIBE_TO_SELF) {
             streamOpenTok.add(stream);
             if (subscriber == null) {
                 SubscribeToStream(stream);
@@ -342,7 +331,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onStreamDropped(Session session, Stream stream) {
-        if (!OpenTokConfig.SUBSCRIBE_TO_SELF) {
+        if (!SUBSCRIBE_TO_SELF) {
             if (subscriber != null) {
                 UnsubscribeFromStream(stream);
             }
@@ -351,7 +340,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onStreamDestroyed(PublisherKit publisherKit, Stream stream) {
-        if (OpenTokConfig.SUBSCRIBE_TO_SELF && subscriber != null){
+        if (SUBSCRIBE_TO_SELF && subscriber != null){
             UnsubscribeFromStream(stream);
         }
     }

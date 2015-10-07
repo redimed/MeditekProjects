@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -20,13 +24,17 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.api.RegisterApi;
+import com.redimed.telehealth.patient.models.Category;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.SocketService;
+import com.redimed.telehealth.patient.utils.RVAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -41,33 +49,59 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private String TAG ="HOME";
     private ActionBarDrawerToggle actionDrawerToggle;
     private boolean shouldFinish = false;
-    private RegisterApi restClient = RESTClient.getRegisterApi();
+    private RegisterApi restClient;
     private String sessionID, token, apiKey;
-    MyApplication mApplication;
+    private MyApplication mApplication;
+    private LinearLayoutManager layoutManagerCategories;
+    private RVAdapter rvAdapter;
+    private List<Category> categories;
 
     @Bind(R.id.testSocket) Button testSocket;
     @Bind(R.id.testSession) Button testSession;
-    @Bind(R.id.patientDrawer) DrawerLayout patientDrawer;
+    @Bind(R.id.drawerCategories) DrawerLayout drawerCategories;
+    @Bind(R.id.rvCategories) RecyclerView rvCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        restClient = RESTClient.getRegisterApi();
+
         ButterKnife.bind(this);
         SocketService.JoinRoom();
+        initializeData();
+
+        rvCategories.setHasFixedSize(true);
+        layoutManagerCategories = new LinearLayoutManager(getApplicationContext());
+        rvCategories.setLayoutManager(layoutManagerCategories);
+        rvAdapter = new RVAdapter(categories);
+        rvCategories.setAdapter(rvAdapter);
+
         testSocket.setOnClickListener(this);
         testSession.setOnClickListener(this);
         mApplication = (MyApplication) getApplicationContext();
+
         DisplayDrawer();
+    }
+
+    private void initializeData(){
+        categories = new ArrayList<Category>();
+        categories.add(new Category(R.drawable.person_icon, "Information", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.share_image_icon, "Share Image", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.person_icon, "Menu3", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.share_image_icon, "Menu4", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.person_icon, "Menu5", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.share_image_icon, "Menu6", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.share_image_icon, "Menu7", R.drawable.circled_chevron_right_icon));
     }
 
     //Initialize Drawer
     private void DisplayDrawer() {
-        actionDrawerToggle = new ActionBarDrawerToggle(this, patientDrawer, null, R.string.drawer_open, R.string.drawer_close){
+        actionDrawerToggle = new ActionBarDrawerToggle(this, drawerCategories, null, R.string.drawer_open, R.string.drawer_close){
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
-                patientDrawer.bringChildToFront(drawerView);
+                drawerCategories.bringChildToFront(drawerView);
                 drawerView.requestLayout();
             }
             @Override
@@ -80,7 +114,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 super.onDrawerClosed(drawerView);
             }
         };
-        patientDrawer.setDrawerListener(actionDrawerToggle);
+        drawerCategories.setDrawerListener(actionDrawerToggle);
         actionDrawerToggle.syncState();
     }
 

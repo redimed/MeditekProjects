@@ -74,8 +74,8 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
     private CountryPicker countryPicker;
     private String phoneCode;
-    private RegisterApi registerApi = RESTClient.getRegisterApi();
-    private Gson gson = new Gson();
+    private RegisterApi registerApi;
+    private Gson gson;
     private TelehealthUser telehealthUser;
     private JsonObject patientJSON;
     private SharedPreferences spDevice;
@@ -85,7 +85,9 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activation);
+        registerApi = RESTClient.getRegisterApi();
         myApplication = (MyApplication) getApplicationContext();
+        gson = new Gson();
         ButterKnife.bind(this);
         layoutContainer.setAnimateFirstView(true);
 
@@ -208,7 +210,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         telehealthUser.setPhone(phoneNumber);
         telehealthUser.setDeviceID(deviceToken);
         telehealthUser.setDeviceType(deviceType);
-
         patientJSON = new JsonObject();
         patientJSON.addProperty("data", gson.toJson(telehealthUser));
 

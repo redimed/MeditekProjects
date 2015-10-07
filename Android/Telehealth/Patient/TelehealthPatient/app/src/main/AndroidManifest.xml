@@ -60,10 +60,6 @@
             android:label="@string/title_activity_call"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CountryCodeActivity"
-            android:label="@string/title_activity_country_code"
-            android:theme="@android:style/Theme.Holo.Light.Dialog" />
-        <activity
             android:name=".ProfilePatientActivity"
             android:label="@string/title_activity_profile_patient" >
         </activity>

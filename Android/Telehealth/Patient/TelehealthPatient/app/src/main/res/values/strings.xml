@@ -6,8 +6,6 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="action_settings">Settings</string>
 
-    <string name="alert_wrong_phone">Phone Number Invalid</string>
-
     <string name="title_activity_verify_code">VerifyCodeActivity</string>
     <string name="code_invalid">Code Invalid</string>
     <string name="code_sent_request_again">Code will sent request again. Please wail a minutes</string>
@@ -24,8 +22,13 @@
     <string name="title_photo">Photo Library</string>
     <string name="title_camera">Camera</string>
 
+    <!-- Error-->
     <string name="error_network">Network Error</string>
     <string name="error_no_response">No Response From Server</string>
+    <string name="alert_wrong_phone">Phone Number Invalid</string>
+    <string name="empty_email">Please Input Your Email</string>
+    <string name="error_email">Email Invalid</string>
+
 
     <!-- Fontello icons -->
     <string name="fontello_search">&#xe816;</string>

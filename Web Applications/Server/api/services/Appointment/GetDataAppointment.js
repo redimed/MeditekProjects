@@ -246,15 +246,24 @@ module.exports = {
             }
         ];
     },
-    Patinent: function(data) {
+    Patient: function(data) {
         return {
             FirstName: data.FirstName,
             MiddleName: data.MiddleName,
             LastName: data.LastName,
             DOB: data.DOB,
+            Address: data.Address,
             Suburb: data.Suburb,
             PostCode: data.PostCode,
-            
+            HomePhoneNumber: data.HomePhoneNumber,
+            Email: data.Email
+        };
+    },
+    Doctor: function(data) {
+        return {
+            FirstName: data.FirstName,
+            LastName: data.LastName,
+            Phone: data.Phone
         };
     }
 };

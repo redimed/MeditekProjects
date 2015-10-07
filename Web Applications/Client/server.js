@@ -1,9 +1,17 @@
  var express = require('express');
  var http = require('http');
+ var https = require('https'); 
  var path = require('path');
+ var fs = require('fs-extra');
 
 
  var app = express();
+
+//**SSL file and passphrase use for server
+ var ssl_options = {
+    pfx: fs.readFileSync('key/star_redimed_com_au.pfx'),
+    passphrase: '1234'
+}; 
 
 // all environments
 //app.set('env', 'developement');
@@ -25,7 +33,9 @@ if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
 }
 
-
+// https.createServer(ssl_options,app).listen(app.get('port'),function(){
+// 	console.log('Express server listening on port ' + app.get('port'));
+// })
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
 });

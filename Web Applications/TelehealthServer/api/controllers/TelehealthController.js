@@ -61,6 +61,46 @@ module.exports = {
             message: 'Invalid Parameters!'
         })
     },
+    GetUserDetails: function(req, res) {
+        if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
+            res.json(500, {
+                status: 'error',
+                message: 'Invalid Parameters!'
+            });
+            return;
+        }
+        var info = toJson(req.body.data);
+        var uid = typeof info.uid != 'undefined' ? info.uid : null;
+        if (uid == null) {
+            res.json(500, {
+                status: 'error',
+                message: 'Invalid Parameters!'
+            });
+            return;
+        }
+        TelehealthService.FindByUID(uid).then(function(teleUser) {
+            if (teleUser) {
+                teleUser.getUserAccount().then(function(user) {
+                    TelehealthService.MakeRequest({
+                        path: '/api/patient/get-patient',
+                        method: 'POST',
+                        body: {
+                            data: {
+                                'UID': user.UID
+                            }
+                        }
+                    }).then(function(response) {
+                        res.json(response.getCode(), response.getBody());
+                    }).catch(function(err) {
+                        res.json(err.getCode(), err.getBody());
+                    })
+                })
+            } else res.json(500, {
+                status: 'error',
+                message: 'User Not Exist!'
+            });
+        })
+    },
     TelehealthLogout: function(req, res) {
         req.logout();
         res.json(200, {
@@ -105,13 +145,9 @@ module.exports = {
         var deviceToken = typeof info.devicetoken != 'undefined' ? info.devicetoken : null;
         var deviceId = typeof info.deviceid != 'undefined' ? info.deviceid : null;
         var deviceType = typeof info.devicetype != 'undefined' ? info.devicetype.toLowerCase() : null;
-        var userId = typeof info.id != 'undefined' ? info.id : null;
-        if (deviceToken != null && userId != null && deviceType != null && deviceId != null) {
-            TelehealthUser.find({
-                where: {
-                    userAccountID: userId
-                }
-            }).then(function(teleUser) {
+        var uid = typeof info.uid != 'undefined' ? info.uid : null;
+        if (deviceToken != null && uid != null && deviceType != null && deviceId != null) {
+            TelehealthService.FindByUID(uid).then(function(teleUser) {
                 TelehealthDevice.findOrCreate({
                     where: {
                         telehealthUserID: teleUser.ID,
@@ -119,7 +155,7 @@ module.exports = {
                         type: deviceType
                     },
                     defaults: {
-                        UID: config.GenerateUUID(),
+                        UID: UUIDService.GenerateUUID(),
                         deviceToken: deviceToken
                     }
                 }).spread(function(device, created) {
@@ -162,8 +198,6 @@ module.exports = {
                 where: {
                     phoneNumber: phoneNumber
                 }
-            }, {
-                raw: true
             }).then(function(user) {
                 if (user) {
                     UserActivation.findOrCreate({
@@ -245,23 +279,18 @@ module.exports = {
                             userAccountID: userActivate.userAccountID
                         },
                         defaults: {
-                            UID: config.GenerateUUID()
+                            UID: UUIDService.GenerateUUID()
                         }
                     }).spread(function(teleUser, created) {
-                        teleUser.getUserAccount({
-                            attributes: ['ID', 'userName', 'email', 'phoneNumber']
-                        }).then(function(user) {
-                            res.json(200, {
-                                status: 'success',
-                                message: 'User Activated!',
-                                data: user
-                            })
-                        }).catch(function(err) {
-                            res.json(500, {
-                                status: 'error',
-                                message: err
-                            });
-                        })
+                        var token = jwt.sign(teleUser, config.TokenSecret, {
+                            expiresInMinutes: 60 * 24
+                        });
+                        res.json(200, {
+                            status: 'success',
+                            message: 'User Activated!',
+                            uid: teleUser.UID,
+                            token: token
+                        });
                     }).catch(function(err) {
                         res.json(500, {
                             status: 'error',

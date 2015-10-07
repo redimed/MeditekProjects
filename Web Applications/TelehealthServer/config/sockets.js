@@ -122,9 +122,10 @@ module.exports.sockets = {
   * disconnects                                                              *
   *                                                                          *
   ***************************************************************************/
-  // afterDisconnect: function(session, socket, cb) {
-  //   return cb();
-  // },
+  afterDisconnect: function(session, socket, cb) {
+    TelehealthService.GetOnlineUsers();
+    return cb();
+  },
 
   /***************************************************************************
   *                                                                          *

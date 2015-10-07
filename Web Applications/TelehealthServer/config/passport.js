@@ -20,18 +20,9 @@ passport.use(new LocalStrategy({
         if (user) {
             bcrypt.compare(p.toString(), user.password, function(err, check) {
                 if (check) {
-                    user.getDoctor().then(function(doctor) {
-                        if (doctor) {
-                            user.dataValues.Doctor = doctor;
-                            return done(null, user, {
-                                message: 'Logged In Successfully!'
-                            });
-                        } else return done(null, false, {
-                            message: 'Wrong Username Or Password!'
-                        });
-                    }).catch(function(err) {
-                        return done(err);
-                    })
+                    return done(null, user, {
+                        message: 'Logged In Successfully!'
+                    });
                 } else return done(null, false, {
                     message: 'Wrong Username Or Password!'
                 });

@@ -118,28 +118,28 @@ public class SocketService extends Service {
     private Emitter.Listener onReconnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            Log.d(TAG, "====Socket Reconnected====");
+        Log.d(TAG, "====Socket Reconnected====");
         }
     };
 
     private Emitter.Listener onDisconnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            Log.d(TAG, "====Socket Disconnect====");
+        Log.d(TAG, "====Socket Disconnect====");
         }
     };
 
     private Emitter.Listener onError = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            Log.d("Socket Error", args[0].toString());
+        Log.d("Socket Error", args[0].toString());
         }
     };
 
     private Emitter.Listener onConnectError = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            Log.d("Socket Connect Error", args[0].toString());
+        Log.d("Socket Connect Error", args[0].toString());
         }
     };
 
@@ -147,27 +147,26 @@ public class SocketService extends Service {
         @Override
         public void call(Object... args) {
             JSONObject data = (JSONObject) args[0];
-        try {
-            String message = data.get("message").toString();
-            Log.d("===" + TAG + "====", message);
-            i = new Intent(getApplicationContext(), CallActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            if (message.equalsIgnoreCase("call")){
-                i.putExtra("apiKey", data.get("apiKey").toString());
-                i.putExtra("sessionId", data.get("sessionId").toString());
-                i.putExtra("token", data.get("token").toString());
-                i.putExtra("to", data.get("from").toString());
-                i.putExtra("from", uidTelehealth.getString("uid", null));
-                i.putExtra("message", data.get("message").toString());
-                startActivity(i);
-            }
-            if (message.equalsIgnoreCase("errorMsg")){
-                Log.d(TAG, data.toString());
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Log.d("Socket Receive Message", data.toString());
+	        try {
+	            String message = data.get("message").toString();
+	            i = new Intent(getApplicationContext(), CallActivity.class);
+	            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+	            if (message.equalsIgnoreCase("call")){
+	                i.putExtra("apiKey", data.get("apiKey").toString());
+	                i.putExtra("sessionId", data.get("sessionId").toString());
+	                i.putExtra("token", data.get("token").toString());
+	                i.putExtra("to", data.get("from").toString());
+	                i.putExtra("from", uidTelehealth.getString("uid", null));
+	                i.putExtra("message", data.get("message").toString());
+	                startActivity(i);
+	            }
+	            if (message.equalsIgnoreCase("errorMsg")){
+	                Log.d(TAG, data.toString());
+	            }
+	        } catch (JSONException e) {
+	            e.printStackTrace();
+	        }
+        	Log.d("Socket Receive Message", data.toString());
         }
     };
 

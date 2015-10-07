@@ -260,10 +260,10 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         if (matcherPhoneExpression.matches()) {
             char subPhone = txtPhone.getText().charAt(0);
             String phoneNumber;
-            if (subPhone == '0')
-                phoneNumber = postCode + txtPhone.getText().toString().substring(1);
+            if(subPhone == '0')
+                phoneNumber = postCode +  txtPhone.getText().toString().substring(1);
             else
-                phoneNumber = postCode + txtPhone.getText().toString();
+                phoneNumber = postCode +  txtPhone.getText().toString();
             GetDeviceInfo(phoneNumber);
         } else {
             Toast.makeText(getApplicationContext(), R.string.alert_wrong_phone, Toast.LENGTH_LONG).show();
@@ -292,7 +292,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                     String status = jsonObject.get("status").getAsString();
                     if (status.equalsIgnoreCase("success")) {
                         switchView(R.anim.in_from_left, R.anim.out_to_right, findViewById(R.id.layoutVerifyCode));
-                        vfChangeLayout.showNext();
                     }
                 }
 
@@ -333,7 +332,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                             finish();
                         }
                     }
-
+                    
                     @Override
                     public void failure(RetrofitError error) {
                         String json =  new String(((TypedByteArray)error.getResponse().getBody()).getBytes());

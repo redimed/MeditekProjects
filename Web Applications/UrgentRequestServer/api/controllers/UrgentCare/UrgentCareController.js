@@ -97,9 +97,16 @@ module.exports = {
                                 urgentRequestType: data.urgentRequestType,
                                 patientName: data.lastName + ' ' + data.firstName,
                                 requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
-                                phoneNumber: data.phoneNumber
+                                phoneNumber: data.phoneNumber,
+                                companyName: data.companyName,
+                                contactPerson: data.contactPerson,
+                                companyPhoneNumber: data.companyPhoneNumber
                             };
-                            SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
+                            if (data.urgentRequestType === 'WorkInjury') {
+                                SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
+                            } else {
+                                SendMailService.SendMail('WorkInjuryRequest', emailInfoPatient, CallBackSendMailPatient);
+                            }
                         }
                     }
                     //send sms

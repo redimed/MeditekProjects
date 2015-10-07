@@ -1,5 +1,7 @@
 <!-- BEGIN SIDEBAR -->
-<div class="page-sidebar-wrapper">
+
+	<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+	<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
 	<div class="page-sidebar navbar-collapse collapse">
 		<!-- BEGIN SIDEBAR MENU -->
 		<!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
@@ -8,7 +10,7 @@
 		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
 		<!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
 		<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-		<ul class="page-sidebar-menu page-sidebar-menu-light page-sidebar-menu-hover-submenu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+		<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 			<!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
 			<li class="sidebar-toggler-wrapper">
 				<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
@@ -34,56 +36,81 @@
 				</form>
 				<!-- END RESPONSIVE QUICK SEARCH FORM -->
 			</li>
-			<li class="start">
-				<a href="javascript:;" ui-sref="loggedIn.home">
+			<li class="start active ">
+				<a href="javascript:;" ui-sref="authentication.home.list">
 				<i class="icon-home"></i>
-				<span class="title">Home</span>
-				<span class="arrow"></span>
-				</a>
-			</li>
-			<li class="start">
-				<a href="javascript:;" ui-sref="loggedIn.urgentCare">
-				<i class="icon-rocket"></i>
-				<span class="title">Urgent Care</span>
-				<span class="arrow"></span>
-				</a>
-			</li>
-			<li class="start active open">
-				<a href="javascript:;" ui-sref="loggedIn.appointment.list">
-				<i class="icon-call-end"></i>
-				<span class="title">Telehealth Appointments</span>
+				<span class="title">Homepage</span>
 				<span class="selected"></span>
 				<span class="arrow open"></span>
 				</a>
 			</li>
-			<li class="start">
-				<a href="javascript:;" ui-sref="loggedIn.patient">
-				<i class="icon-users"></i>
-				<span class="title">Patient</span>
-				<span class="arrow"></span>
+			<li>
+				<a href="javascript:;" ui-sref="authentication.urgentCare.list">
+				<i class="icon-rocket"></i>
+				<span class="title">Urgen Care</span>
+				<span class="arrow "></span>
 				</a>
 			</li>
-			<li class="start">
-				<a href="javascript:;" >
-				<i class="icon-emoticon-smile"></i>
-				<span class="title">Doctor</span>
-				<span class="arrow"></span>
+			<li >
+				<a href="javascript:;">
+				<i class="icon-call-end"></i>
+				<span class="title">Appointment</span>
+				<span class="arrow "></span>
 				</a>
 				<ul class="sub-menu">
 					<li>
-						<a ui-sref="loggedIn.doctor.list">
-						<i class="icon-home"></i>
-						Doctor list</a>
+						<a href="layout_horizontal_sidebar_menu.html" ui-sref="authentication.appointment.list">
+						Appointment List</a>
 					</li>
 					<li>
-						<a ui-sref="loggedIn.doctor.profile">
-						<i class="icon-basket"></i>
-						Profile</a>
+						<a href="index_horizontal_menu.html" ui-sref="authentication.appointment.request">
+						Send Request</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a href="javascript:;" ui-sref="authentication.doctor.list">
+				<i class="icon-plus"></i>
+				<span class="title">Doctor</span>
+				<span class="arrow "></span>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:;" ui-sref="authentication.patient.list">
+				<i class="icon-user"></i>
+				<span class="title">Patient</span>
+				<span class="arrow "></span>
+				</a>
+			</li>
+			<li class="heading">
+				<h3 class="uppercase">Features</h3>
+			</li>
+			<li class="last ">
+				<a href="javascript:;">
+				<i class="icon-pointer"></i>
+				<span class="title">Maps</span>
+				<span class="arrow "></span>
+				</a>
+				<ul class="sub-menu">
+					<li>
+						<a href="maps_google.html">
+						Google Maps</a>
+					</li>
+					<li>
+						<a href="maps_vector.html">
+						Vector Maps</a>
 					</li>
 				</ul>
 			</li>
 		</ul>
 		<!-- END SIDEBAR MENU -->
 	</div>
-</div>
 <!-- END SIDEBAR -->
+
+<script>
+	Layout.init(); // init current layout
+</script>
+
+
+
+

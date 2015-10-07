@@ -1,4 +1,4 @@
-var app = angular.module('app.loggedIn.doctor.profile.controller',[
+var app = angular.module('app.authentication.doctor.profile.controller',[
 ]);
 
 app.controller('doctorProfileCtrl', function($scope, $modal){
@@ -6,8 +6,7 @@ app.controller('doctorProfileCtrl', function($scope, $modal){
 		var modalInstance = $modal.open({
 			animation: true,
 			templateUrl:'modules/doctor/views/doctorModalChangePassword.html',
-			//controller: 'appointmentModalCtrl',
-			//windowClass : 'app-modal-window',//add class
+			controller: 'doctorModalChangePasswordCtrl',
 			size: 'sm',
 			resolve: {
 				getid: function(){
@@ -17,5 +16,13 @@ app.controller('doctorProfileCtrl', function($scope, $modal){
 
 		});
 	};
+});
 
+app.controller('doctorModalChangePasswordCtrl', function($scope, $modalInstance){
+	$scope.modal_close = function(){
+		$modalInstance.close();
+	}
+	$scope.close = function(){
+		$modalInstance.close();
+	}
 });

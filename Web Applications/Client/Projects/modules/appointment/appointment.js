@@ -1,25 +1,24 @@
-var app = angular.module('app.loggedIn.appointment',[
-	'app.loggedIn.appointment.controller',
-	'app.loggedIn.appointment.services'
+var app = angular.module('app.authentication.appointment', [
+	'app.authentication.appointment.controller',
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider){
-	$urlRouterProvider.otherwise('/appointment/list');
+	// $urlRouterProvider.otherwise('/appointment');
 	$stateProvider
-		.state('loggedIn.appointment', {
+		.state('authentication.appointment', {
 			abstract: true,
-			//url: 'appointment',
+			url:'/appointment',
 			templateUrl: 'modules/appointment/views/appointment.html',
 			controller: 'appointmentCtrl'
 		})
-		.state('loggedIn.appointment.list', {
-			url: '/appointment/list',
+		.state('authentication.appointment.list', {
+			url: '/list',
 			templateUrl: 'modules/appointment/views/appointmentList.html',
 			controller: 'appointmentListCtrl'
 		})
-		.state('loggedIn.appointment.request', {
-			url: '/appointment/request',
+		.state('authentication.appointment.request', {
+			url: '/request',
 			templateUrl: 'modules/appointment/views/appointmentRequest.html',
-			controller:'appointmentRequestCtrl'
+			controller: 'appointmentRequestCtrl'
 		});
 });

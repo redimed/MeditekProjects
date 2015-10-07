@@ -1,26 +1,27 @@
-var app = angular.module('app.loggedIn.doctor',[
-	'app.loggedIn.doctor.controller',
-	'app.loggedIn.doctor.profile.controller'
+var app = angular.module('app.authentication.doctor',[
+	'app.authentication.doctor.controller'
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider){
-	$urlRouterProvider.otherwise('/doctor/list');
+	// $urlRouterProvider.otherwise('/doctor/list');
 	$stateProvider
-		.state('loggedIn.doctor', {
+		.state('authentication.doctor', {
 			abstract: true,
+			url: '/doctor',
 			templateUrl: 'modules/doctor/views/doctor.html',
 			controller: 'doctorCtrl'
 		})
-		.state('loggedIn.doctor.list', {
-			url:'/doctor/list',
-			templateUrl: 'modules/doctor/views/doctorList.html'
+		.state('authentication.doctor.list', {
+			url:'/list',
+			templateUrl: 'modules/doctor/views/doctorList.html',
+			controller: 'doctorListCtrl'
 		})
-		.state('loggedIn.doctor.create', {
-			url: '/doctor/create',
+		.state('authentication.doctor.create', {
+			url: '/create',
 			templateUrl: 'modules/doctor/views/doctorCreate.html'
 		})
-		.state('loggedIn.doctor.profile', {
-			url: '/doctor/profile',
+		.state('authentication.doctor.profile', {
+			url: '/profile',
 			templateUrl: 'modules/doctor/views/doctorProfile.html',
 			controller: 'doctorProfileCtrl'
 		});

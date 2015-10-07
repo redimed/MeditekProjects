@@ -1,9 +1,9 @@
 module.exports = {
     Appointment: function(data) {
         return {
-            UID: data.UIDAppt,
             SiteID: 1,
-            // RequestDate: data.RequestDate,
+            RequestDate: data.RequestDate,
+            ApprovalDate: data.ApprovalDate,
             Status: 'Watting for approve',
             Enable: 'Y'
         };
@@ -23,7 +23,6 @@ module.exports = {
     },
     PatientAppointment: function(data) {
         return {
-            UID: data.UIDPatientAppt,
             FirstName: data.FirstName,
             LastName: data.LastName,
             DOB: data.DOB,
@@ -247,4 +246,15 @@ module.exports = {
             }
         ];
     },
+    Patinent: function(data) {
+        return {
+            FirstName: data.FirstName,
+            MiddleName: data.MiddleName,
+            LastName: data.LastName,
+            DOB: data.DOB,
+            Suburb: data.Suburb,
+            PostCode: data.PostCode,
+            
+        };
+    }
 };

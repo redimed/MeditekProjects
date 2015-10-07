@@ -69,6 +69,9 @@ module.exports = {
                     patientName: data.lastName + ' ' + data.firstName,
                     requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                     phoneNumber: data.phoneNumber,
+                    companyName: data.companyName,
+                    contactPerson: data.contactPerson,
+                    companyPhoneNumber: data.companyPhoneNumber,
                     bcc: 'pnguyen@redimed.com.au, thanh1101681@gmail.com'
                 };
 
@@ -97,16 +100,9 @@ module.exports = {
                                 urgentRequestType: data.urgentRequestType,
                                 patientName: data.lastName + ' ' + data.firstName,
                                 requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
-                                phoneNumber: data.phoneNumber,
-                                companyName: data.companyName,
-                                contactPerson: data.contactPerson,
-                                companyPhoneNumber: data.companyPhoneNumber
+                                phoneNumber: data.phoneNumber
                             };
-                            if (data.urgentRequestType === 'WorkInjury') {
-                                SendMailService.SendMail('WorkInjuryRequest', emailInfoPatient, CallBackSendMailPatient);
-                            } else {
-                                SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
-                            }
+                            SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
                         }
                     }
                     //send sms
@@ -124,7 +120,11 @@ module.exports = {
                 };
 
                 //send email
-                SendMailService.SendMail('UrgentRequest', emailInfo, CallBackSendMail);
+                if (data.urgentRequestType === 'WorkInjury') {
+                    SendMailService.SendMail('WorkInjuryRequest', emailInfo, CallBackSendMail);
+                } else {
+                    SendMailService.SendMail('UrgentRequest', emailInfo, CallBackSendMail);
+                }
 
                 //get urgent request id
                 var UrgentRequestID = UrgentRequest.findOne()

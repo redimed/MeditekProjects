@@ -16,7 +16,11 @@ module.exports.routes = {
         controller: 'TelehealthController',
         action: 'TelehealthLogin'
     },
-    'POST /telehealth/sendSMS' : {
+    'POST /telehealth/user/details': {
+        controller: 'TelehealthController',
+        action: 'GetUserDetails'
+    },
+    'POST /telehealth/sendSMS': {
         controller: 'TelehealthController',
         action: 'SendSMS'
     },
@@ -28,6 +32,10 @@ module.exports.routes = {
     '/telehealth/socket/messageTransfer': {
         controller: 'SocketController',
         action: 'MessageTransfer'
+    },
+    '/telehealth/socket/onlineList': {
+        controller: 'SocketController',
+        action: 'OnlineUserList'
     },
     'GET /telehealth/socket/generateSession': {
         controller: 'SocketController',

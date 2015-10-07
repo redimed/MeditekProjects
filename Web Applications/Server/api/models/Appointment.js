@@ -64,14 +64,14 @@ module.exports = {
         tableName: 'Appointment',
         timestamps: false,
         hooks: {
-            // beforeCreate: function(appt, options, callback) {
-            //     appt.CreationDate = new Date();
-            //     callback();
-            // },
-            // beforeUpdate: function(appt, options, callback) {
-            //     appt.ModifiedDate = new Date();
-            //     callback();
-            // }
+            beforeCreate: function(appt, options, callback) {
+                appt.CreationDate = new Date();
+                callback();
+            },
+            beforeUpdate: function(appt, options, callback) {
+                appt.ModifiedDate = new Date();
+                callback();
+            }
         }
     }
 };

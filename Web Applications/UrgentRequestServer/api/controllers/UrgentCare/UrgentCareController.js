@@ -103,9 +103,9 @@ module.exports = {
                                 companyPhoneNumber: data.companyPhoneNumber
                             };
                             if (data.urgentRequestType === 'WorkInjury') {
-                                SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
-                            } else {
                                 SendMailService.SendMail('WorkInjuryRequest', emailInfoPatient, CallBackSendMailPatient);
+                            } else {
+                                SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
                             }
                         }
                     }

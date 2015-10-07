@@ -13,18 +13,21 @@ module.exports = {
 	CreatePatient : function(req, res) {
 		var data = req.body.data;
 		var info = {
-			FirstName  : data.FirstName,
-			MiddleName : data.MiddleName,
-			LastName   : data.LastName,
-			Dob        : moment(data.Dob,'YYYY-MM-DD HH:mm:ss ZZ').toDate(),
-			Gender     : data.Gender,
-			Address    : data.Address,
-			Enable     : "Y"
+			FirstName       : data.FirstName,
+			MiddleName      : data.MiddleName,
+			LastName        : data.LastName,
+			DOB             : data.DOB?moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate():null,
+			Gender          : data.Gender,
+			CountryID       : data.CountryID,
+			Suburb          : data.Suburb,
+			Postcode        : data.Postcode,
+			Email           : data.Email,
+			HomePhoneNumber : data.HomePhoneNumber,
+			UID             : UUIDService.Create(),
+			SiteID          : 1,
+			Address         : data.Address,
+			Enable          : "Y"
 		};
-		info.UID = UUIDService.Create();
-		info.SiteID = 1;
-		//hien tai thi CountryID chua co nen tu set 1 CountryID trong bang? Country de test.
-		info.CountryID = 84;
 		//check is patient have UserAccount by Phone Number
 		Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
 		.then(function(user){
@@ -100,21 +103,25 @@ module.exports = {
 	*/
 	UpdatePatient : function(req, res) {
 		var data = req.body.data;
-		var Dob = moment(data.Dob,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
+		var DOB = moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
 		//get data not required
 		var patientInfo={
-				ID           : data.ID,
-				FirstName    : data.FirstName,
-				MiddleName   : data.MiddleName,
-				LastName     : data.LastName,
-				Dob          : Dob,
-				Gender       : data.Gender,
-				Address      : data.Address,
-				Enable       : data.Enable,
-				CreatedDate  : data.CreatedDate,
-				CreatedBy    : data.CreatedBy,
-				ModifiedDate : data.ModifiedDate,
-				ModifiedBy   : data.ModifiedBy
+				ID              : data.ID,
+				FirstName       : data.FirstName,
+				MiddleName      : data.MiddleName,
+				LastName        : data.LastName,
+				DOB             : DOB,
+				Gender          : data.Gender,
+				Address         : data.Address,
+				Enable          : data.Enable,
+				Suburb          : data.Suburb,
+				Postcode        : data.Postcode,
+				Email           : data.Email,
+				HomePhoneNumber : data.HomePhoneNumber,
+				CreatedDate     : data.CreatedDate,
+				CreatedBy       : data.CreatedBy,
+				ModifiedDate    : data.ModifiedDate,
+				ModifiedBy      : data.ModifiedBy
 		};
 
 		//get data required ( if data has value, get it)
@@ -137,7 +144,7 @@ module.exports = {
 
 	/*
 		GetPatient get a patient with condition
-		input:  Patient's ID
+		input:  UserAccount's UID
 		output: Patient's information of Patient's ID if patient has data.
 	*/
 	GetPatient : function(req, res) {
@@ -197,6 +204,10 @@ module.exports = {
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});
 		});
+	},
+
+	Test : function(req, res) {
+		res.json("yes");
 	}
 
 };

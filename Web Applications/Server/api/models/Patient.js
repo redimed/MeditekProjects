@@ -28,15 +28,24 @@ module.exports = {
         },
         FirstName: {
             type: Sequelize.STRING(50),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,50]
+            }
         },
         MiddleName: {
             type: Sequelize.STRING(100),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,100]
+            }
         },
         LastName: {
             type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,50]
+            }
         },
         DOB: {
             type: Sequelize.DATE,
@@ -44,23 +53,38 @@ module.exports = {
         },
         Address: {
             type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,255]
+            }
         },
         Suburb: {
             type: Sequelize.STRING(100),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,100]
+            }
         },
         Postcode: {
             type: Sequelize.STRING(100),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,100]
+            }
         },
         Email: {
             type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,100]
+            }
         },
         HomePhoneNumber: {
             type: Sequelize.STRING(20),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,100]
+            }
         },
         CountryID: {
             type: Sequelize.BIGINT(20),

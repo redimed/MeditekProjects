@@ -1,7 +1,3 @@
-
-
-
-
 module.exports = {
 	/*
 		CreatePatient : create a new patient
@@ -46,34 +42,7 @@ module.exports = {
 	*/
 	UpdatePatient : function(req, res) {
 		var data = req.body.data;
-		var DOB = moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
-		//get data not required
-		var patientInfo={
-				ID              : data.ID,
-				FirstName       : data.FirstName,
-				MiddleName      : data.MiddleName,
-				LastName        : data.LastName,
-				DOB             : DOB,
-				Gender          : data.Gender,
-				Address         : data.Address,
-				Enable          : data.Enable,
-				Suburb          : data.Suburb,
-				Postcode        : data.Postcode,
-				Email           : data.Email,
-				HomePhoneNumber : data.HomePhoneNumber,
-				CreatedDate     : data.CreatedDate,
-				CreatedBy       : data.CreatedBy,
-				ModifiedDate    : data.ModifiedDate,
-				ModifiedBy      : data.ModifiedBy
-		};
-
-		//get data required ( if data has value, get it)
-		if(data.SiteID)  patientInfo.SiteID=data.SiteID;
-		if(data.UserAccountID)  patientInfo.UserAccountID = data.UserAccountID;
-		if(data.CountryID)  patientInfo.CountryID = data.CountryID;
-		if(data.UID)  patientInfo.UID = data.UID;
-
-		Services.Patient.UpdatePatient(patientInfo)
+		Services.Patient.UpdatePatient(data)
 		.then(function(result){
 			if(result[0] > 0)
 				res.ok({status:200,message:"success"});

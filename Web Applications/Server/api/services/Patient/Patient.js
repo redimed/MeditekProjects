@@ -115,7 +115,6 @@ module.exports = {
 							UID : data.UID
 						}
 			  		]
-
 			  	}
 			});
 		}
@@ -144,35 +143,26 @@ module.exports = {
 
 	/*
 		GetPatient : service get a patient with condition
-		input:patient's ID
+		input:useraccount's UID
 		output: get patient's information.
 	*/
 	GetPatient : function(data) {
-		if(data.PhoneNumber){
-			return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
-			.then(function(user){
-				//check if Phone Number is found in table UserAccount, get UserAccountID to find patient
-				if(user!=undefined && user!=null){
-					return Patient.findAll({
-						where: {
-							UserAccountID : user[0].ID
-						}
-					});
-				}
-				else{
-					res.notFound({status:404,message:"not Found"});
-				}
-			},function(err){
-				res.serverError({status:500,message:ErrorWrap(err)});
-			});
-		}
-		else{
-			return Patient.find({
-				where: {
-					UID : data.UID
-				}
-			});
-		}
+		return Services.UserAccount.GetUserAccountDetails(data)
+		.then(function(user){
+			//check if UserAccount is found in table UserAccount, get UserAccountID to find patient
+			if(user!=undefined && user!=null && user!=''){
+				return Patient.findAll({
+					where: {
+						UserAccountID : user[0].ID
+					}
+				});
+			}
+			else{
+				return null;
+			}
+		},function(err){
+			res.serverError({status:500,message:ErrorWrap(err)});
+		});
 	},
 	
 	

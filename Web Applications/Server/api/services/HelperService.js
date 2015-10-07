@@ -25,24 +25,23 @@ function checkListData() {
     return true;
 }
 
-function exlog()
-{
+function exlog() {
     console.log("\n\nBEGIN REDIMED LOG-------------------------------");
-    for (var i = 0; i < arguments.length; i++) 
-    {
+    for (var i = 0; i < arguments.length; i++) {
         console.log(arguments[i]);
     }
     console.log("END REDIMED LOG---------------------------------\n\n");
 }
 
-function exFileJSON(data,fileName)
-{
-    
-    var file = './temp/'+fileName;
-    var obj = {name: 'JP'}
-     
+function exFileJSON(data, fileName) {
+
+    var file = './temp/' + fileName;
+    var obj = {
+        name: 'JP'
+    }
+
     jf.writeFile(file, data, function(err) {
-      console.log(err);
+        console.log(err);
     })
 }
 
@@ -65,6 +64,10 @@ module.exports = {
         } else {
             return false;
         }
+    },
+
+    CheckExistData: function(data) {
+        return (!_.isUndefined(data) && !_.isEmpty(data) && !_.isNull(data));
     },
 
     //define regex pattern
@@ -106,23 +109,23 @@ module.exports = {
 
     checkListData: checkListData,
 
-    const:{
-        systemType:{
-            ios:'IOS',
-            website:'WEB',
-            android:'ARD'
+    const: {
+        systemType: {
+            ios: 'IOS',
+            website: 'WEB',
+            android: 'ARD'
         },
 
-        roles:{
-            admin:1,
-            assistant:2,
-            doctor:3,
-            gp:4,
-            patient:5
+        roles: {
+            admin: 1,
+            assistant: 2,
+            doctor: 3,
+            gp: 4,
+            patient: 5
         }
     },
 
-    exlog:exlog,
+    exlog: exlog,
 
     exFileJSON: exFileJSON,
 

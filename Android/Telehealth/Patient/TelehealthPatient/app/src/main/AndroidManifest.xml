@@ -71,6 +71,7 @@
         <receiver android:name=".receiver.BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="Restart_Socket_Service"/>
             </intent-filter>
         </receiver>
         <receiver android:name="com.google.android.gms.gcm.GcmReceiver"

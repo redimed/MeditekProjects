@@ -74,7 +74,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
     private CountryPicker countryPicker;
     private String phoneCode;
-    private Intent i;
     private RegisterApi registerApi = RESTClient.getRegisterApi();
     private Gson gson = new Gson();
     private TelehealthUser telehealthUser;
@@ -183,19 +182,15 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         Pattern patternPhoneExpression = Pattern.compile(phoneExpression);
         Matcher matcherPhoneExpression = patternPhoneExpression.matcher(txtPhone.getText());
         String postCode = lblPhoneCode.getText().toString();
-        Matcher matcherPhoneExpression = patternPhoneExpression.matcher(txtPhoneNumber.getText());
-        String postCode = btnPostCode.getText().toString();
         postCode = postCode.substring(1, postCode.length() - 1);
 
         if (matcherPhoneExpression.matches()) {
             char subPhone = txtPhone.getText().charAt(0);
             String phoneNumber;
-            if(subPhone == '0'){
-                phoneNumber = postCode +  txtPhoneNumber.getText().toString().substring(1);
-            }
-            else {
-                phoneNumber = postCode +  txtPhoneNumber.getText().toString();
-            }
+            if(subPhone == '0')
+                phoneNumber = postCode +  txtPhone.getText().toString().substring(1);
+            else
+                phoneNumber = postCode +  txtPhone.getText().toString();
             GetDeviceInfo(phoneNumber);
         } else {
             Toast.makeText(getApplicationContext(), R.string.alert_wrong_phone, Toast.LENGTH_LONG).show();
@@ -224,7 +219,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                     String status = jsonObject.get("status").getAsString();
                     if (status.equalsIgnoreCase("success")) {
                         switchView(R.anim.in_from_left, R.anim.out_to_right, findViewById(R.id.layoutVerifyCode));
-                        vfChangeLayout.showNext();
                     }
                 }
 
@@ -238,7 +232,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
                 }
             });
         }
@@ -264,11 +257,8 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                             myApplication.getTelehealthUser().setUID(jsonObject.get("uid").getAsString());
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                             finish();
-                        }else {
-                            new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, message).show();
                         }
                     }
-                    
                     @Override
                     public void failure(RetrofitError error) {
                         String json =  new String(((TypedByteArray)error.getResponse().getBody()).getBytes());
@@ -279,7 +269,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
                     }
                 });
             }

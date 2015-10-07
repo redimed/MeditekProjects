@@ -19,15 +19,17 @@
         android:layout_marginTop="20dp"
         android:src="@drawable/logo_redimed" />
 
+    <ViewFlipper
+        android:id="@+id/layoutContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
-        <ImageView
-            android:id="@+id/imgEnterPhone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <ViewFlipper
-            android:id="@+id/vfChangeLayout"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/layoutRegisterFone"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -119,21 +121,6 @@
                 android:background="#41000000"
                 android:descendantFocusability="beforeDescendants"
                 android:focusableInTouchMode="true">
-                <Button
-                    android:id="@+id/btnPostCode"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toLeftOf="@+id/txtPhoneNumber"
-                    android:layout_toStartOf="@+id/txtPhoneNumber"
-                    android:background="@drawable/txt_border"
-                    android:drawableLeft="@drawable/phone"
-                    android:gravity="center"
-                    android:padding="6dp"
-                    android:text="(+61)"
-                    android:textColor="@color/greyFont"
-                    android:textSize="20dp" />
 
                 <EditText
                     android:id="@+id/txtVerifyCode"

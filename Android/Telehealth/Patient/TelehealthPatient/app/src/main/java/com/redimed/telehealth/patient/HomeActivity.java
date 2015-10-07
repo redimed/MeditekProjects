@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.SocketService;
@@ -42,7 +41,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private String TAG ="HOME";
     private ActionBarDrawerToggle actionDrawerToggle;
     private boolean shouldFinish = false;
-    private BroadcastReceiver receiverDataSocketService;
     private RegisterApi restClient = RESTClient.getRegisterApi();
     private String sessionID, token, apiKey;
     MyApplication mApplication;
@@ -61,44 +59,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         testSession.setOnClickListener(this);
         mApplication = (MyApplication) getApplicationContext();
         DisplayDrawer();
-        
-        // ListenSocket();
-    }
-
-    //Listen action response when clinic make a call
-    private void ListenSocket() {
-        IntentFilter intentFilter = new IntentFilter("android.intent.action.MessageSocket");
-        receiverDataSocketService = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String message = "";
-                String strSocket = intent.getStringExtra("Message");
-                try {
-                    JSONObject jsonSocket = new JSONObject(strSocket);
-                    message = jsonSocket.get("message").toString();
-                    Log.i("====Message====", message);
-                    if (message.equalsIgnoreCase("call")){
-                        intent = new Intent(HomeActivity.this, CallActivity.class);
-                        intent.putExtra("apiKey", jsonSocket.get("apiKey").toString());
-                        intent.putExtra("sessionId", jsonSocket.get("sessionId").toString());
-                        intent.putExtra("token", jsonSocket.get("token").toString());
-                        intent.putExtra("to", jsonSocket.get("from").toString());
-                        intent.putExtra("from", mApplication.getUserAccount().getPhoneNumber());
-                        startActivity(intent);
-                        HomeActivity.this.finish();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        this.registerReceiver(receiverDataSocketService, intentFilter);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        this.unregisterReceiver(this.receiverDataSocketService);
     }
 
     //Initialize Drawer
@@ -110,7 +70,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 patientDrawer.bringChildToFront(drawerView);
                 drawerView.requestLayout();
             }
-
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -134,9 +93,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.testSession:
                 GenerationSession();
                 break;
-            case R.id.testSession:
-                TestSession();
-                break;
         }
     }
 
@@ -149,12 +105,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     sessionID = jsonObject.getAsJsonObject("data").get("sessionId").getAsString();
                     token = jsonObject.getAsJsonObject("data").get("token").getAsString();
                     apiKey = jsonObject.getAsJsonObject("data").get("apiKey").getAsString();
-                    Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG);
-                Log.d("OK", jsonObject.toString());
-                if (status.equalsIgnoreCase("success")){
-                    sessionID = jsonObject.getAsJsonObject("data").get("sessionId").getAsString();
-                    jsonObjectGlobal = jsonObject.getAsJsonObject("data");
-                    Log.d(TAG, sessionID);
+                    Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
@@ -176,7 +127,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(this, CallActivity.class));
             Toast.makeText(this, "Clinic: " + params.toString(), Toast.LENGTH_LONG).show();
             finish();
-            Toast.makeText(this, "Clinic: " + params.toString(), Toast.LENGTH_LONG).show();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }

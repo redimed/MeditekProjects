@@ -33,6 +33,7 @@ import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.picker.CountryPicker;
 import com.redimed.telehealth.patient.picker.CountryPickerListener;
+import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
 import com.redimed.telehealth.patient.utils.CustomAlertDialog;
 import com.squareup.picasso.Picasso;
@@ -86,31 +87,9 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     private String phoneCode;
     private RegisterApi registerApi;
     private Gson gson;
-    private Intent i;
-    private boolean flagBackActivationLayout = true;
-    @Bind(R.id.logo) ImageView mLogo;
-
-    //=======Layout 1=========
-    @Bind(R.id.btnCode) ImageButton btnCode;
-    @Bind(R.id.btnRequestCode) Button btnRequestCode;
-    @Bind(R.id.lblPhoneCode) TextView lblPhoneCode;
-    @Bind(R.id.txtPhone) EditText txtPhone;
-
-    //======Layout 2==========
-    @Bind(R.id.btnSubmitCode) Button btnSubmitCode;
-    @Bind(R.id.btnBack) RelativeLayout btnBack;
-    @Bind(R.id.txtVerifyCode) EditText txtVerifyCode;
-
-    @Bind(R.id.layoutContainer) ViewFlipper layoutContainer;
-
-    private CountryPicker countryPicker;
-    private String phoneCode;
-    private RegisterApi registerApi = RESTClient.getRegisterApi();
-    private Gson gson = new Gson();
     private TelehealthUser telehealthUser;
     private JsonObject patientJSON;
     private SharedPreferences spDevice;
-    private MyApplication myApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +97,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_activation);
         registerApi = RESTClient.getRegisterApi();
         gson = new Gson();
-        myApplication = (MyApplication) getApplicationContext();
         ButterKnife.bind(this);
         layoutContainer.setAnimateFirstView(true);
 
@@ -147,46 +125,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
         AnimationLogo();
         AnimationContainer();
-    }
-
-    private int getResId(String drawableName) {
-        try {
-            Class<R.drawable> res = R.drawable.class;
-            Field field = res.getField(drawableName);
-            int drawableId = field.getInt(null);
-            return drawableId;
-        } catch (Exception e) {
-            Log.e("COUNTRYPICKER", "Failure to get drawable id.", e);
-        }
-        return -1;
-    }
-
-    private void AnimationLogo() {
-        Animation anim = AnimationUtils.loadAnimation(this, R.anim.translate_center_to_top);
-        mLogo.startAnimation(anim);
-    }
-
-    private void AnimationContainer() {
-        layoutContainer.animate()
-                .setStartDelay(1700)
-                .setDuration(500)
-                .alpha(1.0f);
-
-    }
-
-    private void switchView(int inAnimation, int outAnimation, View v) {
-        layoutContainer.setInAnimation(this, inAnimation);
-        layoutContainer.setOutAnimation(this, outAnimation);
-        if (layoutContainer.indexOfChild(v) == 0)
-            layoutContainer.showNext();
-        else
-            layoutContainer.showPrevious();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        moveTaskToBack(true);
     }
 
     private int getResId(String drawableName) {
@@ -260,10 +198,10 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         if (matcherPhoneExpression.matches()) {
             char subPhone = txtPhone.getText().charAt(0);
             String phoneNumber;
-            if(subPhone == '0')
-                phoneNumber = postCode +  txtPhone.getText().toString().substring(1);
+            if (subPhone == '0')
+                phoneNumber = postCode + txtPhone.getText().toString().substring(1);
             else
-                phoneNumber = postCode +  txtPhone.getText().toString();
+                phoneNumber = postCode + txtPhone.getText().toString();
             GetDeviceInfo(phoneNumber);
         } else {
             Toast.makeText(getApplicationContext(), R.string.alert_wrong_phone, Toast.LENGTH_LONG).show();
@@ -297,7 +235,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
                 @Override
                 public void failure(RetrofitError error) {
-                    String json =  new String(((TypedByteArray)error.getResponse().getBody()).getBytes());
+                    String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
                     try {
                         JSONObject dataObject = new JSONObject(json);
                         String message = dataObject.optString("message");
@@ -332,10 +270,10 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                             finish();
                         }
                     }
-                    
+
                     @Override
                     public void failure(RetrofitError error) {
-                        String json =  new String(((TypedByteArray)error.getResponse().getBody()).getBytes());
+                        String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
                         try {
                             JSONObject dataObject = new JSONObject(json);
                             String message = dataObject.optString("message");

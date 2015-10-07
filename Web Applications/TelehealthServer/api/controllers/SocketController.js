@@ -3,7 +3,6 @@ var config = sails.config.myconf;
 var $q = require('q');
 var OpenTok = require('opentok'),
     opentok = new OpenTok(config.OpentokAPIKey, config.OpentokAPISecret);
-
 module.exports = {
     JoinConferenceRoom: function(req, res) {
         if (!req.isSocket) {
@@ -20,6 +19,7 @@ module.exports = {
                     teleUser.getUserAccount().then(function(user) {
                         sails.sockets.join(req.socket, uid + ":" + user.phoneNumber);
                         sails.sockets.leave(req.socket, req.socket.id);
+                        TelehealthService.GetOnlineUsers();
                     })
                 }
             })

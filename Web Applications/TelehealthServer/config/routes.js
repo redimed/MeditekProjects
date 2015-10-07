@@ -16,7 +16,11 @@ module.exports.routes = {
         controller: 'TelehealthController',
         action: 'TelehealthLogin'
     },
-    'POST /telehealth/sendSMS' : {
+    'POST /telehealth/user/details': {
+        controller: 'TelehealthController',
+        action: 'GetUserDetails'
+    },
+    'POST /telehealth/sendSMS': {
         controller: 'TelehealthController',
         action: 'SendSMS'
     },

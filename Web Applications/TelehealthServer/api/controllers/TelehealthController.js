@@ -29,7 +29,6 @@ function sendSMS(toNumber, content, callback) {
         from: config.twilioPhone
     }, callback());
 };
-
 module.exports = {
     SendSMS: function(req, res) {
         if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
@@ -60,6 +59,46 @@ module.exports = {
         } else res.json(500, {
             status: 'error',
             message: 'Invalid Parameters!'
+        })
+    },
+    GetUserDetails: function(req, res) {
+        if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
+            res.json(500, {
+                status: 'error',
+                message: 'Invalid Parameters!'
+            });
+            return;
+        }
+        var info = toJson(req.body.data);
+        var uid = typeof info.uid != 'undefined' ? info.uid : null;
+        if (uid == null) {
+            res.json(500, {
+                status: 'error',
+                message: 'Invalid Parameters!'
+            });
+            return;
+        }
+        TelehealthService.FindByUID(uid).then(function(teleUser) {
+            if (teleUser) {
+                teleUser.getUserAccount().then(function(user) {
+                    TelehealthService.MakeRequest({
+                        path: '/api/patient/get-patient',
+                        method: 'POST',
+                        body: {
+                            data: {
+                                'UID': user.UID
+                            }
+                        }
+                    }).then(function(response) {
+                        res.json(response.getCode(), response.getBody());
+                    }).catch(function(err) {
+                        res.json(err.getCode(), err.getBody());
+                    })
+                })
+            } else res.json(500, {
+                status: 'error',
+                message: 'User Not Exist!'
+            });
         })
     },
     TelehealthLogout: function(req, res) {
@@ -102,7 +141,6 @@ module.exports = {
             });
             return;
         }
-
         var info = toJson(req.body.data);
         var deviceToken = typeof info.devicetoken != 'undefined' ? info.devicetoken : null;
         var deviceId = typeof info.deviceid != 'undefined' ? info.deviceid : null;

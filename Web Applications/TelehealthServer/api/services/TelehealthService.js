@@ -1,3 +1,5 @@
+var requestify = require('requestify');
+var config = sails.config.myconf;
 module.exports = {
     FindByUID: function(uid) {
         return TelehealthUser.find({
@@ -7,7 +9,7 @@ module.exports = {
         });
     },
     GetOnlineUsers: function() {
-    	var users = [];
+        var users = [];
         var list = sails.sockets.rooms();
         var phoneRegex = /^\+[0-9]{9,15}$/;
         if (list.length > 0) {
@@ -24,5 +26,13 @@ module.exports = {
             }
         } else users = []
         sails.sockets.blast('online_users', users);
+    },
+    MakeRequest: function(info) {
+        return requestify.request(config.CoreAPI + info.path, {
+            method: info.method,
+            body: info.body,
+            timeout: 1000,
+            dataType: 'json'
+        })
     }
 }

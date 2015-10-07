@@ -1,51 +1,8 @@
-var app = angular.module('app.loggedIn.appointment.controller', [
-	'app.loggedIn.appointment.list.controller',
-	'app.loggedIn.appointment.request.controller'
+var app = angular.module('app.authentication.appointment.controller',[
+	'app.authentication.appointment.list.controller',
+	'app.authentication.appointment.request.controller'
 ]);
 
-app.controller('appointmentCtrl', function($scope, $modal, $state, AppointmentService){
-
-	AppointmentService.getList().then(function (data) {
-		console.log("data",data.data);
-	})
-	// $scope.sendRequest = function(){
-	// 	// var modalInstance = $modal.open({
-	// 	// 	animation: true,
-	// 	// 	templateUrl:'modules/appointment/views/appointmentAddView.html',
-	// 	// 	controller: 'appointmentAddCtrl'
-	// 	// 	size: 'lg',
-	// 	// 	resolve: {
-	// 	// 		getid: function(){
-	// 	// 			return true;
-	// 	// 		}
-	// 	// 	}
-
-	// 	// });
-	// };
-	// $scope.sendRequest = function(){
-	// 	$state.go('loggedIn.request');
-	// 	// , null, 
-	// 	// {
-	// 	// 	reload:true
-	// 	// });
-	// };
-	// $scope.openAppointmentModal = function(){
-	// 	var modalInstance = $modal.open({
-	// 		animation: true,
-	// 		templateUrl:'modules/appointment/views/appointmentModal.html',
-	// 		controller: 'appointmentModalCtrl',
-	// 		windowClass : 'app-modal-window',
-	// 		resolve: {
-	// 			getid: function(){
-	// 				return true;
-	// 			}
-	// 		}
-
-	// 	});
-	// };
-
+app.controller('appointmentCtrl', function(){
+	console.log('appointmentCtrl');
 });
-
-// app.controller('appointmentModalCtrl', function($scope, $modal, $modalInstance){
-
-// });

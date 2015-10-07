@@ -1,26 +1,27 @@
 <div class="modal-content">
 	<div class="modal-header my-modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-		<h4 class="modal-title"><b><i class="icon-note"></i> Doctor Details dsdsdsd</b></h4>
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="modal_close()"></button>
+		<h4 class="modal-title"><b><i class="icon-note"></i> Doctor Details</b></h4>
 	</div>
 	<!-- <div class="modal-body" style="overflow-y:scroll; overflow-x:hidden; max-height:400px;"> -->
 	<div class="modal-body">
 		<div class="tabbable">
 			<ul class="nav nav-tabs nav-tabs-lg">
 				<li  class="active">
-					<a href="#basic_info" data-toggle="tab" aria-expanded="true">Basic info</a>
+					<a href="index.html#basic_info" data-toggle="tab" aria-expanded="true">Basic info</a>
 				</li>
 				<li class="">
-					<a href="#detail_info" data-toggle="tab" aria-expanded="false">Detail_info</a>
+					<a href="index.html#detail_info" data-toggle="tab" aria-expanded="false">Detail_info</a>
 				</li>
 				<li class="">
-					<a href="#more_info" data-toggle="tab" aria-expanded="false">More info</a>
+					<a href="index.html#more_info" data-toggle="tab" aria-expanded="false">More info</a>
 				</li>
 			</ul>
 		</div>
 		<div class="tab-content">
 			<!-- begin tab basic info -->
 			<div class="tab-pane active" id="basic_info">
+				<br>
 				<div class="row">
 				 	<!-- Begin Title -->
 					<div class="col-md-3">
@@ -99,15 +100,15 @@
 			<!-- end tab basic info -->
 			<!-- begin tab detail_info -->
 			<div class="tab-pane" id="detail_info">
+				<br>
 				<div class="row">
 					<!-- Begin Enable -->
 					<div class="col-md-3">
-						<div class="form-group">
-							<label class="label-control">&nbsp;</label>
-							<div class="checkbox-list">
-								<label>
-								<div class="checker"><span><input type="checkbox"></span></div> Enable </label>
-							</div>
+						<label class="label-control">Enable</label>
+						<div class="form-control">
+							<label class="label-control my-checkbox">
+						      <input type="checkbox"> Enable
+						    </label>
 						</div>
 					</div>
 					<!-- End Enable -->
@@ -169,11 +170,11 @@
 					<!-- End Appt interval -->
 					<!-- Begin New calendar slot -->
 					<div class="col-md-3">
-						<div class="form-group">
-							<label class="label-control">&nbsp;</label>
-							<div class="checkbox-list">
-								<label><div class="checker"><span><input type="checkbox"></span></div> New calendar slot</label>
-							</div>
+						<label class="label-control">New calendar slot</label>
+						<div class="form-control">
+							<label class="label-control my-checkbox">
+						      <input type="checkbox"> New calendar slot
+						    </label>
 						</div>
 					</div>
 					<!-- End New calendar slot -->
@@ -182,25 +183,27 @@
 			<!-- end tab detail_info -->
 			<!-- begin tab more_info -->
 			<div class="tab-pane" id="more_info">
+				<br>
 				<!--  -->
 				<div class="row">
 					<!-- Begin Enable -->
 					<div class="col-md-3">
-						<div class="form-group">
-							<label class="label-control">&nbsp;</label>
-							<div class="checkbox-list">
-								<label><div class="checker"><span><input type="checkbox"></span></div> Receive email after </label>
-							</div>
+						<label class="label-control">Receive Email After</label>
+						<div class="form-control">
+							<label class="label-control my-checkbox">
+						      <input type="checkbox"> Receive EMail After
+						    </label>
 						</div>
 					</div>
 					<!-- End Enable -->
 					<!-- Begin Enable -->
 					<div class="col-md-3">
-						<div class="form-group">
-							<label class="label-control">&nbsp;</label>
-							<div class="checkbox-list">
-								<label><div class="checker"><span><input type="checkbox"></span></div> Appointment book </label>
-							</div>
+
+						<label class="label-control">Appointment Book</label>
+						<div class="form-control">
+							<label class="label-control my-checkbox">
+						      <input type="checkbox"> Appointment Book
+						    </label>
 						</div>
 					</div>
 					<!-- End Enable -->
@@ -272,7 +275,7 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn default" data-dismiss="modal">Close</button>
-		<button type="button" class="btn blue">Save changes</button>
+		<button type="button" class="btn default" data-dismiss="modal" ng-click="close()"><i class="icon-action-undo"></i> Close</button>
+		<button type="button" class="btn blue"><i class="glyphicon glyphicon-save"></i> Save changes</button>
 	</div>
 </div>

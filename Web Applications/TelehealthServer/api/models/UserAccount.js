@@ -54,9 +54,9 @@ module.exports = {
             type: Sequelize.STRING,
             field: 'TokenExpired'
         },
-        creationDate: {
+        createdDate: {
             type: Sequelize.DATE,
-            field: 'CreationDate'
+            field: 'CreatedDate'
         },
         createdBy: {
             type: Sequelize.BIGINT(20),
@@ -82,7 +82,7 @@ module.exports = {
     options: {
         tableName: 'UserAccount',
         timestamps: true,
-        createdAt: 'creationDate',
+        createdAt: 'createdDate',
         updatedAt: 'modifiedDate',
         classMethods: {},
         instanceMethods: {},

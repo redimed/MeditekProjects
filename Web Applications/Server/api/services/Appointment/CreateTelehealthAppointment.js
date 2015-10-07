@@ -1,7 +1,7 @@
 module.exports = function(data) {
     var $q = require('q');
-    data.UIDAppt = UUIDService.Create();
     var dataAppt = Services.GetDataAppointment.Appointment(data);
+    dataAppt.UID = UUIDService.Create();
     return sequelize.transaction()
         .then(function(t) {
             var defer = $q.defer();
@@ -9,33 +9,33 @@ module.exports = function(data) {
             Appointment.create(dataAppt, {
                     transaction: t
                 })
-                .then(function(appt) {
+                .then(function(apptCreated) {
                     /*create new TelehealthAppointment link with 
                     appointment created via AppointmentID */
                     var dataTeleAppt = Services.GetDataAppointment.TelehealthAppointment(data);
-                    appt.createTelehealthAppointment(dataTeleAppt, {
+                    apptCreated.createTelehealthAppointment(dataTeleAppt, {
                             transaction: t
                         })
-                        .then(function(telehealthAppt) {
+                        .then(function(telehealthApptCreated) {
                             /*create new PatientAppointment link with TelehealthAppointment 
                             created via TelehealthAppointmentID*/
-                            data.UIDPatientAppt = UUIDService.Create();
                             var dataPatientAppt = Services.GetDataAppointment.PatientAppointment(data);
-                            telehealthAppt.createPatientAppointment(dataPatientAppt, {
+                            dataPatientAppt.UID = UUIDService.Create();
+                            telehealthApptCreated.createPatientAppointment(dataPatientAppt, {
                                     transaction: t
                                 })
                                 .then(function(patientAppt) {
                                     /*create new ExaminationRequired link with TelehealthAppointment
                                     created via TelehealthAppointmentID*/
                                     var dataExamniationRequired = Services.GetDataAppointment.ExamniationRequired(data);
-                                    telehealthAppt.createExaminationRequired(dataExamniationRequired, {
+                                    telehealthApptCreated.createExaminationRequired(dataExamniationRequired, {
                                             transaction: t
                                         })
                                         .then(function(examRequired) {
                                             /*create new ReferedPlasticSurgeon link with 
                                             TelehealthAppointment created via TelehealthAppointmentID*/
                                             var dataPrefPlasSurgon = Services.GetDataAppointment.PrefPlasSurgon(data);
-                                            telehealthAppt.createPreferedPlasticSurgeon(dataPrefPlasSurgon, {
+                                            telehealthApptCreated.createPreferedPlasticSurgeon(dataPrefPlasSurgon, {
                                                     transaction: t
                                                 })
                                                 .then(function(refPlasSurgon) {
@@ -47,38 +47,51 @@ module.exports = function(data) {
                                                             transaction: t
                                                         })
                                                         .then(function(teleCliniDetails) {
-                                                            t.commit();
                                                             defer.resolve({
-                                                                result: 'success'
+                                                                transaction: t,
+                                                                status: 'success'
                                                             });
                                                         })
                                                         .catch(function(err) {
-                                                            t.rollback();
-                                                            defer.reject(err);
+                                                            defer.reject({
+                                                                transaction: t,
+                                                                error: err
+                                                            });
                                                         });
                                                 })
                                                 .catch(function(err) {
-                                                    t.rollback();
-                                                    defer.reject(err);
+                                                    defer.reject({
+                                                        transaction: t,
+                                                        error: err
+                                                    });
                                                 });
                                         })
                                         .catch(function(err) {
-                                            t.rollback();
-                                            defer.reject(err);
+                                            defer.reject({
+                                                transaction: t,
+                                                error: err
+                                            });
                                         });
                                 })
                                 .catch(function(err) {
-                                    t.rollback();
-                                    defer.reject(err);
+                                    defer.reject({
+                                        transaction: t,
+                                        error: err
+                                    });
                                 });
                         })
                         .catch(function(err) {
-                            t.rollback();
-                            defer.reject(err);
+                            defer.reject({
+                                transaction: t,
+                                error: err
+                            });
                         });
                 })
                 .catch(function(err) {
-                    defer.reject(err);
+                    defer.reject({
+                        transaction: t,
+                        error: err
+                    });
                 });
             return defer.promise;
         });

@@ -6,4 +6,6 @@ module.exports = {
     GetDataAppointment: require('./Appointment/GetDataAppointment'),
     GetListTelehealthAppointment: require('./Appointment/GetListTelehealthAppointment'),
     GetPaginationAppointment: require('./Appointment/GetPaginationAppointment'),
+    GetDetailTelehealthAppointment: require('./Appointment/GetDetailTelehealthAppointment'),
+    UpdateTelehealthAppointment: require('./Appointment/UpdateTelehealthAppointment'),
 };

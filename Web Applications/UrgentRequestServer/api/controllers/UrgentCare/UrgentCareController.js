@@ -69,7 +69,7 @@ module.exports = {
                     patientName: data.lastName + ' ' + data.firstName,
                     requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                     phoneNumber: data.phoneNumber,
-                    bcc: 'pnguyen@redimed.com.au'
+                    bcc: 'pnguyen@redimed.com.au, thanh1101681@gmail.com'
                 };
 
                 /*

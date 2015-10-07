@@ -10,5 +10,5 @@ module.exports.myconf = {
     GCMApiKey: 'AIzaSyChaE4-AETpWum-4-TOoxM7HZg3NvaFL6I',
     //============ Token Secret ======================
     TokenSecret: 'ewfn09qu43f09qfj94qf*&H#(R',
-    CoreAPI: 'http://192.168.1.97:3000'
+    CoreAPI: 'http://testapp.redimed.com.au:3001'
 };

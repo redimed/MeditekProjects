@@ -6,6 +6,7 @@ module.exports = {
 		output: validate patient's information
 	*/
 	validation : function(data) {
+		console.log(data);
 		var q = $q.defer();
 		var errors = [];
 		//create a error with contain a list errors input
@@ -39,8 +40,29 @@ module.exports = {
 			if(data.Address.length < 0 || data.Address.length > 255){
 				errors.push({field:"Address",message:"Patient.Address.length"});
 				err.pushErrors(errors);
+			}
+
+			if(data.Suburb.length < 0 || data.Suburb.length > 100){
+				errors.push({field:"Suburb",message:"Patient.Suburb.length"});
+				err.pushErrors(errors);
+			}
+
+			if(data.Postcode.length < 0 || data.Postcode.length > 100){
+				errors.push({field:"Postcode",message:"Patient.Postcode.length"});
+				err.pushErrors(errors);
+			}
+
+			if(data.Email.length < 0 || data.Email.length > 100){
+				errors.push({field:"Email",message:"Patient.Email.length"});
+				err.pushErrors(errors);
+			}
+			
+			if(data.HomePhoneNumber.length < 0 || data.HomePhoneNumber.length > 20){
+				errors.push({field:"HomePhoneNumber",message:"Patient.HomePhoneNumber.length"});
+				err.pushErrors(errors);
 				throw err;
 			}
+			
 			else{
 				//if data input has value throw err with contain a list error into controller 
 				if(err.errors!=undefined && err.errors!=null)
@@ -149,11 +171,12 @@ module.exports = {
 	GetPatient : function(data) {
 		return Services.UserAccount.GetUserAccountDetails(data)
 		.then(function(user){
+			console.log(user.ID);
 			//check if UserAccount is found in table UserAccount, get UserAccountID to find patient
-			if(user!=undefined && user!=null && user!=''){
+			if(user!=undefined && user!=null && user!='' && user.length!=0){
 				return Patient.findAll({
 					where: {
-						UserAccountID : user[0].ID
+						UserAccountID : user.ID
 					}
 				});
 			}

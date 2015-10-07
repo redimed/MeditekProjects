@@ -86,6 +86,7 @@ module.exports = {
 			.then(function(user){
 				//check if Phone Number is found in table UserAccount, get UserAccountID to find patient
 				if(user!=undefined && user!=null){
+					console.log(user[0]);
 					return Patient.findAll({
 						where: {
 							UserAccountID : user[0].ID
@@ -111,7 +112,7 @@ module.exports = {
 						    }),
 
 						{
-							ID : data.ID
+							UID : data.UID
 						}
 			  		]
 
@@ -132,7 +133,7 @@ module.exports = {
 		.then(function(success){
 			return Patient.update(data,{
 				where:{
-					ID : data.ID
+					UID : data.UID
 				}
 			});
 		}, function(err){
@@ -146,12 +147,32 @@ module.exports = {
 		input:patient's ID
 		output: get patient's information.
 	*/
-	GetPatient : function(patientID) {
-		return Patient.find({
-			where: {
-				ID : patientID
-			}
-		});
+	GetPatient : function(data) {
+		if(data.PhoneNumber){
+			return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
+			.then(function(user){
+				//check if Phone Number is found in table UserAccount, get UserAccountID to find patient
+				if(user!=undefined && user!=null){
+					return Patient.findAll({
+						where: {
+							UserAccountID : user[0].ID
+						}
+					});
+				}
+				else{
+					res.notFound({status:404,message:"not Found"});
+				}
+			},function(err){
+				res.serverError({status:500,message:ErrorWrap(err)});
+			});
+		}
+		else{
+			return Patient.find({
+				where: {
+					UID : data.UID
+				}
+			});
+		}
 	},
 	
 	

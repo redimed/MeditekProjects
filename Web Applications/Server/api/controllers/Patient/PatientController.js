@@ -141,8 +141,8 @@ module.exports = {
 		output: Patient's information of Patient's ID if patient has data.
 	*/
 	GetPatient : function(req, res) {
-		var ID = req.body.data;
-		Services.Patient.GetPatient(ID)
+		var data = req.body.data;
+		Services.Patient.GetPatient(data)
 		.then(function(info){
 			if(info!==null && info!==undefined){
 				res.ok({status:200, message:"success", data:info});

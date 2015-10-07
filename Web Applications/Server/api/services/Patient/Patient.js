@@ -1,4 +1,11 @@
 var $q = require('q');
+
+//moment
+var moment = require('moment');
+
+//generator Password
+var generatePassword = require('password-generator');
+
 module.exports = {
 	/*
 		validation : validate input from client post into server
@@ -6,61 +13,83 @@ module.exports = {
 		output: validate patient's information
 	*/
 	validation : function(data) {
-		console.log(data);
 		var q = $q.defer();
 		var errors = [];
 		//create a error with contain a list errors input
 		var err = new Error("ERRORS");
 		try {
 			//validate FirstName
-			if(data.FirstName.length < 0 || data.FirstName.length > 50){
-				errors.push({field:"FirstName",message:"Patient.FirstName.length"});
-				err.pushErrors(errors);
+			if(data.FirstName){
+				if(data.FirstName.length < 0 || data.FirstName.length > 50){
+					errors.push({field:"FirstName",message:"Patient.FirstName.length"});
+					err.pushErrors(errors);
+				}
 			}
 
 			//validate MiddleName
-			if(data.MiddleName.length < 0 || data.MiddleName.length > 100){
-				errors.push({field:"MiddleName",message:"Patient.MiddleName.length"});
-				err.pushErrors(errors);
+			if(data.MiddleName){
+				if(data.MiddleName.length < 0 || data.MiddleName.length > 100){
+					errors.push({field:"MiddleName",message:"Patient.MiddleName.length"});
+					err.pushErrors(errors);
+				}
 			}
 
 			//validate LastName
-			if(data.LastName.length < 0 || data.LastName.length > 50){
-				errors.push({field:"LastName",message:"Patient.LastName.length"});
-				err.pushErrors(errors);
+			if(data.LastName){
+				if(data.LastName.length < 0 || data.LastName.length > 50){
+					errors.push({field:"LastName",message:"Patient.LastName.length"});
+					err.pushErrors(errors);
+				}
 			}
 
 			//validate Gender
-			if(data.Gender != "F" && data.Gender != "M"){
-				errors.push({field:"Gender",message:"Patient.Gender.valueField"});
-				err.pushErrors(errors);
+			if(data.Gender){
+				if(data.Gender != "F" && data.Gender != "M"){
+					errors.push({field:"Gender",message:"Patient.Gender.valueField"});
+					err.pushErrors(errors);
+				}
 			}
 
 			//validate Address
-			if(data.Address.length < 0 || data.Address.length > 255){
-				errors.push({field:"Address",message:"Patient.Address.length"});
-				err.pushErrors(errors);
+			if(data.Address){
+				if(data.Address.length < 0 || data.Address.length > 255){
+					errors.push({field:"Address",message:"Patient.Address.length"});
+					err.pushErrors(errors);
+				}
 			}
 
-			if(data.Suburb.length < 0 || data.Suburb.length > 100){
-				errors.push({field:"Suburb",message:"Patient.Suburb.length"});
-				err.pushErrors(errors);
+			//validate Suburb
+			if(data.Suburb){
+				if(data.Suburb.length < 0 || data.Suburb.length > 100){
+					errors.push({field:"Suburb",message:"Patient.Suburb.length"});
+					err.pushErrors(errors);
+				}
 			}
 
-			if(data.Postcode.length < 0 || data.Postcode.length > 100){
-				errors.push({field:"Postcode",message:"Patient.Postcode.length"});
-				err.pushErrors(errors);
+			//validate Postcode
+			if(data.Postcode){
+				if(data.Postcode.length < 0 || data.Postcode.length > 100){
+					errors.push({field:"Postcode",message:"Patient.Postcode.length"});
+					err.pushErrors(errors);
+				}
 			}
 
-			if(data.Email.length < 0 || data.Email.length > 100){
-				errors.push({field:"Email",message:"Patient.Email.length"});
-				err.pushErrors(errors);
+			//validate Email? hoi a Tan su dung exception
+			if(data.Email){
+				if(data.Email.length < 0 || data.Email.length > 100){
+					errors.push({field:"Email",message:"Patient.Email.length"});
+					err.pushErrors(errors);
+				}
 			}
 			
-			if(data.HomePhoneNumber.length < 0 || data.HomePhoneNumber.length > 20){
-				errors.push({field:"HomePhoneNumber",message:"Patient.HomePhoneNumber.length"});
-				err.pushErrors(errors);
-				throw err;
+
+			//validate HomePhoneNumber? hoi a Tan su dung exception
+			if(data.HomePhoneNumber){
+				if(data.HomePhoneNumber.length < 0 || data.HomePhoneNumber.length > 20){
+					errors.push({field:"HomePhoneNumber",message:"Patient.HomePhoneNumber.length"});
+					err.pushErrors(errors);
+					throw err;
+				}
 			}
 			
 			else{
@@ -86,10 +115,53 @@ module.exports = {
 		output: insert Patient's information into table Patient 
 	*/
 	CreatePatient : function(data) {
-		data.CreatedDate = new Date();
+		var info = {
+			FirstName       : data.FirstName,
+			MiddleName      : data.MiddleName,
+			LastName        : data.LastName,
+			DOB             : data.DOB?moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate():null,
+			Gender          : data.Gender,
+			CountryID       : data.CountryID,
+			Suburb          : data.Suburb,
+			Postcode        : data.Postcode,
+			Email           : data.Email,
+			HomePhoneNumber : data.HomePhoneNumber,
+			UID             : UUIDService.Create(),
+			SiteID          : 1,
+			Address         : data.Address,
+			Enable          : "Y",
+			CreatedDate     : new Date()
+		};
 		return Services.Patient.validation(data)
 		.then(function(success){
-			return Patient.create(data);
+			return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber);
+			//return Patient.create(data);
+		},function(err){
+			throw err;
+		})
+		.then(function(user){
+			if(user.length > 0) {
+				info.UserAccountID = user[0].ID;
+				return Patient.create(info);
+			}
+			else{
+				data.password = generatePassword(12, false);
+				var userInfo = {
+					UserName    : data.PhoneNumber,
+					Email       : data.Email,
+					PhoneNumber : data.PhoneNumber,
+					Password    : data.password
+				};
+				userInfo.UID = UUIDService.Create();
+				//create UserAccount
+				return Services.UserAccount.CreateUserAccount(userInfo)
+				.then(function(user){
+					info.UserAccountID = user.ID;
+					return Patient.create(info);
+				},function(err){
+					throw err;
+				});
+			}
 		},function(err){
 			throw err;
 		});

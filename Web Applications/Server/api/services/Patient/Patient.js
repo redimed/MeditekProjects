@@ -1,4 +1,11 @@
 var $q = require('q');
+
+//moment
+var moment = require('moment');
+
+//generator Password
+var generatePassword = require('password-generator');
+
 module.exports = {
 	/*
 		validation : validate input from client post into server
@@ -12,35 +19,79 @@ module.exports = {
 		var err = new Error("ERRORS");
 		try {
 			//validate FirstName
-			if(data.FirstName.length < 0 || data.FirstName.length > 50){
-				errors.push({field:"FirstName",message:"Patient.FirstName.length"});
-				err.pushErrors(errors);
+			if(data.FirstName){
+				if(data.FirstName.length < 0 || data.FirstName.length > 50){
+					errors.push({field:"FirstName",message:"Patient.FirstName.length"});
+					err.pushErrors(errors);
+				}
 			}
 
 			//validate MiddleName
-			if(data.MiddleName.length < 0 || data.MiddleName.length > 100){
-				errors.push({field:"MiddleName",message:"Patient.MiddleName.length"});
-				err.pushErrors(errors);
+			if(data.MiddleName){
+				if(data.MiddleName.length < 0 || data.MiddleName.length > 100){
+					errors.push({field:"MiddleName",message:"Patient.MiddleName.length"});
+					err.pushErrors(errors);
+				}
 			}
 
 			//validate LastName
-			if(data.LastName.length < 0 || data.LastName.length > 50){
-				errors.push({field:"LastName",message:"Patient.LastName.length"});
-				err.pushErrors(errors);
+			if(data.LastName){
+				if(data.LastName.length < 0 || data.LastName.length > 50){
+					errors.push({field:"LastName",message:"Patient.LastName.length"});
+					err.pushErrors(errors);
+				}
 			}
 
 			//validate Gender
-			if(data.Gender != "F" && data.Gender != "M"){
-				errors.push({field:"Gender",message:"Patient.Gender.valueField"});
-				err.pushErrors(errors);
+			if(data.Gender){
+				if(data.Gender != "F" && data.Gender != "M"){
+					errors.push({field:"Gender",message:"Patient.Gender.valueField"});
+					err.pushErrors(errors);
+				}
 			}
 
 			//validate Address
-			if(data.Address.length < 0 || data.Address.length > 255){
-				errors.push({field:"Address",message:"Patient.Address.length"});
-				err.pushErrors(errors);
-				throw err;
+			if(data.Address){
+				if(data.Address.length < 0 || data.Address.length > 255){
+					errors.push({field:"Address",message:"Patient.Address.length"});
+					err.pushErrors(errors);
+				}
 			}
+
+			//validate Suburb
+			if(data.Suburb){
+				if(data.Suburb.length < 0 || data.Suburb.length > 100){
+					errors.push({field:"Suburb",message:"Patient.Suburb.length"});
+					err.pushErrors(errors);
+				}
+			}
+
+			//validate Postcode
+			if(data.Postcode){
+				if(data.Postcode.length < 0 || data.Postcode.length > 100){
+					errors.push({field:"Postcode",message:"Patient.Postcode.length"});
+					err.pushErrors(errors);
+				}
+			}
+
+			//validate Email? hoi a Tan su dung exception
+			if(data.Email){
+				if(data.Email.length < 0 || data.Email.length > 100){
+					errors.push({field:"Email",message:"Patient.Email.length"});
+					err.pushErrors(errors);
+				}
+			}
+			
+
+			//validate HomePhoneNumber? hoi a Tan su dung exception
+			if(data.HomePhoneNumber){
+				if(data.HomePhoneNumber.length < 0 || data.HomePhoneNumber.length > 20){
+					errors.push({field:"HomePhoneNumber",message:"Patient.HomePhoneNumber.length"});
+					err.pushErrors(errors);
+					throw err;
+				}
+			}
+			
 			else{
 				//if data input has value throw err with contain a list error into controller 
 				if(err.errors!=undefined && err.errors!=null)
@@ -64,10 +115,53 @@ module.exports = {
 		output: insert Patient's information into table Patient 
 	*/
 	CreatePatient : function(data) {
-		data.CreatedDate = new Date();
+		var info = {
+			FirstName       : data.FirstName,
+			MiddleName      : data.MiddleName,
+			LastName        : data.LastName,
+			DOB             : data.DOB?moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate():null,
+			Gender          : data.Gender,
+			CountryID       : data.CountryID,
+			Suburb          : data.Suburb,
+			Postcode        : data.Postcode,
+			Email           : data.Email,
+			HomePhoneNumber : data.HomePhoneNumber,
+			UID             : UUIDService.Create(),
+			SiteID          : 1,
+			Address         : data.Address,
+			Enable          : "Y",
+			CreatedDate     : new Date()
+		};
 		return Services.Patient.validation(data)
 		.then(function(success){
-			return Patient.create(data);
+			return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber);
+			//return Patient.create(data);
+		},function(err){
+			throw err;
+		})
+		.then(function(user){
+			if(user.length > 0) {
+				info.UserAccountID = user[0].ID;
+				return Patient.create(info);
+			}
+			else{
+				data.password = generatePassword(12, false);
+				var userInfo = {
+					UserName    : data.PhoneNumber,
+					Email       : data.Email,
+					PhoneNumber : data.PhoneNumber,
+					Password    : data.password
+				};
+				userInfo.UID = UUIDService.Create();
+				//create UserAccount
+				return Services.UserAccount.CreateUserAccount(userInfo)
+				.then(function(user){
+					info.UserAccountID = user.ID;
+					return Patient.create(info);
+				},function(err){
+					throw err;
+				});
+			}
 		},function(err){
 			throw err;
 		});
@@ -115,7 +209,6 @@ module.exports = {
 							UID : data.UID
 						}
 			  		]
-
 			  	}
 			});
 		}
@@ -129,11 +222,37 @@ module.exports = {
 	*/
 	UpdatePatient : function(data) {
 		data.ModifiedDate = new Date();
+		var DOB = moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
+		//get data not required
+		var patientInfo={
+			ID              : data.ID,
+			FirstName       : data.FirstName,
+			MiddleName      : data.MiddleName,
+			LastName        : data.LastName,
+			DOB             : DOB,
+			Gender          : data.Gender,
+			Address         : data.Address,
+			Enable          : data.Enable,
+			Suburb          : data.Suburb,
+			Postcode        : data.Postcode,
+			Email           : data.Email,
+			HomePhoneNumber : data.HomePhoneNumber,
+			CreatedDate     : data.CreatedDate,
+			CreatedBy       : data.CreatedBy,
+			ModifiedDate    : data.ModifiedDate,
+			ModifiedBy      : data.ModifiedBy
+		};
+
+		//get data required ( if data has value, get it)
+		if(data.SiteID)  patientInfo.SiteID=data.SiteID;
+		if(data.UserAccountID)  patientInfo.UserAccountID = data.UserAccountID;
+		if(data.CountryID)  patientInfo.CountryID = data.CountryID;
+		if(data.UID)  patientInfo.UID = data.UID;
 		return Services.Patient.validation(data)
 		.then(function(success){
-			return Patient.update(data,{
+			return Patient.update(patientInfo,{
 				where:{
-					UID : data.UID
+					UID : patientInfo.UID
 				}
 			});
 		}, function(err){
@@ -144,35 +263,26 @@ module.exports = {
 
 	/*
 		GetPatient : service get a patient with condition
-		input:patient's ID
+		input:useraccount's UID
 		output: get patient's information.
 	*/
 	GetPatient : function(data) {
-		if(data.PhoneNumber){
-			return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
-			.then(function(user){
-				//check if Phone Number is found in table UserAccount, get UserAccountID to find patient
-				if(user!=undefined && user!=null){
-					return Patient.findAll({
-						where: {
-							UserAccountID : user[0].ID
-						}
-					});
-				}
-				else{
-					res.notFound({status:404,message:"not Found"});
-				}
-			},function(err){
-				res.serverError({status:500,message:ErrorWrap(err)});
-			});
-		}
-		else{
-			return Patient.find({
-				where: {
-					UID : data.UID
-				}
-			});
-		}
+		return Services.UserAccount.GetUserAccountDetails(data)
+		.then(function(user){
+			//check if UserAccount is found in table UserAccount, get UserAccountID to find patient
+			if(user!=undefined && user!=null && user!='' && user.length!=0){
+				return Patient.findAll({
+					where: {
+						UserAccountID : user.ID
+					}
+				});
+			}
+			else{
+				return null;
+			}
+		},function(err){
+			res.serverError({status:500,message:ErrorWrap(err)});
+		});
 	},
 	
 	

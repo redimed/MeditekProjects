@@ -524,7 +524,7 @@ var Metronic = function() {
         //main function to initiate the theme
         init: function() {
             //IMPORTANT!!!: Do not modify the core handlers call order.
-
+            // alert("OK")
             //Core handlers
             handleInit(); // initialize core variables
             handleOnResize(); // set and handle responsive    

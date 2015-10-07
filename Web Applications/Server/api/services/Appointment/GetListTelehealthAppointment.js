@@ -4,14 +4,14 @@ module.exports = function(data) {
     var pagination = Services.GetPaginationAppointment(data);
     //get limit, offset
     Appointment.findAll({
-            attributes: ['ID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status', 'Enable'],
+            attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status', 'Enable'],
             include: [{
                 model: TelehealthAppointment,
-                attributes: ['ID', 'RefName', 'RefDate'],
+                attributes: ['UID', 'RefName', 'RefDate'],
                 required: true,
                 include: [{
                     model: PatientAppointment,
-                    attributes: ['ID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'PhoneNumber'],
+                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'PhoneNumber'],
                     required: true,
                     where: pagination.filterPatientAppointment,
                     order: pagination.orderPatientAppointment
@@ -20,13 +20,13 @@ module.exports = function(data) {
                 order: pagination.orderTelehealthAppointment
             }, {
                 model: Doctor,
-                attributes: ['ID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'Phone'],
+                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'Phone'],
                 required: true,
                 where: pagination.filterDoctor,
                 order: pagination.orderDoctor
             }, {
                 model: Patient,
-                attributes: ['ID', 'FirstName', 'MiddleName', 'LastName', 'DOB'],
+                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB'],
                 required: true,
                 where: pagination.filterPatient,
                 order: pagination.orderPatient,
@@ -43,7 +43,7 @@ module.exports = function(data) {
         })
         .then(function(apptTelehealth) {
             defer.resolve({
-                result: apptTelehealth
+                data: apptTelehealth
             });
         }, function(err) {
             defer.reject(err);

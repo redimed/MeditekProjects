@@ -1,5 +1,7 @@
-var app = angular.module('app.loggedIn.home.controller', []);
+var app = angular.module('app.authentication.home.controller',[
+	'app.authentication.home.list.controller'
+]);
 
 app.controller('homeCtrl', function(){
-	console.log('home controller');
+	console.log('homeCtrl');
 });

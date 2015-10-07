@@ -1,9 +1,3 @@
-//moment
-var moment = require('moment');
-
-//generator Password
-var generatePassword = require('password-generator');
-
 module.exports = {
 	/*
 		CreatePatient : create a new patient
@@ -12,64 +6,12 @@ module.exports = {
 	*/
 	CreatePatient : function(req, res) {
 		var data = req.body.data;
-		var info = {
-			FirstName  : data.FirstName,
-			MiddleName : data.MiddleName,
-			LastName   : data.LastName,
-			Dob        : moment(data.Dob,'YYYY-MM-DD HH:mm:ss ZZ').toDate(),
-			Gender     : data.Gender,
-			Address    : data.Address,
-			Enable     : "Y"
-		};
-		info.UID = UUIDService.Create();
-		info.SiteID = 1;
-		//hien tai thi CountryID chua co nen tu set 1 CountryID trong bang? Country de test.
-		info.CountryID = 84;
-		//check is patient have UserAccount by Phone Number
-		Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
-		.then(function(user){
-			//if patient has user account, get UserAccountID to create patient
-			if(user.length > 0) {
-				info.UserAccountID = user[0].ID;
-				Services.Patient.CreatePatient(info)
-				.then(function(result){
-					res.ok({status:200,message:"success"});
-				})
-				.catch(function(err){
-					res.serverError({status:500,message:ErrorWrap(err)});
-				});
-			}
-			//if patient doesn't have UserAccount, create UserAccount before create patient
-			else {
-				data.password = generatePassword(12, false);
-				var userInfo = {
-					UserName    : data.PhoneNumber,
-					Email       : data.Email,
-					PhoneNumber : data.PhoneNumber,
-					Password    : data.password
-				};
-				userInfo.UID = UUIDService.Create();
-				//create UserAccount
-				Services.UserAccount.CreateUserAccount(userInfo)
-				.then(function(user){
-					info.UserAccountID = user.ID;
-					//call createPatient function from model UserAccount
-					return Services.Patient.CreatePatient(info);
-				})
-				.catch(function(err){
-					res.serverError({status:500,message:ErrorWrap(err)});
-				})
-				//after call function createPatient, this code runs
-				.then(function(result){
-					res.ok({status:200,message:"success"});
-				})
-				.catch(function(err){
-					res.serverError({status:500,message:ErrorWrap(err)});
-				});
-			}
+		Services.Patient.CreatePatient(data)
+		.then(function(info){
+			res.ok({status:200, message:"success"});
 		})
-		.catch(function(err) {
-			res.serverError({status:500,message:ErrorWrap(err)});
+		.catch(function(err){
+			res.serverError({status:500, message:ErrorWrap(err)});
 		});
 	},
 
@@ -100,30 +42,7 @@ module.exports = {
 	*/
 	UpdatePatient : function(req, res) {
 		var data = req.body.data;
-		var Dob = moment(data.Dob,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
-		//get data not required
-		var patientInfo={
-				ID           : data.ID,
-				FirstName    : data.FirstName,
-				MiddleName   : data.MiddleName,
-				LastName     : data.LastName,
-				Dob          : Dob,
-				Gender       : data.Gender,
-				Address      : data.Address,
-				Enable       : data.Enable,
-				CreatedDate  : data.CreatedDate,
-				CreatedBy    : data.CreatedBy,
-				ModifiedDate : data.ModifiedDate,
-				ModifiedBy   : data.ModifiedBy
-		};
-
-		//get data required ( if data has value, get it)
-		if(data.SiteID)  patientInfo.SiteID=data.SiteID;
-		if(data.UserAccountID)  patientInfo.UserAccountID = data.UserAccountID;
-		if(data.CountryID)  patientInfo.CountryID = data.CountryID;
-		if(data.UID)  patientInfo.UID = data.UID;
-
-		Services.Patient.UpdatePatient(patientInfo)
+		Services.Patient.UpdatePatient(data)
 		.then(function(result){
 			if(result[0] > 0)
 				res.ok({status:200,message:"success"});
@@ -137,7 +56,7 @@ module.exports = {
 
 	/*
 		GetPatient get a patient with condition
-		input:  Patient's ID
+		input:  UserAccount's UID
 		output: Patient's information of Patient's ID if patient has data.
 	*/
 	GetPatient : function(req, res) {
@@ -197,6 +116,10 @@ module.exports = {
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});
 		});
+	},
+
+	Test : function(req, res) {
+		res.json("yes");
 	}
 
 };

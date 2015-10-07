@@ -4,7 +4,7 @@
 	<ul class="page-breadcrumb">
 		<li>
 			<i class="fa fa-home"></i>
-			<a ui-view="loggedIn.doc.list">Doctor</a>
+			<a ui-sref="authentication.doctor.list">Doctor</a>
 		</li>
 		<li>
 			<i class="fa fa-angle-right"></i>
@@ -16,22 +16,22 @@
 
 <div class="row">
 	<div class="col-md-12 column sortable">
-		<div class="portlet portlet-sortable light bordered ui-sortable-handle">
-			<div class="portlet-title tabbable-line">
+		<div class="portlet portlet-sortable box blue bordered ui-sortable-handle">
+			<div class="portlet-title ">
 				<div class="caption">
-					<i class="icon-pin font-blue"></i>
-					<span class="caption-subject bold font-blue uppercase">
-					Create new doctor </span>
+					<i class="glyphicon glyphicon-plus "></i>
+					<span class="caption-subject bold">
+					CREATE NEW DOCTOR </span>
 				</div>
 				<ul class="nav nav-tabs">
 					<li class="active">
-						<a href="#basic_info" data-toggle="tab" aria-expanded="true">Basic info </a>
+						<a href="index.html#basic_info" data-toggle="tab" aria-expanded="true">Basic Info </a>
 					</li>
 					<li class="">
-						<a href="#detail_info" data-toggle="tab" aria-expanded="false">Detail info </a>
+						<a href="index.html#detail_info" data-toggle="tab" aria-expanded="false">Detail Info </a>
 					</li>
 					<li class="">
-						<a href="#more_info" data-toggle="tab" aria-expanded="false">More info</a>
+						<a href="index.html#more_info" data-toggle="tab" aria-expanded="false">More Info</a>
 					</li>
 				</ul>
 			</div>
@@ -42,36 +42,37 @@
 						<div class="tab-content">
 							<!-- begin basic info -->
 							<div class="tab-pane active" id="basic_info">
+								<br>
 								<div class="row">
 								 	<!-- Begin Title -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="text" id="title" class="form-control">
+										<div class="form-group ">
 											<label for="title">Title</label>
+											<input type="text" id="title" class="form-control" placeholder="Title">
 										</div>
 									</div>
 									<!-- End Title -->
 									<!-- begin name -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="text" class="form-control">
+										<div class="form-group ">
 											<label class="control-label">Name</label>
+											<input type="text" class="form-control" placeholder="Name">
 										</div>
 									</div>
 									<!-- end name -->
 									<!-- begin Email -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="text" class="form-control">
+										<div class="form-group ">
 											<label class="control-label">Email</label>
+											<input type="text" class="form-control" placeholder="Email">
 										</div>
 									</div>
 									<!-- end Email -->
 									<!-- begin Phone -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="text" class="form-control">
+										<div class="form-group ">
 											<label class="control-label">Phone</label>
+											<input type="text" class="form-control" placeholder="Phone">
 										</div>
 									</div>
 									<!-- end Phone -->
@@ -80,33 +81,33 @@
 								<div class="row">
 									<!-- Begin First name -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="text" class="form-control">
-											<label class="control-label">First name</label>
+										<div class="form-group ">
+											<label class="control-label">First Name</label>
+											<input type="text" class="form-control" placeholder="First Name">
 										</div>
 									</div>
 									<!-- End First name -->
 									<!-- Begin Middle name -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="text" class="form-control">
-											<label class="control-label">Middle name</label>
+										<div class="form-group ">
+											<label class="control-label">Middle Name</label>
+											<input type="text" class="form-control" placeholder="Middle Name">
 										</div>
 									</div>
 									<!-- End Middle name -->
 									<!-- Begin Sur name -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="text" class="form-control">
-											<label class="control-label">Sur name</label>
+										<div class="form-group ">
+											<label class="control-label">Sur Name</label>
+											<input type="text" class="form-control" placeholder="Sur Name">
 										</div>
 									</div>
 									<!-- End Sur name -->
 									<!-- Begin Address -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="text" class="form-control">
+										<div class="form-group ">
 											<label class="control-label">Address</label>
+											<input type="text" class="form-control" placeholder="Address">
 										</div>
 									</div>
 									<!-- End Address -->
@@ -116,43 +117,45 @@
 							<!-- end basic info -->
 							<!-- begin detail info -->
 							<div class="tab-pane" id="detail_info">
+								<br>
 								<div class="row">
 									<!-- Begin Enable -->
 									<div class="col-md-3">
-										<div class="md-checkbox-inline">
-											<label>&nbsp;</label>
-											<div class="md-checkbox">
-												<input type="checkbox" id="enable" class="md-check">
-												<label for="enable">
-												<span></span>
-												<span class="check"></span>
-												<span class="box"></span>
-												Enable </label>
-											</div>
+										<label class="label-control">Enable</label>
+										<div class="form-control">
+											<label class="label-control my-checkbox">
+										      <input type="checkbox"> Enable
+										    </label>
 										</div>
+										    
+									    
+										<!-- <div class="form-group">
+											<label class="label-control" for="enable">Enable </label>
+											<input type="checkbox" id="enable" class="form-control">
+										</div> -->
 									</div>
 									<!-- End Enable -->
 									<!-- Begin Provider number -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="text" class="form-control">
-											<label class="control-label">Provider number</label>
+										<div class="form-group ">
+											<label class="control-label">Provider Number</label>
+											<input type="text" class="form-control" placeholder="Phone Number">
 										</div>
 									</div>
 									<!-- End Provider number -->
 									<!-- Begin Prescriber number -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="text" class="form-control">
-											<label class="control-label">Prescriber number</label>
+										<div class="form-group ">
+											<label class="control-label">Prescriber Number</label>
+											<input type="text" class="form-control" placeholder="Prescriber Number">
 										</div>
 									</div>
 									<!-- End Prescriber number -->
 									<!-- Begin Payee provider number -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="text" class="form-control">
-											<label class="control-label">Payee provider number</label>
+										<div class="form-group ">
+											<label class="control-label">Payee Provider Number</label>
+											<input type="text" class="form-control" placeholder="Payee Provider Number">
 										</div>
 									</div>
 									<!-- End Payee provider number -->
@@ -161,49 +164,48 @@
 								<div class="row">
 									<!-- Begin Provider type -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
+										<div class="form-group ">
+											<label class="control-label">Provider Type</label>
 											<select class="form-control">
 												<option value=""></option>
-												<option value="1">Provider type</option>
+												<option value="1">Provider Type</option>
 											</select>
-											<label class="control-label">Provider type</label>
 										</div>
 									</div>
 									<!-- End Provider type -->
 									<!-- Begin Clinical department -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
+										<div class="form-group ">
+											<label class="control-label">Clinical Department</label>
 											<select class="form-control">
 												<option value=""></option>
 												<option value="1">Doctor</option>
 												<option value="2">Dept</option>
 												<option value="3">Physio</option>
 											</select>
-											<label class="control-label">Clinical department</label>
 										</div>
 									</div>
 									<!-- End Provider type -->
 									<!-- Begin Appt interval -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="number" class="form-control">
-											<label class="control-label">Appt interval</label>
+										<div class="form-group ">
+											<label class="control-label">Appt Interval</label>
+											<input type="number" class="form-control" placeholder="Appt Interval">
 										</div>
 									</div>
 									<!-- End Appt interval -->
 									<!-- Begin New calendar slot -->
 									<div class="col-md-3">
-										<div class="md-checkbox-inline">
-											<label>&nbsp;</label>
-											<div class="md-checkbox">
-												<input type="checkbox" id="new_calendar_slot" class="md-check">
-												<label for="new_calendar_slot">
-												<span></span>
-												<span class="check"></span>
-												<span class="box"></span>
-												New Calendar Slot </label>
-											</div>
+										<label>New Calendar Slot</label>
+										<div class="form-control">
+											<label class="label-control">
+												<input type="checkbox" id="new_calendar_slot">
+												New Calendar Slot
+											</label>
 										</div>
+										
+										
+										
 									</div>
 									<!-- End New calendar slot -->
 								</div>
@@ -211,93 +213,84 @@
 							<!-- end detail info -->
 							<!-- begin more info -->
 							<div class="tab-pane" id="more_info">
+								<br>
 								<div class="row">
 									<!-- Begin Receive email after -->
 									<div class="col-md-3">
-										<div class="md-checkbox-inline">
-											<label>&nbsp;</label>
-											<div class="md-checkbox">
-												<input type="checkbox" id="receive_email_after" class="md-check">
-												<label for="receive_email_after">
-												<span></span>
-												<span class="check"></span>
-												<span class="box"></span>
-												Receive email after </label>
-											</div>
+										<label class="label-control">Receive Email After</label>
+										<div class="form-control">
+											<label class="label-control">
+												<input type="checkbox"> 
+												Receive Email After
+											</label>
 										</div>
 									</div>
 									<!-- End Receive email after -->
 									<!-- Begin Appointment book  -->
 									<div class="col-md-3">
-										<div class="md-checkbox-inline">
-											<label>&nbsp;</label>
-											<div class="md-checkbox">
-												<input type="checkbox" id="appointment_book" class="md-check">
-												<label for="appointment_book">
-												<span></span>
-												<span class="check"></span>
-												<span class="box"></span>
-												Appointment book </label>
-											</div>
+										<label class="label-control">Appointment Book</label>
+										<div class="form-control">
+											<label class="label-control">
+												<input type="checkbox"> 
+												Appointment Book
+											</label>
 										</div>
 									</div>
 									<!-- End Appointment book  -->
 									<!-- Begin Abn number -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="text" class="form-control">
-											<label class="control-label">Abn number</label>
+										<div class="form-group ">
+											<label class="control-label">Abn Number</label>
+											<input type="text" class="form-control" placeholder="Abn Number">
 										</div>
 									</div>
 									<!-- End Abn number -->
 									<!-- Begin sign off -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="text" class="form-control">
-											<label class="control-label">sign off</label>
+										<div class="form-group ">
+											<label class="control-label">sign Off</label>
+											<input type="text" class="form-control" placeholder="Sign Off">
 										</div>
 									</div>
 									<!-- End sign off -->
 								</div>
-								<div class="row">&nbsp;</div>
 								<div class="row">
 									<!-- Begin Medical registration -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="number" class="form-control">
-											<label class="control-label">Medical registration</label>
+										<div class="form-group ">
+											<label class="control-label">Medical Registration</label>
+											<input type="number" class="form-control" placeholder="Medical Registration">
 										</div>
 									</div>
 									<!-- End Medical registration -->
 									<!-- Begin Qualification ID -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
+										<div class="form-group ">
+											<label class="control-label">Qualification</label>
 											<select class="form-control">
 												<option value=""></option>
 												<option value="1">Qualification</option>
 											</select>
-											<label class="control-label">Qualification</label>
 										</div>
 									</div>
 									<!-- End  Qualification ID -->
 									<!-- Begin Oshc id -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="number" class="form-control">
-											<label class="control-label">Oshc id</label>
+										<div class="form-group ">
+											<label class="control-label">Oshc ID</label>
+											<input type="number" class="form-control" placeholder="Oshc ID">
 										</div>
 									</div>
 									<!-- End Oshc id -->
 									<!-- Begin Default bank account -->
 									<div class="col-md-3">
-										<div class="form-group form-md-line-input form-md-floating-label has-info">
-											<input type="number" class="form-control">
-											<label class="control-label">Default bank account</label>
+										<div class="form-group ">
+											<label class="control-label">Default Bank Account</label>
+											<input type="number" class="form-control" placeholder="Default Bank Account">
 										</div>
 									</div>
 									<!-- End Default bank account -->
 								</div>
-								<div class="row">&nbsp;</div>
 								<!-- begin signatue -->
 								<div class="row">
 									<div class="col-md-12">
@@ -315,7 +308,7 @@
 					</div>
 					<!-- begin submit form -->
 					<div class="form-actions right">
-						<a href="" ui-sref="loggedIn.doctor.list" class="btn btn-default"><i class="icon-arrow-left"></i> Back</a>
+						<a href="" ui-sref="authentication.doctor.list" class="btn btn-default"><i class="icon-arrow-left"></i> Back</a>
 						<button type="submit" class="btn blue"><i class="glyphicon glyphicon-save"></i> Save</button>
 					</div>
 					<!-- end submit form -->

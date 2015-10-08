@@ -1,15 +1,31 @@
 var app = angular.module('app', [
 	"ngCookies",
+    "ngAnimate",
     "ui.router",
     "ui.bootstrap", 
     "ngSanitize",
     "restangular",
+    "toastr",
     "app.unAuthentication",
     "app.authentication"
 ]);
 
 app
-	.config(function($httpProvider,$stateProvider, $urlRouterProvider, RestangularProvider){
+	.config(function($httpProvider,$stateProvider, $urlRouterProvider, RestangularProvider, toastrConfig){
+        // TOASTR CONFIG
+        angular.extend(toastrConfig, {
+            autoDismiss: false,
+            containerId: 'toast-container',
+            maxOpened: 5,    
+            newestOnTop: true,
+            positionClass: 'toast-top-right',
+            preventDuplicates: false,
+            preventOpenDuplicates: true,
+            target: 'body',
+            tapToDismiss: true
+        });
+        //END TOASTR CONFIG
+
 		// JWT SIGN
         $httpProvider.interceptors.push(function($q, $location, $cookies) {
             return {

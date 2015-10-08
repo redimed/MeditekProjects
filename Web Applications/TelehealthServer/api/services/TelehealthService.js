@@ -25,6 +25,7 @@ module.exports = {
                 }
             }
         } else users = []
+        console.log("======Online Users======: ",users);
         sails.sockets.blast('online_users', users);
     },
     MakeRequest: function(info) {

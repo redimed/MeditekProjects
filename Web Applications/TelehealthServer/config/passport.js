@@ -12,10 +12,9 @@ passport.use(new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, function(req, u, p, done) {
+    var whereOpts = u.indexOf('@') > -1 ? {email: u} : {userName: u};
     UserAccount.find({
-        where: {
-            [u.indexOf('@') > -1 ? 'email' : 'userName']: u
-        }
+        where: whereOpts
     }).then(function(user) {
         if (user) {
             bcrypt.compare(p.toString(), user.password, function(err, check) {

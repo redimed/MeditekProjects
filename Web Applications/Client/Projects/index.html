@@ -152,6 +152,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="libs/angular-sanitize/angular-sanitize.min.js" type="text/javascript"></script>
 <script src="libs/angular-touch/angular-touch.min.js" type="text/javascript"></script>	
 <script src="libs/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
+<script src="libs/angular-animate/angular-animate.min.js" type="text/javascript"></script>
 <script src="theme/assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
 <!-- END CORE ANGULARJS PLUGINS -->
 
@@ -161,12 +162,18 @@ License: You must have a valid license purchased only from themeforest(the above
 <script type="text/javascript" src="libs/lodash/lodash.min.js"></script>
 <!-- END DEPENDENCIES -->
 
+<!-- BEGIN ANGULAR TOASTR -->
+<link rel="stylesheet" type="text/css" href="libs/angular-toastr/dist/angular-toastr.css" />
+<script type="text/javascript" src="libs/angular-toastr/dist/angular-toastr.tpls.js"></script>
+<!-- END ANGULAR TOASTR -->
+
 <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
 <script src="app.js" type="text/javascript"></script>
 <!-- END APP LEVEL ANGULARJS SCRIPTS -->
 
 <!-- BEGIN MODULE unAuthentication -->
 <script src="modules/unAuthentication/unAuthentication.js" ></script>
+<script type="text/javascript" src="modules/unAuthentication/services/unAuthenticateService.js"></script>
 <script src="modules/unAuthentication/controllers/unAuthenticationCtrl.js"></script>
 <script src="modules/unAuthentication/controllers/loginCtrl.js"></script>
 <!-- END MODULE unAuthentication -->

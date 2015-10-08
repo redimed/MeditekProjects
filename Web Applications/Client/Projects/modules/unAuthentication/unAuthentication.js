@@ -1,6 +1,6 @@
 var app = angular.module('app.unAuthentication', [
 	'app.unAuthentication.controller',
-	//'app.unAuthentication.login.controller'
+	'app.unAuthentication.service'
 ]);
 
 app.config(function($stateProvider,$urlRouterProvider){

@@ -6,6 +6,10 @@ module.exports = {
             allowNull: false,
             primaryKey: true
         },
+        UID: {
+            type: Sequelize.STRING(255),
+            allowNull: false
+        },
         AppointmentID: {
             type: Sequelize.BIGINT(20),
             allowNull: false,
@@ -37,12 +41,12 @@ module.exports = {
             type: Sequelize.STRING(20),
             allowNull: true
         },
-        RefPostCode: {
-            type: Sequelize.STRING(45),
+        RefPostcode: {
+            type: Sequelize.STRING(100),
             allowNull: true
         },
         RefSignature: {
-            type: Sequelize.STRING(45),
+            type: Sequelize.STRING(255),
             allowNull: true
         },
         RefDate: {

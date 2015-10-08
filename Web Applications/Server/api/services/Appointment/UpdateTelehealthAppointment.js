@@ -38,9 +38,21 @@ module.exports = function(data) {
                                         .then(function(patientApptUpdated) {
                                             if (HelperService.CheckExistData(data.Doctors) &&
                                                 HelperService.CheckExistData(data.Doctors[0])) {
+                                                //upadte doctor telehealth appointment
                                                 var dataDoctor = Services.GetDataAppointment.Doctor(data.Doctors[0]);
-                                                console.log(dataDoctor);
-                                                return;
+                                                Doctor.update(dataDoctor, {
+                                                        where: {
+                                                            UID: data.Doctors[0].UID
+                                                        }
+                                                    }, {
+                                                        transaction: t
+                                                    })
+                                                    .then(function(doctorUpdated) {
+
+                                                    })
+                                                    .catch(function() {
+
+                                                    });
                                             } else {
                                                 /*
                                                 only update appointment, telehealt appointment, patient - complete

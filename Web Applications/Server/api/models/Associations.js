@@ -22,9 +22,20 @@ module.exports = {
         TelehealthAppointment.hasOne(PreferedPlasticSurgeon, {
             foreignKey: 'TelehealthAppointmentID'
         });
-
+        // TelehealthAppointment - Doctor
+        TelehealthAppointment.belongsToMany(Doctor, {
+            through: 'RelTelehealthAppointmentDoctor',
+            foreignKey: 'TelehealthAppointmentID'
+        });
+        Doctor.belongsToMany(TelehealthAppointment, {
+            through: 'RelTelehealthAppointmentDoctor',
+            foreignKey: 'DoctorID'
+        });
         // TelehealthAppointment - ClinicalDetail
-        TelehealthAppointment.hasOne(ClinicalDetail, {
+        TelehealthAppointment.hasMany(ClinicalDetail, {
+            foreignKey: 'TelehealthAppointmentID'
+        });
+        ClinicalDetail.belongsTo(TelehealthAppointment, {
             foreignKey: 'TelehealthAppointmentID'
         });
         // TelehealthAppointment - ClinicalDetail
@@ -55,6 +66,13 @@ module.exports = {
         //association Patient - UserAccount
         Patient.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
+        });
+
+        Doctor.belongsTo(Department, {
+            foreignKey: 'DepartmentID'
+        });
+        Department.hasOne(Doctor, {
+            foreignKey: 'DepartmentID'
         });
         //GeneralPractitioner - Doctor
         GeneralPractitioner.belongsToMany(Doctor, {

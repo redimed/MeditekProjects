@@ -600,7 +600,7 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
                 if(err != nil) {
                     let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
                     
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    dispatch_sync(dispatch_get_main_queue(), { () -> Void in
                         self.AlertShow("Notification",message: "Can not connect to server",addButtonWithTitle: "OK")
                     })
                     alert.dismissWithClickedButtonIndex(-1, animated: true)
@@ -613,7 +613,7 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
                         if(status == 200){
                             
                             
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
                                
                             let alertController = UIAlertController(title: "Success", message: "Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.", preferredStyle: .Alert)
                                 
@@ -631,7 +631,7 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
                             alert.dismissWithClickedButtonIndex(-1, animated: true)
                         }else{
                             
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
                                 self.AlertShow("Notification", message: "Error ! Please check your connection and try again", addButtonWithTitle: "OK")
                             })
                             alert.dismissWithClickedButtonIndex(-1, animated: true)

@@ -36,7 +36,7 @@ app
         // END CORS PROXY
 
         //RESTANGULAR DEFAULT
-        RestangularProvider.setBaseUrl("");
+        RestangularProvider.setBaseUrl("http://localhost:3001");
 
 		$urlRouterProvider.otherwise('');
 		$stateProvider

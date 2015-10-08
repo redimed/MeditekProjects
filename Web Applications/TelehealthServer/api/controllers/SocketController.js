@@ -75,6 +75,7 @@ module.exports = {
             });
             return;
         }
+        console.log("====Emit Online Users====");
         TelehealthService.GetOnlineUsers();
     },
     GenerateConferenceSession: function(req, res) {

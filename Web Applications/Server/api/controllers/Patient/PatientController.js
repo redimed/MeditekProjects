@@ -116,10 +116,5 @@ module.exports = {
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});
 		});
-	},
-
-	Test : function(req, res) {
-		res.json("yes");
 	}
-
 };

@@ -42,7 +42,7 @@ module.exports = {
                             patientName: UR.lastName + ' ' + UR.firstName,
                             requestDate: Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                             phoneNumber: UR.phoneNumber,
-                            bcc: 'pnguyen@redimed.com.au'
+                            bcc: 'pnguyen@redimed.com.au, thanh1101681@gmail.com'
                         };
                         var CallBackSendMail = function(err, responseStatus, html, text) {
                                 if (err) {
@@ -50,7 +50,11 @@ module.exports = {
                                 }
                             }
                             //send mail
-                        SendMailService.SendMail('UrgentRequest', emailInfo, CallBackSendMail);
+                        if (emailInfo.urgentRequestType === 'WorkInjury') {
+                            SendMailService.SendMail('WorkInjuryRequest', emailInfo, CallBackSendMail);
+                        } else {
+                            SendMailService.SendMail('UrgentRequest', emailInfo, CallBackSendMail);
+                        }
 
                         //create message queue
                         UrgentRequest.findOne()

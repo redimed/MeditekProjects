@@ -2,23 +2,48 @@ module.exports = function(teleAppointmentUID) {
     var $q = require('q');
     var defer = $q.defer();
     Appointment.findOne({
-            attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status', 'Enable'],
+            attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status'],
             include: [{
                 model: TelehealthAppointment,
-                attributes: ['ID', 'RefName', 'RefDate'],
+                attributes: ['UID', 'Fund', 'Correspondence', 'RefName',
+                    'RefHealthLink', 'RefAddress', 'RefTelePhone',
+                    'RefPostCode', 'RefSignature', 'RefDate', 'RefProviderNumber',
+                    'RefDurationOfReferal', 'PresentComplain', 'Allergy'
+                ],
                 required: true,
                 include: [{
                     model: PatientAppointment,
-                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'PhoneNumber'],
+                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName',
+                        'DOB', 'Email', 'PhoneNumber', 'Address', 'Suburb', 'Postcode',
+                        'Email', 'PhoneNumber', 'HomePhoneNumber'
+                    ],
                     required: true,
+                }, {
+                    model: ExaminationRequired,
+                    attributes: ['Private', 'Public', 'DVA', 'WorkersComp', 'MVIT'],
+                    required: true
+                }, {
+                    model: PreferedPlasticSurgeon,
+                    attributes: ['Name'],
+                    required: true
+                }, {
+                    model: ClinicalDetail,
+                    required: true
                 }]
             }, {
                 model: Doctor,
-                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'Phone'],
-                required: true
+                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Type', 'Email', 'Phone'],
+                required: true,
+                include: [{
+                    model: Department,
+                    attributes: ['UID', 'DepartmentCode', 'DepartmentName', 'Description'],
+                    required: true
+                }]
             }, {
                 model: Patient,
-                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB'],
+                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB',
+                    'Gender', 'Address', 'Suburb', 'Postcode', 'Email', 'HomePhoneNumber'
+                ],
                 required: true,
                 include: [{
                     model: UserAccount,

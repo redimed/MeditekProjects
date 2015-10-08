@@ -26,77 +26,61 @@ module.exports = {
                 key: 'ID'
             }
         },
+        DepartmentID: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            references: {
+                model: 'Department',
+                key: 'ID'
+            }
+        },
         FirstName: {
             type: Sequelize.STRING(50),
-            allowNull: true,
-            validate: {
-                max: {
-                    args: 50,
-                    msg: 'First Name is too long'
-                }
-            }
+            allowNull: true
         },
         MiddleName: {
             type: Sequelize.STRING(100),
-            allowNull: true,
-            validate: {
-                max: {
-                    args: 100,
-                    msg: 'Middle Name is too long'
-                }
-            }
+            allowNull: true
         },
         LastName: {
             type: Sequelize.STRING(255),
-            allowNull: true,
-            validate: {
-                max: {
-                    args: 50,
-                    msg: 'Last Name is too long'
-                }
-            }
+            allowNull: true
+        },
+        Type: {
+            type: Sequelize.STRING(100),
+            allowNull: true
         },
         DOB: {
             type: Sequelize.DATE,
-            allowNull: true,
-            validate: {
-                isDate: {
-                    msg: 'Dob Invalid'
-                }
-            }
+            allowNull: true
+        },
+        Postcode: {
+            type: Sequelize.STRING(100),
+            allowNull: true
+        },
+        Address: {
+            type: Sequelize.STRING(255),
+            allowNull: true
         },
         Email: {
-            type: Sequelize.STRING(256),
-            allowNull: true,
-            validate: {
-                isEmail: {
-                    msg: 'Email Invalid!'
-                },
-                max: {
-                    args: 256,
-                    msg: 'Email is too long'
-                }
-            }
+            type: Sequelize.STRING(255),
+            allowNull: true
         },
         Phone: {
-            type: Sequelize.STRING(12),
-            allowNull: true,
-            validate: {
-                isNumeric: {
-                    msg: 'Phone Invalid'
-                }
-
-            }
+            type: Sequelize.STRING(20),
+            allowNull: true
         },
-        Enable: {
-            type: Sequelize.STRING(1),
-            allowNull: true,
-            validate: {
-                isIn: {
-                    args: [['Y', 'N']],
-                    msg: 'Must be Y or N'
-                }
-            }
+        Signture: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
+        HealthLink: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
+        ProviderNumber: {
+            type: Sequelize.STRING(255),
+            allowNull: true
         },
         CreatedDate: {
             type: Sequelize.DATE,
@@ -118,8 +102,6 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'Doctor',
-        timestamps: false,
-        createdAt: false,
-        updatedAt: false
+        timestamps: false
     }
 };

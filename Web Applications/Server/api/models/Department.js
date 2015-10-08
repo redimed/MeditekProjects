@@ -10,36 +10,17 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: false
         },
-        TelehealthAppointmentID: {
+        SiteID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
-                model: 'TelehealthAppointment',
+                model: 'Site',
                 key: 'ID'
             }
         },
-        Section: {
-            type: Sequelize.STRING(255),
+        DepartmentCode: {
+            type: Sequelize.STRING(100),
             allowNull: true
-        },
-        Category: {
-            type: Sequelize.STRING(255),
-            allowNull: true
-        },
-        Type: {
-            type: Sequelize.STRING(45),
-            allowNull: true
-        },
-        Name: {
-            type: Sequelize.STRING(255),
-            allowNull: true
-        },
-        Value: {
-            type: Sequelize.STRING(45),
-            allowNull: true
-        },
-        ClinicalNote: {
-            type: Sequelize.TEXT
         },
         Description: {
             type: Sequelize.TEXT
@@ -63,7 +44,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'ClinicalDetail',
+        tableName: 'Department',
         timestamps: false
     }
 };

@@ -16,20 +16,16 @@ module.exports = {
         },
         DoctorID: {
             type: Sequelize.BIGINT(20),
-            allowNull: true
-        },
-        HealthLink: {
-            type: Sequelize.STRING(255),
-            allowNull: true
-        },
-        ProviderNumber: {
-            type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            references: {
+                model: 'Doctor',
+                key: 'ID'
+            }
         }
     },
     associations: function() {},
     options: {
-        tableName: 'GeneralPractitioner',
+        tableName: 'RelTelehealthAppointmentDoctor',
         timestamps: false
     }
 };

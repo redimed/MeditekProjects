@@ -22,16 +22,6 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'PreferedPlasticSurgeon',
-        timestamps: false,
-        hooks: {
-            beforeCreate: function(refPlasSurgon, options, callback) {
-                refPlasSurgon.CreationDate = new Date();
-                callback();
-            },
-            beforeUpdate: function(refPlasSurgon, options, callback) {
-                refPlasSurgon.ModifiedDate = new Date();
-                callback();
-            }
-        }
+        timestamps: false
     }
 };

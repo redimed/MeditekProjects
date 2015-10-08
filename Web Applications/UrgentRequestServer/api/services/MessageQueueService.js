@@ -33,12 +33,12 @@ module.exports = {
                         var emailInfo = {
                             from: 'Health Screenings <HealthScreenings@redimed.com.au>',
                             email: 'HealthScreenings@redimed.com.au',
-                            subject: '[Testing] -[UrgentCare Request] - [' + (UR.tried === 1 ? '2nd' : '3rd') + '] - [' +
+                            subject: '[Testing] -[' + UR.urgentRequestType + '] - [' + (UR.tried === 1 ? '2nd' : '3rd') + '] - [' +
                                 Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                                 '] - [' + UR.lastName + ' ' +
                                 UR.firstName + '] - [' + UR.phoneNumber + ']',
                             confirmed: APIService.UrgentCareConfirmURL + '/' + UR.UID,
-                            urgentRequestType: 'UrgentCare Request',
+                            urgentRequestType: UR.urgentRequestType,
                             patientName: UR.lastName + ' ' + UR.firstName,
                             requestDate: Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                             phoneNumber: UR.phoneNumber,

@@ -82,7 +82,7 @@ module.exports = {
     },
     hooks: {
         beforeCreate: function(patientAppt, options, callback) {
-            patientAppt.CreationDate = new Date();
+            patientAppt.CreatedDate = new Date();
             callback();
         },
         beforeUpdate: function(patientAppt, options, callback) {

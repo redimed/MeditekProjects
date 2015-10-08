@@ -187,5 +187,18 @@ module.exports = {
                     }
                 });
         });
+    },
+
+    GetListUrgentRequests:function(req,res)
+    {
+
+        var clause=req.body;
+        console.log(clause);
+        Services.UrgentCare.GetListUrgentRequests(clause)
+        .then(function(data){
+            res.ok(data);
+        },function(err){
+            res.serverError(ErrorWrap(err));
+        });
     }
 };

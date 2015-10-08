@@ -70,6 +70,7 @@ module.exports = {
         Department.hasOne(Doctor, {
             foreignKey: 'DepartmentID'
         });
+
         /* Doctor */
         Site.hasMany(Doctor, {
             foreignKey: 'SiteID'

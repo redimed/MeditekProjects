@@ -281,7 +281,7 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
             
         }else{
             if(validateImage != noneImage){
-                validateImage.image = UIImage(named: "**")
+                validateImage.image = UIImage(named: "sao")
                 ChangeBorderColor(nameInputField, color: redColorCuston)
             }else{
                 nameInputField.layer.borderWidth = 0
@@ -399,7 +399,7 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
     // check contact no wrong format
     func CheckContactNo(){
         if( contactPhoneTextField.text.length < 9 || contactPhoneTextField.text.length > 10 ){
-            contactPhoneImage.image = UIImage(named: "**")
+            contactPhoneImage.image = UIImage(named: "sao")
             ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
             //AlertShow("Notification",message: "Phone number is invalid",addButtonWithTitle: "OK")
             
@@ -408,7 +408,7 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
                 var str = contactPhoneTextField.text.substringToIndex(advance(contactPhoneTextField.text.startIndex, 1))
                 if(str != "0"){
                     ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
-                    contactPhoneImage.image = UIImage(named: "**")
+                    contactPhoneImage.image = UIImage(named: "sao")
                     // AlertShow("Notification",message: "Phone number is invalid",addButtonWithTitle: "OK")
                 }
             }
@@ -444,7 +444,7 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
                 }else{
                     if( contactPhoneTextField.text.length < 9 || contactPhoneTextField.text.length > 10 ){
                         
-                        contactPhoneImage.image = UIImage(named: "**")
+                        contactPhoneImage.image = UIImage(named: "sao")
                         ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
                         AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
                         
@@ -453,7 +453,7 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
                             var str = contactPhoneTextField.text.substringToIndex(advance(contactPhoneTextField.text.startIndex, 1))
                             if(str != "0"){
                                 ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
-                                contactPhoneImage.image = UIImage(named: "**")
+                                contactPhoneImage.image = UIImage(named: "sao")
                                 AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
                             }else{
                                 phoneNumber  = contactPhoneTextField.text.substringWithRange(Range<String.Index>(start: advance(contactPhoneTextField.text.startIndex, 1), end: contactPhoneTextField.text.endIndex))
@@ -494,7 +494,7 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
                 //
                 if( contactPersonTextField.text.length < 9 || contactPersonTextField.text.length > 10 ){
                     
-                    contactPersonImage.image = UIImage(named: "**")
+                    contactPersonImage.image = UIImage(named: "sao")
                     ChangeBorderColor(contactPersonTextField, color: redColorCuston)
                     AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
                     
@@ -503,7 +503,7 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
                         var str = contactPersonTextField.text.substringToIndex(advance(contactPersonTextField.text.startIndex, 1))
                         if(str != "0"){
                             ChangeBorderColor(contactPersonTextField, color: redColorCuston)
-                            contactPersonImage.image = UIImage(named: "**")
+                            contactPersonImage.image = UIImage(named: "sao")
                             AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
                         }else{
                             contactPerSon  = contactPersonTextField.text.substringWithRange(Range<String.Index>(start: advance(contactPersonTextField.text.startIndex, 1), end: contactPersonTextField.text.endIndex))

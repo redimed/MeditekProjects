@@ -1,36 +1,49 @@
 package com.redimed.urgentcare;
 
+import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.redimed.urgentcare.api.UrgentRequestApi;
 import com.redimed.urgentcare.models.UrgentRequestModel;
+import com.redimed.urgentcare.utils.BlurTransformation;
 import com.redimed.urgentcare.utils.CreateDatePicker;
-import com.redimed.urgentcare.utils.CreateDialog;
 import com.redimed.urgentcare.utils.RetrofitClient;
+import com.redimed.urgentcare.utils.TableRadioGroup;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -39,32 +52,100 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
     @Bind(R.id.txtFirstName) EditText txtFirstName;
     @Bind(R.id.txtLastName) EditText txtLastName;
     @Bind(R.id.txtContactPhone) EditText txtContactPhone;
-    @Bind(R.id.txtSuburb) EditText txtSuburb;
     @Bind(R.id.txtDOB) EditText txtDOB;
     @Bind(R.id.txtEmail) EditText txtEmail;
     @Bind(R.id.txtDescription) EditText txtDescription;
-    @Bind(R.id.radioGroupGPReferral) RadioGroup radioGroupGPReferral;
-    @Bind(R.id.radioGroupUrgentRequestType) RadioGroup radioGroupUrgentRequestType;
+    @Bind(R.id.radioGroupUrgentRequestType) TableRadioGroup radioGroupUrgentRequestType;
     @Bind(R.id.scrollViewWorkInjury) ScrollView scrollViewWorkInjury;
     @Bind(R.id.btnCloseWorkInjuryPage) Button btnCloseWorkInjuryPage;
     @Bind(R.id.btnWorkInjury) Button btnWorkInjury;
-    ProgressDialog progressWorkInjury;
+    @Bind(R.id.autoCompleteSuburb) AutoCompleteTextView autoCompleteSuburb;
+    @Bind(R.id.imgBackgroundWorkInjury) ImageView imgBackgroundWorkInjury;
+    @Bind(R.id.txtCompanyName) EditText txtCompanyName;
+    @Bind(R.id.txtContactPerson) EditText txtContactPerson;
+    @Bind(R.id.txtCompanyPhone) EditText txtCompanyPhone;
+    String[] surburb;
+    Gson gson = new Gson();
+
+    //img
+    private static final int BACKGROUND_IMAGES_WIDTH = 360;
+    private static final int BACKGROUND_IMAGES_HEIGHT = 360;
+    private static final float BLUR_RADIUS = 25F;
+
+    private BlurTransformation blurTransformation;
+    private int backgroundIndex;
+    private Point backgroundImageTargetSize;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_injury);
+//        getList();
         // Initialize default values
         ButterKnife.bind(this);
-
+        mReadJsonData();
         // Initialize controls
-        EditText[] allEditTextEventOnTouchListener = {txtFirstName,txtLastName,txtContactPhone,txtSuburb,txtEmail,txtDescription};
+        EditText[] allEditTextEventOnTouchListener = {txtFirstName,txtLastName,txtContactPhone,txtDOB,autoCompleteSuburb,txtEmail,txtDescription,txtCompanyPhone,txtContactPerson,txtCompanyName};
         OnTouchListenerRelativeLayout(scrollViewWorkInjury, allEditTextEventOnTouchListener);
         TxtDOBCreateDatePicker(txtDOB);
         CloseMakeAppointmentPage(btnCloseWorkInjuryPage);
-        EditText[] allEditTextCheckRequire = {txtFirstName,txtLastName};
+        EditText[] allEditTextCheckRequire = {txtFirstName,txtLastName,txtContactPhone,txtCompanyName,txtContactPerson};
         SendMakeAppointment(btnWorkInjury, allEditTextCheckRequire);
         EdittextValidateFocus(allEditTextCheckRequire);
+//        blurTransformation = new BlurTransformation(this, BLUR_RADIUS);
+//        backgroundImageTargetSize = calculateBackgroundImageSizeCroppedToScreenAspectRatio(
+//        getWindowManager().getDefaultDisplay());
+//        Picasso.with(this).load(R.drawable.bg_work_injury)
+//        .resize(backgroundImageTargetSize.x, backgroundImageTargetSize.y).centerCrop()
+//        .transform(blurTransformation).into(imgBackgroundWorkInjury);
+
     }
+
+    public void mReadJsonData() {
+        try {
+            File f = new File("/data/data/" + getPackageName() + "/" + "suburb.json");
+            if  (f.exists()){
+                FileInputStream is = new FileInputStream(f);
+                int size = is.available();
+                byte[] buffer = new byte[size];
+                is.read(buffer);
+                is.close();
+                String mResponse = new String(buffer);
+                Log.d("roine",mResponse);
+
+                JsonParser parser = new JsonParser();
+                JsonObject obj = (JsonObject) parser.parse(mResponse);
+
+                surburb = gson.fromJson(obj.get("data"), String[].class);
+                Log.d("nene",obj.get("data").toString());
+                ArrayAdapter adapter = new ArrayAdapter(WorkInjuryActivity.this,android.R.layout.simple_list_item_1,surburb);
+                autoCompleteSuburb.setAdapter(adapter);
+                autoCompleteSuburb.setThreshold(1);
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void getList(){
+
+        UrgentRequestApi urgentApi = RetrofitClient.createService(UrgentRequestApi.class);
+        urgentApi.getListSuburb(new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                surburb = gson.fromJson(jsonObject.get("data"), String[].class);
+                ArrayAdapter adapter = new ArrayAdapter(WorkInjuryActivity.this,android.R.layout.simple_list_item_2,surburb);
+                autoCompleteSuburb.setAdapter(adapter);
+                autoCompleteSuburb.setThreshold(1);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
 
     //validate all EditText when outfocus
     public void EdittextValidateFocus(EditText[] edt){
@@ -213,20 +294,18 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
                 objectUrgentRequest.setContactPhone(
                         getResources().getString(R.string.australiaFormatPhone) + txtContactPhone.getText().toString()
                 );
-                objectUrgentRequest.setSuburb(txtSuburb.getText().toString());
                 objectUrgentRequest.setDOB(txtDOB.getText().toString());
                 objectUrgentRequest.setEmail(txtEmail.getText().toString());
                 objectUrgentRequest.setDescription(txtDescription.getText().toString());
-                objectUrgentRequest.setGpReferral(((RadioButton) findViewById(radioGroupGPReferral.getCheckedRadioButtonId())).getHint().toString());
                 objectUrgentRequest.setUrgentRequestType(((RadioButton) findViewById(radioGroupUrgentRequestType.getCheckedRadioButtonId())).getHint().toString());
                 objectUrgentRequest.setServiceType(getResources().getString(R.string.serviceWorkInjury));
-                // Make Appointment Process
-                progressWorkInjury = ProgressDialog.show(
-                        WorkInjuryActivity.this,
-                        getResources().getString(R.string.progressMakeAppointmentTitle),
-                        getResources().getString(R.string.progressMakeAppointmentContent),
-                        true
-                );
+                objectUrgentRequest.setCompanyName(txtCompanyName.getText().toString());
+                objectUrgentRequest.setContactPerson(txtContactPerson.getText().toString());
+                objectUrgentRequest.setCompanyPhone(txtCompanyPhone.getText().toString());
+                objectUrgentRequest.setSuburb(autoCompleteSuburb.getText().toString());
+
+
+
 
                 //send make appointment
                 Gson gson = new Gson();
@@ -236,36 +315,44 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
                         gson.toJson(objectUrgentRequest)
                 );
 
+                final SweetAlertDialog progressDialog = new SweetAlertDialog(WorkInjuryActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                progressDialog.setTitleText(getResources().getString(R.string.progressMakeAppointmentContent));
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
                 UrgentRequestApi urgentApi = RetrofitClient.createService(UrgentRequestApi.class);
                 urgentApi.sendUrgentRequest(jsonUrgentRequest, new Callback<JsonObject>() {
                     @Override
                     public void success(JsonObject jsonObject, Response response) {
-                        progressWorkInjury.dismiss();
-                        CreateDialog diglog = new CreateDialog();
-                        diglog.CreateDialog(
-                                WorkInjuryActivity.this,
-                                getResources().getString(R.string.contentDialogSuccessAppointment),
-                                R.layout.activity_make_appointment_dialog,
-                                R.color.bgDialogSuccess,
-                                R.drawable.ic_dialog_success,
-                                R.drawable.btn_dialog_success,
-                                true
-                        );
+                        progressDialog.dismissWithAnimation();
+                        SweetAlertDialog pDialog = new SweetAlertDialog(WorkInjuryActivity.this, SweetAlertDialog.SUCCESS_TYPE);
+                        pDialog.setTitleText(getResources().getString(R.string.dailogSuccess));
+                        pDialog.setContentText(getResources().getString(R.string.contentDialogSuccessAppointment));
+                        pDialog.setCancelable(false);
+                        pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                finish();
+                            }
+                        });
+                        pDialog.show();
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        progressWorkInjury.dismiss();
-                        CreateDialog diglog = new CreateDialog();
-                        diglog.CreateDialog(
-                                WorkInjuryActivity.this,
-                                getResources().getString(R.string.contentDialogErrorAppointment),
-                                R.layout.activity_make_appointment_dialog,
-                                R.color.bgDialogError,
-                                R.drawable.ic_dialog_error,
-                                R.drawable.btn_make_appointment,
-                                false
-                        );
+                        progressDialog.dismissWithAnimation();
+                        SweetAlertDialog eDialog = new SweetAlertDialog(WorkInjuryActivity.this, SweetAlertDialog.ERROR_TYPE);
+                        eDialog.setTitleText(getResources().getString(R.string.dailogError));
+                        eDialog.setContentText(getResources().getString(R.string.contentDialogErrorAppointment));
+                        eDialog.setCancelable(false);
+                        eDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                finish();
+                            }
+                        });
+                        eDialog.show();
                     }
                 });
             }
@@ -352,5 +439,26 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
     @Override
     public void onComplete(String date) {
         txtDOB.setText(date);
+    }
+
+    //img
+    private static Point calculateBackgroundImageSizeCroppedToScreenAspectRatio(Display display) {
+        final Point screenSize = new Point();
+        getSizeCompat(display, screenSize);
+        int scaledWidth = (int) (((double) BACKGROUND_IMAGES_HEIGHT * screenSize.x) / screenSize.y);
+        int croppedWidth = Math.min(scaledWidth, BACKGROUND_IMAGES_WIDTH);
+        int scaledHeight = (int) (((double) BACKGROUND_IMAGES_WIDTH * screenSize.y) / screenSize.x);
+        int croppedHeight = Math.min(scaledHeight, BACKGROUND_IMAGES_HEIGHT);
+        return new Point(croppedWidth, croppedHeight);
+    }
+    @SuppressWarnings("deprecation")
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private static void getSizeCompat(Display display, Point screenSize) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            display.getSize(screenSize);
+        } else {
+            screenSize.x = display.getWidth();
+            screenSize.y = display.getHeight();
+        }
     }
 }

@@ -7,21 +7,22 @@
     android:background="#FFFFFF">
     <!--Toolbar-->
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbarFAQ"
-        android:minHeight="?attr/actionBarSize"
-        android:background="#820933"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="wrap_content"
+        android:background="@color/bgToolBar"
+        android:elevation="4dp"
+        android:id="@+id/tool_bar">
         <Button
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:id="@+id/btnCloseFAQPage"
-            android:background="@drawable/ic_close_page"/>
+            android:background="@drawable/ic_action"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Contact Us"
+            android:text="Contact us"
             android:id="@+id/textViewNamePage"
             android:layout_marginLeft="30dp"
             android:textColor="#FFFFFF"
@@ -31,12 +32,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbarFAQ"
-        android:padding="5dp">
+        android:layout_below="@+id/tool_bar">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="5dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -7,21 +7,22 @@
     tools:context="com.redimed.urgentcare.MakeAppointmentActivity">
     <!--Toolbar-->
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbarMakeAppointment"
-        android:minHeight="?attr/actionBarSize"
-        android:background="#FFBF00"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="wrap_content"
+        android:background="@color/bgToolBar"
+        android:elevation="4dp"
+        android:id="@+id/tool_bar">
         <Button
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:id="@+id/btnCloseMakeAppointmentPage"
-            android:background="@drawable/ic_close_page"/>
+            android:background="@drawable/ic_action"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Urgent Care Clinic Booking"
+            android:text="Urgent care clinic booking"
             android:id="@+id/textViewNamePage"
             android:layout_marginLeft="30dp"
             android:textColor="#FFFFFF"
@@ -31,8 +32,7 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarMakeAppointment"
-        android:padding="20dp"
+        android:layout_below="@+id/tool_bar"
         android:scrollbars="none"
         android:id="@+id/scrollViewMakeAppointment"
         android:descendantFocusability="blocksDescendants"
@@ -40,7 +40,8 @@
         android:focusableInTouchMode="true">
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:padding="20dp">
             <!--FirstName-->
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -131,18 +132,15 @@
                 android:background="@drawable/boder_edittext"
                 android:layout_below="@+id/relativeLayoutContactPhone"
                 android:layout_marginTop="20dp">
-                    <EditText
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:id="@+id/txtSuburb"
-                        android:hint="Suburb"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:inputType="textCapSentences"
-                        android:fontFamily="sans-serif-light"
-                        android:imeOptions="actionDone"
-                        android:maxLength="100"/>
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteSuburb"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@android:color/transparent"
+                    android:hint="Suburb"
+                    android:fontFamily="sans-serif-light">
+                    <requestFocus />
+                </AutoCompleteTextView>
             </RelativeLayout>
             <!--DOB-->
             <RelativeLayout

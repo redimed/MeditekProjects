@@ -30,6 +30,10 @@
     <string name="belmontAddress"><u> 1 Frederick Street, Belmont WA 6104</u></string>
     <string name="rockinghamAddress"><u> Unit 1/23 Chalgrove Avenue, Rockingham WA 6168</u></string>
     <string name="rockinghamPhone"><u> 08 9527 1585</u></string>
+    <string name="dailogSuccess">Success</string>
+    <string name="dailogError">Error</string>
+    <string name="lblhome">personalised + customised, <b>HEALTHCARE</b> anywhere</string>
+
 
 
 
@@ -51,4 +55,19 @@
     <string name="title_activity_faq">FAQ</string>
     <string name="title_activity_sport_injury">SportInjuryActivity</string>
     <string name="title_activity_work_injury">WorkInjuryActivity</string>
+
+    <string-array name="colorList">
+        <item >Black</item>
+        <item >White</item>
+        <item >Red</item>
+        <item >Blue</item>
+        <item >Yellow</item>
+        <item >Green</item>
+        <item >Brown</item>
+        <item >Pink</item>
+        <item >Orange</item>
+        <item >Purple</item>
+    </string-array>
+
+
 </resources>

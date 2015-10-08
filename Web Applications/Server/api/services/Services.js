@@ -8,4 +8,5 @@ module.exports = {
     GetPaginationAppointment: require('./Appointment/GetPaginationAppointment'),
     GetDetailTelehealthAppointment: require('./Appointment/GetDetailTelehealthAppointment'),
     UpdateTelehealthAppointment: require('./Appointment/UpdateTelehealthAppointment'),
+    UrgentCare: require('./UrgentCare/UrgentCare'),
 };

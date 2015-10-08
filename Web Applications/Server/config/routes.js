@@ -130,6 +130,9 @@ _.extend(routes, PatientRoutes);
 var AppointmentRoutes = require('./routes/AppointmentRoutes');
 _.extend(routes, AppointmentRoutes);
 
+var urgentCareRoutes = require('./routes/urgentCareRoutes');
+_.extend(routes, urgentCareRoutes);
+
 //End Module User Account
 //
 module.exports.routes = routes;

@@ -57,7 +57,7 @@ module.exports = {
         timestamps: false,
         hooks: {
             beforeCreate: function(examRequired, options, callback) {
-                examRequired.CreationDate = new Date();
+                examRequired.CreatedDate = new Date();
                 callback();
             },
             beforeUpdate: function(examRequired, options, callback) {

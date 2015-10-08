@@ -20,7 +20,7 @@ module.exports = {
                 })
                 .catch(function(err) {
                     err.transaction.rollback();
-                    res.serverError(ErrorWrap(err));
+                    res.serverError(ErrorWrap(err.error));
                 });
         }
     },

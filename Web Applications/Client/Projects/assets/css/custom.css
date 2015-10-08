@@ -1,0 +1,25 @@
+.page-header {background-color: white;}
+.page-header.navbar {
+	background: white url('../img/bk-header.png') !important;
+	background-size: 100% 46px !important;
+}
+
+
+.page-header.navbar .page-logo .logo-default {
+    margin: 0px 0 0 0;
+    width: 200px;
+	height: 46px;
+}
+
+.app-modal-window .modal-dialog{
+	width: 75%;
+}
+
+.my-modal-header{
+	background-color: #45B6AF;
+    color: #fff;
+}
+
+.portlet-body .my-portlet-body {
+	margin: 1em 1em;
+}

@@ -1,0 +1,7 @@
+var app = angular.module('app.authentication.doctor.controller', [
+	'app.authentication.doctor.list.controller',
+	'app.authentication.doctor.profile.controller'
+]);
+
+app.controller('doctorCtrl', function($scope, $modal, $state){
+});

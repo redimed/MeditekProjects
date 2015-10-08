@@ -1,0 +1,314 @@
+<!-- BEGIN PAGE HEADER-->
+
+<h3 class="page-title">Telehealth Appointments</h3>
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<b>Telehealth Appointments</b>
+			<i class="fa fa-angle-right"></i>
+		</li>
+	</ul>
+</div>
+<!-- END PAGE HEADER-->
+
+<div class="portlet light bordered">
+	<div class="portlet-title">
+		<div class="caption font-green">
+			<i class="icon-list font-green"></i>
+			<span class="caption-subject bold uppercase"> Telehealth Appointments</span>
+		</div>
+		<div class="actions">
+			<a href="javascript:;" class="btn btn-circle red-thunderbird btn-sm" ng-click="toggleFilter()">
+				<i class="fa fa-filter"></i> Filter
+			</a>
+			<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+		</div>
+	</div>
+	<div class="portlet-body">
+		<!-- begin filter -->
+		<span ng-hide="toggle">
+            <div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="label-control">Patient</label>
+						<input type="text" class="form-control" placeholder="Filter patient">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="label-control">Submit From Date</label>
+						<input type="date" class="form-control" placeholder="Request From Date">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="label-control">Submit To date</label>
+						<input type="date" class="form-control" placeholder="Request To Date">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="label-control">Treating Practictioner</label>
+						<input type="text" class="form-control" placeholder="Filter Treating Practictioner">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="label-control">Appointment From Date</label>
+						<input type="date" class="form-control" placeholder="Approval From Date">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="label-control">Appointment To Date</label>
+						<input type="date" class="form-control" placeholder="Approval To Date">
+					</div>
+				</div>
+			</div>
+        </span>
+        <span ng-show="toggle"></span>
+		<!-- end filter -->
+
+		<!-- begin table -->
+		<div class="table-scrollable">
+			<table class="table table-striped table-bordered table-hover" id="sample_1">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Patient</th>
+					<th>Treating Practictioner</th>
+					<th>Submit Date</th>
+					<th>Status</th>
+					<th>Appointment Date</th>
+					<th>Correspondence</th>
+				</tr>
+			</thead>
+			<tbody>
+			<tbody>
+				<tr class="odd gradeX" ng-click="openAppointmentModal()">
+					<td>1</td>
+					<td>Hana Montana</td>
+					<td>Dr Hanh</td>
+					<td>01/01/2015 01:01:01</td>
+					<td><span class="label label-success">Booked </span></td>
+					<td>01/01/2015 01:01:01</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" ></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					<td>2</td>
+					<td>Andy Bordgard</td>
+					<td>Mai Shimura</td>
+					<td>01/02/2015 01:01:01</td>
+					<td><span class="label label-default">Calling </span></td>
+					<td>01/02/2015 01:01:01</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" ></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					<td>3</td>
+					<td>Joe Higatoshi</td>
+					<td>Mai Shimura</td>
+					<td>05/02/2015 03:11:12</td>
+					<td><span class="label label-warning">Pending </span></td>
+					<td></td>
+					<td><div class="checker"><span class=""><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					<td>4</td>
+					<td>Mai Shimura</td>
+					<td>Joe Higatoshi</td>
+					<td>02/12/2015 01:01:01</td>
+					<td><span class="label label-danger">Cancel </span></td>
+					<td>01/01/2015 01:01:01</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					<td>5</td>
+					<td>Chizuru Kagura</td>
+					<td>Joe Higatoshi</td>
+					<td>03/05/2015 04:05:07</td>
+					<td><span class="label label-info">Finished </span></td>
+					<td>03/04/2015 05:06:06</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX" ng-click="openAppointmentModal()">
+					<td>6</td>
+					<td>Hana Montana</td>
+					<td>Dr Hanh</td>
+					<td>01/01/2015 01:01:01</td>
+					<td><span class="label label-success">Booked </span></td>
+					<td>01/01/2015 01:01:01</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					
+					<td>7</td>
+					<td>Andy Bordgard</td>
+					<td>Mai Shimura</td>
+					<td>01/02/2015 01:01:01</td>
+					<td><span class="label label-default">Calling </span></td>
+					<td>01/02/2015 01:01:01</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					<td>8</td>
+					<td>Joe Higatoshi</td>
+					<td>Mai Shimura</td>
+					<td>05/02/2015 03:11:12</td>
+					<td><span class="label label-warning">Pending </span></td>
+					<td></td>
+					<td><div class="checker"><span class=""><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					<td>9</td>
+					<td>Mai Shimura</td>
+					<td>Joe Higatoshi</td>
+					<td>02/12/2015 01:01:01</td>
+					<td><span class="label label-danger">Cancel </span></td>
+					<td>01/01/2015 01:01:01</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					<td>10</td>
+					<td>Chizuru Kagura</td>
+					<td>Joe Higatoshi</td>
+					<td>03/05/2015 04:05:07</td>
+					<td><span class="label label-info">Finished </span></td>
+					<td>03/04/2015 05:06:06</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX" ng-click="openAppointmentModal()">
+					<td>11</td>
+					<td>Hana Montana</td>
+					<td>Dr Hanh</td>
+					<td>01/01/2015 01:01:01</td>
+					<td><span class="label label-success">Booked </span></td>
+					<td>01/01/2015 01:01:01</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					
+					<td>12</td>
+					<td>Andy Bordgard</td>
+					<td>Mai Shimura</td>
+					<td>01/02/2015 01:01:01</td>
+					<td><span class="label label-default">Calling </span></td>
+					<td>01/02/2015 01:01:01</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					<td>13</td>
+					<td>Joe Higatoshi</td>
+					<td>Mai Shimura</td>
+					<td>05/02/2015 03:11:12</td>
+					<td><span class="label label-warning">Pending </span></td>
+					<td></td>
+					<td><div class="checker"><span class=""><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					<td>14</td>
+					<td>Mai Shimura</td>
+					<td>Joe Higatoshi</td>
+					<td>02/12/2015 01:01:01</td>
+					<td><span class="label label-danger">Cancel </span></td>
+					<td>01/01/2015 01:01:01</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					<td>15</td>
+					<td>Chizuru Kagura</td>
+					<td>Joe Higatoshi</td>
+					<td>03/05/2015 04:05:07</td>
+					<td><span class="label label-info">Finished </span></td>
+					<td>03/04/2015 05:06:06</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX" ng-click="openAppointmentModal()">
+					<td>16</td>
+					<td>Hana Montana</td>
+					<td>Dr Hanh</td>
+					<td>01/01/2015 01:01:01</td>
+					<td><span class="label label-success">Booked </span></td>
+					<td>01/01/2015 01:01:01</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					
+					<td>17</td>
+					<td>Andy Bordgard</td>
+					<td>Mai Shimura</td>
+					<td>01/02/2015 01:01:01</td>
+					<td><span class="label label-default">Calling </span></td>
+					<td>01/02/2015 01:01:01</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					<td>18</td>
+					<td>Joe Higatoshi</td>
+					<td>Mai Shimura</td>
+					<td>05/02/2015 03:11:12</td>
+					<td><span class="label label-warning">Pending </span></td>
+					<td></td>
+					<td><div class="checker"><span class=""><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					<td>19</td>
+					<td>Mai Shimura</td>
+					<td>Joe Higatoshi</td>
+					<td>02/12/2015 01:01:01</td>
+					<td><span class="label label-danger">Cancel </span></td>
+					<td>01/01/2015 01:01:01</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				<tr class="odd gradeX">
+					<td>20</td>
+					<td>Chizuru Kagura</td>
+					<td>Joe Higatoshi</td>
+					<td>03/05/2015 04:05:07</td>
+					<td><span class="label label-info">Finished </span></td>
+					<td>03/04/2015 05:06:06</td>
+					<td><div class="checker"><span class="checked"><input type="checkbox" class="checkboxes" value="1" disabled="true"></span></div></td>
+				</tr>
+				
+			</tbody>
+			</table>
+		</div>
+		<!-- end table -->
+
+		<!-- begin pagination -->
+		<div class="row">
+			<div class="col-md-5 col-sm-12">
+				<div class="dataTables_info" id="sample_1_info" role="status" aria-live="polite">
+					Showing 1 to 20 of 103 entries
+				</div>
+			</div>
+			<div class="col-md-7 col-sm-12">
+				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+					<ul class="pagination">
+						<li class="paginate_button previous disabled" aria-controls="sample_1" tabindex="0" id="sample_1_previous">
+							<a href="#"><i class="fa fa-angle-left"></i></a>
+						</li>
+						<li class="paginate_button active" aria-controls="sample_1" tabindex="0"><a href="#">1</a></li>
+						<li class="paginate_button " aria-controls="sample_1" tabindex="0"><a href="#">2</a></li>
+						<li class="paginate_button " aria-controls="sample_1" tabindex="0"><a href="#">3</a></li>
+						<li class="paginate_button " aria-controls="sample_1" tabindex="0"><a href="#">4</a></li>
+						<li class="paginate_button " aria-controls="sample_1" tabindex="0"><a href="#">5</a></li>
+						<li class="paginate_button next" aria-controls="sample_1" tabindex="0" id="sample_1_next">
+							<a href="#"><i class="fa fa-angle-right"></i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- end pagination -->
+	</div>
+</div>
+
+<!-- BEGIN MAIN JS -->
+<script>
+	// Metronic.initAjax();
+	//TableAdvanced.init();
+	//ComponentsDropdowns.init(); // init todo page
+</script>

@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/callBackground"
+    tools:context="com.redimed.telehealth.patient.CallActivity">
+
+    <ImageView
+        android:id="@+id/imgLogoCall"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="520dp"
+        android:layout_height="520dp" />
+
+    <ImageView
+        android:id="@+id/imgCaller"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/img_avatar_caller"/>
+
+    <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnDecline"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:text="Decline"
+            android:padding="12dp"
+            android:textColor="@color/greyFont"
+            android:drawableLeft="@drawable/end_call"
+            android:background="@drawable/btn_decline"/>
+
+        <Button
+            android:id="@+id/btnAnswer"
+            android:layout_width="130dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="40dp"
+            android:text="Answer"
+            android:padding="12dp"
+            android:textColor="@color/greyFont"
+            android:drawableLeft="@drawable/phone"
+            android:background="@drawable/btn_decline"/>
+    </LinearLayout>
+
+</RelativeLayout>

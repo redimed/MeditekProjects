@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!-- 
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.2
+Version: 3.7.0
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" ng-app="app">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+<meta charset="utf-8"/>
+<title>Metronic | Form Stuff - Bootstrap Form Controls</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+<link href="theme/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="theme/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+<link href="theme/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="theme/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+<link href="theme/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+<!-- END GLOBAL MANDATORY STYLES -->
+
+<!-- BEGIN PAGE LEVEL STYLES -->
+<!-- login 3 -->
+<link href="theme/assets/global/plugins/select2/select2.css" rel="stylesheet" type="text/css"/>
+<link href="theme/assets/admin/pages/css/login3.css" rel="stylesheet" type="text/css"/>
+<!-- end login 3 -->
+<!-- dropdownn -->
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/bootstrap-select/bootstrap-select.min.css">
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/select2/select2.css">
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/jquery-multi-select/css/multi-select.css">
+<!-- end dropdown -->
+
+<!-- form tool -->
+<link href="theme/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css">
+<link href="theme/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
+<link href="theme/assets/global/plugins/jquery-tags-input/jquery.tagsinput.css" rel="stylesheet" type="text/css">
+<link href="theme/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css" rel="stylesheet" type="text/css">
+<link href="theme/assets/global/plugins/typeahead/typeahead.css" rel="stylesheet" type="text/css">
+<!-- end form tool -->
+
+<!-- begin page portfolio -->
+<link href="theme/assets/global/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
+<link href="theme/assets/admin/pages/css/portfolio.css" rel="stylesheet" type="text/css"/>
+<!-- end page portfolio -->
+	
+<!-- pickers -->
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/clockface/css/clockface.css">
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css">
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css">
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css">
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+<!-- end pickers -->
+<!-- END PAGE LEVEL STYLES -->
+
+
+
+<!-- BEGIN THEME STYLES -->
+<link href="theme/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+<link href="theme/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="theme/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+<link id="style_color" href="theme/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css"/>
+<link href="theme/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+<!-- END THEME STYLES -->
+<!-- BEGIN CUSTOM -->
+<link rel="stylesheet" type="text/css" href="assets/css/custom.css">
+<!-- END CUSTOM -->
+<link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<!-- DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices -->
+<!-- DOC: Apply "page-sidebar-closed" class to the body and "page-sidebar-menu-closed" class to the sidebar menu element to hide the sidebar by default -->
+<!-- DOC: Apply "page-sidebar-hide" class to the body to make the sidebar completely hidden on toggle -->
+<!-- DOC: Apply "page-sidebar-closed-hide-logo" class to the body element to make the logo hidden on sidebar toggle -->
+<!-- DOC: Apply "page-sidebar-hide" class to body element to completely hide the sidebar on sidebar toggle -->
+<!-- DOC: Apply "page-sidebar-fixed" class to have fixed sidebar -->
+<!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
+<!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
+<!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
+<body class="page-header-fixed page-quick-sidebar-over-content ">
+<div ui-view="root"></div>
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="theme/assets/global/plugins/respond.min.js"></script>
+<script src="theme/assets/global/plugins/excanvas.min.js"></script> 
+<![endif]-->
+<script src="theme/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="theme/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="theme/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="theme/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="theme/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="theme/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="theme/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="theme/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<!-- dropdown -->
+<script src="theme/assets/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<script src="theme/assets/global/plugins/select2/select2.min.js"></script>
+<script src="theme/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+<script src="theme/assets/admin/pages/scripts/components-dropdowns.js"></script>
+<!-- end dropdown -->
+<!-- beginform tool -->
+<script src="theme/assets/global/plugins/fuelux/js/spinner.min.js"></script>
+<script src="theme/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+<script src="theme/assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js"></script>
+<script src="theme/assets/global/plugins/jquery.input-ip-address-control-1.0.min.js"></script>
+<script src="theme/assets/global/plugins/bootstrap-pwstrength/pwstrength-bootstrap.min.js"></script>
+<script src="theme/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="theme/assets/global/plugins/jquery-tags-input/jquery.tagsinput.min.js"></script>
+<script src="theme/assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+<script src="theme/assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js"></script>
+<script src="theme/assets/global/plugins/typeahead/handlebars.min.js"></script>
+<script src="theme/assets/global/plugins/typeahead/typeahead.bundle.min.js"></script>
+<script src="theme/assets/admin/pages/scripts/components-form-tools.js"></script>
+<!-- end form tool -->
+
+<!-- picker -->
+<script src="theme/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="theme/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+<script src="theme/assets/global/plugins/clockface/js/clockface.js"></script>
+<script src="theme/assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+<script src="theme/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="theme/assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+<script src="theme/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="theme/assets/admin/pages/scripts/components-pickers.js"></script>
+<!-- end picker -->
+<!-- END PAGE LEVEL PLUGINS -->
+
+<!-- BEGIN CORE ANGULARJS PLUGINS -->
+<script src="libs/angular/angular.js" type="text/javascript"></script>	
+<script src="libs/angular-sanitize/angular-sanitize.min.js" type="text/javascript"></script>
+<script src="libs/angular-touch/angular-touch.min.js" type="text/javascript"></script>	
+<script src="libs/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
+<script src="theme/assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+<!-- END CORE ANGULARJS PLUGINS -->
+
+<!-- BEGIN DEPENDENCIES -->
+<script type="text/javascript" src="libs/restangular/dist/restangular.min.js"></script>
+<script type="text/javascript" src="libs/angular-cookies/angular-cookies.js"></script>
+<script type="text/javascript" src="libs/lodash/lodash.min.js"></script>
+<!-- END DEPENDENCIES -->
+
+<!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
+<script src="app.js" type="text/javascript"></script>
+<!-- END APP LEVEL ANGULARJS SCRIPTS -->
+
+<!-- BEGIN MODULE unAuthentication -->
+<script src="modules/unAuthentication/unAuthentication.js" ></script>
+<script src="modules/unAuthentication/controllers/unAuthenticationCtrl.js"></script>
+<script src="modules/unAuthentication/controllers/loginCtrl.js"></script>
+<!-- END MODULE unAuthentication -->
+
+<!-- BEGIN MODULE authentication -->
+<script src="modules/authentication/authentication.js" ></script>
+<script src="modules/authentication/controllers/authenticationCtrl.js"></script>
+<!-- END MODULE authentication -->
+
+<!-- BEGIN MODULE home -->
+<script src="modules/home/home.js" ></script>
+<script src="modules/home/controllers/homeCtrl.js"></script>
+<script src="modules/home/controllers/homeListCtrl.js"></script>
+<script src="modules/home/controllers/homeListDetailCtrl.js"></script>
+<!-- END MODULE home -->
+
+<!-- BEGIN MODULE appointment -->
+<script src="modules/appointment/appointment.js" ></script>
+<script src="modules/appointment/controllers/appointmentCtrl.js"></script>
+<script src="modules/appointment/controllers/appointmentListCtrl.js"></script>
+<script src="modules/appointment/controllers/appointmentListModalCtrl.js"></script>
+<script src="modules/appointment/controllers/appointmentRequestCtrl.js"></script>
+<!-- END MODULE appointment -->
+
+<!-- BEGIN MODULE doctor -->
+<script src="modules/doctor/doctor.js" ></script>
+<script src="modules/doctor/controllers/doctorCtrl.js"></script>
+<script src="modules/doctor/controllers/doctorListCtrl.js"></script>
+<script src="modules/doctor/controllers/doctorProfileCtrl.js"></script>
+<!-- END MODULE doctor -->
+
+<!-- BEGIN MODULE patient -->
+<script src="modules/patient/patient.js" ></script>
+<script src="modules/patient/controllers/patientCtrl.js"></script>
+<script src="modules/patient/controllers/patientListCtrl.js"></script>
+<script src="modules/patient/controllers/patientListModalCtrl.js"></script>
+<!-- END MODULE patient -->
+
+<script src="theme/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="theme/assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
+<script src="theme/assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
+<script src="theme/assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
+<!-- END JAVASCRIPTS -->
+
+<script type="text/javascript">
+/* Init Metronic's core jquery plugins and layout scripts */
+// $(document).ready(function() {   
+// 	   	Metronic.initAjax(); // init metronic core components
+// 		// Layout.init(); // init current layout
+// 		// QuickSidebar.init(); // init quick sidebar
+// 		// Demo.init(); // init demo features
+	Metronic.setAssetsPath('./theme/assets/'); // Set the assets folder path	
+	//alert(Metronic.getAssetsPath())		
+// });
+</script>
+
+</body>
+<!-- END BODY -->
+</html>

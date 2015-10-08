@@ -1,0 +1,48 @@
+{
+  "name": "RedimedProject",
+  "private": true,
+  "version": "0.0.0",
+  "description": "a Sails application",
+  "keywords": [],
+  "dependencies": {
+    "ejs": "~0.8.4",
+    "email-templates": "^2.0.1",
+    "getmac": "^1.0.7",
+    "grunt": "0.4.2",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-coffee": "~0.10.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-cssmin": "~0.9.0",
+    "grunt-contrib-jst": "~0.6.0",
+    "grunt-contrib-less": "0.11.1",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-sails-linker": "~0.9.5",
+    "grunt-sync": "~0.0.4",
+    "guid": "0.0.12",
+    "include-all": "~0.1.3",
+    "moment": "^2.10.6",
+    "node-uuid": "^1.4.3",
+    "nodemailer": "^1.4.0",
+    "nodemailer-smtp-transport": "^1.0.3",
+    "rc": "~0.5.0",
+    "sails": "~0.11.0",
+    "sails-disk": "~0.10.0",
+    "sails-mysql": "^0.11.0",
+    "twilio": "^2.4.0",
+    "underscore": "^1.8.3",
+    "waterline": "^0.10.26"
+  },
+  "scripts": {
+    "debug": "node debug app.js",
+    "start": "node app.js"
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/anonymous node/sails user/RedimedProject.git"
+  },
+  "author": "anonymous node/sails user",
+  "license": ""
+}

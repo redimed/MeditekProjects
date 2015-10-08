@@ -1,0 +1,281 @@
+<div class="modal-content">
+	<div class="modal-header my-modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="modal_close()"></button>
+		<h4 class="modal-title"><b><i class="icon-note"></i> Doctor Details</b></h4>
+	</div>
+	<!-- <div class="modal-body" style="overflow-y:scroll; overflow-x:hidden; max-height:400px;"> -->
+	<div class="modal-body">
+		<div class="tabbable">
+			<ul class="nav nav-tabs nav-tabs-lg">
+				<li  class="active">
+					<a href="index.html#basic_info" data-toggle="tab" aria-expanded="true">Basic info</a>
+				</li>
+				<li class="">
+					<a href="index.html#detail_info" data-toggle="tab" aria-expanded="false">Detail_info</a>
+				</li>
+				<li class="">
+					<a href="index.html#more_info" data-toggle="tab" aria-expanded="false">More info</a>
+				</li>
+			</ul>
+		</div>
+		<div class="tab-content">
+			<!-- begin tab basic info -->
+			<div class="tab-pane active" id="basic_info">
+				<br>
+				<div class="row">
+				 	<!-- Begin Title -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Title</label>
+							<input type="text" class="form-control" placeholder="Title">
+							<span class="help-block">This is inline help </span>
+						</div>
+					</div>
+					<!-- End Title -->
+					<!-- begin name -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Name</label>
+							<input type="text" class="form-control" placeholder="Name">
+							<span class="help-block">This is inline help </span>
+						</div>
+					</div>
+					<!-- end name -->
+					<!-- begin Email -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Email</label>
+							<input type="text" class="form-control" placeholder="Email">
+							<span class="help-block">This is inline help </span>
+						</div>
+					</div>
+					<!-- end Email -->
+					<!-- begin Phone -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Phone</label>
+							<input type="text" class="form-control" placeholder="Phone">
+							<span class="help-block">This is inline help </span>
+						</div>
+					</div>
+					<!-- end Phone -->
+					<div class="row">&nbsp;</div>
+					<div class="row">&nbsp;</div>
+				</div>
+				<div class="row">
+					<!-- Begin First name -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">First name</label>
+							<input type="text" class="form-control" placeholder="First name">
+						</div>
+					</div>
+					<!-- End First name -->
+					<!-- Begin Middle name -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Middle name</label>
+							<input type="text" class="form-control" placeholder="Middle name">
+						</div>
+					</div>
+					<!-- End Middle name -->
+					<!-- Begin Sur name -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Sur name</label>
+							<input type="text" class="form-control" placeholder="Sur name">
+						</div>
+					</div>
+					<!-- End Sur name -->
+					<!-- Begin Address -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Address</label>
+							<input type="text" class="form-control" placeholder="Address">
+						</div>
+					</div>
+					<!-- End Address -->
+				</div>
+			</div>
+			<!-- end tab basic info -->
+			<!-- begin tab detail_info -->
+			<div class="tab-pane" id="detail_info">
+				<br>
+				<div class="row">
+					<!-- Begin Enable -->
+					<div class="col-md-3">
+						<label class="label-control">Enable</label>
+						<div class="form-control">
+							<label class="label-control my-checkbox">
+						      <input type="checkbox"> Enable
+						    </label>
+						</div>
+					</div>
+					<!-- End Enable -->
+					<!-- Begin Provider number -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Provider number</label>
+							<input type="text" class="form-control" placeholder="Provider number">
+						</div>
+					</div>
+					<!-- End Provider number -->
+					<!-- Begin Prescriber number -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Prescriber number</label>
+							<input type="text" class="form-control" placeholder="Prescriber number">
+						</div>
+					</div>
+					<!-- End Prescriber number -->
+					<!-- Begin Payee provider number -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Payee provider number</label>
+							<input type="text" class="form-control" placeholder="Payee provider number">
+						</div>
+					</div>
+					<!-- End Payee provider number -->
+				</div>
+				<div class="row">
+					<!-- Begin Provider type -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Provider type</label>
+							<select class="form-control">
+								<option value="1">Provider type</option>
+							</select>
+						</div>
+					</div>
+					<!-- End Provider type -->
+					<!-- Begin Clinical department -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Clinical department</label>
+							<select class="form-control">
+								<option value="1">Doctor</option>
+								<option value="2">Dept</option>
+								<option value="3">Physio</option>
+							</select>
+						</div>
+					</div>
+					<!-- End Provider type -->
+					<!-- Begin Appt interval -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Appt interval</label>
+							<input type="number" class="form-control" placeholder="Appt interval">
+						</div>
+					</div>
+					<!-- End Appt interval -->
+					<!-- Begin New calendar slot -->
+					<div class="col-md-3">
+						<label class="label-control">New calendar slot</label>
+						<div class="form-control">
+							<label class="label-control my-checkbox">
+						      <input type="checkbox"> New calendar slot
+						    </label>
+						</div>
+					</div>
+					<!-- End New calendar slot -->
+				</div>
+			</div>
+			<!-- end tab detail_info -->
+			<!-- begin tab more_info -->
+			<div class="tab-pane" id="more_info">
+				<br>
+				<!--  -->
+				<div class="row">
+					<!-- Begin Enable -->
+					<div class="col-md-3">
+						<label class="label-control">Receive Email After</label>
+						<div class="form-control">
+							<label class="label-control my-checkbox">
+						      <input type="checkbox"> Receive EMail After
+						    </label>
+						</div>
+					</div>
+					<!-- End Enable -->
+					<!-- Begin Enable -->
+					<div class="col-md-3">
+
+						<label class="label-control">Appointment Book</label>
+						<div class="form-control">
+							<label class="label-control my-checkbox">
+						      <input type="checkbox"> Appointment Book
+						    </label>
+						</div>
+					</div>
+					<!-- End Enable -->
+					<!-- Begin Abn number -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Abn number</label>
+							<input type="text" class="form-control" placeholder="Abn number">
+						</div>
+					</div>
+					<!-- End Abn number -->
+					<!-- Begin sign off -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">sign off</label>
+							<input type="text" class="form-control" placeholder="sign off">
+						</div>
+					</div>
+					<!-- End sign off -->
+				</div>
+				<div class="row">
+					<!-- Begin Medical registration -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Medical registration</label>
+							<input type="number" class="form-control" placeholder="Medical registration">
+						</div>
+					</div>
+					<!-- End Medical registration -->
+					<!-- Begin Qualification ID -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Qualification</label>
+							<select class="form-control">
+								<option value="1">Qualification</option>
+							</select>
+						</div>
+					</div>
+					<!-- End  Qualification ID -->
+					<!-- Begin Oshc id -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Oshc id</label>
+							<input type="number" class="form-control" placeholder="Oshc id">
+						</div>
+					</div>
+					<!-- End Oshc id -->
+					<!-- Begin Default bank account -->
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Default bank account</label>
+							<input type="number" class="form-control" placeholder="Default bank account">
+						</div>
+					</div>
+					<!-- End Default bank account -->
+				</div>
+				<!-- begin signatue -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class="control-label">Signature</label>
+							<textarea class="form-control" rows="4">signature</textarea>
+						</div>
+					</div>
+				</div>
+				<!-- end signatue -->
+			</div>
+			<!-- end tab more_info -->
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn default" data-dismiss="modal" ng-click="close()"><i class="icon-action-undo"></i> Close</button>
+		<button type="button" class="btn blue"><i class="glyphicon glyphicon-save"></i> Save changes</button>
+	</div>
+</div>

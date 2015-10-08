@@ -148,7 +148,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
             
         }else{
             if(validateImage != noneImage){
-                validateImage.image = UIImage(named: "sao")
+                validateImage.image = UIImage(named: "**")
                 ChangeBorderColor(nameInputField, color: redColorCuston)
             }else{
                 nameInputField.layer.borderWidth = 0
@@ -209,7 +209,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluateWithObject(mail)
     }
-    
+
     //when check service type
     @IBAction func ChoosePSH(sender: AnyObject) {
         if(sender.tag == 203){
@@ -250,19 +250,19 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     
     // check contact no wrong format
     func CheckContactNo(){
-        if( contactPhoneTextField.text.length < 9 || contactPhoneTextField.text.length > 10 ){
-            contactPhoneImage.image = UIImage(named: "sao")
+        if( contactPhoneTextField.text!.length < 9 || contactPhoneTextField.text!.length > 10 ){
+            contactPhoneImage.image = UIImage(named: "**")
             ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
             //AlertShow("Notification",message: "Phone number is invalid",addButtonWithTitle: "OK")
             
         }else{
-            if(contactPhoneTextField.text.length == 10){
-                var str = contactPhoneTextField.text.substringToIndex(advance(contactPhoneTextField.text.startIndex, 1))
-                if(str != "0"){
-                    ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
-                    contactPhoneImage.image = UIImage(named: "sao")
-                   // AlertShow("Notification",message: "Phone number is invalid",addButtonWithTitle: "OK")
-                }
+            if(contactPhoneTextField.text!.length == 10){
+//                let str = contactPhoneTextField.text!.substringToIndex(advance(contactPhoneTextField.text!.startIndex, 1))
+//                if(str != "0"){
+//                    ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
+//                    contactPhoneImage.image = UIImage(named: "**")
+//                   // AlertShow("Notification",message: "Phone number is invalid",addButtonWithTitle: "OK")
+//                }
             }
         }
         
@@ -272,42 +272,37 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         
         self.view.endEditing(true)
         //check first name , last name , contactno is Empty
-        if(firstNameTextField.text.isEmpty || lastNameTextField.text.isEmpty || contactPhoneTextField.text.isEmpty){
-            AlertShow("Error", message: "Please input information required *", addButtonWithTitle: "OK")
-            if(firstNameTextField.text.isEmpty){
+        if(firstNameTextField.text!.isEmpty || lastNameTextField.text!.isEmpty || contactPhoneTextField.text!.isEmpty){
+            AlertShow("Error", message: "Please input required information", addButtonWithTitle: "OK")
+            if(firstNameTextField.text!.isEmpty){
                 ChangeBorderColor(firstNameTextField, color: redColorCuston)
             }
-            if(lastNameTextField.text.isEmpty){
+            if(lastNameTextField.text!.isEmpty){
                 ChangeBorderColor(lastNameTextField, color: redColorCuston)
             }
-            if(contactPhoneTextField.text.isEmpty){
+            if(contactPhoneTextField.text!.isEmpty){
                 ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
             }
             
         }else{
             if(checkMaxLength(firstNameTextField, length: 50) && checkMaxLength(lastNameTextField, length: 255) && checkMaxLength(surburbTextField, length: 100) && checkMaxLength(dobTextField, length: 255) && checkMaxLength(emailTextField, length: 255)){
-                if(!isValidEmail(emailTextField.text) && !emailTextField.text.isEmpty){
+                if(!isValidEmail(emailTextField.text!) && !emailTextField.text!.isEmpty){
                     AlertShow("Error", message: "Email is invalid", addButtonWithTitle: "OK")
                 }else{
-                    if( contactPhoneTextField.text.length < 9 || contactPhoneTextField.text.length > 10 ){
+                    if( contactPhoneTextField.text!.length < 9 || contactPhoneTextField.text!.length > 10 ){
                         
-                        contactPhoneImage.image = UIImage(named: "sao")
+                        contactPhoneImage.image = UIImage(named: "**")
                         ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
                         AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
                         
                     }else{
-                        if(contactPhoneTextField.text.length == 10){
-                            var str = contactPhoneTextField.text.substringToIndex(advance(contactPhoneTextField.text.startIndex, 1))
-                            if(str != "0"){
-                                ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
-                                contactPhoneImage.image = UIImage(named: "sao")
-                                AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
-                            }else{
-                                phoneNumber  = contactPhoneTextField.text.substringWithRange(Range<String.Index>(start: advance(contactPhoneTextField.text.startIndex, 1), end: contactPhoneTextField.text.endIndex))
-                                MakeAppointMentSubmit()
-                            }
+                        if(contactPhoneTextField.text!.length == 10){
+
+                        
+                        
+                        
                         }else{
-                            phoneNumber = contactPhoneTextField.text
+                            phoneNumber = contactPhoneTextField.text!
                             MakeAppointMentSubmit()
                         }
                         
@@ -337,7 +332,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         
         //print(patientInformation)
         if(!isConnectedToNetwork()){
-            let alertController = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet  ", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet ", preferredStyle: .Alert)
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
                 // ...
@@ -377,21 +372,21 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
             alert.show();
             
             var err: NSError?
-            request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+            //request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.addValue("application/json", forHTTPHeaderField: "Accept")
             
             var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
                 //print(response)
-                var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
+                var strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
                 
                 var err: NSError?
-                var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
+             //   var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
                 
                 
                 
                 if(err != nil) {
-                    let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
+                    let jsonStr = NSString(data: data!, encoding: NSUTF8StringEncoding)
                     alert.dismissWithClickedButtonIndex(0, animated: true)
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.AlertShow("Notification",message: "Can not connect to server",addButtonWithTitle: "OK")
@@ -405,19 +400,31 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
                         if(status == 200){
                             alert.dismissWithClickedButtonIndex(0, animated: true)
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.AlertShow("Notification", message: "Success", addButtonWithTitle: "OK")
+                                let alertController = UIAlertController(title: "Success", message: "Your request has been send successfully !.Please wait for our staff to contact you", preferredStyle: .Alert)
+                                
+                    
+                                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                                    self.view.endEditing(true)
+                                    self.dismissViewControllerAnimated(true, completion: nil)
+                                }
+                                alertController.addAction(OKAction)
+                                
+                                self.presentViewController(alertController, animated: true) {
+                                    // ...
+                                }
+
                             })
                         }else{
                             alert.dismissWithClickedButtonIndex(0, animated: true)
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.AlertShow("Notification", message: "error", addButtonWithTitle: "OK")
+                                self.AlertShow("Notification", message: "Error ! Please check your connection and try again", addButtonWithTitle: "OK")
                             })
                             //println(json)
                         }
                     }
                     else {
                         
-                        let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
+                        let jsonStr = NSString(data: data!, encoding: NSUTF8StringEncoding)
                         alert.dismissWithClickedButtonIndex(0, animated: true)
                         //println("Error could not parse JSON: \(jsonStr)")
                     }
@@ -440,7 +447,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         
         var response: NSURLResponse?
         
-        var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: nil) as NSData?
+        var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, er) as NSData?
         
         if let httpResponse = response as? NSHTTPURLResponse {
             if httpResponse.statusCode == 200 {

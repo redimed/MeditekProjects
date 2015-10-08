@@ -32,7 +32,7 @@ class ViewController: UIViewController,patientDetailViewDelegate {
         }
         if(segue.identifier == "urgentCare"){
             var moreDetail  = segue.destinationViewController as! PatientDetailViewController
-            moreDetail.informationData["title"] = "Sport Injury Clinic Booking"
+            moreDetail.informationData["title"] = "Urgent Care Clinic Booking"
             moreDetail.informationData["urgentRequestType"] = "UrgentCare"
         }
         if(segue.identifier == "sportInjury"){

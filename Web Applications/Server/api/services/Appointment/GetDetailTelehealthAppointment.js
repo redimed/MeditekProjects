@@ -28,6 +28,11 @@ module.exports = function(teleAppointmentUID) {
                     required: true
                 }, {
                     model: ClinicalDetail,
+                    attributes: ['UID', 'Section', 'Category', 'Type', 'Name', 'Value', 'ClinicalNote', 'Description'],
+                    required: true
+                }, {
+                    model: Doctor,
+                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Type', 'Email', 'Phone'],
                     required: true
                 }]
             }, {

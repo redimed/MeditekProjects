@@ -38,10 +38,6 @@ module.exports = {
         ClinicalDetail.belongsTo(TelehealthAppointment, {
             foreignKey: 'TelehealthAppointmentID'
         });
-        // TelehealthAppointment - ClinicalDetail
-        TelehealthAppointment.hasMany(GeneralPractitioner, {
-            foreignKey: 'TelehealthAppointmentID'
-        });
 
         //association Appointment - Doctor
         Appointment.belongsToMany(Doctor, {
@@ -74,16 +70,6 @@ module.exports = {
         Department.hasOne(Doctor, {
             foreignKey: 'DepartmentID'
         });
-        //GeneralPractitioner - Doctor
-        GeneralPractitioner.belongsToMany(Doctor, {
-            through: 'RefGeneralPractitionerDoctor',
-            foreignKey: 'GeneralPractitionerID'
-        });
-        Doctor.belongsToMany(GeneralPractitioner, {
-            through: 'RefGeneralPractitionerDoctor',
-            foreignKey: 'DoctorID'
-        });
-
         /* Doctor */
         Site.hasMany(Doctor, {
             foreignKey: 'SiteID'

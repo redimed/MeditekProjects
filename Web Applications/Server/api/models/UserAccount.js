@@ -1,4 +1,4 @@
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 module.exports = {
     attributes: {
         ID: {
@@ -84,7 +84,7 @@ module.exports = {
             beforeCreate: function(user, options, cb) {
                 user.CreatedDate=new Date();
                 bcrypt.genSalt(10, function(err, salt) {
-                    bcrypt.hash(user.Password, salt, function(err, hash) {
+                    bcrypt.hash(user.Password, salt,null, function(err, hash) {
                         if (err) {
                             console.log(err);
                             cb(err);

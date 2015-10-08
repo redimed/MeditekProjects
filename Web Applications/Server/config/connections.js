@@ -13,7 +13,7 @@ module.exports.connections = {
         charset: 'utf8',
         collation: 'utf8-general_ci',
         options: {
-            host: 'localhost'
+            host: '192.168.1.2'
         }
         // adapter: 'sails-mysql',
         // port: 3306,

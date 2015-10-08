@@ -4,12 +4,14 @@ module.exports={
 	 * Input:
 	 * 	clause:
 	 * 		-criteria: chứa các key và value để filter dữ liệu
+	 * 			-là một object chứa các toán tử:
+	 * 				tham khảo sequelize
 	 * 		-attributes: tên các trường sẽ trả về
 	 * 		-limit: trả về bao nhiêu dòng dữ liệu
 	 * 		-offset: bỏ qua bao nhiêu dữ liệu đầu tiên
 	 * 		-order: ví dụ { UserName:'ASC',Email:'DESC' }
 	 */
-	GetListUrgentRequests:function(clause,transaction)
+	GetListUrgentRequestsCustom:function(clause,transaction)
 	{
 		var criteria=clause.criteria;
 		var attributes=clause.attributes;
@@ -19,7 +21,8 @@ module.exports={
 		var whereClause={};
 		whereClause={
 			$and:[
-				criteria
+				// {LastName:{$like:'G%'}},//đưa vào các điều kiện bắt buộc
+				criteria// đưa vào các điều kiện từ client
 			],
 		}
 		console.log(whereClause)
@@ -44,5 +47,20 @@ module.exports={
 		},function(err){
 			throw err;
 		})
+	},
+
+	/**
+	 * GetListUsers
+	 * Input:
+	 * 	clause:
+	 * 		-criteria: chứa các key và value để filter dữ liệu
+	 * 		-attributes: tên các trường sẽ trả về
+	 * 		-limit: trả về bao nhiêu dòng dữ liệu
+	 * 		-offset: bỏ qua bao nhiêu dữ liệu đầu tiên
+	 * 		-order: ví dụ { UserName:'ASC',Email:'DESC' }
+	 */
+	GetListUrgentRequests:function(clause,transaction)
+	{
+
 	}
 }

@@ -194,7 +194,7 @@ module.exports = {
 
         var clause=req.body;
         console.log(clause);
-        Services.UrgentCare.GetListUrgentRequests(clause)
+        Services.UrgentCare.GetListUrgentRequestsCustom(clause)
         .then(function(data){
             res.ok(data);
         },function(err){

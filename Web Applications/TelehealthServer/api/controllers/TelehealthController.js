@@ -81,6 +81,7 @@ module.exports = {
         TelehealthService.FindByUID(uid).then(function(teleUser) {
             if (teleUser) {
                 teleUser.getUserAccount().then(function(user) {
+                    console.log("=====",user.UID);
                     TelehealthService.MakeRequest({
                         path: '/api/patient/get-patient',
                         method: 'POST',

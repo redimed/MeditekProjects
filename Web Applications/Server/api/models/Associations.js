@@ -88,6 +88,9 @@ module.exports = {
         UserAccount.hasOne(Patient, {
             foreignKey: 'UserAccountID'
         });
+        Patient.belongsTo(UserAccount, {
+            foreignKey: 'UserAccountID'
+        });
 
         /* Doctor */
         Site.hasMany(Doctor, {

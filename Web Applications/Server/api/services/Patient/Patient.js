@@ -174,25 +174,45 @@ module.exports = {
 		output:find patient which was provided information.
 	*/
 	SearchPatient : function(data) {
-		//if data is Phone Number
+		//if data is Phone Number console.log(data.PhoneNumber.charAt(0));
 		if(data.PhoneNumber!=undefined && data.PhoneNumber!=null){
-			return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
-			.then(function(user){
-				//check if Phone Number is found in table UserAccount, get UserAccountID to find patient
-				if(user!=undefined && user!=null){
-					console.log(user[0]);
-					return Patient.findAll({
-						where: {
-							UserAccountID : user[0].ID
-						}
-					});
-				}
-				else{
-					res.notFound({status:404,message:"not Found"});
-				}
-			},function(err){
-				res.serverError({status:500,message:ErrorWrap(err)});
-			});
+			if(data.PhoneNumber.substr(0,3)=='+61'){
+				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
+				.then(function(user){
+					//check if Phone Number is found in table UserAccount, get UserAccountID to find patient
+					if(user!=undefined && user!=null && user!='' && user.length!=0){
+						return Patient.findAll({
+							where: {
+								UserAccountID : user[0].ID
+							}
+						});
+					}
+					else{
+						return null;
+					}
+				},function(err){
+					throw err;
+				});
+			}
+			else{
+				data.PhoneNumber = '+61'+data.PhoneNumber;
+				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
+				.then(function(user){
+					//check if Phone Number is found in table UserAccount, get UserAccountID to find patient
+					if(user!=undefined && user!=null && user!='' && user.length!=0){
+						return Patient.findAll({
+							where: {
+								UserAccountID : user[0].ID
+							}
+						});
+					}
+					else{
+						return null;
+					}
+				},function(err){
+					throw err;
+				});
+			}
 		}
 		else {
 			//if data is patient's information
@@ -201,9 +221,27 @@ module.exports = {
 					$or :[
 							// gom 3 cot FirstName MiddleName LastName lai de search FullName
 							//dung concat sequelize
-							Sequelize.where(Sequelize.fn("concat", Sequelize.col("FirstName"), ' ', Sequelize.col("MiddleName"), ' ', Sequelize.col("LastName")), {
-						        like: '%'+data.Name+'%'
-						    }),
+						Sequelize.where(Sequelize.fn("concat", Sequelize.col("FirstName"), ' ', Sequelize.col("MiddleName"), ' ', Sequelize.col("LastName")), {
+					        like: '%'+data.Name+'%'
+						}),
+
+						{
+							FirstName:{
+								$like: '%'+data.Name+'%'
+							}
+						},
+
+						{
+							MiddleName:{
+								$like: '%'+data.Name+'%'
+							}
+						},
+
+						{
+							LastName:{
+								$like: '%'+data.Name+'%'
+							}
+						},
 
 						{
 							UID : data.UID
@@ -281,7 +319,7 @@ module.exports = {
 				return null;
 			}
 		},function(err){
-			res.serverError({status:500,message:ErrorWrap(err)});
+			throw err;
 		});
 	},
 	

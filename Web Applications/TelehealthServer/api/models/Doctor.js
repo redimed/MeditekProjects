@@ -46,9 +46,9 @@ module.exports = {
             type: Sequelize.STRING(1),
             field: 'Enable'
         },
-        creationDate: {
+        createdDate: {
             type: Sequelize.DATE,
-            field: 'CreationDate'
+            field: 'CreatedDate'
         },
         createdBy: {
             type: Sequelize.BIGINT(20),
@@ -71,7 +71,7 @@ module.exports = {
     options: {
         tableName: 'Doctor',
         timestamps: true,
-        createdAt: 'creationDate',
+        createdAt: 'createdDate',
         updatedAt: 'modifiedDate',
         classMethods: {},
         instanceMethods: {},

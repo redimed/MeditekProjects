@@ -26,9 +26,9 @@ module.exports = {
             type: Sequelize.TEXT,
             field: 'DeviceID'
         },
-        creationDate: {
+        createdDate: {
             type: Sequelize.DATE,
-            field: 'CreationDate'
+            field: 'CreatedDate'
         },
         createdBy: {
             type: Sequelize.BIGINT(20),
@@ -46,7 +46,7 @@ module.exports = {
     options: {
         tableName: 'UserActivation',
         timestamps: true,
-        createdAt: 'creationDate',
+        createdAt: 'createdDate',
         updatedAt: 'modifiedDate',
         classMethods: {},
         instanceMethods: {},

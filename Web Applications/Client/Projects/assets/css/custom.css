@@ -1,7 +1,7 @@
 .page-header {background-color: white;}
 .page-header.navbar {
-	background: white url('../img/bk-header.png') ;
-	background-size: 100% 46px ;
+	background: white url('../img/bk-header.png') !important;
+	background-size: 100% 46px !important;
 }
 
 

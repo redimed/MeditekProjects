@@ -19,6 +19,7 @@ module.exports = {
                     teleUser.getUserAccount().then(function(user) {
                         sails.sockets.join(req.socket, uid + ":" + user.phoneNumber);
                         sails.sockets.leave(req.socket, req.socket.id);
+                        console.log("=====Join Rooms=====: ",uid + ":" + user.phoneNumber);
                         TelehealthService.GetOnlineUsers();
                     })
                 }

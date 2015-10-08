@@ -63,7 +63,7 @@ module.exports = {
 		var data = req.body.data;
 		Services.Patient.GetPatient(data)
 		.then(function(info){
-			if(info!==null && info!==undefined){
+			if(info!=null && info!=undefined && info!=''){
 				res.ok({status:200, message:"success", data:info});
 			} else {
 				res.notFound({status:404, message:"not Found"});
@@ -116,10 +116,6 @@ module.exports = {
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});
 		});
-	},
-
-	Test : function(req, res) {
-		res.json("yes");
 	}
 
 };

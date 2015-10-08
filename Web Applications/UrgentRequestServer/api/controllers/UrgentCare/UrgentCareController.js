@@ -113,7 +113,7 @@ module.exports = {
                     };
                     var CallBackSendSMS = function(err) {
                         if (err) {
-                            console.log(err);
+                            console.log('Send SMS:' + err);
                         }
                     }
                     SendSMSService.Send(dataSMS, CallBackSendSMS);

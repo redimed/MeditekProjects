@@ -262,8 +262,10 @@ module.exports = {
     Doctor: function(data) {
         return {
             FirstName: data.FirstName,
+            MiddleName: data.MiddleName,
             LastName: data.LastName,
-            Phone: data.Phone
+            Phone: data.Phone,
+            DepartmentID: data.DepartmentID
         };
     }
 };

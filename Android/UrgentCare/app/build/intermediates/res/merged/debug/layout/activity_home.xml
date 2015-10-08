@@ -9,7 +9,7 @@
         android:layout_height="fill_parent"
         android:scaleType="fitXY"
         android:id="@+id/imgBackgroundHome"
-        android:background="@drawable/bg_home"/>
+        android:background="#f8f9fa"/>
 
     <ImageView
         android:layout_width="300dp"
@@ -33,66 +33,68 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/imgLogoBtn"
                     android:background="@drawable/img_logo_btn" />
-                <Button
+                <com.andexert.library.RippleView
+                    android:id="@+id/rippleViewSportInjury"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/btnSportInjury"
-                    android:background="@drawable/img_sport_injury"/>
+                    rv_centered="true">
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnSportInjury"
+                        android:background="@drawable/img_sport_injury"/>
+                </com.andexert.library.RippleView>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_below="@+id/linearLayout1">
-                <Button
+                <com.andexert.library.RippleView
+                    android:id="@+id/rippleViewWorkInjury"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/btnWorkInjury"
-                    android:background="@drawable/img_work_injury"/>
-                <Button
+                    rv_centered="true">
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnWorkInjury"
+                        android:background="@drawable/img_work_injury"/>
+                </com.andexert.library.RippleView>
+                <com.andexert.library.RippleView
+                    android:id="@+id/rippleViewFAQ"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/btnFAQ"
-                    android:background="@drawable/img_faq"/>
+                    rv_centered="true">
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnFAQ"
+                        android:background="@drawable/img_faq"/>
+                </com.andexert.library.RippleView>
             </LinearLayout>
     </RelativeLayout>
 
-    <Button
+    <com.andexert.library.RippleView
+        android:id="@+id/rippleViewMakeAppointment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnMakeAppointment"
-        android:background="@drawable/btn_urgentcare"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        rv_centered="true">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnMakeAppointment"
+            android:background="@drawable/btn_urgentcare"/>
+    </com.andexert.library.RippleView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="URGENT CARE"
-        android:id="@+id/textView"
-        android:textColor="#FB4D3D"
-        android:textStyle="bold"
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="20dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:gravity="center"/>
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textView2"
-        android:text="Sport Injury"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="17dp"
-        android:textColor="#345995"
-        android:layout_marginBottom="15dp"
-        android:gravity="center"/>
-
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/lblslogan"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>
 <!-- From: file:/D:/Project/Android/UrgentCare/app/src/main/res/layout/activity_home.xml -->

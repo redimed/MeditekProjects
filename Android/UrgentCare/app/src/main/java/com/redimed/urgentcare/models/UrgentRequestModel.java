@@ -21,6 +21,27 @@ public class UrgentRequestModel {
     public String UrgentRequestType;
     @SerializedName("urgentRequestType")
     public String serviceType;
+    public String companyName;
+    public String contactPerson;
+
+    public void setCompanyPhone(String companyPhone) {
+        this.companyPhone = companyPhone;
+    }
+
+    @SerializedName("companyPhoneNumber")
+    public String companyPhone;
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public void setContactPerson(String contactPerson) {
+        this.contactPerson = contactPerson;
+    }
+
+    public void setSuburb(String suburb) {
+        this.suburb = suburb;
+    }
 
     public void setServiceType(String serviceType) {
         this.serviceType = serviceType;
@@ -36,10 +57,6 @@ public class UrgentRequestModel {
 
     public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone;
-    }
-
-    public void setSuburb(String suburb) {
-        this.suburb = suburb;
     }
 
     public void setDOB(String DOB) {

@@ -27,10 +27,6 @@
             android:label="@string/title_activity_make_appointment" >
         </activity>
         <activity
-            android:name="com.redimed.urgentcare.FAQ"
-            android:label="@string/title_activity_faq" >
-        </activity>
-        <activity
             android:name="com.redimed.urgentcare.FAQActivity"
             android:label="@string/title_activity_faq" >
         </activity>

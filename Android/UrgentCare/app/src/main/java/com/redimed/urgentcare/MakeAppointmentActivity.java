@@ -1,14 +1,17 @@
 package com.redimed.urgentcare;
 
-import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -17,17 +20,21 @@ import android.widget.ScrollView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.redimed.urgentcare.api.UrgentRequestApi;
 import com.redimed.urgentcare.models.UrgentRequestModel;
 import com.redimed.urgentcare.utils.CreateDatePicker;
-import com.redimed.urgentcare.utils.CreateDialog;
 import com.redimed.urgentcare.utils.RetrofitClient;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -36,7 +43,6 @@ public class MakeAppointmentActivity extends AppCompatActivity implements Create
     @Bind(R.id.txtFirstName) EditText txtFirstName;
     @Bind(R.id.txtLastName) EditText txtLastName;
     @Bind(R.id.txtContactPhone) EditText txtContactPhone;
-    @Bind(R.id.txtSuburb) EditText txtSuburb;
     @Bind(R.id.txtDOB) EditText txtDOB;
     @Bind(R.id.txtEmail) EditText txtEmail;
     @Bind(R.id.txtDescription) EditText txtDescription;
@@ -45,23 +51,52 @@ public class MakeAppointmentActivity extends AppCompatActivity implements Create
     @Bind(R.id.scrollViewMakeAppointment) ScrollView scrollViewMakeAppointment;
     @Bind(R.id.btnCloseMakeAppointmentPage) Button btnCloseMakeAppointmentPage;
     @Bind(R.id.btnMakeAppointment) Button btnMakeAppointment;
-    ProgressDialog progressMakeAppointment;
-
+    @Bind(R.id.autoCompleteSuburb)
+    AutoCompleteTextView autoCompleteSuburb;
+    String[] surburb;
+    Gson gson = new Gson();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_appointment);
         // Initialize default values
         ButterKnife.bind(this);
-
+        mReadJsonData();
         // Initialize controls
-        EditText[] allEditTextEventOnTouchListener = {txtFirstName,txtLastName,txtContactPhone,txtSuburb,txtEmail,txtDescription};
+        EditText[] allEditTextEventOnTouchListener = {txtFirstName,txtLastName,txtDOB,txtContactPhone,txtEmail,txtDescription};
         OnTouchListenerRelativeLayout(scrollViewMakeAppointment, allEditTextEventOnTouchListener);
         TxtDOBCreateDatePicker(txtDOB);
         CloseMakeAppointmentPage(btnCloseMakeAppointmentPage);
         EditText[] allEditTextCheckRequire = {txtFirstName,txtLastName};
         SendMakeAppointment(btnMakeAppointment, allEditTextCheckRequire);
         EdittextValidateFocus(allEditTextCheckRequire);
+    }
+
+    public void mReadJsonData() {
+        try {
+            File f = new File("/data/data/" + getPackageName() + "/" + "suburb.json");
+            if  (f.exists()){
+                FileInputStream is = new FileInputStream(f);
+                int size = is.available();
+                byte[] buffer = new byte[size];
+                is.read(buffer);
+                is.close();
+                String mResponse = new String(buffer);
+                Log.d("roine", mResponse);
+
+                JsonParser parser = new JsonParser();
+                JsonObject obj = (JsonObject) parser.parse(mResponse);
+
+                surburb = gson.fromJson(obj.get("data"), String[].class);
+                Log.d("nene",obj.get("data").toString());
+                ArrayAdapter adapter = new ArrayAdapter(MakeAppointmentActivity.this,android.R.layout.simple_list_item_1,surburb);
+                autoCompleteSuburb.setAdapter(adapter);
+                autoCompleteSuburb.setThreshold(1);
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     //validate all EditText when outfocus
@@ -211,20 +246,19 @@ public class MakeAppointmentActivity extends AppCompatActivity implements Create
                 objectUrgentRequest.setContactPhone(
                         getResources().getString(R.string.australiaFormatPhone) + txtContactPhone.getText().toString()
                 );
-                objectUrgentRequest.setSuburb(txtSuburb.getText().toString());
                 objectUrgentRequest.setDOB(txtDOB.getText().toString());
                 objectUrgentRequest.setEmail(txtEmail.getText().toString());
                 objectUrgentRequest.setDescription(txtDescription.getText().toString());
                 objectUrgentRequest.setGpReferral(((RadioButton) findViewById(radioGroupGPReferral.getCheckedRadioButtonId())).getHint().toString());
                 objectUrgentRequest.setUrgentRequestType(((RadioButton) findViewById(radioGroupUrgentRequestType.getCheckedRadioButtonId())).getHint().toString());
                 objectUrgentRequest.setServiceType(getResources().getString(R.string.serviceUrgentCare));
+                objectUrgentRequest.setSuburb(autoCompleteSuburb.getText().toString());
                 // Make Appointment Process
-                progressMakeAppointment = ProgressDialog.show(
-                        MakeAppointmentActivity.this,
-                        getResources().getString(R.string.progressMakeAppointmentTitle),
-                        getResources().getString(R.string.progressMakeAppointmentContent),
-                        true
-                );
+                final SweetAlertDialog progressDialog = new SweetAlertDialog(MakeAppointmentActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                progressDialog.setTitleText(getResources().getString(R.string.progressMakeAppointmentContent));
+                progressDialog.setCancelable(false);
+                progressDialog.show();
 
                 //send make appointment
                 Gson gson = new Gson();
@@ -238,32 +272,34 @@ public class MakeAppointmentActivity extends AppCompatActivity implements Create
                 urgentApi.sendUrgentRequest(jsonUrgentRequest, new Callback<JsonObject>() {
                     @Override
                     public void success(JsonObject jsonObject, Response response) {
-                        progressMakeAppointment.dismiss();
-                        CreateDialog diglog = new CreateDialog();
-                        diglog.CreateDialog(
-                                MakeAppointmentActivity.this,
-                                getResources().getString(R.string.contentDialogSuccessAppointment),
-                                R.layout.activity_make_appointment_dialog,
-                                R.color.bgDialogSuccess,
-                                R.drawable.ic_dialog_success,
-                                R.drawable.btn_dialog_success,
-                                true
-                        );
+                        progressDialog.dismissWithAnimation();
+                        SweetAlertDialog pDialog = new SweetAlertDialog(MakeAppointmentActivity.this, SweetAlertDialog.SUCCESS_TYPE);
+                        pDialog.setTitleText(getResources().getString(R.string.dailogSuccess));
+                        pDialog.setContentText(getResources().getString(R.string.contentDialogSuccessAppointment));
+                        pDialog.setCancelable(false);
+                        pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                finish();
+                            }
+                        });
+                        pDialog.show();
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        progressMakeAppointment.dismiss();
-                        CreateDialog diglog = new CreateDialog();
-                        diglog.CreateDialog(
-                                MakeAppointmentActivity.this,
-                                getResources().getString(R.string.contentDialogErrorAppointment),
-                                R.layout.activity_make_appointment_dialog,
-                                R.color.bgDialogError,
-                                R.drawable.ic_dialog_error,
-                                R.drawable.btn_make_appointment,
-                                false
-                        );
+                        progressDialog.dismissWithAnimation();
+                        SweetAlertDialog eDialog = new SweetAlertDialog(MakeAppointmentActivity.this, SweetAlertDialog.ERROR_TYPE);
+                        eDialog.setTitleText(getResources().getString(R.string.dailogError));
+                        eDialog.setContentText(getResources().getString(R.string.contentDialogErrorAppointment));
+                        eDialog.setCancelable(false);
+                        eDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                finish();
+                            }
+                        });
+                        eDialog.show();
                     }
                 });
             }

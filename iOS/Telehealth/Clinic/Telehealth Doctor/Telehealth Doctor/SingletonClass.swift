@@ -9,11 +9,13 @@
 import UIKit
 import Socket_IO_Client_Swift
 import SwiftyJSON
+import Alamofire
 
 class Singleton {
     static let SingleTon = Singleton()
     let socket = SocketIOClient(socketURL: STRING_URL_SERVER)
     var onlineUser_Singleton : [OnlineUsers] = []
     var infoOpentok : JSON!
+    var headers : [String: String]!
 }
 let SingleTon = Singleton()

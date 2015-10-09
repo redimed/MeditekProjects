@@ -90,6 +90,10 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func textFieldEditingChange(sender: AnyObject) {
+        let username = usernameTextField.text!
+        var firstChar = username.startIndex.advancedBy(0)
+        print(username[firstChar])
+        
         if(!usernameTextField.text!.isEmpty && !passwordTextField.text!.isEmpty){
             buttonLogin.enabled = true
             buttonLogin.backgroundColor = UIColor(hex: "003366").colorWithAlphaComponent(1)
@@ -149,7 +153,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         let username : String = usernameTextField.text!
         let password : String = passwordTextField.text!
         let paramester = ["username": username, "password": password]
-        
         Alamofire.request(.POST, AUTHORIZATION, parameters: paramester)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
@@ -158,8 +161,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 self.logoImage.hidden = false
                 print("\(data.0) ----- \(data.1) ----- \(data.2)")
                 if(String(data.2) == "SUCCESS") {
-                    let response = JSON(data.2.value!) as JSON
                     let user = data.2.value!["user"] as! NSDictionary
+                    let token = data.2.value!["token"] as! String
+                    
                     let dictionNary = [ "ID" : String(user["ID"]),
                         "UID" : String(user["UID"]),
                         "activated" : String(user["activated"]),
@@ -167,8 +171,13 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                         "phoneNumber" : String(user["phoneNumber"]),
                         "userName" : String(user["userName"]),
                         "userType" : String(user["userType"])] as NSDictionary
+                    
                     self.userDefault.setObject(dictionNary, forKey: "infoDoctor")
-                    self.userDefault.setValue(String(response["token"]), forKey: "token")
+                    self.userDefault.setValue(token, forKey: "token")
+                    SingleTon.headers = [
+                        "Authorization": "Bearer \(token)",
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    ]
                     let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
                     self.presentViewController(initViewController, animated: true, completion: nil)
                 } else {
@@ -200,4 +209,3 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
 }
-

@@ -33,19 +33,28 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     
     @IBOutlet var controllerButtonCall: [UIButton]!
     
+    @IBOutlet weak var nameLabelCall: UILabel!
+    @IBOutlet weak var titleLabelCall: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
+        nameLabelCall.text = SingleTon.onlineUser_Singleton[idOnlineUser].numberPhone
+        nameLabelCall.hidden = true
+        titleLabelCall.hidden = true
     }
     
     override func viewWillAppear(animated: Bool) {
         session = OTSession(apiKey: ApiKey, sessionId: SessionID, delegate: self)
         doConnect(Token)
-        
         let paramTranfer = [String(userDefaults["UID"]), SingleTon.onlineUser_Singleton[idOnlineUser].UUID, "call"]
         SingleTon.socket.emit("get", emitSocket(TRANSFER_CALL, param: paramTranfer))
+        let view: UIView = UIView(frame: CGRectMake(0.0, 0.0, screenSize.width, 50.0))
+        let gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = view.bounds
+        gradient.colors = [UIColor.whiteColor().CGColor, UIColor.blackColor().CGColor]
+        view.layer.insertSublayer(gradient, atIndex: 0)
     }
-    
     
     /**
     Logical call function
@@ -80,6 +89,10 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         for button: UIButton in controllerButtonCall {
             publisher!.view.addSubview(button)
         }
+        nameLabelCall.hidden = false
+        titleLabelCall.hidden = false
+        publisher!.view.addSubview(titleLabelCall)
+        publisher!.view.addSubview(nameLabelCall)
     }
     
     /**
@@ -91,7 +104,6 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     func doSubscribe(stream : OTStream) {
         if let session = self.session {
             subscriber = OTSubscriber(stream: stream, delegate: self)
-            
             var maybeError : OTError?
             session.subscribe(subscriber, error: &maybeError)
             if let error = maybeError {

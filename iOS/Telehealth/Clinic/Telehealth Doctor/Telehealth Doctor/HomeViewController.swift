@@ -40,6 +40,10 @@ class HomeViewController: UIViewController {
                 }
                 NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTable", object: self)
             }
+            
+            SingleTon.socket.on("answer") { data, ack in
+                
+            }
         })
         SingleTon.socket.connect()
     }

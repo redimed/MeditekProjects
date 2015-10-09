@@ -26,10 +26,12 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     }
     
     override func viewWillAppear(animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
         let paramjoinRoom = [String(userDefaults["UID"])]
         SingleTon.socket.emit("get", emitSocket(JOIN_ROOM, param: paramjoinRoom))
         SingleTon.socket.emit("get", GET_ONLINE_USERS)
-        Alamofire.request(.GET, GENERATESESSION).responseJSON() { data in
+        
+        request(.GET, GENERATESESSION, headers: SingleTon.headers).responseJSON() { data in
             let data = data.2.value!["data"] as! NSDictionary
             SingleTon.infoOpentok = JSON(data)
         }
@@ -42,7 +44,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     /**
     Reload data func for notification
     
-    - parameter notification: notification center
+    - parameter notification: notification name "reloadDataTable"
     */
     func reloadTable(notification: NSNotification){
         print(SingleTon.onlineUser_Singleton.count)

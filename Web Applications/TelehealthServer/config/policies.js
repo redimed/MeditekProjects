@@ -17,7 +17,7 @@
  */
 module.exports.policies = {
     '*': true,
-    // 'TelehealthController': {
-    //     'UpdateDeviceToken': ['hasToken']
-    // }
+    'SocketController': {
+        'GenerateConferenceSession': ['hasToken']
+    }
 };

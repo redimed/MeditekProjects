@@ -1,4 +1,5 @@
 var app = angular.module('app.authentication', [
+	'app.authentication.service',
 	'app.authentication.controller',
 	'app.authentication.home',
 	'app.authentication.appointment',

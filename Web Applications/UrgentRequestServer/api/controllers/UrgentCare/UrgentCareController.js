@@ -41,7 +41,7 @@ module.exports = {
                         phoneNumber: data.phoneNumber,
                         gender: data.gender,
                         email: data.email,
-                        DOB: (_.isUndefined(data.DOB) && _.isNull(data.DOB) && _.isEmpty(data.DOB)) ? null : data.DOB),
+                        DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? data.DOB : null),
                     suburb: data.suburb,
                     IP: data.ip,
                     requestDate: data.requestDate,

@@ -1,9 +1,16 @@
 var regexp = require('node-regexp');
+var underscore=require('underscore');
+
 module.exports = {
 	Test:function(req,res)
 	{
-		HelperService.exlog(req.user);
-		res.ok({status:'hehehe',user:req.user});
+			var a={name:'tan'};
+			var b={name:'trinh',address:'binhduong'};
+			var c=underscore.extendOwn(a,b);
+			console.log(a);
+			console.log(b);
+			console.log(c);
+			res.ok();
 	},
 	
 	/**

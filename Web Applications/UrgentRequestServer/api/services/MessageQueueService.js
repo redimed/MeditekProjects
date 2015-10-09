@@ -42,6 +42,9 @@ module.exports = {
                             patientName: UR.lastName + ' ' + UR.firstName,
                             requestDate: Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                             phoneNumber: UR.phoneNumber,
+                            companyName: UR.companyName,
+                            companyPhoneNumber: UR.companyPhoneNumber,
+                            contactPerson: UR.contactPerson,
                             bcc: 'pnguyen@redimed.com.au, thanh1101681@gmail.com'
                         };
                         var CallBackSendMail = function(err, responseStatus, html, text) {

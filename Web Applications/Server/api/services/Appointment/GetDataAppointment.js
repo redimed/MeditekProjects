@@ -45,7 +45,7 @@ module.exports = {
             MVIT: data.MVIT
         };
     },
-    PrefPlasSurgon: function(data) {
+    PreferedPlasticSurgeon: function(data) {
         return {
             Name: data.Name
         };

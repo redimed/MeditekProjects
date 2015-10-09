@@ -19,6 +19,10 @@ module.exports = function(data) {
                         var dataTelehealthAppointment =
                             Services.GetDataAppointment.TelehealthAppointment(telehealthAppointment);
                         return TelehealthAppointment.update(dataTelehealthAppointment, {
+                            where: {
+                                UID: telehealthAppointment.UID
+                            }
+                        }, {
                             transaction: t
                         });
                     } else {
@@ -37,6 +41,10 @@ module.exports = function(data) {
                     var examinationRequired = data.TelehealthAppointment.ExaminationRequired;
                     if (HelperService.CheckExistData(examinationRequired)) {
                         return ExaminationRequired.update(examinationRequired, {
+                            where: {
+                                UID: examinationRequired.UID
+                            }
+                        }, {
                             transaction: t
                         });
                     } else {
@@ -52,6 +60,10 @@ module.exports = function(data) {
                         var dataPreferedPlasticSurgeon =
                             Services.GetDataAppointment.PreferedPlasticSurgeon(preferedPlasticSurgeon);
                         return PreferedPlasticSurgeon.update(dataPreferedPlasticSurgeon, {
+                            where: {
+                                UID: preferedPlasticSurgeon.UID
+                            }
+                        }, {
                             transaction: t
                         });
                     } else {
@@ -62,14 +74,17 @@ module.exports = function(data) {
                     }
                 })
                 .then(function(preferedPlasticSurgeonUpdated) {
-                    var clinicalDetails = data.TelehealthAppointment.PreferedPlasticSurgeon.ClinicalDetails;
+                    var clinicalDetails = data.TelehealthAppointment.ClinicalDetails;
                     if (HelperService.CheckExistData(clinicalDetails)) {
                         //update mutiple row
-                        return;
+                        defer.resolve({
+                            transaction: t,
+                            status: 'success'
+                        });
                     } else {
                         defer.reject({
                             transaction: t,
-                            error: err
+                            error: 'failed'
                         });
                     }
                 })

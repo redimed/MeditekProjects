@@ -4,13 +4,15 @@ var underscore=require('underscore');
 module.exports = {
 	Test:function(req,res)
 	{
-			var a={name:'tan'};
-			var b={name:'trinh',address:'binhduong'};
-			var c=underscore.extend(a,b);
-			console.log(a);
-			console.log(b);
-			console.log(c);
-			res.ok();
+			// Services.UrgentCare.GetListUrgentRequests();
+			console.log(HelperService.checkData(false));
+
+			res.ok(req.user);
+	},
+
+	TestPost:function(req,res)
+	{
+		res.ok(HelperService.checkListData({b:'a'},1,{a:'b'},'1'));
 	},
 	
 	/**

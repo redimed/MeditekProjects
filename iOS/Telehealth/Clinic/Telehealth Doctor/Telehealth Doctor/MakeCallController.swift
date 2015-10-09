@@ -36,8 +36,6 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
-        let paramjoinRoom = [String(userDefaults["UID"])]
-        SingleTon.socket.emit("get", emitSocket(JOIN_ROOM, param: paramjoinRoom))
     }
     
     override func viewWillAppear(animated: Bool) {

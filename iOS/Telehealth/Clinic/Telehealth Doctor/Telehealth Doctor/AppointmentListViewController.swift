@@ -13,6 +13,7 @@ import SwiftyJSON
 class AppointmentListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("infoDoctor") as! NSDictionary
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,8 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     }
     
     override func viewWillAppear(animated: Bool) {
+        let paramjoinRoom = [String(userDefaults["UID"])]
+        SingleTon.socket.emit("get", emitSocket(JOIN_ROOM, param: paramjoinRoom))
         SingleTon.socket.emit("get", GET_ONLINE_USERS)
         Alamofire.request(.GET, GENERATESESSION).responseJSON() { data in
             let data = data.2.value!["data"] as! NSDictionary

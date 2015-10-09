@@ -10,7 +10,8 @@
 		00D4ACA51BC23960007AA820 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 00D4ACA11BC23960007AA820 /* LICENSE */; };
 		00D4ACA61BC23960007AA820 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 00D4ACA21BC23960007AA820 /* README.md */; };
 		00D4ACA71BC23960007AA820 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D4ACA41BC23960007AA820 /* SwiftyJSON.swift */; };
-		542A61721BC4CB2700329427 /* suburb.xml in Resources */ = {isa = PBXBuildFile; fileRef = 542A61711BC4CB2700329427 /* suburb.xml */; };
+		5422174D1BC7693900C0735C /* Suburb.json in Resources */ = {isa = PBXBuildFile; fileRef = 5422174B1BC7693900C0735C /* Suburb.json */; };
+		5422174E1BC7693900C0735C /* suburb.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5422174C1BC7693900C0735C /* suburb.xml */; };
 		5450394C1BABF2FA000D3167 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5450394B1BABF2FA000D3167 /* ApiManager.swift */; };
 		546149CC1BA7AFB700C1F1D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546149CB1BA7AFB700C1F1D6 /* AppDelegate.swift */; };
 		546149CF1BA7AFB700C1F1D6 /* RedimedAfterHours.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 546149CD1BA7AFB700C1F1D6 /* RedimedAfterHours.xcdatamodeld */; };
@@ -53,7 +54,6 @@
 		54614A361BA82B1000C1F1D6 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54614A301BA82B1000C1F1D6 /* TPKeyboardAvoidingScrollView.m */; };
 		54614A371BA82B1000C1F1D6 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54614A321BA82B1000C1F1D6 /* TPKeyboardAvoidingTableView.m */; };
 		54614A381BA82B1000C1F1D6 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 54614A341BA82B1000C1F1D6 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
-		54786D191BC4FDD30042668E /* Suburb.json in Resources */ = {isa = PBXBuildFile; fileRef = 54786D181BC4FDD30042668E /* Suburb.json */; };
 		548A8A8A1BC2700B0004B97D /* WorkInjuryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548A8A891BC2700B0004B97D /* WorkInjuryViewController.swift */; };
 		54C7B6361BC4AC290009DBD8 /* data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54C7B6351BC4AC290009DBD8 /* data.plist */; };
 		54C7B6381BC4ADF00009DBD8 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C7B6371BC4ADF00009DBD8 /* libsqlite3.0.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -74,8 +74,9 @@
 		00D4ACA11BC23960007AA820 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		00D4ACA21BC23960007AA820 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		00D4ACA41BC23960007AA820 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		5422174B1BC7693900C0735C /* Suburb.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Suburb.json; sourceTree = "<group>"; };
+		5422174C1BC7693900C0735C /* suburb.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = suburb.xml; sourceTree = "<group>"; };
 		542A60FA1BC4B83D00329427 /* RedimedAfterHours-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RedimedAfterHours-Bridging-Header.h"; sourceTree = "<group>"; };
-		542A61711BC4CB2700329427 /* suburb.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = suburb.xml; path = ../../suburb.xml; sourceTree = "<group>"; };
 		5450394B1BABF2FA000D3167 /* ApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		546149C61BA7AFB700C1F1D6 /* RedimedAfterHours.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedimedAfterHours.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		546149CA1BA7AFB700C1F1D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -127,7 +128,6 @@
 		54614A321BA82B1000C1F1D6 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
 		54614A331BA82B1000C1F1D6 /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
 		54614A341BA82B1000C1F1D6 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
-		54786D181BC4FDD30042668E /* Suburb.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Suburb.json; path = ../../Suburb.json; sourceTree = "<group>"; };
 		548A8A891BC2700B0004B97D /* WorkInjuryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkInjuryViewController.swift; sourceTree = "<group>"; };
 		54C7B6351BC4AC290009DBD8 /* data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = data.plist; sourceTree = "<group>"; };
 		54C7B6371BC4ADF00009DBD8 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
@@ -193,8 +193,8 @@
 		546149C81BA7AFB700C1F1D6 /* RedimedAfterHours */ = {
 			isa = PBXGroup;
 			children = (
-				54786D181BC4FDD30042668E /* Suburb.json */,
-				542A61711BC4CB2700329427 /* suburb.xml */,
+				5422174B1BC7693900C0735C /* Suburb.json */,
+				5422174C1BC7693900C0735C /* suburb.xml */,
 				54DEECCB1BABA7E700847893 /* Controller */,
 				54DEECCA1BABA7DE00847893 /* Model */,
 				54DEECC91BABA7D500847893 /* API */,
@@ -410,10 +410,10 @@
 				54614A191BA7CBB400C1F1D6 /* Info.plist in Resources */,
 				546149D41BA7AFB700C1F1D6 /* Main.storyboard in Resources */,
 				546149D91BA7AFB700C1F1D6 /* LaunchScreen.xib in Resources */,
-				54786D191BC4FDD30042668E /* Suburb.json in Resources */,
-				542A61721BC4CB2700329427 /* suburb.xml in Resources */,
+				5422174E1BC7693900C0735C /* suburb.xml in Resources */,
 				546149D61BA7AFB700C1F1D6 /* Images.xcassets in Resources */,
 				54C7B6361BC4AC290009DBD8 /* data.plist in Resources */,
+				5422174D1BC7693900C0735C /* Suburb.json in Resources */,
 				54614A1C1BA7CBB400C1F1D6 /* LoadingView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -601,7 +601,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = RedimedAfterHours/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = "8.0	";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -618,7 +618,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = RedimedAfterHours/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = "8.0	";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

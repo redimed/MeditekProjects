@@ -75,6 +75,7 @@ module.exports = function(data) {
                 })
                 .then(function(preferedPlasticSurgeonUpdated) {
                     var clinicalDetails = data.TelehealthAppointment.ClinicalDetails;
+                    console.log(clinicalDetails);
                     if (HelperService.CheckExistData(clinicalDetails)) {
                         //update mutiple row
                         defer.resolve({

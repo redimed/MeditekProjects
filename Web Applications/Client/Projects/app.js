@@ -6,6 +6,7 @@ var app = angular.module('app', [
     "ngSanitize",
     "restangular",
     "toastr",
+    "ladda",
     "app.unAuthentication",
     "app.authentication"
 ]);
@@ -52,7 +53,7 @@ app
         // END CORS PROXY
 
         //RESTANGULAR DEFAULT
-        RestangularProvider.setBaseUrl("http://localhost:3001");
+        RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3005");
 
 		$urlRouterProvider.otherwise('');
 		$stateProvider

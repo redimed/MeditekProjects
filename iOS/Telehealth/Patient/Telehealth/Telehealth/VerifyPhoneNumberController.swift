@@ -13,6 +13,8 @@ import SwiftyJSON
 
 class VerifyPhoneNumberController {
     
+
+    
     func GetDataAPI (url:String,completionHandler: (JSON) -> Void)  {
         
         Alamofire.request(.GET, url)
@@ -39,7 +41,7 @@ class VerifyPhoneNumberController {
                 
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
-                
+                completionHandler(JSON(["TimeOut":"Request Time Out"]))
                 if let data = data {
                     print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
                 }
@@ -64,7 +66,7 @@ class VerifyPhoneNumberController {
                 
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
-                
+                completionHandler(JSON(["TimeOut":"Request Time Out"]))
                 if let data = data {
                     print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
                 }
@@ -74,27 +76,29 @@ class VerifyPhoneNumberController {
         }
     }
     func getInformationPatientByUUID(UUID:String,completionHandler:(JSON) -> Void){
-        print("UID GET:\(UUID)")
+        print("UID GET:\(config.headers)")
         let parameters = [
             "data": [
                 "uid" : UUID
             ]
         ]
-        Alamofire.request(.POST, config.Http + UrlInformationPatient.getInformationPatientByUID.rawValue , parameters: parameters).responseJSON{
+        Alamofire.request(.POST, config.Http + UrlInformationPatient.getInformationPatientByUID.rawValue ,headers:config.headers, parameters: parameters).responseJSON{
             request, response, result in
             switch result {
             case .Success(let JSONData):
-                print("JSON Data---:\(JSON(JSONData))")
-                
+
+                completionHandler(JSON(JSONData))
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
-                print("data:\(String(error))")
+                completionHandler(JSON(["TimeOut":"Request Time Out"]))
+                
                 if let data = data {
                     print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
                 }
             }
 
         }
+        
      
         
  

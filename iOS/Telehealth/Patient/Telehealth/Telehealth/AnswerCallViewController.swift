@@ -18,7 +18,7 @@ class AnswerCallViewController: UIViewController {
         //get UUID to
         uuidTo = String(savedData.data[0]["from"])
         //Get uuid from in localstorage
-        if let uuid = defaults.valueForKey("UserInformation") as? String {
+        if let uuid = defaults.valueForKey("uid") as? String {
             uuidFrom = uuid
             
         }

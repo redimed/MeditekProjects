@@ -16,10 +16,12 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         //Get uuid user in locacalstorage
-        if let uuid = defaults.valueForKey("UserInformation") as? String {
+        if let uuid = defaults.valueForKey("uid") as? String {
             uid = uuid
         }
-       
+        if let token = defaults.valueForKey("token") as? String {
+            tokens = token
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -38,14 +40,11 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             }
             
             sharedSocket.socket.on("receiveMessage"){data, ack in
-                
+                print("calling to me")
                 let dataCalling = JSON(data)
                 //save data to temp class
                 savedData = saveData(data: dataCalling)
                 self.AnswerCall()
-                
-                
-                
             }
         })
         //Socket connecting

@@ -43,3 +43,4 @@ enum numberHashValue : Int {
     case number9 = 942
     case delete = 0
 }
+

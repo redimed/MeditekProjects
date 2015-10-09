@@ -13,33 +13,31 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015 Redimed. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
                     <rect key="frame" x="20" y="626" width="336" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Default" translatesAutoresizingMaskIntoConstraints="NO" id="duP-9Z-Bps">
-                    <rect key="frame" x="-5" y="90" width="380" height="410"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logofix" translatesAutoresizingMaskIntoConstraints="NO" id="Kc3-TX-nVf">
+                    <rect key="frame" x="44" y="281" width="293" height="60"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="410" id="oyy-lP-RGk"/>
+                        <constraint firstAttribute="width" constant="293" id="I1o-ew-ccB"/>
+                        <constraint firstAttribute="height" constant="60" id="on9-59-Ja8"/>
                     </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="duP-9Z-Bps" secondAttribute="bottom" constant="126" id="8nh-Lu-ZYs"/>
-                <constraint firstItem="duP-9Z-Bps" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="90" id="BQK-gw-0Hc"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
+                <constraint firstAttribute="centerX" secondItem="Kc3-TX-nVf" secondAttribute="centerX" constant="-3" id="OfZ-7l-nHD"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
-                <constraint firstAttribute="bottom" secondItem="duP-9Z-Bps" secondAttribute="bottom" constant="167" id="dNa-Fh-oa7"/>
-                <constraint firstAttribute="trailing" secondItem="duP-9Z-Bps" secondAttribute="trailing" id="eRm-YO-Ek3"/>
-                <constraint firstItem="duP-9Z-Bps" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-5" id="orH-Yc-WKN"/>
+                <constraint firstAttribute="centerY" secondItem="Kc3-TX-nVf" secondAttribute="centerY" constant="22.5" id="wYo-cc-FEj"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="548" y="455"/>
+            <point key="canvasLocation" x="547.5" y="454.5"/>
         </view>
     </objects>
     <resources>
-        <image name="Default" width="320" height="480"/>
+        <image name="Logofix" width="2542" height="494"/>
     </resources>
 </document>

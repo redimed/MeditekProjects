@@ -37,7 +37,7 @@ module.exports.cors = {
   *                                                                          *
   ***************************************************************************/
 
-  // allRoutes: false,
+  allRoutes: true,
 
   /***************************************************************************
   *                                                                          *
@@ -47,7 +47,7 @@ module.exports.cors = {
   *                                                                          *
   ***************************************************************************/
 
-  // origin: '*',
+  origin: 'http://localhost:8000,http://localhost:8001',
 
   /***************************************************************************
   *                                                                          *
@@ -55,7 +55,7 @@ module.exports.cors = {
   *                                                                          *
   ***************************************************************************/
 
-  // credentials: true,
+  credentials: true,
 
   /***************************************************************************
   *                                                                          *
@@ -64,7 +64,7 @@ module.exports.cors = {
   *                                                                          *
   ***************************************************************************/
 
-  // methods: 'GET, POST, PUT, DELETE, OPTIONS, HEAD',
+  methods: 'GET, POST, PUT, DELETE, OPTIONS, HEAD',
 
   /***************************************************************************
   *                                                                          *
@@ -73,6 +73,14 @@ module.exports.cors = {
   *                                                                          *
   ***************************************************************************/
 
-  // headers: 'content-type'
+  headers: 'content-type, authorization',
+
+  /**
+   * Security level 1 (high) will respond with a 403 status code to any request 
+   * from a disallowed origin prefixed with the http or https protocol. 
+   * Security level 2 (very high) will do the same, 
+   * but extended to all protocols (so things like Postman and curl won't work).
+   */
+  securityLevel:1,
 
 };

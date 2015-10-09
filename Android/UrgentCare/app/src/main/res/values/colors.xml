@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bgDialogError">#F44336</color>
+    <color name="bgDialogSuccess">#00BCD4</color>
+    <color name="bgPrimaryDark">#0F574D</color>
+    <color name="ColorPrimary">#FF5722</color>
+    <color name="ColorPrimaryDark">#E64A19</color>
+    <color name="bg">#1e000000</color>
+    <color name="bgToolBar">#1aaa93</color>
+</resources>

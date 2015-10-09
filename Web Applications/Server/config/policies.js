@@ -19,6 +19,37 @@
 
 module.exports.policies = {
 
+  '*': true,//bật lên khi ở chế độ develop không cần login phân quyền
+
+  // 'AuthController': {
+  //   'test': 'isAuthenticated'
+  // },
+
+  // '*': "hasToken", //bật lên khi relase, hầu hết tất cả api đều phải có token
+  
+  // 'UserAccount/UserAccountController': {
+  //     "createUser": true,
+  //     "Test":true
+  // },
+  // 'UserAccount/AuthController': {
+  //     '*': true,
+  // },
+  
+  'UserAccount/UserAccountController':{
+    'Test':'hasToken',
+    'CreateUserAccount':'hasToken',
+    'UpdateUserAccount':'hasToken'
+  },
+  
+  'TestController':{
+      'test':['hasToken'],
+      'testAdmin':['hasToken','isAdmin'],
+      'testAssistant':['hasToken','isAssistant'],
+      'testGp':['hasToken','isGp'],
+      'testDoctor':['hasToken','isDoctor'],
+      'testPatient':['hasToken','isPatient']
+  }
+
   /***************************************************************************
   *                                                                          *
   * Default policy for all controllers and actions (`true` allows public     *

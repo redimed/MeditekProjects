@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="D:\Project\Android\UrgentCare\app\build\intermediates\exploded-aar\com.romainpiel.shimmer\library\1.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="605019d3e4be636f5dd74c83d05198994e3a2ce9">
+        <dex dex="D:\Project\Android\UrgentCare\app\build\intermediates\pre-dexed\debug\classes-8d82507b77a290d9e5e9148c9aab7a008dc9f9f0.jar" />
+    </item>
+
+</items>

@@ -42,13 +42,14 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     var blueColorCustom:UIColor = UIColor(red: 41/255, green: 128/255, blue: 185/255, alpha: 1.0)
     var redColorCuston:UIColor = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
     var phoneNumber = ""
+    var checkDOB = true
     let delegate:patientDetailViewDelegate? = nil
     var informationData: Dictionary<String, String> = [:]
     var patientInformation: Dictionary<String, String> = [:]
     var numberContact: String = ""
     var checkSuccess:NSString = ""
     
-    let autocompleteTableView = UITableView(frame: CGRectMake(0,180,320,300), style: UITableViewStyle.Plain)
+    let autocompleteTableView = UITableView(frame: CGRectMake(0,180,400,300), style: UITableViewStyle.Plain)
     
     var pastUrls : [String] = [String]()
     var suburb : NSArray = []
@@ -206,11 +207,14 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     // out focus text field .validate data
     func textFieldDidEndEditing(textField: UITextField) {
         self.view.endEditing(true)
+        
         autocompleteTableView.hidden = true
         if(textField == firstNameTextField){
+            textField.text = upCaseFirstLetter(textField.text)
             OutTextField(textField, validateImage: firstNameImage)
         }
         if(textField == lastNameTextField){
+            textField.text = upCaseFirstLetter(textField.text)
             OutTextField(textField, validateImage: lastNameImage)
         }
         if(textField == contactPhoneTextField){
@@ -242,7 +246,21 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
             
         }
     }
-    
+    func upCaseFirstLetter(description:String)->String{
+        if(!description.isEmpty){
+            // The start index is the first letter
+            let first = description.startIndex
+            
+            // The rest of the string goes from the position after the first letter
+            // to the end.
+            let rest = advance(first,1)..<description.endIndex
+            let capitalised = description[first...first].uppercaseString + description[rest]
+            return capitalised
+        }else{
+            return ""
+        }
+        
+    }
     //when out focus text field validate data if isEmpty changeborder color is red
     func OutTextField(nameInputField:UITextField,validateImage:UIImageView){
         if(!nameInputField.text.isEmpty){
@@ -298,12 +316,32 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
      }
     
     //Done button in datepicker
+    //Done button in datepicker
     func doneClick() {
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         dobTextField.text = dateFormatter.stringFromDate(datePicker.date)
         dobTextField.resignFirstResponder()
+        if(compareDate(datePicker.date)){
+            checkDOB = true
+            ChangeBorderColor(dobTextField, color: blueColorCustom)
+        }else{
+            checkDOB = false
+            ChangeBorderColor(dobTextField, color: redColorCuston)
+        }
+        
     }
+    func compareDate(dateDOB:NSDate)->Bool {
+        let now = NSDate()
+        if now.compare(dateDOB) == NSComparisonResult.OrderedDescending
+        {
+            return true
+        } else
+        {
+            return false
+        }
+    }
+
     
     //cancel button in datepicker
     func cancelClick() {
@@ -393,7 +431,8 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
             }
             
         }else{
-            if(checkMaxLength(firstNameTextField, length: 50) && checkMaxLength(lastNameTextField, length: 255) && checkMaxLength(surburbTextField, length: 100) && checkMaxLength(dobTextField, length: 255) && checkMaxLength(emailTextField, length: 255)){
+            if(checkDOB == true){
+                if(checkMaxLength(firstNameTextField, length: 50) && checkMaxLength(lastNameTextField, length: 255) && checkMaxLength(surburbTextField, length: 100) && checkMaxLength(dobTextField, length: 255) && checkMaxLength(emailTextField, length: 255)){
                 if(!isValidEmail(emailTextField.text) && !emailTextField.text.isEmpty){
                     AlertShow("Error", message: "Email is invalid", addButtonWithTitle: "OK")
                 }else{
@@ -424,6 +463,9 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
                 }
             }else{
                 AlertShow("Error", message: "Some field exceeds so long", addButtonWithTitle: "OK")
+                }
+            }else{
+                AlertShow("Error", message: "Date of birth wrong", addButtonWithTitle: "OK")
             }
 
         }
@@ -435,7 +477,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         patientInformation["firstName"] = firstNameTextField.text
         patientInformation["lastName"] = lastNameTextField.text
         patientInformation["phoneNumber"] = "+61" + phoneNumber
-        patientInformation["email"] = emailTextField.text
+        patientInformation["email"] = emailTextField.text.lowercaseString
         patientInformation["DOB"] = dobTextField.text
         patientInformation["suburb"] = surburbTextField.text
         patientInformation["GPReferal"] = gPReferral
@@ -443,8 +485,6 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         patientInformation["serviceType"] = serviceType
         patientInformation["urgentRequestType"] = informationData["urgentRequestType"]
         
-       // print(informationData)
-        //print(patientInformation)
         if(!isConnectedToNetwork()){
             let alertController = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet ", preferredStyle: .Alert)
             
@@ -491,63 +531,45 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
             request.addValue("application/json", forHTTPHeaderField: "Accept")
             
             var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-                //print(response)
+                
                 var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
                 
                 var err: NSError?
                 var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
                 
-               // alert.dismissWithClickedButtonIndex(0, animated: true)
-                //alert.dismissWithClickedButtonIndex(-1, animated: true)
+                
+                
                 if(err != nil) {
                     let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-                   // alert.dismissWithClickedButtonIndex(0, animated: true)
-                   dispatch_sync(dispatch_get_main_queue(), { () -> Void in
-                     self.AlertShow("Notification",message: "Can not connect to server",addButtonWithTitle: "OK")
-                   })
-                     alert.dismissWithClickedButtonIndex(-1, animated: true)
+                    alert.dismissWithClickedButtonIndex(-1, animated: true)
+                    dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "showAlert", userInfo: nil, repeats: false)
+                    })
                 }
-                    
                 else {
                     
                     // check and make sure that json has a value using optional binding.
                     if let parseJSON = json {
                         var status = parseJSON["status"] as? Int
                         if(status == 200){
-                            
-        
-                            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
-                                
-                                let alertController = UIAlertController(title: "Success", message: "Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.", preferredStyle: .Alert)
-                                
-                                
-                                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-                                   
-                                    self.dismissViewControllerAnimated(true, completion: nil)
-                                    
-                                }
-                                alertController.addAction(OKAction)
-                                
-                                self.presentViewController(alertController, animated: true) {
-                                    // ...
-                                }
-
-                            })
                             alert.dismissWithClickedButtonIndex(-1, animated: true)
-                        }else{
+                            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                                NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "successAlert", userInfo: nil, repeats: false)
+                            })
                             
+                        }else{
+                            alert.dismissWithClickedButtonIndex(-1, animated: true)
                             dispatch_sync(dispatch_get_main_queue(), { () -> Void in
                                 self.AlertShow("Notification", message: "Error ! Please check your connection and try again", addButtonWithTitle: "OK")
                             })
-                            alert.dismissWithClickedButtonIndex(-1, animated: true)
+                            
                             
                         }
                     }
                     else {
-                        
                         let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
                         alert.dismissWithClickedButtonIndex(-1, animated: true)
-                        //println("Error could not parse JSON: \(jsonStr)")
+                        
                     }
                 }
             })
@@ -555,6 +577,23 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         }
 
         }
+    func successAlert(){
+        
+        let alertController = UIAlertController(title: "Success", message: "Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.", preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            // ...
+        }
+    }
+    func showAlert(){
+        self.AlertShow("Notification",message: "Can not connect to server",addButtonWithTitle: "OK")
+    }
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
         return false

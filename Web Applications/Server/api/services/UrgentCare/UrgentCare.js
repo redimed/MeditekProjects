@@ -1,3 +1,4 @@
+
 module.exports={
 	/**
 	 * GetListUrgentRequests
@@ -61,6 +62,20 @@ module.exports={
 	 */
 	GetListUrgentRequests:function(clause,transaction)
 	{
-
-	}
+		var criteria=clause.criteria;
+		var attributes=clause.attributes;
+		var limit=clause.limit;
+		var offset=clause.offset;
+		var order=_.pairs(clause.order);
+		var whereClause={};
+		if(criteria.UID) whereClause.UID=criteria.UID;
+		if(criteria.FirstName) whereClause.FirstName={$like:'%'+criteria.FirstName+'%'};
+		if(criteria.LastName) whereClause.LastName={$like:'%'+criteria.LastName+'%'};
+		if(criteria.PhoneNumber) whereClause.PhoneNumber=criteria.PhoneNumber;
+		if(criteria.Gender) whereClause.Gender=criteria.Gender;
+		if(criteria.Email) whereClause.Email=criteria.Email;
+		if(criteria.DOB) whereClause.DOB=criteria.DOB;
+		if(criteria.Suburb) whereClause.Suburb=criteria.Suburb;
+		// if(criteria.	)
+ 	}
 }

@@ -66,7 +66,7 @@ class ViewController: UIViewController,patientDetailViewDelegate,NSXMLParserDele
         if(segue.identifier == "sportInjury"){
             var moreDetail  = segue.destinationViewController as! PatientDetailViewController
             moreDetail.informationData["title"] = "Sport Injury Clinic Booking"
-            moreDetail.informationData["urgentRequestType"] = "Sport Injury"
+            moreDetail.informationData["urgentRequestType"] = "SportInjury"
             moreDetail.suburb = suburbs
             //let contactDB = FMDatabase(path: databasePath as String)
         }

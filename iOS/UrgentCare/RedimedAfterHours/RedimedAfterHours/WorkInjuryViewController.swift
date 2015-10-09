@@ -442,82 +442,107 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
                 if(!isValidEmail(emailTextField.text) && !emailTextField.text.isEmpty){
                     AlertShow("Error", message: "Email is invalid", addButtonWithTitle: "OK")
                 }else{
-                    if( contactPhoneTextField.text.length < 9 || contactPhoneTextField.text.length > 10 ){
-                        
-                        contactPhoneImage.image = UIImage(named: "sao")
-                        ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
-                        AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
-                        
-                    }else{
-                        if(contactPhoneTextField.text.length == 10){
-                            var str = contactPhoneTextField.text.substringToIndex(advance(contactPhoneTextField.text.startIndex, 1))
-                            if(str != "0"){
-                                ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
-                                contactPhoneImage.image = UIImage(named: "sao")
-                                AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
-                            }else{
-                                phoneNumber  = contactPhoneTextField.text.substringWithRange(Range<String.Index>(start: advance(contactPhoneTextField.text.startIndex, 1), end: contactPhoneTextField.text.endIndex))
-                               // MakeAppointMentSubmit()
-                            }
-                        }else{
-                            phoneNumber = contactPhoneTextField.text
-                           // MakeAppointMentSubmit()
-                        }
-                        
-                    }
                     
-                }
-                //
-                if(!companyPhoneNumber.text.isEmpty){
-                    if( companyPhoneNumber.text.length < 9 || companyPhoneNumber.text.length > 10 ){
-                        ChangeBorderColor(companyPhoneNumber, color: redColorCuston)
-                        //AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
-                        
-                    }else{
-                        if(companyPhoneNumber.text.length == 10){
-                            var str = companyPhoneNumber.text.substringToIndex(advance(companyPhoneNumber.text.startIndex, 1))
-                            if(str != "0"){
-                                ChangeBorderColor(companyPhoneNumber, color: redColorCuston)
-                                //AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
-                            }else{
-                                companyPhone  = companyPhoneNumber.text.substringWithRange(Range<String.Index>(start: advance(companyPhoneNumber.text.startIndex, 1), end: companyPhoneNumber.text.endIndex))
-                                //MakeAppointMentSubmit()
-                            }
-                        }else{
-                            companyPhone = companyPhoneNumber.text
-                           // MakeAppointMentSubmit()
-                        }
-                        
-                    }
-                    
-                }
-                //
-                if( contactPersonTextField.text.length < 9 || contactPersonTextField.text.length > 10 ){
-                    
-                    contactPersonImage.image = UIImage(named: "sao")
-                    ChangeBorderColor(contactPersonTextField, color: redColorCuston)
-                    AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
-                    
-                }else{
-                    if(contactPersonTextField.text.length == 10){
-                        var str = contactPersonTextField.text.substringToIndex(advance(contactPersonTextField.text.startIndex, 1))
-                        if(str != "0"){
-                            ChangeBorderColor(contactPersonTextField, color: redColorCuston)
-                            contactPersonImage.image = UIImage(named: "sao")
+                    if(!companyPhoneNumber.text.isEmpty){
+                        if( companyPhoneNumber.text.length < 9 || companyPhoneNumber.text.length > 10 ){
+                            ChangeBorderColor(companyPhoneNumber, color: redColorCuston)
                             AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
+                            
                         }else{
-                            contactPerSon  = contactPersonTextField.text.substringWithRange(Range<String.Index>(start: advance(contactPersonTextField.text.startIndex, 1), end: contactPersonTextField.text.endIndex))
-                             MakeAppointMentSubmit()
-                        }
-                    }else{
-                        contactPerSon = contactPhoneTextField.text
-                        MakeAppointMentSubmit()
-                    }
-                    
-                }
+                            if(companyPhoneNumber.text.length == 10){
+                                var str = companyPhoneNumber.text.substringToIndex(advance(companyPhoneNumber.text.startIndex, 1))
+                                if(str != "0"){
+                                    ChangeBorderColor(companyPhoneNumber, color: redColorCuston)
+                                    AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
+                                }else{
+                                    companyPhone  = companyPhoneNumber.text.substringWithRange(Range<String.Index>(start: advance(companyPhoneNumber.text.startIndex, 1), end: companyPhoneNumber.text.endIndex))
+                                    //MakeAppointMentSubmit()
+                                    if( contactPhoneTextField.text.length < 9 || contactPhoneTextField.text.length > 10 ){
+                                        
+                                        contactPhoneImage.image = UIImage(named: "sao")
+                                        ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
+                                        AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
+                                        
+                                    }else{
+                                        if(contactPhoneTextField.text.length == 10){
+                                            var str = contactPhoneTextField.text.substringToIndex(advance(contactPhoneTextField.text.startIndex, 1))
+                                            if(str != "0"){
+                                                ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
+                                                contactPhoneImage.image = UIImage(named: "sao")
+                                                AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
+                                            }else{
+                                                phoneNumber  = contactPhoneTextField.text.substringWithRange(Range<String.Index>(start: advance(contactPhoneTextField.text.startIndex, 1), end: contactPhoneTextField.text.endIndex))
+                                                MakeAppointMentSubmit()
+                                            }
+                                        }else{
+                                            phoneNumber = contactPhoneTextField.text
+                                            MakeAppointMentSubmit()
+                                        }
+                                        
+                                    }
 
+                                    //
+                                }
+                            }else{
+                                companyPhone = companyPhoneNumber.text
+                                if( contactPhoneTextField.text.length < 9 || contactPhoneTextField.text.length > 10 ){
+                                    
+                                    contactPhoneImage.image = UIImage(named: "sao")
+                                    ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
+                                    AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
+                                    
+                                }else{
+                                    if(contactPhoneTextField.text.length == 10){
+                                        var str = contactPhoneTextField.text.substringToIndex(advance(contactPhoneTextField.text.startIndex, 1))
+                                        if(str != "0"){
+                                            ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
+                                            contactPhoneImage.image = UIImage(named: "sao")
+                                            AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
+                                        }else{
+                                            phoneNumber  = contactPhoneTextField.text.substringWithRange(Range<String.Index>(start: advance(contactPhoneTextField.text.startIndex, 1), end: contactPhoneTextField.text.endIndex))
+                                            MakeAppointMentSubmit()
+                                        }
+                                    }else{
+                                        phoneNumber = contactPhoneTextField.text
+                                        MakeAppointMentSubmit()
+                                    }
+                                    
+                                }
+
+                            }
+                            
+                        }
+                        
+                    }else{
+                        if( contactPhoneTextField.text.length < 9 || contactPhoneTextField.text.length > 10 ){
+                            
+                            contactPhoneImage.image = UIImage(named: "sao")
+                            ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
+                            AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
+                            
+                        }else{
+                            if(contactPhoneTextField.text.length == 10){
+                                var str = contactPhoneTextField.text.substringToIndex(advance(contactPhoneTextField.text.startIndex, 1))
+                                if(str != "0"){
+                                    ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
+                                    contactPhoneImage.image = UIImage(named: "sao")
+                                    AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
+                                }else{
+                                    phoneNumber  = contactPhoneTextField.text.substringWithRange(Range<String.Index>(start: advance(contactPhoneTextField.text.startIndex, 1), end: contactPhoneTextField.text.endIndex))
+                                    MakeAppointMentSubmit()
+                                }
+                            }else{
+                                phoneNumber = contactPhoneTextField.text
+                                MakeAppointMentSubmit()
+                            }
+                            
+                        }
+
+                    }
+                }
                 //
-            }else{
+                
+                }else{
                 AlertShow("Error", message: "Some field exceeds so long", addButtonWithTitle: "OK")
             }
             
@@ -534,12 +559,12 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
         patientInformation["GPReferal"] = gPReferral
         patientInformation["description"] = descriptionTextView.text
         patientInformation["serviceType"] = serviceType
-        patientInformation["urgentRequestType"] = "Work Injury Clinic Booking"
+        patientInformation["urgentRequestType"] = "WorkInjury"
         patientInformation["companyName"] = companyName.text
         if(!companyPhoneNumber.text.isEmpty){
             patientInformation["companyPhoneNumber"] = "+61" + companyPhone
         }
-        patientInformation["contactPerson"] = "+61" + contactPerSon
+        patientInformation["contactPerson"] = contactPersonTextField.text
         
     
         if(!isConnectedToNetwork()){
@@ -641,7 +666,7 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
                     else {
                         
                         let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-                        alert.dismissWithClickedButtonIndex(0, animated: true)
+                        alert.dismissWithClickedButtonIndex(-1, animated: true)
                         
                     }
                 }

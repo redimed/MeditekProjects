@@ -27,6 +27,8 @@
 		AF9440171BBA6972003F3B07 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9440161BBA6972003F3B07 /* OpenTok.framework */; settings = {ASSET_TAGS = (); }; };
 		AF9F48FC1BB509220044D72F /* VerifyPhoneNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FB1BB509220044D72F /* VerifyPhoneNumberController.swift */; settings = {ASSET_TAGS = (); }; };
 		AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */; settings = {ASSET_TAGS = (); }; };
+		AFB63C671BC25CD700A1541B /* AnswerCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB63C661BC25CD700A1541B /* AnswerCallViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		AFED98241BBE71400042B613 /* Singleton_SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */; settings = {ASSET_TAGS = (); }; };
 		AFEDCB1C1BBA2E89007D584D /* NavigationHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		AFEDCB201BBA392C007D584D /* NavigationLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		AFEE34D71BB0413600471592 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34D61BB0413600471592 /* AppDelegate.swift */; };
@@ -72,6 +74,7 @@
 		AFF10DF21BB24414005E9838 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DEC1BB24414005E9838 /* TPKeyboardAvoidingScrollView.m */; settings = {ASSET_TAGS = (); }; };
 		AFF10DF31BB24414005E9838 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DEE1BB24414005E9838 /* TPKeyboardAvoidingTableView.m */; settings = {ASSET_TAGS = (); }; };
 		AFF10DF41BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DF01BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; settings = {ASSET_TAGS = (); }; };
+		AFF18ADB1BC22CC4006F2590 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFF18ADA1BC22CC4006F2590 /* CoreLocation.framework */; };
 		AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D2F1BB1068A006A190E /* HomeViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D311BB129DB006A190E /* ScreenCallingViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		AFF27E081BB3E5D000B325E8 /* ConfigurationSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */; settings = {ASSET_TAGS = (); }; };
@@ -96,6 +99,7 @@
 
 /* Begin PBXFileReference section */
 		16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
+		AF78A2F71BC3682B003E4E98 /* test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mp4; sourceTree = "<group>"; };
 		AF943FF01BBA6221003F3B07 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = "../../../../../OpenTok-iOS-2.6.0/OpenTok.framework"; sourceTree = "<group>"; };
 		AF943FF21BBA6376003F3B07 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		AF943FF41BBA637F003F3B07 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -116,6 +120,8 @@
 		AF9440211BBA7DD8003F3B07 /* Telehealth-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Telehealth-Bridging-Header.h"; sourceTree = "<group>"; };
 		AF9F48FB1BB509220044D72F /* VerifyPhoneNumberController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberController.swift; sourceTree = "<group>"; };
 		AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationAPI.swift; sourceTree = "<group>"; };
+		AFB63C661BC25CD700A1541B /* AnswerCallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerCallViewController.swift; sourceTree = "<group>"; };
+		AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton_SocketManager.swift; sourceTree = "<group>"; };
 		AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationHomeViewController.swift; sourceTree = "<group>"; };
 		AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationLoginViewController.swift; sourceTree = "<group>"; };
 		AFEE34D31BB0413600471592 /* Telehealth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Telehealth.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +178,7 @@
 		AFF10DEE1BB24414005E9838 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
 		AFF10DEF1BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
 		AFF10DF01BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
+		AFF18ADA1BC22CC4006F2590 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AFF21D2F1BB1068A006A190E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		AFF21D311BB129DB006A190E /* ScreenCallingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenCallingViewController.swift; sourceTree = "<group>"; };
 		AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationSystem.swift; sourceTree = "<group>"; };
@@ -184,6 +191,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFF18ADB1BC22CC4006F2590 /* CoreLocation.framework in Frameworks */,
 				AF94400F1BBA6472003F3B07 /* VideoToolbox.framework in Frameworks */,
 				AF94400D1BBA6468003F3B07 /* UIKit.framework in Frameworks */,
 				AF94400B1BBA645E003F3B07 /* SystemConfiguration.framework in Frameworks */,
@@ -234,6 +242,7 @@
 		9C8F9A3844FDFD23E44C015B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AFF18ADA1BC22CC4006F2590 /* CoreLocation.framework */,
 				AF94400E1BBA6472003F3B07 /* VideoToolbox.framework */,
 				AF94400C1BBA6468003F3B07 /* UIKit.framework */,
 				AF94400A1BBA645E003F3B07 /* SystemConfiguration.framework */,
@@ -253,6 +262,14 @@
 				F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AF78A2F61BC36807003E4E98 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AF78A2F71BC3682B003E4E98 /* test.mp4 */,
+			);
+			name = Sources;
 			sourceTree = "<group>";
 		};
 		AF9440181BBA79AF003F3B07 /* Supporting File */ = {
@@ -289,7 +306,8 @@
 		AFEE34D51BB0413600471592 /* Telehealth */ = {
 			isa = PBXGroup;
 			children = (
-				AFF27DFA1BB39C6600B325E8 /* Configuration */,
+				AF78A2F61BC36807003E4E98 /* Sources */,
+				AFF27DFA1BB39C6600B325E8 /* Utilities */,
 				AFF27DF91BB39C5500B325E8 /* Library */,
 				AFF27DF61BB39C2E00B325E8 /* Views */,
 				AFF27DF71BB39C3A00B325E8 /* Controllers */,
@@ -391,6 +409,8 @@
 				AFEE35431BB0577A00471592 /* VerifyViewController.swift */,
 				AFF21D2F1BB1068A006A190E /* HomeViewController.swift */,
 				AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */,
+				AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */,
+				AFB63C661BC25CD700A1541B /* AnswerCallViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -413,13 +433,13 @@
 			name = Library;
 			sourceTree = "<group>";
 		};
-		AFF27DFA1BB39C6600B325E8 /* Configuration */ = {
+		AFF27DFA1BB39C6600B325E8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */,
 				AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */,
 			);
-			name = Configuration;
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -621,6 +641,7 @@
 				AFEE35341BB0415D00471592 /* LoadingView.swift in Sources */,
 				AFEE353D1BB0415D00471592 /* SpringTextField.swift in Sources */,
 				AFEE35381BB0415D00471592 /* Spring.swift in Sources */,
+				AFB63C671BC25CD700A1541B /* AnswerCallViewController.swift in Sources */,
 				AFEE34DF1BB0413600471592 /* Telehealth.xcdatamodeld in Sources */,
 				AFEE35371BB0415D00471592 /* SoundPlayer.swift in Sources */,
 				AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */,
@@ -649,6 +670,7 @@
 				AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */,
 				AFEE353A1BB0415D00471592 /* SpringButton.swift in Sources */,
 				AFEE35391BB0415D00471592 /* SpringAnimation.swift in Sources */,
+				AFED98241BBE71400042B613 /* Singleton_SocketManager.swift in Sources */,
 				AFEE352B1BB0415D00471592 /* DesignableImageView.swift in Sources */,
 				AFF10DF21BB24414005E9838 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				AFEE34D71BB0413600471592 /* AppDelegate.swift in Sources */,

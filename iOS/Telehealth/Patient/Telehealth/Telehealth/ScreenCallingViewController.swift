@@ -7,47 +7,107 @@
 //
 
 import UIKit
-let videoWidth : CGFloat = 320
-let videoHeight : CGFloat = 400
 
-let videoWidthSub : CGFloat = 50
-let videoHeightSub : CGFloat = 50
+let videoWidthSub : CGFloat = 150
+let videoHeightSub : CGFloat = 150
 
-
-let ApiKey = "45356362"
+var ApiKey  = String()
 // Replace with your generated session ID
-let SessionID = "2_MX40NTM1NjM2Mn5-MTQ0MzQ5OTg1MjM4NX5nZTIwQlY1SFFJNVRTTU41cmY5eHFsb3V-UH4"
+var SessionID = String()
 // Replace with your generated token
-let Token = "T1==cGFydG5lcl9pZD00NTM1NjM2MiZzaWc9MTA1MjMyNDkwNTI3YmJlNmY0N2E0OWU3OGE3MGMwMGQ2N2Y1MGQ4MDpyb2xlPW1vZGVyYXRvciZzZXNzaW9uX2lkPTJfTVg0ME5UTTFOak0yTW41LU1UUTBNelE1T1RnMU1qTTROWDVuWlRJd1FsWTFTRkZKTlZSVFRVNDFjbVk1ZUhGc2IzVi1VSDQmY3JlYXRlX3RpbWU9MTQ0MzUxNjM1NiZub25jZT0wLjMzMjk3MzgxMTAwNjU3NDY0JmV4cGlyZV90aW1lPTE0NDYxMDgzMDgmY29ubmVjdGlvbl9kYXRhPQ=="
+var Token = String()
 
 // Change to YES to subscribe to your own stream.
 let SubscribeToSelf = false
 
 
 class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate {
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    var videoWidth : CGFloat  = UIScreen.mainScreen().bounds.width
+    var videoHeight : CGFloat  = UIScreen.mainScreen().bounds.height
     var session : OTSession?
     var publisher : OTPublisher?
     var subscriber : OTSubscriber?
+    @IBOutlet weak var buttonHoldCall: DesignableButton!
+    @IBOutlet weak var buttonEndCall: DesignableButton!
+    @IBOutlet weak var buttonMuteCall: DesignableButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        session = OTSession(apiKey: ApiKey, sessionId: SessionID, delegate: self)
+        let apiKey = savedData.data[0]["apiKey"]
+        let sessionId = savedData.data[0]["sessionId"]
+        let token = savedData.data[0]["token"]
+        print("token calling : \(token)")
+        ApiKey = String(apiKey)
+        // Replace with your generated session ID
+        SessionID = String(sessionId)
+        // Replace with your generated token
+        Token = String(token)
+        
     }
-
+    
+    //Giap: Open or close publisher video
+    @IBAction func buttonHoldCallAction(sender: DesignableButton) {
+        
+        if publisher?.publishVideo.boolValue == true {
+            publisher?.publishVideo = false
+            //buttonHoldCall.setImage(UIImage(named: "Play-50.png"), forState: UIControlState.Normal)
+            changeIconCallingView(buttonHoldCall, nameImg: "Play-50.png")
+        } else {
+            publisher?.publishVideo = true
+            //buttonHoldCall.setImage(UIImage(named: "Pause-50.png"), forState: UIControlState.Normal)
+            changeIconCallingView(buttonHoldCall, nameImg: "Pause-50.png")
+            
+        }
+    }
+    //Giap: On or Off mic
+    @IBAction func buttonMuteAudioAction(sender: DesignableButton) {
+        if publisher?.publishAudio.boolValue == true {
+            publisher?.publishAudio = false
+            //buttonMuteCall.setImage(UIImage(named: "Volume Up-50.png"), forState: UIControlState.Normal)
+            changeIconCallingView(buttonMuteCall, nameImg: "Volume Up-50.png")
+        }else {
+            publisher?.publishAudio = true
+            //buttonMuteCall.setImage(UIImage(named: "Mute-50.png"), forState: UIControlState.Normal)
+            changeIconCallingView(buttonMuteCall, nameImg: "Mute-50.png")
+        }
+    }
+    @IBAction func buttonEndCallAction(sender: DesignableButton) {
+        sessionDidDisconnect(session!)
+        doUnsubscribe()
+        session!.disconnect()
+        let homeMain = storyboard?.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
+        presentViewController(homeMain, animated: true, completion: nil)
+    }
+    
+    
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
+            print("landscape")
+            print("Width:\(UIScreen.mainScreen().bounds.width) , height:\(UIScreen.mainScreen().bounds.height)")
+        } else {
+            print("portraight")
+            print("Width:\(UIScreen.mainScreen().bounds.width) , height:\(UIScreen.mainScreen().bounds.height)")
+            
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-   
+    
     
     override func viewWillAppear(animated: Bool) {
         // Step 2: As the view comes into the foreground, begin the connection process.
+        session = OTSession(apiKey: ApiKey, sessionId: SessionID, delegate: self)
         doConnect()
+        view.showLoading()
     }
     
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-    // MARK: - OpenTok Methods
+    
     
     /**
     * Asynchronously begins the session connect process. Some time later, we will
@@ -77,10 +137,12 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         if let error = maybeError {
             showAlert(error.localizedDescription)
         }
+        view.addSubview((publisher?.view)!)
+        view.addSubview(buttonEndCall)
+        view.addSubview(buttonHoldCall)
+        view.addSubview(buttonMuteCall)
+        publisher!.view.frame = CGRect(x: 0.0, y: 0, width: videoWidthSub, height: videoHeightSub)
         
-        view.addSubview(publisher!.view)
-        publisher!.view.frame = CGRect(x: 0.0, y: 0, width: videoWidth, height: videoHeight)
-       
     }
     
     /**
@@ -100,7 +162,6 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
             }
         }
         
-      
     }
     
     /**
@@ -113,7 +174,6 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
             if let error = maybeError {
                 showAlert(error.localizedDescription)
             }
-            
             subscriber.view.removeFromSuperview()
             self.subscriber = nil
         }
@@ -131,6 +191,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     
     func sessionDidDisconnect(session : OTSession) {
         NSLog("Session disconnected (\( session.sessionId))")
+        
     }
     
     func session(session: OTSession, streamCreated stream: OTStream) {
@@ -157,6 +218,8 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     
     func session(session: OTSession, connectionDestroyed connection : OTConnection) {
         NSLog("session connectionDestroyed (\(connection.connectionId))")
+        let HomeController = storyboard?.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
+        presentViewController(HomeController, animated: true, completion: nil)
     }
     
     func session(session: OTSession, didFailWithError error: OTError) {
@@ -167,10 +230,20 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     
     func subscriberDidConnectToStream(subscriberKit: OTSubscriberKit) {
         NSLog("subscriberDidConnectToStream (\(subscriberKit))")
+        
         if let view = subscriber?.view {
-            view.frame =  CGRect(x: 0.0, y: videoHeight, width: videoWidth, height: videoHeight)
-            self.view.addSubview(view)
+            view.frame =  CGRect(x: 0.0, y: 0, width: videoWidth, height: videoHeight)
+            
         }
+        //add button in subcriber
+        view.addSubview(subscriber!.view)
+        
+        subscriber?.view.addSubview((publisher?.view)!)
+        subscriber?.view.addSubview(buttonEndCall)
+        subscriber?.view.addSubview(buttonHoldCall)
+        subscriber?.view.addSubview(buttonMuteCall)
+        view.hideLoading()
+        
     }
     
     func subscriber(subscriber: OTSubscriberKit, didFailWithError error : OTError) {
@@ -211,6 +284,10 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
             let al = UIAlertView(title: "OTError", message: message, delegate: nil, cancelButtonTitle: "OK")
         }
     }
+    //Giap: Func change icon
+    func changeIconCallingView(button:DesignableButton,nameImg:String){
+        button.setImage(UIImage(named: nameImg), forState: UIControlState.Normal)
+    }
     
-
+    
 }

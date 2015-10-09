@@ -11,13 +11,14 @@
         <label class="control-label visible-ie8 visible-ie9">Username</label>
         <div class="input-icon">
             <i class="fa fa-user"></i>
-            <input class="form-control placeholder-no-fix" ng-model="user.UserName" type="text" autocomplete="off" placeholder="Username" name="username" required/>
+            <input class="form-control placeholder-no-fix" ng-model="user.UserName" type="text" autocomplete="off" placeholder="Username" name="username" required ng-pattern="/^\s*\S+\s*$/"/>
         </div>
-        <span ng-show="showClickedValidation && loginForm.username.$invalid">
-        	<span for="username" class="help-block">Username is required.</span>
+        <span ng-show="showClickedValidation">
+        	<span for="username" ng-show="loginForm.username.$error.required" class="help-block">Username is required.</span>
+            <span for="username" ng-show="loginForm.username.$error.pattern" class="help-block">Username cannot contains whitespace.</span>
         </span>
     </div>
-    <div class="form-group" ng-class="{ 'has-error' : showClickedValidation && loginForm.username.$invalid}">
+    <div class="form-group" ng-class="{ 'has-error' : showClickedValidation && loginForm.password.$invalid}">
         <label class="control-label visible-ie8 visible-ie9">Password</label>
         <div class="input-icon">
             <i class="fa fa-lock"></i>
@@ -30,7 +31,7 @@
     <div class="form-actions">
         <label class="checkbox">
             <input type="checkbox" name="remember" value="1" /> Remember me </label>
-        <button type="submit" class="btn green-haze pull-right" ng-click="login()">
+        <button ladda-button="laddaLoading" data-style="zoom-in" type="submit" class="btn ladda-button green-haze pull-right">
             Login <i class="m-icon-swapright m-icon-white"></i>
         </button>
     </div>

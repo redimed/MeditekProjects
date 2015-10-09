@@ -8,7 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		002053431BBBBE2B00679E10 /* JSSAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002053421BBBBE2B00679E10 /* JSSAlertView.swift */; settings = {ASSET_TAGS = (); }; };
-		002C6F9E1BBD1403006F4FA6 /* Singleton_SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002C6F9D1BBD1403006F4FA6 /* Singleton_SocketManager.swift */; settings = {ASSET_TAGS = (); }; };
+		002908231BC228B700FED16E /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002908221BC228B700FED16E /* OpenTok.framework */; settings = {ASSET_TAGS = (); }; };
+		0029086E1BC2552A00FED16E /* CALayer+DTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908611BC2552A00FED16E /* CALayer+DTI.swift */; settings = {ASSET_TAGS = (); }; };
+		0029086F1BC2552A00FED16E /* DTIActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908631BC2552A00FED16E /* DTIActivityIndicatorView.swift */; settings = {ASSET_TAGS = (); }; };
+		002908701BC2552A00FED16E /* DTIAnimChasingDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908641BC2552A00FED16E /* DTIAnimChasingDots.swift */; settings = {ASSET_TAGS = (); }; };
+		002908711BC2552A00FED16E /* DTIAnimDoubleBounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908651BC2552A00FED16E /* DTIAnimDoubleBounce.swift */; settings = {ASSET_TAGS = (); }; };
+		002908721BC2552A00FED16E /* DTIAnimProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908661BC2552A00FED16E /* DTIAnimProtocol.swift */; settings = {ASSET_TAGS = (); }; };
+		002908731BC2552A00FED16E /* DTIAnimPulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908671BC2552A00FED16E /* DTIAnimPulse.swift */; settings = {ASSET_TAGS = (); }; };
+		002908741BC2552A00FED16E /* DTIAnimRotatingPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908681BC2552A00FED16E /* DTIAnimRotatingPlane.swift */; settings = {ASSET_TAGS = (); }; };
+		002908751BC2552A00FED16E /* DTIAnimSpotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908691BC2552A00FED16E /* DTIAnimSpotify.swift */; settings = {ASSET_TAGS = (); }; };
+		002908761BC2552A00FED16E /* DTIAnimWanderingCubes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0029086A1BC2552A00FED16E /* DTIAnimWanderingCubes.swift */; settings = {ASSET_TAGS = (); }; };
+		002908771BC2552A00FED16E /* DTIAnimWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0029086B1BC2552A00FED16E /* DTIAnimWave.swift */; settings = {ASSET_TAGS = (); }; };
+		002908781BC2552A00FED16E /* DTIAnimWp8.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0029086C1BC2552A00FED16E /* DTIAnimWp8.swift */; settings = {ASSET_TAGS = (); }; };
+		002908791BC2552A00FED16E /* DTIIndicatorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0029086D1BC2552A00FED16E /* DTIIndicatorStyle.swift */; settings = {ASSET_TAGS = (); }; };
+		002C6F9E1BBD1403006F4FA6 /* SingletonClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002C6F9D1BBD1403006F4FA6 /* SingletonClass.swift */; settings = {ASSET_TAGS = (); }; };
 		004F6D191BB9A02200242CE9 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004F6D181BB9A02200242CE9 /* CustomViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		008FB2351BB93E3A00684968 /* TOPVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008FB2341BB93E3A00684968 /* TOPVCViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		008FB2371BB93F4500684968 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2361BB93F4500684968 /* AudioToolbox.framework */; };
@@ -26,12 +39,12 @@
 		008FB24F1BB9400800684968 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB24E1BB9400800684968 /* SystemConfiguration.framework */; };
 		008FB2511BB9401000684968 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2501BB9401000684968 /* UIKit.framework */; };
 		008FB2531BB9401900684968 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2521BB9401900684968 /* VideoToolbox.framework */; };
-		00A1992A1BBE7EDD000004E0 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A199291BBE7EDD000004E0 /* OpenTok.framework */; settings = {ASSET_TAGS = (); }; };
+		00A9E5B81BC3720A0055A594 /* AppointmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A9E5B71BC3720A0055A594 /* AppointmentTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		00B9917F1BC2E3AD0025EA7F /* OnlineUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B9917E1BC2E3AD0025EA7F /* OnlineUsers.swift */; settings = {ASSET_TAGS = (); }; };
 		00D512771BB4E6100068942D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D512761BB4E6100068942D /* ProfileViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		00D512791BB4E63E0068942D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D512781BB4E63E0068942D /* HomeViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		00D5127B1BB4E6560068942D /* MakeCallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D5127A1BB4E6560068942D /* MakeCallController.swift */; settings = {ASSET_TAGS = (); }; };
 		00D5127D1BB4E7610068942D /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D5127C1BB4E7610068942D /* GlobalConstants.swift */; settings = {ASSET_TAGS = (); }; };
-		00ED27A71BB8E58F006586C8 /* KeyNSUserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ED27A61BB8E58F006586C8 /* KeyNSUserDefault.swift */; settings = {ASSET_TAGS = (); }; };
 		60350A33EBFF3BA69C0DDD73 /* Pods_Telehealth_Doctor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1F17DC5B312EB9B2723910E /* Pods_Telehealth_Doctor.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		AFF21D7D1BB12D8B006A190E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D7C1BB12D8B006A190E /* AppDelegate.swift */; };
 		AFF21D7F1BB12D8B006A190E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D7E1BB12D8B006A190E /* LoginViewController.swift */; };
@@ -64,7 +77,21 @@
 
 /* Begin PBXFileReference section */
 		002053421BBBBE2B00679E10 /* JSSAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSSAlertView.swift; path = "Telehealth Doctor/JSSAlertView.swift"; sourceTree = "<group>"; };
-		002C6F9D1BBD1403006F4FA6 /* Singleton_SocketManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton_SocketManager.swift; sourceTree = "<group>"; };
+		002908221BC228B700FED16E /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = Pods/OpenTok/OpenTok.framework; sourceTree = "<group>"; };
+		002908611BC2552A00FED16E /* CALayer+DTI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+DTI.swift"; sourceTree = "<group>"; };
+		002908621BC2552A00FED16E /* DTIActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTIActivityIndicator.h; sourceTree = "<group>"; };
+		002908631BC2552A00FED16E /* DTIActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIActivityIndicatorView.swift; sourceTree = "<group>"; };
+		002908641BC2552A00FED16E /* DTIAnimChasingDots.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimChasingDots.swift; sourceTree = "<group>"; };
+		002908651BC2552A00FED16E /* DTIAnimDoubleBounce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimDoubleBounce.swift; sourceTree = "<group>"; };
+		002908661BC2552A00FED16E /* DTIAnimProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimProtocol.swift; sourceTree = "<group>"; };
+		002908671BC2552A00FED16E /* DTIAnimPulse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimPulse.swift; sourceTree = "<group>"; };
+		002908681BC2552A00FED16E /* DTIAnimRotatingPlane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimRotatingPlane.swift; sourceTree = "<group>"; };
+		002908691BC2552A00FED16E /* DTIAnimSpotify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimSpotify.swift; sourceTree = "<group>"; };
+		0029086A1BC2552A00FED16E /* DTIAnimWanderingCubes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimWanderingCubes.swift; sourceTree = "<group>"; };
+		0029086B1BC2552A00FED16E /* DTIAnimWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimWave.swift; sourceTree = "<group>"; };
+		0029086C1BC2552A00FED16E /* DTIAnimWp8.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimWp8.swift; sourceTree = "<group>"; };
+		0029086D1BC2552A00FED16E /* DTIIndicatorStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIIndicatorStyle.swift; sourceTree = "<group>"; };
+		002C6F9D1BBD1403006F4FA6 /* SingletonClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingletonClass.swift; sourceTree = "<group>"; };
 		004F6D181BB9A02200242CE9 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		008FB2341BB93E3A00684968 /* TOPVCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOPVCViewController.swift; sourceTree = "<group>"; };
 		008FB2361BB93F4500684968 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -83,12 +110,12 @@
 		008FB2501BB9401000684968 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		008FB2521BB9401900684968 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		009398E41BBA9384005481E2 /* Telehealth Doctor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Telehealth Doctor-Bridging-Header.h"; sourceTree = "<group>"; };
-		00A199291BBE7EDD000004E0 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = "Telehealth Doctor/OpenTok.framework"; sourceTree = "<group>"; };
+		00A9E5B71BC3720A0055A594 /* AppointmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentTableViewCell.swift; sourceTree = "<group>"; };
+		00B9917E1BC2E3AD0025EA7F /* OnlineUsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineUsers.swift; sourceTree = "<group>"; };
 		00D512761BB4E6100068942D /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		00D512781BB4E63E0068942D /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		00D5127A1BB4E6560068942D /* MakeCallController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakeCallController.swift; sourceTree = "<group>"; };
 		00D5127C1BB4E7610068942D /* GlobalConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
-		00ED27A61BB8E58F006586C8 /* KeyNSUserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyNSUserDefault.swift; sourceTree = "<group>"; };
 		7EC46F2286C519B19F81976E /* Pods-Telehealth Doctor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth Doctor.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth Doctor/Pods-Telehealth Doctor.debug.xcconfig"; sourceTree = "<group>"; };
 		AFF21D791BB12D8B006A190E /* Telehealth Doctor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Telehealth Doctor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFF21D7C1BB12D8B006A190E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -125,7 +152,7 @@
 				008FB2451BB93FD700684968 /* GLKit.framework in Frameworks */,
 				008FB2431BB93FD100684968 /* Foundation.framework in Frameworks */,
 				008FB2411BB93FC800684968 /* CoreVideo.framework in Frameworks */,
-				00A1992A1BBE7EDD000004E0 /* OpenTok.framework in Frameworks */,
+				002908231BC228B700FED16E /* OpenTok.framework in Frameworks */,
 				008FB23F1BB93F6700684968 /* CoreTelephony.framework in Frameworks */,
 				008FB23D1BB93F5B00684968 /* CoreMedia.framework in Frameworks */,
 				008FB23B1BB93F5300684968 /* CoreGraphics.framework in Frameworks */,
@@ -160,6 +187,27 @@
 			name = JSSAlertView;
 			sourceTree = "<group>";
 		};
+		002908601BC2552A00FED16E /* DTIActivityIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				002908611BC2552A00FED16E /* CALayer+DTI.swift */,
+				002908621BC2552A00FED16E /* DTIActivityIndicator.h */,
+				002908631BC2552A00FED16E /* DTIActivityIndicatorView.swift */,
+				002908641BC2552A00FED16E /* DTIAnimChasingDots.swift */,
+				002908651BC2552A00FED16E /* DTIAnimDoubleBounce.swift */,
+				002908661BC2552A00FED16E /* DTIAnimProtocol.swift */,
+				002908671BC2552A00FED16E /* DTIAnimPulse.swift */,
+				002908681BC2552A00FED16E /* DTIAnimRotatingPlane.swift */,
+				002908691BC2552A00FED16E /* DTIAnimSpotify.swift */,
+				0029086A1BC2552A00FED16E /* DTIAnimWanderingCubes.swift */,
+				0029086B1BC2552A00FED16E /* DTIAnimWave.swift */,
+				0029086C1BC2552A00FED16E /* DTIAnimWp8.swift */,
+				0029086D1BC2552A00FED16E /* DTIIndicatorStyle.swift */,
+			);
+			name = DTIActivityIndicator;
+			path = Pods/DTIActivityIndicator;
+			sourceTree = "<group>";
+		};
 		004F6D171BB99FE300242CE9 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,7 +228,6 @@
 			isa = PBXGroup;
 			children = (
 				00D5127C1BB4E7610068942D /* GlobalConstants.swift */,
-				00ED27A61BB8E58F006586C8 /* KeyNSUserDefault.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -208,8 +255,9 @@
 		854898B15C0460C15C6AB91F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				00A199291BBE7EDD000004E0 /* OpenTok.framework */,
+				002908601BC2552A00FED16E /* DTIActivityIndicator */,
 				0020533F1BBBBDEC00679E10 /* JSSAlertView */,
+				002908221BC228B700FED16E /* OpenTok.framework */,
 				008FB2521BB9401900684968 /* VideoToolbox.framework */,
 				008FB2501BB9401000684968 /* UIKit.framework */,
 				008FB24E1BB9400800684968 /* SystemConfiguration.framework */,
@@ -242,7 +290,8 @@
 				00D512781BB4E63E0068942D /* HomeViewController.swift */,
 				00D5127A1BB4E6560068942D /* MakeCallController.swift */,
 				008FB2341BB93E3A00684968 /* TOPVCViewController.swift */,
-				002C6F9D1BBD1403006F4FA6 /* Singleton_SocketManager.swift */,
+				002C6F9D1BBD1403006F4FA6 /* SingletonClass.swift */,
+				00A9E5B71BC3720A0055A594 /* AppointmentTableViewCell.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -264,6 +313,7 @@
 		AFF10E011BB286E1005E9838 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				00B9917E1BC2E3AD0025EA7F /* OnlineUsers.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -394,6 +444,7 @@
 				TargetAttributes = {
 					AFF21D781BB12D8B006A190E = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 27TYHQV638;
 					};
 					AFF21D8F1BB12D8B006A190E = {
 						CreatedOnToolsVersion = 7.0;
@@ -505,20 +556,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				002908731BC2552A00FED16E /* DTIAnimPulse.swift in Sources */,
 				002053431BBBBE2B00679E10 /* JSSAlertView.swift in Sources */,
 				AFF21DEA1BB145B1006A190E /* AppointmentListViewController.swift in Sources */,
 				00D5127D1BB4E7610068942D /* GlobalConstants.swift in Sources */,
 				AFF21D7F1BB12D8B006A190E /* LoginViewController.swift in Sources */,
+				002908781BC2552A00FED16E /* DTIAnimWp8.swift in Sources */,
 				004F6D191BB9A02200242CE9 /* CustomViewController.swift in Sources */,
 				AFF21D851BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld in Sources */,
-				002C6F9E1BBD1403006F4FA6 /* Singleton_SocketManager.swift in Sources */,
+				00B9917F1BC2E3AD0025EA7F /* OnlineUsers.swift in Sources */,
+				002908751BC2552A00FED16E /* DTIAnimSpotify.swift in Sources */,
+				002908701BC2552A00FED16E /* DTIAnimChasingDots.swift in Sources */,
+				002908721BC2552A00FED16E /* DTIAnimProtocol.swift in Sources */,
+				002908761BC2552A00FED16E /* DTIAnimWanderingCubes.swift in Sources */,
+				002C6F9E1BBD1403006F4FA6 /* SingletonClass.swift in Sources */,
+				002908791BC2552A00FED16E /* DTIIndicatorStyle.swift in Sources */,
 				00D512791BB4E63E0068942D /* HomeViewController.swift in Sources */,
+				002908771BC2552A00FED16E /* DTIAnimWave.swift in Sources */,
 				AFF21DEC1BB15558006A190E /* ImageListViewController.swift in Sources */,
 				008FB2351BB93E3A00684968 /* TOPVCViewController.swift in Sources */,
 				00D5127B1BB4E6560068942D /* MakeCallController.swift in Sources */,
+				0029086E1BC2552A00FED16E /* CALayer+DTI.swift in Sources */,
 				00D512771BB4E6100068942D /* ProfileViewController.swift in Sources */,
-				00ED27A71BB8E58F006586C8 /* KeyNSUserDefault.swift in Sources */,
+				00A9E5B81BC3720A0055A594 /* AppointmentTableViewCell.swift in Sources */,
+				002908711BC2552A00FED16E /* DTIAnimDoubleBounce.swift in Sources */,
 				AFF21D7D1BB12D8B006A190E /* AppDelegate.swift in Sources */,
+				002908741BC2552A00FED16E /* DTIAnimRotatingPlane.swift in Sources */,
+				0029086F1BC2552A00FED16E /* DTIActivityIndicatorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -664,32 +728,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				ENABLE_BITCODE = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-				);
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Pods/OpenTok";
 				INFOPLIST_FILE = "Telehealth Doctor/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -700,7 +742,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Telehealth Doctor/Telehealth Doctor-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "armv7 arm64 armv7s";
 			};
 			name = Debug;
 		};
@@ -710,32 +752,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				ENABLE_BITCODE = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-					"$(PROJECT_DIR)/Telehealth",
-					Doctor,
-				);
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Pods/OpenTok";
 				INFOPLIST_FILE = "Telehealth Doctor/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -745,7 +765,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Telehealth Doctor/Telehealth Doctor-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "armv7 arm64 armv7s";
 			};
 			name = Release;
 		};
@@ -758,7 +778,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kreatived.Telehealth-DoctorTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Telehealth Doctor.app/Telehealth Doctor";
+				TEST_HOST = "";
 			};
 			name = Debug;
 		};
@@ -771,7 +791,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kreatived.Telehealth-DoctorTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Telehealth Doctor.app/Telehealth Doctor";
+				TEST_HOST = "";
 			};
 			name = Release;
 		};

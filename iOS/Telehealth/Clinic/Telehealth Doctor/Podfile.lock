@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (2.0.2)
+  - OpenTok (2.6.0)
   - ReachabilitySwift (2.0)
   - Socket.IO-Client-Swift (3.1.4)
   - Spring (1.0.3)
@@ -7,6 +8,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 2.0)
+  - OpenTok (~> 2.6)
   - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
   - Socket.IO-Client-Swift (~> 3.1.4)
   - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift2`)
@@ -34,6 +36,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
+  OpenTok: 2b99bd75055554f4028735fa84e4242e4932d245
   ReachabilitySwift: 227b98ae7ec99e1c01148b17fb22357aa91a5675
   Socket.IO-Client-Swift: a0c8a6ba85ea685891d2c5f0e73b7287b89d0121
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7

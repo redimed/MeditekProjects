@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DE418615C11FDE0B9726F357"
+               BlueprintIdentifier = "87FFBDF785DB675539235765"
                BuildableName = "Pods_Telehealth_Doctor.framework"
                BlueprintName = "Pods-Telehealth Doctor"
                ReferencedContainer = "container:Pods.xcodeproj">

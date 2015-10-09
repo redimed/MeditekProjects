@@ -38,7 +38,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     var datePicker = UIDatePicker()
     var serviceType = ""
     var gPReferral:String = "Y"
-    var baseUrl:String = "http://testapp.redimed.com.au:3001/api/urgent-care/urgent-request"
+    var baseUrl:String = "http://testapp.redimed.com.au:3001/api/urgent-care/urgent-requestss"
     var blueColorCustom:UIColor = UIColor(red: 41/255, green: 128/255, blue: 185/255, alpha: 1.0)
     var redColorCuston:UIColor = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
     var phoneNumber = ""
@@ -318,24 +318,12 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
 
     //when check service type
     @IBAction func ChoosePSH(sender: AnyObject) {
-        if(sender.tag == 202){
-            if(serviceType != "GP"){
-                ChangeImageButton(gpRefferralButton, nameImage: "checked")
-                ChangeImageButton(physiotherapyButton, nameImage: "unchecked")
-                ChangeImageButton(specialistButton, nameImage: "unchecked")
-                ChangeImageButton(handTherapistButton, nameImage: "unchecked")
-                serviceType = "GP"
-            }else{
-                ChangeImageButton(gpRefferralButton, nameImage: "unchecked")
-                serviceType = "null"
-            }
-        }
+
         if(sender.tag == 203){
             if(serviceType != "PHY"){
-                 ChangeImageButton(physiotherapyButton, nameImage: "checked")
-                 ChangeImageButton(gpRefferralButton, nameImage: "unchecked")
-                 ChangeImageButton(specialistButton, nameImage: "unchecked")
-                 ChangeImageButton(handTherapistButton, nameImage: "unchecked")
+                ChangeImageButton(physiotherapyButton, nameImage: "checked")
+                ChangeImageButton(specialistButton, nameImage: "unchecked")
+                ChangeImageButton(handTherapistButton, nameImage: "unchecked")
                 serviceType = "PHY"
             }else{
                 ChangeImageButton(physiotherapyButton, nameImage: "unchecked")
@@ -345,7 +333,6 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         if(sender.tag == 204){
             if(serviceType != "SPE"){
                 ChangeImageButton(specialistButton, nameImage: "checked")
-                ChangeImageButton(gpRefferralButton, nameImage: "unchecked")
                 ChangeImageButton(physiotherapyButton, nameImage: "unchecked")
                 ChangeImageButton(handTherapistButton, nameImage: "unchecked")
                 serviceType = "SPE"
@@ -358,7 +345,6 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         if(sender.tag == 205){
             if(serviceType != "HAN"){
                 ChangeImageButton(handTherapistButton, nameImage: "checked")
-                ChangeImageButton(gpRefferralButton, nameImage: "unchecked")
                 ChangeImageButton(physiotherapyButton, nameImage: "unchecked")
                 ChangeImageButton(specialistButton, nameImage: "unchecked")
                 serviceType = "HAN"
@@ -456,6 +442,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         patientInformation["serviceType"] = serviceType
         patientInformation["urgentRequestType"] = informationData["urgentRequestType"]
         
+       // print(informationData)
         //print(patientInformation)
         if(!isConnectedToNetwork()){
             let alertController = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet ", preferredStyle: .Alert)
@@ -558,7 +545,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
                     else {
                         
                         let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-                        //alert.dismissWithClickedButtonIndex(0, animated: true)
+                        alert.dismissWithClickedButtonIndex(-1, animated: true)
                         //println("Error could not parse JSON: \(jsonStr)")
                     }
                 }

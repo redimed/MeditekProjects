@@ -115,7 +115,8 @@ module.exports = {
 
         urgentRequestType: {
             type: 'string',
-            columnName: 'UrgentRequestType'
+            columnName: 'UrgentRequestType',
+            maxLength: 255
         },
 
         confirmUserName: {
@@ -149,7 +150,8 @@ module.exports = {
 
         description: {
             type: 'string',
-            columnName: 'Description'
+            columnName: 'Description',
+            maxLength: 2048
         },
 
         createdDate: {

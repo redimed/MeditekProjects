@@ -9,12 +9,20 @@
 import UIKit
 
 class InformationViewController: UIViewController {
-
-    @IBOutlet var scrollView: UIScrollView!
+    let InformationPatient = VerifyPhoneNumberController()
+    var uid = String()
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        // Do any additional setup after loading the view.
+        if let uuid = defaults.valueForKey("UserInformation") as? String {
+            uid = uuid
+           
+        }
+        InformationPatient.getInformationPatientByUUID(uid){
+            response in
+            print(response)
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,9 +32,5 @@ class InformationViewController: UIViewController {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
          view.endEditing(true)
     }
-    
 
-    
-
-   
 }

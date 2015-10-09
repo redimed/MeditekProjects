@@ -1,0 +1,20 @@
+platform :ios, '8.0'
+use_frameworks!
+
+target 'Telehealth Doctor' do
+ pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift2'
+ pod 'Alamofire', '~> 2.0'
+ pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+ pod 'ReachabilitySwift', git: 'https://github.com/ashleymills/Reachability.swift'
+ pod 'Socket.IO-Client-Swift', '~> 3.1.4'
+ pod 'OpenTok', '~> 2.6'
+end
+
+target 'Telehealth DoctorTests' do
+
+end
+
+target 'Telehealth DoctorUITests' do
+
+end
+

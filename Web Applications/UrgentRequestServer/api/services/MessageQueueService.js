@@ -30,13 +30,14 @@ module.exports = {
                 .spread(function(UR) {
                     //check tried and confirmed urgent request
                     if (UR.tried < 3 && UR.status === 'pending') {
+                        var subjectEmail = '[Testing] -[' + UR.urgentRequestType + '] - [' + (UR.tried == 1 ? '2nd' : '3rd') + '] - [' +
+                            Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss') +
+                            '] - [' + UR.lastName + ' ' +
+                            UR.firstName + '] - [' + UR.phoneNumber + ']';
                         var emailInfo = {
-                            from: 'Health Screenings <HealthScreenings@redimed.com.au>',
+                            from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
                             email: 'HealthScreenings@redimed.com.au',
-                            subject: '[Testing] -[' + UR.urgentRequestType + '] - [' + (UR.tried === 1 ? '2nd' : '3rd') + '] - [' +
-                                Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss') +
-                                '] - [' + UR.lastName + ' ' +
-                                UR.firstName + '] - [' + UR.phoneNumber + ']',
+                            subject: subjectEmail,
                             confirmed: APIService.UrgentCareConfirmURL + '/' + UR.UID,
                             urgentRequestType: UR.urgentRequestType,
                             patientName: UR.lastName + ' ' + UR.firstName,

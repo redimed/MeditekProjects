@@ -79,7 +79,7 @@ module.exports = {
                 /*
                 CallBackSendMail: callback from function sendmail
                 input: err, responseStatus, html, text
-                output: throw error
+                output: throw status send mail
                 */
                 var CallBackSendMail = function(err, responseStatus, html, text) {
                     if (err) {
@@ -128,7 +128,7 @@ module.exports = {
                             };
 
                             var emailInfoPatient = {
-                                from: 'Health Screenings <HealthScreenings@redimed.com.au>',
+                                from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
                                 email: data.email.toLowerCase(),
                                 subject: 'Request Received',
                                 urgentRequestType: data.urgentRequestType || '',
@@ -136,8 +136,7 @@ module.exports = {
                                 requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                                 phoneNumber: data.phoneNumber,
                                 suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb) && !_.isEmpty(data.suburb)) ? data.suburb : '',
-                                DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? data.DOB : '',
-                                requestDate: data.requestDate,
+                                DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? Services.moment(data.DOB).format('DD/MM/YYYY HH:mm:ss') : '',
                                 GPReferal: GPReferal,
                                 serviceType: serviceType,
                                 description: (!_.isUndefined(data.description) && !_.isNull(data.description) && !_.isEmpty(data.description)) ? data.description : '',

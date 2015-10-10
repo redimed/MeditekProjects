@@ -75,6 +75,7 @@ module.exports = {
                     res.ok('success');
                 })
                 .catch(function(err) {
+                    console.log(err);
                     err.transaction.rollback();
                     res.serverError(ErrorWrap(err.error));
                 });

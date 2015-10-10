@@ -85,19 +85,22 @@ module.exports = {
 
 			//validate HomePhoneNumber? hoi a Tan su dung exception
 			if(data.HomePhoneNumber){
-				if(data.HomePhoneNumber.length < 0 || data.HomePhoneNumber.length > 20){
+				var auHomePhoneNumberPattern=new RegExp(HelperService.regexPattern.auHomePhoneNumber);
+				var HomePhone=data.HomePhoneNumber.replace(HelperService.regexPattern.phoneExceptChars,'');
+				console.log(HomePhone);
+				if(!auHomePhoneNumberPattern.test(HomePhone)){
 					errors.push({field:"HomePhoneNumber",message:"Patient.HomePhoneNumber.length"});
 					err.pushErrors(errors);
 					throw err;
 				}
 			}
-			
+
+			if(err.getErrors().length>0){
+				throw err;
+			}
+
 			else{
-				//if data input has value throw err with contain a list error into controller 
-				if(err.errors!=undefined && err.errors!=null)
-					throw err;
-				else
-					q.resolve({status:'success'});
+				q.resolve({status:'success'});
 			}
 			//q.resolve({status:'success'});
 
@@ -134,7 +137,13 @@ module.exports = {
 		};
 		return Services.Patient.validation(data)
 		.then(function(success){
-			return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber);
+			if(data.PhoneNumber.substr(0,3)=='+61'){
+				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber);
+			}
+			else{
+				data.PhoneNumber = '+61'+data.PhoneNumber;
+				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber);
+			}
 			//return Patient.create(data);
 		},function(err){
 			throw err;
@@ -312,7 +321,18 @@ module.exports = {
 				return Patient.findAll({
 					where: {
 						UserAccountID : user.ID
-					}
+					},
+					include: [
+						{
+			                model: Site,
+			                attributes: [ 'SiteName'],
+			                required: true
+			            },{
+			            	model: Country,
+			                attributes: [ 'ShortName'],
+			                required: true
+			            }
+					]
 				});
 			}
 			else{
@@ -323,7 +343,27 @@ module.exports = {
 		});
 	},
 	
-	
+	/*
+		DetailPatient: service get patient detail by patient's UID
+		input: Patient's UID
+		output: get patient's detail
+	*/
+	DetailPatient : function(data) {
+		console.log(data);
+		return Patient.findAll({
+			where:{
+				UID : data.UID
+			},
+			include:[
+				{
+	            	model: UserAccount,
+	            	attributes: ['PhoneNumber'],
+			    	required: true
+			    }
+			]
+		})
+	},
+
 	/*
 		LoadListPatient : service get list patient
 		input: amount patient

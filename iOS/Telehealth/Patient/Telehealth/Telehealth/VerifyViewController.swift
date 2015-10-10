@@ -68,17 +68,24 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                     self.view.hideLoading()
                     let defaults = NSUserDefaults.standardUserDefaults()
                     let uid = response["uid"].string
+                    let token = response["token"].string
                     
                     //Save activated in localstorage
                     defaults.setValue("Verified", forKey: "verifyUser")
-                    defaults.setValue(uid, forKey: "UserInformation")
+                    defaults.setValue(uid, forKey: "uid")
+                    defaults.setValue(token, forKey: "token")
                     defaults.synchronize()
                     //Change to home view by segue
                     self.performSegueWithIdentifier("VerifyToHomeSegue", sender: self)
                 }else {
                     self.view.hideLoading()
-                    let message : String = String(response["message"])
-                    self.alertMessage("Error", message: message) 
+                    if response["TimeOut"] ==  "Request Time Out" {
+                        self.alertMessage("Error", message: "Request Time Out")
+                    }else {
+                        let message : String = String(response["message"]["message"])
+                        self.alertMessage("Error", message: message)
+                    }
+                    
                 }
             }
             

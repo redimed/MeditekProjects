@@ -55,7 +55,13 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     self.performSegueWithIdentifier("phoneRegisterSegue", sender: self)
                 }else {
                     self.view.hideLoading()
-                    self.alertMessage("Error",message:String(response["message"]))
+                    if response["TimeOut"] ==  "Request Time Out" {
+                        self.alertMessage("Error", message: "Request Time Out")
+                    }else {
+                        let message : String = String(response["message"]["message"])
+                        self.alertMessage("Error", message: message)
+                    }
+                    
                 }
             }
         }

@@ -53,13 +53,14 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
     var phoneNumber = ""
     var contactPerSon = ""
     var companyPhone = ""
+    var checkDOB = true
     let delegate:patientDetailViewDelegateW? = nil
     var informationData: Dictionary<String, String> = [:]
     var patientInformation: Dictionary<String, String> = [:]
     var numberContact: String = ""
     var checkSuccess:NSString = ""
     
-    let autocompleteTableView = UITableView(frame: CGRectMake(0,180,320,300), style: UITableViewStyle.Plain)
+    let autocompleteTableView = UITableView(frame: CGRectMake(0,180,400,300), style: UITableViewStyle.Plain)
     var pastUrls : [String] = [String]()
     var suburb : NSArray = []
     var autocompleteUrls = [String]()
@@ -81,6 +82,8 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
         
         firstNameTextField.autocapitalizationType = UITextAutocapitalizationType(rawValue: 1)!
         lastNameTextField.autocapitalizationType = UITextAutocapitalizationType(rawValue: 1)!
+        companyName.autocapitalizationType = UITextAutocapitalizationType(rawValue: 1)!
+        contactPersonTextField.autocapitalizationType = UITextAutocapitalizationType(rawValue: 1)!
         ChangeBorderColor(descriptionTextView,color: blueColorCustom)
         DatepickerMode()
        
@@ -224,10 +227,13 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
     
     // out focus text field .validate data
     func textFieldDidEndEditing(textField: UITextField) {
+        
         if(textField == firstNameTextField){
+            textField.text = upCaseFirstLetter(textField.text)
             OutTextField(textField, validateImage: firstNameImage)
         }
         if(textField == lastNameTextField){
+            textField.text = upCaseFirstLetter(textField.text)
             OutTextField(textField, validateImage: lastNameImage)
         }
         if(textField == contactPhoneTextField){
@@ -258,9 +264,11 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
             
         }
         if(textField == companyName){
+            textField.text = upCaseFirstLetter(textField.text)
             OutTextField(textField, validateImage: companyNameImage)
         }
         if(textField == contactPersonTextField){
+            textField.text = upCaseFirstLetter(textField.text)
             OutTextField(textField, validateImage: contactPersonImage)
         }
         if(textField == companyPhoneNumber){
@@ -269,6 +277,22 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
         }
     }
     
+    
+    func upCaseFirstLetter(description:String)->String{
+        if(!description.isEmpty){
+        // The start index is the first letter
+        let first = description.startIndex
+        
+        // The rest of the string goes from the position after the first letter
+        // to the end.
+        let rest = advance(first,1)..<description.endIndex
+        let capitalised = description[first...first].uppercaseString + description[rest]
+        return capitalised
+        }else{
+            return ""
+        }
+       
+    }
     //when out focus text field validate data if isEmpty changeborder color is red
     func OutTextField(nameInputField:UITextField,validateImage:UIImageView){
         if(!nameInputField.text.isEmpty){
@@ -326,11 +350,28 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
     //Done button in datepicker
     func doneClick() {
         var dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .ShortStyle
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         dobTextField.text = dateFormatter.stringFromDate(datePicker.date)
         dobTextField.resignFirstResponder()
+        if(compareDate(datePicker.date)){
+            checkDOB = true
+            ChangeBorderColor(dobTextField, color: blueColorCustom)
+        }else{
+            checkDOB = false
+            ChangeBorderColor(dobTextField, color: redColorCuston)
+        }
+        
     }
-    
+    func compareDate(dateDOB:NSDate)->Bool {
+        let now = NSDate()
+        if now.compare(dateDOB) == NSComparisonResult.OrderedDescending
+        {
+            return true
+        } else
+        {
+          return false
+        }
+    }
     //cancel button in datepicker
     func cancelClick() {
         dobTextField.resignFirstResponder()
@@ -438,79 +479,42 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
             }
             
         }else{
-            if(checkMaxLength(firstNameTextField, length: 50) && checkMaxLength(lastNameTextField, length: 255) && checkMaxLength(surburbTextField, length: 100) && checkMaxLength(dobTextField, length: 255) && checkMaxLength(emailTextField, length: 255)){
+            if(checkDOB == true){
+                if(checkMaxLength(firstNameTextField, length: 50) && checkMaxLength(lastNameTextField, length: 255) && checkMaxLength(surburbTextField, length: 100) && checkMaxLength(dobTextField, length: 255) && checkMaxLength(emailTextField, length: 255)){
                 if(!isValidEmail(emailTextField.text) && !emailTextField.text.isEmpty){
                     AlertShow("Error", message: "Email is invalid", addButtonWithTitle: "OK")
                 }else{
                     
                     if(!companyPhoneNumber.text.isEmpty){
-                        if( companyPhoneNumber.text.length < 9 || companyPhoneNumber.text.length > 10 ){
+                        if( companyPhoneNumber.text.length < 8 || companyPhoneNumber.text.length > 10 ){
                             ChangeBorderColor(companyPhoneNumber, color: redColorCuston)
                             AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
                             
                         }else{
-                            if(companyPhoneNumber.text.length == 10){
-                                var str = companyPhoneNumber.text.substringToIndex(advance(companyPhoneNumber.text.startIndex, 1))
-                                if(str != "0"){
-                                    ChangeBorderColor(companyPhoneNumber, color: redColorCuston)
-                                    AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
-                                }else{
-                                    companyPhone  = companyPhoneNumber.text.substringWithRange(Range<String.Index>(start: advance(companyPhoneNumber.text.startIndex, 1), end: companyPhoneNumber.text.endIndex))
-                                    //MakeAppointMentSubmit()
-                                    if( contactPhoneTextField.text.length < 9 || contactPhoneTextField.text.length > 10 ){
-                                        
-                                        contactPhoneImage.image = UIImage(named: "sao")
-                                        ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
-                                        AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
-                                        
-                                    }else{
-                                        if(contactPhoneTextField.text.length == 10){
-                                            var str = contactPhoneTextField.text.substringToIndex(advance(contactPhoneTextField.text.startIndex, 1))
-                                            if(str != "0"){
-                                                ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
-                                                contactPhoneImage.image = UIImage(named: "sao")
-                                                AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
-                                            }else{
-                                                phoneNumber  = contactPhoneTextField.text.substringWithRange(Range<String.Index>(start: advance(contactPhoneTextField.text.startIndex, 1), end: contactPhoneTextField.text.endIndex))
-                                                MakeAppointMentSubmit()
-                                            }
-                                        }else{
-                                            phoneNumber = contactPhoneTextField.text
-                                            MakeAppointMentSubmit()
-                                        }
-                                        
-                                    }
-
-                                    //
-                                }
+                            companyPhone = companyPhoneNumber.text
+                            if( contactPhoneTextField.text.length < 9 || contactPhoneTextField.text.length > 10 ){
+                                
+                                contactPhoneImage.image = UIImage(named: "sao")
+                                ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
+                                AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
+                                
                             }else{
-                                companyPhone = companyPhoneNumber.text
-                                if( contactPhoneTextField.text.length < 9 || contactPhoneTextField.text.length > 10 ){
-                                    
-                                    contactPhoneImage.image = UIImage(named: "sao")
-                                    ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
-                                    AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
-                                    
-                                }else{
-                                    if(contactPhoneTextField.text.length == 10){
-                                        var str = contactPhoneTextField.text.substringToIndex(advance(contactPhoneTextField.text.startIndex, 1))
-                                        if(str != "0"){
-                                            ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
-                                            contactPhoneImage.image = UIImage(named: "sao")
-                                            AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
-                                        }else{
-                                            phoneNumber  = contactPhoneTextField.text.substringWithRange(Range<String.Index>(start: advance(contactPhoneTextField.text.startIndex, 1), end: contactPhoneTextField.text.endIndex))
-                                            MakeAppointMentSubmit()
-                                        }
+                                if(contactPhoneTextField.text.length == 10){
+                                    var str = contactPhoneTextField.text.substringToIndex(advance(contactPhoneTextField.text.startIndex, 1))
+                                    if(str != "0"){
+                                        ChangeBorderColor(contactPhoneTextField, color: redColorCuston)
+                                        contactPhoneImage.image = UIImage(named: "sao")
+                                        AlertShow("Error",message: "Phone number is invalid",addButtonWithTitle: "OK")
                                     }else{
-                                        phoneNumber = contactPhoneTextField.text
+                                        phoneNumber  = contactPhoneTextField.text.substringWithRange(Range<String.Index>(start: advance(contactPhoneTextField.text.startIndex, 1), end: contactPhoneTextField.text.endIndex))
                                         MakeAppointMentSubmit()
                                     }
-                                    
+                                }else{
+                                    phoneNumber = contactPhoneTextField.text
+                                    MakeAppointMentSubmit()
                                 }
-
+                                
                             }
-                            
                         }
                         
                     }else{
@@ -540,20 +544,22 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
 
                     }
                 }
-                //
-                
                 }else{
                 AlertShow("Error", message: "Some field exceeds so long", addButtonWithTitle: "OK")
+                }
+            }else{
+                AlertShow("Error", message: "Date of birth wrong", addButtonWithTitle: "OK")
             }
             
         }
     }
-    
+   
     func MakeAppointMentSubmit(){
+        
         patientInformation["firstName"] = firstNameTextField.text
         patientInformation["lastName"] = lastNameTextField.text
         patientInformation["phoneNumber"] = "+61" + phoneNumber
-        patientInformation["email"] = emailTextField.text
+        patientInformation["email"] = emailTextField.text.lowercaseString
         patientInformation["DOB"] = dobTextField.text
         patientInformation["suburb"] = surburbTextField.text
         patientInformation["GPReferal"] = gPReferral
@@ -561,12 +567,9 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
         patientInformation["serviceType"] = serviceType
         patientInformation["urgentRequestType"] = "WorkInjury"
         patientInformation["companyName"] = companyName.text
-        if(!companyPhoneNumber.text.isEmpty){
-            patientInformation["companyPhoneNumber"] = "+61" + companyPhone
-        }
+        patientInformation["companyPhoneNumber"] = companyPhoneNumber.text
         patientInformation["contactPerson"] = contactPersonTextField.text
         
-    
         if(!isConnectedToNetwork()){
             let alertController = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet ", preferredStyle: .Alert)
             
@@ -624,11 +627,10 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
                 
                 if(err != nil) {
                     let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-                    
-                    dispatch_sync(dispatch_get_main_queue(), { () -> Void in
-                        self.AlertShow("Notification",message: "Can not connect to server",addButtonWithTitle: "OK")
-                    })
                     alert.dismissWithClickedButtonIndex(-1, animated: true)
+                    dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "showAlert", userInfo: nil, repeats: false)
+                    })
                 }
                 else {
                     
@@ -636,35 +638,20 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
                     if let parseJSON = json {
                         var status = parseJSON["status"] as? Int
                         if(status == 200){
-                            
-                            
-                            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
-                               
-                            let alertController = UIAlertController(title: "Success", message: "Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.", preferredStyle: .Alert)
-                                
-                                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-                                    
-                                    self.dismissViewControllerAnimated(true, completion: nil)
-                                }
-                                alertController.addAction(OKAction)
-                                
-                                self.presentViewController(alertController, animated: true) {
-                                    // ...
-                                }
-                                
-                            })
                             alert.dismissWithClickedButtonIndex(-1, animated: true)
+                            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                                 NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "successAlert", userInfo: nil, repeats: false)
+                            })
+                            
                         }else{
-                            
-                            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
-                                self.AlertShow("Notification", message: "Error ! Please check your connection and try again", addButtonWithTitle: "OK")
-                            })
                             alert.dismissWithClickedButtonIndex(-1, animated: true)
-                            
+                            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                               NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "errorAlert", userInfo: nil, repeats: false)
+                            })
+ 
                         }
                     }
                     else {
-                        
                         let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
                         alert.dismissWithClickedButtonIndex(-1, animated: true)
                         
@@ -676,6 +663,26 @@ class WorkInjuryViewController: UIViewController,UITextFieldDelegate ,UITextView
         
     }
     
+    func errorAlert(){
+        self.AlertShow("Notification", message: "Error ! Please check your connection and try again", addButtonWithTitle: "OK")
+    }
+    func successAlert(){
+        
+        let alertController = UIAlertController(title: "Success", message: "Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.", preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            // ...
+        }
+    }
+    func showAlert(){
+        self.AlertShow("Notification",message: "Can not connect to server",addButtonWithTitle: "OK")
+    }
     //check device connected internet
     func isConnectedToNetwork()->Bool{
         

@@ -12,14 +12,20 @@ import SwiftyJSON
 let config = ConfigurationSystem()
 var savedData  = saveData()
 let defaults = NSUserDefaults.standardUserDefaults()
+var tokens = String()
 
 
-//
 class ConfigurationSystem: UIViewController {
     let Http = "http://192.168.1.130:3009"
+    
     let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
+    
+    let headers = [
+        "Authorization": "Bearer \(tokens)",
+        "Content-Type": "application/x-www-form-urlencoded"
+    ]
     //change border color textfield
-     func borderTextFieldValid(textField:DesignableTextField,color:UIColor){
+    func borderTextFieldValid(textField:DesignableTextField,color:UIColor){
         textField.layer.borderColor = color.CGColor
         textField.layer.borderWidth = 1
         textField.cornerRadius = 4
@@ -54,8 +60,8 @@ class ConfigurationSystem: UIViewController {
             return false
         }
     }
-
-  
+    
+    
 }
 //class handle get and set data
 class saveData {
@@ -66,3 +72,22 @@ class saveData {
     }
 }
 
+
+//Extension Handle
+extension String
+{
+    //Format date time
+    func toDateTime() -> String
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//this your string date format
+        dateFormatter.timeZone = NSTimeZone(name: "UTC")
+        let date = dateFormatter.dateFromString(self)
+        
+        dateFormatter.dateFormat = "yyyy-MM-dd"///this is you want to convert format
+        dateFormatter.timeZone = NSTimeZone(name: "UTC")
+        let timeStamp = dateFormatter.stringFromDate(date!)
+        //Return Parsed Date
+        return String(timeStamp)
+    }
+}

@@ -15,6 +15,6 @@ class Singleton_SocketManager:UIViewController {
     static let shareInstance = Singleton_SocketManager()
     let socket = SocketIOClient(socketURL: config.Http)
     var delegate: callViewDelegate? = nil
-    
+      
 }
 let sharedSocket = Singleton_SocketManager()

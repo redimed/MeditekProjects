@@ -1,6 +1,25 @@
 var app = angular.module('app.authentication.patient.list.modal.controller', []);
 
-app.controller('patientListModalCtrl', function($scope){
+app.controller('patientListModalCtrl', function($scope, data, PatientService, $modal, $modalInstance){
+	$scope.info = {};
+	PatientService.detailPatient(data).then(function(response){
+		if(response.message=="success"){
+			$scope.info = response.data[0];
+			console.log($scope.info);
+		}
+		else{
+			console.log(response.message);
+		}
+	});
+
+	$scope.close = function() {
+		$modalInstance.dismiss('cancel');
+	},
+
+	$scope.savechange = function(data){
+		
+	}
+
 	$scope.countries = [
 		{name : 'Afghanistan' },
 		{name : 'Albania' },

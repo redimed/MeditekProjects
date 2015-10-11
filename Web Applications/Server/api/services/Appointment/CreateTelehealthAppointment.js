@@ -121,11 +121,12 @@ module.exports = function(data) {
                         status: 'success'
                     });
                 }, function(err) {
-                    defer.reject({
-                        transaction: t,
-                        error: err
-                    });
-                })
+                    console.log(err);
+                    // defer.reject({
+                    //     transaction: t,
+                    //     error: err
+                    // });
+                });
             return defer.promise;
         });
 };

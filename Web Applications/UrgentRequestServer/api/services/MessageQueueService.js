@@ -32,15 +32,15 @@ module.exports = {
                     if (UR.tried < 3 && UR.status === 'pending') {
                         var subjectEmail = '[Testing] -[' + UR.urgentRequestType + '] - [' + (UR.tried == 1 ? '2nd' : '3rd') + '] - [' +
                             Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss') +
-                            '] - [' + UR.lastName + ' ' +
-                            UR.firstName + '] - [' + UR.phoneNumber + ']';
+                            '] - [' + UR.firstName + ' ' +
+                            UR.lastName + '] - [' + UR.phoneNumber + ']';
                         var emailInfo = {
                             from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
                             email: 'HealthScreenings@redimed.com.au',
                             subject: subjectEmail,
                             confirmed: APIService.UrgentCareConfirmURL + '/' + UR.UID,
                             urgentRequestType: UR.urgentRequestType,
-                            patientName: UR.lastName + ' ' + UR.firstName,
+                            patientName: UR.firstName + ' ' + UR.lastName,
                             requestDate: Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                             phoneNumber: UR.phoneNumber,
                             companyName: UR.companyName,

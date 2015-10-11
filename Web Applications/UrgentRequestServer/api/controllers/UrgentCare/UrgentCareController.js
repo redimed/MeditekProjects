@@ -59,15 +59,15 @@ module.exports = {
             })
             .then(function(URCreated) {
                 var subjectEmail = '[Testing] - [' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
-                    '] - [' + data.lastName + ' ' +
-                    data.firstName + '] - [' + data.phoneNumber + ']';
+                    '] - [' + data.firstName + ' ' +
+                    data.lastName + '] - [' + data.phoneNumber + ']';
                 var emailInfo = {
                     from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
                     email: 'HealthScreenings@redimed.com.au',
                     subject: subjectEmail,
                     confirmed: APIService.UrgentCareConfirmURL + '/' + data.UID,
                     urgentRequestType: data.urgentRequestType || '',
-                    patientName: data.lastName + ' ' + data.firstName,
+                    patientName: data.firstName + ' ' + data.lastName,
                     requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                     phoneNumber: data.phoneNumber,
                     companyName: data.companyName,
@@ -132,11 +132,11 @@ module.exports = {
                                 email: data.email.toLowerCase(),
                                 subject: 'Request Received',
                                 urgentRequestType: data.urgentRequestType || '',
-                                patientName: data.lastName + ' ' + data.firstName,
+                                patientName: data.firstName + ' ' + data.lastName,
                                 requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                                 phoneNumber: data.phoneNumber,
                                 suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb) && !_.isEmpty(data.suburb)) ? data.suburb : '',
-                                DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? Services.moment(data.DOB).format('DD/MM/YYYY HH:mm:ss') : '',
+                                DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? Services.moment(data.DOB).format('DD/MM/YYYY') : '',
                                 GPReferal: GPReferal,
                                 serviceType: serviceType,
                                 description: (!_.isUndefined(data.description) && !_.isNull(data.description) && !_.isEmpty(data.description)) ? data.description : '',

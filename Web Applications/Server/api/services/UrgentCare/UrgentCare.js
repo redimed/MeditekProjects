@@ -114,13 +114,14 @@ module.exports={
 			if(o.checkData(criteria.LastName))
 				criteria.LastName={$like:'%'+criteria.LastName+"%"};
 
+			var orderFilter=[];
+			orderFilter=_.filter(orderTemp,function(item){
+				return ['ASC','DESC'].indexOf(_.values(item)[0])>=0;
+			});
 			var order=[];
-
-			order=_.filter(orderTemp,function(item){
-				var value=typeof _.values(item)[0]==='string' 
-				return o.existIn(_.values(item)[0].toUpperCase(),['ASC','DESC']);
+			_.each(orderFilter,function(item){
+				order.push(_.pairs(item)[0]);
 			})
-
 			console.log(order);
 			return UrgentRequest.findAll({
 				where:{
@@ -140,7 +141,7 @@ module.exports={
 		}
 		catch(err)
 		{
-
+			throw err;
 		}
 		
 

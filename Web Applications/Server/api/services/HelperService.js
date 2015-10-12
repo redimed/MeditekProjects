@@ -142,7 +142,9 @@ module.exports = {
             assistant: 2,
             doctor: 3,
             gp: 4,
-            patient: 5
+            internalPractitional:5,
+            externalPractiction:6,
+            patient: 7
         }
     },
 
@@ -263,27 +265,5 @@ module.exports = {
         }
         
     },
-
-    /**
-     * Kiểm tra value có nằm trong mảng list hay không
-     * có: trả về true
-     * 
-     */
-    existIn:function(value,list)
-    {
-        var result=false;
-        if(_.isArray(list) && list.length>0)
-        {
-            for (var i=0;i<list.length;i++)
-            {
-                if(value===list[i]) 
-                {
-                    result=true;
-                    break;
-                }   
-            }
-        }
-        return result;  
-    }
 
 }

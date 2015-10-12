@@ -137,6 +137,22 @@ module.exports = {
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});
 		});
+	},
+
+	CheckPatient : function(req, res) {
+		var data = req.body.data;
+		Services.Patient.CheckPatient(data)
+		.then(function(result){
+			if(result!==undefined && result!==null){
+				res.ok({status:200,message:"success",data:result});
+			}
+			else{
+				res.notFound({status:404,message:"not found"});
+			}
+		})
+		.catch(function(err){
+			res.serverError({status:500,message:ErrorWrap(err)});
+		})
 	}
 
 };

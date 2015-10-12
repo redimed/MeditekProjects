@@ -42,6 +42,10 @@ module.exports = {
             type: Sequelize.DATE,
             allowNull: true
         },
+        Gender: {
+            type: Sequelize.STRING(1),
+            allowNull: true
+        },
         Address1: {
             type: Sequelize.STRING(255),
             allowNull: true

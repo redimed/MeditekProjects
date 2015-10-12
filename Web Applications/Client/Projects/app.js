@@ -1,14 +1,17 @@
 var app = angular.module('app', [
-    "ngCookies", 
-    "ngAnimate", 
-    "ui.router", 
+    "ngCookies",
+    "ngAnimate",
+    "ui.router",
     "ui.bootstrap", 
-    "ngSanitize", 
-    "restangular", 
-    "toastr", 
-    "ladda", 
-    "app.unAuthentication", 
-    "app.authentication"]);
+    "app.lockScreen",
+    "ngSanitize",
+    "restangular",
+    "toastr",
+    "ladda",
+    "app.unAuthentication",
+    "app.authentication"
+]);
+
 app
     .config(function($httpProvider, $stateProvider, $urlRouterProvider, RestangularProvider, toastrConfig) {
         // TOASTR CONFIG
@@ -109,9 +112,13 @@ app
                         reload: true
                     });
                 }
-            }
-        })
-        $rootScope.$on('$viewContentLoaded', function() {
-            Metronic.initAjax();
-        });
-    })
+
+	        }
+		})
+
+		$rootScope.$on('$viewContentLoaded', function() {
+	        Metronic.initAjax();
+		ComponentsDropdowns.init(); // init todo page
+	    });
+	})
+

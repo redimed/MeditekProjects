@@ -1,10 +1,12 @@
 import UIKit
 protocol patientDetailViewDelegate{
-    func tranferDataController(copntroller:PatientDetailViewController,moreData :Dictionary<String, String>)
+    func tranferDataController(copntroller: PatientDetailViewController, moreData: Dictionary<String, String>)
 }
-class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextViewDelegate  {
+class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextViewDelegate,UITableViewDelegate,UITableViewDataSource  {
     
-   
+    @IBOutlet weak var cancelSuburbButton: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var imageCancel: UIImageView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var firstNameImage: UIImageView!
     @IBOutlet weak var lastNameImage: UIImageView!
@@ -28,6 +30,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     @IBOutlet weak var handTherapistButton: UIButton!
     @IBOutlet weak var specialistButton: UIButton!
     @IBOutlet weak var physiotherapyButton: UIButton!
+    @IBOutlet weak var gpRefferralButton: UIButton!
     @IBOutlet weak var yesReferralButton: UIButton!
     @IBOutlet weak var noReferralButton: UIButton!
     
@@ -39,11 +42,20 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     var blueColorCustom:UIColor = UIColor(red: 41/255, green: 128/255, blue: 185/255, alpha: 1.0)
     var redColorCuston:UIColor = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
     var phoneNumber = ""
+    var checkDOB = true
     let delegate:patientDetailViewDelegate? = nil
     var informationData: Dictionary<String, String> = [:]
     var patientInformation: Dictionary<String, String> = [:]
     var numberContact: String = ""
     var checkSuccess:NSString = ""
+    
+    let autocompleteTableView = UITableView(frame: CGRectMake(0,180,400,300), style: UITableViewStyle.Plain)
+    
+    var pastUrls : [String] = [String]()
+    var suburb : NSArray = []
+    var autocompleteUrls = [String]()
+    var checkShow:Bool = false
+    
     override func viewDidLoad() {
         // Controls Initialziation
         super.viewDidLoad()
@@ -54,13 +66,104 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         dobTextField.delegate = self
         emailTextField.delegate = self
         descriptionTextView.delegate = self
+        
+
         firstNameTextField.autocapitalizationType = UITextAutocapitalizationType(rawValue: 1)!
         lastNameTextField.autocapitalizationType = UITextAutocapitalizationType(rawValue: 1)!
+        
         ChangeBorderColor(descriptionTextView,color: blueColorCustom)
         DatepickerMode()
         navigationBar.topItem?.title = informationData["title"]
-        //print(informationData)
+
+        autocompleteTableView.delegate = self
+        autocompleteTableView.dataSource = self
+        autocompleteTableView.scrollEnabled = true
+        autocompleteTableView.hidden = true
+        
+        self.view.addSubview(autocompleteTableView)
+        cancelSuburbButton.hidden = true
+        imageCancel.hidden = true
+        
+        for var i = 0; i < suburb.count; ++i {
+            let a = suburb[i]["name"] as! String
+            pastUrls.append(a)
+        }
     }
+    
+    @IBAction func cancelSuburbButton(sender: AnyObject) {
+        autocompleteTableView.hidden = true
+        cancelSuburbButton.hidden = true
+        imageCancel.hidden = true
+    }
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+    {
+        if(textField == surburbTextField){
+            if(autocompleteUrls.count > 0){
+                var scrollPoint : CGPoint = CGPointMake(0, self.surburbTextField.frame.origin.y - 70)
+                self.scrollView.setContentOffset(scrollPoint, animated: true)
+                autocompleteTableView.hidden = false
+                cancelSuburbButton.hidden = false
+                imageCancel.hidden = false
+            }else{
+                autocompleteTableView.hidden = true
+                cancelSuburbButton.hidden = true
+                imageCancel.hidden = true
+            }
+        }
+        
+        var substring = (textField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
+        searchAutocompleteEntriesWithSubstring(substring)
+        
+        return true
+    }
+    func searchAutocompleteEntriesWithSubstring(substring: String)
+    {
+        let dataSource = pastUrls
+        
+        let searchString = substring.uppercaseString
+        let predicate = NSPredicate(format: "SELF beginswith[c] %@", searchString)
+        let searchDataSource = dataSource.filter { predicate.evaluateWithObject($0) }
+        
+        autocompleteUrls = searchDataSource
+        autocompleteTableView.reloadData()
+
+    }
+    
+    @IBAction func change(sender: AnyObject) {
+        if(surburbTextField.text.isEmpty == true){
+            autocompleteTableView.hidden = true
+            cancelSuburbButton.hidden = true
+            imageCancel.hidden = true
+        }
+    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return autocompleteUrls.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let autoCompleteRowIdentifier = "AutoCompleteRowIdentifier"
+        var cell = tableView.dequeueReusableCellWithIdentifier(autoCompleteRowIdentifier) as? UITableViewCell
+        
+        if let tempo1 = cell
+        {
+            let index = indexPath.row as Int
+            cell!.textLabel!.text = autocompleteUrls[index]
+        } else
+        {
+            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: autoCompleteRowIdentifier)
+        }
+        return cell!
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedCell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        surburbTextField.text = selectedCell.textLabel!.text
+        autocompleteTableView.hidden = true
+        cancelSuburbButton.hidden = true
+        imageCancel.hidden = true
+    }
+    
     //Choose button Yes or no of Referral
     @IBAction func ChooseReferralButton(sender: AnyObject) {
         if(sender.tag == 101){
@@ -103,10 +206,15 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     
     // out focus text field .validate data
     func textFieldDidEndEditing(textField: UITextField) {
+        self.view.endEditing(true)
+        
+        autocompleteTableView.hidden = true
         if(textField == firstNameTextField){
+            textField.text = upCaseFirstLetter(textField.text)
             OutTextField(textField, validateImage: firstNameImage)
         }
         if(textField == lastNameTextField){
+            textField.text = upCaseFirstLetter(textField.text)
             OutTextField(textField, validateImage: lastNameImage)
         }
         if(textField == contactPhoneTextField){
@@ -114,6 +222,9 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
             CheckContactNo()
         }
         if(textField == surburbTextField){
+            autocompleteTableView.hidden = true
+            cancelSuburbButton.hidden = true
+            imageCancel.hidden = true
             OutTextField(textField, validateImage: noneImage)
             
         }
@@ -135,7 +246,21 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
             
         }
     }
-    
+    func upCaseFirstLetter(description:String)->String{
+        if(!description.isEmpty){
+            // The start index is the first letter
+            let first = description.startIndex
+            
+            // The rest of the string goes from the position after the first letter
+            // to the end.
+            let rest = advance(first,1)..<description.endIndex
+            let capitalised = description[first...first].uppercaseString + description[rest]
+            return capitalised
+        }else{
+            return ""
+        }
+        
+    }
     //when out focus text field validate data if isEmpty changeborder color is red
     func OutTextField(nameInputField:UITextField,validateImage:UIImageView){
         if(!nameInputField.text.isEmpty){
@@ -191,12 +316,32 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
      }
     
     //Done button in datepicker
+    //Done button in datepicker
     func doneClick() {
         var dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .ShortStyle
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         dobTextField.text = dateFormatter.stringFromDate(datePicker.date)
         dobTextField.resignFirstResponder()
+        if(compareDate(datePicker.date)){
+            checkDOB = true
+            ChangeBorderColor(dobTextField, color: blueColorCustom)
+        }else{
+            checkDOB = false
+            ChangeBorderColor(dobTextField, color: redColorCuston)
+        }
+        
     }
+    func compareDate(dateDOB:NSDate)->Bool {
+        let now = NSDate()
+        if now.compare(dateDOB) == NSComparisonResult.OrderedDescending
+        {
+            return true
+        } else
+        {
+            return false
+        }
+    }
+
     
     //cancel button in datepicker
     func cancelClick() {
@@ -209,14 +354,15 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluateWithObject(mail)
     }
-    
+
     //when check service type
     @IBAction func ChoosePSH(sender: AnyObject) {
+
         if(sender.tag == 203){
             if(serviceType != "PHY"){
-                 ChangeImageButton(physiotherapyButton, nameImage: "checked")
-                 ChangeImageButton(specialistButton, nameImage: "unchecked")
-                 ChangeImageButton(handTherapistButton, nameImage: "unchecked")
+                ChangeImageButton(physiotherapyButton, nameImage: "checked")
+                ChangeImageButton(specialistButton, nameImage: "unchecked")
+                ChangeImageButton(handTherapistButton, nameImage: "unchecked")
                 serviceType = "PHY"
             }else{
                 ChangeImageButton(physiotherapyButton, nameImage: "unchecked")
@@ -273,7 +419,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         self.view.endEditing(true)
         //check first name , last name , contactno is Empty
         if(firstNameTextField.text.isEmpty || lastNameTextField.text.isEmpty || contactPhoneTextField.text.isEmpty){
-            AlertShow("Error", message: "Please input information required *", addButtonWithTitle: "OK")
+            AlertShow("Error", message: "Please input required information", addButtonWithTitle: "OK")
             if(firstNameTextField.text.isEmpty){
                 ChangeBorderColor(firstNameTextField, color: redColorCuston)
             }
@@ -285,7 +431,8 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
             }
             
         }else{
-            if(checkMaxLength(firstNameTextField, length: 50) && checkMaxLength(lastNameTextField, length: 255) && checkMaxLength(surburbTextField, length: 100) && checkMaxLength(dobTextField, length: 255) && checkMaxLength(emailTextField, length: 255)){
+            if(checkDOB == true){
+                if(checkMaxLength(firstNameTextField, length: 50) && checkMaxLength(lastNameTextField, length: 255) && checkMaxLength(surburbTextField, length: 100) && checkMaxLength(dobTextField, length: 255) && checkMaxLength(emailTextField, length: 255)){
                 if(!isValidEmail(emailTextField.text) && !emailTextField.text.isEmpty){
                     AlertShow("Error", message: "Email is invalid", addButtonWithTitle: "OK")
                 }else{
@@ -316,6 +463,9 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
                 }
             }else{
                 AlertShow("Error", message: "Some field exceeds so long", addButtonWithTitle: "OK")
+                }
+            }else{
+                AlertShow("Error", message: "Date of birth wrong", addButtonWithTitle: "OK")
             }
 
         }
@@ -323,11 +473,11 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     
     func MakeAppointMentSubmit(){
        // print(patientInformation)
-
+        view.endEditing(true)
         patientInformation["firstName"] = firstNameTextField.text
         patientInformation["lastName"] = lastNameTextField.text
-        patientInformation["phoneNumber"] = "+061" + phoneNumber
-        patientInformation["email"] = emailTextField.text
+        patientInformation["phoneNumber"] = "+61" + phoneNumber
+        patientInformation["email"] = emailTextField.text.lowercaseString
         patientInformation["DOB"] = dobTextField.text
         patientInformation["suburb"] = surburbTextField.text
         patientInformation["GPReferal"] = gPReferral
@@ -335,9 +485,8 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         patientInformation["serviceType"] = serviceType
         patientInformation["urgentRequestType"] = informationData["urgentRequestType"]
         
-        //print(patientInformation)
         if(!isConnectedToNetwork()){
-            let alertController = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet  ", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet ", preferredStyle: .Alert)
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
                 // ...
@@ -382,7 +531,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
             request.addValue("application/json", forHTTPHeaderField: "Accept")
             
             var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-                //print(response)
+                
                 var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
                 
                 var err: NSError?
@@ -392,9 +541,9 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
                 
                 if(err != nil) {
                     let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-                    alert.dismissWithClickedButtonIndex(0, animated: true)
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.AlertShow("Notification",message: "Can not connect to server",addButtonWithTitle: "OK")
+                    alert.dismissWithClickedButtonIndex(-1, animated: true)
+                    dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "showAlert", userInfo: nil, repeats: false)
                     })
                 }
                 else {
@@ -403,23 +552,24 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
                     if let parseJSON = json {
                         var status = parseJSON["status"] as? Int
                         if(status == 200){
-                            alert.dismissWithClickedButtonIndex(0, animated: true)
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.AlertShow("Notification", message: "Success", addButtonWithTitle: "OK")
+                            alert.dismissWithClickedButtonIndex(-1, animated: true)
+                            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                                NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "successAlert", userInfo: nil, repeats: false)
                             })
+                            
                         }else{
-                            alert.dismissWithClickedButtonIndex(0, animated: true)
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.AlertShow("Notification", message: "error", addButtonWithTitle: "OK")
+                            alert.dismissWithClickedButtonIndex(-1, animated: true)
+                            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                                self.AlertShow("Notification", message: "Error ! Please check your connection and try again", addButtonWithTitle: "OK")
                             })
-                            //println(json)
+                            
+                            
                         }
                     }
                     else {
-                        
                         let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-                        alert.dismissWithClickedButtonIndex(0, animated: true)
-                        //println("Error could not parse JSON: \(jsonStr)")
+                        alert.dismissWithClickedButtonIndex(-1, animated: true)
+                        
                     }
                 }
             })
@@ -427,7 +577,27 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         }
 
         }
+    func successAlert(){
         
+        let alertController = UIAlertController(title: "Success", message: "Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.", preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            // ...
+        }
+    }
+    func showAlert(){
+        self.AlertShow("Notification",message: "Can not connect to server",addButtonWithTitle: "OK")
+    }
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        return false
+    }
     //check device connected internet
     func isConnectedToNetwork()->Bool{
         

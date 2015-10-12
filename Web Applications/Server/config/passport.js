@@ -2,14 +2,31 @@ var passport = require('passport'),
 LocalStrategy = require('passport-local').Strategy,
 bcrypt = require('bcrypt-nodejs');
 
+/**
+ * passport.serializeUser:
+ * only the user ID is serialized to the session, keeping the amount of data 
+ * stored within the session small. When subsequent requests are received, 
+ * this ID is used to find the user, which will be restored to req.user
+ */
 passport.serializeUser(function(user, done) {
-	done(null, user.UserName);
+	console.log(">>>>>>>>>>>>>>>>>>>>>> passport serializeUser");
+	done(null, user.ID);
 });
 
-passport.deserializeUser(function(UserName, done) {
-    UserAccount.findOne({ UserName: UserName } , function (err, user) {
-        done(err, user);
-    });
+/**
+ * Lấy lại thông tin user login cho mỗi request
+ * Thông tin user sẽ được lưu tron req.user
+ */
+passport.deserializeUser(function(ID, done) {
+	console.log(">>>>>>>>>>>>>>>>>>>>>> passport deserializeUser");
+	UserAccount.findOne({
+		where:{ID:ID}
+	})
+	.then(function(user){
+		done(null,user);
+	},function(err){
+		done(err);
+	})
 });
 
 
@@ -18,6 +35,7 @@ passport.use(new LocalStrategy({
 		passwordField: 'Password'
 	},
 	function(u, p, done) {
+		console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>Passport authentication");
 		//Kiểm tra user đang login bằng email hay phoneNumber hay username
 		var whereClause={};
 		var emailPattern = new RegExp(HelperService.regexPattern.email);
@@ -30,7 +48,6 @@ passport.use(new LocalStrategy({
 		{
 			var auPhoneNumberPattern=new RegExp(HelperService.regexPattern.auPhoneNumber);
 			var phoneTest=u.replace(HelperService.regexPattern.phoneExceptChars,'');
-			console.log(u);
 			if(auPhoneNumberPattern.test(phoneTest))
 			{
 				console.log("Login with phone number");
@@ -58,15 +75,16 @@ passport.use(new LocalStrategy({
 		})
 		.then(function(user){
 			if (!user) {
-				return done(null, false, { message: 'Incorrect userName.' });
+				var err=new Error("User.notFound");
+				return done(null, false, err);
 			}
 			bcrypt.compare(p, user.Password, function (err, res) {
 				if (!res)
-					return done(null, false, 
-							{
-								message: 'Invalid Password'
-							});
-				
+				{
+					var err=new Error("Password.Invalid");
+					return done(null, false,err);
+				}
+					
 				var listRoles=[];
 				_.each(user.RelUserRoles,function(item){
 					listRoles.push(item.Role);
@@ -81,34 +99,11 @@ passport.use(new LocalStrategy({
 				};
 				console.log("Login success");
 				return done(null, returnUser, {
-					message: 'Logged In Successfully'
+						message: 'Logged In Successfully'
 					});
 			});
 		},function(err){
 			return done(err);
 		})
-
-
-		// UserAccount.findOne({ UserName: u }, function (err, user) 
-		// {
-		// 	if (err) { return done(err); }
-		// 	if (!user) {
-		// 		return done(null, false, { message: 'Incorrect userName.' });
-		// 	}
-
-		// 	bcrypt.compare(p, user.Password, function (err, res) {
-		// 		if (!res)
-		// 		return done(null, false, {
-		// 			message: 'Invalid Password'
-		// 			});
-		// 		var returnUser = {
-		// 			UserName: user.UserName,
-		// 			role:user.role
-		// 		};
-		// 		return done(null, returnUser, {
-		// 			message: 'Logged In Successfully'
-		// 			});
-		// 	});
-		// });
 	}
 ));

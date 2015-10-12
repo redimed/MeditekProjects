@@ -1,422 +1,187 @@
-
-
 <div class="modal-content">
 	<div class="modal-header my-modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="modal_close()"></button>
 		<h4 class="modal-title"><b><i class="icon-note"></i> Patient Details</b></h4>
 	</div>
 	<div class="modal-body">
-		<div class="tabbable">
-			<ul class="nav nav-tabs nav-tabs-lg">
-				<li  class="active">
-					<a href="index.html#tab_personal" data-toggle="tab" aria-expanded="true">Personal</a>
-				</li>
-				<li class="">
-					<a href="index.html#tab_medicare" data-toggle="tab" aria-expanded="false">Medicare</a>
-				</li>
-			</ul>
-		</div>
-		<div class="tab-content">
-			<div class="tab-pane active" id="tab_personal">
-				<!-- tab ngang -->
-				<div class="row">
-					<div class="col-md-3">
-						<ul class="ver-inline-menu tabbable margin-bottom-10">
-							<li class="active">
-								<a data-toggle="tab" href="index.html#tab_basic" aria-expanded="true">
-								<i class="fa fa-cog"></i> Basic Information </a>
-								<span class="after"></span>
-							</li>
-							<li>
-								<a data-toggle="tab" href="index.html#tab_contact" aria-expanded="true">
-								<i class="fa fa-picture-o"></i> Contact </a>
-							</li>
-							<li>
-								<a data-toggle="tab" href="index.html#tab_account" aria-expanded="true">
-								<i class="fa fa-lock"></i> Account </a>
-							</li>
-							<li>
-								<a data-toggle="tab" href="index.html#tab_4-4" aria-expanded="true">
-								<i class="fa fa-eye"></i> aaaaaa </a>
-							</li>
-						</ul>
-					</div>
-					<div class="col-md-9">	
-						<div class="tab-content">
-							<!-- tab_basic -->
-							<div id="tab_basic" class="tab-pane active">
-								<div class="row">
-									<div class="col-md-3">
-										<div class="fileinput fileinput-new" data-provides="fileinput">
-											<div class="fileinput-new thumbnail" style="width: 100%; height: 150px;">
-												<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/>
-											</div>
-											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100%; max-height: 150px;">
-											</div>
-											<div>
-												<span class="btn default btn-file">
-												<span class="fileinput-new">
-												Select image </span>
-												<span class="fileinput-exists">
-												Change </span>
-												<input type="file" name="...">
-												</span>
-												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-												Remove </a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-9">
+		<div class="form">
+			<!-- form -->
+			<form class="form-horizontal" role="form">
+				<div class="form-body">
+					<div class="tab-content">
+						<div class="tabbable">
+							<!-- header tab -->
+							<ul class="nav nav-tabs nav-tabs-lg">
+								<li class="active">
+									<a href="index.html#Personal_info" data-toggle="tab" aria-expanded="true">Personal Information </a>
+								</li>
+								<!-- <li class="">
+									<a href="index.html#Account_info" data-toggle="tab" aria-expanded="false">Account Information </a>
+								</li>
+								<li class="">
+									<a href="index.html#Specialist_info" data-toggle="tab" aria-expanded="false">Specialist Information </a>
+								</li> -->
+							</ul>
+							<!-- end header tab -->
+							<!-- content tab -->
+							<div class="tab-content">
+								<!-- Begin Tab Personal -->
+								<div class="tab-pane active" id="Personal_info">
+									<div style="margin:3em;">
 										<div class="row">
-											<!-- begin Title -->
 											<div class="col-md-4">
-												<div class="form-group form-md-line-input has-info">
-													<select class="form-control">
-														<option value="mr">Mr</option>
-														<option value="mrs">Mrs</option>
-														<option value="ms">Ms</option>
-														<option value="dr">Dr</option>
-														<option value="master">Master</option>
-														<option value="phd">Phd</option>
-													</select>
-													<label class="label-control">Title</label>
-													<div class="form-control-focus"></div>
-												</div>
-											</div>
-											<!-- end Title -->
-										</div>
-										<br>
-										<div class="row">
-											<!-- begin Firstname -->	
-											<div class="col-md-4">
-												<div class="form-group form-md-line-input has-info">
-													<input type="text" class="form-control" placeholder="First Name" value="Robert">
-													<label class="label-control">First Name</label>
-													<div class="form-control-focus"></div>
-												</div>
-											</div>
-											<!-- end Firstname -->
-											<!-- begin Surname -->
-											<div class="col-md-4">
-												<div class="form-group form-md-line-input has-info">
-													<input type="text" class="form-control" placeholder="Sur Name" value="Gaigia">
-													<label class="label-control">Sur Name</label>
-													<div class="form-control-focus"></div>
-												</div>
-											</div>
-											<!-- end Surname -->
-											<!-- begin Middle Name -->
-											<div class="col-md-4">
-												<div class="form-group form-md-line-input has-info">
-													<input type="text" class="form-control" placeholder="Middle Name">
-													<label class="label-control">Middle Name</label>
-													<div class="form-control-focus"></div>
-												</div>
-											</div>
-											<!-- end Middle Name -->
-										</div>
-										<br>
-										<div class="row">
-											<!-- begin Know As -->
-											<div class="col-md-4">
-												<div class="form-group form-md-line-input has-info">
-													<input type="text" class="form-control" placeholder="Know As">
-													<label class="label-control">Know As</label>
-													<div class="form-control-focus"></div>
-												</div>
-											</div>
-											<!-- end Know As -->
-											<!-- begin Gender -->
-											<div class="col-md-4">
-												<label class="label-control">Gender</label>
-												<div class="form-group form-md-radios">
-													<div class="md-radio-inline">
-														<div class="md-radio">
-															<input type="radio" id="male" name="gender" class="md-radiobtn" checked>
-															<label for="male">
-															<span></span>
-															<span class="check"></span>
-															<span class="box"></span>
-															Male </label>
+												<!-- avatar -->
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group">
+														<div class="fileinput fileinput-new" data-provides="fileinput">
+															<div class="fileinput-new thumbnail" style="width: 200%; height: 300px;">
+																<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
+															</div>
+															<div class="fileinput-preview fileinput-exists thumbnail">
+															</div>
+															<div>
+																<span class="btn default btn-file">
+																	<span class="fileinput-new">
+																	Select Image </span>
+																	<span class="fileinput-exists">
+																	Change </span>
+																	<input type="file" name="...">
+																</span>
+																<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">Remove </a>
+															</div>
 														</div>
-														<div class="md-radio">
-															<input type="radio" id="female" name="gender" class="md-radiobtn">
-															<label for="female">
-															<span></span>
-															<span class="check"></span>
-															<span class="box"></span>
-															Female </label>
 														</div>
 													</div>
 												</div>
+												<!-- end avatar -->
 											</div>
-											<!-- end Gender -->
-											<!-- begin DOB -->
 											<div class="col-md-4">
-												<div class="form-group form-md-line-input has-info">
-													<input type="date" placeholder="DOB" class="form-control" value="01/01/2015">
-													<label class="label-control">Date of Birth</label>
-													<div class="form-control-focus"></div>
+												<h4><b>Person Information</b></h4>
+												<hr>
+												<!-- First Name -->
+												<div class="form-group">
+													<label class="control-label col-md-4">First Name</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="First Name" ng-model="info.FirstName"></div>
 												</div>
+												<!-- end First Name -->
+												<!-- Sur Name -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Sur Name</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Sur Name" ng-model="info.LastName"></div>
+												</div>
+												<!-- end Sur Name -->
+												<!-- Middle Name -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Middle Name</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Middle Name" ng-model="info.MiddleName"></div>
+												</div>
+												<!-- end Middle Name -->
+												<!-- Date of Birth -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Date of Birth</label>
+													<div class="col-md-8">
+														<input ng-model="info.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
+													</div>
+												</div>
+												<!-- end Date of Birth -->
+												<!-- Gender -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Gender</label>
+													<div class="col-md-8">
+														<select class="form-control" ng-model="info.Gender">
+															<option value="M">Male</option>
+															<option value="F">Female</option>
+														</select>
+													</div>
+												</div>
+												<!-- end Gender -->
+												<!-- Occupation -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Occupation</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Occupation" ng-model="info.Occupation"></div>
+												</div>
+												<!-- end Occupation -->
 											</div>
-											<!-- end DOB -->
+											<div class="col-md-4">
+												<h4><b>Contact Information</b></h4>
+												<hr>
+												<!-- Email -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Email</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Email" ng-disabled="true" ng-model="info.Email"></div>
+												</div>
+												<!-- end Email -->
+												<!-- Home Phone -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Home Phone</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber"></div>
+												</div>
+												<!-- end Home Phone -->
+												<!-- Mobile Phone -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Mobile Phone</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Mobile Phone" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber"></div>
+												</div>
+												<!-- end Mobile Phone -->
+												<!-- Address -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Address</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address" ng-model="info.Address"></div>
+												</div>
+												<!-- end Address -->
+												<!-- Surburb -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Suburb</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Surburd" ng-model="info.Suburb"></div>
+												</div>
+												<!-- end Surburb -->
+												<!-- Postcode -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Postcode</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Postcode" ng-model="info.Postcode"></div>
+												</div>
+												<!-- end Postcode -->
+												<!-- State -->
+												<div class="form-group">
+													<label class="control-label col-md-4">State</label>
+													<div class="col-md-8">
+														<select class="form-control">
+															<option ng-repeat="s in states" value="{{s.name}}">{{s.name}}</option>
+														</select>
+													</div>
+												</div>
+												<!-- end State -->
+												<!-- Country -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Country</label>
+													<div class="col-md-8">
+														<select class="form-control">
+															<option ng-repeat="country in countries" value="{{country.name}}">
+																{{country.name}}
+															</option>
+														</select>
+													</div>
+												</div>
+												<!-- end Country -->
+											</div>
 										</div>
 									</div>
 								</div>
+								<!-- End Tab Personal -->
 							</div>
-							<!-- end tab_basic -->
-							<!-- tab_contact -->
-							<div id="tab_contact" class="tab-pane">
-								<div class="row">
-									<!-- begin email -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<input type="text" placeholder="email" class="form-control" value="robert@gmail.com">
-											<label class="label-control">Email</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end emial -->
-									<!-- begin WorkPhone -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<input type="text" placeholder="Work Phone" class="form-control" value="08 4444 4444">
-											<label class="label-control">Work Phone</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end WorkPhone -->
-									<!-- begin HomePhone -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<input type="text" placeholder="Home Phone" class="form-control" value="04 5555 5555">
-											<label class="label-control">Home Phone</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end HomePhone -->
-									<!-- begin MobilePhone -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<input type="text" placeholder="Mobile Phone" class="form-control" value="09 7896 6987">
-											<label class="label-control">Mobile Phone</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end MobilePhone -->
-								</div>
-								<br>
-								<div class="row">
-									<!-- begin Occupation -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<input type="text" placeholder="Occupation" class="form-control" value="Miner">
-											<label class="label-control">Occupation</label>
-										</div>
-									</div>
-									<!-- end Occupation -->
-									<!-- address -->
-									<div class="col-md-9">
-										<div class="row">
-											<!-- begin Address1 -->
-											<div class="col-md-6">
-												<div class="form-group form-md-line-input has-info">
-													<input type="text" placeholder="Address 1" class="form-control" value="0123 Australia">
-													<label class="label-control">Address</label>
-													<div class="form-control-focus"></div>
-												</div>
-											</div>
-											<!-- end Address1 -->
-											<!-- begin Address 2 -->
-											<div class="col-md-6">
-												<div class="form-group form-md-line-input has-info">
-													<input type="text" placeholder="Address 2" class="form-control" value="">
-													<label class="label-control">Address</label>
-													<div class="form-control-focus"></div>
-												</div>
-											</div>
-											<!-- end Address 2 -->
-										</div>
-									</div>
-									<!-- end address -->
-								</div>
-								<br>
-								<div class="row">
-									<!-- begin Surburb -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<input type="text" placeholder="Surburb" class="form-control">
-											<label class="label-control">Surburb</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end Surburb -->
-									<!-- begin Post Code -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<input type="text" placeholder="Post Code" class="form-control">
-											<label class="label-control">Post Code</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end Post Code -->
-									<!-- begin State -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<!-- <input type="text" placeholder="State" class="form-control"> -->
-											<select class="form-control">
-												<option ng-repeat="s in states" value="{{s.name}}">{{s.name}}</option>
-											</select>
-											<label class="label-control">State</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end State -->
-									<!-- begin Country -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<select class="form-control">
-												<option ng-repeat="country in countries" value="{{country.name}}">
-													{{country.name}}
-												</option>
-											</select>
-											<label class="label-control">Country</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end Country -->
-								</div>
-							</div>
-							<!-- end tab_contact -->
-							<!-- tab_ -->
-							<div id="tab_account" class="tab-pane">
-								<div class="row">
-									<!-- begin insurer -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<select class="form-control">
-												<option ng-repeat="insurer in insurers" value="{{insurer.name}}">{{insurer.name}}</option>
-											</select>
-											<label class="label-control">Company Insurer</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end insurer -->
-									<!-- begin Account type -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<select class="form-control">
-												<option ng-repeat="Account_type in Account_types" value="{{Account_type.name}}">{{Account_type.name}}</option>
-											</select>
-											<label class="label-control">Account type</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end Account type -->
-									
-									<div class="col-md-6">
-										<div class="form-group form-md-checkboxes">
-											<label>&nbsp;</label>
-											<div class="md-checkbox-inline">
-												<div class="md-checkbox">
-													<input type="checkbox" id="sms" class="md-check">
-													<label for="sms">
-													<span></span>
-													<span class="check"></span>
-													<span class="box"></span>
-													SMS </label>
-												</div>
-												<div class="md-checkbox">
-													<input type="checkbox" id="isLock" class="md-check" checked="">
-													<label for="isLock">
-													<span></span>
-													<span class="check"></span>
-													<span class="box"></span>
-													Is Lock </label>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<!-- begin Account_Seft -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<input type="text" placeholder="Account_Seft" class="form-control" value="robert@gmail.com">
-											<label class="label-control">Account Seft</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end Account Seft -->
-									<!-- begin Private Fund -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<select class="form-control">
-												<option>BAPU</option>
-												<option>Medibank</option>
-												<option>HBF</option>
-												<option>Fund D</option>
-											</select>
-											<label class="label-control">Private Fund</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end Private Fund -->
-									<!-- begin Membership Number -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<input type="number" placeholder="Membership Number" class="form-control" value="2564">
-											<label class="label-control">Membership Number</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end Membership Number -->
-									<!-- begin UPI -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<input type="number" placeholder="UPI" class="form-control" value="8974">
-											<label class="label-control">UPI</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end UPI -->
-								</div>
-								<br>
-								<div class="row">
-									<!-- begin HCC Pension Number -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<input type="number" placeholder="HCC Pension Number" class="form-control" value="HCC Pension Number">
-											<label class="label-control">HCC Pension Number</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end HCC Pension Number -->
-									<!-- begin Pension Expire -->
-									<div class="col-md-3">
-										<div class="form-group form-md-line-input has-info">
-											<input type="date" placeholder="Pension Expire" class="form-control" value="jan-01-2015">
-											<label class="label-control">Pension Expire</label>
-											<div class="form-control-focus"></div>
-										</div>
-									</div>
-									<!-- end Pension Expire -->
-									
-								</div>
-								<br>
-							</div>
-							<!-- end tab_ -->
-						</div>		
+							<!-- end content tab -->
+						</div>
 					</div>
 				</div>
-				<!-- end tab ngang -->
-			</div>
-			<div class="tab-pane" id="tab_medicare">
-			</div>
+				<!-- <div class="form-actions">
+				</div> -->
+			</form>
+			<!-- end form -->
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn default" data-dismiss="modal" ng-click="close()"><i class="icon-action-undo"></i> Close</button>
-		<button type="button" class="btn blue"><i class="glyphicon glyphicon-save"></i> Save changes</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()"><i class="icon-action-undo"></i> Close</button>
+		<button type="button" class="btn btn-success" ng-disabled="infoChanged()||!infoClear()" ng-click="savechange(info)" ><i class="glyphicon glyphicon-save"></i> Save changes</button>
 	</div>
 </div>

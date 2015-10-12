@@ -1,9 +1,18 @@
 var regexp = require('node-regexp');
+var underscore=require('underscore');
+
 module.exports = {
 	Test:function(req,res)
 	{
-		HelperService.exlog(req.user);
-		res.ok({status:'hehehe',user:req.user});
+			// Services.UrgentCare.GetListUrgentRequests();
+			console.log(HelperService.checkData(false));
+
+			res.ok(req.user);
+	},
+
+	TestPost:function(req,res)
+	{
+		res.ok(HelperService.checkListData({b:'a'},1,{a:'b'},'1'));
 	},
 	
 	/**

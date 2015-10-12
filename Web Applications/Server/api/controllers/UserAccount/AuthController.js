@@ -24,26 +24,24 @@ module.exports = {
         {
             if ((err) || (!user)) 
             {
-                if(err) 
-                    console.log(err);
-                res.status(401).json({
-                    status:'fail',
-                    message:'login failed'
-                });
-                return;
+                if(!err) 
+                {
+                    var err=info;
+                }
+                return res.unauthor(ErrorWrap(err));
             }
 
             req.logIn(user, function(err) 
             {
                 if (err) 
                 {
-                    res.status(401).send(err);
+                    res.unauthor(ErrorWrap(err));
                 }
                 else
                 {
                     //tạo token
                     var token = jwt.sign(user, secret, { expiresInMinutes: 60*24 });
-                    res.status(200).json({
+                    res.ok({
                         status:'success',
                         message: info.message,
                         user: user,

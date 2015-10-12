@@ -1,9 +1,9 @@
 var app = angular.module('app.authentication.patient', [
-	'app.authentication.patient.controller'
+	'app.authentication.patient.controller',
+	'app.authentication.patient.services'
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider){
-	// $urlRouterProvider.otherwise('/patient/list');
 	$stateProvider
 		.state('authentication.patient', {
 			abstract: true,
@@ -15,5 +15,15 @@ app.config(function($stateProvider, $urlRouterProvider){
 			url: '/list',
 			templateUrl: 'modules/patient/views/patientList.html',
 			controller: 'patientListCtrl'
+		})
+		.state('authentication.patient.checkPhone', {
+			url: '/confirm',
+			templateUrl: 'modules/patient/views/patientCheckPhone.html',
+			controller: 'patientCheckPhoneCtrl'
+		})
+		.state('authentication.patient.create', {
+			url: '/create',
+			templateUrl: 'modules/patient/views/patientCreate.html',
+			controller: 'patientCreateCtrl'
 		});
 });

@@ -21,8 +21,10 @@ class UploadFileController extends Controller
      */
     public function PostUploadFile(Request $request)
     {
-
-        $files = Input::file('images');
+        $files = Input::file('uploadFiles');
+        $arrUploadedFileIds = array();
+        $numFiles = 0;
+        $fileType = $request['fileType'];
 
         // Encrypt and upload multi files
         foreach($files as $file)
@@ -30,7 +32,7 @@ class UploadFileController extends Controller
             // Save file to upload folder
             $uid = Uuid::uuid4();
             $fileLocation = 'uploadfiles/'.$uid;
-            $fileType = $file->getClientOriginalExtension();
+            $fileExtension = $file->getClientOriginalExtension();
             $fileName = $file->getClientOriginalName();
             Storage::put($fileLocation, Crypt::encrypt(File::get($file)));
 
@@ -39,15 +41,22 @@ class UploadFileController extends Controller
             $fileupload->FileLocation = $fileLocation;
             $fileupload->FileType = $fileType;
             $fileupload->FileName = $fileName;
-            $fileupload->FileExtension = $fileType;
+            $fileupload->FileExtension = $fileExtension;
             $fileupload->uid = $uid;
             $fileupload->CreatedDate = Carbon::now();
             $fileupload->ModifiedDate = Carbon::now();
             $fileupload->save();
+
+            $arrUploadedFileIds[$numFiles] = $fileupload->id;
+            $numFiles++;
         }
 
-        return count($files);
+        return response()->json(["ids" => $arrUploadedFileIds]);
+    }
 
+    public function PostDeleteFile( $Id, Request $request)
+    {
+        $file = FileUpload::findOrFail($Id);
 
     }
 
@@ -72,7 +81,8 @@ class UploadFileController extends Controller
         $fileLocation = $file->FileLocation;
         $response  = new Response(Crypt::decrypt(Storage::get($fileLocation)), '200');
         $response->header('Content-Type', '');
-
+        $response->header('Cache-Control','no-cache');
+        
         return $response;
     }
 }

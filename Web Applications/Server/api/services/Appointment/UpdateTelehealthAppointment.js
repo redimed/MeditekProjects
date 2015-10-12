@@ -1,106 +1,107 @@
-module.exports = function(data) {
-    var $q = require('q');
-    return sequelize.transaction()
-        .then(function(t) {
-            var defer = $q.defer();
-            var dataAppt = Services.GetDataAppointment.Appointment(data);
-            //update Appointment
-            Appointment.update(dataAppt, {
-                    where: {
-                        UID: data.UID
-                    }
-                }, {
-                    transaction: t
-                })
-                .then(function(apptUpdated) {
-                    if (HelperService.CheckExistData(data.TelehealthAppointment)) {
-                        var dataTeleAppt = Services.GetDataAppointment.TelehealthAppointment(data.TelehealthAppointment);
-                        //update TelehealthAppointment
-                        TelehealthAppointment.update(dataTeleAppt, {
+    module.exports = function(data) {
+        var $q = require('q');
+        return sequelize.transaction()
+            .then(function(t) {
+                var defer = $q.defer();
+                var dataAppointment = Services.GetDataAppointment.Appointment(data);
+                //update Appointment
+                Appointment.update(dataAppointment, {
+                        where: {
+                            UID: data.UID
+                        }
+                    }, {
+                        transaction: t
+                    })
+                    .then(function(appointmentUpdated) {
+                            var telehealthAppointment = data.TelehealthAppointment;
+                            if (HelperService.CheckExistData(telehealthAppointment)) {
+                                var dataTelehealthAppointment =
+                                    Services.GetDataAppointment.TelehealthAppointment(telehealthAppointment);
+                                //update TelehealthAppointment
+                                return TelehealthAppointment.update(dataTelehealthAppointment, {
+                                    where: {
+                                        UID: telehealthAppointment.UID
+                                    }
+                                });
+                            } else {
+                                defer.reject({
+                                    transaction: t,
+                                    error: new Error('failed')
+                                });
+                            }
+                        },
+                        function(err) {
+                            defer.reject({
+                                transaction: t,
+                                error: err
+                            });
+                        })
+                    .then(function(telehealthAppointmentUpadted) {
+                        var examinationRequired = data.TelehealthAppointment.ExaminationRequired;
+                        if (HelperService.CheckExistData(examinationRequired)) {
+                            var dataExaminationRequired =
+                                Services.GetDataAppointment.ExaminationRequired(examinationRequired);
+                            //update ExaminationRequired
+                            return ExaminationRequired.update(dataExaminationRequired, {
                                 where: {
-                                    ID: data.TelehealthAppointment.ID
+                                    UID: examinationRequired.UID
                                 }
                             }, {
                                 transaction: t
-                            })
-                            .then(function(teleApptUpdated) {
-                                if (HelperService.CheckExistData(data.Patients) &&
-                                    HelperService.CheckExistData(data.Patients[0])) {
-                                    //update patient appointment
-                                    var dataPatient = Services.GetDataAppointment.Patient(data.Patients[0]);
-                                    PatientAppointment.update(dataPatient, {
-                                            where: {
-                                                UID: data.Patients.UID
-                                            }
-                                        }, {
-                                            transaction: t
-                                        })
-                                        .then(function(patientApptUpdated) {
-                                            if (HelperService.CheckExistData(data.Doctors) &&
-                                                HelperService.CheckExistData(data.Doctors[0])) {
-                                                //upadte doctor telehealth appointment
-                                                var dataDoctor = Services.GetDataAppointment.Doctor(data.Doctors[0]);
-                                                Doctor.update(dataDoctor, {
-                                                        where: {
-                                                            UID: data.Doctors[0].UID
-                                                        }
-                                                    }, {
-                                                        transaction: t
-                                                    })
-                                                    .then(function(doctorUpdated) {
-
-                                                    })
-                                                    .catch(function() {
-
-                                                    });
-                                            } else {
-                                                /*
-                                                only update appointment, telehealt appointment, patient - complete
-                                                */
-                                                defer.resolve({
-                                                    transaction: t,
-                                                    status: 'success'
-                                                });
-                                            }
-                                        })
-                                        .catch(function(err) {
-                                            defer.reject({
-                                                transaction: t,
-                                                error: err
-                                            });
-                                        });
-                                } else {
-                                    /*
-                                    only update appointment, telehealt appointment - complete
-                                    */
-                                    defer.resolve({
-                                        transaction: t,
-                                        status: 'success'
-                                    });
+                            });
+                        }
+                    }, function(err) {
+                        defer.reject({
+                            transaction: t,
+                            error: err
+                        });
+                    })
+                    .then(function(examinationRequiredUpdate) {
+                        var preferedPlasticSurgeon = data.TelehealthAppointment.PreferedPlasticSurgeon;
+                        if (HelperService.CheckExistData(preferedPlasticSurgeon)) {
+                            var dataPreferedPlasticSurgeon =
+                                Services.GetDataAppointment.PreferedPlasticSurgeon(preferedPlasticSurgeon);
+                            //update PreferedPlasticSurgeon
+                            return PreferedPlasticSurgeon.update(dataPreferedPlasticSurgeon, {
+                                where: {
+                                    UID: preferedPlasticSurgeon.UID
                                 }
-                            })
-                            .catch(function(err) {
-                                defer.reject({
-                                    transaction: t,
-                                    error: err
+                            }, {
+                                transaction: t
+                            });
+                        }
+                    }, function(err) {
+                        defer.reject({
+                            transaction: t,
+                            error: err
+                        });
+                    })
+                    .then(function(preferedPlasticSurgeonUpdated) {
+                        var dataClinicalDetails = data.TelehealthAppointment.ClinicalDetails;
+                        if (HelperService.CheckExistData(dataClinicalDetails) &&
+                            _.isArray(dataClinicalDetails)) {
+                            return sequelize.Promise.each(dataClinicalDetails, function(dataClinicalDetail) {
+                                return ClinicalDetail.update(dataClinicalDetail, {
+                                    where: {
+                                        UID: dataClinicalDetail.UID
+                                    }
+                                }, {
+                                    transaction: t
                                 });
                             });
-                    } else {
-                        /*
-                        only update appointment - complete
-                        */
+                        }
+                    })
+                    .then(function(clinicalDetailsUpdated) {
                         defer.resolve({
                             transaction: t,
                             status: 'success'
                         });
-                    }
-                })
-                .catch(function(err) {
-                    defer.reject({
-                        transaction: t,
-                        error: err
+                    }, function(err) {
+                        defer.reject({
+                            transaction: t,
+                            error: err
+                        });
                     });
-                });
-            return defer.promise;
-        });
-};
+                return defer.promise;
+            });
+    };

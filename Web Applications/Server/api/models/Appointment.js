@@ -65,7 +65,7 @@ module.exports = {
         timestamps: false,
         hooks: {
             beforeCreate: function(appt, options, callback) {
-                appt.CreationDate = new Date();
+                appt.CreatedDate = new Date();
                 callback();
             },
             beforeUpdate: function(appt, options, callback) {

@@ -20,7 +20,7 @@ module.exports = {
                 })
                 .catch(function(err) {
                     err.transaction.rollback();
-                    res.serverError(ErrorWrap(err));
+                    res.serverError(ErrorWrap(err.error));
                 });
         }
     },
@@ -84,7 +84,7 @@ module.exports = {
     UpdateAppointment : update status in appointment
     input : Appointment ID, Status ,ModifiedBy
     output : success - data :'success' and status :200
-             failed: - Erorr :err and status :500
+             failed: - Erorr :err and status :500`
     */
     UpdateAppointment: function(req, res) {
         var data = HelperService.CheckPostRequest(req);

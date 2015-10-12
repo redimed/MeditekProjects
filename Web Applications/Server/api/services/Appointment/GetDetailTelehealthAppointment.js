@@ -30,18 +30,14 @@ module.exports = function(teleAppointmentUID) {
                     model: ClinicalDetail,
                     attributes: ['UID', 'Section', 'Category', 'Type', 'Name', 'Value', 'ClinicalNote', 'Description'],
                     required: true
-                }, {
-                    model: Doctor,
-                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Type', 'Email', 'Phone'],
-                    required: true
                 }]
             }, {
                 model: Doctor,
-                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Type', 'Email', 'Phone'],
+                attributes: ['ID', 'UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Type', 'Email', 'Phone'],
                 required: true,
                 include: [{
                     model: Department,
-                    attributes: ['UID', 'DepartmentCode', 'DepartmentName', 'Description'],
+                    attributes: ['ID', 'UID', 'DepartmentCode', 'DepartmentName', 'Description'],
                     required: true
                 }]
             }, {

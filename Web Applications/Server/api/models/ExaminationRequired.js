@@ -6,6 +6,10 @@ module.exports = {
             allowNull: false,
             primaryKey: true
         },
+        UID: {
+            type: Sequelize.STRING(255),
+            allowNull: false
+        },
         TelehealthAppointmentID: {
             type: Sequelize.BIGINT(20),
             allowNull: false,
@@ -57,7 +61,7 @@ module.exports = {
         timestamps: false,
         hooks: {
             beforeCreate: function(examRequired, options, callback) {
-                examRequired.CreationDate = new Date();
+                examRequired.CreatedDate = new Date();
                 callback();
             },
             beforeUpdate: function(examRequired, options, callback) {

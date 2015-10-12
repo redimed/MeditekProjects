@@ -1,5 +1,6 @@
 var app = angular.module('app.authentication.doctor.controller', [
 	'app.authentication.doctor.list.controller',
+	'app.authentication.doctor.checkPhone.controller',
 	'app.authentication.doctor.profile.controller'
 ]);
 

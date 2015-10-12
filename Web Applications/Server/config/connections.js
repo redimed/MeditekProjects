@@ -2,8 +2,6 @@ module.exports.connections = {
     disk: {
         module: 'sails-disk'
     },
-
-
     mysql: {
         adapter: 'sails-mysql',
         port: 3306,
@@ -13,17 +11,7 @@ module.exports.connections = {
         charset: 'utf8',
         collation: 'utf8-general_ci',
         options: {
-            host: 'localhost'
+            host: '192.168.1.2'
         }
-        // adapter: 'sails-mysql',
-        // port: 3306,
-        // user: 'root',
-        // password: 'root',
-        // database: 'Redimed',
-        // charset: 'utf8',
-        // collation: 'utf8-general_ci',
-        // options: {
-        //     host: 'localhost'
-        // }
     },
 };

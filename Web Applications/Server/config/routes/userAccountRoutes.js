@@ -4,6 +4,11 @@ module.exports={
 		action:'Test'
 	},
 
+	'post /api/user-account/testPost':{
+		controller:'UserAccount/UserAccountController',
+		action:'TestPost'
+	},
+
 	'post /api/user-account/CreateUserAccount':{
 		controller:'UserAccount/UserAccountController',
 		action:'CreateUserAccount'

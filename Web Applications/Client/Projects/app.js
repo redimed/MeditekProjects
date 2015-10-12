@@ -1,11 +1,13 @@
 var app = angular.module('app', [
-	"ngCookies",
+    "ngCookies",
     "ngAnimate",
     "ui.router",
     "ui.bootstrap", 
+    "app.lockScreen",
     "ngSanitize",
     "restangular",
     "toastr",
+    "ladda",
     "app.unAuthentication",
     "app.authentication"
 ]);
@@ -52,7 +54,7 @@ app
         // END CORS PROXY
 
         //RESTANGULAR DEFAULT
-        RestangularProvider.setBaseUrl("http://localhost:3001");
+        RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3005");
 
 		$urlRouterProvider.otherwise('');
 		$stateProvider
@@ -71,10 +73,49 @@ app
 	                    }
 					}
 				}
-			});
+			})
+			.state('lockScreen', {
+    			url:'/lockScreen',
+    			views: {
+    				'root':{
+    					templateUrl: 'common/views/lockScreen.html',
+    					controller: 'lockScreenCtrl'
+    				}
+    			}
+		    });
+			
 	})
 
-	.run(function($rootScope,$cookies,$window,$state){
+	.run(function($rootScope,$cookies,$window,$state,Restangular,toastr){
+        // RESTANGULAR ERROR HANDLING
+        // Restangular.setErrorInterceptor(function (response) {
+        //     if (response.status == 401) {
+        //         toastr.error('Oops, looks like something went wrong here.<br>Please try your request again later.<br><br>Error Code: ' + response.status,'ERROR!!', {
+        //             allowHtml: true,
+        //             progressBar: true,
+        //             closeButton: true
+        //         });
+
+        //     } else if (response.status == 400) {
+        //         toastr.error('Oops, looks like something went wrong here.<br>Please try your request again later.<br><br>Error Code: ' + response.status,'ERROR!!', {
+        //             allowHtml: true,
+        //             progressBar: true,
+        //             closeButton: true
+        //         });
+
+        //     } else {
+        //         toastr.error("Response received with HTTP error code: " + response.status,'ERROR!!', {
+        //             allowHtml: true,
+        //             progressBar: true,
+        //             closeButton: true
+        //         });
+
+        //     }
+        //     return false;
+        // });
+        // END RESTANGULAR ERROR HANDLING
+
+
 		$rootScope.$on('$stateChangeSuccess',function(e, toState, toParams, fromState, fromParams){
 			if (!$cookies.get("userInfo")) {
                 if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register") {
@@ -97,5 +138,6 @@ app
 
 		$rootScope.$on('$viewContentLoaded', function() {
 	        Metronic.initAjax();
+		ComponentsDropdowns.init(); // init todo page
 	    });
 	})

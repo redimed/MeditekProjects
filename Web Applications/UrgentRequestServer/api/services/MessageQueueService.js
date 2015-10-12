@@ -30,18 +30,22 @@ module.exports = {
                 .spread(function(UR) {
                     //check tried and confirmed urgent request
                     if (UR.tried < 3 && UR.status === 'pending') {
+                        var subjectEmail = '[Testing] -[' + UR.urgentRequestType + '] - [' + (UR.tried == 1 ? '2nd' : '3rd') + '] - [' +
+                            Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss') +
+                            '] - [' + UR.firstName + ' ' +
+                            UR.lastName + '] - [' + UR.phoneNumber + ']';
                         var emailInfo = {
-                            from: 'Health Screenings <HealthScreenings@redimed.com.au>',
+                            from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
                             email: 'HealthScreenings@redimed.com.au',
-                            subject: '[Testing] -[UrgentCare Request] - [' + (UR.tried === 1 ? '2nd' : '3rd') + '] - [' +
-                                Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss') +
-                                '] - [' + UR.lastName + ' ' +
-                                UR.firstName + '] - [' + UR.phoneNumber + ']',
+                            subject: subjectEmail,
                             confirmed: APIService.UrgentCareConfirmURL + '/' + UR.UID,
-                            urgentRequestType: 'UrgentCare Request',
-                            patientName: UR.lastName + ' ' + UR.firstName,
+                            urgentRequestType: UR.urgentRequestType,
+                            patientName: UR.firstName + ' ' + UR.lastName,
                             requestDate: Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                             phoneNumber: UR.phoneNumber,
+                            companyName: UR.companyName,
+                            companyPhoneNumber: UR.companyPhoneNumber,
+                            contactPerson: UR.contactPerson,
                             bcc: 'pnguyen@redimed.com.au, thanh1101681@gmail.com'
                         };
                         var CallBackSendMail = function(err, responseStatus, html, text) {

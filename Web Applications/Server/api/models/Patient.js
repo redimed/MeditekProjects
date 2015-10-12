@@ -29,61 +29,65 @@ module.exports = {
         FirstName: {
             type: Sequelize.STRING(50),
             allowNull: true,
-            validate:{
-                len:[0,50]
+            validate: {
+                len: [0, 50]
             }
         },
         MiddleName: {
             type: Sequelize.STRING(100),
             allowNull: true,
-            validate:{
-                len:[0,100]
+            validate: {
+                len: [0, 100]
             }
         },
         LastName: {
             type: Sequelize.STRING(255),
             allowNull: true,
-            validate:{
-                len:[0,50]
+            validate: {
+                len: [0, 50]
             }
         },
         DOB: {
             type: Sequelize.DATE,
             allowNull: true
         },
+        Gender: {
+            type: Sequelize.STRING(1),
+            allowNull: true
+        },
         Address: {
             type: Sequelize.STRING(255),
             allowNull: true,
-            validate:{
-                len:[0,255]
+            validate: {
+                len: [0, 255]
             }
         },
         Suburb: {
             type: Sequelize.STRING(100),
             allowNull: true,
-            validate:{
-                len:[0,100]
+            validate: {
+                len: [0, 100]
             }
         },
         Postcode: {
             type: Sequelize.STRING(100),
             allowNull: true,
-            validate:{
-                len:[0,100]
+            validate: {
+                len: [0, 100]
             }
         },
         Email: {
             type: Sequelize.STRING(255),
             allowNull: true,
-            validate:{
-                len:[0,100]
+            validate: {
+                len: [0, 100]
             }
         },
         HomePhoneNumber: {
             type: Sequelize.STRING(20),
             allowNull: true,
-            validate:{
-                len:[0,20]
+            validate: {
+                len: [0, 20]
             }
         },
         CountryID: {

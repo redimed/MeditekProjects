@@ -7,14 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-<<<<<<< HEAD
-<<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
-=======
-		543EE8221BA984A300386D59 /* MoreDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543EE8211BA984A300386D59 /* MoreDetail.swift */; };
->>>>>>> commit
-=======
-		543EE8221BA984A300386D59 /* MoreDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543EE8211BA984A300386D59 /* MoreDetail.swift */; };
->>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
+		00D4ACA51BC23960007AA820 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 00D4ACA11BC23960007AA820 /* LICENSE */; };
+		00D4ACA61BC23960007AA820 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 00D4ACA21BC23960007AA820 /* README.md */; };
+		00D4ACA71BC23960007AA820 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D4ACA41BC23960007AA820 /* SwiftyJSON.swift */; };
 		5450394C1BABF2FA000D3167 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5450394B1BABF2FA000D3167 /* ApiManager.swift */; };
 		546149CC1BA7AFB700C1F1D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546149CB1BA7AFB700C1F1D6 /* AppDelegate.swift */; };
 		546149CF1BA7AFB700C1F1D6 /* RedimedAfterHours.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 546149CD1BA7AFB700C1F1D6 /* RedimedAfterHours.xcdatamodeld */; };
@@ -52,23 +47,17 @@
 		54614A271BA7CBB400C1F1D6 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54614A0A1BA7CBB400C1F1D6 /* TransitionManager.swift */; };
 		54614A281BA7CBB400C1F1D6 /* TransitionZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54614A0B1BA7CBB400C1F1D6 /* TransitionZoom.swift */; };
 		54614A291BA7CBB400C1F1D6 /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54614A0C1BA7CBB400C1F1D6 /* UnwindSegue.swift */; };
-<<<<<<< HEAD
-<<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 		54614A2B1BA7EAA700C1F1D6 /* PatientDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54614A2A1BA7EAA700C1F1D6 /* PatientDetailViewController.swift */; };
-=======
-		54614A2B1BA7EAA700C1F1D6 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54614A2A1BA7EAA700C1F1D6 /* InformationViewController.swift */; };
->>>>>>> commit
-=======
-		54614A2B1BA7EAA700C1F1D6 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54614A2A1BA7EAA700C1F1D6 /* InformationViewController.swift */; };
->>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 		54614A351BA82B1000C1F1D6 /* TPKeyboardAvoidingCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54614A2E1BA82B1000C1F1D6 /* TPKeyboardAvoidingCollectionView.m */; };
 		54614A361BA82B1000C1F1D6 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54614A301BA82B1000C1F1D6 /* TPKeyboardAvoidingScrollView.m */; };
 		54614A371BA82B1000C1F1D6 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54614A321BA82B1000C1F1D6 /* TPKeyboardAvoidingTableView.m */; };
 		54614A381BA82B1000C1F1D6 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 54614A341BA82B1000C1F1D6 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
-		54D7340C1BAC122800ECBEA7 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 54D734081BAC122800ECBEA7 /* LICENSE */; };
-		54D7340D1BAC122800ECBEA7 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 54D734091BAC122800ECBEA7 /* README.md */; };
-		54D7340E1BAC122800ECBEA7 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D7340B1BAC122800ECBEA7 /* SwiftyJSON.swift */; };
+		548A8A8A1BC2700B0004B97D /* WorkInjuryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548A8A891BC2700B0004B97D /* WorkInjuryViewController.swift */; };
+		54C7B6361BC4AC290009DBD8 /* data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54C7B6351BC4AC290009DBD8 /* data.plist */; };
+		54C7B6381BC4ADF00009DBD8 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C7B6371BC4ADF00009DBD8 /* libsqlite3.0.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		54DEECCD1BABB90D00847893 /* MakeAppointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DEECCC1BABB90D00847893 /* MakeAppointment.swift */; };
+		BBDE33FA1BC853220055D1D7 /* Suburb.json in Resources */ = {isa = PBXBuildFile; fileRef = BBDE33F81BC853220055D1D7 /* Suburb.json */; };
+		BBDE33FB1BC853220055D1D7 /* suburb.xml in Resources */ = {isa = PBXBuildFile; fileRef = BBDE33F91BC853220055D1D7 /* suburb.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,14 +71,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-<<<<<<< HEAD
-<<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
-=======
-		543EE8211BA984A300386D59 /* MoreDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreDetail.swift; sourceTree = "<group>"; };
->>>>>>> commit
-=======
-		543EE8211BA984A300386D59 /* MoreDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreDetail.swift; sourceTree = "<group>"; };
->>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
+		00D4ACA11BC23960007AA820 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		00D4ACA21BC23960007AA820 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		00D4ACA41BC23960007AA820 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		542A60FA1BC4B83D00329427 /* RedimedAfterHours-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RedimedAfterHours-Bridging-Header.h"; sourceTree = "<group>"; };
 		5450394B1BABF2FA000D3167 /* ApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		546149C61BA7AFB700C1F1D6 /* RedimedAfterHours.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedimedAfterHours.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		546149CA1BA7AFB700C1F1D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -132,15 +117,7 @@
 		54614A0A1BA7CBB400C1F1D6 /* TransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
 		54614A0B1BA7CBB400C1F1D6 /* TransitionZoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionZoom.swift; sourceTree = "<group>"; };
 		54614A0C1BA7CBB400C1F1D6 /* UnwindSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwindSegue.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
-<<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 		54614A2A1BA7EAA700C1F1D6 /* PatientDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientDetailViewController.swift; sourceTree = "<group>"; };
-=======
-		54614A2A1BA7EAA700C1F1D6 /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
->>>>>>> commit
-=======
-		54614A2A1BA7EAA700C1F1D6 /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
->>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 		54614A2D1BA82B1000C1F1D6 /* TPKeyboardAvoidingCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingCollectionView.h; sourceTree = "<group>"; };
 		54614A2E1BA82B1000C1F1D6 /* TPKeyboardAvoidingCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingCollectionView.m; sourceTree = "<group>"; };
 		54614A2F1BA82B1000C1F1D6 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
@@ -149,10 +126,12 @@
 		54614A321BA82B1000C1F1D6 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
 		54614A331BA82B1000C1F1D6 /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
 		54614A341BA82B1000C1F1D6 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
-		54D734081BAC122800ECBEA7 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		54D734091BAC122800ECBEA7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		54D7340B1BAC122800ECBEA7 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		548A8A891BC2700B0004B97D /* WorkInjuryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkInjuryViewController.swift; sourceTree = "<group>"; };
+		54C7B6351BC4AC290009DBD8 /* data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = data.plist; sourceTree = "<group>"; };
+		54C7B6371BC4ADF00009DBD8 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		54DEECCC1BABB90D00847893 /* MakeAppointment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakeAppointment.swift; sourceTree = "<group>"; };
+		BBDE33F81BC853220055D1D7 /* Suburb.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Suburb.json; sourceTree = "<group>"; };
+		BBDE33F91BC853220055D1D7 /* suburb.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = suburb.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54C7B6381BC4ADF00009DBD8 /* libsqlite3.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,9 +153,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00D4ACA01BC23960007AA820 /* SwiftyJSON */ = {
+			isa = PBXGroup;
+			children = (
+				00D4ACA11BC23960007AA820 /* LICENSE */,
+				00D4ACA21BC23960007AA820 /* README.md */,
+				00D4ACA31BC23960007AA820 /* Source */,
+			);
+			path = SwiftyJSON;
+			sourceTree = "<group>";
+		};
+		00D4ACA31BC23960007AA820 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				00D4ACA41BC23960007AA820 /* SwiftyJSON.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 		546149BD1BA7AFB700C1F1D6 = {
 			isa = PBXGroup;
 			children = (
+				54C7B6371BC4ADF00009DBD8 /* libsqlite3.0.dylib */,
 				546149C81BA7AFB700C1F1D6 /* RedimedAfterHours */,
 				546149E11BA7AFB700C1F1D6 /* RedimedAfterHoursTests */,
 				546149C71BA7AFB700C1F1D6 /* Products */,
@@ -194,6 +193,8 @@
 		546149C81BA7AFB700C1F1D6 /* RedimedAfterHours */ = {
 			isa = PBXGroup;
 			children = (
+				BBDE33F81BC853220055D1D7 /* Suburb.json */,
+				BBDE33F91BC853220055D1D7 /* suburb.xml */,
 				54DEECCB1BABA7E700847893 /* Controller */,
 				54DEECCA1BABA7DE00847893 /* Model */,
 				54DEECC91BABA7D500847893 /* API */,
@@ -213,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				546149CA1BA7AFB700C1F1D6 /* Info.plist */,
+				542A60FA1BC4B83D00329427 /* RedimedAfterHours-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -286,28 +288,10 @@
 			path = TPKeyboardAvoiding;
 			sourceTree = "<group>";
 		};
-		54D734071BAC122800ECBEA7 /* SwiftyJSON */ = {
-			isa = PBXGroup;
-			children = (
-				54D734081BAC122800ECBEA7 /* LICENSE */,
-				54D734091BAC122800ECBEA7 /* README.md */,
-				54D7340A1BAC122800ECBEA7 /* Source */,
-			);
-			path = SwiftyJSON;
-			sourceTree = "<group>";
-		};
-		54D7340A1BAC122800ECBEA7 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				54D7340B1BAC122800ECBEA7 /* SwiftyJSON.swift */,
-			);
-			path = Source;
-			sourceTree = "<group>";
-		};
 		54DEECC71BABA79600847893 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				54D734071BAC122800ECBEA7 /* SwiftyJSON */,
+				00D4ACA01BC23960007AA820 /* SwiftyJSON */,
 				546149EE1BA7CBB400C1F1D6 /* Spring */,
 				54614A2C1BA82B0F00C1F1D6 /* TPKeyboardAvoiding */,
 			);
@@ -318,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				5450394B1BABF2FA000D3167 /* ApiManager.swift */,
+				54C7B6351BC4AC290009DBD8 /* data.plist */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -333,17 +318,8 @@
 		54DEECCB1BABA7E700847893 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-<<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 				54614A2A1BA7EAA700C1F1D6 /* PatientDetailViewController.swift */,
-=======
-				54614A2A1BA7EAA700C1F1D6 /* InformationViewController.swift */,
-				543EE8211BA984A300386D59 /* MoreDetail.swift */,
->>>>>>> commit
-=======
-				54614A2A1BA7EAA700C1F1D6 /* InformationViewController.swift */,
-				543EE8211BA984A300386D59 /* MoreDetail.swift */,
->>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
+				548A8A891BC2700B0004B97D /* WorkInjuryViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -392,19 +368,13 @@
 		546149BE1BA7AFB700C1F1D6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-<<<<<<< HEAD
-<<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 				LastSwiftUpdateCheck = 0700;
-=======
->>>>>>> commit
-=======
->>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = DucManh;
 				TargetAttributes = {
 					546149C51BA7AFB700C1F1D6 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 27TYHQV638;
+						DevelopmentTeam = UA7AB584U5;
 					};
 					546149DD1BA7AFB700C1F1D6 = {
 						CreatedOnToolsVersion = 6.4;
@@ -436,11 +406,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54D7340C1BAC122800ECBEA7 /* LICENSE in Resources */,
+				00D4ACA51BC23960007AA820 /* LICENSE in Resources */,
 				54614A191BA7CBB400C1F1D6 /* Info.plist in Resources */,
 				546149D41BA7AFB700C1F1D6 /* Main.storyboard in Resources */,
 				546149D91BA7AFB700C1F1D6 /* LaunchScreen.xib in Resources */,
+				BBDE33FB1BC853220055D1D7 /* suburb.xml in Resources */,
 				546149D61BA7AFB700C1F1D6 /* Images.xcassets in Resources */,
+				54C7B6361BC4AC290009DBD8 /* data.plist in Resources */,
+				BBDE33FA1BC853220055D1D7 /* Suburb.json in Resources */,
 				54614A1C1BA7CBB400C1F1D6 /* LoadingView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,17 +435,8 @@
 				54614A131BA7CBB400C1F1D6 /* DesignableLabel.swift in Sources */,
 				54614A221BA7CBB400C1F1D6 /* SpringImageView.swift in Sources */,
 				54614A0F1BA7CBB400C1F1D6 /* AutoTextView.swift in Sources */,
-				54D7340E1BAC122800ECBEA7 /* SwiftyJSON.swift in Sources */,
 				54614A181BA7CBB400C1F1D6 /* ImageLoader.swift in Sources */,
 				54614A1D1BA7CBB400C1F1D6 /* Misc.swift in Sources */,
-<<<<<<< HEAD
-<<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
-=======
-				543EE8221BA984A300386D59 /* MoreDetail.swift in Sources */,
->>>>>>> commit
-=======
-				543EE8221BA984A300386D59 /* MoreDetail.swift in Sources */,
->>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 				54614A101BA7CBB400C1F1D6 /* BlurView.swift in Sources */,
 				54614A291BA7CBB400C1F1D6 /* UnwindSegue.swift in Sources */,
 				54614A1B1BA7CBB400C1F1D6 /* LoadingView.swift in Sources */,
@@ -480,16 +444,9 @@
 				54614A1F1BA7CBB400C1F1D6 /* Spring.swift in Sources */,
 				546149D11BA7AFB700C1F1D6 /* ViewController.swift in Sources */,
 				54614A1E1BA7CBB400C1F1D6 /* SoundPlayer.swift in Sources */,
+				548A8A8A1BC2700B0004B97D /* WorkInjuryViewController.swift in Sources */,
 				54614A171BA7CBB400C1F1D6 /* DesignableView.swift in Sources */,
-<<<<<<< HEAD
-<<<<<<< 2d48f5b0d5116e18511df296be99cdb1c7ee6c3c
 				54614A2B1BA7EAA700C1F1D6 /* PatientDetailViewController.swift in Sources */,
-=======
-				54614A2B1BA7EAA700C1F1D6 /* InformationViewController.swift in Sources */,
->>>>>>> commit
-=======
-				54614A2B1BA7EAA700C1F1D6 /* InformationViewController.swift in Sources */,
->>>>>>> 45bd11060f4cdc13fcc3311301b31969187572d5
 				54614A141BA7CBB400C1F1D6 /* DesignableTabBarController.swift in Sources */,
 				54614A111BA7CBB400C1F1D6 /* DesignableButton.swift in Sources */,
 				546149CC1BA7AFB700C1F1D6 /* AppDelegate.swift in Sources */,
@@ -500,15 +457,16 @@
 				54614A271BA7CBB400C1F1D6 /* TransitionManager.swift in Sources */,
 				54614A231BA7CBB400C1F1D6 /* SpringLabel.swift in Sources */,
 				54614A0D1BA7CBB400C1F1D6 /* AsyncButton.swift in Sources */,
+				00D4ACA71BC23960007AA820 /* SwiftyJSON.swift in Sources */,
 				54614A381BA82B1000C1F1D6 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				54614A0E1BA7CBB400C1F1D6 /* AsyncImageView.swift in Sources */,
 				54614A161BA7CBB400C1F1D6 /* DesignableTextView.swift in Sources */,
 				54614A261BA7CBB400C1F1D6 /* SpringView.swift in Sources */,
 				54614A251BA7CBB400C1F1D6 /* SpringTextView.swift in Sources */,
-				54D7340D1BAC122800ECBEA7 /* README.md in Sources */,
 				54614A361BA82B1000C1F1D6 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				5450394C1BABF2FA000D3167 /* ApiManager.swift in Sources */,
 				54614A1A1BA7CBB400C1F1D6 /* KeyboardLayoutConstraint.swift in Sources */,
+				00D4ACA61BC23960007AA820 /* README.md in Sources */,
 				54614A211BA7CBB400C1F1D6 /* SpringButton.swift in Sources */,
 				54614A201BA7CBB400C1F1D6 /* SpringAnimation.swift in Sources */,
 				54614A121BA7CBB400C1F1D6 /* DesignableImageView.swift in Sources */,
@@ -647,6 +605,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "RedimedAfterHours/RedimedAfterHours-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "RedimedAfterHours-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -661,6 +622,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "RedimedAfterHours/RedimedAfterHours-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "RedimedAfterHours-Bridging-Header.h";
 			};
 			name = Release;
 		};

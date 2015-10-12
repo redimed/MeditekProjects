@@ -35,6 +35,11 @@ import retrofit.client.Response;
  */
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
+    private String TAG = "HOME";
+    private View v;
+    private RegisterApi restClient;
+    private boolean shouldFinish = false;
+
     @Bind(R.id.imgBtnInformation)
     ImageButton imgBtnInformation;
     @Bind(R.id.imgBtnTelehealth)
@@ -43,11 +48,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     ImageButton imgBtnFAQ;
     @Bind(R.id.imgBtnContact)
     ImageButton imgBtnContact;
-    private String TAG = "HOME";
-    private View v;
-    private RegisterApi restClient;
-    private String sessionID, token, apiKey;
-    private boolean shouldFinish = false;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -81,40 +81,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void InformationPatient() {
         Log.d(TAG, "INFORMATION");
-    }
-
-    private void GenerationSession() {
-        restClient.generateSession(new Callback<JsonObject>() {
-            @Override
-            public void success(JsonObject jsonObject, Response response) {
-                String status = jsonObject.get("status").getAsString();
-                if (status.equalsIgnoreCase("success")) {
-                    sessionID = jsonObject.getAsJsonObject("data").get("sessionId").getAsString();
-                    token = jsonObject.getAsJsonObject("data").get("token").getAsString();
-                    apiKey = jsonObject.getAsJsonObject("data").get("apiKey").getAsString();
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("Error", error.toString());
-            }
-        });
-    }
-
-    private void CallActivity() {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("from", "65defa35-c95a-4096-a5c9-19ec23d21c72");
-        params.put("to", "115cd288-d08b-4e52-bf8c-48a7b544b3a7");
-        params.put("message", "call");
-        params.put("sessionId", sessionID);
-        try {
-            SocketService.sendData("socket/messageTransfer", params);
-            startActivity(new Intent(v.getContext(), CallActivity.class));
-            Toast.makeText(v.getContext(), "Clinic: " + params.toString(), Toast.LENGTH_LONG).show();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
     }
 
     @Override

@@ -149,6 +149,7 @@ public class SocketService extends Service {
             JSONObject data = (JSONObject) args[0];
         try {
             String message = data.get("message").toString();
+            Log.d("===" + TAG + "====", message);
             i = new Intent(getApplicationContext(), CallActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
             if (message.equalsIgnoreCase("call")){
@@ -160,8 +161,8 @@ public class SocketService extends Service {
                 i.putExtra("message", data.get("message").toString());
                 startActivity(i);
             }
-            if (message.equalsIgnoreCase("answer")){
-                startActivity(i);
+            if (message.equalsIgnoreCase("errorMsg")){
+                Log.d(TAG, data.toString());
             }
         } catch (JSONException e) {
             e.printStackTrace();

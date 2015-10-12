@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.redimed.telehealth.patient.models.TelehealthUser;
-import com.redimed.telehealth.patient.service.SocketService;
 
 import java.io.File;
 import java.util.Timer;
@@ -46,12 +45,7 @@ public class LauncherActivity extends AppCompatActivity {
             public void run() {
                 File xmlUser = new File("/data/data/" + getApplicationContext().getPackageName() + "/shared_prefs/TelehealthUser.xml");
                 if (xmlUser.exists()) {
-//                    TelehealthUser telehealthUser = new TelehealthUser();
-//                    telehealthUser.setUID(uidTelehealth.getString("uid", null));
-//                    mApplication.setTelehealthUser(telehealthUser);
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                    startService(new Intent(getApplicationContext(), SocketService.class));
-//                    SocketService.JoinRoom();
                     finish();
                 } else {
                     startActivity(new Intent(getApplicationContext(), ActivationActivity.class));

@@ -42,21 +42,26 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     private String sessionId, token, apiKey, to, from;
     private static final boolean SUBSCRIBE_TO_SELF = false;
 
-//    private BroadcastReceiver receiverDataSocketService;
-//    private MyApplication myApplication;
-
-    @Bind(R.id.fabHold)FloatingActionButton fabHold;
-    @Bind(R.id.fabEndCall) FloatingActionButton fabEndCall;
-    @Bind(R.id.fabMute) FloatingActionButton fabMute;
-
-    @Bind(R.id.publisherView) RelativeLayout publisherView;
-    @Bind(R.id.subscriberView) RelativeLayout subscriberView;
-    @Bind(R.id.loadingSpinner) ProgressBar loadingBar;
-
-    @Bind(R.id.imgLogoCall) ImageView imgLogoCall;
-    @Bind(R.id.btnDecline) FloatingActionButton btnDecline;
-    @Bind(R.id.btnAnswer) FloatingActionButton btnAnswer;
-    @Bind(R.id.vfCall) ViewFlipper vfCall;
+    @Bind(R.id.fabHold)
+    FloatingActionButton fabHold;
+    @Bind(R.id.fabEndCall)
+    FloatingActionButton fabEndCall;
+    @Bind(R.id.fabMute)
+    FloatingActionButton fabMute;
+    @Bind(R.id.publisherView)
+    RelativeLayout publisherView;
+    @Bind(R.id.subscriberView)
+    RelativeLayout subscriberView;
+    @Bind(R.id.loadingSpinner)
+    ProgressBar loadingBar;
+    @Bind(R.id.imgLogoCall)
+    ImageView imgLogoCall;
+    @Bind(R.id.btnDecline)
+    FloatingActionButton btnDecline;
+    @Bind(R.id.btnAnswer)
+    FloatingActionButton btnAnswer;
+    @Bind(R.id.vfCall)
+    ViewFlipper vfCall;
 
 
     @Override
@@ -64,7 +69,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-//        myApplication = (MyApplication) getApplicationContext();
         ButterKnife.bind(this);
 
         streamOpenTok = new ArrayList<Stream>();
@@ -90,7 +94,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     //    Initialize Session ID, API Key, Token
     private void ListenSocket() {
         i = getIntent();
-        if (i.getExtras() != null){
+        if (i.getExtras() != null) {
             if (i.getExtras().getString("message").equalsIgnoreCase("call")) {
                 sessionId = i.getExtras().getString("sessionId");
                 token = i.getExtras().getString("token");
@@ -98,59 +102,12 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 to = i.getExtras().getString("to");
                 from = i.getExtras().getString("from");
             }
-            if (i.getExtras().getString("message").equalsIgnoreCase("answer")){
-                SessionConnect();
-                vfCall.showNext();
-            }
-            if (i.getExtras().getString("message").equalsIgnoreCase("decline")){
-                DeclineCommunication();
-            }
         }
     }
 
-//        Listen action response when clinic make a call
-//    private void ListenSocket() {
-//        IntentFilter intentFilter = new IntentFilter("android.intent.action.MessageSocket");
-//        receiverDataSocketService = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                String message = "";
-//                String strSocket = intent.getStringExtra("Message");
-//                try {
-//                    JSONObject jsonSocket = new JSONObject(strSocket);
-//                    message = jsonSocket.get("message").toString();
-//                    Log.i("====Message====", message);
-//                    if (message.equalsIgnoreCase("call")){
-//                        apiKey = jsonSocket.get("apiKey").toString();
-//                        sessionId = jsonSocket.get("sessionId").toString();
-//                        token = jsonSocket.get("token").toString();
-//                        to = jsonSocket.get("from").toString();
-//                        from = myApplication.getTelehealthUser().getUID();
-//                    }
-//                    if (message.equalsIgnoreCase("answer")){
-//                        vfCall.showNext();
-//                    }
-//                    if (message.equalsIgnoreCase("decline")) {
-//                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                        finish();
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-//        this.registerReceiver(receiverDataSocketService, intentFilter);
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        this.unregisterReceiver(this.receiverDataSocketService);
-//    }
-
     @Override
     public void onBackPressed() {
-        if (sessionOpenTok != null){
+        if (sessionOpenTok != null) {
             DeclineCommunication();
         }
         super.onBackPressed();
@@ -158,7 +115,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case (R.id.btnDecline):
                 DeclineCommunication();
                 break;
@@ -177,7 +134,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-//    Accept appointment
+    //    Accept appointment
     private void AnswerCommunication() {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("from", from);
@@ -193,7 +150,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-//    Refuse appointment
+    //    Refuse appointment
     private void DeclineCommunication() {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("from", from);
@@ -216,10 +173,10 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     //Click button hold on a call
     private void HoldCommunication() {
         publisher.setPublishVideo(!publisher.getPublishVideo());
-        if (publisher.getPublishVideo() == false){
+        if (publisher.getPublishVideo() == false) {
             publisher.setPublishAudio(false);
             subscriber.setSubscribeToAudio(false);
-        }else {
+        } else {
             publisher.setPublishAudio(true);
             publisher.setPublishAudio(true);
         }
@@ -233,7 +190,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     //Initialize session to make connect between application and Open Tok
     private void SessionConnect() {
-        if (sessionOpenTok == null){
+        if (sessionOpenTok == null) {
             sessionOpenTok = new Session(CallActivity.this, apiKey, sessionId);
             sessionOpenTok.setSessionListener(this);
             sessionOpenTok.connect(token);
@@ -252,7 +209,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //Initialize view Subscriber (Clinic)
-    public void AttachSubscriberView(Subscriber paramSubscriber){
+    public void AttachSubscriberView(Subscriber paramSubscriber) {
         RelativeLayout.LayoutParams layoutSubscriber = new RelativeLayout.LayoutParams(
                 getResources().getDisplayMetrics().widthPixels,
                 getResources().getDisplayMetrics().heightPixels);
@@ -265,7 +222,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         subscriber = new Subscriber(CallActivity.this, stream);
         subscriber.setVideoListener(this);
         sessionOpenTok.subscribe(subscriber);
-        if (subscriber.getSubscribeToVideo()){
+        if (subscriber.getSubscribeToVideo()) {
             loadingBar.setVisibility(View.VISIBLE);
         }
     }
@@ -273,10 +230,10 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     //Disconnect with subscribe
     private void UnsubscribeFromStream(Stream stream) {
         streamOpenTok.remove(stream);
-        if (subscriber.getStream().getStreamId().equals(stream.getStreamId())){
+        if (subscriber.getStream().getStreamId().equals(stream.getStreamId())) {
             subscriberView.removeView(subscriber.getView());
             subscriber = null;
-            if (!streamOpenTok.isEmpty()){
+            if (!streamOpenTok.isEmpty()) {
                 SubscribeToStream(streamOpenTok.get(0));
             }
         }
@@ -285,7 +242,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onConnected(Session session) {
-        if (publisher == null){
+        if (publisher == null) {
             publisher = new Publisher(CallActivity.this, "publisher");
             publisher.setPublisherListener(this);
             AttachPublisherView(publisher);
@@ -295,11 +252,11 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onDisconnected(Session session) {
-        if (publisher != null){
+        if (publisher != null) {
             publisherView.removeView(publisher.getView());
         }
 
-        if (subscriber != null){
+        if (subscriber != null) {
             subscriberView.removeView(subscriber.getView());
         }
 
@@ -311,9 +268,9 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onStreamCreated(PublisherKit publisherKit, Stream stream) {
-        if (SUBSCRIBE_TO_SELF){
+        if (SUBSCRIBE_TO_SELF) {
             streamOpenTok.add(stream);
-            if (subscriber == null){
+            if (subscriber == null) {
                 SubscribeToStream(stream);
             }
         }
@@ -340,7 +297,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onStreamDestroyed(PublisherKit publisherKit, Stream stream) {
-        if (SUBSCRIBE_TO_SELF && subscriber != null){
+        if (SUBSCRIBE_TO_SELF && subscriber != null) {
             UnsubscribeFromStream(stream);
         }
     }

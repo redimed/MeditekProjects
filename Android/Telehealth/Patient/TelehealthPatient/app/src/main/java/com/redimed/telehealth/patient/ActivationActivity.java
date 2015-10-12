@@ -58,20 +58,29 @@ import retrofit.mime.TypedByteArray;
 
 public class ActivationActivity extends AppCompatActivity implements View.OnClickListener {
 
-    @Bind(R.id.logo) ImageView mLogo;
+    @Bind(R.id.logo)
+    ImageView mLogo;
 
     //=======Layout 1=========
-    @Bind(R.id.btnCode) ImageButton btnCode;
-    @Bind(R.id.btnRequestCode) Button btnRequestCode;
-    @Bind(R.id.lblPhoneCode) TextView lblPhoneCode;
-    @Bind(R.id.txtPhone) EditText txtPhone;
+    @Bind(R.id.btnCode)
+    ImageButton btnCode;
+    @Bind(R.id.btnRequestCode)
+    Button btnRequestCode;
+    @Bind(R.id.lblPhoneCode)
+    TextView lblPhoneCode;
+    @Bind(R.id.txtPhone)
+    EditText txtPhone;
 
     //======Layout 2==========
-    @Bind(R.id.btnSubmitCode) Button btnSubmitCode;
-    @Bind(R.id.btnBack) RelativeLayout btnBack;
-    @Bind(R.id.txtVerifyCode) EditText txtVerifyCode;
+    @Bind(R.id.btnSubmitCode)
+    Button btnSubmitCode;
+    @Bind(R.id.btnBack)
+    RelativeLayout btnBack;
+    @Bind(R.id.txtVerifyCode)
+    EditText txtVerifyCode;
 
-    @Bind(R.id.layoutContainer) ViewFlipper layoutContainer;
+    @Bind(R.id.layoutContainer)
+    ViewFlipper layoutContainer;
 
     private String TAG = "ACTIVATION";
     private CountryPicker countryPicker;
@@ -81,15 +90,12 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     private TelehealthUser telehealthUser;
     private JsonObject patientJSON;
     private SharedPreferences spDevice;
-    //private MyApplication myApplication;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activation);
         registerApi = RESTClient.getRegisterApi();
-        //myApplication = (MyApplication) getApplicationContext();
         gson = new Gson();
         ButterKnife.bind(this);
         layoutContainer.setAnimateFirstView(true);
@@ -192,10 +198,10 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         if (matcherPhoneExpression.matches()) {
             char subPhone = txtPhone.getText().charAt(0);
             String phoneNumber;
-            if(subPhone == '0')
-                phoneNumber = postCode +  txtPhone.getText().toString().substring(1);
+            if (subPhone == '0')
+                phoneNumber = postCode + txtPhone.getText().toString().substring(1);
             else
-                phoneNumber = postCode +  txtPhone.getText().toString();
+                phoneNumber = postCode + txtPhone.getText().toString();
             GetDeviceInfo(phoneNumber);
         } else {
             Toast.makeText(getApplicationContext(), R.string.alert_wrong_phone, Toast.LENGTH_LONG).show();
@@ -229,7 +235,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
                 @Override
                 public void failure(RetrofitError error) {
-                    String json =  new String(((TypedByteArray)error.getResponse().getBody()).getBytes());
+                    String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
                     try {
                         JSONObject dataObject = new JSONObject(json);
                         String message = dataObject.optString("message");
@@ -245,7 +251,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     //Compare code input with code receive from server
     private void LoginByVerifyCode() {
         String verifyCode = txtVerifyCode.getText().toString();
-        if(spDevice != null){
+        if (spDevice != null) {
             Boolean sendToken = spDevice.getBoolean("sendToken", false);
             telehealthUser.setCode(verifyCode);
             patientJSON.addProperty("data", gson.toJson(telehealthUser));
@@ -255,24 +261,19 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void success(JsonObject jsonObject, Response response) {
                         String status = jsonObject.get("status").getAsString();
-                        if (status.equalsIgnoreCase("success")){
+                        if (status.equalsIgnoreCase("success")) {
                             SharedPreferences.Editor uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE).edit();
                             uidTelehealth.putString("uid", jsonObject.get("uid").getAsString());
                             uidTelehealth.putString("token", jsonObject.get("token").getAsString());
                             uidTelehealth.apply();
-
-//                            TelehealthUser telehealthUser = new TelehealthUser();
-//                            telehealthUser.setUID(jsonObject.get("uid").getAsString());
-//                            telehealthUser.setToken(jsonObject.get("token").getAsString());
-                            //myApplication.setTelehealthUser(telehealthUser);
-
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
                         }
                     }
+
                     @Override
                     public void failure(RetrofitError error) {
-                        String json =  new String(((TypedByteArray)error.getResponse().getBody()).getBytes());
+                        String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
                         try {
                             JSONObject dataObject = new JSONObject(json);
                             String message = dataObject.optString("message");

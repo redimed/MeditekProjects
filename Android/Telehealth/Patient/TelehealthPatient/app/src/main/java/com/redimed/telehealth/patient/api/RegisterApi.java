@@ -20,7 +20,4 @@ public interface RegisterApi {
 
     @POST("/telehealth/user/details")
     void getDetailsPatient(@Body JsonObject telehealthPatient, @Header("Authorization") String token, Callback<JsonObject> callback);
-
-    @GET("/telehealth/socket/generateSession")
-    void generateSession(Callback<JsonObject> callback);
 }

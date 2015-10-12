@@ -6,11 +6,11 @@ module.exports = {
             allowNull: false,
             primaryKey: true
         },
-        PatientID: {
+        TelehealthCallID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
             references: {
-                model: 'Patient',
+                model: 'TelehealthCall',
                 key: 'ID'
             }
         },
@@ -25,7 +25,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'RelPatientAppointment',
+        tableName: 'RelTelehealthCallAppointment',
         timestamps: false
     }
 };

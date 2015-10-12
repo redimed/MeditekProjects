@@ -1,11 +1,22 @@
 var app = angular.module('app.authentication.patient.list.modal.controller', []);
 
-app.controller('patientListModalCtrl', function($scope, data, PatientService, $modal, $modalInstance){
+app.controller('patientListModalCtrl', function($scope, data, PatientService, $modal, $modalInstance, $state, toastr){
 	$scope.info = {};
+	var oriInfo,clearInfo;
+
+	$scope.infoChanged = function() {
+        return angular.equals(oriInfo, $scope.info);
+    },
+
+	$scope.infoClear = function() {
+	    return !angular.equals(clearInfo, $scope.info);
+    },
+
 	PatientService.detailPatient(data).then(function(response){
 		if(response.message=="success"){
 			$scope.info = response.data[0];
 			console.log($scope.info);
+			oriInfo = angular.copy($scope.info);
 		}
 		else{
 			console.log(response.message);
@@ -17,7 +28,16 @@ app.controller('patientListModalCtrl', function($scope, data, PatientService, $m
 	},
 
 	$scope.savechange = function(data){
-		
+		PatientService.updatePatient(data).then(function(response){
+			console.log(response);
+			toastr.success("update success!!!","SUCCESS");
+			$modalInstance.dismiss('cancel');
+		},function(err){
+			console.log(err);
+			console.log("========================",err.data.message.errors);
+			toastr.error(err.data.message.errors,"ERROR");
+			$scope.info = angular.copy(oriInfo);
+		});
 	}
 
 	$scope.countries = [

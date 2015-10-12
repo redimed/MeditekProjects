@@ -1,4 +1,4 @@
-
+var o=require("../HelperService");
 module.exports={
 	/**
 	 * GetListUrgentRequests
@@ -58,24 +58,99 @@ module.exports={
 	 * 		-attributes: tên các trường sẽ trả về
 	 * 		-limit: trả về bao nhiêu dòng dữ liệu
 	 * 		-offset: bỏ qua bao nhiêu dữ liệu đầu tiên
-	 * 		-order: ví dụ { UserName:'ASC',Email:'DESC' }
+	 * 		-order: ví dụ [{UserName:'ASC'},{Email:'DESC'}]
 	 */
 	GetListUrgentRequests:function(clause,transaction)
 	{
-		var criteria=clause.criteria;
-		var attributes=clause.attributes;
-		var limit=clause.limit;
-		var offset=clause.offset;
-		var order=_.pairs(clause.order);
-		var whereClause={};
-		if(criteria.UID) whereClause.UID=criteria.UID;
-		if(criteria.FirstName) whereClause.FirstName={$like:'%'+criteria.FirstName+'%'};
-		if(criteria.LastName) whereClause.LastName={$like:'%'+criteria.LastName+'%'};
-		if(criteria.PhoneNumber) whereClause.PhoneNumber=criteria.PhoneNumber;
-		if(criteria.Gender) whereClause.Gender=criteria.Gender;
-		if(criteria.Email) whereClause.Email=criteria.Email;
-		if(criteria.DOB) whereClause.DOB=criteria.DOB;
-		if(criteria.Suburb) whereClause.Suburb=criteria.Suburb;
-		// if(criteria.	)
+		
+
+		try
+		{
+			var err=new Error("GetListUrgentRequests.Errors");
+			var criteria=clause.criteria;
+			var attributes=clause.attributes;
+			var limit=clause.limit;
+			var offset=clause.offset;
+			var orderTemp=clause.order;
+			var criteriaValidation={
+				UID:null,
+				UserAccountID:null,
+				FirstName:null,
+				LastName:null,
+				PhoneNumber:null,
+				Gender:null,
+				Email:null,
+				DOB:null,
+				Suburb:null,
+				Ip:null,
+				GPReferal:null,
+				ServiceType:null,
+				RequestType:null,
+				RequestDate:null,
+				Tried:null,
+				Interval:null,
+				Further:null,
+				UrgentRequestType:null,
+				ConfirmUserName:null,
+				CompanyName:null,
+				CompanyPhoneNumber:null,
+				ContactPerson:null,
+				Description:null,
+				Enable:null,
+				Status:null
+			};
+			var orderValidation={
+				FirstName:null,
+				LastName:null,
+				Email:null,
+				DOB:null,
+				ConfirmUserName:null,
+				CompanyName:null
+			}
+
+			HelperService.rationalizeObject(criteria,criteriaValidation);
+			if(o.checkData(criteria.FirstName)) 
+				criteria.FirstName={$like:'%'+criteria.FirstName+'%'};
+			if(o.checkData(criteria.LastName))
+				criteria.LastName={$like:'%'+criteria.LastName+"%"};
+
+			var orderFilter=[];
+			orderFilter=_.filter(orderTemp,function(item){
+				return ['ASC','DESC'].indexOf(_.values(item)[0])>=0;
+			});
+			var order=[];
+			_.each(orderFilter,function(item){
+				order.push(_.pairs(item)[0]);
+			})
+			console.log(order);
+			return UrgentRequest.findAll({
+				where:{
+					$and:[
+						//----------
+						//kiểu kiện cứng có thể nhập ở đây,
+						//----------
+						criteria //điều kiện mềm client gửi lên
+					]
+				},
+				limit:limit,
+				offset:offset,
+				attributes:attributes,
+				order:order
+
+			})
+		}
+		catch(err)
+		{
+			throw err;
+		}
+		
+
+		
+
+		
+
+
+		
+
  	}
 }

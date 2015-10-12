@@ -4,7 +4,7 @@
 	<ul class="page-breadcrumb">
 		<li>
 			<i class="fa fa-home"></i>
-			<a ui-sref="authentication.patient.list">Patient</a>
+			<a ui-sref="authentication.doctor.list">Doctor</a>
 		</li>
 		<li>
 			<i class="fa fa-angle-right"></i>
@@ -32,7 +32,7 @@
 					<div class="form-group">
 						<label class="control-label col-md-4">First Name</label>
 						<div class="col-md-4">
-							<input type="text" class="form-control" placeholder="First Name" ng-model="data.FirstName">
+							<input type="text" class="form-control" placeholder="First Name">
 						</div>
 					</div>
 					<!-- End First name -->
@@ -40,7 +40,7 @@
 					<div class="form-group ">
 						<label class="control-label col-md-4">Sur Name</label>
 						<div class="col-md-4">
-							<input type="text" class="form-control" placeholder="Sur Name" ng-model="data.LastName">
+							<input type="text" class="form-control" placeholder="Sur Name">
 						</div>
 					</div>
 					<!-- End Sur name -->
@@ -50,7 +50,7 @@
 						<div class="col-md-4">
 							<div class="input-icon">
 								<i class="icon-call-end"></i>
-								<input type="text" class="form-control" placeholder="Mobile" ng-model="data.PhoneNumber">
+								<input type="text" class="form-control" placeholder="Mobile">
 							</div>
 						</div>
 					</div>
@@ -60,8 +60,8 @@
 			<div class="form-actions">
 				<div class="row">
 					<div class="col-md-offset-4 col-md-8">
-						<a class="btn default" ui-sref="authentication.patient.list"><i class="icon-arrow-left"></i> Cancel</a>
-						<a class="btn green" ui-sref="authentication.patient.create" ng-click="checkPhone(data.PhoneNumber)">Next <i class="icon-arrow-right"></i></a>
+						<a class="btn default" ui-sref="authentication.doctor.list"><i class="icon-arrow-left"></i> Cancel</a>
+						<a class="btn green" ui-sref="authentication.doctor.create">Next <i class="icon-arrow-right"></i></a>
 					</div>
 				</div>
 			</div>

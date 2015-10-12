@@ -168,11 +168,15 @@ module.exports = {
 					info.UserAccountID = user.ID;
 					return Patient.create(info);
 				},function(err){
-					throw err;
+					var error = new Error("CreatePatient.error");
+					error.pushErrors("CreateUserAccount.fail");
+					throw error;
 				});
 			}
 		},function(err){
-			throw err;
+			var error = new Error("CreatePatient.fail");
+			error.pushErrors("FindByPhoneNumber.fail");
+			throw error;
 		});
 	},
 
@@ -200,7 +204,9 @@ module.exports = {
 						return null;
 					}
 				},function(err){
-					throw err;
+					var error = new Error("SearchPatient.error");
+					error.pushErrors("FindByPhoneNumber.error");
+					throw error;
 				});
 			}
 			else{
@@ -219,7 +225,9 @@ module.exports = {
 						return null;
 					}
 				},function(err){
-					throw err;
+					var error = new Error("SearchPatient.error");
+					error.pushErrors("Patient.findAll.error");
+					throw error;
 				});
 			}
 		}
@@ -331,6 +339,10 @@ module.exports = {
 			            	model: Country,
 			                attributes: [ 'ShortName'],
 			                required: true
+			            },{
+			            	model: UserAccount,
+			            	attributes: ['PhoneNumber'],
+			            	required: true
 			            }
 					]
 				});
@@ -339,7 +351,9 @@ module.exports = {
 				return null;
 			}
 		},function(err){
-			throw err;
+			var error = new Error("GetPatient.error");
+			error.pushErrors("Patient.findAll.error");
+			throw error;
 		});
 	},
 	
@@ -373,6 +387,42 @@ module.exports = {
 		return Patient.findAll({
 			limit: limit
 		})
+	},
+
+	CheckPatient : function(data) {
+		if(data.PhoneNumber!=undefined && data.PhoneNumber!=null && data.PhoneNumber!=''){
+			return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
+			.then(function(user){
+				if(user!==undefined && user!==null && user!=='' && user.length!==0){
+					return Patient.findAll({
+						where :{
+							UserAccountID : user[0].ID
+						}
+					});
+				}
+				else
+					return false;
+			},function(err){
+				var error = new Error("CheckPatient.error");
+				error.pushErrors("FindByPhoneNumber.error");
+				throw error;
+			})
+			.then(function(result){
+				if(result!==undefined && result!==null && result!=='' && result.length!==0)
+					return true;
+				else
+					return false;
+			},function(err){
+				var error = new Error("CheckPatient.error");
+				error.pushErrors("Patient.findAll.error");
+				throw error;
+			});
+		}
+		else{
+			var error = new Error("CheckPatient.error");
+			error.pushErrors("invalid.PhoneNumber");
+			throw error;
+		}
 	}
 
 

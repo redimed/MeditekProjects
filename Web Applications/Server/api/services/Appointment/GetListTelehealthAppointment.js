@@ -20,7 +20,7 @@ module.exports = function(data) {
                 order: pagination.orderTelehealthAppointment
             }, {
                 model: Doctor,
-                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'Phone'],
+                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'PhoneNumber'],
                 required: true,
                 where: pagination.filterDoctor,
                 order: pagination.orderDoctor

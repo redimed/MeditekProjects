@@ -9,8 +9,7 @@ app.controller('loginCtrl', function($scope, $state, $cookies, UnauthenticatedSe
             toastr.error("Please Input Your Username And Password!", "Error");
         } else {
             UnauthenticatedService.login($scope.user).then(function(data) {
-                console.log(data.status);
-                $cookies.put("userInfo", data.user);
+                $cookies.putObject("userInfo", data.user);
                 $cookies.put("token", data.token);
                 $state.go("authentication.home.list")
             }, function(err) {

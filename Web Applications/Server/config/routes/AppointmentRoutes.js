@@ -16,5 +16,9 @@ module.exports = {
     'post /api/appointment-telehealth-update': {
         controller: 'Appointment/AppointmentController',
         action: 'UpdateTelehealthAppointment'
+    },
+    'post /api/appointment-telehealth-delete': {
+        controller: 'Appointment/AppointmentController',
+        action: 'DeleteTelehealthAppointment'
     }
 };

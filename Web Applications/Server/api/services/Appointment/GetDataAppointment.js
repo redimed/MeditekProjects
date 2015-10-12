@@ -20,7 +20,8 @@ module.exports = {
             RefSignature: data.RefSignature,
             RefDate: data.RefDate,
             RefProviderNumber: data.RefProviderNumber,
-            RefDurationOfReferal: data.RefDurationOfReferal
+            RefDurationOfReferal: data.RefDurationOfReferal,
+            Enable: 'Y'
         };
     },
     PatientAppointment: function(data) {

@@ -8,7 +8,7 @@ module.exports = {
         },
         UserAccountID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'UserAccount',
                 key: 'ID'
@@ -58,6 +58,13 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'UserActivation',
-        timestamps: false
-    }
+        timestamps: false,
+        hooks:{
+            beforeCreate:function(item, options, cb)
+            {
+                 item.CreatedDate=new Date();
+                 cb();
+            }
+        }
+    },
 };

@@ -53,7 +53,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'TelehealthCallLog',
+        tableName: 'TelehealthCall',
         timestamps: false
     }
 };

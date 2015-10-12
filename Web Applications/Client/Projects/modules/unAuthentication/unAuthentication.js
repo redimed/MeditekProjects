@@ -32,5 +32,23 @@ app.config(function($stateProvider,$urlRouterProvider){
 
 				}
 			}
+		})
+		.state('unAuthentication.activation', {
+			url: '/activation',
+			views: {
+				'main-content': {
+					templateUrl: 'modules/unAuthentication/views/activation.html',
+
+				}
+			}
+		})
+		.state('unAuthentication.forgot', {
+			url: '/forgot',
+			views: {
+				'main-content': {
+					templateUrl: 'modules/unAuthentication/views/forgot.html',
+
+				}
+			}
 		});
 });

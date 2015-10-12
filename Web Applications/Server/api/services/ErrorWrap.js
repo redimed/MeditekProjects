@@ -5,27 +5,35 @@ var ENV=true;
 
 module.exports=function(err)
 {
+	var returnObj={};
 	if(ENV)
 	{
 		//Kiem tra co phai kieu Error khong, neu la kieu Error thi tra ve stack error
-		if(err && err.stack)
-			return {message:err.message,errors:err.errors,stack:err.stack};
+		if(err)
+		{
+			if(err.message)
+				returnObj.ErrorType=err.message;
+			returnObj.ErrorsList=err.errors;
+			if(err.stack)
+				returnObj.Stack=err.stack;
+		}
 		else
-			return err;
+		{
+			returnObj.ErrorType="Server.Error";
+		}
 	}
 	else
 	{
-		if(err && err.stack)
+		if(err)
 		{
 			if(err.message)
-				return {message:err.message,errors:err.errors};
-			else
-				return {message:'server error'};
+				returnObj.ErrorType=err.message;
+			returnObj.ErrorsList=err.errors;
 		}
 		else
 		{
-			return err;
+			returnObj.ErrorType="Server.Error";
 		}
-		
 	}
+	return returnObj;
 }

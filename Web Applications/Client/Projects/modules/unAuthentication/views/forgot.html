@@ -1,0 +1,27 @@
+<form method="post" class="forget-form" novalidate name="forgetForm" style="display: block;"   >
+    <h3>Forget Password ?</h3>
+    <p>
+        Enter your e-mail address below to reset your password.
+    </p>
+    <div class="form-group" ng-class="{'has-error':forgetForm.email.$invalid && showClickedValidation}">
+        <div class="input-icon">
+            <i class="fa fa-envelope"></i>
+            <input class="form-control placeholder-no-fix" type="email" autocomplete="off" ng-model="email" placeholder="Email" name="email" required ng-model="email"/>
+
+        </div>
+        <!--validate-->
+        <span ng-show="forgetForm.email.$invalid && showClickedValidation">
+                    <span for="email" class="help-block">Enter a valid Email.</span>
+        </span>
+
+        <!--end validate-->
+    </div>
+
+    <div class="form-actions">
+        <button type="button" id="back-btn" ui-sref="unAuthentication.login" class="btn">
+            <i class="m-icon-swapleft"></i> Back </button>
+        <button class="btn green pull-right" ng-click="forgotPass()">
+            Submit <i class="m-icon-swapright m-icon-white"></i>
+        </button>
+    </div>
+</form>

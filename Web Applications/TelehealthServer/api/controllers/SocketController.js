@@ -19,12 +19,20 @@ module.exports = {
                     teleUser.getUserAccount().then(function(user) {
                         sails.sockets.join(req.socket, uid + ":" + user.phoneNumber);
                         sails.sockets.leave(req.socket, req.socket.id);
-                        console.log("=====Join Rooms=====: ",uid + ":" + user.phoneNumber);
+                        console.log("=====Join Rooms=====: ", uid + ":" + user.phoneNumber);
                         TelehealthService.GetOnlineUsers();
                     })
-                }
+                } else sails.sockets.emit(req.socket, 'errorMsg', {
+                    msg: 'User Not Exist!'
+                });
+            }).catch(function(err) {
+                sails.sockets.emit(req.socket, 'errorMsg', {
+                    msg: err
+                });
             })
-        }
+        } else sails.sockets.emit(req.socket, 'errorMsg', {
+            msg: 'Invalid Parameters!'
+        });
     },
     MessageTransfer: function(req, res) {
         if (!req.isSocket) {
@@ -37,6 +45,9 @@ module.exports = {
         var from = typeof req.param('from') != 'undefined' ? req.param('from') : null;
         var to = typeof req.param('to') != 'undefined' ? req.param('to') : null;
         var message = typeof req.param('message') != 'undefined' ? req.param('message') : null;
+        console.log("====From======: ", from);
+        console.log("====To========: ", to);
+        console.log("====Message====: ", message);
         var data = {};
         if (message == null || from == null || to == null) return;
         var list = sails.sockets.rooms();
@@ -75,7 +86,6 @@ module.exports = {
             });
             return;
         }
-        console.log("====Emit Online Users====");
         TelehealthService.GetOnlineUsers();
     },
     GenerateConferenceSession: function(req, res) {

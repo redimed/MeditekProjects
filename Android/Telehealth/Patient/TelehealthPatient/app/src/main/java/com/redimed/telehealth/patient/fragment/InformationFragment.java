@@ -19,15 +19,17 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.MainActivity;
+import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
-import com.redimed.telehealth.patient.models.Patient;
+import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.network.RESTClient;
+import com.redimed.telehealth.patient.utils.CustomAlertDialog;
 
-import org.w3c.dom.Text;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,6 +39,10 @@ import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,25 +54,18 @@ public class InformationFragment extends Fragment implements View.OnClickListene
     private DatePickerDialog birthdayPickerDialog;
     private SimpleDateFormat dateFormat;
     private RegisterApi restClient;
+    private JsonObject patientJSON;
     private Gson gson;
-    private Patient[] patients;
+    private TelehealthUser telehealthUser;
+    private static SharedPreferences uidTelehealth;
 
     @Bind(R.id.layoutProfile)
     RelativeLayout layoutProfile;
-    @Bind(R.id.txtFirstName)
-    EditText txtFirstName;
-    @Bind(R.id.txtLastName)
-    EditText txtLastName;
-    @Bind(R.id.txtPhone)
-    EditText txtPhone;
-    @Bind(R.id.txtEmail)
-    EditText txtEmail;
     @Bind(R.id.txtDOB)
     EditText txtDOB;
-    @Bind(R.id.txtAddress1)
-    EditText txtAddress1;
-    @Bind(R.id.txtAddress2)
-    EditText txtAddress2;
+    @Bind(R.id.txtEmail)
+    EditText txtEmail;
+
     @Bind(R.id.errFirstName)
     TextInputLayout errFirstName;
     @Bind(R.id.errLastName)
@@ -81,6 +80,7 @@ public class InformationFragment extends Fragment implements View.OnClickListene
     TextInputLayout errAddress1;
     @Bind(R.id.errAddress2)
     TextInputLayout errAddress2;
+
     @Bind(R.id.btnSubmit)
     Button btnSubmit;
 
@@ -88,11 +88,14 @@ public class InformationFragment extends Fragment implements View.OnClickListene
         // Required empty public constructor
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_information, container, false);
+        uidTelehealth = v.getContext().getSharedPreferences("TelehealthUser", v.getContext().MODE_PRIVATE);
         restClient = RESTClient.getRegisterApi();
+        gson = new Gson();
         ButterKnife.bind(this, v);
 
         dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
@@ -111,27 +114,41 @@ public class InformationFragment extends Fragment implements View.OnClickListene
         errAddress1.setOnFocusChangeListener(this);
         errAddress2.setOnFocusChangeListener(this);
 
-        DisplayPatientInfo();
+        GetDetailsPatient();
         return v;
     }
 
-    private void DisplayPatientInfo() {
-        SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("PatientInfo", v.getContext().MODE_PRIVATE);
-        gson = new Gson();
-        patients = gson.fromJson(sharedPreferences.getString("info", null), Patient[].class);
+    private void GetDetailsPatient() {
+        String headerToken = "";
+        telehealthUser = new TelehealthUser();
+        telehealthUser.setUID(uidTelehealth.getString("uid", null));
+        headerToken = "Bearer " + uidTelehealth.getString("token", null);
 
-        for (int i = 0; i < patients.length; i++){
-            if (patients[i] == null) {
-                txtFirstName.setText(patients[i].toString());
-                txtLastName.setText(patients[i].toString());
-                txtPhone.setText(patients[i].toString());
-                txtEmail.setText(patients[i].toString());
-                txtDOB.setText(patients[i].toString());
-//                txtAddress1.setText(patients[i].toString());
-//                txtAddress2.setText(patients[i].toString());
+        patientJSON = new JsonObject();
+        patientJSON.addProperty("data", gson.toJson(telehealthUser));
+        restClient.getDetailsPatient(patientJSON, headerToken, new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                String status = jsonObject.get("status").getAsString();
+                if (status.equalsIgnoreCase("success")) {
+                    Log.d("Patient", jsonObject.get("data").getAsString());
+                }
             }
-        }
-}
+
+            @Override
+            public void failure(RetrofitError error) {
+                String json =  new String(((TypedByteArray)error.getResponse().getBody()).getBytes());
+                try {
+                    JSONObject dataObject = new JSONObject(json);
+                    String message = dataObject.optString("message");
+                    new CustomAlertDialog(v.getContext(), CustomAlertDialog.State.Error, message).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 
     @Override
     public void onClick(View v) {

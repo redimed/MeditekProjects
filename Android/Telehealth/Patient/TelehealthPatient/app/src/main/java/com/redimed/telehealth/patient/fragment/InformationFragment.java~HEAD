@@ -1,29 +1,33 @@
-package com.redimed.telehealth.patient;
+package com.redimed.telehealth.patient.fragment;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.redimed.telehealth.patient.MainActivity;
+import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
-import com.redimed.telehealth.patient.models.TelehealthUser;
+import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
-import com.redimed.telehealth.patient.utils.CustomAlertDialog;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,27 +37,36 @@ import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-import retrofit.mime.TypedByteArray;
 
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class InformationFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener, View.OnTouchListener {
 
-public class ProfilePatientActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
-
+    private String TAG = "INFORMATION";
+    private View v;
     private DatePickerDialog birthdayPickerDialog;
     private SimpleDateFormat dateFormat;
     private RegisterApi restClient;
-    private MyApplication myApplication;
-    private JsonObject patientJSON;
     private Gson gson;
-    private TelehealthUser telehealthUser;
+    private Patient[] patients;
 
-    @Bind(R.id.txtDOB)
-    EditText txtDOB;
+    @Bind(R.id.layoutProfile)
+    RelativeLayout layoutProfile;
+    @Bind(R.id.txtFirstName)
+    EditText txtFirstName;
+    @Bind(R.id.txtLastName)
+    EditText txtLastName;
+    @Bind(R.id.txtPhone)
+    EditText txtPhone;
     @Bind(R.id.txtEmail)
     EditText txtEmail;
-
+    @Bind(R.id.txtDOB)
+    EditText txtDOB;
+    @Bind(R.id.txtAddress1)
+    EditText txtAddress1;
+    @Bind(R.id.txtAddress2)
+    EditText txtAddress2;
     @Bind(R.id.errFirstName)
     TextInputLayout errFirstName;
     @Bind(R.id.errLastName)
@@ -68,20 +81,23 @@ public class ProfilePatientActivity extends AppCompatActivity implements View.On
     TextInputLayout errAddress1;
     @Bind(R.id.errAddress2)
     TextInputLayout errAddress2;
-
     @Bind(R.id.btnSubmit)
     Button btnSubmit;
 
+    public InformationFragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_patient);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        v = inflater.inflate(R.layout.fragment_information, container, false);
         restClient = RESTClient.getRegisterApi();
-        myApplication = (MyApplication) getApplicationContext();
-        gson = new Gson();
-        ButterKnife.bind(this);
+        ButterKnife.bind(this, v);
 
         dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+
+        layoutProfile.setOnTouchListener(this);
 
         txtDOB.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
@@ -95,43 +111,33 @@ public class ProfilePatientActivity extends AppCompatActivity implements View.On
         errAddress1.setOnFocusChangeListener(this);
         errAddress2.setOnFocusChangeListener(this);
 
-        GetDetailsPatient();
+        DisplayPatientInfo();
+        return v;
     }
 
-    private void GetDetailsPatient() {
-        String uid = "uid:{" + myApplication.getTelehealthUser().getUID() + "}";
-        patientJSON = new JsonObject();
-        patientJSON.addProperty("data", gson.toJson(uid));
-        Log.d("DADADADAD", patientJSON.toString());
+    private void DisplayPatientInfo() {
+        SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("PatientInfo", v.getContext().MODE_PRIVATE);
+        gson = new Gson();
+        patients = gson.fromJson(sharedPreferences.getString("info", null), Patient[].class);
 
-//        restClient.getDetailsPatient(patientJSON, new Callback<JsonObject>() {
-//            @Override
-//            public void success(JsonObject jsonObject, Response response) {
-//                String status = jsonObject.get("status").getAsString();
-//                if (status.equalsIgnoreCase("success")) {
-//                    Log.d("Patient", jsonObject.get("data").getAsString());
-//                }
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                String json =  new String(((TypedByteArray)error.getResponse().getBody()).getBytes());
-//                try {
-//                    JSONObject dataObject = new JSONObject(json);
-//                    String message = dataObject.optString("message");
-//                    new CustomAlertDialog(ProfilePatientActivity.this, CustomAlertDialog.State.Error, message).show();
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-    }
+        for (int i = 0; i < patients.length; i++){
+            if (patients[i] == null) {
+                txtFirstName.setText(patients[i].toString());
+                txtLastName.setText(patients[i].toString());
+                txtPhone.setText(patients[i].toString());
+                txtEmail.setText(patients[i].toString());
+                txtDOB.setText(patients[i].toString());
+//                txtAddress1.setText(patients[i].toString());
+//                txtAddress2.setText(patients[i].toString());
+            }
+        }
+}
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnSubmit:
-                new Intent(this, HomeActivity.class);
+                new Intent(v.getContext(), MainActivity.class);
                 break;
             case R.id.txtDOB:
                 DisplayDatePickerDialog();
@@ -183,7 +189,7 @@ public class ProfilePatientActivity extends AppCompatActivity implements View.On
 
     private void DisplayDatePickerDialog() {
         Calendar birthdayCalendar = Calendar.getInstance();
-        birthdayPickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        birthdayPickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newCalendar = Calendar.getInstance();
@@ -195,36 +201,19 @@ public class ProfilePatientActivity extends AppCompatActivity implements View.On
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        View v = getCurrentFocus();
-        if (v != null &&
-                (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
-                v instanceof EditText &&
-                !v.getClass().getName().startsWith("android.webkit.")) {
-            int scrcoords[] = new int[2];
-            v.getLocationOnScreen(scrcoords);
-            float x = ev.getRawX() + v.getLeft() - scrcoords[0];
-            float y = ev.getRawY() + v.getTop() - scrcoords[1];
-
-            if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
-                hideKeyboard(this);
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (v.getId()){
+            case R.id.layoutProfile:
+                hideKeyboard(v);
+                break;
+            default:
+                return false;
         }
-        return super.dispatchTouchEvent(ev);
+        return false;
     }
 
-    public void hideKeyboard(AppCompatActivity activity) {
-        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(this, HomeActivity.class));
-        finish();
+    private void hideKeyboard(View v) {
+        InputMethodManager in = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

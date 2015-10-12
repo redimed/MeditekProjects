@@ -118,28 +118,28 @@ public class SocketService extends Service {
     private Emitter.Listener onReconnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-        Log.d(TAG, "====Socket Reconnected====");
+            Log.d(TAG, "====Socket Reconnected====");
         }
     };
 
     private Emitter.Listener onDisconnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-        Log.d(TAG, "====Socket Disconnect====");
+            Log.d(TAG, "====Socket Disconnect====");
         }
     };
 
     private Emitter.Listener onError = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-        Log.d("Socket Error", args[0].toString());
+            Log.d("Socket Error", args[0].toString());
         }
     };
 
     private Emitter.Listener onConnectError = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-        Log.d("Socket Connect Error", args[0].toString());
+            Log.d("Socket Connect Error", args[0].toString());
         }
     };
 

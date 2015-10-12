@@ -43,7 +43,7 @@ public class CountryCodeActivity extends ListActivity {
             }
         });
     }
-    
+
     public class Country {
         private String name;
         private String code;

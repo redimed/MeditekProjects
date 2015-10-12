@@ -65,6 +65,16 @@ License: You must have a valid license purchased only from themeforest(the above
 <link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css">
 <link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
 <!-- end pickers -->
+
+<!-- table advance -->
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/datatables/extensions/Scroller/css/dataTables.scroller.min.css"/>
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css"/>
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css"/>
+<!-- end table advance -->
+
+<!-- form_icheck -->
+<link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/icheck/skins/all.css">
+<!-- end form icheck -->
 <!-- END PAGE LEVEL STYLES -->
 
 
@@ -145,6 +155,10 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="theme/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script src="theme/assets/admin/pages/scripts/components-pickers.js"></script>
 <!-- end picker -->
+
+<!-- begin form_icheck -->
+<script src="theme/assets/global/plugins/icheck/icheck.min.js"></script>
+<!-- end form_icheck -->
 <!-- END PAGE LEVEL PLUGINS -->
 
 <!-- BEGIN CORE ANGULARJS PLUGINS -->
@@ -178,6 +192,9 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="app.js" type="text/javascript"></script>
 <!-- END APP LEVEL ANGULARJS SCRIPTS -->
 
+<!-- BEGIN lockScreen -->
+<script src="common/views/lockScreenCtrl.js"></script>
+<!-- END lockScreen -->
 <!-- BEGIN MODULE unAuthentication -->
 <script src="modules/unAuthentication/unAuthentication.js" ></script>
 <script type="text/javascript" src="modules/unAuthentication/services/unAuthenticateService.js"></script>
@@ -210,6 +227,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="modules/doctor/doctor.js" ></script>
 <script src="modules/doctor/controllers/doctorCtrl.js"></script>
 <script src="modules/doctor/controllers/doctorListCtrl.js"></script>
+<script src="modules/doctor/controllers/doctorCheckPhoneCtrl.js"></script>
 <script src="modules/doctor/controllers/doctorProfileCtrl.js"></script>
 <!-- END MODULE doctor -->
 
@@ -227,18 +245,16 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="theme/assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
 <script src="theme/assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
 <script src="theme/assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
+<script src="theme/assets/admin/pages/scripts/form-wizard.js"></script>
+<script src="theme/assets/admin/pages/scripts/form-icheck.js"></script>
 <!-- END JAVASCRIPTS -->
 
 <script type="text/javascript">
 /* Init Metronic's core jquery plugins and layout scripts */
-// $(document).ready(function() {   
-// 	   	Metronic.initAjax(); // init metronic core components
-// 		// Layout.init(); // init current layout
-// 		// QuickSidebar.init(); // init quick sidebar
-// 		// Demo.init(); // init demo features
-	Metronic.setAssetsPath('./theme/assets/'); // Set the assets folder path	
-	//alert(Metronic.getAssetsPath())		
-// });
+$(document).ready(function() {   
+        FormWizard.init(); // form step
+		FormiCheck.init(); // init page demo	
+});
 </script>
 
 </body>

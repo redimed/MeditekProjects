@@ -8,7 +8,7 @@ module.exports = {
         },
         FileUploadID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'FileUpload',
                 key: 'ID'

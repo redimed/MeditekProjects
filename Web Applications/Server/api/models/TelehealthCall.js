@@ -6,31 +6,35 @@ module.exports = {
             allowNull: false,
             primaryKey: true
         },
-        UserAccountId: {
-            type: Sequelize.BIGINT(20),
-            allowNull: true,
-            references: {
-                model: 'UserAccount',
-                key: 'ID'
-            }
+        UID: {
+            type: Sequelize.STRING(255),
+            allowNull: false
         },
-        RoleId: {
+        FromUserAccountID: {
             type: Sequelize.BIGINT(20),
-            allowNull: true,
-            references: {
-                model: 'Role',
-                key: 'ID'
-            }
+            allowNull: false
         },
-        SiteId: {
+        ToUserAccountID: {
             type: Sequelize.BIGINT(20),
-            allowNull: true,
-            references: {
-                model: 'Site',
-                key: 'ID'
-            }
+            allowNull: false
         },
-        CreationDate: {
+        StartTime: {
+            type: Sequelize.DATE,
+            allowNull: true
+        },
+        EndTime: {
+            type: Sequelize.DATE,
+            allowNull: true
+        },
+        Status: {
+            type: Sequelize.STRING(50),
+            allowNull: true
+        },
+        NetWorkSpeed: {
+            type: Sequelize.STRING(50),
+            allowNull: true
+        },
+        CreatedDate: {
             type: Sequelize.DATE,
             allowNull: true
         },
@@ -49,7 +53,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'RelUserRole',
+        tableName: 'TelehealthCall',
         timestamps: false
     }
 };

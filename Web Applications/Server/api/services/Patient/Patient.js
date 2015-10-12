@@ -331,6 +331,10 @@ module.exports = {
 			            	model: Country,
 			                attributes: [ 'ShortName'],
 			                required: true
+			            },{
+			            	model: UserAccount,
+			            	attributes: ['PhoneNumber'],
+			            	required: true
 			            }
 					]
 				});
@@ -373,6 +377,31 @@ module.exports = {
 		return Patient.findAll({
 			limit: limit
 		})
+	},
+
+	CheckPatient : function(data) {
+		return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
+		.then(function(user){
+			if(user!==undefined && user!==null && user!=='' && user.length!==0){
+				return Patient.findAll({
+					where :{
+						UserAccountID : user[0].ID
+					}
+				});
+			}
+			else
+				return false;
+		},function(err){
+			throw err;
+		})
+		.then(function(result){
+			if(result!==undefined && result!==null && result!=='' && result.length!==0)
+				return true;
+			else
+				return false;
+		},function(err){
+			throw err;
+		});
 	}
 
 

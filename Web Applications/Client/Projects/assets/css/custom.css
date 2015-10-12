@@ -1,7 +1,8 @@
+.register-form {display: block !important;}
 .page-header {background-color: white;}
 .page-header.navbar {
-	background: white url('../img/bk-header.png') !important;
-	background-size: 100% 46px !important;
+	background: white url('../img/bk-header.png') ;
+	background-size: 100% 46px ;
 }
 
 
@@ -22,4 +23,8 @@
 
 .portlet-body .my-portlet-body {
 	margin: 1em 1em;
+}
+
+.bootstrap-select.btn-group .dropdown-menu {
+    z-index: 99999999 !important;
 }

@@ -13,9 +13,9 @@ module.exports=function(err)
 		{
 			if(err.message)
 				returnObj.ErrorType=err.message;
+			returnObj.ErrorsList=err.errors;
 			if(err.stack)
 				returnObj.Stack=err.stack;
-			returnObj.ErrorsList=err.errors;
 		}
 		else
 		{

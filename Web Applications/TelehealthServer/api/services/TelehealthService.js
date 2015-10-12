@@ -18,6 +18,7 @@ function checkOnlineUser() {
             }
         }
     }
+    console.log("====Online====: ",appts);
     sails.sockets.blast('online_users', appts);
 }
 module.exports = {
@@ -27,6 +28,9 @@ module.exports = {
                 UID: uid
             }
         });
+    },
+    GetAppointments: function(){
+        return appts;
     },
     GetAppointmentList: function() {
         return TelehealthService.MakeRequest({

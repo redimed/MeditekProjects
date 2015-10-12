@@ -43,6 +43,7 @@ module.exports = {
             return;
         }
         var from = typeof req.param('from') != 'undefined' ? req.param('from') : null;
+        var fromName = typeof req.param('fromName') != 'undefined' ? req.param('fromName') : null;
         var to = typeof req.param('to') != 'undefined' ? req.param('to') : null;
         var message = typeof req.param('message') != 'undefined' ? req.param('message') : null;
         console.log("====From======: ", from);
@@ -50,30 +51,28 @@ module.exports = {
         console.log("====Message====: ", message);
         var data = {};
         if (message == null || from == null || to == null) return;
-        var list = sails.sockets.rooms();
-        var phoneRegex = /^\+[0-9]{9,15}$/;
-        if (list.length > 0) {
-            for (var i = 0; i < list.length; i++) {
-                if (list[i].indexOf(":") != -1) {
-                    var arr = list[i].split(':');
-                    if (arr[1].match(phoneRegex) && arr[0] == to) {
-                        data.from = from;
-                        data.message = message;
-                        if (message.toLowerCase() == 'call') {
-                            var sessionId = typeof req.param('sessionId') != 'undefined' ? req.param('sessionId') : null;
-                            if (sessionId == null) return;
-                            var sessionId = req.param('sessionId');
-                            var tokenOptions = {
-                                role: 'moderator'
-                            };
-                            var token = opentok.generateToken(sessionId, tokenOptions);
-                            data.apiKey = config.OpentokAPIKey;
-                            data.sessionId = sessionId;
-                            data.token = token;
-                        }
-                        console.log("======data======: ", data);
-                        sails.sockets.broadcast(list[i], 'receiveMessage', data);
+        var appts = TelehealthService.GetAppointments();
+        if (appts.length > 0) {
+            for (var i = 0; i < appts.length; i++) {
+                var appt = appts[i];
+                if (appt.TeleUID == to && appt.IsOnline) {
+                    data.from = from;
+                    data.fromName = fromName;
+                    data.message = message;
+                    if (message.toLowerCase() == 'call') {
+                        var sessionId = typeof req.param('sessionId') != 'undefined' ? req.param('sessionId') : null;
+                        if (sessionId == null) return;
+                        var sessionId = req.param('sessionId');
+                        var tokenOptions = {
+                            role: 'moderator'
+                        };
+                        var token = opentok.generateToken(sessionId, tokenOptions);
+                        data.apiKey = config.OpentokAPIKey;
+                        data.sessionId = sessionId;
+                        data.token = token;
                     }
+                    console.log("======data======: ", data);
+                    sails.sockets.broadcast(to + ":" + appt.Patients[0].UserAccount.PhoneNumber, 'receiveMessage', data);
                 }
             }
         }

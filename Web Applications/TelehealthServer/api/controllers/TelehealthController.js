@@ -311,5 +311,8 @@ module.exports = {
             status: 'error',
             message: 'Invalid Parameters!'
         })
+    },
+    UploadFile: function(req,res){
+        
     }
 }

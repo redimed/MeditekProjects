@@ -75,6 +75,30 @@ module.exports = {
 	},
 
 	/*
+		DetailPatient: get detail patient with patient UID
+		input: patient's UID
+		output: Patient's information
+	*/
+	DetailPatient : function(req, res) {
+		var data = req.body.data;
+		console.log(data,"----------------------");
+		Services.Patient.DetailPatient(data)
+		.then(function(info){
+			if(info!=null && info!=undefined && info!='' && info.length!=0){
+				res.ok({status:200, message:"success", data:info});
+			} else {
+				res.notFound({status:404, message:"not Found"});
+			}
+		})
+		.catch(function(err){
+			res.serverError({status:500,message:ErrorWrap(err)});
+		});
+	},
+
+	Test : function(req, res){
+		res.json("asd");
+	},
+	/*
 		DeletePatient : disable patient who was deleted.
 		input: Patient's ID
 		output: attribute Enable of Patient will receive value "N" in table Patient 

@@ -22,7 +22,6 @@ let TRANSFER_CALL = "/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@
 
 let JOIN_ROOM = "/telehealth/socket/joinRoom?phone=%@"
 
-
 func emitSocket(url: String, param: NSArray) -> NSDictionary {
 
     var URL = "\(url)"
@@ -34,4 +33,11 @@ func emitSocket(url: String, param: NSArray) -> NSDictionary {
     return dictionNary
 }
 
+
+/**
+*  Alert Title and Message for JSSAlertView
+*/
+
+var warning_Network = (title: "Not Connection", mess: "Unable to connect to the Internet")
+var connection_Server = (title: "Error")
 

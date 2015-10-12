@@ -6,6 +6,10 @@ module.exports = {
             allowNull: false,
             primaryKey: true
         },
+        UID: {
+            type: Sequelize.STRING(255),
+            allowNull: false
+        },
         TelehealthAppointmentID: {
             type: Sequelize.BIGINT(20),
             allowNull: false,

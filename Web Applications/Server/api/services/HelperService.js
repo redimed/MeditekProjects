@@ -103,6 +103,9 @@ module.exports = {
 
         //except (,),whitespace,- in phone number
         phoneExceptChars: /[\(\)\s\-]/g,
+
+        //autralian home phone number
+        auHomePhoneNumber: /^[1-9]{9}$/
     },
 
     checkData: checkData,

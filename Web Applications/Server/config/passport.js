@@ -75,14 +75,16 @@ passport.use(new LocalStrategy({
 		})
 		.then(function(user){
 			if (!user) {
-				return done(null, false, { message: 'Incorrect userName.' });
+				var err=new Error("User.notFound");
+				return done(null, false, err);
 			}
 			bcrypt.compare(p, user.Password, function (err, res) {
 				if (!res)
-					return done(null, false, 
-							{
-								message: 'Invalid Password'
-							});
+				{
+					var err=new Error("Password.Invalid");
+					return done(null, false,err);
+				}
+					
 				var listRoles=[];
 				_.each(user.RelUserRoles,function(item){
 					listRoles.push(item.Role);
@@ -97,34 +99,11 @@ passport.use(new LocalStrategy({
 				};
 				console.log("Login success");
 				return done(null, returnUser, {
-					message: 'Logged In Successfully'
+						message: 'Logged In Successfully'
 					});
 			});
 		},function(err){
 			return done(err);
 		})
-
-
-		// UserAccount.findOne({ UserName: u }, function (err, user) 
-		// {
-		// 	if (err) { return done(err); }
-		// 	if (!user) {
-		// 		return done(null, false, { message: 'Incorrect userName.' });
-		// 	}
-
-		// 	bcrypt.compare(p, user.Password, function (err, res) {
-		// 		if (!res)
-		// 		return done(null, false, {
-		// 			message: 'Invalid Password'
-		// 			});
-		// 		var returnUser = {
-		// 			UserName: user.UserName,
-		// 			role:user.role
-		// 		};
-		// 		return done(null, returnUser, {
-		// 			message: 'Logged In Successfully'
-		// 			});
-		// 	});
-		// });
 	}
 ));

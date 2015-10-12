@@ -1,62 +1,62 @@
 module.exports = {
-    /*
-        ReceiveRequest
-        input: patient's datarmation
-        output: - success: send status success for patient
-                - fail: send status error for patient
-    */
-    ReceiveRequest: function(req, res) {
-        var data = req.body.data;
-        if (!_.isObject(data)) {
-            try {
-                data = JSON.parse(data);
-            } catch (err) {
-                console.log(err);
-                res.json(400, {
-                    error: err,
-                    status: 400
-                });
-                return;
-            }
-        }
+        /*
+            ReceiveRequest
+            input: patient's datarmation
+            output: - success: send status success for patient
+                    - fail: send status error for patient
+        */
+        ReceiveRequest: function(req, res) {
+                var data = req.body.data;
+                if (!_.isObject(data)) {
+                    try {
+                        data = JSON.parse(data);
+                    } catch (err) {
+                        console.log(err);
+                        res.json(400, {
+                            error: err,
+                            status: 400
+                        });
+                        return;
+                    }
+                }
 
-        //get client's IP
-        data.ip = req.headers['X-Client-IP'] ||
-            req.headers['X-Forwarded-For'] ||
-            req.headers['X-Real-IP'] ||
-            req.headers['X-Cluster-Client-IP'] ||
-            req.headers['X-Forwared'] ||
-            req.headers['X-Forwared-For'] ||
-            req.headers['X-Forwared'] ||
-            req.connection.remoteAddress ||
-            req.socket.remoteAddress ||
-            req.connection.socket.remoteAddress;
-        data.UID = UUIDService.Create();
-        data.requestDate = Services.moment().format('YYYY-MM-DD HH:mm:ss');
-        //save information patient
-        UrgentRequest.create({
-                UID: data.UID,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                phoneNumber: data.phoneNumber,
-                gender: data.gender,
-                email: data.email,
-                DOB: (data.DOB === '' ? null : data.DOB),
-                suburb: data.suburb,
-                IP: data.ip,
-                requestDate: data.requestDate,
-                serviceType: data.serviceType,
-                GPReferal: data.GPReferal,
-                urgentRequestType: data.urgentRequestType,
-                companyName: data.companyName,
-                companyPhoneNumber: data.companyPhoneNumber,
-                contactPerson: data.contactPerson,
-                tried: 1,
-                status: 'pending',
-                interval: 5,
-                description: data.description,
-                enable: 1
-            })
+                //get client's IP
+                data.ip = req.headers['X-Client-IP'] ||
+                    req.headers['X-Forwarded-For'] ||
+                    req.headers['X-Real-IP'] ||
+                    req.headers['X-Cluster-Client-IP'] ||
+                    req.headers['X-Forwared'] ||
+                    req.headers['X-Forwared-For'] ||
+                    req.headers['X-Forwared'] ||
+                    req.connection.remoteAddress ||
+                    req.socket.remoteAddress ||
+                    req.connection.socket.remoteAddress;
+                data.UID = UUIDService.Create();
+                data.requestDate = Services.moment().format('YYYY-MM-DD HH:mm:ss');
+                //save information patient
+                UrgentRequest.create({
+                        UID: data.UID,
+                        firstName: data.firstName,
+                        lastName: data.lastName,
+                        phoneNumber: data.phoneNumber,
+                        gender: data.gender,
+                        email: data.email,
+                        DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? data.DOB : null,
+                    suburb: data.suburb,
+                    IP: data.ip,
+                    requestDate: data.requestDate,
+                    serviceType: data.serviceType,
+                    GPReferal: data.GPReferal,
+                    urgentRequestType: data.urgentRequestType,
+                    companyName: data.companyName,
+                    companyPhoneNumber: data.companyPhoneNumber,
+                    contactPerson: data.contactPerson,
+                    tried: 1,
+                    status: 'pending',
+                    interval: 5,
+                    description: data.description,
+                    enable: 1
+                })
             .then(function(URCreated) {
                 var emailInfo = {
                     from: 'Health Screenings <HealthScreenings@redimed.com.au>',

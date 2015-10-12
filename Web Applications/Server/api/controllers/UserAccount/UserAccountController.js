@@ -6,7 +6,7 @@ module.exports = {
 	{
 			var a={name:'tan'};
 			var b={name:'trinh',address:'binhduong'};
-			var c=underscore.extendOwn(a,b);
+			var c=underscore.extend(a,b);
 			console.log(a);
 			console.log(b);
 			console.log(c);

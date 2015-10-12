@@ -31,8 +31,8 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         SingleTon.socket.emit("get", emitSocket(JOIN_ROOM, param: paramjoinRoom))
         SingleTon.socket.emit("get", GET_ONLINE_USERS)
         
-        request(.GET, GENERATESESSION, headers: SingleTon.headers).responseJSON() { data in
-            let data = data.2.value!["data"] as! NSDictionary
+        request(.GET, GENERATESESSION, headers: SingleTon.headers).responseJSON() { response in
+            let data = response.2.value!["data"] as! NSDictionary
             SingleTon.infoOpentok = JSON(data)
         }
     }

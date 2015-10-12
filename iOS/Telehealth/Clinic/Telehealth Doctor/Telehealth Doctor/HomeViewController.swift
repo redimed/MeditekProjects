@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class HomeViewController: UIViewController {
     
-    let nsuserDefs = NSUserDefaults.standardUserDefaults().valueForKey("infoDoctor") as! NSDictionary
+//    let nsuserDefs = NSUserDefaults.standardUserDefaults().valueForKey("infoDoctor") as! NSDictionary
     
     override func viewDidLoad() {
         super.viewDidLoad()

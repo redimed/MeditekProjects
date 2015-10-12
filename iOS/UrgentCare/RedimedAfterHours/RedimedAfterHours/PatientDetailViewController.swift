@@ -38,7 +38,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     var datePicker = UIDatePicker()
     var serviceType = ""
     var gPReferral:String = "Y"
-    var baseUrl:String = "http://testapp.redimed.com.au:3001/api/urgent-care/urgent-requestss"
+    var baseUrl:String = "http://testapp.redimed.com.au:3001/api/urgent-care/urgent-request"
     var blueColorCustom:UIColor = UIColor(red: 41/255, green: 128/255, blue: 185/255, alpha: 1.0)
     var redColorCuston:UIColor = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
     var phoneNumber = ""
@@ -69,6 +69,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
 
         firstNameTextField.autocapitalizationType = UITextAutocapitalizationType(rawValue: 1)!
         lastNameTextField.autocapitalizationType = UITextAutocapitalizationType(rawValue: 1)!
+        
         ChangeBorderColor(descriptionTextView,color: blueColorCustom)
         DatepickerMode()
         navigationBar.topItem?.title = informationData["title"]
@@ -299,7 +300,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     //Done button in datepicker
     func doneClick() {
         var dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .ShortStyle
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         dobTextField.text = dateFormatter.stringFromDate(datePicker.date)
         dobTextField.resignFirstResponder()
     }

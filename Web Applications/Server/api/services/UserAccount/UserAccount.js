@@ -6,6 +6,18 @@ module.exports = {
 
 	FindByPhoneNumber:function(PhoneNumber,attributes)
 	{
+		//Phone number validation
+		//autralian phone number regex
+		var auPhoneNumberPattern=new RegExp(HelperService.regexPattern.auPhoneNumber);
+		if(PhoneNumber)
+		{
+			//remove (,),whitespace,- from phone number
+			PhoneNumber=PhoneNumber.replace(HelperService.regexPattern.phoneExceptChars,'');
+			if(!auPhoneNumberPattern.test(PhoneNumber))
+			{
+				err.pushError('PhoneNumber.invalid');
+			}
+		}
 		return UserAccount.findAll({
 			where :{
 				PhoneNumber:PhoneNumber

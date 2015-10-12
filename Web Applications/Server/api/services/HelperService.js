@@ -239,20 +239,51 @@ module.exports = {
     checkCorrectValues:function(obj,corrects)
     {
         var result=true;
-        for (var key in obj)
+        if(_.isObject(obj) && _.keys(obj).length>0)
         {
-            var t=false;
-            for (var i=0;i<corrects.length;i++)
+            for (var key in obj)
             {
-                if(obj[key]==corrects[i]) t=true;
+                var t=false;
+                for (var i=0;i<corrects.length;i++)
+                {
+                    if(obj[key]==corrects[i]) t=true;
+                }
+                if(t==false)
+                {
+                    result=false;
+                    break;
+                }
             }
-            if(t==false)
+            return result;
+        }
+        else
+        {
+            result=false;
+            return result;
+        }
+        
+    },
+
+    /**
+     * Kiểm tra value có nằm trong mảng list hay không
+     * có: trả về true
+     * 
+     */
+    existIn:function(value,list)
+    {
+        var result=false;
+        if(_.isArray(list) && list.length>0)
+        {
+            for (var i=0;i<list.length;i++)
             {
-                result=false;
-                break;
+                if(value===list[i]) 
+                {
+                    result=true;
+                    break;
+                }   
             }
         }
-        return result;
+        return result;  
     }
 
 }

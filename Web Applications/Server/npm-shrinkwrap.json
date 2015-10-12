@@ -1424,15 +1424,15 @@
           "from": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-1.0.0.tgz",
           "resolved": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-1.0.0.tgz"
         },
-        "strip-ansi": {
-          "version": "0.1.1",
-          "from": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-0.1.1.tgz",
-          "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-0.1.1.tgz"
-        },
         "commander": {
           "version": "2.1.0",
           "from": "https://registry.npmjs.org/commander/-/commander-2.1.0.tgz",
           "resolved": "https://registry.npmjs.org/commander/-/commander-2.1.0.tgz"
+        },
+        "strip-ansi": {
+          "version": "0.1.1",
+          "from": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-0.1.1.tgz",
+          "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-0.1.1.tgz"
         }
       }
     },
@@ -2492,6 +2492,11 @@
       "from": "https://registry.npmjs.org/qs/-/qs-5.1.0.tgz",
       "resolved": "https://registry.npmjs.org/qs/-/qs-5.1.0.tgz"
     },
+    "randomstring": {
+      "version": "1.1.0",
+      "from": "randomstring@*",
+      "resolved": "https://registry.npmjs.org/randomstring/-/randomstring-1.1.0.tgz"
+    },
     "range-parser": {
       "version": "1.0.2",
       "from": "https://registry.npmjs.org/range-parser/-/range-parser-1.0.2.tgz",
@@ -2930,15 +2935,15 @@
           "from": "https://registry.npmjs.org/dottie/-/dottie-0.1.0.tgz",
           "resolved": "https://registry.npmjs.org/dottie/-/dottie-0.1.0.tgz"
         },
-        "lodash": {
-          "version": "2.4.2",
-          "from": "https://registry.npmjs.org/lodash/-/lodash-2.4.2.tgz",
-          "resolved": "https://registry.npmjs.org/lodash/-/lodash-2.4.2.tgz"
-        },
         "generic-pool": {
           "version": "2.0.4",
           "from": "https://registry.npmjs.org/generic-pool/-/generic-pool-2.0.4.tgz",
           "resolved": "https://registry.npmjs.org/generic-pool/-/generic-pool-2.0.4.tgz"
+        },
+        "lodash": {
+          "version": "2.4.2",
+          "from": "https://registry.npmjs.org/lodash/-/lodash-2.4.2.tgz",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-2.4.2.tgz"
         },
         "moment": {
           "version": "2.5.1",

@@ -118,7 +118,7 @@ module.exports = {
 			{
 				if(userInfo.Email)
 					userInfo.UserName=userInfo.Email;
-				if(userInfo.PhoneNumber)
+				else
 					userInfo.UserName=userInfo.PhoneNumber;
 			}
 			//Kiểm tra nếu Email và PhoneNumber là chuỗi rỗng thì không được đưa vào database

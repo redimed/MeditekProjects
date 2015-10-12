@@ -7,6 +7,15 @@ module.exports = {
 	 * output: 
 	 * 	if success return promise.resolve (new User Activation Info)
 	 * 	if error throw error
+	 * 		error: 
+	 * 		+message
+	 * 		+errors:[
+	 * 			. UserAccountID.notProvided
+	 * 			. SystemType.notProvided
+	 * 			. DeviceID.notProvided
+	 * 			. SystemType.unknown
+	 * 			. UserAccount.notFound
+	 * 		]
 	 */
 	CreateUserActivation:function(activationInfo,transaction)
 	{

@@ -75,14 +75,14 @@ app
 				}
 			})
 			.state('lockScreen', {
-			url:'/lockScreen',
-			views: {
-				'root':{
-					templateUrl: 'common/views/lockScreen.html',
-					controller: 'lockScreenCtrl'
-				}
-			}
-		});
+    			url:'/lockScreen',
+    			views: {
+    				'root':{
+    					templateUrl: 'common/views/lockScreen.html',
+    					controller: 'lockScreenCtrl'
+    				}
+    			}
+		    });
 			
 	})
 

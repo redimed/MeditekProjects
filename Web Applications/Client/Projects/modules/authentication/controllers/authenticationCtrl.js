@@ -2,8 +2,23 @@ var app = angular.module('app.authentication.controller', [
 	
 ]);
 
-app.controller('authenticationCtrl', function($rootScope){
+app.controller('authenticationCtrl', function($rootScope,$scope,$state,$cookies,AuthenticationService,toastr){
 	console.log('authenticationCtrl');
+
+	$scope.logout = function(){
+		AuthenticationService.logout().then(function(){
+			var cookies = $cookies.getAll();
+			angular.forEach(cookies, function (v, k) {
+			    $cookies.remove(k);
+			});
+			$state.go("unAuthentication.login", null, {
+                location: "replace",
+                reload: true
+            });
+		}, function(err) {
+            toastr.error(err.data.message, "Error");
+        })
+	}
 
 	$rootScope.countries = [
 		{name : 'Afghanistan' },

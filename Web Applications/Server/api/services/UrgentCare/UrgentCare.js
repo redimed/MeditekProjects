@@ -1,4 +1,4 @@
-
+var o=require("../HelperService");
 module.exports={
 	/**
 	 * GetListUrgentRequests
@@ -67,15 +67,72 @@ module.exports={
 		var limit=clause.limit;
 		var offset=clause.offset;
 		var order=_.pairs(clause.order);
-		var whereClause={};
-		if(criteria.UID) whereClause.UID=criteria.UID;
-		if(criteria.FirstName) whereClause.FirstName={$like:'%'+criteria.FirstName+'%'};
-		if(criteria.LastName) whereClause.LastName={$like:'%'+criteria.LastName+'%'};
-		if(criteria.PhoneNumber) whereClause.PhoneNumber=criteria.PhoneNumber;
-		if(criteria.Gender) whereClause.Gender=criteria.Gender;
-		if(criteria.Email) whereClause.Email=criteria.Email;
-		if(criteria.DOB) whereClause.DOB=criteria.DOB;
-		if(criteria.Suburb) whereClause.Suburb=criteria.Suburb;
-		// if(criteria.	)
+		// var order=clause.order;
+		var whereClause={
+			UID:null,
+			UserAccountID:null,
+			FirstName:null,
+			LastName:null,
+			PhoneNumber:null,
+			Gender:null,
+			Email:null,
+			DOB:null,
+			Suburb:null,
+			Ip:null,
+			GPReferal:null,
+			ServiceType:null,
+			RequestType:null,
+			RequestDate:null,
+			Tried:null,
+			Interval:null,
+			Further:null,
+			UrgentRequestType:null,
+			ConfirmUserName:null,
+			CompanyName:null,
+			CompanyPhoneNumber:null,
+			ContactPerson:null,
+			Description:null,
+			Enable:null,
+			Status:null
+		};
+		var orderClause={
+			FirstName:null,
+			LastName:null,
+			Email:null,
+			DOB:null,
+			ConfirmUserName:null,
+			CompanyName:null
+		}
+
+
+		HelperService.rationalizeObject(criteria,whereClause);
+		console.log(criteria);
+		whereClause=criteria;
+
+		// HelperService.cleanObject(whereClause);
+
+
+
+		if(o.checkData(whereClause.FirstName)) 
+			whereClause.FirstName={$like:'%'+whereClause.FirstName+'%'};
+		if(o.checkData(whereClause.LastName))
+			whereClause.LastName={$like:'%'+whereClause.LastName+"%"};
+
+		return UrgentRequest.findAll({
+			where:{
+				$and:[
+					//----------
+					//kiểu kiện cứng có thể nhập ở đây,
+					//----------
+					whereClause //điều kiện mềm client gửi lên
+				]
+			},
+			limit:limit,
+			offset:offset,
+			attributes:attributes,
+			order:order
+
+		})
+
  	}
 }

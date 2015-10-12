@@ -1,8 +1,9 @@
 var app = angular.module('app', [
-	"ngCookies",
+    "ngCookies",
     "ngAnimate",
     "ui.router",
     "ui.bootstrap", 
+    "app.lockScreen",
     "ngSanitize",
     "restangular",
     "toastr",
@@ -72,7 +73,17 @@ app
 	                    }
 					}
 				}
-			});
+			})
+			.state('lockScreen', {
+			url:'/lockScreen',
+			views: {
+				'root':{
+					templateUrl: 'common/views/lockScreen.html',
+					controller: 'lockScreenCtrl'
+				}
+			}
+		});
+			
 	})
 
 	.run(function($rootScope,$cookies,$window,$state,Restangular,toastr){
@@ -127,5 +138,6 @@ app
 
 		$rootScope.$on('$viewContentLoaded', function() {
 	        Metronic.initAjax();
+		ComponentsDropdowns.init(); // init todo page
 	    });
 	})

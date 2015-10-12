@@ -1,66 +1,60 @@
 var $q = require('q');
+var randomstring = require("randomstring");
 module.exports = {
 	/**
 	 * Create user activation
-	 * Input:
-	 * 	if website system: 
-	 * 		activationInfo:UserAccountID,Type,VerificationToken
-	 * 	if mobile system:
-	 * 		activationInfo: UserAccountID,Type, VerificationCode, DeviceID
+	 * Input: activationInfo:{UserAccountID,Type,VerificationCode,CreatedBy}
 	 * output: 
-	 * 	if success return promise.resolve(user Activation Info)
+	 * 	if success return promise.resolve (new User Activation Info)
 	 * 	if error throw error
 	 */
 	CreateUserActivation:function(activationInfo,transaction)
 	{
-
+		var err=new Error('CreateUserActivation.Error');
 		function Validation()
 		{
 			var q=$q.defer();
+			var systems=[];
 			var mobileSystems=[];
+			systems.push(HelperService.const.systemType.website);
+			systems.push(HelperService.const.systemType.ios);
+			systems.push(HelperService.const.systemType.android);
 			mobileSystems.push(HelperService.const.systemType.ios);
 			mobileSystems.push(HelperService.const.systemType.android);
+
+			activationInfo.VerificationCode=randomstring.generate({length:6,charset:'numeric'});
+			
 			try{
-				//Code mẫu demo trả về error với nhiều chi tiết lỗi
-				/*if(activationInfo.VerificationCode.length>2)
-				{
-					var errors=[];
-					var err=new Error('Validate.VerificationCode');
-					errors.push({field: 'from_date', message: 'From Date must be smaller than or equal To Date'});
-					errors.push({field: 'to_date', message: 'To Date must be larger than or equal From Date'});
-					err.pushErrors(errors);
-					throw err;
-					
-				}*/
 				//Check UserAccountId
 				if(!activationInfo.UserAccountID)
 				{
-					throw new Error('User Account is not provided');
+					err.pushError('UserAccountID.notProvided');
 				}
 				//Check system type
 				if(!activationInfo.Type)
 				{
-					throw new Error('System type (IOS, Website, Android) is not provided');
+					err.pushError('SystemType.notProvided');
 				}
-				else if(activationInfo.Type==HelperService.const.systemType.website)
+				else if(systems.indexOf(activationInfo.Type)>=0)
 				{
-					if(!activationInfo.VerificationToken) 
+					if(mobileSystems.indexOf(activationInfo.Type)>=0 && !activationInfo.DeviceID)
 					{
-						throw new Error("System type is website but VerificationToken is not provided");
-					}
-				}
-				else if(mobileSystems.indexOf(activationInfo.Type)>=0)
-				{
-					if(!activationInfo.VerificationCode || !activationInfo.DeviceID)
-					{
-						throw new Error("System type is mobile but VerificationCode and DeviceID are not provided");
+						err.pushError('DeviceID.notProvided')
 					}
 				}
 				else
 				{
-					throw new Error("System type unknown");
+					err.pushError('SystemType.unknown');
 				}
-				q.resolve({result:'success'});
+
+				if(err.getErrors().length>0)
+				{
+					throw err;
+				}
+				else
+				{
+					q.resolve({result:'success'});
+				}
 			}
 			catch(err){
 				q.reject(err);
@@ -70,22 +64,34 @@ module.exports = {
 
 		return Validation()
 		.then(function(success){
-			var insertInfo={};
-			insertInfo.UserAccountID=activationInfo.UserAccountID;
-			insertInfo.Type=activationInfo.Type;
-			if(activationInfo.Type==HelperService.const.systemType.website)
+			return UserAccount.findOne({where:{ID:activationInfo.UserAccountID}},{transaction:transaction});
+		},function(err){
+			throw err;
+		})
+		.then(function(user){
+			if(user)
 			{
-				insertInfo.VerificationToken=activationInfo.VerificationToken;
+				var insertInfo={
+					UserAccountID:activationInfo.UserAccountID,
+					Type:activationInfo.Type,
+					VerificationCode:activationInfo.VerificationCode,
+					CreatedBy:activationInfo.CreatedBy?activationInfo.CreatedBy:null
+				};
+				if(activationInfo.Type!=HelperService.const.systemType.website)
+				{
+					insertInfo.DeviceID=activationInfo.DeviceID;
+				}
+				return UserActivation.create(insertInfo,{transaction:transaction});
 			}
 			else
 			{
-				insertInfo.VerificationCode=activationInfo.VerificationCode;
-				insertInfo.DeviceID=activationInfo.DeviceID;
+				err.pushError('UserAccount.notFound');
+				throw err;
 			}
-			return UserActivation.create(insertInfo,{transaction:transaction});
+			
 		},function(err){
 			throw err;
-		});
+		})
 	},
 
 	/**

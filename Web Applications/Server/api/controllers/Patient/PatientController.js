@@ -95,9 +95,6 @@ module.exports = {
 		});
 	},
 
-	Test : function(req, res){
-		res.json("asd");
-	},
 	/*
 		DeletePatient : disable patient who was deleted.
 		input: Patient's ID

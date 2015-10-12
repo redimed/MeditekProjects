@@ -331,6 +331,10 @@ module.exports = {
 			            	model: Country,
 			                attributes: [ 'ShortName'],
 			                required: true
+			            },{
+			            	model: UserAccount,
+			            	attributes: ['PhoneNumber'],
+			            	required: true
 			            }
 					]
 				});

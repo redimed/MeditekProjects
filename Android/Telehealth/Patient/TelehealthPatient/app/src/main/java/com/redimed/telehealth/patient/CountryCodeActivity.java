@@ -44,6 +44,7 @@ public class CountryCodeActivity extends ListActivity {
         });
     }
 
+//    Initialize object Country storage name, code, image
     public class Country {
         private String name;
         private String code;

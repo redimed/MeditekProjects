@@ -5,6 +5,8 @@ module.exports = {
 	Test:function(req,res)
 	{
 			var orderTemp=[{UserName:undefined},{Email:'DESC'}];
+			var arr=['000',undefined,'a'];
+			console.log(arr.indexOf(undefined));
 			// var order=[];
 
 			// order=_.filter(orderTemp,function(item){

@@ -28,12 +28,12 @@ class VerifyPhoneNumberController {
     func SendVerifyPhoneNumber (deviceID:String,completionHandler:(JSON) -> Void){
         let parameters = [
             "data": [
-                "phone":"+84988880682",
+                "phone":"+841654901590",
                 "deviceId":deviceID,
                 "deviceType": "ios"
             ]
         ]
-        Alamofire.request(.POST, config.Http + UrlAPICheckPhoneNumber.SendVerifyCodePhoneNumber.rawValue , parameters: parameters).responseJSON{
+        Alamofire.request(.POST, ConfigurationSystem.Http + UrlAPICheckPhoneNumber.SendVerifyCodePhoneNumber , parameters: parameters).responseJSON{
             request, response, result  in
             switch result {
             case .Success(let JSONData):
@@ -58,7 +58,7 @@ class VerifyPhoneNumberController {
                 "deviceType": "ios"
             ]
         ]
-        Alamofire.request(.POST, config.Http + UrlAPICheckPhoneNumber.CheckVerifyCode.rawValue , parameters: parameters).responseJSON{
+        Alamofire.request(.POST, ConfigurationSystem.Http + UrlAPICheckPhoneNumber.CheckVerifyCode , parameters: parameters).responseJSON{
             request, response, result in
             switch result {
             case .Success(let JSONData):
@@ -82,7 +82,7 @@ class VerifyPhoneNumberController {
                 "uid" : UUID
             ]
         ]
-        Alamofire.request(.POST, config.Http + UrlInformationPatient.getInformationPatientByUID.rawValue ,headers:config.headers, parameters: parameters).responseJSON{
+        Alamofire.request(.POST, ConfigurationSystem.Http + UrlInformationPatient.getInformationPatientByUID ,headers:config.headers, parameters: parameters).responseJSON{
             request, response, result in
             switch result {
             case .Success(let JSONData):

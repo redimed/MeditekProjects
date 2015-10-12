@@ -50,12 +50,11 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         
         if publisher?.publishVideo.boolValue == true {
             publisher?.publishVideo = false
-            //buttonHoldCall.setImage(UIImage(named: "Play-50.png"), forState: UIControlState.Normal)
-            changeIconCallingView(buttonHoldCall, nameImg: "Play-50.png")
+            sender.setTitle(FAIcon.play, forState: .Normal)
+
         } else {
             publisher?.publishVideo = true
-            //buttonHoldCall.setImage(UIImage(named: "Pause-50.png"), forState: UIControlState.Normal)
-            changeIconCallingView(buttonHoldCall, nameImg: "Pause-50.png")
+            sender.setTitle(FAIcon.pause, forState: .Normal)
             
         }
     }
@@ -63,12 +62,10 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     @IBAction func buttonMuteAudioAction(sender: DesignableButton) {
         if publisher?.publishAudio.boolValue == true {
             publisher?.publishAudio = false
-            //buttonMuteCall.setImage(UIImage(named: "Volume Up-50.png"), forState: UIControlState.Normal)
-            changeIconCallingView(buttonMuteCall, nameImg: "Volume Up-50.png")
+            sender.setTitle(FAIcon.volume_up, forState: .Normal)
         }else {
             publisher?.publishAudio = true
-            //buttonMuteCall.setImage(UIImage(named: "Mute-50.png"), forState: UIControlState.Normal)
-            changeIconCallingView(buttonMuteCall, nameImg: "Mute-50.png")
+            sender.setTitle(FAIcon.volume_off, forState: .Normal)
         }
     }
     @IBAction func buttonEndCallAction(sender: DesignableButton) {

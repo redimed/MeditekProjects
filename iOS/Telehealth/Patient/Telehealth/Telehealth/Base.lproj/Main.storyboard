@@ -5,6 +5,12 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="FontAwesome.otf">
+            <string>FontAwesome</string>
+            <string>FontAwesome</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -1210,7 +1216,7 @@
                                                 <variation key="heightClass=compact" constant="80"/>
                                             </constraint>
                                         </constraints>
-                                        <state key="normal" title="FAQ" backgroundImage="Orange">
+                                        <state key="normal" title="FAQs" backgroundImage="Orange">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -1663,7 +1669,7 @@ Pre- employment medicals, Drug and alcohol screening, general medical services, 
                                             <constraint firstAttribute="width" constant="240" id="5lR-y6-uMY"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Doctor Hanh" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="vnU-os-bhA">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="vnU-os-bhA">
                                         <rect key="frame" x="8" y="10" width="109" height="23"/>
                                         <animations/>
                                         <constraints>
@@ -1673,7 +1679,7 @@ Pre- employment medicals, Drug and alcohol screening, general medical services, 
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calling..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWs-vK-j9B">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Calling..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWs-vK-j9B">
                                         <rect key="frame" x="8" y="33" width="50" height="15"/>
                                         <animations/>
                                         <constraints>
@@ -1793,13 +1799,14 @@ Pre- employment medicals, Drug and alcohol screening, general medical services, 
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="userCallingLabel" destination="vnU-os-bhA" id="Cdy-Bt-qhB"/>
                         <segue destination="Bjr-7W-fq1" kind="modal" identifier="CallingSegue" id="gJo-M2-qlF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vZS-8y-Uli" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="5hj-K2-G9A" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="504" y="-639"/>
+            <point key="canvasLocation" x="444" y="-339"/>
         </scene>
         <!--Screen Calling View Controller-->
         <scene sceneID="bKK-we-3Nk">
@@ -1834,11 +1841,15 @@ Pre- employment medicals, Drug and alcohol screening, general medical services, 
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HqE-dm-SQU" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
-                                <rect key="frame" x="20" y="496" width="52" height="52"/>
+                                <rect key="frame" x="20" y="496" width="50" height="50"/>
                                 <animations/>
-                                <state key="normal" image="Mute-50" backgroundImage="Oval 98">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <color key="backgroundColor" red="0.22745098039215686" green="0.3411764705882353" blue="0.58431372549019611" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="JBt-96-6kw"/>
+                                    <constraint firstAttribute="width" constant="50" id="kk1-OO-3Cd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="30"/>
+                                <state key="normal" title=""/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="25"/>
@@ -1849,10 +1860,16 @@ Pre- employment medicals, Drug and alcohol screening, general medical services, 
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRH-hO-Ugj" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
-                                <rect key="frame" x="239" y="496" width="52" height="52"/>
+                                <rect key="frame" x="239" y="496" width="50" height="50"/>
                                 <animations/>
+                                <color key="backgroundColor" red="0.2274509804" green="0.3411764706" blue="0.58431372550000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Nef-Xn-J29"/>
+                                    <constraint firstAttribute="width" constant="50" id="qvm-vs-52u"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="20"/>
                                 <size key="titleShadowOffset" width="2.2250738585072014e-308" height="0.0"/>
-                                <state key="normal" image="Pause-50" backgroundImage="Oval 98">
+                                <state key="normal" title="">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -1869,11 +1886,11 @@ Pre- employment medicals, Drug and alcohol screening, general medical services, 
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="JDv-eX-tV9" firstAttribute="top" secondItem="5G9-Yz-hOo" secondAttribute="bottom" constant="10" id="38J-QL-vKY"/>
-                            <constraint firstItem="JDv-eX-tV9" firstAttribute="top" secondItem="VRH-hO-Ugj" secondAttribute="bottom" constant="20" id="LbH-wI-EPg"/>
-                            <constraint firstItem="5G9-Yz-hOo" firstAttribute="leading" secondItem="HqE-dm-SQU" secondAttribute="trailing" constant="53" id="Quo-zt-W1t"/>
+                            <constraint firstItem="JDv-eX-tV9" firstAttribute="top" secondItem="HqE-dm-SQU" secondAttribute="bottom" constant="22" id="6yH-P7-bKC"/>
+                            <constraint firstItem="JDv-eX-tV9" firstAttribute="top" secondItem="VRH-hO-Ugj" secondAttribute="bottom" constant="22" id="98A-qU-cHN"/>
                             <constraint firstItem="5G9-Yz-hOo" firstAttribute="centerX" secondItem="Oja-4n-Fql" secondAttribute="centerX" id="Txo-ik-ceb"/>
-                            <constraint firstItem="JDv-eX-tV9" firstAttribute="top" secondItem="HqE-dm-SQU" secondAttribute="bottom" constant="20" id="V7W-Pe-7bX"/>
-                            <constraint firstItem="VRH-hO-Ugj" firstAttribute="leading" secondItem="5G9-Yz-hOo" secondAttribute="trailing" constant="44" id="xm0-nM-SYD"/>
+                            <constraint firstItem="5G9-Yz-hOo" firstAttribute="leading" secondItem="HqE-dm-SQU" secondAttribute="trailing" constant="55" id="kpZ-Ng-gPD"/>
+                            <constraint firstItem="VRH-hO-Ugj" firstAttribute="leading" secondItem="5G9-Yz-hOo" secondAttribute="trailing" constant="44" id="tmV-UH-RDd"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1884,7 +1901,7 @@ Pre- employment medicals, Drug and alcohol screening, general medical services, 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tcz-p4-dxA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="898" y="-639"/>
+            <point key="canvasLocation" x="834" y="-339"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="25O-6w-7T5">
@@ -1937,10 +1954,7 @@ Pre- employment medicals, Drug and alcohol screening, general medical services, 
         <image name="End Call-50" width="26" height="21"/>
         <image name="Green" width="162" height="124"/>
         <image name="Logo" width="2542" height="494"/>
-        <image name="Mute-50" width="25" height="25"/>
         <image name="Orange" width="162" height="124"/>
-        <image name="Oval 98" width="52" height="52"/>
-        <image name="Pause-50" width="19" height="21"/>
         <image name="Phone-50" width="22" height="22"/>
         <image name="Red" width="164" height="124"/>
         <image name="line" width="632" height="2"/>

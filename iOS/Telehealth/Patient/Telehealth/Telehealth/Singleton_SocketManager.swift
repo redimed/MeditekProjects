@@ -8,13 +8,10 @@
 
 import UIKit
 import Socket_IO_Client_Swift
-protocol callViewDelegate {
-    func callView (controller:Singleton_SocketManager,sender:String)
-}
+
 class Singleton_SocketManager:UIViewController {
     static let shareInstance = Singleton_SocketManager()
-    let socket = SocketIOClient(socketURL: config.Http)
-    var delegate: callViewDelegate? = nil
-      
+    let socket = SocketIOClient(socketURL: ConfigurationSystem.Http)
+   
 }
 let sharedSocket = Singleton_SocketManager()

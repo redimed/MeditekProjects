@@ -16,7 +16,7 @@ var tokens = String()
 
 
 class ConfigurationSystem: UIViewController {
-    let Http = "http://192.168.1.130:3009"
+    let Http = "http://testapp.redimed.com.au:3009"
     
     let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
     

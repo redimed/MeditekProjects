@@ -33,6 +33,17 @@
     <string name="dailogSuccess">Success</string>
     <string name="dailogError">Error</string>
     <string name="lblhome">personalised + customised, <b>HEALTHCARE</b> anywhere</string>
+    <string name="lblfaq1"><b>Where are you located?</b></string>
+    <string name="lblfaq2"><b>What are your opening hours?</b></string>
+    <string name="lblfaq3"><b>Do I need to provide a GP referral?</b></string>
+    <string name="lblfaq4"><b>What fees will I need to pay?</b></string>
+    <string name="lblfaq5"><b>Can I claim any money back from Medicare or Private Health?</b></string>
+    <string name="lblfaq6"><b>I don’t have private health insurance, can I still be seen?</b></string>
+    <string name="lblfaq7"><b>How long do I have to wait to see a Specialist?</b></string>
+    <string name="lblfaq8"><b>What services do you offer?</b></string>
+
+
+
 
 
 

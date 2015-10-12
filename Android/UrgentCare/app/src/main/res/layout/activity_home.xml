@@ -29,37 +29,41 @@
                 android:orientation="horizontal"
                 android:id="@+id/linearLayout1">
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
                     android:id="@+id/imgLogoBtn"
-                    android:background="@drawable/img_logo_btn" />
+                    android:background="@drawable/img_logo_btn"
+                    android:layout_marginRight="5dp"/>
                 <com.andexert.library.RippleView
                     android:id="@+id/rippleViewSportInjury"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     rv_centered="true">
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
                         android:id="@+id/btnSportInjury"
-                        android:background="@drawable/img_sport_injury"/>
+                        android:background="@drawable/img_sport_injury"
+                        android:layout_marginLeft="5dp"/>
                 </com.andexert.library.RippleView>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below="@+id/linearLayout1">
+                android:layout_below="@+id/linearLayout1"
+                android:layout_marginTop="10dp">
                 <com.andexert.library.RippleView
                     android:id="@+id/rippleViewWorkInjury"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     rv_centered="true">
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
                         android:id="@+id/btnWorkInjury"
-                        android:background="@drawable/img_work_injury"/>
+                        android:background="@drawable/img_work_injury"
+                        android:layout_marginRight="5dp"/>
                 </com.andexert.library.RippleView>
                 <com.andexert.library.RippleView
                     android:id="@+id/rippleViewFAQ"
@@ -67,10 +71,11 @@
                     android:layout_height="wrap_content"
                     rv_centered="true">
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
                         android:id="@+id/btnFAQ"
-                        android:background="@drawable/img_faq"/>
+                        android:background="@drawable/img_faq"
+                        android:layout_marginLeft="5dp"/>
                 </com.andexert.library.RippleView>
             </LinearLayout>
     </RelativeLayout>
@@ -83,10 +88,12 @@
         android:layout_centerVertical="true"
         rv_centered="true">
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/btnMakeAppointment"
-            android:background="@drawable/btn_urgentcare"/>
+            android:background="@drawable/btn_urgentcare"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="10dp"/>
     </com.andexert.library.RippleView>
 
     <ImageView

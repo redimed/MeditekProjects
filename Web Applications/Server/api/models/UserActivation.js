@@ -58,6 +58,13 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'UserActivation',
-        timestamps: false
-    }
+        timestamps: false,
+        hooks:{
+            beforeCreate:function(item, options, cb)
+            {
+                 item.CreatedDate=new Date();
+                 cb();
+            }
+        }
+    },
 };

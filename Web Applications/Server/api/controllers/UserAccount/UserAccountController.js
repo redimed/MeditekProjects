@@ -4,9 +4,15 @@ var underscore=require('underscore');
 module.exports = {
 	Test:function(req,res)
 	{
-			// Services.UrgentCare.GetListUrgentRequests();
-			console.log(HelperService.checkData(false));
+			var orderTemp=[{UserName:undefined},{Email:'DESC'}];
+			// var order=[];
 
+			// order=_.filter(orderTemp,function(item){
+
+			// 	return HelperService.existIn(_.values(item)[0].toUpperCase(),['ASC','DESC']);
+			// })
+
+			// console.log(order);
 			res.ok(req.user);
 	},
 

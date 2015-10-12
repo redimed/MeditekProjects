@@ -6,17 +6,17 @@ module.exports = {
             allowNull: false,
             primaryKey: true
         },
-        TelehealthCallLogID: {
+        TelehealthCallID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
-                model: 'TelehealthCallLog',
+                model: 'TelehealthCall',
                 key: 'ID'
             }
         },
         TelehealthUserID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'TelehealthUser',
                 key: 'ID'

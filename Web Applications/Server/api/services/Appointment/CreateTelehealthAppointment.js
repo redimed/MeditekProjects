@@ -23,7 +23,7 @@ module.exports = function(data) {
                     } else {
                         defer.reject({
                             transaction: t,
-                            error: 'failed'
+                            error: new Error('failed')
                         });
                     }
 
@@ -47,7 +47,7 @@ module.exports = function(data) {
                     } else {
                         defer.reject({
                             transaction: t,
-                            error: 'failed'
+                            error: new Error('failed')
                         });
                     }
                 }, function(err) {
@@ -62,13 +62,14 @@ module.exports = function(data) {
                     if (HelperService.CheckExistData(data.TelehealthAppointment.ExaminationRequired)) {
                         var dataExamniationRequired =
                             Services.GetDataAppointment.ExaminationRequired(data.TelehealthAppointment.ExaminationRequired);
+                        dataExamniationRequired.UID = UUIDService.Create();
                         return telehealthApointmentCreated.createExaminationRequired(dataExamniationRequired, {
                             transaction: t
                         });
                     } else {
                         defer.reject({
                             transaction: t,
-                            error: 'failed'
+                            error: new Error('failed')
                         });
                     }
                 }, function(err) {
@@ -82,14 +83,15 @@ module.exports = function(data) {
                     link with TelehealthAppointment via TelehealthAppointmentID*/
                     if (HelperService.CheckExistData(data.TelehealthAppointment.PreferedPlasticSurgeon)) {
                         var dataPrefPlasSurgon =
-                            Services.GetDataAppointment.PrefPlasSurgon(data.TelehealthAppointment.PreferedPlasticSurgeon);
-                        telehealthApointmentCreated.createPreferedPlasticSurgeon(dataPrefPlasSurgon, {
+                            Services.GetDataAppointment.PreferedPlasticSurgeon(data.TelehealthAppointment.PreferedPlasticSurgeon);
+                        dataPrefPlasSurgon.UID = UUIDService.Create();
+                        return telehealthApointmentCreated.createPreferedPlasticSurgeon(dataPrefPlasSurgon, {
                             transaction: t
                         });
                     } else {
                         defer.reject({
                             transaction: t,
-                            error: 'failed'
+                            error: new Error('failed')
                         });
                     }
                 }, function(err) {
@@ -111,9 +113,14 @@ module.exports = function(data) {
                     } else {
                         defer.reject({
                             transaction: t,
-                            error: 'failed'
+                            error: new Error('failed')
                         });
                     }
+                }, function(err) {
+                    defer.reject({
+                        transaction: t,
+                        error: err
+                    });
                 })
                 .then(function(clinicalDetailCreated) {
                     defer.resolve({
@@ -121,11 +128,10 @@ module.exports = function(data) {
                         status: 'success'
                     });
                 }, function(err) {
-                    console.log(err);
-                    // defer.reject({
-                    //     transaction: t,
-                    //     error: err
-                    // });
+                    defer.reject({
+                        transaction: t,
+                        error: err
+                    });
                 });
             return defer.promise;
         });

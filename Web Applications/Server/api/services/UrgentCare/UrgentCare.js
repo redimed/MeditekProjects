@@ -1,69 +1,20 @@
 var o=require("../HelperService");
 module.exports={
+
 	/**
 	 * GetListUrgentRequests
 	 * Input:
 	 * 	clause:
 	 * 		-criteria: chứa các key và value để filter dữ liệu
-	 * 			-là một object chứa các toán tử:
-	 * 				tham khảo sequelize
-	 * 		-attributes: tên các trường sẽ trả về
+	 * 			Ví dụ: {FirstName:'h',LastName:'a'}
+	 * 		-attributes: mảng _ tên các trường sẽ trả về
 	 * 		-limit: trả về bao nhiêu dòng dữ liệu
 	 * 		-offset: bỏ qua bao nhiêu dữ liệu đầu tiên
-	 * 		-order: ví dụ { UserName:'ASC',Email:'DESC' }
-	 */
-	GetListUrgentRequestsCustom:function(clause,transaction)
-	{
-		var criteria=clause.criteria;
-		var attributes=clause.attributes;
-		var limit=clause.limit;
-		var offset=clause.offset;
-		var order=_.pairs(clause.order);
-		var whereClause={};
-		whereClause={
-			$and:[
-				// {LastName:{$like:'G%'}},//đưa vào các điều kiện bắt buộc
-				criteria// đưa vào các điều kiện từ client
-			],
-		}
-		console.log(whereClause)
-		var totalRows=0;
-		return UrgentRequest.count({
-			where:whereClause
-		},{transaction:transaction})
-		.then(function(count){
-			totalRows=count;
-			return UrgentRequest.findAll({
-				where:whereClause,
-				limit:limit,
-				offset:offset,
-				attributes:attributes,
-				order:order
-			})
-		},function(err){
-			throw err;
-		})
-		.then(function(rows){
-			return {totalRows:totalRows,rows:rows};
-		},function(err){
-			throw err;
-		})
-	},
-
-	/**
-	 * GetListUsers
-	 * Input:
-	 * 	clause:
-	 * 		-criteria: chứa các key và value để filter dữ liệu
-	 * 		-attributes: tên các trường sẽ trả về
-	 * 		-limit: trả về bao nhiêu dòng dữ liệu
-	 * 		-offset: bỏ qua bao nhiêu dữ liệu đầu tiên
-	 * 		-order: ví dụ [{UserName:'ASC'},{Email:'DESC'}]
+	 * 		-order: là object chứa key tương ứng tên trường và value tương ứng kiểu sắp xếp
+	 * 			ví dụ { UserName:'ASC',Email:'DESC' }
 	 */
 	GetListUrgentRequests:function(clause,transaction)
 	{
-		
-
 		try
 		{
 			var err=new Error("GetListUrgentRequests.Errors");
@@ -109,48 +60,68 @@ module.exports={
 			}
 
 			HelperService.rationalizeObject(criteria,criteriaValidation);
-			if(o.checkData(criteria.FirstName)) 
+			if(criteria.hasOwnProperty('FirstName'))
 				criteria.FirstName={$like:'%'+criteria.FirstName+'%'};
-			if(o.checkData(criteria.LastName))
+			if(criteria.hasOwnProperty('LastName'))
 				criteria.LastName={$like:'%'+criteria.LastName+"%"};
 
-			var orderFilter=[];
-			orderFilter=_.filter(orderTemp,function(item){
-				return ['ASC','DESC'].indexOf(_.values(item)[0])>=0;
-			});
+			HelperService.rationalizeObject(orderTemp,orderValidation);
 			var order=[];
-			_.each(orderFilter,function(item){
-				order.push(_.pairs(item)[0]);
-			})
-			console.log(order);
-			return UrgentRequest.findAll({
+			_.each(orderTemp,function(value,key){
+				if(['ASC','DESC'].indexOf(value)>=0)
+					order.push([key,value]);
+			});
+
+			var totalRows=0;
+			return UrgentRequest.count({
 				where:{
 					$and:[
-						//----------
-						//kiểu kiện cứng có thể nhập ở đây,
-						//----------
-						criteria //điều kiện mềm client gửi lên
+						criteria
 					]
-				},
-				limit:limit,
-				offset:offset,
-				attributes:attributes,
-				order:order
-
+				}
+			},{transaction:transaction})
+			.then(function(data){
+				totalRows=data;
+				if(totalRows>0)
+				{
+					return UrgentRequest.findAll({
+						where:{
+							$and:[
+								//----------
+								//kiểu kiện cứng có thể nhập ở đây,
+								//----------
+								criteria //điều kiện mềm client gửi lên
+							]
+						},
+						limit:limit,
+						offset:offset,
+						attributes:attributes,
+						order:order
+					})					
+				}
+				else
+				{
+					return {totalRows:0,rows:[]};
+				}
+				
+			},function(e){
+				o.exlog(e);
+				err.pushError("GetListUrgentRequests.whenCount");
+				throw err;
 			})
+			.then(function(rows){
+				return {totalRows:totalRows,rows:rows};
+			},function(e){
+				o.exlog(e);
+				err.pushError("GetListUrgentRequests.whenSelect");
+				throw err;
+			})
+			
 		}
 		catch(err)
 		{
 			throw err;
 		}
-		
-
-		
-
-		
-
-
-		
 
  	}
 }

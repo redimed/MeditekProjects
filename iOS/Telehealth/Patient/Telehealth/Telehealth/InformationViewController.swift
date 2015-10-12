@@ -46,27 +46,24 @@ class InformationViewController: UIViewController {
                 self.dobLabel.text = (jsonInformation["DOB"].string)?.toDateTime()
                 self.suburbLabel.text = jsonInformation["Suburb"].string
                 self.postCodeLabel.text = jsonInformation["Postcode"].string
-                self.countryLabel.text = jsonInformation["CountryID"].string
-                self.siteLabel.text = jsonInformation["siteLabel"].string
+                self.countryLabel.text = jsonInformation["Country"]["ShortName"].string
+                self.siteLabel.text = jsonInformation["Site"]["SiteName"].string
                 self.addressLabel.text = jsonInformation["Address"].string
                 self.emailLabel.text = jsonInformation["Email"].string
                 self.homePhoneLabel.text = jsonInformation["HomePhoneNumber"].string
-                
-                
-                
-                
+                self.genderLabel.text = (jsonInformation["Gender"].string)?.toGender()
                 
             }else {
                 self.view.hideLoading()
                 if response["TimeOut"] ==  "Request Time Out" {
                     self.alertMessage("Error", message: "Request Time Out")
                 }else {
-                    let message : String = String(response["message"]["message"])
+                    let message : String = String(response["message"])
                     self.alertMessage("Error", message: message)
                 }
                 
             }
-//            print(response)
+           print(response)
         }
         
     }

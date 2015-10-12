@@ -58,7 +58,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     if response["TimeOut"] ==  "Request Time Out" {
                         self.alertMessage("Error", message: "Request Time Out")
                     }else {
-                        let message : String = String(response["message"]["message"])
+                        print(response)
+                        let message : String = String(response["message"])
                         self.alertMessage("Error", message: message)
                     }
                     
@@ -115,6 +116,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         let length = ((textField.text?.length)! + string.length)
         if config.validateInputOnlyNumber(hashValue) == false || length > 10 {
+            
             return false
         }else{
             return true

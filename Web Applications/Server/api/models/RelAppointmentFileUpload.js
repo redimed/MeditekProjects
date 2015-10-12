@@ -6,11 +6,11 @@ module.exports = {
             allowNull: false,
             primaryKey: true
         },
-        PatientID: {
+        FileUploadID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
             references: {
-                model: 'Patient',
+                model: 'FileUpload',
                 key: 'ID'
             }
         },
@@ -25,7 +25,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'RelPatientAppointment',
+        tableName: 'RelAppointmentFileUpload',
         timestamps: false
     }
 };

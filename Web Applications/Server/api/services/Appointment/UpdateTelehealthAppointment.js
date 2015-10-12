@@ -80,6 +80,7 @@
                         var dataClinicalDetails = data.TelehealthAppointment.ClinicalDetails;
                         if (HelperService.CheckExistData(dataClinicalDetails) &&
                             _.isArray(dataClinicalDetails)) {
+                            //update list Clinical details
                             return sequelize.Promise.each(dataClinicalDetails, function(dataClinicalDetail) {
                                 return ClinicalDetail.update(dataClinicalDetail, {
                                     where: {

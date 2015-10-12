@@ -5,19 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.service.SocketService;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -39,7 +35,6 @@ public class LauncherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launcher);
         ButterKnife.bind(this);
         mApplication = (MyApplication) getApplicationContext();
-        startService(new Intent(getApplicationContext(), SocketService.class));
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
 
         AnimationLogo();
@@ -51,10 +46,12 @@ public class LauncherActivity extends AppCompatActivity {
             public void run() {
                 File xmlUser = new File("/data/data/" + getApplicationContext().getPackageName() + "/shared_prefs/TelehealthUser.xml");
                 if (xmlUser.exists()) {
-                    TelehealthUser telehealthUser = new TelehealthUser();
-                    telehealthUser.setUID(uidTelehealth.getString("uid", null));
-                    mApplication.setTelehealthUser(telehealthUser);
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+//                    TelehealthUser telehealthUser = new TelehealthUser();
+//                    telehealthUser.setUID(uidTelehealth.getString("uid", null));
+//                    mApplication.setTelehealthUser(telehealthUser);
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//                    startService(new Intent(getApplicationContext(), SocketService.class));
+//                    SocketService.JoinRoom();
                     finish();
                 } else {
                     startActivity(new Intent(getApplicationContext(), ActivationActivity.class));

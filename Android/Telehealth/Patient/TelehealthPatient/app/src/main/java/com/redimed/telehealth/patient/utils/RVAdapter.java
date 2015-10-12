@@ -1,21 +1,14 @@
 package com.redimed.telehealth.patient.utils;
 
-import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.redimed.telehealth.patient.ProfilePatientActivity;
+import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.models.Category;
 
@@ -27,9 +20,6 @@ import java.util.List;
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CategoriesViewHolder> {
 
     private List<Category> categories;
-    private Context context;
-    private DrawerLayout drawerCategories;
-
     public RVAdapter(List<Category> arrCategories){
         categories = arrCategories;
     }
@@ -46,18 +36,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CategoriesViewHold
         holder.imgTitle.setImageResource(categories.get(position).getScrImg());
         holder.lblTitle.setText(categories.get(position).getTitle());
         holder.imgIcon.setImageResource(categories.get(position).getIcon());
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String selectItem = categories.get(position).getTitle();
-                Log.d("Name", selectItem);
-                switch (selectItem){
-                    case "Information":
-                        v.getContext().startActivity(new Intent(v.getContext(), ProfilePatientActivity.class));
-                        break;
-                }
-            }
-        });
     }
 
     @Override
@@ -65,7 +43,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CategoriesViewHold
         return categories.size();
     }
 
-    public static class CategoriesViewHolder extends RecyclerView.ViewHolder {
+    public static class CategoriesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cardView;
         ImageView imgTitle;
         TextView lblTitle;
@@ -77,6 +55,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CategoriesViewHold
             imgTitle = (ImageView) itemView.findViewById(R.id.imgTitle);
             lblTitle = (TextView) itemView.findViewById(R.id.lblTitle);
             imgIcon = (ImageView) itemView.findViewById(R.id.imgIcon);
+            itemView.setClickable(true);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            ((MainActivity)v.getContext()).Display(getAdapterPosition());
         }
     }
 }

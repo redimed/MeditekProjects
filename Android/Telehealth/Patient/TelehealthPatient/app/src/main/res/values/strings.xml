@@ -1,26 +1,10 @@
 <resources>
     <string name="welcome">Welcome to REDiMED</string>
     <string name="title_activity_launcher">Telehealth Patient</string>
-
     <string name="app_name">TelehealthPatient</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="title_activity_verify_code">VerifyCodeActivity</string>
-    <string name="code_invalid">Code Invalid</string>
-    <string name="code_sent_request_again">Code will sent request again. Please wail a minutes</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_home">HomeActivity</string>
-    <string name="title_remote">Remote Video Consulting (RVC)</string>
     <string name="confirm_exit">Press Back button again to exit</string>
-
     <string name="title_activity_call">CallActivity</string>
-
-    <string name="title_activity_voice">VoiceActivity</string>
-    <string name="title_dialog">Choose an action</string>
-    <string name="title_photo">Photo Library</string>
-    <string name="title_camera">Camera</string>
 
     <!-- Error-->
     <string name="error_network">Network Error</string>
@@ -28,7 +12,6 @@
     <string name="alert_wrong_phone">Phone Number Invalid</string>
     <string name="empty_email">Please Input Your Email</string>
     <string name="error_email">Email Invalid</string>
-
 
     <!-- Fontello icons -->
     <string name="fontello_search">&#xe816;</string>
@@ -83,9 +66,10 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_country_code">Select your country</string>
-    <string name="title_activity_profile_patient">ProfilePatientActivity</string>
+    <!-- Home Layout-->
+    <string name="green_btn">Information</string>
+    <string name="blue_btn">Telehealth</string>
+    <string name="orange_btn">FAQ</string>
+    <string name="red_btn">Contact</string>
 
 </resources>

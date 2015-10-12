@@ -131,7 +131,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 //                        vfCall.showNext();
 //                    }
 //                    if (message.equalsIgnoreCase("decline")) {
-//                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+//                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
 //                        finish();
 //                    }
 //                } catch (JSONException e) {
@@ -206,7 +206,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             subscriber = null;
             streamOpenTok.clear();
             sessionOpenTok = null;
-            startActivity(new Intent(this, HomeActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             finish();
         } catch (Throwable throwable) {
             throwable.printStackTrace();

@@ -1,6 +1,7 @@
 package com.redimed.telehealth.patient.service;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -10,9 +11,9 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.redimed.telehealth.patient.CallActivity;
-import com.redimed.telehealth.patient.HomeActivity;
 import com.redimed.telehealth.patient.LauncherActivity;
 import com.redimed.telehealth.patient.MyApplication;
+import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.utils.Config;
 
 import org.json.JSONException;
@@ -34,8 +35,8 @@ public class SocketService extends Service {
 
     private static String TAG = "SocketService";
     private static Socket socket;
-    private static MyApplication mApplication;
     private Intent i;
+    private static SharedPreferences uidTelehealth;
 
     static {
         initializeSocket();
@@ -62,13 +63,7 @@ public class SocketService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mApplication = (MyApplication) getApplicationContext();
-    }
-
-    public class MyBinder extends Binder {
-        public SocketService getService() {
-            return SocketService.this;
-        }
+        uidTelehealth =  getSharedPreferences("TelehealthUser", MODE_PRIVATE);
     }
 
     @Override
@@ -102,49 +97,49 @@ public class SocketService extends Service {
     }
 
     public static void JoinRoom() {
-        try {
-            Map<String, Object> params = new HashMap<String, Object>();
-            params.put("uid", mApplication.getTelehealthUser().getUID());
-            SocketService.sendData("socket/joinRoom", params);
-            Log.d(TAG, params.toString());
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
+            try {
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("uid", uidTelehealth.getString("uid", null));
+                SocketService.sendData("socket/joinRoom", params);
+                Log.d(TAG, params.toString());
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
     }
 
     private Emitter.Listener onConnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-        Log.d(TAG, "====Socket Connected====");
-        JoinRoom();
+            Log.d(TAG, "====Socket Connected====");
+            JoinRoom();
         }
     };
 
     private Emitter.Listener onReconnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-        Log.d(TAG, "====Socket Reconnected====");
+            Log.d(TAG, "====Socket Reconnected====");
         }
     };
 
     private Emitter.Listener onDisconnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-        Log.d(TAG, "====Socket Disconnect====");
+            Log.d(TAG, "====Socket Disconnect====");
         }
     };
 
     private Emitter.Listener onError = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-        Log.d("Socket Error", args[0].toString());
+            Log.d("Socket Error", args[0].toString());
         }
     };
 
     private Emitter.Listener onConnectError = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-        Log.d("Socket Connect Error", args[0].toString());
+            Log.d("Socket Connect Error", args[0].toString());
         }
     };
 
@@ -152,9 +147,6 @@ public class SocketService extends Service {
         @Override
         public void call(Object... args) {
             JSONObject data = (JSONObject) args[0];
-//            Intent i = new Intent("android.intent.action.MessageSocket").putExtra("Message", data.toString());
-//            getApplicationContext().sendBroadcast(i);
-
         try {
             String message = data.get("message").toString();
             i = new Intent(getApplicationContext(), CallActivity.class);
@@ -164,7 +156,7 @@ public class SocketService extends Service {
                 i.putExtra("sessionId", data.get("sessionId").toString());
                 i.putExtra("token", data.get("token").toString());
                 i.putExtra("to", data.get("from").toString());
-                i.putExtra("from", mApplication.getTelehealthUser().getUID());
+                i.putExtra("from", uidTelehealth.getString("uid", null));
                 i.putExtra("message", data.get("message").toString());
                 startActivity(i);
             }
@@ -177,4 +169,10 @@ public class SocketService extends Service {
         Log.d("Socket Receive Message", data.toString());
         }
     };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sendBroadcast(new Intent("Restart_Socket_Service"));
+    }
 }

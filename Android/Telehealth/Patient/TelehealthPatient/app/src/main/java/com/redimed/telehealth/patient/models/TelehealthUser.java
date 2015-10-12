@@ -31,13 +31,15 @@ public class TelehealthUser {
     @SerializedName("Address2")
     private String Address2;
 
-    private String Phone;
-
     @SerializedName("DeviceID")
     private String DeviceID;
 
     @SerializedName("DeviceType")
     private String DeviceType;
+
+    private String Phone;
+
+    private String Token;
 
     private String Code;
 
@@ -105,14 +107,6 @@ public class TelehealthUser {
         Address2 = address2;
     }
 
-    public String getPhone() {
-        return Phone;
-    }
-
-    public void setPhone(String phone) {
-        Phone = phone;
-    }
-
     public String getDeviceID() {
         return DeviceID;
     }
@@ -127,6 +121,22 @@ public class TelehealthUser {
 
     public void setDeviceType(String deviceType) {
         DeviceType = deviceType;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
+    }
+
+    public String getToken() {
+        return Token;
+    }
+
+    public void setToken(String token) {
+        Token = token;
     }
 
     public String getCode() {

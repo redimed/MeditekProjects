@@ -33,6 +33,7 @@ import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.picker.CountryPicker;
 import com.redimed.telehealth.patient.picker.CountryPickerListener;
+import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
 import com.redimed.telehealth.patient.utils.CustomAlertDialog;
 import com.squareup.picasso.Picasso;
@@ -72,6 +73,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
     @Bind(R.id.layoutContainer) ViewFlipper layoutContainer;
 
+    private String TAG = "ACTIVATION";
     private CountryPicker countryPicker;
     private String phoneCode;
     private RegisterApi registerApi;
@@ -79,14 +81,15 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     private TelehealthUser telehealthUser;
     private JsonObject patientJSON;
     private SharedPreferences spDevice;
-    private MyApplication myApplication;
+    //private MyApplication myApplication;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activation);
         registerApi = RESTClient.getRegisterApi();
-        myApplication = (MyApplication) getApplicationContext();
+        //myApplication = (MyApplication) getApplicationContext();
         gson = new Gson();
         ButterKnife.bind(this);
         layoutContainer.setAnimateFirstView(true);
@@ -203,13 +206,14 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     private void GetDeviceInfo(String phoneNumber) {
         spDevice = getApplicationContext().getSharedPreferences("DeviceInfo", MODE_PRIVATE);
         boolean sendToken = spDevice.getBoolean("sendToken", false);
-        String deviceToken = spDevice.getString("deviceToken", null);
+        String deviceID = spDevice.getString("deviceID", null);
         String deviceType = spDevice.getString("deviceType", null);
 
         telehealthUser = new TelehealthUser();
         telehealthUser.setPhone(phoneNumber);
-        telehealthUser.setDeviceID(deviceToken);
+        telehealthUser.setDeviceID(deviceID);
         telehealthUser.setDeviceType(deviceType);
+
         patientJSON = new JsonObject();
         patientJSON.addProperty("data", gson.toJson(telehealthUser));
 
@@ -254,9 +258,15 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                         if (status.equalsIgnoreCase("success")){
                             SharedPreferences.Editor uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE).edit();
                             uidTelehealth.putString("uid", jsonObject.get("uid").getAsString());
+                            uidTelehealth.putString("token", jsonObject.get("token").getAsString());
                             uidTelehealth.apply();
-                            myApplication.getTelehealthUser().setUID(jsonObject.get("uid").getAsString());
-                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+
+//                            TelehealthUser telehealthUser = new TelehealthUser();
+//                            telehealthUser.setUID(jsonObject.get("uid").getAsString());
+//                            telehealthUser.setToken(jsonObject.get("token").getAsString());
+                            //myApplication.setTelehealthUser(telehealthUser);
+
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
                         }
                     }

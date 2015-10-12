@@ -12,6 +12,7 @@ import com.redimed.telehealth.patient.service.RegistrationIntentService;
 public class MyApplication extends Application{
 
     private TelehealthUser telehealthUser;
+
     private static MyApplication myApplication;
 
     public static MyApplication getInstance(){

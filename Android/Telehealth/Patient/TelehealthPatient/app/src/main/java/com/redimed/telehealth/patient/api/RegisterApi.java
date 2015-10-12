@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.Header;
 import retrofit.http.POST;
 
 /**
@@ -18,10 +19,8 @@ public interface RegisterApi {
     void verify(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
 
     @POST("/telehealth/user/details")
-    void getDetailsPatient(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
+    void getDetailsPatient(@Body JsonObject telehealthPatient, @Header("Authorization") String token, Callback<JsonObject> callback);
 
     @GET("/telehealth/socket/generateSession")
     void generateSession(Callback<JsonObject> callback);
-
-
 }

@@ -8,10 +8,14 @@ module.exports = {
         },
         FileUploadID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false
+            allowNull: true,
+            references: {
+                model: 'FileUpload',
+                key: 'ID'
+            }
         },
         BodyPart: {
-            type: Sequelize.STRING(255),
+            type: Sequelize.STRING(100),
             allowNull: true
         }
     },

@@ -8,11 +8,11 @@ module.exports = {
         },
         UID: {
             type: Sequelize.STRING(255),
-            allowNull: false
+            allowNull: true
         },
         TelehealthAppointmentID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'TelehealthAppointment',
                 key: 'ID'

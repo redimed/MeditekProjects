@@ -16,7 +16,7 @@ module.exports = {
             allowNull: true
         },
         Email: {
-            type: Sequelize.STRING(250),
+            type: Sequelize.STRING(255),
             allowNull: true,
             validate:{
                 len:[0,255],

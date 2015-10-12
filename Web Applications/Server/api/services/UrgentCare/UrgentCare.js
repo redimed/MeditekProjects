@@ -68,7 +68,7 @@ module.exports={
 		var offset=clause.offset;
 		var order=_.pairs(clause.order);
 		// var order=clause.order;
-		var whereClause={
+		var criteriaValidation={
 			UID:null,
 			UserAccountID:null,
 			FirstName:null,
@@ -103,20 +103,14 @@ module.exports={
 			ConfirmUserName:null,
 			CompanyName:null
 		}
-
-
-		HelperService.rationalizeObject(criteria,whereClause);
 		console.log(criteria);
-		whereClause=criteria;
+		HelperService.rationalizeObject(criteria,criteriaValidation);
+		console.log(criteria);
+		if(o.checkData(criteria.FirstName)) 
+			criteria.FirstName={$like:'%'+criteria.FirstName+'%'};
+		if(o.checkData(criteria.LastName))
+			criteria.LastName={$like:'%'+criteria.LastName+"%"};
 
-		// HelperService.cleanObject(whereClause);
-
-
-
-		if(o.checkData(whereClause.FirstName)) 
-			whereClause.FirstName={$like:'%'+whereClause.FirstName+'%'};
-		if(o.checkData(whereClause.LastName))
-			whereClause.LastName={$like:'%'+whereClause.LastName+"%"};
 
 		return UrgentRequest.findAll({
 			where:{
@@ -124,7 +118,7 @@ module.exports={
 					//----------
 					//kiểu kiện cứng có thể nhập ở đây,
 					//----------
-					whereClause //điều kiện mềm client gửi lên
+					criteria //điều kiện mềm client gửi lên
 				]
 			},
 			limit:limit,

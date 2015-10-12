@@ -210,8 +210,6 @@ module.exports = {
      */
     rationalizeObject:function(destination,source)
     {
-        console.log(destination);
-        console.log(source);
         if(_.isObject(destination))
         {
             if(_.isObject(source) && !_.isEmpty(source))

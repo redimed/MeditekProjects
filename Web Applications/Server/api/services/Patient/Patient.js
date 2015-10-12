@@ -168,11 +168,15 @@ module.exports = {
 					info.UserAccountID = user.ID;
 					return Patient.create(info);
 				},function(err){
-					throw err;
+					var error = new Error("CreatePatient.error");
+					error.pushErrors("CreateUserAccount.fail");
+					throw error;
 				});
 			}
 		},function(err){
-			throw err;
+			var error = new Error("CreatePatient.fail");
+			error.pushErrors("FindByPhoneNumber.fail");
+			throw error;
 		});
 	},
 
@@ -200,7 +204,9 @@ module.exports = {
 						return null;
 					}
 				},function(err){
-					throw err;
+					var error = new Error("SearchPatient.error");
+					error.pushErrors("FindByPhoneNumber.error");
+					throw error;
 				});
 			}
 			else{
@@ -219,7 +225,9 @@ module.exports = {
 						return null;
 					}
 				},function(err){
-					throw err;
+					var error = new Error("SearchPatient.error");
+					error.pushErrors("Patient.findAll.error");
+					throw error;
 				});
 			}
 		}
@@ -343,7 +351,9 @@ module.exports = {
 				return null;
 			}
 		},function(err){
-			throw err;
+			var error = new Error("GetPatient.error");
+			error.pushErrors("Patient.findAll.error");
+			throw error;
 		});
 	},
 	
@@ -380,28 +390,39 @@ module.exports = {
 	},
 
 	CheckPatient : function(data) {
-		return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
-		.then(function(user){
-			if(user!==undefined && user!==null && user!=='' && user.length!==0){
-				return Patient.findAll({
-					where :{
-						UserAccountID : user[0].ID
-					}
-				});
-			}
-			else
-				return false;
-		},function(err){
-			throw err;
-		})
-		.then(function(result){
-			if(result!==undefined && result!==null && result!=='' && result.length!==0)
-				return true;
-			else
-				return false;
-		},function(err){
-			throw err;
-		});
+		if(data.PhoneNumber!=undefined && data.PhoneNumber!=null && data.PhoneNumber!=''){
+			return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
+			.then(function(user){
+				if(user!==undefined && user!==null && user!=='' && user.length!==0){
+					return Patient.findAll({
+						where :{
+							UserAccountID : user[0].ID
+						}
+					});
+				}
+				else
+					return false;
+			},function(err){
+				var error = new Error("CheckPatient.error");
+				error.pushErrors("FindByPhoneNumber.error");
+				throw error;
+			})
+			.then(function(result){
+				if(result!==undefined && result!==null && result!=='' && result.length!==0)
+					return true;
+				else
+					return false;
+			},function(err){
+				var error = new Error("CheckPatient.error");
+				error.pushErrors("Patient.findAll.error");
+				throw error;
+			});
+		}
+		else{
+			var error = new Error("CheckPatient.error");
+			error.pushErrors("invalid.PhoneNumber");
+			throw error;
+		}
 	}
 
 

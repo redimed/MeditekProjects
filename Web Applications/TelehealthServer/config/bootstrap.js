@@ -10,6 +10,7 @@
  */
 
 module.exports.bootstrap = function(cb) {
+	sails.moment = require('moment');
 	/**
 	 * Overide Error Object
 	 * add function pushErrors

@@ -152,7 +152,7 @@ module.exports = {
                     where: {
                         telehealthUserID: teleUser.ID,
                         deviceId: deviceId,
-                        type: deviceType
+                        type: deviceType == 'android' ? 'ARD':'IOS'
                     },
                     defaults: {
                         UID: UUIDService.GenerateUUID(),
@@ -203,7 +203,7 @@ module.exports = {
                     UserActivation.findOrCreate({
                         where: {
                             userAccountID: user.ID,
-                            type: deviceType,
+                            type: deviceType == 'android' ? 'ARD':'IOS',
                             deviceID: deviceId
                         },
                         defaults: {
@@ -270,7 +270,7 @@ module.exports = {
                 where: {
                     verificationCode: verifyCode.toString(),
                     deviceID: deviceId,
-                    type: deviceType
+                    type: deviceType == 'android' ? 'ARD':'IOS'
                 }
             }).then(function(userActivate) {
                 if (userActivate) {
@@ -311,5 +311,8 @@ module.exports = {
             status: 'error',
             message: 'Invalid Parameters!'
         })
+    },
+    UploadFile: function(req,res){
+        
     }
 }

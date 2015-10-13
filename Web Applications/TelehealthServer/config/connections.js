@@ -7,6 +7,7 @@ module.exports.connections = {
       dialect: 'mysql',
       port: 3306,
       user: 'meditek_db',
+      // password: 'tz!@9\8$3a?=G].T',
       password: 'meditekdb123456',
       database: 'Redimed',
       charset: 'utf8',

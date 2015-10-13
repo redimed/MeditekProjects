@@ -25,11 +25,15 @@ class VerifyPhoneNumberController {
         
     }
     //Giap: Check phone number and send verify code
-    func SendVerifyPhoneNumber (deviceID:String,phoneNumber:String,completionHandler:(JSON) -> Void){
+    func SendVerifyPhoneNumber (deviceID:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
         print("Phone Number ----",phoneNumber)
+        let removedChar = phoneNumber.removeAtIndex(phoneNumber.startIndex)
+        print("Phone Number ----",removedChar)
+         print("Phone Number ----",phoneNumber)
+        
         let parameters = [
             "data": [
-                "phone":phoneNumber,
+                "phone":"+61"+phoneNumber,
                 "deviceId":deviceID,
                 "deviceType": "ios"
             ]

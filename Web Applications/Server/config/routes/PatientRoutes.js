@@ -45,5 +45,4 @@ module.exports={
 		controller: 'Patient/PatientController',
 		action :'CheckPatient'
 	}
-
 }

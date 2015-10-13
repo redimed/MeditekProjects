@@ -1,0 +1,71 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.redimed.telehealth.patient.fragment.HomeFragment">
+
+    <RelativeLayout
+        android:id="@+id/homeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/category_background">
+
+        <ImageView
+            android:id="@+id/imgViewLogo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/logo_redimed" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
+
+            <LinearLayout
+                android:id="@+id/layoutUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp">
+
+                <ImageButton
+                    android:id="@+id/imgBtnInformation"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/custom_3d_btn" />
+
+                <ImageButton
+                    android:id="@+id/imgBtnTelehealth"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:background="@drawable/blue_bg" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutUp">
+
+                <ImageButton
+                    android:id="@+id/imgBtnFAQ"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/orange_bg" />
+
+                <ImageButton
+                    android:id="@+id/imgBtnContact"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:background="@drawable/red_bg" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

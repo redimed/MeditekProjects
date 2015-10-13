@@ -130,7 +130,6 @@ module.exports = {
 			Email           : data.Email,
 			HomePhoneNumber : data.HomePhoneNumber,
 			UID             : UUIDService.Create(),
-			SiteID          : 1,
 			Address         : data.Address,
 			Enable          : "Y",
 			CreatedDate     : new Date()

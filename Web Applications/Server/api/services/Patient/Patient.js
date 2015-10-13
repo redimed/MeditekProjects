@@ -390,28 +390,44 @@ module.exports = {
 	},
 
 	CheckPatient : function(data) {
+		var info = {};
 		if(data.PhoneNumber!=undefined && data.PhoneNumber!=null && data.PhoneNumber!=''){
+			data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
 			return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
 			.then(function(user){
 				if(user!==undefined && user!==null && user!=='' && user.length!==0){
+					info.Email = user[0].Email;
+					info.PhoneNumber = user[0].PhoneNumber;
 					return Patient.findAll({
-						where :{
-							UserAccountID : user[0].ID
-						}
-					});
+							where :{
+								UserAccountID : user[0].ID
+							}
+						});
+	
 				}
 				else
-					return false;
+					return ({
+						isCheck:false
+					});
 			},function(err){
 				var error = new Error("CheckPatient.error");
 				error.pushErrors("FindByPhoneNumber.error");
 				throw error;
 			})
 			.then(function(result){
-				if(result!==undefined && result!==null && result!=='' && result.length!==0)
-					return true;
+				if(result!==undefined && result!==null && result!=='' && result.length!==0 && result.isCheck!==false){
+					return ({
+						isCheck:true
+					});
+				}
 				else
-					return false;
+					return ({
+						isCheck:false,
+						data: {
+							Email : info.Email,
+							PhoneNumber: info.PhoneNumber
+						}
+					});
 			},function(err){
 				var error = new Error("CheckPatient.error");
 				error.pushErrors("Patient.findAll.error");

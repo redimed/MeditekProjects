@@ -44,7 +44,7 @@ class AnswerCallViewController: UIViewController {
     //Giap: Action handle Cancel Call
     @IBAction func btnEndCallAction(sender: AnyObject) {
         
-        emitDataToServer(MessageString.CallEndCall)
+        emitDataToServer(MessageString.Decline)
         
         //Change to home view
         let HomeController = storyboard?.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController

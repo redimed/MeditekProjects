@@ -28,6 +28,8 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     var session : OTSession?
     var publisher : OTPublisher?
     var subscriber : OTSubscriber?
+    var uuidFrom = String()
+    var uuidTo = String()
     @IBOutlet weak var buttonHoldCall: DesignableButton!
     @IBOutlet weak var buttonEndCall: DesignableButton!
     @IBOutlet weak var buttonMuteCall: DesignableButton!
@@ -42,6 +44,14 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         SessionID = String(sessionId)
         // Replace with your generated token
         Token = String(token)
+        //get UUID to
+        uuidTo = String(savedData.data[0]["from"])
+        //Get uuid from in localstorage
+        if let uuid = defaults.valueForKey("uid") as? String {
+            uuidFrom = uuid
+            
+        }
+
         
     }
     
@@ -72,10 +82,17 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         sessionDidDisconnect(session!)
         doUnsubscribe()
         session!.disconnect()
+        emitDataToServer(MessageString.CallEndCall)
         let homeMain = storyboard?.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
         presentViewController(homeMain, animated: true, completion: nil)
     }
     
+    //Giap: Func handle emit socket to server 2 message : Answer or EndCall
+    func emitDataToServer(message:String){
+        let modifieldURLString = NSString(format: UrlAPISocket.emitAnswer,self.uuidFrom,self.uuidTo,message) as String
+        let dictionNary : NSDictionary = ["url": modifieldURLString]
+        sharedSocket.socket.emit("get", dictionNary)
+    }
     
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {

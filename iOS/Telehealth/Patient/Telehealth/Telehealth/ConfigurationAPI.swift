@@ -27,7 +27,8 @@ struct UrlAPISocket  {
 //Giap: Group Message in system
 struct MessageString  {
     static let CallAnswer = "answer"
-    static let CallEndCall = "endcall"
+    static let CallEndCall = "end"
+    static let Decline = "decline"
 }
 //Giap: Group Hash Value Number 0 - 9 and delete
 struct numberHashValue  {

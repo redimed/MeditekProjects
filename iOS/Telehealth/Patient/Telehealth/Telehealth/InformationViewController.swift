@@ -20,7 +20,6 @@ class InformationViewController: UIViewController {
     @IBOutlet weak var suburbLabel: UILabel!
     @IBOutlet weak var postCodeLabel: UILabel!
     @IBOutlet weak var countryLabel: UILabel!
-    @IBOutlet weak var siteLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var homePhoneLabel: UILabel!
@@ -47,7 +46,6 @@ class InformationViewController: UIViewController {
                 self.suburbLabel.text = jsonInformation["Suburb"].string
                 self.postCodeLabel.text = jsonInformation["Postcode"].string
                 self.countryLabel.text = jsonInformation["Country"]["ShortName"].string
-                self.siteLabel.text = jsonInformation["Site"]["SiteName"].string
                 self.addressLabel.text = jsonInformation["Address"].string
                 self.emailLabel.text = jsonInformation["Email"].string
                 self.homePhoneLabel.text = jsonInformation["HomePhoneNumber"].string

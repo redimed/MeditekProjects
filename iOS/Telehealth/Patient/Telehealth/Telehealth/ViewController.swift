@@ -47,7 +47,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
             
             view.showLoading()
             
-            api.SendVerifyPhoneNumber(config.deviceID!){
+            api.SendVerifyPhoneNumber(config.deviceID!,phoneNumber: phoneTextField.text!){
                 response in
                 //Check status API responsed
                 if(response["status"] == "success"){

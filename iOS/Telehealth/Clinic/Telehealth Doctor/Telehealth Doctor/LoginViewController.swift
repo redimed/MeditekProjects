@@ -118,7 +118,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     
     
     @IBAction func LoginButtonAction(sender: UIButton) {
-        
         self.buttonLogin.enabled = false
         self.buttonLogin.backgroundColor = UIColor(hex: "003366").colorWithAlphaComponent(0.6)
         usernameTextField.resignFirstResponder()
@@ -150,33 +149,36 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         let password : String = passwordTextField.text!
         let paramester = ["username": username, "password": password]
         
-        Alamofire.request(.POST, AUTHORIZATION, parameters: paramester)
+        request(.POST, AUTHORIZATION, parameters: paramester)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
-            .responseJSON { data -> Void in
+            .responseJSON { response -> Void in
                 self.loading.stopActivity(true)
                 self.logoImage.hidden = false
-                print("\(data.0) ----- \(data.1) ----- \(data.2)")
-                if(String(data.2) == "SUCCESS") {
-                    let response = JSON(data.2.value!) as JSON
-                    let user = data.2.value!["user"] as! NSDictionary
-                    let dictionNary = [ "ID" : String(user["ID"]),
-                        "UID" : String(user["UID"]),
-                        "activated" : String(user["activated"]),
-                        "email" : String(user["email"]),
-                        "phoneNumber" : String(user["phoneNumber"]),
-                        "userName" : String(user["userName"]),
-                        "userType" : String(user["userType"])] as NSDictionary
-                    self.userDefault.setObject(dictionNary, forKey: "infoDoctor")
-                    self.userDefault.setValue(String(response["token"]), forKey: "token")
+                
+                switch response.2 {
+                case .Success:
+                    let userJSON = JSON(response.2.value!["user"] as! NSDictionary)
+                    var user = [String: String]()
+                    
+                    for (key, object) in userJSON {
+                        user[key] = object.stringValue
+                    }
+                    let token = response.2.value!["token"] as! String
+                    
+                    self.userDefault.setObject(user, forKey: "infoDoctor")
+                    self.userDefault.setValue(token, forKey: "token")
+                    
+                    SingleTon.headers = [
+                        "Authorization": "Bearer \(token)",
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    ]
                     let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
                     self.presentViewController(initViewController, animated: true, completion: nil)
-                } else {
-                    if(data.1 == nil) {
-                        self.errorLogin("Could not connect to server!")
-                    }else {
-                        self.errorLogin("Wrong username or password. Please try again!")
-                    }
+                    break
+                case .Failure( _, let error):
+                    self.errorLogin("\((error as NSError).code) - \((error as NSError).localizedDescription)")
+                    break
                 }
         }
     }
@@ -192,7 +194,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     func AlertWarningNetwork() {
-        JSSAlertView().warning(self, title: "No Connection", text: "Unable to connect to the Internet")
+        JSSAlertView().warning(self, title: warning_Network.title, text: warning_Network.mess)
     }
     
     override func didReceiveMemoryWarning() {
@@ -200,4 +202,3 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
 }
-

@@ -1,35 +1,54 @@
 var $q = require('q');
 var regexp = require('node-regexp');
 var generatePassword = require("password-generator");
+var o=require("../HelperService");
 module.exports = {
 
 
+	/**
+	 * FindByPhoneNumber: tìm kiếm user thông qua PhoneNumber
+	 * Input: 
+	 * 	PhoneNumber
+	 * 	attributes: các field thông tin muốn lấy
+	 * Output:
+	 * 	
+	 */
 	FindByPhoneNumber:function(PhoneNumber,attributes)
 	{
-		//Phone number validation
-		//autralian phone number regex
 		var err=new Error("FindByPhoneNumber.Error");
-		var auPhoneNumberPattern=new RegExp(HelperService.regexPattern.auPhoneNumber);
-		if(PhoneNumber)
+		function Validate()
 		{
-			//remove (,),whitespace,- from phone number
-			PhoneNumber=PhoneNumber.replace(HelperService.regexPattern.phoneExceptChars,'');
-			if(!auPhoneNumberPattern.test(PhoneNumber))
+			var q=$q.defer();
+			//Phone number validation
+			//autralian phone number regex
+			var auPhoneNumberPattern=new RegExp(HelperService.regexPattern.auPhoneNumber);
+			if(PhoneNumber)
 			{
-				err.pushError('PhoneNumber.invalid');
+				//remove (,),whitespace,- from phone number
+				PhoneNumber=PhoneNumber.replace(HelperService.regexPattern.phoneExceptChars,'');
+				if(!auPhoneNumberPattern.test(PhoneNumber))
+				{
+					err.pushError('PhoneNumber.invalid');
+				}
 			}
-		}
-		else
-		{
-			err.pushError("PhoneNumber.notProvided");
+			else
+			{
+				err.pushError("PhoneNumber.notProvided");
+			}
+
+			if(err.getErrors().length>0)
+			{
+				q.reject(err);
+			}
+			else
+			{
+				q.resolve({status:'success'});
+			}
+			return q.promise;
 		}
 
-		if(err.getErrors().length>0)
-		{
-			throw err;
-		}
-		else
-		{
+		return Validate()
+		.then(function(data){
 			PhoneNumber=PhoneNumber.slice(-9);
 			PhoneNumber='+61'+PhoneNumber;
 			return UserAccount.findAll({
@@ -37,10 +56,17 @@ module.exports = {
 					PhoneNumber:PhoneNumber
 				},
 				attributes:attributes
-			});
-		}
-
-		
+			})
+			.then(function(data){
+				return data;
+			},function(e){
+				o.exlog(e);
+				err.pushError('UserAccount.queryError');
+				throw err;
+			})
+		},function(e){
+			throw e;
+		})
 	},
 
 	/**
@@ -57,15 +83,21 @@ module.exports = {
 	 * 				-Email.invalid: lỗi định dạng email
 	 * 				-PhoneNumber.invalid: lỗi định dạng phone number
 	 * 				-UserNameOrEmailOrPhoneNumber.need: cần phải có thông tin UserName, Email hoặc PhoneNumber (chỉ cần 1 trong 3)
+	 * 				-UserName.duplicate: UserName bị trùng
+	 * 				-Email.duplicate: Email bị trùng
+	 * 				-PhoneNumber.duplicate: PhoneNumber bị trùng
+	 * 				
+	 * 				
 	 */
 	CreateUserAccount:function(userInfo,transaction)
 	{
 		userInfo.UID=UUIDService.Create();
+		var err=new Error('CreateUserAccount.Error');
 		function Validate()
 		{
 			var q=$q.defer();
 			try {
-				var err=new Error('Your data invalid');
+				
 
 				//UserName or Email or PhoneNumber must not null
 				if(!userInfo.UserName && !userInfo.Email && !userInfo.PhoneNumber)
@@ -121,6 +153,100 @@ module.exports = {
 			return q.promise;
 		}
 
+		function checkUserName(UserName)
+		{
+			var q=$q.defer();
+			if(UserName)
+			{
+				
+				UserAccount.findOne({
+					where:{UserName:UserName}
+				},{transaction:transaction})
+				.then(function(user){
+					if(user)
+					{
+						err.pushError("UserName.duplicate");
+						q.reject(err);
+					}
+					else
+					{
+						q.resolve();
+					}
+				},function(e){
+					o.exlog(e);
+					err.pushError("UserName.queryError");
+					q.reject(err);
+				})
+			}
+			else
+			{
+				q.resolve();
+			}
+			return q.promise;
+		}
+
+		function checkEmail(Email)
+		{
+			var q=$q.defer();
+			if(Email)
+			{
+				UserAccount.findOne({
+					where:{Email:Email}
+				},{transaction:transaction})
+				.then(function(user){
+					if(user)
+					{
+						err.pushError("Email.duplicate");
+						q.reject(err);
+					}
+					else
+					{
+						q.resolve();
+					}
+				},function(e){
+					o.exlog(e);
+					err.pushError("Email.queryError");
+					q.reject(err);
+				})
+			}
+			else
+			{
+				q.resolve();
+			}
+			return q.promise;
+		}
+
+		function checkPhoneNumber(PhoneNumber)
+		{
+			var q=$q.defer();
+			if(PhoneNumber)
+			{
+				UserAccount.findOne({
+					where:{PhoneNumber:PhoneNumber}
+				},{transaction:transaction})
+				.then(function(user){
+					if(user)
+					{
+						err.pushError("PhoneNumber.duplicate");
+						q.reject(err);
+					}
+					else
+					{
+						q.resolve();
+					}
+				},function(e){
+					o.exlog(e);
+					err.pushError("PhoneNumber.queryError");
+					q.reject(err);
+				})
+			}
+			else
+			{
+				q.resolve();
+			}
+			return q.promise;
+		}
+
 		return Validate()
 		.then(function(data){
 			//Định dạng lại kiểu phoneNumber lưu vào database. Có dạng: +61412345678
@@ -142,10 +268,26 @@ module.exports = {
 			if(!userInfo.Email) delete userInfo.Email;
 			if(!userInfo.PhoneNumber) delete userInfo.PhoneNumber;
 			//-----
-
-			return UserAccount.create(userInfo,{transaction:transaction});
-		},function(err){
-			throw err;
+			return checkUserName(userInfo.UserName);
+		})
+		.then(function(user){
+			return checkEmail(userInfo.Email);
+			// return UserAccount.create(userInfo,{transaction:transaction});
+		})
+		.then(function(user){
+			return checkPhoneNumber(userInfo.PhoneNumber);
+		})
+		.then(function(user){
+			return UserAccount.create(userInfo,{transaction:transaction})
+			.then(function(data){
+				return data;
+			},function(e){
+				o.exlog(e);
+				err.pushError("UserName.createError");
+				throw err;
+			})
+		},function(e){
+			throw e;
 		})
 	},
 

@@ -13,8 +13,9 @@ class AppointmentTableViewCell: UITableViewCell {
     @IBOutlet weak var noRows: UILabel!
     @IBOutlet weak var patientName: UILabel!
     @IBOutlet weak var doctorName: UILabel!
-    @IBOutlet weak var date: UILabel!
-    @IBOutlet weak var note: UILabel!
+    @IBOutlet weak var submitDate: UILabel!
+    @IBOutlet weak var appoinmentDate: UILabel!
     @IBOutlet weak var callButton: UIButton!
+    @IBOutlet weak var statusAppoinment: UILabel!
     
 }

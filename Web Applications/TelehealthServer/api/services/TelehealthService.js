@@ -40,7 +40,6 @@ module.exports = {
         });
     },
     GetOnlineUsers: function() {
-        // if (appts.length == 0) {
         appts = [];
         TelehealthService.GetAppointmentList().then(function(response) {
             appts = response.getBody();
@@ -54,16 +53,15 @@ module.exports = {
                             }
                         }
                     }
+                    checkOnlineUser();
                 }).catch(function(err) {
                     console.log(err);
                 })
             }
-            checkOnlineUser();
+            else checkOnlineUser();
         }).catch(function(err) {
-            appts = [];
             checkOnlineUser();
         })
-        // } else checkOnlineUser();
     },
     MakeRequest: function(info) {
         return requestify.request(config.CoreAPI + info.path, {

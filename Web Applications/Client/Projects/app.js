@@ -15,7 +15,6 @@ var app = angular.module('app', [
 app
     .config(function($httpProvider, $stateProvider, $urlRouterProvider, RestangularProvider, toastrConfig) {
         // TOASTR CONFIG
-<<<<<<< d37fc4a4b6e98fa50f512f45aa3a44aa5f5f6a5e
         angular.extend(toastrConfig, {
             autoDismiss: false,
             containerId: 'toast-container',
@@ -27,19 +26,6 @@ app
             target: 'body',
             tapToDismiss: true
         });
-=======
-        // angular.extend(toastrConfig, {
-        //     autoDismiss: false,
-        //     containerId: 'toast-container',
-        //     maxOpened: 5,    
-        //     newestOnTop: true,
-        //     positionClass: 'toast-top-right',
-        //     preventDuplicates: false,
-        //     preventOpenDuplicates: true,
-        //     target: 'body',
-        //     tapToDismiss: true
-        // });
->>>>>>> update GUI register, doctor, patient
         //END TOASTR CONFIG
         // JWT SIGN
         $httpProvider.interceptors.push(function($q, $location, $cookies) {
@@ -65,7 +51,6 @@ app
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
         // END CORS PROXY
         //RESTANGULAR DEFAULT
-<<<<<<< d37fc4a4b6e98fa50f512f45aa3a44aa5f5f6a5e
         RestangularProvider.setBaseUrl("http://192.168.1.2:3005");
         $urlRouterProvider.otherwise('');
         $stateProvider.state('sys', {
@@ -86,42 +71,6 @@ app
         });
     })
     .run(function($rootScope, $cookies, $window, $state, Restangular, toastr) {
-=======
-        // RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3005");
-        RestangularProvider.setBaseUrl("http://192.168.1.2:3005");
-
-		$urlRouterProvider.otherwise('');
-		$stateProvider
-			.state('sys', {
-				url:'',
-				resolve: {
-					initHome: function($state, $timeout,$cookies){
-	                    if (!$cookies.get("userInfo")) {
-	                        $timeout(function() {
-	                            $state.go("unAuthentication.login");
-	                        }, 100);
-	                    } else {
-	                        $timeout(function() {
-	                            $state.go("authentication.home.list");
-	                        }, 100);
-	                    }
-					}
-				}
-			})
-			.state('lockScreen', {
-    			url:'/lockScreen',
-    			views: {
-    				'root':{
-    					templateUrl: 'common/views/lockScreen.html',
-    					controller: 'lockScreenCtrl'
-    				}
-    			}
-		    });
-			
-	})
-
-	.run(function($rootScope,$cookies,$window,$state,Restangular,toastr){
->>>>>>> update GUI register, doctor, patient
         // RESTANGULAR ERROR HANDLING
         // Restangular.setErrorInterceptor(function (response) {
         //     if (response.status == 401) {

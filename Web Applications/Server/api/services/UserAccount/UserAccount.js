@@ -8,6 +8,7 @@ module.exports = {
 	{
 		//Phone number validation
 		//autralian phone number regex
+		var err=new Error("FindByPhoneNumber.Error");
 		var auPhoneNumberPattern=new RegExp(HelperService.regexPattern.auPhoneNumber);
 		if(PhoneNumber)
 		{
@@ -18,12 +19,28 @@ module.exports = {
 				err.pushError('PhoneNumber.invalid');
 			}
 		}
-		return UserAccount.findAll({
-			where :{
-				PhoneNumber:PhoneNumber
-			},
-			attributes:attributes
-		});
+		else
+		{
+			err.pushError("PhoneNumber.notProvided");
+		}
+
+		if(err.getErrors().length>0)
+		{
+			throw err;
+		}
+		else
+		{
+			PhoneNumber=PhoneNumber.slice(-9);
+			PhoneNumber='+61'+PhoneNumber;
+			return UserAccount.findAll({
+				where :{
+					PhoneNumber:PhoneNumber
+				},
+				attributes:attributes
+			});
+		}
+
+		
 	},
 
 	/**

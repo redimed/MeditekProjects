@@ -25,5 +25,5 @@ module.exports.log = {
   ***************************************************************************/
 
   // level: 'info'
-  level: 'info'//log query
+  level: 'verbose'//log query
 };

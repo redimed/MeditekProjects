@@ -29,7 +29,6 @@ struct MessageString  {
     static let CallAnswer = "answer"
     static let CallEndCall = "end"
     static let Decline = "decline"
-
 }
 //Giap: Group Hash Value Number 0 - 9 and delete
 struct numberHashValue  {

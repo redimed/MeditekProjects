@@ -10,14 +10,6 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: false
         },
-        SiteID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: true,
-            references: {
-                model: 'Site',
-                key: 'ID'
-            }
-        },
         UserAccountID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
@@ -42,8 +34,12 @@ module.exports = {
             type: Sequelize.DATE,
             allowNull: true
         },
-        Gender: {
+	Gender: {
             type: Sequelize.STRING(1),
+            allowNull: true
+        },
+        Occupation: {
+            type: Sequelize.STRING(255),
             allowNull: true
         },
         Address1: {

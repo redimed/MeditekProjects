@@ -217,7 +217,7 @@ app.controller('appointmentListCtrl', function($scope, $modal, $state){
 			resolve: {
 				getid: function(){
 					return true;
-				},
+				}
 			}
 		});
 	};

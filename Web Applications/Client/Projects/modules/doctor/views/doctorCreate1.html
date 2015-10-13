@@ -1,0 +1,214 @@
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">Create New Doctor</h3>
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<a ui-sref="authentication.doctor.list">Doctor</a>
+		</li>
+		<li>
+			<i class="fa fa-angle-right"></i>
+			<b>Create New Doctor</b>
+		</li>
+	</ul>
+</div>
+<!-- END PAGE HEADER-->
+
+<!-- BEGIN Portlet PORTLET-->
+<div class="portlet light bordered">
+	<div class="portlet-title tabbable-line">
+		<div class="caption">
+			<i class="icon-pin font-green"></i>
+			<span class="caption-subject bold font-green uppercase">Create New Doctor </span>
+		</div>
+		<div class="actions">
+			<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+		</div>
+	</div>
+	<div class="portlet-body form">
+		<form class="form-horizontal" role="form">
+			<div class="form-body">
+				<div class="tab-content">
+					<div class="tabbable">
+						<!-- header tab -->
+						<ul class="nav nav-tabs nav-tabs-lg">
+							<li class="active">
+								<a href="index.html#Personal_info" data-toggle="tab" aria-expanded="true">Personal Information </a>
+							</li>
+							<li class="">
+								<a href="index.html#Specialist_info" data-toggle="tab" aria-expanded="false">Specialist Information </a>
+							</li>
+						</ul>
+						<!-- end header tab -->
+						<!-- content tab -->
+						<div class="tab-content">
+							<div class="tab-pane active" id="Personal_info">
+								<div style="margin:3em;">
+									<div class="row">
+										<!-- Begin First name -->
+										<div class="form-group">
+											<label class="control-label col-md-3">First Name</label>
+											<div class="col-md-4">
+												<input type="text" class="form-control" placeholder="First Name">
+											</div>
+										</div>
+										<!-- End First name -->
+										<!-- Begin Middle name -->
+										<div class="form-group">
+											<label class="control-label col-md-3">Middle Name</label>
+											<div class="col-md-4">
+												<input type="text" class="form-control" placeholder="Middle Name">
+											</div>
+										</div>
+										<!-- End Middle name -->
+										<!-- Begin Sur name -->
+											<div class="form-group ">
+												<label class="control-label col-md-3">Sur Name</label>
+												<div class="col-md-4">
+													<input type="text" class="form-control" placeholder="Sur Name">
+												</div>
+											</div>
+										<!-- End Sur name -->
+										<!-- Begin Address -->
+										<div class="form-group ">
+											<label class="control-label col-md-3">Address</label>
+											<div class="col-md-4">
+												<div class="input-icon">
+													<i class="fa  fa-paper-plane"></i>
+													<input type="text" class="form-control" placeholder="Address">
+												</div>
+											</div>
+										</div>
+										<!-- End Address -->
+										<!-- begin Email -->
+										<div class="form-group">
+											<label class="control-label col-md-3">Email</label>
+											<div class="col-md-4">
+												<div class="input-icon">
+													<i class="fa fa-envelope"></i>
+													<input type="text" class="form-control" placeholder="Email">
+												</div>
+											</div>
+										</div>
+										<!-- end Email -->
+										<!-- begin Phone -->
+										<div class="form-group">
+											<label class="control-label col-md-3">Phone</label>
+											<div class="col-md-4">
+												<div class="input-icon">
+													<i class="icon-call-end"></i>
+													<input type="text" class="form-control" placeholder="Phone">
+												</div>
+											</div>
+										</div>
+										<!-- end Phone -->
+										<!-- begin Postcode -->
+										<div class="form-group">
+											<label class="control-label col-md-3">Post Code</label>
+											<div class="col-md-4">
+												<input type="text" class="form-control" placeholder="Post Code">
+											</div>
+										</div>
+										<!-- end Postcode -->
+										<!-- Healthlink ID -->
+										<div class="form-group">
+											<label class="control-label col-md-3">Healthlink ID</label>
+											<div class="col-md-4">
+												<input type="text" placeholder="Healthlink ID" class="form-control">
+											</div>
+										</div>
+										<!-- End Healthlink ID -->
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane" id="Specialist_info">
+								<div style="margin:3em;">
+									<div class="row">
+										<!-- Begin Enable -->
+										<div class="form-group">
+											<label class="control-label col-md-3">Enable</label>
+											<div class="col-md-4">
+												<div class="form-control" style="border: none;">
+													<label class="label-control my-checkbox">
+												      <input type="checkbox">
+												    </label>
+												</div>
+											</div>
+										</div>
+										<!-- End Enable -->
+										<!--  Clinical Department-->
+										<div class="form-group">
+											<label class="control-label col-md-3">Clinical Department</label>
+											<div class="col-md-4">
+												<select class="form-control">
+													<option value=""></option>
+													<option value="1">Doctor</option>
+													<option value="2">Dept</option>
+													<option value="3">Physio</option>
+												</select>
+											</div>
+										</div>
+										<!-- end Clinical Department -->
+										<!-- Provider Number -->
+										<div class="form-group">
+											<label class="control-label col-md-3">Provider Number</label>
+											<div class="col-md-4">
+												<input type="text" placeholder="Provider Number" class="form-control">
+											</div>
+										</div>
+										<!-- Provider Number -->
+										<!-- Type -->
+										<div class="form-group">
+											<label class="control-label col-md-3">Type</label>
+											<div class="col-md-4">
+												<select class="form-control">
+													<option value="GP">GP</option>
+												</select>
+											</div>
+										</div>
+										<!-- End Type -->
+										<!-- signature -->
+										<div class="form-group">
+											<label class="control-label col-md-3">Signature</label>
+											<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
+												<div>
+													<span class="btn green btn-file">
+													<span class="fileinput-new">
+													Select Image </span>
+													<span class="fileinput-exists">
+													Change </span>
+													<input type="file" name="...">
+													</span>
+													<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+													Remove </a>
+												</div>
+												<br>
+												<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 500px; height: 150px;"></div>
+											</div>
+											<div class="clearfix margin-top-10"></div>
+										</div>
+										<!-- end signature -->
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end content tab -->
+					</div>
+				</div>
+			</div>
+			<div class="form-actions">
+				<div class="row">
+					<div class="col-md-offset-3 col-md-9">
+						<a class="btn default" ui-sref="authentication.doctor.list"><i class="icon-arrow-left"></i> Cancel</a>
+						<a class="btn green"><i class="glyphicon glyphicon-save"></i> Create</a>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+	Metronic.initAjax();
+</script>
+

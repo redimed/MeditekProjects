@@ -1,54 +1,120 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/callBackground"
-    tools:context="com.redimed.telehealth.patient.CallActivity">
+    tools:context="com.redimed.telehealth.patient.CallActivity"
+    android:keepScreenOn="true">
 
-    <ImageView
-        android:id="@+id/imgLogoCall"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_width="520dp"
-        android:layout_height="520dp" />
+    <ViewFlipper
+        android:id="@+id/vfCall"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imgCaller"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/img_avatar_caller"/>
+        <RelativeLayout
+            android:id="@+id/spendingLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/callBackground">
 
-    <LinearLayout
-        android:layout_marginBottom="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:gravity="bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imgLogoCall"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_width="520dp"
+                android:layout_height="520dp" />
 
-        <Button
-            android:id="@+id/btnDecline"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
-            android:text="Decline"
-            android:padding="12dp"
-            android:textColor="@color/greyFont"
-            android:drawableLeft="@drawable/end_call"
-            android:background="@drawable/btn_decline"/>
+            <ImageView
+                android:id="@+id/imgCaller"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/img_avatar_caller"/>
 
-        <Button
-            android:id="@+id/btnAnswer"
-            android:layout_width="130dp"
-            android:layout_marginLeft="10dp"
-            android:layout_height="40dp"
-            android:text="Answer"
-            android:padding="12dp"
-            android:textColor="@color/greyFont"
-            android:drawableLeft="@drawable/phone"
-            android:background="@drawable/btn_decline"/>
-    </LinearLayout>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnDecline"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                app:backgroundTint="@color/declineFone"
+                android:src="@drawable/icon_end_call"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnAnswer"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                app:backgroundTint="@color/answerFone"
+                android:src="@drawable/phone_receiver_icon"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/callLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/publisherView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:keepScreenOn="true"/>
+
+            <RelativeLayout
+                android:id="@+id/subscriberView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:keepScreenOn="true">
+
+                <ProgressBar
+                    android:id="@+id/loadingSpinner"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:indeterminate="false"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:gravity="bottom"
+                android:layout_marginBottom="10dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fabHold"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/icon_pause"/>
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fabEndCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_end_call"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    app:backgroundTint="@color/declineFone"/>
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fabMute"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/icon_unmute"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ViewFlipper>
 
 </RelativeLayout>

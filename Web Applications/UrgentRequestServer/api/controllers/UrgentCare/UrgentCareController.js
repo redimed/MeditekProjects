@@ -45,12 +45,15 @@ module.exports = {
                 suburb: data.suburb,
                 IP: data.ip,
                 requestDate: data.requestDate,
-                serviceType: data.serviceType,
                 GPReferal: data.GPReferal,
                 urgentRequestType: data.urgentRequestType,
                 companyName: data.companyName,
                 companyPhoneNumber: data.companyPhoneNumber,
                 contactPerson: data.contactPerson,
+                physiotherapy: data.physiotherapy,
+                specialist: data.specialist,
+                handTherapy: data.handTherapy,
+                GP: data.GP,
                 tried: 1,
                 status: 'pending',
                 interval: 5,
@@ -73,7 +76,7 @@ module.exports = {
                     companyName: data.companyName,
                     contactPerson: data.contactPerson,
                     companyPhoneNumber: data.companyPhoneNumber,
-                    bcc: 'pnguyen@redimed.com.au, thanh1101681@gmail.com'
+                    bcc: 'pnguyen@redimed.com.au, meditekcompany@gmail.com'
                 };
 
                 /*
@@ -97,24 +100,18 @@ module.exports = {
                             //convert service type and gp referral
                             var serviceType = '',
                                 GPReferal = '';
-
-                            switch (data.serviceType) {
-                                case 'PHY':
-                                    serviceType = 'Physiotherapy';
-                                    break;
-                                case 'SPE':
-                                    serviceType = 'Specialist';
-                                    break;
-                                case 'HAN':
-                                    serviceType = 'Hand Therapy';
-                                    break;
-                                case 'GP':
-                                    serviceType = 'GP';
-                                    break;
-                                default:
-                                    serviceType = '';
-                                    break;
-                            };
+                            if (data.physiotherapy === 'Y') {
+                                serviceType += 'Physiotherapy\n';
+                            }
+                            if (data.specialist === 'Y') {
+                                serviceType += 'Specialist\n';
+                            }
+                            if (data.handTherapy === 'Y') {
+                                serviceType += 'HandTherapy\n';
+                            }
+                            if (data.GP === 'Y') {
+                                serviceType += 'GP\n';
+                            }
                             switch (data.GPReferal) {
                                 case 'Y':
                                     GPReferal = 'Yes';
@@ -245,7 +242,7 @@ module.exports = {
     ConfirmRequest: function(req, res) {
         require('getmac').getMac(function(err, macaddr) {
             UrgentRequest.update({
-                    status: 'queueing',
+                    status: 'pending',
                     confirmUserName: null
                 }, {
                     status: 'confirmed',

@@ -4,13 +4,23 @@ var underscore=require('underscore');
 module.exports = {
 	Test:function(req,res)
 	{
-			var a={name:'tan'};
-			var b={name:'trinh',address:'binhduong'};
-			var c=underscore.extend(a,b);
-			console.log(a);
-			console.log(b);
-			console.log(c);
-			res.ok();
+			var orderTemp=[{UserName:undefined},{Email:'DESC'}];
+			var arr=['000',undefined,'a'];
+			console.log(arr.indexOf(undefined));
+			// var order=[];
+
+			// order=_.filter(orderTemp,function(item){
+
+			// 	return HelperService.existIn(_.values(item)[0].toUpperCase(),['ASC','DESC']);
+			// })
+
+			// console.log(order);
+			res.ok(req.user);
+	},
+
+	TestPost:function(req,res)
+	{
+		res.ok(HelperService.checkListData({b:'a'},1,{a:'b'},'1'));
 	},
 	
 	/**
@@ -67,10 +77,7 @@ module.exports = {
 		.then(function(data){
 			res.ok(data[0]);
 		},function(err){
-			if(err.status==404)
-				res.notFound(ErrorWrap(err));
-			else
-				res.serverError(ErrorWrap(err));
+			res.serverError(ErrorWrap(err));
 		})
 	},
 

@@ -51,7 +51,7 @@ public class RegistrationIntentService extends IntentService {
 
             editor.putBoolean("sendToken", true);
             editor.putString("deviceType", "Android");
-            editor.putString("deviceToken", token);
+            editor.putString("deviceID", deviceId);
             editor.apply();
 
             Log.i(TAG, "GCM Registration Token: " + token);

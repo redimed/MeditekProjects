@@ -16,10 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var config = ConfigurationSystem()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-       
-
-        
         // Override point for customization after application launch.
         UINavigationBar.appearance().barTintColor = UIColor(red: 51.0/255.0, green: 65.0/255.0, blue: 105.0/255.0, alpha: 1.0)
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
@@ -31,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let defaults = NSUserDefaults.standardUserDefaults()
         if let stringOne = defaults.valueForKey("verifyUser") as? String {
             if stringOne == "Verified" {
+                
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let initialViewController = storyboard.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
                 self.window?.rootViewController = initialViewController
@@ -49,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        print("Err")
+       
     }
 
     func applicationWillResignActive(application: UIApplication) {

@@ -25,15 +25,20 @@ class VerifyPhoneNumberController {
         
     }
     //Giap: Check phone number and send verify code
-    func SendVerifyPhoneNumber (deviceID:String,completionHandler:(JSON) -> Void){
+    func SendVerifyPhoneNumber (deviceID:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
+        print("Phone Number ----",phoneNumber)
+        let removedChar = phoneNumber.removeAtIndex(phoneNumber.startIndex)
+        print("Phone Number ----",removedChar)
+         print("Phone Number ----",phoneNumber)
+        
         let parameters = [
             "data": [
-                "phone":"+84988880682",
+                "phone":"+61"+phoneNumber,
                 "deviceId":deviceID,
                 "deviceType": "ios"
             ]
         ]
-        Alamofire.request(.POST, config.Http + UrlAPICheckPhoneNumber.SendVerifyCodePhoneNumber.rawValue , parameters: parameters).responseJSON{
+        Alamofire.request(.POST, ConfigurationSystem.Http + UrlAPICheckPhoneNumber.SendVerifyCodePhoneNumber , parameters: parameters).responseJSON{
             request, response, result  in
             switch result {
             case .Success(let JSONData):
@@ -58,7 +63,7 @@ class VerifyPhoneNumberController {
                 "deviceType": "ios"
             ]
         ]
-        Alamofire.request(.POST, config.Http + UrlAPICheckPhoneNumber.CheckVerifyCode.rawValue , parameters: parameters).responseJSON{
+        Alamofire.request(.POST, ConfigurationSystem.Http + UrlAPICheckPhoneNumber.CheckVerifyCode , parameters: parameters).responseJSON{
             request, response, result in
             switch result {
             case .Success(let JSONData):
@@ -82,7 +87,7 @@ class VerifyPhoneNumberController {
                 "uid" : UUID
             ]
         ]
-        Alamofire.request(.POST, config.Http + UrlInformationPatient.getInformationPatientByUID.rawValue ,headers:config.headers, parameters: parameters).responseJSON{
+        Alamofire.request(.POST, ConfigurationSystem.Http + UrlInformationPatient.getInformationPatientByUID ,headers:config.headers, parameters: parameters).responseJSON{
             request, response, result in
             switch result {
             case .Success(let JSONData):

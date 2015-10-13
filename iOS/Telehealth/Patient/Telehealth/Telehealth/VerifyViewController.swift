@@ -82,8 +82,10 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                     if response["TimeOut"] ==  "Request Time Out" {
                         self.alertMessage("Error", message: "Request Time Out")
                     }else {
-                        let message : String = String(response["message"]["message"])
+                        let message : String = String(response["message"])
+                        self.textFieldVerifyCode.text = ""
                         self.alertMessage("Error", message: message)
+                        
                     }
                     
                 }

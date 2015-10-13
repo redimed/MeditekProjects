@@ -16,7 +16,9 @@ var tokens = String()
 
 
 struct ConfigurationSystem {
+
     static let Http = "http://testapp.redimed.com.au:3009"
+
     let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
     
     let headers = [

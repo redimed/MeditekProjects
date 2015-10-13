@@ -12,6 +12,6 @@ import Socket_IO_Client_Swift
 class Singleton_SocketManager:UIViewController {
     static let shareInstance = Singleton_SocketManager()
     let socket = SocketIOClient(socketURL: ConfigurationSystem.Http,opts: ["connectParams": ["__sails_io_sdk_version": "0.11.0"]])
-    
+
 }
 let sharedSocket = Singleton_SocketManager()

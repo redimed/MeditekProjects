@@ -45,7 +45,7 @@ class AnswerCallViewController: UIViewController {
     @IBAction func btnEndCallAction(sender: AnyObject) {
         
         emitDataToServer(MessageString.Decline)
-        
+
         //Change to home view
         let HomeController = storyboard?.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
         presentViewController(HomeController, animated: true, completion: nil)

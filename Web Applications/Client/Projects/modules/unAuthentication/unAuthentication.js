@@ -29,6 +29,7 @@ app.config(function($stateProvider,$urlRouterProvider){
 			views: {
 				'main-content': {
 					templateUrl: 'modules/unAuthentication/views/register.html',
+					controller: 'registerCtrl'
 
 				}
 			}

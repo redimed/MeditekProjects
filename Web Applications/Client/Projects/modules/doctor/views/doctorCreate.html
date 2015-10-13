@@ -13,205 +13,261 @@
 	</ul>
 </div>
 <!-- END PAGE HEADER-->
-
-<!-- BEGIN Portlet PORTLET-->
-<div class="portlet light bordered">
-	<div class="portlet-title tabbable-line">
-		<div class="caption">
-			<i class="icon-pin font-green"></i>
-			<span class="caption-subject bold font-green uppercase">Create New Doctor </span>
-		</div>
-		<div class="actions">
-			<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
-		</div>
-	</div>
-	<div class="portlet-body form">
-		<form class="form-horizontal" role="form">
-			<div class="form-body">
-				<div class="tab-content">
-					<div class="tabbable">
-						<!-- header tab -->
-						<ul class="nav nav-tabs nav-tabs-lg">
-							<li class="active">
-								<a href="index.html#Personal_info" data-toggle="tab" aria-expanded="true">Personal Information </a>
-							</li>
-							<li class="">
-								<a href="index.html#Specialist_info" data-toggle="tab" aria-expanded="false">Specialist Information </a>
-							</li>
-						</ul>
-						<!-- end header tab -->
-						<!-- content tab -->
-						<div class="tab-content">
-							<div class="tab-pane active" id="Personal_info">
-								<div style="margin:3em;">
-									<div class="row">
-										<!-- Begin First name -->
-										<div class="form-group">
-											<label class="control-label col-md-3">First Name</label>
-											<div class="col-md-4">
-												<input type="text" class="form-control" placeholder="First Name">
-											</div>
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+	<div class="col-md-12">
+		<div class="portlet light bordered" id="form_wizard_1">
+			<div class="portlet-title">
+				<div class="caption font-green">
+					<i class="fa fa-plus-circle font-green"></i> Create New Doctor - <span class="step-title">Step 1 of 2 </span>
+				</div>
+				<div class="tools hidden-xs">
+					<a href="javascript:;" class="collapse"></a>
+				</div>
+			</div>
+			<div class="portlet-body form">
+				<form action="#" class="form-horizontal" id="submit_form" method="POST">
+					<div class="form-wizard">
+						<div class="form-body">
+							<ul class="nav nav-pills nav-justified steps">
+								<li>
+									<a href="#tab1" data-toggle="tab" class="step">
+									<span class="number">1 </span>
+									<span class="desc">
+									<i class="fa fa-check"></i> Check Phone </span>
+									</a>
+								</li>
+								<li>
+									<a href="#tab2" data-toggle="tab" class="step">
+									<span class="number">2 </span>
+									<span class="desc">
+									<i class="fa fa-check"></i> Personal Information </span>
+									</a>
+								</li>
+								<li>
+									<a href="#tab3" data-toggle="tab" class="step">
+									<span class="number">3 </span>
+									<span class="desc">
+									<i class="fa fa-check"></i> Specialist Information </span>
+									</a>
+								</li>
+							</ul>
+							<div id="bar" class="progress progress-striped active" role="progressbar">
+								<div class="progress-bar progress-bar-success"></div>
+							</div>
+							<div class="tab-content">
+								<div class="alert alert-danger display-none">
+									<button class="close" data-dismiss="alert"></button>
+									You have some form errors. Please check below.
+								</div>
+								<div class="alert alert-success display-none">
+									<button class="close" data-dismiss="alert"></button>
+									Your form validation is successful!
+								</div>
+								<div class="tab-pane active" id="tab1">
+									<!-- Begin Firstname -->
+									<div class="form-group">
+										<label class="control-label col-md-3">Firstname</label>
+										<div class="col-md-4">
+											<input type="text" class="form-control" placeholder="Firstname">
 										</div>
-										<!-- End First name -->
-										<!-- Begin Middle name -->
-										<div class="form-group">
-											<label class="control-label col-md-3">Middle Name</label>
-											<div class="col-md-4">
-												<input type="text" class="form-control" placeholder="Middle Name">
-											</div>
-										</div>
-										<!-- End Middle name -->
-										<!-- Begin Sur name -->
-											<div class="form-group ">
-												<label class="control-label col-md-3">Sur Name</label>
-												<div class="col-md-4">
-													<input type="text" class="form-control" placeholder="Sur Name">
-												</div>
-											</div>
-										<!-- End Sur name -->
-										<!-- Begin Address -->
+									</div>
+									<!-- End Firstname -->
+									<!-- Begin Surname -->
 										<div class="form-group ">
-											<label class="control-label col-md-3">Address</label>
+											<label class="control-label col-md-3">Surname</label>
 											<div class="col-md-4">
-												<div class="input-icon">
-													<i class="fa  fa-paper-plane"></i>
-													<input type="text" class="form-control" placeholder="Address">
-												</div>
+												<input type="text" class="form-control" placeholder="Surname">
 											</div>
 										</div>
-										<!-- End Address -->
-										<!-- begin Email -->
-										<div class="form-group">
-											<label class="control-label col-md-3">Email</label>
-											<div class="col-md-4">
-												<div class="input-icon">
-													<i class="fa fa-envelope"></i>
-													<input type="text" class="form-control" placeholder="Email">
-												</div>
+									<!-- End Surname -->
+									<!-- begin MobilePhone -->
+									<div class="form-group">
+										<label class="control-label col-md-3">MobilePhone</label>
+										<div class="col-md-4">
+											<div class="input-icon">
+												<i class="icon-call-end"></i>
+												<input type="text" class="form-control" placeholder="MobilePhone">
 											</div>
 										</div>
-										<!-- end Email -->
-										<!-- begin Phone -->
-										<div class="form-group">
-											<label class="control-label col-md-3">Phone</label>
-											<div class="col-md-4">
-												<div class="input-icon">
-													<i class="icon-call-end"></i>
-													<input type="text" class="form-control" placeholder="Phone">
+									</div>
+									<!-- end MobilePhone -->
+								</div>
+								<div class="tab-pane" id="tab2">
+									<div style="margin:3em;">
+										<div class="row">
+											<!-- Begin First name -->
+											<div class="form-group">
+												<label class="control-label col-md-3">First Name</label>
+												<div class="col-md-4">
+													<input type="text" class="form-control" placeholder="First Name">
 												</div>
 											</div>
-										</div>
-										<!-- end Phone -->
-										<!-- begin Postcode -->
-										<div class="form-group">
-											<label class="control-label col-md-3">Post Code</label>
-											<div class="col-md-4">
-												<div class="input-icon">
-													<i class="icon-call-end"></i>
+											<!-- End First name -->
+											<!-- Begin Middle name -->
+											<div class="form-group">
+												<label class="control-label col-md-3">Middle Name</label>
+												<div class="col-md-4">
+													<input type="text" class="form-control" placeholder="Middle Name">
+												</div>
+											</div>
+											<!-- End Middle name -->
+											<!-- Begin Sur name -->
+												<div class="form-group ">
+													<label class="control-label col-md-3">Sur Name</label>
+													<div class="col-md-4">
+														<input type="text" class="form-control" placeholder="Sur Name">
+													</div>
+												</div>
+											<!-- End Sur name -->
+											<!-- Begin Address -->
+											<div class="form-group ">
+												<label class="control-label col-md-3">Address</label>
+												<div class="col-md-4">
+													<div class="input-icon">
+														<i class="fa  fa-paper-plane"></i>
+														<input type="text" class="form-control" placeholder="Address">
+													</div>
+												</div>
+											</div>
+											<!-- End Address -->
+											<!-- begin Email -->
+											<div class="form-group">
+												<label class="control-label col-md-3">Email</label>
+												<div class="col-md-4">
+													<div class="input-icon">
+														<i class="fa fa-envelope"></i>
+														<input type="text" class="form-control" placeholder="Email">
+													</div>
+												</div>
+											</div>
+											<!-- end Email -->
+											<!-- begin Homephone -->
+											<div class="form-group">
+												<label class="control-label col-md-3">Homephone</label>
+												<div class="col-md-4">
+													<div class="input-icon">
+														<i class="icon-call-end"></i>
+														<input type="text" class="form-control" placeholder="Homephone">
+													</div>
+												</div>
+											</div>
+											<!-- end Homephone -->
+											<!-- begin Postcode -->
+											<div class="form-group">
+												<label class="control-label col-md-3">Post Code</label>
+												<div class="col-md-4">
 													<input type="text" class="form-control" placeholder="Post Code">
 												</div>
 											</div>
-										</div>
-										<!-- end Postcode -->
-										<!-- Healthlink ID -->
-										<div class="form-group">
-											<label class="control-label col-md-3">Healthlink ID</label>
-											<div class="col-md-4">
-												<input type="text" placeholder="Healthlink ID" class="form-control">
+											<!-- end Postcode -->
+											<!-- Healthlink ID -->
+											<div class="form-group">
+												<label class="control-label col-md-3">Healthlink ID</label>
+												<div class="col-md-4">
+													<input type="text" placeholder="Healthlink ID" class="form-control">
+												</div>
 											</div>
+											<!-- End Healthlink ID -->
 										</div>
-										<!-- End Healthlink ID -->
 									</div>
 								</div>
-							</div>
-							<div class="tab-pane" id="Specialist_info">
-								<div style="margin:3em;">
-									<div class="row">
-										<!-- Begin Enable -->
-										<div class="form-group">
-											<label class="control-label col-md-3">Enable</label>
-											<div class="col-md-4">
-												<div class="form-control" style="border: none;">
-													<label class="label-control my-checkbox">
-												      <input type="checkbox">
-												    </label>
+								<div class="tab-pane" id="tab3">
+									<div style="margin:3em;">
+										<div class="row">
+											<!-- Begin Enable -->
+											<div class="form-group">
+												<label class="control-label col-md-3">Enable</label>
+												<div class="col-md-4">
+													<div class="form-control" style="border: none;">
+														<label class="label-control my-checkbox">
+													      <input type="checkbox" class="icheck">
+													    </label>
+													</div>
 												</div>
 											</div>
-										</div>
-										<!-- End Enable -->
-										<!--  Clinical Department-->
-										<div class="form-group">
-											<label class="control-label col-md-3">Clinical Department</label>
-											<div class="col-md-4">
-												<select class="form-control">
-													<option value=""></option>
-													<option value="1">Doctor</option>
-													<option value="2">Dept</option>
-													<option value="3">Physio</option>
-												</select>
-											</div>
-										</div>
-										<!-- end Clinical Department -->
-										<!-- Provider Number -->
-										<div class="form-group">
-											<label class="control-label col-md-3">Provider Number</label>
-											<div class="col-md-4">
-												<input type="text" placeholder="Provider Number" class="form-control">
-											</div>
-										</div>
-										<!-- Provider Number -->
-										<!-- Type -->
-										<div class="form-group">
-											<label class="control-label col-md-3">Type</label>
-											<div class="col-md-4">
-												<select class="form-control">
-													<option value="GP">GP</option>
-												</select>
-											</div>
-										</div>
-										<!-- End Type -->
-										<!-- signature -->
-										<div class="form-group">
-											<label class="control-label col-md-3">Signature</label>
-											<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
-												<div>
-													<span class="btn green btn-file">
-													<span class="fileinput-new">
-													Select Image </span>
-													<span class="fileinput-exists">
-													Change </span>
-													<input type="file" name="...">
-													</span>
-													<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-													Remove </a>
+											<!-- End Enable -->
+											<!--  Clinical Department-->
+											<div class="form-group">
+												<label class="control-label col-md-3">Clinical Department</label>
+												<div class="col-md-4">
+													<select class="form-control">
+														<option value=""></option>
+														<option value="1">Doctor</option>
+														<option value="2">Dept</option>
+														<option value="3">Physio</option>
+													</select>
 												</div>
-												<br>
-												<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 500px; height: 150px;"></div>
 											</div>
-											<div class="clearfix margin-top-10"></div>
+											<!-- end Clinical Department -->
+											<!-- Provider Number -->
+											<div class="form-group">
+												<label class="control-label col-md-3">Provider Number</label>
+												<div class="col-md-4">
+													<input type="text" placeholder="Provider Number" class="form-control">
+												</div>
+											</div>
+											<!-- Provider Number -->
+											<!-- Type -->
+											<div class="form-group">
+												<label class="control-label col-md-3">Type</label>
+												<div class="col-md-4">
+													<select class="form-control">
+														<option value="GP">GP</option>
+													</select>
+												</div>
+											</div>
+											<!-- End Type -->
+											<!-- signature -->
+											<div class="form-group">
+												<label class="control-label col-md-3">Signature</label>
+												<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
+													<div>
+														<span class="btn green btn-file">
+														<span class="fileinput-new">
+														Select Image </span>
+														<span class="fileinput-exists">
+														Change </span>
+														<input type="file" name="...">
+														</span>
+														<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+														Remove </a>
+													</div>
+													<br>
+													<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 500px; height: 150px;"></div>
+												</div>
+												<div class="clearfix margin-top-10"></div>
+											</div>
+											<!-- end signature -->
 										</div>
-										<!-- end signature -->
 									</div>
 								</div>
 							</div>
 						</div>
-						<!-- end content tab -->
+						<div class="form-actions">
+							<div class="row">
+								<div class="col-md-offset-4 col-md-9">
+									<a href="javascript:;" class="btn default button-previous">
+									<i class="m-icon-swapleft"></i> Back </a>
+									<a href="javascript:;" class="btn blue button-next">
+									Continue <i class="m-icon-swapright m-icon-white"></i>
+									</a>
+									<a href="javascript:;" class="btn green button-submit">
+									Create <i class="m-icon-swapright m-icon-white"></i>
+									</a>
+								</div>
+							</div>
+						</div>
 					</div>
-				</div>
+				</form>
 			</div>
-			<div class="form-actions">
-				<div class="row">
-					<div class="col-md-offset-3 col-md-9">
-						<a class="btn default" ui-sref="authentication.doctor.list"><i class="icon-arrow-left"></i> Cancel</a>
-						<a class="btn green"><i class="glyphicon glyphicon-save"></i> Create</a>
-					</div>
-				</div>
-			</div>
-		</form>
+		</div>
 	</div>
 </div>
+<!-- END PAGE CONTENT-->
 
-<script>
-	Metronic.initAjax();
+
+<script type="text/javascript">
+Metronic.setAssetsPath('theme/assets/'); // Set the assets folder path	
+FormWizard.init(); // form step
 </script>
-

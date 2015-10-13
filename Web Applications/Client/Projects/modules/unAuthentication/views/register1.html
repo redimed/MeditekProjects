@@ -1,0 +1,116 @@
+<form class="register-form" role="form">
+	<h3>Sign Up</h3>
+	<p>
+		 Enter your personal details below:
+	</p>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="txtFirstName" class="control-label visible-ie8 visible-ie9">First Name</label>
+            <div class="input-icon">
+				<i class="fa fa-font"></i>
+				<input type="input" class="form-control placeholder-no-fix" id="txtFirstName" placeholder="First Name">
+			</div>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="txtLastName" class="control-label visible-ie8 visible-ie9">Last Name</label>
+            <div class="input-icon">
+				<i class="fa fa-font"></i>
+				<input type="input" class="form-control placeholder-no-fix" id="txtLastName" placeholder="Last Name">
+			</div>
+        </div>
+    </div> 
+  
+   <div class="form-group">
+	   <label for="txtEmail" class="control-label visible-ie8 visible-ie9">Email Address</label>
+		<div class="input-icon">
+			<i class="fa fa-envelope"></i>
+			<input id="txtEmail" class="form-control placeholder-no-fix" type="text" placeholder="Email" name="txtEmail"/>
+		</div>
+	</div>
+  
+	<div class="row">  
+	    <div class="form-group col-md-6">
+	       <label class="control-label visible-ie8 visible-ie9">Healthlink ID</label>
+			<div class="input-icon">
+				<i class="fa fa-location-arrow"></i>
+				<input id="txtHealthlinkID" class="form-control placeholder-no-fix" type="text" placeholder="Healthlink ID"/>
+			</div>
+	    </div>
+	    <div class="form-group col-md-6">
+	        <label class="control-label visible-ie8 visible-ie9">Postcode</label>
+			<div class="input-icon">
+				<i class="fa fa-location-arrow"></i>
+				<input id="txtPostcode" class="form-control placeholder-no-fix" type="text" placeholder="Postcode" />
+			</div>
+	    </div>
+	</div>
+  
+	<div class="form-group">
+		<label class="control-label visible-ie8 visible-ie9">Address</label>
+		<div class="input-icon">
+			<i class="fa fa-check"></i>
+			<input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address"/>
+		</div>
+	</div>
+
+	<div class="row">
+	    <div class="form-group col-md-6" >
+	       <label for="txtTelephone" class="control-label visible-ie8 visible-ie9">Telephone</label>
+	       <div class="input-icon">
+				<i class="fa fa-mobile"></i>
+	       		<input type="input" class="form-control placeholder-no-fix" id="txtTelephone" placeholder="Telephone">
+	       	</div>
+	    </div>
+	    <div class="form-group col-md-6">
+	        <label for="txtProviderNumber" class="control-label visible-ie8 visible-ie9">Provider Number</label>
+	        <div class="input-icon">
+				<i class="fa fa-star-o"></i>
+	       		<input type="input" class="form-control placeholder-no-fix" id="txtProviderNumber" placeholder="Provider Number">
+	       	</div>
+	    </div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group ">
+				<div class="fileinput fileinput-new" data-provides="fileinput">
+					<div>
+						<span class="btn green btn-file">
+						<span class="fileinput-new">
+						Signature </span>
+						<span class="fileinput-exists">
+						Change </span>
+						<input type="file" name="...">
+						</span>
+						<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+						Remove </a>
+					</div>
+					<br>
+					<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 400px; height: 150px;">
+					</div>
+				</div>
+				<div class="clearfix margin-top-10">
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="form-actions">
+        <a href="" id="register-back-btn" class="btn btn-default pull" ui-sref="unAuthentication.login">
+            <i class="m-icon-swapleft"></i> Cancel 
+        </a>
+         <button type="submit" id="register-submit-btn" class="btn green pull-right">
+            Register <i class="m-icon-swapright m-icon-white"></i>
+        </button>
+    </div>
+</form>
+
+<style type="text/css">
+    .login .content{
+        width: 35% !important; 
+    }
+</style>
+
+<script>
+Login.init();
+</script>
+

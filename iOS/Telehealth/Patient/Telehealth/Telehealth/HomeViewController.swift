@@ -34,7 +34,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             sharedSocket.socket.on("connect") {data, ack in
                 print("socket connected")
                 print("\(self.uid)")
-                let modifieldURLString = NSString(format: UrlAPISocket.joinRoom.rawValue, self.uid) as String
+                let modifieldURLString = NSString(format: UrlAPISocket.joinRoom, self.uid) as String
                 let dictionNary : NSDictionary = ["url": modifieldURLString]
                 sharedSocket.socket.emit("get", dictionNary)
             }

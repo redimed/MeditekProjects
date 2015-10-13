@@ -13,6 +13,7 @@ class AnswerCallViewController: UIViewController {
     var uuidFrom = String()
     var uuidTo = String()
     
+    @IBOutlet weak var userCallingLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         //get UUID to
@@ -22,6 +23,8 @@ class AnswerCallViewController: UIViewController {
             uuidFrom = uuid
             
         }
+        
+        userCallingLabel.text = savedData.data[0]["fromName"].string
         
         
     }
@@ -33,7 +36,7 @@ class AnswerCallViewController: UIViewController {
     //Giap: Action handle Answer
     @IBAction func btnAnswerAction(sender: AnyObject) {
         
-        emitDataToServer(MessageString.CallAnswer.rawValue)
+        emitDataToServer(MessageString.CallAnswer)
         
         performSegueWithIdentifier("CallingSegue", sender: self)
         
@@ -41,7 +44,7 @@ class AnswerCallViewController: UIViewController {
     //Giap: Action handle Cancel Call
     @IBAction func btnEndCallAction(sender: AnyObject) {
         
-        emitDataToServer(MessageString.CallEndCall.rawValue)
+        emitDataToServer(MessageString.Decline)
         
         //Change to home view
         let HomeController = storyboard?.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
@@ -51,7 +54,7 @@ class AnswerCallViewController: UIViewController {
     
     //Giap: Func handle emit socket to server 2 message : Answer or EndCall
     func emitDataToServer(message:String){
-        let modifieldURLString = NSString(format: UrlAPISocket.emitAnswer.rawValue,self.uuidFrom,self.uuidTo,message) as String
+        let modifieldURLString = NSString(format: UrlAPISocket.emitAnswer,self.uuidFrom,self.uuidTo,message) as String
         let dictionNary : NSDictionary = ["url": modifieldURLString]
         sharedSocket.socket.emit("get", dictionNary)
     }

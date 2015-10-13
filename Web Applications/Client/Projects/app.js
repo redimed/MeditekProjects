@@ -118,7 +118,7 @@ app
 
 		$rootScope.$on('$viewContentLoaded', function() {
 	        Metronic.initAjax();
-		ComponentsDropdowns.init(); // init todo page
+		      ComponentsDropdowns.init(); // init todo page
 	    });
 	})
 

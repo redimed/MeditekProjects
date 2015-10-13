@@ -5,20 +5,14 @@ var appts = [];
 function checkOnlineUser() {
     var list = sails.sockets.rooms();
     if (appts.length > 0 && list.length > 0) {
-        for (var i = 0; i < list.length; i++) {
-            if (list[i].indexOf(":") != -1) {
-                var data = list[i].split(':');
-                for (var j = 0; j < appts.length; j++) {
-                    var appt = appts[j];
-                    if (appt.Patients[0].UserAccount.PhoneNumber == data[1]) {
-                        appt.TeleUID = data[0]
-                        appt.IsOnline = true;
-                    }
-                }
+        for (var j = 0; j < appts.length; j++) {
+            var appt = appts[j];
+            appt.IsOnline = 0;
+            for (var i = 0; i < list.length; i++) {
+                if (appt.TeleUID == list[i]) appt.IsOnline = 1;
             }
         }
     }
-    console.log("====Online====: ",appts);
     sails.sockets.blast('online_users', appts);
 }
 module.exports = {
@@ -29,9 +23,6 @@ module.exports = {
             }
         });
     },
-    GetAppointments: function(){
-        return appts;
-    },
     GetAppointmentList: function() {
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-list',
@@ -40,7 +31,7 @@ module.exports = {
                 data: {
                     Filter: [{
                         Appointment: {
-                            FromTime: "2015-10-10",
+                            FromTime: sails.moment().format('YYYY-MM-DD'),
                             status: "Approved"
                         }
                     }]
@@ -52,6 +43,20 @@ module.exports = {
         if (appts.length == 0) {
             TelehealthService.GetAppointmentList().then(function(response) {
                 appts = response.getBody();
+                if (appts.length > 0) {
+                    TelehealthUser.findAll().then(function(teleUsers) {
+                        for (var i = 0; i < teleUsers.length; i++) {
+                            for (var j = 0; j < appts.length; j++) {
+                                if (teleUsers[i].userAccountID == appts[j].Patients[0].UserAccount.ID) {
+                                    appts[j].IsOnline = 0;
+                                    appts[j].TeleUID = teleUsers[i].UID;
+                                }
+                            }
+                        }
+                    }).catch(function(err) {
+                        console.log(err);
+                    })
+                }
                 checkOnlineUser();
             }).catch(function(err) {
                 appts = [];

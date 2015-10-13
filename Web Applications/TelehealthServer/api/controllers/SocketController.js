@@ -16,12 +16,9 @@ module.exports = {
         if (uid != null) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 if (teleUser) {
-                    teleUser.getUserAccount().then(function(user) {
-                        sails.sockets.join(req.socket, uid + ":" + user.phoneNumber);
-                        sails.sockets.leave(req.socket, req.socket.id);
-                        console.log("=====Join Rooms=====: ", uid + ":" + user.phoneNumber);
-                        TelehealthService.GetOnlineUsers();
-                    })
+                    sails.sockets.join(req.socket, uid);
+                    sails.sockets.leave(req.socket, req.socket.id);
+                    TelehealthService.GetOnlineUsers();
                 } else sails.sockets.emit(req.socket, 'errorMsg', {
                     msg: 'User Not Exist!'
                 });
@@ -43,23 +40,18 @@ module.exports = {
             return;
         }
         var from = typeof req.param('from') != 'undefined' ? req.param('from') : null;
-        var fromName = typeof req.param('fromName') != 'undefined' ? req.param('fromName') : null;
         var to = typeof req.param('to') != 'undefined' ? req.param('to') : null;
         var message = typeof req.param('message') != 'undefined' ? req.param('message') : null;
-        console.log("====From======: ", from);
-        console.log("====To========: ", to);
-        console.log("====Message====: ", message);
         var data = {};
         if (message == null || from == null || to == null) return;
-        var appts = TelehealthService.GetAppointments();
-        if (appts.length > 0) {
-            for (var i = 0; i < appts.length; i++) {
-                var appt = appts[i];
-                if (appt.TeleUID == to && appt.IsOnline) {
+        var roomList = sails.sockets.rooms();
+        if(roomList.length > 0){
+            for(var i=0; i<roomList.length; i++){
+                if(roomList[i] == to){
                     data.from = from;
-                    data.fromName = fromName;
                     data.message = message;
-                    if (message.toLowerCase() == 'call') {
+                     if (message.toLowerCase() == 'call') {
+                        var fromName = typeof req.param('fromName') != 'undefined' ? req.param('fromName') : null;
                         var sessionId = typeof req.param('sessionId') != 'undefined' ? req.param('sessionId') : null;
                         if (sessionId == null) return;
                         var sessionId = req.param('sessionId');
@@ -70,9 +62,10 @@ module.exports = {
                         data.apiKey = config.OpentokAPIKey;
                         data.sessionId = sessionId;
                         data.token = token;
+                        data.fromName = fromName;
                     }
-                    console.log("======data======: ", data);
-                    sails.sockets.broadcast(to + ":" + appt.Patients[0].UserAccount.PhoneNumber, 'receiveMessage', data);
+                    console.log("====Data====: ",data);
+                    sails.sockets.broadcast(roomList[i], 'receiveMessage', data);
                 }
             }
         }

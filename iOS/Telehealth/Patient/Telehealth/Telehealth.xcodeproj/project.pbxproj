@@ -103,7 +103,6 @@
 		16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
 		AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
 		AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionHandleData.swift; sourceTree = "<group>"; };
-		AF78A2F71BC3682B003E4E98 /* test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mp4; sourceTree = "<group>"; };
 		AF943FF01BBA6221003F3B07 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = "../../../../../OpenTok-iOS-2.6.0/OpenTok.framework"; sourceTree = "<group>"; };
 		AF943FF21BBA6376003F3B07 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		AF943FF41BBA637F003F3B07 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -272,7 +271,6 @@
 			isa = PBXGroup;
 			children = (
 				AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */,
-				AF78A2F71BC3682B003E4E98 /* test.mp4 */,
 			);
 			name = Sources;
 			sourceTree = "<group>";

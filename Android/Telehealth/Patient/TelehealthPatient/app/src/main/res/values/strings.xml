@@ -69,7 +69,7 @@
     <!-- Home Layout-->
     <string name="green_btn">Information</string>
     <string name="blue_btn">Telehealth</string>
-    <string name="orange_btn">FAQ</string>
+    <string name="orange_btn">FAQs</string>
     <string name="red_btn">Contact</string>
 
 </resources>

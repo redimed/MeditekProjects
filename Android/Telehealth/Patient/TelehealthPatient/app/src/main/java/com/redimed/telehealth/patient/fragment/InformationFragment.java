@@ -19,19 +19,18 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
 
-import org.w3c.dom.Text;
-
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -95,7 +94,7 @@ public class InformationFragment extends Fragment implements View.OnClickListene
         restClient = RESTClient.getRegisterApi();
         ButterKnife.bind(this, v);
 
-        dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         layoutProfile.setOnTouchListener(this);
 
@@ -119,25 +118,35 @@ public class InformationFragment extends Fragment implements View.OnClickListene
         SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("PatientInfo", v.getContext().MODE_PRIVATE);
         gson = new Gson();
         patients = gson.fromJson(sharedPreferences.getString("info", null), Patient[].class);
-
+        String DOB = "N/A";
         for (int i = 0; i < patients.length; i++){
-            if (patients[i] == null) {
-                txtFirstName.setText(patients[i].toString());
-                txtLastName.setText(patients[i].toString());
-                txtPhone.setText(patients[i].toString());
-                txtEmail.setText(patients[i].toString());
-                txtDOB.setText(patients[i].toString());
-//                txtAddress1.setText(patients[i].toString());
-//                txtAddress2.setText(patients[i].toString());
-            }
+            txtFirstName.setText(patients[i].getFirstName() == null ? "NONE" : patients[i].getFirstName());
+            txtLastName.setText(patients[i].getLastName() == null ? "NONE" : patients[i].getLastName());
+            txtPhone.setText(patients[i].getUserAccount().getPhoneNumber() == null ? "NONE" : patients[i].getUserAccount().getPhoneNumber());
+            txtEmail.setText(patients[i].getEmail() == null ? "NONE" : patients[i].getEmail());
+//            try {
+                if (patients[i].getDOB() != null) {
+                    DOB = patients[i].getDOB().substring(0, 10);
+//                    Date convertedDate = dateFormat.parse(patients[i].getDOB());
+//                    dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+//                    DOB = dateFormat.format(convertedDate).toString();
+//                    Log.d(TAG, convertedDate.toString());
+                }
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+            txtDOB.setText(DOB);
+
+            txtAddress1.setText(patients[i].getAddress1() == null ? "NONE" : patients[i].getAddress1());
+            txtAddress2.setText(patients[i].getAddress2() == null ? "NONE" : patients[i].getAddress2());
         }
-}
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnSubmit:
-                new Intent(v.getContext(), MainActivity.class);
+                startActivity(new Intent(v.getContext(), MainActivity.class));
                 break;
             case R.id.txtDOB:
                 DisplayDatePickerDialog();

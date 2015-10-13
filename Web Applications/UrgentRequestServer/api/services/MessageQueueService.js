@@ -46,7 +46,7 @@ module.exports = {
                             companyName: UR.companyName,
                             companyPhoneNumber: UR.companyPhoneNumber,
                             contactPerson: UR.contactPerson,
-                            bcc: 'pnguyen@redimed.com.au, thanh1101681@gmail.com'
+                            bcc: 'pnguyen@redimed.com.au, meditekcompany@gmail.com'
                         };
                         var CallBackSendMail = function(err, responseStatus, html, text) {
                                 if (err) {
@@ -94,7 +94,8 @@ module.exports = {
                                                 return fn(err);
                                             } else {
                                                 UrgentRequest.update({
-                                                        tried: UR.tried
+                                                        tried: UR.tried,
+                                                        UID: UR.UID
                                                     }, {
                                                         tried: UR.tried + 1
                                                     })

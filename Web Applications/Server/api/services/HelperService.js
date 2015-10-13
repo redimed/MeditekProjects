@@ -266,4 +266,18 @@ module.exports = {
         
     },
 
+    /*
+        get-listcountry: lay danh sach country 
+    */
+    getListCountry : function() {
+        return Country.findAll({})
+        .then(function(result){
+            return result;
+        }, function(err) {
+            var error = new Error("getListCountry.error");
+            error.pushErrors("Country.findAll.error");
+            throw error;
+        })
+    }
+
 }

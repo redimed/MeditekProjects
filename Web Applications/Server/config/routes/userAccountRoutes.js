@@ -1,8 +1,16 @@
-module.exports={
-	'get /api/user-account/test':{
-		controller:'UserAccount/UserAccountController',
-		action:'Test'
-	},
+var api=require('../../api/services/api');
+var Routes={
+	// 'get /api/user-account/test':{
+	// 	controller:'UserAccount/UserAccountController',
+	// 	action:'Test',
+	// 	// policy:'hasToken'
+	// },
+	
+	// api.make(api.method.get,api.version.0_1, '/user-account/test'):{
+	// 	controller:'UserAccount/UserAccountController',
+	// 	action:'Test',
+	// 	// policy:'hasToken'
+	// },
 
 	'post /api/user-account/testPost':{
 		controller:'UserAccount/UserAccountController',
@@ -86,4 +94,12 @@ module.exports={
     'get /testGp':'TestController.testGp',
     'get /testDoctor':'TestController.testDoctor',
     'get /testPatient':'TestController.testPatient',
-}
+
+};
+
+Routes[api.make(api.method.get,api.version.v0_2, '/user-account','/test')]={
+	controller:'UserAccount/UserAccountController',
+	action:'v2Test',
+	policy:'out'
+},
+module.exports=Routes;

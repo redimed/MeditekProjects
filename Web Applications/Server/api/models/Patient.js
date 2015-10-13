@@ -20,7 +20,10 @@ module.exports = {
         },
         FirstName: {
             type: Sequelize.STRING(50),
-            allowNull: true
+            allowNull: true,
+            validate:{
+                len:[0,5]
+            }
         },
         MiddleName: {
             type: Sequelize.STRING(100),

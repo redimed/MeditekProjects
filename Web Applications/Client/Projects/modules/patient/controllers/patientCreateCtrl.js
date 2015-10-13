@@ -3,6 +3,8 @@ var app = angular.module('app.authentication.patient.create.controller', [
 
 app.controller('patientCreateCtrl', function($scope, $modal, $state, PatientService, toastr){
 	console.log('patientCreateCtrl');
+	$scope.er={};
+	$scope.myStyle= {};
 	$scope.isShowNext=false;
 	$scope.Back = function() {
 		$scope.isShowNext=false;
@@ -28,8 +30,19 @@ app.controller('patientCreateCtrl', function($scope, $modal, $state, PatientServ
 					console.log(result.data);
 				}
 			}, function(err){
-				toastr.error(err,"ERROR");
-				console.log(err);
+				toastr.error("Please input correct information","ERROR");
+				console.log(err.data.message.ErrorsList);
+				for(var i = 0; i < err.data.message.ErrorsList.length;i++){
+					if(err.data.message.ErrorsList[i].field=="FirstName"){
+						$scope.er.FirstName = {'border': '2px solid #DCA7B0'};
+					}
+					if(err.data.message.ErrorsList[i].field=="LastName"){
+						$scope.er.LastName = {'border': '2px solid #DCA7B0'};
+					}
+					if(err.data.message.ErrorsList[i].field=="PhoneNumber"){
+						$scope.er.PhoneNumber = {'border': '2px solid #DCA7B0'};
+					}
+				}
 			});
 		}
 		else {

@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import SwiftyJSON
 
-let STRING_URL_SERVER = "http://192.168.1.130:3009"
+let STRING_URL_SERVER = "http://testapp.redimed.com.au:3009"
 
 let AUTHORIZATION = STRING_URL_SERVER + "/telehealth/user/login"
 
@@ -22,15 +21,45 @@ let TRANSFER_CALL = "/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@
 
 let JOIN_ROOM = "/telehealth/socket/joinRoom?phone=%@"
 
-func emitSocket(url: String, param: NSArray) -> NSDictionary {
+func emitSocket(url: String, parameters: [String: AnyObject]){
 
-    var URL = "\(url)"
-    for var i = 0; i < param.count; ++i {
-        let paramUrl = param[i] as! String
-        URL.appendContentsOf(paramUrl)
+    let parameterString = parameters.stringFromHttpParameters()
+    print(url)
+        print(parameterString)
+    let requestURL = NSURL(string:"\(url)?\(parameterString)")!
+    
+//    var URL = "\(url)"
+//    for var i = 0; i < param.count; ++i {
+//        let paramUrl = param[i] as! String
+//        URL.appendContentsOf(paramUrl)
+//    }
+//    let dictionNary : NSDictionary = ["url": URL]
+    print(requestURL)
+}
+
+extension String {
+    
+    func stringByAddingPercentEncodingForURLQueryValue() -> String? {
+        let characterSet = NSMutableCharacterSet.alphanumericCharacterSet()
+        characterSet.addCharactersInString("-._~")
+        
+        return self.stringByAddingPercentEncodingWithAllowedCharacters(characterSet)
     }
-    let dictionNary : NSDictionary = ["url": URL]
-    return dictionNary
+    
+}
+
+extension Dictionary {
+    
+    func stringFromHttpParameters() -> String {
+        let parameterArray = self.map { (key, value) -> String in
+            let percentEscapedKey = (key as! String).stringByAddingPercentEncodingForURLQueryValue()!
+            let percentEscapedValue = (value as! String).stringByAddingPercentEncodingForURLQueryValue()!
+            return "\(percentEscapedKey)=\(percentEscapedValue)"
+        }
+        
+        return parameterArray.joinWithSeparator("&")
+    }
+    
 }
 
 

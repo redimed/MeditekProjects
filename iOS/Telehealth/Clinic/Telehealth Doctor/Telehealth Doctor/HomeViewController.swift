@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class HomeViewController: UIViewController {
     
-//    let nsuserDefs = NSUserDefaults.standardUserDefaults().valueForKey("infoDoctor") as! NSDictionary
+//    let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("infoDoctor") as! NSDictionary
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,22 +27,31 @@ class HomeViewController: UIViewController {
             
             SingleTon.socket.on("connect") {data, ack in
                 print("SOCKET CONNECTED")
+                
+//                SingleTon.socket.emit("get", GET_ONLINE_USERS)
+//                let modURL = NSString(format: "/telehealth/socket/joinRoom?uid=%@", self.userDefaults["UID"] as! String)
+//                let dictionNary : NSDictionary = ["url": modURL]
+//                SingleTon.socket.emit("get", dictionNary)
             }
             
             SingleTon.socket.on("online_users") {data, ack in
                 let onlineUser = JSON(data[0])
-                print(onlineUser)
                 SingleTon.onlineUser_Singleton = []
                 for var i = 0; i < onlineUser.count ; ++i {
-//                    if(String(onlineUser[i]["uid"]) != String(self.nsuserDefs["UID"])) {
-                        SingleTon.onlineUser_Singleton.append(OnlineUsers(userId: "\(i+1)", numberPhone: String(onlineUser[i]["phone"]), UUID: String(onlineUser[i]["uid"])))
-//                    }
+                    let fullnamePatient = onlineUser[i]["Patients"][0]["FirstName"].stringValue + " " + onlineUser[i]["Patients"][0]["MiddleName"].stringValue + " " + onlineUser[i]["Patients"][0]["LastName"].stringValue
+                    let fullnameDoctor = onlineUser[i]["Doctors"][0]["FirstName"].stringValue + " " + onlineUser[i]["Doctors"][0]["MiddleName"].stringValue + " " + onlineUser[i]["Doctors"][0]["LastName"].stringValue
+                    SingleTon.onlineUser_Singleton.append(OnlineUsers(userId: "\(i+1)", fullNamePatient: fullnamePatient, fullNameDoctor: fullnameDoctor, requestDateAppoinment: onlineUser[i]["RequestDate"].stringValue, appoinmentDate: onlineUser[i]["FromTime"].stringValue, UID: onlineUser[i]["TeleUID"].stringValue, status: onlineUser[i]["IsOnline"].intValue))
                 }
                 NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTable", object: self)
             }
             
-            SingleTon.socket.on("answer") { data, ack in
-                
+            SingleTon.socket.on("receiveMessage") { data, ack in
+                let result = JSON(data[0])
+                NSNotificationCenter.defaultCenter().postNotificationName("handleCallNotification", object: nil, userInfo: ["message": result["message"].stringValue])
+            }
+            
+            SingleTon.socket.on("errorMsg") { data, ack in
+                debugPrint("error event: ", data)
             }
         })
         SingleTon.socket.connect()

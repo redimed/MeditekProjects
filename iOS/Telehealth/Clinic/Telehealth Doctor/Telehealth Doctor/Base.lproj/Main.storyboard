@@ -250,37 +250,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Patient" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7a4-Wb-wyY">
-                                <rect key="frame" x="71" y="64" width="164" height="55"/>
+                                <rect key="frame" x="120" y="64" width="164" height="55"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="25"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Doctor" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJt-Rf-CQ5">
-                                <rect key="frame" x="235" y="64" width="190" height="55"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Submit Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Les-cg-R27">
+                                <rect key="frame" x="514" y="64" width="140" height="55"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="25"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Les-cg-R27">
-                                <rect key="frame" x="425" y="64" width="147" height="55"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="25"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Action" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkS-SF-Tds">
-                                <rect key="frame" x="834" y="64" width="190" height="55"/>
+                                <rect key="frame" x="865" y="64" width="159" height="55"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="25"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Note" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="crN-dK-T0i">
-                                <rect key="frame" x="572" y="64" width="262" height="55"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Appointment Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="crN-dK-T0i">
+                                <rect key="frame" x="654" y="64" width="211" height="55"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="25"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -289,7 +282,7 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="60" id="rR7-1j-GiJ" customClass="AppointmentTableViewCell" customModule="Telehealth_Doctor" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell" rowHeight="60" id="rR7-1j-GiJ" customClass="AppointmentTableViewCell" customModule="Telehealth_Doctor" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="1024" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rR7-1j-GiJ" id="leD-Ue-lCy">
@@ -304,38 +297,33 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="doctor" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oRg-gg-Kdq">
-                                                    <rect key="frame" x="235" y="0.0" width="190" height="40"/>
+                                                    <rect key="frame" x="284" y="0.0" width="230" height="40"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQQ-UI-CNK">
-                                                    <rect key="frame" x="425" y="0.0" width="147" height="40"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="submit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQQ-UI-CNK">
+                                                    <rect key="frame" x="514" y="0.0" width="140" height="40"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="note" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Meo-h1-tvd">
-                                                    <rect key="frame" x="572" y="0.0" width="262" height="40"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="appointment" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Meo-h1-tvd">
+                                                    <rect key="frame" x="654" y="0.0" width="211" height="40"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="patient" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jlu-VQ-HUc">
-                                                    <rect key="frame" x="86" y="6" width="131" height="26"/>
+                                                    <rect key="frame" x="120" y="0.0" width="164" height="40"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYN-lb-3er">
-                                                    <rect key="frame" x="877" y="8" width="35" height="35"/>
-                                                    <animations/>
-                                                    <state key="normal" image="view-detail"/>
-                                                </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYX-V9-nql">
                                                     <rect key="frame" x="959" y="8" width="35" height="35"/>
                                                     <animations/>
@@ -344,17 +332,35 @@
                                                         <segue destination="3t3-LS-PAl" kind="push" identifier="callAction" id="TeP-02-v0U"/>
                                                     </connections>
                                                 </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kxC-Da-spr">
+                                                    <rect key="frame" x="68" y="12" width="20" height="20"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="30"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYN-lb-3er">
+                                                    <rect key="frame" x="896" y="8" width="35" height="35"/>
+                                                    <animations/>
+                                                    <state key="normal" image="view-detail"/>
+                                                </button>
                                             </subviews>
                                             <animations/>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
+                                            <outlet property="appoinmentDate" destination="Meo-h1-tvd" id="zqm-gY-T3Q"/>
                                             <outlet property="callButton" destination="AYX-V9-nql" id="Aus-JF-6J8"/>
-                                            <outlet property="date" destination="fQQ-UI-CNK" id="ZN6-qq-uNB"/>
                                             <outlet property="doctorName" destination="oRg-gg-Kdq" id="GyW-TL-cqz"/>
                                             <outlet property="noRows" destination="Lsa-kV-hgz" id="N89-l4-z0m"/>
-                                            <outlet property="note" destination="Meo-h1-tvd" id="Jxw-Yc-dD2"/>
                                             <outlet property="patientName" destination="Jlu-VQ-HUc" id="oP9-KA-bYY"/>
+                                            <outlet property="statusAppoinment" destination="kxC-Da-spr" id="H6f-7A-doa"/>
+                                            <outlet property="submitDate" destination="fQQ-UI-CNK" id="NCV-mG-nRj"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -363,6 +369,13 @@
                                     <outlet property="delegate" destination="FvW-KE-v8N" id="R4p-LT-NXR"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Treating Practictioner" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJt-Rf-CQ5">
+                                <rect key="frame" x="284" y="64" width="230" height="55"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -547,10 +560,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ecs-h4-ksF">
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ecs-h4-ksF" userLabel="endcall">
                                 <rect key="frame" x="474" y="638" width="70" height="70"/>
                                 <animations/>
-                                <color key="backgroundColor" red="0.87450980392156863" green="0.20392156862745098" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.11764705882352941" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="end-call"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -558,40 +571,76 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="Nf3-sy-OjL" kind="unwind" unwindAction="unwindToViewController:" id="fud-1L-5ES"/>
+                                    <action selector="actionControllerButton:" destination="3t3-LS-PAl" eventType="touchDown" id="weZ-J9-XtJ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cox-7j-fH5">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cox-7j-fH5" userLabel="micro">
                                 <rect key="frame" x="367" y="638" width="70" height="70"/>
                                 <animations/>
-                                <color key="backgroundColor" red="0.51372549019607838" green="0.58039215686274515" blue="0.58431372549019611" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="mic-on"/>
+                                <color key="backgroundColor" red="0.72941176470588232" green="0.72549019607843135" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="mic-off"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="35"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionControllerButton:" destination="3t3-LS-PAl" eventType="touchDown" id="Gcg-g4-hnW"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ing-UJ-91K">
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ing-UJ-91K" userLabel="camera">
                                 <rect key="frame" x="588" y="638" width="70" height="70"/>
                                 <animations/>
-                                <color key="backgroundColor" red="0.51372549019607838" green="0.58039215686274515" blue="0.58431372549019611" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="camera-on"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="camera-off"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="35"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionControllerButton:" destination="3t3-LS-PAl" eventType="touchDown" id="8NT-Hy-Oc6"/>
+                                </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uN5-Z4-dEX">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uN5-Z4-dEX">
                                 <rect key="frame" x="353" y="94" width="319" height="76"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="45"/>
                                 <color key="textColor" red="0.98857717803030298" green="0.98857717803030298" blue="0.98857717803030298" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calling to..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWs-ze-mmq">
-                                <rect key="frame" x="427" y="41" width="170" height="45"/>
+                            <button hidden="YES" opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pb3-HB-6hU" userLabel="callback">
+                                <rect key="frame" x="405" y="638" width="70" height="70"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.23529411764705882" green="0.84705882352941175" blue="0.29803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="call-back"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="35"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionControllerButton:" destination="3t3-LS-PAl" eventType="touchDown" id="7TM-fO-WAm"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q02-hi-EB8" userLabel="cancel">
+                                <rect key="frame" x="545" y="638" width="70" height="70"/>
+                                <animations/>
+                                <state key="normal" image="cancel"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="35"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionControllerButton:" destination="3t3-LS-PAl" eventType="touchDown" id="ydu-U8-Vyu"/>
+                                </connections>
+                            </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calling to..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWs-ze-mmq">
+                                <rect key="frame" x="397" y="55" width="231" height="45"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="25"/>
                                 <color key="textColor" red="0.98857717803030298" green="0.98857717803030298" blue="0.98857717803030298" alpha="1" colorSpace="calibratedRGB"/>
@@ -608,10 +657,11 @@
                         <outletCollection property="controllerButtonCall" destination="cox-7j-fH5" collectionClass="NSMutableArray" id="Io9-oj-Uoa"/>
                         <outletCollection property="controllerButtonCall" destination="Ecs-h4-ksF" collectionClass="NSMutableArray" id="Ssk-u8-Uek"/>
                         <outletCollection property="controllerButtonCall" destination="Ing-UJ-91K" collectionClass="NSMutableArray" id="bW3-3i-wia"/>
+                        <outletCollection property="controllerButtonCall" destination="q02-hi-EB8" collectionClass="NSMutableArray" id="iqt-Fr-aZD"/>
+                        <outletCollection property="controllerButtonCall" destination="Pb3-HB-6hU" collectionClass="NSMutableArray" id="mQ7-tD-GR6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ok-YA-SsX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="Nf3-sy-OjL" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="6068" y="288"/>
         </scene>
@@ -698,13 +748,15 @@
         <image name="Default" width="320" height="480"/>
         <image name="Forward-100 (1)" width="100" height="100"/>
         <image name="background" width="1024" height="768"/>
-        <image name="camera-on" width="32" height="32"/>
+        <image name="call-back" width="32" height="32"/>
+        <image name="camera-off" width="32" height="32"/>
+        <image name="cancel" width="100" height="100"/>
         <image name="doctor" width="100" height="100"/>
         <image name="end-call" width="32" height="32"/>
         <image name="img-allied-healthinjury-manager" width="512" height="256"/>
         <image name="lock" width="100" height="100"/>
         <image name="logo" width="320" height="62"/>
-        <image name="mic-on" width="32" height="32"/>
+        <image name="mic-off" width="32" height="32"/>
         <image name="tai-của-mình" width="500" height="375"/>
         <image name="video-call" width="50" height="50"/>
         <image name="view-detail" width="50" height="50"/>

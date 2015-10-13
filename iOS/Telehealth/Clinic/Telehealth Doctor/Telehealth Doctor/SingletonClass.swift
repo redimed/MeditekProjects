@@ -13,7 +13,7 @@ import Alamofire
 
 class Singleton {
     static let SingleTon = Singleton()
-    let socket = SocketIOClient(socketURL: STRING_URL_SERVER)
+    let socket = SocketIOClient(socketURL: STRING_URL_SERVER, opts: ["connectParams": ["__sails_io_sdk_version": "0.11.0"]])
     var onlineUser_Singleton : [OnlineUsers] = []
     var infoOpentok : JSON!
     var headers : [String: String]!

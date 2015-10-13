@@ -158,16 +158,13 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 
                 switch response.2 {
                 case .Success:
-                    let user = response.2.value!["user"] as! NSDictionary
-                    let token = response.2.value!["token"] as! String
+                    let userJSON = JSON(response.2.value!["user"] as! NSDictionary)
+                    var user = [String: String]()
                     
-                    //                    let dictionNary = [ "ID" : String(user["ID"]),
-                    //                        "UID" : String(user["UID"]),
-                    //                        "activated" : String(user["activated"]),
-                    //                        "email" : String(user["email"]),
-                    //                        "phoneNumber" : String(user["phoneNumber"]),
-                    //                        "userName" : String(user["userName"]),
-                    //                        "userType" : String(user["userType"])] as NSDictionary
+                    for (key, object) in userJSON {
+                        user[key] = object.stringValue
+                    }
+                    let token = response.2.value!["token"] as! String
                     
                     self.userDefault.setObject(user, forKey: "infoDoctor")
                     self.userDefault.setValue(token, forKey: "token")
@@ -179,7 +176,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
                     self.presentViewController(initViewController, animated: true, completion: nil)
                     break
-                case .Failure(let _, let error):
+                case .Failure( _, let error):
                     self.errorLogin("\((error as NSError).code) - \((error as NSError).localizedDescription)")
                     break
                 }

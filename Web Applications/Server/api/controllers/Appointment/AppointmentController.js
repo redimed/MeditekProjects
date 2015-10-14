@@ -19,8 +19,11 @@ module.exports = {
                     res.ok('success');
                 })
                 .catch(function(err) {
-                    err.transaction.rollback();
-                    res.serverError(ErrorWrap(err.error));
+                    if (HelperService.CheckExistData(err) &&
+                        HelperService.CheckExistData(err.transaction)) {
+                        err.transaction.rollback();
+                    }
+                    res.serverError(ErrorWrap(err));
                 });
         }
     },
@@ -39,6 +42,10 @@ module.exports = {
                     res.ok(success.data);
                 })
                 .catch(function(err) {
+                    if (HelperService.CheckPostRequest(err) &&
+                        HelperService.CheckPostRequest(err.transaction)) {
+                        err.transaction.rollback();
+                    }
                     res.serverError(ErrorWrap(err));
                 });
         }
@@ -55,6 +62,10 @@ module.exports = {
                 res.ok(success);
             })
             .catch(function(err) {
+                if (HelperService.CheckPostRequest(err) &&
+                    HelperService.CheckPostRequest(err.transaction)) {
+                    err.transaction.rollback();
+                }
                 res.serverError(ErrorWrap(err));
             });
     },
@@ -75,8 +86,11 @@ module.exports = {
                     res.ok('success');
                 })
                 .catch(function(err) {
-                    err.transaction.rollback();
-                    res.serverError(ErrorWrap(err.error));
+                    if (HelperService.CheckPostRequest(err) &&
+                        HelperService.CheckPostRequest(err.transaction)) {
+                        err.transaction.rollback();
+                    }
+                    res.serverError(ErrorWrap(err));
                 });
         }
     },
@@ -97,8 +111,11 @@ module.exports = {
                     res.ok('success');
                 })
                 .catch(function(err) {
-                    err.transaction.rollback();
-                    res.serverError(ErrorWrap(err.error));
+                    if (HelperService.CheckPostRequest(err) &&
+                        HelperService.CheckPostRequest(err.transaction)) {
+                        err.transaction.rollback();
+                    }
+                    res.serverError(ErrorWrap(err));
                 });
         }
     }

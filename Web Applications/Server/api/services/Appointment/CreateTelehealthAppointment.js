@@ -1,16 +1,19 @@
 module.exports = function(data) {
     var $q = require('q');
-    var telehealthApointmentCreated;
+    var telehealthApointmentCreated, PreferringPractitioner, appointmentCreated;
     return sequelize.transaction()
         .then(function(t) {
             var defer = $q.defer();
             if (HelperService.CheckExistData(data.UserInfo) &&
                 HelperService.CheckExistData(data.UserInfo.UID)) {
-                //create new appointment
+                //find information PreferringPractitioner
                 UserAccount.findOne({
                         attributes: ['ID'],
                         include: [{
-                            attributes: ['ID'],
+                            attributes: ['ID', 'FirstName', 'MiddleName', 'LastName',
+                                'HealthLink', 'Address', 'PhoneNumber', 'PostCode',
+                                'ProviderNumber', 'Signature'
+                            ],
                             model: Doctor,
                             required: true
                         }],
@@ -20,9 +23,14 @@ module.exports = function(data) {
                         transaction: t
                     })
                     .then(function(preferringPractitioner) {
-                        if (HelperService.CheckExistData(preferringPractitioner)) {
-                            var dataAppointment = Services.GetDataAppointment.Appointment(data);
+                        if (HelperService.CheckExistData(preferringPractitioner) &&
+                            HelperService.CheckExistData(preferringPractitioner.Doctor)) {
+                            PreferringPractitioner = preferringPractitioner.Doctor;
+                            PreferringPractitioner.RefDate = data.TelehealthAppointment.RefDate;
+                            PreferringPractitioner.RefDurationOfReferal = data.TelehealthAppointment.RefDurationOfReferal;
+                            var dataAppointment = Services.GetDataAppointment.AppointmentCreate(data);
                             dataAppointment.UID = UUIDService.Create();
+                            dataAppointment.CreatedBy = PreferringPractitioner.ID;
                             //create Appointment
                             return Appointment.create(dataAppointment, {
                                 transaction: t
@@ -34,13 +42,31 @@ module.exports = function(data) {
                             error: err
                         });
                     })
-                    .then(function(appointmentCreated) {
-                        /*create new TelehealthAppointment link with 
-                        appointment created via AppointmentID */
+                    .then(function(apptCreated) {
+                        appointmentCreated = apptCreated;
+                        if (HelperService.CheckExistData(data.FileUploads) &&
+                            _.isArray(data.FileUploads)) {
+                            /*create association Appointment with FileUpload 
+                        via RelAppointmentFileUpload*/
+                            appointmentCreated.addFileUploads(data.FileUploads, {
+                                transaction: t
+                            });
+                        }
+
+                    }, function(err) {
+                        defer.reject({
+                            transaction: t,
+                            error: err
+                        });
+                    })
+                    .then(function(associationAppointmentFileUploadCreated) {
                         if (HelperService.CheckExistData(data.TelehealthAppointment)) {
                             var dataTelehealthAppointment =
-                                Services.GetDataAppointment.TelehealthAppointment(data.TelehealthAppointment);
+                                Services.GetDataAppointment.TelehealthAppointmentCreate(PreferringPractitioner);
                             dataTelehealthAppointment.UID = UUIDService.Create();
+                            dataTelehealthAppointment.CreatedBy = PreferringPractitioner.ID;
+                            /*create new TelehealthAppointment link with 
+                              appointment created via AppointmentID */
                             return appointmentCreated.createTelehealthAppointment(dataTelehealthAppointment, {
                                 transaction: t
                             });
@@ -58,12 +84,27 @@ module.exports = function(data) {
                     })
                     .then(function(telehealthApptCreated) {
                         telehealthApointmentCreated = telehealthApptCreated;
-                        /*create new PatientAppointment link with TelehealthAppointment 
-                        created via TelehealthAppointmentID*/
+                        /*
+                        Created associated PreferringPractitioner 
+                        via Model RelTelehealthAppointmentDoctor
+                        */
+                        return telehealthApointmentCreated.addDoctor(PreferringPractitioner.ID, {
+                            transaction: t
+                        });
+                    }, function(err) {
+                        defer.reject({
+                            transaction: t,
+                            error: err
+                        });
+                    })
+                    .then(function(relTelehealthAppointmentDoctorCreated) {
                         if (HelperService.CheckExistData(data.TelehealthAppointment.PatientAppointment)) {
                             var dataPatientAppointment =
-                                Services.GetDataAppointment.PatientAppointment(data.TelehealthAppointment.PatientAppointment);
+                                Services.GetDataAppointment.PatientAppointmentCreate(data.TelehealthAppointment.PatientAppointment);
                             dataPatientAppointment.UID = UUIDService.Create();
+                            dataPatientAppointment.CreatedBy = PreferringPractitioner.ID;
+                            /*create new PatientAppointment link with TelehealthAppointment 
+                              created via TelehealthAppointmentID*/
                             return telehealthApointmentCreated.createPatientAppointment(dataPatientAppointment, {
                                 transaction: t
                             });
@@ -80,12 +121,13 @@ module.exports = function(data) {
                         });
                     })
                     .then(function(patientAppointmentCreated) {
-                        /*create new ExaminationRequired link with TelehealthAppointment
-                        created via TelehealthAppointmentID*/
                         if (HelperService.CheckExistData(data.TelehealthAppointment.ExaminationRequired)) {
                             var dataExamniationRequired =
-                                Services.GetDataAppointment.ExaminationRequired(data.TelehealthAppointment.ExaminationRequired);
+                                Services.GetDataAppointment.ExaminationRequiredCreate(data.TelehealthAppointment.ExaminationRequired);
                             dataExamniationRequired.UID = UUIDService.Create();
+                            dataExamniationRequired.CreatedBy = PreferringPractitioner.ID;
+                            /*create new ExaminationRequired link with TelehealthAppointment
+                              created via TelehealthAppointmentID*/
                             return telehealthApointmentCreated.createExaminationRequired(dataExamniationRequired, {
                                 transaction: t
                             });
@@ -102,11 +144,12 @@ module.exports = function(data) {
                         });
                     })
                     .then(function(examinationRequiredCreated) {
-                        /*create new PreferedPlasticSurgeon
-                        link with TelehealthAppointment via TelehealthAppointmentID*/
                         if (HelperService.CheckExistData(data.TelehealthAppointment.PreferedPlasticSurgeon)) {
-                            var dataPrefPlasSurgon = Services.GetDataAppointment.PreferedPlasticSurgeon(data.TelehealthAppointment.PreferedPlasticSurgeon);
+                            var dataPrefPlasSurgon =
+                                Services.GetDataAppointment.PreferedPlasticSurgeonCreate(data.TelehealthAppointment.PreferedPlasticSurgeon);
                             dataPrefPlasSurgon.UID = UUIDService.Create();
+                            /*create new PreferedPlasticSurgeon
+                              link with TelehealthAppointment via TelehealthAppointmentID*/
                             return telehealthApointmentCreated.createPreferedPlasticSurgeon(dataPrefPlasSurgon, {
                                 transaction: t
                             });
@@ -123,12 +166,12 @@ module.exports = function(data) {
                         });
                     })
                     .then(function(preferedPlasticSurgeonCreated) {
-                        /*create new list TelehealthClinicalDetails
-                        link with TelehealthAppointment via TelehealthAppointmentID*/
                         var teleApptID = (!_.isUndefined(telehealthApointmentCreated.dataValues) ? telehealthApointmentCreated.dataValues.ID : null);
                         if (HelperService.CheckExistData(data.TelehealthAppointment.ClinicalDetails)) {
                             var dataTeleClinicDetail =
-                                Services.GetDataAppointment.ClinicalDetails(teleApptID, data.TelehealthAppointment.ClinicalDetails);
+                                Services.GetDataAppointment.ClinicalDetailsCreate(teleApptID, PreferringPractitioner.ID, data.TelehealthAppointment.ClinicalDetails);
+                            /*create new list TelehealthClinicalDetails
+                              link with TelehealthAppointment via TelehealthAppointmentID*/
                             return ClinicalDetail.bulkCreate(dataTeleClinicDetail, {
                                 transaction: t
                             });
@@ -158,7 +201,7 @@ module.exports = function(data) {
             } else {
                 defer.reject({
                     transaction: t,
-                    error: err
+                    error: new Error('failed')
                 });
             }
             return defer.promise;

@@ -34,7 +34,7 @@
 									<a href="#tab1" data-toggle="tab" class="step">
 									<span class="number">1 </span>
 									<span class="desc">
-									<i class="fa fa-check"></i> Validation </span>
+									<i class="fa fa-check"></i> User Account </span>
 									</a>
 								</li>
 								<li>
@@ -62,7 +62,7 @@
 									<div class="form-group">
 										<label class="control-label col-md-4">Firstname <span class="required">* </span></label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" name="Firstname" placeholder="Firstname"ng-model="data.FirstName" ng-style="er.FirstName"/>
+											<input type="text" class="form-control" name="Firstname" placeholder="Firstname"ng-model="data.FirstName" ng-style="er.FirstName" ng-disabled="isBlockStep1" />
 											<span class="help-block">Provide your Firstname </span>
 										</div>
 									</div>
@@ -71,7 +71,7 @@
 									<div class="form-group ">
 										<label class="control-label col-md-4">Surname <span class="required">* </span></label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" name="Surname" placeholder="Surname" ng-model="data.LastName" ng-style="er.LastName"/>
+											<input type="text" class="form-control" name="Surname" placeholder="Surname" ng-model="data.LastName" ng-style="er.LastName" ng-disabled="isBlockStep1" />
 											<span class="help-block">Provide your Surname </span>
 										</div>
 									</div>
@@ -90,7 +90,7 @@
 										<label class="control-label col-md-4">Mobilephone <span class="required">* </span>
 										</label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" name="Mobilephone" placeholder="+61 8888 8888"/>
+											<input type="text" class="form-control" name="Mobilephone" placeholder="+61 8888 8888" ng-model="data.PhoneNumber" ng-style="er.PhoneNumber" ng-disabled="isBlockStep1" />
 											<span class="help-block">Provide your Mobilephone </span>
 										</div>
 									</div>
@@ -100,6 +100,7 @@
 										<div class="row">
 											<!-- begin avatar -->
 											<div class="col-md-4">
+												<!-- avatar -->
 												<div class="form-group">
 													<div class="fileinput fileinput-new" data-provides="fileinput">
 														<div class="fileinput-new thumbnail" style="width: 350px; height: 350px;">
@@ -125,30 +126,44 @@
 											<div class="col-md-4">
 												<h4><b>Basic Information</b></h4>
 												<hr>
-												<!-- Begin First name -->
+												<!-- begin title -->
 												<div class="form-group">
-													<label class="control-label col-md-4">First Name</label>
+													<label class="control-label col-md-4">Title</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="First Name"ng-model="data.FirstName">
+														<select class="form-control">
+															<option value=""></option>
+															<option value="">Mr</option>
+															<option value="">Mrs</option>
+															<option value="">Ms</option>
+															<option value="">Dr</option>
+														</select>
 													</div>
 												</div>
-												<!-- End First name -->
-												<!-- Begin Sur name -->
+												<!-- end title -->
+												<!-- Begin Firstname -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Firstname</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control" placeholder="Firstname"ng-model="data.FirstName">
+													</div>
+												</div>
+												<!-- End Firstname -->
+												<!-- Begin Surname -->
 												<div class="form-group ">
-													<label class="control-label col-md-4">Sur Name</label>
+													<label class="control-label col-md-4">Surname</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="Sur Name" ng-model="data.LastName">
+														<input type="text" class="form-control" placeholder="Surname" ng-model="data.LastName">
 													</div>
 												</div>
-												<!-- End Sur name -->
-												<!-- Begin Middle name -->
+												<!-- End Surname -->
+												<!-- Begin Middlename -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Middle Name</label>
+													<label class="control-label col-md-4">Middlename</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="Middle Name" ng-model="data.MiddleName">
+														<input type="text" class="form-control" placeholder="Middlename" ng-model="data.MiddleName">
 													</div>
 												</div>
-												<!-- End Middle name -->
+												<!-- End Middlename -->
 												<!-- Date of Birth -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Date of Birth</label>
@@ -200,9 +215,9 @@
 													</div>
 												</div>
 												<!-- end Home Phone -->
-												<!-- begin Mobile -->
+												<!-- begin PhoneNumber -->
 												<div class="form-group">
-													<label class="control-label col-md-3">Mobile</label>
+													<label class="control-label col-md-3">PhoneNumber</label>
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="icon-call-end"></i>
@@ -210,8 +225,19 @@
 														</div>
 													</div>
 												</div>
-												<!-- end Mobile -->
-												<!-- Begin Address -->
+												<!-- end PhoneNumber -->
+												<!-- begin WorkPhone -->
+												<div class="form-group">
+													<label class="control-label col-md-3">WorkPhone</label>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="icon-call-end"></i>
+															<input type="text" class="form-control" placeholder="WorkPhone" ng-model="data.WorkPhone">
+														</div>
+													</div>
+												</div>
+												<!-- end WorkPhone -->
+												<!-- Begin Address1 -->
 												<div class="form-group ">
 													<label class="control-label col-md-3">Address1</label>
 													<div class="col-md-8">
@@ -221,8 +247,8 @@
 														</div>
 													</div>
 												</div>
-												<!-- End Address -->
-												<!-- Begin Address -->
+												<!-- End Address1 -->
+												<!-- Begin Address2 -->
 												<div class="form-group ">
 													<label class="control-label col-md-3">Address2</label>
 													<div class="col-md-8">
@@ -232,7 +258,7 @@
 														</div>
 													</div>
 												</div>
-												<!-- End Address -->
+												<!-- End Address2 -->
 												<!-- begin Suburb -->
 												<div class="form-group">
 													<label class="control-label col-md-3">Suburb</label>
@@ -280,8 +306,11 @@
 								<div class="col-md-offset-4 col-md-9">
 									<a href="javascript:;" class="btn default button-previous" ng-click="Back()">
 									<i class="m-icon-swapleft"></i> Back </a>
+									<a href="javascript:;" class="btn default" ng-hide="isShowCreate" ng-click="Cancel()">
+									<i class="m-icon-swapleft"></i>Cancel</a>
 									<a href="javascript:;" class="btn blue" ng-click="checkPhone(data)" ng-hide="isShowNext">
-									Check <i class="m-icon-swapright m-icon-white"></i>
+									Verify <i class="m-icon-swapright m-icon-white"></i>
+									</a>
 									<a href="javascript:;" class="btn blue button-next" ng-show="isShowNext" ng-click="isShowCreate=true">
 									Continue <i class="m-icon-swapright m-icon-white"></i>
 									</a>

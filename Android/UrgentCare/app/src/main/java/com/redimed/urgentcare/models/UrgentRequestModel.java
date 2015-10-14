@@ -17,19 +17,36 @@ public class UrgentRequestModel {
     public String description;
     @SerializedName("GPReferal")
     public String gpReferral;
-    @SerializedName("serviceType")
-    public String UrgentRequestType;
+    public String physiotherapy;
+    public String specialist;
+    public String handTherapy;
+    public String GP;
     @SerializedName("urgentRequestType")
     public String serviceType;
     public String companyName;
     public String contactPerson;
+    @SerializedName("companyPhoneNumber")
+    public String companyPhone;
+
+    public void setPhysiotherapy(String physiotherapy) {
+        this.physiotherapy = physiotherapy;
+    }
+
+    public void setSpecialist(String specialist) {
+        this.specialist = specialist;
+    }
+
+    public void setHandTherapy(String handTherapy) {
+        this.handTherapy = handTherapy;
+    }
+
+    public void setGP(String GP) {
+        this.GP = GP;
+    }
 
     public void setCompanyPhone(String companyPhone) {
         this.companyPhone = companyPhone;
     }
-
-    @SerializedName("companyPhoneNumber")
-    public String companyPhone;
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
@@ -75,7 +92,4 @@ public class UrgentRequestModel {
         this.gpReferral = gpReferral;
     }
 
-    public void setUrgentRequestType(String urgentRequestType) {
-        UrgentRequestType = urgentRequestType;
-    }
 }

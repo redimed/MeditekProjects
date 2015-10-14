@@ -3,18 +3,18 @@ package com.redimed.urgentcare;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Display;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.andexert.library.RippleView;
 import com.google.gson.JsonObject;
 import com.redimed.urgentcare.api.UrgentRequestApi;
 import com.redimed.urgentcare.utils.BlurTransformation;
+import com.redimed.urgentcare.utils.Config;
 import com.redimed.urgentcare.utils.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
@@ -29,16 +29,14 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class HomeActivity extends AppCompatActivity {
-    @Bind(R.id.btnMakeAppointment) Button btnMakeAppointment;
-    @Bind(R.id.btnSportInjury) Button btnSportInjury;
-    @Bind(R.id.btnWorkInjury) Button btnWorkInjury;
-    @Bind(R.id.btnFAQ) Button btnFAQ;
     @Bind(R.id.imgLogoRedimed) ImageView imgLogoRedimed;
     @Bind(R.id.imgBackgroundHome) ImageView imgBackgroundHome;
     @Bind(R.id.rippleViewSportInjury) RippleView rippleViewSportInjury;
     @Bind(R.id.rippleViewWorkInjury) RippleView rippleViewWorkInjury;
     @Bind(R.id.rippleViewFAQ) RippleView rippleViewFAQ;
     @Bind(R.id.rippleViewMakeAppointment) RippleView rippleViewMakeAppointment;
+    @Bind(R.id.rippleViewCallUs) RippleView rippleViewCallUs;
+
 
     private static final int BACKGROUND_IMAGES_WIDTH = 360;
     private static final int BACKGROUND_IMAGES_HEIGHT = 360;
@@ -56,8 +54,7 @@ public class HomeActivity extends AppCompatActivity {
         // Initialize default values
         ButterKnife.bind(this);
 
-        mCreateAndSaveFile();
-//        mReadJsonData();
+        CreateJsonDataSuburb();
 
         Picasso.with(HomeActivity.this).load(R.drawable.img_logo_redimed).fit().into(imgLogoRedimed);
         blurTransformation = new BlurTransformation(this, BLUR_RADIUS);
@@ -102,21 +99,29 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(movedToWorkInjuryPage);
             }
         });
+        rippleViewCallUs.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse(Config.CALLPHONE));
+                startActivity(callIntent);
+            }
+        });
     }
 
-    public void mCreateAndSaveFile() {
-        File file = new File("/data/data/" + getApplicationContext().getPackageName() + "/" + "suburb.json");
+    //CreateJsonDataSuburb : if suburb.json file not exists then create file suburb.json
+    public void CreateJsonDataSuburb() {
+        File file = new File(getStringValue(R.string.urlFile) + getApplicationContext().getPackageName() + getStringValue(R.string.fileName));
         if(!file.exists()){
             UrgentRequestApi urgentApi = RetrofitClient.createService(UrgentRequestApi.class);
             urgentApi.getListSuburb(new Callback<JsonObject>() {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
                     try {
-                        FileWriter file = new FileWriter("/data/data/" + getApplicationContext().getPackageName() + "/" + "suburb.json");
+                        FileWriter file = new FileWriter(getStringValue(R.string.urlFile) + getApplicationContext().getPackageName() + getStringValue(R.string.fileName));
                         file.write(String.valueOf(jsonObject));
                         file.flush();
                         file.close();
-                        Log.d("createfile","/data/data/" + getApplicationContext().getPackageName() + "/" + "suburb.json");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -128,6 +133,10 @@ public class HomeActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public String getStringValue(int id){
+        return getResources().getString(id);
     }
 
     private static Point calculateBackgroundImageSizeCroppedToScreenAspectRatio(Display display) {

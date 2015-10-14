@@ -35,8 +35,9 @@ module.exports.policies = {
   //     '*': true,
   // },
   
-  'UserAccount/UserAccountController':{
-    'Test':true,
+  'UserAccount/v0_1/UserAccountController':{
+    'Test':'checkVersion',
+    'TestURL':'checkVersion',
     'CreateUserAccount':'hasToken',
     'UpdateUserAccount':'hasToken'
   },

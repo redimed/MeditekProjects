@@ -33,24 +33,27 @@ module.exports = function(teleAppointmentUID) {
                 }]
             }, {
                 model: Doctor,
-                attributes: ['ID', 'UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Type', 'Email', 'Phone'],
-                required: true,
+                attributes: ['ID', 'UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Type', 'Email', 'HomePhoneNumber'],
+                required: false,
                 include: [{
                     model: Department,
                     attributes: ['ID', 'UID', 'DepartmentCode', 'DepartmentName', 'Description'],
-                    required: true
+                    required: false
                 }]
             }, {
                 model: Patient,
                 attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB',
-                    'Gender', 'Address', 'Suburb', 'Postcode', 'Email', 'HomePhoneNumber'
+                    'Gender', 'Address1', 'Address2', 'Suburb', 'Postcode', 'Email', 'HomePhoneNumber'
                 ],
-                required: true,
+                required: false,
                 include: [{
                     model: UserAccount,
                     attributes: ['UserName', 'Email', 'PhoneNumber', 'Activated'],
-                    required: true
+                    required: false
                 }]
+            }, {
+                model: FileUpload,
+                required: false
             }],
             where: {
                 UID: teleAppointmentUID

@@ -4,21 +4,30 @@ var path = require('path');
 var templateDirs = path.resolve(__dirname, 'GenerateTemplateEmail');
 var emailTemplates = require('email-templates');
 var emailAddressRequiredError = new Error('email address required');
-
-var transport = nodemailer.createTransport(smtpTransport({
-    host: "mail.redimed.com.au",
-    secure: false,
-    port: 25,
-    auth: {
-        user: "programmer2",
-        pass: "Hello8080"
-    },
-    tls: {
-        rejectUnauthorized: false
-    },
-    debug: true
-}));
-
+var transport, isTestApp = true;
+if (isTestApp) {
+    transport = nodemailer.createTransport(smtpTransport({
+        host: "mail.redimed.com.au",
+        secure: false,
+        port: 25,
+        auth: {
+            user: "programmer2",
+            pass: "Hello8080"
+        },
+        tls: {
+            rejectUnauthorized: false
+        },
+        debug: true
+    }));
+} else {
+    transport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'meditekcompany@gmail.com',
+            pass: 'meditek123456'
+        }
+    });
+}
 var SendMailService = {
     /*
     SendMail: Send mail notification for patient

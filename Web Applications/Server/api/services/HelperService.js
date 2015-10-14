@@ -9,13 +9,11 @@ output: false: if data miss or parse failed
  * Kiem tra xem bien hop le hay khong
  */
 function checkData(value) {
-    var result=true;
-    if(value===undefined || value===null || value==='')
-    {
-        result=false;
-    }
-    else if(_.isObject(value) && _.isEmpty(value)){
-        result=false;
+    var result = true;
+    if (value === undefined || value === null || value === '') {
+        result = false;
+    } else if (_.isObject(value) && _.isEmpty(value)) {
+        result = false;
     }
     return result;
 }
@@ -24,18 +22,14 @@ function checkData(value) {
  * Kiem tra danh sach data truyen vao hop le hay kkhong
  */
 function checkListData() {
-    var result=true;
+    var result = true;
     for (var i = 0; i < arguments.length; i++) {
-        if(arguments[i] === undefined || arguments[i] === null || arguments[i] === '')
-        {
-            result=false;
+        if (arguments[i] === undefined || arguments[i] === null || arguments[i] === '') {
+            result = false;
+        } else if (_.isObject(arguments[i]) && _.isEmpty(arguments[i])) {
+            result = false;
         }
-        else if(_.isObject(arguments[i]) && _.isEmpty(arguments[i]))
-        {   
-            result=false;
-        }
-        if(result===false)
-        {
+        if (result === false) {
             console.log(">>>>>>>> Vi tri data truyen den bi loi:", i);
             break;
         }
@@ -87,7 +81,11 @@ module.exports = {
     CheckExistData: function(data) {
         return (!_.isUndefined(data) && !_.isEmpty(data) && !_.isNull(data));
     },
-
+    GetFullName: function(firstName, middleName, lastName) {
+        return (!_.isNull(firstName) && !_.isUndefined(firstName) && !_.isEmpty(firstName)) ? firstName : '' +
+            (!_.isNull(middleName) && !_.isUndefined(middleName) && !_.isEmpty(middleName)) ? ' ' + middleName : '' +
+            (!_.isNull(lastName) && !_.isUndefined(lastName) && !_.isEmpty(lastName)) ? ' ' + lastName : '';
+    },
     //define regex pattern
     regexPattern: {
         //emailPattern example :
@@ -142,8 +140,8 @@ module.exports = {
             assistant: 2,
             doctor: 3,
             gp: 4,
-            internalPractitional:5,
-            externalPractiction:6,
+            internalPractitional: 5,
+            externalPractiction: 6,
             patient: 7
         }
     },
@@ -157,26 +155,19 @@ module.exports = {
      * So sánh 2 object destination và source, nếu 2 object có attribute nào trùng nhau
      * thì copy giá trị attribute từ source vào destination
      */
-    copyAttrsValue:function(destination,source)
-    {
-        if(_.isObject(destination))
-        {
-            if(_.isObject(source) && !_.isEmpty(source))
-            {
-                for (var key in destination)
-                {
-                    if(source[key])
-                    {
-                        destination[key]=source[key];
+    copyAttrsValue: function(destination, source) {
+        if (_.isObject(destination)) {
+            if (_.isObject(source) && !_.isEmpty(source)) {
+                for (var key in destination) {
+                    if (source[key]) {
+                        destination[key] = source[key];
                     }
                 }
             }
+        } else {
+            destination = {};
         }
-        else
-        {
-            destination={};
-        }
-        
+
         return destination;
     },
 
@@ -185,21 +176,15 @@ module.exports = {
      * cleanObject: xóa những thuộc tính nào có giá trị là null, undefined, '' 
      * hoặc giá trị là object rỗng {}
      */
-    cleanObject:function(obj)
-    {
-        if(_.isObject(obj))
-        {
-            for (var key in obj)
-            {
-                if(!checkData(obj[key]))
-                {
+    cleanObject: function(obj) {
+        if (_.isObject(obj)) {
+            for (var key in obj) {
+                if (!checkData(obj[key])) {
                     delete obj[key];
                 }
             }
-        }
-        else
-        {
-            obj={};
+        } else {
+            obj = {};
         }
         return obj;
     },
@@ -210,26 +195,19 @@ module.exports = {
      * Nếu destination có attributes mà source cũng có thì copy giá trị attributes từ source qua
      * Nếu destination có attributes mà source không có thì xóa attributes đó của destination
      */
-    rationalizeObject:function(destination,source)
-    {
-        if(_.isObject(destination))
-        {
-            if(_.isObject(source) && !_.isEmpty(source))
-            {
-                for (var key in destination)
-                {
-                    if(!source.hasOwnProperty(key))
-                    {
+    rationalizeObject: function(destination, source) {
+        if (_.isObject(destination)) {
+            if (_.isObject(source) && !_.isEmpty(source)) {
+                for (var key in destination) {
+                    if (!source.hasOwnProperty(key)) {
                         delete destination[key];
                     }
                 }
             }
+        } else {
+            destination = {};
         }
-        else
-        {
-            destination={};
-        }
-        
+
         return destination;
     },
 
@@ -238,32 +216,25 @@ module.exports = {
      * Kiểm tra các attributes của object có giá trị bằng một trong các giá trị trong mảng corrects
      * hay không
      */
-    checkCorrectValues:function(obj,corrects)
-    {
-        var result=true;
-        if(_.isObject(obj) && _.keys(obj).length>0)
-        {
-            for (var key in obj)
-            {
-                var t=false;
-                for (var i=0;i<corrects.length;i++)
-                {
-                    if(obj[key]==corrects[i]) t=true;
+    checkCorrectValues: function(obj, corrects) {
+        var result = true;
+        if (_.isObject(obj) && _.keys(obj).length > 0) {
+            for (var key in obj) {
+                var t = false;
+                for (var i = 0; i < corrects.length; i++) {
+                    if (obj[key] == corrects[i]) t = true;
                 }
-                if(t==false)
-                {
-                    result=false;
+                if (t == false) {
+                    result = false;
                     break;
                 }
             }
             return result;
-        }
-        else
-        {
-            result=false;
+        } else {
+            result = false;
             return result;
         }
-        
+
     },
 
     /*

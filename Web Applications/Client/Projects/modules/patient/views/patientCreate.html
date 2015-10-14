@@ -62,7 +62,7 @@
 									<div class="form-group">
 										<label class="control-label col-md-4">Firstname <span class="required">* </span></label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" name="Firstname" placeholder="Firstname"ng-model="data.FirstName" ng-style="er.FirstName"/>
+											<input type="text" class="form-control" name="Firstname" placeholder="Firstname"ng-model="data.FirstName" ng-style="er.FirstName" ng-disabled="isBlockStep1" />
 											<span class="help-block">Provide your Firstname </span>
 										</div>
 									</div>
@@ -71,7 +71,7 @@
 									<div class="form-group ">
 										<label class="control-label col-md-4">Surname <span class="required">* </span></label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" name="Surname" placeholder="Surname" ng-model="data.LastName" ng-style="er.LastName"/>
+											<input type="text" class="form-control" name="Surname" placeholder="Surname" ng-model="data.LastName" ng-style="er.LastName" ng-disabled="isBlockStep1" />
 											<span class="help-block">Provide your Surname </span>
 										</div>
 									</div>
@@ -90,7 +90,7 @@
 										<label class="control-label col-md-4">Mobilephone <span class="required">* </span>
 										</label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" name="Mobilephone" placeholder="+61 8888 8888"/>
+											<input type="text" class="form-control" name="Mobilephone" placeholder="+61 8888 8888" ng-model="data.PhoneNumber" ng-style="er.PhoneNumber" ng-disabled="isBlockStep1" />
 											<span class="help-block">Provide your Mobilephone </span>
 										</div>
 									</div>
@@ -100,6 +100,7 @@
 										<div class="row">
 											<!-- begin avatar -->
 											<div class="col-md-4">
+												<!-- avatar -->
 												<div class="form-group">
 													<div class="fileinput fileinput-new" data-provides="fileinput">
 														<div class="fileinput-new thumbnail" style="width: 350px; height: 350px;">
@@ -125,6 +126,14 @@
 											<div class="col-md-4">
 												<h4><b>Basic Information</b></h4>
 												<hr>
+												<!-- begin title -->
+									            <div class="form-group">
+									            	<label class="control-label col-md-4">Title</label>
+									            	<div class="col-md-8">
+									            		<select class="form-control"> </select>
+									            	</div>
+									            </div>
+									            <!-- end title -->
 												<!-- Begin First name -->
 												<div class="form-group">
 													<label class="control-label col-md-4">First Name</label>
@@ -211,7 +220,18 @@
 													</div>
 												</div>
 												<!-- end Mobile -->
-												<!-- Begin Address -->
+												<!-- begin WorkPhone -->
+												<div class="form-group">
+													<label class="control-label col-md-3">WorkPhone</label>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="icon-call-end"></i>
+															<input type="text" class="form-control" placeholder="WorkPhone" ng-model="data.WorkPhone">
+														</div>
+													</div>
+												</div>
+												<!-- end WorkPhone -->
+												<!-- Begin Address1 -->
 												<div class="form-group ">
 													<label class="control-label col-md-3">Address1</label>
 													<div class="col-md-8">
@@ -221,8 +241,8 @@
 														</div>
 													</div>
 												</div>
-												<!-- End Address -->
-												<!-- Begin Address -->
+												<!-- End Address1 -->
+												<!-- Begin Address2 -->
 												<div class="form-group ">
 													<label class="control-label col-md-3">Address2</label>
 													<div class="col-md-8">
@@ -232,7 +252,7 @@
 														</div>
 													</div>
 												</div>
-												<!-- End Address -->
+												<!-- End Address2 -->
 												<!-- begin Suburb -->
 												<div class="form-group">
 													<label class="control-label col-md-3">Suburb</label>
@@ -280,8 +300,11 @@
 								<div class="col-md-offset-4 col-md-9">
 									<a href="javascript:;" class="btn default button-previous" ng-click="Back()">
 									<i class="m-icon-swapleft"></i> Back </a>
+									<a href="javascript:;" class="btn default" ng-hide="isShowCreate" ng-click="Cancel()">
+									<i class="m-icon-swapleft"></i>Cancel</a>
 									<a href="javascript:;" class="btn blue" ng-click="checkPhone(data)" ng-hide="isShowNext">
-									Check <i class="m-icon-swapright m-icon-white"></i>
+									Verify <i class="m-icon-swapright m-icon-white"></i>
+									</a>
 									<a href="javascript:;" class="btn blue button-next" ng-show="isShowNext" ng-click="isShowCreate=true">
 									Continue <i class="m-icon-swapright m-icon-white"></i>
 									</a>

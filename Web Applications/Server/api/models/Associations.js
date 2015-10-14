@@ -59,6 +59,16 @@ module.exports = {
             foreignKey: 'PatientID'
         });
 
+        //association Appointment - FileUpload
+        Appointment.belongsToMany(FileUpload, {
+            through: 'RelAppointmentFileUpload',
+            foreignKey: 'AppointmentID'
+        });
+        FileUpload.belongsToMany(Appointment, {
+            through: 'RelAppointmentFileUpload',
+            foreignKey: 'FileUploadID'
+        });
+
         //association Patient - UserAccount
         Patient.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
@@ -96,17 +106,8 @@ module.exports = {
         Patient.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
         });
-
-        //Patient - Site
-        Site.hasOne(Patient,{
-            foreignKey: 'SiteID'
-        });
-        Patient.belongsTo(Site, {
-            foreignKey: 'SiteID'
-        });
-
         //Patient - Country
-        Country.hasOne(Patient,{
+        Country.hasOne(Patient, {
             foreignKey: 'CountryID'
         });
         Patient.belongsTo(Country, {

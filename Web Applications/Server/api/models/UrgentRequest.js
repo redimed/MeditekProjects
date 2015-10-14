@@ -50,10 +50,6 @@ module.exports = {
             type: Sequelize.STRING(1),
             allowNull: true
         },
-        ServiceType: {
-            type: Sequelize.STRING(3),
-            allowNull: true
-        },
         RequestType: {
             type: Sequelize.STRING(255),
             allowNull: true
@@ -118,6 +114,26 @@ module.exports = {
         },
         ModifiedBy: {
             type: Sequelize.BIGINT(20),
+            allowNull: true
+        },
+        Physiotherapy: {
+            type: Sequelize.STRING(1),
+            allowNull: true
+        },
+        Specialist: {
+            type: Sequelize.STRING(1),
+            allowNull: true
+        },
+        HandTherapy: {
+            type: Sequelize.STRING(1),
+            allowNull: true
+        },
+        GP: {
+            type: Sequelize.STRING(1),
+            allowNull: true
+        },
+        ServiceType: {
+            type: Sequelize.STRING(3),
             allowNull: true
         }
     },

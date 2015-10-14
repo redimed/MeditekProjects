@@ -10,37 +10,44 @@ import UIKit
 
 
 //Giap: API verify phone number and send verifycode
-enum UrlAPICheckPhoneNumber : String {
-    case SendVerifyCodePhoneNumber =  "/telehealth/user/requestActivationCode"
-    case CheckVerifyCode = "/telehealth/user/verifyActivationCode"
+struct UrlAPICheckPhoneNumber  {
+    static let SendVerifyCodePhoneNumber = "/telehealth/user/requestActivationCode"
+    static let CheckVerifyCode = "/telehealth/user/verifyActivationCode"
     
 }
-enum UrlInformationPatient : String {
-    case getInformationPatientByUID = "/telehealth/user/details"
+struct UrlInformationPatient  {
+    static let getInformationPatientByUID = "/telehealth/user/details"
 }
 
 //Giap: API Socket
-enum UrlAPISocket : String {
-    case joinRoom = "/telehealth/socket/joinRoom?uid=%@"
-    case emitAnswer = "/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
+struct UrlAPISocket  {
+    static let joinRoom = "/telehealth/socket/joinRoom?uid=%@"
+    static let emitAnswer = "/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
 }
 //Giap: Group Message in system
-enum MessageString : String {
-    case CallAnswer = "answer"
-    case CallEndCall = "endcall"
+struct MessageString  {
+    static let CallAnswer = "answer"
+    static let CallEndCall = "end"
+    static let Decline = "decline"
 }
 //Giap: Group Hash Value Number 0 - 9 and delete
-enum numberHashValue : Int {
-    case number0 = 915
-    case number1 = 918
-    case number2 = 921
-    case number3 = 924
-    case number4 = 927
-    case number5 = 930
-    case number6 = 933
-    case number7 = 936
-    case number8 = 939
-    case number9 = 942
-    case delete = 0
+struct numberHashValue  {
+    static let number0 = 915
+    static let number1 = 918
+    static let number2 = 921
+    static let number3 = 924
+    static let number4 = 927
+    static let number5 = 930
+    static let number6 = 933
+    static let number7 = 936
+    static let number8 = 939
+    static let number9 = 942
+    static let delete = 0
+}
+struct FAIcon {
+    static let volume_off = "\u{f026}"
+    static let volume_up = "\u{f028}"
+    static let pause = "\u{f04c}"
+    static let play = "\u{f04b}"
 }
 

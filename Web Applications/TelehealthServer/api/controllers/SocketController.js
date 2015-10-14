@@ -16,15 +16,20 @@ module.exports = {
         if (uid != null) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 if (teleUser) {
-                    teleUser.getUserAccount().then(function(user) {
-                        sails.sockets.join(req.socket, uid + ":" + user.phoneNumber);
-                        sails.sockets.leave(req.socket, req.socket.id);
-                        console.log("=====Join Rooms=====: ",uid + ":" + user.phoneNumber);
-                        TelehealthService.GetOnlineUsers();
-                    })
-                }
+                    sails.sockets.join(req.socket, uid);
+                    sails.sockets.leave(req.socket, req.socket.id);
+                    TelehealthService.GetOnlineUsers();
+                } else sails.sockets.emit(req.socket, 'errorMsg', {
+                    msg: 'User Not Exist!'
+                });
+            }).catch(function(err) {
+                sails.sockets.emit(req.socket, 'errorMsg', {
+                    msg: err
+                });
             })
-        }
+        } else sails.sockets.emit(req.socket, 'errorMsg', {
+            msg: 'Invalid Parameters!'
+        });
     },
     MessageTransfer: function(req, res) {
         if (!req.isSocket) {
@@ -39,30 +44,28 @@ module.exports = {
         var message = typeof req.param('message') != 'undefined' ? req.param('message') : null;
         var data = {};
         if (message == null || from == null || to == null) return;
-        var list = sails.sockets.rooms();
-        var phoneRegex = /^\+[0-9]{9,15}$/;
-        if (list.length > 0) {
-            for (var i = 0; i < list.length; i++) {
-                if (list[i].indexOf(":") != -1) {
-                    var arr = list[i].split(':');
-                    if (arr[1].match(phoneRegex) && arr[0] == to) {
-                        data.from = from;
-                        data.message = message;
-                        if (message.toLowerCase() == 'call') {
-                            var sessionId = typeof req.param('sessionId') != 'undefined' ? req.param('sessionId') : null;
-                            if (sessionId == null) return;
-                            var sessionId = req.param('sessionId');
-                            var tokenOptions = {
-                                role: 'moderator'
-                            };
-                            var token = opentok.generateToken(sessionId, tokenOptions);
-                            data.apiKey = config.OpentokAPIKey;
-                            data.sessionId = sessionId;
-                            data.token = token;
-                        }
-                        console.log("======data======: ", data);
-                        sails.sockets.broadcast(list[i], 'receiveMessage', data);
+        var roomList = sails.sockets.rooms();
+        if(roomList.length > 0){
+            for(var i=0; i<roomList.length; i++){
+                if(roomList[i] == to){
+                    data.from = from;
+                    data.message = message;
+                     if (message.toLowerCase() == 'call') {
+                        var fromName = typeof req.param('fromName') != 'undefined' ? req.param('fromName') : null;
+                        var sessionId = typeof req.param('sessionId') != 'undefined' ? req.param('sessionId') : null;
+                        if (sessionId == null) return;
+                        var sessionId = req.param('sessionId');
+                        var tokenOptions = {
+                            role: 'moderator'
+                        };
+                        var token = opentok.generateToken(sessionId, tokenOptions);
+                        data.apiKey = config.OpentokAPIKey;
+                        data.sessionId = sessionId;
+                        data.token = token;
+                        data.fromName = fromName;
                     }
+                    console.log("====Data====: ",data);
+                    sails.sockets.broadcast(roomList[i], 'receiveMessage', data);
                 }
             }
         }
@@ -75,7 +78,6 @@ module.exports = {
             });
             return;
         }
-        console.log("====Emit Online Users====");
         TelehealthService.GetOnlineUsers();
     },
     GenerateConferenceSession: function(req, res) {

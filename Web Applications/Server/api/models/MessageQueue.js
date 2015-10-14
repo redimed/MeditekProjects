@@ -12,7 +12,7 @@ module.exports = {
         },
         UrgentRequestID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'UrgentRequest',
                 key: 'ID'

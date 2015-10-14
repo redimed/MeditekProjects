@@ -16,7 +16,12 @@ angular.module('app.authentication.patient.services',[])
 	PatientService.updatePatient = function(data){
 		var updatePatient = api.all("patient/update-patient");
 		return updatePatient.post({data:data});
-	}
+	};
+
+	PatientService.checkPatient = function(data){
+		var checkPatient = api.all("patient/check-patient");
+		return checkPatient.post({data:data});
+	};
 
 	return PatientService;
 })

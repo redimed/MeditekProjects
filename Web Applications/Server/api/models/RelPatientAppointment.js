@@ -8,7 +8,7 @@ module.exports = {
         },
         PatientID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'Patient',
                 key: 'ID'
@@ -16,7 +16,7 @@ module.exports = {
         },
         AppointmentID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'Appointment',
                 key: 'ID'

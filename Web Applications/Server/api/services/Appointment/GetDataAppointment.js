@@ -1,29 +1,39 @@
 module.exports = {
-    Appointment: function(data) {
+    AppointmentCreate: function(data) {
         return {
-            SiteID: 1,
-            FromTime: data.FromTime,
-            ToTime: data.ToTime,
+            SiteID: data.SiteID,
             RequestDate: data.RequestDate,
-            ApprovalDate: data.ApprovalDate,
             Status: 'Watting for approve',
             Enable: 'Y'
         };
     },
-    TelehealthAppointment: function(data) {
+    AppointmentUpdate: function(data) {
         return {
-            RefName: data.RefName,
-            RefHealthLink: data.RefHealthLink,
-            RefAddress: data.RefAddress,
-            RefTelePhone: data.RefTelePhone,
-            RefPostCode: data.RefPostCode,
-            RefSignature: data.RefSignature,
-            RefDate: data.RefDate,
-            RefProviderNumber: data.RefProviderNumber,
-            RefDurationOfReferal: data.RefDurationOfReferal
+            FromTime: data.FromTime,
+            ToTime: data.ToTime,
+            ApprovalDate: data.ApprovalDate,
+            Status: data.Status
         };
     },
-    PatientAppointment: function(data) {
+    TelehealthAppointmentCreate: function(data) {
+        var FullName = HelperService.GetFullName(data.FirstName, data.MiddleName, data.LastName);
+        return {
+            RefName: FullName,
+            RefHealthLink: data.HealthLink,
+            RefAddress: data.Address,
+            RefTelePhone: data.PhoneNumber,
+            RefPostCode: data.PostCode,
+            RefSignature: data.Signature,
+            RefDate: data.RefDate,
+            RefProviderNumber: data.ProviderNumber,
+            RefDurationOfReferal: data.RefDurationOfReferal,
+            Enable: 'Y'
+        };
+    },
+    TelehealthAppointmentUpdate: function(data) {
+
+    },
+    PatientAppointmentCreate: function(data) {
         return {
             FirstName: data.FirstName,
             LastName: data.LastName,
@@ -36,7 +46,7 @@ module.exports = {
             HomePhoneNumber: data.HomePhoneNumber
         };
     },
-    ExaminationRequired: function(data) {
+    ExaminationRequiredCreate: function(data) {
         return {
             Private: data.Private,
             Public: data.Public,
@@ -45,20 +55,21 @@ module.exports = {
             MVIT: data.MVIT
         };
     },
-    PreferedPlasticSurgeon: function(data) {
+    PreferedPlasticSurgeonCreate: function(data) {
         return {
             Name: data.Name
         };
 
     },
-    ClinicalDetails: function(teleApptID, data) {
+    ClinicalDetailsCreate: function(teleApptID, createdBy, data) {
         data.forEach(function(value, index) {
             data[index].UID = UUIDService.Create();
             data[index].TelehealthAppointmentID = teleApptID;
+            data[index].CreatedBy = createdBy;
         });
         return data;
     },
-    Patient: function(data) {
+    PatientCreate: function(data) {
         return {
             FirstName: data.FirstName,
             MiddleName: data.MiddleName,
@@ -71,7 +82,7 @@ module.exports = {
             Email: data.Email
         };
     },
-    Doctor: function(data) {
+    DoctorCreate: function(data) {
         return {
             FirstName: data.FirstName,
             MiddleName: data.MiddleName,

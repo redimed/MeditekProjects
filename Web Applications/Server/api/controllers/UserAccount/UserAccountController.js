@@ -5,6 +5,8 @@ module.exports = {
 	Test:function(req,res)
 	{
 			var orderTemp=[{UserName:undefined},{Email:'DESC'}];
+			var arr=['000',undefined,'a'];
+			console.log(arr.indexOf(undefined));
 			// var order=[];
 
 			// order=_.filter(orderTemp,function(item){
@@ -75,10 +77,7 @@ module.exports = {
 		.then(function(data){
 			res.ok(data[0]);
 		},function(err){
-			if(err.status==404)
-				res.notFound(ErrorWrap(err));
-			else
-				res.serverError(ErrorWrap(err));
+			res.serverError(ErrorWrap(err));
 		})
 	},
 

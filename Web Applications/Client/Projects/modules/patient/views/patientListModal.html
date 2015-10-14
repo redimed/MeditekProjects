@@ -59,6 +59,14 @@
 											<div class="col-md-4">
 												<h4><b>Person Information</b></h4>
 												<hr>
+												<!-- begin title -->
+									            <div class="form-group">
+									            	<label class="control-label col-md-4">Title</label>
+									            	<div class="col-md-8">
+									            		<select class="form-control"> </select>
+									            	</div>
+									            </div>
+									            <!-- end title -->
 												<!-- First Name -->
 												<div class="form-group">
 													<label class="control-label col-md-4">First Name</label>
@@ -185,3 +193,17 @@
 		<button type="button" class="btn btn-success" ng-disabled="infoChanged()||!infoClear()" ng-click="savechange(info)" ><i class="glyphicon glyphicon-save"></i> Save changes</button>
 	</div>
 </div>
+
+<script>
+	// Metronic.setAssetsPath('./theme/assets/'); // Set the assets folder path			
+	// ComponentsFormTools.init();
+	//ComponentsDropdowns.init(); // init todo page
+	// //FormiCheck.init(); // init page demo
+	ComponentsPickers.init(); // init todo page
+	// //Portfolio.init(); // coi hinh
+
+	Metronic.initAjax();
+	//ComponentsFormTools.init();
+	ComponentsDropdowns.init(); // init todo page
+	//FormiCheck.init(); // init page demo
+</script>

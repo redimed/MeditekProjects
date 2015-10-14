@@ -10,17 +10,9 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: false
         },
-        SiteID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: true,
-            references: {
-                model: 'Site',
-                key: 'ID'
-            }
-        },
         UserAccountID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'UserAccount',
                 key: 'ID'
@@ -33,6 +25,10 @@ module.exports = {
                 model: 'Department',
                 key: 'ID'
             }
+        },
+        Title: {
+            type: Sequelize.STRING(45),
+            allowNull: true
         },
         FirstName: {
             type: Sequelize.STRING(50),
@@ -54,25 +50,53 @@ module.exports = {
             type: Sequelize.DATE,
             allowNull: true
         },
+        Address1: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
+        Address2: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
         Postcode: {
             type: Sequelize.STRING(100),
             allowNull: true
         },
-        Address: {
-            type: Sequelize.STRING(255),
+        Suburb: {
+            type: Sequelize.STRING(100),
             allowNull: true
+        },
+        State: {
+            type: Sequelize.STRING(100),
+            allowNull: true
+        },
+        CountryID: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            references: {
+                model: 'Country',
+                key: 'ID'
+            }
         },
         Email: {
             type: Sequelize.STRING(255),
             allowNull: true
         },
-        Phone: {
+        HomePhoneNumber: {
             type: Sequelize.STRING(20),
             allowNull: true
         },
-        Signture: {
-            type: Sequelize.STRING(255),
+        WorkPhoneNumber: {
+            type: Sequelize.STRING(20),
             allowNull: true
+        },
+        Signature: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            references: {
+                model: 'FileUpload',
+                key: 'ID'
+            }
         },
         HealthLink: {
             type: Sequelize.STRING(255),

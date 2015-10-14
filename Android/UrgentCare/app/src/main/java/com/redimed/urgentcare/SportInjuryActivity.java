@@ -6,18 +6,18 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 
+import com.andexert.library.RippleView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -29,6 +29,9 @@ import com.redimed.urgentcare.utils.RetrofitClient;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,12 +50,13 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
     @Bind(R.id.txtEmail) EditText txtEmail;
     @Bind(R.id.txtDescription) EditText txtDescription;
     @Bind(R.id.radioGroupGPReferral) RadioGroup radioGroupGPReferral;
-    @Bind(R.id.radioGroupUrgentRequestType) RadioGroup radioGroupUrgentRequestType;
     @Bind(R.id.scrollViewSportInjury) ScrollView scrollViewSportInjury;
-    @Bind(R.id.btnCloseSportInjuryPage) Button btnCloseSportInjuryPage;
-    @Bind(R.id.btnSportInjury) Button btnSportInjury;
-    @Bind(R.id.autoCompleteSuburb)
-    AutoCompleteTextView autoCompleteSuburb;
+    @Bind(R.id.rippleViewCloseSportInjuryPage) RippleView rippleViewCloseSportInjuryPage;
+    @Bind(R.id.rippleViewBtnSportInjury) RippleView rippleViewBtnSportInjury;
+    @Bind(R.id.autoCompleteSuburb) AutoCompleteTextView autoCompleteSuburb;
+    @Bind(R.id.checkboxHandTherapy) CheckBox checkboxHandTherapy;
+    @Bind(R.id.checkboxPhysiotherapy) CheckBox checkboxPhysiotherapy;
+    @Bind(R.id.checkboxSpecialist) CheckBox checkboxSpecialist;
     String[] surburb;
     Gson gson = new Gson();
 
@@ -64,19 +68,19 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
         ButterKnife.bind(this);
         mReadJsonData();
         // Initialize controls
-        EditText[] allEditTextEventOnTouchListener = {txtFirstName,txtLastName,txtDOB,txtContactPhone,txtEmail,txtDescription};
+        EditText[] allEditTextEventOnTouchListener = {txtFirstName,txtLastName,txtDOB,txtContactPhone,txtEmail,txtDescription, autoCompleteSuburb};
         OnTouchListenerRelativeLayout(scrollViewSportInjury, allEditTextEventOnTouchListener);
         TxtDOBCreateDatePicker(txtDOB);
-        CloseMakeAppointmentPage(btnCloseSportInjuryPage);
+        CloseMakeAppointmentPage(rippleViewCloseSportInjuryPage);
         EditText[] allEditTextCheckRequire = {txtFirstName, txtLastName};
-        SendMakeAppointment(btnSportInjury, allEditTextCheckRequire);
+        SendMakeAppointment(rippleViewBtnSportInjury, allEditTextCheckRequire);
         EdittextValidateFocus(allEditTextCheckRequire);
 
     }
 
     public void mReadJsonData() {
         try {
-            File f = new File("/data/data/" + getPackageName() + "/" + "suburb.json");
+            File f = new File(getStringValue(R.string.urlFile) + getPackageName() + getStringValue(R.string.fileName));
             if  (f.exists()){
                 FileInputStream is = new FileInputStream(f);
                 int size = is.available();
@@ -84,13 +88,11 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
                 is.read(buffer);
                 is.close();
                 String mResponse = new String(buffer);
-                Log.d("roine", mResponse);
 
                 JsonParser parser = new JsonParser();
                 JsonObject obj = (JsonObject) parser.parse(mResponse);
 
                 surburb = gson.fromJson(obj.get("data"), String[].class);
-                Log.d("nene",obj.get("data").toString());
                 ArrayAdapter adapter = new ArrayAdapter(SportInjuryActivity.this,android.R.layout.simple_list_item_1,surburb);
                 autoCompleteSuburb.setAdapter(adapter);
                 autoCompleteSuburb.setThreshold(1);
@@ -114,9 +116,10 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         if (CheckRequiredData(editTextFocus)) {
-                            editTextFocus.setError(editTextFocus.getHint()+" is required!", customErrorDrawable);
+                            editTextFocus.setError(editTextFocus.getHint()+" "+ getStringValue(R.string.isRequired), customErrorDrawable);
                         } else {
                             editTextFocus.setError(null);
+                            editTextFocus.setText(capFirstLetter(editTextFocus.getText().toString()));
                         }
                     }
                 }
@@ -128,11 +131,32 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     if (CheckContactNo(txtContactPhone) == "null") {
-                        txtContactPhone.setError("Contact Phone is required!", customErrorDrawable);
+                        txtContactPhone.setError(getStringValue(R.string.contactPhoneRequired), customErrorDrawable);
                     } else if (CheckContactNo(txtContactPhone) == "error") {
-                        txtContactPhone.setError("Contact Phone wrong formatted", customErrorDrawable);
+                        txtContactPhone.setError(getStringValue(R.string.contactPhoneFormat), customErrorDrawable);
                     } else {
                         txtContactPhone.setError(null);
+                    }
+                }
+            }
+        });
+
+        autoCompleteSuburb.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    if (autoCompleteSuburb.getText().length() >0 ){
+                        autoCompleteSuburb.setText(capFirstLetter(autoCompleteSuburb.getText().toString()));
+                    }
+                }
+            }
+        });
+        txtDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    if (txtDescription.getText().length() >0){
+                        txtDescription.setText(capFirstLetter(txtDescription.getText().toString()));
                     }
                 }
             }
@@ -144,13 +168,17 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     if (!IsEmailValid(txtEmail) && txtEmail.getText().length() > 0) {
-                        txtEmail.setError("Email address not valid", customErrorDrawable);
+                        txtEmail.setError(getStringValue(R.string.emailValid), customErrorDrawable);
                     } else {
                         txtEmail.setError(null);
                     }
                 }
             }
         });
+    }
+
+    public String getStringValue(int id){
+        return getResources().getString(id);
     }
 
     //validate from
@@ -163,7 +191,7 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
         //validation
         for (int i=0; i<arrayEditTextCheckRequired.length;i++){
             if (CheckRequiredData(arrayEditTextCheckRequired[i])) {
-                arrayEditTextCheckRequired[i].setError(arrayEditTextCheckRequired[i].getHint()+" is required!", customErrorDrawable);
+                arrayEditTextCheckRequired[i].setError(arrayEditTextCheckRequired[i].getHint()+" "+ getStringValue(R.string.isRequired), customErrorDrawable);
                 validate = false;
             }else {
                 arrayEditTextCheckRequired[i].setError(null);
@@ -172,17 +200,17 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
         //validate phone number
         // australian phonenumer: 10digits (0X YYYY YYYY)
         if (CheckContactNo(txtContactPhone) == "null"){
-            txtContactPhone.setError("Contact No is required!", customErrorDrawable);
+            txtContactPhone.setError(getStringValue(R.string.contactPhoneRequired), customErrorDrawable);
             validate = false;
         }else if (CheckContactNo(txtContactPhone) == "error"){
-            txtContactPhone.setError("Contact No wrong formatted",customErrorDrawable);
+            txtContactPhone.setError(getStringValue(R.string.contactPhoneFormat),customErrorDrawable);
             validate = false;
         }else {
             txtContactPhone.setError(null);
         }
         //validate email format
         if (!IsEmailValid(txtEmail) && txtEmail.getText().length() > 0){
-            txtEmail.setError("Email address not valid",customErrorDrawable);
+            txtEmail.setError(getStringValue(R.string.emailValid),customErrorDrawable);
             validate = false;
         }else {
             txtEmail.setError(null);
@@ -234,11 +262,19 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
         return "true";
     }
 
-    public void SendMakeAppointment(Button btn, final EditText[] arr) {
-        btn.setOnClickListener(new View.OnClickListener() {
+    //SendMakeAppointment
+    //input: Urgent care request infomation
+    //output: new urgent care request
+    public void SendMakeAppointment(RippleView rv, final EditText[] arr) {
+        rv.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
-            public void onClick(View v) {
+            public void onComplete(RippleView rippleView) {
                 if (!CheckValidateFrom(arr)) {
+                    SweetAlertDialog eFDialog = new SweetAlertDialog(SportInjuryActivity.this, SweetAlertDialog.ERROR_TYPE);
+                    eFDialog.setTitleText(getResources().getString(R.string.dailogError));
+                    eFDialog.setContentText(getResources().getString(R.string.contentDialogErrorFrom));
+                    eFDialog.setCancelable(false);
+                    eFDialog.show();
                     return;
                 }
                 // Initialize objectUrgentRequest
@@ -248,11 +284,20 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
                 objectUrgentRequest.setContactPhone(
                         getResources().getString(R.string.australiaFormatPhone) + txtContactPhone.getText().toString()
                 );
-                objectUrgentRequest.setDOB(txtDOB.getText().toString());
+                if (txtDOB.length() > 0) {
+                    StringTokenizer st = new StringTokenizer(txtDOB.getText().toString(), "/");
+                    List<Integer> myList = new ArrayList<Integer>();
+                    while (st.hasMoreTokens()) {
+                        myList.add(Integer.parseInt(st.nextToken()));
+                    }
+                    objectUrgentRequest.setDOB(myList.get(2) + "-" + myList.get(1) + "-" + myList.get(0));
+                }
                 objectUrgentRequest.setEmail(txtEmail.getText().toString());
                 objectUrgentRequest.setDescription(txtDescription.getText().toString());
                 objectUrgentRequest.setGpReferral(((RadioButton) findViewById(radioGroupGPReferral.getCheckedRadioButtonId())).getHint().toString());
-                objectUrgentRequest.setUrgentRequestType(((RadioButton) findViewById(radioGroupUrgentRequestType.getCheckedRadioButtonId())).getHint().toString());
+                objectUrgentRequest.setHandTherapy((checkboxHandTherapy.isChecked() != true) ? "N" : "Y");
+                objectUrgentRequest.setPhysiotherapy((checkboxPhysiotherapy.isChecked() != true) ? "N" : "Y");
+                objectUrgentRequest.setSpecialist((checkboxSpecialist.isChecked() != true) ? "N" : "Y");
                 objectUrgentRequest.setServiceType(getResources().getString(R.string.serviceSportInjury));
                 objectUrgentRequest.setSuburb(autoCompleteSuburb.getText().toString());
                 // Make Appointment Process
@@ -275,17 +320,18 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
                     @Override
                     public void success(JsonObject jsonObject, Response response) {
                         progressDialog.dismissWithAnimation();
-                        SweetAlertDialog pDialog = new SweetAlertDialog(SportInjuryActivity.this, SweetAlertDialog.SUCCESS_TYPE);
+                        final SweetAlertDialog pDialog = new SweetAlertDialog(SportInjuryActivity.this, SweetAlertDialog.SUCCESS_TYPE);
                         pDialog.setTitleText(getResources().getString(R.string.dailogSuccess));
                         pDialog.setContentText(getResources().getString(R.string.contentDialogSuccessAppointment));
                         pDialog.setCancelable(false);
+                        pDialog.show();
                         pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
+                                pDialog.dismissWithAnimation();
                                 finish();
                             }
                         });
-                        pDialog.show();
                     }
 
                     @Override
@@ -295,12 +341,6 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
                         eDialog.setTitleText(getResources().getString(R.string.dailogError));
                         eDialog.setContentText(getResources().getString(R.string.contentDialogErrorAppointment));
                         eDialog.setCancelable(false);
-                        eDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                finish();
-                            }
-                        });
                         eDialog.show();
                     }
                 });
@@ -331,24 +371,29 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
         });
     }
 
-    public void CloseMakeAppointmentPage(Button btn) {
-        btn.setOnClickListener(new View.OnClickListener() {
+    public void CloseMakeAppointmentPage(RippleView rv) {
+        rv.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
-            public void onClick(View v) {
+            public void onComplete(RippleView rippleView) {
                 finish();
             }
         });
     }
 
+    //CreatePopupDatePicker: show popup date picker
     public void CreatePopupDatePicker(){
         CreateDatePicker datepicker = new CreateDatePicker();
         datepicker.show(getSupportFragmentManager(), "date_picker");
     }
+
     public void HideKeyBoard(EditText editText){
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
-
+    //Upper case first string
+    public static String capFirstLetter(String input) {
+        return input.substring(0,1).toUpperCase() + input.substring(1,input.length());
+    }
     public void TxtDOBCreateDatePicker(final EditText editText){
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

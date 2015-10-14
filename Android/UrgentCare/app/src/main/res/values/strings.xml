@@ -10,6 +10,7 @@
     <string name="progressMakeAppointmentContent">Please wait..</string>
     <string name="jsonTitleSendAppointment">data</string>
     <string name="contentDialogErrorAppointment">Error! please check your connection and try again</string>
+    <string name="contentDialogErrorFrom">Please input required information</string>
     <string name="contentDialogSuccessAppointment">Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.</string>
     <string name="australiaFormatPhone">+61</string>
     <string name="serviceFAQ">FAQ</string>
@@ -33,6 +34,34 @@
     <string name="dailogSuccess">Success</string>
     <string name="dailogError">Error</string>
     <string name="lblhome">personalised + customised, <b>HEALTHCARE</b> anywhere</string>
+    <string name="lblfaq1"><b>Where are you located?</b></string>
+    <string name="lblfaq2"><b>What are your opening hours?</b></string>
+    <string name="lblfaq3"><b>Do I need to provide a GP referral?</b></string>
+    <string name="lblfaq4"><b>What fees will I need to pay?</b></string>
+    <string name="lblfaq5"><b>Can I claim any money back from Medicare or Private Health?</b></string>
+    <string name="lblfaq6"><b>I don’t have private health insurance, can I still be seen?</b></string>
+    <string name="lblfaq7"><b>How long do I have to wait to see a Specialist?</b></string>
+
+    <string name="urlFile">/data/data/</string>
+    <string name="fileName">/suburb.json</string>
+
+    <string name="isRequired">  is required!</string>
+    <string name="contactPhoneRequired">Contact Phone is required!</string>
+    <string name="contactPhoneFormat">Contact Phone wrong formatted</string>
+    <string name="emailValid">Email address not valid</string>
+    <string name="companyPhoneFormat">Company Phone wrong formatted</string>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

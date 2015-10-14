@@ -5,6 +5,8 @@
     <color name="bgPrimaryDark">#0F574D</color>
     <color name="ColorPrimary">#FF5722</color>
     <color name="ColorPrimaryDark">#E64A19</color>
-    <color name="bg">#1e000000</color>
-    <color name="bgToolBar">#1aaa93</color>
+    <color name="bg">#14000000</color>
+    <color name="bgToolBar">#1AAA93</color>
+    <color name="DiaLogColor">#A5DC86</color>
+
 </resources>

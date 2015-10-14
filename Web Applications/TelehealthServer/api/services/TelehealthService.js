@@ -1,8 +1,7 @@
 var requestify = require('requestify');
 var config = sails.config.myconf;
-var appts = [];
 
-function checkOnlineUser() {
+function checkOnlineUser(appts) {
     var list = sails.sockets.rooms();
     if (appts.length > 0 && list.length > 0) {
         for (var j = 0; j < appts.length; j++) {
@@ -23,12 +22,50 @@ module.exports = {
             }
         });
     },
+    GetAppointmentsByPatient: function(patientUID, limit) {
+        return TelehealthService.MakeRequest({
+            path: '/api/appointment-telehealth-list',
+            method: 'POST',
+            body: {
+                data: {
+                    Order: [{
+                        Appointment: {
+                            FromTime: 'DESC'
+                        }
+                    }],
+                    Filter: [{
+                        Appointment: {
+                            Status: "Approved",
+                            Enable: "Y"
+                        }
+                    }, {
+                        Patient: {
+                            UID: patientUID
+                        }
+                    }],
+                    Limit: limit
+                }
+            }
+        })
+    },
+    GetAppointmentDetails: function(apptUID) {
+        return TelehealthService.MakeRequest({
+            path: '/api/appointment-telehealth-detail/' + apptUID,
+            method: 'GET',
+            body: {}
+        })
+    },
     GetAppointmentList: function() {
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-list',
             method: 'POST',
             body: {
                 data: {
+                    Order: [{
+                        Appointment: {
+                            FromTime: 'DESC'
+                        }
+                    }],
                     Filter: [{
                         Appointment: {
                             FromTime: sails.moment().format('YYYY-MM-DD'),
@@ -40,7 +77,7 @@ module.exports = {
         });
     },
     GetOnlineUsers: function() {
-        appts = [];
+        var appts = [];
         TelehealthService.GetAppointmentList().then(function(response) {
             appts = response.getBody();
             if (appts.length > 0) {
@@ -53,14 +90,13 @@ module.exports = {
                             }
                         }
                     }
-                    checkOnlineUser();
+                    checkOnlineUser(appts);
                 }).catch(function(err) {
                     console.log(err);
                 })
-            }
-            else checkOnlineUser();
+            } else checkOnlineUser(appts);
         }).catch(function(err) {
-            checkOnlineUser();
+            checkOnlineUser(appts);
         })
     },
     MakeRequest: function(info) {

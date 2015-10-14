@@ -1,47 +1,51 @@
 module.exports.routes = {
     //=================Telehealth User Routes======================
-    'POST /telehealth/user/updateToken': {
+    'POST /api/telehealth/user/updateToken': {
         controller: 'TelehealthController',
         action: 'UpdateDeviceToken'
     },
-    'POST /telehealth/user/requestActivationCode': {
+    'POST /api/telehealth/user/requestActivationCode': {
         controller: 'TelehealthController',
         action: 'RequestActivationCode'
     },
-    'POST /telehealth/user/verifyActivationCode': {
+    'POST /api/telehealth/user/verifyActivationCode': {
         controller: 'TelehealthController',
         action: 'VerifyActivationCode'
     },
-    'POST /telehealth/user/login': {
+    'POST /api/telehealth/user/login': {
         controller: 'TelehealthController',
         action: 'TelehealthLogin'
     },
-    'POST /telehealth/user/details': {
+    'POST /api/telehealth/user/details': {
         controller: 'TelehealthController',
         action: 'GetUserDetails'
     },
-    'POST /telehealth/sendSMS': {
+    'POST /api/telehealth/user/appointments': {
+        controller: 'TelehealthController',
+        action: 'GetUserAppointments'
+    },
+    'POST /api/telehealth/user/appointmentDetails':{
+        controller: 'TelehealthController',
+        action: 'GetAppointmentDetails'
+    },
+    'POST /api/telehealth/sendSMS': {
         controller: 'TelehealthController',
         action: 'SendSMS'
     },
-    '/telehealth/upload': {
-        controller: 'TelehealthController',
-        action: 'UploadFile'
-    },
     //================Telehealth Socket Routes==========================
-    '/telehealth/socket/joinRoom': {
+    '/api/telehealth/socket/joinRoom': {
         controller: 'SocketController',
         action: 'JoinConferenceRoom'
     },
-    '/telehealth/socket/messageTransfer': {
+    '/api/telehealth/socket/messageTransfer': {
         controller: 'SocketController',
         action: 'MessageTransfer'
     },
-    '/telehealth/socket/onlineList': {
+    '/api/telehealth/socket/onlineList': {
         controller: 'SocketController',
         action: 'OnlineUserList'
     },
-    'GET /telehealth/socket/generateSession': {
+    'GET /api/telehealth/socket/generateSession': {
         controller: 'SocketController',
         action: 'GenerateConferenceSession'
     }

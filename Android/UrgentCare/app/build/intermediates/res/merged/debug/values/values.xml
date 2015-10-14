@@ -343,7 +343,11 @@
     <string name="australiaFormatPhone">+61</string>
     <string name="belmontAddress"><u> 1 Frederick Street, Belmont WA 6104</u></string>
     <string name="belmontPhone"><u> 08 9230 0900</u></string>
+    <string name="companyPhoneFormat">Company Phone wrong formatted</string>
+    <string name="contactPhoneFormat">Contact Phone wrong formatted</string>
+    <string name="contactPhoneRequired">Contact Phone is required!</string>
     <string name="contentDialogErrorAppointment">Error! please check your connection and try again</string>
+    <string name="contentDialogErrorFrom">Please input required information</string>
     <string name="contentDialogSuccessAppointment">Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.</string>
     <string name="dailogError">Error</string>
     <string name="dailogSuccess">Success</string>
@@ -356,8 +360,11 @@
     <eat-comment/>
     <string name="emailBold"><b>Email: </b></string>
     <string name="emailRedimed"><u> reception@redimed.com.au</u></string>
+    <string name="emailValid">Email address not valid</string>
     <string name="faxBold"><b>Fax: </b></string>
+    <string name="fileName">/suburb.json</string>
     <string name="hello_world">Hello world!</string>
+    <string name="isRequired">  is required!</string>
     <string name="joondalupAddress"><u> 81 McLarty Avenue, Joondalup WA 6027</u></string>
     <string name="joondalupPhone"><u> 08 9300 3835</u></string>
     <string name="jsonTitleSendAppointment">data</string>
@@ -368,7 +375,6 @@
     <string name="lblfaq5"><b>Can I claim any money back from Medicare or Private Health?</b></string>
     <string name="lblfaq6"><b>I don’t have private health insurance, can I still be seen?</b></string>
     <string name="lblfaq7"><b>How long do I have to wait to see a Specialist?</b></string>
-    <string name="lblfaq8"><b>What services do you offer?</b></string>
     <string name="lblhome">personalised + customised, <b>HEALTHCARE</b> anywhere</string>
     <string name="openingHoursBold"><b>Opening hours: </b></string>
     <string name="phoneBold"><b>Phone: </b></string>
@@ -392,6 +398,7 @@
     <string name="title_activity_make_appointment">MakeAppointmentActivity</string>
     <string name="title_activity_sport_injury">SportInjuryActivity</string>
     <string name="title_activity_work_injury">WorkInjuryActivity</string>
+    <string name="urlFile">/data/data/</string>
     <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
@@ -402,7 +409,7 @@
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/bgToolBar</item>
-        <item name="colorPrimaryDark">@color/bgPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/bgToolBar</item>
         <!-- Customize your theme here. -->
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="buttonStyle">@style/RobotoButtonStyle</item>

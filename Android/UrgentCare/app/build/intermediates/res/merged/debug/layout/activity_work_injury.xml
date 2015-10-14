@@ -71,7 +71,7 @@
                         android:hint="First Name"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:inputType="textCapSentences"
+                        android:inputType="text"
                         android:fontFamily="sans-serif-light"
                         android:imeOptions="actionDone"
                         android:maxLength="50"/>
@@ -99,7 +99,7 @@
                         android:hint="Last Name"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:inputType="textCapSentences"
+                        android:inputType="text"
                         android:fontFamily="sans-serif-light"
                         android:imeOptions="actionDone"
                         android:maxLength="255"/>
@@ -127,7 +127,7 @@
                         android:hint="Contact Phone"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:inputType="textCapSentences|number"
+                        android:inputType="phone"
                         android:fontFamily="sans-serif-light"
                         android:imeOptions="actionDone"
                         android:maxLength="10"/>
@@ -153,6 +153,8 @@
                         android:layout_height="fill_parent"
                         android:background="@android:color/transparent"
                         android:hint="Suburb"
+                        android:lines="1"
+                        android:ems="1"
                         android:fontFamily="sans-serif-light"
                         android:autoText="false">
                         <requestFocus />
@@ -174,7 +176,7 @@
                         android:hint="Date Of Birth"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:inputType="textCapSentences"
+                        android:inputType="date"
                         android:fontFamily="sans-serif-light"/>
                 </RelativeLayout>
                 <!--Email-->
@@ -192,13 +194,13 @@
                         android:id="@+id/txtEmail"
                         android:hint="Email"
                         android:maxLines="1"
-                        android:inputType="textCapSentences"
+                        android:inputType="text"
                         android:fontFamily="sans-serif-light"
                         android:imeOptions="actionDone"
                         android:maxLength="255"/>
                 </RelativeLayout>
                 <!--Description-->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/relativeLayoutDescription"
@@ -211,60 +213,60 @@
                         android:background="@android:color/transparent"
                         android:id="@+id/txtDescription"
                         android:hint="Description"
-                        android:inputType="textMultiLine|textCapSentences"
+                        android:inputType="textMultiLine|text"
                         android:lines="2"
                         android:scrollHorizontally="false"
                         android:imeOptions="actionDone"
                         android:fontFamily="sans-serif-light" />
-                </RelativeLayout>
+                </LinearLayout>
                 <!--UrgentRequestType-->
-                <com.redimed.urgentcare.utils.TableRadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/radioGroupUrgentRequestType"
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:layout_below="@+id/relativeLayoutDescription"
-                    android:layout_marginTop="15dp">
-                    <TableRow
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
-                        <RadioButton
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal"
+                    android:id="@+id/relativeLayoutCheckBox1">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
                             android:text="Physio Therapy"
-                            android:textSize="17dp"
-                            android:hint="PHY"/>
-                        <RadioButton
+                            android:id="@+id/checkboxPhysiotherapy"
+                            android:fontFamily="sans-serif-light"
+                            android:textSize="17dp"/>
+                        <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
                             android:text="Specialist"
-                            android:textSize="17dp"
-                            android:hint="SPE"
-                            android:layout_marginLeft="20dp"/>
-                    </TableRow>
-                    <TableRow
-                        android:id="@+id/group2"
-                        android:orientation="horizontal"
+                            android:id="@+id/checkboxSpecialist"
+                            android:fontFamily="sans-serif-light"
+                            android:textSize="17dp"/>
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
-                        <RadioButton
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="20dp">
+                        <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
                             android:text="Hand Therapy"
-                            android:textSize="17dp"
-                            android:hint="HAN"/>
-                        <RadioButton
+                            android:id="@+id/checkboxHandTherapy"
+                            android:fontFamily="sans-serif-light"
+                            android:textSize="17dp"/>
+                        <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
                             android:text="GP"
-                            android:textSize="17dp"
-                            android:hint="GP"
-                            android:layout_marginLeft="20dp"/>
-                    </TableRow>
-                </com.redimed.urgentcare.utils.TableRadioGroup>
+                            android:id="@+id/checkboxGP"
+                            android:fontFamily="sans-serif-light"
+                            android:textSize="17dp"/>
+                    </LinearLayout>
+                </LinearLayout>
             </RelativeLayout>
             <!--layoutCompany-->
             <RelativeLayout
@@ -287,7 +289,7 @@
                         android:hint="Company Name"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:inputType="textCapSentences"
+                        android:inputType="text"
                         android:fontFamily="sans-serif-light"
                         android:imeOptions="actionDone"
                         android:maxLength="255"/>
@@ -315,7 +317,7 @@
                         android:hint="Contact Person"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:inputType="textCapSentences"
+                        android:inputType="text"
                         android:fontFamily="sans-serif-light"
                         android:imeOptions="actionDone"
                         android:maxLength="255"/>
@@ -345,7 +347,8 @@
                         android:singleLine="true"
                         android:inputType="phone"
                         android:fontFamily="sans-serif-light"
-                        android:imeOptions="actionDone" />
+                        android:imeOptions="actionDone"
+                        android:maxLength="10"/>
                 </RelativeLayout>
             </RelativeLayout>
             <!--Button-->

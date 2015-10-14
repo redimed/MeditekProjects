@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/bgToolBar</item>
-        <item name="colorPrimaryDark">@color/bgPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/bgToolBar</item>
         <!-- Customize your theme here. -->
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="buttonStyle">@style/RobotoButtonStyle</item>

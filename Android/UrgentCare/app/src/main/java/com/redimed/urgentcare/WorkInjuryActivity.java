@@ -2,6 +2,7 @@ package com.redimed.urgentcare;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,9 +12,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.ScrollView;
 
 import com.andexert.library.RippleView;
@@ -24,7 +25,6 @@ import com.redimed.urgentcare.api.UrgentRequestApi;
 import com.redimed.urgentcare.models.UrgentRequestModel;
 import com.redimed.urgentcare.utils.CreateDatePicker;
 import com.redimed.urgentcare.utils.RetrofitClient;
-import com.redimed.urgentcare.utils.TableRadioGroup;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,11 +49,13 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
     @Bind(R.id.txtDOB) EditText txtDOB;
     @Bind(R.id.txtEmail) EditText txtEmail;
     @Bind(R.id.txtDescription) EditText txtDescription;
-    @Bind(R.id.radioGroupUrgentRequestType) TableRadioGroup radioGroupUrgentRequestType;
     @Bind(R.id.scrollViewWorkInjury) ScrollView scrollViewWorkInjury;
     @Bind(R.id.rippleViewBtnWorkInjury) RippleView rippleViewBtnWorkInjury;
     @Bind(R.id.rippleViewCloseWorkInjuryPage) RippleView rippleViewCloseWorkInjuryPage;
-
+    @Bind(R.id.checkboxGP) CheckBox checkboxGP;
+    @Bind(R.id.checkboxHandTherapy) CheckBox checkboxHandTherapy;
+    @Bind(R.id.checkboxPhysiotherapy) CheckBox checkboxPhysiotherapy;
+    @Bind(R.id.checkboxSpecialist) CheckBox checkboxSpecialist;
     @Bind(R.id.autoCompleteSuburb) AutoCompleteTextView autoCompleteSuburb;
     @Bind(R.id.txtCompanyName) EditText txtCompanyName;
     @Bind(R.id.txtContactPerson) EditText txtContactPerson;
@@ -69,7 +71,7 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
         ButterKnife.bind(this);
         ReadJsonDataSuburb();
         // Initialize controls
-        EditText[] allEditTextEventOnTouchListener = {txtFirstName,txtLastName,txtContactPhone,txtDOB,autoCompleteSuburb,txtEmail,txtDescription,txtCompanyPhone,txtContactPerson,txtCompanyName};
+        EditText[] allEditTextEventOnTouchListener = {txtFirstName,txtLastName,txtContactPhone,txtDOB,txtEmail,txtDescription,txtCompanyPhone,txtContactPerson,txtCompanyName,autoCompleteSuburb};
         OnTouchListenerRelativeLayout(scrollViewWorkInjury, allEditTextEventOnTouchListener);
         TxtDOBCreateDatePicker();
         CloseMakeAppointmentPage(rippleViewCloseWorkInjuryPage);
@@ -82,7 +84,7 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
     */
     public void ReadJsonDataSuburb() {
         try {
-            File f = new File("/data/data/" + getPackageName() + "/" + "suburb.json");
+            File f = new File(getStringValue(R.string.urlFile) + getPackageName() + getStringValue(R.string.fileName));
             if  (f.exists()){
                 FileInputStream is = new FileInputStream(f);
                 int size = is.available();
@@ -118,9 +120,10 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         if (CheckRequiredData(editTextFocus)) {
-                            editTextFocus.setError(editTextFocus.getHint()+" is required!", customErrorDrawable);
+                            editTextFocus.setError(editTextFocus.getHint()+" "+ getStringValue(R.string.isRequired), customErrorDrawable);
                         } else {
                             editTextFocus.setError(null);
+                            editTextFocus.setText(capFirstLetter(editTextFocus.getText().toString()));
                         }
                     }
                 }
@@ -133,9 +136,9 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     if (CheckContactNo(txtContactPhone) == "null") {
-                        txtContactPhone.setError("Contact Phone is required!", customErrorDrawable);
+                        txtContactPhone.setError(getStringValue(R.string.contactPhoneRequired), customErrorDrawable);
                     } else if (CheckContactNo(txtContactPhone) == "error") {
-                        txtContactPhone.setError("Contact Phone wrong formatted", customErrorDrawable);
+                        txtContactPhone.setError(getStringValue(R.string.contactPhoneFormat), customErrorDrawable);
                     } else {
                         txtContactPhone.setError(null);
                     }
@@ -147,15 +150,56 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
         txtEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    if (!IsEmailValid(txtEmail) && txtEmail.getText().length() > 0) {
-                        txtEmail.setError("Email address not valid", customErrorDrawable);
-                    } else {
-                        txtEmail.setError(null);
+            if (!hasFocus) {
+                if (!IsEmailValid(txtEmail) && txtEmail.getText().length() > 0) {
+                    txtEmail.setError(getStringValue(R.string.emailValid), customErrorDrawable);
+                } else {
+                    txtEmail.setError(null);
+                }
+            }
+            }
+        });
+
+        //Upper case suburb
+        autoCompleteSuburb.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    if (autoCompleteSuburb.getText().length() >0 ){
+                        autoCompleteSuburb.setText(capFirstLetter(autoCompleteSuburb.getText().toString()));
                     }
                 }
             }
         });
+        //Upper case description
+        txtDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    if (txtDescription.getText().length() >0){
+                        txtDescription.setText(capFirstLetter(txtDescription.getText().toString()));
+                    }
+                }
+            }
+        });
+        //validate company phone
+        txtCompanyPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus){
+                    if (CheckCompanyPhone(txtCompanyPhone) && txtCompanyPhone.getText().length() > 0){
+                        txtCompanyPhone.setError(getStringValue(R.string.companyPhoneFormat), customErrorDrawable);
+                    }else {
+                        txtCompanyPhone.setError(null);
+                    }
+                }
+            }
+        });
+    }
+
+
+    public String getStringValue(int id){
+        return getResources().getString(id);
     }
 
     //validate from
@@ -168,7 +212,7 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
         //validation
         for (int i=0; i<arrayEditTextCheckRequired.length;i++){
             if (CheckRequiredData(arrayEditTextCheckRequired[i])) {
-                arrayEditTextCheckRequired[i].setError(arrayEditTextCheckRequired[i].getHint()+" is required!", customErrorDrawable);
+                arrayEditTextCheckRequired[i].setError(arrayEditTextCheckRequired[i].getHint()+" "+ getStringValue(R.string.isRequired), customErrorDrawable);
                 validate = false;
             }else {
                 arrayEditTextCheckRequired[i].setError(null);
@@ -177,20 +221,26 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
         //validate phone number
         // australian phonenumer: 10 digits (0X YYYY YYYY) or 9 digits (X YYYY YYYY)
         if (CheckContactNo(txtContactPhone) == "null"){
-            txtContactPhone.setError("Contact No is required!", customErrorDrawable);
+            txtContactPhone.setError(getStringValue(R.string.contactPhoneRequired), customErrorDrawable);
             validate = false;
         }else if (CheckContactNo(txtContactPhone) == "error"){
-            txtContactPhone.setError("Contact No wrong formatted",customErrorDrawable);
+            txtContactPhone.setError(getStringValue(R.string.contactPhoneFormat),customErrorDrawable);
             validate = false;
         }else {
             txtContactPhone.setError(null);
         }
         //validate email format
         if (!IsEmailValid(txtEmail) && txtEmail.getText().length() > 0){
-            txtEmail.setError("Email address not valid",customErrorDrawable);
+            txtEmail.setError(getStringValue(R.string.emailValid),customErrorDrawable);
             validate = false;
         }else {
             txtEmail.setError(null);
+        }
+        if (CheckCompanyPhone(txtCompanyPhone) && txtCompanyPhone.getText().length() > 0){
+            txtCompanyPhone.setError(getStringValue(R.string.companyPhoneFormat), customErrorDrawable);
+            validate = false;
+        }else {
+            txtCompanyPhone.setError(null);
         }
         return validate;
     }
@@ -216,7 +266,14 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
         }
         return isRequire;
     }
-
+    //validate company phone
+    public boolean CheckCompanyPhone (EditText editText){
+        boolean check = false;
+        if(editText.getText().length() < 8){
+            check = true;
+        }
+        return check;
+    }
     //validate contact phone
     public String CheckContactNo (EditText editTextContactNo){
         if (CheckRequiredData(editTextContactNo)) {
@@ -239,11 +296,19 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
         return "true";
     }
 
+    //SendMakeAppointment
+    //input: Urgent care request infomation
+    //output: new urgent care request
     public void SendMakeAppointment(RippleView rv, final EditText[] arr){
         rv.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
                 if (!CheckValidateFrom(arr)) {
+                    SweetAlertDialog eFDialog = new SweetAlertDialog(WorkInjuryActivity.this, SweetAlertDialog.ERROR_TYPE);
+                    eFDialog.setTitleText(getResources().getString(R.string.dailogError));
+                    eFDialog.setContentText(getResources().getString(R.string.contentDialogErrorFrom));
+                    eFDialog.setCancelable(false);
+                    eFDialog.show();
                     return;
                 }
                 // Initialize objectUrgentRequest
@@ -262,14 +327,12 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
                     }
                     objectUrgentRequest.setDOB(myList.get(2)+"-"+myList.get(1)+"-"+myList.get(0));
                 }
-                objectUrgentRequest.setEmail(   txtEmail.getText().toString());
+                objectUrgentRequest.setEmail(txtEmail.getText().toString());
                 objectUrgentRequest.setDescription(txtDescription.getText().toString());
-                radioGroupUrgentRequestType.setOnCheckedChangeListener(new TableRadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(TableRadioGroup group, int checkedId) {
-                        objectUrgentRequest.setUrgentRequestType(((RadioButton) findViewById(radioGroupUrgentRequestType.getCheckedRadioButtonId())).getHint().toString());
-                    }
-                });
+                objectUrgentRequest.setGP((checkboxGP.isChecked() != true) ? "N" : "Y");
+                objectUrgentRequest.setHandTherapy((checkboxHandTherapy.isChecked() != true) ? "N" : "Y");
+                objectUrgentRequest.setPhysiotherapy((checkboxPhysiotherapy.isChecked() != true) ? "N" : "Y");
+                objectUrgentRequest.setSpecialist((checkboxSpecialist.isChecked() != true) ? "N" : "Y");
                 objectUrgentRequest.setServiceType(getResources().getString(R.string.serviceWorkInjury));
                 objectUrgentRequest.setCompanyName(txtCompanyName.getText().toString());
                 objectUrgentRequest.setContactPerson(txtContactPerson.getText().toString());
@@ -285,7 +348,7 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
 
                 //dialog waiting make appointment
                 final SweetAlertDialog progressDialog = new SweetAlertDialog(WorkInjuryActivity.this, SweetAlertDialog.PROGRESS_TYPE);
-                progressDialog.getProgressHelper().setBarColor(R.color.DiaLogColor);
+                progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                 progressDialog.setTitleText(getResources().getString(R.string.progressMakeAppointmentContent));
                 progressDialog.setCancelable(false);
                 progressDialog.show();
@@ -321,6 +384,11 @@ public class WorkInjuryActivity extends AppCompatActivity implements CreateDateP
                 });
             }
         });
+    }
+
+    //Upper case first string
+    public static String capFirstLetter(String input) {
+        return input.substring(0,1).toUpperCase() + input.substring(1,input.length());
     }
 
     //OnTouchListenerRelativeLayout: Hide keyboard when outfocus controls

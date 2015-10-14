@@ -1,16 +1,18 @@
-var api=require('../../api/services/api');
-var Routes={
-	// 'get /api/user-account/test':{
-	// 	controller:'UserAccount/UserAccountController',
-	// 	action:'Test',
-	// 	// policy:'hasToken'
+
+module.exports={
+	'get /api/user-account/test':{
+		controller:'UserAccount/UserAccountController',
+		action:'Test',
+		// policy:'hasToken'
+	},
+	// 'get /api/user-account/test':function(req,res){
+	// 	res.json({status:"heheehehhehe"});
 	// },
-	
-	// api.make(api.method.get,api.version.0_1, '/user-account/test'):{
-	// 	controller:'UserAccount/UserAccountController',
-	// 	action:'Test',
-	// 	// policy:'hasToken'
-	// },
+	// 
+	'get /api/user-account/test-url/:param1/:param2/:param3':{
+		controller:'UserAccount/UserAccountController',
+		action:'TestURL',
+	},
 
 	'post /api/user-account/testPost':{
 		controller:'UserAccount/UserAccountController',
@@ -94,12 +96,4 @@ var Routes={
     'get /testGp':'TestController.testGp',
     'get /testDoctor':'TestController.testDoctor',
     'get /testPatient':'TestController.testPatient',
-
 };
-
-Routes[api.make(api.method.get,api.version.v0_2, '/user-account','/test')]={
-	controller:'UserAccount/UserAccountController',
-	action:'v2Test',
-	policy:'out'
-},
-module.exports=Routes;

@@ -15,7 +15,12 @@ module.exports = {
 			// })
 
 			// console.log(order);
-			res.ok(req.user);
+			res.ok("V1 NE");
+	},
+
+	TestURL:function(req,res)
+	{
+		res.ok("test url 1");
 	},
 
 	TestPost:function(req,res)

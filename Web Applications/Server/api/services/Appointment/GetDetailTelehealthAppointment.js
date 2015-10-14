@@ -33,7 +33,7 @@ module.exports = function(teleAppointmentUID) {
                 }]
             }, {
                 model: Doctor,
-                attributes: ['ID', 'UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Type', 'Email', 'PhoneNumber'],
+                attributes: ['ID', 'UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Type', 'Email', 'HomePhoneNumber'],
                 required: false,
                 include: [{
                     model: Department,

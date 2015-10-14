@@ -16,7 +16,7 @@
 	<div class="portlet-title">
 		<div class="caption font-green">
 			<i class="icon-list font-green"></i>
-			<span class="caption-subject bold uppercase"> Patients</span>
+			<span class="caption-subject bold uppercase"> Patient</span>
 		</div>
 		<div class="actions">
 			<a href="javascript:;" class="btn btn-circle red btn-sm" ng-click="toggleFilter()"><i class="fa fa-filter"></i> Filter</a>
@@ -29,28 +29,40 @@
 		<!-- begin filter -->
 		<span ng-hide="toggle">
             <div class="row">
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="form-group">
 						<label class="label-control">First Name</label>
 						<input type="text" class="form-control" placeholder="First Name" ng-model="search.FirstName">
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="form-group">
 						<label class="label-control">Last Name</label>
 						<input type="text" class="form-control" placeholder="Last Name" ng-model="search.LastName">
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="form-group">
-						<label class="label-control">Adress</label>
-						<input type="text" class="form-control" placeholder="Address" ng-model="search.Address">
+						<label class="label-control">Gender</label>
+						<input type="text" class="form-control" placeholder="Address" ng-model="search.Address1">
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="form-group">
-						<label class="label-control">Post Code</label>
-						<input type="text" class="form-control" placeholder="Post Code" ng-model="search.PostCode">
+						<label class="label-control">Mobile</label>
+						<input type="text" class="form-control" placeholder="PhoneNumber" ng-model="search.PhoneNumber">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<label class="label-control">Email</label>
+						<input type="text" class="form-control" placeholder="Email" ng-model="search.Email">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<label class="label-control">Enable</label>
+						<input type="text" class="form-control" placeholder="Enable" ng-model="search.PostCode">
 					</div>
 				</div>
 			</div>
@@ -63,10 +75,12 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Address</th>
-					<th>Post Code</th>
+					<th>Firstname</th>
+					<th>Lastname</th>
+					<th>Gender</th>
+					<th>Mobilephone</th>
+					<th>Email</th>
+					<th>Enable</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -75,8 +89,10 @@
 					<td>{{p.ID}}</td>
 					<td>{{p.FirstName}}</td>
 					<td>{{p.LastName}}</td>
-					<td>{{p.Address}}</td>
-					<td>{{p.Postcode}}</td>
+					<td>{{p.Gender}}</td>
+					<!-- <td>{{p.PhoneNumber}}</td> -->
+					<td>{{p.Email}}</td>
+					<td>{{p.Enable}}</td>
 				</tr>
 			</tbody>
 			</table>

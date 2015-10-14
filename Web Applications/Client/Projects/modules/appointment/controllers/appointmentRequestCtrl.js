@@ -29,7 +29,7 @@ app.controller('appointmentRequestCtrl', function($scope,$cookies){
 				Name : null
 			},
 			ClinicalDetails : [{
-				Section:
+				Section:null
 			}]
 		}
 

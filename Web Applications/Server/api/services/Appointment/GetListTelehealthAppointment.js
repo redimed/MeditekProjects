@@ -3,11 +3,11 @@ module.exports = function(data) {
     var defer = $q.defer();
     var pagination = Services.GetPaginationAppointment(data);
     //get limit, offset
-    Appointment.findAll({
+    Appointment.findAndCountAll({
             attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status', 'Enable'],
             include: [{
                 model: TelehealthAppointment,
-                attributes: ['UID', 'RefName', 'RefDate'],
+                attributes: ['UID', 'RefName', 'RefDate', 'Correspondence'],
                 required: true,
                 include: [{
                     model: PatientAppointment,
@@ -40,6 +40,7 @@ module.exports = function(data) {
             order: pagination.orderAppointment,
             limit: pagination.limit,
             offset: pagination.offset,
+            subQuery: false
         })
         .then(function(apptTelehealth) {
             defer.resolve({

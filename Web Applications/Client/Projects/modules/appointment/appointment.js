@@ -1,5 +1,6 @@
 var app = angular.module('app.authentication.appointment', [
 	'app.authentication.appointment.controller',
+	'app.authentication.appointment.services'
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider){

@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.redimed.telehealth.patient.api.RegisterApi;
+import com.redimed.telehealth.patient.fragment.FAQsFragment;
 import com.redimed.telehealth.patient.fragment.HomeFragment;
 import com.redimed.telehealth.patient.fragment.InformationFragment;
 import com.redimed.telehealth.patient.fragment.TelehealthFragment;
@@ -91,11 +92,9 @@ public class MainActivity extends AppCompatActivity{
         categories = new ArrayList<Category>();
         categories.add(new Category(R.drawable.share_image_icon, "Home", R.drawable.circled_chevron_right_icon));
         categories.add(new Category(R.drawable.person_icon, "Information", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.share_image_icon, "Share Image", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.person_icon, "Menu3", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.share_image_icon, "Menu4", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.person_icon, "Menu5", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.share_image_icon, "Menu6", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.share_image_icon, "Telehealth", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.person_icon, "FAQs", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.share_image_icon, "Contact", R.drawable.circled_chevron_right_icon));
     }
 
     private void GetDetailsPatient() {
@@ -128,7 +127,6 @@ public class MainActivity extends AppCompatActivity{
                     JSONObject dataObject = new JSONObject(json);
                     String message = (String.valueOf(isJSONValid(dataObject.optString("message"))).equalsIgnoreCase("true") ? error.getMessage() : dataObject.optString("message"));
                     Log.d(TAG, message);
-//                    new CustomAlertDialog(getApplicationContext(), CustomAlertDialog.State.Error, message).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -186,6 +184,11 @@ public class MainActivity extends AppCompatActivity{
             case 2:
                 fragment = new TelehealthFragment();
                 break;
+            case 3:
+                fragment = new FAQsFragment();
+                break;
+            case 4:
+                fragment = new ContactFragment();
             default:
                 break;
         }
@@ -196,5 +199,9 @@ public class MainActivity extends AppCompatActivity{
         } else {
             Log.e("MainActivity", "Error in creating fragment");
         }
+    }
+
+    public void Call(){
+        startActivity(new Intent(this, ContactActivity.class));
     }
 }

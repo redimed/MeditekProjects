@@ -26,14 +26,13 @@ class VerifyPhoneNumberController {
     }
     //Giap: Check phone number and send verify code
     func SendVerifyPhoneNumber (deviceID:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
-        print("Phone Number ----",phoneNumber)
+        //Split number 0
         let removedChar = phoneNumber.removeAtIndex(phoneNumber.startIndex)
-        print("Phone Number ----",removedChar)
-         print("Phone Number ----",phoneNumber)
-        
+       
         let parameters = [
             "data": [
-                "phone":"+61"+phoneNumber,
+//                "phone":"+61"+phoneNumber,
+                "phone":"+841654901590",
                 "deviceId":deviceID,
                 "deviceType": "ios"
             ]
@@ -80,6 +79,7 @@ class VerifyPhoneNumberController {
             
         }
     }
+    //Giap: Get information Patient by UID
     func getInformationPatientByUUID(UUID:String,completionHandler:(JSON) -> Void){
         print("UID GET:\(config.headers)")
         let parameters = [

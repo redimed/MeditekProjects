@@ -9,11 +9,14 @@
 import UIKit
 
 class FAQsViewController: UIViewController {
-
-    override func viewDidLoad() {
+    @IBOutlet weak var webView: UIWebView!
+  
+        override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+            let localfilePath = NSBundle.mainBundle().URLForResource("FAQs", withExtension: "html");
+            let myRequest = NSURLRequest(URL: localfilePath!);
+            webView.loadRequest(myRequest);
+        
     }
 
     override func didReceiveMemoryWarning() {

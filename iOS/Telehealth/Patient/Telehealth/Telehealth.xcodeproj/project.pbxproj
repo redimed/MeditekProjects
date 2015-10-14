@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		50B38E783E64ABD83BAA0BD6 /* Pods_Telehealth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		50B38E783E64ABD83BAA0BD6 /* Pods_Telehealth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */; };
+		AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */ = {isa = PBXBuildFile; fileRef = AF3902F51BCDE8DD00173A58 /* FAQs.html */; settings = {ASSET_TAGS = (); }; };
 		AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */; };
 		AF5AD22E1BCB97290054B4C3 /* ExtensionHandleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */; settings = {ASSET_TAGS = (); }; };
 		AF840FF11BCCA39900F69EF8 /* FAQsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -28,7 +29,7 @@
 		AF94400D1BBA6468003F3B07 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF94400C1BBA6468003F3B07 /* UIKit.framework */; };
 		AF94400F1BBA6472003F3B07 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF94400E1BBA6472003F3B07 /* VideoToolbox.framework */; };
 		AF9440171BBA6972003F3B07 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9440161BBA6972003F3B07 /* OpenTok.framework */; settings = {ASSET_TAGS = (); }; };
-		AF9F48FC1BB509220044D72F /* VerifyPhoneNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FB1BB509220044D72F /* VerifyPhoneNumberController.swift */; settings = {ASSET_TAGS = (); }; };
+		AF9F48FC1BB509220044D72F /* GetAndPostDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FB1BB509220044D72F /* GetAndPostDataController.swift */; settings = {ASSET_TAGS = (); }; };
 		AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */; settings = {ASSET_TAGS = (); }; };
 		AFB63C671BC25CD700A1541B /* AnswerCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB63C661BC25CD700A1541B /* AnswerCallViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		AFED98241BBE71400042B613 /* Singleton_SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */; settings = {ASSET_TAGS = (); }; };
@@ -102,6 +103,7 @@
 
 /* Begin PBXFileReference section */
 		16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
+		AF3902F51BCDE8DD00173A58 /* FAQs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = FAQs.html; sourceTree = "<group>"; };
 		AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
 		AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionHandleData.swift; sourceTree = "<group>"; };
 		AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQsViewController.swift; sourceTree = "<group>"; };
@@ -123,7 +125,7 @@
 		AF94400E1BBA6472003F3B07 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		AF9440161BBA6972003F3B07 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenTok.framework; sourceTree = "<group>"; };
 		AF9440211BBA7DD8003F3B07 /* Telehealth-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Telehealth-Bridging-Header.h"; sourceTree = "<group>"; };
-		AF9F48FB1BB509220044D72F /* VerifyPhoneNumberController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberController.swift; sourceTree = "<group>"; };
+		AF9F48FB1BB509220044D72F /* GetAndPostDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAndPostDataController.swift; sourceTree = "<group>"; };
 		AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationAPI.swift; sourceTree = "<group>"; };
 		AFB63C661BC25CD700A1541B /* AnswerCallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerCallViewController.swift; sourceTree = "<group>"; };
 		AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton_SocketManager.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */,
+				AF3902F51BCDE8DD00173A58 /* FAQs.html */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -424,7 +427,7 @@
 		AFF27DF81BB39C4600B325E8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AF9F48FB1BB509220044D72F /* VerifyPhoneNumberController.swift */,
+				AF9F48FB1BB509220044D72F /* GetAndPostDataController.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -565,6 +568,7 @@
 				AFEE35321BB0415D00471592 /* Info.plist in Resources */,
 				AFEE34E41BB0413600471592 /* LaunchScreen.storyboard in Resources */,
 				AFEE34E11BB0413600471592 /* Assets.xcassets in Resources */,
+				AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */,
 				AFEE34DC1BB0413600471592 /* Main.storyboard in Resources */,
 				AFEE35351BB0415D00471592 /* LoadingView.xib in Resources */,
 			);
@@ -666,7 +670,7 @@
 				AFF10DF11BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m in Sources */,
 				AFEE353C1BB0415D00471592 /* SpringLabel.swift in Sources */,
 				AFEE35261BB0415D00471592 /* AsyncButton.swift in Sources */,
-				AF9F48FC1BB509220044D72F /* VerifyPhoneNumberController.swift in Sources */,
+				AF9F48FC1BB509220044D72F /* GetAndPostDataController.swift in Sources */,
 				AFEE35441BB0577A00471592 /* VerifyViewController.swift in Sources */,
 				AFEE35271BB0415D00471592 /* AsyncImageView.swift in Sources */,
 				AF840FF11BCCA39900F69EF8 /* FAQsViewController.swift in Sources */,
@@ -842,6 +846,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Telehealth/Telehealth-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -864,6 +869,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Telehealth/Telehealth-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

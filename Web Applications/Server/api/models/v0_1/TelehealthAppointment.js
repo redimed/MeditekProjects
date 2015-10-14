@@ -25,6 +25,10 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: true
         },
+        Correspondence: {
+            type: Sequelize.STRING(1),
+            allowNull: true
+        },
         RefName: {
             type: Sequelize.STRING(255),
             allowNull: true

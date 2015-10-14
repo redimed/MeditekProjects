@@ -39,7 +39,10 @@ module.exports = {
         } else {
             Services.GetListTelehealthAppointment(data)
                 .then(function(success) {
-                    res.ok(success.data);
+                    res.ok({
+                        status: 'success',
+                        data: success.data
+                    });
                 })
                 .catch(function(err) {
                     if (HelperService.CheckPostRequest(err) &&

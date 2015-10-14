@@ -13,9 +13,6 @@ public class Patient {
     @SerializedName("UID")
     private String UID;
 
-    @SerializedName("SiteID")
-    private int SiteID;
-
     @SerializedName("UserAccountID")
     private int UserAccountID;
 
@@ -29,7 +26,7 @@ public class Patient {
     private String LastName;
 
     @SerializedName("DOB")
-    private String DOB;
+    private String DOB = "N/A";
 
     @SerializedName("Gender")
     private String Gender;
@@ -61,14 +58,14 @@ public class Patient {
     @SerializedName("Enable")
     private String Enable;
 
-    @SerializedName("SiteName")
-    private String SiteName;
-
     @SerializedName("ShortName")
     private String CountryName;
 
     @SerializedName("PhoneNumber")
     private String PhoneNumber;
+
+    @SerializedName("UserAccount")
+    private UserAccount userAccount;
 
     public int getID() {
         return ID;
@@ -84,14 +81,6 @@ public class Patient {
 
     public void setUID(String UID) {
         this.UID = UID;
-    }
-
-    public int getSiteID() {
-        return SiteID;
-    }
-
-    public void setSiteID(int siteID) {
-        SiteID = siteID;
     }
 
     public int getUserAccountID() {
@@ -214,14 +203,6 @@ public class Patient {
         Enable = enable;
     }
 
-    public String getSiteName() {
-        return SiteName;
-    }
-
-    public void setSiteName(String siteName) {
-        SiteName = siteName;
-    }
-
     public String getCountryName() {
         return CountryName;
     }
@@ -236,5 +217,13 @@ public class Patient {
 
     public void setPhoneNumber(String phoneNumber) {
         PhoneNumber = phoneNumber;
+    }
+
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
     }
 }

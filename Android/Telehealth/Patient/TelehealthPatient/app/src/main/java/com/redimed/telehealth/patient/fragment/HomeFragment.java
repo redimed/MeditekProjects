@@ -10,12 +10,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.CallActivity;
+import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.network.RESTClient;
@@ -40,14 +42,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private RegisterApi restClient;
     private boolean shouldFinish = false;
 
-    @Bind(R.id.imgBtnInformation)
-    ImageButton imgBtnInformation;
-    @Bind(R.id.imgBtnTelehealth)
-    ImageButton imgBtnTelehealth;
-    @Bind(R.id.imgBtnFAQ)
-    ImageButton imgBtnFAQ;
-    @Bind(R.id.imgBtnContact)
-    ImageButton imgBtnContact;
+    @Bind(R.id.btnInformation)
+    Button btnInformation;
+    @Bind(R.id.btnTelehealth)
+    Button btnTelehealth;
+    @Bind(R.id.btnFAQ)
+    Button btnFAQ;
+    @Bind(R.id.btnContact)
+    Button btnContact;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,9 +61,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         ButterKnife.bind(this, v);
         restClient = RESTClient.getRegisterApi();
 
-        imgBtnInformation.setOnClickListener(this);
-        imgBtnFAQ.setOnClickListener(this);
-        imgBtnContact.setOnClickListener(this);
+        btnInformation.setOnClickListener(this);
+        btnTelehealth.setOnClickListener(this);
+        btnFAQ.setOnClickListener(this);
+        btnContact.setOnClickListener(this);
 
         return v;
     }
@@ -69,17 +72,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.imgBtnInformation:
+            case R.id.btnInformation:
                 InformationPatient();
                 break;
-            case R.id.imgBtnFAQ:
+            case R.id.btnTelehealth:
                 break;
-            case R.id.imgBtnContact:
+            case R.id.btnFAQ:
+                break;
+            case R.id.btnContact:
                 break;
         }
     }
 
     private void InformationPatient() {
+        ((MainActivity)v.getContext()).Display(1);
         Log.d(TAG, "INFORMATION");
     }
 

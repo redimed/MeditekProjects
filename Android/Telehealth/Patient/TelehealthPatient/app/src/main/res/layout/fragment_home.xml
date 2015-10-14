@@ -29,17 +29,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp">
 
-                <ImageButton
-                    android:id="@+id/imgBtnInformation"
+                <Button
+                    android:id="@+id/btnInformation"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_marginRight="40dp"
-                    android:background="@drawable/custom_3d_btn" />
+                    android:text="@string/green_btn"
+                    android:textColor="@color/lightFont"
+                    style="?android:borderlessButtonStyle"
+                    android:background="@drawable/green_bg" />
 
-                <ImageButton
-                    android:id="@+id/imgBtnTelehealth"
+                <Button
+                    android:id="@+id/btnTelehealth"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
+                    android:text="@string/blue_btn"
+                    android:textColor="@color/lightFont"
+                    style="?android:borderlessButtonStyle"
                     android:background="@drawable/blue_bg" />
 
             </LinearLayout>
@@ -49,17 +55,23 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layoutUp">
 
-                <ImageButton
-                    android:id="@+id/imgBtnFAQ"
+                <Button
+                    android:id="@+id/btnFAQ"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_marginRight="40dp"
+                    android:text="@string/orange_btn"
+                    android:textColor="@color/lightFont"
+                    style="?android:borderlessButtonStyle"
                     android:background="@drawable/orange_bg" />
 
-                <ImageButton
-                    android:id="@+id/imgBtnContact"
+                <Button
+                    android:id="@+id/btnContact"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
+                    android:text="@string/red_btn"
+                    android:textColor="@color/lightFont"
+                    style="?android:borderlessButtonStyle"
                     android:background="@drawable/red_bg" />
 
             </LinearLayout>

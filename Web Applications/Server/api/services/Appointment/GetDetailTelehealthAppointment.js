@@ -43,7 +43,7 @@ module.exports = function(teleAppointmentUID) {
             }, {
                 model: Patient,
                 attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB',
-                    'Gender', 'Address', 'Suburb', 'Postcode', 'Email', 'HomePhoneNumber'
+                    'Gender', 'Address1', 'Address2', 'Suburb', 'Postcode', 'Email', 'HomePhoneNumber'
                 ],
                 required: false,
                 include: [{
@@ -68,6 +68,3 @@ module.exports = function(teleAppointmentUID) {
         });
     return defer.promise;
 };
-
-
-

@@ -19,7 +19,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
     
     
     
-    let api = VerifyPhoneNumberController()
+    let api = GetAndPostDataController()
     //Color is red
     let colorCustom = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
     

@@ -9,7 +9,7 @@
 import UIKit
 
 class InformationViewController: UIViewController {
-    let InformationPatient = VerifyPhoneNumberController()
+    let InformationPatient = GetAndPostDataController()
     var uid = String()
     
     @IBOutlet weak var firstNameLabel: UILabel!
@@ -50,7 +50,6 @@ class InformationViewController: UIViewController {
                 self.emailLabel.text = jsonInformation["Email"].string
                 self.homePhoneLabel.text = jsonInformation["HomePhoneNumber"].string
                 self.genderLabel.text = (jsonInformation["Gender"].string)?.toGender()
-                
             }else {
                 self.view.hideLoading()
                 if response["TimeOut"] ==  "Request Time Out" {

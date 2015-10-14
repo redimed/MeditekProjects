@@ -11,18 +11,20 @@ import UIKit
 
 //Giap: API verify phone number and send verifycode
 struct UrlAPICheckPhoneNumber  {
-    static let SendVerifyCodePhoneNumber = "/telehealth/user/requestActivationCode"
-    static let CheckVerifyCode = "/telehealth/user/verifyActivationCode"
+    static let SendVerifyCodePhoneNumber = "/api/telehealth/user/requestActivationCode"
+    static let CheckVerifyCode = "/api/telehealth/user/verifyActivationCode"
     
 }
 struct UrlInformationPatient  {
-    static let getInformationPatientByUID = "/telehealth/user/details"
+    static let getInformationPatientByUID = "/api/telehealth/user/details"
+    static let getAppointmentList = "/api/telehealth/user/appointments"
+    static let getAppointmentDetails = "/api/telehealth/user/appointmentDetails"
 }
 
 //Giap: API Socket
 struct UrlAPISocket  {
-    static let joinRoom = "/telehealth/socket/joinRoom?uid=%@"
-    static let emitAnswer = "/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
+    static let joinRoom = "/api/telehealth/socket/joinRoom?uid=%@"
+    static let emitAnswer = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
 }
 //Giap: Group Message in system
 struct MessageString  {
@@ -30,6 +32,7 @@ struct MessageString  {
     static let CallEndCall = "end"
     static let Decline = "decline"
 }
+
 //Giap: Group Hash Value Number 0 - 9 and delete
 struct numberHashValue  {
     static let number0 = 915

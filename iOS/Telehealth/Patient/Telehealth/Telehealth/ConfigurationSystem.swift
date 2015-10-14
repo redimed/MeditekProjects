@@ -16,12 +16,13 @@ var tokens = String()
 
 
 struct ConfigurationSystem {
-    static let Http = "http://testapp.redimed.com.au:3009"
+    static let Http = "http://192.168.1.130:3009"
     let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
     
     let headers = [
         "Authorization": "Bearer \(tokens)",
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Version" : "1.0"
     ]
     //change border color textfield
     func borderTextFieldValid(textField:DesignableTextField,color:UIColor){
@@ -59,7 +60,7 @@ struct ConfigurationSystem {
         }
     }
 }
-//class handle get and set data
+//class handle get and set data calling
 class saveData {
     var data: JSON = ""
     init(){}

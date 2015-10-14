@@ -10,14 +10,6 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: false
         },
-        SiteID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: true,
-            references: {
-                model: 'Site',
-                key: 'ID'
-            }
-        },
         UserAccountID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
@@ -33,6 +25,10 @@ module.exports = {
                 model: 'Department',
                 key: 'ID'
             }
+        },
+        Title: {
+            type: Sequelize.STRING(45),
+            allowNull: true
         },
         FirstName: {
             type: Sequelize.STRING(50),
@@ -86,7 +82,11 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: true
         },
-        PhoneNumber: {
+        HomePhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true
+        },
+        WorkPhoneNumber: {
             type: Sequelize.STRING(20),
             allowNull: true
         },

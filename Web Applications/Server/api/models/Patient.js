@@ -18,12 +18,13 @@ module.exports = {
                 key: 'ID'
             }
         },
+        Title: {
+            type: Sequelize.STRING(45),
+            allowNull: true
+        },
         FirstName: {
             type: Sequelize.STRING(50),
-            allowNull: true,
-            validate:{
-                len:[0,5]
-            }
+            allowNull: true
         },
         MiddleName: {
             type: Sequelize.STRING(100),
@@ -78,6 +79,10 @@ module.exports = {
             allowNull: true
         },
         HomePhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true
+        },
+        WorkPhoneNumber: {
             type: Sequelize.STRING(20),
             allowNull: true
         },

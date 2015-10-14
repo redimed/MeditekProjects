@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="http://schemas.android.com/tools">
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string-array name="colorList">
         <item>Black</item>
@@ -25,7 +25,7 @@
         <item>South Australia</item>
         <item>Tasmania</item>
     </string-array>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -38,11 +38,12 @@
     <bool name="abc_config_allowActionMenuItemTextWithIcon">false</bool>
     <bool name="abc_config_closeDialogWhenTouchOutside">true</bool>
     <bool name="abc_config_showMenuShortcutsWhenKeyboardPresent">false</bool>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/src/main/res/values/colors.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="ColorPrimary">#FF5722</color>
     <color name="ColorPrimaryDark">#E64A19</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <color name="DiaLogColor">#A5DC86</color>
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="abc_input_method_navigation_guard">@android:color/black</color>
     <color name="abc_search_url_text_normal">#7fa87f</color>
@@ -54,18 +55,18 @@
     <color name="background_floating_material_light">@android:color/white</color>
     <color name="background_material_dark">@color/material_grey_850</color>
     <color name="background_material_light">@color/material_grey_50</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/src/main/res/values/colors.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/src/main/res/values/colors.xml -->
     <eat-comment/>
-    <color name="bg">#1e000000</color>
+    <color name="bg">#14000000</color>
     <color name="bgDialogError">#F44336</color>
     <color name="bgDialogSuccess">#00BCD4</color>
     <color name="bgPrimaryDark">#0F574D</color>
-    <color name="bgToolBar">#1aaa93</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <color name="bgToolBar">#1AAA93</color>
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="blue_btn_bg_color">#AEDEF4</color>
     <color name="blue_btn_bg_pressed_color">#96BFD2</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
@@ -75,61 +76,61 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="button_text_color">#FFFFFF</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
     <color name="dim_foreground_material_dark">#ffbebebe</color>
     <color name="dim_foreground_material_light">#ff323232</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="error_stroke_color">#F27474</color>
     <color name="float_transparent">#00000000</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="foreground_material_dark">@android:color/white</color>
     <color name="foreground_material_light">@android:color/black</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="gray_btn_bg_color">#D0D0D0</color>
     <color name="gray_btn_bg_pressed_color">#B6B6B6</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>
     <color name="hint_foreground_material_dark">@color/bright_foreground_disabled_material_dark</color>
     <color name="hint_foreground_material_light">@color/bright_foreground_disabled_material_light</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="material_blue_grey_80">#ff37474f</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="material_blue_grey_800">#ff37474f</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="material_blue_grey_90">#ff263238</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="material_blue_grey_900">#ff263238</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="material_blue_grey_95">#ff21272b</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="material_blue_grey_950">#ff21272b</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="material_deep_teal_20">#ff80cbc4</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="material_deep_teal_200">#ff80cbc4</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="material_deep_teal_50">#ff009688</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="material_deep_teal_500">#ff009688</color>
     <color name="material_grey_100">#fff5f5f5</color>
@@ -147,14 +148,14 @@
     <color name="primary_text_default_material_light">#de000000</color>
     <color name="primary_text_disabled_material_dark">#4Dffffff</color>
     <color name="primary_text_disabled_material_light">#39000000</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="red_btn_bg_color">#DD6B55</color>
     <color name="red_btn_bg_pressed_color">#CD5B55</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.github.traex.rippleeffect/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.github.traex.rippleeffect/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="rippelColor">#FFFFFF</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="ripple_material_dark">#42ffffff</color>
     <color name="ripple_material_light">#1f000000</color>
@@ -162,17 +163,17 @@
     <color name="secondary_text_default_material_light">#8a000000</color>
     <color name="secondary_text_disabled_material_dark">#36ffffff</color>
     <color name="secondary_text_disabled_material_light">#24000000</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="success_stroke_color">#A5DC86</color>
     <color name="sweet_dialog_bg_color">#FFFFFF</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="switch_thumb_disabled_material_dark">#ff616161</color>
     <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="text_color">#575757</color>
     <color name="trans_success_stroke_color">#33A5DC86</color>
@@ -208,7 +209,7 @@
     <declare-styleable name="View"><attr format="dimension" name="paddingStart"/><attr format="dimension" name="paddingEnd"/><attr name="android:focusable"/><attr format="reference" name="theme"/><attr name="android:theme"/></declare-styleable>
     <declare-styleable name="ViewBackgroundHelper"><attr name="android:background"/><attr format="color" name="backgroundTint"/><attr name="backgroundTintMode"><enum name="src_over" value="3"/><enum name="src_in" value="5"/><enum name="src_atop" value="9"/><enum name="multiply" value="14"/><enum name="screen" value="15"/></attr></declare-styleable>
     <declare-styleable name="ViewStubCompat"><attr name="android:layout"/><attr name="android:inflatedId"/><attr name="android:id"/></declare-styleable>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <dimen name="abc_action_bar_content_inset_material">16dp</dimen>
     <dimen name="abc_action_bar_default_height_material">56dp</dimen>
@@ -270,15 +271,15 @@
     <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
     <dimen name="abc_text_size_title_material">20sp</dimen>
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/src/main/res/values/dimens.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <dimen name="alert_width">290dp</dimen>
     <dimen name="common_circle_width">3dp</dimen>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <item name="dialog_fixed_height_major" type="dimen">80%</item>
     <item name="dialog_fixed_height_minor" type="dimen">100%</item>
@@ -292,10 +293,10 @@
     <dimen name="notification_large_icon_height">64dp</dimen>
     <dimen name="notification_large_icon_width">64dp</dimen>
     <dimen name="notification_subtext_size">12dp</dimen>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <dimen name="progress_circle_radius">34dp</dimen>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <drawable name="notification_template_icon_bg">#3333B5E5</drawable>
     <item name="action_bar_activity_content" type="id"/>
@@ -312,10 +313,10 @@
     <integer name="abc_max_action_buttons">2</integer>
     <integer name="cancel_button_image_alpha">127</integer>
     <integer name="status_bar_notification_info_maxnum">999</integer>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <string name="LOADING">Loading...</string>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
@@ -334,7 +335,7 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_settings">Settings</string>
     <string name="addressBold"><b>Address: </b></string>
@@ -342,24 +343,38 @@
     <string name="australiaFormatPhone">+61</string>
     <string name="belmontAddress"><u> 1 Frederick Street, Belmont WA 6104</u></string>
     <string name="belmontPhone"><u> 08 9230 0900</u></string>
+    <string name="companyPhoneFormat">Company Phone wrong formatted</string>
+    <string name="contactPhoneFormat">Contact Phone wrong formatted</string>
+    <string name="contactPhoneRequired">Contact Phone is required!</string>
     <string name="contentDialogErrorAppointment">Error! please check your connection and try again</string>
+    <string name="contentDialogErrorFrom">Please input required information</string>
     <string name="contentDialogSuccessAppointment">Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.</string>
     <string name="dailogError">Error</string>
     <string name="dailogSuccess">Success</string>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_default_title">Here\'s a message!</string>
     <string name="dialog_ok">OK</string>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="emailBold"><b>Email: </b></string>
     <string name="emailRedimed"><u> reception@redimed.com.au</u></string>
+    <string name="emailValid">Email address not valid</string>
     <string name="faxBold"><b>Fax: </b></string>
+    <string name="fileName">/suburb.json</string>
     <string name="hello_world">Hello world!</string>
+    <string name="isRequired">  is required!</string>
     <string name="joondalupAddress"><u> 81 McLarty Avenue, Joondalup WA 6027</u></string>
     <string name="joondalupPhone"><u> 08 9300 3835</u></string>
     <string name="jsonTitleSendAppointment">data</string>
+    <string name="lblfaq1"><b>Where are you located?</b></string>
+    <string name="lblfaq2"><b>What are your opening hours?</b></string>
+    <string name="lblfaq3"><b>Do I need to provide a GP referral?</b></string>
+    <string name="lblfaq4"><b>What fees will I need to pay?</b></string>
+    <string name="lblfaq5"><b>Can I claim any money back from Medicare or Private Health?</b></string>
+    <string name="lblfaq6"><b>I don’t have private health insurance, can I still be seen?</b></string>
+    <string name="lblfaq7"><b>How long do I have to wait to see a Specialist?</b></string>
     <string name="lblhome">personalised + customised, <b>HEALTHCARE</b> anywhere</string>
     <string name="openingHoursBold"><b>Opening hours: </b></string>
     <string name="phoneBold"><b>Phone: </b></string>
@@ -373,33 +388,34 @@
     <string name="serviceUrgentCare">UrgentCare</string>
     <string name="serviceWorkInjury">WorkInjury</string>
     <string name="state_prompt">Choose State</string>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="title_activity_faq">FAQ</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_make_appointment">MakeAppointmentActivity</string>
     <string name="title_activity_sport_injury">SportInjuryActivity</string>
     <string name="title_activity_work_injury">WorkInjuryActivity</string>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <string name="urlFile">/data/data/</string>
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>
     <style name="Animation.AppCompat.DropDownUp" parent="Base.Animation.AppCompat.DropDownUp"/>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/bgToolBar</item>
-        <item name="colorPrimaryDark">@color/bgPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/bgToolBar</item>
         <!-- Customize your theme here. -->
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="buttonStyle">@style/RobotoButtonStyle</item>
         <item name="android:editTextStyle">@style/RobotoEditTextStyle</item>
     </style>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.AlertDialog.AppCompat" parent="android:Widget">
         <item name="android:layout">@layout/abc_alert_dialog_material</item>
@@ -1412,7 +1428,7 @@
         <item name="android:dropDownItemStyle">@style/Widget.AppCompat.DropDownItem.Spinner</item>
     </style>
     <style name="Platform.Widget.AppCompat.Spinner" parent="android:Widget.Spinner"/>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
         <item name="android:fontFamily" ns1:targetApi="jelly_bean">sans-serif-light</item>
@@ -1423,7 +1439,7 @@
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily" ns1:targetApi="jelly_bean">sans-serif-light</item>
     </style>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <style name="RtlOverlay.DialogWindowTitle.AppCompat" parent="Base.DialogWindowTitle.AppCompat">
     </style>
@@ -1652,7 +1668,7 @@
     <style name="Widget.AppCompat.TextView.SpinnerItem" parent="Base.Widget.AppCompat.TextView.SpinnerItem"/>
     <style name="Widget.AppCompat.Toolbar" parent="Base.Widget.AppCompat.Toolbar"/>
     <style name="Widget.AppCompat.Toolbar.Button.Navigation" parent="Base.Widget.AppCompat.Toolbar.Button.Navigation"/>
-    <!-- From: file:/D:/Project/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <style name="alert_dialog" parent="android:Theme.Dialog">
         <item name="android:windowIsFloating">true</item>

@@ -1,4 +1,4 @@
-var userAccountController_v0_1=require("../../controllers/UserAccount/UserAccountController");
+var userAccountController_v0_1=require("../../controllers/UserAccount/v0_1/UserAccountController");
 var userAccountController_v0_2=require("../../controllers/UserAccount/v0_2/UserAccountController");
 var userAccountController_v0_3=require("../../controllers/UserAccount/v0_3/UserAccountController");
 

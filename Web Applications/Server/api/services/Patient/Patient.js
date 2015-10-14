@@ -50,10 +50,18 @@ module.exports = {
 				}
 			}
 
-			//validate Address
+			//validate Address1
 			if(data.Address){
-				if(data.Address.length < 0 || data.Address.length > 255){
-					errors.push({field:"Address",message:"Patient.Address.length"});
+				if(data.Address1.length < 0 || data.Address1.length > 255){
+					errors.push({field:"Address1",message:"Patient.Address1.length"});
+					err.pushErrors(errors);
+				}
+			}
+
+			//validate Address2
+			if(data.Address){
+				if(data.Address2.length < 0 || data.Address2.length > 255){
+					errors.push({field:"Address2",message:"Patient.Address2.length"});
 					err.pushErrors(errors);
 				}
 			}
@@ -379,8 +387,20 @@ module.exports = {
 		output: get list patient from table Patient
 	*/
 	LoadListPatient : function(limit,offset){
+		var resLimit = (limit)? limit : 10;
+		var resOffset = (offset)? offset : 0;
 		return Patient.findAll({
-			limit: limit
+			limit: resLimit,
+			offset: resOffset
+		})
+		.then(function(result){
+			return result;
+		},function(err){
+			var error = new Error("SERVER ERROR");
+			var errors = [];
+			errors.push({message:"LoadListPatient.findAll.error"});
+			error.pushErrors(errors);
+			throw error;
 		})
 	},
 

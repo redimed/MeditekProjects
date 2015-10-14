@@ -25,6 +25,13 @@ app.controller('authenticationCtrl', function($rootScope,$scope,$state,$cookies,
 		toastr.error("error data country","ERROR");
 	});
 
+	$rootScope.titles = [
+		{id:0, name:'Mr'},
+		{id:0, name:'Mrs'},
+		{id:0, name:'Ms'},
+		{id:0, name:'Dr'}
+	];
+
 	$rootScope.states = [
 		{ name: 'Victoria' },
 		{ name: 'New South Wales' },

@@ -8,30 +8,34 @@ import butterknife.ButterKnife.ViewBinder;
 public class SportInjuryActivity$$ViewBinder<T extends com.redimed.urgentcare.SportInjuryActivity> implements ViewBinder<T> {
   @Override public void bind(final Finder finder, final T target, Object source) {
     View view;
-    view = finder.findRequiredView(source, 2131558504, "field 'txtFirstName'");
-    target.txtFirstName = finder.castView(view, 2131558504, "field 'txtFirstName'");
-    view = finder.findRequiredView(source, 2131558506, "field 'txtLastName'");
-    target.txtLastName = finder.castView(view, 2131558506, "field 'txtLastName'");
-    view = finder.findRequiredView(source, 2131558508, "field 'txtContactPhone'");
-    target.txtContactPhone = finder.castView(view, 2131558508, "field 'txtContactPhone'");
-    view = finder.findRequiredView(source, 2131558512, "field 'txtDOB'");
-    target.txtDOB = finder.castView(view, 2131558512, "field 'txtDOB'");
-    view = finder.findRequiredView(source, 2131558514, "field 'txtEmail'");
-    target.txtEmail = finder.castView(view, 2131558514, "field 'txtEmail'");
-    view = finder.findRequiredView(source, 2131558516, "field 'txtDescription'");
-    target.txtDescription = finder.castView(view, 2131558516, "field 'txtDescription'");
-    view = finder.findRequiredView(source, 2131558519, "field 'radioGroupGPReferral'");
-    target.radioGroupGPReferral = finder.castView(view, 2131558519, "field 'radioGroupGPReferral'");
-    view = finder.findRequiredView(source, 2131558521, "field 'radioGroupUrgentRequestType'");
-    target.radioGroupUrgentRequestType = finder.castView(view, 2131558521, "field 'radioGroupUrgentRequestType'");
-    view = finder.findRequiredView(source, 2131558524, "field 'scrollViewSportInjury'");
-    target.scrollViewSportInjury = finder.castView(view, 2131558524, "field 'scrollViewSportInjury'");
-    view = finder.findRequiredView(source, 2131558523, "field 'btnCloseSportInjuryPage'");
-    target.btnCloseSportInjuryPage = finder.castView(view, 2131558523, "field 'btnCloseSportInjuryPage'");
-    view = finder.findRequiredView(source, 2131558493, "field 'btnSportInjury'");
-    target.btnSportInjury = finder.castView(view, 2131558493, "field 'btnSportInjury'");
-    view = finder.findRequiredView(source, 2131558510, "field 'autoCompleteSuburb'");
-    target.autoCompleteSuburb = finder.castView(view, 2131558510, "field 'autoCompleteSuburb'");
+    view = finder.findRequiredView(source, 2131558503, "field 'txtFirstName'");
+    target.txtFirstName = finder.castView(view, 2131558503, "field 'txtFirstName'");
+    view = finder.findRequiredView(source, 2131558505, "field 'txtLastName'");
+    target.txtLastName = finder.castView(view, 2131558505, "field 'txtLastName'");
+    view = finder.findRequiredView(source, 2131558507, "field 'txtContactPhone'");
+    target.txtContactPhone = finder.castView(view, 2131558507, "field 'txtContactPhone'");
+    view = finder.findRequiredView(source, 2131558511, "field 'txtDOB'");
+    target.txtDOB = finder.castView(view, 2131558511, "field 'txtDOB'");
+    view = finder.findRequiredView(source, 2131558513, "field 'txtEmail'");
+    target.txtEmail = finder.castView(view, 2131558513, "field 'txtEmail'");
+    view = finder.findRequiredView(source, 2131558515, "field 'txtDescription'");
+    target.txtDescription = finder.castView(view, 2131558515, "field 'txtDescription'");
+    view = finder.findRequiredView(source, 2131558518, "field 'radioGroupGPReferral'");
+    target.radioGroupGPReferral = finder.castView(view, 2131558518, "field 'radioGroupGPReferral'");
+    view = finder.findRequiredView(source, 2131558528, "field 'scrollViewSportInjury'");
+    target.scrollViewSportInjury = finder.castView(view, 2131558528, "field 'scrollViewSportInjury'");
+    view = finder.findRequiredView(source, 2131558526, "field 'rippleViewCloseSportInjuryPage'");
+    target.rippleViewCloseSportInjuryPage = finder.castView(view, 2131558526, "field 'rippleViewCloseSportInjuryPage'");
+    view = finder.findRequiredView(source, 2131558529, "field 'rippleViewBtnSportInjury'");
+    target.rippleViewBtnSportInjury = finder.castView(view, 2131558529, "field 'rippleViewBtnSportInjury'");
+    view = finder.findRequiredView(source, 2131558509, "field 'autoCompleteSuburb'");
+    target.autoCompleteSuburb = finder.castView(view, 2131558509, "field 'autoCompleteSuburb'");
+    view = finder.findRequiredView(source, 2131558522, "field 'checkboxHandTherapy'");
+    target.checkboxHandTherapy = finder.castView(view, 2131558522, "field 'checkboxHandTherapy'");
+    view = finder.findRequiredView(source, 2131558520, "field 'checkboxPhysiotherapy'");
+    target.checkboxPhysiotherapy = finder.castView(view, 2131558520, "field 'checkboxPhysiotherapy'");
+    view = finder.findRequiredView(source, 2131558521, "field 'checkboxSpecialist'");
+    target.checkboxSpecialist = finder.castView(view, 2131558521, "field 'checkboxSpecialist'");
   }
 
   @Override public void unbind(T target) {
@@ -42,10 +46,12 @@ public class SportInjuryActivity$$ViewBinder<T extends com.redimed.urgentcare.Sp
     target.txtEmail = null;
     target.txtDescription = null;
     target.radioGroupGPReferral = null;
-    target.radioGroupUrgentRequestType = null;
     target.scrollViewSportInjury = null;
-    target.btnCloseSportInjuryPage = null;
-    target.btnSportInjury = null;
+    target.rippleViewCloseSportInjuryPage = null;
+    target.rippleViewBtnSportInjury = null;
     target.autoCompleteSuburb = null;
+    target.checkboxHandTherapy = null;
+    target.checkboxPhysiotherapy = null;
+    target.checkboxSpecialist = null;
   }
 }

@@ -8,7 +8,7 @@ module.exports = {
         },
         UserAccountId: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'UserAccount',
                 key: 'ID'
@@ -16,7 +16,7 @@ module.exports = {
         },
         RoleId: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'Role',
                 key: 'ID'

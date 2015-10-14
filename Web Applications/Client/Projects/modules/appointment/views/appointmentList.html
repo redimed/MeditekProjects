@@ -29,42 +29,46 @@
 		<!-- begin filter -->
 		<span ng-hide="toggle">
             <div class="row">
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="form-group">
 						<label class="label-control">Patient</label>
-						<input type="text" class="form-control" placeholder="Filter patient">
+						<input type="text" class="form-control input-sm" placeholder="Filter patient">
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="form-group">
 						<label class="label-control">Submit From Date</label>
-						<input type="date" class="form-control" placeholder="Request From Date">
+						<!-- <input type="date" class="form-control" placeholder="Request From Date"> -->
+						 <input ng-model="info.submit_from_date" type="text" class="form-control input-sm" name="submit_from_date" datepicker-popup="dd/MM/yyyy" is-open="submit_from_date" ng-click="submit_from_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="form-group">
-						<label class="label-control">Submit To date</label>
-						<input type="date" class="form-control" placeholder="Request To Date">
+						<label class="label-control">Submit To Date</label>
+						<!-- <input type="date" class="form-control" placeholder="Request To Date"> -->
+						<input ng-model="info.submit_to_date" type="text" class="form-control input-sm" name="submit_to_date" datepicker-popup="dd/MM/yyyy" is-open="submit_to_date" ng-click="submit_to_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="form-group">
-						<label class="label-control">Treating Practictioner</label>
-						<input type="text" class="form-control" placeholder="Filter Treating Practictioner">
+						<label class="label-control">Treating Practitioner</label>
+						<input type="text" class="form-control input-sm" placeholder="Filter Treating Practitioner">
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="form-group">
 						<label class="label-control">Appointment From Date</label>
-						<input type="date" class="form-control" placeholder="Approval From Date">
+						<!-- <input type="date" class="form-control" placeholder="Approval From Date"> -->
+						<input ng-model="info.appointment_from_date" type="text" class="form-control input-sm" name="appointment_from_date" datepicker-popup="dd/MM/yyyy" is-open="appointment_from_date" ng-click="appointment_from_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="form-group">
 						<label class="label-control">Appointment To Date</label>
-						<input type="date" class="form-control" placeholder="Approval To Date">
+						<!-- <input type="date" class="form-control" placeholder="Approval To Date"> -->
+						<input ng-model="info.appointment_to_date" type="text" class="form-control input-sm" name="appointment_to_date" datepicker-popup="dd/MM/yyyy" is-open="appointment_to_date" ng-click="appointment_to_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
 					</div>
 				</div>
 			</div>
@@ -281,7 +285,7 @@
 		<div class="row">
 			<div class="col-md-5 col-sm-12">
 				<div class="dataTables_info" id="sample_1_info" role="status" aria-live="polite">
-					Showing 1 to 20 of 103 entries
+					<!-- Showing 1 to 20 of 103 entries -->
 				</div>
 			</div>
 			<div class="col-md-7 col-sm-12">

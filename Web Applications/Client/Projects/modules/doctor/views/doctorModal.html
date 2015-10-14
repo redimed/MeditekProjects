@@ -5,277 +5,507 @@
 	</div>
 	<!-- <div class="modal-body" style="overflow-y:scroll; overflow-x:hidden; max-height:400px;"> -->
 	<div class="modal-body">
-		<div class="tabbable">
-			<ul class="nav nav-tabs nav-tabs-lg">
-				<li  class="active">
-					<a href="index.html#basic_info" data-toggle="tab" aria-expanded="true">Basic info</a>
-				</li>
-				<li class="">
-					<a href="index.html#detail_info" data-toggle="tab" aria-expanded="false">Detail_info</a>
-				</li>
-				<li class="">
-					<a href="index.html#more_info" data-toggle="tab" aria-expanded="false">More info</a>
-				</li>
-			</ul>
-		</div>
-		<div class="tab-content">
-			<!-- begin tab basic info -->
-			<div class="tab-pane active" id="basic_info">
-				<br>
-				<div class="row">
-				 	<!-- Begin Title -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Title</label>
-							<input type="text" class="form-control" placeholder="Title">
-							<span class="help-block">This is inline help </span>
+		<div class="form">
+			<!-- form -->
+			<form class="form-horizontal" role="form">
+				<div class="form-body">
+					<div class="tab-content">
+						<div class="tabbable">
+							<!-- header tab -->
+							<ul class="nav nav-tabs nav-tabs-lg">
+								<li class="active">
+									<a href="index.html#User_info" data-toggle="tab" aria-expanded="true">User Account </a>
+								</li>
+								<li class="">
+									<a href="index.html#Personal_info" data-toggle="tab" aria-expanded="false">Personal Information </a>
+								</li>
+								<!-- <li class="">
+									<a href="index.html#Specialist_info" data-toggle="tab" aria-expanded="false">Specialist Information </a>
+								</li> -->
+							</ul>
+							<!-- end header tab -->
+							<!-- content tab -->
+							<div class="tab-content">
+								<div class="tab-pane active" id="User_info">
+									<div style="margin:3em;">
+										<div class="row">
+											<!-- Begin Username -->
+											<div class="form-group">
+												<label class="control-label col-md-3">Username</label>
+												<div class="col-md-4">
+													<div class="input-icon">
+														<i class="fa fa-user"></i>
+														<input type="text" class="form-control" placeholder="Username">
+													</div>
+												</div>
+											</div>
+											<!-- End Username -->
+											<!-- Begin Email -->
+											<div class="form-group">
+												<label class="control-label col-md-3">Email</label>
+												<div class="col-md-4">
+													<div class="input-icon">
+														<i class="fa fa-envelope"></i>
+														<input type="text" class="form-control" placeholder="Email">
+													</div>
+												</div>
+											</div>
+											<!-- End Email -->
+											<!-- Begin Mobile -->
+											<div class="form-group">
+												<label class="control-label col-md-3">Mobile</label>
+												<div class="col-md-4">
+													<div class="input-icon">
+														<i class="icon-call-end"></i>
+														<input type="text" class="form-control" placeholder="Mobile">
+													</div>
+												</div>
+											</div>
+											<!-- End Mobile -->
+											<!-- Begin Enable -->
+											<div class="form-group">
+												<label class="control-label col-md-3">&nbsp;</label>
+												<div class="col-md-4">
+													<div class="form-control" style="border: none;">
+														<label class="label-control">
+													      <input type="checkbox" class="icheck"> Enable
+													    </label>
+													</div>
+												</div>
+											</div>
+											<!-- End Enable -->
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane" id="Personal_info">
+									<div style="margin:2em;">
+										<div class="row">
+											<div class="col-md-4">
+												<h4><b>Personal Information</b></h4>
+												<hr>
+												<!-- Begin Firstname -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Firstname</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" placeholder="Firstname">
+													</div>
+												</div>
+												<!-- End Firstname -->
+												<!-- Begin Middlename -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Middlename</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" placeholder="Middlename">
+													</div>
+												</div>
+												<!-- End Middlename -->
+												<!-- Begin Surname -->
+												<div class="form-group ">
+													<label class="control-label col-md-5">Surname</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" placeholder="Surname">
+													</div>
+												</div>
+												<!-- End Surname -->
+												<!-- Healthlink ID -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Healthlink ID</label>
+													<div class="col-md-7">
+														<input type="text" placeholder="Healthlink ID" class="form-control">
+													</div>
+												</div>
+												<!-- End Healthlink ID -->
+												<!--  Clinical Department-->
+												<div class="form-group">
+													<label class="control-label col-md-5">Clinical Department</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" disabled placeholder="Clinical Department" value="">
+													</div>
+												</div>
+												<!-- end Clinical Department -->
+												<!-- Provider Number -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Provider Number</label>
+													<div class="col-md-7">
+														<input type="text" placeholder="Provider Number" class="form-control">
+													</div>
+												</div>
+												<!-- Provider Number -->
+												<!-- Type -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Type</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" placeholder="Type" disabled>
+													</div>
+												</div>
+												<!-- End Type -->
+											</div>
+											<div class="col-md-4">
+												<h4><b>Contact Information</b></h4>
+												<hr>
+												<!-- Begin Address1 -->
+												<div class="form-group ">
+													<label class="control-label col-md-5">Address1</label>
+													<div class="col-md-7">
+														<div class="input-icon">
+															<i class="fa  fa-paper-plane"></i>
+															<input type="text" class="form-control" placeholder="Address1">
+														</div>
+													</div>
+												</div>
+												<!-- End Address1 -->
+												<!-- Begin Address2 -->
+												<div class="form-group ">
+													<label class="control-label col-md-5">Address2</label>
+													<div class="col-md-7">
+														<div class="input-icon">
+															<i class="fa  fa-paper-plane"></i>
+															<input type="text" class="form-control" placeholder="Address2">
+														</div>
+													</div>
+												</div>
+												<!-- End Address2 -->
+												<!-- begin Email -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Email</label>
+													<div class="col-md-7">
+														<div class="input-icon">
+															<i class="fa fa-envelope"></i>
+															<input type="text" class="form-control" placeholder="Email">
+														</div>
+													</div>
+												</div>
+												<!-- end Email -->
+												<!-- begin Homephone -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Homephone</label>
+													<div class="col-md-7">
+														<div class="input-icon">
+															<i class="icon-call-end"></i>
+															<input type="text" class="form-control" placeholder="Homephone">
+														</div>
+													</div>
+												</div>
+												<!-- end Homephone -->
+												<!-- begin Postcode -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Postcode</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" placeholder="Postcode">
+													</div>
+												</div>
+												<!-- end Postcode -->
+												<!-- begin Suburb -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Suburb</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" placeholder="Suburb">
+													</div>
+												</div>
+												<!-- end Suburb -->
+												<!-- begin State -->
+												<div class="form-group">
+													<label class="control-label col-md-5">State</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" placeholder="State">
+													</div>
+												</div>
+												<!-- end State -->
+												<!-- begin Country -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Country</label>
+													<div class="col-md-7">
+														<!-- <select id="select2_sample4" class="select2 form-control" > -->
+														<select class="select2 form-control" >
+															<option value=""></option>
+															<option value="AF">Afghanistan</option>
+															<option value="AL">Albania</option>
+															<option value="DZ">Algeria</option>
+															<option value="AS">American Samoa</option>
+															<option value="AD">Andorra</option>
+															<option value="AO">Angola</option>
+															<option value="AI">Anguilla</option>
+															<option value="AR">Argentina</option>
+															<option value="AM">Armenia</option>
+															<option value="AW">Aruba</option>
+															<option value="AU">Australia</option>
+															<option value="AT">Austria</option>
+															<option value="AZ">Azerbaijan</option>
+															<option value="BS">Bahamas</option>
+															<option value="BH">Bahrain</option>
+															<option value="BD">Bangladesh</option>
+															<option value="BB">Barbados</option>
+															<option value="BY">Belarus</option>
+															<option value="BE">Belgium</option>
+															<option value="BZ">Belize</option>
+															<option value="BJ">Benin</option>
+															<option value="BM">Bermuda</option>
+															<option value="BT">Bhutan</option>
+															<option value="BO">Bolivia</option>
+															<option value="BA">Bosnia and Herzegowina</option>
+															<option value="BW">Botswana</option>
+															<option value="BV">Bouvet Island</option>
+															<option value="BR">Brazil</option>
+															<option value="IO">British Indian Ocean Territory</option>
+															<option value="BN">Brunei Darussalam</option>
+															<option value="BG">Bulgaria</option>
+															<option value="BF">Burkina Faso</option>
+															<option value="BI">Burundi</option>
+															<option value="KH">Cambodia</option>
+															<option value="CM">Cameroon</option>
+															<option value="CA">Canada</option>
+															<option value="CV">Cape Verde</option>
+															<option value="KY">Cayman Islands</option>
+															<option value="CF">Central African Republic</option>
+															<option value="TD">Chad</option>
+															<option value="CL">Chile</option>
+															<option value="CN">China</option>
+															<option value="CX">Christmas Island</option>
+															<option value="CC">Cocos (Keeling) Islands</option>
+															<option value="CO">Colombia</option>
+															<option value="KM">Comoros</option>
+															<option value="CG">Congo</option>
+															<option value="CD">Congo, the Democratic Republic of the</option>
+															<option value="CK">Cook Islands</option>
+															<option value="CR">Costa Rica</option>
+															<option value="CI">Cote d'Ivoire</option>
+															<option value="HR">Croatia (Hrvatska)</option>
+															<option value="CU">Cuba</option>
+															<option value="CY">Cyprus</option>
+															<option value="CZ">Czech Republic</option>
+															<option value="DK">Denmark</option>
+															<option value="DJ">Djibouti</option>
+															<option value="DM">Dominica</option>
+															<option value="DO">Dominican Republic</option>
+															<option value="EC">Ecuador</option>
+															<option value="EG">Egypt</option>
+															<option value="SV">El Salvador</option>
+															<option value="GQ">Equatorial Guinea</option>
+															<option value="ER">Eritrea</option>
+															<option value="EE">Estonia</option>
+															<option value="ET">Ethiopia</option>
+															<option value="FK">Falkland Islands (Malvinas)</option>
+															<option value="FO">Faroe Islands</option>
+															<option value="FJ">Fiji</option>
+															<option value="FI">Finland</option>
+															<option value="FR">France</option>
+															<option value="GF">French Guiana</option>
+															<option value="PF">French Polynesia</option>
+															<option value="TF">French Southern Territories</option>
+															<option value="GA">Gabon</option>
+															<option value="GM">Gambia</option>
+															<option value="GE">Georgia</option>
+															<option value="DE">Germany</option>
+															<option value="GH">Ghana</option>
+															<option value="GI">Gibraltar</option>
+															<option value="GR">Greece</option>
+															<option value="GL">Greenland</option>
+															<option value="GD">Grenada</option>
+															<option value="GP">Guadeloupe</option>
+															<option value="GU">Guam</option>
+															<option value="GT">Guatemala</option>
+															<option value="GN">Guinea</option>
+															<option value="GW">Guinea-Bissau</option>
+															<option value="GY">Guyana</option>
+															<option value="HT">Haiti</option>
+															<option value="HM">Heard and Mc Donald Islands</option>
+															<option value="VA">Holy See (Vatican City State)</option>
+															<option value="HN">Honduras</option>
+															<option value="HK">Hong Kong</option>
+															<option value="HU">Hungary</option>
+															<option value="IS">Iceland</option>
+															<option value="IN">India</option>
+															<option value="ID">Indonesia</option>
+															<option value="IR">Iran (Islamic Republic of)</option>
+															<option value="IQ">Iraq</option>
+															<option value="IE">Ireland</option>
+															<option value="IL">Israel</option>
+															<option value="IT">Italy</option>
+															<option value="JM">Jamaica</option>
+															<option value="JP">Japan</option>
+															<option value="JO">Jordan</option>
+															<option value="KZ">Kazakhstan</option>
+															<option value="KE">Kenya</option>
+															<option value="KI">Kiribati</option>
+															<option value="KP">Korea, Democratic People's Republic of</option>
+															<option value="KR">Korea, Republic of</option>
+															<option value="KW">Kuwait</option>
+															<option value="KG">Kyrgyzstan</option>
+															<option value="LA">Lao People's Democratic Republic</option>
+															<option value="LV">Latvia</option>
+															<option value="LB">Lebanon</option>
+															<option value="LS">Lesotho</option>
+															<option value="LR">Liberia</option>
+															<option value="LY">Libyan Arab Jamahiriya</option>
+															<option value="LI">Liechtenstein</option>
+															<option value="LT">Lithuania</option>
+															<option value="LU">Luxembourg</option>
+															<option value="MO">Macau</option>
+															<option value="MK">Macedonia, The Former Yugoslav Republic of</option>
+															<option value="MG">Madagascar</option>
+															<option value="MW">Malawi</option>
+															<option value="MY">Malaysia</option>
+															<option value="MV">Maldives</option>
+															<option value="ML">Mali</option>
+															<option value="MT">Malta</option>
+															<option value="MH">Marshall Islands</option>
+															<option value="MQ">Martinique</option>
+															<option value="MR">Mauritania</option>
+															<option value="MU">Mauritius</option>
+															<option value="YT">Mayotte</option>
+															<option value="MX">Mexico</option>
+															<option value="FM">Micronesia, Federated States of</option>
+															<option value="MD">Moldova, Republic of</option>
+															<option value="MC">Monaco</option>
+															<option value="MN">Mongolia</option>
+															<option value="MS">Montserrat</option>
+															<option value="MA">Morocco</option>
+															<option value="MZ">Mozambique</option>
+															<option value="MM">Myanmar</option>
+															<option value="NA">Namibia</option>
+															<option value="NR">Nauru</option>
+															<option value="NP">Nepal</option>
+															<option value="NL">Netherlands</option>
+															<option value="AN">Netherlands Antilles</option>
+															<option value="NC">New Caledonia</option>
+															<option value="NZ">New Zealand</option>
+															<option value="NI">Nicaragua</option>
+															<option value="NE">Niger</option>
+															<option value="NG">Nigeria</option>
+															<option value="NU">Niue</option>
+															<option value="NF">Norfolk Island</option>
+															<option value="MP">Northern Mariana Islands</option>
+															<option value="NO">Norway</option>
+															<option value="OM">Oman</option>
+															<option value="PK">Pakistan</option>
+															<option value="PW">Palau</option>
+															<option value="PA">Panama</option>
+															<option value="PG">Papua New Guinea</option>
+															<option value="PY">Paraguay</option>
+															<option value="PE">Peru</option>
+															<option value="PH">Philippines</option>
+															<option value="PN">Pitcairn</option>
+															<option value="PL">Poland</option>
+															<option value="PT">Portugal</option>
+															<option value="PR">Puerto Rico</option>
+															<option value="QA">Qatar</option>
+															<option value="RE">Reunion</option>
+															<option value="RO">Romania</option>
+															<option value="RU">Russian Federation</option>
+															<option value="RW">Rwanda</option>
+															<option value="KN">Saint Kitts and Nevis</option>
+															<option value="LC">Saint LUCIA</option>
+															<option value="VC">Saint Vincent and the Grenadines</option>
+															<option value="WS">Samoa</option>
+															<option value="SM">San Marino</option>
+															<option value="ST">Sao Tome and Principe</option>
+															<option value="SA">Saudi Arabia</option>
+															<option value="SN">Senegal</option>
+															<option value="SC">Seychelles</option>
+															<option value="SL">Sierra Leone</option>
+															<option value="SG">Singapore</option>
+															<option value="SK">Slovakia (Slovak Republic)</option>
+															<option value="SI">Slovenia</option>
+															<option value="SB">Solomon Islands</option>
+															<option value="SO">Somalia</option>
+															<option value="ZA">South Africa</option>
+															<option value="GS">South Georgia and the South Sandwich Islands</option>
+															<option value="ES">Spain</option>
+															<option value="LK">Sri Lanka</option>
+															<option value="SH">St. Helena</option>
+															<option value="PM">St. Pierre and Miquelon</option>
+															<option value="SD">Sudan</option>
+															<option value="SR">Suriname</option>
+															<option value="SJ">Svalbard and Jan Mayen Islands</option>
+															<option value="SZ">Swaziland</option>
+															<option value="SE">Sweden</option>
+															<option value="CH">Switzerland</option>
+															<option value="SY">Syrian Arab Republic</option>
+															<option value="TW">Taiwan, Province of China</option>
+															<option value="TJ">Tajikistan</option>
+															<option value="TZ">Tanzania, United Republic of</option>
+															<option value="TH">Thailand</option>
+															<option value="TG">Togo</option>
+															<option value="TK">Tokelau</option>
+															<option value="TO">Tonga</option>
+															<option value="TT">Trinidad and Tobago</option>
+															<option value="TN">Tunisia</option>
+															<option value="TR">Turkey</option>
+															<option value="TM">Turkmenistan</option>
+															<option value="TC">Turks and Caicos Islands</option>
+															<option value="TV">Tuvalu</option>
+															<option value="UG">Uganda</option>
+															<option value="UA">Ukraine</option>
+															<option value="AE">United Arab Emirates</option>
+															<option value="GB">United Kingdom</option>
+															<option value="US">United States</option>
+															<option value="UM">United States Minor Outlying Islands</option>
+															<option value="UY">Uruguay</option>
+															<option value="UZ">Uzbekistan</option>
+															<option value="VU">Vanuatu</option>
+															<option value="VE">Venezuela</option>
+															<option value="VN">Viet Nam</option>
+															<option value="VG">Virgin Islands (British)</option>
+															<option value="VI">Virgin Islands (U.S.)</option>
+															<option value="WF">Wallis and Futuna Islands</option>
+															<option value="EH">Western Sahara</option>
+															<option value="YE">Yemen</option>
+															<option value="ZM">Zambia</option>
+															<option value="ZW">Zimbabwe</option>
+														</select>
+													</div>
+												</div>
+												<!-- end Country -->
+											</div>
+											<div class="col-md-4">
+												<h4><b>Signature</b></h4>
+												<hr>
+												<!-- signature -->
+												<div class="form-group">
+													<!-- <label class="control-label">Signature</label> -->
+													<div class="fileinput fileinput-new" data-provides="fileinput" style="text-align: right; float: right;">
+														<div >
+															<span class="btn green btn-file">
+															<span class="fileinput-new">
+															Select Image </span>
+															<span class="fileinput-exists">
+															Change </span>
+															<input type="file" name="...">
+															</span>
+															<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+															Remove </a>
+														</div>
+														<br>
+														<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 300px; height: 200px;"></div>
+													</div>
+													<div class="clearfix margin-top-10"></div>
+												</div>
+												<!-- end signature -->
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="tab-pane" id="Specialist_info">
+								</div> -->
+							</div>
+							<!-- end content tab -->
 						</div>
 					</div>
-					<!-- End Title -->
-					<!-- begin name -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Name</label>
-							<input type="text" class="form-control" placeholder="Name">
-							<span class="help-block">This is inline help </span>
-						</div>
-					</div>
-					<!-- end name -->
-					<!-- begin Email -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Email</label>
-							<input type="text" class="form-control" placeholder="Email">
-							<span class="help-block">This is inline help </span>
-						</div>
-					</div>
-					<!-- end Email -->
-					<!-- begin Phone -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Phone</label>
-							<input type="text" class="form-control" placeholder="Phone">
-							<span class="help-block">This is inline help </span>
-						</div>
-					</div>
-					<!-- end Phone -->
-					<div class="row">&nbsp;</div>
-					<div class="row">&nbsp;</div>
 				</div>
-				<div class="row">
-					<!-- Begin First name -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">First name</label>
-							<input type="text" class="form-control" placeholder="First name">
-						</div>
-					</div>
-					<!-- End First name -->
-					<!-- Begin Middle name -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Middle name</label>
-							<input type="text" class="form-control" placeholder="Middle name">
-						</div>
-					</div>
-					<!-- End Middle name -->
-					<!-- Begin Sur name -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Sur name</label>
-							<input type="text" class="form-control" placeholder="Sur name">
-						</div>
-					</div>
-					<!-- End Sur name -->
-					<!-- Begin Address -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Address</label>
-							<input type="text" class="form-control" placeholder="Address">
-						</div>
-					</div>
-					<!-- End Address -->
-				</div>
-			</div>
-			<!-- end tab basic info -->
-			<!-- begin tab detail_info -->
-			<div class="tab-pane" id="detail_info">
-				<br>
-				<div class="row">
-					<!-- Begin Enable -->
-					<div class="col-md-3">
-						<label class="label-control">Enable</label>
-						<div class="form-control">
-							<label class="label-control my-checkbox">
-						      <input type="checkbox"> Enable
-						    </label>
-						</div>
-					</div>
-					<!-- End Enable -->
-					<!-- Begin Provider number -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Provider number</label>
-							<input type="text" class="form-control" placeholder="Provider number">
-						</div>
-					</div>
-					<!-- End Provider number -->
-					<!-- Begin Prescriber number -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Prescriber number</label>
-							<input type="text" class="form-control" placeholder="Prescriber number">
-						</div>
-					</div>
-					<!-- End Prescriber number -->
-					<!-- Begin Payee provider number -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Payee provider number</label>
-							<input type="text" class="form-control" placeholder="Payee provider number">
-						</div>
-					</div>
-					<!-- End Payee provider number -->
-				</div>
-				<div class="row">
-					<!-- Begin Provider type -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Provider type</label>
-							<select class="form-control">
-								<option value="1">Provider type</option>
-							</select>
-						</div>
-					</div>
-					<!-- End Provider type -->
-					<!-- Begin Clinical department -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Clinical department</label>
-							<select class="form-control">
-								<option value="1">Doctor</option>
-								<option value="2">Dept</option>
-								<option value="3">Physio</option>
-							</select>
-						</div>
-					</div>
-					<!-- End Provider type -->
-					<!-- Begin Appt interval -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Appt interval</label>
-							<input type="number" class="form-control" placeholder="Appt interval">
-						</div>
-					</div>
-					<!-- End Appt interval -->
-					<!-- Begin New calendar slot -->
-					<div class="col-md-3">
-						<label class="label-control">New calendar slot</label>
-						<div class="form-control">
-							<label class="label-control my-checkbox">
-						      <input type="checkbox"> New calendar slot
-						    </label>
-						</div>
-					</div>
-					<!-- End New calendar slot -->
-				</div>
-			</div>
-			<!-- end tab detail_info -->
-			<!-- begin tab more_info -->
-			<div class="tab-pane" id="more_info">
-				<br>
-				<!--  -->
-				<div class="row">
-					<!-- Begin Enable -->
-					<div class="col-md-3">
-						<label class="label-control">Receive Email After</label>
-						<div class="form-control">
-							<label class="label-control my-checkbox">
-						      <input type="checkbox"> Receive EMail After
-						    </label>
-						</div>
-					</div>
-					<!-- End Enable -->
-					<!-- Begin Enable -->
-					<div class="col-md-3">
-
-						<label class="label-control">Appointment Book</label>
-						<div class="form-control">
-							<label class="label-control my-checkbox">
-						      <input type="checkbox"> Appointment Book
-						    </label>
-						</div>
-					</div>
-					<!-- End Enable -->
-					<!-- Begin Abn number -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Abn number</label>
-							<input type="text" class="form-control" placeholder="Abn number">
-						</div>
-					</div>
-					<!-- End Abn number -->
-					<!-- Begin sign off -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">sign off</label>
-							<input type="text" class="form-control" placeholder="sign off">
-						</div>
-					</div>
-					<!-- End sign off -->
-				</div>
-				<div class="row">
-					<!-- Begin Medical registration -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Medical registration</label>
-							<input type="number" class="form-control" placeholder="Medical registration">
-						</div>
-					</div>
-					<!-- End Medical registration -->
-					<!-- Begin Qualification ID -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Qualification</label>
-							<select class="form-control">
-								<option value="1">Qualification</option>
-							</select>
-						</div>
-					</div>
-					<!-- End  Qualification ID -->
-					<!-- Begin Oshc id -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Oshc id</label>
-							<input type="number" class="form-control" placeholder="Oshc id">
-						</div>
-					</div>
-					<!-- End Oshc id -->
-					<!-- Begin Default bank account -->
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Default bank account</label>
-							<input type="number" class="form-control" placeholder="Default bank account">
-						</div>
-					</div>
-					<!-- End Default bank account -->
-				</div>
-				<!-- begin signatue -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label class="control-label">Signature</label>
-							<textarea class="form-control" rows="4">signature</textarea>
-						</div>
-					</div>
-				</div>
-				<!-- end signatue -->
-			</div>
-			<!-- end tab more_info -->
+				<!-- <div class="form-actions">
+				</div> -->
+			</form>
+			<!-- end form -->
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn default" data-dismiss="modal" ng-click="close()"><i class="icon-action-undo"></i> Close</button>
-		<button type="button" class="btn blue"><i class="glyphicon glyphicon-save"></i> Save changes</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()"><i class="icon-action-undo"></i> Close</button>
+		<button type="button" class="btn btn-success"><i class="glyphicon glyphicon-save"></i> Save changes</button>
 	</div>
 </div>
+<script>
+	Metronic.setAssetsPath('theme/assets/'); // Set the assets folder path
+	Metronic.initAjax();
+	ComponentsDropdowns.init(); // init todo page
+	ComponentsPickers.init(); // init todo page
+</script>

@@ -15,9 +15,8 @@ let defaults = NSUserDefaults.standardUserDefaults()
 var tokens = String()
 
 
-class ConfigurationSystem: UIViewController {
-    let Http = "http://192.168.1.130:3009"
-    
+struct ConfigurationSystem {
+    static let Http = "http://testapp.redimed.com.au:3009"
     let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
     
     let headers = [
@@ -30,38 +29,35 @@ class ConfigurationSystem: UIViewController {
         textField.layer.borderWidth = 1
         textField.cornerRadius = 4
     }
-    
     //Giap: Check input only number
     func validateInputOnlyNumber(value: Int) -> Bool {
         switch value {
-        case numberHashValue.number0.rawValue :
+        case numberHashValue.number0 :
             return true
-        case numberHashValue.number1.rawValue :
+        case numberHashValue.number1 :
             return true
-        case numberHashValue.number2.rawValue :
+        case numberHashValue.number2 :
             return true
-        case numberHashValue.number3.rawValue :
+        case numberHashValue.number3 :
             return true
-        case numberHashValue.number4.rawValue :
+        case numberHashValue.number4 :
             return true
-        case numberHashValue.number5.rawValue :
+        case numberHashValue.number5 :
             return true
-        case numberHashValue.number6.rawValue :
+        case numberHashValue.number6 :
             return true
-        case numberHashValue.number7.rawValue :
+        case numberHashValue.number7 :
             return true
-        case numberHashValue.number8.rawValue :
+        case numberHashValue.number8 :
             return true
-        case numberHashValue.number9.rawValue :
+        case numberHashValue.number9 :
             return true
-        case numberHashValue.delete.rawValue :
+        case numberHashValue.delete :
             return true
         default:
             return false
         }
     }
-    
-    
 }
 //class handle get and set data
 class saveData {
@@ -73,21 +69,5 @@ class saveData {
 }
 
 
-//Extension Handle
-extension String
-{
-    //Format date time
-    func toDateTime() -> String
-    {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//this your string date format
-        dateFormatter.timeZone = NSTimeZone(name: "UTC")
-        let date = dateFormatter.dateFromString(self)
-        
-        dateFormatter.dateFormat = "yyyy-MM-dd"///this is you want to convert format
-        dateFormatter.timeZone = NSTimeZone(name: "UTC")
-        let timeStamp = dateFormatter.stringFromDate(date!)
-        //Return Parsed Date
-        return String(timeStamp)
-    }
-}
+
+

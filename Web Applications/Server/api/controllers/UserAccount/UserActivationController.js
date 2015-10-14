@@ -1,11 +1,7 @@
 module.exports = {
 	/**
 	 * Create UserActivation
-	 * input: 
-	 * 	if website system: 
-	 * 		req.body: activationInfo:UserAccountID,Type,VerificationToken
-	 * 	if mobile system:
-	 * 		req.body: UserAccountID,Type, VerificationCode, DeviceID
+	 * input: req.body: {UserAccountID,Type,VerificationCode}
 	 * output: 
 	 * 	if success return status 200 + UserActivateInfo
 	 * 	if error return status 500 + error
@@ -13,6 +9,7 @@ module.exports = {
 	CreateUserActivation:function(req,res)
 	{
 		var activationInfo=req.body;
+		activationInfo.CreatedBy=req.user?req.user.ID:null;
 		sequelize.transaction().then(function(t){
 			Services.UserActivation.CreateUserActivation(activationInfo,t)
 			.then(function(data){
@@ -20,7 +17,6 @@ module.exports = {
 				res.ok(data);
 			},function(err){
 				t.rollback();
-				console.log(err);
 				res.serverError(ErrorWrap(err));
 			})
 		})

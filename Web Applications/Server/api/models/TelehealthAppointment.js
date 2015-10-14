@@ -12,7 +12,7 @@ module.exports = {
         },
         AppointmentID: {
             type: Sequelize.BIGINT(20),
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'Appointment',
                 key: 'ID'
@@ -66,6 +66,10 @@ module.exports = {
         },
         Allergy: {
             type: Sequelize.TEXT
+        },
+        Enable: {
+            type: Sequelize.STRING(1),
+            allowNull: true
         },
         CreatedDate: {
             type: Sequelize.DATE,

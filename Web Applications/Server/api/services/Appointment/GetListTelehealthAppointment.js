@@ -20,7 +20,7 @@ module.exports = function(data) {
                 order: pagination.orderTelehealthAppointment
             }, {
                 model: Doctor,
-                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'Phone'],
+                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'PhoneNumber'],
                 required: true,
                 where: pagination.filterDoctor,
                 order: pagination.orderDoctor
@@ -32,7 +32,7 @@ module.exports = function(data) {
                 order: pagination.orderPatient,
                 include: [{
                     model: UserAccount,
-                    attributes: ['UserName', 'Email', 'PhoneNumber', 'Activated'],
+                    attributes: ['ID', 'UserName', 'Email', 'PhoneNumber', 'Activated'],
                     required: true
                 }]
             }],

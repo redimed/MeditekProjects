@@ -50,10 +50,10 @@ module.exports = {
             type: Sequelize.STRING(1),
             allowNull: true
         },
-        ServiceType: {
-            type: Sequelize.STRING(3),
-            allowNull: true
-        },
+        // ServiceType: {
+        //     type: Sequelize.STRING(3),
+        //     allowNull: true
+        // },
         RequestType: {
             type: Sequelize.STRING(255),
             allowNull: true

@@ -3,7 +3,6 @@ var app = angular.module('app.authentication.doctor',[
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider){
-	// $urlRouterProvider.otherwise('/doctor/list');
 	$stateProvider
 		.state('authentication.doctor', {
 			abstract: true,
@@ -18,7 +17,8 @@ app.config(function($stateProvider, $urlRouterProvider){
 		})
 		.state('authentication.doctor.create', {
 			url: '/create',
-			templateUrl: 'modules/doctor/views/doctorCreate.html'
+			templateUrl: 'modules/doctor/views/doctorCreate.html',
+			controller: 'doctorCreateCtrl'
 		})
 		.state('authentication.doctor.profile', {
 			url: '/profile',

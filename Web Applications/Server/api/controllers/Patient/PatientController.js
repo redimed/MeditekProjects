@@ -95,9 +95,6 @@ module.exports = {
 		});
 	},
 
-	Test : function(req, res){
-		res.json("asd");
-	},
 	/*
 		DeletePatient : disable patient who was deleted.
 		input: Patient's ID
@@ -140,6 +137,40 @@ module.exports = {
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});
 		});
+	},
+
+	/*
+		CheckPatient : check patient has created ?
+		input : Patient's PhoneNumber
+		output: true if patient has created and (false,data:{}) if patient hasn't created
+	*/
+	CheckPatient : function(req, res) {
+		var data = req.body.data;
+		Services.Patient.CheckPatient(data)
+		.then(function(result){
+			if(result!==undefined && result!==null){
+				res.ok({status:200,message:"success",data:result});
+			}
+			else{
+				res.notFound({status:404,message:"not found"});
+			}
+		})
+		.catch(function(err){
+			res.serverError({status:500,message:ErrorWrap(err)});
+		})
+	},
+
+	GetListCountry : function(req, res) {
+		HelperService.getListCountry()
+		.then(function(result){
+			if(result!==undefined && result!==null && result!=='' && result.length!==0)
+				res.ok({status:200,message:"success",data:result});
+			else
+				res.notFound({status:404,message:"not found"});
+		})
+		.catch(function(err){
+			res.serverError({status:500,message:ErrorWrap(err)});
+		})
 	}
 
 };

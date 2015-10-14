@@ -24,6 +24,10 @@ module.exports.routes = {
         controller: 'TelehealthController',
         action: 'SendSMS'
     },
+    '/telehealth/upload': {
+        controller: 'TelehealthController',
+        action: 'UploadFile'
+    },
     //================Telehealth Socket Routes==========================
     '/telehealth/socket/joinRoom': {
         controller: 'SocketController',

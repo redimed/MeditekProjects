@@ -97,13 +97,6 @@ module.exports = {
             foreignKey: 'UserAccountID'
         });
 
-        //Patient - Site
-        Site.hasOne(Patient,{
-            foreignKey: 'SiteID'
-        });
-        Patient.belongsTo(Site, {
-            foreignKey: 'SiteID'
-        });
 
         //Patient - Country
         Country.hasOne(Patient,{

@@ -28,6 +28,8 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     var session : OTSession?
     var publisher : OTPublisher?
     var subscriber : OTSubscriber?
+    var uuidFrom = String()
+    var uuidTo = String()
     @IBOutlet weak var buttonHoldCall: DesignableButton!
     @IBOutlet weak var buttonEndCall: DesignableButton!
     @IBOutlet weak var buttonMuteCall: DesignableButton!
@@ -42,6 +44,14 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         SessionID = String(sessionId)
         // Replace with your generated token
         Token = String(token)
+        //get UUID to
+        uuidTo = String(savedData.data[0]["from"])
+        //Get uuid from in localstorage
+        if let uuid = defaults.valueForKey("uid") as? String {
+            uuidFrom = uuid
+            
+        }
+
         
     }
     
@@ -50,12 +60,11 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         
         if publisher?.publishVideo.boolValue == true {
             publisher?.publishVideo = false
-            //buttonHoldCall.setImage(UIImage(named: "Play-50.png"), forState: UIControlState.Normal)
-            changeIconCallingView(buttonHoldCall, nameImg: "Play-50.png")
+            sender.setTitle(FAIcon.play, forState: .Normal)
+
         } else {
             publisher?.publishVideo = true
-            //buttonHoldCall.setImage(UIImage(named: "Pause-50.png"), forState: UIControlState.Normal)
-            changeIconCallingView(buttonHoldCall, nameImg: "Pause-50.png")
+            sender.setTitle(FAIcon.pause, forState: .Normal)
             
         }
     }
@@ -63,22 +72,27 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     @IBAction func buttonMuteAudioAction(sender: DesignableButton) {
         if publisher?.publishAudio.boolValue == true {
             publisher?.publishAudio = false
-            //buttonMuteCall.setImage(UIImage(named: "Volume Up-50.png"), forState: UIControlState.Normal)
-            changeIconCallingView(buttonMuteCall, nameImg: "Volume Up-50.png")
+            sender.setTitle(FAIcon.volume_up, forState: .Normal)
         }else {
             publisher?.publishAudio = true
-            //buttonMuteCall.setImage(UIImage(named: "Mute-50.png"), forState: UIControlState.Normal)
-            changeIconCallingView(buttonMuteCall, nameImg: "Mute-50.png")
+            sender.setTitle(FAIcon.volume_off, forState: .Normal)
         }
     }
     @IBAction func buttonEndCallAction(sender: DesignableButton) {
         sessionDidDisconnect(session!)
         doUnsubscribe()
         session!.disconnect()
+        emitDataToServer(MessageString.CallEndCall)
         let homeMain = storyboard?.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
         presentViewController(homeMain, animated: true, completion: nil)
     }
     
+    //Giap: Func handle emit socket to server 2 message : Answer or EndCall
+    func emitDataToServer(message:String){
+        let modifieldURLString = NSString(format: UrlAPISocket.emitAnswer,self.uuidFrom,self.uuidTo,message) as String
+        let dictionNary : NSDictionary = ["url": modifieldURLString]
+        sharedSocket.socket.emit("get", dictionNary)
+    }
     
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {

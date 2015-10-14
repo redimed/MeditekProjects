@@ -34,7 +34,7 @@
 									<a href="#tab1" data-toggle="tab" class="step">
 									<span class="number">1 </span>
 									<span class="desc">
-									<i class="fa fa-check"></i> Validation </span>
+									<i class="fa fa-check"></i> User Account </span>
 									</a>
 								</li>
 								<li>
@@ -127,37 +127,43 @@
 												<h4><b>Basic Information</b></h4>
 												<hr>
 												<!-- begin title -->
-									            <div class="form-group">
-									            	<label class="control-label col-md-4">Title</label>
-									            	<div class="col-md-8">
-									            		<select class="form-control"> </select>
-									            	</div>
-									            </div>
-									            <!-- end title -->
-												<!-- Begin First name -->
 												<div class="form-group">
-													<label class="control-label col-md-4">First Name</label>
+													<label class="control-label col-md-4">Title</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="First Name"ng-model="data.FirstName">
+														<select class="form-control">
+															<option value=""></option>
+															<option value="">Mr</option>
+															<option value="">Mrs</option>
+															<option value="">Ms</option>
+															<option value="">Dr</option>
+														</select>
 													</div>
 												</div>
-												<!-- End First name -->
-												<!-- Begin Sur name -->
+												<!-- end title -->
+												<!-- Begin Firstname -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Firstname</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control" placeholder="Firstname"ng-model="data.FirstName">
+													</div>
+												</div>
+												<!-- End Firstname -->
+												<!-- Begin Surname -->
 												<div class="form-group ">
-													<label class="control-label col-md-4">Sur Name</label>
+													<label class="control-label col-md-4">Surname</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="Sur Name" ng-model="data.LastName">
+														<input type="text" class="form-control" placeholder="Surname" ng-model="data.LastName">
 													</div>
 												</div>
-												<!-- End Sur name -->
-												<!-- Begin Middle name -->
+												<!-- End Surname -->
+												<!-- Begin Middlename -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Middle Name</label>
+													<label class="control-label col-md-4">Middlename</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="Middle Name" ng-model="data.MiddleName">
+														<input type="text" class="form-control" placeholder="Middlename" ng-model="data.MiddleName">
 													</div>
 												</div>
-												<!-- End Middle name -->
+												<!-- End Middlename -->
 												<!-- Date of Birth -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Date of Birth</label>
@@ -209,9 +215,9 @@
 													</div>
 												</div>
 												<!-- end Home Phone -->
-												<!-- begin Mobile -->
+												<!-- begin PhoneNumber -->
 												<div class="form-group">
-													<label class="control-label col-md-3">Mobile</label>
+													<label class="control-label col-md-3">PhoneNumber</label>
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="icon-call-end"></i>
@@ -219,7 +225,7 @@
 														</div>
 													</div>
 												</div>
-												<!-- end Mobile -->
+												<!-- end PhoneNumber -->
 												<!-- begin WorkPhone -->
 												<div class="form-group">
 													<label class="control-label col-md-3">WorkPhone</label>

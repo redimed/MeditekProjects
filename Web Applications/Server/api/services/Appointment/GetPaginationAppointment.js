@@ -6,11 +6,7 @@ module.exports = function(data) {
         filterTelehealthAppointment: [],
         filterPatientAppointment: [],
         filterPatient: [],
-        orderAppointment: [],
-        orderDoctor: [],
-        orderTelehealthAppointment: [],
-        orderPatientAppointment: [],
-        orderPatient: [],
+        order: [],
         limit: data.Limit,
         offset: data.Offset
     };
@@ -147,22 +143,23 @@ module.exports = function(data) {
                     for (var keyOrder in order[keyModel]) {
                         if (HelperService.CheckExistData(keyOrder) &&
                             HelperService.CheckExistData(order[keyModel][keyOrder])) {
-                            var tempOrder = [keyOrder, order[keyModel][keyOrder]];
+                            var tempOrder = [];
                             switch (keyModel) {
                                 case 'Appointment':
-                                    pagination.orderAppointment.push(tempOrder);
+                                    tempOrder = [keyOrder, order[keyModel][keyOrder]];
+                                    pagination.order.push(tempOrder);
                                     break;
                                 case 'Doctor':
-                                    pagination.orderDoctor.push(tempOrder);
+                                    tempOrder = [Doctor, keyOrder, order[keyModel][keyOrder]];
+                                    pagination.order.push(tempOrder);
                                     break;
                                 case 'TelehealthAppointment':
-                                    pagination.orderTelehealthAppointment.push(tempOrder);
-                                    break;
-                                case 'PatientAppointment':
-                                    pagination.orderPatientAppointment.push(tempOrder);
+                                    tempOrder = [TelehealthAppointment, keyOrder, order[keyModel][keyOrder]];
+                                    pagination.order.push(tempOrder);
                                     break;
                                 case 'Patient':
-                                    pagination.orderPatient.push(tempOrder);
+                                    tempOrder = [Patient, keyOrder, order[keyModel][keyOrder]];
+                                    pagination.order.push(tempOrder);
                                     break;
                                 default:
                                     break;

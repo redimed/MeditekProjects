@@ -394,7 +394,7 @@ module.exports = {
 			offset: resOffset
 		})
 		.then(function(result){
-
+			return result;
 		},function(err){
 			var error = new Error("SERVER ERROR");
 			var errors = [];

@@ -8,7 +8,7 @@ app.controller('patientListCtrl', function($scope, $modal, PatientService){
   	$scope.maxSize = 10;
   	$scope.filteredTodos = [];
 	var data ={
-		limit:1000
+		limit:100
 	};
 	PatientService.loadlistPatient(data).then(function(response){
 		if(response.message=="success"){

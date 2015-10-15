@@ -94,7 +94,8 @@ module.exports = {
                                             sourceID: dataMQ.sourceID,
                                             job: dataMQ.job,
                                             status: dataMQ.status,
-                                            startTime: dataMQ.startTime
+                                            startTime: dataMQ.startTime,
+                                            enable: 'Y'
                                         })
                                         .exec(function(err, MQCreated) {
                                             if (err) {

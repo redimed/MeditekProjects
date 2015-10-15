@@ -45,7 +45,7 @@ module.exports = {
                 suburb: data.suburb,
                 IP: data.ip,
                 requestDate: data.requestDate,
-                GPReferal: data.GPReferal,
+                GPReferral: data.GPReferral,
                 urgentRequestType: data.urgentRequestType,
                 companyName: data.companyName,
                 companyPhoneNumber: data.companyPhoneNumber,
@@ -62,7 +62,7 @@ module.exports = {
             })
             .then(function(URCreated) {
                 //convert service type and gp referral
-                var GPReferal = Services.ConvertData.GPReferal(data.GPReferal);
+                var GPReferral = Services.ConvertData.GPReferral(data.GPReferral);
                 var serviceType = Services.ConvertData.ServiceType(data);
                 var subjectEmail = '[Testing] - [' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                     '] - [' + data.firstName + ' ' +
@@ -79,7 +79,7 @@ module.exports = {
                     phoneNumber: data.phoneNumber,
                     suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb) && !_.isEmpty(data.suburb)) ? data.suburb : '',
                     DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? Services.moment(data.DOB).format('DD/MM/YYYY') : '',
-                    GPReferal: GPReferal,
+                    GPReferral: GPReferral,
                     serviceType: serviceType,
                     description: (!_.isUndefined(data.description) && !_.isNull(data.description) && !_.isEmpty(data.description)) ? data.description : '',
                     companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName) && !_.isEmpty(data.companyName)) ? data.companyName : '',
@@ -116,7 +116,7 @@ module.exports = {
                                 phoneNumber: data.phoneNumber,
                                 suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb) && !_.isEmpty(data.suburb)) ? data.suburb : '',
                                 DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? Services.moment(data.DOB).format('DD/MM/YYYY') : '',
-                                GPReferal: GPReferal,
+                                GPReferral: GPReferral,
                                 serviceType: serviceType,
                                 description: (!_.isUndefined(data.description) && !_.isNull(data.description) && !_.isEmpty(data.description)) ? data.description : '',
                                 companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName) && !_.isEmpty(data.companyName)) ? data.companyName : '',

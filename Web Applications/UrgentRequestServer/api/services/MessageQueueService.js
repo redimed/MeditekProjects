@@ -34,7 +34,7 @@ module.exports = {
                             Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                             '] - [' + UR.firstName + ' ' +
                             UR.lastName + '] - [' + UR.phoneNumber + ']';
-                        var GPReferal = Services.ConvertData.GPReferal(UR.GPReferal);
+                        var GPReferral = Services.ConvertData.GPReferral(UR.GPReferral);
                         var serviceType = Services.ConvertData.ServiceType(UR);
                         var emailInfo = {
                             from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
@@ -48,7 +48,7 @@ module.exports = {
                             phoneNumber: UR.phoneNumber,
                             suburb: (!_.isUndefined(UR.suburb) && !_.isNull(UR.suburb) && !_.isEmpty(UR.suburb)) ? UR.suburb : '',
                             DOB: (!_.isUndefined(UR.DOB) && !_.isNull(UR.DOB)) ? Services.moment(UR.DOB).format('DD/MM/YYYY') : '',
-                            GPReferal: GPReferal,
+                            GPReferral: GPReferral,
                             serviceType: serviceType,
                             description: (!_.isUndefined(UR.description) && !_.isNull(UR.description) && !_.isEmpty(UR.description)) ? UR.description : '',
                             companyName: (!_.isUndefined(UR.companyName) && !_.isNull(UR.companyName) && !_.isEmpty(UR.companyName)) ? UR.companyName : '',

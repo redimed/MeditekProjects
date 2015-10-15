@@ -24,10 +24,11 @@ module.exports = function(data) {
                             HelperService.CheckExistData(filter[keyModel][keyFilter])) {
                             //check format value is date
                             var tempFilter = {};
-                            if (moment(filter[keyModel][keyFilter], moment.ISO_8601, true).isValid()) {
+                            if (moment(filter[keyModel][keyFilter], 'YYYY-MM-DD Z', true).isValid() ||
+                                moment(filter[keyModel][keyFilter], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
                                 //data valid date
-                                var dateActual = moment(filter[keyModel][keyFilter]).format('YYYY-MM-DD 00:00:00');
-                                var dateAdded = moment(dateActual).add(1, 'day').format('YYYY-MM-DD 00:00:00');
+                                var dateActual = moment(filter[keyModel][keyFilter], 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                var dateAdded = moment(dateActual).add(1, 'day').toDate();
                                 var tempFilter = {};
                                 tempFilter[keyFilter] = {
                                     '$gte': dateActual,
@@ -183,12 +184,31 @@ module.exports = function(data) {
                     for (var keyRange in range[keyModel]) {
                         if (HelperService.CheckExistData(keyRange) &&
                             HelperService.CheckExistData(range[keyModel][keyRange])) {
-                            var start = range[keyModel][keyRange][0];
-                            var end = range[keyModel][keyRange][1];
+                            var start = null,
+                                end = null;
+                            if (moment(range[keyModel][keyRange][0], 'YYYY-MM-DD Z', true).isValid() ||
+                                moment(range[keyModel][keyRange][0], 'YYYY-MM-DD HH:mm:ss Z', true).isValid() ||
+                                moment(range[keyModel][keyRange][1], 'YYYY-MM-DD Z', true).isValid() ||
+                                moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                start = moment(range[keyModel][keyRange][0], 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                end = moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z').toDate();
+
+                            } else {
+                                start = range[keyModel][keyRange][0];
+                                end = range[keyModel][keyRange][1];
+                            }
                             var tempRange = {};
-                            tempRange[keyRange] = {
-                                '$between': [start, end]
-                            };
+                            tempRange[keyRange] = {};
+                            if (!_.isUndefined(range[keyModel][keyRange][0]) &&
+                                !_.isNull(range[keyModel][keyRange][0]) &&
+                                !_.isEmpty(range[keyModel][keyRange][0])) {
+                                tempRange[keyRange]['$gte'] = start;
+                            }
+                            if (!_.isUndefined(range[keyModel][keyRange][1]) &&
+                                !_.isNull(range[keyModel][keyRange][1]) &&
+                                !_.isEmpty(range[keyModel][keyRange][1])) {
+                                tempRange[keyRange]['$lte'] = end;
+                            }
                             switch (keyModel) {
                                 case 'Appointment':
                                     pagination.filterAppointment.push(tempRange);

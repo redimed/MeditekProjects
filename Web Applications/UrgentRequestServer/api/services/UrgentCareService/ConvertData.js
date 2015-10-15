@@ -2,17 +2,18 @@ module.exports = {
     ServiceType: function(data) {
         var serviceType = '';
         if (data.physiotherapy === 'Y') {
-            serviceType += 'Physiotherapy';
+            serviceType += 'Physiotherapy, ';
         }
         if (data.specialist === 'Y') {
-            serviceType += ', ' + 'Specialist';
+            serviceType += 'Specialist, ';
         }
         if (data.handTherapy === 'Y') {
-            serviceType += ', ' + 'HandTherapy';
+            serviceType += 'HandTherapy, ';
         }
         if (data.GP === 'Y') {
-            serviceType += ', ' + 'GP';
+            serviceType += 'GP, ';
         }
+        serviceType = serviceType.substring(0, serviceType.length - 2);
         return serviceType;
     },
     GPReferal: function(gPreferal) {

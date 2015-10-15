@@ -35,10 +35,10 @@ module.exports = {
             allowNull: true
         },
         DOB: {
-            type: Sequelize.DATE,
+            type: Sequelize.STRING(45),
             allowNull: true
         },
-	Gender: {
+        Gender: {
             type: Sequelize.STRING(1),
             allowNull: true
         },

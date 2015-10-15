@@ -16,19 +16,19 @@ module.exports = {
         serviceType = serviceType.substring(0, serviceType.length - 2);
         return serviceType;
     },
-    GPReferal: function(gPreferal) {
-        var GPReferal = '';
-        switch (gPreferal) {
+    GPReferral: function(gPreferral) {
+        var GPReferral = '';
+        switch (gPreferral) {
             case 'Y':
-                GPReferal = 'Yes';
+                GPReferral = 'Yes';
                 break;
             case 'N':
-                GPReferal = 'No';
+                GPReferral = 'No';
                 break;
             default:
-                GPReferal = '';
+                GPReferral = '';
                 break;
         };
-        return GPReferal;
+        return GPReferral;
     }
 };

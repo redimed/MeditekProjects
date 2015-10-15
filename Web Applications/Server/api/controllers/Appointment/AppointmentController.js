@@ -23,7 +23,7 @@ module.exports = {
                         HelperService.CheckExistData(err.transaction)) {
                         err.transaction.rollback();
                     }
-                    res.serverError(ErrorWrap(err));
+                    res.serverError(ErrorWrap(err.error));
                 });
         }
     },

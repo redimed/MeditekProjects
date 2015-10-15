@@ -21,6 +21,8 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <permission
         android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE"
@@ -54,7 +56,10 @@
             android:name=".CallActivity"
             android:label="@string/title_activity_call"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".ContactActivity"
+            android:label="@string/title_activity_contact"
+            android:screenOrientation="portrait" />
         <receiver android:name=".receiver.BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

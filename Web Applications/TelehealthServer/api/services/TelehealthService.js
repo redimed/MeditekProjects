@@ -40,29 +40,28 @@ module.exports = {
         });
     },
     GetOnlineUsers: function() {
-        if (appts.length == 0) {
-            TelehealthService.GetAppointmentList().then(function(response) {
-                appts = response.getBody();
-                if (appts.length > 0) {
-                    TelehealthUser.findAll().then(function(teleUsers) {
-                        for (var i = 0; i < teleUsers.length; i++) {
-                            for (var j = 0; j < appts.length; j++) {
-                                if (teleUsers[i].userAccountID == appts[j].Patients[0].UserAccount.ID) {
-                                    appts[j].IsOnline = 0;
-                                    appts[j].TeleUID = teleUsers[i].UID;
-                                }
+        appts = [];
+        TelehealthService.GetAppointmentList().then(function(response) {
+            appts = response.getBody();
+            if (appts.length > 0) {
+                TelehealthUser.findAll().then(function(teleUsers) {
+                    for (var i = 0; i < teleUsers.length; i++) {
+                        for (var j = 0; j < appts.length; j++) {
+                            if (teleUsers[i].userAccountID == appts[j].Patients[0].UserAccount.ID) {
+                                appts[j].IsOnline = 0;
+                                appts[j].TeleUID = teleUsers[i].UID;
                             }
                         }
-                    }).catch(function(err) {
-                        console.log(err);
-                    })
-                }
-                checkOnlineUser();
-            }).catch(function(err) {
-                appts = [];
-                checkOnlineUser();
-            })
-        } else checkOnlineUser();
+                    }
+                    checkOnlineUser();
+                }).catch(function(err) {
+                    console.log(err);
+                })
+            }
+            else checkOnlineUser();
+        }).catch(function(err) {
+            checkOnlineUser();
+        })
     },
     MakeRequest: function(info) {
         return requestify.request(config.CoreAPI + info.path, {

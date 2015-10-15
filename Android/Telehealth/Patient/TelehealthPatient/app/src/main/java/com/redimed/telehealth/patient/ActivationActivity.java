@@ -265,6 +265,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                             SharedPreferences.Editor uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE).edit();
                             uidTelehealth.putString("uid", jsonObject.get("uid").getAsString());
                             uidTelehealth.putString("token", jsonObject.get("token").getAsString());
+                            uidTelehealth.putString("patientUID", jsonObject.get("patientUID").getAsString());
                             uidTelehealth.apply();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();

@@ -34,18 +34,26 @@ module.exports = {
                             Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                             '] - [' + UR.firstName + ' ' +
                             UR.lastName + '] - [' + UR.phoneNumber + ']';
+                        var GPReferral = Services.ConvertData.GPReferral(UR.GPReferral);
+                        var serviceType = Services.ConvertData.ServiceType(UR);
                         var emailInfo = {
                             from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
                             email: 'HealthScreenings@redimed.com.au',
+                            patientEmail: (!_.isUndefined(UR.email) && !_.isNull(UR.email)) ? UR.email : '',
                             subject: subjectEmail,
                             confirmed: APIService.UrgentCareConfirmURL + '/' + UR.UID,
                             urgentRequestType: UR.urgentRequestType,
                             patientName: UR.firstName + ' ' + UR.lastName,
                             requestDate: Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                             phoneNumber: UR.phoneNumber,
-                            companyName: UR.companyName,
-                            companyPhoneNumber: UR.companyPhoneNumber,
-                            contactPerson: UR.contactPerson,
+                            suburb: (!_.isUndefined(UR.suburb) && !_.isNull(UR.suburb) && !_.isEmpty(UR.suburb)) ? UR.suburb : '',
+                            DOB: (!_.isUndefined(UR.DOB) && !_.isNull(UR.DOB)) ? Services.moment(UR.DOB).format('DD/MM/YYYY') : '',
+                            GPReferral: GPReferral,
+                            serviceType: serviceType,
+                            description: (!_.isUndefined(UR.description) && !_.isNull(UR.description) && !_.isEmpty(UR.description)) ? UR.description : '',
+                            companyName: (!_.isUndefined(UR.companyName) && !_.isNull(UR.companyName) && !_.isEmpty(UR.companyName)) ? UR.companyName : '',
+                            contactPerson: (!_.isUndefined(UR.contactPerson) && !_.isNull(UR.contactPerson) && !_.isEmpty(UR.contactPerson)) ? UR.contactPerson : '',
+                            companyPhoneNumber: (!_.isUndefined(UR.companyPhoneNumber) && !_.isNull(UR.companyPhoneNumber) && !_.isEmpty(UR.companyPhoneNumber)) ? UR.companyPhoneNumber : '',
                             bcc: 'pnguyen@redimed.com.au, meditekcompany@gmail.com'
                         };
                         var CallBackSendMail = function(err, responseStatus, html, text) {
@@ -86,7 +94,8 @@ module.exports = {
                                             sourceID: dataMQ.sourceID,
                                             job: dataMQ.job,
                                             status: dataMQ.status,
-                                            startTime: dataMQ.startTime
+                                            startTime: dataMQ.startTime,
+                                            enable: 'Y'
                                         })
                                         .exec(function(err, MQCreated) {
                                             if (err) {

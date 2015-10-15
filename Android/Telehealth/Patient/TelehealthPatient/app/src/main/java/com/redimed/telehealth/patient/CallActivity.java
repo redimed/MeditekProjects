@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 
 public class CallActivity extends AppCompatActivity implements View.OnClickListener, PublisherKit.PublisherListener, SubscriberKit.VideoListener, Session.SessionListener {
 
+    private String TAG = "CALL";
     private Intent i;
     private Session sessionOpenTok;
     private Publisher publisher;
@@ -86,9 +87,17 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        if(sessionOpenTok != null)
+            sessionOpenTok.disconnect();
+    }
+
+    @Override
     protected void onDestroy() {
+        if(sessionOpenTok != null)
+            sessionOpenTok.disconnect();
         super.onDestroy();
-        sendBroadcast(new Intent("Restart_Socket_Service"));
     }
 
     //    Initialize Session ID, API Key, Token
@@ -102,13 +111,27 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 to = i.getExtras().getString("to");
                 from = i.getExtras().getString("from");
             }
+            if (i.getExtras().getString("message").equalsIgnoreCase("end")){
+                publisher = null;
+                subscriber = null;
+                streamOpenTok.clear();
+                sessionOpenTok.disconnect();
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            }
         }
     }
 
     @Override
     public void onBackPressed() {
         if (sessionOpenTok != null) {
-            DeclineCommunication();
+            int position = vfCall.getCurrentView().getId();
+            if (position == 0){
+                DeclineCommunication("decline");
+            }
+            else {
+                DeclineCommunication("end");
+            }
         }
         super.onBackPressed();
     }
@@ -117,7 +140,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.btnDecline):
-                DeclineCommunication();
+                DeclineCommunication("decline");
                 break;
             case (R.id.btnAnswer):
                 AnswerCommunication();
@@ -129,7 +152,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 MuteCommunication();
                 break;
             case R.id.fabEndCall:
-                DeclineCommunication();
+                DeclineCommunication("end");
                 break;
         }
     }
@@ -140,7 +163,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         params.put("from", from);
         params.put("to", to);
         params.put("message", "answer");
-        params.put("sessionId", sessionId);
         try {
             SocketService.sendData("socket/messageTransfer", params);
             SessionConnect();
@@ -151,18 +173,21 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //    Refuse appointment
-    private void DeclineCommunication() {
+    private void DeclineCommunication(String message) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("from", from);
         params.put("to", to);
-        params.put("message", "decline");
-        params.put("sessionId", sessionId);
+        params.put("message", message);
         try {
             SocketService.sendData("socket/messageTransfer", params);
             publisher = null;
             subscriber = null;
             streamOpenTok.clear();
-            sessionOpenTok = null;
+            if (message == "end") {
+                sessionOpenTok.disconnect();
+            }else {
+                sessionOpenTok = null;
+            }
             startActivity(new Intent(this, MainActivity.class));
             finish();
         } catch (Throwable throwable) {
@@ -172,13 +197,17 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     //Click button hold on a call
     private void HoldCommunication() {
-        publisher.setPublishVideo(!publisher.getPublishVideo());
-        if (publisher.getPublishVideo() == false) {
+        if (publisher.getPublishVideo() == true){
             publisher.setPublishAudio(false);
             subscriber.setSubscribeToAudio(false);
-        } else {
+            publisher.setPublishVideo(false);
+            fabMute.setImageResource(R.drawable.icon_mute);
+        }
+        else {
             publisher.setPublishAudio(true);
-            publisher.setPublishAudio(true);
+            subscriber.setSubscribeToAudio(true);
+            publisher.setPublishVideo(true);
+            fabMute.setImageResource(R.drawable.icon_unmute);
         }
     }
 
@@ -237,7 +266,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 SubscribeToStream(streamOpenTok.get(0));
             }
         }
-        DeclineCommunication();
     }
 
     @Override
@@ -263,7 +291,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         publisher = null;
         subscriber = null;
         streamOpenTok.clear();
-        sessionOpenTok = null;
+        sessionOpenTok.disconnect();
     }
 
     @Override

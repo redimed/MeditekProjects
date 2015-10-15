@@ -3,6 +3,7 @@ package com.redimed.telehealth.patient.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,12 +11,15 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.CallActivity;
+import com.redimed.telehealth.patient.ContactActivity;
+import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.network.RESTClient;
@@ -40,14 +44,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private RegisterApi restClient;
     private boolean shouldFinish = false;
 
-    @Bind(R.id.imgBtnInformation)
-    ImageButton imgBtnInformation;
-    @Bind(R.id.imgBtnTelehealth)
-    ImageButton imgBtnTelehealth;
-    @Bind(R.id.imgBtnFAQ)
-    ImageButton imgBtnFAQ;
-    @Bind(R.id.imgBtnContact)
-    ImageButton imgBtnContact;
+    @Bind(R.id.btnInformation)
+    Button btnInformation;
+    @Bind(R.id.btnTelehealth)
+    Button btnTelehealth;
+    @Bind(R.id.btnFAQ)
+    Button btnFAQ;
+    @Bind(R.id.btnContact)
+    Button btnContact;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,9 +63,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         ButterKnife.bind(this, v);
         restClient = RESTClient.getRegisterApi();
 
-        imgBtnInformation.setOnClickListener(this);
-        imgBtnFAQ.setOnClickListener(this);
-        imgBtnContact.setOnClickListener(this);
+        btnInformation.setOnClickListener(this);
+        btnTelehealth.setOnClickListener(this);
+        btnFAQ.setOnClickListener(this);
+        btnContact.setOnClickListener(this);
 
         return v;
     }
@@ -69,18 +74,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.imgBtnInformation:
-                InformationPatient();
+            case R.id.btnInformation:
+                ((MainActivity)v.getContext()).Display(1);
                 break;
-            case R.id.imgBtnFAQ:
+            case R.id.btnTelehealth:
+                ((MainActivity)v.getContext()).Display(2);
                 break;
-            case R.id.imgBtnContact:
+            case R.id.btnFAQ:
+                ((MainActivity)v.getContext()).Display(3);
+                break;
+            case R.id.btnContact:
+                Contact();
+//                ((MainActivity)v.getContext()).Display(4);
                 break;
         }
     }
 
-    private void InformationPatient() {
-        Log.d(TAG, "INFORMATION");
+    private void Contact(){
+        Log.d(TAG, "CALL");
+//        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + "+84908618694")));
+//        ((MainActivity)v.getContext()).Call();
     }
 
     @Override

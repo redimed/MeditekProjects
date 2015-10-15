@@ -12,7 +12,9 @@ import android.util.Log;
 
 import com.redimed.telehealth.patient.CallActivity;
 import com.redimed.telehealth.patient.LauncherActivity;
+import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.MyApplication;
+import com.redimed.telehealth.patient.fragment.HomeFragment;
 import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.utils.Config;
 
@@ -47,6 +49,7 @@ public class SocketService extends Service {
             IO.Options opts = new IO.Options();
             opts.forceNew = true;
             opts.reconnection = true;
+            opts.query = "__sails_io_sdk_version=0.11.0";
             socket = IO.socket(Config.socketURL, opts);
             socket.connect();
         } catch (URISyntaxException e) {
@@ -149,9 +152,8 @@ public class SocketService extends Service {
             JSONObject data = (JSONObject) args[0];
         try {
             String message = data.get("message").toString();
-            Log.d("===" + TAG + "====", message);
             i = new Intent(getApplicationContext(), CallActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             if (message.equalsIgnoreCase("call")){
                 i.putExtra("apiKey", data.get("apiKey").toString());
                 i.putExtra("sessionId", data.get("sessionId").toString());
@@ -159,7 +161,15 @@ public class SocketService extends Service {
                 i.putExtra("to", data.get("from").toString());
                 i.putExtra("from", uidTelehealth.getString("uid", null));
                 i.putExtra("message", data.get("message").toString());
+                i.putExtra("fromName", data.get("fromName").toString());
                 startActivity(i);
+            }
+            if (message.equalsIgnoreCase("end")){
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("message", data.get("message").toString());
+                startActivity(intent);
+                Log.d(TAG, data.toString());
             }
             if (message.equalsIgnoreCase("errorMsg")){
                 Log.d(TAG, data.toString());

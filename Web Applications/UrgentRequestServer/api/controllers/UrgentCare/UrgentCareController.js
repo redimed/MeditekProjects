@@ -45,7 +45,7 @@ module.exports = {
                 suburb: data.suburb,
                 IP: data.ip,
                 requestDate: data.requestDate,
-                GPReferal: data.GPReferal,
+                GPReferral: data.GPReferral,
                 urgentRequestType: data.urgentRequestType,
                 companyName: data.companyName,
                 companyPhoneNumber: data.companyPhoneNumber,
@@ -61,21 +61,30 @@ module.exports = {
                 enable: 1
             })
             .then(function(URCreated) {
+                //convert service type and gp referral
+                var GPReferral = Services.ConvertData.GPReferral(data.GPReferral);
+                var serviceType = Services.ConvertData.ServiceType(data);
                 var subjectEmail = '[Testing] - [' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                     '] - [' + data.firstName + ' ' +
                     data.lastName + '] - [' + data.phoneNumber + ']';
                 var emailInfo = {
                     from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
                     email: 'HealthScreenings@redimed.com.au',
+                    patientEmail: (!_.isUndefined(data.email) && !_.isNull(data.email)) ? data.email : '',
                     subject: subjectEmail,
                     confirmed: APIService.UrgentCareConfirmURL + '/' + data.UID,
                     urgentRequestType: data.urgentRequestType || '',
                     patientName: data.firstName + ' ' + data.lastName,
                     requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                     phoneNumber: data.phoneNumber,
-                    companyName: data.companyName,
-                    contactPerson: data.contactPerson,
-                    companyPhoneNumber: data.companyPhoneNumber,
+                    suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb) && !_.isEmpty(data.suburb)) ? data.suburb : '',
+                    DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? Services.moment(data.DOB).format('DD/MM/YYYY') : '',
+                    GPReferral: GPReferral,
+                    serviceType: serviceType,
+                    description: (!_.isUndefined(data.description) && !_.isNull(data.description) && !_.isEmpty(data.description)) ? data.description : '',
+                    companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName) && !_.isEmpty(data.companyName)) ? data.companyName : '',
+                    contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson) && !_.isEmpty(data.contactPerson)) ? data.contactPerson : '',
+                    companyPhoneNumber: (!_.isUndefined(data.companyPhoneNumber) && !_.isNull(data.companyPhoneNumber) && !_.isEmpty(data.companyPhoneNumber)) ? data.companyPhoneNumber : '',
                     bcc: 'pnguyen@redimed.com.au, meditekcompany@gmail.com'
                 };
 
@@ -97,33 +106,6 @@ module.exports = {
                                 }
                             };
                             //send email and sms to customer
-                            //convert service type and gp referral
-                            var serviceType = '',
-                                GPReferal = '';
-                            if (data.physiotherapy === 'Y') {
-                                serviceType += 'Physiotherapy\n';
-                            }
-                            if (data.specialist === 'Y') {
-                                serviceType += 'Specialist\n';
-                            }
-                            if (data.handTherapy === 'Y') {
-                                serviceType += 'HandTherapy\n';
-                            }
-                            if (data.GP === 'Y') {
-                                serviceType += 'GP\n';
-                            }
-                            switch (data.GPReferal) {
-                                case 'Y':
-                                    GPReferal = 'Yes';
-                                    break;
-                                case 'N':
-                                    GPReferal = 'No';
-                                    break;
-                                default:
-                                    GPReferal = '';
-                                    break;
-                            };
-
                             var emailInfoPatient = {
                                 from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
                                 email: data.email.toLowerCase(),
@@ -134,7 +116,7 @@ module.exports = {
                                 phoneNumber: data.phoneNumber,
                                 suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb) && !_.isEmpty(data.suburb)) ? data.suburb : '',
                                 DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? Services.moment(data.DOB).format('DD/MM/YYYY') : '',
-                                GPReferal: GPReferal,
+                                GPReferral: GPReferral,
                                 serviceType: serviceType,
                                 description: (!_.isUndefined(data.description) && !_.isNull(data.description) && !_.isEmpty(data.description)) ? data.description : '',
                                 companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName) && !_.isEmpty(data.companyName)) ? data.companyName : '',
@@ -199,7 +181,8 @@ module.exports = {
                         sourceID: dataMQ.sourceID,
                         job: dataMQ.job,
                         status: dataMQ.status,
-                        startTime: dataMQ.startTime
+                        startTime: dataMQ.startTime,
+                        enable: 'Y'
                     })
                     .exec(function(err, MQCreated) {
                         if (err) {

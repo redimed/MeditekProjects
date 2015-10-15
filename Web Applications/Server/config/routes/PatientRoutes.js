@@ -44,5 +44,10 @@ module.exports={
 	'post /api/patient/check-patient'    : {
 		controller: 'Patient/PatientController',
 		action :'CheckPatient'
+	},
+
+	'get /api/patient/get-listcountry' :{
+		controller: 'Patient/PatientController',
+		action: 'GetListCountry'
 	}
 }

@@ -34,26 +34,26 @@
             <div class="row">
 				<div class="col-md-3">
 					<div class="form-group">
-						<label class="label-control">Full Name</label>
-						<input type="text" class="form-control" placeholder="Full Name">
+						<label class="label-control">Firstname</label>
+						<input type="text" class="form-control" placeholder="Firstname">
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="label-control">Lastname</label>
+						<input type="text" class="form-control" placeholder="Lastname">
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="label-control">Mobile</label>
+						<input type="text" class="form-control" placeholder="Mobile">
 					</div>
 				</div>
 				<div class="col-md-3">
 					<div class="form-group">
 						<label class="label-control">Email</label>
 						<input type="text" class="form-control" placeholder="Email">
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">Phone</label>
-						<input type="text" class="form-control" placeholder="Phone">
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">Specialties</label>
-						<input type="text" class="form-control" placeholder="Specialties">
 					</div>
 				</div>
 			</div>
@@ -66,27 +66,22 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>Full name</th>
+					<th>Firstname</th>
+					<th>Lastname</th>
+					<th>Mobile</th>
 					<th>Email</th>
-					<th>Phone</th>
-					<th>Specialties</th>
+					<th>Enable</th>
 				</tr>
 			</thead>
 			<tbody>
 			<tbody>
 				<tr ng-click="openModalDoctor()">
 					<td>1</td>
-					<td>Mai Shimura</td>
+					<td>John</td>
+					<td>Cena</td>
+					<td>61 8888 8888</td>
 					<td>mai@gamil.com</td>
-					<td>0122 565 8787</td>
-					<td>Duis mollis, est non commodo luctus</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td>Athena Kasumi</td>
-					<td>athena@gamil.com</td>
-					<td>0122 565 8787</td>
-					<td>Duis mollis, est non commodo luctus</td>
+					<td><input type="checkbox" class="icheck" checked></td>
 				</tr>
 			</tbody>
 			</table>
@@ -95,7 +90,7 @@
 		<div class="row">
 			<div class="col-md-5 col-sm-12">
 				<div class="dataTables_info" id="sample_1_info" role="status" aria-live="polite">
-					Showing 1 to 10 of 43 entries
+					<!-- Showing 1 to 10 of 43 entries -->
 				</div>
 			</div>
 			<div class="col-md-7 col-sm-12">

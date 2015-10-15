@@ -19,7 +19,9 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.redimed.telehealth.patient.api.RegisterApi;
+import com.redimed.telehealth.patient.fragment.FAQsFragment;
 import com.redimed.telehealth.patient.fragment.HomeFragment;
 import com.redimed.telehealth.patient.fragment.InformationFragment;
 import com.redimed.telehealth.patient.fragment.TelehealthFragment;
@@ -30,6 +32,7 @@ import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.CustomAlertDialog;
 import com.redimed.telehealth.patient.utils.RVAdapter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -89,11 +92,9 @@ public class MainActivity extends AppCompatActivity{
         categories = new ArrayList<Category>();
         categories.add(new Category(R.drawable.share_image_icon, "Home", R.drawable.circled_chevron_right_icon));
         categories.add(new Category(R.drawable.person_icon, "Information", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.share_image_icon, "Share Image", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.person_icon, "Menu3", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.share_image_icon, "Menu4", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.person_icon, "Menu5", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.share_image_icon, "Menu6", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.share_image_icon, "Telehealth", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.person_icon, "FAQs", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.share_image_icon, "Contact", R.drawable.circled_chevron_right_icon));
     }
 
     private void GetDetailsPatient() {
@@ -122,14 +123,28 @@ public class MainActivity extends AppCompatActivity{
             public void failure(RetrofitError error) {
                 String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
                 try {
+//                    JSONObject jsonObject = new JSONObject((((TypedByteArray) error.getResponse().getBody()).getBytes()).toString());
                     JSONObject dataObject = new JSONObject(json);
-                    String message = dataObject.optString("message");
-                    new CustomAlertDialog(getApplicationContext(), CustomAlertDialog.State.Error, message).show();
+                    String message = (String.valueOf(isJSONValid(dataObject.optString("message"))).equalsIgnoreCase("true") ? error.getMessage() : dataObject.optString("message"));
+                    Log.d(TAG, message);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    public boolean isJSONValid(String test) {
+        try {
+            new JSONObject(test);
+        } catch (JSONException ex) {
+            try {
+                new JSONArray(test);
+            } catch (JSONException ex1) {
+                return false;
+            }
+        }
+        return true;
     }
 
     //Initialize Drawer
@@ -169,6 +184,11 @@ public class MainActivity extends AppCompatActivity{
             case 2:
                 fragment = new TelehealthFragment();
                 break;
+            case 3:
+                fragment = new FAQsFragment();
+                break;
+            case 4:
+                fragment = new ContactFragment();
             default:
                 break;
         }
@@ -181,14 +201,7 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if (!shouldFinish){
-//            Toast.makeText(getApplicationContext(), R.string.confirm_exit, Toast.LENGTH_SHORT).show();
-//            shouldFinish = true;
-//        }
-//        else {
-//            super.onBackPressed();
-//        }
-//    }
+    public void Call(){
+        startActivity(new Intent(this, ContactActivity.class));
+    }
 }

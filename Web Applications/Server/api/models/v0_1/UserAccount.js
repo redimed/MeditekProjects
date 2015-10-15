@@ -28,15 +28,15 @@ module.exports = {
             allowNull: true
         },
         Password: {
-            type: Sequelize.STRING(256),
+            type: Sequelize.STRING(255),
             allowNull: false
         },
         PasswordSalt: {
-            type: Sequelize.STRING(256),
+            type: Sequelize.STRING(255),
             allowNull: true
         },
         PasswordHashAlgorithm: {
-            type: Sequelize.STRING(256),
+            type: Sequelize.STRING(255),
             allowNull: true
         },
         Activated: {
@@ -52,7 +52,7 @@ module.exports = {
             allowNull: true
         },
         Token: {
-            type: Sequelize.STRING(256),
+            type: Sequelize.STRING(255),
             allowNull: true
         },
         TokenExpired: {

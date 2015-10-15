@@ -7,7 +7,7 @@ app.directive('patientList', function(PatientService, $modal, toastr){
 				PatientService.loadlistPatient(info).then(function(response){
 					if(response.message=="success"){
 						scope.patients = response.data;
-						for(var i = 0; i < scope.searchObjectMap.limit;i++){
+						for(var i = 0; i < response.data.length;i++){
 							scope.patients[i].stt = scope.searchObjectMap.offset*1 + i + 1;
 						}
 						scope.count= response.count;
@@ -50,18 +50,18 @@ app.directive('patientList', function(PatientService, $modal, toastr){
 				//scope.ID = patientUID;
 				var modalInstance = $modal.open({
 					templateUrl: 'patientListmodal',
-					controller: function(scope){
-						scope.ID = patientUID;
-						scope.close = function() {
+					controller: function($scope){
+						$scope.ID = patientUID;
+						$scope.close = function() {
 							modalInstance.close();
 						};
-						scope.savechange = function(data){
+						$scope.savechange = function(data){
 							PatientService.updatePatient(data).then(function(response){
 								toastr.success("update success!!!","SUCCESS");
 								modalInstance.close('cancel');
 							},function(err){
 								toastr.error(err.data.message.errors,"ERROR");
-								scopes.info = angular.copy(oriInfo);
+								$scope.info = angular.copy(oriInfo);
 							});
 						}
 					},

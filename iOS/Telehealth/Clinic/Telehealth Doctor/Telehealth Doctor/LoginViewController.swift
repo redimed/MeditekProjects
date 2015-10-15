@@ -28,7 +28,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     let appDelegate : AppDelegate = AppDelegate()
     let reachability = Reachability.reachabilityForInternetConnection()
     // declare loading indicator
-    let loading: DTIActivityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:220.0, y:65.0, width:80.0, height:80.0))
+    let loading: DTIActivityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:210.0, y:65.0, width:80.0, height:80.0))
     let userDefault = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
@@ -44,6 +44,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         
         self.usernameTextField.delegate = self
         self.passwordTextField.delegate = self
+        self.usernameTextField.becomeFirstResponder()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:", name: ReachabilityChangedNotification, object: reachability)
         reachability?.startNotifier()
@@ -74,19 +75,19 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        usernameTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
-        performAction()
-        return true
-    }
-    
     func performAction() {
         if(!usernameTextField.text!.isEmpty && !passwordTextField.text!.isEmpty){
             LoginButtonAction(buttonLogin)
         } else {
             print("No go func Login")
         }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        usernameTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        performAction()
+        return true
     }
     
     @IBAction func textFieldEditingChange(sender: AnyObject) {
@@ -124,8 +125,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         passwordTextField.resignFirstResponder()
         logoImage.hidden = true
         self.viewModal.addSubview(self.loading)
-        loading.indicatorColor = UIColor.redColor()
-        loading.indicatorStyle = DTIIndicatorStyle.convInv(.chasingDots)
+        loading.indicatorColor = UIColor(hex: "34AADC")
+        loading.indicatorStyle = DTIIndicatorStyle.convInv(.spotify)
         loading.startActivity()
         
         if let reachability = reachability {
@@ -176,8 +177,17 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
                     self.presentViewController(initViewController, animated: true, completion: nil)
                     break
-                case .Failure( _, let error):
-                    self.errorLogin("\((error as NSError).code) - \((error as NSError).localizedDescription)")
+                case .Failure(_, let error):
+                    if let err : Int = (error as NSError).code {
+                        switch err {
+                        case -6003:
+                            self.errorLogin("Username or password invalid")
+                            break
+                        default:
+                            self.errorLogin("\((error as NSError).code) - \((error as NSError).localizedDescription)")
+                            break
+                        }
+                    }
                     break
                 }
         }

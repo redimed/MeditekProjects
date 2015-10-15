@@ -16,8 +16,8 @@ class CustomViewController {
     let colorButtonLoginDisable : UIColor = UIColor(red: 0/255, green: 51/255, blue: 102/255, alpha: 0.65)
     
     /**
-        set border bottom for uitextfield
-        - parameter textField: UITextField Object
+    set border bottom for uitextfield
+    - parameter textField: UITextField Object
     */
     func TextFieldLogin(textField: UITextField!, active: Bool, imageTextField: UIImageView) {
         let bottomBorder = CALayer()
@@ -67,5 +67,4 @@ class CustomViewController {
         }
         return true;
     }
-    
 }

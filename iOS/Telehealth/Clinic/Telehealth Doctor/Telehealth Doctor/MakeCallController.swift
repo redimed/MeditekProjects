@@ -29,7 +29,6 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     var idOnlineUser : Int!
     let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("infoDoctor") as! NSDictionary
     let screenSize: CGRect = UIScreen.mainScreen().bounds
-    let appointmentController : AppointmentListViewController = AppointmentListViewController()
     
     @IBOutlet var controllerButtonCall: [UIButton]!
     
@@ -42,6 +41,8 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         nameLabelCall.text = SingleTon.onlineUser_Singleton[idOnlineUser].fullNamePatient
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "handleCall", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleCall:", name: "handleCallNotification", object: nil)
+        session = OTSession(apiKey: ApiKey, sessionId: SessionID, delegate: self)
+        doConnect(Token)
     }
     
     /**
@@ -106,11 +107,6 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         self.navigationController!.popViewControllerAnimated(true)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        session = OTSession(apiKey: ApiKey, sessionId: SessionID, delegate: self)
-        doConnect(Token)
-    }
-    
     /**
     function for action controller button call
     */
@@ -127,9 +123,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             }
             break
         case 1: // ---end call---
-            let modURL = NSString(format: "/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "end")
-            let dictionNary : NSDictionary = ["url": modURL]
-            SingleTon.socket.emit("get", dictionNary)
+            SingleTon.socket.emit("get", ["url": NSString(format: TRANSFER_IN_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "end")])
             endCall()
             break
         case 2: // camera call
@@ -151,9 +145,9 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
                     button.hidden = true
                 }
             }
-            let modURL = NSString(format: "/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@&sessionId=%@&fromName=%@", userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)
-            let dictionNary : NSDictionary = ["url": modURL]
-            SingleTon.socket.emit("get", dictionNary)
+            
+            SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
+            
             break
         case 4: // ---cancel call view---
             self.navigationController!.popViewControllerAnimated(true)
@@ -194,10 +188,8 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         publisher!.view.frame = CGRect(x: 0.0, y: 0, width: screenSize.width
             , height: screenSize.height)
         
-        /// emit call to patient
-        let modURL = NSString(format: "/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@&sessionId=%@&fromName=%@", userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)
-        let dictionNary : NSDictionary = ["url": modURL]
-        SingleTon.socket.emit("get", dictionNary)
+        /// EMIT CALL A PATIENT
+        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
         
         /**
         button controller call to publisherview

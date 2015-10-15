@@ -13,6 +13,7 @@ import SwiftyJSON
 class AppointmentListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    var refreshControl : UIRefreshControl!
     let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("infoDoctor") as! NSDictionary
     
     override func viewDidLoad() {
@@ -23,15 +24,17 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         */
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "reloadDataTable", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadTable:", name: "reloadDataTable", object: nil)
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Refresh Appointment List")
+        self.refreshControl.addTarget(self, action: "emitOnlineUser:", forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(refreshControl)
     }
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: true)
-        
-        SingleTon.socket.emit("get", GET_ONLINE_USERS)
-        let modURL = NSString(format: "/telehealth/socket/joinRoom?uid=%@", userDefaults["UID"] as! String)
-        let dictionNary : NSDictionary = ["url": modURL]
-        SingleTon.socket.emit("get", dictionNary)
         
         request(.GET, GENERATESESSION, headers: SingleTon.headers).responseJSON() { response in
             let data = response.2.value!["data"] as! NSDictionary
@@ -51,13 +54,18 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     func reloadTable(notification: NSNotification){
         self.tableView.reloadData()
         tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+    }
+    
+    func emitOnlineUser(sender: AnyObject) {
+        SingleTon.socket.emit("get", GET_ONLINE_USERS)
+        self.refreshControl?.endRefreshing()
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! AppointmentTableViewCell
         
         let singletonOnlineUser = SingleTon.onlineUser_Singleton[indexPath.row]
-        
         cell.noRows.text = singletonOnlineUser.userId
         cell.callButton.tag = Int(indexPath.row)
         cell.patientName.text = singletonOnlineUser.fullNamePatient
@@ -66,11 +74,11 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         cell.appoinmentDate.text = formatString(singletonOnlineUser.appoinmentDate)
         if let status = singletonOnlineUser.status {
             if status != 0 {
-                cell.statusAppoinment.backgroundColor = UIColor.greenColor()
                 cell.callButton.enabled = true
+                cell.statusImageView.hidden = false
             } else {
-                cell.statusAppoinment.backgroundColor = UIColor.clearColor()
                 cell.callButton.enabled = false
+                cell.statusImageView.hidden = true
             }
         }
         return cell
@@ -83,6 +91,10 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
                 destinationController.idOnlineUser = indexPath
             }
         }
+    }
+    @IBAction func detailAppointment(sender: AnyObject) {
+        let initViewController : UISplitViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("splitViewController") as! UISplitViewController
+        self.presentViewController(initViewController, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {

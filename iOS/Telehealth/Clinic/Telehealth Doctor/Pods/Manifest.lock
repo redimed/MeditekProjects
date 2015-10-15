@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (2.0.2)
-  - OpenTok (2.6.0)
+  - OpenTok (2.6.1)
   - ReachabilitySwift (2.0)
   - Socket.IO-Client-Swift (3.1.4)
   - Spring (1.0.3)
@@ -25,7 +25,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ReachabilitySwift:
-    :commit: 2a8cbe7265d7b9221a789d60612a152f5ee9c8c7
+    :commit: dfbdbfc6e2fad1ec2b086f6cc1b7beb1a2de0f65
     :git: https://github.com/ashleymills/Reachability.swift
   Spring:
     :commit: 18d5c7b74489de8044e34767f856d1e574f0820e
@@ -36,10 +36,10 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
-  OpenTok: 2b99bd75055554f4028735fa84e4242e4932d245
+  OpenTok: 6c094ee06dc954a4327c0a736f494f0eaf35c48c
   ReachabilitySwift: 227b98ae7ec99e1c01148b17fb22357aa91a5675
   Socket.IO-Client-Swift: a0c8a6ba85ea685891d2c5f0e73b7287b89d0121
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
   SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

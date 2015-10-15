@@ -1,0 +1,212 @@
+<div class="modal-content">
+	<div class="modal-header my-modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="modal_close()"></button>
+		<h4 class="modal-title"><b><i class="icon-note"></i> Patient Details</b></h4>
+	</div>
+	<div class="modal-body">
+		<div class="form">
+			<!-- form -->
+			<form class="form-horizontal" role="form">
+				<div class="form-body">
+					<div class="tab-content">
+						<div class="tabbable">
+							<!-- header tab -->
+							<ul class="nav nav-tabs nav-tabs-lg">
+								<li class="active">
+									<a href="index.html#Personal_info" data-toggle="tab" aria-expanded="true">Personal Information </a>
+								</li>
+								<!-- <li class="">
+									<a href="index.html#Account_info" data-toggle="tab" aria-expanded="false">Account Information </a>
+								</li>
+								<li class="">
+									<a href="index.html#Specialist_info" data-toggle="tab" aria-expanded="false">Specialist Information </a>
+								</li> -->
+							</ul>
+							<!-- end header tab -->
+							<!-- content tab -->
+							<div class="tab-content">
+								<!-- Begin Tab Personal -->
+								<div class="tab-pane active" id="Personal_info">
+									<div style="margin:3em;">
+										<div class="row">
+											<div class="col-md-4">
+												<!-- avatar -->
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group">
+														<div class="fileinput fileinput-new" data-provides="fileinput">
+															<div class="fileinput-new thumbnail" style="width: 200%; height: 300px;">
+																<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
+															</div>
+															<div class="fileinput-preview fileinput-exists thumbnail">
+															</div>
+															<div>
+																<span class="btn default btn-file">
+																	<span class="fileinput-new">
+																	Select Image </span>
+																	<span class="fileinput-exists">
+																	Change </span>
+																	<input type="file" name="...">
+																</span>
+																<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">Remove </a>
+															</div>
+														</div>
+														</div>
+													</div>
+												</div>
+												<!-- end avatar -->
+											</div>
+											<div class="col-md-4">
+												<h4><b>Person Information</b></h4>
+												<hr>
+												<!-- begin title -->
+									            <div class="form-group">
+									            	<label class="control-label col-md-4">Title</label>
+									            	<div class="col-md-8">
+									            		<select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title"> </select>
+									            	</div>
+									            </div>
+									            <!-- end title -->
+												<!-- First Name -->
+												<div class="form-group">
+													<label class="control-label col-md-4">First Name</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="First Name" ng-model="info.FirstName"></div>
+												</div>
+												<!-- end First Name -->
+												<!-- Sur Name -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Sur Name</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Sur Name" ng-model="info.LastName"></div>
+												</div>
+												<!-- end Sur Name -->
+												<!-- Middle Name -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Middle Name</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Middle Name" ng-model="info.MiddleName"></div>
+												</div>
+												<!-- end Middle Name -->
+												<!-- Date of Birth -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Date of Birth</label>
+													<div class="col-md-8">
+														<input ng-model="info.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
+													</div>
+												</div>
+												<!-- end Date of Birth -->
+												<!-- Gender -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Gender</label>
+													<div class="col-md-8">
+														<select class="form-control" ng-model="info.Gender">
+															<option value="M">Male</option>
+															<option value="F">Female</option>
+														</select>
+													</div>
+												</div>
+												<!-- end Gender -->
+												<!-- Occupation -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Occupation</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Occupation" ng-model="info.Occupation"></div>
+												</div>
+												<!-- end Occupation -->
+											</div>
+											<div class="col-md-4">
+												<h4><b>Contact Information</b></h4>
+												<hr>
+												<!-- Email -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Email</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Email" ng-disabled="true" ng-model="info.Email"></div>
+												</div>
+												<!-- end Email -->
+												<!-- Home Phone -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Home Phone</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber"></div>
+												</div>
+												<!-- end Home Phone -->
+												<!-- Mobile Phone -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Mobile Phone</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Mobile Phone" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber"></div>
+												</div>
+												<!-- end Mobile Phone -->
+												<!-- Address1 -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Address1</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address1" ng-model="info.Address1"></div>
+												</div>
+												<!-- end Address1 -->
+												<!-- Address2 -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Address2</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address2" ng-model="info.Address2"></div>
+												</div>
+												<!-- end Address2 -->
+												<!-- Surburb -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Suburb</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Surburd" ng-model="info.Suburb"></div>
+												</div>
+												<!-- end Surburb -->
+												<!-- Postcode -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Postcode</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Postcode" ng-model="info.Postcode"></div>
+												</div>
+												<!-- end Postcode -->
+												<!-- State -->
+												<div class="form-group">
+													<label class="control-label col-md-4">State</label>
+													<div class="col-md-8">
+														<select class="form-control">
+															<option ng-repeat="s in states" value="{{s.name}}">{{s.name}}</option>
+														</select>
+													</div>
+												</div>
+												<!-- end State -->
+												<!-- Country -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Country</label>
+													<div class="col-md-8">
+														<select class="form-control" ng-model="info.CountryID" ng-options="c.ID as c.ShortName for c in countries">
+														</select>
+													</div>
+												</div>
+												<!-- end Country -->
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- End Tab Personal -->
+							</div>
+							<!-- end content tab -->
+						</div>
+					</div>
+				</div>
+				<!-- <div class="form-actions">
+				</div> -->
+			</form>
+			<!-- end form -->
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onCancel()"><i class="icon-action-undo"></i> Close</button>
+		<button type="button" class="btn btn-success" ng-disabled="infoChanged()||!infoClear()" ng-click="onSavechange(info)" ><i class="glyphicon glyphicon-save"></i> Save changes</button>
+	</div>
+</div>
+
+<script>
+	// Metronic.setAssetsPath('./theme/assets/'); // Set the assets folder path			
+	// ComponentsFormTools.init();
+	//ComponentsDropdowns.init(); // init todo page
+	// //FormiCheck.init(); // init page demo
+	ComponentsPickers.init(); // init todo page
+	// //Portfolio.init(); // coi hinh
+
+	Metronic.initAjax();
+	//ComponentsFormTools.init();
+	ComponentsDropdowns.init(); // init todo page
+	//FormiCheck.init(); // init page demo
+</script>

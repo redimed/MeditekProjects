@@ -3,6 +3,7 @@ package com.redimed.telehealth.patient.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.CallActivity;
+import com.redimed.telehealth.patient.ContactActivity;
 import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
@@ -73,20 +75,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnInformation:
-                InformationPatient();
+                ((MainActivity)v.getContext()).Display(1);
                 break;
             case R.id.btnTelehealth:
+                ((MainActivity)v.getContext()).Display(2);
                 break;
             case R.id.btnFAQ:
+                ((MainActivity)v.getContext()).Display(3);
                 break;
             case R.id.btnContact:
+                Contact();
+//                ((MainActivity)v.getContext()).Display(4);
                 break;
         }
     }
 
-    private void InformationPatient() {
-        ((MainActivity)v.getContext()).Display(1);
-        Log.d(TAG, "INFORMATION");
+    private void Contact(){
+        Log.d(TAG, "CALL");
+//        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + "+84908618694")));
+//        ((MainActivity)v.getContext()).Call();
     }
 
     @Override

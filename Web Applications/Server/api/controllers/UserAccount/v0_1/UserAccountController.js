@@ -1,21 +1,10 @@
 var regexp = require('node-regexp');
 var underscore=require('underscore');
-
+var moment=require('moment');
 module.exports = {
 	Test:function(req,res)
 	{
-			var orderTemp=[{UserName:undefined},{Email:'DESC'}];
-			var arr=['000',undefined,'a'];
-			console.log(arr.indexOf(undefined));
-			// var order=[];
-
-			// order=_.filter(orderTemp,function(item){
-
-			// 	return HelperService.existIn(_.values(item)[0].toUpperCase(),['ASC','DESC']);
-			// })
-
-			// console.log(order);
-			res.ok("V1 NE");
+		res.ok("V1 NE");
 	},
 
 	TestURL:function(req,res)
@@ -25,7 +14,30 @@ module.exports = {
 
 	TestPost:function(req,res)
 	{
-		res.ok(HelperService.checkListData({b:'a'},1,{a:'b'},'1'));
+		var modifiedDateStr=req.body.modifiedDate;
+		var modifiedDate=moment(modifiedDateStr,"YYYY-MM-DD HH:mm:ss Z");
+		var addDate=modifiedDate.clone().add(1,'day');
+		// console.log(modifiedDate);
+		// console.log(addDate);
+		// console.log(modifiedDate.format('YYYY-MM-DD HH:mm:ss'))
+		// console.log(addDate.format('YYYY-MM-DD HH:mm:ss'))
+		UserAccount.findAll({
+			where:{
+				ModifiedDate:{
+					// $gte:modifiedDate.zone('0000').format("YYYY-MM-DD HH:mm:ss"),
+					// $lt:addDate.zone('0000').format("YYYY-MM-DD HH:mm:ss")
+					$gte:modifiedDate.toDate(),
+					$lt:addDate.toDate()
+				}
+			}
+		})
+		.then(function(data){
+			console.log(data);
+			res.ok(data);
+		},function(err){
+			res.serverError(err);
+		})
+		// res.ok(HelperService.checkListData({b:'a'},1,{a:'b'},'1'));
 	},
 	
 	/**

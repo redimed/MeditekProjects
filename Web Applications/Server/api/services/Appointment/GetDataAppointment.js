@@ -21,7 +21,7 @@ module.exports = {
             RefName: FullName,
             RefHealthLink: data.HealthLink,
             RefAddress: data.Address,
-            RefTelePhone: data.PhoneNumber,
+            RefTelePhone: data.WorkPhoneNumber,
             RefPostCode: data.PostCode,
             RefSignature: data.Signature,
             RefDate: data.RefDate,
@@ -55,11 +55,12 @@ module.exports = {
             MVIT: data.MVIT
         };
     },
-    PreferedPlasticSurgeonCreate: function(data) {
-        return {
-            Name: data.Name
-        };
-
+    PreferedPlasticSurgeonCreate: function(teleApptID, data) {
+        data.forEach(function(value, index) {
+            data[index].UID = UUIDService.Create();
+            data[index].TelehealthAppointmentID = teleApptID;
+        });
+        return data;
     },
     ClinicalDetailsCreate: function(teleApptID, createdBy, data) {
         data.forEach(function(value, index) {

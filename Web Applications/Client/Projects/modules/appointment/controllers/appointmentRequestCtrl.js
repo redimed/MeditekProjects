@@ -49,7 +49,7 @@ app.controller('appointmentRequestCtrl', function($scope,$cookies){
 		}
 	};
 
-	console.log($cookies.getObject('userInfo'));
+    console.log(moment(new Date).format("YYYY-MM-DD HH:mm:ss"));
 	$scope.sendRequestAppointment = function() {
 		
 	}

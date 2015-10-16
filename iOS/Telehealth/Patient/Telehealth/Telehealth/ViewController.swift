@@ -59,7 +59,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
                         self.alertMessage("Error", message: "Request Time Out")
                     }else {
                         print(response)
-                        let message : String = String(response["message"])
+                        let message : String = String(response["ErrorsList"][0])
                         self.alertMessage("Error", message: message)
                     }
                     

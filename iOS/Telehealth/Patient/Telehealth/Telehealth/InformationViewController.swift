@@ -12,17 +12,15 @@ class InformationViewController: UIViewController {
     let InformationPatient = GetAndPostDataController()
     var uid = String()
     
-    @IBOutlet weak var firstNameLabel: UILabel!
-    @IBOutlet weak var middleNameLabel: UILabel!
-    @IBOutlet weak var lastNameLabel: UILabel!
-    @IBOutlet weak var dobLabel: UILabel!
-    @IBOutlet weak var genderLabel: UILabel!
-    @IBOutlet weak var suburbLabel: UILabel!
-    @IBOutlet weak var postCodeLabel: UILabel!
-    @IBOutlet weak var countryLabel: UILabel!
-    @IBOutlet weak var addressLabel: UILabel!
-    @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var homePhoneLabel: UILabel!
+    @IBOutlet weak var fullName: DesignableLabel!
+    @IBOutlet weak var dobLabel: DesignableLabel!
+    @IBOutlet weak var genderLabel: DesignableLabel!
+    @IBOutlet weak var suburbLabel: DesignableLabel!
+    @IBOutlet weak var postCodeLabel: DesignableLabel!
+    @IBOutlet weak var countryLabel: DesignableLabel!
+    @IBOutlet weak var addressLabel: DesignableLabel!
+    @IBOutlet weak var emailLabel: DesignableLabel!
+    @IBOutlet weak var homePhoneLabel: DesignableLabel!
     
     
     override func viewDidLoad() {
@@ -39,9 +37,7 @@ class InformationViewController: UIViewController {
             if response["message"] == "success" {
                 self.view.hideLoading()
                 let jsonInformation = response["data"][0]
-                self.firstNameLabel.text = jsonInformation["FirstName"].string
-                self.middleNameLabel.text = jsonInformation["MiddleName"].string
-                self.lastNameLabel.text = jsonInformation["LastName"].string
+                self.fullName.text = jsonInformation["FirstName"].string! + " " + jsonInformation["MiddleName"].string! + " " + jsonInformation["LastName"].string!
                 self.dobLabel.text = (jsonInformation["DOB"].string)?.toDate()
                 self.suburbLabel.text = jsonInformation["Suburb"].string
                 self.postCodeLabel.text = jsonInformation["Postcode"].string
@@ -55,7 +51,7 @@ class InformationViewController: UIViewController {
                 if response["TimeOut"] ==  "Request Time Out" {
                     self.alertMessage("Error", message: "Request Time Out")
                 }else {
-                    let message : String = String(response["message"])
+                    let message : String = String(response["ErrorsList"][0])
                     self.alertMessage("Error", message: message)
                 }
                 

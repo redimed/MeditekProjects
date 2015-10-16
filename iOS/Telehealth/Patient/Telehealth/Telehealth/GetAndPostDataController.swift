@@ -18,7 +18,7 @@ class GetAndPostDataController {
     //Giap: Check phone number and send verify code
     func SendVerifyPhoneNumber (deviceID:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
         //Split number 0
-        let removedChar = phoneNumber.removeAtIndex(phoneNumber.startIndex)
+        phoneNumber.removeAtIndex(phoneNumber.startIndex)
         
         let parameters = [
             "data": [
@@ -129,21 +129,52 @@ class GetAndPostDataController {
     func uploadImage(image:UIImage)
     {
         let imageData = UIImagePNGRepresentation(image)
-        
         let base64String = imageData!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+
+        
         
         let parameters = [
-            "uploadFiles[]": base64String,
-            "fileType":"MedicalImage"
+            "uploadFile": base64String,
+            "fileType":"MedicalImage",
+            "patientUID":"c2af34c7-1365-4406-b087-861b74fa5f79"
         ]
+        let fileType = "MedicalImage"
+        let patientUID = "c2af34c7-1365-4406-b087-861b74fa5f79"
+        let headers = ["Content-Type": "multipart/form-data"]
         
-        Alamofire.request(.POST, UrlInformationPatient.uploadImage, parameters:parameters) .response {
-            (request, response, data, error) in
-            print("Resquest",request)
-            print("response",response)
-            print("data",data)
-            print("error",error)
-        }
+
+
+        
+        Alamofire.upload(
+            .POST,
+            UrlInformationPatient.uploadImage, headers: headers,
+            multipartFormData: { multipartFormData in
+                multipartFormData.appendBodyPart(
+                    data: imageData!,
+                    name: "uploadFile",
+                    fileName: "testIMG.png",
+                    mimeType: "image/png"
+                    
+                )
+                multipartFormData.appendBodyPart(
+                    data: fileType.dataUsingEncoding(NSUTF8StringEncoding)!,
+                    name: "fileType"
+                )
+                multipartFormData.appendBodyPart(
+                    data: "c2af34c7-1365-4406-b087-861b74fa5f79".dataUsingEncoding(NSUTF8StringEncoding)!,
+                    name: "patientUID"
+                )
+            },
+            encodingCompletion: { encodingResult in
+                print("a--",encodingResult)
+                switch encodingResult {
+                case .Success(let upload, _, _):
+                    upload.responseJSON { _, _, JSON in print(JSON) }
+                case .Failure(let encodingError):
+                    print(encodingError)
+                }
+            }
+        )
         
     }
     

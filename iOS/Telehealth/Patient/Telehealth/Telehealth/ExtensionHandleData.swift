@@ -15,7 +15,7 @@ extension String
     func toDate() -> String
     {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"//this your string date format
+        dateFormatter.dateFormat = "yyyy-MM-dd"//this your string date format
         dateFormatter.timeZone = NSTimeZone(name: "UTC")
         let date = dateFormatter.dateFromString(self)
         

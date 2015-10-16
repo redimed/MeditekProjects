@@ -531,8 +531,11 @@
 				TargetAttributes = {
 					AFEE34D21BB0413600471592 = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 3Y88WBCRNR;
+						DevelopmentTeam = UA7AB584U5;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -867,7 +870,7 @@
 			baseConfigurationReference = C8FFC31A755811601F972F1F /* Pods-Telehealth.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

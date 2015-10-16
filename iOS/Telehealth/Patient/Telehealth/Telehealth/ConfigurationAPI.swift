@@ -19,7 +19,7 @@ struct UrlInformationPatient  {
     static let getInformationPatientByUID = "/api/telehealth/user/details"
     static let getAppointmentList = "/api/telehealth/user/appointments"
     static let getAppointmentDetails = "/api/telehealth/user/appointmentDetails"
-    static let uploadImage = "https://testapp.redimed.com.au:3010/api/UploadFile"
+    static let uploadImage = "https://testapp.redimed.com.au:3010/api/UploadSingleFileTelehealth"
 }
 
 //Giap: API Socket
@@ -32,6 +32,7 @@ struct MessageString  {
     static let CallAnswer = "answer"
     static let CallEndCall = "end"
     static let Decline = "decline"
+    static let Call = "call"
 }
 
 //Giap: Group Hash Value Number 0 - 9 and delete

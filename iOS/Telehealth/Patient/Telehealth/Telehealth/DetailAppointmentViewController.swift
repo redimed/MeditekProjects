@@ -122,7 +122,7 @@ class DetailAppointmentViewController: UIViewController,UIAlertViewDelegate,UIIm
     }
 
     @IBAction func UploadActionButton(sender: AnyObject) {
-         print(imageView.image)
+    
         appointmentApi.uploadImage(imageView.image!)
     }
    

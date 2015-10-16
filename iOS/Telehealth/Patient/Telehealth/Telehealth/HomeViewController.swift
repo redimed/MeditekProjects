@@ -44,9 +44,17 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             sharedSocket.socket.on("receiveMessage"){data, ack in
                 print("calling to me")
                 let dataCalling = JSON(data)
-                //save data to temp class
-                savedData = saveData(data: dataCalling)
-                self.AnswerCall()
+                
+                let message : String = data[0]["message"] as! String
+                print("Message",message)
+                if message == MessageString.Call {
+                    //save data to temp class
+                    savedData = saveData(data: dataCalling)
+                    self.AnswerCall()
+                }else if message == MessageString.CallEndCall {
+                     NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
+                }
+                
             }
         })
         //Socket connecting
@@ -63,6 +71,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     func AnswerCall(){
         let answerCall = storyboard?.instantiateViewControllerWithIdentifier("AnswerCallStoryBoard") as! AnswerCallViewController
         presentViewController(answerCall, animated: true, completion: nil)
+      
 
     }
     

@@ -1,8 +1,14 @@
 var app = angular.module('app.authentication.patient.list.directive',[]);
-app.directive('patientList', function(PatientService, $modal, toastr){
+app.directive('patientList', function(PatientService, $modal, toastr,$cookies){
 	return {
 		restrict: "EA",
 		link: function(scope, elem, attrs){
+			var userInfo=$cookies.getObject("userInfo");
+			scope.enableCreate=false;
+			_.each(userInfo.roles,function(role){
+				if(['ASSISTANT','ADMIN'].indexOf(role.RoleCode)>=0)
+					scope.enableCreate=true;
+			})
 			scope.loadList = function(info){
 				PatientService.loadlistPatient(info).then(function(response){
 					if(response.message=="success"){

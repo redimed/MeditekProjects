@@ -8,7 +8,10 @@ var app = angular.module('app', [
     "restangular",
     "toastr",
     "ladda",
-    "app.common",
+    "app.common.ngEnter",
+    'app.common.msgDialog',
+    'app.common.menuBar',
+    'app.common.CommonService',
     "app.unAuthentication",
     "app.authentication",
     "angularFileUpload"

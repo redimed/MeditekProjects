@@ -1,4 +1,4 @@
-angular.module('app.common',[])
+angular.module('app.common.menuBar',[])
 .directive('menuBar',function(Restangular){
 	return {
 		restrict:'E',

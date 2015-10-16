@@ -4,7 +4,6 @@ var app = angular.module('app.authentication.controller', [
 
 app.controller('authenticationCtrl', function($rootScope,$scope,$state,$cookies,AuthenticationService,toastr){
 	console.log('authenticationCtrl');
-	$rootScope.countries = [];
 	$scope.logout = function(){
 		AuthenticationService.logout().then(function(){
 			var cookies = $cookies.getAll();
@@ -26,10 +25,15 @@ app.controller('authenticationCtrl', function($rootScope,$scope,$state,$cookies,
 	});
 
 	$rootScope.titles = [
-		{id:0, name:'Mr'},
-		{id:0, name:'Mrs'},
-		{id:0, name:'Ms'},
-		{id:0, name:'Dr'}
+		{id:"0", name:'Mr'},
+		{id:"1", name:'Mrs'},
+		{id:"2", name:'Ms'},
+		{id:"3", name:'Dr'}
+	];
+
+	$rootScope.gender = [
+		{value:"M", name:'Male'},
+		{value:"F", name:'Female'}
 	];
 
 	$rootScope.states = [

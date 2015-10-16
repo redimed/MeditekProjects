@@ -167,6 +167,7 @@ public class SocketService extends Service {
             if (message.equalsIgnoreCase("end")){
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("message", data.get("message").toString());
                 startActivity(intent);
                 Log.d(TAG, data.toString());
             }

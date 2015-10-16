@@ -98,7 +98,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         if(sessionOpenTok != null)
             sessionOpenTok.disconnect();
         super.onDestroy();
-        sendBroadcast(new Intent("Restart_Socket_Service"));
     }
 
     //    Initialize Session ID, API Key, Token
@@ -111,6 +110,14 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 apiKey = i.getExtras().getString("apiKey");
                 to = i.getExtras().getString("to");
                 from = i.getExtras().getString("from");
+            }
+            if (i.getExtras().getString("message").equalsIgnoreCase("end")){
+                publisher = null;
+                subscriber = null;
+                streamOpenTok.clear();
+                sessionOpenTok.disconnect();
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
             }
         }
     }
@@ -176,7 +183,11 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             publisher = null;
             subscriber = null;
             streamOpenTok.clear();
-            sessionOpenTok = null;
+            if (message == "end") {
+                sessionOpenTok.disconnect();
+            }else {
+                sessionOpenTok = null;
+            }
             startActivity(new Intent(this, MainActivity.class));
             finish();
         } catch (Throwable throwable) {
@@ -186,14 +197,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     //Click button hold on a call
     private void HoldCommunication() {
-//        publisher.setPublishVideo(!publisher.getPublishVideo());
-//        if (publisher.getPublishVideo() == false) {
-//            publisher.setPublishAudio(false);
-//            subscriber.setSubscribeToAudio(false);
-//        } else {
-//            publisher.setPublishAudio(true);
-//            subscriber.setSubscribeToAudio(true);
-//        }
         if (publisher.getPublishVideo() == true){
             publisher.setPublishAudio(false);
             subscriber.setSubscribeToAudio(false);
@@ -263,7 +266,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 SubscribeToStream(streamOpenTok.get(0));
             }
         }
-        DeclineCommunication("end");
     }
 
     @Override
@@ -289,7 +291,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         publisher = null;
         subscriber = null;
         streamOpenTok.clear();
-        sessionOpenTok = null;
+        sessionOpenTok.disconnect();
     }
 
     @Override

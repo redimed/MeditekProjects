@@ -20,7 +20,7 @@ module.exports = {
 		try {
 			//validate FirstName
 			if(data.FirstName){
-				if(data.FirstName.length < 0 || data.FirstName.length > 6){
+				if(data.FirstName.length < 0 || data.FirstName.length > 50){
 					errors.push({field:"FirstName",message:"Patient.FirstName.length"});
 					err.pushErrors(errors);
 				}
@@ -36,7 +36,7 @@ module.exports = {
 
 			//validate LastName
 			if(data.LastName){
-				if(data.LastName.length < 0 || data.LastName.length > 6){
+				if(data.LastName.length < 0 || data.LastName.length > 50){
 					errors.push({field:"LastName",message:"Patient.LastName.length"});
 					err.pushErrors(errors);
 				}
@@ -51,7 +51,7 @@ module.exports = {
 			}
 
 			//validate Address1
-			if(data.Address){
+			if(data.Address1){
 				if(data.Address1.length < 0 || data.Address1.length > 255){
 					errors.push({field:"Address1",message:"Patient.Address1.length"});
 					err.pushErrors(errors);
@@ -59,9 +59,17 @@ module.exports = {
 			}
 
 			//validate Address2
-			if(data.Address){
+			if(data.Address2){
 				if(data.Address2.length < 0 || data.Address2.length > 255){
 					errors.push({field:"Address2",message:"Patient.Address2.length"});
+					err.pushErrors(errors);
+				}
+			}
+
+			//validate Occupation
+			if(data.Occupation){
+				if(data.Occupation.length < 0 || data.Occupation.length > 255){
+					errors.push({field:"Occupation",message:"Patient.Occupation.length"});
 					err.pushErrors(errors);
 				}
 			}
@@ -84,12 +92,23 @@ module.exports = {
 
 			//validate Email? hoi a Tan su dung exception
 			if(data.Email){
-				if(data.Email.length < 0 || data.Email.length > 100){
-					errors.push({field:"Email",message:"Patient.Email.length"});
+				var EmailPattern=new RegExp(HelperService.regexPattern.email);
+				var Email=data.Email.replace(HelperService.regexPattern.phoneExceptChars,'');
+				console.log(HomePhone);
+				if(!EmailPattern.test(Email)){
+					errors.push({field:"Email",message:"Patient.Email.invalid-value"});
+					err.pushErrors(errors);
+					throw err;
+				}
+			}
+
+			//validte State
+			if(data.State){
+				if(data.State.length < 0 || data.State.length > 255){
+					errors.push({field:"State",message:"Patient.State.length"});
 					err.pushErrors(errors);
 				}
 			}
-			
 
 			//validate HomePhoneNumber? hoi a Tan su dung exception
 			if(data.HomePhoneNumber){
@@ -97,7 +116,18 @@ module.exports = {
 				var HomePhone=data.HomePhoneNumber.replace(HelperService.regexPattern.phoneExceptChars,'');
 				console.log(HomePhone);
 				if(!auHomePhoneNumberPattern.test(HomePhone)){
-					errors.push({field:"HomePhoneNumber",message:"Patient.HomePhoneNumber.length"});
+					errors.push({field:"HomePhoneNumber",message:"Patient.HomePhoneNumber.invalid-value"});
+					err.pushErrors(errors);
+					throw err;
+				}
+			}
+
+			//validate HomePhoneNumber? hoi a Tan su dung exception
+			if(data.WorkPhoneNumber){
+				var auWorkPhoneNumberPattern=new RegExp(HelperService.regexPattern.auHomePhoneNumber);
+				var WorkPhoneNumber=data.WorkPhoneNumber.replace(HelperService.regexPattern.phoneExceptChars,'');
+				if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
+					errors.push({field:"WorkPhoneNumber",message:"Patient.WorkPhoneNumber.invalid-value"});
 					err.pushErrors(errors);
 					throw err;
 				}
@@ -127,20 +157,25 @@ module.exports = {
 	*/
 	CreatePatient : function(data) {
 		var info = {
+			Title           : data.Title,
 			FirstName       : data.FirstName,
 			MiddleName      : data.MiddleName,
 			LastName        : data.LastName,
-			DOB             : data.DOB?moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate():null,
+			DOB             : data.DOB,
 			Gender          : data.Gender,
+			Occupation      : data.Occupation,
+			HomePhoneNumber : data.HomePhoneNumber,
+			WorkPhoneNumber : data.WorkPhoneNumber,
 			CountryID       : data.CountryID,
 			Suburb          : data.Suburb,
 			Postcode        : data.Postcode,
 			Email           : data.Email,
-			HomePhoneNumber : data.HomePhoneNumber,
 			UID             : UUIDService.Create(),
-			Address         : data.Address,
+			Address1        : data.Address1,
+			Address2        : data.Address2,
+			State           : data.State,
 			Enable          : "Y",
-			CreatedDate     : new Date()
+			CreatedDate     : moment(new Date(),'YYYY-MM-DD HH:mm:ss ZZ').toDate()
 		};
 		return Services.Patient.validation(data)
 		.then(function(success){
@@ -283,22 +318,28 @@ module.exports = {
 		output:update patient into table Patient
 	*/
 	UpdatePatient : function(data) {
+		console.log(data);
 		data.ModifiedDate = new Date();
 		var DOB = moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
 		//get data not required
 		var patientInfo={
 			ID              : data.ID,
+			Title           : data.Title,
 			FirstName       : data.FirstName,
 			MiddleName      : data.MiddleName,
 			LastName        : data.LastName,
 			DOB             : DOB,
 			Gender          : data.Gender,
-			Address         : data.Address,
+			Address1        : data.Address1,
+			Address2        : data.Address2,
 			Enable          : data.Enable,
 			Suburb          : data.Suburb,
 			Postcode        : data.Postcode,
+			State           : data.State,
 			Email           : data.Email,
+			Occupation      : data.Occupation,
 			HomePhoneNumber : data.HomePhoneNumber,
+			WorkPhoneNumber : data.WorkPhoneNumber,
 			CreatedDate     : data.CreatedDate,
 			CreatedBy       : data.CreatedBy,
 			ModifiedDate    : data.ModifiedDate,
@@ -306,7 +347,6 @@ module.exports = {
 		};
 
 		//get data required ( if data has value, get it)
-		if(data.SiteID)  patientInfo.SiteID=data.SiteID;
 		if(data.UserAccountID)  patientInfo.UserAccountID = data.UserAccountID;
 		if(data.CountryID)  patientInfo.CountryID = data.CountryID;
 		if(data.UID)  patientInfo.UID = data.UID;
@@ -389,9 +429,16 @@ module.exports = {
 	LoadListPatient : function(limit,offset){
 		var resLimit = (limit)? limit : 10;
 		var resOffset = (offset)? offset : 0;
-		return Patient.findAll({
+		return Patient.findAndCountAll({
+			include:[
+				{
+	            	model: UserAccount,
+	            	attributes: ['PhoneNumber'],
+			    	required: true
+			    }
+			],
 			limit: resLimit,
-			offset: resOffset
+			offset: resOffset,
 		})
 		.then(function(result){
 			return result;

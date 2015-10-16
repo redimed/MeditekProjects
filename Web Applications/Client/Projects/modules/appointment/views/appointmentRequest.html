@@ -60,7 +60,10 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="control-label">Date of Birth</label>
-                            <input type="text" class="form-control date-picker" placeholder="Date of Birth" ng-model="patientAppointmentDOBTemp">
+                            <div class="input-icon">
+                                <i class="fa fa-calendar"></i>
+                                <input type="text" class="form-control date-picker" placeholder="Date of Birth" ng-model="patientAppointmentDOBTemp">
+                            </div>
                         </div>
                     </div>
                     <!-- end dob -->
@@ -70,7 +73,10 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label">Address</label>
-                            <input type="text" class="form-control" placeholder="Address" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Address">
+                            <div class="input-icon">
+                                <i class="fa fa-send"></i>
+                                <input type="text" class="form-control" placeholder="Address" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Address">
+                            </div>
                         </div>
                     </div>
                     <!-- end address -->
@@ -98,7 +104,10 @@
                     <div class="col-md-4">
                         <div class="form-group ">
                             <label class="control-label">Contact Number (Mobile)</label>
-                            <input type="text" class="form-control" placeholder="Contact Number (Mobile)" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PhoneNumber">
+                            <div class="input-icon">
+                                <i class="icon-call-end"></i>
+                                <input type="text" class="form-control" placeholder="Contact Number (Mobile)" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PhoneNumber">
+                            </div>
                         </div>
                     </div>
                     <!-- end contact number -->
@@ -106,7 +115,10 @@
                     <div class="col-md-4">
                         <div class="form-group ">
                             <label class="control-label">Contact Number (Homephone)</label>
-                            <input type="text" class="form-control" placeholder="Contact Number (Homephone)" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.HomePhoneNumber">
+                            <div class="input-icon">
+                                <i class="icon-call-end"></i>
+                                <input type="text" class="form-control" placeholder="Contact Number (Homephone)" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.HomePhoneNumber">
+                            </div>
                         </div>
                     </div>
                     <!-- begin contact number H-->
@@ -114,7 +126,10 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="control-label">Email</label>
-                            <input type="text" class="form-control" placeholder="Email" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Email">
+                            <div class="input-icon">
+                                <i class="fa fa-envelope"></i>
+                                <input type="text" class="form-control" placeholder="Email" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Email">
+                            </div>
                         </div>
                     </div>
                     <!-- end email -->
@@ -228,42 +243,15 @@
     </div>
     <div class="portlet-body">
         <div class="row my-portlet-body">
-            <!-- begin column 1 -->
-            <div class="col-md-6">
+             <!-- begin column 1 -->
+            <div class="col-md-4">
                 <div class="form-group">
-                    <textarea class="form-control" rows="10" ng-model="ClinicalNote"></textarea>
+                    <textarea class="form-control" rows="15" ng-model="ClinicalNote"></textarea>
                 </div>
             </div>
             <!-- end column 1 -->
-            <div class="col-md-6">
-                <label class="control-label">Attach Detailed Letter</label>
-                <!-- begin avatar -->
-                <div class="form-group">
-                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div class="fileinput-new thumbnail" style="width: 300%; height: 150px;">
-                            <!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-                        </div>
-                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 300%; max-height: 150px;">
-                        </div>
-                        <div>
-                            <span class="btn green btn-file">
-								<span class="fileinput-new">
-								Select Image </span>
-                            <span class="fileinput-exists">
-								Change </span>
-                            <input type="file" name="...">
-                            </span>
-                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">Remove </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- end avatar -->
-            </div>
-        </div>
-        <hr>
-        <div class="row my-portlet-body">
             <!-- begin column 2 -->
-            <div class="form-group form-md-checkboxes col-md-6">
+            <div class="form-group form-md-checkboxes col-md-4">
                 <div class="caption" ng-init="details[0].type = 'Trauma'">
                     <h4><b>Trauma</b></h4>
                 </div>
@@ -334,13 +322,7 @@
                                 <input type="checkbox" ng-model="details[1].data[3].value" ng-true-value="'Y'" ng-false-value="null"> Facial</label>
                         </div>
                     </div>
-                    <div class="col-md-3" ng-init="details[1].data[4].name = 'Skin Loss'">
-                        <div class="checkbox-list">
-                            <label class="control-label">
-                                <input type="checkbox" ng-model="details[1].data[4].value" ng-true-value="'Y'" ng-false-value="null"> Skin Loss</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6" ng-init="details[1].data[5].name = 'Other'">
+                    <div class="col-md-9" ng-init="details[1].data[5].name = 'Other'">
                         <div class="form-inline">
                             <div class="checkbox">
                                 <label class="control-label">
@@ -352,11 +334,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12" ng-init="details[1].data[4].name = 'Skin Loss'">
+                        <div class="checkbox-list">
+                            <label class="control-label">
+                                <input type="checkbox" ng-model="details[1].data[4].value" ng-true-value="'Y'" ng-false-value="null"> Skin Loss</label>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- end column 2 -->
             <!-- begin column 3 -->
-            <div class="form-group form-md-checkboxes col-md-6">
+            <div class="form-group form-md-checkboxes col-md-4">
                 <div class="caption">
                     <h4><b>Elective</b></h4>
                 </div>
@@ -372,7 +360,7 @@
                         <label class="control-label">
                             <input type="checkbox" ng-model="details[2].data[1].value" ng-true-value="'Y'" ng-false-value="null">Melanoma </label>
                     </div>
-                    <div class="col-md-6" ng-init="details[2].data[2].name = 'Other'">
+                    <div class="col-md-12" ng-init="details[2].data[2].name = 'Other'">
                         <div class="form-inline">
                             <div class="checkbox">
                                 <label class="control-label">
@@ -397,11 +385,11 @@
                         <label class="control-label">
                             <input type="checkbox" ng-model="details[3].data[1].value" ng-true-value="'Y'" ng-false-value="null">Arthritis </label>
                     </div>
-                    <div class="col-md-3" ng-init="details[3].data[2].name = 'DeQuervains / Trigger'">
+                    <div class="col-md-6" ng-init="details[3].data[2].name = 'DeQuervains / Trigger'">
                         <label class="control-label">
                             <input type="checkbox" ng-model="details[3].data[2].value" ng-true-value="'Y'" ng-false-value="null">DeQuervains / Trigger</label>
                     </div>
-                    <div class="col-md-3" ng-init="details[3].data[3].name = 'Contracture'">
+                    <div class="col-md-6" ng-init="details[3].data[3].name = 'Contracture'">
                         <label class="control-label">
                             <input type="checkbox" ng-model="details[3].data[3].value" ng-true-value="'Y'" ng-false-value="null">Contracture </label>
                     </div>
@@ -415,19 +403,19 @@
                         <label class="control-label">
                             <input type="checkbox" ng-model="details[4].data[0].value" ng-true-value="'Y'" ng-false-value="null">Carpal Tunnel</label>
                     </div>
-                    <div class="col-md-3" ng-init="details[4].data[1].name = 'Cubital Tunnel'">
+                    <div class="col-md-4" ng-init="details[4].data[1].name = 'Cubital Tunnel'">
                         <label class="control-label">
                             <input type="checkbox" ng-model="details[4].data[1].value" ng-true-value="'Y'" ng-false-value="null">Cubital Tunnel</label>
                     </div>
-                    <div class="col-md-3" ng-init="details[4].data[2].name = 'Tarsal Tunnel'">
+                    <div class="col-md-4" ng-init="details[4].data[2].name = 'Tarsal Tunnel'">
                         <label class="control-label">
                             <input type="checkbox" ng-model="details[4].data[2].value" ng-true-value="'Y'" ng-false-value="null">Tarsal Tunnel</label>
                     </div>
-                    <div class="col-md-4" ng-init="details[4].data[3].name = 'Complex Reconstructive Case'">
+                    <div class="col-md-12" ng-init="details[4].data[3].name = 'Complex Reconstructive Case'">
                         <label class="control-label">
                             <input type="checkbox" ng-model="details[4].data[3].value" ng-true-value="'Y'" ng-false-value="null">Complex Reconstructive Case</label>
                     </div>
-                    <div class="col-md-6" ng-init="details[4].data[4].name = 'Other'">
+                    <div class="col-md-12" ng-init="details[4].data[4].name = 'Other'">
                         <div class="form-inline">
                             <div class="checkbox">
                                 <label class="control-label">
@@ -446,6 +434,92 @@
     </div>
 </div>
 <!-- END Clinical Details & Relevant Medical History -->
+
+<!-- BEGIN Attach Documents and Image -->
+<div class="row" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+    <div class="col-md-12">
+        <!-- BEGIN: ACCORDION DEMO -->
+        <div class="portlet box green bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>
+                    <span class="caption-subject">Attach Documents and Images</span>
+                </div>
+                <div class="tools">
+                    <a href="" class="collapse"></a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="my-portlet-body">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th width="30%">Name</th>
+                                    <th ng-show="uploader.isHTML5">Size</th>
+                                    <!-- <th ng-show="uploader.isHTML5">Progress</th> -->
+                                    <!-- <th>Status</th> -->
+                                    <th>Date</th>
+                                    <th>Body Part</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <!-- <td ng-show="uploader.isHTML5">
+                                        <div class="progress progress-sm" style="margin-bottom: 0;">
+                                            <div class="progress-bar progress-bar-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td> -->
+                                    <!-- <td class="text-center">
+                                        <span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel" class="text-info"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td> -->
+                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    <td>
+                                        <button class="btn blue btn-xs" ng-click="ModalBodyPart()">
+                                            <span class="fa fa-file-image-o"></span> Select
+                                        </button>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                        <div class="progress progress-sm" style="">
+                            <div class="progress-bar progress-bar-info" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                        </div>
+                    </div>
+                    <div class="input-inline">
+                        <div class="input-icon">
+                            <span class="btn green btn-file">
+                                <i class="fa fa-file-image-o"></i>
+                                <span class="fileinput-new">Select Document</span>
+                                <input type="file" nv-file-select="" uploader="uploader" multiple/>
+                            </span>
+                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                                <span class="glyphicon glyphicon-trash"></span> Remove all
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>      
+        <!-- END: ACCORDION DEMO -->
+    </div>
+</div>
+<!-- END Attach Documents and Image -->
+
 <div class="row">
     <div class="col-md-12" style="text-align:right">
         <a href="" class="btn default"><i class="icon-action-undo"></i> Cancel</a>

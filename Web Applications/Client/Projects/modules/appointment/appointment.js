@@ -16,10 +16,13 @@ app.config(function($stateProvider, $urlRouterProvider){
 		.state('authentication.appointment.list', {
 			url: '/list',
 			templateUrl: 'modules/appointment/views/appointmentList.html',
-			controller: 'appointmentListCtrl'
+			data: {pageTitle: 'Appointment List'},
+			controller: 'appointmentListCtrl',
+
 		})
 		.state('authentication.appointment.request', {
 			url: '/request',
+			data: {pageTitle: 'Appointment Send Request'},
 			templateUrl: 'modules/appointment/views/appointmentRequest.html',
 			controller: 'appointmentRequestCtrl'
 		});

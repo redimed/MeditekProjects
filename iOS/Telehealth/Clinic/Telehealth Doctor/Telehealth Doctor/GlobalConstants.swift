@@ -8,11 +8,13 @@
 
 import Foundation
 
-let STRING_URL_SERVER = "http://192.168.1.130:3009"
+let STRING_URL_SERVER = "http://testapp.redimed.com.au:3009"
 
 let AUTHORIZATION = STRING_URL_SERVER + "/api/telehealth/user/login"
 
 let GENERATESESSION = STRING_URL_SERVER + "/api/telehealth/socket/generateSession"
+
+let APPOINTMENT_DETAIL = STRING_URL_SERVER + "/api/telehealth/user/appointmentDetails"
 
 /// Socket Emit
 let GET_ONLINE_USERS : NSDictionary = ["url": "/api/telehealth/socket/onlineList"]
@@ -22,6 +24,7 @@ let TRANSFER_IN_CALL = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&mes
 let MAKE_CALL = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@&sessionId=%@&fromName=%@"
 
 let JOIN_ROOM = "/api/telehealth/socket/joinRoom?uid=%@"
+
 
 /**
 *  Alert Title and Message for JSSAlertView

@@ -7,14 +7,37 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class DetailAppointmentVC: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var gradientBackground: UIImageView!
+    
+    var xibView : UIView!
+    var uidUser : Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        let gradient :CAGradientLayer = CAGradientLayer()
+        gradient.frame = gradientBackground.bounds;
+        gradient.colors = [UIColor(hex: "FF5E3A").CGColor, UIColor(hex: "FF2A68").CGColor]
+        gradientBackground.layer.insertSublayer(gradient, atIndex: 0)
+        
+        loadXib("demoViewController")
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        let param = ["data": ["uid": SingleTon.onlineUser_Singleton[uidUser!].appointmentUID]]
+        request(.POST, APPOINTMENT_DETAIL, headers: SingleTon.headers, parameters: param)
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .responseJSON { response -> Void in
+                
+                print(response)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -23,8 +46,7 @@ class DetailAppointmentVC: UIViewController {
     }
     
     @IBAction func viewOption(sender: UIButton) {
-        
-        
+        xibView.removeFromSuperview()
         switch sender.tag {
         case 0:
             loadXib("BasicInfomation")
@@ -48,27 +70,7 @@ class DetailAppointmentVC: UIViewController {
     }
     
     func loadXib(nameXib: String) {
-        let xibView = UINib(nibName: nameXib, bundle: NSBundle(forClass: self.dynamicType)).instantiateWithOwner(self, options: nil)[0] as! UIView
+        xibView = UINib(nibName: nameXib, bundle: NSBundle(forClass: self.dynamicType)).instantiateWithOwner(self, options: nil)[0] as! UIView
         containerView.addSubview(xibView)
-    }
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
-}
-
-extension UIView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> UIView? {
-        return UINib(
-            nibName: nibNamed,
-            bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? UIView
     }
 }

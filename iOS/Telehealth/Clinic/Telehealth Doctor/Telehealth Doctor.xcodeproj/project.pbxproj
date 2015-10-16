@@ -48,6 +48,7 @@
 		008FB2531BB9401900684968 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2521BB9401900684968 /* VideoToolbox.framework */; };
 		00A9E5B81BC3720A0055A594 /* AppointmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A9E5B71BC3720A0055A594 /* AppointmentTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		00B9917F1BC2E3AD0025EA7F /* OnlineUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B9917E1BC2E3AD0025EA7F /* OnlineUsers.swift */; settings = {ASSET_TAGS = (); }; };
+		00C9599D1BD0E5B000E3FFAD /* call.wav in Resources */ = {isa = PBXBuildFile; fileRef = 00C9599C1BD0E5B000E3FFAD /* call.wav */; settings = {ASSET_TAGS = (); }; };
 		00D512771BB4E6100068942D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D512761BB4E6100068942D /* ProfileViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		00D512791BB4E63E0068942D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D512781BB4E63E0068942D /* HomeViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		00D5127B1BB4E6560068942D /* MakeCallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D5127A1BB4E6560068942D /* MakeCallController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -126,6 +127,7 @@
 		009398E41BBA9384005481E2 /* Telehealth Doctor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Telehealth Doctor-Bridging-Header.h"; sourceTree = "<group>"; };
 		00A9E5B71BC3720A0055A594 /* AppointmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentTableViewCell.swift; sourceTree = "<group>"; };
 		00B9917E1BC2E3AD0025EA7F /* OnlineUsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineUsers.swift; sourceTree = "<group>"; };
+		00C9599C1BD0E5B000E3FFAD /* call.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = call.wav; sourceTree = "<group>"; };
 		00D512761BB4E6100068942D /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		00D512781BB4E63E0068942D /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		00D5127A1BB4E6560068942D /* MakeCallController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakeCallController.swift; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 		AFF10DF81BB27A39005E9838 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				00C9599C1BD0E5B000E3FFAD /* call.wav */,
 				001C28CB1BCEAD4D005A82D7 /* video.mp4 */,
 			);
 			name = Resource;
@@ -405,8 +408,8 @@
 		AFF21D7B1BB12D8B006A190E /* Telehealth Doctor */ = {
 			isa = PBXGroup;
 			children = (
-				AFF10DF81BB27A39005E9838 /* Resource */,
 				00D5127E1BB4E7810068942D /* Delegate */,
+				AFF10DF81BB27A39005E9838 /* Resource */,
 				AFF10DF51BB279FE005E9838 /* Controllers */,
 				AFF10E011BB286E1005E9838 /* Model */,
 				AFF10DF71BB27A17005E9838 /* API */,
@@ -507,6 +510,11 @@
 					AFF21D781BB12D8B006A190E = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = UA7AB584U5;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					AFF21D8F1BB12D8B006A190E = {
 						CreatedOnToolsVersion = 7.0;
@@ -545,6 +553,7 @@
 			files = (
 				0045A2E21BCF8F9100AC4028 /* ClinicalMedical.xib in Resources */,
 				AFF21D8A1BB12D8B006A190E /* LaunchScreen.storyboard in Resources */,
+				00C9599D1BD0E5B000E3FFAD /* call.wav in Resources */,
 				0045A2E41BCF8FB200AC4028 /* PresentComplain.xib in Resources */,
 				0045A2E61BCF8FC900AC4028 /* MedicalImage.xib in Resources */,
 				001C28CC1BCEAD4D005A82D7 /* video.mp4 in Resources */,

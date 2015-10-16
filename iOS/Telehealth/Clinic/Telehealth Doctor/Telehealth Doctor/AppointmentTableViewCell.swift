@@ -17,5 +17,5 @@ class AppointmentTableViewCell: UITableViewCell {
     @IBOutlet weak var appoinmentDate: UILabel!
     @IBOutlet weak var callButton: UIButton!
     @IBOutlet weak var statusImageView: UIImageView!
-    
+    @IBOutlet weak var viewDetailButton: UIButton!
 }

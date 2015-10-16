@@ -5,6 +5,7 @@ PODS:
   - Socket.IO-Client-Swift (3.1.4)
   - Spring (1.0.3)
   - SwiftyJSON (2.3.0)
+  - UIView+draggable (1.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 2.0)
@@ -13,6 +14,7 @@ DEPENDENCIES:
   - Socket.IO-Client-Swift (~> 3.1.4)
   - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift2`)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+  - UIView+draggable (~> 1.0)
 
 EXTERNAL SOURCES:
   ReachabilitySwift:
@@ -41,5 +43,6 @@ SPEC CHECKSUMS:
   Socket.IO-Client-Swift: a0c8a6ba85ea685891d2c5f0e73b7287b89d0121
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
   SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
+  UIView+draggable: 57651151332c7b5a74b5de41c1e6333c14d66851
 
 COCOAPODS: 0.39.0

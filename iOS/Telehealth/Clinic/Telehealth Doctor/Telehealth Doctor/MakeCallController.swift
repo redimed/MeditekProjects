@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UIView_draggable
 
 let videoWidth : CGFloat = 200
 let videoHeight : CGFloat = 120
@@ -29,9 +30,10 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     var idOnlineUser : Int!
     let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("infoDoctor") as! NSDictionary
     let screenSize: CGRect = UIScreen.mainScreen().bounds
+    var avAudioPlayer : AVAudioPlayer?
+    var soundFileURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("call", ofType: "wav")!)
     
     @IBOutlet var controllerButtonCall: [UIButton]!
-    
     @IBOutlet weak var nameLabelCall: UILabel!
     @IBOutlet weak var titleLabelCall: UILabel!
     
@@ -39,10 +41,24 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
         nameLabelCall.text = SingleTon.onlineUser_Singleton[idOnlineUser].fullNamePatient
+        nameLabelCall.sizeToFit()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "handleCall", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleCall:", name: "handleCallNotification", object: nil)
         session = OTSession(apiKey: ApiKey, sessionId: SessionID, delegate: self)
         doConnect(Token)
+        playSoundCall()
+    }
+    
+    
+    func playSoundCall() {
+        do {
+            try avAudioPlayer = AVAudioPlayer(contentsOfURL: soundFileURL)
+            avAudioPlayer?.prepareToPlay()
+            avAudioPlayer?.play()
+            avAudioPlayer?.numberOfLoops = -5
+        } catch {
+            print("Error set audio player contents of URL")
+        }
     }
     
     /**
@@ -52,15 +68,12 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         if notification.name == "handleCallNotification" {
             let userInfo : Dictionary<String, String!> = notification.userInfo as! Dictionary<String,String!>
             let message : String! = userInfo["message"]
-            print(message)
             switch message {
             case "answer":
                 receiveAnswerEvent()
-                print(userInfo["message"])
                 break
             case "decline":
                 receiveDeclineEvent()
-                print(userInfo["message"])
                 break
             case "end":
                 endCall()
@@ -75,6 +88,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     function controller for call
     */
     func receiveAnswerEvent() {
+        avAudioPlayer?.stop()
         titleLabelCall.text = "Connecting..."
         for button : UIButton in controllerButtonCall {
             if button.tag >= 0 && button.tag <= 2 {
@@ -84,6 +98,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     }
     
     func receiveDeclineEvent() {
+        avAudioPlayer?.stop()
         titleLabelCall.text = "Unavailable with"
         for button : UIButton in controllerButtonCall {
             if button.tag >= 0 && button.tag <= 2 {
@@ -95,13 +110,24 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     }
     
     func tryAgainCall() {
+        playSoundCall()
+        titleLabelCall.text = "Calling to..."
+        for button : UIButton in controllerButtonCall {
+            if button.tag >= 0 && button.tag <= 2 {
+                button.hidden = false
+            } else {
+                button.hidden = true
+            }
+        }
         
+        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
     }
     
     /**
     spend for end call and back view controller
     */
     func endCall() {
+        avAudioPlayer?.stop()
         sessionDidDisconnect(session!)
         doUnsubscribe()
         self.navigationController!.popViewControllerAnimated(true)
@@ -137,17 +163,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             }
             break
         case 3: // try again call
-            titleLabelCall.text = "Calling to..."
-            for button : UIButton in controllerButtonCall {
-                if button.tag >= 0 && button.tag <= 2 {
-                    button.hidden = false
-                } else {
-                    button.hidden = true
-                }
-            }
-            
-            SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
-            
+            tryAgainCall()
             break
         case 4: // ---cancel call view---
             self.navigationController!.popViewControllerAnimated(true)
@@ -188,7 +204,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         publisher!.view.frame = CGRect(x: 0.0, y: 0, width: screenSize.width
             , height: screenSize.height)
         
-        /// EMIT CALL A PATIENT
+        /// Emit call patient
         SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
         
         /**
@@ -196,6 +212,9 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         */
         for button: UIButton in controllerButtonCall {
             publisher!.view.addSubview(button)
+            if button.tag >= 0 && button.tag <= 2 {
+                button.hidden = false
+            }
         }
         
         /**
@@ -291,6 +310,10 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         NSLog("session didFailWithError (%@)", error)
     }
     
+    func session(session: OTSession!, receivedSignalType type: String!, fromConnection connection: OTConnection!, withString string: String!) {
+        print("receive event session--- ", string)
+    }
+    
     // MARK: - OTSubscriber delegate callbacks
     
     func subscriberDidConnectToStream(subscriberKit: OTSubscriberKit) {
@@ -303,6 +326,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             for button: UIButton in controllerButtonCall {
                 self.view.addSubview(button)
             }
+            self.publisher!.view.enableDragging()
         }
     }
     

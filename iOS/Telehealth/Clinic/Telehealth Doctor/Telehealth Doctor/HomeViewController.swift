@@ -28,7 +28,6 @@ class HomeViewController: UIViewController {
         buttonAppointment.layer.borderWidth = 2
         buttonAppointment.layer.borderColor = UIColor(red: 255/0, green: 255/0, blue: 255/0, alpha: 0.5).CGColor
         
-        self.navigationController!.navigationBar.translucent = false
         self.navigationController!.navigationBar.tintColor = UIColor.whiteColor()
         let fontDictionary = [ NSForegroundColorAttributeName:UIColor.whiteColor() ]
         self.navigationController!.navigationBar.titleTextAttributes = fontDictionary
@@ -84,7 +83,9 @@ class HomeViewController: UIViewController {
                         lastNameDoctor: response[i]["Doctors"][0]["LastName"].stringValue,
                         firstNamePatient: response[i]["Patients"][0]["FirstName"].stringValue,
                         midleNamePatient: response[i]["Patients"][0]["MiddleName"].stringValue,
-                        lastNamePatient: response[i]["Patients"][0]["LastName"].stringValue )
+                        lastNamePatient: response[i]["Patients"][0]["LastName"].stringValue,
+                        appointmentUID: response[i]["UID"].stringValue
+                    )
                     
                     SingleTon.onlineUser_Singleton.append(onlineObj)
                 }

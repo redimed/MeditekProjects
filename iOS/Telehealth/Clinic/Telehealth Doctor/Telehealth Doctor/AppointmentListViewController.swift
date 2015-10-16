@@ -68,6 +68,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         let singletonOnlineUser = SingleTon.onlineUser_Singleton[indexPath.row]
         cell.noRows.text = singletonOnlineUser.userId
         cell.callButton.tag = Int(indexPath.row)
+        cell.viewDetailButton.tag = Int(indexPath.row)
         cell.patientName.text = singletonOnlineUser.fullNamePatient
         cell.doctorName.text = singletonOnlineUser.fullNameDoctor
         cell.submitDate.text = formatString(singletonOnlineUser.requestDateAppoinment)
@@ -89,6 +90,11 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
             if let indexPath = sender!.tag {
                 let destinationController = segue.destinationViewController as! MakeCallViewController
                 destinationController.idOnlineUser = indexPath
+            }
+        } else if segue.identifier == "detailAppoinment" {
+            if let indexPath = sender!.tag {
+                let destinationController = segue.destinationViewController as! DetailAppointmentVC
+                destinationController.uidUser = indexPath
             }
         }
     }

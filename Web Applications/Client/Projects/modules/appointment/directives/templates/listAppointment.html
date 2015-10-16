@@ -92,7 +92,7 @@
 			</thead>
 			<tbody>
 			<tbody>
-				<tr ng-repeat="p in appointments" ng-click="openAppointmentModal()">
+				<tr ng-repeat="p in appointments" ng-click="openAppointmentModal(p.UID)">
 					<td>#</td>
 					<td>{{p.Patients[0].FirstName}} {{p.Patients[0].LastName}}</td>
 					<td>{{p.Doctors[0].FirstName}}</td>

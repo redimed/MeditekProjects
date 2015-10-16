@@ -55,7 +55,7 @@
 										<label for="time" class="control-label">Duration Of Referral</label>
 										<div class="form-control">
 											<!-- <i class="fa fa-calendar-o"></i> -->
-											<!-- &nbsp;&nbsp; --><span class="label label-lg label-info">12 months </span>
+											<!-- &nbsp;&nbsp; --><span class="label label-lg label-info">{{appointment.TelehealthAppointment.RefDurationOfReferal}} month </span>
 										</div>
 										<!-- <div class="form-control-focus"></div> -->
 									</div>
@@ -63,12 +63,12 @@
 								<div class="col-md-4">
 									<div class="form-group ">
 										<label for="time" class="control-label">Status</label>
-										<select class="bs-select form-control" data-show-subtext="true">
-											<option data-content=" <span class='label lable-sm label-warning'>Pending </span>">Pending</option>
-											<option data-content=" <span class='label lable-lg label-default'>Calling </span>">Calling</option>
-											<option data-content=" <span class='label lable-lg label-success'>Booked </span>">Booked</option>
-											<option data-content=" <span class='label lable-sm label-danger'>Cancel </span>">Cancel</option>
-											<option data-content=" <span class='label lable-sm label-info'>Finish </span>">Finish</option>
+										<select class="bs-select form-control" data-show-subtext="true" ng-model="">
+											<option data-content=" <span class='label lable-sm label-warning'>Pending </span>" value="Pending">Pending</option>
+											<option data-content=" <span class='label lable-lg label-default'>Calling </span>" value="Calling">Calling</option>
+											<option data-content=" <span class='label lable-lg label-success'>Booked </span>" value="Booked">Booked</option>
+											<option data-content=" <span class='label lable-sm label-danger'>Cancel </span>" value="Cancel">Cancel</option>
+											<option data-content=" <span class='label lable-sm label-info'>Finish </span>" value="Finish">Finish</option>
 										</select>
 									</div>
 								</div>

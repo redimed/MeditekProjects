@@ -13,23 +13,19 @@ module.exports = function(data) {
                     model: PatientAppointment,
                     attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'PhoneNumber'],
                     required: true,
-                    where: pagination.filterPatientAppointment,
-                    order: pagination.orderPatientAppointment
+                    where: pagination.filterPatientAppointment
                 }],
-                where: pagination.filterTelehealthAppointment,
-                order: pagination.orderTelehealthAppointment
+                where: pagination.filterTelehealthAppointment
             }, {
                 model: Doctor,
                 attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'HomePhoneNumber'],
                 required: true,
-                where: pagination.filterDoctor,
-                order: pagination.orderDoctor
+                where: pagination.filterDoctor
             }, {
                 model: Patient,
                 attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB'],
                 required: true,
                 where: pagination.filterPatient,
-                order: pagination.orderPatient,
                 include: [{
                     model: UserAccount,
                     attributes: ['ID', 'UserName', 'Email', 'PhoneNumber', 'Activated'],
@@ -37,7 +33,7 @@ module.exports = function(data) {
                 }]
             }],
             where: pagination.filterAppointment,
-            order: pagination.orderAppointment,
+            order: pagination.order,
             limit: pagination.limit,
             offset: pagination.offset,
             subQuery: false

@@ -72,9 +72,9 @@ module.exports = {
             maxLength: 255
         },
 
-        GPReferal: {
+        GPReferral: {
             type: 'string',
-            columnName: 'GPReferal',
+            columnName: 'GPReferral',
             maxLength: 1
         },
         requestDate: {

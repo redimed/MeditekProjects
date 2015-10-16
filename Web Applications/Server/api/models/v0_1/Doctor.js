@@ -47,7 +47,7 @@ module.exports = {
             allowNull: true
         },
         DOB: {
-            type: Sequelize.DATE,
+            type: Sequelize.STRING(45),
             allowNull: true
         },
         Address1: {

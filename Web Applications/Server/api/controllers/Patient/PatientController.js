@@ -130,7 +130,7 @@ module.exports = {
 		Services.Patient.LoadListPatient(limit, offset)
 		.then(function(result){
 			if(result!==undefined && result!==null && result!=='')
-				res.ok({status:200,message:"success",data:result});
+				res.ok({status:200,message:"success",data:result.rows,count:result.count});
 			else
 				res.notFound({status:404,message:"not found"});
 		})

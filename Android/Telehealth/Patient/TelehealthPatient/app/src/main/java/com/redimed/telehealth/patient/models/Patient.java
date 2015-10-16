@@ -26,7 +26,7 @@ public class Patient {
     private String LastName;
 
     @SerializedName("DOB")
-    private String DOB = "N/A";
+    private String DOB;
 
     @SerializedName("Gender")
     private String Gender;
@@ -66,6 +66,11 @@ public class Patient {
 
     @SerializedName("UserAccount")
     private UserAccount userAccount;
+
+    @SerializedName("RelPatientAppointment")
+    private RelPatientAppointment RelPatientAppointment;
+
+    private String Limit;
 
     public int getID() {
         return ID;
@@ -225,5 +230,21 @@ public class Patient {
 
     public void setUserAccount(UserAccount userAccount) {
         this.userAccount = userAccount;
+    }
+
+    public RelPatientAppointment getRelPatientAppointment() {
+        return RelPatientAppointment;
+    }
+
+    public void setRelPatientAppointment(RelPatientAppointment relPatientAppointment) {
+        RelPatientAppointment = relPatientAppointment;
+    }
+
+    public String getLimit() {
+        return Limit;
+    }
+
+    public void setLimit(String limit) {
+        Limit = limit;
     }
 }

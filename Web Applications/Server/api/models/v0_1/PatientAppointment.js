@@ -27,11 +27,11 @@ module.exports = {
             allowNull: true
         },
         LastName: {
-            type: Sequelize.STRING(50),
+            type: Sequelize.STRING(255),
             allowNull: true
         },
         DOB: {
-            type: Sequelize.DATE,
+            type: Sequelize.STRING(45),
             allowNull: true
         },
         Address: {

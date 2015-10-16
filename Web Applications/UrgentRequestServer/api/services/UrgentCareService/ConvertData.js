@@ -2,32 +2,33 @@ module.exports = {
     ServiceType: function(data) {
         var serviceType = '';
         if (data.physiotherapy === 'Y') {
-            serviceType += 'Physiotherapy';
+            serviceType += 'Physiotherapy, ';
         }
         if (data.specialist === 'Y') {
-            serviceType += ', ' + 'Specialist';
+            serviceType += 'Specialist, ';
         }
         if (data.handTherapy === 'Y') {
-            serviceType += ', ' + 'HandTherapy';
+            serviceType += 'HandTherapy, ';
         }
         if (data.GP === 'Y') {
-            serviceType += ', ' + 'GP';
+            serviceType += 'GP, ';
         }
+        serviceType = serviceType.substring(0, serviceType.length - 2);
         return serviceType;
     },
-    GPReferal: function(gPreferal) {
-        var GPReferal = '';
-        switch (gPreferal) {
+    GPReferral: function(gPreferral) {
+        var GPReferral = '';
+        switch (gPreferral) {
             case 'Y':
-                GPReferal = 'Yes';
+                GPReferral = 'Yes';
                 break;
             case 'N':
-                GPReferal = 'No';
+                GPReferral = 'No';
                 break;
             default:
-                GPReferal = '';
+                GPReferral = '';
                 break;
         };
-        return GPReferal;
+        return GPReferral;
     }
 };

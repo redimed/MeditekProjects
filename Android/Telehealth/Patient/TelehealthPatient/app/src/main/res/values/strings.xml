@@ -5,6 +5,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="confirm_exit">Press Back button again to exit</string>
     <string name="title_activity_call">CallActivity</string>
+    <string name="title_activity_contact">ContactActivity</string>
 
     <!-- Error-->
     <string name="error_network">Network Error</string>
@@ -71,5 +72,8 @@
     <string name="blue_btn">Telehealth</string>
     <string name="orange_btn">FAQs</string>
     <string name="red_btn">Contact</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

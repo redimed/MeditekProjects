@@ -30,10 +30,19 @@ module.exports = function(appointmentUID) {
                     model: ClinicalDetail,
                     attributes: ['UID', 'Section', 'Category', 'Type', 'Name', 'Value', 'ClinicalNote', 'Description'],
                     required: false
+                }, {
+                    model: Doctor,
+                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName',
+                        'HealthLink', 'Address1', 'Address2', 'WorkPhoneNumber',
+                        'Postcode', 'ProviderNumber', 'Signature'
+                    ],
+                    required: false
                 }]
             }, {
                 model: Doctor,
-                attributes: ['ID', 'UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Type', 'Email', 'HomePhoneNumber'],
+                attributes: ['ID', 'UID', 'FirstName', 'MiddleName', 'LastName',
+                    'DOB', 'Type', 'Email', 'HomePhoneNumber', 'WorkPhoneNumber'
+                ],
                 required: false,
                 include: [{
                     model: Department,
@@ -43,7 +52,7 @@ module.exports = function(appointmentUID) {
             }, {
                 model: Patient,
                 attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB',
-                    'Gender', 'Address1', 'Address2', 'Suburb', 'Postcode', 'Email', 'HomePhoneNumber'
+                    'Gender', 'Address1', 'Address2', 'Suburb', 'Postcode', 'Email', 'HomePhoneNumber', 'WorkPhoneNumber'
                 ],
                 required: false,
                 include: [{

@@ -19,9 +19,21 @@ passport.serializeUser(function(user, done) {
  */
 passport.deserializeUser(function(ID, done) {
 	console.log(">>>>>>>>>>>>>>>>>>>>>> passport deserializeUser");
+
 	UserAccount.findOne({
-		where:{ID:ID}
+		where:{ID:ID},
+		include:{
+			model:RelUserRole,
+			attributes:['ID','UserAccountId','RoleId'],
+			include:{
+				model:Role,
+				attributes:['ID','UID','RoleCode','RoleName']
+			}
+		}
 	})
+	// UserAccount.findOne({
+	// 	where:{ID:ID}
+	// })
 	.then(function(user){
 		done(null,user);
 	},function(err){

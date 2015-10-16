@@ -136,13 +136,13 @@ module.exports = {
         },
 
         roles: {
-            admin: 1,
-            assistant: 2,
-            doctor: 3,
-            gp: 4,
+            admin: 'ADMIN',
+            assistant: 'ASSISTANT',
+            doctor: 'DOCTOR',
+            gp: 'GP',
+            patient: 'PATIENT',
             internalPractitional: 5,
             externalPractiction: 6,
-            patient: 7
         }
     },
 

@@ -40,9 +40,7 @@ var modules=[
 		parent:'3',
 		order:'2',
 		roles:[
-			'ADMIN',
 			'GP',
-			'ASSISTANT'
 		]
 	},
 	{
@@ -53,7 +51,6 @@ var modules=[
 		order:'4',
 		roles:[
 			'ADMIN',
-			'ASSISTANT'
 		]
 	},
 	{

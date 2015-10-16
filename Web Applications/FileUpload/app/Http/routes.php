@@ -19,4 +19,10 @@ Route::get('api/UploadFile', 'UploadFileController@GetUploadFile');
 
 Route::post('api/UploadFile', 'UploadFileController@PostUploadFile');
 
-Route::get('api/LoadFile/{Id}', 'UploadFileController@GetLoadFile');
+Route::post('api/UploadFileTelehealthPatient', 'UploadFileController@PostUploadFileTelehealthPatient');
+
+Route::get('api/LoadFile/{Id}', 'UploadFileController@GetLoadFileID');
+
+Route::get('api/LoadFileUID/{UID}', 'UploadFileController@GetLoadFileUID');
+
+Route::post('api/UploadSingleFileTelehealth', 'UploadFileController@PostUploadSingleFileTelehealth');

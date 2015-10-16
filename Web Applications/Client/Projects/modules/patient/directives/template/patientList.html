@@ -20,7 +20,7 @@
 		</div>
 		<div class="actions">
 			<a href="javascript:;" class="btn btn-circle red btn-sm" ng-click="toggleFilter()"><i class="fa fa-filter"></i> Filter</a>
-			<a href="javascript:;" class="btn btn-circle blue btn-sm" ui-sref="authentication.patient.create">
+			<a ng-show="enableCreate" href="javascript:;" class="btn btn-circle blue btn-sm" ui-sref="authentication.patient.create">
 			<i class="glyphicon glyphicon-plus"></i> Create</a>
 			<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
 		</div>

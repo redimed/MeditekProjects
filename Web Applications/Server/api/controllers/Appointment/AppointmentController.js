@@ -90,7 +90,7 @@ module.exports = {
                         HelperService.CheckPostRequest(err.transaction)) {
                         err.transaction.rollback();
                     }
-                    res.serverError(ErrorWrap(err));
+                    res.serverError(ErrorWrap(err.error));
                 });
         }
     },

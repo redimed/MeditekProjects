@@ -8,28 +8,28 @@ module.exports = function(data) {
             include: [{
                 model: TelehealthAppointment,
                 attributes: ['UID', 'RefName', 'RefDate', 'Correspondence'],
-                required: true,
+                required: false,
                 include: [{
                     model: PatientAppointment,
                     attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'PhoneNumber'],
-                    required: true,
+                    required: false,
                     where: pagination.filterPatientAppointment
                 }],
                 where: pagination.filterTelehealthAppointment
             }, {
                 model: Doctor,
-                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'HomePhoneNumber'],
-                required: true,
+                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'HomePhoneNumber', 'WorkPhoneNumber'],
+                required: false,
                 where: pagination.filterDoctor
             }, {
                 model: Patient,
                 attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB'],
-                required: true,
+                required: false,
                 where: pagination.filterPatient,
                 include: [{
                     model: UserAccount,
                     attributes: ['ID', 'UserName', 'Email', 'PhoneNumber', 'Activated'],
-                    required: true
+                    required: false
                 }]
             }],
             where: pagination.filterAppointment,

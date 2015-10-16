@@ -19,7 +19,7 @@ module.exports = {
         });
 
         // TelehealthAppointment - PreferedPlasticSurgeon
-        TelehealthAppointment.hasOne(PreferedPlasticSurgeon, {
+        TelehealthAppointment.hasMany(PreferedPlasticSurgeon, {
             foreignKey: 'TelehealthAppointmentID'
         });
         // TelehealthAppointment - Doctor
@@ -81,16 +81,6 @@ module.exports = {
             foreignKey: 'DepartmentID'
         });
 
-        /* Doctor */
-        Site.hasMany(Doctor, {
-            foreignKey: 'SiteID'
-        });
-        UserAccount.hasOne(Doctor, {
-            foreignKey: 'UserAccountID'
-        });
-        /* End Doctor */
-
-
         //UserAccount
         UserAccount.hasOne(Patient, {
             foreignKey: 'UserAccountID'
@@ -115,10 +105,16 @@ module.exports = {
         })
 
         /* Doctor */
-        Site.hasMany(Doctor, {
-            foreignKey: 'SiteID'
+        FileUpload.hasOne(Doctor, {
+            foreignKey: 'Signature'
+        });
+        Country.hasOne(Doctor, {
+            foreignKey: 'CountryID'
         });
         UserAccount.hasOne(Doctor, {
+            foreignKey: 'UserAccountID'
+        });
+        Doctor.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
         });
         /* End Doctor */

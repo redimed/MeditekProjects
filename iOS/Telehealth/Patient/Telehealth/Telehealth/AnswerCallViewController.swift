@@ -16,6 +16,7 @@ class AnswerCallViewController: UIViewController {
     @IBOutlet weak var userCallingLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+//          UIDevice.currentDevice().setValue(UIInterfaceOrientation.Portrait.rawValue, forKey: "orientation")
         //get UUID to
         uuidTo = String(savedData.data[0]["from"])
         //Get uuid from in localstorage
@@ -25,9 +26,15 @@ class AnswerCallViewController: UIViewController {
         }
         
         userCallingLabel.text = savedData.data[0]["fromName"].string
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "endCallAnswer", name: "endCallAnswer", object: nil)
         
     }
+    func endCallAnswer() {
+        let homeMain = self.storyboard?.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
+        self.presentViewController(homeMain, animated: true, completion: nil)
+    }
+    
+   
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -58,7 +65,16 @@ class AnswerCallViewController: UIViewController {
         let dictionNary : NSDictionary = ["url": modifieldURLString]
         sharedSocket.socket.emit("get", dictionNary)
     }
-    
+//    override func shouldAutorotate() -> Bool {
+//        // Lock autorotate
+//        return false
+//    }
+//    override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
+//        
+//        // Only allow Portrait
+//        return UIInterfaceOrientation.Portrait
+//    }
+
     
     
 }

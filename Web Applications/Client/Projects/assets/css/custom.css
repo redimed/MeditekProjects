@@ -52,3 +52,11 @@
     -moz-border-radius: 50% !important;
     border-radius: 50% !important;
 }
+
+/*phan quoc chien*/
+.sweet-alert .sa-icon{
+    border-radius: 50% !important;
+}
+.sweet-alert .sa-icon.sa-success .sa-placeholder{
+    border-radius: 50% !important;
+}

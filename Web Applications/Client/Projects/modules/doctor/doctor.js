@@ -1,8 +1,11 @@
-var app = angular.module('app.authentication.doctor',[
-	'app.authentication.doctor.controller'
-]);
+angular.module('app.authentication.doctor',[
+	'app.authentication.doctor.service',
+	'app.authentication.doctor.controller',
+	'app.authentication.doctor.directive.list',
+	'app.authentication.doctor.directive.create'
+])
 
-app.config(function($stateProvider, $urlRouterProvider){
+.config(function($stateProvider, $urlRouterProvider){
 	$stateProvider
 		.state('authentication.doctor', {
 			abstract: true,
@@ -12,6 +15,7 @@ app.config(function($stateProvider, $urlRouterProvider){
 		})
 		.state('authentication.doctor.list', {
 			url:'/list',
+			data: {pageTitle: 'Doctor List'},
 			templateUrl: 'modules/doctor/views/doctorList.html',
 			controller: 'doctorListCtrl'
 		})
@@ -25,4 +29,4 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'modules/doctor/views/doctorProfile.html',
 			controller: 'doctorProfileCtrl'
 		});
-});
+})

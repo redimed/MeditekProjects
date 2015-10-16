@@ -66,18 +66,10 @@ html, body {
     <body>
         <div class="container">
             <div class="content">
-                <form class="form" method="post" action="../api/UploadFile" enctype="multipart/form-data">
-                    <select name="fileType" >
-                        <option value="MedicalImage">Medical Image</option>
-                        <option value="MedicalDocument">Medical Document</option>
-                        <option value="ProfileImage">Profile Image</option>
-                        <option value="Signature">Signature</option>
-                    </select>
-                    <input type="file" multiple="multiple" name="uploadFiles[]" id="uploadFiles"/>
-
-                    <span>&nbsp;</span>
-                    <input class="form-input" type="submit" value="Upload Files" />
-                </form>
+                <div>Meditek Upload File</div>
+                <!-- <form class="form" method="post" action="../api/UploadFile" enctype="multipart/form-data"> -->
+                @yield('UploadForm')
+                
             </div>
         </div>
     </body>

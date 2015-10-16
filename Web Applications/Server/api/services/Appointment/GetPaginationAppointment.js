@@ -190,43 +190,47 @@ module.exports = function(data) {
                                 moment(range[keyModel][keyRange][0], 'YYYY-MM-DD HH:mm:ss Z', true).isValid() ||
                                 moment(range[keyModel][keyRange][1], 'YYYY-MM-DD Z', true).isValid() ||
                                 moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                                start = moment(range[keyModel][keyRange][0], 'YYYY-MM-DD HH:mm:ss Z').toDate();
-                                end = moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z').toDate();
-
+                                if (moment(range[keyModel][keyRange][0], 'YYYY-MM-DD Z', true).isValid() ||
+                                    moment(range[keyModel][keyRange][0], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                    start = moment(range[keyModel][keyRange][0], 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                }
+                                if (moment(range[keyModel][keyRange][1], 'YYYY-MM-DD Z', true).isValid() ||
+                                    moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                    end = moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                }
                             } else {
                                 start = range[keyModel][keyRange][0];
                                 end = range[keyModel][keyRange][1];
                             }
                             var tempRange = {};
                             tempRange[keyRange] = {};
-                            if (!_.isUndefined(range[keyModel][keyRange][0]) &&
-                                !_.isNull(range[keyModel][keyRange][0]) &&
-                                !_.isEmpty(range[keyModel][keyRange][0])) {
+                            if (HelperService.CheckExistData(start)) {
                                 tempRange[keyRange]['$gte'] = start;
                             }
-                            if (!_.isUndefined(range[keyModel][keyRange][1]) &&
-                                !_.isNull(range[keyModel][keyRange][1]) &&
-                                !_.isEmpty(range[keyModel][keyRange][1])) {
+                            if (HelperService.CheckExistData(end)) {
                                 tempRange[keyRange]['$lte'] = end;
                             }
-                            switch (keyModel) {
-                                case 'Appointment':
-                                    pagination.filterAppointment.push(tempRange);
-                                    break;
-                                case 'Doctor':
-                                    pagination.filterDoctor.push(tempRange);
-                                    break;
-                                case 'TelehealthAppointment':
-                                    pagination.filterTelehealthAppointment.push(tempRange);
-                                    break;
-                                case 'PatientAppointment':
-                                    pagination.filterPatientAppointment.push(tempRange);
-                                    break;
-                                case 'Patient':
-                                    pagination.filterPatient.push(tempRange);
-                                    break;
-                                default:
-                                    break;
+                            if (HelperService.CheckExistData(tempRange[keyRange]) &&
+                                !_.isEmpty(tempRange[keyRange])) {
+                                switch (keyModel) {
+                                    case 'Appointment':
+                                        pagination.filterAppointment.push(tempRange);
+                                        break;
+                                    case 'Doctor':
+                                        pagination.filterDoctor.push(tempRange);
+                                        break;
+                                    case 'TelehealthAppointment':
+                                        pagination.filterTelehealthAppointment.push(tempRange);
+                                        break;
+                                    case 'PatientAppointment':
+                                        pagination.filterPatientAppointment.push(tempRange);
+                                        break;
+                                    case 'Patient':
+                                        pagination.filterPatient.push(tempRange);
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
                     }

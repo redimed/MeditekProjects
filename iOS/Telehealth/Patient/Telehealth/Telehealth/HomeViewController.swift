@@ -28,7 +28,9 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             // Called on every event
             sharedSocket.socket.onAny {
-                print("got event: \($0.event) with items \($0.items)")
+//                print("got event: \($0.event) with items \($0.items)")
+                let a = $0.event
+                let b = $0.items
             }
             // Socket Events
             sharedSocket.socket.on("connect") {data, ack in
@@ -42,9 +44,17 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             sharedSocket.socket.on("receiveMessage"){data, ack in
                 print("calling to me")
                 let dataCalling = JSON(data)
-                //save data to temp class
-                savedData = saveData(data: dataCalling)
-                self.AnswerCall()
+                
+                let message : String = data[0]["message"] as! String
+                print("Message",message)
+                if message == MessageString.Call {
+                    //save data to temp class
+                    savedData = saveData(data: dataCalling)
+                    self.AnswerCall()
+                }else if message == MessageString.CallEndCall {
+                     NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
+                }
+                
             }
         })
         //Socket connecting
@@ -61,10 +71,32 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     func AnswerCall(){
         let answerCall = storyboard?.instantiateViewControllerWithIdentifier("AnswerCallStoryBoard") as! AnswerCallViewController
         presentViewController(answerCall, animated: true, completion: nil)
+      
 
     }
     
+    @IBAction func ContactUsAction(sender: AnyObject) {
+       
+        callAlertMessage("", message: "You want to contact us?")
+    }
     
+    //Giap: Show alert message
+    func callAlertMessage(title : String,message : String){
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            // ...
+        }
+        alertController.addAction(cancelAction)
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+             UIApplication.sharedApplication().openURL(NSURL(string: "tel://0892300900")!)
+        }
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
+        }
+    }
+
 
    
 

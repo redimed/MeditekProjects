@@ -35,6 +35,8 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     @IBOutlet weak var buttonMuteCall: DesignableButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//         UIDevice.currentDevice().setValue(UIInterfaceOrientation.Portrait.rawValue, forKey: "orientation")
         let apiKey = savedData.data[0]["apiKey"]
         let sessionId = savedData.data[0]["sessionId"]
         let token = savedData.data[0]["token"]
@@ -49,13 +51,12 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         //Get uuid from in localstorage
         if let uuid = defaults.valueForKey("uid") as? String {
             uuidFrom = uuid
-            
         }
-
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "endCallAnswer", name: "endCallAnswer", object: nil)
         
     }
     
-    //Giap: Open or close publisher video
+       //Giap: Open or close publisher video
     @IBAction func buttonHoldCallAction(sender: DesignableButton) {
         
         if publisher?.publishVideo.boolValue == true {
@@ -79,12 +80,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         }
     }
     @IBAction func buttonEndCallAction(sender: DesignableButton) {
-        sessionDidDisconnect(session!)
-        doUnsubscribe()
-        session!.disconnect()
-        emitDataToServer(MessageString.CallEndCall)
-        let homeMain = storyboard?.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
-        presentViewController(homeMain, animated: true, completion: nil)
+       endCallAnswer()
     }
     
     //Giap: Func handle emit socket to server 2 message : Answer or EndCall
@@ -232,8 +228,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     
     func session(session: OTSession, connectionDestroyed connection : OTConnection) {
         NSLog("session connectionDestroyed (\(connection.connectionId))")
-        let HomeController = storyboard?.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
-        presentViewController(HomeController, animated: true, completion: nil)
+
     }
     
     func session(session: OTSession, didFailWithError error: OTError) {
@@ -295,13 +290,24 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     func showAlert(message: String) {
         // show alertview on main UI
         dispatch_async(dispatch_get_main_queue()) {
-            let al = UIAlertView(title: "OTError", message: message, delegate: nil, cancelButtonTitle: "OK")
+            print("Message",message)
         }
     }
     //Giap: Func change icon
     func changeIconCallingView(button:DesignableButton,nameImg:String){
         button.setImage(UIImage(named: nameImg), forState: UIControlState.Normal)
     }
+    
+
+    func endCallAnswer() {
+        sessionDidDisconnect(session!)
+        doUnsubscribe()
+        session?.disconnect()
+         emitDataToServer(MessageString.CallEndCall)
+        let homeMain = self.storyboard?.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
+        self.presentViewController(homeMain, animated: true, completion: nil)
+    }
+
     
     
 }

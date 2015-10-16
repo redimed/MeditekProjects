@@ -11,9 +11,8 @@ angular.module("app.common",[])
 		},
 		templateUrl: "common/directives/dialog.html",
 		link:function(scope,element, attrs){
-			scope.msg=element.find(".msg-content").text();
-
-			// alert(element.find("#testne").text());
+			scope.msg=element.find(".msg-content").html();
+			console.log(scope.msg);
 			if(!scope.data)
 			{
 				scope.data={};
@@ -43,6 +42,7 @@ angular.module("app.common",[])
 								break;
 						}
 						$scope.yes=function(){
+							
 							$modalInstance.close('yes');
 						}
 						$scope.no=function(){
@@ -70,8 +70,8 @@ angular.module("app.common",[])
 				})
 				.result.then(function(response){
 					return response;
-				},function(err){
-					throw err;
+				},function(reason){
+					throw 'dismiss';
 				});
 			}
 		}

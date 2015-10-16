@@ -1,6 +1,21 @@
 <!-- BEGIN PAGE HEADER-->
-<msg-dialog type='okCancel' data='data'>
-	<div class='msg-content'>Do you want to save?</div>
+<msg-dialog type='yesNo' data='data'>
+	<div class='msg-content'>
+		Do you want to save?
+		<table>
+			<tr>
+				<td>1</td>
+				<td>2</td>
+
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>4</td>
+
+			</tr>
+
+		</table>
+	</div>
 </msg-dialog>
 <button ng-click="testDialog()">{{data}}</button>
 

@@ -1,8 +1,8 @@
-<ng-transclude ng-show='false' id='testne'></ng-transclude>
+<ng-transclude ng-show='false'></ng-transclude>
 
 <script type="text/ng-template" id="msg-dialog">
 	<div class="modal-body">	
-		{{msg}}
+		<p ng-bind-html="msg"></p>
 		<div ng-if="isYesNo">
 			<button ng-click="yes();">Yes</button>
 			<button ng-click="no();">No</button>

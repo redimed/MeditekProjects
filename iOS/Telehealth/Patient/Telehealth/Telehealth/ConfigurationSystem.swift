@@ -13,7 +13,7 @@ let config = ConfigurationSystem()
 var savedData  = saveData()
 let defaults = NSUserDefaults.standardUserDefaults()
 var tokens = String()
-
+var Appointment : [AppointmentList] = []
 
 struct ConfigurationSystem {
     static let Http = "http://testapp.redimed.com.au:3009"
@@ -21,7 +21,8 @@ struct ConfigurationSystem {
     
     let headers = [
         "Authorization": "Bearer \(tokens)",
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Version" : "1.0"
     ]
     //change border color textfield
     func borderTextFieldValid(textField:DesignableTextField,color:UIColor){
@@ -59,12 +60,23 @@ struct ConfigurationSystem {
         }
     }
 }
-//class handle get and set data
+//class handle get and set data calling
 class saveData {
     var data: JSON = ""
     init(){}
     init(data:JSON){
         self.data = data
+    }
+}
+
+class AppointmentList {
+     var UIDApointment,ToTime,Status,FromTime,NameDoctor: String!
+    init(UIDApointment:String,ToTime:String,Status:String,FromTime:String,NameDoctor:String){
+        self.UIDApointment = UIDApointment
+        self.ToTime = ToTime
+        self.Status = Status
+        self.FromTime = FromTime
+        self.NameDoctor = NameDoctor
     }
 }
 

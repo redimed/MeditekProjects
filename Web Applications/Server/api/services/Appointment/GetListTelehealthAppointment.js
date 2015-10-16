@@ -18,7 +18,7 @@ module.exports = function(data) {
                 where: pagination.filterTelehealthAppointment
             }, {
                 model: Doctor,
-                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'HomePhoneNumber'],
+                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'HomePhoneNumber', 'WorkPhoneNumber'],
                 required: true,
                 where: pagination.filterDoctor
             }, {

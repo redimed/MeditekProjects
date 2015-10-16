@@ -3,7 +3,7 @@ var randomstring = require("randomstring");
 module.exports = {
 	/**
 	 * Create user activation
-	 * Input: activationInfo:{UserAccountID,Type,VerificationCode,CreatedBy}
+	 * Input: activationInfo:{UserAccountID,Type,CreatedBy}
 	 * output: 
 	 * 	if success return promise.resolve (new User Activation Info)
 	 * 	if error throw error

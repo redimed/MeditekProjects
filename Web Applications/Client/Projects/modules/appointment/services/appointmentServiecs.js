@@ -15,8 +15,8 @@ angular.module("app.authentication.appointment.services",[])
 		services.ListAppointment = function(){
 			return api.one('appointment-telehealth-list').get();
 		}
-		services.SendRequest = function(){
-			return api.all('appointment-telehealth-request').post();
+		services.SendRequest = function(requestInfo){
+			return api.all('appointment-telehealth-request').post({data:requestInfo});
 		}
 		return services;
 	})

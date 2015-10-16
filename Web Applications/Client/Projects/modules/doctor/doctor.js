@@ -12,6 +12,7 @@ app.config(function($stateProvider, $urlRouterProvider){
 		})
 		.state('authentication.doctor.list', {
 			url:'/list',
+			data: {pageTitle: 'Doctor List'},
 			templateUrl: 'modules/doctor/views/doctorList.html',
 			controller: 'doctorListCtrl'
 		})

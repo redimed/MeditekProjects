@@ -8,12 +8,14 @@ app.config(function($stateProvider, $urlRouterProvider){
 		.state('authentication.home', {
 			abstract: true,
 			templateUrl: 'modules/home/views/home.html',
-			controller: 'homeCtrl'
+			controller: 'homeCtrl',
+			data: {pageTitle: 'Home'},
 		})
 		.state('authentication.home.list', {
 			url: '/home',
 			templateUrl: 'modules/home/views/homeList.html',
-			controller: 'homeListCtrl'
+			controller: 'homeListCtrl',
+			data: {pageTitle: 'Home List'},
 		})
 		.state('authentication.home.list.detail', {
 			url: '/detail',

@@ -32,10 +32,9 @@ function sendSMS(toNumber, content, callback) {
 module.exports = {
     SendSMS: function(req, res) {
         if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
-            res.json(500, {
-                status: 'error',
-                message: 'Invalid Parameters!'
-            });
+            var err = new Error("Telehealth.SendSMS.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
             return;
         }
         var info = toJson(req.body.data);
@@ -45,37 +44,33 @@ module.exports = {
         if (phoneNumber != null && phoneNumber.match(phoneRegex) && content != null) {
             sendSMS(phoneNumber, content, function(err, message) {
                 if (err) {
-                    res.json(500, {
-                        status: 'error',
-                        message: err
-                    });
+                    res.serverError(ErrorWrap(err));
                     return;
                 }
-                res.json(200, {
+                res.ok({
                     status: 'success',
                     message: 'Send SMS Successfully!'
                 });
             });
-        } else res.json(500, {
-            status: 'error',
-            message: 'Invalid Parameters!'
-        })
+        } else {
+            var err = new Error("Telehealth.SendSMS.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+        }
     },
     GetUserDetails: function(req, res) {
         if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
-            res.json(500, {
-                status: 'error',
-                message: 'Invalid Parameters!'
-            });
+            var err = new Error("Telehealth.GetUserDetails.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
             return;
         }
         var info = toJson(req.body.data);
         var uid = typeof info.uid != 'undefined' ? info.uid : null;
         if (uid == null) {
-            res.json(500, {
-                status: 'error',
-                message: 'Invalid Parameters!'
-            });
+            var err = new Error("Telehealth.GetUserDetails.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
             return;
         }
         TelehealthService.FindByUID(uid).then(function(teleUser) {
@@ -95,33 +90,33 @@ module.exports = {
                         }).catch(function(err) {
                             res.json(err.getCode(), err.getBody());
                         })
-                    } else res.json(500, {
-                        status: 'error',
-                        message: 'User Not Exist!'
-                    });
+                    } else {
+                        var err = new Error("Telehealth.GetUserDetails.Error");
+                        err.pushError("User Is Not Exist");
+                        res.serverError(ErrorWrap(err));
+                    }
                 })
-            } else res.json(500, {
-                status: 'error',
-                message: 'User Not Exist!'
-            });
+            } else {
+                var err = new Error("Telehealth.GetUserDetails.Error");
+                err.pushError("User Is Not Exist");
+                res.serverError(ErrorWrap(err));
+            }
         })
     },
     GetUserAppointments: function(req, res) {
         if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
-            res.json(500, {
-                status: 'error',
-                message: 'Invalid Parameters!'
-            });
+            var err = new Error("Telehealth.GetUserAppointments.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
             return;
         }
         var info = toJson(req.body.data);
         var patientUID = typeof info.uid != 'undefined' ? info.uid : null;
         var limit = typeof info.limit != 'undefined' ? info.limit : null;
         if (patientUID == null) {
-            res.json(500, {
-                status: 'error',
-                message: 'Invalid Parameters!'
-            });
+            var err = new Error("Telehealth.GetUserAppointments.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
             return;
         }
         TelehealthService.GetAppointmentsByPatient(patientUID, limit).then(function(response) {
@@ -132,19 +127,17 @@ module.exports = {
     },
     GetAppointmentDetails: function(req, res) {
         if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
-            res.json(500, {
-                status: 'error',
-                message: 'Invalid Parameters!'
-            });
+            var err = new Error("Telehealth.GetAppointmentDetails.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
             return;
         }
         var info = toJson(req.body.data);
         var apptUID = typeof info.uid != 'undefined' ? info.uid : null;
         if (apptUID == null) {
-            res.json(500, {
-                status: 'error',
-                message: 'Invalid Parameters!'
-            });
+            var err = new Error("Telehealth.GetAppointmentDetails.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
             return;
         }
         TelehealthService.GetAppointmentDetails(apptUID).then(function(response) {
@@ -155,27 +148,23 @@ module.exports = {
     },
     TelehealthLogout: function(req, res) {
         req.logout();
-        res.json(200, {
+        res.ok({
             status: "success"
         });
     },
     TelehealthLogin: function(req, res) {
         passport.authenticate('local', function(err, user, info) {
             if ((err) || (!user)) {
-                if (err) console.log(err);
-                res.json(401, {
-                    status: 'error',
-                    message: 'Login Failed!'
-                });
-                return;
+                if (!err) var err = info;
+                return res.unauthorize(ErrorWrap(err));
             }
             req.logIn(user, function(err) {
-                if (err) res.status(401).send(err);
+                if (err) res.unauthorize(ErrorWrap(err));
                 else {
                     var token = jwt.sign(user, config.TokenSecret, {
                         expiresIn: 3600 * 24
                     });
-                    res.json(200, {
+                    res.ok({
                         status: 'success',
                         message: info.message,
                         user: user,
@@ -187,10 +176,9 @@ module.exports = {
     },
     UpdateDeviceToken: function(req, res) {
         if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
-            res.json(500, {
-                status: 'error',
-                message: 'Invalid Parameters!'
-            });
+            var err = new Error("Telehealth.UpdateDeviceToken.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
             return;
         }
         var info = toJson(req.body.data);
@@ -214,29 +202,26 @@ module.exports = {
                     device.update({
                         deviceToken: !created ? deviceToken : device.deviceToken
                     }).then(function() {
-                        res.json(200, {
+                        res.ok({
                             status: 'success',
                             message: 'Success!'
                         })
                     }).catch(function(err) {
-                        res.json(500, {
-                            status: 'error',
-                            message: err
-                        });
+                        res.serverError(ErrorWrap(err));
                     })
                 })
             })
-        } else res.json(500, {
-            status: 'error',
-            message: 'Invalid Parameters!'
-        })
+        } else {
+            var err = new Error("Telehealth.UpdateDeviceToken.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+        }
     },
     RequestActivationCode: function(req, res) {
         if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
-            res.json(500, {
-                status: 'error',
-                message: 'Invalid Parameters!'
-            });
+            var err = new Error("Telehealth.RequestActivationCode.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
             return;
         }
         var info = toJson(req.body.data);
@@ -267,50 +252,39 @@ module.exports = {
                         }).then(function() {
                             sendSMS(phoneNumber, "Your verification code is " + verificationCode, function(err, message) {
                                 if (err) {
-                                    res.json(500, {
-                                        status: 'error',
-                                        message: err
-                                    });
+                                    res.serverError(ErrorWrap(err));
                                     return;
                                 }
-                                res.json(200, {
+                                res.ok({
                                     status: 'success',
                                     message: 'Request Verification Code Successfully!'
                                 });
                             });
                         }).catch(function(err) {
-                            res.json(500, {
-                                status: 'error',
-                                message: err
-                            });
+                            res.serverError(ErrorWrap(err));
                         })
                     }).catch(function(err) {
-                        res.json(500, {
-                            status: 'error',
-                            message: err
-                        });
+                        res.serverError(ErrorWrap(err));
                     })
-                } else res.json(500, {
-                    status: 'error',
-                    message: 'User Is Not Exist!'
-                })
+                } else {
+                    var err = new Error("Telehealth.RequestActivationCode.Error");
+                    err.pushError("User Is Not Exist");
+                    res.serverError(ErrorWrap(err));
+                }
             }).catch(function(err) {
-                res.json(500, {
-                    status: 'error',
-                    message: err
-                });
+                res.serverError(ErrorWrap(err));
             })
-        } else res.json(500, {
-            status: 'error',
-            message: 'Invalid Parameters!'
-        })
+        } else {
+            var err = new Error("Telehealth.RequestActivationCode.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+        }
     },
     VerifyActivationCode: function(req, res) {
         if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
-            res.json(500, {
-                status: 'error',
-                message: 'Invalid Parameters!'
-            });
+            var err = new Error("Telehealth.VerifyActivationCode.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
             return;
         }
         var info = toJson(req.body.data);
@@ -341,42 +315,40 @@ module.exports = {
                                         var token = jwt.sign(teleUser, config.TokenSecret, {
                                             expiresIn: 3600 * 24
                                         });
-                                        res.json(200, {
+                                        res.ok({
                                             status: 'success',
                                             message: 'User Activated!',
                                             uid: teleUser.UID,
                                             patientUID: patient.UID,
                                             token: token
                                         });
-                                    } else res.json(500, {
-                                        status: 'error',
-                                        message: 'Only Patient Can Logged In!'
-                                    })
+                                    } else {
+                                        var err = new Error("Telehealth.VerifyActivationCode.Error");
+                                        err.pushError("Only Patient Can Logged In");
+                                        res.serverError(ErrorWrap(err));
+                                    }
                                 })
-                            } else res.json(500, {
-                                status: 'error',
-                                message: 'User Not Exist!'
-                            })
+                            } else {
+                                var err = new Error("Telehealth.VerifyActivationCode.Error");
+                                err.pushError("User Is Not Exist");
+                                res.serverError(ErrorWrap(err));
+                            }
                         })
                     }).catch(function(err) {
-                        res.json(500, {
-                            status: 'error',
-                            message: err
-                        });
+                        res.serverError(ErrorWrap(err));
                     })
-                } else res.json(500, {
-                    status: 'error',
-                    message: 'Invalid Code!'
-                })
+                } else {
+                    var err = new Error("Telehealth.VerifyActivationCode.Error");
+                    err.pushError("Invalid Verification Code");
+                    res.serverError(ErrorWrap(err));
+                }
             }).catch(function(err) {
-                res.json(500, {
-                    status: 'error',
-                    message: err
-                });
+                res.serverError(ErrorWrap(err));
             })
-        } else res.json(500, {
-            status: 'error',
-            message: 'Invalid Parameters!'
-        })
+        } else {
+            var err = new Error("Telehealth.VerifyActivationCode.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+        }
     }
 }

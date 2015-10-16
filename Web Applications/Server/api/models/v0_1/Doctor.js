@@ -102,6 +102,10 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: true
         },
+        Enable: {
+            type: Sequelize.STRING(1),
+            allowNull: true
+        },
         ProviderNumber: {
             type: Sequelize.STRING(255),
             allowNull: true

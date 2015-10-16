@@ -1,5 +1,4 @@
-var app = angular.module('app.authentication.doctor.profile.controller',[
-]);
+angular.module('app.authentication.doctor.profile.controller', [])
 
 app.controller('doctorProfileCtrl', function($scope, $modal){
 	$scope.changePassword = function(){

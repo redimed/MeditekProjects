@@ -63,12 +63,12 @@
 								<div class="col-md-4">
 									<div class="form-group ">
 										<label for="time" class="control-label">Status</label>
-										<select class="bs-select form-control" data-show-subtext="true">
-											<option data-content=" <span class='label lable-sm label-warning'>Pending </span>">Pending</option>
-											<option data-content=" <span class='label lable-lg label-default'>Calling </span>">Calling</option>
-											<option data-content=" <span class='label lable-lg label-success'>Booked </span>">Booked</option>
-											<option data-content=" <span class='label lable-sm label-danger'>Cancel </span>">Cancel</option>
-											<option data-content=" <span class='label lable-sm label-info'>Finish </span>">Finish</option>
+										<select class="form-control" ng-model="appointment.Status" name="Status">
+											<option  value="Pending">Pending</option>
+											<option  value="Calling">Calling</option>
+											<option  value="Approved">Approved</option>
+											<option  value="Cancel">Cancel</option>
+											<option  value="Finish">Finish</option>
 										</select>
 									</div>
 								</div>
@@ -77,7 +77,7 @@
 										<label class="control-label">Request Date</label>
 										<div class="input-icon">
 											<i class="fa fa-calendar"></i>
-											<input type="text" class="form-control form-control-inline date-picker" value="01/01/2015">
+											<input type="text" class="form-control form-control-inline date-picker" ng-model="appointment.RequestDate" id="RequestDate">
 										</div>
 									</div>
 								</div>
@@ -88,7 +88,7 @@
 										<label class="control-label">Appointment Date</label>
 										<div class="input-icon">
 											<i class="fa fa-calendar"></i>
-											<input class="form-control form-control-inline date-picker" size="16" type="text" value="01/02/2015"/>
+											<input class="form-control form-control-inline date-picker" size="16" type="text" ng-model="DateTimeAppointmentDate" id="DateTimeAppointmentDate"/>
 										</div>
 										
 									</div>
@@ -98,7 +98,7 @@
 										<label class="control-label">Appointment Time</label>
 										<div class="input-icon">
 											<i class="fa fa-clock-o"></i>
-											<input type="text" class="form-control timepicker timepicker-default">
+											<input type="text" class="form-control timepicker timepicker-default" ng-model="DateTimeAppointmentDateTime" id="DateTimeAppointmentDateTime">
 										</div>
 									</div>
 								</div>
@@ -107,7 +107,7 @@
 										<div class="checkbox-list">
 											<label class="control-label">&nbsp;</label>
 											<div class="form-control" style="border: none;">
-												<input type="checkbox" class="icheck" id="Correspondence" checked="true"> 
+												<input type="checkbox" ng-model="appointment.TelehealthAppointment.Correspondence" ng-true-value="'Y'" ng-false-value="'N'">
 												<label for="Correspondence">Correspondence</label>
 											</div>
 											
@@ -119,9 +119,7 @@
 								<div class="col-md-6">
 									<div class="form-group ">
 										<label class="control-label">Patient</label>
-										<!-- <div class="input-icon"> -->
-											<!-- <i class="fa fa-smile-o"></i> -->
-											<input type="text" class="form-control"  value="Hana Montana" disabled="true">
+											<input type="text" class="form-control"  ng-model="PatientsFullName" disabled="true">
 										<!-- </div> -->
 									</div>
 								</div>
@@ -130,7 +128,7 @@
 										<label class="control-label">Referring Practitioner</label>
 										<!-- <div class="input-icon"> -->
 											<!-- <i class="icon-plus"></i> -->
-											<input type="text" class="form-control"  value="Shen Woo" disabled="true">
+											<input type="text" class="form-control"  ng-model="appointment.TelehealthAppointment.RefName" disabled="true">
 										<!-- </div> -->
 									</div>
 								</div>
@@ -139,7 +137,8 @@
 								<div class="col-md-12">
 									<div class="form-group">
 										<label class="control-label">Fund</label>
-										<select class="form-control">
+										<select class="form-control" ng-model="appointment.TelehealthAppointment.Fund">
+										    <option value=''></option>
 											<option value='ACA'>ACA Health Benefits Fund</option>
 											<option value='AHM'>ahm Health Insurance</option>
 											<option value='AUF'>Australian Unity Health Limited</option>
@@ -187,35 +186,35 @@
 									<div class="form-group">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Private&nbsp;&nbsp;<input type="checkbox" checked="true" class="icheck">  
+												Private&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.Private" ng-true-value="'Y'" ng-false-value="'N'">
 											</label>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Public&nbsp;&nbsp;<input type="checkbox" class="icheck">  
+												Public&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.Public" ng-true-value="'Y'" ng-false-value="'N'">  
 											</label>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="checkbox-list">
 											<label class="control-label">
-												DVA&nbsp;&nbsp;<input type="checkbox" class="icheck">  
+												DVA&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.DVA" ng-true-value="'Y'" ng-false-value="'N'">  
 											</label>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Workers Comp&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+												Workers Comp&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.WorkersComp" ng-true-value="'Y'" ng-false-value="'N'">
 											</label>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="checkbox-list">
 											<label class="control-label">
-												MVIT&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+												MVIT&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.MVIT" ng-true-value="'Y'" ng-false-value="'N'">  
 											</label>
 										</div>
 									</div>
@@ -229,35 +228,35 @@
 									<div class="form-group">
 										<div class="checkbox-list">
 											<label class="control-label">
-												First Surgeon Available&nbsp;&nbsp;<input type="checkbox" class="icheck">  
+												First Surgeon Available&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferedPlasticSurgeons[0].Value" ng-true-value="'Y'" ng-false-value="'N'">
 											</label>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Mr Hanh Nguyen&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+												Mr Hanh Nguyen&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferedPlasticSurgeons[1].Value" ng-true-value="'Y'" ng-false-value="'N'">
 											</label>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Mr Adrian Brooks&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+												Mr Adrian Brooks&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferedPlasticSurgeons[2].Value" ng-true-value="'Y'" ng-false-value="'N'"> 
 											</label>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Mr Dan Luo&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+												Mr Dan Luo&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferedPlasticSurgeons[3].Value" ng-true-value="'Y'" ng-false-value="'N'">
 											</label>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Ms Sharon Chu&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+												Ms Sharon Chu&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferedPlasticSurgeons[4].Value" ng-true-value="'Y'" ng-false-value="'N'">
 											</label>
 										</div>
 									</div>
@@ -271,7 +270,7 @@
 					<div class="row">&nbsp;</div>
 					<!-- begin column 1 -->
 	            	<div class="form-group col-md-4">
-						<textarea class="form-control" rows="7">Clinical Details & Relevant Medical History</textarea>
+						<textarea class="form-control" rows="7" ng-model="appointment.TelehealthAppointment.ClinicalDetails[0].ClinicalNote"></textarea>
 						<br><br>
 						<table class="table table-striped table-hover">
 							<thead>
@@ -308,8 +307,8 @@
 	            		</div>
 	            		<div class="form-group">
 	            			<div class="checkbox-list">
-	            				<label class="control-label">
-	            					<input type="checkbox" checked="true" class="icheck">&nbsp;&nbsp;Dislocation
+	            				<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[0].Value" ng-true-value="'Y'" ng-false-value="'N'">
+	            					&nbsp;&nbsp;Dislocation
 	            				</label>
 	            			</div>
 	            		</div>
@@ -317,23 +316,23 @@
 							<label for="fracture" class="control-label">Fracture</label>
 							<!-- <div class="input-icon"> -->
 								<!--<i class="fa fa-font"></i>-->
-								<input type="text" class="form-control" id="fracture">
+								<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.ClinicalDetails[1].Value">
 							<!-- </div> -->
 						</div>
 						<div class="row">
 							<div class="col-md-3">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Open</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[2].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Open</label>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Closed</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[3].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Closed</label>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Displaced</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[4].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Displaced</label>
 								</div>
 							</div>
 						</div>
@@ -344,29 +343,29 @@
 	            		<div class="row">
 	            			<div class="col-md-3">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Hand</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[5].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Hand</label>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Nerve</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[6].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Nerve</label>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Tendon / muscle</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[7].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Tendon / muscle</label>
 								</div>
 							</div>
 	            		</div>
 	            		<div class="row">
 	            			<div class="col-md-3">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Facial</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[8].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Facial</label>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Skin loss</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[9].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Skin loss</label>
 								</div>
 							</div>
 	            		</div>
@@ -374,7 +373,7 @@
 	            			<div class="col-md-12">
 	            				<div class="form-inline">
 		            				<div class="checkbox">
-										<label class="control-label"><input type="checkbox" class="icheck"> Other</label>
+										<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[10].Value" ng-true-value="'Y'" ng-false-value="'N'"> Other</label>
 									</div>
 									&nbsp;&nbsp;&nbsp;
 									<div class="form-group">
@@ -400,18 +399,18 @@
 	            		<div class="row">
 	            			<div class="col-md-6">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> BCC / SCC</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[11].Value" ng-true-value="'Y'" ng-false-value="'N'"> BCC / SCC</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-6">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Melanoma</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[12].Value" ng-true-value="'Y'" ng-false-value="'N'"> Melanoma</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-12">
 	            				<div class="form-inline">
 		            				<div class="checkbox">
-										<label class="control-label"><input type="checkbox" class="icheck"> Other</label>
+										<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[13].Value" ng-true-value="'Y'" ng-false-value="'N'"> Other</label>
 									</div>
 									&nbsp;&nbsp;&nbsp;
 									<div class="form-group">
@@ -427,22 +426,22 @@
 	            		<div class="row">
 	            			<div class="col-md-6">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Ganglion</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[14].Value" ng-true-value="'Y'" ng-false-value="'N'"> Ganglion</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-6">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Arthritis</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[15].Value" ng-true-value="'Y'" ng-false-value="'N'"> Arthritis</label>{{appointment.TelehealthAppointment.ClinicalDetails[15].Value + "11"}}
 								</div>
 	            			</div>
 	            			<div class="col-md-6">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> DeQuervains / Trigger</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[16].Value" ng-true-value="'Y'" ng-false-value="'N'"> DeQuervains / Trigger</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-6">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Contracture</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[17].Value" ng-true-value="'Y'" ng-false-value="'N'"> Contracture</label>
 								</div>
 	            			</div>
 	            		</div>
@@ -453,28 +452,28 @@
 	            		<div class="row">
 	            			<div class="col-md-5">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Carpal Tunnel</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[18].Value" ng-true-value="'Y'" ng-false-value="'N'"> Carpal Tunnel</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-7">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Cubital Tunnel</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[19].Value" ng-true-value="'Y'" ng-false-value="'N'"> Cubital Tunnel</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-5">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Tarsal Tunnel</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[20].Value" ng-true-value="'Y'" ng-false-value="'N'"> Tarsal Tunnel</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-7">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Complex Reconstructive Case</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[21].Value" ng-true-value="'Y'" ng-false-value="'N'"> Complex Reconstructive Case</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-12">
 	            				<div class="form-inline">
 		            				<div class="checkbox">
-										<label class="control-label"><input type="checkbox" class="icheck"> Other</label>
+										<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[22].Value" ng-true-value="'Y'" ng-false-value="'N'"> Other</label>
 									</div>
 									&nbsp;&nbsp;&nbsp;
 									<div class="form-group">
@@ -495,7 +494,7 @@
 								<label class="control-label">First Name</label>
 								<!-- <div class="input-icon"> -->
 									<!--<i class="fa fa-font"></i>-->
-									<input type="text" class="form-control" placeholder="First Name" value="Hanna">
+									<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.FirstName" placeholder="First Name">
 								<!-- </div> -->
 							</div>
 						</div>
@@ -504,7 +503,7 @@
 								<label class="control-label">Last Name</label>
 								<!-- <div class="input-icon"> -->
 									<!--<i class="fa fa-font"></i>-->
-									<input type="text" class="form-control" placeholder="Last Name" value="Montana">
+									<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.LastName" placeholder="Last Name">
 								<!-- </div> -->
 							</div>
 						</div>
@@ -513,7 +512,7 @@
 								<label class="control-label">Date of Birth</label>
 								<div class="input-icon">
 									<i class="fa fa-calendar"></i>
-									<input type="text" class="form-control form-control-inline date-picker" value="01/01/2015">
+									<input type="text" class="form-control form-control-inline date-picker" ng-model="patientDOBTemp">
 								</div>
 							</div>
 						</div>
@@ -522,7 +521,7 @@
 								<label class="control-label">Address</label>
 								<div class="input-icon">
 									<i class="fa fa-send"></i>
-									<input type="text" class="form-control" placeholder="Address" value="01 Elizabeth Street Australia">
+									<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Address1" placeholder="Address">
 								</div>
 							</div>
 						</div>
@@ -533,7 +532,7 @@
 								<label class="control-label">Suburb</label>
 								<!-- <div class="input-icon"> -->
 									<!-- <i class="fa fa-tree"></i> -->
-									<input type="text" class="form-control" value="01234">
+									<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Suburb">
 								<!-- </div> -->
 							</div>
 						</div>
@@ -542,7 +541,7 @@
 								<label class="control-label">Postcode</label>
 								<!-- <div class="input-icon"> -->
 									<!-- <i class="fa fa-sort-amount-desc"></i> -->
-									<input type="number" class="form-control" value="1234">
+									<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Postcode">
 								<!-- </div> -->
 							</div>
 						</div>
@@ -551,7 +550,7 @@
 								<label class="control-label">Contact Number (M)</label>
 								<div class="input-icon">
 									<i class="icon-call-end"></i>
-									<input type="text" class="form-control"  value="04 2727 2727">
+									<input type="text" class="form-control"  ng-model="appointment.TelehealthAppointment.PatientAppointment.WorkPhoneNumber">
 								</div>
 							</div>
 						</div>
@@ -560,7 +559,7 @@
 								<label class="control-label">Contact Number (H)</label>
 								<div class="input-icon">
 									<i class="icon-call-end"></i>
-									<input type="text" class="form-control"  value="08 9999 9999">
+									<input type="text" class="form-control"  ng-model="appointment.TelehealthAppointment.PatientAppointment.HomePhoneNumber">
 								</div>
 							</div>
 						</div>
@@ -569,7 +568,7 @@
 								<label class="control-label">Email Address</label>
 								<div class="input-icon">
 									<i class="fa fa-envelope"></i>
-									<input type="text" class="form-control"  value="hanamontana@gmail.com">
+									<input type="text" class="form-control"  ng-model="appointment.TelehealthAppointment.PatientAppointment.Email">
 								</div>
 							</div>
 						</div>
@@ -603,7 +602,7 @@
 										<label class="control-label">First Name</label>
 										<!-- <div class="input-icon"> -->
 											<!--<i class="fa fa-font"></i>-->
-											<input type="text" placeholder="First Name" value="Hanh" disabled="true" class="form-control">
+											<input type="text" placeholder="First Name" ng-model="appointment.Doctors[0].FirstName" disabled="true" class="form-control">
 										<!-- </div> -->
 									</div>
 								</div>
@@ -612,7 +611,7 @@
 										<label class="control-label">Last Name</label>
 										<!-- <div class="input-icon"> -->
 											<!--<i class="fa fa-font"></i>-->
-											<input type="text" placeholder="Last Name" value="Nguyen" disabled="true" class="form-control">
+											<input type="text" placeholder="Last Name" ng-model="appointment.Doctors[0].LastName" disabled="true" class="form-control">
 										<!-- </div> -->
 									</div>
 								</div>
@@ -621,7 +620,7 @@
 										<label class="control-label">Contact Number (M)</label>
 										<!-- <div class="input-icon"> -->
 											<!--<i class="fa fa-font"></i>-->
-											<input type="text" placeholder="Contact Number (M)" value="08 2727 2727" disabled="true" class="form-control">
+											<input type="text" placeholder="Contact Number (M)" ng-model="appointment.Doctors[0].WorkPhoneNumber" disabled="true" class="form-control">
 										<!-- </div> -->
 									</div>
 								</div>	
@@ -630,7 +629,7 @@
 										<label class="control-label">Department</label>
 										<!-- <div class="input-icon"> -->
 											<!--<i class="fa fa-font"></i>-->
-											<input type="text" placeholder="Department" value="MBBS, FRACS (Plastic Surgeon)" disabled="true" class="form-control">
+											<input type="text" placeholder="Department" ng-model="appointment.Doctors[0].Department.DepartmentName" disabled="true" class="form-control">
 										<!-- </div> -->
 									</div>
 								</div>							
@@ -884,13 +883,13 @@
 		            	<div class="col-md-6">
 			            	<div class="form-group ">	
 			            		<label class="form-label">Name</label>							            		
-			            		<input type="text" class="form-control" placeholder="Name" value="Shen Woo">
+			            		<input type="text" class="form-control" placeholder="Name" ng-model="appointment.TelehealthAppointment.Doctors[0].FirstName">
 			            	</div>
 		            	</div>
 		            	<div class="col-md-6">
 			            	<div class="form-group ">
 			            		<label class="control-label">Healthlink ID</label>								            		
-			            		<input type="text" class="form-control" placeholder="Healthlink ID" value="redimspc">
+			            		<input type="text" class="form-control" placeholder="Healthlink ID" ng-model="appointment.TelehealthAppointment.Doctors[0].HealthLink">
 			            	</div>
 		            	</div>
 		            </div>
@@ -898,7 +897,7 @@
 		            	<div class="col-md-12">
 			            	<div class="form-group ">	
 			            		<label class="control-label">Address</label>							            		
-			            		<input type="text" class="form-control" placeholder="Address" value="01 Elizabeth Street Australia">
+			            		<input type="text" class="form-control" placeholder="Address" ng-model="appointment.TelehealthAppointment.Doctors[0].Address1">
 			            	</div>
 		            	</div>
 		            </div>
@@ -906,19 +905,19 @@
 		            	<div class="col-md-4">
 			            	<div class="form-group ">
 			            		<label class="control-label">Telephone</label>								            		
-			            		<input type="text" class="form-control" placeholder="Telephone" value="04 2727 2727">
+			            		<input type="text" class="form-control" placeholder="Telephone" ng-model="appointment.TelehealthAppointment.Doctors[0].WorkPhoneNumber">
 			            	</div>
 		            	</div>
 		            	<div class="col-md-4">
 			            	<div class="form-group ">
 			            		<label class="control-label">Postcode</label>								            		
-			            		<input type="number" class="form-control" placeholder="Postcode" value="1234">
+			            		<input type="text" class="form-control" placeholder="Postcode" ng-model="appointment.TelehealthAppointment.Doctors[0].Postcode">
 			            	</div>
 		            	</div>
 		            	<div class="col-md-4">
 			            	<div class="form-group ">				
 			            		<label class="control-label">Provider Number</label>				            		
-			            		<input type="number" class="form-control" placeholder="number" value="1234">
+			            		<input type="text" class="form-control" placeholder="number" ng-model="appointment.TelehealthAppointment.Doctors[0].ProviderNumber">
 			            	</div>
 			            </div>
 		            </div>
@@ -926,13 +925,13 @@
 			            <div class="col-md-8">
 			            	<div class="form-group ">	
 			            		<label class="control-label">Signature</label>							            		
-			            		<input type="text" class="form-control" placeholder="Signature">
+			            		<input type="text" class="form-control" placeholder="Signature" ng-model="appointment.TelehealthAppointment.Doctors[0].Signature">
 			            	</div>
 			            </div>
 		            	<div class="col-md-4">
 			            	<div class="form-group ">	
 			            		<label class="control-label">Date</label>							            		
-			            		<input type="text" class="form-control" placeholder="Date" value="01/01/2015">
+			            		<input type="text" class="form-control" placeholder="Date" ng-model="referringPractitionerDateTemp">
 			            	</div>
 			            </div>
 		            </div>
@@ -944,13 +943,13 @@
 						<div class="col-md-6">
 							<label class="label-control">History of Present Complain</label>
 							<div class="form-group">
-								<textarea class="form-control" rows="10" >General medical history</textarea>
+								<textarea class="form-control" rows="10" ng-model="appointment.TelehealthAppointment.PresentComplain"></textarea>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<label class="label-control">Allergy</label>
 							<div class="form-group">
-								<textarea class="form-control" rows="10">Fur allergies,....</textarea>
+								<textarea class="form-control" rows="10" ng-model="appointment.TelehealthAppointment.Allergy"></textarea>
 							</div>
 						</div>
 					</div>
@@ -981,7 +980,7 @@
 	ComponentsPickers.init(); // init todo page
 	Portfolio.init(); // coi hinh
 
-	Metronic.initAjax();
+	// Metronic.initAjax();
 	//ComponentsFormTools.init();
 	ComponentsDropdowns.init(); // init todo page
 	//FormiCheck.init(); // init page demo

@@ -9,7 +9,14 @@ app.directive('listAppointment', function(AppointmentService,$modal) {
 		  	scope.maxSize = 10;
 		  	scope.filteredTodos = [];
 			var data = {
-				patient : null
+				Order :[
+					{
+						Appointment:
+				        {
+				             RequestDate: "DESC"
+				        }
+				    }
+				]
 			};
 			scope.infoAppointment = {
 				patient: null,
@@ -49,7 +56,7 @@ app.directive('listAppointment', function(AppointmentService,$modal) {
 				limit : 100,
 				Search: [
 					{
-						Patient:{
+						PatientAppointment:{
 				       		FullName:scope.infoAppointment.patient
 				       	}
 			        },

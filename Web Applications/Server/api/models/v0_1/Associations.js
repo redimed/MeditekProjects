@@ -81,13 +81,6 @@ module.exports = {
             foreignKey: 'DepartmentID'
         });
 
-        /* Doctor */
-        UserAccount.hasOne(Doctor, {
-            foreignKey: 'UserAccountID'
-        });
-        /* End Doctor */
-
-
         //UserAccount
         UserAccount.hasOne(Patient, {
             foreignKey: 'UserAccountID'
@@ -112,7 +105,16 @@ module.exports = {
         })
 
         /* Doctor */
+        FileUpload.hasOne(Doctor, {
+            foreignKey: 'Signature'
+        });
+        Country.hasOne(Doctor, {
+            foreignKey: 'CountryID'
+        });
         UserAccount.hasOne(Doctor, {
+            foreignKey: 'UserAccountID'
+        });
+        Doctor.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
         });
         /* End Doctor */

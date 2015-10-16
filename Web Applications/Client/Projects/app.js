@@ -54,7 +54,7 @@ app
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
         // END CORS PROXY
         //RESTANGULAR DEFAULT
-        RestangularProvider.setBaseUrl("http://192.168.1.2:3005");
+        RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3005");
         $urlRouterProvider.otherwise('');
         $stateProvider.state('sys', {
             url: '',

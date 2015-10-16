@@ -78,6 +78,9 @@ module.exports = {
         UserAccount.hasOne(Doctor, {
             foreignKey: 'userAccountID'
         });
+        UserAccount.hasOne(Patient, {
+            foreignKey: 'UserAccountID'
+        });
     },
     options: {
         tableName: 'UserAccount',

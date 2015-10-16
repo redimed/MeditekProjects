@@ -45,12 +45,12 @@ module.exports = {
         var data = {};
         if (message == null || from == null || to == null) return;
         var roomList = sails.sockets.rooms();
-        if(roomList.length > 0){
-            for(var i=0; i<roomList.length; i++){
-                if(roomList[i] == to){
+        if (roomList.length > 0) {
+            for (var i = 0; i < roomList.length; i++) {
+                if (roomList[i] == to) {
                     data.from = from;
                     data.message = message;
-                     if (message.toLowerCase() == 'call') {
+                    if (message.toLowerCase() == 'call') {
                         var fromName = typeof req.param('fromName') != 'undefined' ? req.param('fromName') : null;
                         var sessionId = typeof req.param('sessionId') != 'undefined' ? req.param('sessionId') : null;
                         if (sessionId == null) return;
@@ -64,7 +64,7 @@ module.exports = {
                         data.token = token;
                         data.fromName = fromName;
                     }
-                    console.log("====Data====: ",data);
+                    console.log("====Data====: ", data);
                     sails.sockets.broadcast(roomList[i], 'receiveMessage', data);
                 }
             }

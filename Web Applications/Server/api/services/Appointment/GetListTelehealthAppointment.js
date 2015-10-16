@@ -3,33 +3,29 @@ module.exports = function(data) {
     var defer = $q.defer();
     var pagination = Services.GetPaginationAppointment(data);
     //get limit, offset
-    Appointment.findAll({
+    Appointment.findAndCountAll({
             attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status', 'Enable'],
             include: [{
                 model: TelehealthAppointment,
-                attributes: ['UID', 'RefName', 'RefDate'],
+                attributes: ['UID', 'RefName', 'RefDate', 'Correspondence'],
                 required: true,
                 include: [{
                     model: PatientAppointment,
                     attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'PhoneNumber'],
                     required: true,
-                    where: pagination.filterPatientAppointment,
-                    order: pagination.orderPatientAppointment
+                    where: pagination.filterPatientAppointment
                 }],
-                where: pagination.filterTelehealthAppointment,
-                order: pagination.orderTelehealthAppointment
+                where: pagination.filterTelehealthAppointment
             }, {
                 model: Doctor,
                 attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'HomePhoneNumber'],
                 required: true,
-                where: pagination.filterDoctor,
-                order: pagination.orderDoctor
+                where: pagination.filterDoctor
             }, {
                 model: Patient,
                 attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB'],
                 required: true,
                 where: pagination.filterPatient,
-                order: pagination.orderPatient,
                 include: [{
                     model: UserAccount,
                     attributes: ['ID', 'UserName', 'Email', 'PhoneNumber', 'Activated'],
@@ -37,9 +33,10 @@ module.exports = function(data) {
                 }]
             }],
             where: pagination.filterAppointment,
-            order: pagination.orderAppointment,
+            order: pagination.order,
             limit: pagination.limit,
             offset: pagination.offset,
+            subQuery: false
         })
         .then(function(apptTelehealth) {
             defer.resolve({

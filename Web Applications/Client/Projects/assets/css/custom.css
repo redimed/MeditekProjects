@@ -37,3 +37,18 @@
 .bootstrap-select.btn-group .dropdown-menu {
     z-index: 99999999 !important;
 }
+
+.my-step-number{
+    background-color: #eee;
+    display: inline-block;
+    text-align: center !important;
+    font-size: 16px;
+    font-weight: 300;
+    padding: 14px 15px 13px 15px;
+    margin-right: 10px;
+    height: 45px;
+    width: 45px;
+    -webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
+    border-radius: 50% !important;
+}

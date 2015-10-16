@@ -60,36 +60,44 @@
 												<h4><b>Person Information</b></h4>
 												<hr>
 												<!-- begin title -->
-									            <div class="form-group">
-									            	<label class="control-label col-md-4">Title</label>
-									            	<div class="col-md-8">
-									            		<select class="form-control"> </select>
-									            	</div>
-									            </div>
-									            <!-- end title -->
-												<!-- First Name -->
 												<div class="form-group">
-													<label class="control-label col-md-4">First Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="First Name" ng-model="info.FirstName"></div>
+													<label class="control-label col-md-4">Title</label>
+													<div class="col-md-8">
+														<select class="form-control">
+															<option value="">Mr</option>
+															<option value="">Mrs</option>
+															<option value="">Ms</option>
+															<option value="">Dr</option>
+														</select>
+													</div>
 												</div>
-												<!-- end First Name -->
-												<!-- Sur Name -->
+												<!-- end title -->
+												<!-- Firstname -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Sur Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Sur Name" ng-model="info.LastName"></div>
+													<label class="control-label col-md-4">Firstname</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Firstname" ng-model="info.FirstName"></div>
 												</div>
-												<!-- end Sur Name -->
-												<!-- Middle Name -->
+												<!-- end Firstname -->
+												<!-- Surname -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Middle Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Middle Name" ng-model="info.MiddleName"></div>
+													<label class="control-label col-md-4">Surname</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Surname" ng-model="info.LastName"></div>
 												</div>
-												<!-- end Middle Name -->
+												<!-- end Surname -->
+												<!-- Middlename -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Middlename</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Middlename" ng-model="info.MiddleName"></div>
+												</div>
+												<!-- end Middlename -->
 												<!-- Date of Birth -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Date of Birth</label>
 													<div class="col-md-8">
-														<input ng-model="info.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
+														<div class="input-icon">
+															<i class="fa fa-calendar"></i>
+															<input ng-model="info.DOB" type="text" class="form-control" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close">
+														</div>
 													</div>
 												</div>
 												<!-- end Date of Birth -->
@@ -117,25 +125,45 @@
 												<!-- Email -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Email</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Email" ng-disabled="true" ng-model="info.Email"></div>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="fa fa-envelope"></i>
+															<input type="text" class="form-control" placeholder="Email" ng-disabled="true" ng-model="info.Email">
+														</div>
+													</div>
 												</div>
 												<!-- end Email -->
 												<!-- Home Phone -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Home Phone</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber"></div>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="icon-call-end"></i>
+															<input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber">
+														</div>
+													</div>
 												</div>
 												<!-- end Home Phone -->
 												<!-- Mobile Phone -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Mobile Phone</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Mobile Phone" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber"></div>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="icon-call-end"></i>
+															<input type="text" class="form-control" placeholder="Mobile Phone" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber">
+														</div>
+													</div>
 												</div>
 												<!-- end Mobile Phone -->
 												<!-- Address -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Address</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address" ng-model="info.Address"></div>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="fa fa-check"></i>
+															<input type="text" class="form-control" placeholder="Address" ng-model="info.Address">
+														</div>
+													</div>
 												</div>
 												<!-- end Address -->
 												<!-- Surburb -->

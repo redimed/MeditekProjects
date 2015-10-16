@@ -8,6 +8,7 @@ var app = angular.module('app', [
     "restangular",
     "toastr",
     "ladda",
+    "app.common",
     "app.unAuthentication",
     "app.authentication"
 ]);

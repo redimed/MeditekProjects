@@ -35,7 +35,7 @@
 												<div class="col-md-4">
 													<div class="input-icon">
 														<i class="fa fa-user"></i>
-														<input type="text" class="form-control" placeholder="Username">
+														<input type="text" class="form-control" placeholder="Username" disabled>
 													</div>
 												</div>
 											</div>
@@ -46,7 +46,7 @@
 												<div class="col-md-4">
 													<div class="input-icon">
 														<i class="fa fa-envelope"></i>
-														<input type="text" class="form-control" placeholder="Email">
+														<input type="text" class="form-control" placeholder="Email" disabled>
 													</div>
 												</div>
 											</div>
@@ -57,7 +57,7 @@
 												<div class="col-md-4">
 													<div class="input-icon">
 														<i class="icon-call-end"></i>
-														<input type="text" class="form-control" placeholder="Mobile">
+														<input type="text" class="form-control" placeholder="Mobile" disabled>
 													</div>
 												</div>
 											</div>
@@ -83,6 +83,20 @@
 											<div class="col-md-4">
 												<h4><b>Personal Information</b></h4>
 												<hr>
+												<!-- begin title -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Title</label>
+													<div class="col-md-7">
+														<select class="form-control">
+															<option value="">Select your title</option>
+															<option value="">Mr</option>
+															<option value="">Mrs</option>
+															<option value="">Ms</option>
+															<option value="">Dr</option>
+														</select>
+													</div>
+												</div>
+												<!-- end title -->
 												<!-- Begin Firstname -->
 												<div class="form-group">
 													<label class="control-label col-md-5">Firstname</label>
@@ -111,7 +125,7 @@
 												<div class="form-group">
 													<label class="control-label col-md-5">Healthlink ID</label>
 													<div class="col-md-7">
-														<input type="text" placeholder="Healthlink ID" class="form-control">
+														<input type="text" placeholder="Healthlink ID" class="form-control" disabled>
 													</div>
 												</div>
 												<!-- End Healthlink ID -->
@@ -171,7 +185,7 @@
 													<div class="col-md-7">
 														<div class="input-icon">
 															<i class="fa fa-envelope"></i>
-															<input type="text" class="form-control" placeholder="Email">
+															<input type="text" class="form-control" placeholder="Email" disabled>
 														</div>
 													</div>
 												</div>
@@ -187,6 +201,17 @@
 													</div>
 												</div>
 												<!-- end Homephone -->
+												<!-- begin Workphone -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Workphone</label>
+													<div class="col-md-7">
+														<div class="input-icon">
+															<i class="icon-call-end"></i>
+															<input type="text" class="form-control" placeholder="Workphone">
+														</div>
+													</div>
+												</div>
+												<!-- end Workphone -->
 												<!-- begin Postcode -->
 												<div class="form-group">
 													<label class="control-label col-md-5">Postcode</label>
@@ -217,7 +242,7 @@
 													<div class="col-md-7">
 														<!-- <select id="select2_sample4" class="select2 form-control" > -->
 														<select class="select2 form-control" >
-															<option value=""></option>
+															<option value="">Select your country</option>
 															<option value="AF">Afghanistan</option>
 															<option value="AL">Albania</option>
 															<option value="DZ">Algeria</option>

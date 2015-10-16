@@ -23,13 +23,8 @@ app.directive('patientList', function(PatientService, $modal, toastr){
 	                offset: 0,
 	                currentPage: 1,
 	                maxSize: 5,
-	                search: {
-	                    Name:null,
-	                    PhoneNumber:null
-	                },
-	                order: {
-	                    0: 'DESC'
-	                }
+	                values:null,
+	                order: null
 	            };
 	            scope.searchObjectMap = angular.copy(scope.searchObject);
 	            scope.loadList(scope.searchObjectMap);
@@ -42,9 +37,9 @@ app.directive('patientList', function(PatientService, $modal, toastr){
 			};
 
 			scope.setPage = function() {
-            scope.searchObjectMap.offset = (scope.searchObjectMap.currentPage - 1) * scope.searchObjectMap.limit;
-            scope.loadList(scope.searchObjectMap);
-        };
+	            scope.searchObjectMap.offset = (scope.searchObjectMap.currentPage - 1) * scope.searchObjectMap.limit;
+	            scope.loadList(scope.searchObjectMap);
+	        };
 
 			scope.clickOpen = function(patientUID){
 				//scope.ID = patientUID;
@@ -69,6 +64,30 @@ app.directive('patientList', function(PatientService, $modal, toastr){
 					//size: 'lg',
 				});
 			};
+
+			scope.Search = function(data){
+				scope.searchObjectMap.values = data;
+				PatientService.searchPatient(scope.searchObjectMap).then(function(response){
+					scope.patients = response.data;
+					for(var i = 0; i < response.data.length;i++){
+						scope.patients[i].stt = scope.searchObjectMap.offset*1 + i + 1;
+					}
+					scope.count= response.count;
+				},function(err){
+					toastr.error("Server Error","ERROR");
+				});
+
+			};
+
+			scope.sortASC = function(data) {
+				scope.searchObjectMap.order = data;
+				scope.loadList(scope.searchObjectMap);
+			};
+
+			scope.sortDESC = function(data) {
+				scope.searchObjectMap.order = data;
+				scope.loadList(scope.searchObjectMap);
+			}
 		},
 		templateUrl:"modules/patient/directives/template/patientList.html"
 	};

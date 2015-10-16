@@ -32,37 +32,37 @@
 				<div class="col-md-2">
 					<div class="form-group">
 						<label class="label-control">First Name</label>
-						<input type="text" class="form-control" placeholder="First Name" ng-model="search.FirstName">
+						<input type="text" class="form-control" placeholder="First Name" ng-model="search.FirstName" ng-blur="Search(search.FirstName)">
 					</div>
 				</div>
 				<div class="col-md-2">
 					<div class="form-group">
 						<label class="label-control">Last Name</label>
-						<input type="text" class="form-control" placeholder="Last Name" ng-model="search.LastName">
+						<input type="text" class="form-control" placeholder="Last Name" ng-model="search.LastName" ng-blur="Search(search.LastName)">
 					</div>
 				</div>
 				<div class="col-md-2">
 					<div class="form-group">
 						<label class="label-control">Gender</label>
-						<input type="text" class="form-control" placeholder="Address" ng-model="search.Address1">
+						<input type="text" class="form-control" placeholder="Gender" ng-model="search.Gender" ng-blur="Search(search.Gender)">
 					</div>
 				</div>
 				<div class="col-md-2">
 					<div class="form-group">
 						<label class="label-control">Mobile</label>
-						<input type="text" class="form-control" placeholder="PhoneNumber" ng-model="search.PhoneNumber">
+						<input type="text" class="form-control" placeholder="Mobile" ng-model="search.PhoneNumber" ng-blur="Search(search.Gender)">
 					</div>
 				</div>
 				<div class="col-md-2">
 					<div class="form-group">
 						<label class="label-control">Email</label>
-						<input type="text" class="form-control" placeholder="Email" ng-model="search.Email">
+						<input type="text" class="form-control" placeholder="Email" ng-model="search.Email" ng-blur="Search(search.Email)">
 					</div>
 				</div>
 				<div class="col-md-2">
 					<div class="form-group">
 						<label class="label-control">Enable</label>
-						<input type="text" class="form-control" placeholder="Enable" ng-model="search.PostCode">
+						<input type="text" class="form-control" placeholder="Enable" ng-model="search.PostCode" ng-blur="Search(search.PostCode)">
 					</div>
 				</div>
 			</div>
@@ -73,19 +73,43 @@
 		<div class="table-scrollable">
 			<table class="table table-bordered table-hover">
 			<thead>
-				<tr>
-					<th>#</th>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Gender</th>
-					<th>Mobile</th>
-					<th>Email</th>
-					<th>Enable</th>
+				<tr style="width:100%;">
+					<th style="width:10%;">#</th>
+					<th style="width:15%">
+						<label>First Name </label>
+						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('FirstName ASC')" style="float: right; margin-top: -4px;"></span>
+	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('FirstName DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
+ 					</th>
+					<th style="width:15%">
+						<label>Last Name</label>
+						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('LastName ASC')" style="float: right; margin-top: -4px;"></span>
+	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('LastName DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
+					</th>
+					<th style="width:15%">
+						<label>Gender</label>
+						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('Gender ASC')" style="float: right; margin-top: -4px;"></span>
+	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('Gender DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
+					</th>
+					<th style="width:15%">
+						<label>Mobile</label>
+						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('PhoneNumber ASC')" style="float: right; margin-top: -4px;"></span>
+	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('PhoneNumber DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
+					</th>
+					<th style="width:15%">
+						<label>Email</label>
+						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('Email ASC')" style="float: right; margin-top: -4px;"></span>
+	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('Email DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
+					</th>
+					<th style="width:15%">
+						<label>Enable</label>
+						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('Enable ASC')" style="float: right; margin-top: -4px;"></span>
+	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('Enable DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
 			<tbody>
-				<tr ng-repeat="p in patients | filter:search" ng-click="clickOpen(p.UID)">
+				<tr ng-repeat="p in patients" ng-click="clickOpen(p.UID)">
 					<td>{{p.stt}}</td>
 					<td>{{p.FirstName}}</td>
 					<td>{{p.LastName}}</td>

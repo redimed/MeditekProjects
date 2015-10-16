@@ -30,8 +30,10 @@ class GetAndPostDataController {
         ]
         Alamofire.request(.POST, ConfigurationSystem.Http + UrlAPICheckPhoneNumber.SendVerifyCodePhoneNumber ,headers:config.headers, parameters: parameters).responseJSON{
             request, response, result  in
+            print(response)
             switch result {
             case .Success(let JSONData):
+                
                 completionHandler(JSON(JSONData) )
                 
             case .Failure(let data, let error):
@@ -120,6 +122,27 @@ class GetAndPostDataController {
                 }
             }
             
+        }
+        
+    }
+    //GIap:Upload Image
+    func uploadImage(image:UIImage)
+    {
+        let imageData = UIImagePNGRepresentation(image)
+        
+        let base64String = imageData!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+        
+        let parameters = [
+            "uploadFiles[]": base64String,
+            "fileType":"MedicalImage"
+        ]
+        
+        Alamofire.request(.POST, UrlInformationPatient.uploadImage, parameters:parameters) .response {
+            (request, response, data, error) in
+            print("Resquest",request)
+            print("response",response)
+            print("data",data)
+            print("error",error)
         }
         
     }

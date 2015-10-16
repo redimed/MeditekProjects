@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		50B38E783E64ABD83BAA0BD6 /* Pods_Telehealth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */; };
+		AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */ = {isa = PBXBuildFile; fileRef = AF3902F51BCDE8DD00173A58 /* FAQs.html */; settings = {ASSET_TAGS = (); }; };
 		AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */; };
 		AF5AD22E1BCB97290054B4C3 /* ExtensionHandleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */; settings = {ASSET_TAGS = (); }; };
@@ -105,6 +106,7 @@
 
 /* Begin PBXFileReference section */
 		16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
+		AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListTableViewCell.swift; sourceTree = "<group>"; };
 		AF3902F51BCDE8DD00173A58 /* FAQs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = FAQs.html; sourceTree = "<group>"; };
 		AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
 		AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionHandleData.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 		AFF27DF61BB39C2E00B325E8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -528,7 +531,7 @@
 				TargetAttributes = {
 					AFEE34D21BB0413600471592 = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = UA7AB584U5;
+						DevelopmentTeam = 3Y88WBCRNR;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -688,6 +691,7 @@
 				AFEE353E1BB0415D00471592 /* SpringTextView.swift in Sources */,
 				AFEE35331BB0415D00471592 /* KeyboardLayoutConstraint.swift in Sources */,
 				AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */,
+				AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */,
 				AF7726091BCE5E42007F29AC /* DetailAppointmentViewController.swift in Sources */,
 				AFEE353A1BB0415D00471592 /* SpringButton.swift in Sources */,
 				AFEE35391BB0415D00471592 /* SpringAnimation.swift in Sources */,

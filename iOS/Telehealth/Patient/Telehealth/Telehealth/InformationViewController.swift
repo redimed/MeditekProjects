@@ -42,7 +42,7 @@ class InformationViewController: UIViewController {
                 self.firstNameLabel.text = jsonInformation["FirstName"].string
                 self.middleNameLabel.text = jsonInformation["MiddleName"].string
                 self.lastNameLabel.text = jsonInformation["LastName"].string
-                self.dobLabel.text = (jsonInformation["DOB"].string)?.toDateTime()
+                self.dobLabel.text = (jsonInformation["DOB"].string)?.toDate()
                 self.suburbLabel.text = jsonInformation["Suburb"].string
                 self.postCodeLabel.text = jsonInformation["Postcode"].string
                 self.countryLabel.text = jsonInformation["Country"]["ShortName"].string

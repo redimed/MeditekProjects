@@ -19,6 +19,7 @@ struct UrlInformationPatient  {
     static let getInformationPatientByUID = "/api/telehealth/user/details"
     static let getAppointmentList = "/api/telehealth/user/appointments"
     static let getAppointmentDetails = "/api/telehealth/user/appointmentDetails"
+    static let uploadImage = "https://testapp.redimed.com.au:3010/api/UploadFile"
 }
 
 //Giap: API Socket

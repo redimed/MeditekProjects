@@ -13,10 +13,10 @@ let config = ConfigurationSystem()
 var savedData  = saveData()
 let defaults = NSUserDefaults.standardUserDefaults()
 var tokens = String()
-
+var Appointment : [AppointmentList] = []
 
 struct ConfigurationSystem {
-    static let Http = "http://192.168.1.130:3009"
+    static let Http = "http://testapp.redimed.com.au:3009"
     let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
     
     let headers = [
@@ -66,6 +66,17 @@ class saveData {
     init(){}
     init(data:JSON){
         self.data = data
+    }
+}
+
+class AppointmentList {
+     var UIDApointment,ToTime,Status,FromTime,NameDoctor: String!
+    init(UIDApointment:String,ToTime:String,Status:String,FromTime:String,NameDoctor:String){
+        self.UIDApointment = UIDApointment
+        self.ToTime = ToTime
+        self.Status = Status
+        self.FromTime = FromTime
+        self.NameDoctor = NameDoctor
     }
 }
 

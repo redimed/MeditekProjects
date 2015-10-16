@@ -9,7 +9,7 @@
 import UIKit
 
 class DetailAppointmentViewController: UIViewController,UIAlertViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPopoverControllerDelegate {
-
+    let appointmentApi = GetAndPostDataController()
     @IBOutlet weak var btnClickMe: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     var picker:UIImagePickerController?=UIImagePickerController()
@@ -91,12 +91,15 @@ class DetailAppointmentViewController: UIViewController,UIAlertViewDelegate,UIIm
     {
         picker .dismissViewControllerAnimated(true, completion: nil)
         imageView.image=info[UIImagePickerControllerOriginalImage] as? UIImage
+       
+       
+        
         //Check capture and save image to Gallary
         if(picker.sourceType == UIImagePickerControllerSourceType.Camera)
         {
             // Access the uncropped image from info dictionary
             let imageToSave: UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage //same but with different way
-             print(imageToSave)
+            
             UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil)
             savedImageAlert()
             self.dismissViewControllerAnimated(true, completion: nil)
@@ -118,5 +121,9 @@ class DetailAppointmentViewController: UIViewController,UIAlertViewDelegate,UIIm
         alert.show()
     }
 
+    @IBAction func UploadActionButton(sender: AnyObject) {
+         print(imageView.image)
+        appointmentApi.uploadImage(imageView.image!)
+    }
    
 }

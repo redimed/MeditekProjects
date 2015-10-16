@@ -1,9 +1,9 @@
 var app = angular.module('app.authentication.appointment.directives.listAppoint', []);
-app.directive('listAppointment', function(AppointmentService) {
+app.directive('listAppointment', function(AppointmentService,$modal) {
     return {
         restrict: 'E',
         templateUrl: "modules/appointment/directives/templates/listAppointment.html",
-        link: function (scope, $modal, $state) {
+        link: function (scope, $state) {
             scope.currentPage = 1;
 		  	scope.numPerPage = 20;
 		  	scope.maxSize = 10;
@@ -34,10 +34,10 @@ app.directive('listAppointment', function(AppointmentService) {
 				var appointment_from_date = null
 				var appointment_to_date = null
 				if(scope.infoAppointment.submit_from_date !== null){
-					submit_from_date = moment(scope.infoAppointment.submit_from_date).format("YYYY-MM-DD HH:mm:ss Z");
+					submit_from_date = moment(scope.infoAppointment.submit_from_date).format("YYYY-MM-DD Z");
 				}
 				if (scope.infoAppointment.submit_to_date !== null) {
-					submit_to_date = moment(scope.infoAppointment.submit_to_date).format("YYYY-MM-DD HH:mm:ss Z");
+					submit_to_date = moment(scope.infoAppointment.submit_to_date).format("YYYY-MM-DD Z");
 				}
 				if (scope.infoAppointment.appointment_from_date) {
 					appointment_from_date = moment(scope.infoAppointment.appointment_from_date).format("YYYY-MM-DD HH:mm:ss Z");
@@ -45,8 +45,6 @@ app.directive('listAppointment', function(AppointmentService) {
 				if (scope.infoAppointment.appointment_to_date !== null) {
 					appointment_to_date = moment(scope.infoAppointment.appointment_to_date).format("YYYY-MM-DD HH:mm:ss Z");
 				};
-				console.log(submit_from_date)
-				console.log(submit_to_date)
 				var postData = {
 				limit : 100,
 				Search: [
@@ -72,6 +70,7 @@ app.directive('listAppointment', function(AppointmentService) {
 					    }
 					 ]
 			}
+			console.log(postData)
 			AppointmentService.loadListAppointment(postData).then(function(response){
 				scope.filteredTodos = response.rows;
 				scope.appointments = response.rows;
@@ -89,6 +88,21 @@ app.directive('listAppointment', function(AppointmentService) {
 				scope.toggle = scope.toggle === false ? true : false;
 			};
 			
+
+			scope.openAppointmentModal = function(UID){
+				var modalInstance = $modal.open({
+					animation: true,
+					templateUrl:'modules/appointment/views/appointmentListModal.html',
+					controller: 'appointmentListModalCtrl',
+					windowClass : 'app-modal-window',
+					//size: 'lg',
+					resolve: {
+						getid: function(){
+							return UID;
+						}
+					}
+				});
+			};
 
         }
     };

@@ -8,6 +8,10 @@ angular.module("app.authentication.appointment.services",[])
 			var loadListAppointment = api.all("appointment-telehealth-list");
 			return loadListAppointment.post({data:data});
 		};
+		//Get Detail Appointment
+		services.getDetailApppointment = function(data){
+			return api.one('appointment-telehealth-detail/'+ data).get();
+		};
 		services.ListAppointment = function(){
 			return api.one('appointment-telehealth-list').get();
 		}

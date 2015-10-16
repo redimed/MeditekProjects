@@ -1,4 +1,4 @@
-angular.module("app.common",[])
+angular.module("app.common.msgDialog",[])
 
 
 .directive('msgDialog',function($modal){

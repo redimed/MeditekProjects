@@ -1,4 +1,4 @@
-angular.module("app.common",[])
+angular.module("app.common.CommonService",[])
 .factory("CommonService",function(Restangular){
 	var commonService={};
 	var api = Restangular.all("api");

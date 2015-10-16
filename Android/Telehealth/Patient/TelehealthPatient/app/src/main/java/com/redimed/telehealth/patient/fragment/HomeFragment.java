@@ -2,37 +2,26 @@ package com.redimed.telehealth.patient.fragment;
 
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
-import com.redimed.telehealth.patient.CallActivity;
-import com.redimed.telehealth.patient.ContactActivity;
 import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.network.RESTClient;
-import com.redimed.telehealth.patient.service.SocketService;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +48,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         v = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, v);
         restClient = RESTClient.getRegisterApi();
@@ -85,15 +75,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.btnContact:
                 Contact();
-//                ((MainActivity)v.getContext()).Display(4);
                 break;
         }
     }
 
     private void Contact(){
         Log.d(TAG, "CALL");
-//        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + "+84908618694")));
-//        ((MainActivity)v.getContext()).Call();
+        String number = "+1267146714";
+        Uri call = Uri.parse("tel:" + number);
+        Intent phoneCallIntent = new Intent(Intent.ACTION_CALL, call);
+        startActivity(phoneCallIntent);
     }
 
     @Override
@@ -108,7 +99,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     if (!shouldFinish){
                         Toast.makeText(v.getContext(), R.string.confirm_exit, Toast.LENGTH_SHORT).show();
                         shouldFinish = true;
-                        return false;
+                        return true;
                     }
                 }
                 return false;

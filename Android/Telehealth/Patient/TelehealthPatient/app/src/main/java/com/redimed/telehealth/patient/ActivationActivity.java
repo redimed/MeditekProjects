@@ -189,7 +189,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     //Validated phone number match 10-15 digit numbers
     private void RequestCode() {
         txtVerifyCode.setText("");
-        String phoneExpression = "^[0-9]{9,14}$";
+        String phoneExpression = "^[0-9]{5,14}$";
         Pattern patternPhoneExpression = Pattern.compile(phoneExpression);
         Matcher matcherPhoneExpression = patternPhoneExpression.matcher(txtPhone.getText());
         String postCode = lblPhoneCode.getText().toString();
@@ -235,13 +235,16 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
                 @Override
                 public void failure(RetrofitError error) {
-                    String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
-                    try {
-                        JSONObject dataObject = new JSONObject(json);
-                        String message = dataObject.optString("message");
-                        new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, message).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    if (error != null){
+                        String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
+                        try {
+                            JSONObject dataObject = new JSONObject(json);
+                            String message = (String.valueOf(((MyApplication) getApplicationContext()).isJSONValid(dataObject.optString("ErrorsList"))) == null ) ? error.getMessage() : dataObject.optString("ErrorsList");
+                            Log.d(TAG, message);
+                            new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, message).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             });
@@ -274,13 +277,16 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
                     @Override
                     public void failure(RetrofitError error) {
-                        String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
-                        try {
-                            JSONObject dataObject = new JSONObject(json);
-                            String message = dataObject.optString("message");
-                            new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, message).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if (error != null){
+                            String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
+                            try {
+                                JSONObject dataObject = new JSONObject(json);
+                                String message = (String.valueOf(((MyApplication) getApplicationContext()).isJSONValid(dataObject.optString("ErrorsList"))) == null ) ? error.getMessage() : dataObject.optString("ErrorsList");
+                                Log.d(TAG, message);
+                                new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, message).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 });

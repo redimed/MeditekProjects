@@ -25,8 +25,10 @@ public class LauncherActivity extends AppCompatActivity {
     private MyApplication mApplication;
     private SharedPreferences uidTelehealth;
 
-    @Bind(R.id.logo) ImageView mLogo;
-    @Bind(R.id.welcome_text) TextView txtWelcome;
+    @Bind(R.id.logo)
+    ImageView mLogo;
+    @Bind(R.id.welcome_text)
+    TextView txtWelcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

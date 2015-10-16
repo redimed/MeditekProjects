@@ -154,6 +154,28 @@ module.exports = function(data) {
                             error: err
                         });
                     })
+                    //link patient with telehealth appointment
+                    .then(function(patientAppointmentCreated) {
+                        if (HelperService.CheckExistData(data.Patient) &&
+                            HelperService.CheckExistData(data.Patient.UID)) {
+                            //find patient
+                            return Patient.findOne({
+                                attributes: ['ID'],
+                                where: {
+                                    UID: data.Patient.UID
+                                },
+                                transaction: t
+                            });
+                        }
+                    })
+                    .then(function(infoPatient) {
+                        if (HelperService.CheckExistData(infoPatient)) {
+                            //association appointment with patient
+                            return appointmentCreated.addPatient(infoPatient.ID, {
+                                transaction: t
+                            });
+                        }
+                    })
                     .then(function(patientAppointmentCreated) {
                         if (HelperService.CheckExistData(data.TelehealthAppointment.ExaminationRequired)) {
                             var dataExamniationRequired =

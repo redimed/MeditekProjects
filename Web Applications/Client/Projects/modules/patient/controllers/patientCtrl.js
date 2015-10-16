@@ -129,7 +129,6 @@ app.controller('patientCtrl', function($scope,$q){
 			if(info.HomePhoneNumber){
 				var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
 				var HomePhone=info.HomePhoneNumber.replace('/[\(\)\s\-]/g','');
-				console.log(HomePhone);
 				if(!auHomePhoneNumberPattern.test(HomePhone)){
 					error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.invalid-value"});
 				}
@@ -169,7 +168,7 @@ app.controller('patientCtrl', function($scope,$q){
 		try {
 			//validate FirstName
 			if(info.FirstName){
-				if(info.FirstName.length < 0 || info.FirstName.length > 6){
+				if(info.FirstName.length < 0 || info.FirstName.length > 50){
 					error.push({field:"FirstName",message:"length"});
 				}
 			}
@@ -179,7 +178,7 @@ app.controller('patientCtrl', function($scope,$q){
 
 			//validate MiddleName
 			if(info.MiddleName){
-				if(info.MiddleName.length < 0 || info.MiddleName.length > 6){
+				if(info.MiddleName.length < 0 || info.MiddleName.length > 100){
 					error.push({field:"MiddleName",message:"length"});
 				}
 			}
@@ -189,7 +188,7 @@ app.controller('patientCtrl', function($scope,$q){
 
 			//validate LastName
 			if(info.LastName){
-				if(info.LastName.length < 0 || info.LastName.length > 6){
+				if(info.LastName.length < 0 || info.LastName.length > 50){
 					error.push({field:"LastName",message:"length"});
 				}
 			}

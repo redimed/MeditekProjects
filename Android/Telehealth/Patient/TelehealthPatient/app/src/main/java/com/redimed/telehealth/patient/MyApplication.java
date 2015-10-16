@@ -6,6 +6,10 @@ import android.content.Intent;
 import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by luann on 9/23/2015.
  */
@@ -42,5 +46,18 @@ public class MyApplication extends Application{
     @Override
     public void onTerminate() {
         super.onTerminate();
+    }
+
+    public boolean isJSONValid(String test) {
+        try {
+            new JSONObject(test);
+        } catch (JSONException ex) {
+            try {
+                new JSONArray(test);
+            } catch (JSONException ex1) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -19,7 +19,6 @@ app.directive('patientCreate',function(toastr, PatientService, $state){
 					PatientService.checkPatient(data)
 					.then(function(result){
 						if(result!=undefined && result!=null && result!='' && result.length!=0){
-							console.log(result.data);
 							if(result.data.isCheck==false){
 								toastr.success("Phone number can user to create patient","SUCCESS");
 								scope.isShowEmail = result.data.data.Email;
@@ -31,18 +30,13 @@ app.directive('patientCreate',function(toastr, PatientService, $state){
 								scope.isBlockStep1 =false;
 							}
 						}
-						else{
-							console.log(result.data);
-						}
 					}, function(err){
 						toastr.error("Please input correct information","ERROR");
-						console.log(err.data.message.ErrorsList);
 						for(var i = 0; i < err.data.message.ErrorsList.length;i++){
 							scope.er[err.data.message.ErrorsList[i].field] = {'border': '2px solid #DCA7B0'};
 						}
 					});
 				},function (err){
-					console.log(err);
 					toastr.error("Please check data again.","ERROR");
 					scope.er ={};
 					for(var i = 0; i < err.length; i++){
@@ -59,21 +53,22 @@ app.directive('patientCreate',function(toastr, PatientService, $state){
 			};
 
 			scope.createPatient = function(data) {
-				// console.log(data);
-				// var DOB =moment(data.DOB).format();
-				// console.log(DOB);
-				data.DOB = moment(data.DOB).format('YYYY/MM/DD');
+				// data.DOB = moment(data.DOB).format('YYYY/MM/DD');
 				return scope.validate(data)
 				.then(function(result){
 					return PatientService.createPatient(data)
 					.then(function(success){
-						console.log(success);
+						
 					},function(err){
-						console.log(err);
+						toastr.error("Please check data again.","ERROR");
+						scope.er = scope.er?scope.er:{};
+						for(var i = 0; i < err.data.message.ErrorsList.length; i++){
+							scope.er[err.data.message.ErrorsList[i].field] ={'border': '2px solid #DCA7B0'};
+						}
 					});
 				},function(err){
 					toastr.error("Please check data again.","ERROR");
-					scope.er ={};
+					scope.er = scope.er?scope.er:{};
 					for(var i = 0; i < err.length; i++){
 						scope.er[err[i].field] ={'border': '2px solid #DCA7B0'};
 					}

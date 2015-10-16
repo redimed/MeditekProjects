@@ -1,6 +1,7 @@
 angular.module("app.common",[])
-.factory("CommonService",function(){
+.factory("CommonService",function(Restangular){
 	var commonService={};
+	var api = Restangular.all("api");
 	//FUNCTION MẪU
 	commonService.getTitles=function()
 	{
@@ -12,6 +13,11 @@ angular.module("app.common",[])
 		];
 		return list; 
 	}
-	
+
+	commonService.getModulesForUser=function()
+	{
+		var result = api.one("module/GetModulesForUser");
+		return result.get();
+	}	
 	return commonService;
 })

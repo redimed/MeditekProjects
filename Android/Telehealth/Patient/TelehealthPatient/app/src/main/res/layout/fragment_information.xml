@@ -258,7 +258,7 @@
                     android:background="#67000000"
                     android:fontFamily="sans-serif-light"
                     android:orientation="horizontal"
-                    android:text="Submit"
+                    android:text="@string/btn_submit"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="17sp"

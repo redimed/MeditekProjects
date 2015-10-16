@@ -45,7 +45,7 @@ module.exports = {
 			//validate Gender
 			if(data.Gender){
 				if(data.Gender != "F" && data.Gender != "M"){
-					errors.push({field:"Gender",message:"Patient.Gender.valueField"});
+					errors.push({field:"Gender",message:"Patient.Gender.valuesField"});
 					err.pushErrors(errors);
 				}
 			}
@@ -94,9 +94,8 @@ module.exports = {
 			if(data.Email){
 				var EmailPattern=new RegExp(HelperService.regexPattern.email);
 				var Email=data.Email.replace(HelperService.regexPattern.phoneExceptChars,'');
-				console.log(HomePhone);
 				if(!EmailPattern.test(Email)){
-					errors.push({field:"Email",message:"Patient.Email.invalid-value"});
+					errors.push({field:"Email",message:"Patient.Email.invalid-values"});
 					err.pushErrors(errors);
 					throw err;
 				}
@@ -114,9 +113,8 @@ module.exports = {
 			if(data.HomePhoneNumber){
 				var auHomePhoneNumberPattern=new RegExp(HelperService.regexPattern.auHomePhoneNumber);
 				var HomePhone=data.HomePhoneNumber.replace(HelperService.regexPattern.phoneExceptChars,'');
-				console.log(HomePhone);
 				if(!auHomePhoneNumberPattern.test(HomePhone)){
-					errors.push({field:"HomePhoneNumber",message:"Patient.HomePhoneNumber.invalid-value"});
+					errors.push({field:"HomePhoneNumber",message:"Patient.HomePhoneNumber.invalid-values"});
 					err.pushErrors(errors);
 					throw err;
 				}
@@ -127,7 +125,7 @@ module.exports = {
 				var auWorkPhoneNumberPattern=new RegExp(HelperService.regexPattern.auHomePhoneNumber);
 				var WorkPhoneNumber=data.WorkPhoneNumber.replace(HelperService.regexPattern.phoneExceptChars,'');
 				if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
-					errors.push({field:"WorkPhoneNumber",message:"Patient.WorkPhoneNumber.invalid-value"});
+					errors.push({field:"WorkPhoneNumber",message:"Patient.WorkPhoneNumber.invalid-values"});
 					err.pushErrors(errors);
 					throw err;
 				}
@@ -147,6 +145,51 @@ module.exports = {
 			q.reject(err);
 		}
 		return q.promise;
+	},
+
+	whereClause : function(data) {
+		var whereClause = {};
+		whereClause.Patient = {};
+		whereClause.UserAccount ={};
+		if(data.Search!== null && data.Search!==undefined && data.Search!==''){
+			if(data.Search.FirstName){
+				whereClause.Patient.FirstName={
+					like:'%'+data.Search.FirstName+'%'
+				} 
+			}
+			if(data.Search.MiddleName){
+				whereClause.Patient.MiddleName = {
+					like:'%'+data.Search.MiddleName+'%'
+				}
+			}
+			if(data.Search.LastName){
+				whereClause.Patient.LastName = {
+					like:'%'+data.Search.LastName+'%'
+				}
+			}
+			if(data.Search.Gender){
+				whereClause.Patient.Gender = {
+					like:'%'+data.Search.Gender+'%'
+				}
+			}
+			if(data.Search.Email){
+				whereClause.Patient.Email = {
+					like:'%'+data.Search.Email+'%'
+				}
+			}
+			if(data.Search.Enable){
+				whereClause.Patient.Enable = {
+					like:'%'+data.Search.Enable+'%'
+				}
+			}
+			if(data.Search.PhoneNumber){
+				whereClause.UserAccount.PhoneNumber = {
+					like:'%'+data.Search.PhoneNumber+'%'
+				}
+				// whereClause.push("UserAccount.PhoneNumber LIKE '%"+data.Search.PhoneNumber+"%'");
+			}
+		}
+		return whereClause;
 	},
 
 
@@ -210,15 +253,11 @@ module.exports = {
 					info.UserAccountID = user.ID;
 					return Patient.create(info);
 				},function(err){
-					var error = new Error("CreatePatient.error");
-					error.pushErrors("CreateUserAccount.fail");
-					throw error;
+					throw err;
 				});
 			}
 		},function(err){
-			var error = new Error("CreatePatient.fail");
-			error.pushErrors("FindByPhoneNumber.fail");
-			throw error;
+			throw err;
 		});
 	},
 
@@ -229,84 +268,154 @@ module.exports = {
 		output:find patient which was provided information.
 	*/
 	SearchPatient : function(data) {
-		//if data is Phone Number console.log(data.PhoneNumber.charAt(0));
-		if(data.PhoneNumber!=undefined && data.PhoneNumber!=null){
-			if(data.PhoneNumber.substr(0,3)=='+61'){
-				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
-				.then(function(user){
-					//check if Phone Number is found in table UserAccount, get UserAccountID to find patient
-					if(user!=undefined && user!=null && user!='' && user.length!=0){
-						return Patient.findAll({
-							where: {
-								UserAccountID : user[0].ID
-							}
-						});
-					}
-					else{
-						return null;
-					}
-				},function(err){
-					var error = new Error("SearchPatient.error");
-					error.pushErrors("FindByPhoneNumber.error");
-					throw error;
-				});
+		if(data.values!='' && data.values!=null && data.values!=undefined){
+			var PhoneNumberPattern1=new RegExp(/^4[0-9]{8}$/);
+			var PhoneNumberPattern2=new RegExp(/^(\+61|0061|0)?4[0-9]{8}$/);
+			var PhoneNumber=data.values.replace(HelperService.regexPattern.phoneExceptChars,'');
+			if(PhoneNumberPattern1.test(PhoneNumber)||PhoneNumberPattern2.test(PhoneNumber)){
+				if(data.values.substr(0,3)=='+61'){
+					return Services.UserAccount.FindByPhoneNumber(data.values)
+					.then(function(user){
+						//check if Phone Number is found in table UserAccount, 
+						// get UserAccountID to find patient
+						if(user!=undefined && user!=null && user!='' && user.length!=0){
+							return Patient.findAndCountAll({
+								include:[
+									{
+						            	model: UserAccount,
+						            	attributes: ['PhoneNumber'],
+								    	required: true
+								    }
+								],
+								where: {
+									UserAccountID : user[0].ID
+								},
+								limit: data.limit,
+								offset: data.offset,
+							})
+							.then(function(result){
+								return result;
+							},function(err){
+								throw err;
+							});
+						}
+						else{
+							return null;
+						}
+					},function(err){
+						throw err;
+					});
+				}
+				else{
+					data.PhoneNumber = '+61'+data.values;
+					return Services.UserAccount.FindByPhoneNumber(data.values)
+					.then(function(user){
+						//check if Phone Number is found in table UserAccount, 
+						// get UserAccountID to find patient
+						if(user!=undefined && user!=null && user!='' && user.length!=0){
+							return Patient.findAndCountAll({
+								include:[
+											{
+								            	model: UserAccount,
+								            	attributes: ['PhoneNumber'],
+										    	required: true
+										    }
+										],
+								where: {
+									UserAccountID : user[0].ID
+								},
+								limit: data.limit,
+								offset: data.offset,
+							})
+							.then(function(result){
+								return result;
+							},function(err){
+								throw err;
+							});
+						}
+						else{
+							return null;
+						}
+					},function(err){
+						throw err;
+					});
+				}
 			}
 			else{
-				data.PhoneNumber = '+61'+data.PhoneNumber;
-				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
-				.then(function(user){
-					//check if Phone Number is found in table UserAccount, get UserAccountID to find patient
-					if(user!=undefined && user!=null && user!='' && user.length!=0){
-						return Patient.findAll({
-							where: {
-								UserAccountID : user[0].ID
-							}
-						});
-					}
-					else{
-						return null;
-					}
+				return Patient.findAndCountAll({
+					where: {
+						$or :[
+								// gom 3 cot FirstName MiddleName LastName lai de search FullName
+								//dung concat sequelize
+								Sequelize.where(Sequelize.fn("concat", Sequelize.col("FirstName"), ' ', Sequelize.col("MiddleName"), ' ', Sequelize.col("LastName")), {
+						        	like: '%'+data.values+'%'
+								}),
+
+								{
+									FirstName:{
+										$like: '%'+data.values+'%'
+									}
+								},
+
+								{	
+									MiddleName:{
+										$like: '%'+data.values+'%'
+									}
+								},
+
+								{
+									LastName:{
+										$like: '%'+data.values+'%'
+									}
+								},
+
+								{
+									UID : data.values
+								},
+
+								{
+									Gender: {
+										$like: '%'+data.values+'%'
+									}
+								},
+
+								{
+									Email: {
+										$like: '%'+data.values+'%'
+									}
+								},
+
+								{
+									Enable: data.values
+								}
+					  		]
+					},
+					limit: data.limit,
+					offset: data.offset,
+				})
+				.then(function(result){
+					return result;
 				},function(err){
-					var error = new Error("SearchPatient.error");
-					error.pushErrors("Patient.findAll.error");
-					throw error;
-				});
+					throw err;
+			})
 			}
 		}
 		else {
-			//if data is patient's information
-			return Patient.findAll({
-				where: {
-					$or :[
-							// gom 3 cot FirstName MiddleName LastName lai de search FullName
-							//dung concat sequelize
-						Sequelize.where(Sequelize.fn("concat", Sequelize.col("FirstName"), ' ', Sequelize.col("MiddleName"), ' ', Sequelize.col("LastName")), {
-					        like: '%'+data.Name+'%'
-						}),
-
-						{
-							FirstName:{
-								$like: '%'+data.Name+'%'
-							}
-						},
-
-						{
-							MiddleName:{
-								$like: '%'+data.Name+'%'
-							}
-						},
-
-						{
-							LastName:{
-								$like: '%'+data.Name+'%'
-							}
-						},
-
-						{
-							UID : data.UID
-						}
-			  		]
-			  	}
+			return Patient.findAndCountAll({
+				include:[
+					{
+		            	model: UserAccount,
+		            	attributes: ['PhoneNumber'],
+				    	required: true
+				    }
+				],
+				limit: data.limit,
+				offset: data.offset,
+			})
+			.then(function(result){
+				return result;
+			},function(err){
+				throw err;
 			});
 		}
 	},
@@ -318,7 +427,6 @@ module.exports = {
 		output:update patient into table Patient
 	*/
 	UpdatePatient : function(data) {
-		console.log(data);
 		data.ModifiedDate = new Date();
 		var DOB = moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
 		//get data not required
@@ -346,7 +454,7 @@ module.exports = {
 			ModifiedBy      : data.ModifiedBy
 		};
 
-		//get data required ( if data has value, get it)
+		//get data required ( if data has values, get it)
 		if(data.UserAccountID)  patientInfo.UserAccountID = data.UserAccountID;
 		if(data.CountryID)  patientInfo.CountryID = data.CountryID;
 		if(data.UID)  patientInfo.UID = data.UID;
@@ -394,9 +502,7 @@ module.exports = {
 				return null;
 			}
 		},function(err){
-			var error = new Error("GetPatient.error");
-			error.pushErrors("Patient.findAll.error");
-			throw error;
+			throw err;
 		});
 	},
 	
@@ -406,7 +512,6 @@ module.exports = {
 		output: get patient's detail
 	*/
 	DetailPatient : function(data) {
-		console.log(data);
 		return Patient.findAll({
 			where:{
 				UID : data.UID
@@ -419,6 +524,11 @@ module.exports = {
 			    }
 			]
 		})
+		.then(function(result){
+			return result;
+		},function(err){
+			throw err;
+		});
 	},
 
 	/*
@@ -426,29 +536,60 @@ module.exports = {
 		input: amount patient
 		output: get list patient from table Patient
 	*/
-	LoadListPatient : function(limit,offset){
-		var resLimit = (limit)? limit : 10;
-		var resOffset = (offset)? offset : 0;
+	LoadListPatient : function(data){
+		var resLimit = (data.limit)? data.limit : 10;
+		var resOffset = (data.offset)? data.offset : 0;
+		var whereClause = Services.Patient.whereClause(data);
 		return Patient.findAndCountAll({
 			include:[
 				{
-	            	model: UserAccount,
-	            	attributes: ['PhoneNumber'],
-			    	required: true
+		           	model: UserAccount,
+		          	attributes: ['PhoneNumber'],
+				   	required: true,
+				   	where:{
+				   		$or: whereClause.UserAccount
+				   	}
 			    }
 			],
-			limit: resLimit,
-			offset: resOffset,
+			limit  : resLimit,
+			offset : resOffset,
+			order  : data.order,
+			// where  : UserAccount.PhoneNumber='+456456'
+			// where  : whereClause
+			where: {
+				$or: whereClause.Patient
+				
+			}
 		})
 		.then(function(result){
 			return result;
 		},function(err){
-			var error = new Error("SERVER ERROR");
-			var errors = [];
-			errors.push({message:"LoadListPatient.findAll.error"});
-			error.pushErrors(errors);
-			throw error;
-		})
+			throw err;
+		});
+			
+		// else {
+		// 	return Patient.findAndCountAll({
+		// 		include:[
+		// 			{
+		//             	model: UserAccount,
+		//             	attributes: ['PhoneNumber'],
+		// 		    	required: true
+		// 		    }
+		// 		],
+		// 		limit  : resLimit,
+		// 		offset : resOffset,
+		// 		order  : data.order
+		// 	})
+		// 	.then(function(result){
+		// 		return result;
+		// 	},function(err){
+		// 		var error = new Error("SERVER ERROR");
+		// 		var errors = [];
+		// 		errors.push({message:"LoadListPatient.findAll.error"});
+		// 		error.pushErrors(errors);
+		// 		throw error;
+		// 	})
+		// }
 	},
 
 	CheckPatient : function(data) {
@@ -474,9 +615,7 @@ module.exports = {
 							isCheck:false
 						});
 				},function(err){
-					var error = new Error("CheckPatient.error");
-					error.pushErrors("FindByPhoneNumber.error");
-					throw error;
+					throw err;
 				})
 				.then(function(result){
 					if(result!==undefined && result!==null && result!=='' && result.length!==0 && result.isCheck!==false){
@@ -493,11 +632,7 @@ module.exports = {
 							}
 						});
 				},function(err){
-					var error = new Error("CheckPatient.error");
-					var errors = [];
-					errors.push({field:"PhoneNumber",message:err.errors});
-					error.pushErrors(errors);
-					throw error;
+					throw err;
 				});
 			}
 			else{

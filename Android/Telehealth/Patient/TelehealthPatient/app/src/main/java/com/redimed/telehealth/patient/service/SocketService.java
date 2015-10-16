@@ -72,6 +72,7 @@ public class SocketService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         socket.on("receiveMessage", onReceiveMessage);
+        socket.on("errorMsg", onReceiveError);
         socket.on(Socket.EVENT_CONNECT, onConnect);
         socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
         socket.on(Socket.EVENT_RECONNECT, onReconnect);
@@ -84,7 +85,7 @@ public class SocketService extends Service {
         JSONObject obj = new JSONObject();
         try {
             Uri.Builder builder = new Uri.Builder();
-            builder.appendPath("telehealth");
+            builder.appendPath("api/telehealth");
             builder.appendPath(url);
             for (String key : params.keySet()) {
                 builder.appendQueryParameter(key, String.valueOf(params.get(key)));
@@ -146,15 +147,23 @@ public class SocketService extends Service {
         }
     };
 
+    private Emitter.Listener onReceiveError = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.d("Socket errorMsg", args[0].toString());
+        }
+    };
+
+
     private Emitter.Listener onReceiveMessage = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             JSONObject data = (JSONObject) args[0];
         try {
             String message = data.get("message").toString();
-            i = new Intent(getApplicationContext(), CallActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             if (message.equalsIgnoreCase("call")){
+                i = new Intent(getApplicationContext(), CallActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("apiKey", data.get("apiKey").toString());
                 i.putExtra("sessionId", data.get("sessionId").toString());
                 i.putExtra("token", data.get("token").toString());
@@ -162,17 +171,15 @@ public class SocketService extends Service {
                 i.putExtra("from", uidTelehealth.getString("uid", null));
                 i.putExtra("message", data.get("message").toString());
                 i.putExtra("fromName", data.get("fromName").toString());
+                Log.d(TAG, message.toString());
                 startActivity(i);
             }
             if (message.equalsIgnoreCase("end")){
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("message", data.get("message").toString());
-                startActivity(intent);
-                Log.d(TAG, data.toString());
-            }
-            if (message.equalsIgnoreCase("errorMsg")){
-                Log.d(TAG, data.toString());
+                i = new Intent(getApplicationContext(), MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("message", data.get("message").toString());
+                JoinRoom();
+                startActivity(i);
             }
         } catch (JSONException e) {
             e.printStackTrace();

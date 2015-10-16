@@ -2,6 +2,7 @@ package com.redimed.telehealth.patient;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +50,7 @@ import retrofit.mime.TypedByteArray;
 
 public class MainActivity extends AppCompatActivity{
 
-    private String TAG ="HOME";
+    private String TAG ="MAIN";
     private ActionBarDrawerToggle actionDrawerToggle;
     private RegisterApi restClient;
     private LinearLayoutManager layoutManagerCategories;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity{
     private TelehealthUser telehealthUser;
     private SharedPreferences uidTelehealth;
     private Gson gson;
+    private boolean flagImageViewDrawer;
 
     @Bind(R.id.frame_container)
     FrameLayout main_contain;
@@ -94,7 +97,6 @@ public class MainActivity extends AppCompatActivity{
         categories.add(new Category(R.drawable.person_icon, "Information", R.drawable.circled_chevron_right_icon));
         categories.add(new Category(R.drawable.share_image_icon, "Telehealth", R.drawable.circled_chevron_right_icon));
         categories.add(new Category(R.drawable.person_icon, "FAQs", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.share_image_icon, "Contact", R.drawable.circled_chevron_right_icon));
     }
 
     private void GetDetailsPatient() {
@@ -121,30 +123,19 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void failure(RetrofitError error) {
-                String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
-                try {
-//                    JSONObject jsonObject = new JSONObject((((TypedByteArray) error.getResponse().getBody()).getBytes()).toString());
-                    JSONObject dataObject = new JSONObject(json);
-                    String message = (String.valueOf(isJSONValid(dataObject.optString("message"))).equalsIgnoreCase("true") ? error.getMessage() : dataObject.optString("message"));
-                    Log.d(TAG, message);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (error != null){
+                    String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
+                    try {
+                        JSONObject dataObject = new JSONObject(json);
+                        String message = (String.valueOf(((MyApplication) getApplicationContext()).isJSONValid(dataObject.optString("ErrorsList"))) == null ) ? error.getMessage() : dataObject.optString("ErrorsList");
+                        Log.d(TAG, message);
+                        new CustomAlertDialog(MainActivity.this, CustomAlertDialog.State.Error, message).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
-    }
-
-    public boolean isJSONValid(String test) {
-        try {
-            new JSONObject(test);
-        } catch (JSONException ex) {
-            try {
-                new JSONArray(test);
-            } catch (JSONException ex1) {
-                return false;
-            }
-        }
-        return true;
     }
 
     //Initialize Drawer
@@ -172,7 +163,6 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void Display(int position){
-        Log.d("POSITION", position + "");
         Fragment fragment = null;
         switch (position) {
             case 0:
@@ -187,8 +177,6 @@ public class MainActivity extends AppCompatActivity{
             case 3:
                 fragment = new FAQsFragment();
                 break;
-            case 4:
-                fragment = new ContactFragment();
             default:
                 break;
         }
@@ -199,9 +187,5 @@ public class MainActivity extends AppCompatActivity{
         } else {
             Log.e("MainActivity", "Error in creating fragment");
         }
-    }
-
-    public void Call(){
-        startActivity(new Intent(this, ContactActivity.class));
     }
 }

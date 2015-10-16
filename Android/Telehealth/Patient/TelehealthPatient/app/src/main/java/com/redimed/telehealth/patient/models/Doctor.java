@@ -28,6 +28,9 @@ public class Doctor {
     @SerializedName("HomePhoneNumber")
     private String HomePhoneNumber;
 
+    @SerializedName("WorkPhoneNumber")
+    private String WorkPhoneNumber;
+
     @SerializedName("RelDoctorAppointment")
     private RelDoctorAppointment RelDoctorAppointment;
 
@@ -85,6 +88,14 @@ public class Doctor {
 
     public void setHomePhoneNumber(String homePhoneNumber) {
         HomePhoneNumber = homePhoneNumber;
+    }
+
+    public String getWorkPhoneNumber() {
+        return WorkPhoneNumber;
+    }
+
+    public void setWorkPhoneNumber(String workPhoneNumber) {
+        WorkPhoneNumber = workPhoneNumber;
     }
 
     public com.redimed.telehealth.patient.models.RelDoctorAppointment getRelDoctorAppointment() {

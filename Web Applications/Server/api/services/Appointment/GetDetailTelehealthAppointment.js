@@ -1,4 +1,4 @@
-module.exports = function(teleAppointmentUID) {
+module.exports = function(appointmentUID) {
     var $q = require('q');
     var defer = $q.defer();
     Appointment.findOne({
@@ -10,26 +10,26 @@ module.exports = function(teleAppointmentUID) {
                     'RefPostCode', 'RefSignature', 'RefDate', 'RefProviderNumber',
                     'RefDurationOfReferal', 'PresentComplain', 'Allergy'
                 ],
-                required: true,
+                required: false,
                 include: [{
                     model: PatientAppointment,
                     attributes: ['UID', 'FirstName', 'MiddleName', 'LastName',
                         'DOB', 'Email', 'PhoneNumber', 'Address', 'Suburb', 'Postcode',
                         'Email', 'PhoneNumber', 'HomePhoneNumber'
                     ],
-                    required: true,
+                    required: false,
                 }, {
                     model: ExaminationRequired,
                     attributes: ['Private', 'Public', 'DVA', 'WorkersComp', 'MVIT'],
-                    required: true
+                    required: false
                 }, {
                     model: PreferedPlasticSurgeon,
                     attributes: ['Name'],
-                    required: true
+                    required: false
                 }, {
                     model: ClinicalDetail,
                     attributes: ['UID', 'Section', 'Category', 'Type', 'Name', 'Value', 'ClinicalNote', 'Description'],
-                    required: true
+                    required: false
                 }]
             }, {
                 model: Doctor,
@@ -56,7 +56,7 @@ module.exports = function(teleAppointmentUID) {
                 required: false
             }],
             where: {
-                UID: teleAppointmentUID
+                UID: appointmentUID
             }
         })
         .then(function(detailApptTelehealth) {

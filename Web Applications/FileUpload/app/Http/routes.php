@@ -15,8 +15,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('api/UploadFile', 'UploadFileController@GetUploadFile');
 
-Route::post('api/UploadFile', 'UploadFileController@PostUploadFile');
+// Web App Upload File
+Route::get('api/UploadMultiFiles','UploadFileController@GetUploadMultiFiles');
+Route::post('api/UploadMultiFiles', 'UploadFileController@PostUploadMultiFiles');
 
-Route::get('api/LoadFile/{Id}', 'UploadFileController@GetLoadFile');
+
+
+// View File
+Route::get('api/LoadFile/{Id}', 'UploadFileController@GetLoadFileID');
+Route::get('api/LoadFileUID/{UID}', 'UploadFileController@GetLoadFileUID');
+
+
+// Telehealth Patient - Upload Single File
+Route::get( 'api/UploadSingleFileTelehealthPatient',        'UploadFileController@GetUploadSingleFileTelehealthPatient');
+Route::post('api/UploadSingleFileTelehealthPatient', 'UploadFileController@PostUploadSingleFileTelehealthPatient');
+Route::post('api/UploadMultiFileTelehealthPatient',  'UploadFileController@PostUploadMultiFileTelehealthPatient');

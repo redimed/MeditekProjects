@@ -1,8 +1,14 @@
 var app = angular.module('app.authentication.patient.list.directive',[]);
-app.directive('patientList', function(PatientService, $modal, toastr){
+app.directive('patientList', function(PatientService, $modal, toastr,$cookies){
 	return {
 		restrict: "EA",
 		link: function(scope, elem, attrs){
+			var userInfo=$cookies.getObject("userInfo");
+			scope.enableCreate=false;
+			_.each(userInfo.roles,function(role){
+				if(['ASSISTANT','ADMIN'].indexOf(role.RoleCode)>=0)
+					scope.enableCreate=true;
+			})
 			scope.loadList = function(info){
 				PatientService.loadlistPatient(info).then(function(response){
 					if(response.message=="success"){
@@ -23,28 +29,22 @@ app.directive('patientList', function(PatientService, $modal, toastr){
 	                offset: 0,
 	                currentPage: 1,
 	                maxSize: 5,
-	                search: {
-	                    Name:null,
-	                    PhoneNumber:null
-	                },
-	                order: {
-	                    0: 'DESC'
-	                }
+	                Search:null,
+	                order: null
 	            };
 	            scope.searchObjectMap = angular.copy(scope.searchObject);
 	            scope.loadList(scope.searchObjectMap);
 	        };
 
-	        scope.init();
 			scope.toggle = true;
 			scope.toggleFilter = function(){
 				scope.toggle = scope.toggle === false ? true : false;
 			};
 
 			scope.setPage = function() {
-            scope.searchObjectMap.offset = (scope.searchObjectMap.currentPage - 1) * scope.searchObjectMap.limit;
-            scope.loadList(scope.searchObjectMap);
-        };
+	            scope.searchObjectMap.offset = (scope.searchObjectMap.currentPage - 1) * scope.searchObjectMap.limit;
+	            scope.loadList(scope.searchObjectMap);
+	        };
 
 			scope.clickOpen = function(patientUID){
 				//scope.ID = patientUID;
@@ -69,6 +69,24 @@ app.directive('patientList', function(PatientService, $modal, toastr){
 					//size: 'lg',
 				});
 			};
+
+			scope.Search = function(data){
+				 scope.searchObjectMap.Search = data;
+				 scope.loadList(scope.searchObjectMap);
+
+			};
+
+			scope.sortASC = function(data) {
+				scope.searchObjectMap.order = data;
+				scope.loadList(scope.searchObjectMap);
+			};
+
+			scope.sortDESC = function(data) {
+				scope.searchObjectMap.order = data;
+				scope.loadList(scope.searchObjectMap);
+			};
+
+			scope.init();
 		},
 		templateUrl:"modules/patient/directives/template/patientList.html"
 	};

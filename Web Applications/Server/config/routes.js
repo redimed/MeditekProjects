@@ -20,4 +20,8 @@ var urgentCareRoutes = require('./routes/urgentCareRoutes');
 _.extend(routes, urgentCareRoutes);
 
 //End Module User Account
+
+var authorizationRoutes = require('./routes/authorizationRoutes');
+_.extend(routes, authorizationRoutes);
+
 module.exports.routes = routes;

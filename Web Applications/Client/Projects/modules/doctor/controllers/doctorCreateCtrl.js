@@ -1,5 +1,3 @@
-var app = angular.module('app.authentication.doctor.create.controller', [
-]);
-
-app.controller('doctorCreateCtrl', function($scope, $modal, $state){
-});
+angular.module('app.authentication.doctor.create.controller', [])
+.controller('doctorCreateCtrl', function($scope, $modal, $state){
+})

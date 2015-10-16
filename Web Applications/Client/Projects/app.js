@@ -12,6 +12,7 @@ var app = angular.module('app', [
     "app.unAuthentication",
     "app.authentication",
     "angularFileUpload"
+    
 ]);
 
 app

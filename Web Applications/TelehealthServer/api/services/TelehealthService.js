@@ -68,8 +68,9 @@ module.exports = {
                     }],
                     Filter: [{
                         Appointment: {
-                            FromTime: sails.moment().format('YYYY-MM-DD'),
-                            status: "Approved"
+                            FromTime: sails.moment().format('YYYY-MM-DD ZZ'),
+                            Status: "Approved",
+                            Enable: "Y"
                         }
                     }]
                 }
@@ -79,8 +80,9 @@ module.exports = {
     GetOnlineUsers: function() {
         var appts = [];
         TelehealthService.GetAppointmentList().then(function(response) {
-            appts = response.getBody();
-            if (appts.length > 0) {
+            var data = response.getBody();
+            if (data.count > 0) {
+                appts = data.rows;
                 TelehealthUser.findAll().then(function(teleUsers) {
                     for (var i = 0; i < teleUsers.length; i++) {
                         for (var j = 0; j < appts.length; j++) {

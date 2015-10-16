@@ -1,35 +1,35 @@
 module.exports.routes = {
     //=================Telehealth User Routes======================
     'POST /api/telehealth/user/updateToken': {
-        controller: 'TelehealthController',
+        controller: 'Telehealth/v1_0/TelehealthController',
         action: 'UpdateDeviceToken'
     },
     'POST /api/telehealth/user/requestActivationCode': {
-        controller: 'TelehealthController',
+        controller: 'Telehealth/v1_0/TelehealthController',
         action: 'RequestActivationCode'
     },
     'POST /api/telehealth/user/verifyActivationCode': {
-        controller: 'TelehealthController',
+        controller: 'Telehealth/v1_0/TelehealthController',
         action: 'VerifyActivationCode'
     },
     'POST /api/telehealth/user/login': {
-        controller: 'TelehealthController',
+        controller: 'Telehealth/v1_0/TelehealthController',
         action: 'TelehealthLogin'
     },
     'POST /api/telehealth/user/details': {
-        controller: 'TelehealthController',
+        controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetUserDetails'
     },
     'POST /api/telehealth/user/appointments': {
-        controller: 'TelehealthController',
+        controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetUserAppointments'
     },
     'POST /api/telehealth/user/appointmentDetails':{
-        controller: 'TelehealthController',
+        controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetAppointmentDetails'
     },
     'POST /api/telehealth/sendSMS': {
-        controller: 'TelehealthController',
+        controller: 'Telehealth/v1_0/TelehealthController',
         action: 'SendSMS'
     },
     //================Telehealth Socket Routes==========================

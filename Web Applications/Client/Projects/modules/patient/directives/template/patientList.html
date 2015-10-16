@@ -1,0 +1,145 @@
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">Patient</h3>
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<b>Patient</b>
+			<i class="fa fa-angle-right"></i>
+		</li>
+	</ul>
+</div>
+<!-- END PAGE HEADER-->
+
+<!-- content page -->
+<div class="portlet light bordered">
+	<div class="portlet-title">
+		<div class="caption font-green">
+			<i class="icon-list font-green"></i>
+			<span class="caption-subject bold uppercase"> Patient</span>
+		</div>
+		<div class="actions">
+			<a href="javascript:;" class="btn btn-circle red btn-sm" ng-click="toggleFilter()"><i class="fa fa-filter"></i> Filter</a>
+			<a href="javascript:;" class="btn btn-circle blue btn-sm" ui-sref="authentication.patient.create">
+			<i class="glyphicon glyphicon-plus"></i> Create</a>
+			<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+		</div>
+	</div>
+	<div class="portlet-body">
+		<!-- begin filter -->
+		<span ng-hide="toggle">
+            <div class="row">
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="label-control">First Name</label>
+						<input type="text" class="form-control" placeholder="First Name" ng-model="search.FirstName" ng-change="Search(search)">
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="label-control">Last Name</label>
+						<input type="text" class="form-control" placeholder="Last Name" ng-model="search.LastName" ng-change="Search(search)">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<label class="label-control">Gender</label>
+						<input type="text" class="form-control" placeholder="Gender" ng-model="search.Gender" ng-change="Search(search)">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<label class="label-control">Mobile</label>
+						<input type="text" class="form-control" placeholder="Mobile" ng-model="search.PhoneNumber" ng-change="Search(search)">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<label class="label-control">Email</label>
+						<input type="text" class="form-control" placeholder="Email" ng-model="search.Email" ng-change="Search(search)">
+					</div>
+				</div>
+				
+			</div>
+        </span>
+        <span ng-show="toggle"></span>
+        <!-- end filter -->
+		<!-- begin table -->
+		<div class="table-scrollable">
+			<table class="table table-bordered table-hover">
+			<thead>
+				<tr style="width:100%;">
+					<th style="width:10%;">#</th>
+					<th style="width:18%">
+						<label>First Name </label>
+						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('FirstName ASC')" style="float: right; margin-top: -4px;"></span>
+	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('FirstName DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
+ 					</th>
+					<th style="width:18%">
+						<label>Last Name</label>
+						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('LastName ASC')" style="float: right; margin-top: -4px;"></span>
+	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('LastName DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
+					</th>
+					<th style="width:18%">
+						<label>Gender</label>
+						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('Gender ASC')" style="float: right; margin-top: -4px;"></span>
+	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('Gender DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
+					</th>
+					<th style="width:18%">
+						<label>Mobile</label>
+						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('PhoneNumber ASC')" style="float: right; margin-top: -4px;"></span>
+	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('PhoneNumber DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
+					</th>
+					<th style="width:18%">
+						<label>Email</label>
+						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('Email ASC')" style="float: right; margin-top: -4px;"></span>
+	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('Email DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			<tbody>
+				<tr ng-repeat="p in patients" ng-click="clickOpen(p.UID)" style="width:100%;">
+					<td style="width:10%;">{{p.stt}}</td>
+					<td style="width:18%;">{{p.FirstName}}</td>
+					<td style="width:18%;">{{p.LastName}}</td>
+					<td style="width:18%;">{{p.Gender=='F'?'Female':'Male'}}</td>
+					<td style="width:18%;">{{p.UserAccount.PhoneNumber}}</td>
+					<td style="width:18%;">{{p.Email}}</td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+		<!-- begin pagination -->
+		<div class="row">
+			<div class="col-md-5 col-sm-12">
+				&nbsp;
+			</div>
+			<div class="col-md-7 col-sm-12">
+				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+					<pagination 
+					boundary-links="true" 
+					total-items="count" 
+					ng-model="searchObjectMap.currentPage" 
+					class="pagination-sm " 
+					previous-text="&lsaquo; " 
+					next-text="&rsaquo; " 
+					first-text="&laquo; " 
+					last-text="&raquo; " 
+					items-per-page="searchObjectMap.limit" 
+					max-size="searchObjectMap.maxSize"
+					ng-change="setPage()"></pagination>
+				</div>
+			</div>
+		</div>
+		<!-- end pagination -->
+		<!-- end table -->
+
+		<!-- begin pagination -->
+		<!-- end paginatiton -->
+	</div>
+</div>
+<!-- end content page -->
+<script type="text/ng-template " id="patientListmodal">
+    <patient-listmodal on-uid="ID" on-cancel="close" on-savechange="savechange"></patient-listmodal>
+</script>

@@ -1,445 +1,528 @@
 <!-- BEGIN PAGE HEADER-->
 <h3 class="page-title">Telehealth Appointments Request</h3>
 <div class="page-bar">
-	<ul class="page-breadcrumb">
-		<li>
-			<i class="fa fa-home"></i>
-			<a href="" ui-sref="authentication.apppointment.list">Telehealth Appointments Request</a>
-		</li>
-		<li>
-			<i class="fa fa-angle-right"></i>
-			<b>Telehealth Appointments Request</b>
-		</li>
-	</ul>
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="" ui-sref="authentication.apppointment.list">Telehealth Appointments Request</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Telehealth Appointments Request</b>
+        </li>
+    </ul>
 </div>
 <!-- END PAGE HEADER-->
-
-<!-- <div class="form-group">
-	<div class="checkbox-list-inline">
-		<label class="control-label">Duration Of Referral : </label>
-		<label class="radio-inline">
-		<input type="radio" class="icheck"  id="inlineCheckbox1" value="option1"  checked> 3 months</label>
-		<label class="radio-inline">
-		<input type="radio" class="icheck"  id="inlineCheckbox2" value="option2" > 12 months</label>
-		<label class="radio-inline">
-		<input type="radio" class="icheck"  id="inlineCheckbox3" value="option3" > Indefinite</label>
-	</div>
-</div> -->
-
 <div class="form-group">
-	<div class="input-group">
-		<div class="icheck-list-inline">
-			<label>Duration Of Referral :</label>&nbsp;&nbsp;
-			<label>
-			<input type="radio" name="duration_of_referral" class="icheck"> 3 months </label>
-			<label>
-			<input type="radio" name="duration_of_referral" checked class="icheck"> 12 months </label>
-			<label>
-			<input type="radio" name="duration_of_referral" class="icheck"> Indefinite </label>
-		</div>
-	</div>
+    <div class="input-group">
+        <div class="icheck-list-inline">
+            <label>Duration Of Referral :</label>&nbsp;&nbsp;
+            <label>
+                <input type="radio" name="duration_of_referral" ng-model="requestInfo.TelehealthAppointment.RefDurationOfReferal" value="03"> 3 months </label>
+            <label>
+                <input type="radio" name="duration_of_referral" ng-model="requestInfo.TelehealthAppointment.RefDurationOfReferal" value="12"> 12 months </label>
+            <label>
+                <input type="radio" name="duration_of_referral" ng-model="requestInfo.TelehealthAppointment.RefDurationOfReferal" value="00"> Indefinite </label>
+        </div>
+    </div>
 </div>
-
 <!-- BEGIN Patient details (Affix Patient Label Here)-->
 <div class="portlet box green bordered">
-	<div class="portlet-title">
-		<div class="caption">
-			<i class="fa fa-gift "></i> Patient Details (Affix Patient Label Here)
-		</div>
-		<div class="tools">
-			<a href="" class="collapse"></a>
-		</div>
-	</div>
-	<div class="portlet-body">
-		<div class="row my-portlet-body">
-			<div class="col-md-12">
-				<div class="row">
-					<!-- begin firstname -->
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">First Name</label>
-							<input type="text" class="form-control" placeholder="First Name">
-						</div>
-					</div>
-					<!-- end firstname -->
-					<!-- begin lastname -->
-					<div class="col-md-4">
-						<div class="form-group ">
-							<label class="control-label">Last Name</label>
-							<input type="text" class="form-control" placeholder="Last Name">
-						</div>
-					</div>
-					<!-- end lastname -->
-					<!-- begin dob -->
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">Date of Birth</label>
-							<input type="text" class="form-control" placeholder="Date of Birth">
-						</div>
-					</div>
-					<!-- end dob -->
-				</div>
-				<div class="row">
-					<!-- begin address -->
-					<div class="col-md-12">
-						<div class="form-group">
-							<label class="control-label">Address</label>
-							<input type="text" class="form-control" placeholder="Address">
-						</div>
-					</div>
-					<!-- end address -->
-				</div>
-				<div class="row">
-					<!-- begin suburb -->
-					<div class="col-md-8">
-						<div class="form-group ">
-							<label class="control-label">Suburb</label>
-							<input type="text" class="form-control" placeholder="Surburb">
-						</div>
-					</div>
-					<!-- end suburb -->
-					<!-- begin postcode -->
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">Postcode</label>
-							<input type="text" class="form-control" placeholder="Postcode">
-						</div>
-					</div>
-					<!-- end postcode -->
-				</div>
-				<div class="row">
-					<!-- begin contact number -->
-					<div class="col-md-4">
-						<div class="form-group ">
-							<label class="control-label">Contact Number (M)</label>
-							<input type="text" class="form-control" placeholder="Contact Number (M)">
-						</div>
-					</div>
-					<!-- end contact number -->
-					<!-- begin contact number H-->
-					<div class="col-md-4">
-						<div class="form-group ">
-							<label class="control-label">Contact Number (H)</label>
-							<input type="text" class="form-control" placeholder="Contact Number (H)">
-						</div>
-					</div>
-					<!-- begin contact number H-->
-					<!-- begin email -->
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">Email</label>
-							<input type="text" class="form-control" placeholder="Email">
-						</div>
-					</div>
-					<!-- end email -->
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift "></i> Patient Details (Affix Patient Label Here)
+        </div>
+        <div class="tools">
+            <a href="" class="collapse"></a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row my-portlet-body">
+            <div class="col-md-12">
+                <div class="row">
+                    <!-- begin firstname -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">First Name</label>
+                            <input type="text" class="form-control" placeholder="First Name" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.FirstName">
+                        </div>
+                    </div>
+                    <!-- end firstname -->
+                    <!-- begin lastname -->
+                    <div class="col-md-4">
+                        <div class="form-group ">
+                            <label class="control-label">Last Name</label>
+                            <input type="text" class="form-control" placeholder="Last Name" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.LastName">
+                        </div>
+                    </div>
+                    <!-- end lastname -->
+                    <!-- begin dob -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Date of Birth</label>
+                            <div class="input-icon">
+                                <i class="fa fa-calendar"></i>
+                                <input type="text" class="form-control date-picker" placeholder="Date of Birth" ng-model="patientAppointmentDOBTemp">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end dob -->
+                </div>
+                <div class="row">
+                    <!-- begin address -->
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Address</label>
+                            <div class="input-icon">
+                                <i class="fa fa-send"></i>
+                                <input type="text" class="form-control" placeholder="Address" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Address">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end address -->
+                </div>
+                <div class="row">
+                    <!-- begin suburb -->
+                    <div class="col-md-8">
+                        <div class="form-group ">
+                            <label class="control-label">Suburb</label>
+                            <input type="text" class="form-control" placeholder="Surburb" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Suburb">
+                        </div>
+                    </div>
+                    <!-- end suburb -->
+                    <!-- begin postcode -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Postcode</label>
+                            <input type="text" class="form-control" placeholder="Postcode" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Postcode">
+                        </div>
+                    </div>
+                    <!-- end postcode -->
+                </div>
+                <div class="row">
+                    <!-- begin contact number -->
+                    <div class="col-md-4">
+                        <div class="form-group ">
+                            <label class="control-label">Contact Number (Mobile)</label>
+                            <div class="input-icon">
+                                <i class="icon-call-end"></i>
+                                <input type="text" class="form-control" placeholder="Contact Number (Mobile)" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PhoneNumber">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end contact number -->
+                    <!-- begin contact number H-->
+                    <div class="col-md-4">
+                        <div class="form-group ">
+                            <label class="control-label">Contact Number (Homephone)</label>
+                            <div class="input-icon">
+                                <i class="icon-call-end"></i>
+                                <input type="text" class="form-control" placeholder="Contact Number (Homephone)" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.HomePhoneNumber">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- begin contact number H-->
+                    <!-- begin email -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Email</label>
+                            <div class="input-icon">
+                                <i class="fa fa-envelope"></i>
+                                <input type="text" class="form-control" placeholder="Email" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Email">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end email -->
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- END Patient details (Affix Patient Label Here)-->
-
 <!-- BEGIN Examination Required (Please Tick)-->
 <div class="portlet box green bordered">
-	<div class="portlet-title">
-		<div class="caption ">
-			<i class="fa fa-gift "></i> Examination Required (Please Tick)
-		</div>
-		<div class="tools">
-			<a href="" class="collapse"></a>
-		</div>
-	</div>
-	<div class="portlet-body">
+    <div class="portlet-title">
+        <div class="caption ">
+            <i class="fa fa-gift "></i> Examination Required (Please Tick)
+        </div>
+        <div class="tools">
+            <a href="" class="collapse"></a>
+        </div>
+    </div>
+    <div class="portlet-body">
         <div class="row my-portlet-body">
-    		<div class="col-md-2">
-    			<div class="checkbox-list">
-    				<label class="control-label"><input type="checkbox" class="icheck" > Private</label>
-    			</div>
-    		</div>
-    		<div class="col-md-2">
-    			<div class="checkbox-list">
-    				<label class="control-label"><input type="checkbox" class="icheck" > Public</label>
-    			</div>
-    		</div>
-    		<div class="col-md-2">
-    			<div class="checkbox-list">
-    				<label class="control-label"><input type="checkbox" class="icheck" > DVA</label>
-    			</div>
-    		</div>
-    		<div class="col-md-2">
-    			<div class="checkbox-list">
-    				<label class="control-label"><input type="checkbox" class="icheck" > Workers Comp</label>
-    			</div>
-    		</div>
-    		<div class="col-md-2">
-    			<div class="checkbox-list">
-    				<label class="control-label"><input type="checkbox" class="icheck" > MVIT</label>
-    			</div>
-    		</div>
-		</div>
-	</div>
+            <div class="col-md-2">
+                <div class="checkbox-list">
+                    <label class="control-label">
+                        <input type="checkbox" ng-model="requestInfo.TelehealthAppointment.ExaminationRequired.Private" ng-true-value="'Y'" ng-false-value="null"> Private</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="checkbox-list">
+                    <label class="control-label">
+                        <input type="checkbox" ng-model="requestInfo.TelehealthAppointment.ExaminationRequired.Public" ng-true-value="'Y'" ng-false-value="null"> Public</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="checkbox-list">
+                    <label class="control-label">
+                        <input type="checkbox" ng-model="requestInfo.TelehealthAppointment.ExaminationRequired.DVA" ng-true-value="'Y'" ng-false-value="null"> DVA</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="checkbox-list">
+                    <label class="control-label">
+                        <input type="checkbox" ng-model="requestInfo.TelehealthAppointment.ExaminationRequired.WorkersComp" ng-true-value="'Y'" ng-false-value="null"> Workers Comp</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="checkbox-list">
+                    <label class="control-label">
+                        <input type="checkbox" ng-model="requestInfo.TelehealthAppointment.ExaminationRequired.MVIT" ng-true-value="'Y'" ng-false-value="null"> MVIT</label>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- END Examination Required (Please Tick)-->
-
 <!-- BEGIN PReferred Plastic Surgeon-->
 <div class="portlet box green bordered">
-	<div class="portlet-title">
-		<div class="caption ">
-			<i class="fa fa-gift "></i> Preferred Plastic Sergeon
-		</div>
-		<div class="tools">
-			<a href="" class="collapse"></a>
-		</div>
-	</div>
-	<div class="portlet-body">
+    <div class="portlet-title">
+        <div class="caption ">
+            <i class="fa fa-gift "></i> Preferred Plastic Sergeon
+        </div>
+        <div class="tools">
+            <a href="" class="collapse"></a>
+        </div>
+    </div>
+    <div class="portlet-body">
         <div class="row my-portlet-body">
-        	<div class="col-md-2">
-    			<div class="checkbox-list">
-    				<label class="control-label"><input type="checkbox" class="icheck" > First Surgeon Available</label>
-    			</div>
-    		</div>
-    		<div class="col-md-2">
-    			<div class="checkbox-list">
-    				<label class="control-label"><input type="checkbox" class="icheck" > Mr Hanh Nguyen</label>
-    			</div>
-    		</div>
-    		<div class="col-md-2">
-    			<div class="checkbox-list">
-    				<label class="control-label"><input type="checkbox" class="icheck" > Mr Adrian Brooks</label>
-    			</div>
-    		</div>
-    		<div class="col-md-2">
-    			<div class="checkbox-list">
-    				<label class="control-label"><input type="checkbox" class="icheck" > Mr Dan Luo</label>
-    			</div>
-    		</div>
-    		<div class="col-md-2">
-    			<div class="checkbox-list">
-    				<label class="control-label"><input type="checkbox" class="icheck" > Ms Sharon Chu</label>
-    			</div>
-    		</div>
-		</div>
-	</div>
+            <div class="col-md-2">
+                <div class="checkbox-list">
+                    <label class="control-label">
+                        <input type="checkbox" ng-model="doctors[0]" ng-true-value="'First Surgeon Available'" ng-false-value="null"> First Surgeon Available</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="checkbox-list">
+                    <label class="control-label">
+                        <input type="checkbox" ng-model="doctors[1]" ng-true-value="'Mr Hanh Nguyen'" ng-false-value="null"> Mr Hanh Nguyen</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="checkbox-list">
+                    <label class="control-label">
+                        <input type="checkbox" ng-model="doctors[2]" ng-true-value="'Mr Adrian Brooks'" ng-false-value="null"> Mr Adrian Brooks</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="checkbox-list">
+                    <label class="control-label">
+                        <input type="checkbox" ng-model="doctors[3]" ng-true-value="'Mr Dan Luo'" ng-false-value="null"> Mr Dan Luo</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="checkbox-list">
+                    <label class="control-label">
+                        <input type="checkbox" ng-model="doctors[4]" ng-true-value="'Ms Sharon Chu'" ng-false-value="null"> Ms Sharon Chu</label>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- END PReferred Plastic Surgeon-->
-
 <!-- BEGIN Clinical Details & Relevant Medical History -->
 <div class="portlet box green bordered">
-	<div class="portlet-title">
-		<div class="caption ">
-			<i class="fa fa-gift "></i> Clinical Details & Relevant Medical History
-		</div>
-		<div class="tools">
-			<a href="" class="collapse"></a>
-		</div>
-	</div>
-	<div class="portlet-body">
-		<div class="row my-portlet-body">
-	    	<!-- begin column 1 -->
-	    	<div class="col-md-6">
-	    		<div class="form-group">
-	    			<textarea class="form-control" rows="10"></textarea>
-	    		</div>
-			</div>
-			<!-- end column 1 -->
-			<div class="col-md-6">
-				<label class="control-label">Attach Detailed Letter</label>
-				<!-- begin avatar -->
-				<div class="form-group">
-					<div class="fileinput fileinput-new" data-provides="fileinput">
-						<div class="fileinput-new thumbnail" style="width: 300%; height: 150px;">
-							<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-						</div>
-						<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 300%; max-height: 150px;">
-						</div>
-						<div>
-							<span class="btn green btn-file">
-								<span class="fileinput-new">
-								Select Image </span>
-								<span class="fileinput-exists">
-								Change </span>
-								<input type="file" name="...">
-							</span>
-							<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">Remove </a>
-						</div>
-					</div>
-				</div>
-				<!-- end avatar -->
-			</div>
-		</div>
-		<hr>
-		<div class="row my-portlet-body">
-			<!-- begin column 2 -->
-			<div class="form-group form-md-checkboxes col-md-6">
-				<div class="caption">
-	    			<h4><b>Trauma</b></h4>
-	    		</div>
-	    		<div class="row">
-	    			<div class="col-md-12">
-		    			<div class="checkbox-list">
-		    				<label class="control-label"><input type="checkbox" class="icheck" > Dislocation</label>
-		    			</div>
-		    		</div>
-	    		</div>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label for="fracture">Fracture</label>
-							<input type="text" class="form-control" id="fracture">
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-3">
-		    			<div class="checkbox-list">
-		    				<label class="control-label"><input type="checkbox" class="icheck" > Open</label>
-		    			</div>
-		    		</div>
-		    		<div class="col-md-3">
-		    			<div class="checkbox-list">
-		    				<label class="control-label"><input type="checkbox" class="icheck" > Closed</label>
-		    			</div>
-		    		</div>
-		    		<div class="col-md-3">
-		    			<div class="checkbox-list">
-		    				<label class="control-label"><input type="checkbox" class="icheck" > Displaced</label>
-		    			</div>
-		    		</div>
-				</div>
-				<br>
-				<div class="caption">
-	    			<label><b>Lacerations</b></label>
-	    		</div>
-	    		<div class="row">
-	    			<div class="col-md-3">
-		    			<div class="checkbox-list">
-		    				<label class="control-label"><input type="checkbox" class="icheck" > Hand</label>
-		    			</div>
-		    		</div>
-	    			<div class="col-md-3">
-		    			<div class="checkbox-list">
-		    				<label class="control-label"><input type="checkbox" class="icheck" > Nerve</label>
-		    			</div>
-		    		</div>
-	    			<div class="col-md-3">
-		    			<div class="checkbox-list">
-		    				<label class="control-label"><input type="checkbox" class="icheck" > Tendon/muscle</label>
-		    			</div>
-		    		</div>
-	    		</div>
-	    		<div class="row">
-	    			<div class="col-md-3">
-		    			<div class="checkbox-list">
-		    				<label class="control-label"><input type="checkbox" class="icheck" > Facial</label>
-		    			</div>
-		    		</div>
-	    			<div class="col-md-3">
-		    			<div class="checkbox-list">
-		    				<label class="control-label"><input type="checkbox" class="icheck" > Skin Loss</label>
-		    			</div>
-		    		</div>
-		    		<div class="col-md-6">
-        				<div class="form-inline">
-            				<div class="checkbox">
-								<label class="control-label"><input type="checkbox" class="icheck"> Other</label>
-							</div>
-							&nbsp;&nbsp;&nbsp;
-							<div class="form-group">
-								<input type="text" class="form-control input-sm" placeholder="Other">
-							</div>
-						</div>
-        			</div>
-	    		</div>
-			</div>
-			<!-- end column 2 -->
-
-			<!-- begin column 3 -->
-			<div class="form-group form-md-checkboxes col-md-6">
-
-				<div class="caption">
-	    			<h4><b>Elective</b></h4>
-	    		</div>
-
-	    		<div class="caption">
-	    			<label><b>Skin cancer</b></label>
-	    		</div>
-
-	    		<div class="row">
-	    			<div class="col-md-3">
-						<label class="control-label"><input type="checkbox" class="icheck">BCC / SCC </label>
-	    			</div>
-	    			<div class="col-md-3">
-						<label class="control-label"><input type="checkbox" class="icheck">Melanoma </label>
-	    			</div>
-	    			<div class="col-md-6">
-        				<div class="form-inline">
-            				<div class="checkbox">
-								<label class="control-label"><input type="checkbox" class="icheck"> Other</label>
-							</div>
-							&nbsp;&nbsp;&nbsp;
-							<div class="form-group">
-								<input type="text" class="form-control input-sm" placeholder="Other">
-							</div>
-						</div>
-        			</div>
-	    		</div>
-	    		<br>
-	    		<div class="caption">
-	    			<label><b>Hand condition</b></label>
-	    		</div>
-	    		<div class="row">
-	    			<div class="col-md-3">
-						<label class="control-label"><input type="checkbox" class="icheck">Ganglion </label>
-	    			</div>
-	    			<div class="col-md-3">
-						<label class="control-label"><input type="checkbox" class="icheck">Arthritis </label>
-	    			</div>
-	    			<div class="col-md-3">
-						<label class="control-label"><input type="checkbox" class="icheck">DeQuervains / Trigger</label>
-	    			</div>
-	    			<div class="col-md-3">
-						<label class="control-label"><input type="checkbox" class="icheck">Contracture </label>
-	    			</div>
-	    		</div>
-	    		<br>
-				<div class="caption">
-	    			<label><b>PNS</b></label>
-	    		</div>
-	    		<div class="row">
-	    			<div class="col-md-4">
-						<label class="control-label"><input type="checkbox" class="icheck">Carpal Tunnel</label>
-	    			</div>
-	    			<div class="col-md-3">
-						<label class="control-label"><input type="checkbox" class="icheck">Cubital Tunnel</label>
-	    			</div>
-	    			<div class="col-md-3">
-						<label class="control-label"><input type="checkbox" class="icheck">Tarsal Tunnel</label>
-	    			</div>
-	    			<div class="col-md-4">
-						<label class="control-label"><input type="checkbox" class="icheck">Complex Reconstructive Case</label>
-	    			</div>
-	    			<div class="col-md-6">
-        				<div class="form-inline">
-            				<div class="checkbox">
-								<label class="control-label"><input type="checkbox" class="icheck"> Other</label>
-							</div>
-							&nbsp;&nbsp;&nbsp;
-							<div class="form-group">
-								<input type="text" class="form-control input-sm" placeholder="Other">
-							</div>
-						</div>
-        			</div>
-	    		</div>
-	    	</div>
-			<!-- end column 3 -->
-		</div>
-	</div>
+    <div class="portlet-title">
+        <div class="caption ">
+            <i class="fa fa-gift "></i> Clinical Details & Relevant Medical History
+        </div>
+        <div class="tools">
+            <a href="" class="collapse"></a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row my-portlet-body">
+             <!-- begin column 1 -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <textarea class="form-control" rows="15" ng-model="ClinicalNote"></textarea>
+                </div>
+            </div>
+            <!-- end column 1 -->
+            <!-- begin column 2 -->
+            <div class="form-group form-md-checkboxes col-md-4">
+                <div class="caption" ng-init="details[0].type = 'Trauma'">
+                    <h4><b>Trauma</b></h4>
+                </div>
+                <div class="row" ng-init="details[0].data[0].name = 'Dislocation'">
+                    <div class="col-md-12">
+                        <div class="checkbox-list">
+                            <label class="control-label">
+                                <input type="checkbox" ng-model="details[0].data[0].value" ng-true-value="'Y'" ng-false-value="null"> Dislocation</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-init="details[0].data[1].name = 'Fracture'">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="fracture" ng-model="fracture">Fracture</label>
+                            <input type="text" class="form-control" id="fracture" ng-model="details[0].data[1].value">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3" ng-init="details[0].data[2].name = 'Open'">
+                        <div class="checkbox-list">
+                            <label class="control-label">
+                                <input type="checkbox" ng-model="details[0].data[2].value" ng-true-value="'Y'" ng-false-value="null"> Open</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3" ng-init="details[0].data[3].name = 'Closed'">
+                        <div class="checkbox-list">
+                            <label class="control-label">
+                                <input type="checkbox" ng-model="details[0].data[3].value" ng-true-value="'Y'" ng-false-value="null"> Closed</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3" ng-init="details[0].data[4].name = 'Displaced'">
+                        <div class="checkbox-list">
+                            <label class="control-label">
+                                <input type="checkbox" ng-model="details[0].data[4].value" ng-true-value="'Y'" ng-false-value="null"> Displaced</label>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="caption" ng-init="details[1].type = 'Lacerations'">
+                    <label><b>Lacerations</b></label>
+                </div>
+                <div class="row">
+                    <div class="col-md-3" ng-init="details[1].data[0].name = 'Hand'">
+                        <div class="checkbox-list">
+                            <label class="control-label">
+                                <input type="checkbox" ng-model="details[1].data[0].value" ng-true-value="'Y'" ng-false-value="null"> Hand</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3" ng-init="details[1].data[1].name = 'Nerve'">
+                        <div class="checkbox-list">
+                            <label class="control-label">
+                                <input type="checkbox" ng-model="details[1].data[1].value" ng-true-value="'Y'" ng-false-value="null"> Nerve</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3" ng-init="details[1].data[2].name = 'Tendon/muscle'">
+                        <div class="checkbox-list">
+                            <label class="control-label">
+                                <input type="checkbox" ng-model="details[1].data[2].value" ng-true-value="'Y'" ng-false-value="null"> Tendon/muscle</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3" ng-init="details[1].data[3].name = 'Facial'">
+                        <div class="checkbox-list">
+                            <label class="control-label">
+                                <input type="checkbox" ng-model="details[1].data[3].value" ng-true-value="'Y'" ng-false-value="null"> Facial</label>
+                        </div>
+                    </div>
+                    <div class="col-md-9" ng-init="details[1].data[5].name = 'Other'">
+                        <div class="form-inline">
+                            <div class="checkbox">
+                                <label class="control-label">
+                                    <input type="checkbox" ng-model="checkLacerationsOther" ng-click="checkboxOther()"> Other</label>
+                            </div>
+                            &nbsp;&nbsp;&nbsp;
+                            <div class="form-group">
+                                <input type="text" class="form-control input-sm" placeholder="Other" ng-model="details[1].data[5].value" ng-disabled="checkLacerationsOther == false">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" ng-init="details[1].data[4].name = 'Skin Loss'">
+                        <div class="checkbox-list">
+                            <label class="control-label">
+                                <input type="checkbox" ng-model="details[1].data[4].value" ng-true-value="'Y'" ng-false-value="null"> Skin Loss</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end column 2 -->
+            <!-- begin column 3 -->
+            <div class="form-group form-md-checkboxes col-md-4">
+                <div class="caption">
+                    <h4><b>Elective</b></h4>
+                </div>
+                <div class="caption" ng-init="details[2].type = 'Skin cancer'">
+                    <label><b>Skin cancer</b></label>
+                </div>
+                <div class="row">
+                    <div class="col-md-3" ng-init="details[2].data[0].name = 'BCC / SCC'">
+                        <label class="control-label">
+                            <input type="checkbox" ng-model="details[2].data[0].value" ng-true-value="'Y'" ng-false-value="null">BCC / SCC </label>
+                    </div>
+                    <div class="col-md-3" ng-init="details[2].data[1].name = 'Melanoma'">
+                        <label class="control-label">
+                            <input type="checkbox" ng-model="details[2].data[1].value" ng-true-value="'Y'" ng-false-value="null">Melanoma </label>
+                    </div>
+                    <div class="col-md-12" ng-init="details[2].data[2].name = 'Other'">
+                        <div class="form-inline">
+                            <div class="checkbox">
+                                <label class="control-label">
+                                    <input type="checkbox" ng-model="checkElectiveOther" ng-click="checkboxOther()"> Other</label>
+                            </div>
+                            &nbsp;&nbsp;&nbsp;
+                            <div class="form-group">
+                                <input type="text" class="form-control input-sm" placeholder="Other" ng-model="details[2].data[2].value" ng-disabled="checkElectiveOther == false">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="caption" ng-init="details[3].type = 'Hand condition'">
+                    <label><b>Hand condition</b></label>
+                </div>
+                <div class="row">
+                    <div class="col-md-3" ng-init="details[3].data[0].name = 'Ganglion'">
+                        <label class="control-label">
+                            <input type="checkbox" ng-model="details[3].data[0].value" ng-true-value="'Y'" ng-false-value="null">Ganglion </label>
+                    </div>
+                    <div class="col-md-3" ng-init="details[3].data[1].name = 'Arthritis'">
+                        <label class="control-label">
+                            <input type="checkbox" ng-model="details[3].data[1].value" ng-true-value="'Y'" ng-false-value="null">Arthritis </label>
+                    </div>
+                    <div class="col-md-6" ng-init="details[3].data[2].name = 'DeQuervains / Trigger'">
+                        <label class="control-label">
+                            <input type="checkbox" ng-model="details[3].data[2].value" ng-true-value="'Y'" ng-false-value="null">DeQuervains / Trigger</label>
+                    </div>
+                    <div class="col-md-6" ng-init="details[3].data[3].name = 'Contracture'">
+                        <label class="control-label">
+                            <input type="checkbox" ng-model="details[3].data[3].value" ng-true-value="'Y'" ng-false-value="null">Contracture </label>
+                    </div>
+                </div>
+                <br>
+                <div class="caption" ng-init="details[4].type = 'PNS'">
+                    <label><b>PNS</b></label>
+                </div>
+                <div class="row">
+                    <div class="col-md-4" ng-init="details[4].data[0].name = 'Carpal Tunnel'">
+                        <label class="control-label">
+                            <input type="checkbox" ng-model="details[4].data[0].value" ng-true-value="'Y'" ng-false-value="null">Carpal Tunnel</label>
+                    </div>
+                    <div class="col-md-4" ng-init="details[4].data[1].name = 'Cubital Tunnel'">
+                        <label class="control-label">
+                            <input type="checkbox" ng-model="details[4].data[1].value" ng-true-value="'Y'" ng-false-value="null">Cubital Tunnel</label>
+                    </div>
+                    <div class="col-md-4" ng-init="details[4].data[2].name = 'Tarsal Tunnel'">
+                        <label class="control-label">
+                            <input type="checkbox" ng-model="details[4].data[2].value" ng-true-value="'Y'" ng-false-value="null">Tarsal Tunnel</label>
+                    </div>
+                    <div class="col-md-12" ng-init="details[4].data[3].name = 'Complex Reconstructive Case'">
+                        <label class="control-label">
+                            <input type="checkbox" ng-model="details[4].data[3].value" ng-true-value="'Y'" ng-false-value="null">Complex Reconstructive Case</label>
+                    </div>
+                    <div class="col-md-12" ng-init="details[4].data[4].name = 'Other'">
+                        <div class="form-inline">
+                            <div class="checkbox">
+                                <label class="control-label">
+                                    <input type="checkbox" ng-model="checkPNSOther" ng-click="checkboxOther()"> Other</label>
+                            </div>
+                            &nbsp;&nbsp;&nbsp;
+                            <div class="form-group">
+                                <input type="text" class="form-control input-sm" placeholder="Other" ng-model="details[4].data[4].value" ng-disabled="checkPNSOther == false">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end column 3 -->
+        </div>
+    </div>
 </div>
 <!-- END Clinical Details & Relevant Medical History -->
 
+<!-- BEGIN Attach Documents and Image -->
+<div class="row" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+    <div class="col-md-12">
+        <!-- BEGIN: ACCORDION DEMO -->
+        <div class="portlet box green bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>
+                    <span class="caption-subject">Attach Documents and Images</span>
+                </div>
+                <div class="tools">
+                    <a href="" class="collapse"></a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="my-portlet-body">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th width="30%">Name</th>
+                                    <th ng-show="uploader.isHTML5">Size</th>
+                                    <!-- <th ng-show="uploader.isHTML5">Progress</th> -->
+                                    <!-- <th>Status</th> -->
+                                    <th>Date</th>
+                                    <th>Body Part</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <!-- <td ng-show="uploader.isHTML5">
+                                        <div class="progress progress-sm" style="margin-bottom: 0;">
+                                            <div class="progress-bar progress-bar-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td> -->
+                                    <!-- <td class="text-center">
+                                        <span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel" class="text-info"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td> -->
+                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    <td>
+                                        <button class="btn blue btn-xs" ng-click="ModalBodyPart()">
+                                            <span class="fa fa-file-image-o"></span> Select
+                                        </button>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                        <div class="progress progress-sm" style="">
+                            <div class="progress-bar progress-bar-info" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                        </div>
+                    </div>
+                    <div class="input-inline">
+                        <div class="input-icon">
+                            <span class="btn green btn-file">
+                                <i class="fa fa-file-image-o"></i>
+                                <span class="fileinput-new">Select Document</span>
+                                <input type="file" nv-file-select="" uploader="uploader" multiple/>
+                            </span>
+                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                                <span class="glyphicon glyphicon-trash"></span> Remove all
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>      
+        <!-- END: ACCORDION DEMO -->
+    </div>
+</div>
+<!-- END Attach Documents and Image -->
+
 <div class="row">
- 	<div class="col-md-12" style="text-align:right">
-  		<a href="" class="btn default"><i class="icon-action-undo"></i> Cancel</a>
- 		 <button class="btn green" ng-click="sendRequestAppointment()"><i class="glyphicon glyphicon-save"></i> Send</button>
- 	</div>
+    <div class="col-md-12" style="text-align:right">
+        <a href="" class="btn default"><i class="icon-action-undo"></i> Cancel</a>
+        <button class="btn green" ng-click="sendRequestAppointment()"><i class="glyphicon glyphicon-save"></i> Send</button>
+    </div>
 </div>

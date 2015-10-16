@@ -12,7 +12,7 @@ app.controller('patientCtrl', function($scope,$q){
 		try {
 			//validate FirstName
 			if(info.FirstName){
-				if(info.FirstName.length < 0 || info.FirstName.length > 6){
+				if(info.FirstName.length < 0 || info.FirstName.length > 50){
 					error.push({field:"FirstName",message:"FirstName.length"});
 				}
 			}
@@ -32,7 +32,7 @@ app.controller('patientCtrl', function($scope,$q){
 
 			//validate LastName
 			if(info.LastName){
-				if(info.LastName.length < 0 || info.LastName.length > 6){
+				if(info.LastName.length < 0 || info.LastName.length > 50){
 					error.push({field:"LastName",message:"LastName.length"});
 				}
 			}
@@ -72,7 +72,7 @@ app.controller('patientCtrl', function($scope,$q){
 
 			//validate Suburb
 			if(info.Suburb){
-				if(info.Suburb.length < 0 || info.Suburb.length > 100){
+				if(info.Suburb.length < 0 || info.Suburb.length > 255){
 					error.push({field:"Suburb",message:"Suburb.length"});
 				}
 			}
@@ -82,7 +82,7 @@ app.controller('patientCtrl', function($scope,$q){
 
 			//validate Postcode
 			if(info.Postcode){
-				if(info.Postcode.length < 0 || info.Postcode.length > 100){
+				if(info.Postcode.length < 0 || info.Postcode.length > 255){
 					error.push({field:"Postcode",message:"Postcode.length"});
 				}
 			}
@@ -90,28 +90,61 @@ app.controller('patientCtrl', function($scope,$q){
 			// 	error.push({field:"Postcode",message:"Postcode.required"});
 			// }
 
-			//validate Email? hoi a Tan su dung exception
+			// validate Email? hoi a Tan su dung exception
 			if(info.Email){
-				if(info.Email.length < 0 || info.Email.length > 100){
-					error.push({field:"Email",message:"Email.length"});
+				var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+				var Email=info.Email.replace('/[\(\)\s\-]/g','');
+				if(!EmailPattern.test(Email)){
+					error.push({field:"Email",message:"Email.invalid-value"});
 				}
 			}
 			else {
 				error.push({field:"Email",message:"Email.required"});
 			}
 			
+			//validate Occupation
+			if(info.Occupation){
+				if(info.Occupation.length < 0 || info.Occupation.length > 255){
+					error.push({field:"Occupation",message:"Occupation.length"});
+				}
+			}
+			// else {
+			// 	error.push({field:"Occupation",message:"Occupation.required"});
+			// }
+
+
+			//validate WorkPhone
+			if(info.WorkPhoneNumber){
+				var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+				var WorkPhoneNumber=info.WorkPhoneNumber.replace('/[\(\)\s\-]/g','');
+				if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
+					error.push({field:"WorkPhoneNumber",message:"WorkPhoneNumber.invalid-value"});
+				}
+			}
+			// else {
+			// 	error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.required"});
+			// }
 
 			//validate HomePhoneNumber? hoi a Tan su dung exception
 			if(info.HomePhoneNumber){
 				var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
 				var HomePhone=info.HomePhoneNumber.replace('/[\(\)\s\-]/g','');
-				console.log(HomePhone);
 				if(!auHomePhoneNumberPattern.test(HomePhone)){
 					error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.invalid-value"});
 				}
 			}
 			// else {
 			// 	error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.required"});
+			// }
+
+			//validate State
+			if(info.State){
+				if(info.State.length < 0 || info.State.length > 255){
+					error.push({field:"State",message:"State.length"});
+				}
+			}
+			// else {
+			// 	error.push({field:"State",message:"State.required"});
 			// }
 
 			if(error.length>0){
@@ -135,7 +168,7 @@ app.controller('patientCtrl', function($scope,$q){
 		try {
 			//validate FirstName
 			if(info.FirstName){
-				if(info.FirstName.length < 0 || info.FirstName.length > 6){
+				if(info.FirstName.length < 0 || info.FirstName.length > 50){
 					error.push({field:"FirstName",message:"length"});
 				}
 			}
@@ -143,9 +176,19 @@ app.controller('patientCtrl', function($scope,$q){
 				error.push({field:"FirstName",message:"required"});
 			}
 
+			//validate MiddleName
+			if(info.MiddleName){
+				if(info.MiddleName.length < 0 || info.MiddleName.length > 100){
+					error.push({field:"MiddleName",message:"length"});
+				}
+			}
+			else {
+				error.push({field:"MiddleName",message:"required"});
+			}
+
 			//validate LastName
 			if(info.LastName){
-				if(info.LastName.length < 0 || info.LastName.length > 6){
+				if(info.LastName.length < 0 || info.LastName.length > 50){
 					error.push({field:"LastName",message:"length"});
 				}
 			}

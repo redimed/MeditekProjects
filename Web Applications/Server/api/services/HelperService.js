@@ -79,7 +79,7 @@ module.exports = {
     },
 
     CheckExistData: function(data) {
-        return (!_.isUndefined(data) && !_.isEmpty(data) && !_.isNull(data));
+        return (!_.isUndefined(data) && !_.isNull(data));
     },
     GetFullName: function(firstName, middleName, lastName) {
         return (!_.isNull(firstName) && !_.isUndefined(firstName) && !_.isEmpty(firstName)) ? firstName : '' +
@@ -136,13 +136,13 @@ module.exports = {
         },
 
         roles: {
-            admin: 1,
-            assistant: 2,
-            doctor: 3,
-            gp: 4,
+            admin: 'ADMIN',
+            assistant: 'ASSISTANT',
+            doctor: 'DOCTOR',
+            gp: 'GP',
+            patient: 'PATIENT',
             internalPractitional: 5,
             externalPractiction: 6,
-            patient: 7
         }
     },
 
@@ -240,15 +240,15 @@ module.exports = {
     /*
         get-listcountry: lay danh sach country 
     */
-    getListCountry : function() {
+    getListCountry: function() {
         return Country.findAll({})
-        .then(function(result){
-            return result;
-        }, function(err) {
-            var error = new Error("getListCountry.error");
-            error.pushErrors("Country.findAll.error");
-            throw error;
-        })
+            .then(function(result) {
+                return result;
+            }, function(err) {
+                var error = new Error("getListCountry.error");
+                error.pushErrors("Country.findAll.error");
+                throw error;
+            })
     }
 
 }

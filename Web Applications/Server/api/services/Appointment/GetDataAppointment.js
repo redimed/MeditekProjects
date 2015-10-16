@@ -21,17 +21,22 @@ module.exports = {
             RefName: FullName,
             RefHealthLink: data.HealthLink,
             RefAddress: data.Address,
-            RefTelePhone: data.PhoneNumber,
+            RefTelePhone: data.WorkPhoneNumber,
             RefPostCode: data.PostCode,
             RefSignature: data.Signature,
             RefDate: data.RefDate,
             RefProviderNumber: data.ProviderNumber,
             RefDurationOfReferal: data.RefDurationOfReferal,
+            Correspondence: data.Correspondence,
             Enable: 'Y'
         };
     },
     TelehealthAppointmentUpdate: function(data) {
-
+        return {
+            RefDurationOfReferal: data.RefDurationOfReferal,
+            Correspondence: data.Correspondence,
+            Fund: data.Fund
+        };
     },
     PatientAppointmentCreate: function(data) {
         return {
@@ -46,7 +51,7 @@ module.exports = {
             HomePhoneNumber: data.HomePhoneNumber
         };
     },
-    ExaminationRequiredCreate: function(data) {
+    ExaminationRequired: function(data) {
         return {
             Private: data.Private,
             Public: data.Public,
@@ -55,13 +60,14 @@ module.exports = {
             MVIT: data.MVIT
         };
     },
-    PreferedPlasticSurgeonCreate: function(data) {
-        return {
-            Name: data.Name
-        };
-
+    PreferedPlasticSurgeon: function(teleApptID, data) {
+        data.forEach(function(value, index) {
+            data[index].UID = UUIDService.Create();
+            data[index].TelehealthAppointmentID = teleApptID;
+        });
+        return data;
     },
-    ClinicalDetailsCreate: function(teleApptID, createdBy, data) {
+    ClinicalDetails: function(teleApptID, createdBy, data) {
         data.forEach(function(value, index) {
             data[index].UID = UUIDService.Create();
             data[index].TelehealthAppointmentID = teleApptID;

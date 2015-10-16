@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.andexert.library.RippleView;
@@ -57,6 +59,27 @@ public class HomeActivity extends AppCompatActivity {
         CreateJsonDataSuburb();
 
         Picasso.with(HomeActivity.this).load(R.drawable.img_logo_redimed).fit().into(imgLogoRedimed);
+
+//        TranslateAnimation animation = new TranslateAnimation(0,0,0,40);
+//        animation.setDuration(1000);
+//        animation.setFillAfter(true);
+//        animation.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
+        imgLogoRedimed.setAnimation(animation);
         blurTransformation = new BlurTransformation(this, BLUR_RADIUS);
         backgroundImageTargetSize = calculateBackgroundImageSizeCroppedToScreenAspectRatio(
                 getWindowManager().getDefaultDisplay());

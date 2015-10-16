@@ -17,8 +17,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
+<title data-ng-bind="'Redimed ' + $state.current.data.pageTitle"></title>
 <meta charset="utf-8"/>
-<title>Metronic | Form Stuff - Bootstrap Form Controls</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -175,6 +175,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <!-- BEGIN CORE ANGULARJS PLUGINS -->
 <script src="libs/angular/angular.js" type="text/javascript"></script>	
+<script src="theme/assets/global/plugins/angularjs/plugins/angular-file-upload/angular-file-upload.min.js"></script>
 <script src="libs/angular-sanitize/angular-sanitize.min.js" type="text/javascript"></script>
 <script src="libs/angular-touch/angular-touch.min.js" type="text/javascript"></script>	
 <script src="libs/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
@@ -186,6 +187,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script type="text/javascript" src="libs/restangular/dist/restangular.min.js"></script>
 <script type="text/javascript" src="libs/angular-cookies/angular-cookies.js"></script>
 <script type="text/javascript" src="libs/lodash/lodash.min.js"></script>
+<script type="text/javascript" src="libs/moment/moment.js"></script>
 <!-- END DEPENDENCIES -->
 
 <!-- BEGIN ANGULAR TOASTR -->
@@ -208,6 +210,12 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
 <script src="app.js" type="text/javascript"></script>
 <!-- END APP LEVEL ANGULARJS SCRIPTS -->
+
+<!--BEGIN COMMON SERVICE-->
+<script src="common/services/CommonService.js"></script>
+<script src="common/directives/dialog.js"></script>
+<script src="common/directives/menuBar.js"></script>
+<!--END COMMON SERVICE-->
 
 <!-- BEGIN lockScreen -->
 <script src="common/views/lockScreenCtrl.js"></script>
@@ -239,6 +247,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="modules/appointment/controllers/appointmentListCtrl.js"></script>
 <script src="modules/appointment/controllers/appointmentListModalCtrl.js"></script>
 <script src="modules/appointment/controllers/appointmentRequestCtrl.js"></script>
+<script src="modules/appointment/controllers/appointmentRequestModalCtrl.js"></script>
+<script src="modules/appointment/directives/listAppointmentDirectives.js"></script>
 <script src="modules/appointment/services/appointmentServiecs.js"></script>
 
 <!-- END MODULE appointment -->
@@ -255,9 +265,12 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="modules/patient/patient.js" ></script>
 <script src="modules/patient/controllers/patientCtrl.js"></script>
 <script src="modules/patient/controllers/patientListCtrl.js"></script>
-<script src="modules/patient/controllers/patientListModalCtrl.js"></script>
 <script src="modules/patient/controllers/patientCreateCtrl.js"></script>
 <script src="modules/patient/services/PatientService.js"></script>
+<script src="modules/patient/directives/PatientDirective.js"></script>
+<script src="modules/patient/directives/patientListDirective.js"></script>
+<script src="modules/patient/directives/patientListModalDirective.js"></script>
+<script src="modules/patient/directives/patientCreateDirective.js"></script>
 <!-- END MODULE patient -->
 
 <script src="theme/assets/global/scripts/metronic.js" type="text/javascript"></script>
@@ -273,6 +286,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <script type="text/javascript">
 /* Init Metronic's core jquery plugins and layout scripts */
 $(document).ready(function() {   
+		Metronic.init(); // Run metronic theme
+		Metronic.setAssetsPath('theme/assets/'); // Set the assets folder path		
 		FormiCheck.init(); // init page demo	
 });
 </script>

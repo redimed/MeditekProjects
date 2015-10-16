@@ -5,4 +5,9 @@ var _ = require('lodash');
 var userAccountVersions = require('./userAccountVersions');
 _.extend(versions, userAccountVersions);
 
+//Begin Module Authorization
+var authorizationVersions = require('./authorizationVersions');
+_.extend(versions, authorizationVersions);
+
+
 module.exports=versions;

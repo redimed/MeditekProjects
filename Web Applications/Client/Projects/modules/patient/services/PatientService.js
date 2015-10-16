@@ -23,5 +23,15 @@ angular.module('app.authentication.patient.services',[])
 		return checkPatient.post({data:data});
 	};
 
+	PatientService.createPatient = function(data){
+		var createPatient = api.all("patient/create-patient");
+		return createPatient.post({data:data});
+	};
+
+	PatientService.searchPatient = function(data){
+		var searchPatient = api.all("patient/search-patient");
+		return searchPatient.post({data:data});
+	}
+
 	return PatientService;
 })

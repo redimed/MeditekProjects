@@ -6,11 +6,7 @@ module.exports = function(data) {
         filterTelehealthAppointment: [],
         filterPatientAppointment: [],
         filterPatient: [],
-        orderAppointment: [],
-        orderDoctor: [],
-        orderTelehealthAppointment: [],
-        orderPatientAppointment: [],
-        orderPatient: [],
+        order: [],
         limit: data.Limit,
         offset: data.Offset
     };
@@ -28,10 +24,11 @@ module.exports = function(data) {
                             HelperService.CheckExistData(filter[keyModel][keyFilter])) {
                             //check format value is date
                             var tempFilter = {};
-                            if (moment(filter[keyModel][keyFilter], moment.ISO_8601, true).isValid()) {
+                            if (moment(filter[keyModel][keyFilter], 'YYYY-MM-DD Z', true).isValid() ||
+                                moment(filter[keyModel][keyFilter], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
                                 //data valid date
-                                var dateActual = moment(filter[keyModel][keyFilter]).format('YYYY-MM-DD 00:00:00');
-                                var dateAdded = moment(dateActual).add(1, 'day').format('YYYY-MM-DD 00:00:00');
+                                var dateActual = moment(filter[keyModel][keyFilter], 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                var dateAdded = moment(dateActual).add(1, 'day').toDate();
                                 var tempFilter = {};
                                 tempFilter[keyFilter] = {
                                     '$gte': dateActual,
@@ -147,22 +144,23 @@ module.exports = function(data) {
                     for (var keyOrder in order[keyModel]) {
                         if (HelperService.CheckExistData(keyOrder) &&
                             HelperService.CheckExistData(order[keyModel][keyOrder])) {
-                            var tempOrder = [keyOrder, order[keyModel][keyOrder]];
+                            var tempOrder = [];
                             switch (keyModel) {
                                 case 'Appointment':
-                                    pagination.orderAppointment.push(tempOrder);
+                                    tempOrder = [keyOrder, order[keyModel][keyOrder]];
+                                    pagination.order.push(tempOrder);
                                     break;
                                 case 'Doctor':
-                                    pagination.orderDoctor.push(tempOrder);
+                                    tempOrder = [Doctor, keyOrder, order[keyModel][keyOrder]];
+                                    pagination.order.push(tempOrder);
                                     break;
                                 case 'TelehealthAppointment':
-                                    pagination.orderTelehealthAppointment.push(tempOrder);
-                                    break;
-                                case 'PatientAppointment':
-                                    pagination.orderPatientAppointment.push(tempOrder);
+                                    tempOrder = [TelehealthAppointment, keyOrder, order[keyModel][keyOrder]];
+                                    pagination.order.push(tempOrder);
                                     break;
                                 case 'Patient':
-                                    pagination.orderPatient.push(tempOrder);
+                                    tempOrder = [Patient, keyOrder, order[keyModel][keyOrder]];
+                                    pagination.order.push(tempOrder);
                                     break;
                                 default:
                                     break;
@@ -186,12 +184,36 @@ module.exports = function(data) {
                     for (var keyRange in range[keyModel]) {
                         if (HelperService.CheckExistData(keyRange) &&
                             HelperService.CheckExistData(range[keyModel][keyRange])) {
-                            var start = range[keyModel][keyRange][0];
-                            var end = range[keyModel][keyRange][1];
+                            var start = null,
+                                end = null;
+                            if (moment(range[keyModel][keyRange][0], 'YYYY-MM-DD Z', true).isValid() ||
+                                moment(range[keyModel][keyRange][0], 'YYYY-MM-DD HH:mm:ss Z', true).isValid() ||
+                                moment(range[keyModel][keyRange][1], 'YYYY-MM-DD Z', true).isValid() ||
+                                moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                if (moment(range[keyModel][keyRange][0], 'YYYY-MM-DD Z', true).isValid() ||
+                                    moment(range[keyModel][keyRange][0], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                    start = moment(range[keyModel][keyRange][0], 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                }
+                                if (moment(range[keyModel][keyRange][1], 'YYYY-MM-DD Z', true).isValid() ||
+                                    moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                    end = moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                }
+                            } else {
+                                start = range[keyModel][keyRange][0];
+                                end = range[keyModel][keyRange][1];
+                            }
                             var tempRange = {};
-                            tempRange[keyRange] = {
-                                '$between': [start, end]
-                            };
+                            tempRange[keyRange] = {};
+                            if (HelperService.CheckExistData(start)) {
+                                tempRange[keyRange]['$gte'] = start;
+                            }
+                            if (HelperService.CheckExistData(end)) {
+                                tempRange[keyRange]['$lte'] = end;
+                            }
+                            if (!HelperService.CheckExistData(tempRange[keyRange]) ||
+                                _.isEmpty(tempRange[keyRange])) {
+                                tempRange = null;
+                            }
                             switch (keyModel) {
                                 case 'Appointment':
                                     pagination.filterAppointment.push(tempRange);

@@ -11,4 +11,5 @@ module.exports = {
     UpdateTelehealthAppointment: require('./Appointment/UpdateTelehealthAppointment'),
     UrgentCare: require('./UrgentCare/UrgentCare'),
     DeleteTelehealthAppointment: require('./Appointment/DeleteTelehealthAppointment'),
+    Module:require('./Authorization/v0_1/Module'),
 };

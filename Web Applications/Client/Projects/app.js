@@ -2,14 +2,16 @@ var app = angular.module('app', [
     "ngCookies",
     "ngAnimate",
     "ui.router",
-    "ui.bootstrap", 
+    "ui.bootstrap",
     "app.lockScreen",
     "ngSanitize",
     "restangular",
     "toastr",
     "ladda",
+    "app.common",
     "app.unAuthentication",
-    "app.authentication"
+    "app.authentication",
+    "angularFileUpload"
 ]);
 
 app
@@ -113,12 +115,12 @@ app
                     });
                 }
 
-	        }
-		})
+            }
+        })
 
-		$rootScope.$on('$viewContentLoaded', function() {
-	        Metronic.initAjax();
-		      ComponentsDropdowns.init(); // init todo page
-	    });
-	})
-
+        $rootScope.$on('$viewContentLoaded', function() {
+            Metronic.initAjax();
+            ComponentsDropdowns.init(); // init todo page
+            ComponentsPickers.init(); // init todo page
+        });
+    })

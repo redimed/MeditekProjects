@@ -190,24 +190,29 @@ module.exports = function(data) {
                                 moment(range[keyModel][keyRange][0], 'YYYY-MM-DD HH:mm:ss Z', true).isValid() ||
                                 moment(range[keyModel][keyRange][1], 'YYYY-MM-DD Z', true).isValid() ||
                                 moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                                start = moment(range[keyModel][keyRange][0], 'YYYY-MM-DD HH:mm:ss Z').toDate();
-                                end = moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z').toDate();
-
+                                if (moment(range[keyModel][keyRange][0], 'YYYY-MM-DD Z', true).isValid() ||
+                                    moment(range[keyModel][keyRange][0], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                    start = moment(range[keyModel][keyRange][0], 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                }
+                                if (moment(range[keyModel][keyRange][1], 'YYYY-MM-DD Z', true).isValid() ||
+                                    moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                    end = moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                }
                             } else {
                                 start = range[keyModel][keyRange][0];
                                 end = range[keyModel][keyRange][1];
                             }
                             var tempRange = {};
                             tempRange[keyRange] = {};
-                            if (!_.isUndefined(range[keyModel][keyRange][0]) &&
-                                !_.isNull(range[keyModel][keyRange][0]) &&
-                                !_.isEmpty(range[keyModel][keyRange][0])) {
+                            if (HelperService.CheckExistData(start)) {
                                 tempRange[keyRange]['$gte'] = start;
                             }
-                            if (!_.isUndefined(range[keyModel][keyRange][1]) &&
-                                !_.isNull(range[keyModel][keyRange][1]) &&
-                                !_.isEmpty(range[keyModel][keyRange][1])) {
+                            if (HelperService.CheckExistData(end)) {
                                 tempRange[keyRange]['$lte'] = end;
+                            }
+                            if (!HelperService.CheckExistData(tempRange[keyRange]) ||
+                                _.isEmpty(tempRange[keyRange])) {
+                                tempRange = null;
                             }
                             switch (keyModel) {
                                 case 'Appointment':

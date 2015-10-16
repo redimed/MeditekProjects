@@ -23,14 +23,13 @@ app.directive('patientList', function(PatientService, $modal, toastr){
 	                offset: 0,
 	                currentPage: 1,
 	                maxSize: 5,
-	                values:null,
+	                Search:null,
 	                order: null
 	            };
 	            scope.searchObjectMap = angular.copy(scope.searchObject);
 	            scope.loadList(scope.searchObjectMap);
 	        };
 
-	        scope.init();
 			scope.toggle = true;
 			scope.toggleFilter = function(){
 				scope.toggle = scope.toggle === false ? true : false;
@@ -66,16 +65,8 @@ app.directive('patientList', function(PatientService, $modal, toastr){
 			};
 
 			scope.Search = function(data){
-				scope.searchObjectMap.values = data;
-				PatientService.searchPatient(scope.searchObjectMap).then(function(response){
-					scope.patients = response.data;
-					for(var i = 0; i < response.data.length;i++){
-						scope.patients[i].stt = scope.searchObjectMap.offset*1 + i + 1;
-					}
-					scope.count= response.count;
-				},function(err){
-					toastr.error("Server Error","ERROR");
-				});
+				 scope.searchObjectMap.Search = data;
+				 scope.loadList(scope.searchObjectMap);
 
 			};
 
@@ -87,7 +78,9 @@ app.directive('patientList', function(PatientService, $modal, toastr){
 			scope.sortDESC = function(data) {
 				scope.searchObjectMap.order = data;
 				scope.loadList(scope.searchObjectMap);
-			}
+			};
+
+			scope.init();
 		},
 		templateUrl:"modules/patient/directives/template/patientList.html"
 	};

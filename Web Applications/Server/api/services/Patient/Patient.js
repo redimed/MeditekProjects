@@ -147,6 +147,51 @@ module.exports = {
 		return q.promise;
 	},
 
+	whereClause : function(data) {
+		var whereClause = {};
+		whereClause.Patient = {};
+		whereClause.UserAccount ={};
+		if(data.Search!== null && data.Search!==undefined && data.Search!==''){
+			if(data.Search.FirstName){
+				whereClause.Patient.FirstName={
+					like:'%'+data.Search.FirstName+'%'
+				} 
+			}
+			if(data.Search.MiddleName){
+				whereClause.Patient.MiddleName = {
+					like:'%'+data.Search.MiddleName+'%'
+				}
+			}
+			if(data.Search.LastName){
+				whereClause.Patient.LastName = {
+					like:'%'+data.Search.LastName+'%'
+				}
+			}
+			if(data.Search.Gender){
+				whereClause.Patient.Gender = {
+					like:'%'+data.Search.Gender+'%'
+				}
+			}
+			if(data.Search.Email){
+				whereClause.Patient.Email = {
+					like:'%'+data.Search.Email+'%'
+				}
+			}
+			if(data.Search.Enable){
+				whereClause.Patient.Enable = {
+					like:'%'+data.Search.Enable+'%'
+				}
+			}
+			if(data.Search.PhoneNumber){
+				whereClause.UserAccount.PhoneNumber = {
+					like:'%'+data.Search.PhoneNumber+'%'
+				}
+				// whereClause.push("UserAccount.PhoneNumber LIKE '%"+data.Search.PhoneNumber+"%'");
+			}
+		}
+		return whereClause;
+	},
+
 
 	/*
 		CreatePatient : service create patient
@@ -494,27 +539,57 @@ module.exports = {
 	LoadListPatient : function(data){
 		var resLimit = (data.limit)? data.limit : 10;
 		var resOffset = (data.offset)? data.offset : 0;
+		var whereClause = Services.Patient.whereClause(data);
 		return Patient.findAndCountAll({
 			include:[
 				{
-	            	model: UserAccount,
-	            	attributes: ['PhoneNumber'],
-			    	required: true
+		           	model: UserAccount,
+		          	attributes: ['PhoneNumber'],
+				   	required: true,
+				   	where:{
+				   		$or: whereClause.UserAccount
+				   	}
 			    }
 			],
 			limit  : resLimit,
 			offset : resOffset,
-			order  : data.order
+			order  : data.order,
+			// where  : UserAccount.PhoneNumber='+456456'
+			// where  : whereClause
+			where: {
+				$or: whereClause.Patient
+				
+			}
 		})
 		.then(function(result){
 			return result;
 		},function(err){
-			var error = new Error("SERVER ERROR");
-			var errors = [];
-			errors.push({message:"LoadListPatient.findAll.error"});
-			error.pushErrors(errors);
-			throw error;
-		})
+			throw err;
+		});
+			
+		// else {
+		// 	return Patient.findAndCountAll({
+		// 		include:[
+		// 			{
+		//             	model: UserAccount,
+		//             	attributes: ['PhoneNumber'],
+		// 		    	required: true
+		// 		    }
+		// 		],
+		// 		limit  : resLimit,
+		// 		offset : resOffset,
+		// 		order  : data.order
+		// 	})
+		// 	.then(function(result){
+		// 		return result;
+		// 	},function(err){
+		// 		var error = new Error("SERVER ERROR");
+		// 		var errors = [];
+		// 		errors.push({message:"LoadListPatient.findAll.error"});
+		// 		error.pushErrors(errors);
+		// 		throw error;
+		// 	})
+		// }
 	},
 
 	CheckPatient : function(data) {

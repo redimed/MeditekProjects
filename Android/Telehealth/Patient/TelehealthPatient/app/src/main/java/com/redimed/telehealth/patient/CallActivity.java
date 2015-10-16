@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.opentok.android.BaseVideoRenderer;
@@ -33,7 +34,7 @@ import butterknife.ButterKnife;
 
 public class CallActivity extends AppCompatActivity implements View.OnClickListener, PublisherKit.PublisherListener, SubscriberKit.VideoListener, Session.SessionListener {
 
-    private String TAG = "CALL";
+    private String TAG = "CALL", nameCaller;
     private Intent i;
     private Session sessionOpenTok;
     private Publisher publisher;
@@ -63,7 +64,8 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     FloatingActionButton btnAnswer;
     @Bind(R.id.vfCall)
     ViewFlipper vfCall;
-
+    @Bind(R.id.lblCaller)
+    TextView lblCaller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,9 +97,14 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
-        if(sessionOpenTok != null)
-            sessionOpenTok.disconnect();
         super.onDestroy();
+        int position = vfCall.getCurrentView().getId();
+        if (position == 0){
+            DeclineCommunication("decline");
+        }
+        else {
+            DeclineCommunication("end");
+        }
     }
 
     //    Initialize Session ID, API Key, Token
@@ -110,6 +117,8 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 apiKey = i.getExtras().getString("apiKey");
                 to = i.getExtras().getString("to");
                 from = i.getExtras().getString("from");
+                nameCaller = i.getExtras().getString("fromName");
+                lblCaller.setText(nameCaller == null ? "Calling...." : nameCaller + "calling....");
             }
             if (i.getExtras().getString("message").equalsIgnoreCase("end")){
                 publisher = null;
@@ -275,6 +284,8 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             publisher.setPublisherListener(this);
             AttachPublisherView(publisher);
             sessionOpenTok.publish(publisher);
+            fabMute.setVisibility(View.VISIBLE);
+            fabHold.setVisibility(View.VISIBLE);
         }
     }
 

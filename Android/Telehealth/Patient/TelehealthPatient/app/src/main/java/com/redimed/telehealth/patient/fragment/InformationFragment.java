@@ -4,10 +4,12 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -90,11 +92,12 @@ public class InformationFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         v = inflater.inflate(R.layout.fragment_information, container, false);
         restClient = RESTClient.getRegisterApi();
         ButterKnife.bind(this, v);
 
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         layoutProfile.setOnTouchListener(this);
 
@@ -124,19 +127,7 @@ public class InformationFragment extends Fragment implements View.OnClickListene
             txtLastName.setText(patients[i].getLastName() == null ? "NONE" : patients[i].getLastName());
             txtPhone.setText(patients[i].getUserAccount().getPhoneNumber() == null ? "NONE" : patients[i].getUserAccount().getPhoneNumber());
             txtEmail.setText(patients[i].getEmail() == null ? "NONE" : patients[i].getEmail());
-//            try {
-                if (patients[i].getDOB() != null) {
-                    DOB = patients[i].getDOB().substring(0, 10);
-//                    Date convertedDate = dateFormat.parse(patients[i].getDOB());
-//                    dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-//                    DOB = dateFormat.format(convertedDate).toString();
-//                    Log.d(TAG, convertedDate.toString());
-                }
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-            txtDOB.setText(DOB);
-
+            txtDOB.setText(patients[i].getDOB() == null ? "NONE" : patients[i].getDOB());
             txtAddress1.setText(patients[i].getAddress1() == null ? "NONE" : patients[i].getAddress1());
             txtAddress2.setText(patients[i].getAddress2() == null ? "NONE" : patients[i].getAddress2());
         }
@@ -224,5 +215,22 @@ public class InformationFragment extends Fragment implements View.OnClickListene
     private void hideKeyboard(View v) {
         InputMethodManager in = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         in.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    ((MainActivity) v.getContext()).Display(0);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

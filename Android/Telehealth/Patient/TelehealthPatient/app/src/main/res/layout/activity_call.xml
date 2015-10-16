@@ -35,8 +35,13 @@
                 android:background="@drawable/img_avatar_caller"/>
 
             <TextView
+                android:id="@+id/lblCaller"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/imgCaller"
+                android:layout_centerHorizontal="true"
+                android:textSize="30dp"
+                android:textColor="@color/lightFont"
                 android:text="Calling..."/>
 
             <android.support.design.widget.FloatingActionButton
@@ -44,7 +49,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 app:backgroundTint="@color/declineFone"
                 android:src="@drawable/icon_end_call"/>
 
@@ -54,7 +59,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="20dp"
                 app:backgroundTint="@color/answerFone"
                 android:src="@drawable/phone_receiver_icon"/>
 
@@ -102,6 +107,7 @@
                     android:id="@+id/fabHold"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:visibility="gone"
                     android:src="@drawable/icon_pause"/>
 
                 <android.support.design.widget.FloatingActionButton
@@ -117,6 +123,7 @@
                     android:id="@+id/fabMute"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:visibility="gone"
                     android:src="@drawable/icon_unmute"/>
             </LinearLayout>
 

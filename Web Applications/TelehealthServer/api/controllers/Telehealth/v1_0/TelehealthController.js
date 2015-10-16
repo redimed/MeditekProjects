@@ -81,24 +81,76 @@ module.exports = {
         TelehealthService.FindByUID(uid).then(function(teleUser) {
             if (teleUser) {
                 teleUser.getUserAccount().then(function(user) {
-                    TelehealthService.MakeRequest({
-                        path: '/api/patient/get-patient',
-                        method: 'POST',
-                        body: {
-                            data: {
-                                'UID': user.UID
+                    if (user) {
+                        TelehealthService.MakeRequest({
+                            path: '/api/patient/get-patient',
+                            method: 'POST',
+                            body: {
+                                data: {
+                                    'UID': user.UID
+                                }
                             }
-                        }
-                    }).then(function(response) {
-                        res.json(response.getCode(), response.getBody());
-                    }).catch(function(err) {
-                        res.json(err.getCode(), err.getBody());
-                    })
+                        }).then(function(response) {
+                            res.json(response.getCode(), response.getBody());
+                        }).catch(function(err) {
+                            res.json(err.getCode(), err.getBody());
+                        })
+                    } else res.json(500, {
+                        status: 'error',
+                        message: 'User Not Exist!'
+                    });
                 })
             } else res.json(500, {
                 status: 'error',
                 message: 'User Not Exist!'
             });
+        })
+    },
+    GetUserAppointments: function(req, res) {
+        if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
+            res.json(500, {
+                status: 'error',
+                message: 'Invalid Parameters!'
+            });
+            return;
+        }
+        var info = toJson(req.body.data);
+        var patientUID = typeof info.uid != 'undefined' ? info.uid : null;
+        var limit = typeof info.limit != 'undefined' ? info.limit : null;
+        if (patientUID == null) {
+            res.json(500, {
+                status: 'error',
+                message: 'Invalid Parameters!'
+            });
+            return;
+        }
+        TelehealthService.GetAppointmentsByPatient(patientUID, limit).then(function(response) {
+            res.json(response.getCode(), response.getBody());
+        }).catch(function(err) {
+            res.json(err.getCode(), err.getBody());
+        })
+    },
+    GetAppointmentDetails: function(req, res) {
+        if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
+            res.json(500, {
+                status: 'error',
+                message: 'Invalid Parameters!'
+            });
+            return;
+        }
+        var info = toJson(req.body.data);
+        var apptUID = typeof info.uid != 'undefined' ? info.uid : null;
+        if (apptUID == null) {
+            res.json(500, {
+                status: 'error',
+                message: 'Invalid Parameters!'
+            });
+            return;
+        }
+        TelehealthService.GetAppointmentDetails(apptUID).then(function(response) {
+            res.json(response.getCode(), response.getBody());
+        }).catch(function(err) {
+            res.json(err.getCode(), err.getBody());
         })
     },
     TelehealthLogout: function(req, res) {
@@ -121,7 +173,7 @@ module.exports = {
                 if (err) res.status(401).send(err);
                 else {
                     var token = jwt.sign(user, config.TokenSecret, {
-                        expiresInMinutes: 60 * 24
+                        expiresIn: 3600 * 24
                     });
                     res.json(200, {
                         status: 'success',
@@ -152,7 +204,7 @@ module.exports = {
                     where: {
                         telehealthUserID: teleUser.ID,
                         deviceId: deviceId,
-                        type: deviceType == 'android' ? 'ARD':'IOS'
+                        type: deviceType == 'android' ? 'ARD' : 'IOS'
                     },
                     defaults: {
                         UID: UUIDService.GenerateUUID(),
@@ -203,7 +255,7 @@ module.exports = {
                     UserActivation.findOrCreate({
                         where: {
                             userAccountID: user.ID,
-                            type: deviceType == 'android' ? 'ARD':'IOS',
+                            type: deviceType == 'android' ? 'ARD' : 'IOS',
                             deviceID: deviceId
                         },
                         defaults: {
@@ -270,7 +322,7 @@ module.exports = {
                 where: {
                     verificationCode: verifyCode.toString(),
                     deviceID: deviceId,
-                    type: deviceType == 'android' ? 'ARD':'IOS'
+                    type: deviceType == 'android' ? 'ARD' : 'IOS'
                 }
             }).then(function(userActivate) {
                 if (userActivate) {
@@ -282,15 +334,30 @@ module.exports = {
                             UID: UUIDService.GenerateUUID()
                         }
                     }).spread(function(teleUser, created) {
-                        var token = jwt.sign(teleUser, config.TokenSecret, {
-                            expiresInMinutes: 60 * 24
-                        });
-                        res.json(200, {
-                            status: 'success',
-                            message: 'User Activated!',
-                            uid: teleUser.UID,
-                            token: token
-                        });
+                        teleUser.getUserAccount().then(function(userAccount) {
+                            if (userAccount) {
+                                userAccount.getPatient().then(function(patient) {
+                                    if (patient) {
+                                        var token = jwt.sign(teleUser, config.TokenSecret, {
+                                            expiresIn: 3600 * 24
+                                        });
+                                        res.json(200, {
+                                            status: 'success',
+                                            message: 'User Activated!',
+                                            uid: teleUser.UID,
+                                            patientUID: patient.UID,
+                                            token: token
+                                        });
+                                    } else res.json(500, {
+                                        status: 'error',
+                                        message: 'Only Patient Can Logged In!'
+                                    })
+                                })
+                            } else res.json(500, {
+                                status: 'error',
+                                message: 'User Not Exist!'
+                            })
+                        })
                     }).catch(function(err) {
                         res.json(500, {
                             status: 'error',
@@ -311,8 +378,5 @@ module.exports = {
             status: 'error',
             message: 'Invalid Parameters!'
         })
-    },
-    UploadFile: function(req,res){
-        
     }
 }

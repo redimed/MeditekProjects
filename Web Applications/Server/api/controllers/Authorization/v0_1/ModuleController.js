@@ -21,7 +21,7 @@ module.exports={
 			}
 			return result;
 		});
-		
+		console.log(modules);
 		var moduleMap={};
 		_.each(modules,function(module){
 			moduleMap[module.uid]=module;
@@ -65,7 +65,7 @@ module.exports={
 				moduleMap[module.parent]={};
 			moduleMap[module.parent][module.uid]=module;
 		})*/
-
+		console.log(JSON.stringify(modulemapF['root']));
 		return res.ok({data:modulemapF['root']});
 	}
 }

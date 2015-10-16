@@ -3,6 +3,11 @@ angular.module("app.authentication.appointment.services",[])
 		var services = {};
 		var api = Restangular.all("api");
 
+		//load list appointment
+		services.loadListAppointment = function(data){
+			var loadListAppointment = api.all("appointment-telehealth-list");
+			return loadListAppointment.post({data:data});
+		};
 		services.ListAppointment = function(){
 			return api.one('appointment-telehealth-list').get();
 		}

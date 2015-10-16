@@ -19,7 +19,7 @@ module.exports = {
         });
 
         // TelehealthAppointment - PreferedPlasticSurgeon
-        TelehealthAppointment.hasOne(PreferedPlasticSurgeon, {
+        TelehealthAppointment.hasMany(PreferedPlasticSurgeon, {
             foreignKey: 'TelehealthAppointmentID'
         });
         // TelehealthAppointment - Doctor

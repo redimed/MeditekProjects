@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.redimed.telehealth.patient" >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.redimed.telehealth.patient">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -21,51 +22,48 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE" />
-
-    <permission
-        android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+    <permission android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE" android:protectionLevel="signature" />
 
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name=".ActivationActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".LauncherActivity"
+            android:label="@string/title_activity_launcher"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivationTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity
-            android:name=".HomeActivity"
-            android:label="@string/title_activity_home"
+        <activity android:name=".ActivationActivity"
+            android:label="@string/app_name"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".CallActivity"
+        <activity android:name=".CallActivity"
             android:label="@string/title_activity_call"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".VoiceActivity"
-            android:label="@string/title_activity_voice"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".CountryCodeActivity"
-            android:label="@string/title_activity_country_code"
-            android:theme="@android:style/Theme.Holo.Light.Dialog" />
+        <activity android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ModelActivity"
+            android:label="@string/title_activity_model"
+            android:screenOrientation="portrait"></activity>
 
-        <receiver android:name=".receiver.BootReceiver" >
+        <receiver android:name=".receiver.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="Restart_Socket_Service" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
+        <receiver android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
@@ -74,41 +72,28 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".service.SocketService"
+        <service android:name=".service.SocketService"
             android:enabled="true" />
-        <service
-            android:name=".service.MyGcmListenerService"
-            android:exported="false" >
+        <service android:name=".service.MyGcmListenerService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-        <service
-            android:name=".service.MyInstanceIDListenerService"
-            android:exported="false" >
+        <service android:name=".service.MyInstanceIDListenerService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
-        <service
-            android:name=".service.RegistrationIntentService"
+        <service android:name=".service.RegistrationIntentService"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".LoadingActivity"
-            android:label="@string/title_activity_loading" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

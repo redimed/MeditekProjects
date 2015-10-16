@@ -1,55 +1,59 @@
 module.exports = {
-	tableName: 'MessageQueue',
-	autoCreatedAt: false,
-	autoUpdatedAt: false,
+    tableName: 'MessageQueue',
+    autoCreatedAt: false,
+    autoUpdatedAt: false,
     attributes: {
         ID: {
-			type: 'integer',
-			columnName: 'ID'
-		},
-		UID: {
-			type: 'string',
-			columnName: 'UID',
-			required: true,
-			maxLength: 255
-		},
-		urgentRequestID: {
-			type: 'integer',
-			columnName: 'UrgentRequestID',
-			required: true
-		},
-		source: {
-			type: 'string',
-			columnName: 'Source',
-			required: true,
-			maxLength: 100
-		},
-		sourceID: {
-			type: 'string',
-			columnName: 'SourceID',
-			required: true
-		},
-		job: {
-			type: 'string',
-			columnName: 'Job',
-			maxLength: 100,
-		},
-		status: {
-			type: 'string',
-			columnName: 'Status',
-			required: true,
-			maxLength: 100
+            type: 'integer',
+            columnName: 'ID'
+        },
+        UID: {
+            type: 'string',
+            columnName: 'UID',
+            required: true,
+            maxLength: 255
+        },
+        urgentRequestID: {
+            type: 'integer',
+            columnName: 'UrgentRequestID',
+            required: true
+        },
+        source: {
+            type: 'string',
+            columnName: 'Source',
+            required: true,
+            maxLength: 100
+        },
+        sourceID: {
+            type: 'string',
+            columnName: 'SourceID',
+            required: true
+        },
+        job: {
+            type: 'string',
+            columnName: 'Job',
+            maxLength: 100,
+        },
+        status: {
+            type: 'string',
+            columnName: 'Status',
+            required: true,
+            maxLength: 100
 
-		},
-		startTime: {
-			type: 'datetime',
-			columnName: 'StartTime'
-		},
-		completedTime: {
-			type: 'datetime',
-			columnName: 'CompletedTime'
-		},
-		createdDate: {
+        },
+        startTime: {
+            type: 'datetime',
+            columnName: 'StartTime'
+        },
+        completedTime: {
+            type: 'datetime',
+            columnName: 'CompletedTime'
+        },
+        enable: {
+            type: 'string',
+            columnName: 'Enable'
+        },
+        createdDate: {
             type: 'datetime',
             columnName: 'CreatedDate'
         },
@@ -69,18 +73,18 @@ module.exports = {
             columnName: 'ModifiedBy'
         },
 
-        urgentRequestID:{
-            model:'UrgentRequest'
+        urgentRequestID: {
+            model: 'UrgentRequest'
         }
     },
 
-    beforeCreate: function(values, callback){
-        	values.creationDate = new Date();
-        	callback();
-        },
+    beforeCreate: function(values, callback) {
+        values.creationDate = new Date();
+        callback();
+    },
 
-    beforeUpdate: function(values, callback){
-        	values.modifiedDate = new Date();
-        	callback();
-        } 
+    beforeUpdate: function(values, callback) {
+        values.modifiedDate = new Date();
+        callback();
+    }
 };

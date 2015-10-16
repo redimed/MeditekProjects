@@ -1,45 +1,41 @@
 package com.redimed.telehealth.patient;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 
-import com.redimed.telehealth.patient.models.UserAccount;
-import com.redimed.telehealth.patient.service.MyInstanceIDListenerService;
+import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by luann on 9/23/2015.
  */
 public class MyApplication extends Application{
 
+    private TelehealthUser telehealthUser;
+
     private static MyApplication myApplication;
-
-    private UserAccount currUser;
-
-    public UserAccount getCurrUser() {
-        return currUser;
-    }
-
-    public void setCurrUser(UserAccount currUser) {
-        this.currUser = currUser;
-    }
-
 
     public static MyApplication getInstance(){
         return myApplication;
+    }
+
+    public TelehealthUser getTelehealthUser() {
+        return telehealthUser;
+    }
+
+    public void setTelehealthUser(TelehealthUser telehealthUser) {
+        this.telehealthUser = telehealthUser;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         myApplication = this;
-
-        Intent intent = new Intent(this, RegistrationIntentService.class);
-        startService(intent);
+        startService(new Intent(getApplicationContext(), RegistrationIntentService.class));
     }
 
     @Override
@@ -50,5 +46,18 @@ public class MyApplication extends Application{
     @Override
     public void onTerminate() {
         super.onTerminate();
+    }
+
+    public boolean isJSONValid(String test) {
+        try {
+            new JSONObject(test);
+        } catch (JSONException ex) {
+            try {
+                new JSONArray(test);
+            } catch (JSONException ex1) {
+                return false;
+            }
+        }
+        return true;
     }
 }

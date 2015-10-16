@@ -66,12 +66,10 @@ html, body {
     <body>
         <div class="container">
             <div class="content">
-                <form class="form" method="post" action="../api/UploadFile" enctype="multipart/form-data">
-                    <input type="file" multiple="multiple" name="images[]" id="images"/>
-
-                    <span>&nbsp;</span>
-                    <input class="form-input" type="submit" value="Upload Files" />
-                </form>
+                <div>Meditek Upload File</div>
+                <!-- <form class="form" method="post" action="../api/UploadFile" enctype="multipart/form-data"> -->
+                @yield('UploadForm')
+                
             </div>
         </div>
     </body>

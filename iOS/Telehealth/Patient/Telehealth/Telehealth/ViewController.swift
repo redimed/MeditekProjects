@@ -19,7 +19,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
     
     
     
-    let api = VerifyPhoneNumberController()
+    let api = GetAndPostDataController()
     //Color is red
     let colorCustom = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
     
@@ -47,7 +47,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
             
             view.showLoading()
             
-            api.SendVerifyPhoneNumber(config.deviceID!){
+            api.SendVerifyPhoneNumber(config.deviceID!,phoneNumber: phoneTextField.text!){
                 response in
                 //Check status API responsed
                 if(response["status"] == "success"){
@@ -58,7 +58,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     if response["TimeOut"] ==  "Request Time Out" {
                         self.alertMessage("Error", message: "Request Time Out")
                     }else {
-                        let message : String = String(response["message"]["message"])
+                        print(response)
+                        let message : String = String(response["ErrorsList"][0])
                         self.alertMessage("Error", message: message)
                     }
                     
@@ -115,6 +116,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         let length = ((textField.text?.length)! + string.length)
         if config.validateInputOnlyNumber(hashValue) == false || length > 10 {
+            
             return false
         }else{
             return true

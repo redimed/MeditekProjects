@@ -24,8 +24,12 @@ module.exports = {
 		var data = req.body.data;
 		Services.Patient.SearchPatient(data)
 		.then(function(info){
-			if(info!==undefined && info!==null && info.length > 0)
-				res.ok({status:200, message:"success", data:info});
+			if(info!==undefined){
+				if(info === null)
+					res.ok({status:200, message:"success", data:'',count:0});
+				else
+					res.ok({status:200,message:"success",data:info.rows,count:info.count});
+			}
 			else
 				res.notFound({status:404,message:"not Found"});
 		})
@@ -81,7 +85,6 @@ module.exports = {
 	*/
 	DetailPatient : function(req, res) {
 		var data = req.body.data;
-		console.log(data,"----------------------");
 		Services.Patient.DetailPatient(data)
 		.then(function(info){
 			if(info!=null && info!=undefined && info!='' && info.length!=0){
@@ -95,9 +98,6 @@ module.exports = {
 		});
 	},
 
-	Test : function(req, res){
-		res.json("asd");
-	},
 	/*
 		DeletePatient : disable patient who was deleted.
 		input: Patient's ID
@@ -128,18 +128,50 @@ module.exports = {
 	*/
 	LoadListPatient : function(req, res) {
 		var data = req.body.data;
-		var limit = data.limit;
-		var offset = data.offset;
-		Services.Patient.LoadListPatient(limit, offset)
+		Services.Patient.LoadListPatient(data)
 		.then(function(result){
 			if(result!==undefined && result!==null && result!=='')
-				res.ok({status:200,message:"success",data:result});
+				res.ok({status:200,message:"success",data:result.rows,count:result.count});
 			else
 				res.notFound({status:404,message:"not found"});
 		})
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});
 		});
+	},
+
+	/*
+		CheckPatient : check patient has created ?
+		input : Patient's PhoneNumber
+		output: true if patient has created and (false,data:{}) if patient hasn't created
+	*/
+	CheckPatient : function(req, res) {
+		var data = req.body.data;
+		Services.Patient.CheckPatient(data)
+		.then(function(result){
+			if(result!==undefined && result!==null){
+				res.ok({status:200,message:"success",data:result});
+			}
+			else{
+				res.notFound({status:404,message:"not found"});
+			}
+		})
+		.catch(function(err){
+			res.serverError({status:500,message:ErrorWrap(err)});
+		})
+	},
+
+	GetListCountry : function(req, res) {
+		HelperService.getListCountry()
+		.then(function(result){
+			if(result!==undefined && result!==null && result!=='' && result.length!==0)
+				res.ok({status:200,message:"success",data:result});
+			else
+				res.notFound({status:404,message:"not found"});
+		})
+		.catch(function(err){
+			res.serverError({status:500,message:ErrorWrap(err)});
+		})
 	}
 
 };

@@ -1,5 +1,7 @@
 var app = angular.module('app.authentication.appointment', [
 	'app.authentication.appointment.controller',
+	'app.authentication.appointment.services',
+	'app.authentication.appointment.directives.listAppoint'
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider){
@@ -14,10 +16,13 @@ app.config(function($stateProvider, $urlRouterProvider){
 		.state('authentication.appointment.list', {
 			url: '/list',
 			templateUrl: 'modules/appointment/views/appointmentList.html',
-			controller: 'appointmentListCtrl'
+			data: {pageTitle: 'Appointment List'},
+			controller: 'appointmentListCtrl',
+
 		})
 		.state('authentication.appointment.request', {
 			url: '/request',
+			data: {pageTitle: 'Appointment Send Request'},
 			templateUrl: 'modules/appointment/views/appointmentRequest.html',
 			controller: 'appointmentRequestCtrl'
 		});

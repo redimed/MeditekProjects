@@ -1,84 +1,97 @@
 module.exports = {
-        /*
-            ReceiveRequest
-            input: patient's datarmation
-            output: - success: send status success for patient
-                    - fail: send status error for patient
-        */
-        ReceiveRequest: function(req, res) {
-                var data = req.body.data;
-                if (!_.isObject(data)) {
-                    try {
-                        data = JSON.parse(data);
-                    } catch (err) {
-                        console.log(err);
-                        res.json(400, {
-                            error: err,
-                            status: 400
-                        });
-                        return;
-                    }
-                }
+    /*
+        ReceiveRequest
+        input: patient's datarmation
+        output: - success: send status success for patient
+                - fail: send status error for patient
+    */
+    ReceiveRequest: function(req, res) {
+        var data = req.body.data;
+        if (!_.isObject(data)) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                console.log(err);
+                res.json(400, {
+                    error: err,
+                    status: 400
+                });
+                return;
+            }
+        }
 
-                //get client's IP
-                data.ip = req.headers['X-Client-IP'] ||
-                    req.headers['X-Forwarded-For'] ||
-                    req.headers['X-Real-IP'] ||
-                    req.headers['X-Cluster-Client-IP'] ||
-                    req.headers['X-Forwared'] ||
-                    req.headers['X-Forwared-For'] ||
-                    req.headers['X-Forwared'] ||
-                    req.connection.remoteAddress ||
-                    req.socket.remoteAddress ||
-                    req.connection.socket.remoteAddress;
-                data.UID = UUIDService.Create();
-                data.requestDate = Services.moment().format('YYYY-MM-DD HH:mm:ss');
-                //save information patient
-                UrgentRequest.create({
-                        UID: data.UID,
-                        firstName: data.firstName,
-                        lastName: data.lastName,
-                        phoneNumber: data.phoneNumber,
-                        gender: data.gender,
-                        email: data.email,
-                        DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? data.DOB : null,
-                    suburb: data.suburb,
-                    IP: data.ip,
-                    requestDate: data.requestDate,
-                    serviceType: data.serviceType,
-                    GPReferal: data.GPReferal,
-                    urgentRequestType: data.urgentRequestType,
-                    companyName: data.companyName,
-                    companyPhoneNumber: data.companyPhoneNumber,
-                    contactPerson: data.contactPerson,
-                    tried: 1,
-                    status: 'pending',
-                    interval: 5,
-                    description: data.description,
-                    enable: 1
-                })
+        //get client's IP
+        data.ip = req.headers['X-Client-IP'] ||
+            req.headers['X-Forwarded-For'] ||
+            req.headers['X-Real-IP'] ||
+            req.headers['X-Cluster-Client-IP'] ||
+            req.headers['X-Forwared'] ||
+            req.headers['X-Forwared-For'] ||
+            req.headers['X-Forwared'] ||
+            req.connection.remoteAddress ||
+            req.socket.remoteAddress ||
+            req.connection.socket.remoteAddress;
+        data.UID = UUIDService.Create();
+        data.requestDate = Services.moment().format('YYYY-MM-DD HH:mm:ss');
+        //save information patient
+        UrgentRequest.create({
+                UID: data.UID,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                phoneNumber: data.phoneNumber,
+                gender: data.gender,
+                email: data.email,
+                DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? data.DOB : null,
+                suburb: data.suburb,
+                IP: data.ip,
+                requestDate: data.requestDate,
+                GPReferral: data.GPReferral,
+                urgentRequestType: data.urgentRequestType,
+                companyName: data.companyName,
+                companyPhoneNumber: data.companyPhoneNumber,
+                contactPerson: data.contactPerson,
+                physiotherapy: data.physiotherapy,
+                specialist: data.specialist,
+                handTherapy: data.handTherapy,
+                GP: data.GP,
+                tried: 1,
+                status: 'pending',
+                interval: 5,
+                description: data.description,
+                enable: 1
+            })
             .then(function(URCreated) {
+                //convert service type and gp referral
+                var GPReferral = Services.ConvertData.GPReferral(data.GPReferral);
+                var serviceType = Services.ConvertData.ServiceType(data);
+                var subjectEmail = '[Testing] - [' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
+                    '] - [' + data.firstName + ' ' +
+                    data.lastName + '] - [' + data.phoneNumber + ']';
                 var emailInfo = {
-                    from: 'Health Screenings <HealthScreenings@redimed.com.au>',
+                    from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
                     email: 'HealthScreenings@redimed.com.au',
-                    subject: '[Testing] - [' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
-                        '] - [' + data.lastName + ' ' +
-                        data.firstName + '] - [' + data.phoneNumber + ']',
+                    patientEmail: (!_.isUndefined(data.email) && !_.isNull(data.email)) ? data.email : '',
+                    subject: subjectEmail,
                     confirmed: APIService.UrgentCareConfirmURL + '/' + data.UID,
                     urgentRequestType: data.urgentRequestType || '',
-                    patientName: data.lastName + ' ' + data.firstName,
+                    patientName: data.firstName + ' ' + data.lastName,
                     requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                     phoneNumber: data.phoneNumber,
-                    companyName: data.companyName,
-                    contactPerson: data.contactPerson,
-                    companyPhoneNumber: data.companyPhoneNumber,
-                    bcc: 'pnguyen@redimed.com.au, thanh1101681@gmail.com'
+                    suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb) && !_.isEmpty(data.suburb)) ? data.suburb : '',
+                    DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? Services.moment(data.DOB).format('DD/MM/YYYY') : '',
+                    GPReferral: GPReferral,
+                    serviceType: serviceType,
+                    description: (!_.isUndefined(data.description) && !_.isNull(data.description) && !_.isEmpty(data.description)) ? data.description : '',
+                    companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName) && !_.isEmpty(data.companyName)) ? data.companyName : '',
+                    contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson) && !_.isEmpty(data.contactPerson)) ? data.contactPerson : '',
+                    companyPhoneNumber: (!_.isUndefined(data.companyPhoneNumber) && !_.isNull(data.companyPhoneNumber) && !_.isEmpty(data.companyPhoneNumber)) ? data.companyPhoneNumber : '',
+                    bcc: 'pnguyen@redimed.com.au, meditekcompany@gmail.com'
                 };
 
                 /*
                 CallBackSendMail: callback from function sendmail
                 input: err, responseStatus, html, text
-                output: throw error
+                output: throw status send mail
                 */
                 var CallBackSendMail = function(err, responseStatus, html, text) {
                     if (err) {
@@ -94,29 +107,42 @@ module.exports = {
                             };
                             //send email and sms to customer
                             var emailInfoPatient = {
-                                from: 'Health Screenings <HealthScreenings@redimed.com.au>',
+                                from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
                                 email: data.email.toLowerCase(),
                                 subject: 'Request Received',
                                 urgentRequestType: data.urgentRequestType || '',
-                                patientName: data.lastName + ' ' + data.firstName,
+                                patientName: data.firstName + ' ' + data.lastName,
                                 requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
-                                phoneNumber: data.phoneNumber
+                                phoneNumber: data.phoneNumber,
+                                suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb) && !_.isEmpty(data.suburb)) ? data.suburb : '',
+                                DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? Services.moment(data.DOB).format('DD/MM/YYYY') : '',
+                                GPReferral: GPReferral,
+                                serviceType: serviceType,
+                                description: (!_.isUndefined(data.description) && !_.isNull(data.description) && !_.isEmpty(data.description)) ? data.description : '',
+                                companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName) && !_.isEmpty(data.companyName)) ? data.companyName : '',
+                                contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson) && !_.isEmpty(data.contactPerson)) ? data.contactPerson : '',
+                                companyPhoneNumber: (!_.isUndefined(data.companyPhoneNumber) && !_.isNull(data.companyPhoneNumber) && !_.isEmpty(data.companyPhoneNumber)) ? data.companyPhoneNumber : '',
                             };
-                            SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
+                            if (data.urgentRequestType === 'WorkInjury') {
+                                SendMailService.SendMail('WorkInjuryReceive', emailInfoPatient, CallBackSendMailPatient);
+                            } else {
+                                SendMailService.SendMail('UrgentReceive', emailInfoPatient, CallBackSendMailPatient);
+                            }
                         }
-                    }
-                    //send sms
-                    var dataSMS = {
-                        phone: data.phoneNumber,
-                        content: 'Hi ' + data.firstName + ' ' + data.lastName + ', \nPlease note that your request has been received. ' + 'Someone from our REDIMED team will contact you shortly.' + '\nThank you for request.'
+                        //send sms
+                        var dataSMS = {
+                            phone: data.phoneNumber,
+                            content: 'Hi ' + data.firstName + ' ' + data.lastName + ', \nPlease note that your request has been received. ' + 'Someone from our REDIMED team will contact you shortly.' + '\nThank you for request.'
 
-                    };
-                    var CallBackSendSMS = function(err) {
-                        if (err) {
-                            console.log('Send SMS:' + err);
+                        };
+                        var CallBackSendSMS = function(err) {
+                            if (err) {
+                                console.log('Send SMS:' + err);
+                            }
                         }
+                        SendSMSService.Send(dataSMS, CallBackSendSMS);
                     }
-                    SendSMSService.Send(dataSMS, CallBackSendSMS);
+
                 };
 
                 //send email
@@ -155,7 +181,8 @@ module.exports = {
                         sourceID: dataMQ.sourceID,
                         job: dataMQ.job,
                         status: dataMQ.status,
-                        startTime: dataMQ.startTime
+                        startTime: dataMQ.startTime,
+                        enable: 'Y'
                     })
                     .exec(function(err, MQCreated) {
                         if (err) {
@@ -198,7 +225,7 @@ module.exports = {
     ConfirmRequest: function(req, res) {
         require('getmac').getMac(function(err, macaddr) {
             UrgentRequest.update({
-                    status: 'queueing',
+                    status: 'pending',
                     confirmUserName: null
                 }, {
                     status: 'confirmed',

@@ -11,7 +11,7 @@
     <!-- view border color and width -->
     <stroke
         android:width="0.2dp"
-        android:color="#424242" >
+        android:color="#28424242" >
     </stroke>
 
     <!-- If you want to add some padding -->
@@ -27,4 +27,4 @@
         android:radius="5dp"   >
     </corners>
 
-</shape><!-- From: file:/D:/Project/Android/UrgentCare/app/src/main/res/drawable/boder_edittext.xml -->
+</shape><!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/src/main/res/drawable/boder_edittext.xml -->

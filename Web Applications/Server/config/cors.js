@@ -28,59 +28,59 @@
 
 module.exports.cors = {
 
-  /***************************************************************************
-  *                                                                          *
-  * Allow CORS on all routes by default? If not, you must enable CORS on a   *
-  * per-route basis by either adding a "cors" configuration object to the    *
-  * route config, or setting "cors:true" in the route config to use the      *
-  * default settings below.                                                  *
-  *                                                                          *
-  ***************************************************************************/
+    /***************************************************************************
+     *                                                                          *
+     * Allow CORS on all routes by default? If not, you must enable CORS on a   *
+     * per-route basis by either adding a "cors" configuration object to the    *
+     * route config, or setting "cors:true" in the route config to use the      *
+     * default settings below.                                                  *
+     *                                                                          *
+     ***************************************************************************/
 
-  allRoutes: true,
+    allRoutes: true,
 
-  /***************************************************************************
-  *                                                                          *
-  * Which domains which are allowed CORS access? This can be a               *
-  * comma-delimited list of hosts (beginning with http:// or https://) or    *
-  * "*" to allow all domains CORS access.                                    *
-  *                                                                          *
-  ***************************************************************************/
+    /***************************************************************************
+     *                                                                          *
+     * Which domains which are allowed CORS access? This can be a               *
+     * comma-delimited list of hosts (beginning with http:// or https://) or    *
+     * "*" to allow all domains CORS access.                                    *
+     *                                                                          *
+     ***************************************************************************/
 
-  origin: 'http://localhost:8000,http://localhost:8001',
+    origin: 'http://localhost:8000,http://localhost:8001,http://localhost:3004, http://192.168.1.2:3004, http://telehealvietnam.com.vn:3004, http://testapp.redimed.com.au:3004',
 
-  /***************************************************************************
-  *                                                                          *
-  * Allow cookies to be shared for CORS requests?                            *
-  *                                                                          *
-  ***************************************************************************/
+    /***************************************************************************
+     *                                                                          *
+     * Allow cookies to be shared for CORS requests?                            *
+     *                                                                          *
+     ***************************************************************************/
 
-  credentials: true,
+    credentials: true,
 
-  /***************************************************************************
-  *                                                                          *
-  * Which methods should be allowed for CORS requests? This is only used in  *
-  * response to preflight requests (see article linked above for more info)  *
-  *                                                                          *
-  ***************************************************************************/
+    /***************************************************************************
+     *                                                                          *
+     * Which methods should be allowed for CORS requests? This is only used in  *
+     * response to preflight requests (see article linked above for more info)  *
+     *                                                                          *
+     ***************************************************************************/
 
-  methods: 'GET, POST, PUT, DELETE, OPTIONS, HEAD',
+    methods: 'GET, POST, PUT, DELETE, OPTIONS, HEAD',
 
-  /***************************************************************************
-  *                                                                          *
-  * Which headers should be allowed for CORS requests? This is only used in  *
-  * response to preflight requests.                                          *
-  *                                                                          *
-  ***************************************************************************/
+    /***************************************************************************
+     *                                                                          *
+     * Which headers should be allowed for CORS requests? This is only used in  *
+     * response to preflight requests.                                          *
+     *                                                                          *
+     ***************************************************************************/
 
-  headers: 'content-type, authorization',
+    headers: 'content-type, authorization',
 
-  /**
-   * Security level 1 (high) will respond with a 403 status code to any request 
-   * from a disallowed origin prefixed with the http or https protocol. 
-   * Security level 2 (very high) will do the same, 
-   * but extended to all protocols (so things like Postman and curl won't work).
-   */
-  securityLevel:1,
+    /**
+     * Security level 1 (high) will respond with a 403 status code to any request 
+     * from a disallowed origin prefixed with the http or https protocol. 
+     * Security level 2 (very high) will do the same, 
+     * but extended to all protocols (so things like Postman and curl won't work).
+     */
+    securityLevel: 1,
 
 };

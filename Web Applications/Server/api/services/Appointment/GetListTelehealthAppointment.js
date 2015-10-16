@@ -3,43 +3,40 @@ module.exports = function(data) {
     var defer = $q.defer();
     var pagination = Services.GetPaginationAppointment(data);
     //get limit, offset
-    Appointment.findAll({
+    Appointment.findAndCountAll({
             attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status', 'Enable'],
             include: [{
                 model: TelehealthAppointment,
-                attributes: ['UID', 'RefName', 'RefDate'],
-                required: true,
+                attributes: ['UID', 'RefName', 'RefDate', 'Correspondence'],
+                required: false,
                 include: [{
                     model: PatientAppointment,
                     attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'PhoneNumber'],
-                    required: true,
-                    where: pagination.filterPatientAppointment,
-                    order: pagination.orderPatientAppointment
+                    required: false,
+                    where: pagination.filterPatientAppointment
                 }],
-                where: pagination.filterTelehealthAppointment,
-                order: pagination.orderTelehealthAppointment
+                where: pagination.filterTelehealthAppointment
             }, {
                 model: Doctor,
-                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'Phone'],
-                required: true,
-                where: pagination.filterDoctor,
-                order: pagination.orderDoctor
+                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'HomePhoneNumber', 'WorkPhoneNumber'],
+                required: false,
+                where: pagination.filterDoctor
             }, {
                 model: Patient,
                 attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB'],
-                required: true,
+                required: false,
                 where: pagination.filterPatient,
-                order: pagination.orderPatient,
                 include: [{
                     model: UserAccount,
-                    attributes: ['UserName', 'Email', 'PhoneNumber', 'Activated'],
-                    required: true
+                    attributes: ['ID', 'UserName', 'Email', 'PhoneNumber', 'Activated'],
+                    required: false
                 }]
             }],
             where: pagination.filterAppointment,
-            order: pagination.orderAppointment,
+            order: pagination.order,
             limit: pagination.limit,
             offset: pagination.offset,
+            subQuery: false
         })
         .then(function(apptTelehealth) {
             defer.resolve({

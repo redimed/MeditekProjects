@@ -35,8 +35,9 @@ module.exports.policies = {
   //     '*': true,
   // },
   
-  'UserAccount/UserAccountController':{
-    'Test':true,
+  'UserAccount/v0_1/UserAccountController':{
+    'Test':'checkVersion',
+    'TestURL':'checkVersion',
     'CreateUserAccount':'hasToken',
     'UpdateUserAccount':'hasToken'
   },
@@ -48,6 +49,10 @@ module.exports.policies = {
       'testGp':['hasToken','isGp'],
       'testDoctor':['hasToken','isDoctor'],
       'testPatient':['hasToken','isPatient']
+  },
+
+  'Authorization/v0_1/ModuleController':{
+    'GetModulesForUser':['hasToken']
   }
 
   /***************************************************************************

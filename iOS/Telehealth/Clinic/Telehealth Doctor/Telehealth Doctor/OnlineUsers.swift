@@ -11,12 +11,28 @@ import Foundation
 class OnlineUsers {
     
     var userId: String!
-    var numberPhone: String!
-    var UUID:String!
     
-    init(userId: String, numberPhone: String, UUID: String) {
+    var fullNamePatient: String!
+    
+    var fullNameDoctor: String!
+    
+    var requestDateAppoinment: String!
+    var appoinmentDate: String!
+    var status: Int!
+    
+    var UID:String!
+    
+    init(userId: String, fullNamePatient: String, fullNameDoctor: String, requestDateAppoinment: String, appoinmentDate: String, UID:String, status: Int) {
         self.userId = userId
-        self.numberPhone = numberPhone
-        self.UUID = UUID
+        
+        self.fullNamePatient = fullNamePatient
+        
+        self.fullNameDoctor = fullNameDoctor
+        
+        self.requestDateAppoinment = requestDateAppoinment
+        self.appoinmentDate = appoinmentDate
+        self.status = status
+        
+        self.UID = UID
     }
 }

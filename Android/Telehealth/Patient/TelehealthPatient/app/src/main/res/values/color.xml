@@ -11,18 +11,25 @@
     <color name="greyFont">#ff9e9e9e</color>
     <color name="redFont">#B51E46</color>
 
-    <!-- -->
-    <color name="darkLine">#000000</color>
+    <!-- Mix color-->
+    <color name="colorLine">#4d000000</color>
+    <color name="declineFone">#B51E46</color>
+    <color name="answerFone">#009688</color>
 
     <!-- Status Bar Color-->
-    <color name="colorPrimaryDark">#1565C0</color>
+    <color name="colorPrimaryDark">#87b4f3</color>
     <color name="colorPrimary">#2196f3</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
+    <color name="colorAccent">#B42047</color>
 
     <!-- Dialog Color-->
     <color name="success">#2196f3</color>
     <color name="error">#F44336</color>
     <color name="warning">#FFB300</color>
+
+    <!-- Status Color-->
+    <color name="approved">#00703C</color>
+    <color name="unapproved">#F44336</color>
 </resources>

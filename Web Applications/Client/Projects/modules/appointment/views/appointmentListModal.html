@@ -1,287 +1,276 @@
 <div class="modal-content">
 	<div class="modal-header my-modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="modal_close()"></button>
-		<h4 class="modal-title"><b><i class="glyphicon glyphicon-pencil"></i>  Telehealth Appointments</b></h4>
+		<h4 class="modal-title"><b><i class="glyphicon glyphicon-edit"></i>  Telehealth Appointments</b></h4>
 	</div>
 	<!-- <div class="modal-body" style="overflow-y:scroll; overflow-x:hidden; max-height:400px;"> -->
 	<div class="modal-body">
 		<!--  -->
 		<div class="tabbable">
 			<ul class="nav nav-tabs nav-tabs-lg">
-				<li  class="active">
+				<li class="active" ng-click="tab_name='';">
 					<a href="index.html#appointment" data-toggle="tab" aria-expanded="true">
 					Appointment
 					</a>
 				</li>
-				<li class="">
+				<li class="" ng-click="tab_name='';">
 					<a href="index.html#clinical_medical" data-toggle="tab" aria-expanded="false">
 					Clinical & Medical
 					</a>
 				</li>
-				<li class="">
+				<li class="" ng-click="tab_name='patient';">
 					<a href="index.html#patient" data-toggle="tab" aria-expanded="false">
 					Patient 
 					</a>
 				</li>
-				<li class="">
-					<a href="index.html#Treating_Practictioner" data-toggle="tab" aria-expanded="false">
-					Treating Practictioner 
+				<li class="" ng-click="tab_name='';">
+					<a href="index.html#Treating_Practitioner" data-toggle="tab" aria-expanded="false">
+					Treating Practitioner 
 					</a>
 				</li>
-				<li class="">
+				<li class="" ng-click="tab_name='';">
 					<a href="index.html#medical_image" data-toggle="tab" aria-expanded="false">
 					Medical Images
 					</a>
 				</li>
-				<li class="">
+				<li class="" ng-click="tab_name='';">
 					<a href="index.html#referring_practitioner" data-toggle="tab" aria-expanded="false">
 						Referring Practitioner
 					</a>
 				</li>
-				<li class="">
+				<li class="" ng-click="tab_name='';">
 					<a href="index.html#present_complain_and_allergy" data-toggle="tab" aria-expanded="false">
 						Present Complain & Allergy
 					</a>
 				</li>
 			</ul>
-			<div class="tab-content" style="padding: 0 2%; margin: 0 auto">
+			<div class="tab-content" style="padding: 0 1%; margin: 0 auto">
 				<div class="tab-pane active" id="appointment">
 					<div class="row">&nbsp;</div>
 					<div class="row">
-						<div class="col-md-4">
-							<div class="form-group">
-								<label for="time" class="control-label">Duration of referral</label>
-								<div class="form-control"><span class="label label-lg label-info">12 months </span></div>
-								<!-- <div class="form-control-focus"></div> -->
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group ">
-								<label for="time" class="control-label">Status</label>
-								<select class="bs-select form-control" data-show-subtext="true">
-									<option data-content=" <span class='label lable-sm label-warning'>Pending </span>">Pending</option>
-									<option data-content=" <span class='label lable-lg label-default'>Calling </span>">Calling</option>
-									<option data-content=" <span class='label lable-lg label-success'>Booked </span>">Booked</option>
-									<option data-content=" <span class='label lable-sm label-danger'>Cancel </span>">Cancel</option>
-									<option data-content=" <span class='label lable-sm label-info'>Finish </span>">Finish</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group  ">
-								<label class="control-label">Request Date</label>
-								<div class="input-icon">
-									<i class="fa fa-calendar"></i>
-									<input type="text" class="form-control form-control-inline date-picker" value="01/01/2015">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4">
-							<div class="form-group">
-								<label class="control-label">Appointment Date</label>
-								<div class="input-icon">
-									<i class="fa fa-calendar"></i>
-									<input class="form-control form-control-inline date-picker" size="16" type="text" value="01/02/2015"/>
-								</div>
-								
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<label class="control-label">Appointment Time</label>
-								<div class="input-icon">
-									<i class="fa fa-clock-o"></i>
-									<input type="text" class="form-control timepicker timepicker-default">
-								</div>
-								
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<div class="checkbox-list">
-									<label class="control-label">&nbsp;</label>
-									<div class="form-control">
-										<input type="checkbox" id="Correspondence" checked="true"> 
-										<label for="Correspondence">Correspondence</label>
-									</div>
-									
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4">
-							<div class="form-group ">
-								<label class="control-label">Patient</label>
-								<input type="text" class="form-control"  value="Hana Montana" disabled="true">
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group ">
-								<label class="control-label">Referring Practitioner</label>
-								<input type="text" class="form-control"  value="Shen Woo" disabled="true">
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<label class="control-label">Fund</label>
-								<select class="form-control">
-									<option value='ACA'>ACA Health Benefits Fund</option>
-									<option value='AHM'>ahm Health Insurance</option>
-									<option value='AUF'>Australian Unity Health Limited</option>
-									<option value='BUP'>Bupa Australia Pty Ltd</option>
-									<option value='CBH'>CBHS Health Fund Limited</option>
-									<option value='CDH'>CDH Benefits Fund</option>
-									<option value='CPS'>CUA Health Limited</option>
-									<option value='AHB'>Defence Health Limited</option>
-									<option value='AMA'>Doctors' Health Fund</option>
-									<option value='GMF'>GMF Health</option>
-									<option value='GMH'>GMHBA Limited</option>
-									<option value='FAI'>Grand United Corporate Health</option>
-									<option value='HBF'>HBF Health Limited</option>
-									<option value='HCF'>HCF</option>
-									<option value='HCI'>Health Care Insurance Limited</option>
-									<option value='HIF'>Health Insurance Fund of Australia Limited</option>
-									<option value='SPS'>Health Partners</option>
-									<option value='HEA'>health.com.au</option>
-									<option value='LHS'>Latrobe Health Services</option>
-									<option value='MBP'>Medibank Private Limited</option>
-									<option value='MDH'>Mildura Health Fund</option>
-									<option value='OMF'>National Health Benefits Australia Pty Ltd (onemedifund)</option>
-									<option value='NHB'>Navy Health Ltd</option>
-									<option value='NIB'>NIB Health Funds Ltd.</option>
-									<option value='LHM'>Peoplecare Health Insurance</option>
-									<option value='PWA'>Phoenix Health Fund Limited</option>
-									<option value='SPE'>Police Health</option>
-									<option value='QCH'>Queensland Country Health Fund Ltd</option>
-									<option value='RTE'>Railway and Transport Health Fund Limited</option>
-									<option value='RBH'>Reserve Bank Health Society Ltd</option>
-									<option value='SLM'>St.Lukes Health</option>
-									<option value='NTF'>Teachers Health Fund</option>
-									<option value='TFS'>Transport Health Pty Ltd</option>
-									<option value='QTU'>TUH</option>
-									<option value='WFD'>Westfund Limited</option>
-								</select>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<h4 class="caption"><b>Examination Required</b></h4>
+						<div class="col-md-6">
 							<div class="row">
-								<div class="col-md-2">
+								<div class="col-md-4">
 									<div class="form-group">
-										<div class="checkbox-list">
-											<label class="control-label">
-												<input type="checkbox" checked="true"> Private 
-											</label>
+										<label for="time" class="control-label">Duration Of Referral</label>
+										<div class="form-control">
+											<!-- <i class="fa fa-calendar-o"></i> -->
+											<!-- &nbsp;&nbsp; --><span class="label label-lg label-info">12 months </span>
+										</div>
+										<!-- <div class="form-control-focus"></div> -->
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group ">
+										<label for="time" class="control-label">Status</label>
+										<select class="form-control" ng-model="appointment.Status" name="Status">
+											<option  value="Pending">Pending</option>
+											<option  value="Calling">Calling</option>
+											<option  value="Approved">Approved</option>
+											<option  value="Cancel">Cancel</option>
+											<option  value="Finish">Finish</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group  ">
+										<label class="control-label">Request Date</label>
+										<div class="input-icon">
+											<i class="fa fa-calendar"></i>
+											<input type="text" class="form-control form-control-inline date-picker" ng-model="appointment.RequestDate" id="RequestDate">
 										</div>
 									</div>
 								</div>
-								<div class="col-md-2">
+							</div>
+							<div class="row">
+								<div class="col-md-4">
 									<div class="form-group">
-										<div class="checkbox-list">
-											<label class="control-label">
-												<input type="checkbox"> Public 
-											</label>
+										<label class="control-label">Appointment Date</label>
+										<div class="input-icon">
+											<i class="fa fa-calendar"></i>
+											<input class="form-control form-control-inline date-picker" size="16" type="text" ng-model="DateTimeAppointmentDate" id="DateTimeAppointmentDate"/>
+										</div>
+										
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="control-label">Appointment Time</label>
+										<div class="input-icon">
+											<i class="fa fa-clock-o"></i>
+											<input type="text" class="form-control timepicker timepicker-default" ng-model="DateTimeAppointmentDateTime" id="DateTimeAppointmentDateTime">
 										</div>
 									</div>
 								</div>
-								<div class="col-md-2">
+								<div class="col-md-4">
 									<div class="form-group">
 										<div class="checkbox-list">
-											<label class="control-label">
-												<input type="checkbox"> DVA 
-											</label>
+											<label class="control-label">&nbsp;</label>
+											<div class="form-control" style="border: none;">
+												<input type="checkbox" ng-model="appointment.TelehealthAppointment.Correspondence" ng-true-value="'Y'" ng-false-value="'N'">
+												<label for="Correspondence">Correspondence</label>
+											</div>
+											
 										</div>
 									</div>
 								</div>
-								<div class="col-md-2">
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group ">
+										<label class="control-label">Patient</label>
+											<input type="text" class="form-control"  ng-model="PatientsFullName" disabled="true">
+										<!-- </div> -->
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group ">
+										<label class="control-label">Referring Practitioner</label>
+										<!-- <div class="input-icon"> -->
+											<!-- <i class="icon-plus"></i> -->
+											<input type="text" class="form-control"  ng-model="appointment.TelehealthAppointment.RefName" disabled="true">
+										<!-- </div> -->
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label class="control-label">Fund</label>
+										<select class="form-control" ng-model="appointment.TelehealthAppointment.Fund">
+										    <option value=''></option>
+											<option value='ACA'>ACA Health Benefits Fund</option>
+											<option value='AHM'>ahm Health Insurance</option>
+											<option value='AUF'>Australian Unity Health Limited</option>
+											<option value='BUP'>Bupa Australia Pty Ltd</option>
+											<option value='CBH'>CBHS Health Fund Limited</option>
+											<option value='CDH'>CDH Benefits Fund</option>
+											<option value='CPS'>CUA Health Limited</option>
+											<option value='AHB'>Defence Health Limited</option>
+											<option value='AMA'>Doctors' Health Fund</option>
+											<option value='GMF'>GMF Health</option>
+											<option value='GMH'>GMHBA Limited</option>
+											<option value='FAI'>Grand United Corporate Health</option>
+											<option value='HBF'>HBF Health Limited</option>
+											<option value='HCF'>HCF</option>
+											<option value='HCI'>Health Care Insurance Limited</option>
+											<option value='HIF'>Health Insurance Fund of Australia Limited</option>
+											<option value='SPS'>Health Partners</option>
+											<option value='HEA'>health.com.au</option>
+											<option value='LHS'>Latrobe Health Services</option>
+											<option value='MBP'>Medibank Private Limited</option>
+											<option value='MDH'>Mildura Health Fund</option>
+											<option value='OMF'>National Health Benefits Australia Pty Ltd (onemedifund)</option>
+											<option value='NHB'>Navy Health Ltd</option>
+											<option value='NIB'>NIB Health Funds Ltd.</option>
+											<option value='LHM'>Peoplecare Health Insurance</option>
+											<option value='PWA'>Phoenix Health Fund Limited</option>
+											<option value='SPE'>Police Health</option>
+											<option value='QCH'>Queensland Country Health Fund Ltd</option>
+											<option value='RTE'>Railway and Transport Health Fund Limited</option>
+											<option value='RBH'>Reserve Bank Health Society Ltd</option>
+											<option value='SLM'>St.Lukes Health</option>
+											<option value='NTF'>Teachers Health Fund</option>
+											<option value='TFS'>Transport Health Pty Ltd</option>
+											<option value='QTU'>TUH</option>
+											<option value='WFD'>Westfund Limited</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="row" style="text-align: right;">
+								<h4 class="caption col-md-12"><b>Examination Required</b></h4>
+								<div class="col-md-12">
 									<div class="form-group">
 										<div class="checkbox-list">
 											<label class="control-label">
-												<input type="checkbox"> Workers Comp
+												Private&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.Private" ng-true-value="'Y'" ng-false-value="'N'">
 											</label>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
 									<div class="form-group">
 										<div class="checkbox-list">
 											<label class="control-label">
-												<input type="checkbox"> MVIT 
+												Public&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.Public" ng-true-value="'Y'" ng-false-value="'N'">  
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												DVA&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.DVA" ng-true-value="'Y'" ng-false-value="'N'">  
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												Workers Comp&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.WorkersComp" ng-true-value="'Y'" ng-false-value="'N'">
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												MVIT&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.MVIT" ng-true-value="'Y'" ng-false-value="'N'">  
 											</label>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-12">
-							<h4 class="caption"><b>Referred Plastic Surgeon</b></h4>
-							<div class="row">
-								<div class="col-md-2">
-									<div class="md-checkbox">
-										<input type="checkbox" id="first_surgeon_available" class="md-check" checked="">
-										<label for="first_surgeon_available">
-										<span></span>
-										<span class="check"></span>
-										<span class="box"></span>
-										First Surgeon Available </label>
+						<div class="col-md-3">
+							<div class="row" style="text-align: right;">
+								<h4 class="caption col-md-12"><b>Preferred Plastic Surgeon</b></h4>
+								<div class="col-md-12">
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												First Surgeon Available&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferedPlasticSurgeons[0].Value" ng-true-value="'Y'" ng-false-value="'N'">
+											</label>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="md-checkbox">
-										<input type="checkbox" id="mr_hanh_nguyen" class="md-check" checked="">
-										<label for="mr_hanh_nguyen">
-										<span></span>
-										<span class="check"></span>
-										<span class="box"></span>
-										Mr Hanh Nguyen </label>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												Mr Hanh Nguyen&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferedPlasticSurgeons[1].Value" ng-true-value="'Y'" ng-false-value="'N'">
+											</label>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="md-checkbox">
-										<input type="checkbox" id="mr_adrian_brooks" class="md-check">
-										<label for="mr_adrian_brooks">
-										<span></span>
-										<span class="check"></span>
-										<span class="box"></span>
-										Mr Adrian Brooks </label>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												Mr Adrian Brooks&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferedPlasticSurgeons[2].Value" ng-true-value="'Y'" ng-false-value="'N'"> 
+											</label>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="md-checkbox">
-										<input type="checkbox" id="mr_dan_lou" class="md-check">
-										<label for="mr_dan_lou">
-										<span></span>
-										<span class="check"></span>
-										<span class="box"></span>
-										Mr Dan Luo </label>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												Mr Dan Luo&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferedPlasticSurgeons[3].Value" ng-true-value="'Y'" ng-false-value="'N'">
+											</label>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="md-checkbox">
-										<input type="checkbox" id="ms_sharon_chu" class="md-check">
-										<label for="ms_sharon_chu">
-										<span></span>
-										<span class="check"></span>
-										<span class="box"></span>
-										Ms Sharon Chu</label>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												Ms Sharon Chu&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferedPlasticSurgeons[4].Value" ng-true-value="'Y'" ng-false-value="'N'">
+											</label>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="row">&nbsp;</div>
 				</div>
 
-				<div class="tab-pane" id="clinical_medical">
+				<div class="tab-pane" id="clinical_medical" >
 					<div class="row">&nbsp;</div>
 					<!-- begin column 1 -->
 	            	<div class="form-group col-md-4">
-						<textarea class="form-control" rows="7">Clinical Details & Relevant Medical History</textarea>
+						<textarea class="form-control" rows="7" ng-model="appointment.TelehealthAppointment.ClinicalDetails[0].ClinicalNote"></textarea>
 						<br><br>
 						<table class="table table-striped table-hover">
 							<thead>
@@ -316,48 +305,34 @@
 						<div class="caption">
 	            			<h4><b>Trauma</b></h4>
 	            		</div>
-						<div class="md-checkbox">
-							<input type="checkbox" id="dislocation" class="md-check" checked="checked">
-							<label for="dislocation">
-							<span></span>
-							<span class="check"></span>
-							<span class="box"></span>
-							Dislocation </label>
-						</div>
-						<div class="form-group  form-md-floating-label has-error">
-							<input type="text" class="form-control" id="fracture">
-							<label for="fracture">Fracture</label>
-							<div class="form-control-focus"></div>
+	            		<div class="form-group">
+	            			<div class="checkbox-list">
+	            				<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[0].Value" ng-true-value="'Y'" ng-false-value="'N'">
+	            					&nbsp;&nbsp;Dislocation
+	            				</label>
+	            			</div>
+	            		</div>
+						<div class="form-group">
+							<label for="fracture" class="control-label">Fracture</label>
+							<!-- <div class="input-icon"> -->
+								<!--<i class="fa fa-font"></i>-->
+								<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.ClinicalDetails[1].Value">
+							<!-- </div> -->
 						</div>
 						<div class="row">
-							<div class="col-md-4">
-								<div class="md-checkbox">
-									<input type="checkbox" id="open" class="md-check">
-									<label for="open">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Open </label>
+							<div class="col-md-3">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[2].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Open</label>
 								</div>
 							</div>
-							<div class="col-md-4">
-								<div class="md-checkbox">
-									<input type="checkbox" id="closed" class="md-check">
-									<label for="closed">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Closed </label>
+							<div class="col-md-3">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[3].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Closed</label>
 								</div>
 							</div>
-							<div class="col-md-4">
-								<div class="md-checkbox">
-									<input type="checkbox" id="displaced" class="md-check">
-									<label for="displaced">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Displaced </label>
+							<div class="col-md-6">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[4].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Displaced</label>
 								</div>
 							</div>
 						</div>
@@ -366,67 +341,44 @@
 	            			<label><b>Lacerations</b></label>
 	            		</div>
 	            		<div class="row">
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="hand" class="md-check" checked="checked">
-									<label for="hand">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Hand </label>
+	            			<div class="col-md-3">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[5].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Hand</label>
 								</div>
-	            			</div>
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="nerve" class="md-check">
-									<label for="nerve">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Nerve </label>
+							</div>
+							<div class="col-md-3">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[6].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Nerve</label>
 								</div>
-	            			</div>
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="tendon_muscle" class="md-check">
-									<label for="tendon_muscle">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Tendon/ muscle </label>
+							</div>
+							<div class="col-md-6">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[7].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Tendon / muscle</label>
 								</div>
-	            			</div>
+							</div>
 	            		</div>
 	            		<div class="row">
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="facial" class="md-check">
-									<label for="facial">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Facial </label>
+	            			<div class="col-md-3">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[8].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Facial</label>
 								</div>
-	            			</div>
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="lacerations_others" class="md-check">
-									<label for="lacerations_others">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Others </label>
-									<input type="text" placeholder="Others">
+							</div>
+							<div class="col-md-6">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[9].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Skin loss</label>
 								</div>
-	            			</div>
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="skin_loss" class="md-check">
-									<label for="skin_loss">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Skin loss </label>
+							</div>
+	            		</div>
+	            		<div class="row">
+	            			<div class="col-md-12">
+	            				<div class="form-inline">
+		            				<div class="checkbox">
+										<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[10].Value" ng-true-value="'Y'" ng-false-value="'N'"> Other</label>
+									</div>
+									&nbsp;&nbsp;&nbsp;
+									<div class="form-group">
+										<input type="text" class="form-control input-sm" placeholder="Other">
+									</div>
 								</div>
 	            			</div>
 	            		</div>
@@ -445,34 +397,25 @@
 	            		</div>
 
 	            		<div class="row">
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="bcc_scc" class="md-check">
-									<label for="bcc_scc">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									BCC / SCC </label>
+	            			<div class="col-md-6">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[11].Value" ng-true-value="'Y'" ng-false-value="'N'"> BCC / SCC</label>
 								</div>
 	            			</div>
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="melanoma" class="md-check">
-									<label for="melanoma">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Melanoma </label>
+	            			<div class="col-md-6">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[12].Value" ng-true-value="'Y'" ng-false-value="'N'"> Melanoma</label>
 								</div>
 	            			</div>
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="elective_other" class="md-check">
-									<label for="elective_other">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Other </label>
+	            			<div class="col-md-12">
+	            				<div class="form-inline">
+		            				<div class="checkbox">
+										<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[13].Value" ng-true-value="'Y'" ng-false-value="'N'"> Other</label>
+									</div>
+									&nbsp;&nbsp;&nbsp;
+									<div class="form-group">
+										<input type="text" class="form-control input-sm" placeholder="Other">
+									</div>
 								</div>
 	            			</div>
 	            		</div>
@@ -481,49 +424,24 @@
 	            			<label><b>Hand condition</b></label>
 	            		</div>
 	            		<div class="row">
-	            			<div class="col-md-4"></div>
-	            			<div class="col-md-4"></div>
-	            			<div class="col-md-4"></div>
-	            		</div>
-	            		<div class="row">
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="ganglion" class="md-check">
-									<label for="ganglion">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Ganglion </label>
+	            			<div class="col-md-6">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[14].Value" ng-true-value="'Y'" ng-false-value="'N'"> Ganglion</label>
 								</div>
 	            			</div>
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="arthritis" class="md-check">
-									<label for="arthritis">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Arthritis </label>
+	            			<div class="col-md-6">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[15].Value" ng-true-value="'Y'" ng-false-value="'N'"> Arthritis</label>{{appointment.TelehealthAppointment.ClinicalDetails[15].Value + "11"}}
 								</div>
 	            			</div>
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="deQuervains_trigger" class="md-check">
-									<label for="deQuervains_trigger">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									DeQuervains/Trigger </label>
+	            			<div class="col-md-6">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[16].Value" ng-true-value="'Y'" ng-false-value="'N'"> DeQuervains / Trigger</label>
 								</div>
 	            			</div>
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="contracture" class="md-check">
-									<label for="contracture">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Contracture </label>
+	            			<div class="col-md-6">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[17].Value" ng-true-value="'Y'" ng-false-value="'N'"> Contracture</label>
 								</div>
 	            			</div>
 	            		</div>
@@ -532,54 +450,35 @@
 	            			<label><b>PNS</b></label>
 	            		</div>
 	            		<div class="row">
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="carpal_tunnel" class="md-check">
-									<label for="carpal_tunnel">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Carpal Tunnel </label>
+	            			<div class="col-md-5">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[18].Value" ng-true-value="'Y'" ng-false-value="'N'"> Carpal Tunnel</label>
 								</div>
 	            			</div>
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="cupital_tunnel" class="md-check">
-									<label for="cupital_tunnel">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Cubital Tunnel </label>
+	            			<div class="col-md-7">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[19].Value" ng-true-value="'Y'" ng-false-value="'N'"> Cubital Tunnel</label>
 								</div>
 	            			</div>
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="tarsal_tunnel" class="md-check">
-									<label for="tarsal_tunnel">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Tarsal Tunnel </label>
+	            			<div class="col-md-5">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[20].Value" ng-true-value="'Y'" ng-false-value="'N'"> Tarsal Tunnel</label>
 								</div>
 	            			</div>
-	            			<div class="col-md-4">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="other_pns" class="md-check">
-									<label for="other_pns">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Other </label>
+	            			<div class="col-md-7">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[21].Value" ng-true-value="'Y'" ng-false-value="'N'"> Complex Reconstructive Case</label>
 								</div>
 	            			</div>
-	            			<div class="col-md-8">
-	            				<div class="md-checkbox">
-									<input type="checkbox" id="complex_reconstructive_case" class="md-check">
-									<label for="complex_reconstructive_case">
-									<span></span>
-									<span class="check"></span>
-									<span class="box"></span>
-									Complex Reconstructive Case </label>
+	            			<div class="col-md-12">
+	            				<div class="form-inline">
+		            				<div class="checkbox">
+										<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails[22].Value" ng-true-value="'Y'" ng-false-value="'N'"> Other</label>
+									</div>
+									&nbsp;&nbsp;&nbsp;
+									<div class="form-group">
+										<input type="text" class="form-control input-sm" placeholder="Other">
+									</div>
 								</div>
 	            			</div>
 	            		</div>
@@ -588,113 +487,107 @@
 				</div>
 
 				<div class="tab-pane" id="patient">
-					<div class="row">&nbsp;</div>
+					<br>
 					<div class="row">
-						<div class="col-md-4">
+						<div class="col-md-2">
 							<div class="form-group ">
-								<input type="text" class="form-control"  value="Hanna">
-								<label >Firstname</label>
-								<div class="form-control-focus">
+								<label class="control-label">First Name</label>
+								<!-- <div class="input-icon"> -->
+									<!--<i class="fa fa-font"></i>-->
+									<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.FirstName" placeholder="First Name">
+								<!-- </div> -->
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label class="control-label">Last Name</label>
+								<!-- <div class="input-icon"> -->
+									<!--<i class="fa fa-font"></i>-->
+									<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.LastName" placeholder="Last Name">
+								<!-- </div> -->
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group ">
+								<label class="control-label">Date of Birth</label>
+								<div class="input-icon">
+									<i class="fa fa-calendar"></i>
+									<input type="text" class="form-control form-control-inline date-picker" ng-model="patientDOBTemp">
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4">
-							<div class="form-group " >
-								<input type="text" class="form-control" value="Montana">
-								<label>Lastname</label>
-								<div class="form-control-focus">
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group ">
-								<input type="text" class="form-control form-control-inline date-picker" value="01/01/2015">
-								<label>Date of Birth</label>
-								<div class="form-control-focus">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Address</label>
+								<div class="input-icon">
+									<i class="fa fa-send"></i>
+									<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Address1" placeholder="Address">
 								</div>
 							</div>
 						</div>
 					</div>
-
-					<div class="row">&nbsp;</div>
-
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-2">
 							<div class="form-group ">
-								<input type="text" class="form-control" value="01 Elizabeth Street Australia">
-								<label >Address</label>
-								<div class="form-control-focus">
+								<label class="control-label">Suburb</label>
+								<!-- <div class="input-icon"> -->
+									<!-- <i class="fa fa-tree"></i> -->
+									<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Suburb">
+								<!-- </div> -->
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group ">
+								<label class="control-label">Postcode</label>
+								<!-- <div class="input-icon"> -->
+									<!-- <i class="fa fa-sort-amount-desc"></i> -->
+									<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Postcode">
+								<!-- </div> -->
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group ">
+								<label class="control-label">Contact Number (M)</label>
+								<div class="input-icon">
+									<i class="icon-call-end"></i>
+									<input type="text" class="form-control"  ng-model="appointment.TelehealthAppointment.PatientAppointment.WorkPhoneNumber">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group ">
+								<label class="control-label">Contact Number (H)</label>
+								<div class="input-icon">
+									<i class="icon-call-end"></i>
+									<input type="text" class="form-control"  ng-model="appointment.TelehealthAppointment.PatientAppointment.HomePhoneNumber">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group ">
+								<label class="control-label">Email Address</label>
+								<div class="input-icon">
+									<i class="fa fa-envelope"></i>
+									<input type="text" class="form-control"  ng-model="appointment.TelehealthAppointment.PatientAppointment.Email">
 								</div>
 							</div>
 						</div>
 					</div>
-
-					<div class="row">&nbsp;</div>
-
-					<div class="row">
-						<div class="col-md-8">
-							<div class="form-group ">
-								<input type="text" class="form-control"  value="01234">
-								<label >Suburd</label>
-								<div class="form-control-focus">
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group ">
-								<input type="text" class="form-control"  value="1234">
-								<label >Postcode</label>
-								<div class="form-control-focus">
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row">&nbsp;</div>
-					
-					<div class="row">
-						<div class="col-md-4">
-							<div class="form-group ">
-								<input type="text" class="form-control"  value="04 2727 2727">
-								<label >Contact Number (M)</label>
-								<div class="form-control-focus">
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group ">
-								<input type="text" class="form-control"  value="(09) 8888 8888">
-								<label >Contact Number (H)</label>
-								<div class="form-control-focus">
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group ">
-								<input type="text" class="form-control"  value="hanamontana@gmail.com">
-								<label >Email</label>
-								<div class="form-control-focus">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">&nbsp;</div>
-					<div class="row">&nbsp;</div>
 				</div>
 
-				<div class="tab-pane" id="Treating_Practictioner">
+				<div class="tab-pane" id="Treating_Practitioner" >
 					<div class="row">&nbsp;</div>
 					<div class="row">
 						<div class="col-md-3">
 							<div class="form-group">
-								<label >Doctor type</label>
+								<label class="control-label">Doctor Type</label>
 								<select size="1" class="form-control " >
 									<option value="1">Plastic Surgeons</option>
 									<option value="2">Orthopaedic Surgeons</option>
 								</select>
 							</div>
 							<div class="form-group">
-								<label >Doctor List</label>
+								<label class="control-label">Doctor List</label>
 								<select size="5" class="form-control">
 									<option value="1">Dr. Hanh Nguyen</option>
 									<option value="2">Dr. Adrian Brooks</option>
@@ -705,260 +598,277 @@
 						<div class="col-md-9">
 							<div class="row">
 								<div class="col-md-4">
-									<div class="form-group ">
-										<div class="form-control">Hanh</div>
-										<label >Firstname</label>
-										<div class="form-control-focus">
-										</div>
+									<div class="form-group">
+										<label class="control-label">First Name</label>
+										<!-- <div class="input-icon"> -->
+											<!--<i class="fa fa-font"></i>-->
+											<input type="text" placeholder="First Name" ng-model="appointment.Doctors[0].FirstName" disabled="true" class="form-control">
+										<!-- </div> -->
 									</div>
 								</div>
 								<div class="col-md-4">
-									<div class="form-group " >
-										<div class="form-control">Nguyen</div>
-										<label >Lastname</label>
-										<div class="form-control-focus">
-										</div>
+									<div class="form-group">
+										<label class="control-label">Last Name</label>
+										<!-- <div class="input-icon"> -->
+											<!--<i class="fa fa-font"></i>-->
+											<input type="text" placeholder="Last Name" ng-model="appointment.Doctors[0].LastName" disabled="true" class="form-control">
+										<!-- </div> -->
 									</div>
 								</div>
 								<div class="col-md-4">
-									<div class="form-group ">
-										<div class="form-control">08 2727 2727</div>
-										<label >Contact Number (M)</label>
-										<div class="form-control-focus">
-										</div>
+									<div class="form-group">
+										<label class="control-label">Contact Number (M)</label>
+										<!-- <div class="input-icon"> -->
+											<!--<i class="fa fa-font"></i>-->
+											<input type="text" placeholder="Contact Number (M)" ng-model="appointment.Doctors[0].WorkPhoneNumber" disabled="true" class="form-control">
+										<!-- </div> -->
 									</div>
-								</div>
-								
-							</div>
-							<div class="row">&nbsp;</div>
-							<div class="row">
+								</div>	
 								<div class="col-md-12">
-									<div class="form-group ">
-										<div class="form-control">MBBS, FRACS (Plastic Surgeon)</div>
-										<label >Department</label>
-										<div class="form-control-focus">
-										</div>
+									<div class="form-group">
+										<label class="control-label">Department</label>
+										<!-- <div class="input-icon"> -->
+											<!--<i class="fa fa-font"></i>-->
+											<input type="text" placeholder="Department" ng-model="appointment.Doctors[0].Department.DepartmentName" disabled="true" class="form-control">
+										<!-- </div> -->
 									</div>
-								</div>
+								</div>							
 							</div>
-							<div class="row">&nbsp;</div>
 						</div>
 					</div>
 					<div class="row">&nbsp;</div>
 				</div>
 
 				<div class="tab-pane" id="medical_image" style="overflow-y:scroll; overflow-x:hidden; max-height:400px;">
-					<div class="row">&nbsp;</div>
+					<br>
 					<!-- BEGIN FILTER -->
 					<div class="margin-top-10">
-						<ul class="mix-filter">
-							<li class="filter" data-filter="category_1">
-								Arm
-							</li>
-							<li class="filter" data-filter="category_2">
-								Foot
-							</li>
-							<li class="filter" data-filter="category_3">
-								Head
-							</li>
-							<li class="filter active" data-filter="category_3 category_1">
-								All
-							</li>
-						</ul>
-						<div class="row mix-grid" style="   ">
-							<div class="col-md-2 col-sm-2 mix category_1 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/0.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto odio</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="assets/img/0.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+						<div class="row">
+							<div class="col-md-2">
+								<ul class="ver-inline-menu tabbable margin-bottom-10">
+									<li class="filter active" data-filter="category_3 category_1 category_2 category_4" ng-click="tab_body_part='all';">
+										<a><i class="fa fa-picture-o"></i> All </a>
+									</li>
+									<li class="filter" data-filter="category_1" ng-click="tab_body_part='arm';">
+										<a><i class="fa fa-picture-o"></i> Arm </a>
+									</li>
+									<li class="filter" data-filter="category_2" ng-click="tab_body_part='foot';">
+										<a><i class="fa fa-picture-o"></i> Foot</a>
+									</li>
+									<li class="filter" data-filter="category_3" ng-click="tab_body_part='head';">
+										<a><i class="fa fa-picture-o"></i> Head</a>
+									</li>
+									<li class="filter" data-filter="category_4" ng-click="tab_body_part='body';">
+										<a><i class="fa fa-picture-o"></i> Body</a>
+									</li>
+								</ul>
+								<div class="input-inline"  ng-if="tab_body_part != 'all'">
+									<div class="input-icon">
+										<span class="btn btn-info btn-file">
+											<i class="glyphicon glyphicon-plus"></i>
+											<span class="fileinput-new">Add Image</span>
+											<input type="file" nv-file-select="" uploader="uploader" multiple/>
+										</span>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-2 col-sm-2 mix category_3 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/1.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto accusamus</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="assets/img/1.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+							<div class="col-md-9">
+								<div class="row mix-grid" style="">
+									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/0.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto odio</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="assets/img/0.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/2.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto accusamus</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/2.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+									<div class="col-md-3 col-sm-3 mix category_4 mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/1.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto accusamus</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="assets/img/1.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/3.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto accusamus</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/3.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+									<div class="col-md-3 col-sm-3 mix category_3  mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/2.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto accusamus</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/2.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/4.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto accusamus</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/4.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+									<div class="col-md-3 col-sm-3 mix category_3  mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/3.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto accusamus</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/3.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/5.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto accusamus</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/5.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+									<div class="col-md-3 col-sm-3 mix category_4  mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/4.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto accusamus</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/4.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/6.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto accusamus</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/6.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+									<div class="col-md-3 col-sm-3 mix category_2 mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/5.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto accusamus</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/5.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/8.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto accusamus</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/8.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+									<div class="col-md-3 col-sm-3 mix category_4 mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/6.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto accusamus</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/6.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/9.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto accusamus</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/9.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+									<div class="col-md-3 col-sm-3 mix category_4 mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/8.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto accusamus</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/8.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/10.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto accusamus</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/10.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+									<div class="col-md-3 col-sm-3 mix category_4 mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/9.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto accusamus</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/9.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/11.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto accusamus</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/11.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/10.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto accusamus</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/10.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/12.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto accusamus</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/12.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/11.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto accusamus</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/11.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/13.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto accusamus</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/13.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/12.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto accusamus</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/12.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
-								<div class="mix-inner">
-									<img class="img-responsive" src="assets/img/14.jpg" alt="" style="height:200px;">
-									<div class="mix-details">
-										<h4>Cascusamus et iusto accusamus</h4>
-										<a class="mix-link">
-										<i class="fa fa-link"></i>
-										</a>
-										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/14.jpg" title="Project Name" data-rel="fancybox-button">
-										<i class="fa fa-search"></i>
-										</a>
+									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/13.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto accusamus</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/13.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
+										<div class="mix-inner">
+											<img class="img-responsive" src="assets/img/14.jpg" alt="" style="height:200px;">
+											<div class="mix-details">
+												<h4>Cascusamus et iusto accusamus</h4>
+												<a class="mix-link">
+												<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/14.jpg" title="Project Name" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -971,68 +881,57 @@
 					<div class="row">&nbsp;</div>
 					<div class="row">
 		            	<div class="col-md-6">
-			            	<div class="form-group ">								            		
-			            		<input type="text" class="form-control" placeholder="Name" value="Shen Woo">
-			            		<label >Name</label>
-								<div class="form-control-focus"></div>
+			            	<div class="form-group ">	
+			            		<label class="form-label">Name</label>							            		
+			            		<input type="text" class="form-control" placeholder="Name" ng-model="appointment.TelehealthAppointment.Doctors[0].FirstName">
 			            	</div>
 		            	</div>
 		            	<div class="col-md-6">
-			            	<div class="form-group ">								            		
-			            		<input type="text" class="form-control" placeholder="Healthlink ID" value="redimspc">
-			            		<label >Healthlink ID</label>
-								<div class="form-control-focus"></div>
+			            	<div class="form-group ">
+			            		<label class="control-label">Healthlink ID</label>								            		
+			            		<input type="text" class="form-control" placeholder="Healthlink ID" ng-model="appointment.TelehealthAppointment.Doctors[0].HealthLink">
 			            	</div>
 		            	</div>
 		            </div>
-		            <div class="row">&nbsp;</div>
 		            <div class="row">
 		            	<div class="col-md-12">
-			            	<div class="form-group ">								            		
-			            		<input type="text" class="form-control" placeholder="Address" value="01 Elizabeth Street Australia">
-			            		<label >Address</label>
-								<div class="form-control-focus"></div>
+			            	<div class="form-group ">	
+			            		<label class="control-label">Address</label>							            		
+			            		<input type="text" class="form-control" placeholder="Address" ng-model="appointment.TelehealthAppointment.Doctors[0].Address1">
 			            	</div>
 		            	</div>
 		            </div>
-		            <div class="row">&nbsp;</div>
 		            <div class="row">
 		            	<div class="col-md-4">
-			            	<div class="form-group ">								            		
-			            		<input type="text" class="form-control" placeholder="Telephone" value="04 2727 2727">
-			            		<label >Telephone</label>
-								<div class="form-control-focus"></div>
+			            	<div class="form-group ">
+			            		<label class="control-label">Telephone</label>								            		
+			            		<input type="text" class="form-control" placeholder="Telephone" ng-model="appointment.TelehealthAppointment.Doctors[0].WorkPhoneNumber">
 			            	</div>
 		            	</div>
 		            	<div class="col-md-4">
-			            	<div class="form-group ">								            		
-			            		<input type="number" class="form-control" placeholder="Postcode" value="1234">
-			            		<label >Postcode</label>
-								<div class="form-control-focus"></div>
+			            	<div class="form-group ">
+			            		<label class="control-label">Postcode</label>								            		
+			            		<input type="text" class="form-control" placeholder="Postcode" ng-model="appointment.TelehealthAppointment.Doctors[0].Postcode">
 			            	</div>
 		            	</div>
 		            	<div class="col-md-4">
-			            	<div class="form-group ">								            		
-			            		<input type="number" class="form-control" placeholder="number" value="1234">
-			            		<label >Provider Number</label>
-								<div class="form-control-focus"></div>
+			            	<div class="form-group ">				
+			            		<label class="control-label">Provider Number</label>				            		
+			            		<input type="text" class="form-control" placeholder="number" ng-model="appointment.TelehealthAppointment.Doctors[0].ProviderNumber">
 			            	</div>
 			            </div>
 		            </div>
-		            <div class="row">&nbsp;</div>
 		            <div class="row">
 			            <div class="col-md-8">
-			            	<div class="form-group ">								            		
-			            		<input type="text" class="form-control" placeholder="Signature">
-			            		<label >Signature</label>
-								<div class="form-control-focus"></div>
+			            	<div class="form-group ">	
+			            		<label class="control-label">Signature</label>							            		
+			            		<input type="text" class="form-control" placeholder="Signature" ng-model="appointment.TelehealthAppointment.Doctors[0].Signature">
 			            	</div>
 			            </div>
 		            	<div class="col-md-4">
-			            	<div class="form-group ">								            		
-			            		<input type="text" class="form-control" placeholder="Date" value="01/01/2015">
-			            		<label >Date</label>
-								<div class="form-control-focus"></div>
+			            	<div class="form-group ">	
+			            		<label class="control-label">Date</label>							            		
+			            		<input type="text" class="form-control" placeholder="Date" ng-model="referringPractitionerDateTemp">
 			            	</div>
 			            </div>
 		            </div>
@@ -1044,13 +943,13 @@
 						<div class="col-md-6">
 							<label class="label-control">History of Present Complain</label>
 							<div class="form-group">
-								<textarea class="form-control" rows="10" >eneral medical history</textarea>
+								<textarea class="form-control" rows="10" ng-model="appointment.TelehealthAppointment.PresentComplain"></textarea>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<label class="label-control">Allergy</label>
 							<div class="form-group">
-								<textarea class="form-control" rows="10">Fur allergies,....</textarea>
+								<textarea class="form-control" rows="10" ng-model="appointment.TelehealthAppointment.Allergy"></textarea>
 							</div>
 						</div>
 					</div>
@@ -1060,18 +959,29 @@
 		<!--  -->
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn default" data-dismiss="modal" ng-click="close()"><i class="icon-action-undo"></i> Close</button>
-		<button type="button" class="btn green"><i class="glyphicon glyphicon-save"></i> Save changes</button>
+		<button type="button" class="btn default" data-dismiss="modal" ng-click="close()">
+			<i class="icon-action-undo"></i> Close
+		</button>
+		<a ng-show="tab_name=='patient'" class="btn red">
+			<i class="glyphicon glyphicon-plus"></i> Create New Patient
+		</a>
+		<button type="button" class="btn green">
+			<i class="glyphicon glyphicon-save"></i> Save changes
+		</button>
 	</div>
 </div>
 
+
 <script>
-	Metronic.setAssetsPath('./theme/assets/'); // Set the assets folder path			
-	ComponentsFormTools.init();
+	// Metronic.setAssetsPath('./theme/assets/'); // Set the assets folder path			
+	// ComponentsFormTools.init();
+	//ComponentsDropdowns.init(); // init todo page
+	// //FormiCheck.init(); // init page demo
+	ComponentsPickers.init(); // init todo page
+	Portfolio.init(); // coi hinh
+
+	// Metronic.initAjax();
+	//ComponentsFormTools.init();
 	ComponentsDropdowns.init(); // init todo page
 	//FormiCheck.init(); // init page demo
-	ComponentsPickers.init(); // init todo page
-	//Portfolio.init(); // coi hinh
-
-	Metronic.initAjax();
 </script>

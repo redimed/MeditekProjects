@@ -12,16 +12,32 @@ passport.use(new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, function(req, u, p, done) {
-    var whereOpts = u.indexOf('@') > -1 ? {email: u} : {userName: u};
+    var whereOpts = u.indexOf('@') > -1 ? {
+        email: u
+    } : {
+        userName: u
+    };
     UserAccount.find({
         where: whereOpts
     }).then(function(user) {
         if (user) {
             bcrypt.compare(p.toString(), user.password, function(err, check) {
                 if (check) {
-                    return done(null, user, {
-                        message: 'Logged In Successfully!'
-                    });
+                    TelehealthUser.find({
+                        where: {
+                            userAccountID: user.ID
+                        },
+                        attributes: ["UID","userAccountID"]
+                    }).then(function(teleUser) {
+                        if (teleUser) return done(null, teleUser, {
+                            message: 'Logged In Successfully!'
+                        });
+                        else return done(null, false, {
+                            message: 'Wrong Username Or Password!'
+                        });
+                    }).catch(function(err) {
+                        return done(err);
+                    })
                 } else return done(null, false, {
                     message: 'Wrong Username Or Password!'
                 });

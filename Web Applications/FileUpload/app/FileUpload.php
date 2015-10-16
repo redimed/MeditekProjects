@@ -9,8 +9,6 @@ class FileUpload extends Model{
     protected $date = array ('ModifiedDate', 'CreatedDate');
     public $timestamps = false;
 
-    //protected $fillable = ['FileType','FileLocation', 'CreatedDate', 'CreatedBy', 'ModifiedDate', 'ModifiedBy', 'FileExtension'];
-
 
 
 }

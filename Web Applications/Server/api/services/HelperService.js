@@ -9,20 +9,32 @@ output: false: if data miss or parse failed
  * Kiem tra xem bien hop le hay khong
  */
 function checkData(value) {
-    return (value !== undefined && value !== null && value !== '' && value != {});
+    var result = true;
+    if (value === undefined || value === null || value === '') {
+        result = false;
+    } else if (_.isObject(value) && _.isEmpty(value)) {
+        result = false;
+    }
+    return result;
 }
 
 /**
  * Kiem tra danh sach data truyen vao hop le hay kkhong
  */
 function checkListData() {
+    var result = true;
     for (var i = 0; i < arguments.length; i++) {
-        if (arguments[i] === undefined || arguments[i] === null || arguments[i] === '' || arguments[i] == {}) {
+        if (arguments[i] === undefined || arguments[i] === null || arguments[i] === '') {
+            result = false;
+        } else if (_.isObject(arguments[i]) && _.isEmpty(arguments[i])) {
+            result = false;
+        }
+        if (result === false) {
             console.log(">>>>>>>> Vi tri data truyen den bi loi:", i);
-            return false;
+            break;
         }
     }
-    return true;
+    return result;
 }
 
 function exlog() {
@@ -67,9 +79,13 @@ module.exports = {
     },
 
     CheckExistData: function(data) {
-        return (!_.isUndefined(data) && !_.isEmpty(data) && !_.isNull(data));
+        return (!_.isUndefined(data) && !_.isNull(data));
     },
-
+    GetFullName: function(firstName, middleName, lastName) {
+        return (!_.isNull(firstName) && !_.isUndefined(firstName) && !_.isEmpty(firstName)) ? firstName : '' +
+            (!_.isNull(middleName) && !_.isUndefined(middleName) && !_.isEmpty(middleName)) ? ' ' + middleName : '' +
+            (!_.isNull(lastName) && !_.isUndefined(lastName) && !_.isEmpty(lastName)) ? ' ' + lastName : '';
+    },
     //define regex pattern
     regexPattern: {
         //emailPattern example :
@@ -78,7 +94,7 @@ module.exports = {
         //  mysite@you.me.net
         //reference from: http://www.w3resource.com/javascript/form/email-validation.php
         email: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        date: /^(\d{4})-(\d{1,2})-(\d{1,2})$/,
+        date: /^(\d{4})\/(\d{1,2})\/(\d{1,2})$/,
 
         //fullPhonePattern example:
         //  (+351) 282 43 50 50
@@ -120,16 +136,119 @@ module.exports = {
         },
 
         roles: {
-            admin: 1,
-            assistant: 2,
-            doctor: 3,
-            gp: 4,
-            patient: 5
+            admin: 'ADMIN',
+            assistant: 'ASSISTANT',
+            doctor: 'DOCTOR',
+            gp: 'GP',
+            patient: 'PATIENT',
+            internalPractitional: 5,
+            externalPractiction: 6,
         }
     },
 
     exlog: exlog,
 
     exFileJSON: exFileJSON,
+
+    /**
+     * copyAttrsValue: 
+     * So sánh 2 object destination và source, nếu 2 object có attribute nào trùng nhau
+     * thì copy giá trị attribute từ source vào destination
+     */
+    copyAttrsValue: function(destination, source) {
+        if (_.isObject(destination)) {
+            if (_.isObject(source) && !_.isEmpty(source)) {
+                for (var key in destination) {
+                    if (source[key]) {
+                        destination[key] = source[key];
+                    }
+                }
+            }
+        } else {
+            destination = {};
+        }
+
+        return destination;
+    },
+
+
+    /**
+     * cleanObject: xóa những thuộc tính nào có giá trị là null, undefined, '' 
+     * hoặc giá trị là object rỗng {}
+     */
+    cleanObject: function(obj) {
+        if (_.isObject(obj)) {
+            for (var key in obj) {
+                if (!checkData(obj[key])) {
+                    delete obj[key];
+                }
+            }
+        } else {
+            obj = {};
+        }
+        return obj;
+    },
+
+    /**
+     * rationalizeObject:
+     * Hợp lệ hóa destination object bằng source object
+     * Nếu destination có attributes mà source cũng có thì copy giá trị attributes từ source qua
+     * Nếu destination có attributes mà source không có thì xóa attributes đó của destination
+     */
+    rationalizeObject: function(destination, source) {
+        if (_.isObject(destination)) {
+            if (_.isObject(source) && !_.isEmpty(source)) {
+                for (var key in destination) {
+                    if (!source.hasOwnProperty(key)) {
+                        delete destination[key];
+                    }
+                }
+            }
+        } else {
+            destination = {};
+        }
+
+        return destination;
+    },
+
+
+    /**
+     * Kiểm tra các attributes của object có giá trị bằng một trong các giá trị trong mảng corrects
+     * hay không
+     */
+    checkCorrectValues: function(obj, corrects) {
+        var result = true;
+        if (_.isObject(obj) && _.keys(obj).length > 0) {
+            for (var key in obj) {
+                var t = false;
+                for (var i = 0; i < corrects.length; i++) {
+                    if (obj[key] == corrects[i]) t = true;
+                }
+                if (t == false) {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        } else {
+            result = false;
+            return result;
+        }
+
+    },
+
+    /*
+        get-listcountry: lay danh sach country 
+    */
+    getListCountry: function() {
+        return Country.findAll({})
+            .then(function(result) {
+                return result;
+            }, function(err) {
+                var error = new Error("getListCountry.error");
+                error.pushErrors("Country.findAll.error");
+                throw error;
+            })
+    }
 
 }

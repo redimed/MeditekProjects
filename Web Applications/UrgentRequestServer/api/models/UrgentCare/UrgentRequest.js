@@ -72,18 +72,11 @@ module.exports = {
             maxLength: 255
         },
 
-        GPReferal: {
+        GPReferral: {
             type: 'string',
-            columnName: 'GPReferal',
+            columnName: 'GPReferral',
             maxLength: 1
         },
-
-        serviceType: {
-            type: 'string',
-            columnName: 'ServiceType',
-            maxLength: 3
-        },
-
         requestDate: {
             type: 'datetime',
             columnName: 'RequestDate'
@@ -152,6 +145,30 @@ module.exports = {
             type: 'string',
             columnName: 'Description',
             maxLength: 2048
+        },
+
+        physiotherapy: {
+            type: 'string',
+            columnName: 'Physiotherapy',
+            maxLength: 1
+        },
+
+        specialist: {
+            type: 'string',
+            columnName: 'Specialist',
+            maxLength: 1
+        },
+
+        handTherapy: {
+            type: 'string',
+            columnName: 'HandTherapy',
+            maxLength: 1
+        },
+
+        GP: {
+            type: 'string',
+            columnName: 'GP',
+            maxLength: 1
         },
 
         createdDate: {

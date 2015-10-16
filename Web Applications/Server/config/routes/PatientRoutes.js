@@ -41,9 +41,13 @@ module.exports={
 	    action :'DetailPatient'
 	},
 
-	'post /api/patient/test' :{
+	'post /api/patient/check-patient'    : {
 		controller: 'Patient/PatientController',
-		action:'Test'
-	}
+		action :'CheckPatient'
+	},
 
+	'get /api/patient/get-listcountry' :{
+		controller: 'Patient/PatientController',
+		action: 'GetListCountry'
+	}
 }

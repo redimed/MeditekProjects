@@ -19,7 +19,7 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
-app.set('port', process.env.PORT || 8000); // set port
+app.set('port', process.env.PORT || 3004); // set port
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('02fnvnwt43fgj93fqmkmmm'));

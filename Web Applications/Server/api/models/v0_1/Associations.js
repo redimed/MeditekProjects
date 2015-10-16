@@ -82,9 +82,6 @@ module.exports = {
         });
 
         /* Doctor */
-        Site.hasMany(Doctor, {
-            foreignKey: 'SiteID'
-        });
         UserAccount.hasOne(Doctor, {
             foreignKey: 'UserAccountID'
         });
@@ -115,9 +112,6 @@ module.exports = {
         })
 
         /* Doctor */
-        Site.hasMany(Doctor, {
-            foreignKey: 'SiteID'
-        });
         UserAccount.hasOne(Doctor, {
             foreignKey: 'UserAccountID'
         });

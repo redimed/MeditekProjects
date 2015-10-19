@@ -8,7 +8,7 @@ module.exports = {
 		var data = req.body.data;
 		Services.Patient.CreatePatient(data)
 		.then(function(info){
-			res.ok({status:200, message:"success"});
+			res.ok({status:200, message:"success",data:info.UID});
 		})
 		.catch(function(err){
 			res.serverError({status:500, message:ErrorWrap(err)});

@@ -5,6 +5,7 @@ var app = angular.module('app.authentication', [
 	'app.authentication.appointment',
 	'app.authentication.doctor',
 	'app.authentication.patient',
+	'app.authentication.user',
 ]);
 
 app.config(function($stateProvider){

@@ -8,6 +8,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
             onSavechange: '='
         },
 		link: function(scope, elem, attrs){
+			var oriInfo,clearInfo;
 			var data = {};
 			data.UID = scope.uid;
 			scope.info = {};
@@ -22,6 +23,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			PatientService.detailPatient(data).then(function(response){
 				if(response.message=="success"){
 					scope.info = response.data[0];
+					scope.info.DOB = moment(new Date(scope.info.DOB)).format('DD/MM/YYYY');
 					oriInfo = angular.copy(scope.info);
 				}
 				else{

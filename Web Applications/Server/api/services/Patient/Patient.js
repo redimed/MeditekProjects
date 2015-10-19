@@ -428,7 +428,7 @@ module.exports = {
 	*/
 	UpdatePatient : function(data) {
 		data.ModifiedDate = new Date();
-		var DOB = moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
+		// var DOB = moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
 		//get data not required
 		var patientInfo={
 			ID              : data.ID,
@@ -436,7 +436,7 @@ module.exports = {
 			FirstName       : data.FirstName,
 			MiddleName      : data.MiddleName,
 			LastName        : data.LastName,
-			DOB             : DOB,
+			DOB             : data.DOB,
 			Gender          : data.Gender,
 			Address1        : data.Address1,
 			Address2        : data.Address2,

@@ -226,11 +226,11 @@ module.exports = {
 		.then(function(success){
 			if(data.PhoneNumber){
 				if(data.PhoneNumber.substr(0,3)=='+61'){
-					return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,{transaction:transaction});
+					return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
 				}
 				else{
 					data.PhoneNumber = '+61'+data.PhoneNumber;
-					return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,{transaction:transaction});
+					return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
 				}
 			}
 			else{
@@ -240,7 +240,7 @@ module.exports = {
 						Password : generatePassword(12, false)
 					};
 					isCreateByEmail = true;
-					return Services.UserAccount.CreateUserAccount(userInfo),{transaction:transaction};
+					return Services.UserAccount.CreateUserAccount(userInfo,transaction);
 				}
 				else{
 					var userInfo = {
@@ -248,7 +248,7 @@ module.exports = {
 						Password : generatePassword(12, false)
 					};
 					isCreateByName = true;
-					return Services.UserAccount.CreateUserAccount(userInfo,{transaction:transaction});
+					return Services.UserAccount.CreateUserAccount(userInfo,transaction);
 				}
 			}
 			//return Patient.create(data);
@@ -259,7 +259,7 @@ module.exports = {
 			if(isCreateByName==false && isCreateByEmail==false){
 				if(user.length > 0) {
 					info.UserAccountID = user[0].ID;
-					return Patient.create(info,{transaction:transaction});
+					return Patient.create(info,transaction);
 				}
 				else{
 					data.password = generatePassword(12, false);
@@ -271,10 +271,10 @@ module.exports = {
 					};
 					userInfo.UID = UUIDService.Create();
 					//create UserAccount
-					return Services.UserAccount.CreateUserAccount(userInfo,{transaction:transaction})
+					return Services.UserAccount.CreateUserAccount(userInfo,transaction)
 					.then(function(user){
 						info.UserAccountID = user.ID;
-						return Patient.create(info,{transaction:transaction});
+						return Patient.create(info,transaction);
 					},function(err){
 						throw err;
 					});
@@ -282,7 +282,7 @@ module.exports = {
 			}
 			else{
 				info.UserAccountID = user.ID;
-				return Patient.create(info,{transaction:transaction});
+				return Patient.create(info,transaction);
 			}
 		},function(err){
 			throw err;
@@ -342,7 +342,7 @@ module.exports = {
 				}
 				else{
 					data.PhoneNumber = '+61'+data.values;
-					return Services.UserAccount.FindByPhoneNumber(data.values,{transaction:transaction})
+					return Services.UserAccount.FindByPhoneNumber(data.values,transaction)
 					.then(function(user){
 						//check if Phone Number is found in table UserAccount, 
 						// get UserAccountID to find patient
@@ -639,7 +639,7 @@ module.exports = {
 		.then(function(success){
 			if(data.PhoneNumber!=undefined && data.PhoneNumber!=null && data.PhoneNumber!=''){
 				data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
-				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,{transaction:transaction})
+				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction)
 				.then(function(user){
 					if(user!==undefined && user!==null && user!=='' && user.length!==0){
 						info.Email = user[0].Email;

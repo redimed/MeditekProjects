@@ -33,8 +33,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
         },
         UserInfo: {
             UID: $cookies.getObject('userInfo').UID
-        },
-        Patient:{UID: '64551c71-70cb-4f66-9ba1-50e1d5b67ccc'}
+        }
     }
 
     $scope.checkElectiveOther = false;

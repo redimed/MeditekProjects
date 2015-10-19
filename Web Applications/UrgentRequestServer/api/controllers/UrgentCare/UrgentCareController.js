@@ -32,7 +32,7 @@ module.exports = {
             req.socket.remoteAddress ||
             req.connection.socket.remoteAddress;
         data.UID = UUIDService.Create();
-        data.requestDate = Services.moment().format('YYYY-MM-DD HH:mm:ss');
+        data.requestDate = Services.moment(data.requestDate, 'YYYY-MM-DD HH:mm:ss Z').format('YYYY-MM-DD HH:mm:ss');
         //save information patient
         UrgentRequest.create({
                 UID: data.UID,
@@ -41,7 +41,7 @@ module.exports = {
                 phoneNumber: data.phoneNumber,
                 gender: data.gender,
                 email: data.email,
-                DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? data.DOB : null,
+                DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB)) ? data.DOB : null,
                 suburb: data.suburb,
                 IP: data.ip,
                 requestDate: data.requestDate,
@@ -77,14 +77,14 @@ module.exports = {
                     patientName: data.firstName + ' ' + data.lastName,
                     requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                     phoneNumber: data.phoneNumber,
-                    suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb) && !_.isEmpty(data.suburb)) ? data.suburb : '',
-                    DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? Services.moment(data.DOB).format('DD/MM/YYYY') : '',
+                    suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb)) ? data.suburb : '',
+                    DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB)) ? data.DOB : '',
                     GPReferral: GPReferral,
                     serviceType: serviceType,
-                    description: (!_.isUndefined(data.description) && !_.isNull(data.description) && !_.isEmpty(data.description)) ? data.description : '',
-                    companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName) && !_.isEmpty(data.companyName)) ? data.companyName : '',
-                    contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson) && !_.isEmpty(data.contactPerson)) ? data.contactPerson : '',
-                    companyPhoneNumber: (!_.isUndefined(data.companyPhoneNumber) && !_.isNull(data.companyPhoneNumber) && !_.isEmpty(data.companyPhoneNumber)) ? data.companyPhoneNumber : '',
+                    description: (!_.isUndefined(data.description) && !_.isNull(data.description)) ? data.description : '',
+                    companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName)) ? data.companyName : '',
+                    contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson)) ? data.contactPerson : '',
+                    companyPhoneNumber: (!_.isUndefined(data.companyPhoneNumber) && !_.isNull(data.companyPhoneNumber)) ? data.companyPhoneNumber : '',
                     bcc: 'pnguyen@redimed.com.au, meditekcompany@gmail.com'
                 };
 
@@ -114,14 +114,14 @@ module.exports = {
                                 patientName: data.firstName + ' ' + data.lastName,
                                 requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                                 phoneNumber: data.phoneNumber,
-                                suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb) && !_.isEmpty(data.suburb)) ? data.suburb : '',
-                                DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB) && !_.isEmpty(data.DOB)) ? Services.moment(data.DOB).format('DD/MM/YYYY') : '',
+                                suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb)) ? data.suburb : '',
+                                DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB)) ? data.DOB : '',
                                 GPReferral: GPReferral,
                                 serviceType: serviceType,
-                                description: (!_.isUndefined(data.description) && !_.isNull(data.description) && !_.isEmpty(data.description)) ? data.description : '',
-                                companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName) && !_.isEmpty(data.companyName)) ? data.companyName : '',
-                                contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson) && !_.isEmpty(data.contactPerson)) ? data.contactPerson : '',
-                                companyPhoneNumber: (!_.isUndefined(data.companyPhoneNumber) && !_.isNull(data.companyPhoneNumber) && !_.isEmpty(data.companyPhoneNumber)) ? data.companyPhoneNumber : '',
+                                description: (!_.isUndefined(data.description) && !_.isNull(data.description)) ? data.description : '',
+                                companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName)) ? data.companyName : '',
+                                contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson)) ? data.contactPerson : '',
+                                companyPhoneNumber: (!_.isUndefined(data.companyPhoneNumber) && !_.isNull(data.companyPhoneNumber)) ? data.companyPhoneNumber : '',
                             };
                             if (data.urgentRequestType === 'WorkInjury') {
                                 SendMailService.SendMail('WorkInjuryReceive', emailInfoPatient, CallBackSendMailPatient);

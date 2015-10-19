@@ -46,14 +46,14 @@ module.exports = {
                             patientName: UR.firstName + ' ' + UR.lastName,
                             requestDate: Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                             phoneNumber: UR.phoneNumber,
-                            suburb: (!_.isUndefined(UR.suburb) && !_.isNull(UR.suburb) && !_.isEmpty(UR.suburb)) ? UR.suburb : '',
-                            DOB: (!_.isUndefined(UR.DOB) && !_.isNull(UR.DOB)) ? Services.moment(UR.DOB).format('DD/MM/YYYY') : '',
+                            suburb: (!_.isUndefined(UR.suburb) && !_.isNull(UR.suburb)) ? UR.suburb : '',
+                            DOB: (!_.isUndefined(UR.DOB) && !_.isNull(UR.DOB)) ? UR.DOB : '',
                             GPReferral: GPReferral,
                             serviceType: serviceType,
-                            description: (!_.isUndefined(UR.description) && !_.isNull(UR.description) && !_.isEmpty(UR.description)) ? UR.description : '',
-                            companyName: (!_.isUndefined(UR.companyName) && !_.isNull(UR.companyName) && !_.isEmpty(UR.companyName)) ? UR.companyName : '',
-                            contactPerson: (!_.isUndefined(UR.contactPerson) && !_.isNull(UR.contactPerson) && !_.isEmpty(UR.contactPerson)) ? UR.contactPerson : '',
-                            companyPhoneNumber: (!_.isUndefined(UR.companyPhoneNumber) && !_.isNull(UR.companyPhoneNumber) && !_.isEmpty(UR.companyPhoneNumber)) ? UR.companyPhoneNumber : '',
+                            description: (!_.isUndefined(UR.description) && !_.isNull(UR.description)) ? UR.description : '',
+                            companyName: (!_.isUndefined(UR.companyName) && !_.isNull(UR.companyName)) ? UR.companyName : '',
+                            contactPerson: (!_.isUndefined(UR.contactPerson) && !_.isNull(UR.contactPerson)) ? UR.contactPerson : '',
+                            companyPhoneNumber: (!_.isUndefined(UR.companyPhoneNumber) && !_.isNull(UR.companyPhoneNumber)) ? UR.companyPhoneNumber : '',
                             bcc: 'pnguyen@redimed.com.au, meditekcompany@gmail.com'
                         };
                         var CallBackSendMail = function(err, responseStatus, html, text) {

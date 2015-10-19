@@ -12,7 +12,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state){
 			};
 
 			scope.checkPhone = function(data) {
-				return scope.validateCheckPhone(data)
+				return PatientService.validateCheckPhone(data)
 				.then(function(success){
 					scope.er ='';
 					scope.isBlockStep1=true;
@@ -54,7 +54,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state){
 
 			scope.createPatient = function(data) {
 				// data.DOB = moment(data.DOB).format('YYYY/MM/DD');
-				return scope.validate(data)
+				return PatientService.validate(data)
 				.then(function(result){
 					return PatientService.createPatient(data)
 					.then(function(success){

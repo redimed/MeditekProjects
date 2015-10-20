@@ -1,6 +1,64 @@
 var $q = require('q');
 var randomstring = require("randomstring");
+var o=require("../HelperService");
 module.exports = {
+	CheckActivated:function(userInfo,transaction)
+	{
+		var error=new Error("UserActivation.Error");
+		var whereClause={};
+		if(_.isObject(userInfo) && _.isEmpty(userInfo))
+		{
+			if(o.checkData(userInfo.UID))
+			{
+				whereClause.UID=userInfo.UID;
+			}
+			else if(o.checkData(userInfo.UserName))
+			{
+				whereClause.UserName=userInfo.UserName;
+			}
+			else if(o.checkData(userInfo.Email))
+			{
+				whereClause.Email=userInfo.Email;
+			}
+			else if(o.checkData(userInfo.PhoneNumber)){
+				whereClause.PhoneNumber=userInfo.PhoneNumber;
+			}
+			else
+			{
+				error.pushError("CheckActivated.conditionNotFound");
+			}
+		}
+		else
+		{
+			error.pushError("CheckActivated.requireUserInfo");
+		}
+		if(error.getErrors().length>0)
+		{
+			throw error;
+		}
+
+		return UserAccount.findOne({
+			where:whereClause
+		},{transaction:transaction})
+		.then(function(user){
+			if(user)
+			{
+
+			}
+			else
+			{
+
+			}
+		},function(err){
+			throw err;
+		})
+		.then(function(data){
+
+		},function(err){
+
+		})
+	},
+
 	/**
 	 * Create user activation
 	 * Input: activationInfo:{UserAccountID,Type,CreatedBy}

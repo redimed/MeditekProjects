@@ -52,7 +52,12 @@ module.exports.policies = {
   },
 
   'Authorization/v0_1/ModuleController':{
-    'GetModulesForUser':['hasToken']
+    'GetModulesForUser':['hasToken'],
+  },
+
+  'Authorization/v0_1/UserRoleController':{
+    'CreateUserRole':['hasToken','checkVersion'],
+    'GetRolesOfUser':['hasToken','checkVersion']
   }
 
   /***************************************************************************

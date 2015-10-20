@@ -76,10 +76,10 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                     defaults.setValue(uid, forKey: "uid")
                     defaults.setValue(token, forKey: "token")
                     defaults.setValue(patientUID, forKey: "patientUID")
-                    
                     defaults.synchronize()
+                    
                     //Change to home view by segue
-                    self.performSegueWithIdentifier("VerifyToHomeSegue", sender: self)
+                    self.performSegueWithIdentifier("VerifyToProfileSegue", sender: self)
                 }else {
                     self.view.hideLoading()
                     if response["TimeOut"] ==  "Request Time Out" {
@@ -118,6 +118,13 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
         
         self.presentViewController(alertController, animated: true) {
             
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "VerifyToProfileSegue" {
+            let profile = segue.destinationViewController as! InformationViewController
+            profile.messageFrom = "VerifyToProfile"
         }
     }
     

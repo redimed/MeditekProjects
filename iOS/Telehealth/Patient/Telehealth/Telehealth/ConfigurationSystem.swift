@@ -13,7 +13,7 @@ let config = ConfigurationSystem()
 var savedData  = saveData()
 let defaults = NSUserDefaults.standardUserDefaults()
 var tokens = String()
-var Appointment : [AppointmentList] = []
+
 
 struct ConfigurationSystem {
     static let Http = "http://testapp.redimed.com.au:3009"

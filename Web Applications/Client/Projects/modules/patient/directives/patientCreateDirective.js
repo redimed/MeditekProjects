@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.patient.create.directive',[]);
-app.directive('patientCreate',function(toastr, PatientService, $state){
+app.directive('patientCreate',function(toastr, PatientService, $state, $timeout){
 	return {
 		restrict: "EA",
 		link: function(scope, elem, attrs){
@@ -10,9 +10,13 @@ app.directive('patientCreate',function(toastr, PatientService, $state){
 				scope.isShowNext=false;
 				scope.isShowCreate=false;
 			};
-
+			//event timeout will call after this template's directive rendered
+			$timeout(function(){
+				Metronic.setAssetsPath('theme/assets/'); // Set the assets folder path	
+				FormWizard.init(); // form step
+			},0); 
 			scope.checkPhone = function(data) {
-				return scope.validateCheckPhone(data)
+				PatientService.validateCheckPhone(data)
 				.then(function(success){
 					scope.er ='';
 					scope.isBlockStep1=true;
@@ -54,7 +58,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state){
 
 			scope.createPatient = function(data) {
 				// data.DOB = moment(data.DOB).format('YYYY/MM/DD');
-				return scope.validate(data)
+				return PatientService.validate(data)
 				.then(function(result){
 					return PatientService.createPatient(data)
 					.then(function(success){

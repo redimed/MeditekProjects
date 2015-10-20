@@ -56,7 +56,7 @@ module.exports = {
         },
 
         DOB: {
-            type: 'datetime',
+            type: 'string',
             columnName: 'DOB'
         },
 

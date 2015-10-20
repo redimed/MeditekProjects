@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailAppointmentViewController: UIViewController,UIAlertViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPopoverControllerDelegate {
+class DetailAppointmentViewController: UIViewController,UIAlertViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPopoverControllerDelegate ,NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate{
     let appointmentApi = GetAndPostDataController()
     @IBOutlet weak var btnClickMe: UIButton!
     @IBOutlet weak var imageView: UIImageView!
@@ -122,8 +122,45 @@ class DetailAppointmentViewController: UIViewController,UIAlertViewDelegate,UIIm
     }
 
     @IBAction func UploadActionButton(sender: AnyObject) {
-    
-        appointmentApi.uploadImage(imageView.image!)
+        
+        if let patientUID = defaults.valueForKey("patientUID") as? String {
+            appointmentApi.uploadImage(imageView.image!,PatientUID: patientUID)
+        }
+
+       
     }
+    func uploadImage()
+    {
+        let imageData = UIImageJPEGRepresentation(imageView.image!, 1)
+        
+        if(imageData == nil )  { return }
+        
+        
+        
+        let uploadScriptUrl = NSURL(string:"http://192.168.1.130:3005/api/uploadFile")
+        let request = NSMutableURLRequest(URL: uploadScriptUrl!)
+        request.HTTPMethod = "POST"
+        request.setValue("Keep-Alive", forHTTPHeaderField: "Connection")
+        
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let session = NSURLSession(configuration: configuration, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        
+        
+        let task = session.uploadTaskWithRequest(request, fromData: imageData!)
+        task.resume()
+        
+    }
+    
+    func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64)
+    {
+        let uploadProgress:Float = Float(totalBytesSent) / Float(totalBytesExpectedToSend)
+            print(uploadProgress)
+//        imageUploadProgressView.progress = uploadProgress
+//        let progressPercent = Int(uploadProgress*100)
+//        progressLabel.text = "\(progressPercent)%"
+        
+    }
+   
+
    
 }

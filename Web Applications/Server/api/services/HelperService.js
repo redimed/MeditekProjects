@@ -6,7 +6,8 @@ output: false: if data miss or parse failed
 */
 
 /**
- * Kiem tra xem bien hop le hay khong
+ * Kiem tra xem bien hop le hay khong 
+ * 
  */
 function checkData(value) {
     var result = true;
@@ -138,11 +139,9 @@ module.exports = {
         roles: {
             admin: 'ADMIN',
             assistant: 'ASSISTANT',
-            doctor: 'DOCTOR',
-            gp: 'GP',
+            internalPractitioner: 'INTERNAL_PRACTITIONER',//DOCTOR
+            externalPractitioner: 'EXTERTAL_PRACTITIONER',//GP
             patient: 'PATIENT',
-            internalPractitional: 5,
-            externalPractiction: 6,
         }
     },
 
@@ -249,6 +248,38 @@ module.exports = {
                 error.pushErrors("Country.findAll.error");
                 throw error;
             })
+    },
+
+    parseAuMobilePhone:function(PhoneNumber)
+    {
+        if(!checkData(PhoneNumber))
+            return null;
+        var auPhoneNumberPattern=new RegExp(this.regexPattern.auPhoneNumber);
+        PhoneNumber=PhoneNumber.replace(this.regexPattern.phoneExceptChars,'');
+        if(!auPhoneNumberPattern.test(PhoneNumber))
+        {
+            return null;
+        }
+        else
+        {
+            PhoneNumber=PhoneNumber.slice(-9);
+            PhoneNumber='+61'+PhoneNumber;
+            return PhoneNumber;
+        }
+    },
+
+    isValidEmail:function(Email){
+        if(!checkData(Email))
+            return false;
+        var emailPattern = new RegExp(this.regexPattern.email);
+        if(emailPattern.test(Email))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 }

@@ -4,7 +4,14 @@ var moment=require('moment');
 module.exports = {
 	Test:function(req,res)
 	{
-		res.ok("V1 NE");
+		// return RefUserRole.create({UserAccountId:86,RoleCode:'ADMIN',SiteId:1})
+		return RelUserRole.findAll()//({UserAccountId:86,RoleCode:'ADMIN',SiteId:1})
+		.then(function(data){
+			res.ok(data);
+		},function(err){
+			res.serverError(err);
+		})
+
 	},
 
 	TestURL:function(req,res)

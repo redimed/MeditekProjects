@@ -22,35 +22,32 @@ function toJson(str) {
     return newobj;
 };
 //****Send SMS function******
-function sendSMS(toNumber, content, callback) {
-    twilioClient.messages.create({
+function sendSMS(toNumber, content) {
+    return twilioClient.messages.create({
         body: content,
         to: toNumber,
         from: config.twilioPhone
-    }, callback());
+    });
 };
 module.exports = {
     SendSMS: function(req, res) {
         if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
             var err = new Error("Telehealth.SendSMS.Error");
             err.pushError("Invalid Params");
-            res.serverError(ErrorWrap(err));
-            return;
+            return res.serverError(ErrorWrap(err));
         }
         var info = toJson(req.body.data);
-        var phoneNumber = typeof info.phone != 'undefined' ? info.phone : null;
-        var content = typeof info.content != 'undefined' ? info.content : null;
+        var phoneNumber = info.phone;
+        var content = info.content;
         var phoneRegex = /^\+[0-9]{9,15}$/;
-        if (phoneNumber != null && phoneNumber.match(phoneRegex) && content != null) {
-            sendSMS(phoneNumber, content, function(err, message) {
-                if (err) {
-                    res.serverError(ErrorWrap(err));
-                    return;
-                }
-                res.ok({
+        if (phoneNumber && phoneNumber.match(phoneRegex) && content) {
+            sendSMS(phoneNumber, content).then(function(mess) {
+                return res.ok({
                     status: 'success',
                     message: 'Send SMS Successfully!'
                 });
+            }, function(error) {
+                return res.serverError(ErrorWrap(err));
             });
         } else {
             var err = new Error("Telehealth.SendSMS.Error");
@@ -62,16 +59,14 @@ module.exports = {
         if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
             var err = new Error("Telehealth.GetUserDetails.Error");
             err.pushError("Invalid Params");
-            res.serverError(ErrorWrap(err));
-            return;
+            return res.serverError(ErrorWrap(err));
         }
         var info = toJson(req.body.data);
-        var uid = typeof info.uid != 'undefined' ? info.uid : null;
-        if (uid == null) {
+        var uid = info.uid;
+        if (!uid) {
             var err = new Error("Telehealth.GetUserDetails.Error");
             err.pushError("Invalid Params");
-            res.serverError(ErrorWrap(err));
-            return;
+            return res.serverError(ErrorWrap(err));
         }
         TelehealthService.FindByUID(uid).then(function(teleUser) {
             if (teleUser) {
@@ -111,13 +106,12 @@ module.exports = {
             return;
         }
         var info = toJson(req.body.data);
-        var patientUID = typeof info.uid != 'undefined' ? info.uid : null;
-        var limit = typeof info.limit != 'undefined' ? info.limit : null;
-        if (patientUID == null) {
+        var patientUID = info.uid;
+        var limit = info.limit;
+        if (!patientUID) {
             var err = new Error("Telehealth.GetUserAppointments.Error");
             err.pushError("Invalid Params");
-            res.serverError(ErrorWrap(err));
-            return;
+            return res.serverError(ErrorWrap(err));
         }
         TelehealthService.GetAppointmentsByPatient(patientUID, limit).then(function(response) {
             res.json(response.getCode(), response.getBody());
@@ -133,12 +127,11 @@ module.exports = {
             return;
         }
         var info = toJson(req.body.data);
-        var apptUID = typeof info.uid != 'undefined' ? info.uid : null;
-        if (apptUID == null) {
+        var apptUID = info.uid;
+        if (!apptUID) {
             var err = new Error("Telehealth.GetAppointmentDetails.Error");
             err.pushError("Invalid Params");
-            res.serverError(ErrorWrap(err));
-            return;
+            return res.serverError(ErrorWrap(err));
         }
         TelehealthService.GetAppointmentDetails(apptUID).then(function(response) {
             res.json(response.getCode(), response.getBody());
@@ -182,17 +175,17 @@ module.exports = {
             return;
         }
         var info = toJson(req.body.data);
-        var deviceToken = typeof info.devicetoken != 'undefined' ? info.devicetoken : null;
-        var deviceId = typeof info.deviceid != 'undefined' ? info.deviceid : null;
-        var deviceType = typeof info.devicetype != 'undefined' ? info.devicetype.toLowerCase() : null;
-        var uid = typeof info.uid != 'undefined' ? info.uid : null;
-        if (deviceToken != null && uid != null && deviceType != null && deviceId != null) {
+        var deviceToken = info.devicetoken;
+        var deviceId = info.deviceid;
+        var deviceType = info.devicetype;
+        var uid = info.uid;
+        if (deviceToken && uid && deviceType && deviceId) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 TelehealthDevice.findOrCreate({
                     where: {
                         telehealthUserID: teleUser.ID,
                         deviceId: deviceId,
-                        type: deviceType == 'android' ? 'ARD' : 'IOS'
+                        type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS'
                     },
                     defaults: {
                         UID: UUIDService.GenerateUUID(),
@@ -225,12 +218,12 @@ module.exports = {
             return;
         }
         var info = toJson(req.body.data);
-        var phoneNumber = typeof info.phone != 'undefined' ? info.phone : null;
-        var deviceId = typeof info.deviceid != 'undefined' ? info.deviceid : null;
-        var deviceType = typeof info.devicetype != 'undefined' ? info.devicetype.toLowerCase() : null;
+        var phoneNumber = info.phone;
+        var deviceId = info.deviceid;
+        var deviceType = info.devicetype;
         var phoneRegex = /^\+[0-9]{9,15}$/;
         var verificationCode = Math.floor(Math.random() * 900000) + 100000;
-        if (phoneNumber != null && phoneNumber.match(phoneRegex) && deviceId != null && deviceType != null) {
+        if (phoneNumber && phoneNumber.match(phoneRegex) && deviceId && deviceType) {
             UserAccount.find({
                 where: {
                     phoneNumber: phoneNumber
@@ -240,7 +233,7 @@ module.exports = {
                     UserActivation.findOrCreate({
                         where: {
                             userAccountID: user.ID,
-                            type: deviceType == 'android' ? 'ARD' : 'IOS',
+                            type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS',
                             deviceID: deviceId
                         },
                         defaults: {
@@ -250,15 +243,13 @@ module.exports = {
                         userActivate.update({
                             verificationCode: !created ? verificationCode.toString() : userActivate.verificationCode
                         }).then(function() {
-                            sendSMS(phoneNumber, "Your verification code is " + verificationCode, function(err, message) {
-                                if (err) {
-                                    res.serverError(ErrorWrap(err));
-                                    return;
-                                }
-                                res.ok({
+                            sendSMS(phoneNumber, "Your verification code is " + verificationCode).then(function(mess) {
+                                return res.ok({
                                     status: 'success',
                                     message: 'Request Verification Code Successfully!'
                                 });
+                            }, function(error) {
+                                return res.serverError(ErrorWrap(err));
                             });
                         }).catch(function(err) {
                             res.serverError(ErrorWrap(err));
@@ -288,15 +279,15 @@ module.exports = {
             return;
         }
         var info = toJson(req.body.data);
-        var verifyCode = typeof info.code != 'undefined' ? info.code : null;
-        var deviceId = typeof info.deviceid != 'undefined' ? info.deviceid : null;
-        var deviceType = typeof info.devicetype != 'undefined' ? info.devicetype.toLowerCase() : null;
-        if (verifyCode != null && deviceId != null && deviceType != null) {
+        var verifyCode = info.code;
+        var deviceId = info.deviceid;
+        var deviceType = info.devicetype;
+        if (verifyCode && deviceId && deviceType) {
             UserActivation.find({
                 where: {
                     verificationCode: verifyCode.toString(),
                     deviceID: deviceId,
-                    type: deviceType == 'android' ? 'ARD' : 'IOS'
+                    type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS'
                 }
             }).then(function(userActivate) {
                 if (userActivate) {

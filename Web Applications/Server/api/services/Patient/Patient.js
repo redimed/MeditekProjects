@@ -519,7 +519,7 @@ module.exports = {
 			include:[
 				{
 	            	model: UserAccount,
-	            	attributes: ['PhoneNumber'],
+	            	attributes: ['PhoneNumber','ID','UID'],
 			    	required: true
 			    }
 			]

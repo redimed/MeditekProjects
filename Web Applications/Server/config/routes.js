@@ -32,4 +32,9 @@ _.extend(routes, DoctorRoutes);
     ------------------ End Doctor -------------------
     -------------------------------------------------
 */
+// Begin Module File Upload
+var UploadRoutes = require('./routes/FileUploadRoutes')
+_.extend(routes, UploadRoutes);
+// End Module File Upload
+
 module.exports.routes = routes;

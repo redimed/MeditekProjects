@@ -399,7 +399,7 @@
                                                 <animations/>
                                                 <color key="backgroundColor" red="0.074509803920000006" green="0.62352941179999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="HiraMinProN-W3" family="Hiragino Mincho ProN" pointSize="18"/>
-                                                <state key="normal" title="Enter Telehealth">
+                                                <state key="normal" title="Verify">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                 </state>
                                                 <userDefinedRuntimeAttributes>
@@ -497,7 +497,7 @@
                     <connections>
                         <outlet property="searchDisplayController" destination="dC6-GC-MvJ" id="0XT-YB-NcJ"/>
                         <outlet property="textFieldVerifyCode" destination="38j-Rt-eRs" id="AyP-sR-wqT"/>
-                        <segue destination="NY9-hg-Fsp" kind="modal" identifier="VerifyToHomeSegue" id="j4s-Wh-U0Q"/>
+                        <segue destination="Xm6-Wi-wMU" kind="push" identifier="VerifyToProfileSegue" id="WIk-td-gkE"/>
                     </connections>
                 </viewController>
                 <searchDisplayController id="dC6-GC-MvJ">
@@ -515,20 +515,30 @@
         <!--Profile-->
         <scene sceneID="KHh-Dn-bIP">
             <objects>
-                <viewController title="Profile" id="Xm6-Wi-wMU" customClass="InformationViewController" customModule="Telehealth" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Profile" wantsFullScreenLayout="YES" id="Xm6-Wi-wMU" customClass="InformationViewController" customModule="Telehealth" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZYq-FS-yJ8"/>
                         <viewControllerLayoutGuide type="bottom" id="3fx-Tl-qtg"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="hcf-sf-FmQ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="700"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="726"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <navigationBar hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E7J-tD-RMB">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="Bik-Kh-Prd"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="User Information" id="jie-ne-17V"/>
+                                </items>
+                            </navigationBar>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KCa-RT-Lju" customClass="TPKeyboardAvoidingScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="700"/>
+                                <rect key="frame" x="0.0" y="65" width="320" height="711"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Full Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8g9-7g-Lqx">
-                                        <rect key="frame" x="8" y="75" width="53" height="18"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Full Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8g9-7g-Lqx">
+                                        <rect key="frame" x="8" y="11" width="45" height="18"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.074509803920000006" green="0.62352941179999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -540,7 +550,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nW-ft-aHW" customClass="DesignableLabel" customModule="Telehealth" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="93" width="302" height="46"/>
+                                        <rect key="frame" x="8" y="29" width="306" height="46"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -551,7 +561,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q10-p8-VHw">
-                                        <rect key="frame" x="8" y="141" width="53" height="18"/>
+                                        <rect key="frame" x="8" y="77" width="53" height="18"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.074509803920000006" green="0.62352941179999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -563,7 +573,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wQ-PY-LJK" customClass="DesignableLabel" customModule="Telehealth" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="159" width="302" height="46"/>
+                                        <rect key="frame" x="8" y="95" width="306" height="46"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -574,7 +584,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DateofBirth" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ui3-HF-Sea">
-                                        <rect key="frame" x="8" y="208" width="53" height="18"/>
+                                        <rect key="frame" x="8" y="144" width="53" height="18"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.074509803920000006" green="0.62352941179999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -586,7 +596,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pK7-4z-i3d" customClass="DesignableLabel" customModule="Telehealth" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="226" width="302" height="46"/>
+                                        <rect key="frame" x="8" y="162" width="306" height="46"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -597,7 +607,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xBk-gF-6Hb">
-                                        <rect key="frame" x="8" y="274" width="53" height="18"/>
+                                        <rect key="frame" x="8" y="210" width="53" height="18"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.074509803920000006" green="0.62352941179999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -609,7 +619,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yGm-Di-B3P" customClass="DesignableLabel" customModule="Telehealth" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="292" width="302" height="46"/>
+                                        <rect key="frame" x="8" y="228" width="306" height="46"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -620,7 +630,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Home Phone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IE1-hQ-ak0">
-                                        <rect key="frame" x="8" y="340" width="53" height="18"/>
+                                        <rect key="frame" x="8" y="276" width="53" height="18"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.074509803920000006" green="0.62352941179999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -632,7 +642,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="voX-68-yX3" customClass="DesignableLabel" customModule="Telehealth" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="358" width="302" height="46"/>
+                                        <rect key="frame" x="8" y="294" width="306" height="46"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -643,7 +653,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RFt-9B-QxO">
-                                        <rect key="frame" x="8" y="406" width="53" height="18"/>
+                                        <rect key="frame" x="8" y="342" width="53" height="18"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.074509803920000006" green="0.62352941179999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -655,7 +665,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bMV-qA-etV" customClass="DesignableLabel" customModule="Telehealth" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="424" width="302" height="46"/>
+                                        <rect key="frame" x="8" y="360" width="306" height="46"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -666,7 +676,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Suburb" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zPr-Ek-BVs">
-                                        <rect key="frame" x="8" y="472" width="53" height="18"/>
+                                        <rect key="frame" x="8" y="408" width="53" height="18"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.074509803920000006" green="0.62352941179999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -678,7 +688,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r9S-Tf-x1r" customClass="DesignableLabel" customModule="Telehealth" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="490" width="302" height="46"/>
+                                        <rect key="frame" x="8" y="426" width="306" height="46"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -689,7 +699,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post Code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ktE-3g-eEI">
-                                        <rect key="frame" x="8" y="539" width="53" height="18"/>
+                                        <rect key="frame" x="8" y="475" width="53" height="18"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.074509803920000006" green="0.62352941179999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -701,7 +711,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOK-oW-1LS" customClass="DesignableLabel" customModule="Telehealth" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="557" width="302" height="46"/>
+                                        <rect key="frame" x="8" y="493" width="306" height="46"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -712,7 +722,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZx-va-wB8">
-                                        <rect key="frame" x="9" y="607" width="52" height="18"/>
+                                        <rect key="frame" x="9" y="543" width="52" height="18"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.074509803920000006" green="0.62352941179999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -724,7 +734,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zoD-iS-SJE" customClass="DesignableLabel" customModule="Telehealth" customModuleProvider="target">
-                                        <rect key="frame" x="9" y="625" width="301" height="46"/>
+                                        <rect key="frame" x="9" y="561" width="305" height="46"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.23529411759999999" green="0.40784313729999999" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -734,10 +744,28 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fKL-OF-EEq" customClass="DesignableButton" customModule="Telehealth" customModuleProvider="target">
+                                        <rect key="frame" x="51" y="621" width="219" height="30"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.074509803920000006" green="0.62352941179999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HiraMinProN-W3" family="Hiragino Mincho ProN" pointSize="18"/>
+                                        <state key="normal" title="Go Telehealth">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="VerifyButtonAction:" destination="JzN-Ol-caw" eventType="touchDown" id="i76-Ui-rQ7"/>
+                                            <segue destination="NY9-hg-Fsp" kind="modal" modalTransitionStyle="crossDissolve" id="bmE-fx-lfF"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstItem="8g9-7g-Lqx" firstAttribute="top" secondItem="KCa-RT-Lju" secondAttribute="top" constant="75" id="07P-4K-RNs"/>
+                                    <constraint firstItem="8g9-7g-Lqx" firstAttribute="top" secondItem="KCa-RT-Lju" secondAttribute="top" constant="11" id="07P-4K-RNs"/>
                                     <constraint firstItem="zPr-Ek-BVs" firstAttribute="top" secondItem="bMV-qA-etV" secondAttribute="bottom" constant="2" id="2NK-Ta-0wa"/>
                                     <constraint firstItem="6wQ-PY-LJK" firstAttribute="top" secondItem="q10-p8-VHw" secondAttribute="bottom" id="2zZ-zC-Oq2"/>
                                     <constraint firstItem="8g9-7g-Lqx" firstAttribute="leading" secondItem="KCa-RT-Lju" secondAttribute="leadingMargin" id="6wD-Mf-x3U"/>
@@ -766,11 +794,12 @@
                                     <constraint firstItem="voX-68-yX3" firstAttribute="leading" secondItem="KCa-RT-Lju" secondAttribute="leading" constant="8" id="dox-hg-vPr"/>
                                     <constraint firstItem="RFt-9B-QxO" firstAttribute="leading" secondItem="KCa-RT-Lju" secondAttribute="leading" constant="8" id="eG9-53-eJq"/>
                                     <constraint firstItem="zoD-iS-SJE" firstAttribute="top" secondItem="gZx-va-wB8" secondAttribute="bottom" id="efA-hs-pIw"/>
-                                    <constraint firstAttribute="bottom" secondItem="8g9-7g-Lqx" secondAttribute="bottom" constant="607" id="gcb-V5-zIq"/>
+                                    <constraint firstAttribute="bottom" secondItem="8g9-7g-Lqx" secondAttribute="bottom" constant="682" id="gcb-V5-zIq"/>
                                     <constraint firstItem="4nW-ft-aHW" firstAttribute="leading" secondItem="KCa-RT-Lju" secondAttribute="leading" constant="8" id="nvg-4C-VvC"/>
                                     <constraint firstItem="pK7-4z-i3d" firstAttribute="leading" secondItem="KCa-RT-Lju" secondAttribute="leading" constant="8" id="owD-to-2Ts"/>
                                     <constraint firstItem="gZx-va-wB8" firstAttribute="leading" secondItem="KCa-RT-Lju" secondAttribute="leading" constant="9" id="owM-51-XXL"/>
                                     <constraint firstItem="ktE-3g-eEI" firstAttribute="top" secondItem="r9S-Tf-x1r" secondAttribute="bottom" constant="3" id="rlV-Jv-aWq"/>
+                                    <constraint firstItem="fKL-OF-EEq" firstAttribute="top" secondItem="zoD-iS-SJE" secondAttribute="bottom" constant="14" id="sQY-hP-CUW"/>
                                     <constraint firstItem="bMV-qA-etV" firstAttribute="leading" secondItem="KCa-RT-Lju" secondAttribute="leading" constant="8" id="tGd-l3-OA4"/>
                                     <constraint firstItem="zPr-Ek-BVs" firstAttribute="leading" secondItem="KCa-RT-Lju" secondAttribute="leading" constant="8" id="uIQ-dx-hKM"/>
                                     <constraint firstItem="xOK-oW-1LS" firstAttribute="top" secondItem="ktE-3g-eEI" secondAttribute="bottom" id="w7u-HG-FkB"/>
@@ -781,29 +810,40 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="pK7-4z-i3d" secondAttribute="trailing" constant="-6" id="49E-yr-lWf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="4nW-ft-aHW" secondAttribute="trailing" constant="-6" id="B3T-sB-AhJ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="yGm-Di-B3P" secondAttribute="trailing" constant="-6" id="FIQ-eg-EPO"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="xOK-oW-1LS" secondAttribute="trailing" constant="-6" id="GiY-KU-1mF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pK7-4z-i3d" secondAttribute="trailing" constant="-10" id="49E-yr-lWf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4nW-ft-aHW" secondAttribute="trailing" constant="-10" id="B3T-sB-AhJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="yGm-Di-B3P" secondAttribute="trailing" constant="-10" id="FIQ-eg-EPO"/>
+                            <constraint firstItem="KCa-RT-Lju" firstAttribute="top" secondItem="ZYq-FS-yJ8" secondAttribute="bottom" constant="-64" id="Fc5-qU-IAF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xOK-oW-1LS" secondAttribute="trailing" constant="-10" id="GiY-KU-1mF"/>
                             <constraint firstItem="3fx-Tl-qtg" firstAttribute="top" secondItem="KCa-RT-Lju" secondAttribute="bottom" constant="-16" id="JzD-mo-v93"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="r9S-Tf-x1r" secondAttribute="trailing" constant="-6" id="NRn-Ap-9Ed"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="r9S-Tf-x1r" secondAttribute="trailing" constant="-10" id="NRn-Ap-9Ed"/>
                             <constraint firstItem="KCa-RT-Lju" firstAttribute="top" secondItem="hcf-sf-FmQ" secondAttribute="topMargin" id="O8K-eb-27m"/>
-                            <constraint firstItem="KCa-RT-Lju" firstAttribute="bottom" secondItem="3fx-Tl-qtg" secondAttribute="top" id="PKv-Ej-QHP"/>
+                            <constraint firstItem="KCa-RT-Lju" firstAttribute="bottom" secondItem="3fx-Tl-qtg" secondAttribute="top" constant="50" id="PKv-Ej-QHP"/>
                             <constraint firstItem="KCa-RT-Lju" firstAttribute="leading" secondItem="hcf-sf-FmQ" secondAttribute="leading" id="PTr-N9-ZaR"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="voX-68-yX3" secondAttribute="trailing" constant="-6" id="PZr-fK-Dyg"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="bMV-qA-etV" secondAttribute="trailing" constant="-6" id="TCg-wO-1In"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="voX-68-yX3" secondAttribute="trailing" constant="-10" id="PZr-fK-Dyg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bMV-qA-etV" secondAttribute="trailing" constant="-10" id="TCg-wO-1In"/>
                             <constraint firstItem="KCa-RT-Lju" firstAttribute="top" secondItem="ZYq-FS-yJ8" secondAttribute="bottom" id="Uii-sT-aVj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="zoD-iS-SJE" secondAttribute="trailing" constant="-6" id="aF0-qA-zJp"/>
+                            <constraint firstAttribute="trailing" secondItem="E7J-tD-RMB" secondAttribute="trailing" id="WoT-wt-Wsa"/>
+                            <constraint firstItem="E7J-tD-RMB" firstAttribute="leading" secondItem="hcf-sf-FmQ" secondAttribute="leading" id="XBT-em-f8X"/>
+                            <constraint firstItem="KCa-RT-Lju" firstAttribute="top" secondItem="ZYq-FS-yJ8" secondAttribute="bottom" constant="45" id="YH2-dl-yE0"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zoD-iS-SJE" secondAttribute="trailing" constant="-10" id="aF0-qA-zJp"/>
+                            <constraint firstItem="fKL-OF-EEq" firstAttribute="leading" secondItem="hcf-sf-FmQ" secondAttribute="leadingMargin" constant="35" id="cAw-na-X01"/>
+                            <constraint firstItem="E7J-tD-RMB" firstAttribute="top" secondItem="ZYq-FS-yJ8" secondAttribute="bottom" constant="-20" id="f0Z-s7-TaE"/>
                             <constraint firstItem="KCa-RT-Lju" firstAttribute="leading" secondItem="hcf-sf-FmQ" secondAttribute="leading" id="kFD-W5-FRQ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="6wQ-PY-LJK" secondAttribute="trailing" constant="-6" id="olB-Vo-We8"/>
+                            <constraint firstItem="KCa-RT-Lju" firstAttribute="top" secondItem="hcf-sf-FmQ" secondAttribute="topMargin" id="mrX-1T-dRF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6wQ-PY-LJK" secondAttribute="trailing" constant="-10" id="olB-Vo-We8"/>
                             <constraint firstAttribute="trailing" secondItem="KCa-RT-Lju" secondAttribute="trailing" id="pGl-To-NjZ"/>
                             <constraint firstAttribute="trailing" secondItem="KCa-RT-Lju" secondAttribute="trailing" id="rgS-bx-f4T"/>
                             <constraint firstItem="KCa-RT-Lju" firstAttribute="top" secondItem="ZYq-FS-yJ8" secondAttribute="bottom" constant="8" symbolic="YES" id="s9B-6s-d6O"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fKL-OF-EEq" secondAttribute="trailing" constant="34" id="u7W-Xq-enf"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="Fc5-qU-IAF"/>
+                                <exclude reference="O8K-eb-27m"/>
                                 <exclude reference="PTr-N9-ZaR"/>
                                 <exclude reference="Uii-sT-aVj"/>
+                                <exclude reference="mrX-1T-dRF"/>
                                 <exclude reference="rgS-bx-f4T"/>
                                 <exclude reference="s9B-6s-d6O"/>
                                 <exclude reference="JzD-mo-v93"/>
@@ -811,23 +851,26 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="dVx-Hy-r7w"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="700"/>
+                    <size key="freeformSize" width="320" height="726"/>
                     <connections>
                         <outlet property="addressLabel" destination="bMV-qA-etV" id="JdU-nd-n4P"/>
+                        <outlet property="btnHomeView" destination="fKL-OF-EEq" id="ogn-Vk-khI"/>
                         <outlet property="countryLabel" destination="zoD-iS-SJE" id="u2I-fs-PGq"/>
                         <outlet property="dobLabel" destination="pK7-4z-i3d" id="mrr-yI-yXl"/>
                         <outlet property="emailLabel" destination="yGm-Di-B3P" id="GO6-zZ-Ti2"/>
                         <outlet property="fullName" destination="4nW-ft-aHW" id="VhX-UH-hsj"/>
                         <outlet property="genderLabel" destination="6wQ-PY-LJK" id="rI7-R4-zeh"/>
                         <outlet property="homePhoneLabel" destination="voX-68-yX3" id="WiI-zn-iQd"/>
+                        <outlet property="naviProfile" destination="E7J-tD-RMB" id="QN1-I7-1fk"/>
                         <outlet property="postCodeLabel" destination="xOK-oW-1LS" id="CzC-So-mfx"/>
                         <outlet property="suburbLabel" destination="r9S-Tf-x1r" id="4nf-vc-90t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJy-PC-ANB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1355" y="388"/>
+            <point key="canvasLocation" x="431" y="432"/>
         </scene>
         <!--Home-->
         <scene sceneID="YUG-cu-cy5">
@@ -1048,7 +1091,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Aj-ws-ccg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="854" y="327"/>
+            <point key="canvasLocation" x="1564" y="244"/>
         </scene>
         <!--FAQ-->
         <scene sceneID="EYc-Rf-9SF">
@@ -1091,7 +1134,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qxv-mY-IqA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="400" y="1089"/>
+            <point key="canvasLocation" x="1436" y="1037"/>
         </scene>
         <!--Appointments-->
         <scene sceneID="Rov-49-Zgu">
@@ -1104,7 +1147,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="appointmentCell" rowHeight="120" id="hsV-2w-D1v" customClass="AppointmentListTableViewCell" customModule="Telehealth" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="320" height="120"/>
+                                <rect key="frame" x="0.0" y="28" width="320" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hsV-2w-D1v" id="vB0-Lg-Yxg">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="119.5"/>
@@ -1138,16 +1181,12 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJu-dO-Y2a">
-                                            <rect key="frame" x="102" y="7" width="42" height="20.5"/>
-                                            <animations/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hnd-2E-GMd">
                                             <rect key="frame" x="103" y="47" width="42" height="20.5"/>
                                             <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20.5" id="OUY-H2-kf1"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
@@ -1155,6 +1194,9 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NI9-CF-2c5">
                                             <rect key="frame" x="103" y="25" width="42" height="20.5"/>
                                             <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20.5" id="D0e-5x-SNB"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
@@ -1176,6 +1218,19 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ub3-A0-dMy">
                                             <rect key="frame" x="103" y="65" width="42" height="20.5"/>
                                             <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20.5" id="lVg-js-Fne"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJu-dO-Y2a">
+                                            <rect key="frame" x="102" y="7" width="42" height="20.5"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20.5" id="CTs-YN-41w"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
@@ -1221,13 +1276,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Appointments" id="C6R-Rk-QFk"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <segue destination="mcX-qw-GNO" kind="push" identifier="uploadSegue" id="nNH-MQ-C88"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wjh-T1-G95" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="930" y="1097"/>
+            <point key="canvasLocation" x="1780" y="1037"/>
         </scene>
         <!--Telehealth-->
         <scene sceneID="Kfh-IE-yfk">
@@ -1241,8 +1297,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3OR-ST-1Es">
-                                <rect key="frame" x="16" y="37" width="288" height="204"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3OR-ST-1Es">
+                                <rect key="frame" x="16" y="37" width="288" height="172"/>
                                 <animations/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csg-ba-jgw">
@@ -1288,7 +1344,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0mW-zY-6LE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1348" y="1097"/>
+            <point key="canvasLocation" x="1780" y="1765"/>
         </scene>
         <!--Answer Call View Controller-->
         <scene sceneID="8DT-0E-SVp">
@@ -1450,7 +1506,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vZS-8y-Uli" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="5hj-K2-G9A" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="354" y="-391"/>
+            <point key="canvasLocation" x="338" y="-443"/>
         </scene>
         <!--Screen Calling View Controller-->
         <scene sceneID="bKK-we-3Nk">
@@ -1545,7 +1601,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tcz-p4-dxA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="768" y="-398"/>
+            <point key="canvasLocation" x="708" y="-443"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="25O-6w-7T5">
@@ -1589,7 +1645,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n2P-z6-tGB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="444" y="336"/>
+            <point key="canvasLocation" x="894" y="652"/>
         </scene>
     </scenes>
     <resources>
@@ -1602,5 +1658,8 @@
         <image name="Phone-50" width="22" height="22"/>
         <image name="Red" width="164" height="124"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="BUH-gj-4mh"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

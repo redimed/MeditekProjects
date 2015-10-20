@@ -25,6 +25,17 @@ let MAKE_CALL = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@
 
 let JOIN_ROOM = "/api/telehealth/socket/joinRoom?uid=%@"
 
+func formatString(dateString: String) -> String {
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000Z"
+    if let datePublished = dateFormatter.dateFromString(dateString) {
+        dateFormatter.dateFormat = "MMM dd, yyyy 'at' h:mm a"
+        dateFormatter.timeZone = NSTimeZone(name: "UTC")
+        let dateFormated = dateFormatter.stringFromDate(datePublished)
+        return dateFormated
+    }
+    return ""
+}
 
 /**
 *  Alert Title and Message for JSSAlertView

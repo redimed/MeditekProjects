@@ -17,5 +17,6 @@ class Singleton {
     var onlineUser_Singleton : [OnlineUsers] = []
     var infoOpentok : JSON!
     var headers : [String: String]!
+    var detailAppointMentObj: JSON!
 }
 let SingleTon = Singleton()

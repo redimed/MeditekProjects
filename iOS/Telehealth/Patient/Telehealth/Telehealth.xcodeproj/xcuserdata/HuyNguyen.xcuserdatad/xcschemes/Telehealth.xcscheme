@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AFF21D781BB12D8B006A190E"
-               BuildableName = "Telehealth Doctor.app"
-               BlueprintName = "Telehealth Doctor"
-               ReferencedContainer = "container:Telehealth Doctor.xcodeproj">
+               BlueprintIdentifier = "AFEE34D21BB0413600471592"
+               BuildableName = "Telehealth.app"
+               BlueprintName = "Telehealth"
+               ReferencedContainer = "container:Telehealth.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,30 +32,30 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AFF21D8F1BB12D8B006A190E"
-               BuildableName = "Telehealth Doctor.xctest"
-               BlueprintName = "Telehealth DoctorTests"
-               ReferencedContainer = "container:Telehealth Doctor.xcodeproj">
+               BlueprintIdentifier = "AFEE34E91BB0413600471592"
+               BuildableName = "TelehealthTests.xctest"
+               BlueprintName = "TelehealthTests"
+               ReferencedContainer = "container:Telehealth.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AFF21D9A1BB12D8B006A190E"
-               BuildableName = "Telehealth Doctor.xctest"
-               BlueprintName = "Telehealth DoctorUITests"
-               ReferencedContainer = "container:Telehealth Doctor.xcodeproj">
+               BlueprintIdentifier = "AFEE34F41BB0413600471592"
+               BuildableName = "TelehealthUITests.xctest"
+               BlueprintName = "TelehealthUITests"
+               ReferencedContainer = "container:Telehealth.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AFF21D781BB12D8B006A190E"
-            BuildableName = "Telehealth Doctor.app"
-            BlueprintName = "Telehealth Doctor"
-            ReferencedContainer = "container:Telehealth Doctor.xcodeproj">
+            BlueprintIdentifier = "AFEE34D21BB0413600471592"
+            BuildableName = "Telehealth.app"
+            BlueprintName = "Telehealth"
+            ReferencedContainer = "container:Telehealth.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -75,10 +75,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AFF21D781BB12D8B006A190E"
-            BuildableName = "Telehealth Doctor.app"
-            BlueprintName = "Telehealth Doctor"
-            ReferencedContainer = "container:Telehealth Doctor.xcodeproj">
+            BlueprintIdentifier = "AFEE34D21BB0413600471592"
+            BuildableName = "Telehealth.app"
+            BlueprintName = "Telehealth"
+            ReferencedContainer = "container:Telehealth.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -94,10 +94,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AFF21D781BB12D8B006A190E"
-            BuildableName = "Telehealth Doctor.app"
-            BlueprintName = "Telehealth Doctor"
-            ReferencedContainer = "container:Telehealth Doctor.xcodeproj">
+            BlueprintIdentifier = "AFEE34D21BB0413600471592"
+            BuildableName = "Telehealth.app"
+            BlueprintName = "Telehealth"
+            ReferencedContainer = "container:Telehealth.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

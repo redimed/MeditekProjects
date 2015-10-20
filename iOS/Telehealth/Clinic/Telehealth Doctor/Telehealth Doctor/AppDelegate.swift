@@ -19,13 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let reachability = Reachability.reachabilityForInternetConnection()
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
         //        let userName = userDefaultsLogin.valueForKey(KeyNSUserDefault.userNameKey) as? String
         //        if userName == "" {
-        let controllerId = "LoginView"
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let initViewController : UIViewController = storyBoard.instantiateViewControllerWithIdentifier(controllerId) as UIViewController
-        self.window?.rootViewController = initViewController
+        let loginVC : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginView") as UIViewController
+        self.window?.rootViewController = loginVC
         
         //        } else {
         //            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

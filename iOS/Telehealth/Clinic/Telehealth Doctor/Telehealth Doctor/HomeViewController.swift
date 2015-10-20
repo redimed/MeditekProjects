@@ -65,7 +65,7 @@ class HomeViewController: UIViewController {
             
             SingleTon.socket.on("connect") {data, ack in
                 print("SOCKET CONNECTED")
-                        SingleTon.socket.emit("get", ["url": NSString(format: JOIN_ROOM, userDefaults["UID"] as! String)])
+                SingleTon.socket.emit("get", ["url": NSString(format: JOIN_ROOM, userDefaults["UID"] as! String)])
             }
             
             SingleTon.socket.on("online_users") {data, ack in
@@ -92,8 +92,10 @@ class HomeViewController: UIViewController {
                 NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTable", object: self)
             }
             
+            
             SingleTon.socket.on("receiveMessage") { data, ack in
                 let result = JSON(data[0])
+                print(result)
                 NSNotificationCenter.defaultCenter().postNotificationName("handleCallNotification", object: nil, userInfo: ["message": result["message"].stringValue])
             }
             

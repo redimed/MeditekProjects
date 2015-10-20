@@ -32,6 +32,8 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var avAudioPlayer : AVAudioPlayer?
     var soundFileURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("call", ofType: "wav")!)
+    var loading: DTIActivityIndicatorView!
+    var isClickEnd = false
     
     @IBOutlet var controllerButtonCall: [UIButton]!
     @IBOutlet weak var nameLabelCall: UILabel!
@@ -39,6 +41,12 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loading = DTIActivityIndicatorView(frame: CGRect(x:screenSize.size.width/2 - 30, y:screenSize.size.height/2, width:90.0, height:90.0))
+        self.view.addSubview(self.loading)
+        loading.indicatorColor = UIColor(hex: "34AADC")
+        loading.indicatorStyle = DTIIndicatorStyle.convInv(.doubleBounce)
+        loading.startActivity()
+        
         navigationController?.setNavigationBarHidden(true, animated: true)
         nameLabelCall.text = SingleTon.onlineUser_Singleton[idOnlineUser].fullNamePatient
         nameLabelCall.sizeToFit()
@@ -76,7 +84,9 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
                 receiveDeclineEvent()
                 break
             case "end":
-                endCall()
+                if isClickEnd != true {
+                    endCall()
+                }
                 break
             default:
                 break
@@ -127,7 +137,6 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     spend for end call and back view controller
     */
     func endCall() {
-        avAudioPlayer?.stop()
         sessionDidDisconnect(session!)
         doUnsubscribe()
         self.navigationController!.popViewControllerAnimated(true)
@@ -149,9 +158,20 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             }
             break
         case 1: // ---end call---
-            SingleTon.socket.emit("get", ["url": NSString(format: TRANSFER_IN_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "end")])
+            isClickEnd = true
+            SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "end")])
             endCall()
-            break
+            
+            /// using for multiple conference, sent signal in a session
+            //            var err: OTError? = nil
+            //
+            //            session!.signalWithType("type", string: "endCall", connection: nil, error: &err)
+            //            if ((err) != nil) {
+            //                print("Error, \(err)")
+            //            } else {
+            //                print("--signal sent--")
+            //            }
+            
         case 2: // camera call
             publisher!.publishVideo = !publisher!.publishVideo
             if(publisher!.publishVideo) {
@@ -161,7 +181,6 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
                 sender.backgroundColor = UIColor(hex: "8E8E93")
                 sender.tintColor = UIColor.grayColor()
             }
-            break
         case 3: // try again call
             tryAgainCall()
             break
@@ -224,6 +243,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         titleLabelCall.hidden = false
         publisher!.view.addSubview(titleLabelCall)
         publisher!.view.addSubview(nameLabelCall)
+        loading.stopActivity(true)
     }
     
     /**
@@ -310,8 +330,8 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         NSLog("session didFailWithError (%@)", error)
     }
     
-    func session(session: OTSession!, receivedSignalType type: String!, fromConnection connection: OTConnection!, withString string: String!) {
-        print("receive event session--- ", string)
+    func session(session: OTSession, receivedSignalType type: String!, fromConnection connection: OTConnection!, withString string: String!) {
+        print(type, string)
     }
     
     // MARK: - OTSubscriber delegate callbacks

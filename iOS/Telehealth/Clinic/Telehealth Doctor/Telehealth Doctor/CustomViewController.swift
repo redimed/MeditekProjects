@@ -22,6 +22,7 @@ class CustomViewController {
     func TextFieldLogin(textField: UITextField!, active: Bool, imageTextField: UIImageView) {
         let bottomBorder = CALayer()
         bottomBorder.frame = CGRectMake(0.0, textField.frame.size.height - 1, textField.frame.size.width, 2.0);
+        
         if(textField.tag == 1) {
             if(active) {
                 bottomBorder.frame = CGRectMake(2.0, textField.frame.size.height - 1, textField.frame.size.width, 2.0);
@@ -42,7 +43,6 @@ class CustomViewController {
             }
         }
         textField.layer.addSublayer(bottomBorder)
-        
     }
     
     func BlurLayer(view: UIView!) -> Bool {
@@ -53,18 +53,5 @@ class CustomViewController {
         view.addSubview(blurEffectView)
         
         return true
-    }
-    
-    func textFieldDidBeginEditing(textField: UITextField, scrollview: UIScrollView) -> Bool {
-        if(UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-            if(208 < textField.frame.origin.y) {
-                scrollview.setContentOffset(CGPointMake(0, 6), animated: true)
-            } else {
-                scrollview.setContentOffset(CGPointMake(0, 0), animated: true)
-            }
-        } else {
-            scrollview.setContentOffset(CGPointMake(0, 50), animated: true)
-        }
-        return true;
     }
 }

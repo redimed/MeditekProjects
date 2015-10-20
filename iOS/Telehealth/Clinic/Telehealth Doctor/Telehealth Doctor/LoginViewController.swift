@@ -25,7 +25,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var errorLoginLabel: UILabel!
     
     let customUIViewController : CustomViewController = CustomViewController()
-    let appDelegate : AppDelegate = AppDelegate()
     let reachability = Reachability.reachabilityForInternetConnection()
     // declare loading indicator
     let loading: DTIActivityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:210.0, y:65.0, width:80.0, height:80.0))

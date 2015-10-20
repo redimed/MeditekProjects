@@ -107,15 +107,4 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func formatString(dateString: String) -> String {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000Z"
-        if let datePublished = dateFormatter.dateFromString(dateString) {
-            dateFormatter.dateFormat = "MMM dd, yyyy 'at' h:mm a"
-            let dateFormated = dateFormatter.stringFromDate(datePublished)
-            return dateFormated
-        }
-        return ""
-    }
 }

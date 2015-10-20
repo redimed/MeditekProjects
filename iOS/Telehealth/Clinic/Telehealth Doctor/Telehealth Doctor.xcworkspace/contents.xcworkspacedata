@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Telehealth Doctor.xcodeproj">
+      location = "group:/Users/HuyNguyen/MeditekProjects/iOS/Telehealth/Clinic/Telehealth Doctor/Telehealth Doctor.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

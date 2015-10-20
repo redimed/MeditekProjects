@@ -15,8 +15,13 @@ class DetailAppointmentVC: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var gradientBackground: UIImageView!
     
-    var xibView : UIView!
+    var xibVC : UIViewController!
     var uidUser : Int?
+    var appointment = Appointment()
+    var clinicalMedical = ClinicalMedical()
+    var patient = PatientTabVC()
+    var medicalImage = MedicalImage()
+    var presentComplain = PresentComplain()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +30,6 @@ class DetailAppointmentVC: UIViewController {
         gradient.frame = gradientBackground.bounds;
         gradient.colors = [UIColor(hex: "FF5E3A").CGColor, UIColor(hex: "FF2A68").CGColor]
         gradientBackground.layer.insertSublayer(gradient, atIndex: 0)
-        
-        loadXib("demoViewController")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -35,8 +38,11 @@ class DetailAppointmentVC: UIViewController {
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseJSON { response -> Void in
-                
-                print(response)
+                if let data: JSON = JSON(response.2.value!)["data"] {
+                    print("detail appointment: \(data)")
+                    SingleTon.detailAppointMentObj = data
+                    self.loadXib(self.appointment)
+                }
         }
     }
     
@@ -46,22 +52,22 @@ class DetailAppointmentVC: UIViewController {
     }
     
     @IBAction func viewOption(sender: UIButton) {
-        xibView.removeFromSuperview()
+        xibVC.view.removeFromSuperview()
         switch sender.tag {
         case 0:
-            loadXib("BasicInfomation")
+            loadXib(appointment)
             break;
         case 1:
-            loadXib("ClinicalMedical")
+            loadXib(clinicalMedical)
             break;
         case 2:
-            loadXib("PresentComplain")
+            loadXib(presentComplain)
             break;
         case 3:
-            loadXib("MedicalImage")
+            loadXib(medicalImage)
             break;
         case 4:
-            loadXib("Patient")
+            loadXib(patient)
             break;
         default:
             
@@ -69,8 +75,8 @@ class DetailAppointmentVC: UIViewController {
         }
     }
     
-    func loadXib(nameXib: String) {
-        xibView = UINib(nibName: nameXib, bundle: NSBundle(forClass: self.dynamicType)).instantiateWithOwner(self, options: nil)[0] as! UIView
-        containerView.addSubview(xibView)
+    func loadXib(nameXib: UIViewController) {
+        xibVC = nameXib
+        containerView.addSubview(xibVC.view)
     }
 }

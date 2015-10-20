@@ -94,12 +94,12 @@
 			<tbody>
 				<tr ng-repeat="p in appointments" ng-click="openAppointmentModal(p.UID)">
 					<td>{{$index +1}}</td>
-					<td>{{p.TelehealthAppointment.PatientAppointment[0].FirstName}} {{p.TelehealthAppointment.PatientAppointment[0].LastName}}</td>
+					<td>{{p.TelehealthAppointment.PatientAppointment.FirstName}} {{p.TelehealthAppointment.PatientAppointment.LastName}}</td>
 					<td>{{p.Doctors[0].FirstName}}</td>
 					<td>{{p.RequestDate | date: 'dd/MM/yyyy - hh:mm'}}</td>
 					<td>{{p.Status}}</td>
 					<td>{{p.FromTime | date: 'dd/MM/yyyy - hh:mm'}}</td>
-					<td ng-show="p.TelehealthAppointment.Correspondence == 'N'"><input type="checkbox" class="checkboxes" value="N"></td>
+					<td ng-show="p.TelehealthAppointment.Correspondence !== 'Y'"><input type="checkbox" class="checkboxes" value="N"></td>
 					<td ng-show="p.TelehealthAppointment.Correspondence == 'Y'"><input type="checkbox" class="checkboxes" value="Y" checked="true"></td>
 				</tr>
 			</tbody>

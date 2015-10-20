@@ -55,7 +55,8 @@ app.directive('patientList', function(PatientService, $modal, toastr,$cookies){
 						$scope.close = function() {
 							modalInstance.close();
 						};
-						$scope.savechange = function(data){
+						$scope.savechange = function(data,oriInfo){
+							data.DOB = moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss');
 							PatientService.updatePatient(data).then(function(response){
 								toastr.success("update success!!!","SUCCESS");
 								modalInstance.close('cancel');

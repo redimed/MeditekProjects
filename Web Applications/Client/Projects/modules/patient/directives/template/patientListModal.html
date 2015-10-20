@@ -89,7 +89,7 @@
 												<div class="form-group">
 													<label class="control-label col-md-4">Date of Birth</label>
 													<div class="col-md-8">
-														<input ng-model="info.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
+														<input ng-model="info.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" >
 													</div>
 												</div>
 												<!-- end Date of Birth -->
@@ -193,7 +193,7 @@
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onCancel()"><i class="icon-action-undo"></i> Close</button>
-		<button type="button" class="btn btn-success" ng-disabled="infoChanged()||!infoClear()" ng-click="onSavechange(info)" ><i class="glyphicon glyphicon-save"></i> Save changes</button>
+		<button type="button" class="btn btn-success" ng-disabled="infoChanged()||!infoClear()" ng-click="onSavechange(info,oriInfo)" ><i class="glyphicon glyphicon-save"></i> Save changes</button>
 	</div>
 </div>
 

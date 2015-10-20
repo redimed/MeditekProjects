@@ -4,10 +4,10 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		restrict: 'EA',
         scope: {
             uid: '=onUid',
-            onCancel: '=',
-            onSavechange: '='
+            onCancel: '='
         },
 		link: function(scope, elem, attrs){
+			var oriInfo,clearInfo;
 			var data = {};
 			data.UID = scope.uid;
 			scope.info = {};
@@ -19,9 +19,32 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			scope.infoClear = function() {
 			    return !angular.equals(clearInfo, scope.info);
 		    },
+
+		    scope.savechange = function(data){
+				PatientService.validate(data)
+					.then(function(result){
+						scope.er ='';
+						PatientService.updatePatient(data).then(function(response){
+							toastr.success("update success!!!","SUCCESS");
+							scope.onCancel();
+						},function(err){
+							toastr.error(err.data.message.errors,"ERROR");
+							scope.info = angular.copy(oriInfo);
+						});
+				}, function(err){
+					toastr.error("Please check data again.","ERROR");
+					scope.er ={};
+					for(var i = 0; i < err.length; i++){
+						scope.er[err[i].field] ={'border': '2px solid #DCA7B0'};
+					}
+				})
+			},
+
 			PatientService.detailPatient(data).then(function(response){
 				if(response.message=="success"){
 					scope.info = response.data[0];
+					scope.info.DOB = moment(new Date(scope.info.DOB)).format('DD/MM/YYYY');
+					
 					oriInfo = angular.copy(scope.info);
 				}
 				else{

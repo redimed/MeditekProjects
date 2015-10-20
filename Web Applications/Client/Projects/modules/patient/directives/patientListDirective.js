@@ -55,15 +55,6 @@ app.directive('patientList', function(PatientService, $modal, toastr,$cookies){
 						$scope.close = function() {
 							modalInstance.close();
 						};
-						$scope.savechange = function(data){
-							PatientService.updatePatient(data).then(function(response){
-								toastr.success("update success!!!","SUCCESS");
-								modalInstance.close('cancel');
-							},function(err){
-								toastr.error(err.data.message.errors,"ERROR");
-								$scope.info = angular.copy(oriInfo);
-							});
-						}
 					},
 					windowClass: 'app-modal-window'
 					//size: 'lg',

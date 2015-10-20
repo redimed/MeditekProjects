@@ -31,14 +31,10 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
                 $scope.DateTimeAppointmentDateTime = moment(DateTime).format('H:mm:ss A');
             }
            
-            if($scope.appointment.TelehealthAppointment.PatientAppointment !== undefined &&
-            	$scope.appointment.TelehealthAppointment.PatientAppointment[0]!==undefined){
-            	// $scope.PatientsFullName = $scope.appointment.TelehealthAppointment.Patients[0].FirstName + ' ' + $scope.appointment.TelehealthAppointment.Patients[0].LastName
-            $scope.PatientsFullName = ($scope.appointment.TelehealthAppointment.PatientAppointment[0].FirstName!==undefined && 
-            	$scope.appointment.TelehealthAppointment.PatientAppointment[0].FirstName!==null)?$scope.appointment.TelehealthAppointment.PatientAppointment[0].FirstName:''+
-            ($scope.appointment.TelehealthAppointment.PatientAppointment[0].FirstName!==undefined && 
-            	$scope.appointment.TelehealthAppointment.PatientAppointment[0].LastName!==null)?' '+$scope.appointment.TelehealthAppointment.PatientAppointment[0].LastName:''
+            if($scope.appointment.TelehealthAppointment.PatientAppointment !== undefined){
+             $scope.PatientsFullName = $scope.appointment.TelehealthAppointment.PatientAppointment.FirstName + ' ' + $scope.appointment.TelehealthAppointment.PatientAppointment.LastName
             }
+
 
            
        		ClinicalDetails.forEach(function(valueInit,indexInit){

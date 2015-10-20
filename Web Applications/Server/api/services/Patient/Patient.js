@@ -2,6 +2,7 @@ var $q = require('q');
 
 //moment
 var moment = require('moment');
+var check  = require('../HelperService');
 
 //generator Password
 var generatePassword = require('password-generator');
@@ -151,7 +152,7 @@ module.exports = {
 		var whereClause = {};
 		whereClause.Patient = {};
 		whereClause.UserAccount ={};
-		if(data.Search!== null && data.Search!==undefined && data.Search!==''){
+		if(check.checkData(data.Search)){
 			if(data.Search.FirstName){
 				whereClause.Patient.FirstName={
 					like:'%'+data.Search.FirstName+'%'
@@ -186,25 +187,25 @@ module.exports = {
 				whereClause.UserAccount.PhoneNumber = {
 					like:'%'+data.Search.PhoneNumber+'%'
 				}
-				// whereClause.push("UserAccount.PhoneNumber LIKE '%"+data.Search.PhoneNumber+"%'");
 			}
 		}
 		return whereClause;
 	},
-
 
 	/*
 		CreatePatient : service create patient
 		input: Patient's information
 		output: insert Patient's information into table Patient 
 	*/
-	CreatePatient : function(data) {
+	CreatePatient : function(data, transaction) {
+		var isCreateByName = false;
+		var isCreateByEmail = false;
 		var info = {
 			Title           : data.Title,
 			FirstName       : data.FirstName,
 			MiddleName      : data.MiddleName,
 			LastName        : data.LastName,
-			DOB             : data.DOB,
+			DOB             : moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss'),
 			Gender          : data.Gender,
 			Occupation      : data.Occupation,
 			HomePhoneNumber : data.HomePhoneNumber,
@@ -222,43 +223,74 @@ module.exports = {
 		};
 		return Services.Patient.validation(data)
 		.then(function(success){
-			if(data.PhoneNumber.substr(0,3)=='+61'){
-				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber);
+			if(data.PhoneNumber){
+				if(data.PhoneNumber.substr(0,3)=='+61'){
+					return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
+				}
+				else{
+					data.PhoneNumber = '+61'+data.PhoneNumber;
+					return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
+				}
 			}
 			else{
-				data.PhoneNumber = '+61'+data.PhoneNumber;
-				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber);
+				if(data.Email){
+					var userInfo = {
+						UserName : data.Email,
+						Password : generatePassword(12, false)
+					};
+					isCreateByEmail = true;
+					return Services.UserAccount.CreateUserAccount(userInfo,transaction);
+				}
+				else{
+					var userInfo = {
+						UserName : info.FirstName+"."+info.LastName+"."+generatePassword(4, false),
+						Password : generatePassword(12, false)
+					};
+					isCreateByName = true;
+					return Services.UserAccount.CreateUserAccount(userInfo,transaction);
+				}
 			}
 			//return Patient.create(data);
 		},function(err){
 			throw err;
 		})
 		.then(function(user){
-			if(user.length > 0) {
-				info.UserAccountID = user[0].ID;
-				return Patient.create(info);
+			if(isCreateByName==false && isCreateByEmail==false){
+				if(user.length > 0) {
+					info.UserAccountID = user[0].ID;
+					return Patient.create(info,transaction);
+				}
+				else{
+					data.password = generatePassword(12, false);
+					var userInfo = {
+						UserName    : data.PhoneNumber,
+						Email       : data.Email,
+						PhoneNumber : data.PhoneNumber,
+						Password    : data.password
+					};
+					userInfo.UID = UUIDService.Create();
+					//create UserAccount
+					return Services.UserAccount.CreateUserAccount(userInfo,transaction)
+					.then(function(user){
+						info.UserAccountID = user.ID;
+						return Patient.create(info,transaction);
+					},function(err){
+						throw err;
+					});
+				}
 			}
 			else{
-				data.password = generatePassword(12, false);
-				var userInfo = {
-					UserName    : data.PhoneNumber,
-					Email       : data.Email,
-					PhoneNumber : data.PhoneNumber,
-					Password    : data.password
-				};
-				userInfo.UID = UUIDService.Create();
-				//create UserAccount
-				return Services.UserAccount.CreateUserAccount(userInfo)
-				.then(function(user){
-					info.UserAccountID = user.ID;
-					return Patient.create(info);
-				},function(err){
-					throw err;
-				});
+				info.UserAccountID = user.ID;
+				return Patient.create(info,transaction);
 			}
 		},function(err){
 			throw err;
-		});
+		})
+		.then(function(result){
+			return result;
+		}, function(err){
+			throw err;
+		})
 	},
 
 
@@ -267,8 +299,8 @@ module.exports = {
 		input:patient's information
 		output:find patient which was provided information.
 	*/
-	SearchPatient : function(data) {
-		if(data.values!='' && data.values!=null && data.values!=undefined){
+	SearchPatient : function(data, transaction) {
+		if(check.checkData(data.values)){
 			var PhoneNumberPattern1=new RegExp(/^4[0-9]{8}$/);
 			var PhoneNumberPattern2=new RegExp(/^(\+61|0061|0)?4[0-9]{8}$/);
 			var PhoneNumber=data.values.replace(HelperService.regexPattern.phoneExceptChars,'');
@@ -278,7 +310,7 @@ module.exports = {
 					.then(function(user){
 						//check if Phone Number is found in table UserAccount, 
 						// get UserAccountID to find patient
-						if(user!=undefined && user!=null && user!='' && user.length!=0){
+						if(check.checkData(user)){
 							return Patient.findAndCountAll({
 								include:[
 									{
@@ -290,6 +322,7 @@ module.exports = {
 								where: {
 									UserAccountID : user[0].ID
 								},
+								transaction:transaction,
 								limit: data.limit,
 								offset: data.offset,
 							})
@@ -308,11 +341,11 @@ module.exports = {
 				}
 				else{
 					data.PhoneNumber = '+61'+data.values;
-					return Services.UserAccount.FindByPhoneNumber(data.values)
+					return Services.UserAccount.FindByPhoneNumber(data.values,transaction)
 					.then(function(user){
 						//check if Phone Number is found in table UserAccount, 
 						// get UserAccountID to find patient
-						if(user!=undefined && user!=null && user!='' && user.length!=0){
+						if(check.checkData(user)){
 							return Patient.findAndCountAll({
 								include:[
 											{
@@ -324,6 +357,7 @@ module.exports = {
 								where: {
 									UserAccountID : user[0].ID
 								},
+								transaction:transaction,
 								limit: data.limit,
 								offset: data.offset,
 							})
@@ -390,6 +424,7 @@ module.exports = {
 								}
 					  		]
 					},
+					transaction:transaction,
 					limit: data.limit,
 					offset: data.offset,
 				})
@@ -409,6 +444,7 @@ module.exports = {
 				    	required: true
 				    }
 				],
+				transaction:transaction,
 				limit: data.limit,
 				offset: data.offset,
 			})
@@ -426,48 +462,52 @@ module.exports = {
 		input:patient's information
 		output:update patient into table Patient
 	*/
-	UpdatePatient : function(data) {
-		data.ModifiedDate = new Date();
-		var DOB = moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
-		//get data not required
-		var patientInfo={
-			ID              : data.ID,
-			Title           : data.Title,
-			FirstName       : data.FirstName,
-			MiddleName      : data.MiddleName,
-			LastName        : data.LastName,
-			DOB             : DOB,
-			Gender          : data.Gender,
-			Address1        : data.Address1,
-			Address2        : data.Address2,
-			Enable          : data.Enable,
-			Suburb          : data.Suburb,
-			Postcode        : data.Postcode,
-			State           : data.State,
-			Email           : data.Email,
-			Occupation      : data.Occupation,
-			HomePhoneNumber : data.HomePhoneNumber,
-			WorkPhoneNumber : data.WorkPhoneNumber,
-			CreatedDate     : data.CreatedDate,
-			CreatedBy       : data.CreatedBy,
-			ModifiedDate    : data.ModifiedDate,
-			ModifiedBy      : data.ModifiedBy
-		};
+	UpdatePatient : function(data, transaction) {
+		if(check.checkData(data)){
+			data.ModifiedDate = new Date();
+			// var DOB = moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
+			//get data not required
+			data.DOB = moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss');
+			var patientInfo={
+				ID              : data.ID,
+				Title           : data.Title,
+				FirstName       : data.FirstName,
+				MiddleName      : data.MiddleName,
+				LastName        : data.LastName,
+				DOB             : data.DOB,
+				Gender          : data.Gender,
+				Address1        : data.Address1,
+				Address2        : data.Address2,
+				Enable          : data.Enable,
+				Suburb          : data.Suburb,
+				Postcode        : data.Postcode,
+				State           : data.State,
+				Email           : data.Email,
+				Occupation      : data.Occupation,
+				HomePhoneNumber : data.HomePhoneNumber,
+				WorkPhoneNumber : data.WorkPhoneNumber,
+				CreatedDate     : data.CreatedDate,
+				CreatedBy       : data.CreatedBy,
+				ModifiedDate    : data.ModifiedDate,
+				ModifiedBy      : data.ModifiedBy
+			};
 
-		//get data required ( if data has values, get it)
-		if(data.UserAccountID)  patientInfo.UserAccountID = data.UserAccountID;
-		if(data.CountryID)  patientInfo.CountryID = data.CountryID;
-		if(data.UID)  patientInfo.UID = data.UID;
-		return Services.Patient.validation(data)
-		.then(function(success){
-			return Patient.update(patientInfo,{
-				where:{
-					UID : patientInfo.UID
-				}
+			//get data required ( if data has values, get it)
+			if(data.UserAccountID)  patientInfo.UserAccountID = data.UserAccountID;
+			if(data.CountryID)  patientInfo.CountryID = data.CountryID;
+			if(data.UID)  patientInfo.UID = data.UID;
+			return Services.Patient.validation(data)
+			.then(function(success){
+				return Patient.update(patientInfo,{
+					where:{
+						UID : patientInfo.UID
+					},
+					transaction:transaction
+				});
+			}, function(err){
+				throw err;
 			});
-		}, function(err){
-			throw err;
-		});
+		}
 	},
 
 
@@ -476,15 +516,16 @@ module.exports = {
 		input:useraccount's UID
 		output: get patient's information.
 	*/
-	GetPatient : function(data) {
+	GetPatient : function(data, transaction) {
 		return Services.UserAccount.GetUserAccountDetails(data)
 		.then(function(user){
 			//check if UserAccount is found in table UserAccount, get UserAccountID to find patient
-			if(user!=undefined && user!=null && user!='' && user.length!=0){
+			if(check.checkData(user)){
 				return Patient.findAll({
 					where: {
 						UserAccountID : user.ID
 					},
+					transaction:transaction,
 					include: [
 						{
 			            	model: Country,
@@ -511,15 +552,16 @@ module.exports = {
 		input: Patient's UID
 		output: get patient's detail
 	*/
-	DetailPatient : function(data) {
+	DetailPatient : function(data, transaction) {
 		return Patient.findAll({
 			where:{
 				UID : data.UID
 			},
+			transaction:transaction,
 			include:[
 				{
 	            	model: UserAccount,
-	            	attributes: ['PhoneNumber'],
+	            	attributes: ['PhoneNumber','Email','ID','UID'],
 			    	required: true
 			    }
 			]
@@ -536,9 +578,7 @@ module.exports = {
 		input: amount patient
 		output: get list patient from table Patient
 	*/
-	LoadListPatient : function(data){
-		var resLimit = (data.limit)? data.limit : 10;
-		var resOffset = (data.offset)? data.offset : 0;
+	LoadListPatient : function(data, transaction){
 		var whereClause = Services.Patient.whereClause(data);
 		return Patient.findAndCountAll({
 			include:[
@@ -551,81 +591,57 @@ module.exports = {
 				   	}
 			    }
 			],
-			limit  : resLimit,
-			offset : resOffset,
+			limit  : data.limit,
+			offset : data.offset,
 			order  : data.order,
-			// where  : UserAccount.PhoneNumber='+456456'
-			// where  : whereClause
 			where: {
 				$or: whereClause.Patient
 				
-			}
+			},
+			transaction:transaction
 		})
 		.then(function(result){
 			return result;
 		},function(err){
 			throw err;
 		});
-			
-		// else {
-		// 	return Patient.findAndCountAll({
-		// 		include:[
-		// 			{
-		//             	model: UserAccount,
-		//             	attributes: ['PhoneNumber'],
-		// 		    	required: true
-		// 		    }
-		// 		],
-		// 		limit  : resLimit,
-		// 		offset : resOffset,
-		// 		order  : data.order
-		// 	})
-		// 	.then(function(result){
-		// 		return result;
-		// 	},function(err){
-		// 		var error = new Error("SERVER ERROR");
-		// 		var errors = [];
-		// 		errors.push({message:"LoadListPatient.findAll.error"});
-		// 		error.pushErrors(errors);
-		// 		throw error;
-		// 	})
-		// }
 	},
 
-	CheckPatient : function(data) {
+	CheckPatient : function(data, transaction) {
 		var info = {};
 		return Services.Patient.validation(data)
 		.then(function(success){
-			if(data.PhoneNumber!=undefined && data.PhoneNumber!=null && data.PhoneNumber!=''){
+			if(check.checkData(data.PhoneNumber)){
 				data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
-				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber)
+				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction)
 				.then(function(user){
-					if(user!==undefined && user!==null && user!=='' && user.length!==0){
+					if(check.checkData(user)){
 						info.Email = user[0].Email;
 						info.PhoneNumber = user[0].PhoneNumber;
 						return Patient.findAll({
 								where :{
 									UserAccountID : user[0].ID
-								}
+								},
+								transaction:transaction
 							});
 		
 					}
 					else
 						return ({
-							isCheck:false
+							isCreated:false
 						});
 				},function(err){
 					throw err;
 				})
 				.then(function(result){
-					if(result!==undefined && result!==null && result!=='' && result.length!==0 && result.isCheck!==false){
+					if(check.checkData(result) && result.isCreated!==false){
 						return ({
-							isCheck:true
+							isCreated:true
 						});
 					}
 					else
 						return ({
-							isCheck:false,
+							isCreated:false,
 							data: {
 								Email : info.Email,
 								PhoneNumber: info.PhoneNumber

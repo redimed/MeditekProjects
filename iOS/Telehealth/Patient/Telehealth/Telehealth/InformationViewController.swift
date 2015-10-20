@@ -11,7 +11,10 @@ import UIKit
 class InformationViewController: UIViewController {
     let InformationPatient = GetAndPostDataController()
     var uid = String()
+    var messageFrom = String()
     
+    @IBOutlet weak var btnHomeView: DesignableButton!
+    @IBOutlet weak var naviProfile: UINavigationBar!
     @IBOutlet weak var fullName: DesignableLabel!
     @IBOutlet weak var dobLabel: DesignableLabel!
     @IBOutlet weak var genderLabel: DesignableLabel!
@@ -24,11 +27,16 @@ class InformationViewController: UIViewController {
     
     
     override func viewDidLoad() {
+        print(messageFrom)
         super.viewDidLoad()
         self.view.showLoading()
         if let uuid = defaults.valueForKey("uid") as? String {
             uid = uuid
-            
+        }
+        
+        if messageFrom == "VerifyToProfile" {
+            btnHomeView.hidden = false
+            naviProfile.hidden = false
         }
        
         InformationPatient.getInformationPatientByUUID(uid){
@@ -38,11 +46,11 @@ class InformationViewController: UIViewController {
                 self.view.hideLoading()
                 let jsonInformation = response["data"][0]
                 self.fullName.text = jsonInformation["FirstName"].string! + " " + jsonInformation["MiddleName"].string! + " " + jsonInformation["LastName"].string!
-                self.dobLabel.text = (jsonInformation["DOB"].string)?.toDate()
+//                self.dobLabel.text = (jsonInformation["DOB"].string)?.toDate()
                 self.suburbLabel.text = jsonInformation["Suburb"].string
                 self.postCodeLabel.text = jsonInformation["Postcode"].string
                 self.countryLabel.text = jsonInformation["Country"]["ShortName"].string
-                self.addressLabel.text = jsonInformation["Address"].string
+                self.addressLabel.text = jsonInformation["Address1"].string
                 self.emailLabel.text = jsonInformation["Email"].string
                 self.homePhoneLabel.text = jsonInformation["HomePhoneNumber"].string
                 self.genderLabel.text = (jsonInformation["Gender"].string)?.toGender()

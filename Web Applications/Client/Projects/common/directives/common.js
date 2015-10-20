@@ -1,4 +1,4 @@
-angular.module('app.common', [])
+angular.module('app.common.ngEnter', [])
 .directive('ngEnter', function() {
 	return function(scope, element, attrs) {
 		element.bind("keydown keypress", function(event) {

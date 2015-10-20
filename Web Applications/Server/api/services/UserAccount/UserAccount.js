@@ -465,34 +465,86 @@ module.exports = {
 	 * chỉ cần 1 trong 4 tiêu chí được cung cấp thì user tương ứng sẽ được trả về
 	 * Input:
 	 * 	criteria: là json chứa 1 trong các thuộc tính [UID, UserName, Email, Phone]
+	 * 	attributes: chứa các field muốn trả về
 	 * 	transaction: nếu được cung cấp thì sẽ áp dụng transaction vào các câu truy vấn
 	 * Output:
-	 * 	if success return promise update UserAccount
+	 * 	if success return promise getOne UserAccount
 	 * 	if error throw err;
 	 * 	NOTES:
 	 * 		CHÚ Ý, KHÔNG LẤY USER ACCOUNT THÔNG QUA ID VÌ ID THEO CƠ CHẾ TỰ TĂNG, NHƯ THẾ
 	 * 	 	SẼ KHÔNG AN TOÀN VÌ NGƯỜI DÙNG CÓ THỂ DÙNG TOOL ĐỂ TỰ ĐỘNG ĐIỀN ID
 	 */
-	GetUserAccountDetails:function(criteria,transaction)
+	GetUserAccountDetails:function(criteria,attributes,transaction)
 	{
+		var error=new Error('GetUserAccountDetails.Error');
 		var whereClause={};
-		if(criteria.UID)
-			whereClause.UID=criteria.UID;
-		else if(criteria.UserName)
-			whereClause.UserName=criteria.UserName;
-		else if(criteria.Email)
-			whereClause.Email=criteria.Email;
-		else if(criteria.PhoneNumber)
-			whereClause.PhoneNumber=criteria.PhoneNumber;
-		else
+
+		function Validation()
 		{
-			var err=new Error('GetUserAccountDetails.Error');
-			err.pushError('GetUserAccountDetails.criteriaNotFound');
-			throw err;
+			var q=$q.defer();
+			try{
+				if(criteria.UID)
+					whereClause.UID=criteria.UID;
+				else if(criteria.UserName)
+					whereClause.UserName=criteria.UserName;
+				else if(criteria.Email)
+				{
+					if(o.isValidEmail(criteria.Email))
+					{
+						whereClause.Email=criteria.Email;
+					}
+					else
+					{
+						error.pushError("GetUserAccountDetails.emailInvalid");
+					}
+				}
+				else if(criteria.PhoneNumber)
+				{
+					criteria.PhoneNumber=o.parseAuMobilePhone(criteria.PhoneNumber);
+					console.log(criteria.PhoneNumber);
+					if(criteria.PhoneNumber)
+						whereClause.PhoneNumber=criteria.PhoneNumber;
+					else{
+						error.pushError("GetUserAccountDetails.phoneNumberInvalid");
+					}
+				}
+				else
+				{
+					error.pushError('GetUserAccountDetails.criteriaNotFound');
+				}
+
+				if(error.getErrors().length>0)
+				{
+					throw error;
+				}
+				else
+				{
+					q.resolve({status:'success'});
+				}
+			}
+			catch(err){
+				q.reject(err);
+			}
+			
+			return q.promise;
 		}
-		return UserAccount.findOne({
-			where:criteria
-		},{transaction:transaction});
+		
+		return Validation()
+		.then(function(data){
+			return UserAccount.findOne({
+				where:criteria,
+				attributes:attributes
+			},{transaction:transaction})
+			.then(function(user){
+				return user;
+			},function(err){
+				o.exlog(err);
+				error.pushError("GetUserAccountDetails.queryError");
+				throw error;
+			})
+		},function(err){
+			throw err;
+		})
 	},
 
 

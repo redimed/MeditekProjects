@@ -1,2 +1,4 @@
 node_modules/*
+upload_files/*
+temp/*
 config/connections.js

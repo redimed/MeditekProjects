@@ -11,46 +11,20 @@ import UIKit
 class AppointmentListTableViewController: UITableViewController,AppointmentListTableViewCellDelegate {
     let appointmentApi = GetAndPostDataController()
     var patientUid = String()
+    var Appointment : [AppointmentList] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.showLoading()
+        
         if let patientUID = defaults.valueForKey("patientUID") as? String {
             patientUid = patientUID
         }
+        if Appointment.count <= 0 {
+            self.view.showLoading()
+        }
+        
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        appointmentApi.getListAppointmentByUID(patientUid, Limit: "1", completionHandler: {
-            response in
-            print(response)
-            
-            if response["ErrorsList"] != nil {
-                print("Error")
-                self.alertMessage("Error", message: response["ErrorsList"][0].string!)
-            }else if response["TimeOut"] ==  "Request Time Out" {
-                self.alertMessage("Error", message: "Request Time Out")
-            }
-            else {
-                var UIDApointment : String!
-                var FromTime : String!
-                var ToTime : String!
-                var Status : String!
-                var NameDoctor : String!
-                let countAppointment = response["rows"].count
-                
-                Appointment = []
-                for var i = 0 ; i < countAppointment ;i++ {
-                    UIDApointment = response["rows"][i]["UID"].string
-                    FromTime = response["rows"][i]["FromTime"].string
-                    ToTime = response["rows"][i]["ToTime"].string
-                    Status = response["rows"][i]["Status"].string
-                    NameDoctor = response["rows"][i]["Doctors"][0]["FirstName"].string
-                  
-                    Appointment.append(AppointmentList(UIDApointment: UIDApointment, ToTime: ToTime, Status: Status, FromTime: FromTime, NameDoctor: NameDoctor))
-                    
-                }
-                self.view.hideLoading()
-                self.tableView.reloadData()
-            }
-        })
+        getAppointmentList()
         
     }
     
@@ -86,6 +60,43 @@ class AppointmentListTableViewController: UITableViewController,AppointmentListT
         self.presentViewController(alertController, animated: true) {
             
         }
+    }
+    //Giap: Get Appointment List
+    func getAppointmentList() {
+        appointmentApi.getListAppointmentByUID(patientUid, Limit: "1", completionHandler: {
+            response in
+            print(response)
+            
+            if response["ErrorsList"] != nil {
+                print("Error")
+                self.alertMessage("Error", message: response["ErrorsList"][0].string!)
+            }else if response["TimeOut"] ==  "Request Time Out" {
+                self.alertMessage("Error", message: "Request Time Out")
+            }
+            else {
+                var UIDApointment : String!
+                var FromTime : String!
+                var ToTime : String!
+                var Status : String!
+                var NameDoctor : String!
+                var data = response["rows"]
+                let countAppointment = data.count
+                
+                for var i = 0 ; i < countAppointment ;i++ {
+                    UIDApointment = data[i]["UID"].string
+                    FromTime = data[i]["FromTime"].string
+                    ToTime = data[i]["ToTime"].string
+                    Status = data[i]["Status"].string
+                    NameDoctor = data[i]["Doctors"][0]["FirstName"].string != nil ? data[i]["Doctors"][0]["FirstName"].string : ""
+                    
+                    self.Appointment.append(AppointmentList(UIDApointment: UIDApointment, ToTime: ToTime, Status: Status, FromTime: FromTime, NameDoctor: NameDoctor))
+                    
+                }
+                self.view.hideLoading()
+                self.tableView.reloadData()
+            }
+        })
+        
     }
     
     

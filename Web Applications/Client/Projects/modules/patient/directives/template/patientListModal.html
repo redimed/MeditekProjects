@@ -70,26 +70,26 @@
 												<!-- First Name -->
 												<div class="form-group">
 													<label class="control-label col-md-4">First Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="First Name" ng-model="info.FirstName"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="First Name" ng-model="info.FirstName" ng-style="er.FirstName"></div>
 												</div>
 												<!-- end First Name -->
 												<!-- Sur Name -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Sur Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Sur Name" ng-model="info.LastName"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Sur Name" ng-model="info.LastName" ng-style="er.LastName"></div>
 												</div>
 												<!-- end Sur Name -->
 												<!-- Middle Name -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Middle Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Middle Name" ng-model="info.MiddleName"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Middle Name" ng-model="info.MiddleName" ng-style="er.MiddleName"></div>
 												</div>
 												<!-- end Middle Name -->
 												<!-- Date of Birth -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Date of Birth</label>
 													<div class="col-md-8">
-														<input ng-model="info.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" >
+														<input ng-model="info.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" ng-style="er.DOB">
 													</div>
 												</div>
 												<!-- end Date of Birth -->
@@ -123,7 +123,7 @@
 												<!-- Home Phone -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Home Phone</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber"></div>
 												</div>
 												<!-- end Home Phone -->
 												<!-- Mobile Phone -->
@@ -135,37 +135,33 @@
 												<!-- Address1 -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Address1</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address1" ng-model="info.Address1"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address1" ng-model="info.Address1" ng-style="er.Address1"></div>
 												</div>
 												<!-- end Address1 -->
 												<!-- Address2 -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Address2</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address2" ng-model="info.Address2"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address2" ng-model="info.Address2" ng-style="er.Address2"></div>
 												</div>
 												<!-- end Address2 -->
-												<!-- Surburb -->
+												<!-- Suburb -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Suburb</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Surburd" ng-model="info.Suburb"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Suburb" ng-model="info.Suburb" ng-style="er.Suburb"></div>
 												</div>
 												<!-- end Surburb -->
 												<!-- Postcode -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Postcode</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Postcode" ng-model="info.Postcode"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Postcode" ng-model="info.Postcode" ng-style="er.Postcode"></div>
 												</div>
 												<!-- end Postcode -->
 												<!-- State -->
 												<div class="form-group">
 													<label class="control-label col-md-4">State</label>
-													<div class="col-md-8">
-														<select class="form-control">
-															<option ng-repeat="s in states" value="{{s.name}}">{{s.name}}</option>
-														</select>
-													</div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="State" ng-model="info.State" ng-style="er.State"></div>
 												</div>
-												<!-- end State -->
+												<!-- end Postcode -->
 												<!-- Country -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Country</label>
@@ -193,7 +189,7 @@
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onCancel()"><i class="icon-action-undo"></i> Close</button>
-		<button type="button" class="btn btn-success" ng-disabled="infoChanged()||!infoClear()" ng-click="onSavechange(info,oriInfo)" ><i class="glyphicon glyphicon-save"></i> Save changes</button>
+		<button type="button" class="btn btn-success" ng-disabled="infoChanged()||!infoClear()" ng-click="savechange(info)" ><i class="glyphicon glyphicon-save"></i> Save changes</button>
 	</div>
 </div>
 

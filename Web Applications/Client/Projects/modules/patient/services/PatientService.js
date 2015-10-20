@@ -3,36 +3,6 @@ angular.module('app.authentication.patient.services',[])
 	var PatientService = {};
 	var api = Restangular.all("api");
 
-	PatientService.detailPatient = function(data){
-		var detailPatient = api.all("patient/detail-patient");
-		return detailPatient.post({data:data});
-	};
-
-	PatientService.loadlistPatient = function(data){
-		var loadlistPatient = api.all("patient/loadlist-patient");
-		return loadlistPatient.post({data:data});
-	};
-
-	PatientService.updatePatient = function(data){
-		var updatePatient = api.all("patient/update-patient");
-		return updatePatient.post({data:data});
-	};
-
-	PatientService.checkPatient = function(data){
-		var checkPatient = api.all("patient/check-patient");
-		return checkPatient.post({data:data});
-	};
-
-	PatientService.createPatient = function(data){
-		var createPatient = api.all("patient/create-patient");
-		return createPatient.post({data:data});
-	};
-
-	PatientService.searchPatient = function(data){
-		var searchPatient = api.all("patient/search-patient");
-		return searchPatient.post({data:data});
-	};
-
 	PatientService.validate = function(info) {
 		var error = [];
 		var q = $q.defer();
@@ -73,8 +43,10 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"Gender",message:"Gender.invalid-value"});
 				}
 			}
-			else {
-				error.push({field:"Gender",message:"Gender.required"});
+
+			//validate DOB
+			if(info.DOB==undefined){
+				error.push({field:"DOB",message:"DOB.invalid-value"});
 			}
 
 			//validate Address1
@@ -83,9 +55,6 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"Address1",message:"Address1.length"});
 				}
 			}
-			// else {
-			// 	error.push({field:"Address1",message:"Address1.required"});
-			// }
 
 			//validate Address2
 			if(info.Address2){
@@ -93,9 +62,6 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"Address2",message:"Address2.length"});
 				}
 			}
-			// else {
-			// 	error.push({field:"Address2",message:"Address2.required"});
-			// }
 
 			//validate Suburb
 			if(info.Suburb){
@@ -103,9 +69,6 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"Suburb",message:"Suburb.length"});
 				}
 			}
-			// else {
-			// 	error.push({field:"Suburb",message:"Suburb.required"});
-			// }
 
 			//validate Postcode
 			if(info.Postcode){
@@ -113,9 +76,6 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"Postcode",message:"Postcode.length"});
 				}
 			}
-			// else {
-			// 	error.push({field:"Postcode",message:"Postcode.required"});
-			// }
 
 			// validate Email? hoi a Tan su dung exception
 			if(info.Email){
@@ -125,9 +85,6 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"Email",message:"Email.invalid-value"});
 				}
 			}
-			else {
-				error.push({field:"Email",message:"Email.required"});
-			}
 			
 			//validate Occupation
 			if(info.Occupation){
@@ -135,9 +92,6 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"Occupation",message:"Occupation.length"});
 				}
 			}
-			// else {
-			// 	error.push({field:"Occupation",message:"Occupation.required"});
-			// }
 
 
 			//validate WorkPhone
@@ -148,9 +102,6 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"WorkPhoneNumber",message:"WorkPhoneNumber.invalid-value"});
 				}
 			}
-			// else {
-			// 	error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.required"});
-			// }
 
 			//validate HomePhoneNumber? hoi a Tan su dung exception
 			if(info.HomePhoneNumber){
@@ -160,9 +111,6 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.invalid-value"});
 				}
 			}
-			// else {
-			// 	error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.required"});
-			// }
 
 			//validate State
 			if(info.State){
@@ -170,9 +118,6 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"State",message:"State.length"});
 				}
 			}
-			// else {
-			// 	error.push({field:"State",message:"State.required"});
-			// }
 
 			if(error.length>0){
 				throw error;
@@ -180,7 +125,6 @@ angular.module('app.authentication.patient.services',[])
 			else{
 				q.resolve({status:'success'});
 			}
-			//q.resolve({status:'success'});
 
 		}
 		catch(error){
@@ -248,6 +192,36 @@ angular.module('app.authentication.patient.services',[])
 			q.reject(error);
 		}
 		return q.promise;
+	};
+
+	PatientService.detailPatient = function(data){
+		var detailPatient = api.all("patient/detail-patient");
+		return detailPatient.post({data:data});
+	};
+
+	PatientService.loadlistPatient = function(data){
+		var loadlistPatient = api.all("patient/loadlist-patient");
+		return loadlistPatient.post({data:data});
+	};
+
+	PatientService.updatePatient = function(data){
+		var updatePatient = api.all("patient/update-patient");
+		return updatePatient.post({data:data});
+	};
+
+	PatientService.checkPatient = function(data){
+		var checkPatient = api.all("patient/check-patient");
+		return checkPatient.post({data:data});
+	};
+
+	PatientService.createPatient = function(data){
+		var createPatient = api.all("patient/create-patient");
+		return createPatient.post({data:data});
+	};
+
+	PatientService.searchPatient = function(data){
+		var searchPatient = api.all("patient/search-patient");
+		return searchPatient.post({data:data});
 	};
 
 	return PatientService;

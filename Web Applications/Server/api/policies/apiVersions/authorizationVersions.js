@@ -8,10 +8,17 @@ module.exports={
 		}
 	},
 
-	'post /api/user-role/CreateUserRole':{
+	'post /api/user-role/CreateUserRoleWithExistUser':{
 		'0.1':{
 			enable:true,
-			action:userRoleController_v0_1.CreateUserRole
+			action:userRoleController_v0_1.CreateUserRoleWithExistUser
+		}
+	},
+
+	'post /api/user-role/CreateUserRoleWhenCreateUser':{
+		'0.1':{
+			enable:true,
+			action:userRoleController_v0_1.CreateUserRoleWhenCreateUser
 		}
 	},
 

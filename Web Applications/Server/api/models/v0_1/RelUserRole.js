@@ -45,11 +45,30 @@ module.exports = {
         ModifiedBy: {
             type: Sequelize.BIGINT(20),
             allowNull: true
+        },
+
+        Enable:{
+            type:Sequelize.STRING(1),
+            allowNull:false,
+            defaultValue:'Y'
         }
+
     },
     associations: function() {},
     options: {
         tableName: 'RelUserRole',
-        timestamps: false
+        timestamps: false,
+        hooks:{
+            beforeCreate:function(relUserRole,options,cb)
+            {
+                relUserRole.CreatedDate=new Date();
+                cb();
+            },
+            beforeUpdate:function(relUserRole,options,cb)
+            {
+                relUserRole.ModifiedDate=new Date();
+                cb();
+            }
+        }
     }
 };

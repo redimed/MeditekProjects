@@ -63,16 +63,16 @@ module.exports = {
                     err.pushError("No File Was Uploaded!");
                     return res.serverError(ErrorWrap(err));
                 }
-                if (!params.patientUID) {
+                if (!params.userUID || !params.fileType) {
                     fs.unlink(uploadedFiles[0].fd);
                     var err = new Error("FileUpload.UploadFile.Error");
                     err.pushError("Invalid Params!");
                     return res.serverError(ErrorWrap(err));
                 }
-                Services.Patient.DetailPatient({
-                    UID: params.patientUID
+                Services.UserAccount.GetUserAccountDetails({
+                    UID: params.userUID
                 }).then(function(data) {
-                    if (data.length > 0) {
+                    if (data) {
                         var fileUID = UUIDService.Create();
                         encryptFile({
                             inputFile: uploadedFiles[0].fd,
@@ -84,7 +84,7 @@ module.exports = {
                             return sequelize.transaction().then(function(t) {
                                 return FileUpload.create({
                                     UID: fileUID,
-                                    UserAccountID: data[0].UserAccount.ID,
+                                    UserAccountID: data.ID,
                                     FileName: decodeURIComponent(uploadedFiles[0].filename),
                                     FileLocation: 'upload_files/' + fileUID,
                                     FileType: !params.fileType ? null : params.fileType,
@@ -142,6 +142,9 @@ module.exports = {
                         err.pushError("User Not Exist!");
                         return res.serverError(ErrorWrap(err));
                     }
+                }).catch(function(err) {
+                    fs.unlink(uploadedFiles[0].fd);
+                    return res.serverError(ErrorWrap(err))
                 })
             })
         })

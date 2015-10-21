@@ -310,6 +310,7 @@ module.exports = {
                                             status: 'success',
                                             message: 'User Activated!',
                                             uid: teleUser.UID,
+                                            userUID: userAccount.UID,
                                             patientUID: patient.UID,
                                             token: token
                                         });

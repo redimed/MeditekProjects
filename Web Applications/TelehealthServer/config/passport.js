@@ -27,12 +27,17 @@ passport.use(new LocalStrategy({
                         where: {
                             userAccountID: user.ID
                         },
-                        attributes: ["UID","userAccountID"]
+                        attributes: ["UID", "userAccountID"]
                     }).then(function(teleUser) {
-                        if (teleUser) return done(null, teleUser, {
-                            message: 'Logged In Successfully!'
-                        });
-                        else return done(null, false, {
+                        if (teleUser) {
+                            var returnUser = {
+                                UID: teleUser.UID,
+                                UserUID: user.UID
+                            }
+                            return done(null, returnUser, {
+                                message: 'Logged In Successfully!'
+                            });
+                        } else return done(null, false, {
                             message: 'Wrong Username Or Password!'
                         });
                     }).catch(function(err) {

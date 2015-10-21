@@ -2,6 +2,9 @@ var $q = require('q');
 var randomstring = require("randomstring");
 var o=require("../HelperService");
 module.exports = {
+	/**
+	 * TODO
+	 */
 	CheckActivated:function(userInfo,transaction)
 	{
 		var error=new Error("UserActivation.Error");
@@ -61,7 +64,7 @@ module.exports = {
 
 	/**
 	 * Create user activation
-	 * Input: activationInfo:{UserAccountID,Type,CreatedBy}
+	 * Input: activationInfo:{UserUID,Type,CreatedBy}
 	 * output: 
 	 * 	if success return promise.resolve (new User Activation Info)
 	 * 	if error throw error
@@ -90,30 +93,37 @@ module.exports = {
 			mobileSystems.push(HelperService.const.systemType.android);
 
 			activationInfo.VerificationCode=randomstring.generate({length:6,charset:'numeric'});
-			
+			activationInfo.VerificationToken=randomstring.generate({length:150});
 			try{
-				//Check UserAccountId
-				if(!activationInfo.UserAccountID)
+				if(_.isObject(activationInfo) && ! _.isEmpty(activationInfo))
 				{
-					err.pushError('UserAccountID.notProvided');
-				}
-				//Check system type
-				if(!activationInfo.Type)
-				{
-					err.pushError('SystemType.notProvided');
-				}
-				else if(systems.indexOf(activationInfo.Type)>=0)
-				{
-					if(mobileSystems.indexOf(activationInfo.Type)>=0 && !activationInfo.DeviceID)
+					//Check UserAccountId
+					if(!activationInfo.UserUID)
 					{
-						err.pushError('DeviceID.notProvided')
+						err.pushError('UserUID.notProvided');
+					}
+					//Check system type
+					if(!activationInfo.Type)
+					{
+						err.pushError('SystemType.notProvided');
+					}
+					else if(systems.indexOf(activationInfo.Type)>=0)
+					{
+						if(mobileSystems.indexOf(activationInfo.Type)>=0 && !activationInfo.DeviceID)
+						{
+							err.pushError('DeviceID.notProvided')
+						}
+					}
+					else
+					{
+						err.pushError('SystemType.unknown');
 					}
 				}
 				else
 				{
-					err.pushError('SystemType.unknown');
+					err.pushError("CreateUserActivation.paramsNotFound");
 				}
-
+				
 				if(err.getErrors().length>0)
 				{
 					throw err;
@@ -131,38 +141,172 @@ module.exports = {
 
 		return Validation()
 		.then(function(success){
-			return UserAccount.findOne({where:{ID:activationInfo.UserAccountID}},{transaction:transaction});
-		},function(err){
-			throw err;
-		})
-		.then(function(user){
-			if(user)
-			{
-				var insertInfo={
-					UserAccountID:activationInfo.UserAccountID,
-					Type:activationInfo.Type,
-					VerificationCode:activationInfo.VerificationCode,
-					CreatedBy:activationInfo.CreatedBy?activationInfo.CreatedBy:null
-				};
-				if(activationInfo.Type!=HelperService.const.systemType.website)
+			return UserAccount.findOne({
+				where:{UID:activationInfo.UserUID}
+			},{transaction:transaction})
+			.then(function(user){
+				if(o.checkData(user))
 				{
-					insertInfo.DeviceID=activationInfo.DeviceID;
+					function CheckExist()
+					{
+						if(activationInfo.Type==HelperService.const.systemType.website)
+						{
+							return UserActivation.findOne({
+								where:{UserAccountID:user.ID,Type:HelperService.const.systemType.website}
+							},{transaction:transaction});
+						}
+						else
+						{
+							return UserActivation.findOne({
+								where:{UserAccountID:user.ID,DeviceID:activationInfo.DeviceID}
+							})
+						}
+					}
+
+					return CheckExist()
+					.then(function(activation){
+						if(o.checkData(activation))
+						{
+							//return userInfo.updateAttributes({Activated:"Y"},{transaction:transaction});
+
+							return activation.updateAttributes({
+								VerificationCode:activationInfo.VerificationCode,
+								VerificationToken:activationInfo.VerificationToken,
+							},{transaction:transaction})
+							.then(function(result){
+								return result;
+							},function(e){
+								o.exlog(e);
+								err.pushError("CreateUserActivation.updateActivationError");
+								throw err;
+							})
+						}
+						else
+						{
+							//create moi
+							var insertInfo={
+								UserAccountID:user.ID,
+								Type:activationInfo.Type,
+								VerificationCode:activationInfo.VerificationCode,
+								VerificationToken:activationInfo.VerificationToken,
+								CreatedBy:activationInfo.CreatedBy?activationInfo.CreatedBy:null
+							};
+							if(activationInfo.Type!=HelperService.const.systemType.website)
+							{
+								insertInfo.DeviceID=activationInfo.DeviceID;
+							}
+							return UserActivation.create(insertInfo,{transaction:transaction})
+							.then(function(result){
+								return result;
+							},function(e){
+								o.exlog(e);
+								err.pushError("CreateUserActivation.userActivationInsertError");
+								throw err;
+							})
+							
+						}
+					},function(e){
+						o.exlog(e);
+						err.pushError("CreateUserActivation.checkExistQueryError");
+						throw err;
+					})
+					
 				}
-				return UserActivation.create(insertInfo,{transaction:transaction});
-			}
+				else
+				{
+					err.pushError("CreateUserActivation.userNotFound");
+					throw err;
+				}
+			},function(e){
+				o.exlog(e);
+				err.pushError("CreateUserActivation.userQueryError")
+				throw err;
+			})
+
+		},function(e){
+			throw e;
+		})
+
+	},
+
+	Activation:function(activationInfo,transaction){
+		var UserUID=activationInfo.UserUID;
+		var SystemType=activationInfo.SystemType;
+		var VerificationCode=null;
+		var VerificationToken=null;
+		var DeviceID=null;
+		var error=new Error("Activation.Error");
+		return UserAccount.findOne({
+			where:{UID:UserUID}
+		},{transaction:transaction})
+		.then(function(user){
+			if(o.checkData(user))
+			{
+				function GetUserActivation()
+				{
+					if(SystemType==o.const.systemType.website)
+					{
+						VerificationToken=activationInfo.VerificationToken;
+						return UserActivation.findOne({
+							where:{UserAccountID:user.ID,Type:o.const.systemType.website}
+						},{transaction:transaction})
+					}
+					else
+					{
+						VerificationCode=activationInfo.VerificationCode;
+						DeviceID=activationInfo.DeviceID;
+						return UserActivation.findOne({
+							where:{UserAccountID:user.ID,DeviceID:DeviceID}
+						})
+					}
+				}
+				return GetUserActivation()
+				.then(function(activation){
+					if(SystemType==o.const.systemType.website)
+					{
+						if(activation.VerificationToken==VerificationToken)
+						{
+							return true;
+						}
+						else
+						{
+							return false;
+						}
+					}
+					else
+					{
+						if(activation.VerificationCode==VerificationCode)
+						{
+							return true;
+						}
+						else
+						{
+							return false;
+						}
+					}
+				},function(err){
+					o.exlog(err);
+					error.pushError("Activation.getUserActivationQueryError");
+					throw error;
+				})
+			}	
 			else
 			{
-				err.pushError('UserAccount.notFound');
-				throw err;
+				error.pushError("Activation.userNotFound");
+				throw error;
 			}
 			
 		},function(err){
-			throw err;
+			o.exlog(err);
+			error.pushError("Activation.userQueryError");
+			throw error;
 		})
+		
+
 	},
 
 	/**
-	 * ActivationWeb: Activation User through Web
+	 * ActivationWeb: Activation User through g
 	 * Input:
 	 * 	activationInfo: useruid, verificationToken
 	 * 	output: 

@@ -53,6 +53,16 @@ module.exports = {
         ModifiedBy: {
             type: Sequelize.BIGINT(20),
             allowNull: true
+        },
+
+        TokenExpired:{
+            type:Sequelize.INTEGER,
+            allowNull:false
+        },
+
+        CodeExpired:{
+            type:Sequelize.INTEGER,
+            allowNull:false
         }
     },
     associations: function() {},

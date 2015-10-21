@@ -64,7 +64,9 @@ module.exports = {
                     return res.serverError(ErrorWrap(err));
                 }
                 if (!params.userUID || !params.fileType) {
-                    fs.unlink(uploadedFiles[0].fd);
+                    fs.access(uploadedFiles[0].fd, function(err) {
+                        if (!err) fs.unlink(uploadedFiles[0].fd);
+                    })
                     var err = new Error("FileUpload.UploadFile.Error");
                     err.pushError("Invalid Params!");
                     return res.serverError(ErrorWrap(err));
@@ -79,7 +81,9 @@ module.exports = {
                             outputFile: rootPath + '/upload_files/' + fileUID,
                             password: fileUID
                         }, function(err) {
-                            fs.unlink(uploadedFiles[0].fd);
+                            fs.access(uploadedFiles[0].fd, function(err) {
+                                if (!err) fs.unlink(uploadedFiles[0].fd);
+                            })
                             if (err) return res.serverError(ErrorWrap(err));
                             return sequelize.transaction().then(function(t) {
                                 return FileUpload.create({
@@ -113,14 +117,18 @@ module.exports = {
                                                 })
                                             } else {
                                                 t.rollback();
-                                                fs.unlink(rootPath + '/upload_files/' + fileUID);
+                                                fs.access(rootPath + '/upload_files/' + fileUID, function(err) {
+                                                    if (!err) fs.unlink(rootPath + '/upload_files/' + fileUID);
+                                                })
                                                 var err = new Error("FileUpload.UploadFile.Error");
                                                 err.pushError("Appointment Not Valid!");
                                                 return res.serverError(ErrorWrap(err));
                                             }
                                         }).catch(function(err) {
                                             t.rollback();
-                                            fs.unlink(rootPath + '/upload_files/' + fileUID);
+                                            fs.access(rootPath + '/upload_files/' + fileUID, function(err) {
+                                                if (!err) fs.unlink(rootPath + '/upload_files/' + fileUID);
+                                            })
                                             return res.serverError(ErrorWrap(err));
                                         })
                                     } else {
@@ -131,19 +139,25 @@ module.exports = {
                                     }
                                 }).catch(function(err) {
                                     t.rollback();
-                                    fs.unlink(rootPath + '/upload_files/' + fileUID);
+                                    fs.access(rootPath + '/upload_files/' + fileUID, function(err) {
+                                        if (!err) fs.unlink(rootPath + '/upload_files/' + fileUID);
+                                    })
                                     return res.serverError(ErrorWrap(err));
                                 })
                             })
                         });
                     } else {
-                        fs.unlink(uploadedFiles[0].fd);
+                        fs.access(uploadedFiles[0].fd, function(err) {
+                            if (!err) fs.unlink(uploadedFiles[0].fd);
+                        })
                         var err = new Error("FileUpload.UploadFile.Error");
                         err.pushError("User Not Exist!");
                         return res.serverError(ErrorWrap(err));
                     }
                 }).catch(function(err) {
-                    fs.unlink(uploadedFiles[0].fd);
+                    fs.access(uploadedFiles[0].fd, function(err) {
+                        if (!err) fs.unlink(uploadedFiles[0].fd);
+                    })
                     return res.serverError(ErrorWrap(err))
                 })
             })
@@ -174,7 +188,9 @@ module.exports = {
                             if (err) return res.serverError(ErrorWrap(err));
                             res.download(rootPath + '/temp/' + file.FileName, function(err) {
                                 if (err) res.serverError(ErrorWrap(err));
-                                fs.unlink(rootPath + '/temp/' + file.FileName);
+                                fs.access(rootPath + '/temp/' + file.FileName, function(err) {
+                                    if (!err) fs.unlink(rootPath + '/temp/' + file.FileName);
+                                })
                             });
                         })
                     })

@@ -55,6 +55,11 @@ module.exports = {
             allowNull: true
         },
 
+        TokenCreatedDate:{
+            type:Sequelize.DATE,
+            allowNull:false
+        },
+
         TokenExpired:{
             type:Sequelize.INTEGER,
             allowNull:false
@@ -63,7 +68,7 @@ module.exports = {
         CodeExpired:{
             type:Sequelize.INTEGER,
             allowNull:false
-        }
+        },
     },
     associations: function() {},
     options: {
@@ -74,7 +79,13 @@ module.exports = {
             {
                  item.CreatedDate=new Date();
                  cb();
-            }
+            },
+
+            beforeUpdate:function(item,options,cb)
+            {
+                item.ModifiedDate=new Date();
+                cb();
+            },
         }
     },
 };

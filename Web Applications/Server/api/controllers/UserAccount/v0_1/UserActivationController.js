@@ -22,6 +22,17 @@ module.exports = {
 		})
 	},
 
+	Activation:function(req,res)
+	{
+		var activationInfo=req.query;
+		Services.UserActivation.Activation(activationInfo)
+		.then(function(data){
+			res.ok(data);
+		},function(err){
+			res.serverError(ErrorWrap(err));
+		})
+	},
+
 	/**
 	 * Activation: handle request Activation User through website
 	 * Input: request.query: useruid,verificationToken

@@ -84,6 +84,12 @@ module.exports={
     	action:'CreateUserActivation'
 	},
 
+	
+	'get /api/user-activation/activation':{
+		controller:'UserAccount/v0_1/UserActivationController',
+    	action:'Activation'
+	},
+
 	'get /api/user-activation/activation-web':{
 		controller:'UserAccount/v0_1/UserActivationController',
 		action:'ActivationWeb'

@@ -1,6 +1,7 @@
 var $q = require('q');
 var randomstring = require("randomstring");
 var o=require("../HelperService");
+var moment=require("moment");
 module.exports = {
 	/**
 	 * TODO
@@ -63,20 +64,22 @@ module.exports = {
 	},
 
 	/**
-	 * Create user activation
-	 * Input: activationInfo:{UserUID,Type,CreatedBy}
+	 * CreateUserActivation: Tạo UserActivation
+	 *	Đối với web system: mỗi user chỉ có 1 record
+	 *	Đối với mobile system: tương ứng với mỗi cặp {userId, deviceId} có 1 record
+	 *	Nếu record activation của user đã tồn tại thì update, nếu chưa thì insert mới
+	 * 		+trường hợp update: các thông tin được update: 
+	 * 			VerificationCode,VerificationToken,TokenCreatedDate,TokenExpired,CodeExpired,
+	 * 			ModifiedBy,ModifiedDate
+	 * 		+trường hợp insert: các thông tin được insert:
+	 * 			UserAccountID,Type,VerificationCode,VerificationToken,CreatedBy,TokenCreatedDate,
+	 * 			TokenExpired,CodeExpired,CreatedDate
+	 *
+	 * Input: 
+	 * - activationInfo:{UserUID,Type,CreatedBy}
 	 * output: 
-	 * 	if success return promise.resolve (new User Activation Info)
+	 * 	if success return UserActivationInfo
 	 * 	if error throw error
-	 * 		error: 
-	 * 		+message
-	 * 		+errors:[
-	 * 			. UserAccountID.notProvided
-	 * 			. SystemType.notProvided
-	 * 			. DeviceID.notProvided
-	 * 			. SystemType.unknown
-	 * 			. UserAccount.notFound
-	 * 		]
 	 */
 	CreateUserActivation:function(activationInfo,transaction)
 	{
@@ -92,8 +95,13 @@ module.exports = {
 			mobileSystems.push(HelperService.const.systemType.ios);
 			mobileSystems.push(HelperService.const.systemType.android);
 
-			activationInfo.VerificationCode=randomstring.generate({length:6,charset:'numeric'});
-			activationInfo.VerificationToken=randomstring.generate({length:150});
+			activationInfo.VerificationCode=randomstring.generate({
+				length:o.const.verificationCodeLength,
+				charset:'numeric'
+			});
+			activationInfo.VerificationToken=randomstring.generate({
+				length:o.const.verificationTokenLength
+			});
 			try{
 				if(_.isObject(activationInfo) && ! _.isEmpty(activationInfo))
 				{
@@ -141,9 +149,7 @@ module.exports = {
 
 		return Validation()
 		.then(function(success){
-			return UserAccount.findOne({
-				where:{UID:activationInfo.UserUID}
-			},{transaction:transaction})
+			return Services.UserAccount.GetUserAccountDetails({UID:activationInfo.UserUID},null,transaction)
 			.then(function(user){
 				if(o.checkData(user))
 				{
@@ -152,13 +158,19 @@ module.exports = {
 						if(activationInfo.Type==HelperService.const.systemType.website)
 						{
 							return UserActivation.findOne({
-								where:{UserAccountID:user.ID,Type:HelperService.const.systemType.website}
+								where:{
+									UserAccountID:user.ID,
+									Type:HelperService.const.systemType.website
+								}
 							},{transaction:transaction});
 						}
 						else
 						{
 							return UserActivation.findOne({
-								where:{UserAccountID:user.ID,DeviceID:activationInfo.DeviceID}
+								where:{
+									UserAccountID:user.ID,
+									DeviceID:activationInfo.DeviceID
+								}
 							})
 						}
 					}
@@ -167,11 +179,13 @@ module.exports = {
 					.then(function(activation){
 						if(o.checkData(activation))
 						{
-							//return userInfo.updateAttributes({Activated:"Y"},{transaction:transaction});
-
 							return activation.updateAttributes({
 								VerificationCode:activationInfo.VerificationCode,
 								VerificationToken:activationInfo.VerificationToken,
+								TokenCreatedDate:new Date(),
+								TokenExpired:o.const.tokenExpired,
+								CodeExpired: o.const.codeExpired,
+								ModifiedBy:activationInfo.CreatedBy||null
 							},{transaction:transaction})
 							.then(function(result){
 								return result;
@@ -189,7 +203,10 @@ module.exports = {
 								Type:activationInfo.Type,
 								VerificationCode:activationInfo.VerificationCode,
 								VerificationToken:activationInfo.VerificationToken,
-								CreatedBy:activationInfo.CreatedBy?activationInfo.CreatedBy:null
+								CreatedBy:activationInfo.CreatedBy||null,
+								TokenCreatedDate:new Date(),
+								TokenExpired:o.const.tokenExpired,
+								CodeExpired: o.const.codeExpired
 							};
 							if(activationInfo.Type!=HelperService.const.systemType.website)
 							{
@@ -226,83 +243,217 @@ module.exports = {
 		},function(e){
 			throw e;
 		})
-
 	},
 
+
 	Activation:function(activationInfo,transaction){
-		var UserUID=activationInfo.UserUID;
-		var SystemType=activationInfo.SystemType;
+		// var UserUID=activationInfo.UserUID;
+		// var SystemType=activationInfo.SystemType;
+		// var VerificationCode=null;
+		// var VerificationToken=null;
+		// var DeviceID=null;
+		var UserUID=null;
+		var SystemType=null;
 		var VerificationCode=null;
 		var VerificationToken=null;
 		var DeviceID=null;
 		var error=new Error("Activation.Error");
-		return UserAccount.findOne({
-			where:{UID:UserUID}
-		},{transaction:transaction})
-		.then(function(user){
-			if(o.checkData(user))
+		function Validation()
+		{
+			var q=$q.defer();
+			try
 			{
-				function GetUserActivation()
+				if(o.checkData(activationInfo.UserUID))
 				{
-					if(SystemType==o.const.systemType.website)
+					UserUID=activationInfo.UserUID;
+				}
+				else
+				{
+					error.pushError("Activation.userNotProvided");
+					throw error;
+				}
+				if(o.checkData(activationInfo.SystemType))
+				{
+					SystemType=activationInfo.SystemType;
+				}
+				else
+				{
+					error.pushError("Activation.systemTypeNotProvided");
+					throw error;
+				}
+				if(SystemType==o.const.systemType.website)
+				{
+					if(o.checkData(activationInfo.VerificationToken))
 					{
 						VerificationToken=activationInfo.VerificationToken;
-						return UserActivation.findOne({
-							where:{UserAccountID:user.ID,Type:o.const.systemType.website}
-						},{transaction:transaction})
 					}
 					else
 					{
-						VerificationCode=activationInfo.VerificationCode;
-						DeviceID=activationInfo.DeviceID;
-						return UserActivation.findOne({
-							where:{UserAccountID:user.ID,DeviceID:DeviceID}
-						})
+						error.pushError("Activation.verificationTokenNotProvided");
+						throw error;
 					}
 				}
-				return GetUserActivation()
-				.then(function(activation){
-					if(SystemType==o.const.systemType.website)
+				else if([o.const.systemType.ios,o.const.systemType.android].indexOf(SystemType)>=0)
+				{
+					if(o.checkData(activationInfo.VerificationCode))
 					{
-						if(activation.VerificationToken==VerificationToken)
-						{
-							return true;
-						}
-						else
-						{
-							return false;
-						}
+						VerificationCode=activationInfo.VerificationCode;
 					}
 					else
 					{
-						if(activation.VerificationCode==VerificationCode)
+						error.pushError("Activation.verificationCodeNotProvided");
+						throw error;
+					}
+					if(o.checkData(activationInfo.DeviceID))
+					{
+						DeviceID=activationInfo.DeviceID;
+					}
+					else
+					{
+						error.pushError("Activation.deviceIdNotProvided");
+						throw error;
+					}
+				}
+				else
+				{
+					error.pushError("Activation.systemTypeInvalid");
+					throw error;
+				}
+				q.resolve({status:'success'});
+			}
+			catch(err)
+			{
+				q.reject(err);
+			}
+			return q.promise;
+		}
+
+		return Validation()
+		.then(function(data){
+			return Services.UserAccount.GetUserAccountDetails({UID:UserUID},null,transaction)
+			// return UserAccount.findOne({
+			// 	where:{UID:UserUID}
+			// },{transaction:transaction})
+			.then(function(user){
+				if(o.checkData(user))
+				{
+					function GetUserActivation()
+					{
+						if(SystemType==o.const.systemType.website)
 						{
-							return true;
+							//Nếu là web system thì kiểm tra record Activation của user có tồn tại
+							//hay chưa dựa vào UserId và SystemType='WEB'
+							VerificationToken=activationInfo.VerificationToken;
+							return UserActivation.findOne({
+								where:{UserAccountID:user.ID,Type:o.const.systemType.website}
+							},{transaction:transaction})
 						}
 						else
 						{
-							return false;
+							//Nếu là mobile system thì kiểm tra record Activation của user có tồn tại
+							//hay chưa dựa vào userId và DeviceId
+							VerificationCode=activationInfo.VerificationCode;
+							DeviceID=activationInfo.DeviceID;
+							return UserActivation.findOne({
+								where:{UserAccountID:user.ID,DeviceID:DeviceID}
+							})
 						}
 					}
-				},function(err){
-					o.exlog(err);
-					error.pushError("Activation.getUserActivationQueryError");
+					return GetUserActivation()
+					.then(function(activation){
+						if(o.checkData(activation))
+						{
+							if(SystemType==o.const.systemType.website)
+							{
+								var tokenCreatedDate=moment(activation.TokenCreatedDate);
+								var verificationDate= tokenCreatedDate.clone().add(activation.TokenExpired,'seconds');
+								console.log('verificationDate:'+verificationDate.format("DD/MM/YYYY HH:mm:ss"));
+								var current=moment();
+								console.log('current:'+current.format("DD/MM/YYYY HH:mm:ss"));
+								if(current.isBefore(verificationDate))
+								{
+									if(activation.VerificationToken==VerificationToken)
+									{
+										return {status:'sucess'};
+									}
+									else
+									{
+										error.pushError("Activation.tokenInvalid");
+										throw error;
+									}
+								}
+								else
+								{
+									error.pushError("Activation.tokenExpired");
+									throw error;
+								}
+							}
+							else
+							{
+								var codeExpired=activation.CodeExpired;
+								if(codeExpired>0)
+								{
+									if(activation.VerificationCode==VerificationCode)
+									{
+										return user.updateAttributes({Activated:"Y"},{transaction:transaction})
+										.then(function(data){
+											return {status:'success'};
+										},function(err){
+											o.exlog(err);
+											error.pushError("Activation.userUpdateError");
+											throw error;
+										})
+									}
+									else
+									{
+										return activation.updateAttributes({
+											CodeExpired:(codeExpired-1)
+										},{transaction:transaction})
+										.then(function(data){
+											console.log(data);
+											error.pushError("Activation.codeInvalid")
+											throw error;
+										},function(err){
+											o.exlog(err);
+											error.pushError("Activation.codeExpiredUpdateError");
+											throw error;
+										});
+										
+									}
+								}
+								else
+								{
+									error.pushError("Activation.codeExpired");
+									throw error;
+								}
+							}
+						}
+						else
+						{
+							error.pushError("Activation.activationNotFound");
+							throw error;
+						}
+					},function(err){
+						o.exlog(err);
+						error.pushError("Activation.getUserActivationQueryError");
+						throw error;
+					})
+				}	
+				else
+				{
+					error.pushError("Activation.userNotFound");
 					throw error;
-				})
-			}	
-			else
-			{
-				error.pushError("Activation.userNotFound");
+				}
+				
+			},function(err){
+				o.exlog(err);
+				error.pushError("Activation.userQueryError");
 				throw error;
-			}
-			
+			})
 		},function(err){
-			o.exlog(err);
-			error.pushError("Activation.userQueryError");
-			throw error;
+			throw err;
 		})
 		
-
 	},
 
 	/**

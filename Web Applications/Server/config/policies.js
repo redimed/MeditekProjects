@@ -59,7 +59,11 @@ module.exports.policies = {
     'CreateUserRoleWithExistUser':['hasToken','checkVersion'],
     'CreateUserRoleWhenCreateUser':['hasToken','checkVersion'],
     'GetRolesOfUser':['hasToken','checkVersion']
-  }
+  },
+
+  'UserAccount/v0_1/UserActivationController':{
+    'CreateUserActivation':['hasToken','checkVersion']
+  },
 
   /***************************************************************************
   *                                                                          *

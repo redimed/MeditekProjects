@@ -1,7 +1,8 @@
 var app = angular.module('app.authentication.patient', [
+	'app.authentication.patient.directive',
 	'app.authentication.patient.controller',
-	'app.authentication.patient.services',
-	'app.authentication.patient.directive'
+	'app.authentication.patient.services'
+	
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider){

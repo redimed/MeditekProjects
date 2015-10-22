@@ -3,7 +3,7 @@ Customized Bootstrap Modal
 ***/
 
 .modal {
-    z-index: $zindex-modal;
+    z-index: $zindex-modal; 
 
     .page-portlet-fullscreen & {
         z-index: $zindex-modal + 10;        

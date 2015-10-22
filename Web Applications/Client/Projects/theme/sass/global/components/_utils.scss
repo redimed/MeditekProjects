@@ -2,24 +2,6 @@
 Utilities
 ***/
 
-/* Links */
-
-a:hover {
-    cursor: pointer;
-}
-
-/* Primary Link */
-
-.primary-link {
-    color: $primary-link-color;
-    font-weight: 600;
-
-    &:hover {
-        color: darken($primary-link-color, 5%);
-    }
-}
-
-
 /* Rounded Element */
 .rounded-2 {
   border-radius: 2px !important;  
@@ -54,6 +36,10 @@ a:hover {
   border-radius: 25px 25px 0 0 !important;
 }
 
+.rounded {
+    border-radius: 50% !important;
+}
+
 /* General utilities */
 
 .display-none,
@@ -71,6 +57,18 @@ a:hover {
 
 .bold {
     font-weight: 700 !important;
+
+    &.btn {
+        letter-spacing: 0;
+    }
+}
+
+.sbold {
+    font-weight: 600 !important;
+
+    &.btn {
+        letter-spacing: 0;
+    }
 }
 
 @if $theme-type == "material-design" {
@@ -166,6 +164,14 @@ a:hover {
     margin-top: 20px !important;
 }
 
+.margin-top-30 {
+    margin-top: 30px !important;
+}
+
+.margin-top-40 {
+    margin-top: 40px !important;
+}
+
 .margin-bottom-25 {
     margin-bottom: 25px !important;
 }
@@ -237,7 +243,7 @@ Responsive Utils
     .hidden-320 {
         display: none;
     }
-} 
+}   
 
 /***
 Demo Utils
@@ -256,6 +262,18 @@ Demo Utils
 
 .util-btn-group-margin-bottom-5 .btn-group {
     margin-bottom: 5px !important;
+}
+
+.padding-tb-10 {
+    padding: 10px 0;
+}
+
+.padding-tb-15 {
+    padding: 10px 0;
+}
+
+.padding-tb-20 {
+    padding: 20px 0;
 }
 
 /***
@@ -277,118 +295,6 @@ Users
     .label {
         font-weight: 300;
         font-size: 11px;
-    }
-}
-
-/***
-Top News Blocks(new in v1.2.2) 
-***/
-.top-news {
-    color: #fff;
-    margin: 8px 0;
-
-    em {
-        font-size: 13px;
-        margin-bottom: 8px;
-        margin-bottom: 0;
-        font-style: normal;
-        display: block;
-
-        i {            
-            font-size: 14px;
-        }
-    }
-
-    span {
-        font-size: 18px;
-        margin-bottom: 5px;
-        display: block;
-        text-align: left;
-    }
-
-    a {
-        display: block;
-        text-align: left;
-        padding: 10px;
-        position: relative;
-        margin-bottom: 10px;
-    
-        .top-news-icon {
-            right: 8px;
-            bottom: 15px; 
-            opacity:0.3; 
-            font-size: 35px;
-            position: absolute;
-            filter: alpha(opacity=30); /*For IE8*/  
-        }
-    }
-}
-
-/***
-Block Images(new in v1.2.2)
-***/
-
-.blog-images {
-    margin-bottom: 0;
-
-    li {
-        padding: 0;
-        margin: 0;
-        display: inline;
-        
-        a {
-            &:hover {
-                text-decoration: none;
-            }
-        }
-
-        img {
-            width: 50px;
-            height: 50px;
-            opacity: 0.6;
-            margin: 0 2px 8px; 
-
-            &:hover {
-                opacity: 1;
-                box-shadow: 0 0 0 4px #72c02c;
-                transition: all 0.4s ease-in-out 0s;
-                -moz-transition: all 0.4s ease-in-out 0s;
-                -webkit-transition: all 0.4s ease-in-out 0s;
-            }
-        }
-    }
-}
-
-/***
-Sidebar Tags
-***/
-
-.sidebar-tags {
-    li {
-        padding: 0;
-
-        a {
-            color: #555;
-            font-size:12px;
-            padding:3px 5px;
-            background:#f7f7f7;
-            margin:0 2px 5px 0;
-            display:inline-block;
-
-            &:hover,
-            &:hover i {
-                background: #EEE;
-                text-decoration:none;
-                -webkit-transition:all 0.3s ease-in-out;
-                -moz-transition:all 0.3s ease-in-out;
-                -o-transition:all 0.3s ease-in-out;
-                transition:all 0.3s ease-in-out;
-            }
-
-            i {
-                color: #777;
-            }
-        }
     }
 }
 

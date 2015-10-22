@@ -4,12 +4,12 @@ Notes
 
 @mixin note-variant($text-color, $background-color, $border-color) {
     background-color: lighten($background-color, 5%);
-    border-color: darken($border-color, 5%);
-    color: $text-color;  
+    border-color: darken($border-color, 20%);
+    color:  darken($text-color, 50%);  
 
     &.note-bordered {
         background-color: darken($background-color, 1%);
-        border-color: darken($border-color, 10%);
+        border-color: darken($border-color, 15%);
     }
 
     &.note-shadow {
@@ -24,7 +24,7 @@ Notes
   	padding: 15px 30px 15px 15px; 
   	border-left: 5px solid #eee;
  
-    @include border-radius(0 $portlet-border-radius $portlet-border-radius 0);
+    @include border-radius(0 $general-border-radius $general-border-radius 0);
 
   	h1,
   	h2,
@@ -40,6 +40,8 @@ Notes
   	}
 
   	p {
+      margin: 0;
+      
   		&:last-child {
   			margin-bottom: 0;
   		}
@@ -52,11 +54,7 @@ Notes
   	}
 
   	&.note-default {
-  		@include note-variant($state-default-text, $state-default-bg, $state-default-border);
-  	}
-
-  	&.note-primary {
-  		@include note-variant($state-primary-text, $state-primary-bg, $state-primary-border);
+  		@include note-variant($general-panel-font-color, $general-panel-bg-color, $general-panel-bg-color);
   	}
 
   	&.note-success {
@@ -68,8 +66,8 @@ Notes
   	}
 
   	&.note-warning {
-  		@include note-variant($state-warning-text, darken($state-warning-bg, 5%), darken($state-warning-border, 5%));
-  	}
+  		@include note-variant($state-warning-text, $state-warning-bg, $state-warning-border);
+  	}  
 
   	&.note-danger {
   		@include note-variant($state-danger-text, $state-danger-bg, $state-danger-border);

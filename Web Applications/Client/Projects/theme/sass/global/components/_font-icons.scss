@@ -2,15 +2,13 @@
 Fontawesome Icons
 ***/
 
-[class^="fa-"],
+[class^="fa-"]:not(.fa-stack),
 [class^="glyphicon-"],
 [class^="icon-"],
-[class*=" fa-"],
+[class*=" fa-"]:not(.fa-stack),
 [class*=" glyphicon-"],  
 [class*=" icon-"] {
   display: inline-block; 
-  margin-top: 1px;
-  font-size: $icon-size-normal;
   *margin-right: .3em;
   line-height: $icon-size-normal;
   -webkit-font-smoothing: antialiased;
@@ -50,35 +48,8 @@ li [class*=" icon-"].icon-large {
   width: 1.5625em;
 }
 
-/* Icon sizing */
 
-.fa-sm,
-.icon-sm {
-  font-size: 12px;
-}
-
-.fa-lg,
-.icon-lg {
-  font-size: 16px !important;
-} 
-
-.fa-2x {
-  font-size: 2em;
-}
-
-.fa-3x {
-  font-size: 3em;
-}
-
-.fa-4x {
-  font-size: 4em;
-}
-
-.fa-5x {
-  font-size: 5em;
-}
-
-/* Icon coloring */
+/* Icon states */
 
 .icon-state-default {
   color: $brand-default;

@@ -31,14 +31,14 @@ Bootstrap  Datetimepicker
 }
 
 .datetimepicker .fa-angle-left:before {
-  content: "\f104";
+  content: "\f104"#{'/*rtl:"\f105"*/'};
 }
 
 .datetimepicker .fa-angle-right:before {
-  content: "\f105"; 
+  content: "\f105"#{'/*rtl:"\f104"*/'}; 
 } 
 
 /* change z-index when opened in modal */
 .modal-open .datetimepicker {
-  z-index: 10055 !important;
+  z-index: 10055;
 }

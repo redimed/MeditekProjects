@@ -15,7 +15,7 @@ Portlets
     margin-bottom: 25px;
     padding: 0px; 
     
-    @include border-radius($portlet-border-radius);
+    @include border-radius($general-border-radius);
 
     &.portlet-fullscreen {
         z-index: $zindex-modal + 10;
@@ -46,7 +46,7 @@ Portlets
         margin-bottom: 10px;
         min-height: 41px;
         
-        @include border-radius($portlet-border-radius $portlet-border-radius 0 0);       
+        @include border-radius($general-border-radius $general-border-radius 0 0);       
 
         @include clearfix();  
 
@@ -235,7 +235,7 @@ Portlets
 
         > .nav-tabs {
             background: none;
-            margin: 0;
+            margin: 1px 0 0 0;
             float: right;
             display: inline-block;
             border: 0;
@@ -265,7 +265,11 @@ Portlets
 
     > .portlet-body {
         clear: both;  
-        @include border-radius(0 0 $portlet-border-radius $portlet-border-radius); 
+        @include border-radius(0 0 $general-border-radius $general-border-radius); 
+
+        p {
+            margin-top: 0;
+        }
     }
  
     > .portlet-empty {
@@ -430,13 +434,7 @@ Portlets
 
     > .portlet-body {
         background-color: #fff;
-        padding: 10px;
-    }
-
-    &.portlet-fullscreen {
-        > .portlet-body {
-            padding: 10px; 
-        }
+        padding: 15px;
     }
 }
 
@@ -501,15 +499,15 @@ Portlets
     background-color: #fff;
 
     &.bordered {
-        border: 1px solid #e1e1e1 !important;
+        border: 1px solid $general-panel-border-color !important;
 
         > .portlet-title {
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid lighten($general-panel-border-color, 2%);
         }
     }
 
     &.bg-inverse {
-        background: #F7F7F7;
+        background: $general-panel-bg-color;
     }
 
     > .portlet-title {  
@@ -634,7 +632,27 @@ Portlets
 
     &.portlet-fullscreen {
         > .portlet-body {
-            padding: 8px 0; 
+            padding: 8px 0;     
+        }
+    }
+
+    &.portlet-fit {
+        padding: 0;
+
+        > .portlet-title { 
+            padding: 17px 20px 10px 20px;
+        }
+
+        > .portlet-body {
+            padding: 10px 20px 20px 20px;
+        }
+    }
+
+
+    &.portlet-datatable.portlet-fit {
+        > .portlet-body {
+            padding-top: 10px;
+            padding-bottom: 25px;
         }
     }
 }
@@ -677,36 +695,16 @@ Portlets
 
 @if $theme-type == "material-design" {
     .portlet {
-        @extend .md-shadow-z-2;  
-
-        border: 0 !important;        
-        padding: 10px;
-
-        > .portlet-title {
-            border: 0 !important;
-            margin-bottom: 0;
-        }
-
-        &.light.bordered.form-fit {
-            > .portlet-title {
-                border-bottom: 1px solid #eee !important;
-            }
-        }
-
-        > .portlet-body {
-            border: 0 !important;
-        }
-
-        &:not(.light):not(.box):not(.solid) {
-            padding: 0 10px 10px 10px;
-        }
-
-        &.box > .portlet-title > .actions {
-            padding: 7px 0 4px 0;
-        }
-
-        &.light .portlet-body {
-            padding-top: 5px;
-        }
+        box-shadow: $general-shadow;
     }
+}
+
+/***
+Custom colored portlets 
+***/
+
+@each $name, $colors in $component-colors {
+    @include porlet-background($name, map-get($colors, base));
+    @include porlet-solid($name, map-get($colors, font));
+    @include porlet-box($name, map-get($colors, base), map-get($colors, font));
 }

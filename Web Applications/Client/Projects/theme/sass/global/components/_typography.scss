@@ -2,6 +2,31 @@
 General typography
 ***/
 
+/* Links */
+
+a:hover {
+    cursor: pointer;
+}
+
+/* Primary Link */
+
+.primary-link {
+    color: $primary-link-color;
+    font-weight: 600;
+
+    &:hover {
+        color: darken($primary-link-color, 5%);
+    }
+}
+
+p {
+    margin: 20px 0;
+}
+
+label {
+    font-weight: normal;
+}
+
 /* Headings */
 
 h1,
@@ -102,9 +127,10 @@ code {
 
 .disabled-link { 
 
+    &.disable-target,
     .disable-target {  
-        opacity: 0.5 !important;
-        filter: alpha(opacity=50) !important; 
+        opacity: 0.6 !important;
+        filter: alpha(opacity=60) !important; 
 
         &:hover {
             cursor: not-allowed !important;    

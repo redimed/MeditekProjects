@@ -21,6 +21,12 @@ Bootstrap Modal
 	bottom: 0; 
 }
 
+.modal-scrollable {
+    overflow: hidden !important;
+    z-index: 10051;
+    overflow-y: scroll !important;
+}
+
 @if $theme-type == "material-design" { 
 
     .modal {

@@ -1,8 +1,24 @@
 var app = angular.module('app.authentication.patient.list.directive',[]);
 app.directive('patientList', function(PatientService, $modal, toastr,$cookies){
 	return {
+		scope :{
+			items:'=onItem',
+			isShowCreateButton:'=onCreate',
+			isShowSelectButton:'=onSelect',
+			uidReturn:'='
+		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
+			scope.search ={};
+			scope.itemDefault = [
+				{field:"FirstName",name:"First Name"},
+				{field:"LastName",name:"Last Name"},
+				{field:"Gender",name:"Gender"},
+				{field:"UserAccount",name:"Mobile"},
+				{field:"Email",name:"Email"}
+			];
+			scope.items = scope.items?scope.items:scope.itemDefault;
+			scope.isShowCreateButton = scope.isShowCreateButton?scope.isShowCreateButton:true;
 			var userInfo=$cookies.getObject("userInfo");
 			scope.enableCreate=false;
 			_.each(userInfo.roles,function(role){
@@ -25,7 +41,7 @@ app.directive('patientList', function(PatientService, $modal, toastr,$cookies){
 			};
 			scope.init = function() {
 	            scope.searchObject = {
-	                limit: 5,
+	                limit: 20,
 	                offset: 0,
 	                currentPage: 1,
 	                maxSize: 5,
@@ -62,19 +78,25 @@ app.directive('patientList', function(PatientService, $modal, toastr,$cookies){
 			};
 
 			scope.Search = function(data){
-				 scope.searchObjectMap.Search = data;
-				 scope.loadList(scope.searchObjectMap);
+				if(data.UserAccount){
+					data.PhoneNumber = data.UserAccount;
+				}
+				scope.searchObjectMap.Search = data;
+				scope.loadList(scope.searchObjectMap);
 
 			};
 
-			scope.sortASC = function(data) {
+			scope.sort = function(field,sort) {
+				if(field=='UserAccount'){
+					field = 'PhoneNumber';
+				}
+				var data = field+" "+sort;
 				scope.searchObjectMap.order = data;
 				scope.loadList(scope.searchObjectMap);
 			};
 
-			scope.sortDESC = function(data) {
-				scope.searchObjectMap.order = data;
-				scope.loadList(scope.searchObjectMap);
+			scope.selectPatient = function(patientUID){
+				scope.uidReturn=patientUID;
 			};
 
 			scope.init();

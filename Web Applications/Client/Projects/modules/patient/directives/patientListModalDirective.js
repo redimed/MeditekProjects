@@ -20,11 +20,12 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			    return !angular.equals(clearInfo, scope.info);
 		    },
 
-		    scope.savechange = function(data){
-				PatientService.validate(data)
+		    scope.savechange = function(Patient){
+				PatientService.validate(Patient)
 					.then(function(result){
 						scope.er ='';
-						PatientService.updatePatient(data).then(function(response){
+						scope.ermsg ='';
+						PatientService.updatePatient(Patient).then(function(response){
 							toastr.success("update success!!!","SUCCESS");
 							scope.onCancel();
 						},function(err){
@@ -34,8 +35,10 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				}, function(err){
 					toastr.error("Please check data again.","ERROR");
 					scope.er ={};
+					scope.ermsg ={};
 					for(var i = 0; i < err.length; i++){
 						scope.er[err[i].field] ={'border': '2px solid #DCA7B0'};
+						scope.ermsg[err[i].field] = err[i].message;
 					}
 				})
 			},

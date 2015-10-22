@@ -111,7 +111,16 @@ module.exports = {
         //except (,),whitespace,- in phone number
         phoneExceptChars: /[\(\)\s\-]/g,
         //autralian home phone number
-        auHomePhoneNumber: /^[1-9]{9}$/
+        auHomePhoneNumber: /^[1-9]{9}$/,
+
+        //character
+        character: /^[a-zA-Z]{0,255}$/,
+
+        //address
+        address: /^[a-zA-Z0-9\s,'-]{0,255}$/,
+
+        //postcode
+        postcode: /^[0-9]{4}$/
     },
     checkData: checkData,
     checkListData: checkListData,

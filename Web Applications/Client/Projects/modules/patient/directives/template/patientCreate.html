@@ -47,7 +47,7 @@
 									<div class="form-group">
 										<label class="control-label col-md-4">FirstName <span class="required">* </span></label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" name="Firstname" placeholder="FirstName"ng-model="data.FirstName" ng-style="er.FirstName" ng-disabled="isBlockStep1" />
+											<input type="text" class="form-control" name="Firstname" placeholder="FirstName"ng-model="data.FirstName" ng-style="er.FirstName" ng-disabled="isBlockStep1" ng-change="ermsg.FirstName=''" /><span style="color:red;">{{ermsg.FirstName}}</span>
 											<span class="help-block">Provide your FirstName </span>
 										</div>
 									</div>
@@ -56,7 +56,7 @@
 									<div class="form-group ">
 										<label class="control-label col-md-4">SurName <span class="required">* </span></label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" name="Surname" placeholder="SurName" ng-model="data.LastName" ng-style="er.LastName" ng-disabled="isBlockStep1" />
+											<input type="text" class="form-control" name="Surname" placeholder="SurName" ng-model="data.LastName" ng-style="er.LastName" ng-disabled="isBlockStep1" ng-change="ermsg.LastName=''" /><span style="color:red;">{{ermsg.LastName}}</span>
 											<span class="help-block">Provide your SurName </span>
 										</div>
 									</div>
@@ -65,7 +65,8 @@
 									<div class="form-group">
 										<label class="control-label col-md-4">MiddleName <span class="required">* </span></label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" placeholder="MiddleName"ng-model="data.MiddleName" ng-style="er.MiddleName" ng-disabled="isBlockStep1">
+											<input type="text" class="form-control" placeholder="MiddleName"ng-model="data.MiddleName" ng-style="er.MiddleName" ng-disabled="isBlockStep1" ng-change="ermsg.MiddleName=''" />
+											<span style="color:red;">{{ermsg.MiddleName}}</span>
 											<span class="help-block">Provide your MiddleName </span>
 										</div>
 									</div>
@@ -75,7 +76,8 @@
 										<label class="control-label col-md-4">Mobilephone <span class="required">* </span>
 										</label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" name="Mobilephone" placeholder="+61 8888 8888" ng-model="data.PhoneNumber" ng-style="er.PhoneNumber" ng-disabled="isBlockStep1" />
+											<input type="text" class="form-control" name="Mobilephone" placeholder="+61 8888 8888" ng-model="data.PhoneNumber" ng-style="er.PhoneNumber" ng-disabled="isBlockStep1" ng-change="ermsg.PhoneNumber=''" />
+											<span style="color:red;">{{ermsg.PhoneNumber}}</span>
 											<span class="help-block">Provide your Mobilephone </span>
 										</div>
 									</div>
@@ -123,7 +125,8 @@
 												<div class="form-group">
 													<label class="control-label col-md-4">First Name</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="First Name"ng-model="data.FirstName" ng-style="er.FirstName">
+														<input type="text" class="form-control" placeholder="First Name"ng-model="data.FirstName" ng-style="er.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName=''" />
+														<span style="color:red;">{{ermsg.FirstName}}</span>
 													</div>
 												</div>
 												<!-- End First name -->
@@ -131,7 +134,8 @@
 												<div class="form-group ">
 													<label class="control-label col-md-4">Sur Name</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="Sur Name" ng-model="data.LastName" ng-style="er.LastName">
+														<input type="text" class="form-control" placeholder="Sur Name" ng-model="data.LastName" ng-style="er.LastName" ng-change="ermsg.LastName=''" />
+														<span style="color:red;">{{ermsg.LastName}}</span>
 													</div>
 												</div>
 												<!-- End Sur name -->
@@ -139,14 +143,16 @@
 												<div class="form-group">
 													<label class="control-label col-md-4">Middle Name</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="Middle Name" ng-model="data.MiddleName" ng-style="er.MiddleName">
+														<input type="text" class="form-control" placeholder="Middle Name" ng-model="data.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName=''" />
+														<span style="color:red;">{{ermsg.MiddleName}}</span>
 													</div>
 												</div>
 												<!-- End Middle name -->
 												<!-- Date of Birth -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Date of Birth</label>
-													<div class="col-md-8">  <input ng-model="data.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" ></div>
+													<div class="col-md-8">  <input ng-model="data.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" ng-style="er.DOB" ng-change="ermsg.DOB=''" />
+														<span style="color:red;">{{ermsg.DOB}}</span></div>
 												</div>
 												<!-- end Date of Birth -->
 												<!-- Gender -->
@@ -163,7 +169,8 @@
 												<!-- Occupation -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Occupation</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Occupation" ng-model="data.Occupation" ng-style="er.Occupation"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Occupation" ng-model="data.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation=''" />
+														<span style="color:red;">{{ermsg.Occupation}}</span></div>
 												</div>
 												<!-- end Occupation -->
 											</div>
@@ -178,7 +185,8 @@
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="fa fa-envelope"></i>
-															<input type="text" class="form-control" placeholder="Email" ng-disabled="isShowEmail?true:false" ng-model="data.Email" ng-style="er.Email">
+															<input type="text" class="form-control" placeholder="Email" ng-disabled="isShowEmail?true:false" ng-model="data.Email" ng-style="er.Email" ng-change="ermsg.Email=''" />
+														<span style="color:red;">{{ermsg.Email}}</span>
 														</div>
 													</div>
 												</div>
@@ -189,7 +197,8 @@
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="icon-call-end"></i>
-															<input type="text" class="form-control" placeholder="Home Phone" ng-model="data.HomePhoneNumber" ng-style="er.HomePhoneNumber">
+															<input type="text" class="form-control" placeholder="Home Phone" ng-model="data.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber=''" />
+														<span style="color:red;">{{ermsg.HomePhoneNumber}}</span>
 														</div>
 													</div>
 												</div>
@@ -211,7 +220,8 @@
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="icon-call-end"></i>
-															<input type="text" class="form-control" placeholder="WorkPhone" ng-model="data.WorkPhoneNumber" ng-style="er.WorkPhoneNumber">
+															<input type="text" class="form-control" placeholder="WorkPhone" ng-model="data.WorkPhoneNumber" ng-style="er.WorkPhoneNumber" ng-change="ermsg.WorkPhoneNumber=''" />
+														<span style="color:red;">{{ermsg.WorkPhoneNumber}}</span>
 														</div>
 													</div>
 												</div>
@@ -222,7 +232,8 @@
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="fa  fa-paper-plane"></i>
-															<input type="text" class="form-control" placeholder="Address1"ng-model="data.Address1" ng-style="er.Address1">
+															<input type="text" class="form-control" placeholder="Address1"ng-model="data.Address1" ng-style="er.Address1" ng-change="ermsg.Address1=''" />
+														<span style="color:red;">{{ermsg.Address1}}</span>
 														</div>
 													</div>
 												</div>
@@ -233,7 +244,8 @@
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="fa  fa-paper-plane"></i>
-															<input type="text" class="form-control" placeholder="Address2" ng-model="data.Address2" ng-style="er.Address2">
+															<input type="text" class="form-control" placeholder="Address2" ng-model="data.Address2" ng-style="er.Address2" ng-change="ermsg.Address2=''" />
+														<span style="color:red;">{{ermsg.Address2}}</span>
 														</div>
 													</div>
 												</div>
@@ -242,7 +254,8 @@
 												<div class="form-group">
 													<label class="control-label col-md-3">Suburb</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="Suburb" ng-model="data.Suburb" ng-style="er.Suburb">
+														<input type="text" class="form-control" placeholder="Suburb" ng-model="data.Suburb" ng-style="er.Suburb" ng-change="ermsg.Suburb=''" />
+														<span style="color:red;">{{ermsg.Suburb}}</span>
 													</div>
 												</div>
 												<!-- end Suburb -->
@@ -250,7 +263,8 @@
 												<div class="form-group">
 													<label class="control-label col-md-3">Postcode</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="Postcode" ng-model="data.Postcode" ng-style="er.Postcode">
+														<input type="text" class="form-control" placeholder="Postcode" ng-model="data.Postcode" ng-style="er.Postcode" ng-change="ermsg.Postcode=''" />
+														<span style="color:red;">{{ermsg.Postcode}}</span>
 													</div>
 												</div>
 												<!-- end Postcode -->
@@ -258,7 +272,8 @@
 													<div class="form-group">
 														<label class="control-label col-md-3">State</label>
 														<div class="col-md-8">
-															<input type="text" class="form-control" placeholder="State" ng-model="data.State" ng-style="er.State">
+															<input type="text" class="form-control" placeholder="State" ng-model="data.State" ng-style="er.State" ng-change="ermsg.State=''" />
+														<span style="color:red;">{{ermsg.State}}</span>
 														</div>
 													</div>
 													<!-- end State -->

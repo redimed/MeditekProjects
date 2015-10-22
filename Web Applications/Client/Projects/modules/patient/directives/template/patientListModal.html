@@ -70,26 +70,26 @@
 												<!-- First Name -->
 												<div class="form-group">
 													<label class="control-label col-md-4">First Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="First Name" ng-model="info.FirstName" ng-style="er.FirstName"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="First Name" ng-model="info.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName=''" ><span style="color:red;">{{ermsg.FirstName}}</span></div>
 												</div>
 												<!-- end First Name -->
 												<!-- Sur Name -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Sur Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Sur Name" ng-model="info.LastName" ng-style="er.LastName"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Sur Name" ng-model="info.LastName" ng-style="er.LastName" ng-change="ermsg.LastName=''" ><span style="color:red;">{{ermsg.LastName}}</span></div>
 												</div>
 												<!-- end Sur Name -->
 												<!-- Middle Name -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Middle Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Middle Name" ng-model="info.MiddleName" ng-style="er.MiddleName"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Middle Name" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName=''" ><span style="color:red;">{{ermsg.MiddleName}}</span></div>
 												</div>
 												<!-- end Middle Name -->
 												<!-- Date of Birth -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Date of Birth</label>
 													<div class="col-md-8">
-														<input ng-model="info.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" ng-style="er.DOB">
+														<input ng-model="info.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" ng-style="er.DOB" ng-change="ermsg.DOB=''"><span style="color:red;">{{ermsg.DOB}}</span>
 													</div>
 												</div>
 												<!-- end Date of Birth -->
@@ -107,7 +107,7 @@
 												<!-- Occupation -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Occupation</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Occupation" ng-model="info.Occupation"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Occupation" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation=''"><span style="color:red;">{{ermsg.Occupation}}</span></div>
 												</div>
 												<!-- end Occupation -->
 											</div>
@@ -123,7 +123,7 @@
 												<!-- Home Phone -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Home Phone</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber=''"><span style="color:red;">{{ermsg.HomePhoneNumber}}</span></div>
 												</div>
 												<!-- end Home Phone -->
 												<!-- Mobile Phone -->
@@ -135,31 +135,31 @@
 												<!-- Address1 -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Address1</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address1" ng-model="info.Address1" ng-style="er.Address1"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address1" ng-model="info.Address1" ng-style="er.Address1"ng-change="ermsg.Address1=''" ><span style="color:red;">{{ermsg.Address1}}</span></div>
 												</div>
 												<!-- end Address1 -->
 												<!-- Address2 -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Address2</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address2" ng-model="info.Address2" ng-style="er.Address2"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address2" ng-model="info.Address2" ng-style="er.Address2"ng-change="ermsg.Address2=''" ><span style="color:red;">{{ermsg.Address2}}</span></div>
 												</div>
 												<!-- end Address2 -->
 												<!-- Suburb -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Suburb</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Suburb" ng-model="info.Suburb" ng-style="er.Suburb"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Suburb" ng-model="info.Suburb" ng-style="er.Suburb"ng-change="ermsg.Suburb=''" ><span style="color:red;">{{ermsg.Suburb}}</span></div>
 												</div>
 												<!-- end Surburb -->
 												<!-- Postcode -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Postcode</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Postcode" ng-model="info.Postcode" ng-style="er.Postcode"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Postcode" ng-model="info.Postcode" ng-style="er.Postcode"ng-change="ermsg.Postcode=''" ><span style="color:red;">{{ermsg.Postcode}}</span></div>
 												</div>
 												<!-- end Postcode -->
 												<!-- State -->
 												<div class="form-group">
 													<label class="control-label col-md-4">State</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="State" ng-model="info.State" ng-style="er.State"></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="State" ng-model="info.State" ng-style="er.State"ng-change="ermsg.State=''" ><span style="color:red;">{{ermsg.State}}</span></div>
 												</div>
 												<!-- end Postcode -->
 												<!-- Country -->

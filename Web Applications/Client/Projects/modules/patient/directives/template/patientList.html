@@ -1,16 +1,3 @@
-<!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">Patient</h3>
-<div class="page-bar">
-	<ul class="page-breadcrumb">
-		<li>
-			<i class="fa fa-home"></i>
-			<b>Patient</b>
-			<i class="fa fa-angle-right"></i>
-		</li>
-	</ul>
-</div>
-<!-- END PAGE HEADER-->
-
 <!-- content page -->
 <div class="portlet light bordered">
 	<div class="portlet-title">
@@ -20,7 +7,7 @@
 		</div>
 		<div class="actions">
 			<a href="javascript:;" class="btn btn-circle red btn-sm" ng-click="toggleFilter()"><i class="fa fa-filter"></i> Filter</a>
-			<a ng-show="enableCreate" href="javascript:;" class="btn btn-circle blue btn-sm" ui-sref="authentication.patient.create">
+			<a  href="javascript:;" class="btn btn-circle blue btn-sm" ui-sref="authentication.patient.create" ng-show="isShowCreateButton">
 			<i class="glyphicon glyphicon-plus"></i> Create</a>
 			<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
 		</div>
@@ -28,38 +15,23 @@
 	<div class="portlet-body">
 		<!-- begin filter -->
 		<span ng-hide="toggle">
-            <div class="row">
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">First Name</label>
-						<input type="text" class="form-control" placeholder="First Name" ng-model="search.FirstName" ng-change="Search(search)">
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">Last Name</label>
-						<input type="text" class="form-control" placeholder="Last Name" ng-model="search.LastName" ng-change="Search(search)">
-					</div>
-				</div>
-				<div class="col-md-2">
-					<div class="form-group">
-						<label class="label-control">Gender</label>
-						<input type="text" class="form-control" placeholder="Gender" ng-model="search.Gender" ng-change="Search(search)">
-					</div>
-				</div>
-				<div class="col-md-2">
-					<div class="form-group">
-						<label class="label-control">Mobile</label>
-						<input type="text" class="form-control" placeholder="Mobile" ng-model="search.PhoneNumber" ng-change="Search(search)">
-					</div>
-				</div>
-				<div class="col-md-2">
-					<div class="form-group">
-						<label class="label-control">Email</label>
-						<input type="text" class="form-control" placeholder="Email" ng-model="search.Email" ng-change="Search(search)">
-					</div>
-				</div>
-				
+			<div class="table-scrollable">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr style="width:100%;">
+							<th ng-repeat="i in items">
+								<label class="label-control">{{i.name}} </label>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr style="width:100%;">
+							<td ng-repeat="i in items">
+								<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-change="Search(search)">
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
         </span>
         <span ng-show="toggle"></span>
@@ -70,42 +42,20 @@
 			<thead>
 				<tr style="width:100%;">
 					<th style="width:10%;">#</th>
-					<th style="width:18%">
-						<label>First Name </label>
-						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('FirstName ASC')" style="float: right; margin-top: -4px;"></span>
-	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('FirstName DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
+					<th ng-repeat="i in items">
+						<label>{{i.name}} </label>
+						<span class="glyphicon glyphicon-chevron-up" ng-click="sort(i.field,'ASC')" style="float: right; margin-top: -4px;"></span>
+	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sort(i.field,'DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
  					</th>
-					<th style="width:18%">
-						<label>Last Name</label>
-						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('LastName ASC')" style="float: right; margin-top: -4px;"></span>
-	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('LastName DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
-					</th>
-					<th style="width:18%">
-						<label>Gender</label>
-						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('Gender ASC')" style="float: right; margin-top: -4px;"></span>
-	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('Gender DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
-					</th>
-					<th style="width:18%">
-						<label>Mobile</label>
-						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('PhoneNumber ASC')" style="float: right; margin-top: -4px;"></span>
-	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('PhoneNumber DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
-					</th>
-					<th style="width:18%">
-						<label>Email</label>
-						<span class="glyphicon glyphicon-chevron-up" ng-click="sortASC('Email ASC')" style="float: right; margin-top: -4px;"></span>
-	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sortDESC('Email DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
-					</th>
+ 					<th ng-if="isShowSelectButton">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>
 			<tbody>
-				<tr ng-repeat="p in patients" ng-click="clickOpen(p.UID)" style="width:100%;">
-					<td style="width:10%;">{{p.stt}}</td>
-					<td style="width:18%;">{{p.FirstName}}</td>
-					<td style="width:18%;">{{p.LastName}}</td>
-					<td style="width:18%;">{{p.Gender=='F'?'Female':'Male'}}</td>
-					<td style="width:18%;">{{p.UserAccount.PhoneNumber}}</td>
-					<td style="width:18%;">{{p.Email}}</td>
+				<tr ng-repeat="p in patients" style="width:100%;margin-top: -50px;margin-left: -50px;">
+					<td style="width:10%;" ng-click="clickOpen(p.UID)">{{p.stt}}</td>
+					<td ng-repeat="i in items" ng-click="clickOpen(p.UID)">{{i.field=='UserAccount'?p[i.field]['PhoneNumber']:i.field!='Gender'?p[i.field]:p[i.field]=='M'?'Male':'Female'}}</td>
+					<td style="width:10%;" ng-if="isShowSelectButton"><button ng-click="selectPatient(p.UID)">select</button></td>
 				</tr>
 			</tbody>
 			</table>
@@ -141,5 +91,5 @@
 </div>
 <!-- end content page -->
 <script type="text/ng-template " id="patientListmodal">
-    <patient-listmodal on-uid="ID" action="action" on-cancel="close" on-savechange="savechange"></patient-listmodal>
+    <patient-listmodal on-uid="ID" action="action" on-cancel="close"></patient-listmodal>
 </script>

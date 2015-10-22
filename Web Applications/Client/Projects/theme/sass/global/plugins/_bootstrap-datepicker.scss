@@ -49,3 +49,11 @@ Bootstrap Datepicker
   box-shadow: 5px 5px rgba(#666, 0.1);
   border: 1px solid #efefef;
 }
+
+.datepicker .fa-angle-left:before {
+  content: "\f104"#{'/*rtl:"\f105"*/'};
+}
+
+.datepicker .fa-angle-right:before {
+  content: "\f105"#{'/*rtl:"\f104"*/'}; 
+} 

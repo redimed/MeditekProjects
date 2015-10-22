@@ -47,6 +47,7 @@ Form Layouts
 
 .control-label {
   margin-top: 1px;
+  font-weight: normal;
 
   .required {
     color: #e02222;
@@ -73,7 +74,7 @@ Form Layouts
         background-color: #f5f5f5;
 
         @if $theme-type == "default" {
-            border-top: 1px solid #e5e5e5;
+            border-top: 1px solid $general-panel-border-color;
         }
         
         *zoom: 1;
@@ -89,7 +90,7 @@ Form Layouts
         }
 
         .portlet & {
-            @include border-radius(0 0 $portlet-border-radius $portlet-border-radius);   
+            @include border-radius(0 0 $general-border-radius $general-border-radius);   
         }
 
         @include clearfix(); 
@@ -124,7 +125,7 @@ Form Layouts
             border-top: 0;
 
             @if $theme-type == "default" {
-                border-bottom: 1px solid #e5e5e5;
+                border-bottom: 1px solid $general-panel-border-color;
             }
 
             .portlet.light & {
@@ -146,15 +147,16 @@ Form Layouts
     }
 
     .form-section {
-        margin: 30px 0px 25px 0px;
+        margin: 30px 0px 30px 0px;
         padding-bottom: 5px;
 
-        @if $theme-type == "default" {
-            border-bottom: 1px solid #eee;
+        .form-fit & {
+            margin-left: 20px;
+            margin-right: 20px;    
         }
-        
-        &:first-child {
-            margin-top: 5px;
+
+        @if $theme-type == "default" {
+            border-bottom: 1px solid $general-panel-border-color;
         }
     }
 }

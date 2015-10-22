@@ -19,4 +19,4 @@ angular.module("app.authentication.appointment.services",[])
 			return api.all('appointment-telehealth-request').post({data:requestInfo});
 		}
 		return services;
-	})
+	});

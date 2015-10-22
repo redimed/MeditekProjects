@@ -23,7 +23,7 @@ Fullcalendar
 .portlet {
 
     .event-form-title {
-      font-size: 14px;
+      font-size: 16px;
       margin-top: 4px;
       font-weight: 400;
       margin-bottom: 10px;
@@ -37,7 +37,7 @@ Fullcalendar
             text-shadow: none;
             border: 0 ;
             height: 35px;
-            padding: 6px 8px 7px 8px ; 
+            padding: 5px 8px 8px 8px ; 
             margin-left:2px;   
             border-top-style: none;
             border-bottom-style: none;
@@ -46,7 +46,7 @@ Fullcalendar
             border-color: #ddd;
             background: transparent;
             color: #fff;
-            top: -45px; 
+            top: -48px; 
             outline: none !important;    
           
             @include border-radius($general-border-radius $general-border-radius 0 0);    
@@ -124,21 +124,23 @@ Fullcalendar
 
            .fc-content {
               border: 0px;
+              padding: 5px 7px;
             }
 
              .fc-time {
               float: left;
               text-align: left;
               color: #fff;
-              font-size: 13px;
+              font-size: 14px;
               font-weight: 300;
+              padding-right: 5px;
             }
 
             .fc-title {
               text-align: left;
               float: left;
               color: #fff;
-              font-size: 13px;
+              font-size: 14px;
               font-weight: 300;
             }
         }

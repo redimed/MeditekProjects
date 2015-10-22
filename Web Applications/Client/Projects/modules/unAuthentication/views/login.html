@@ -1,10 +1,9 @@
 <!-- BEGIN LOGIN FORM -->
 <form class="login-form my-login-form" name="loginForm" ng-submit="login()" novalidate>
-    <h3 class="form-title">Login to your account</h3>
+    <h3 class="form-title"><b>Login to your account</b></h3>
     <div class="alert alert-danger display-hide">
         <button class="close" data-close="alert"></button>
-        <span>
-        Enter any username and password. </span>
+        <span>Enter any username and password. </span>
     </div>
     <div class="form-group" ng-class="{ 'has-error' : showClickedValidation && loginForm.username.$invalid}">
         <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
@@ -44,18 +43,10 @@
     </div>
     <div class="create-account">
         <p>
-            Don't have an account yet ?&nbsp;
+            Don't have an account yet ? &nbsp; 
             <a href="javascript:;" id="register-btn" ui-sref="unAuthentication.register">
             Create an account </a>
-            <!-- <a ui-sref="security.rlobRegister" class="btn btn-primary pull-right">
-            Register <i class="fa fa-pencil-square-o"></i>
-            </a>
-            <br>
-            <br> -->
         </p>
     </div>
 </form>
 <!-- END LOGIN FORM -->
-<script>
-// Metronic.init(); // init metronic core components
-</script>

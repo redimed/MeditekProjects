@@ -1,5 +1,4 @@
 <!-- BEGIN PAGE HEADER-->
-
 <h3 class="page-title">Telehealth Appointments</h3>
 <div class="page-bar">
 	<ul class="page-breadcrumb">
@@ -109,9 +108,9 @@
 		<!-- begin pagination -->
 		<div class="row">
 			<div class="col-md-5 col-sm-12">
-				&nbsp;
+				{{filteredTodos.length }}
 			</div>
-			<div class="col-md-7 col-sm-12">{{filteredTodos.length }}
+			<div class="col-md-7 col-sm-12" style="text-align:right">
 				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
 					<pagination 
 					boundary-links="true " 
@@ -133,7 +132,5 @@
 
 <!-- BEGIN MAIN JS -->
 <script>
-	Metronic.initAjax();
-	//TableAdvanced.init();
-	//ComponentsDropdowns.init(); // init todo page
+	App.initComponents();
 </script>

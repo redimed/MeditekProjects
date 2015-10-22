@@ -8,7 +8,7 @@ Morris Charts
     margin-bottom: -15px;
 
     > svg {
-		@include border-radius(0 0 $portlet-border-radius $portlet-border-radius); 
+		@include border-radius(0 0 $general-border-radius $general-border-radius); 
 	}
 }
 

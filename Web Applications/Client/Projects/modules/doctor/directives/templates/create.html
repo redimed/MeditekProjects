@@ -449,11 +449,11 @@
 											<div class="form-group">
 												<label class="control-label col-md-3">Enable</label>
 												<div class="col-md-4">
-													<div class="form-control" style="border: none;">
-														<label class="label-control my-checkbox">
-													      <input type="checkbox" class="icheck">
-													    </label>
-													</div>
+													 <div class="checkbox">
+									                    <label class="control-label">
+									                        <input type="checkbox">
+									                    </label>
+									                </div>
 												</div>
 											</div>
 											<!-- End Enable -->
@@ -517,6 +517,9 @@
 						<div class="form-actions">
 							<div class="row">
 								<div class="col-md-offset-4 col-md-9">
+									<a href="" ui-sref="authentication.doctor.list" class="btn red">
+										<i class="icon-action-undo"></i> Cancel
+									</a>
 									<a href="javascript:;" ng-click="Back()" class="btn default button-previous">
 									<i class="m-icon-swapleft"></i> Back </a>
 									<!--Step 1-->
@@ -547,8 +550,3 @@
 </div>
 <!-- END PAGE CONTENT-->
 
-
-<script type="text/javascript">
-Metronic.setAssetsPath('theme/assets/'); // Set the assets folder path	
-FormWizard.init(); // form step
-</script>

@@ -56,33 +56,6 @@
 		@include opacity($input-md-label-opacity);	
   	}
 
-  	&:last-child {
-  		margin-bottom: 0;
-  	} 
-
-  	& + .input-icon {
-  		padding-top: 0;
-  	}
-
-  	> .input-icon {
-  		padding-top: 20px;
-
-		> i {  
-			left: 0;
-        	bottom: 0;
-        	margin: 11px 2px 10px 10px; 
-			color: $input-md-label-color;   
-		}
-
-		&.right {
-			> i {
-				left: auto;
-				right: 8px;
-				margin: 11px 2px 10px 10px;
-			}
-		}
-  	} 
-
 	.form-control {     
 		background: none;
 		border: 0;
@@ -260,13 +233,45 @@
 		} 
 	}  
   
+  	& + .input-icon {
+  		padding-top: 0;
+  	}
+
+
+	// Help block
+
+	.help-block { 
+		position: absolute;
+	  	margin: 2px 0 0 0;   
+	  	@include opacity(0);   
+	  	font-size: 13px;
+	}
+
+	// Input icons
+
 	> .input-icon {
+
 		> i {
-			margin-top: 9px;
+			left: 0;
+        	bottom: 0;
+        	margin: 9px 2px 10px 10px; 
+			color: $input-md-label-color;
 		}  
+
+		&.input-icon-lg > i {
+			top: 6px;
+		}
+
+		&.input-icon-sm > i {
+			top: -1px;
+		}
 
 		.form-control {
 			padding-left: 34px;      
+		}
+
+		> label {
+			margin-top: -20px;  
 		}
 
 		&.right {
@@ -274,15 +279,78 @@
 				padding-left: 0;
 				padding-right: 34px;        
 			}
+
+			> i {
+				left: auto;
+				right: 8px;
+				margin: 11px 2px 10px 10px;
+			}
 		}
 	}
 
-	.help-block {
-		position: absolute;
-	  	margin: 2px 0 0 0;   
-	  	@include opacity(0);   
-	  	font-size: 13px;
+	// Input groups
+  
+	& + .input-group {
+  		padding-top: 0;
+  	} 
+
+	.input-group {
+		padding-top: 0;
+
+		> label {
+			margin-top: -20px;  
+		}
+
+		.input-group-addon {
+			@include border-radius(0);  
+			background: none;
+			border: 0;    
+			border-bottom: 1px solid $input-border;     		
+		}
+
+		& + .input-group-control {
+  			padding-top: 0;
+  		}	
+
+		.input-group-control {  
+			padding-top: 0;
+			position: relative;
+			display: table-cell;
+  			vertical-align: bottom;
+
+  			> label {
+  				margin-top: -20px;
+  			}
+		}
+
+		.input-group-btn {
+			.btn {
+				@include border-radius($general-border-radius);
+			}
+		}
+
+		.input-group-btn.btn-left .btn {
+			margin-right: 10px;
+		}
+
+		.input-group-btn.btn-right .btn {
+			margin-left: 10px;
+		}
+
+		.help-block {
+			margin-top: 35px;
+		}
+
+		&.input-group-sm .help-block {
+			margin-top: 30px;  
+		}
+
+		&.input-group-lg .help-block {
+			margin-top: 47px;  
+		}
 	}
+
+	// States
 
 	&.has-success {   
 		@if $theme-type == "material-design" {
@@ -313,62 +381,6 @@
 			@include input-variant($state-info-bg);
 		} @else {
 			@include input-variant($state-info-text);
-		}
-	}
-
-	// Input groups
-  
-	& + .input-group {
-  		padding-top: 0;
-  	} 
-
-	.input-group {
-		padding-top: 20px;
-
-		.input-group-addon {
-			@include border-radius(0);  
-			background: none;
-			border: 0;    
-			border-bottom: 1px solid $input-border;     		
-		}
-
-		& + .input-group-control {
-  			padding-top: 0;
-  		}	
-
-		.input-group-control {  
-			padding-top: 20px;
-			position: relative;
-			display: table-cell;
-  			vertical-align: bottom;
-		}
-
-		.input-group-btn {
-			.btn {
-				@include border-radius($general-border-radius);
-			}
-		}
-
-		.input-group-btn.btn-left .btn {
-			margin-right: 10px;
-			margin-bottom: -20px; 
-		}
-
-		.input-group-btn.btn-right .btn {
-			margin-left: 10px;
-			margin-bottom: -20px; 
-		}
-
-		&.input-group-sm {
-			.input-group-btn .btn {
-				margin-bottom: -20px;
-			}
-		}
-   
-		&.input-group-lg {
-			.input-group-btn .btn {
-				margin-bottom: -20px; 
-			}
 		}
 	}
 } 

@@ -7,6 +7,7 @@ Custom Bootstrap Badges
   	font-weight: 300;
   	text-align: center;
   	height: 18px;
+    color: #fff;   
   	padding: 3px 6px 3px 6px;
   	-webkit-border-radius: 12px !important;
     -moz-border-radius: 12px !important;
@@ -21,10 +22,10 @@ Custom Bootstrap Badges
           border-radius: 0 !important;
 	 }
 
-    &.badge-empty {
+    &.badge-empty {  
       display: inline-block;
       padding: 0;
-      min-width: 8px;   
+      min-width: 8px;    
       height: 8px;
       width: 8px;
     }
@@ -84,19 +85,9 @@ Dropdown Menu Badges
             > .badge {
    	            position: absolute;
    	            margin-top: 1px;
-               	right: 3px;
+               	right: 3px;  
+                
                	display: inline;
-               	font-size: 11px;
-               	font-weight: 300;
-               	text-shadow:none;
-                height: 18px;
-                padding: 3px 6px 3px 6px;
-                text-align: center;
-                vertical-align: middle;
-               	-webkit-border-radius: 12px !important;
-                -moz-border-radius: 12px !important;
-                border-radius: 12px !important;
-
                 @if $theme-type == "material-design" {
                   padding: 4px 6px 2px 6px;
                 }

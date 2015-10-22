@@ -46,53 +46,27 @@ Customized Bootstrap Panels
     }
 }
 
-
-
-// Contextual variations
-
-.panel-default {
-  @include panel-variant(lighten($state-default-border, 15%), $state-default-text, lighten($state-default-bg, 20%), lighten($state-default-border, 15%));   
-}
-
-.panel-primary {
-  @include panel-variant($state-primary-border, $state-primary-text, $state-primary-bg, $state-primary-border);
-} 
-
-.panel-success {
-  @include panel-variant($state-success-border, $state-success-text, $state-success-bg, $state-success-border);
-}
-
-.panel-info {
-  @include panel-variant($state-info-border, $state-info-text, $state-info-bg, $state-info-border);
-}
-
-.panel-warning {
-  @include panel-variant($state-warning-border, $state-warning-text, $state-warning-bg, $state-warning-border);
-}
-
-.panel-danger {
-  @include panel-variant($state-danger-border, $state-danger-text, $state-danger-bg, $state-danger-border);
-}
-
 /***
 Accordions
 ***/
 
-.accordion-heading {
+.panel-heading {
     background:#eee;
     
     a {
         text-decoration:none;
     }
 
+    a:active,
+    a:focus,
     a:hover {
-        text-decoration:none;
+        text-decoration:none;  
     }
 }
 
 @if $theme-type == "material-design" {
     .panel {
-        @extend .md-shadow-z-2;        
+        @extend .md-shadow-z-1;        
         border: 0; 
     }
 }

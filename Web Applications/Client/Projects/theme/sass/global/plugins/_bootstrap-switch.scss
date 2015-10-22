@@ -32,10 +32,10 @@ Color variants
 @include bootstrap-switch-variant("default", lighten($brand-default, 15%), #444);    
  
 /* Bootstrap switch on portlet headers */
-.portlet > {
+.portlet:not(.light) > {
     .portlet-title { 
     	> .actions {
-            > .bootstrap-switch {
+            > .bootstrap-switch {  
                 border-color: transparent;
                 margin-top: 0px;
             }

@@ -1,5 +1,5 @@
 angular.module('app.authentication.doctor.directive.create', [])
-.directive('doctorCreate', function(doctorService, CommonService, $filter, toastr, $stateParams, $modal, $state) {
+.directive('doctorCreate', function(doctorService, CommonService, $filter, toastr, $stateParams, $modal, $state, $timeout) {
 
 	return {
 
@@ -21,6 +21,13 @@ angular.module('app.authentication.doctor.directive.create', [])
 				scope.isShowNext3=false;
 				scope.isShowCreate=false;
 			};
+
+			$timeout(function () {
+            	App.initComponents(); // init core components
+				ComponentsSelect2.init(); // init todo page
+            	ComponentsBootstrapSelect.init(); // init todo page
+            	FormWizard.init(); // form step
+			},0);
 
 			scope.checkPhone = function(data) {
 

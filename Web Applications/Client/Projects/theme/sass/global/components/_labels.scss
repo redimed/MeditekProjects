@@ -4,15 +4,15 @@ Customized Bootstrap Labels
 
 .label {
     text-shadow: none !important;
-    font-size: 13px;  
+    font-size: 14px;  
     font-weight: 300;  
     padding: 3px 6px 3px 6px;
     color: #fff;
     font-family: $font-family-primary;   
 
     &.label-sm {   
-        font-size: 12px;
-        padding: 0px 4px 1px 4px;  
+        font-size: 13px;
+        padding: 2px 5px 2px 5px;  
     }
 
     h1 &,

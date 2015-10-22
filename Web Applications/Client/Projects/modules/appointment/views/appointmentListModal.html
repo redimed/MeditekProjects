@@ -1,3 +1,5 @@
+
+
 <div class="modal-content">
 	<div class="modal-header my-modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="modal_close()"></button>
@@ -8,37 +10,37 @@
 		<!--  -->
 		<div class="tabbable">
 			<ul class="nav nav-tabs nav-tabs-lg">
-				<li class="active" ng-click="tab_name='';">
+				<li class="active" >
 					<a href="index.html#appointment" data-toggle="tab" aria-expanded="true">
 					Appointment
 					</a>
 				</li>
-				<li class="" ng-click="tab_name='';">
+				<li class="">
 					<a href="index.html#clinical_medical" data-toggle="tab" aria-expanded="false">
 					Clinical & Medical
 					</a>
 				</li>
-				<li class="" ng-click="tab_name='patient';">
+				<li class="">
 					<a href="index.html#patient" data-toggle="tab" aria-expanded="false">
 					Patient 
 					</a>
 				</li>
-				<li class="" ng-click="tab_name='';">
+				<li class="">
 					<a href="index.html#Treating_Practitioner" data-toggle="tab" aria-expanded="false">
 					Treating Practitioner 
 					</a>
 				</li>
-				<li class="" ng-click="tab_name='';">
+				<li class="">
 					<a href="index.html#medical_image" data-toggle="tab" aria-expanded="false">
 					Medical Images
 					</a>
 				</li>
-				<li class="" ng-click="tab_name='';">
+				<li class="">
 					<a href="index.html#referring_practitioner" data-toggle="tab" aria-expanded="false">
 						Referring Practitioner
 					</a>
 				</li>
-				<li class="" ng-click="tab_name='';">
+				<li class="">
 					<a href="index.html#present_complain_and_allergy" data-toggle="tab" aria-expanded="false">
 						Present Complain & Allergy
 					</a>
@@ -53,7 +55,7 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="time" class="control-label">Duration Of Referral</label>
-										<div class="form-control">
+										<div class="form-control" style="border:none;">
 											<!-- <i class="fa fa-calendar-o"></i> -->
 											<!-- &nbsp;&nbsp; --><span class="label label-lg label-info">12 months </span>
 										</div>
@@ -64,11 +66,11 @@
 									<div class="form-group ">
 										<label for="time" class="control-label">Status</label>
 										<select class="form-control" ng-model="appointment.Status" name="Status">
-											<option  value="Pending">Pending</option>
-											<option  value="Calling">Calling</option>
-											<option  value="Approved">Approved</option>
-											<option  value="Cancel">Cancel</option>
-											<option  value="Finish">Finish</option>
+											<option value="Pending">Pending</option>
+											<option value="Calling">Calling</option>
+											<option value="Approved">Approved</option>
+											<option value="Cancel">Cancel</option>
+											<option	value="Cancel">Finish</option>
 										</select>
 									</div>
 								</div>
@@ -98,7 +100,7 @@
 										<label class="control-label">Appointment Time</label>
 										<div class="input-icon">
 											<i class="fa fa-clock-o"></i>
-											<input type="text" class="form-control timepicker timepicker-default" ng-model="DateTimeAppointmentDateTime" id="DateTimeAppointmentDateTime">
+											<input type="text"  class="form-control timepicker timepicker-default" ng-model="DateTimeAppointmentDateTime" id="DateTimeAppointmentDateTime">
 										</div>
 									</div>
 								</div>
@@ -573,6 +575,14 @@
 							</div>
 						</div>
 					</div>
+					<hr>
+					<div class="row pull-right">
+						<div class="col-md-12 co-xs-12">
+							<button class="btn red" ng-click="createNewPatient()">
+								<i class="glyphicon glyphicon-plus"></i> Create New Patient
+							</button>
+						</div>
+					</div>
 				</div>
 
 				<div class="tab-pane" id="Treating_Practitioner" >
@@ -676,13 +686,13 @@
 								<div class="row mix-grid" style="">
 									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/0.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/0.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto odio</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="assets/img/0.jpg" title="Project Name" data-rel="fancybox-button">
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/0.jpg" title="Project Name" data-rel="fancybox-button">
 												<i class="fa fa-search"></i>
 												</a>
 											</div>
@@ -690,13 +700,13 @@
 									</div>
 									<div class="col-md-3 col-sm-3 mix category_4 mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/1.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/1.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto accusamus</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="assets/img/1.jpg" title="Project Name" data-rel="fancybox-button">
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/1.jpg" title="Project Name" data-rel="fancybox-button">
 												<i class="fa fa-search"></i>
 												</a>
 											</div>
@@ -704,13 +714,13 @@
 									</div>
 									<div class="col-md-3 col-sm-3 mix category_3  mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/2.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/2.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto accusamus</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/2.jpg" title="Project Name" data-rel="fancybox-button">
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/2.jpg" title="Project Name" data-rel="fancybox-button">
 												<i class="fa fa-search"></i>
 												</a>
 											</div>
@@ -718,154 +728,143 @@
 									</div>
 									<div class="col-md-3 col-sm-3 mix category_3  mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/3.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/3.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto accusamus</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/3.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/3.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-search"></i>
 												</a>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3 mix category_4  mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/4.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/4.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto accusamus</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/4.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/4.jpg" title="Project Name" data-rel="fancybox-button"> <i class="fa fa-search"></i>
 												</a>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3 mix category_2 mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/5.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/5.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto accusamus</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/5.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/5.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-search"></i>
 												</a>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3 mix category_4 mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/6.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/6.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto accusamus</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/6.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/6.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-search"></i>
 												</a>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3 mix category_4 mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/8.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/8.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto accusamus</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/8.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/8.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-search"></i>
 												</a>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3 mix category_4 mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/9.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/9.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto accusamus</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/9.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/9.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-search"></i>
 												</a>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/10.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/10.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto accusamus</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/10.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/10.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-search"></i>
 												</a>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/11.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/11.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto accusamus</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/11.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/11.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-search"></i>
 												</a>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/12.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/12.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto accusamus</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/12.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/12.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-search"></i>
 												</a>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/13.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/13.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto accusamus</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/13.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/13.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-search"></i>
 												</a>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/14.jpg" alt="" style="height:200px;">
+											<img class="img-responsive" src="{{settings.globalPath}}/images/14.jpg" alt="" style="height:200px;">
 											<div class="mix-details">
 												<h4>Cascusamus et iusto accusamus</h4>
 												<a class="mix-link">
 												<i class="fa fa-link"></i>
 												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/14.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
+												<a class="mix-preview fancybox-button" href="{{settings.globalPath}}/images/14.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-search"></i>
 												</a>
 											</div>
 										</div>
@@ -962,10 +961,7 @@
 		<button type="button" class="btn default" data-dismiss="modal" ng-click="close()">
 			<i class="icon-action-undo"></i> Close
 		</button>
-		<a ng-show="tab_name=='patient'" class="btn red">
-			<i class="glyphicon glyphicon-plus"></i> Create New Patient
-		</a>
-		<button type="button" class="btn green">
+		<button type="button" class="btn green" ng-click="updateAppointment()">
 			<i class="glyphicon glyphicon-save"></i> Save changes
 		</button>
 	</div>
@@ -977,11 +973,13 @@
 	// ComponentsFormTools.init();
 	//ComponentsDropdowns.init(); // init todo page
 	// //FormiCheck.init(); // init page demo
-	ComponentsPickers.init(); // init todo page
-	Portfolio.init(); // coi hinh
+	// ComponentsPickers.init(); // init todo page
+	// Portfolio.init(); // coi hinh
 
 	// Metronic.initAjax();
 	//ComponentsFormTools.init();
-	ComponentsDropdowns.init(); // init todo page
-	//FormiCheck.init(); // init page demo
+	// ComponentsDropdowns.init(); // init todo page
+// 	//FormiCheck.init(); // init page demo
+// 	Metronic.setAssetsPath('theme/assets/'); // Set the assets folder path  
+//     FormWizard.init(); // form step
 </script>

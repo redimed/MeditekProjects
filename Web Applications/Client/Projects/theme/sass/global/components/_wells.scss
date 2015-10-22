@@ -3,8 +3,8 @@ Custimized Bootstrap Wells
 ***/
 
 .well {
-  background-color: #eee;
   border: 0;
+  padding: 20px;   
 
   @if $theme-type == "default" {
   		-webkit-box-shadow: none !important;

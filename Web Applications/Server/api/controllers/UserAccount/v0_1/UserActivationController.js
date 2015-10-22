@@ -1,14 +1,37 @@
 module.exports = {
 	/**
-	 * Create UserActivation
-	 * input: req.body: {UserAccountID,Type,VerificationCode}
+	 * CreateUserActivation: Tạo UserActivation
+	 *	Đối với web system: mỗi user chỉ có 1 record
+	 *	Đối với mobile system: tương ứng với mỗi cặp {userId, deviceId} có 1 record
+	 *	Nếu record activation của user đã tồn tại thì update, nếu chưa thì insert mới
+	 * 		+trường hợp update: các thông tin được update: 
+	 * 			VerificationCode,VerificationToken,TokenCreatedDate,TokenExpired,CodeExpired,
+	 * 			ModifiedBy,ModifiedDate
+	 * 		+trường hợp insert: các thông tin được insert:
+	 * 			UserAccountID,Type,VerificationCode,VerificationToken,CreatedBy,TokenCreatedDate,
+	 * 			TokenExpired,CodeExpired,CreatedDate
+	 *
+	 * Input: 
+	 * - req.body:{UserUID,Type,DeviceID(chỉ trong trường hợp Mobile System)}
 	 * output: 
-	 * 	if success return status 200 + UserActivateInfo
-	 * 	if error return status 500 + error
+	 * 	nếu thành công trả status 200 cùng UserActivationInfo
+	 * 	nếu lỗi thì trả về status 500 cùng error, trong error có mảng errors
+	 * 		errors[0]:
+	 * 			+ UserUID.notProvided: UserUID chưa được cung cấp
+	 *			+ SystemType.notProvided: SystemType chưa được cung cấp
+	 *			+ DeviceID.notProvided: DeviceID chưa được cung cấp
+	 *			+ SystemType.unknown: SystemType không hợp lệ
+	 *			+ CreateUserActivation.paramsNotFound: chưa cung cấp tham số
+	 *			+ CreateUserActivation.updateActivationError: lỗi update activation
+	 *			+ CreateUserActivation.userActivationInsertError: lỗi insert activation
+	 *			+ CreateUserActivation.checkExistQueryError: lỗi truy vấn kiểm tra activation đã tồn tại
+	 *			+ CreateUserActivation.userNotFound: không tìm thấy user tương ứng UID
+	 *			+ CreateUserActivation.userQueryError: lỗi truy vấn thông tin user
+	 * 		
 	 */
 	CreateUserActivation:function(req,res)
 	{
-		var activationInfo=req.body;
+		var activationInfo=req.body||{};
 		activationInfo.CreatedBy=req.user?req.user.ID:null;
 		sequelize.transaction().then(function(t){
 			Services.UserActivation.CreateUserActivation(activationInfo,t)
@@ -19,31 +42,48 @@ module.exports = {
 				t.rollback();
 				res.serverError(ErrorWrap(err));
 			})
-		})
-	},
-
-	Activation:function(req,res)
-	{
-		var activationInfo=req.query;
-		Services.UserActivation.Activation(activationInfo)
-		.then(function(data){
-			res.ok(data);
 		},function(err){
-			res.serverError(ErrorWrap(err));
+			console.log(err);
+			var error=new Error("CreateUserActivation.Error");
+			error.pushError("CreateUserActivation.beginTransactionError");
+			res.serverError(ErrorWrap(error));
 		})
 	},
 
 	/**
-	 * Activation: handle request Activation User through website
-	 * Input: request.query: useruid,verificationToken
-	 * Output: if success return http status 200 + userInfo
-	 * 			if error return http status 500 + error
+	 * Activation: Activation account
+	 * input:
+	 *  -req.query:
+	 *  	+Nếu là web system: UserUID, SystemType, VerificationToken
+	 *  	+Nếu là mobile system: UserUID, SytemType, DeviceID, VerificationCode
+	 *  -Transaction
+	 *  output:
+	 *  - Nếu thành công trả về {status:'success'}
+	 *  - Nếu lỗi ném về error: trong error sẽ có mảng errors, mã lỗi cụ thể nằm ở phần tử errors thứ 0
+	 *  	-errors[0]
+	 *  		+ Activation.userNotProvided: chưa cung cấp UserUID
+	 *  		+ Activation.systemTypeNotProvided: chưa cung cấp SystemType
+	 *  		+ Activation.verificationTokenNotProvided: chưa cung cấp VerificationToken
+	 *  		+ Activation.verificationCodeNotProvided: chưa cung cấp VerificataionCode
+	 *  		+ Activation.deviceIdNotProvided: chưa cung cấp DeviceID
+	 *  		+ Activation.systemTypeInvalid: SystemType không hợp lệ
+	 *  		+ Activation.tokenInvalid: token không khớp
+	 *  		+ Activation.tokenExpired: token đã hết hạn
+	 *  		+ Activation.userUpdateError: không thể update UserAccount (Update Activated='Y')
+	 *  		+ Activation.codeInvalid: code không khớp
+	 *  		+ Activation.codeExpiredUpdateError: Không thể cập nhật field CodeExpired
+	 *			+ Activation.codeExpired: đã nhập Code quá số lần cho phép
+	 *			+ Activation.activationNotFound: không tìm thấy thông tin activation
+	 *			+ Activation.getUserActivationQueryError: Lỗi truy vấn thông tin activation
+	 *			+ Activation.userNotFound: không tìm thấy user tương ướng UserUID
+	 *			+ Activation.userQueryError: lỗi khi truy vấn thông tin user
 	 */
-	ActivationWeb:function(req,res){
-		var useruid=req.query.useruid;
-		var verificationToken=req.query.verificationToken;
+	Activation:function(req,res)
+	{
+		var activationInfo=req.query||{};
+		activationInfo.CreatedBy=req.user?req.user.ID:null;
 		sequelize.transaction().then(function(t){
-			Services.UserActivation.ActivationWeb({useruid:useruid,verificationToken:verificationToken},t)
+			Services.UserActivation.Activation(activationInfo,t)
 			.then(function(data){
 				t.commit();
 				res.ok(data);
@@ -51,6 +91,11 @@ module.exports = {
 				t.rollback();
 				res.serverError(ErrorWrap(err));
 			})
+		},function(err){
+			console.log(err);
+			var error=new Error("Activation.Error");
+			error.pushError("Activation.beginTransactionError");
+			res.serverError(ErrorWrap(error));
 		});
 		
 	},

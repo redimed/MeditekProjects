@@ -90,10 +90,6 @@ module.exports={
     	action:'Activation'
 	},
 
-	'get /api/user-activation/activation-web':{
-		controller:'UserAccount/v0_1/UserActivationController',
-		action:'ActivationWeb'
-	},
 
 
 	'get /test':'TestController.test',

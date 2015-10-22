@@ -62,7 +62,8 @@ module.exports.policies = {
   },
 
   'UserAccount/v0_1/UserActivationController':{
-    'CreateUserActivation':['hasToken','checkVersion']
+    // 'CreateUserActivation':['hasToken','checkVersion']
+    // 'CreateUserActivation':['hasToken','checkVersion']
   },
 
   /***************************************************************************

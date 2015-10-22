@@ -444,7 +444,7 @@ module.exports = {
 									{
 										return activation.updateAttributes({
 											CodeExpired:(codeExpired-1)
-										},{transaction:transaction})
+										})/*{transaction:transaction}*/
 										.then(function(data){
 											console.log(data);
 											error.pushError("Activation.codeInvalid")
@@ -489,60 +489,8 @@ module.exports = {
 		},function(err){
 			throw err;
 		})
-		
 	},
 
-	/**
-	 * ActivationWeb: Activation User through g
-	 * Input:
-	 * 	activationInfo: useruid, verificationToken
-	 * 	output: 
-	 * 		if success return promise.resolve(user Info) 
-	 * 		if error throw error
-	 */
-	ActivationWeb:function(activationInfo,transaction)
-	{
-		var useruid=activationInfo.useruid;
-		var verificationToken=activationInfo.verificationToken;
-		var userInfo={};
-		//Check user exist or not
-		return UserAccount.findOne({
-			where:{UID:useruid}
-		},{transaction:transaction})
-		.then(function(user){
-			if(user)
-			{
-				userInfo=user;
-				//check userActivation exist or not
-				return UserActivation.findOne({
-						where:{
-							UserAccountID:userInfo.ID,
-							VerificationToken:verificationToken
-						}},{transaction:transaction});
-			}
-			else
-			{
-				var err=new Error("User not found");
-				throw err;
-			}
-		},function(err){
-			throw err;
-		})
-		.then(function(userActivation){
-			if(userActivation)
-			{
-				//Update user activative attribute
-				return userInfo.updateAttributes({Activated:"Y"},{transaction:transaction});
-			}	
-			else
-			{
-				var err=new Error('User Activation info not exist');
-				throw err;
-			}
-		},function(err){
-			throw err;
-		})
-	},
 
 	/**
 	 * DeactivationUserAccount (for admin role) 

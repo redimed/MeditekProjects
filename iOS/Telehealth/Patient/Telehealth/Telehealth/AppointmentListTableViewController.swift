@@ -22,7 +22,7 @@ class AppointmentListTableViewController: UITableViewController,AppointmentListT
         if Appointment.count <= 0 {
             self.view.showLoading()
         }
-        
+        //clear bottom line in table view
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         getAppointmentList()
         

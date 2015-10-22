@@ -11,33 +11,21 @@ import Foundation
 //Extension Handle
 extension String
 {
-    //Format date time
-    func toDate() -> String
+    func toDateTimeZone(time:String,format:String) -> String
     {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"//this your string date format
+        dateFormatter.dateFormat = time//this your string date format
         dateFormatter.timeZone = NSTimeZone(name: "UTC")
         let date = dateFormatter.dateFromString(self)
         
-        dateFormatter.dateFormat = "dd/MM/yyyy"///this is you want to convert format
+        dateFormatter.dateFormat = format///this is you want to convert format
         dateFormatter.timeZone = NSTimeZone(name: "UTC")
         let timeStamp = dateFormatter.stringFromDate(date!)
         //Return Parsed Date
         return String(timeStamp)
     }
-    func toDateTime() -> String
-    {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//this your string date format
-        dateFormatter.timeZone = NSTimeZone(name: "UTC")
-        let date = dateFormatter.dateFromString(self)
-        
-        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"///this is you want to convert format
-        dateFormatter.timeZone = NSTimeZone(name: "UTC")
-        let timeStamp = dateFormatter.stringFromDate(date!)
-        //Return Parsed Date
-        return String(timeStamp)
-    }
+
+   
 
     //Change format Male or Female
     func toGender() -> String

@@ -3,12 +3,8 @@ module.exports = {
 		controller: 'FileUpload/FileUploadController',
 		action: 'UploadFile'
 	},
-	'GET /api/downloadFile/:size?/:fileUID': {
+	'GET /api/downloadFile/:fileUID': {
 		controller: 'FileUpload/FileUploadController',
 		action: 'DownloadFile'
-	},
-	'GET /api/enableFile/:isEnable/:fileUID': {
-		controller: 'FileUpload/FileUploadController',
-		action: 'EnableFile'
 	}
 }

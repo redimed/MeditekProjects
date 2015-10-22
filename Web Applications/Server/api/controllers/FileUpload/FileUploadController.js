@@ -1,61 +1,46 @@
 var path = require('path');
 var mkdirp = require('mkdirp');
 var fs = require('fs');
+var gm = require('gm');
 var rootPath = process.cwd();
-var crypto = require('crypto'),
-    algorithm = 'aes-256-ctr';
-var zlib = require('zlib');
+var uploadDir = rootPath + '/upload_files/';
 
-function encryptFile(info, callback) {
-    var inputStream = fs.createReadStream(info.inputFile);
-    var outputStream = fs.createWriteStream(info.outputFile);
-    var encrypt = crypto.createCipher(algorithm, info.password);
-    inputStream.on('data', function(data) {
-        var buf = new Buffer(encrypt.update(data), 'binary');
-        outputStream.write(buf);
-    }).on('end', function() {
-        var buf = new Buffer(encrypt.final('binary'), 'binary');
-        zlib.gzip(buf, {
-            level: 9
-        }, function(err, result) {
-            if (err) throw err;
-            outputStream.write(buf);
-            outputStream.end();
-            outputStream.on('close', function() {
-                callback();
+function resizeImage(filePath, fileName, fileExt) {
+    var arrSize = [200, 400, 600];
+    gm(filePath).size(function(err, size) {
+        if (err) throw err;
+        _.each(arrSize, function(w, i) {
+            var dest = uploadDir + '/' + fileName + '_' + w + '.' + fileExt;
+            gm(filePath).resizeExact(w, Math.round((size.height / size.width) * w)).write(dest, function(err) {
+                if (err) throw err;
+                HelperService.EncryptFile({
+                    inputFile: dest,
+                    outputFile: uploadDir + fileName + '_' + w,
+                    password: fileName
+                }, function(err) {
+                    if (err) throw err;
+                    fs.access(dest, function(err) {
+                        if (!err) fs.unlink(dest);
+                    })
+                    if (i == (arrSize.length - 1)) {
+                        fs.access(filePath, function(err) {
+                            if (!err) fs.unlink(filePath);
+                        })
+                    }
+                })
             })
-        });
-    });
-}
-
-function decryptFile(info, callback) {
-    var inputStream = fs.createReadStream(info.inputFile);
-    var outputStream = fs.createWriteStream(info.outputFile);
-    var decrypt = crypto.createDecipher(algorithm, info.password)
-    inputStream.on('data', function(data) {
-        var buf = new Buffer(decrypt.update(data), 'binary');
-        outputStream.write(buf);
-    }).on('end', function() {
-        var buf = new Buffer(decrypt.final('binary'), 'binary');
-        zlib.gunzip(buf, function(err, result) {
-            if (err) throw err;
-            outputStream.write(buf);
-            outputStream.end();
-            outputStream.on('close', function() {
-                callback();
-            });
-        });
-    });
+        })
+    })
 }
 module.exports = {
     UploadFile: function(req, res) {
-        mkdirp(rootPath + '/upload_files', function(err) {
+        mkdirp(uploadDir, function(err) {
             if (err) return res.serverError(ErrorWrap(err));
             var params = req.params.all();
             var maxFileSize = 15 * 1000 * 1000; //in MB
             req.file('uploadFile').upload({
                 maxBytes: maxFileSize,
-                dirname: rootPath + '/upload_files'
+                dirname: uploadDir
             }, function whenDone(err, uploadedFiles) {
                 if (err) return res.serverError(ErrorWrap(err));
                 if (uploadedFiles.length == 0) {
@@ -63,7 +48,7 @@ module.exports = {
                     err.pushError("No File Was Uploaded!");
                     return res.serverError(ErrorWrap(err));
                 }
-                if (!params.userUID || !params.fileType) {
+                if (!params.userUID || !params.fileType || !_.contains(HelperService.const.fileType, params.fileType)) {
                     fs.access(uploadedFiles[0].fd, function(err) {
                         if (!err) fs.unlink(uploadedFiles[0].fd);
                     })
@@ -76,76 +61,97 @@ module.exports = {
                 }).then(function(data) {
                     if (data) {
                         var fileUID = UUIDService.Create();
-                        encryptFile({
+                        var fileName = decodeURIComponent(uploadedFiles[0].filename);
+                        var fileExt = uploadedFiles[0].filename.split('.')[1];
+                        HelperService.EncryptFile({
                             inputFile: uploadedFiles[0].fd,
-                            outputFile: rootPath + '/upload_files/' + fileUID,
+                            outputFile: uploadDir + fileUID,
                             password: fileUID
                         }, function(err) {
                             fs.access(uploadedFiles[0].fd, function(err) {
                                 if (!err) fs.unlink(uploadedFiles[0].fd);
                             })
                             if (err) return res.serverError(ErrorWrap(err));
-                            return sequelize.transaction().then(function(t) {
-                                return FileUpload.create({
-                                    UID: fileUID,
-                                    UserAccountID: data.ID,
-                                    FileName: decodeURIComponent(uploadedFiles[0].filename),
-                                    FileLocation: 'upload_files/' + fileUID,
-                                    FileType: !params.fileType ? null : params.fileType,
-                                    FileExtension: uploadedFiles[0].filename.split('.')[1],
-                                    Enable: 'Y'
-                                }, {
-                                    transaction: t
-                                }).then(function(file) {
-                                    if (params.apptUID) {
-                                        return Appointment.find({
-                                            where: {
-                                                UID: params.apptUID
-                                            }
-                                        }).then(function(appt) {
-                                            if (appt) {
-                                                return RelAppointmentFileUpload.create({
-                                                    FileUploadID: file.ID,
-                                                    AppointmentID: appt.ID
-                                                }, {
-                                                    transaction: t
-                                                }).then(function() {
-                                                    t.commit();
-                                                    return res.ok({
-                                                        status: 'success'
-                                                    })
-                                                })
-                                            } else {
-                                                t.rollback();
-                                                fs.access(rootPath + '/upload_files/' + fileUID, function(err) {
-                                                    if (!err) fs.unlink(rootPath + '/upload_files/' + fileUID);
-                                                })
+                            sequelize.transaction().then(function(t) {
+                                function medicalImageCheck(bodyPart, fileID) {
+                                    return MedicalImage.create({
+                                        FileUploadID: fileID,
+                                        BodyPart: bodyPart
+                                    }, {
+                                        transaction: t
+                                    })
+                                }
+
+                                function documentCheck(docType, fileID) {
+                                    return DocumentFile.create({
+                                        FileUploadID: fileID,
+                                        DocType: docType
+                                    }, {
+                                        transaction: t
+                                    })
+                                }
+
+                                function startTransaction() {
+                                    return FileUpload.create({
+                                        UID: fileUID,
+                                        UserAccountID: data.ID,
+                                        Description: !params.description ? null : params.description,
+                                        FileName: fileName,
+                                        FileLocation: 'upload_files/' + fileUID,
+                                        FileType: params.fileType,
+                                        FileExtension: fileExt,
+                                        Enable: 'Y'
+                                    }, {
+                                        transaction: t
+                                    }).then(function(file) {
+                                        if (params.fileType == HelperService.const.fileType.image) {
+                                            if (!params.bodyPart) {
                                                 var err = new Error("FileUpload.UploadFile.Error");
-                                                err.pushError("Appointment Not Valid!");
-                                                return res.serverError(ErrorWrap(err));
+                                                err.pushError("Invalid Params!");
+                                                throw err;
                                             }
-                                        }).catch(function(err) {
-                                            t.rollback();
-                                            fs.access(rootPath + '/upload_files/' + fileUID, function(err) {
-                                                if (!err) fs.unlink(rootPath + '/upload_files/' + fileUID);
+                                            return medicalImageCheck(params.bodyPart, file.ID);
+                                        } else if (params.fileType == HelperService.const.fileType.document) {
+                                            if (!params.docType) {
+                                                var err = new Error("FileUpload.UploadFile.Error");
+                                                err.pushError("Invalid Params!");
+                                                throw err;
+                                            }
+                                            return documentCheck(params.docType, file.ID);
+                                        }
+                                    })
+                                }
+                                return startTransaction().then(function(data) {
+                                    t.commit();
+                                    if (_.contains(HelperService.const.imageExt, fileExt)) {
+                                        mkdirp(rootPath + '/temp', function(err) {
+                                            if (err) throw err;
+                                            HelperService.DecryptFile({
+                                                inputFile: uploadDir + fileUID,
+                                                outputFile: rootPath + '/temp/' + fileUID + '.' + fileExt,
+                                                password: fileUID
+                                            }, function(err) {
+                                                if (err) throw err;
+                                                fs.access(rootPath + '/temp/' + fileUID + '.' + fileExt, function(err) {
+                                                    if (err) throw err
+                                                    resizeImage(rootPath + '/temp/' + fileUID + '.' + fileExt, fileUID, fileExt);
+                                                })
                                             })
-                                            return res.serverError(ErrorWrap(err));
-                                        })
-                                    } else {
-                                        t.commit();
-                                        return res.ok({
-                                            status: 'success'
                                         })
                                     }
+                                    return res.ok({
+                                        status: 'success',
+                                        fileUID: fileUID
+                                    })
                                 }).catch(function(err) {
                                     t.rollback();
-                                    fs.access(rootPath + '/upload_files/' + fileUID, function(err) {
-                                        if (!err) fs.unlink(rootPath + '/upload_files/' + fileUID);
+                                    fs.access(uploadDir + fileUID, function(err) {
+                                        if (!err) fs.unlink(uploadDir + fileUID);
                                     })
                                     return res.serverError(ErrorWrap(err));
                                 })
                             })
-                        });
+                        })
                     } else {
                         fs.access(uploadedFiles[0].fd, function(err) {
                             if (!err) fs.unlink(uploadedFiles[0].fd);
@@ -165,43 +171,69 @@ module.exports = {
     },
     DownloadFile: function(req, res) {
         var params = req.params.all();
-        if (!params.fileUID) {
-            var err = new Error("FileUpload.DownloadFile.Error");
-            err.pushError("Invalid Params");
-            return res.serverError(ErrorWrap(err));
-        }
         mkdirp(rootPath + '/temp', function(err) {
             if (err) return res.serverError(ErrorWrap(err));
             FileUpload.find({
                 where: {
-                    UID: params.fileUID
+                    UID: params.fileUID,
+                    Enable: 'Y'
                 }
             }).then(function(file) {
                 if (file) {
-                    fs.access(rootPath + '/' + file.FileLocation, function(err) {
+                    var dest = rootPath + '/' + file.FileLocation;
+                    if (_.contains(HelperService.const.imageExt, file.FileExtension)) dest = !params.size ? rootPath + '/' + file.FileLocation : rootPath + '/' + file.FileLocation + '_' + params.size
+                    if (err) return res.serverError(ErrorWrap(err));
+                    HelperService.DecryptFile({
+                        inputFile: dest,
+                        outputFile: rootPath + '/temp/' + file.FileName,
+                        password: file.UID
+                    }, function(err) {
                         if (err) return res.serverError(ErrorWrap(err));
-                        decryptFile({
-                            inputFile: rootPath + '/' + file.FileLocation,
-                            outputFile: rootPath + '/temp/' + file.FileName,
-                            password: file.UID
-                        }, function(err) {
+                        res.download(rootPath + '/temp/' + file.FileName, function(err) {
                             if (err) return res.serverError(ErrorWrap(err));
-                            res.download(rootPath + '/temp/' + file.FileName, function(err) {
-                                if (err) res.serverError(ErrorWrap(err));
-                                fs.access(rootPath + '/temp/' + file.FileName, function(err) {
-                                    if (!err) fs.unlink(rootPath + '/temp/' + file.FileName);
-                                })
-                            });
-                        })
+                            fs.access(rootPath + '/temp/' + file.FileName, file.FileName, function(err) {
+                                if (!err) fs.unlink(rootPath + '/temp/' + file.FileName);
+                            })
+                        });
                     })
                 } else {
                     var err = new Error("FileUpload.DownloadFile.Error");
-                    err.pushError("File Is Not Exist!");
+                    err.pushError("File Not Exist!");
                     return res.serverError(ErrorWrap(err));
                 }
             }).catch(function(err) {
                 return res.serverError(ErrorWrap(err));
             })
+        })
+    },
+    EnableFile: function(req,res){
+        var params = req.params.all();
+        if(params.isEnable != 'true' && params.isEnable != 'false'){
+            var err = new Error("FileUpload.EnableFile.Error");
+            err.pushError("Invalid Params!");
+            return res.serverError(ErrorWrap(err));
+        }
+        var isEnable = (params.isEnable === "true");
+        FileUpload.find({
+            where: {
+                UID: params.fileUID
+            }
+        }).then(function(file) {
+            if (file) {
+                file.update({
+                    Enable: isEnable ? 'Y' : 'N'
+                }).then(function(){
+                    return res.ok({
+                        status: 'success'
+                    })
+                })
+            } else {
+                var err = new Error("FileUpload.DownloadFile.Error");
+                err.pushError("File Not Exist!");
+                return res.serverError(ErrorWrap(err));
+            }
+        }).catch(function(err) {
+            return res.serverError(ErrorWrap(err));
         })
     }
 }

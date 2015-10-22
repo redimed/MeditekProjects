@@ -211,16 +211,16 @@ module.exports = function(data) {
                         });
                     })
                     .then(function(examinationRequiredCreated) {
-                        if (HelperService.CheckExistData(data.TelehealthAppointment.PreferedPlasticSurgeon) &&
-                            _.isArray(data.TelehealthAppointment.PreferedPlasticSurgeon)) {
+                        if (HelperService.CheckExistData(data.TelehealthAppointment.PreferredPractitioner) &&
+                            _.isArray(data.TelehealthAppointment.PreferredPractitioner)) {
                             var dataPrefPlasSurgon =
-                                Services.GetDataAppointment.PreferedPlasticSurgeon(teleApptID, data.TelehealthAppointment.PreferedPlasticSurgeon);
+                                Services.GetDataAppointment.PreferredPractitioners(teleApptID, data.TelehealthAppointment.PreferredPractitioner);
                             dataPrefPlasSurgon.UID = UUIDService.Create();
                             /*
                             create new PreferedPlasticSurgeon
                             link with TelehealthAppointment via TelehealthAppointmentID
                             */
-                            return PreferedPlasticSurgeon.bulkCreate(dataPrefPlasSurgon, {
+                            return PreferredPractitioner.bulkCreate(dataPrefPlasSurgon, {
                                 transaction: t
                             });
                         } else {

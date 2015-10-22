@@ -196,7 +196,8 @@ module.exports = function(data) {
                                 }
                                 if (moment(range[keyModel][keyRange][1], 'YYYY-MM-DD Z', true).isValid() ||
                                     moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                                    end = moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                    end = moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z');
+                                    end = moment(end).add(1, 'day').toDate();
                                 }
                             } else {
                                 start = range[keyModel][keyRange][0];
@@ -208,7 +209,7 @@ module.exports = function(data) {
                                 tempRange[keyRange]['$gte'] = start;
                             }
                             if (HelperService.CheckExistData(end)) {
-                                tempRange[keyRange]['$lte'] = end;
+                                tempRange[keyRange]['$lt'] = end;
                             }
                             if (HelperService.CheckExistData(tempRange[keyRange]) &&
                                 !_.isEmpty(tempRange[keyRange])) {

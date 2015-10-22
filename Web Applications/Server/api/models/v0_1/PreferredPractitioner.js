@@ -25,7 +25,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'PreferedPlasticSurgeon',
+        tableName: 'PreferredPractitioner',
         timestamps: false
     }
 };

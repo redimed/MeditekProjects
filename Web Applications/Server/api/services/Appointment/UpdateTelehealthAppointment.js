@@ -2,7 +2,7 @@
         var $q = require('q');
         var preferringPractitionerObject;
         var appointmentObject;
-        var dataPreferedPlasticSurgeons;
+        var dataPreferredPractitioners;
         var dataClinicalDetails;
         return sequelize.transaction()
             .then(function(t) {
@@ -42,16 +42,19 @@
 
                             }
                         }, function(err) {
+                            console.log('>>>>>>>>>>>>>>preferPractitionerObj');
                             defer.reject({
                                 transaction: t,
                                 error: err
                             });
                         })
                         .then(function(appointmentObj) {
-                            if (HelperService.CheckExistData(appointmentObj)) {
+                            if (HelperService.CheckExistData(appointmentObj) &&
+                                HelperService.CheckExistData(preferringPractitionerObject)) {
                                 appointmentObject = appointmentObj;
                                 var dataAppointment = Services.GetDataAppointment.AppointmentUpdate(data);
                                 dataAppointment.ModifiedBy = preferringPractitionerObject.ID;
+                                console.log(dataAppointment);
                                 //update Appointment
                                 return Appointment.update(dataAppointment, {
                                     where: {
@@ -61,6 +64,7 @@
                                 });
                             }
                         }, function(err) {
+                            console.log('>>>>>>>>>>>>>>appointmentObj');
                             defer.reject({
                                 transaction: t,
                                 error: err
@@ -81,6 +85,8 @@
                             }
 
                         }, function(err) {
+                            console.log('>>>>>>>>>>>>>>appointmentUpdated');
+                            console.log(err);
                             defer.reject({
                                 transaction: t,
                                 error: err
@@ -96,6 +102,7 @@
                                 });
                             }
                         }, function(err) {
+                            console.log('>>>>>>>>>>>>>>doctorObj');
                             defer.reject({
                                 transaction: t,
                                 error: err
@@ -115,6 +122,7 @@
                                 });
                             }
                         }, function(err) {
+                            console.log('>>>>>>>>>>>>>>relDoctorAppointmentCreated');
                             defer.reject({
                                 transaction: t,
                                 error: err
@@ -151,6 +159,7 @@
                             }
 
                         }, function(err) {
+                            console.log('>>>>>>>>>>>>>>relPatientAppointmentCreated');
                             defer.reject({
                                 transaction: t,
                                 error: err
@@ -166,7 +175,8 @@
                         })
                         .then(function(relAppointmentFileUploadCreated) {
                             var telehealthAppointment = data.TelehealthAppointment;
-                            if (HelperService.CheckExistData(telehealthAppointment)) {
+                            if (HelperService.CheckExistData(telehealthAppointment) &&
+                                HelperService.CheckExistData(preferringPractitionerObject)) {
                                 var dataTelehealthAppointment =
                                     Services.GetDataAppointment.TelehealthAppointmentUpdate(telehealthAppointment);
                                 dataTelehealthAppointment.ModifiedBy = preferringPractitionerObject.ID;
@@ -179,6 +189,7 @@
                                 });
                             }
                         }, function(err) {
+                            console.log('>>>>>>>>>>>>>>relAppointmentFileUploadCreated');
                             defer.reject({
                                 transaction: t,
                                 error: err
@@ -186,33 +197,13 @@
                         })
                         .then(function(telehealthAppointmentUpadted) {
                             var examinationRequired = data.TelehealthAppointment.ExaminationRequired;
-                            if (HelperService.CheckExistData(examinationRequired)) {
+                            if (HelperService.CheckExistData(examinationRequired) &&
+                                HelperService.CheckExistData(preferringPractitionerObject)) {
                                 var dataExaminationRequired =
                                     Services.GetDataAppointment.ExaminationRequired(examinationRequired);
                                 dataExaminationRequired.CreatedBy = preferringPractitionerObject.ID;
                                 //update ExaminationRequired
                                 return ExaminationRequired.update(dataExaminationRequired, {
-                                    where: {
-                                        UID: examinationRequired.UID
-                                    },
-                                    transaction: t
-                                });
-                            }
-                        }, function(err) {
-                            defer.reject({
-                                transaction: t,
-                                error: err
-                            });
-                        })
-                        .then(function(examinationRequiredUpdated) {
-                            var preferedPlasticSurgeon = data.TelehealthAppointment.PreferedPlasticSurgeon;
-                            if (HelperService.CheckExistData(preferedPlasticSurgeon) &&
-                                _.isArray(preferedPlasticSurgeon) &&
-                                HelperService.CheckExistData(appointmentObject)) {
-                                dataPreferedPlasticSurgeons =
-                                    Services.GetDataAppointment.PreferedPlasticSurgeon(appointmentObject.TelehealthAppointment.ID, preferedPlasticSurgeon);
-                                //remove PreferedPlasticSurgeons
-                                return PreferedPlasticSurgeon.destroy({
                                     where: {
                                         TelehealthAppointmentID: appointmentObject.TelehealthAppointment.ID
                                     },
@@ -220,25 +211,49 @@
                                 });
                             }
                         }, function(err) {
+                            console.log('>>>>>>>>>>>>>>telehealthAppointmentUpadted');
                             defer.reject({
                                 transaction: t,
                                 error: err
                             });
                         })
-                        .then(function(preferedPlasticSurgeonDeleted) {
-                            if (HelperService.CheckExistData(dataPreferedPlasticSurgeons) &&
-                                _.isArray(dataPreferedPlasticSurgeons)) {
-                                //created new PreferedPlasticSurgeons
-                                return PreferedPlasticSurgeon.bulkCreate(dataPreferedPlasticSurgeons, {
+                        .then(function(examinationRequiredUpdated) {
+                            var preferredPractitioners = data.TelehealthAppointment.PreferredPractitioners;
+                            if (HelperService.CheckExistData(preferredPractitioners) &&
+                                _.isArray(preferredPractitioners) &&
+                                HelperService.CheckExistData(appointmentObject)) {
+                                dataPreferredPractitioners =
+                                    Services.GetDataAppointment.PreferredPractitioners(appointmentObject.TelehealthAppointment.ID, preferredPractitioners);
+                                //remove PreferredPractitioners
+                                return PreferredPractitioner.destroy({
+                                    where: {
+                                        TelehealthAppointmentID: appointmentObject.TelehealthAppointment.ID
+                                    },
+                                    transaction: t
+                                });
+                            }
+                        }, function(err) {
+                            console.log('>>>>>>>>>>>>>>examinationRequiredUpdated')
+                            defer.reject({
+                                transaction: t,
+                                error: err
+                            });
+                        })
+                        .then(function(preferredPractitionerDeleted) {
+                            if (HelperService.CheckExistData(dataPreferredPractitioners) &&
+                                _.isArray(dataPreferredPractitioners)) {
+                                //created new PreferredPractitioner
+                                return PreferredPractitioner.bulkCreate(dataPreferredPractitioners, {
                                     transaction: t
                                 });
                             }
                         })
-                        .then(function(preferedPlasticSurgeonUpdated) {
+                        .then(function(preferredPractitionerUpdated) {
                             var clinicalDetails = data.TelehealthAppointment.ClinicalDetails;
                             if (HelperService.CheckExistData(clinicalDetails) &&
                                 _.isArray(clinicalDetails) &&
-                                HelperService.CheckExistData(appointmentObject)) {
+                                HelperService.CheckExistData(appointmentObject) &&
+                                HelperService.CheckExistData(preferringPractitionerObject)) {
                                 dataClinicalDetails =
                                     Services.GetDataAppointment.ClinicalDetails(appointmentObject.TelehealthAppointment.ID, preferringPractitionerObject.ID, clinicalDetails);
                                 //remove ClinicalDetails
@@ -250,6 +265,8 @@
                                 });
                             }
                         }, function(err) {
+                            console.log('>>>>>>>>>>>>>>preferredPractitionerUpdated');
+                            console.log(err);
                             defer.reject({
                                 transaction: t,
                                 error: err
@@ -264,6 +281,7 @@
                                 });
                             }
                         }, function(err) {
+                            console.log('>>>>>>>>>>>>>>clinicalDetailsDeleted')
                             defer.reject({
                                 transaction: t,
                                 error: err
@@ -275,6 +293,7 @@
                                 status: 'success'
                             });
                         }, function(err) {
+                            console.log('>>>>>>>>>>>>>>clinicalDetailsCreated')
                             defer.reject({
                                 transaction: t,
                                 error: err

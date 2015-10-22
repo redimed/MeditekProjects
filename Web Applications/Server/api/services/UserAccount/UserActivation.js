@@ -78,8 +78,20 @@ module.exports = {
 	 * Input: 
 	 * - activationInfo:{UserUID,Type,CreatedBy}
 	 * output: 
-	 * 	if success return UserActivationInfo
-	 * 	if error throw error
+	 * 	nếu thành công trả về UserActivationInfo
+	 * 	nếu lỗi thì trả về error, trong error có mảng errors
+	 * 		errors[0]:
+	 * 			+ UserUID.notProvided: UserUID chưa được cung cấp
+	 *			+ SystemType.notProvided: SystemType chưa được cung cấp
+	 *			+ DeviceID.notProvided: DeviceID chưa được cung cấp
+	 *			+ SystemType.unknown: SystemType không hợp lệ
+	 *			+ CreateUserActivation.paramsNotFound: chưa cung cấp tham số
+	 *			+ CreateUserActivation.updateActivationError: lỗi update activation
+	 *			+ CreateUserActivation.userActivationInsertError: lỗi insert activation
+	 *			+ CreateUserActivation.checkExistQueryError: lỗi truy vấn kiểm tra activation đã tồn tại
+	 *			+ CreateUserActivation.userNotFound: không tìm thấy user tương ứng UID
+	 *			+ CreateUserActivation.userQueryError: lỗi truy vấn thông tin user
+	 * 		
 	 */
 	CreateUserActivation:function(activationInfo,transaction)
 	{
@@ -245,13 +257,35 @@ module.exports = {
 		})
 	},
 
-
+	/**
+	 * Activation: Activation account
+	 * input:
+	 *  -ActivationInfo:
+	 *  	+Nếu là web system: UserUID, SystemType, VerificationToken
+	 *  	+Nếu là mobile system: UserUID, SytemType, DeviceID, VerificationCode
+	 *  -Transaction
+	 *  output:
+	 *  - Nếu thành công trả về {status:'success'}
+	 *  - Nếu lỗi ném về error: trong error sẽ có mảng errors, mã lỗi cụ thể nằm ở phần tử errors thứ 0
+	 *  	-errors[0]
+	 *  		+ Activation.userNotProvided: chưa cung cấp UserUID
+	 *  		+ Activation.systemTypeNotProvided: chưa cung cấp SystemType
+	 *  		+ Activation.verificationTokenNotProvided: chưa cung cấp VerificationToken
+	 *  		+ Activation.verificationCodeNotProvided: chưa cung cấp VerificataionCode
+	 *  		+ Activation.deviceIdNotProvided: chưa cung cấp DeviceID
+	 *  		+ Activation.systemTypeInvalid: SystemType không hợp lệ
+	 *  		+ Activation.tokenInvalid: token không khớp
+	 *  		+ Activation.tokenExpired: token đã hết hạn
+	 *  		+ Activation.userUpdateError: không thể update UserAccount (Update Activated='Y')
+	 *  		+ Activation.codeInvalid: code không khớp
+	 *  		+ Activation.codeExpiredUpdateError: Không thể cập nhật field CodeExpired
+	 *			+ Activation.codeExpired: đã nhập Code quá số lần cho phép
+	 *			+ Activation.activationNotFound: không tìm thấy thông tin activation
+	 *			+ Activation.getUserActivationQueryError: Lỗi truy vấn thông tin activation
+	 *			+ Activation.userNotFound: không tìm thấy user tương ướng UserUID
+	 *			+ Activation.userQueryError: lỗi khi truy vấn thông tin user
+	 */
 	Activation:function(activationInfo,transaction){
-		// var UserUID=activationInfo.UserUID;
-		// var SystemType=activationInfo.SystemType;
-		// var VerificationCode=null;
-		// var VerificationToken=null;
-		// var DeviceID=null;
 		var UserUID=null;
 		var SystemType=null;
 		var VerificationCode=null;
@@ -272,6 +306,7 @@ module.exports = {
 					error.pushError("Activation.userNotProvided");
 					throw error;
 				}
+
 				if(o.checkData(activationInfo.SystemType))
 				{
 					SystemType=activationInfo.SystemType;
@@ -281,6 +316,7 @@ module.exports = {
 					error.pushError("Activation.systemTypeNotProvided");
 					throw error;
 				}
+				
 				if(SystemType==o.const.systemType.website)
 				{
 					if(o.checkData(activationInfo.VerificationToken))

@@ -45,7 +45,8 @@ module.exports = {
         },
         Enable: {
             type: Sequelize.STRING(1),
-            allowNull: true
+            allowNull: true,
+            defaultValue:'Y'
         },
         UserType: {
             type: Sequelize.STRING(3),

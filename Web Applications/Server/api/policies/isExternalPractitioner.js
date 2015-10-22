@@ -1,19 +1,18 @@
 var o=require("../services/HelperService");
 var ErrorWrap=require("../services/ErrorWrap");
 module.exports = function(req, res, next) {
-	var isPatient=false;
+	var isExternalPractitioner=false;
 	_.each(req.user.roles,function(role){
-		if(role.RoleCode==o.const.roles.patient)
-			isPatient=true;
+		if(role.RoleCode==o.const.roles.internalPractitioner)
+			isExternalPractitioner=true;
 	});
-    if (isPatient) 
-    {
+    if (isExternalPractitioner) {
         return next();
     }
     else
     {
         var error=new Error("Policies.Error");
-        error.pushError("Policies.notPatient");
+        error.pushError("Policies.notExternalPractitioner");
         return res.unauthor(ErrorWrap(error));
     }
 };

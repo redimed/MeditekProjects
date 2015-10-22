@@ -31,9 +31,6 @@ passport.deserializeUser(function(ID, done) {
 			}
 		}
 	})
-	// UserAccount.findOne({
-	// 	where:{ID:ID}
-	// })
 	.then(function(user){
 		done(null,user);
 	},function(err){
@@ -107,6 +104,7 @@ passport.use(new LocalStrategy({
 					ID:user.ID,
 					UID:user.UID,
 					UserName: user.UserName,
+					Activated:user.Activated,
 					roles:listRoles
 				};
 				console.log("Login success");

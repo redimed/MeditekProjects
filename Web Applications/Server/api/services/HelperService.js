@@ -130,6 +130,12 @@ module.exports = {
             website: 'WEB',
             android: 'ARD'
         },
+
+        verificationMethod:{
+            token:'TOKEN',
+            code:'CODE'
+        },
+
         roles: {
             admin: 'ADMIN',
             assistant: 'ASSISTANT',

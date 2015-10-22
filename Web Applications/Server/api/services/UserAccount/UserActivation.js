@@ -290,6 +290,7 @@ module.exports = {
 		var SystemType=null;
 		var VerificationCode=null;
 		var VerificationToken=null;
+		var Method=null;//Token,Code
 		var DeviceID=null;
 		var error=new Error("Activation.Error");
 		function Validation()
@@ -319,13 +320,26 @@ module.exports = {
 				
 				if(SystemType==o.const.systemType.website)
 				{
-					if(o.checkData(activationInfo.VerificationToken))
+					if(o.checkData(activationInfo.Method))
 					{
-						VerificationToken=activationInfo.VerificationToken;
+						Method=activationInfo.Method;
+						if(Method==o.const.verificationMethod.token)
+						{
+							VerificationToken=activationInfo.VerificationToken;
+						}
+						else if(Method==o.const.verificationMethod.code)
+						{
+							VerificationCode=activationInfo.VerificationCode;
+						}
+						else
+						{
+							error.pushError("Activation.methodInvalid");
+							throw error;
+						}
 					}
 					else
 					{
-						error.pushError("Activation.verificationTokenNotProvided");
+						error.pushError("Activation.methodNotProvided");
 						throw error;
 					}
 				}
@@ -399,7 +413,7 @@ module.exports = {
 					.then(function(activation){
 						if(o.checkData(activation))
 						{
-							if(SystemType==o.const.systemType.website)
+							function activationByToken()
 							{
 								var tokenCreatedDate=moment(activation.TokenCreatedDate);
 								var verificationDate= tokenCreatedDate.clone().add(activation.TokenExpired,'seconds');
@@ -424,7 +438,7 @@ module.exports = {
 									throw error;
 								}
 							}
-							else
+							function activationByCode()
 							{
 								var codeExpired=activation.CodeExpired;
 								if(codeExpired>0)
@@ -462,6 +476,17 @@ module.exports = {
 									error.pushError("Activation.codeExpired");
 									throw error;
 								}
+							}
+							if(SystemType==o.const.systemType.website)
+							{
+								if(Method==o.const.verificationMethod.token)
+									return activationByToken();
+								else
+									return activationByCode();
+							}
+							else
+							{
+								return activationByCode();
 							}
 						}
 						else

@@ -142,7 +142,16 @@ module.exports = {
             internalPractitioner: 'INTERNAL_PRACTITIONER',//DOCTOR
             externalPractitioner: 'EXTERTAL_PRACTITIONER',//GP
             patient: 'PATIENT',
-        }
+        },
+
+        verificationCodeLength:6,
+        
+        verificationTokenLength:150,
+
+        tokenExpired:15, //seconds
+
+        codeExpired:3, //Số lần có thể nhập sai
+
     },
 
     exlog: exlog,

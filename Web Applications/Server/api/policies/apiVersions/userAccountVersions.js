@@ -1,6 +1,7 @@
 var userAccountController_v0_1=require("../../controllers/UserAccount/v0_1/UserAccountController");
 var userAccountController_v0_2=require("../../controllers/UserAccount/v0_2/UserAccountController");
 var userAccountController_v0_3=require("../../controllers/UserAccount/v0_3/UserAccountController");
+var userActivationController_v0_1=require("../../controllers/UserAccount/v0_1/UserActivationController");
 
 module.exports={
 	'get /api/user-account/test':{
@@ -24,6 +25,13 @@ module.exports={
 		'0.1':{
 			enable:true,
 			action:userAccountController_v0_1.TestURL
+		}
+	},
+
+	'post /api/user-activation/create-user-activation':{
+		'0.1':{
+			enable:true,
+			action:userActivationController_v0_1.CreateUserActivation
 		}
 	}
 }

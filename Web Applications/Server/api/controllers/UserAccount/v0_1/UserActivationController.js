@@ -82,21 +82,12 @@ module.exports = {
 	{
 		var activationInfo=req.query||{};
 		activationInfo.CreatedBy=req.user?req.user.ID:null;
-		sequelize.transaction().then(function(t){
-			Services.UserActivation.Activation(activationInfo,t)
-			.then(function(data){
-				t.commit();
-				res.ok(data);
-			},function(err){
-				t.rollback();
-				res.serverError(ErrorWrap(err));
-			})
+		Services.UserActivation.Activation(activationInfo)
+		.then(function(data){
+			res.ok(data);
 		},function(err){
-			console.log(err);
-			var error=new Error("Activation.Error");
-			error.pushError("Activation.beginTransactionError");
-			res.serverError(ErrorWrap(error));
-		});
+			res.serverError(ErrorWrap(err));
+		})
 		
 	},
 

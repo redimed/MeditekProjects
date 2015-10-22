@@ -4,6 +4,7 @@ var moment=require('moment');
 module.exports = {
 	Test:function(req,res)
 	{
+		console.log(req.user);
 		// return RefUserRole.create({UserAccountId:86,RoleCode:'ADMIN',SiteId:1})
 		return RelUserRole.findAll()//({UserAccountId:86,RoleCode:'ADMIN',SiteId:1})
 		.then(function(data){

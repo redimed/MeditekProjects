@@ -278,6 +278,7 @@ module.exports = {
 			return checkPhoneNumber(userInfo.PhoneNumber);
 		})
 		.then(function(user){
+			userInfo.Enable='Y';
 			return UserAccount.create(userInfo,{transaction:transaction})
 			.then(function(data){
 				return data;

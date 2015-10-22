@@ -23,7 +23,7 @@ module.exports = function(appointmentUID) {
                     attributes: ['Private', 'Public', 'DVA', 'WorkersComp', 'MVIT'],
                     required: false
                 }, {
-                    model: PreferedPlasticSurgeon,
+                    model: PreferredPractitioner,
                     attributes: ['Name'],
                     required: false
                 }, {
@@ -62,7 +62,14 @@ module.exports = function(appointmentUID) {
                 }]
             }, {
                 model: FileUpload,
-                required: false
+                required: false,
+                include: [{
+                    model: MedicalImage,
+                    required: false
+                }, {
+                    model: DocumentFile,
+                    required: false
+                }]
             }],
             where: {
                 UID: appointmentUID

@@ -1,3 +1,4 @@
+var moment = require('moment');
 module.exports = {
     AppointmentCreate: function(data) {
         return {
@@ -9,9 +10,10 @@ module.exports = {
     },
     AppointmentUpdate: function(data) {
         return {
-            FromTime: data.FromTime,
-            ToTime: data.ToTime,
-            ApprovalDate: data.ApprovalDate,
+            RequestDate: HelperService.CheckExistData(data.RequestDate) ? moment(data.RequestDate, 'YYYY-MM-DD HH:mm:ss Z').toDate() : null,
+            FromTime: HelperService.CheckExistData(data.FromTime) ? moment(data.FromTime, 'YYYY-MM-DD HH:mm:ss Z').toDate() : null,
+            ToTime: HelperService.CheckExistData(data.ToTime) ? moment(data.ToTime, 'YYYY-MM-DD HH:mm:ss Z').toDate() : null,
+            ApprovalDate: HelperService.CheckExistData(data.ApprovalDate) ? moment(data.ApprovalDate, 'YYYY-MM-DD HH:mm:ss Z').toDate() : null,
             Status: data.Status
         };
     },
@@ -22,7 +24,7 @@ module.exports = {
             RefHealthLink: data.HealthLink,
             RefAddress: data.Address,
             RefTelePhone: data.WorkPhoneNumber,
-            RefPostCode: data.PostCode,
+            RefPostcode: data.PostCode,
             RefSignature: data.Signature,
             RefDate: data.RefDate,
             RefProviderNumber: data.ProviderNumber,
@@ -35,7 +37,9 @@ module.exports = {
         return {
             RefDurationOfReferal: data.RefDurationOfReferal,
             Correspondence: data.Correspondence,
-            Fund: data.Fund
+            Fund: data.Fund,
+            Allergy: data.Allergy,
+            PresentComplain: data.PresentComplain
         };
     },
     PatientAppointmentCreate: function(data) {
@@ -60,7 +64,7 @@ module.exports = {
             MVIT: data.MVIT
         };
     },
-    PreferedPlasticSurgeon: function(teleApptID, data) {
+    PreferredPractitioners: function(teleApptID, data) {
         data.forEach(function(value, index) {
             data[index].UID = UUIDService.Create();
             data[index].TelehealthAppointmentID = teleApptID;

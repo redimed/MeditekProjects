@@ -135,6 +135,15 @@ module.exports = {
             signature: 'Signature'
         },
         imageExt: ['jpg','png','gif','webp','tif','bmp','psd','jxr']
+
+        verificationCodeLength:6,
+        
+        verificationTokenLength:150,
+
+        tokenExpired:15, //seconds
+
+        codeExpired:3, //Số lần có thể nhập sai
+
     },
     exlog: exlog,
     exFileJSON: exFileJSON,

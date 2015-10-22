@@ -16,24 +16,13 @@ Customized Progress Bars
   }
 }
 
-.progress > .progress-bar-default {
-    @include progress-bar-variant($brand-default);
-}
+/* Custom colors */
 
-.progress > .progress-bar-success {
-    @include progress-bar-variant($brand-success);
-}
-
-.progress > .progress-bar-info {
-    @include progress-bar-variant($brand-info);
-}
-
-.progress > .progress-bar-danger {
-    @include progress-bar-variant($brand-danger);
-}
-
-.progress > .progress-bar-warning {
-    @include progress-bar-variant($brand-warning);
+@each $name, $colors in $component-colors {
+    .progress-bar.#{$name} {
+        background: map-get($colors, base) !important;
+        color: map-get($colors, font) !important;
+    }
 }
 
 @if $theme-type == "material-design" {

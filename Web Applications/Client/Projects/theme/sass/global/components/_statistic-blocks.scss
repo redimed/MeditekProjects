@@ -50,6 +50,10 @@ Dashboard Stats
         margin-bottom: 0;
     }
 
+    @if $theme-type == "material-design" {
+        box-shadow: $general-shadow;
+    }
+
     .visual {
         width: 80px;
         height:80px;
@@ -116,6 +120,12 @@ Dashboard Stats
     }  
 }
 
+@each $name, $colors in $component-colors {
+    .dashboard-stat {
+        @include dashboard-stat-variant($name, map-get($colors, base), map-get($colors, font));
+    }
+}
+
 .dashboard-stat-light {
     padding-bottom: 20px;
     margin-bottom: 20px;
@@ -139,6 +149,14 @@ Dashboard Stats 2
     background: #fff;
     padding: 15px 15px 30px 15px; 
     margin-bottom: 20px;  
+
+    @if $theme-type == "material-design" {
+        box-shadow: $general-shadow;
+    }
+
+    &.bordered {
+        border: 1px solid $general-panel-border-color;
+    }
 
     .display {
         @include clearfix();
@@ -207,9 +225,7 @@ Dashboard Stats 2
                 display: inline-block;
             }
         }
-    }
-
-    
+    }    
 }
 
 /***

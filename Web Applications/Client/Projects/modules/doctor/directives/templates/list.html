@@ -65,36 +65,36 @@
 			<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>#</th>
+					<th width="1">#</th>
 					<th>
 						Firstname
-						<a ng-if="doctor.search.sortFisrtName === 'ASC'" ng-click="doctor.sortBy({field:'sortFisrtName', sort: 'DESC'})">
+						<a ng-if="doctor.search.sortFisrtName === 'ASC'" ng-click="doctor.sortBy({field:'sortFisrtName', sort: 'DESC'})" class="tableSort">
 							<i class="fa fa-sort-asc"></i>
 						</a>
-						<a ng-if="doctor.search.sortFisrtName === 'DESC'" ng-click="doctor.sortBy({field:'sortFisrtName', sort: 'ASC'})">
+						<a ng-if="doctor.search.sortFisrtName === 'DESC'" ng-click="doctor.sortBy({field:'sortFisrtName', sort: 'ASC'})" class="tableSort">
 							<i class="fa fa-sort-desc"></i>
 						</a>
 					</th>
 					<th>
 						Lastname
-						<a ng-if="doctor.search.sortLastName === 'ASC'" ng-click="doctor.sortBy({field:'sortLastName', sort: 'DESC'})">
+						<a ng-if="doctor.search.sortLastName === 'ASC'" ng-click="doctor.sortBy({field:'sortLastName', sort: 'DESC'})" class="tableSort">
 							<i class="fa fa-sort-asc"></i>
 						</a>
-						<a ng-if="doctor.search.sortLastName === 'DESC'" ng-click="doctor.sortBy({field:'sortLastName', sort: 'ASC'})">
+						<a ng-if="doctor.search.sortLastName === 'DESC'" ng-click="doctor.sortBy({field:'sortLastName', sort: 'ASC'})" class="tableSort">
 							<i class="fa fa-sort-desc"></i>
 						</a>
 					</th>
 					<th>Mobile</th>
 					<th>
 						Email
-						<a ng-if="doctor.search.sortEmail === 'ASC'" ng-click="doctor.sortBy({field:'sortEmail', sort: 'DESC'})">
+						<a ng-if="doctor.search.sortEmail === 'ASC'" ng-click="doctor.sortBy({field:'sortEmail', sort: 'DESC'})" class="tableSort">
 							<i class="fa fa-sort-asc"></i>
 						</a>
-						<a ng-if="doctor.search.sortEmail === 'DESC'" ng-click="doctor.sortBy({field:'sortEmail', sort: 'ASC'})">
+						<a ng-if="doctor.search.sortEmail === 'DESC'" ng-click="doctor.sortBy({field:'sortEmail', sort: 'ASC'})" class="tableSort">
 							<i class="fa fa-sort-desc"></i>
 						</a>
 					</th>
-					<th>Enable</th>
+					<th width="1">Enable</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -105,9 +105,12 @@
 					<td>{{ row.LastName }}</td>
 					<td>{{ row.UserAccount.PhoneNumber }}</td>
 					<td>{{ row.Email }}</td>
-					<td>
-						<span ng-if="row.Enable != 'N'">
+					<td style="text-align:center">
+						<span ng-if="row.Enable != 'N'" class="text-success">
 							<i class="fa fa-check"></i>
+						</span>
+						<span ng-if="row.Enable == 'N'" class="text-danger">
+							<i class="fa fa-remove"></i>
 						</span>
 					</td>
 				</tr>
@@ -121,7 +124,7 @@
 					<!-- Showing 1 to 10 of 43 entries -->
 				</div>
 			</div>
-			<div class="col-md-7 col-sm-12">
+			<div class="col-md-7 col-sm-12" style="text-align:right">
 				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
 					<pagination boundary-links="true" total-items="doctor.count" ng-model="doctor.search.page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="doctor.search.limit" max-size="doctor.search.max_size" ng-change="setPage(doctor.search.page)"></pagination>
 				</div>

@@ -4,12 +4,14 @@ Input icons
 
 .input-icon {
     position: relative;
+    left: 0;
+
 
     > .form-control {
         padding-left: 33px;
 
         .input-group & {
-             @include border-radius($portlet-border-radius 0 0 $portlet-border-radius);
+             @include border-radius($general-border-radius 0 0 $general-border-radius);
         }
     }
 
@@ -45,12 +47,15 @@ Input icons
     }
 
     &.right {
+        left: auto;
+        right: 0;
+        
         > .form-control {
             padding-right: 33px;
             padding-left: 12px;
 
             .input-group & {
-                @include border-radius(0 $portlet-border-radius $portlet-border-radius 0); 
+                @include border-radius(0 $general-border-radius $general-border-radius 0); 
             }
         }
 

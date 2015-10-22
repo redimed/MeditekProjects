@@ -14,12 +14,12 @@ FuelUX Spinners
   .page-style-rounded & {
   	 &.spinner-up {
 		border-radius: 0;
-	  	border-top-right-radius: $form-control-border-radius !important;
+	  	border-top-right-radius: $general-border-radius !important;
 	  }    
 
 	  &.spinner-down {     
 	  	border-radius: 0;
-	  	border-bottom-right-radius: $form-control-border-radius;      
+	  	border-bottom-right-radius: $general-border-radius;      
 	  }
 	} 
 } 

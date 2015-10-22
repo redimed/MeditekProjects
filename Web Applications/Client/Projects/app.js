@@ -15,7 +15,7 @@ var app = angular.module('app', [
     "app.unAuthentication",
     "app.authentication",
     "angularFileUpload"
-    
+
 ]);
 
 app
@@ -57,7 +57,8 @@ app
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
         // END CORS PROXY
         //RESTANGULAR DEFAULT
-        RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3005");
+        // RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3005");
+        RestangularProvider.setBaseUrl("http://telehealthvietnam.com.vn:3005");
         $urlRouterProvider.otherwise('');
         $stateProvider.state('sys', {
             url: '',
@@ -76,7 +77,26 @@ app
             }
         });
     })
-    .run(function($rootScope, $cookies, $window, $state, Restangular, toastr) {
+    .factory('settings', ['$rootScope', function($rootScope) {
+        // supported languages
+        var settings = {
+            layout: {
+                pageSidebarClosed: false, // sidebar menu state
+                pageContentWhite: true, // set page content layout
+                pageBodySolid: false, // solid body color state
+                pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
+            },
+            assetsPath: './theme/assets',
+            globalPath: './theme/assets/global',
+            layoutPath: './theme/assets/layouts/layout',
+            pagesPath  : './theme/assets/pages',
+        };
+
+        $rootScope.settings = settings;
+
+        return settings;
+    }])
+    .run(function($rootScope, $cookies, $window, $state, Restangular, toastr, settings) {
         // RESTANGULAR ERROR HANDLING
         // Restangular.setErrorInterceptor(function (response) {
         //     if (response.status == 401) {
@@ -101,6 +121,10 @@ app
         //     return false;
         // });
         // END RESTANGULAR ERROR HANDLING
+
+        $rootScope.$state = $state; // state to be accessed from view
+        $rootScope.$settings = settings; // state to be accessed from view
+
         $rootScope.$on('$stateChangeSuccess', function(e, toState, toParams, fromState, fromParams) {
             if (!$cookies.get("userInfo")) {
                 if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register") {
@@ -123,8 +147,12 @@ app
         })
 
         $rootScope.$on('$viewContentLoaded', function() {
-            Metronic.initAjax();
-            ComponentsDropdowns.init(); // init todo page
-            ComponentsPickers.init(); // init todo page
+            // App.initAjax();
+            App.initComponents(); // init core components
+            ComponentsSelect2.init(); // init todo page
+            ComponentsBootstrapSelect.init(); // init todo page
+            ComponentsDateTimePickers.init(); // init todo page
+            FormWizard.init(); // form step
         });
     })
+    

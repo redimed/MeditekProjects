@@ -121,7 +121,7 @@ Chats
     }
 
     .btn-cont {
-        margin-top: -42px;
+        margin-top: -41px;
         position: relative;
         float: right;
         width: 44px;
@@ -139,16 +139,18 @@ Chats
         }
 
         .btn {
-            margin-top: 8px;
+            margin-top: 7px;
         }
 
         &:hover {
             .arrow {
                 border-right-color: #0362fd;
+                transition: all 0.3s;
             }
 
             .btn {
                 background-color: #0362fd;
+                transition: all 0.3s;
             }
         }
     }

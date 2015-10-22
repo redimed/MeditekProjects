@@ -6,6 +6,8 @@ Customized Bootstrap Dropdowns
 Dropdowns
 ***/
 
+$color-blue:                        #009dc7 !default;
+
 .dropup.open,
 .dropdown.open {
     > .dropdown-toggle {
@@ -17,24 +19,25 @@ Dropdowns
 Dropdown Menu
 ***/
 
+@if $theme-type == "default" { 
+/*rtl:ignore*/
 .dropdown-menu {
+    box-shadow: 5px 5px rgba(#666, 0.1);
+}
+}
+
+.dropdown-menu {
+    left: 0#{'/*rtl:auto*/'};
     min-width: 175px;
     position: absolute;
-    top: 100%;
-    left: 0;
     z-index: 1000;
     display: none;
     float: left;
     list-style: none;
     text-shadow: none;
     padding: 0px;  
-    background-color: #ffffff; 
-
-    @if $theme-type == "default" { 
-        margin: 10px  0px 0px 0px; 
-        box-shadow: 5px 5px rgba(#666, 0.1);
-    }
-    
+    background-color: #ffffff;  
+    margin: 10px  0px 0px 0px; 
     border: 1px solid #eee;
     font-family: $font-family-default;  
 
@@ -44,50 +47,59 @@ Dropdown Menu
         background: #f1f3f6;
     }
 
-    li.dropdown-header {
+    li.header {
         padding: 8px 14px 2px 14px;  
     }
     
-    li > a {
-        padding: 8px 14px;
-        color: #555;
-        text-decoration: none;
-        display: block;
-        clear: both;
-        font-weight: 300;
-        line-height: 18px;
-        white-space: nowrap;
+    > li {
+        > a {
+            padding: 8px 16px;
+            color: lighten(#555, 10%);
+            text-decoration: none;
+            display: block;
+            clear: both;
+            font-weight: 300;
+            line-height: 18px;
+            white-space: nowrap;
 
-        > [class^="fa-"],
-        > [class*=" fa-"] {
-            color: #888; 
+            > [class^="fa-"],
+            > [class*=" fa-"] {
+                color: #888; 
+            }
+
+            > [class^="icon-"],  
+            > [class*=" icon-"] {
+                color: #666;
+            }
+
+            > [class^="glyphicon-"],
+            > [class*=" glyphicon-"] {
+                color: #888;
+            }
         }
-
-        > [class^="icon-"],
-        > [class*=" icon-"] {
-            color: #666;
+    
+        &:hover,
+        &.active,
+        &.active:hover {
+            > a {
+                text-decoration: none;
+                background-image: none;
+                background-color: lighten(#eee, 3%);
+                color: #555;
+                filter:none;
+            }
         }
-
-        > [class^="glyphicon-"],
-        > [class*=" glyphicon-"] {
-            color: #888;
-        }
-    }
-
-    li > a:hover, 
-    .active > a, 
-    .active > a:hover {
-      text-decoration: none;
-      background-image: none;
-      background-color: lighten(#eee, 3%);
-      color: #555;
-      filter:none;
     }
 
     &.bottom-up {
         top: auto;
         bottom: 100%;
         margin-bottom: 2px;
+
+        &:before,
+        &:after {
+            display: none;
+        }
     }
 
     > li:first-child:hover > a {
@@ -96,6 +108,13 @@ Dropdown Menu
 
     > li:last-child:hover > a {
         border-radius: 0px 0px $general-border-radius $general-border-radius;
+    }
+}
+
+// hoverable dropdown menu
+.dropdown-hover:hover {
+    > .dropdown-menu {
+        display: block;
     }
 }
 
@@ -170,6 +189,11 @@ Dropdown Menu
     }
 }
 
+.dropdown-toggle {
+    &:after {
+        display: none;
+    }
+}
 
 /* Dropdown submenu support for Bootsrap 3 */
 .dropdown-submenu {
@@ -279,7 +303,7 @@ Dropdown Checkboxes
 ***/
 
 .dropdown-content {
-    padding:5px;
+    padding: 10px;
 
     form {
         margin:0;
@@ -309,8 +333,14 @@ Dropdown Checkboxes
 }
 
 @if $theme-type == "material-design" {
+    /*rtl:ignore*/
     .dropdown-menu {
-        @extend .md-shadow-z-2-i;        
+        @extend .md-shadow-z-2-i;      
+    }
+}
+
+@if $theme-type == "material-design" {
+    .dropdown-menu {
         border: 0 !important;
         border-radius: $general-border-radius !important;     
         margin: 0;     
@@ -341,5 +371,128 @@ Dropdown Checkboxes
             @include ease-out(1500ms, opacity, 0.1ms);  
             @include opacity(1);
         }
+    }
+}
+
+/*--------------------------------------------------
+    [Dropdown Menu v2]
+----------------------------------------------------*/
+
+.dropdown-menu-v2 {
+    top: 100%;
+    right: 0;
+    z-index: 1001;
+    display: none;
+    float: left;
+    min-width: 225px;
+    padding: 20px 0;
+    margin: 25px 0 0;
+    font-size: 13px;
+    text-align: left;
+    list-style: none;
+    position: absolute;
+    background: #242b31;
+    @include border-radius(2px);
+    -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+    @include cubic-transition($delay: 0, $duration:300ms, $property: (all));
+
+    &:before {
+        top: -10px;
+        right: 0;
+        width: 0;
+        height: 0;
+        content: ' ';
+        position: absolute;
+        border-style: solid;
+        display: inline-block;
+        border-width: 0 0 15px 15px;
+        border-color: transparent transparent #242b31 transparent;
+    }
+    
+    > li {    
+        > a {
+            clear: both;
+            color: #606e7a;
+            display: block;
+            font-weight: 600;
+            padding: 8px 20px;
+            position: relative;
+            white-space: nowrap;
+            line-height: 1.42857143;
+            text-transform: uppercase;
+
+            &:hover,
+            &:focus {
+                background: #21282e;
+                text-decoration: none;
+                color: $color-blue;
+            }
+        }
+    }
+    
+    .active,
+    .active,
+    .active {
+        > a,
+        > a:hover,
+        > a:focus {
+            outline: 0;
+            text-decoration: none;
+            background-color: #21282e;
+            color: $color-blue;
+        }
+    }
+    
+    .disabled,
+    .disabled,
+    .disabled { 
+        > a,
+        > a:hover,
+        > a:focus {
+            color: $color-blue;
+        }
+    }
+    
+    .disabled,
+    .disabled {
+        > a:hover,
+        > a:focus {
+            text-decoration: none;
+            cursor: not-allowed;
+            background-color: transparent;
+            background-image: none;
+        }
+    }
+
+    .divider {
+        height: 1px;
+        margin: 9px 0;
+        overflow: hidden;
+        background: #2e353c;
+    }
+
+    .badge {
+        top: 8px;
+        right: 10px;
+        position: absolute;
+    }
+}
+
+.dropdown-menu-v2.pull-right {
+    right: 0;
+    left: auto;
+}
+
+.open {
+    > .dropdown-menu-v2 {
+        display: block;
+    }
+}
+
+.pull-right {
+    > .dropdown-menu-v2 {
+        right: 0;
+        left: auto;
     }
 }

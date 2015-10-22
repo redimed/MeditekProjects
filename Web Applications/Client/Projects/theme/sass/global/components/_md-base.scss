@@ -62,35 +62,49 @@
     position: absolute;
     background: rgba(0,0,0,.2);
     border-radius: 50%;
-
+    opacity: 0;
     -webkit-animation: scale(0);
     -moz-transform: scale(0);
     transform: scale(0);
   
     &.md-click-animate {   
-        -webkit-animation: mdClickEffect 0.55s linear;
-        -moz-animation: mdClickEffect 0.55s linear;
-        animation: mdClickEffect 0.55s linear;
+        -webkit-animation: mdClickEffect 0.65s linear;
+        -moz-animation: mdClickEffect 0.65s linear;
+        animation: mdClickEffect 0.65s linear;
     }
 }
 
 @-webkit-keyframes mdClickEffect {
+  0% {     
+     opacity: 1;        
+     -webkit-transform: scale(0);
+  }
     100% {     
-     opacity: 0;        
-     -webkit-transform: scale(1.5);
+     opacity: 0 !important;        
+     -webkit-transform: scale(2.5);
   }
 }
 
 @-moz-keyframes mdClickEffect {
+   0% {     
+     opacity: 1;        
+     -webkit-transform: scale(0);
+  }  
+ 
     100% {
-     opacity: 0; 
-     -moz-transform: scale(2.5);
+     opacity: 0 !important; 
+     -moz-transform: scale(2.5); 
   }
 }
 
 @keyframes mdClickEffect {
+   0% {     
+     opacity: 1;        
+     -webkit-transform: scale(0);
+  }
+ 
     100% {
-     opacity: 0; 
+     opacity: 0 !important; 
      transform: scale(2.5);
   }
 }

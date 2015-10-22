@@ -63,6 +63,9 @@ module.exports = {
                         var fileUID = UUIDService.Create();
                         var fileName = decodeURIComponent(uploadedFiles[0].filename);
                         var fileExt = uploadedFiles[0].filename.split('.')[1];
+                        var fileType = params.fileType;
+                        if (!_.contains(HelperService.const.imageExt, fileExt)) fileType = HelperService.const.fileType.document;
+                        if (_.contains(HelperService.const.imageExt, fileExt) && fileType == HelperService.const.fileType.document) fileType = HelperService.const.fileType.image;
                         HelperService.EncryptFile({
                             inputFile: uploadedFiles[0].fd,
                             outputFile: uploadDir + fileUID,
@@ -98,27 +101,14 @@ module.exports = {
                                         Description: !params.description ? null : params.description,
                                         FileName: fileName,
                                         FileLocation: 'upload_files/' + fileUID,
-                                        FileType: params.fileType,
+                                        FileType: fileType,
                                         FileExtension: fileExt,
                                         Enable: 'Y'
                                     }, {
                                         transaction: t
                                     }).then(function(file) {
-                                        if (params.fileType == HelperService.const.fileType.image) {
-                                            if (!params.bodyPart) {
-                                                var err = new Error("FileUpload.UploadFile.Error");
-                                                err.pushError("Invalid Params!");
-                                                throw err;
-                                            }
-                                            return medicalImageCheck(params.bodyPart, file.ID);
-                                        } else if (params.fileType == HelperService.const.fileType.document) {
-                                            if (!params.docType) {
-                                                var err = new Error("FileUpload.UploadFile.Error");
-                                                err.pushError("Invalid Params!");
-                                                throw err;
-                                            }
-                                            return documentCheck(params.docType, file.ID);
-                                        }
+                                        if (fileType == HelperService.const.fileType.image) return medicalImageCheck(!params.bodyPart ? null : params.bodyPart, file.ID);
+                                        else if (fileType == HelperService.const.fileType.document) return documentCheck(!params.docType ? null : params.docType, file.ID);
                                     })
                                 }
                                 return startTransaction().then(function(data) {
@@ -206,9 +196,9 @@ module.exports = {
             })
         })
     },
-    EnableFile: function(req,res){
+    EnableFile: function(req, res) {
         var params = req.params.all();
-        if(params.isEnable != 'true' && params.isEnable != 'false'){
+        if (params.isEnable != 'true' && params.isEnable != 'false') {
             var err = new Error("FileUpload.EnableFile.Error");
             err.pushError("Invalid Params!");
             return res.serverError(ErrorWrap(err));
@@ -222,7 +212,7 @@ module.exports = {
             if (file) {
                 file.update({
                     Enable: isEnable ? 'Y' : 'N'
-                }).then(function(){
+                }).then(function() {
                     return res.ok({
                         status: 'success'
                     })

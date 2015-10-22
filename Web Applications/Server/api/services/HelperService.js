@@ -143,7 +143,7 @@ module.exports = {
             avatar: 'ProfileImage',
             signature: 'Signature'
         },
-        imageExt: ['jpg','png','gif','webp','tif','bmp','psd','jxr']
+        imageExt: ['jpg','png','gif','webp','tif','bmp','psd','jxr'],
 
         verificationCodeLength:6,
         

@@ -1,5 +1,4 @@
 node_modules/*
 upload_files/*
 temp/*
-logs/*
 config/connections.js

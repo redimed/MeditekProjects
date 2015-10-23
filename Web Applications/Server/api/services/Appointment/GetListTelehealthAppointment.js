@@ -11,7 +11,7 @@ module.exports = function(data) {
                 required: false,
                 include: [{
                     model: PatientAppointment,
-                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'PhoneNumber'],
+                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'WorkPhoneNumber'],
                     required: false,
                     where: pagination.filterPatientAppointment
                 }],

@@ -50,6 +50,7 @@
     "string": "^3.3.1",
     "twilio": "^2.5.1",
     "underscore": "^1.8.3",
+    "winston": "https://registry.npmjs.org/winston/-/winston-0.8.3.tgz",
     "winston-mail": "^0.5.0"
   },
   "scripts": {

@@ -14,8 +14,8 @@ module.exports = function(appointmentUID) {
                 include: [{
                     model: PatientAppointment,
                     attributes: ['UID', 'FirstName', 'MiddleName', 'LastName',
-                        'DOB', 'Email', 'PhoneNumber', 'Address', 'Suburb', 'Postcode',
-                        'Email', 'PhoneNumber', 'HomePhoneNumber'
+                        'DOB', 'Email', 'Address1', 'Address2', 'Suburb', 'Postcode',
+                        'Email', 'WorkPhoneNumber', 'HomePhoneNumber'
                     ],
                     required: false,
                 }, {

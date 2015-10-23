@@ -1,0 +1,20 @@
+<ng-transclude ng-show='false'></ng-transclude>
+
+<script type="text/ng-template" id="msg-dialog">
+	<div class="modal-body">	
+		<p ng-bind-html="msg"></p>
+		<div ng-if="isYesNo">
+			<button ng-click="yes();">Yes</button>
+			<button ng-click="no();">No</button>
+		</div>
+		<div ng-if="isYesNoCancel">
+			<button ng-click="yes();">Yes</button>
+			<button ng-click="no();">No</button>
+			<button ng-click="cancel();">Cancel</button>
+		</div>
+		<div ng-if="isOkCancel">
+			<button ng-click="ok();">Ok</button>
+			<button ng-click="cancel();">Cancel</button>
+		</div>
+	</div>
+</script>

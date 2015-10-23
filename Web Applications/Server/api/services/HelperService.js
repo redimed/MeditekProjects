@@ -131,12 +131,19 @@ module.exports = {
             website: 'WEB',
             android: 'ARD'
         },
+
+        verificationMethod:{
+            token:'TOKEN',
+            code:'CODE'
+        },
+
         roles: {
             admin: 'ADMIN',
             assistant: 'ASSISTANT',
             internalPractitioner: 'INTERNAL_PRACTITIONER', //DOCTOR
             externalPractitioner: 'EXTERTAL_PRACTITIONER', //GP
             patient: 'PATIENT',
+            clinicTelehealth:'CLINIC_TELEHEALTH'
         },
         fileType: {
             image: 'MedicalImage',

@@ -7,8 +7,23 @@ module.exports = {
 	CreatePatient : function(req, res) {
 		var data = req.body.data;
 		Services.Patient.CreatePatient(data)
-		.then(function(info){
-			res.ok({status:200, message:"success",data:info.UID});
+		.then(function(patient){
+			if(patient!==undefined && patient!==null && patient!=='' && patient.length!==0){
+				var info = {
+					UID       : patient.UID,
+					FirstName : patient.FirstName,
+					LastName  : patient.LastName,
+					DOB       : patient.DOB,
+					Address1  : patient.Address1,
+					Address2  : patient.Address2
+				};
+				res.ok({status:200, message:"success",data:info});
+			}
+			else{
+				var err = new Error("SERVER ERROR");
+				err.pushErrors("Server Error");
+				res.notFound({status:404,message:ErrorWrap(err)});
+			}
 		})
 		.catch(function(err){
 			res.serverError({status:500, message:ErrorWrap(err)});
@@ -30,8 +45,11 @@ module.exports = {
 				else
 					res.ok({status:200,message:"success",data:info.rows,count:info.count});
 			}
-			else
-				res.notFound({status:404,message:"not Found"});
+			else{
+				var err = new Error("SERVER ERROR");
+				err.pushErrors("Server Error");
+				res.notFound({status:404,message:ErrorWrap(err)});
+			}
 		})
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});
@@ -50,8 +68,11 @@ module.exports = {
 		.then(function(result){
 			if(result[0] > 0)
 				res.ok({status:200,message:"success"});
-			else
-				res.notFound({status:404,message:"not Found"});
+			else{
+				var err = new Error("SERVER ERROR");
+				err.pushErrors("Server Error");
+				res.notFound({status:404,message:ErrorWrap(err)});
+			}
 		})
 		.catch(function(err){
 			return res.serverError({status:500,message:ErrorWrap(err)});
@@ -70,7 +91,9 @@ module.exports = {
 			if(info!=null && info!=undefined && info!=''){
 				res.ok({status:200, message:"success", data:info});
 			} else {
-				res.notFound({status:404, message:"not Found"});
+				var err = new Error("SERVER ERROR");
+				err.pushErrors("Server Error");
+				res.notFound({status:404,message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){
@@ -90,7 +113,9 @@ module.exports = {
 			if(info!=null && info!=undefined && info!='' && info.length!=0){
 				res.ok({status:200, message:"success", data:info});
 			} else {
-				res.notFound({status:404, message:"not Found"});
+				var err = new Error("SERVER ERROR");
+				err.pushErrors("Server Error");
+				res.notFound({status:404,message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){
@@ -111,8 +136,11 @@ module.exports = {
 		}
 		Services.Patient.UpdatePatient(patientInfo)
 		.then(function(result){
-			if(result===0)
-				res.notFound({status:404, message:"not Found"});
+			if(result===0){
+				var err = new Error("SERVER ERROR");
+				err.pushErrors("Server Error");
+				res.notFound({status:404,message:ErrorWrap(err)});
+			}
 			else
 				res.ok({status:200,message:"success"});
 		})
@@ -132,8 +160,11 @@ module.exports = {
 		.then(function(result){
 			if(result!==undefined && result!==null && result!=='')
 				res.ok({status:200,message:"success",data:result.rows,count:result.count});
-			else
-				res.notFound({status:404,message:"not found"});
+			else{
+				var err = new Error("SERVER ERROR");
+				err.pushErrors("Server Error");
+				res.notFound({status:404,message:ErrorWrap(err)});
+			}
 		})
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});
@@ -153,7 +184,9 @@ module.exports = {
 				res.ok({status:200,message:"success",data:result});
 			}
 			else{
-				res.notFound({status:404,message:"not found"});
+				var err = new Error("SERVER ERROR");
+				err.pushErrors("Server Error");
+				res.notFound({status:404,message:ErrorWrap(err)});;
 			}
 		})
 		.catch(function(err){
@@ -166,8 +199,11 @@ module.exports = {
 		.then(function(result){
 			if(result!==undefined && result!==null && result!=='' && result.length!==0)
 				res.ok({status:200,message:"success",data:result});
-			else
-				res.notFound({status:404,message:"not found"});
+			else{
+				var err = new Error("SERVER ERROR");
+				err.pushErrors("Server Error");
+				res.notFound({status:404,message:ErrorWrap(err)});
+			}
 		})
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});

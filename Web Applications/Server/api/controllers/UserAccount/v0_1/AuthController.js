@@ -41,12 +41,25 @@ module.exports = {
                 {
                     //tạo token
                     var token = jwt.sign(user, secret, { expiresInMinutes: 60*24 });
-                    res.ok({
-                        status:'success',
-                        message: info.message,
-                        user: user,
-                        token:token
-                    });
+                    if(user.Activated=='Y')
+                    {
+                        res.ok({
+                            status:'success',
+                            message: info.message,
+                            user: user,
+                            token:token
+                        });
+                    }
+                    else
+                    {
+                        res.notActivated({
+                            status:'success',
+                            message: info.message,
+                            user: user,
+                            token:token
+                        });
+                    }
+                    
                 }
                 
             });

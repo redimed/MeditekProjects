@@ -8,23 +8,23 @@ module.exports = function(data) {
             include: [{
                 model: TelehealthAppointment,
                 attributes: ['UID', 'RefName', 'RefDate', 'Correspondence'],
-                required: false,
+                required: (HelperService.CheckExistData(pagination.filterPatientAppointment) && !_.isEmpty(pagination.filterPatientAppointment)),
                 include: [{
                     model: PatientAppointment,
-                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'PhoneNumber'],
-                    required: false,
+                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'WorkPhoneNumber'],
+                    required: (HelperService.CheckExistData(pagination.filterPatientAppointment) && !_.isEmpty(pagination.filterPatientAppointment)),
                     where: pagination.filterPatientAppointment
                 }],
                 where: pagination.filterTelehealthAppointment
             }, {
                 model: Doctor,
                 attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Email', 'HomePhoneNumber', 'WorkPhoneNumber'],
-                required: false,
+                required: (HelperService.CheckExistData(pagination.filterDoctor) && !_.isEmpty(pagination.filterDoctor)),
                 where: pagination.filterDoctor
             }, {
                 model: Patient,
                 attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB'],
-                required: false,
+                required: (HelperService.CheckExistData(pagination.filterPatient) && !_.isEmpty(pagination.filterPatient)),
                 where: pagination.filterPatient,
                 include: [{
                     model: UserAccount,

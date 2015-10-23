@@ -1,0 +1,83 @@
+<div class="modal-content">
+	<div class="modal-header my-modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="modal_close()"></button>
+		<h4 class="modal-title"><b><i class="glyphicon glyphicon-edit"></i> User Detail</b></h4>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="Username" class="col-md-4 control-label">Username</label>
+						<div class="col-md-6">
+							<div class="input-icon">
+								<i class="fa fa-user"></i>
+								<input type="text" class="form-control" id="Username" placeholder="Username">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Email" class="col-md-4 control-label">Email</label>
+						<div class="col-md-6">
+							<div class="input-icon">
+								<i class="fa fa-envelope"></i>
+								<input type="text" class="form-control" id="Email" placeholder="Email">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Phonenumber" class="col-md-4 control-label">Phonenumber</label>
+						<div class="col-md-6">
+							<div class="input-icon">
+								<i class="fa fa-phone"></i>
+								<input type="text" class="form-control" id="Phonenumber" placeholder="Phonenumber">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-4 col-md-8">
+							<button type="submit" class="btn red"><i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Reset Password</button>
+						</div>
+					</div>
+					<hr>
+					<div class="form-group">
+						<label class="control-label col-md-5">Active</label>
+						<div class="col-md-6">
+							<input type="checkbox" 
+								class="make-switch" 
+								checked 
+								data-on-color="success" 
+								data-off-color="danger"
+								data-on-text="<i class='fa fa-check'></i>"
+								data-off-text="<i class='fa fa-times'></i>">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-5">Enable</label>
+						<div class="col-md-6">
+							<input type="checkbox" 
+								class="make-switch" 
+								checked 
+								data-on-color="primary" 
+								data-off-color="danger"
+								data-on-text="<i class='fa fa-check'></i>"
+								data-off-text="<i class='fa fa-times'></i>">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn default" data-dismiss="modal" ng-click="close()"><i class="icon-action-undo"></i> Close</button>
+		<button type="button" class="btn yellow"><i class="glyphicon glyphicon-refresh"></i> Reset</button>
+		<button type="button" class="btn green"><i class="glyphicon glyphicon-save"></i> Save</button>
+	</div>
+</div>
+
+<script>
+	Metronic.initAjax();
+	ComponentsPickers.init(); // init todo page
+	Portfolio.init(); // coi hinh
+	ComponentsDropdowns.init(); // init todo page
+</script>

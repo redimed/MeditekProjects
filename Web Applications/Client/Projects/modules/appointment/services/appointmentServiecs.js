@@ -8,9 +8,18 @@ angular.module("app.authentication.appointment.services",[])
 			var loadListAppointment = api.all("appointment-telehealth-list");
 			return loadListAppointment.post({data:data});
 		};
-		//Get Detail Appointment
+		//
+		services.upDateApppointment = function(data){
+			var upDateApppointment = api.all("appointment-telehealth-update");
+			return upDateApppointment.post(data);
+		};
+		//Get Image Appointment
 		services.getDetailApppointment = function(data){
 			return api.one('appointment-telehealth-detail/'+ data).get();
+		};
+		//Get Detail Appointment
+		services.getImage = function(){
+			return "http://192.168.1.2:3005/api/downloadFile/400/"
 		};
 		services.ListAppointment = function(){
 			return api.one('appointment-telehealth-list').get();

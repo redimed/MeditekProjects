@@ -81,14 +81,14 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
-                is:/^[a-zA-Z]{0,255}$/
+                is:/^[a-zA-Z0-9\s]{0,255}$/
             }
         },
         Address2: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
-                is:/^[a-zA-Z]{0,255}$/
+                is:/^[a-zA-Z0-9\s]{0,255}$/
             }
         },
         Suburb: {

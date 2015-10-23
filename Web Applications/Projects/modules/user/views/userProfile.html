@@ -1,0 +1,100 @@
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">User Profile</h3>
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<a ui-sref="authentication.user.list">User Profile</a>
+		</li>
+		<li>
+			<i class="fa fa-angle-right"></i>
+			<b>User Profile</b>
+		</li>
+	</ul>
+</div>
+<!-- END PAGE HEADER-->
+
+<div class="portlet light bordered">
+	<div class="portlet-title">
+		<div class="caption font-green">
+			<i class="icon-list font-green"></i>
+			<span class="caption-subject bold uppercase"> User Profile</span>
+		</div>
+	</div>
+	<div class="portlet-body">
+		<form class="form-horizontal" role="form" ng-show="toggle == true">
+			<div class="form-group">
+				<label for="Username" class="col-md-4 control-label">Username</label>
+				<div class="col-md-4">
+					<div class="input-icon">
+						<i class="fa fa-user"></i>
+						<input type="text" class="form-control" id="Username" placeholder="Username" value="Taylor" disabled>
+						<!-- <p class="help-block">Show error</p> -->
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="Email" class="col-md-4 control-label">Email</label>
+				<div class="col-md-4">
+					<div class="input-icon">
+						<i class="fa fa-envelope"></i>
+						<input type="text" class="form-control" id="Email" placeholder="Email" value="taylor@gmail.com" disabled>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="Phonenumber" class="col-md-4 control-label">Phonenumber</label>
+				<div class="col-md-4">
+					<div class="input-icon">
+						<i class="fa fa-phone"></i>
+						<input type="text" class="form-control" id="Phonenumber" placeholder="Phonenumber" value="+61 2424 2424" disabled>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-4 col-md-8">
+					<button type="submit" class="btn green" ng-click="changePass()">
+						<i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Change Password
+					</button>
+				</div>
+			</div>
+		</form>
+		<form class="form-horizontal" role="form" ng-show="toggle == false">
+			<div class="form-group">
+				<label for="Oldpassword" class="col-md-4 control-label">Old Password</label>
+				<div class="col-md-4">
+					<div class="input-icon">
+						<i class="fa fa-key"></i>
+						<input type="password" class="form-control" id="Oldpassword" placeholder="Old Password">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="Newpassword" class="col-md-4 control-label">New Password</label>
+				<div class="col-md-4">
+					<div class="input-icon">
+						<i class="fa fa-key"></i>
+						<input type="password" class="form-control" id="Newpassword" placeholder="New Password">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="ComfirmNewPassword" class="col-md-4 control-label">Comfirm New Password</label>
+				<div class="col-md-4">
+					<div class="input-icon">
+						<i class="fa fa-key"></i>
+						<input type="password" class="form-control" id="ComfirmNewPassword" placeholder="Comfirm New Password">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-4 col-md-8">
+					<button type="submit" class="btn default" ng-click="backProfile()">
+						<i class="icon-action-undo"></i>&nbsp;&nbsp;Back
+					</button>
+					<button type="submit" class="btn red"><i class="glyphicon glyphicon-save"></i>&nbsp;&nbsp;Save Change</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

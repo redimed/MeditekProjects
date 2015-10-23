@@ -87,3 +87,14 @@
 .sweet-alert .sa-icon.sa-success .sa-placeholder{
     border-radius: 50% !important;
 }
+
+/*giang*/
+.is-Choose {
+    background-color: #CCFFFF !important;
+}
+.is-Selected{
+    color: #31b0d5;
+}
+.is-notSelected{
+    color: red;
+}

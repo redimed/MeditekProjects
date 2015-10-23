@@ -9,7 +9,4 @@ app.controller('patientListCtrl', function($scope, $modal, PatientService){
 	];
 	$scope.isCreate=false;
 	$scope.isSelect=true;
-	$scope.aa = function(){
-		console.log($scope.uid);
-	}
 });

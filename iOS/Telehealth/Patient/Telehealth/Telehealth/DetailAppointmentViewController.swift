@@ -105,7 +105,6 @@ class DetailAppointmentViewController: UIViewController,UIAlertViewDelegate,UIIm
             self.dismissViewControllerAnimated(true, completion: nil)
             
         }
-//        print(info)
     }
     func imagePickerControllerDidCancel(picker: UIImagePickerController)
     {
@@ -123,8 +122,8 @@ class DetailAppointmentViewController: UIViewController,UIAlertViewDelegate,UIIm
 
     @IBAction func UploadActionButton(sender: AnyObject) {
         
-        if let patientUID = defaults.valueForKey("patientUID") as? String {
-            appointmentApi.uploadImage(imageView.image!,PatientUID: patientUID)
+        if let userUID = defaults.valueForKey("userUID") as? String {
+            appointmentApi.uploadImage(imageView.image!,userUID: userUID)
         }
 
        

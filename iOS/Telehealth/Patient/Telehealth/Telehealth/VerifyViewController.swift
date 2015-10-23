@@ -70,16 +70,18 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                     let uid = response["uid"].string
                     let token = response["token"].string
                     let patientUID = response["patientUID"].string
+                    let userUID = response["userUID"].string
                     
                     //Save activated in localstorage
                     defaults.setValue("Verified", forKey: "verifyUser")
                     defaults.setValue(uid, forKey: "uid")
                     defaults.setValue(token, forKey: "token")
                     defaults.setValue(patientUID, forKey: "patientUID")
+                    defaults.setValue(userUID, forKey: "userUID")
                     defaults.synchronize()
                     
                     //Change to home view by segue
-                    self.performSegueWithIdentifier("VerifyToProfileSegue", sender: self)
+                    self.performSegueWithIdentifier("VerifyToHomeSegue", sender: self)
                 }else {
                     self.view.hideLoading()
                     if response["TimeOut"] ==  "Request Time Out" {

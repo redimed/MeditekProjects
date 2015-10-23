@@ -13,11 +13,13 @@ class FAQsViewController: UIViewController {
   
         override func viewDidLoad() {
         super.viewDidLoad()
-            let localfilePath = NSBundle.mainBundle().URLForResource("FAQs", withExtension: "html");
-            let myRequest = NSURLRequest(URL: localfilePath!);
-            webView.loadRequest(myRequest);
+        let localfilePath = NSBundle.mainBundle().URLForResource("FAQs", withExtension: "html");
+        let myRequest = NSURLRequest(URL: localfilePath!);
+        webView.loadRequest(myRequest);
         
     }
+    
+ 
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

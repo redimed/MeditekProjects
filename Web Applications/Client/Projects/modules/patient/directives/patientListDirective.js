@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.patient.list.directive',[]);
-app.directive('patientList', function(PatientService, $modal, toastr,$cookies){
+app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies){
 	return {
 		scope :{
 			items:'=onItem',
@@ -17,7 +17,16 @@ app.directive('patientList', function(PatientService, $modal, toastr,$cookies){
 				{field:"UserAccount",name:"Mobile"},
 				{field:"Email",name:"Email"}
 			];
-			scope.items = scope.items?scope.items:scope.itemDefault;
+			scope.EnableChoose = [
+				{id:null,name:"All"},
+				{id:"Y",name:"Enable"},
+				{id:"N",name:"Disable"}
+			];
+			scope.items = angular.isArray(scope.items)?scope.items:scope.itemDefault;
+			for(var i = 0; i < scope.items.length; i++){
+				if(scope.items[i].field=="Enable")
+					scope.items.splice(i,1);
+			}
 			scope.isShowCreateButton = scope.isShowCreateButton?scope.isShowCreateButton:true;
 			var userInfo=$cookies.getObject("userInfo");
 			scope.enableCreate=false;
@@ -48,6 +57,7 @@ app.directive('patientList', function(PatientService, $modal, toastr,$cookies){
 	                Search:null,
 	                order: null
 	            };
+	            scope.search.Enable = null;
 	            scope.searchObjectMap = angular.copy(scope.searchObject);
 	            scope.loadList(scope.searchObjectMap);
 	        };
@@ -64,7 +74,7 @@ app.directive('patientList', function(PatientService, $modal, toastr,$cookies){
 
 			scope.clickOpen = function(patientUID){
 				//scope.ID = patientUID;
-				var modalInstance = $modal.open({
+				var modalInstance = $uibModal.open({
 					templateUrl: 'patientListmodal',
 					controller: function($scope){
 						$scope.ID = patientUID;

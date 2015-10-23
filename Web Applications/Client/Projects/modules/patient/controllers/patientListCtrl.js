@@ -1,7 +1,7 @@
 var app = angular.module('app.authentication.patient.list.controller', [
 ]);
 
-app.controller('patientListCtrl', function($scope, $modal, PatientService){
+app.controller('patientListCtrl', function($scope, $uibModal, PatientService){
 	$scope.item =[
 		{field:"FirstName",name:"First Name"},
 		{field:"LastName",name:"Last Name"},

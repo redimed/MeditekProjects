@@ -4,7 +4,7 @@ module.exports = {
         return {
             SiteID: data.SiteID,
             RequestDate: data.RequestDate,
-            Status: 'Watting for approve',
+            Status: 'Watting for approval',
             Enable: 'Y'
         };
     },
@@ -46,12 +46,29 @@ module.exports = {
         return {
             FirstName: data.FirstName,
             LastName: data.LastName,
+            MiddleName: data.MiddleName,
             DOB: data.DOB,
-            Address: data.Address,
+            Address1: data.Address1,
+            Address2: data.Address2,
             Suburb: data.Suburb,
             Postcode: data.Postcode,
             Email: data.Email,
-            PhoneNumber: data.PhoneNumber,
+            WorkPhoneNumber: data.WorkPhoneNumber,
+            HomePhoneNumber: data.HomePhoneNumber
+        };
+    },
+    PatientAppointmentUpdate: function(data) {
+        return {
+            FirstName: data.FirstName,
+            LastName: data.LastName,
+            MiddleName: data.MiddleName,
+            DOB: data.DOB,
+            Address1: data.Address1,
+            Address2: data.Address2,
+            Suburb: data.Suburb,
+            Postcode: data.Postcode,
+            Email: data.Email,
+            WorkPhoneNumber: data.WorkPhoneNumber,
             HomePhoneNumber: data.HomePhoneNumber
         };
     },

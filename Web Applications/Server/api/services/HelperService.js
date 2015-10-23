@@ -2,7 +2,6 @@ var crypto = require('crypto'),
     algorithm = 'aes-256-ctr';
 var zlib = require('zlib');
 var fs = require('fs');
-
 /*
 check data request
 input: request from client

@@ -1,10 +1,62 @@
 var app = angular.module('app.authentication.patient.create.directive',[]);
-app.directive('patientCreate',function(toastr, PatientService, $state, $timeout){
+app.directive('patientCreate',function(toastr, PatientService, $state, $timeout, $cookies){
 	return {
 		scope :{
 			appointment:'='
 		},
 		restrict: "EA",
+		controller:function($scope,FileUploader)
+		{
+			// Profile Image
+		    var uploader = $scope.uploader = new FileUploader({
+		    	url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	alias : 'uploadFile'
+		    });
+
+		    // FILTERS
+		    uploader.filters.push({
+		        name: 'customFilter',
+		        fn: function (item /*{File|FileLikeObject}*/, options) {
+		            return this.queue.length < 10;
+		        }
+		    });
+
+		    // CALLBACKS
+		    uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+		        // console.info('onWhenAddingFileFailed', item, filter, options);
+		    };
+		    uploader.onAfterAddingFile = function (fileItem) {
+		        // console.info('onAfterAddingFile', fileItem);
+		    };
+
+		    uploader.onAfterAddingAll = function (addedFileItems) {
+		        // console.info('onAfterAddingAll', addedFileItems);
+		    };
+		    uploader.onBeforeUploadItem = function (item) {
+		        // console.info('onBeforeUploadItem', item);
+		    };
+		    uploader.onProgressItem = function (fileItem, progress) {
+		        // console.info('onProgressItem', fileItem, progress);
+		    };
+		    uploader.onProgressAll = function (progress) {
+		        // console.info('onProgressAll', progress);
+		    };
+		    uploader.onSuccessItem = function (fileItem, response, status, headers) {
+		        // console.info('onSuccessItem', fileItem, response, status, headers);
+		    };
+		    uploader.onErrorItem = function (fileItem, response, status, headers) {
+		        // console.info('onErrorItem', fileItem, response, status, headers);
+		    };
+		    uploader.onCancelItem = function (fileItem, response, status, headers) {
+		        // console.info('onCancelItem', fileItem, response, status, headers);
+		    };
+		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
+		        // console.info('onCompleteItem', fileItem, response, status, headers);
+		    };
+		    uploader.onCompleteAll = function () {
+		        // console.info('onCompleteAll');
+		    };
+		},
 		link: function(scope, elem, attrs){
 			scope.data ={};
 			scope.er={};
@@ -21,6 +73,11 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout)
 				App.setAssetsPath('theme/assets/'); // Set the assets folder path	
 				FormWizard.init(); // form step
 			},0); 
+
+			
+
+
+
 			scope.checkPhone = function(data) {
 				PatientService.validateCheckPhone(data)
 				.then(function(success){
@@ -75,6 +132,20 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout)
 				.then(function(result){
 					return PatientService.createPatient(data)
 					.then(function(success){
+<<<<<<< HEAD
+						for (var i = 0; i < scope.uploader.queue.length; i++) 
+			            {
+			                var item=scope.uploader.queue[i];
+			                item.formData[i]={};
+			                item.formData[i].userUID = success.data.UserAccountUID;
+			                item.formData[i].fileType = 'ProfileImage';
+			            }
+						scope.uploader.uploadAll();
+						toastr.success("Create Successful!!","SUCCESS");
+						$state.go('authentication.patient.list',null, {
+		           			'reload': true
+		        		});
+=======
 						if (scope.appointment) {
 							scope.appointment.runIfSuccess(success.data);
 						}else{
@@ -84,6 +155,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout)
 			        		});
 						};
 						
+>>>>>>> f0d987c5c23007f10d50010cd80c52241d2c20c7
 					},function(err){
 						scope.er={};
 						scope.ermsg={};
@@ -104,7 +176,12 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout)
 						scope.ermsg[err[i].field] = err[i].message;
 					}
 				});
-			}
+			};
+
+			
+		    
+
+
 		},
 		templateUrl:"modules/patient/directives/template/patientCreate.html"
 	}

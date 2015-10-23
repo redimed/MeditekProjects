@@ -1,3 +1,5 @@
+
+
 <div class="modal-content">
 	<div class="modal-header my-modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="modal_close()"></button>
@@ -8,37 +10,37 @@
 		<!--  -->
 		<div class="tabbable">
 			<ul class="nav nav-tabs nav-tabs-lg">
-				<li class="active" ng-click="tab_name='';">
+				<li class="active" >
 					<a href="index.html#appointment" data-toggle="tab" aria-expanded="true">
 					Appointment
 					</a>
 				</li>
-				<li class="" ng-click="tab_name='';">
+				<li class="">
 					<a href="index.html#clinical_medical" data-toggle="tab" aria-expanded="false">
 					Clinical & Medical
 					</a>
 				</li>
-				<li class="" ng-click="tab_name='patient';">
+				<li class="">
 					<a href="index.html#patient" data-toggle="tab" aria-expanded="false">
 					Patient 
 					</a>
 				</li>
-				<li class="" ng-click="tab_name='';">
+				<li class="">
 					<a href="index.html#Treating_Practitioner" data-toggle="tab" aria-expanded="false">
 					Treating Practitioner 
 					</a>
 				</li>
-				<li class="" ng-click="tab_name='';">
+				<li class="">
 					<a href="index.html#medical_image" data-toggle="tab" aria-expanded="false">
 					Medical Images
 					</a>
 				</li>
-				<li class="" ng-click="tab_name='';">
+				<li class="">
 					<a href="index.html#referring_practitioner" data-toggle="tab" aria-expanded="false">
 						Referring Practitioner
 					</a>
 				</li>
-				<li class="" ng-click="tab_name='';">
+				<li class="">
 					<a href="index.html#present_complain_and_allergy" data-toggle="tab" aria-expanded="false">
 						Present Complain & Allergy
 					</a>
@@ -51,64 +53,64 @@
 						<div class="col-md-6">
 							<div class="row">
 								<div class="col-md-4">
-									<div class="form-group">
-										<label for="time" class="control-label">Duration Of Referral</label>
-										<div class="form-control">
-											<!-- <i class="fa fa-calendar-o"></i> -->
-											<!-- &nbsp;&nbsp; --><span class="label label-lg label-info">12 months </span>
-										</div>
-										<!-- <div class="form-control-focus"></div> -->
-									</div>
+									<div class="form-group form-md-line-input">
+					                    <input type="text" class="form-control" id="Username" value="12 months" disabled>
+					                    <label for="Username">Duration Of Referral</label>
+					                    <!-- <span class="help-block">Error Username</span> -->
+					                </div>
 								</div>
 								<div class="col-md-4">
-									<div class="form-group ">
-										<label for="time" class="control-label">Status</label>
-										<select class="bs-select form-control" data-show-subtext="true">
-											<option data-content=" <span class='label lable-sm label-warning'>Pending </span>">Pending</option>
-											<option data-content=" <span class='label lable-lg label-default'>Calling </span>">Calling</option>
-											<option data-content=" <span class='label lable-lg label-success'>Booked </span>">Booked</option>
-											<option data-content=" <span class='label lable-sm label-danger'>Cancel </span>">Cancel</option>
-											<option data-content=" <span class='label lable-sm label-info'>Finish </span>">Finish</option>
+									<div class="form-group form-md-line-input  ">
+										<select class="form-control" ng-model="appointment.Status" name="Status">
+											<option  value="Pending">Pending</option>
+											<option  value="Calling">Calling</option>
+											<option  value="Approved">Booked</option>
+											<option  value="Cancel">Cancel</option>
+											<option  value="Finish">Finish</option>
 										</select>
+										<label for="time" class="control-label">Status</label>
 									</div>
 								</div>
 								<div class="col-md-4">
-									<div class="form-group  ">
-										<label class="control-label">Request Date</label>
+									<div class="form-group form-md-line-input   ">
 										<div class="input-icon">
 											<i class="fa fa-calendar"></i>
-											<input type="text" class="form-control form-control-inline date-picker" value="01/01/2015">
+											<input type="text" class="form-control form-control-inline date-picker" ng-model="appointment.RequestDate" id="RequestDate">
+											<label class="control-label">Request Date</label>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-4">
-									<div class="form-group">
-										<label class="control-label">Appointment Date</label>
+									<div class="form-group form-md-line-input ">
 										<div class="input-icon">
 											<i class="fa fa-calendar"></i>
-											<input class="form-control form-control-inline date-picker" size="16" type="text" value="01/02/2015"/>
+											<input class="form-control form-control-inline date-picker" size="16" type="text" ng-model="ShowData.DateTimeAppointmentDate" id="DateTimeAppointmentDate"/>
+											<label class="control-label">Appointment Date</label>
 										</div>
 										
 									</div>
 								</div>
 								<div class="col-md-4">
-									<div class="form-group">
-										<label class="control-label">Appointment Time</label>
+									<div class="form-group form-md-line-input ">
 										<div class="input-icon">
-											<i class="fa fa-clock-o"></i>
-											<input type="text" class="form-control timepicker timepicker-default">
+										    <div class="input-icon">
+										        <i class="fa fa-clock-o"></i>
+										        <input type="text" class="form-control timepicker timepicker-default"> 
+										    </div>
+											<!-- <i class="fa fa-clock-o"></i>
+											<input type="text"  class="form-control" ng-model="ShowData.DateTimeAppointmentDateTime" id="DateTimeAppointmentDateTime">
+											<label class="control-label">Appointment Time</label> -->
 										</div>
 									</div>
 								</div>
 								<div class="col-md-4">
-									<div class="form-group">
+									<div class="form-group form-md-line-input ">
 										<div class="checkbox-list">
-											<label class="control-label">&nbsp;</label>
 											<div class="form-control" style="border: none;">
-												<input type="checkbox" class="icheck" id="Correspondence" checked="true"> 
-												<label for="Correspondence">Correspondence</label>
+												<input type="checkbox" ng-model="appointment.TelehealthAppointment.Correspondence" ng-true-value="'Y'" ng-false-value="'N'"><label for="Correspondence">Correspondence</label>
+												<label class="control-label">&nbsp;</label>
 											</div>
 											
 										</div>
@@ -117,29 +119,23 @@
 							</div>
 							<div class="row">
 								<div class="col-md-6">
-									<div class="form-group ">
+									<div class="form-group form-md-line-input  ">
+										<input type="text" class="form-control"  ng-model="ShowData.PatientsFullName" disabled="true">
 										<label class="control-label">Patient</label>
-										<!-- <div class="input-icon"> -->
-											<!-- <i class="fa fa-smile-o"></i> -->
-											<input type="text" class="form-control"  value="Hana Montana" disabled="true">
-										<!-- </div> -->
 									</div>
 								</div>
 								<div class="col-md-6">
-									<div class="form-group ">
+									<div class="form-group form-md-line-input  ">
+										<input type="text" class="form-control"  ng-model="appointment.TelehealthAppointment.RefName" disabled="true">
 										<label class="control-label">Referring Practitioner</label>
-										<!-- <div class="input-icon"> -->
-											<!-- <i class="icon-plus"></i> -->
-											<input type="text" class="form-control"  value="Shen Woo" disabled="true">
-										<!-- </div> -->
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-12">
-									<div class="form-group">
-										<label class="control-label">Fund</label>
-										<select class="form-control">
+									<div class="form-group form-md-line-input ">
+										<select class="form-control" ng-model="appointment.TelehealthAppointment.Fund">
+										    <option value=''>------Select Fund-----</option>
 											<option value='ACA'>ACA Health Benefits Fund</option>
 											<option value='AHM'>ahm Health Insurance</option>
 											<option value='AUF'>Australian Unity Health Limited</option>
@@ -176,6 +172,7 @@
 											<option value='QTU'>TUH</option>
 											<option value='WFD'>Westfund Limited</option>
 										</select>
+										<label class="control-label">Fund</label>
 									</div>
 								</div>
 							</div>
@@ -184,38 +181,42 @@
 							<div class="row" style="text-align: right;">
 								<h4 class="caption col-md-12"><b>Examination Required</b></h4>
 								<div class="col-md-12">
-									<div class="form-group">
+									<div class="form-group  ">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Private&nbsp;&nbsp;<input type="checkbox" checked="true" class="icheck">  
+												Private&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.Private" ng-true-value="'Y'" ng-false-value="'N'">
+											
+											
+											
 											</label>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group  ">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Public&nbsp;&nbsp;<input type="checkbox" class="icheck">  
+												Public&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.Public" ng-true-value="'Y'" ng-false-value="'N'">  
+											
 											</label>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group  ">
 										<div class="checkbox-list">
 											<label class="control-label">
-												DVA&nbsp;&nbsp;<input type="checkbox" class="icheck">  
+												DVA&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.DVA" ng-true-value="'Y'" ng-false-value="'N'">  
 											</label>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group  ">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Workers Comp&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+												Workers Comp&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.WorkersComp" ng-true-value="'Y'" ng-false-value="'N'">
 											</label>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group  ">
 										<div class="checkbox-list">
 											<label class="control-label">
-												MVIT&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+												MVIT&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.ExaminationRequired.MVIT" ng-true-value="'Y'" ng-false-value="'N'">  
 											</label>
 										</div>
 									</div>
@@ -226,38 +227,38 @@
 							<div class="row" style="text-align: right;">
 								<h4 class="caption col-md-12"><b>Preferred Plastic Surgeon</b></h4>
 								<div class="col-md-12">
-									<div class="form-group">
+									<div class="form-group  ">
 										<div class="checkbox-list">
 											<label class="control-label">
-												First Surgeon Available&nbsp;&nbsp;<input type="checkbox" class="icheck">  
+												First Surgeon Available&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferredPractitioners[0].Value" ng-true-value="'Y'" ng-false-value="'N'">
 											</label>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group  ">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Mr Hanh Nguyen&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+												Mr Hanh Nguyen&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferredPractitioners[1].Value" ng-true-value="'Y'" ng-false-value="'N'" id="123">
 											</label>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group ">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Mr Adrian Brooks&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+												Mr Adrian Brooks&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferredPractitioners[2].Value" ng-true-value="'Y'" ng-false-value="'N'"> 
 											</label>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group ">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Mr Dan Luo&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+												Mr Dan Luo&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferredPractitioners[3].Value" ng-true-value="'Y'" ng-false-value="'N'">
 											</label>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group ">
 										<div class="checkbox-list">
 											<label class="control-label">
-												Ms Sharon Chu&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+												Ms Sharon Chu&nbsp;&nbsp;<input type="checkbox" ng-model="appointment.TelehealthAppointment.PreferredPractitioners[4].Value" ng-true-value="'Y'" ng-false-value="'N'">
 											</label>
 										</div>
 									</div>
@@ -271,7 +272,7 @@
 					<div class="row">&nbsp;</div>
 					<!-- begin column 1 -->
 	            	<div class="form-group col-md-4">
-						<textarea class="form-control" rows="7">Clinical Details & Relevant Medical History</textarea>
+						<textarea class="form-control" rows="7" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Trauma.ClinicalNote'].Value"></textarea>
 						<br><br>
 						<table class="table table-striped table-hover">
 							<thead>
@@ -301,39 +302,38 @@
 					<!-- end column 1 -->
 
 					<!-- begin column 2 -->
-					<div class="form-group form-md-checkboxes col-md-4">
+					<div class="form-group form-md-line-input  form-md-checkboxes col-md-4">
 
 						<div class="caption">
 	            			<h4><b>Trauma</b></h4>
 	            		</div>
-	            		<div class="form-group">
+	            		<div class="form-group form-md-line-input ">
 	            			<div class="checkbox-list">
-	            				<label class="control-label">
-	            					<input type="checkbox" checked="true" class="icheck">&nbsp;&nbsp;Dislocation
+	            				<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Trauma.Dislocation'].Value" ng-true-value="'Y'" ng-false-value="'N'">
+	            					&nbsp;&nbsp;Dislocation
 	            				</label>
 	            			</div>
 	            		</div>
-						<div class="form-group">
-							<label for="fracture" class="control-label">Fracture</label>
-							<!-- <div class="input-icon"> -->
-								<!--<i class="fa fa-font"></i>-->
-								<input type="text" class="form-control" id="fracture">
+						<div class="form-group form-md-line-input ">
+							
+								<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Trauma.Fracture'].Value">
+								<label for="fracture" class="control-label">Fracture</label>
 							<!-- </div> -->
 						</div>
 						<div class="row">
 							<div class="col-md-3">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Open</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Trauma.Open'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Open</label>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Closed</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Trauma.Closed'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Closed</label>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Displaced</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Trauma.Displaced'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Displaced</label>
 								</div>
 							</div>
 						</div>
@@ -344,29 +344,29 @@
 	            		<div class="row">
 	            			<div class="col-md-3">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Hand</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Hand'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Hand</label>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Nerve</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Nerve'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Nerve</label>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Tendon / muscle</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Tendon/musde'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Tendon / muscle</label>
 								</div>
 							</div>
 	            		</div>
 	            		<div class="row">
 	            			<div class="col-md-3">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Facial</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Facial'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Facial</label>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Skin loss</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Skin__loss'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Skin loss</label>
 								</div>
 							</div>
 	            		</div>
@@ -374,11 +374,14 @@
 	            			<div class="col-md-12">
 	            				<div class="form-inline">
 		            				<div class="checkbox">
-										<label class="control-label"><input type="checkbox" class="icheck"> Other</label>
+										<label class="control-label"><input type="checkbox" ng-model="Other.LacerationsOther" ng-true-value="'Y'" ng-false-value="'N'"> Other</label>
 									</div>
 									&nbsp;&nbsp;&nbsp;
-									<div class="form-group">
-										<input type="text" class="form-control input-sm" placeholder="Other">
+									<div class="form-group form-md-line-input " ng-show="Other.LacerationsOther == 'N'">
+										<input type="text" class="form-control input-sm" placeholder="Other" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Others'].Value" disabled="false">
+									</div>
+									<div class="form-group form-md-line-input " ng-show="Other.LacerationsOther !== 'N'">
+										<input type="text" class="form-control input-sm" placeholder="Other" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Others'].Value" >
 									</div>
 								</div>
 	            			</div>
@@ -387,7 +390,7 @@
 					<!-- end column 2 -->
 
 					<!-- begin column 3 -->
-					<div class="form-group form-md-checkboxes col-md-4">
+					<div class="form-group form-md-line-input  form-md-checkboxes col-md-4">
 
 						<div class="caption">
 	            			<h4><b>Elective</b></h4>
@@ -400,22 +403,25 @@
 	            		<div class="row">
 	            			<div class="col-md-6">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> BCC / SCC</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.BCC/SCC'].Value" ng-true-value="'Y'" ng-false-value="'N'"> BCC / SCC</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-6">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Melanoma</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Melanoma'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Melanoma</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-12">
 	            				<div class="form-inline">
 		            				<div class="checkbox">
-										<label class="control-label"><input type="checkbox" class="icheck"> Other</label>
+										<label class="control-label"><input type="checkbox" ng-model="Other.SkincancerOther" ng-true-value="'Y'" ng-false-value="'N'"> Other</label>
 									</div>
 									&nbsp;&nbsp;&nbsp;
-									<div class="form-group">
-										<input type="text" class="form-control input-sm" placeholder="Other">
+									<div class="form-group form-md-line-input " ng-show="Other.SkincancerOther == 'N'">
+										<input type="text" class="form-control input-sm" placeholder="Other" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'].Value" disabled="false">
+									</div>
+									<div class="form-group form-md-line-input " ng-show="Other.SkincancerOther == 'Y'">
+										<input type="text" class="form-control input-sm" placeholder="Other" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'].Value">
 									</div>
 								</div>
 	            			</div>
@@ -427,22 +433,22 @@
 	            		<div class="row">
 	            			<div class="col-md-6">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Ganglion</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Hand__Condition.Ganglion'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Ganglion</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-6">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Arthritis</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Hand__Condition.Arthritis'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Arthritis</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-6">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> DeQuervains / Trigger</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Hand__Condition.DeQuervains/Trigger'].Value" ng-true-value="'Y'" ng-false-value="'N'"> DeQuervains / Trigger</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-6">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Contracture</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Hand__Condition.Contracture'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Contracture</label>
 								</div>
 	            			</div>
 	            		</div>
@@ -453,32 +459,35 @@
 	            		<div class="row">
 	            			<div class="col-md-5">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Carpal Tunnel</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.PNS.Carpal__Tunnel'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Carpal Tunnel</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-7">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Cubital Tunnel</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.PNS.Cubital__Tunnel'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Cubital Tunnel</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-5">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Tarsal Tunnel</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.PNS.Tarsal__Tunnel'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Tarsal Tunnel</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-7">
 	            				<div class="checkbox">
-									<label class="control-label"><input type="checkbox" class="icheck"> Complex Reconstructive Case</label>
+									<label class="control-label"><input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.PNS.Complex__Reconstructive__Case'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Complex Reconstructive Case</label>
 								</div>
 	            			</div>
 	            			<div class="col-md-12">
 	            				<div class="form-inline">
 		            				<div class="checkbox">
-										<label class="control-label"><input type="checkbox" class="icheck"> Other</label>
+										<label class="control-label"><input type="checkbox" ng-model="Other.PNSOther" ng-true-value="'Y'" ng-false-value="'N'"> Other</label>
 									</div>
 									&nbsp;&nbsp;&nbsp;
-									<div class="form-group">
-										<input type="text" class="form-control input-sm" placeholder="Other">
+									<div class="form-group form-md-line-input " ng-show="Other.PNSOther == 'N'">
+										<input type="text" class="form-control input-sm" placeholder="Other" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.PNS.Other'].Value" disabled="false">
+									</div>
+									<div class="form-group form-md-line-input " ng-show="Other.PNSOther !== 'N'">
+										<input type="text" class="form-control input-sm" placeholder="Other" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.PNS.Other'].Value" >
 									</div>
 								</div>
 	            			</div>
@@ -490,88 +499,98 @@
 				<div class="tab-pane" id="patient">
 					<br>
 					<div class="row">
-						<div class="col-md-2">
-							<div class="form-group ">
+						<div class="col-md-3">
+							<div class="form-group form-md-line-input  ">
+								<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.FirstName" placeholder="First Name" ng-disabled="ShowData.isLinkPatient">
 								<label class="control-label">First Name</label>
-								<!-- <div class="input-icon"> -->
-									<!--<i class="fa fa-font"></i>-->
-									<input type="text" class="form-control" placeholder="First Name" value="Hanna">
-								<!-- </div> -->
 							</div>
 						</div>
-						<div class="col-md-2">
-							<div class="form-group">
+						<div class="col-md-3">
+							<div class="form-group form-md-line-input  ">
+								<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.MiddleName" placeholder="Middle Name" ng-disabled="ShowData.isLinkPatient">
+								<label class="control-label">Middle Name</label>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group form-md-line-input ">
+								<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.LastName" placeholder="Last Name" ng-disabled="ShowData.isLinkPatient">
 								<label class="control-label">Last Name</label>
-								<!-- <div class="input-icon"> -->
-									<!--<i class="fa fa-font"></i>-->
-									<input type="text" class="form-control" placeholder="Last Name" value="Montana">
-								<!-- </div> -->
 							</div>
 						</div>
-						<div class="col-md-2">
-							<div class="form-group ">
-								<label class="control-label">Date of Birth</label>
+						<div class="col-md-3">
+							<div class="form-group form-md-line-input  ">
 								<div class="input-icon">
 									<i class="fa fa-calendar"></i>
-									<input type="text" class="form-control form-control-inline date-picker" value="01/01/2015">
+									<input type="text" class="form-control form-control-inline date-picker" ng-model="patientDOBTemp" ng-disabled="ShowData.isLinkPatient">
+									<label class="control-label">Date of Birth</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group form-md-line-input  ">
+								<div class="input-icon">
+									<i class="fa fa-mobile"></i>
+									<input type="text" class="form-control"  ng-model="appointment.TelehealthAppointment.PatientAppointment.WorkPhoneNumber" ng-disabled="ShowData.isLinkPatient">
+									<label class="control-label">Contact Number (M)</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group form-md-line-input  ">
+								<div class="input-icon">
+									<i class="fa fa-phone"></i>
+									<input type="text" class="form-control"  ng-model="appointment.TelehealthAppointment.PatientAppointment.HomePhoneNumber" ng-disabled="ShowData.isLinkPatient">
+									<label class="control-label">Contact Number (H)</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group form-md-line-input  ">
+								<div class="input-icon">
+									<i class="fa fa-envelope"></i>
+									<input type="text" class="form-control"  ng-model="appointment.TelehealthAppointment.PatientAppointment.Email" ng-disabled="ShowData.isLinkPatient">
+									<label class="control-label">Email Address</label>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">Address</label>
+							<div class="form-group form-md-line-input ">
 								<div class="input-icon">
 									<i class="fa fa-send"></i>
-									<input type="text" class="form-control" placeholder="Address" value="01 Elizabeth Street Australia">
+									<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Address1" placeholder="Address1" ng-disabled="ShowData.isLinkPatient">
+									<label class="control-label">Address1</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group form-md-line-input ">
+								<div class="input-icon">
+									<i class="fa fa-send"></i>
+									<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Address2" placeholder="Address2" ng-disabled="ShowData.isLinkPatient">
+									<label class="control-label">Address2</label>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-2">
-							<div class="form-group ">
+						<div class="col-md-3">
+							<div class="form-group form-md-line-input  ">
+								<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Suburb" ng-disabled="ShowData.isLinkPatient">
 								<label class="control-label">Suburb</label>
-								<!-- <div class="input-icon"> -->
-									<!-- <i class="fa fa-tree"></i> -->
-									<input type="text" class="form-control" value="01234">
-								<!-- </div> -->
 							</div>
 						</div>
-						<div class="col-md-2">
-							<div class="form-group ">
+						<div class="col-md-3">
+							<div class="form-group form-md-line-input  ">
+								<input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Postcode" ng-disabled="ShowData.isLinkPatient">
 								<label class="control-label">Postcode</label>
-								<!-- <div class="input-icon"> -->
-									<!-- <i class="fa fa-sort-amount-desc"></i> -->
-									<input type="number" class="form-control" value="1234">
-								<!-- </div> -->
 							</div>
 						</div>
-						<div class="col-md-2">
-							<div class="form-group ">
-								<label class="control-label">Contact Number (M)</label>
-								<div class="input-icon">
-									<i class="icon-call-end"></i>
-									<input type="text" class="form-control"  value="04 2727 2727">
-								</div>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<div class="form-group ">
-								<label class="control-label">Contact Number (H)</label>
-								<div class="input-icon">
-									<i class="icon-call-end"></i>
-									<input type="text" class="form-control"  value="08 9999 9999">
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group ">
-								<label class="control-label">Email Address</label>
-								<div class="input-icon">
-									<i class="fa fa-envelope"></i>
-									<input type="text" class="form-control"  value="hanamontana@gmail.com">
-								</div>
-							</div>
+					</div>
+					<div class="row pull-right">
+						<div class="col-md-12 co-xs-12">
+							<button class="btn red" ng-click="createNewPatient()">
+								<i class="glyphicon glyphicon-plus"></i> Create New Patient
+							</button>
 						</div>
 					</div>
 				</div>
@@ -580,58 +599,56 @@
 					<div class="row">&nbsp;</div>
 					<div class="row">
 						<div class="col-md-3">
-							<div class="form-group">
-								<label class="control-label">Doctor Type</label>
+							<div class="form-group form-md-line-input ">
 								<select size="1" class="form-control " >
 									<option value="1">Plastic Surgeons</option>
 									<option value="2">Orthopaedic Surgeons</option>
 								</select>
+								<label class="control-label">Doctor Type</label>
 							</div>
-							<div class="form-group">
-								<label class="control-label">Doctor List</label>
+							<div class="form-group form-md-line-input ">
 								<select size="5" class="form-control">
 									<option value="1">Dr. Hanh Nguyen</option>
 									<option value="2">Dr. Adrian Brooks</option>
 									<option value="3">Dr. Daniel Luo</option>
 								</select>
+								<label class="control-label">Doctor List</label>
 							</div>
 						</div>
 						<div class="col-md-9">
 							<div class="row">
 								<div class="col-md-4">
-									<div class="form-group">
-										<label class="control-label">First Name</label>
-										<!-- <div class="input-icon"> -->
-											<!--<i class="fa fa-font"></i>-->
-											<input type="text" placeholder="First Name" value="Hanh" disabled="true" class="form-control">
-										<!-- </div> -->
+									<div class="form-group form-md-line-input ">
+										<input type="text" placeholder="Firstname" ng-model="appointment.Doctors[0].FirstName" disabled="true" class="form-control">
+										<label class="control-label">Firstname</label>
 									</div>
 								</div>
 								<div class="col-md-4">
-									<div class="form-group">
-										<label class="control-label">Last Name</label>
-										<!-- <div class="input-icon"> -->
-											<!--<i class="fa fa-font"></i>-->
-											<input type="text" placeholder="Last Name" value="Nguyen" disabled="true" class="form-control">
-										<!-- </div> -->
+									<div class="form-group form-md-line-input ">
+										<input type="text" placeholder="Middlename" ng-model="appointment.Doctors[0].MiddleName" disabled="true" class="form-control">
+										<label class="control-label">Middlename</label>
 									</div>
 								</div>
 								<div class="col-md-4">
-									<div class="form-group">
-										<label class="control-label">Contact Number (M)</label>
-										<!-- <div class="input-icon"> -->
-											<!--<i class="fa fa-font"></i>-->
-											<input type="text" placeholder="Contact Number (M)" value="08 2727 2727" disabled="true" class="form-control">
-										<!-- </div> -->
+									<div class="form-group form-md-line-input ">
+										<input type="text" placeholder="Lastname" ng-model="appointment.Doctors[0].LastName" disabled="true" class="form-control">
+										<label class="control-label">Lastname</label>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group form-md-line-input ">
+										
+										<div class="input-icon">
+											<i class="fa fa-mobile"></i>
+											<input type="text" placeholder="Contact Number (M)" ng-model="appointment.Doctors[0].WorkPhoneNumber" disabled="true" class="form-control">
+											<label class="control-label">Contact Number (M)</label>
+										</div>
 									</div>
 								</div>	
-								<div class="col-md-12">
-									<div class="form-group">
+								<div class="col-md-8">
+									<div class="form-group form-md-line-input ">
+										<input type="text" placeholder="Department" ng-model="appointment.Doctors[0].Department.DepartmentName" disabled="true" class="form-control">
 										<label class="control-label">Department</label>
-										<!-- <div class="input-icon"> -->
-											<!--<i class="fa fa-font"></i>-->
-											<input type="text" placeholder="Department" value="MBBS, FRACS (Plastic Surgeon)" disabled="true" class="form-control">
-										<!-- </div> -->
 									</div>
 								</div>							
 							</div>
@@ -647,228 +664,28 @@
 						<div class="row">
 							<div class="col-md-2">
 								<ul class="ver-inline-menu tabbable margin-bottom-10">
-									<li class="filter active" data-filter="category_3 category_1 category_2 category_4" ng-click="tab_body_part='all';">
+									<li class="filter active" data-filter="Arm Foot Head Body" ng-click="tab_body_part='all';">
 										<a><i class="fa fa-picture-o"></i> All </a>
 									</li>
-									<li class="filter" data-filter="category_1" ng-click="tab_body_part='arm';">
+									<li class="filter" data-filter="Arm" ng-click="tab_body_part='arm';">
 										<a><i class="fa fa-picture-o"></i> Arm </a>
 									</li>
-									<li class="filter" data-filter="category_2" ng-click="tab_body_part='foot';">
+									<li class="filter" data-filter="Foot" ng-click="tab_body_part='foot';">
 										<a><i class="fa fa-picture-o"></i> Foot</a>
 									</li>
-									<li class="filter" data-filter="category_3" ng-click="tab_body_part='head';">
+									<li class="filter" data-filter="Head" ng-click="tab_body_part='head';">
 										<a><i class="fa fa-picture-o"></i> Head</a>
 									</li>
-									<li class="filter" data-filter="category_4" ng-click="tab_body_part='body';">
+									<li class="filter" data-filter="Body" ng-click="tab_body_part='body';">
 										<a><i class="fa fa-picture-o"></i> Body</a>
 									</li>
 								</ul>
-								<div class="input-inline"  ng-if="tab_body_part != 'all'">
-									<div class="input-icon">
-										<span class="btn btn-info btn-file">
-											<i class="glyphicon glyphicon-plus"></i>
-											<span class="fileinput-new">Add Image</span>
-											<input type="file" nv-file-select="" uploader="uploader" multiple/>
-										</span>
-									</div>
-								</div>
 							</div>
 							<div class="col-md-9">
-								<div class="row mix-grid" style="">
-									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
+								<div class="row mix-grid" style="" ng-repeat="p in appointment.FileUploads">{{Url}}{{p.UID}}
+									<div class="col-md-3 col-sm-3 mix Arm Foot Head Body mix_all" style=" display: block; opacity: 1;">
 										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/0.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto odio</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="assets/img/0.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3 mix category_4 mix_all" style=" display: block; opacity: 1;">
-										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/1.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto accusamus</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="assets/img/1.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3 mix category_3  mix_all" style=" display: block; opacity: 1;">
-										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/2.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto accusamus</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/2.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3 mix category_3  mix_all" style=" display: block; opacity: 1;">
-										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/3.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto accusamus</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/3.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3 mix category_4  mix_all" style=" display: block; opacity: 1;">
-										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/4.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto accusamus</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/4.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3 mix category_2 mix_all" style=" display: block; opacity: 1;">
-										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/5.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto accusamus</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/5.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3 mix category_4 mix_all" style=" display: block; opacity: 1;">
-										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/6.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto accusamus</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/6.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3 mix category_4 mix_all" style=" display: block; opacity: 1;">
-										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/8.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto accusamus</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/8.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3 mix category_4 mix_all" style=" display: block; opacity: 1;">
-										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/9.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto accusamus</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/9.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
-										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/10.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto accusamus</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/10.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
-										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/11.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto accusamus</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/11.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
-										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/12.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto accusamus</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/12.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
-										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/13.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto accusamus</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/13.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-3 mix category_3 mix_all" style=" display: block; opacity: 1;">
-										<div class="mix-inner">
-											<img class="img-responsive" src="assets/img/14.jpg" alt="" style="height:200px;">
-											<div class="mix-details">
-												<h4>Cascusamus et iusto accusamus</h4>
-												<a class="mix-link">
-												<i class="fa fa-link"></i>
-												</a>
-												<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/14.jpg" title="Project Name" data-rel="fancybox-button">
-												<i class="fa fa-search"></i>
-												</a>
-											</div>
+											<img class="img-responsive" src="{{Url}}{{p.UID}}" alt="" style="height:200px;">
 										</div>
 									</div>
 								</div>
@@ -881,76 +698,378 @@
 				<div class="tab-pane" id="referring_practitioner">
 					<div class="row">&nbsp;</div>
 					<div class="row">
+		            	<div class="col-md-4">
+			            	<div class="form-group form-md-line-input  ">	
+			            		<input type="text" class="form-control" placeholder="Firstname" ng-model="appointment.TelehealthAppointment.Doctors[0].FirstName" disabled="true">
+			            		<label class="form-label">Firstname</label>
+			            	</div>
+		            	</div>
+		            	<div class="col-md-4">
+			            	<div class="form-group form-md-line-input  ">	
+			            		<input type="text" class="form-control" placeholder="Middlename" ng-model="appointment.TelehealthAppointment.Doctors[0].MiddleName" disabled="true">
+			            		<label class="form-label">Middlename</label>
+			            	</div>
+		            	</div>
+		            	<div class="col-md-4">
+			            	<div class="form-group form-md-line-input  ">	
+			            		<input type="text" class="form-control" placeholder="Lastname" ng-model="appointment.TelehealthAppointment.Doctors[0].LastName" disabled="true">
+			            		<label class="form-label">Lastname</label>
+			            	</div>
+		            	</div>
 		            	<div class="col-md-6">
-			            	<div class="form-group ">	
-			            		<label class="form-label">Name</label>							            		
-			            		<input type="text" class="form-control" placeholder="Name" value="Shen Woo">
+			            	<div class="form-group form-md-line-input  ">	
+			            		<input type="text" class="form-control" placeholder="Address1" ng-model="appointment.TelehealthAppointment.Doctors[0].Address1" disabled="true">
+			            		<label class="control-label">Address1</label>	
 			            	</div>
 		            	</div>
 		            	<div class="col-md-6">
-			            	<div class="form-group ">
-			            		<label class="control-label">Healthlink ID</label>								            		
-			            		<input type="text" class="form-control" placeholder="Healthlink ID" value="redimspc">
+			            	<div class="form-group form-md-line-input  ">	
+			            		<input type="text" class="form-control" placeholder="Address2" ng-model="appointment.TelehealthAppointment.Doctors[0].Address2" disabled="true">
+			            		<label class="control-label">Address2</label>	
+			            	</div>
+		            	</div>
+		            	<div class="col-md-3">
+			            	<div class="form-group form-md-line-input  ">
+			            		<input type="text" class="form-control" placeholder="Workphone" ng-model="appointment.TelehealthAppointment.Doctors[0].WorkPhoneNumber" disabled="true">
+			            		<label class="control-label">Workphone</label>		
+			            	</div>
+		            	</div>
+		            	<div class="col-md-3">
+			            	<div class="form-group form-md-line-input  ">							            		
+			            		<input type="text" class="form-control" placeholder="HomePhone" ng-model="appointment.TelehealthAppointment.Doctors[0].HomePhoneNumber" disabled="true">
+			            		<label class="control-label">HomePhone</label>	
+			            	</div>
+		            	</div>
+		            	<div class="col-md-3">
+			            	<div class="form-group form-md-line-input  ">
+			            		<input type="text" class="form-control" placeholder="Postcode" ng-model="appointment.TelehealthAppointment.Doctors[0].Postcode" disabled="true">
+			            		<label class="control-label">Postcode</label>
+			            	</div>
+		            	</div>
+		            	<div class="col-md-3">
+			            	<div class="form-group form-md-line-input  ">							            		
+			            		<input type="text" class="form-control" placeholder="Suburb" ng-model="appointment.TelehealthAppointment.Doctors[0].Suburb" disabled="true">
+			            		<label class="control-label">Suburb</label>	
 			            	</div>
 		            	</div>
 		            </div>
 		            <div class="row">
-		            	<div class="col-md-12">
-			            	<div class="form-group ">	
-			            		<label class="control-label">Address</label>							            		
-			            		<input type="text" class="form-control" placeholder="Address" value="01 Elizabeth Street Australia">
-			            	</div>
+		            	<div class="col-md-6">
+		            		<div class="row">
+		            			<div class="col-md-6">
+					                <div class="form-group form-md-line-input">
+					                    <select name="States" id="States" class="form-control">
+					                        <option value=""></option>
+					                        <option value="Victoria" selected>Victoria</option>
+					                        <option value="New_South_Wales">New South Wales</option>
+					                        <option value="Queensland">Queensland</option>
+					                        <option value="Austria_Capital_Territory">Austria Capital Territory</option>
+					                        <option value="Northern_Territory">Northern Territory</option>
+					                        <option value="Western_Australia">Western Australia</option>
+					                        <option value="Tasmania">Tasmania</option>
+					                    </select>
+					                    <label for="State">States</label>
+					                    <!-- <span class="help-block">Error State</span> -->
+					                </div>
+					            </div>
+					            <div class="col-md-6">
+					                <div class="form-group form-md-line-input">
+					                    <select name="country" id="Country" class="form-control edited" disabled>
+					                        <option value=""></option>
+					                        <option value="AF">Afghanistan</option>
+					                        <option value="AL">Albania</option>
+					                        <option value="DZ">Algeria</option>
+					                        <option value="AS">American Samoa</option>
+					                        <option value="AD">Andorra</option>
+					                        <option value="AO">Angola</option>
+					                        <option value="AI">Anguilla</option>
+					                        <option value="AR">Argentina</option>
+					                        <option value="AM">Armenia</option>
+					                        <option value="AW">Aruba</option>
+					                        <option value="AU" selected="true">Australia</option>
+					                        <option value="AT">Austria</option>
+					                        <option value="AZ">Azerbaijan</option>
+					                        <option value="BS">Bahamas</option>
+					                        <option value="BH">Bahrain</option>
+					                        <option value="BD">Bangladesh</option>
+					                        <option value="BB">Barbados</option>
+					                        <option value="BY">Belarus</option>
+					                        <option value="BE">Belgium</option>
+					                        <option value="BZ">Belize</option>
+					                        <option value="BJ">Benin</option>
+					                        <option value="BM">Bermuda</option>
+					                        <option value="BT">Bhutan</option>
+					                        <option value="BO">Bolivia</option>
+					                        <option value="BA">Bosnia and Herzegowina</option>
+					                        <option value="BW">Botswana</option>
+					                        <option value="BV">Bouvet Island</option>
+					                        <option value="BR">Brazil</option>
+					                        <option value="IO">British Indian Ocean Territory</option>
+					                        <option value="BN">Brunei Darussalam</option>
+					                        <option value="BG">Bulgaria</option>
+					                        <option value="BF">Burkina Faso</option>
+					                        <option value="BI">Burundi</option>
+					                        <option value="KH">Cambodia</option>
+					                        <option value="CM">Cameroon</option>
+					                        <option value="CA">Canada</option>
+					                        <option value="CV">Cape Verde</option>
+					                        <option value="KY">Cayman Islands</option>
+					                        <option value="CF">Central African Republic</option>
+					                        <option value="TD">Chad</option>
+					                        <option value="CL">Chile</option>
+					                        <option value="CN">China</option>
+					                        <option value="CX">Christmas Island</option>
+					                        <option value="CC">Cocos (Keeling) Islands</option>
+					                        <option value="CO">Colombia</option>
+					                        <option value="KM">Comoros</option>
+					                        <option value="CG">Congo</option>
+					                        <option value="CD">Congo, the Democratic Republic of the</option>
+					                        <option value="CK">Cook Islands</option>
+					                        <option value="CR">Costa Rica</option>
+					                        <option value="CI">Cote d'Ivoire</option>
+					                        <option value="HR">Croatia (Hrvatska)</option>
+					                        <option value="CU">Cuba</option>
+					                        <option value="CY">Cyprus</option>
+					                        <option value="CZ">Czech Republic</option>
+					                        <option value="DK">Denmark</option>
+					                        <option value="DJ">Djibouti</option>
+					                        <option value="DM">Dominica</option>
+					                        <option value="DO">Dominican Republic</option>
+					                        <option value="EC">Ecuador</option>
+					                        <option value="EG">Egypt</option>
+					                        <option value="SV">El Salvador</option>
+					                        <option value="GQ">Equatorial Guinea</option>
+					                        <option value="ER">Eritrea</option>
+					                        <option value="EE">Estonia</option>
+					                        <option value="ET">Ethiopia</option>
+					                        <option value="FK">Falkland Islands (Malvinas)</option>
+					                        <option value="FO">Faroe Islands</option>
+					                        <option value="FJ">Fiji</option>
+					                        <option value="FI">Finland</option>
+					                        <option value="FR">France</option>
+					                        <option value="GF">French Guiana</option>
+					                        <option value="PF">French Polynesia</option>
+					                        <option value="TF">French Southern Territories</option>
+					                        <option value="GA">Gabon</option>
+					                        <option value="GM">Gambia</option>
+					                        <option value="GE">Georgia</option>
+					                        <option value="DE">Germany</option>
+					                        <option value="GH">Ghana</option>
+					                        <option value="GI">Gibraltar</option>
+					                        <option value="GR">Greece</option>
+					                        <option value="GL">Greenland</option>
+					                        <option value="GD">Grenada</option>
+					                        <option value="GP">Guadeloupe</option>
+					                        <option value="GU">Guam</option>
+					                        <option value="GT">Guatemala</option>
+					                        <option value="GN">Guinea</option>
+					                        <option value="GW">Guinea-Bissau</option>
+					                        <option value="GY">Guyana</option>
+					                        <option value="HT">Haiti</option>
+					                        <option value="HM">Heard and Mc Donald Islands</option>
+					                        <option value="VA">Holy See (Vatican City State)</option>
+					                        <option value="HN">Honduras</option>
+					                        <option value="HK">Hong Kong</option>
+					                        <option value="HU">Hungary</option>
+					                        <option value="IS">Iceland</option>
+					                        <option value="IN">India</option>
+					                        <option value="ID">Indonesia</option>
+					                        <option value="IR">Iran (Islamic Republic of)</option>
+					                        <option value="IQ">Iraq</option>
+					                        <option value="IE">Ireland</option>
+					                        <option value="IL">Israel</option>
+					                        <option value="IT">Italy</option>
+					                        <option value="JM">Jamaica</option>
+					                        <option value="JP">Japan</option>
+					                        <option value="JO">Jordan</option>
+					                        <option value="KZ">Kazakhstan</option>
+					                        <option value="KE">Kenya</option>
+					                        <option value="KI">Kiribati</option>
+					                        <option value="KP">Korea, Democratic People's Republic of</option>
+					                        <option value="KR">Korea, Republic of</option>
+					                        <option value="KW">Kuwait</option>
+					                        <option value="KG">Kyrgyzstan</option>
+					                        <option value="LA">Lao People's Democratic Republic</option>
+					                        <option value="LV">Latvia</option>
+					                        <option value="LB">Lebanon</option>
+					                        <option value="LS">Lesotho</option>
+					                        <option value="LR">Liberia</option>
+					                        <option value="LY">Libyan Arab Jamahiriya</option>
+					                        <option value="LI">Liechtenstein</option>
+					                        <option value="LT">Lithuania</option>
+					                        <option value="LU">Luxembourg</option>
+					                        <option value="MO">Macau</option>
+					                        <option value="MK">Macedonia, The Former Yugoslav Republic of</option>
+					                        <option value="MG">Madagascar</option>
+					                        <option value="MW">Malawi</option>
+					                        <option value="MY">Malaysia</option>
+					                        <option value="MV">Maldives</option>
+					                        <option value="ML">Mali</option>
+					                        <option value="MT">Malta</option>
+					                        <option value="MH">Marshall Islands</option>
+					                        <option value="MQ">Martinique</option>
+					                        <option value="MR">Mauritania</option>
+					                        <option value="MU">Mauritius</option>
+					                        <option value="YT">Mayotte</option>
+					                        <option value="MX">Mexico</option>
+					                        <option value="FM">Micronesia, Federated States of</option>
+					                        <option value="MD">Moldova, Republic of</option>
+					                        <option value="MC">Monaco</option>
+					                        <option value="MN">Mongolia</option>
+					                        <option value="MS">Montserrat</option>
+					                        <option value="MA">Morocco</option>
+					                        <option value="MZ">Mozambique</option>
+					                        <option value="MM">Myanmar</option>
+					                        <option value="NA">Namibia</option>
+					                        <option value="NR">Nauru</option>
+					                        <option value="NP">Nepal</option>
+					                        <option value="NL">Netherlands</option>
+					                        <option value="AN">Netherlands Antilles</option>
+					                        <option value="NC">New Caledonia</option>
+					                        <option value="NZ">New Zealand</option>
+					                        <option value="NI">Nicaragua</option>
+					                        <option value="NE">Niger</option>
+					                        <option value="NG">Nigeria</option>
+					                        <option value="NU">Niue</option>
+					                        <option value="NF">Norfolk Island</option>
+					                        <option value="MP">Northern Mariana Islands</option>
+					                        <option value="NO">Norway</option>
+					                        <option value="OM">Oman</option>
+					                        <option value="PK">Pakistan</option>
+					                        <option value="PW">Palau</option>
+					                        <option value="PA">Panama</option>
+					                        <option value="PG">Papua New Guinea</option>
+					                        <option value="PY">Paraguay</option>
+					                        <option value="PE">Peru</option>
+					                        <option value="PH">Philippines</option>
+					                        <option value="PN">Pitcairn</option>
+					                        <option value="PL">Poland</option>
+					                        <option value="PT">Portugal</option>
+					                        <option value="PR">Puerto Rico</option>
+					                        <option value="QA">Qatar</option>
+					                        <option value="RE">Reunion</option>
+					                        <option value="RO">Romania</option>
+					                        <option value="RU">Russian Federation</option>
+					                        <option value="RW">Rwanda</option>
+					                        <option value="KN">Saint Kitts and Nevis</option>
+					                        <option value="LC">Saint LUCIA</option>
+					                        <option value="VC">Saint Vincent and the Grenadines</option>
+					                        <option value="WS">Samoa</option>
+					                        <option value="SM">San Marino</option>
+					                        <option value="ST">Sao Tome and Principe</option>
+					                        <option value="SA">Saudi Arabia</option>
+					                        <option value="SN">Senegal</option>
+					                        <option value="SC">Seychelles</option>
+					                        <option value="SL">Sierra Leone</option>
+					                        <option value="SG">Singapore</option>
+					                        <option value="SK">Slovakia (Slovak Republic)</option>
+					                        <option value="SI">Slovenia</option>
+					                        <option value="SB">Solomon Islands</option>
+					                        <option value="SO">Somalia</option>
+					                        <option value="ZA">South Africa</option>
+					                        <option value="GS">South Georgia and the South Sandwich Islands</option>
+					                        <option value="ES">Spain</option>
+					                        <option value="LK">Sri Lanka</option>
+					                        <option value="SH">St. Helena</option>
+					                        <option value="PM">St. Pierre and Miquelon</option>
+					                        <option value="SD">Sudan</option>
+					                        <option value="SR">Suriname</option>
+					                        <option value="SJ">Svalbard and Jan Mayen Islands</option>
+					                        <option value="SZ">Swaziland</option>
+					                        <option value="SE">Sweden</option>
+					                        <option value="CH">Switzerland</option>
+					                        <option value="SY">Syrian Arab Republic</option>
+					                        <option value="TW">Taiwan, Province of China</option>
+					                        <option value="TJ">Tajikistan</option>
+					                        <option value="TZ">Tanzania, United Republic of</option>
+					                        <option value="TH">Thailand</option>
+					                        <option value="TG">Togo</option>
+					                        <option value="TK">Tokelau</option>
+					                        <option value="TO">Tonga</option>
+					                        <option value="TT">Trinidad and Tobago</option>
+					                        <option value="TN">Tunisia</option>
+					                        <option value="TR">Turkey</option>
+					                        <option value="TM">Turkmenistan</option>
+					                        <option value="TC">Turks and Caicos Islands</option>
+					                        <option value="TV">Tuvalu</option>
+					                        <option value="UG">Uganda</option>
+					                        <option value="UA">Ukraine</option>
+					                        <option value="AE">United Arab Emirates</option>
+					                        <option value="GB">United Kingdom</option>
+					                        <option value="US">United States</option>
+					                        <option value="UM">United States Minor Outlying Islands</option>
+					                        <option value="UY">Uruguay</option>
+					                        <option value="UZ">Uzbekistan</option>
+					                        <option value="VU">Vanuatu</option>
+					                        <option value="VE">Venezuela</option>
+					                        <option value="VN">Viet Nam</option>
+					                        <option value="VG">Virgin Islands (British)</option>
+					                        <option value="VI">Virgin Islands (U.S.)</option>
+					                        <option value="WF">Wallis and Futuna Islands</option>
+					                        <option value="EH">Western Sahara</option>
+					                        <option value="YE">Yemen</option>
+					                        <option value="ZM">Zambia</option>
+					                        <option value="ZW">Zimbabwe</option>
+					                    </select>
+					                    <label for="Country">Country</label>
+					                    <!-- <span class="help-block">Error Country</span> -->
+					                </div>
+					            </div>
+		            			<div class="col-md-6">
+					            	<div class="form-group form-md-line-input  ">
+					            		<input type="text" class="form-control" placeholder="Healthlink ID" ng-model="appointment.TelehealthAppointment.Doctors[0].HealthLink" disabled="true">
+					            		<label class="control-label">Healthlink ID</label>
+					            	</div>
+				            	</div>
+				            	<div class="col-md-6">
+					            	<div class="form-group form-md-line-input  ">				
+					            		<input type="text" class="form-control" placeholder="number" ng-model="appointment.TelehealthAppointment.Doctors[0].ProviderNumber" disabled="true">
+					            		<label class="control-label">Provider Number</label>	
+					            	</div>
+					            </div>
+		            		</div>
+		            	</div>
+		            	<div class="col-md-6">
+		            		<div class="row">
+				            	<div class="col-md-12 col-sm-12">
+				            		<div class="form-group ">
+					                    <div class="fileinput fileinput-new" data-provides="fileinput">
+					                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
+					                            <img src="./theme/assets/global/images/no_image.png" width="100%" height="100%">
+					                        </div>
+					                        <br>
+					                        <div>
+					                            <span class="btn green btn-file">
+					                            <span class="fileinput-new">
+					                            Signature </span>
+					                            <span class="fileinput-exists">
+					                            Change </span>
+					                            <input type="file" name="...">
+					                            </span>
+					                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+					                            Remove </a>
+					                        </div>
+					                    </div>
+					                    <div class="clearfix"></div>
+					                </div>
+				            	</div>
+				            </div>
 		            	</div>
 		            </div>
-		            <div class="row">
-		            	<div class="col-md-4">
-			            	<div class="form-group ">
-			            		<label class="control-label">Telephone</label>								            		
-			            		<input type="text" class="form-control" placeholder="Telephone" value="04 2727 2727">
-			            	</div>
-		            	</div>
-		            	<div class="col-md-4">
-			            	<div class="form-group ">
-			            		<label class="control-label">Postcode</label>								            		
-			            		<input type="number" class="form-control" placeholder="Postcode" value="1234">
-			            	</div>
-		            	</div>
-		            	<div class="col-md-4">
-			            	<div class="form-group ">				
-			            		<label class="control-label">Provider Number</label>				            		
-			            		<input type="number" class="form-control" placeholder="number" value="1234">
-			            	</div>
-			            </div>
-		            </div>
-		            <div class="row">
-			            <div class="col-md-8">
-			            	<div class="form-group ">	
-			            		<label class="control-label">Signature</label>							            		
-			            		<input type="text" class="form-control" placeholder="Signature">
-			            	</div>
-			            </div>
-		            	<div class="col-md-4">
-			            	<div class="form-group ">	
-			            		<label class="control-label">Date</label>							            		
-			            		<input type="text" class="form-control" placeholder="Date" value="01/01/2015">
-			            	</div>
-			            </div>
-		            </div>
-		            <div class="row">&nbsp;</div>
 				</div>
 
 				<div class="tab-pane" id="present_complain_and_allergy">
 					<div class="row">
 						<div class="col-md-6">
 							<label class="label-control">History of Present Complain</label>
-							<div class="form-group">
-								<textarea class="form-control" rows="10" >General medical history</textarea>
+							<div class="form-group ">
+								<textarea class="form-control" rows="10" ng-model="appointment.TelehealthAppointment.PresentComplain"></textarea>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<label class="label-control">Allergy</label>
-							<div class="form-group">
-								<textarea class="form-control" rows="10">Fur allergies,....</textarea>
+							<div class="form-group ">
+								<textarea class="form-control" rows="10" ng-model="appointment.TelehealthAppointment.Allergy"></textarea>
 							</div>
 						</div>
 					</div>
@@ -963,10 +1082,7 @@
 		<button type="button" class="btn default" data-dismiss="modal" ng-click="close()">
 			<i class="icon-action-undo"></i> Close
 		</button>
-		<a ng-show="tab_name=='patient'" class="btn red">
-			<i class="glyphicon glyphicon-plus"></i> Create New Patient
-		</a>
-		<button type="button" class="btn green">
+		<button type="button" class="btn green" ng-click="updateAppointment()">
 			<i class="glyphicon glyphicon-save"></i> Save changes
 		</button>
 	</div>
@@ -974,15 +1090,4 @@
 
 
 <script>
-	// Metronic.setAssetsPath('./theme/assets/'); // Set the assets folder path			
-	// ComponentsFormTools.init();
-	//ComponentsDropdowns.init(); // init todo page
-	// //FormiCheck.init(); // init page demo
-	ComponentsPickers.init(); // init todo page
-	Portfolio.init(); // coi hinh
-
-	Metronic.initAjax();
-	//ComponentsFormTools.init();
-	ComponentsDropdowns.init(); // init todo page
-	//FormiCheck.init(); // init page demo
 </script>

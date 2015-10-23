@@ -12,24 +12,29 @@ module.exports = {
             });
             return;
         }
-        var uid = typeof req.param('uid') != 'undefined' ? req.param('uid') : null;
-        if (uid != null) {
+        var socketQuery = req.socket.handshake.query;
+        var uid = req.param('uid');
+        if (uid) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 if (teleUser) {
                     sails.sockets.join(req.socket, uid);
                     sails.sockets.leave(req.socket, req.socket.id);
-                    TelehealthService.GetOnlineUsers();
-                } else sails.sockets.emit(req.socket, 'errorMsg', {
-                    msg: 'User Not Exist!'
-                });
+                    TelehealthService.GetOnlineUsers(socketQuery.CoreAuth);
+                } else {
+                    sails.sockets.emit(req.socket, 'errorMsg', {
+                        msg: 'User Not Exist!'
+                    });
+                }
             }).catch(function(err) {
                 sails.sockets.emit(req.socket, 'errorMsg', {
                     msg: err
                 });
             })
-        } else sails.sockets.emit(req.socket, 'errorMsg', {
-            msg: 'Invalid Parameters!'
-        });
+        } else {
+            sails.sockets.emit(req.socket, 'errorMsg', {
+                msg: 'Invalid Parameters!'
+            });
+        }
     },
     MessageTransfer: function(req, res) {
         if (!req.isSocket) {
@@ -39,11 +44,11 @@ module.exports = {
             });
             return;
         }
-        var from = typeof req.param('from') != 'undefined' ? req.param('from') : null;
-        var to = typeof req.param('to') != 'undefined' ? req.param('to') : null;
-        var message = typeof req.param('message') != 'undefined' ? req.param('message') : null;
+        var from = req.param('from');
+        var to = req.param('to');
+        var message = req.param('message');
         var data = {};
-        if (message == null || from == null || to == null) return;
+        if (!message || !from || !to) return;
         var roomList = sails.sockets.rooms();
         if (roomList.length > 0) {
             for (var i = 0; i < roomList.length; i++) {
@@ -51,10 +56,9 @@ module.exports = {
                     data.from = from;
                     data.message = message;
                     if (message.toLowerCase() == 'call') {
-                        var fromName = typeof req.param('fromName') != 'undefined' ? req.param('fromName') : null;
-                        var sessionId = typeof req.param('sessionId') != 'undefined' ? req.param('sessionId') : null;
-                        if (sessionId == null) return;
+                        var fromName = req.param('fromName');
                         var sessionId = req.param('sessionId');
+                        if (!sessionId) return;
                         var tokenOptions = {
                             role: 'moderator'
                         };
@@ -62,9 +66,8 @@ module.exports = {
                         data.apiKey = config.OpentokAPIKey;
                         data.sessionId = sessionId;
                         data.token = token;
-                        data.fromName = fromName;
+                        data.fromName = !fromName ? 'Unknown' : fromName;
                     }
-                    console.log("====Data====: ", data);
                     sails.sockets.broadcast(roomList[i], 'receiveMessage', data);
                 }
             }
@@ -78,7 +81,8 @@ module.exports = {
             });
             return;
         }
-        TelehealthService.GetOnlineUsers();
+        var socketQuery = req.socket.handshake.query;
+        TelehealthService.GetOnlineUsers(socketQuery.CoreAuth);
     },
     GenerateConferenceSession: function(req, res) {
         opentok.createSession({

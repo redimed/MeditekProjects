@@ -4,15 +4,31 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             autoIncrement: true,
             allowNull: false,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            },
             primaryKey: true
         },
         UID: {
             type: Sequelize.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isUUID: {
+                    args: 4,
+                    msg: 'Must be an UUID V4!'
+                }
+            }
         },
         TelehealthAppointmentID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            },
             references: {
                 model: 'TelehealthAppointment',
                 key: 'ID'
@@ -20,45 +36,109 @@ module.exports = {
         },
         Section: {
             type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
         Category: {
             type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
         Type: {
             type: Sequelize.STRING(45),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
         },
         Name: {
             type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
         Value: {
             type: Sequelize.STRING(45),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
         },
         ClinicalNote: {
-            type: Sequelize.TEXT
+            type: Sequelize.TEXT,
+            validate: {
+
+                len: {
+                    args: [0, 2048],
+                    msg: 'Too long!'
+                }
+            }
         },
         Description: {
-            type: Sequelize.TEXT
+            type: Sequelize.TEXT,
+            validate: {
+
+                len: {
+                    args: [0, 2048],
+                    msg: 'Too long!'
+                }
+            }
         },
         CreatedDate: {
             type: Sequelize.DATE,
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
         },
         CreatedBy: {
             type: Sequelize.BIGINT(20),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
         },
         ModifiedDate: {
             type: Sequelize.DATE,
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
         },
         ModifiedBy: {
             type: Sequelize.BIGINT(20),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
         }
     },
     associations: function() {},
@@ -66,18 +146,18 @@ module.exports = {
         tableName: 'ClinicalDetail',
         timestamps: false,
         hooks: {
-            beforeCreate: function(clinicalDetail, options, callback) {
-                clinicalDetail.CreatedDate = new Date();
+            beforeCreate: function(clinicaldetail, options, callback) {
+                clinicaldetail.CreatedDate = new Date();
                 callback();
             },
-            beforeBulkCreate: function(clinicalDetails, options, callback) {
-                clinicalDetails.forEach(function(value, index) {
-                    clinicalDetails[index].CreatedDate = new Date();
+            beforeBulkCreate: function(clinicaldetails, options, callback) {
+                clinicaldetails.forEach(function(clinicaldetail, index) {
+                    clinicaldetails[index].CreatedDate = new Date();
                 });
                 callback();
             },
-            beforeUpdate: function(appt, options, callback) {
-                clinicalDetail.ModifiedDate = new Date();
+            beforeUpdate: function(clinicaldetail, options, callback) {
+                clinicaldetail.ModifiedDate = new Date();
                 callback();
             }
         }

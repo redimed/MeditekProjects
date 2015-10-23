@@ -1,7 +1,7 @@
 module.exports={
 	GetModulesForUser:function(req,res)
 	{
-		var modules=Services.Module.GetModulesForUser();
+		var modules=_.cloneDeep(Services.Module.GetModulesForUser());
 
 		if(!req.user)
 		{
@@ -21,7 +21,8 @@ module.exports={
 			}
 			return result;
 		});
-		
+		console.log(">>>>>>>>>>>>>>>>.1")
+		console.log(modules);
 		var moduleMap={};
 		_.each(modules,function(module){
 			moduleMap[module.uid]=module;
@@ -60,12 +61,13 @@ module.exports={
 			modulemapF[moduleMapOrder[module.parent]].nodes[moduleMapOrder[module.uid]]=module;
 		})
 
+		console.log(">>>>>>>>>>>>>>>>.2")
+		console.log(JSON.stringify(modulemapF['root']));
 		/*_.each(modules,function(module){
 			if(!moduleMap[module.parent])
 				moduleMap[module.parent]={};
 			moduleMap[module.parent][module.uid]=module;
 		})*/
-
 		return res.ok({data:modulemapF['root']});
 	}
 }

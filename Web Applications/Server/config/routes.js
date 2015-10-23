@@ -20,8 +20,21 @@ var urgentCareRoutes = require('./routes/urgentCareRoutes');
 _.extend(routes, urgentCareRoutes);
 
 //End Module User Account
-
+//
 var authorizationRoutes = require('./routes/authorizationRoutes');
 _.extend(routes, authorizationRoutes);
+/*
+    ------------------ Doctor -----------------------
+*/
+var DoctorRoutes = require('./routes/DoctorRoutes');
+_.extend(routes, DoctorRoutes);
+/*
+    ------------------ End Doctor -------------------
+    -------------------------------------------------
+*/
+// Begin Module File Upload
+var UploadRoutes = require('./routes/FileUploadRoutes')
+_.extend(routes, UploadRoutes);
+// End Module File Upload
 
 module.exports.routes = routes;

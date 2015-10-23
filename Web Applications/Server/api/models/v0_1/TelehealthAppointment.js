@@ -4,92 +4,221 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             autoIncrement: true,
             allowNull: false,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            },
             primaryKey: true
         },
         UID: {
             type: Sequelize.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isUUID: {
+                    args: 4,
+                    msg: 'Must be an UUID V4!'
+                }
+            }
         },
         AppointmentID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            },
             references: {
                 model: 'Appointment',
                 key: 'ID'
             }
         },
-        Description: {
-            type: Sequelize.TEXT
-        },
         Fund: {
             type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
         Correspondence: {
             type: Sequelize.STRING(1),
-            allowNull: true
+            comment: 'Y/N',
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Description: {
+            type: Sequelize.TEXT,
+            validate: {
+
+                len: {
+                    args: [0, 2048],
+                    msg: 'Too long!'
+                }
+            }
         },
         RefName: {
             type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
         RefHealthLink: {
             type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
         RefAddress: {
             type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
         RefTelePhone: {
             type: Sequelize.STRING(20),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
         },
         RefPostcode: {
-            type: Sequelize.STRING(100),
-            allowNull: true
+            type: Sequelize.STRING(10),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 10],
+                    msg: 'Too long!'
+                }
+            }
         },
         RefSignature: {
             type: Sequelize.STRING(255),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
         RefDate: {
             type: Sequelize.DATE,
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
         },
         RefProviderNumber: {
             type: Sequelize.STRING(45),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
         },
         RefDurationOfReferal: {
             type: Sequelize.STRING(2),
-            allowNull: true
+            allowNull: true,
+            comment: '- 3 months: 03\n- 12 months: 12\n- indefinite: 00',
+            validate: {
+                len: {
+                    args: [0, 2],
+                    msg: 'Too long!'
+                }
+            }
         },
         PresentComplain: {
-            type: Sequelize.TEXT
+            type: Sequelize.TEXT,
+            validate: {
+
+                len: {
+                    args: [0, 2048],
+                    msg: 'Too long!'
+                }
+            }
         },
         Allergy: {
-            type: Sequelize.TEXT
+            type: Sequelize.TEXT,
+            validate: {
+
+                len: {
+                    args: [0, 2048],
+                    msg: 'Too long!'
+                }
+            }
         },
         Enable: {
             type: Sequelize.STRING(1),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
         },
         CreatedDate: {
             type: Sequelize.DATE,
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
         },
         CreatedBy: {
             type: Sequelize.BIGINT(20),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
         },
         ModifiedDate: {
             type: Sequelize.DATE,
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
         },
         ModifiedBy: {
             type: Sequelize.BIGINT(20),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
         }
     },
     associations: function() {},
@@ -97,12 +226,18 @@ module.exports = {
         tableName: 'TelehealthAppointment',
         timestamps: false,
         hooks: {
-            beforeCreate: function(telehealthAppt, options, callback) {
-                telehealthAppt.CreationDate = new Date();
+            beforeCreate: function(telehealthappointment, options, callback) {
+                telehealthappointment.CreatedDate = new Date();
                 callback();
             },
-            beforeUpdate: function(telehealthAppt, options, callback) {
-                telehealthAppt.ModifiedDate = new Date();
+            beforeBulkCreate: function(telehealthappointments, options, callback) {
+                telehealthappointments.forEach(function(telehealthappointment, index) {
+                    telehealthappointments[index].CreatedDate = new Date();
+                });
+                callback();
+            },
+            beforeUpdate: function(telehealthappointment, options, callback) {
+                telehealthappointment.ModifiedDate = new Date();
                 callback();
             }
         }

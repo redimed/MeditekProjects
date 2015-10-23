@@ -46,27 +46,29 @@ module.exports = function(data) {
                         });
                     })
                     .then(function(apptCreated) {
-                        appointmentCreated = apptCreated;
-                        if (HelperService.CheckExistData(data.FileUploads) &&
-                            _.isArray(data.FileUploads)) {
-                            /*
-                            create association Appointment with FileUpload 
-                            via RelAppointmentFileUpload
-                            */
-                            var arrayFileUploadsUnique = _.map(_.groupBy(data.FileUploads, function(FU) {
-                                return FU.UID;
-                            }), function(subGrouped) {
-                                return subGrouped[0].UID;
-                            });
-                            return FileUpload.findAll({
-                                attributes: ['ID'],
-                                where: {
-                                    UID: {
-                                        $in: arrayFileUploadsUnique
-                                    }
-                                },
-                                transaction: t
-                            });
+                        if (HelperService.CheckExistData(apptCreated)) {
+                            appointmentCreated = apptCreated;
+                            if (HelperService.CheckExistData(data.FileUploads) &&
+                                _.isArray(data.FileUploads)) {
+                                /*
+                                create association Appointment with FileUpload 
+                                via RelAppointmentFileUpload
+                                */
+                                var arrayFileUploadsUnique = _.map(_.groupBy(data.FileUploads, function(FU) {
+                                    return FU.UID;
+                                }), function(subGrouped) {
+                                    return subGrouped[0].UID;
+                                });
+                                return FileUpload.findAll({
+                                    attributes: ['ID'],
+                                    where: {
+                                        UID: {
+                                            $in: arrayFileUploadsUnique
+                                        }
+                                    },
+                                    transaction: t
+                                });
+                            }
                         }
 
                     }, function(err) {
@@ -77,7 +79,8 @@ module.exports = function(data) {
                     })
                     .then(function(IDFileUploads) {
                         if (HelperService.CheckExistData(IDFileUploads) &&
-                            _.isArray(IDFileUploads)) {
+                            _.isArray(IDFileUploads) &&
+                            HelperService.CheckExistData(appointmentCreated)) {
                             return appointmentCreated.addFileUploads(IDFileUploads, {
                                 transaction: t
                             });
@@ -89,7 +92,8 @@ module.exports = function(data) {
                         });
                     })
                     .then(function(associationAppointmentFileUploadCreated) {
-                        if (HelperService.CheckExistData(data.TelehealthAppointment)) {
+                        if (HelperService.CheckExistData(data.TelehealthAppointment) &&
+                            HelperService.CheckExistData(appointmentCreated)) {
                             var dataTelehealthAppointment =
                                 Services.GetDataAppointment.TelehealthAppointmentCreate(preferringPractitioner);
                             dataTelehealthAppointment.UID = UUIDService.Create();
@@ -114,15 +118,17 @@ module.exports = function(data) {
                         });
                     })
                     .then(function(telehealthApptCreated) {
-                        telehealthApointmentCreated = telehealthApptCreated;
-                        teleApptID = (!_.isUndefined(telehealthApointmentCreated.dataValues) ? telehealthApointmentCreated.dataValues.ID : null);
-                        /*
-                        created associated PreferringPractitioner 
-                        via Model RelTelehealthAppointmentDoctor
-                        */
-                        return telehealthApointmentCreated.addDoctor(preferringPractitioner.ID, {
-                            transaction: t
-                        });
+                        if (HelperService.CheckExistData(telehealthApptCreated)) {
+                            telehealthApointmentCreated = telehealthApptCreated;
+                            teleApptID = (!_.isUndefined(telehealthApointmentCreated.dataValues) ? telehealthApointmentCreated.dataValues.ID : null);
+                            /*
+                            created associated PreferringPractitioner 
+                            via Model RelTelehealthAppointmentDoctor
+                            */
+                            return telehealthApointmentCreated.addDoctor(preferringPractitioner.ID, {
+                                transaction: t
+                            });
+                        }
                     }, function(err) {
                         defer.reject({
                             transaction: t,
@@ -130,7 +136,8 @@ module.exports = function(data) {
                         });
                     })
                     .then(function(relTelehealthAppointmentDoctorCreated) {
-                        if (HelperService.CheckExistData(data.TelehealthAppointment.PatientAppointment)) {
+                        if (HelperService.CheckExistData(data.TelehealthAppointment.PatientAppointment) &&
+                            HelperService.CheckExistData(telehealthApointmentCreated)) {
                             var dataPatientAppointment =
                                 Services.GetDataAppointment.PatientAppointmentCreate(data.TelehealthAppointment.PatientAppointment);
                             dataPatientAppointment.UID = UUIDService.Create();
@@ -154,8 +161,32 @@ module.exports = function(data) {
                             error: err
                         });
                     })
+                    //link patient with telehealth appointment
                     .then(function(patientAppointmentCreated) {
-                        if (HelperService.CheckExistData(data.TelehealthAppointment.ExaminationRequired)) {
+                        if (HelperService.CheckExistData(data.Patient) &&
+                            HelperService.CheckExistData(data.Patient.UID)) {
+                            //find patient
+                            return Patient.findOne({
+                                attributes: ['ID'],
+                                where: {
+                                    UID: data.Patient.UID
+                                },
+                                transaction: t
+                            });
+                        }
+                    })
+                    .then(function(infoPatient) {
+                        if (HelperService.CheckExistData(infoPatient) &&
+                            HelperService.CheckExistData(appointmentCreated)) {
+                            //association appointment with patient
+                            return appointmentCreated.addPatient(infoPatient.ID, {
+                                transaction: t
+                            });
+                        }
+                    })
+                    .then(function(patientAppointmentCreated) {
+                        if (HelperService.CheckExistData(data.TelehealthAppointment.ExaminationRequired) &&
+                            HelperService.CheckExistData(telehealthApointmentCreated)) {
                             var dataExamniationRequired =
                                 Services.GetDataAppointment.ExaminationRequired(data.TelehealthAppointment.ExaminationRequired);
                             dataExamniationRequired.UID = UUIDService.Create();
@@ -180,16 +211,16 @@ module.exports = function(data) {
                         });
                     })
                     .then(function(examinationRequiredCreated) {
-                        if (HelperService.CheckExistData(data.TelehealthAppointment.PreferedPlasticSurgeon) &&
-                            _.isArray(data.TelehealthAppointment.PreferedPlasticSurgeon)) {
+                        if (HelperService.CheckExistData(data.TelehealthAppointment.PreferredPractitioner) &&
+                            _.isArray(data.TelehealthAppointment.PreferredPractitioner)) {
                             var dataPrefPlasSurgon =
-                                Services.GetDataAppointment.PreferedPlasticSurgeon(teleApptID, data.TelehealthAppointment.PreferedPlasticSurgeon);
+                                Services.GetDataAppointment.PreferredPractitioners(teleApptID, data.TelehealthAppointment.PreferredPractitioner);
                             dataPrefPlasSurgon.UID = UUIDService.Create();
                             /*
                             create new PreferedPlasticSurgeon
                             link with TelehealthAppointment via TelehealthAppointmentID
                             */
-                            return PreferedPlasticSurgeon.bulkCreate(dataPrefPlasSurgon, {
+                            return PreferredPractitioner.bulkCreate(dataPrefPlasSurgon, {
                                 transaction: t
                             });
                         } else {

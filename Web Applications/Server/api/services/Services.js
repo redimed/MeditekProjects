@@ -12,4 +12,8 @@ module.exports = {
     UrgentCare: require('./UrgentCare/UrgentCare'),
     DeleteTelehealthAppointment: require('./Appointment/DeleteTelehealthAppointment'),
     Module:require('./Authorization/v0_1/Module'),
+    Role: require('./Authorization/v0_1/Role'),
+    UserRole: require('./Authorization/v0_1/UserRole'),
+    Doctor:require('./Doctor/Doctor'),
+    FileUpload:require('./FileUpload/FileUpload')
 };

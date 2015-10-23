@@ -18,8 +18,8 @@ module.exports = {
             foreignKey: 'TelehealthAppointmentID'
         });
 
-        // TelehealthAppointment - PreferedPlasticSurgeon
-        TelehealthAppointment.hasMany(PreferedPlasticSurgeon, {
+        // TelehealthAppointment - PreferredPractitioner
+        TelehealthAppointment.hasMany(PreferredPractitioner, {
             foreignKey: 'TelehealthAppointmentID'
         });
         // TelehealthAppointment - Doctor
@@ -69,6 +69,22 @@ module.exports = {
             foreignKey: 'FileUploadID'
         });
 
+        //association FileUpload - DocumentFile
+        FileUpload.belongsTo(DocumentFile, {
+            foreignKey: 'ID'
+        });
+        FileUpload.hasOne(DocumentFile, {
+            foreignKey: 'FileUploadID'
+        });
+
+        //association FileUpload - MedicalImage
+        FileUpload.belongsTo(MedicalImage, {
+            foreignKey: 'ID'
+        });
+        FileUpload.hasOne(MedicalImage, {
+            foreignKey: 'FileUploadID'
+        });
+
         //association Patient - UserAccount
         Patient.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
@@ -80,13 +96,6 @@ module.exports = {
         Department.hasOne(Doctor, {
             foreignKey: 'DepartmentID'
         });
-
-        /* Doctor */
-        UserAccount.hasOne(Doctor, {
-            foreignKey: 'UserAccountID'
-        });
-        /* End Doctor */
-
 
         //UserAccount
         UserAccount.hasOne(Patient, {
@@ -112,7 +121,16 @@ module.exports = {
         })
 
         /* Doctor */
+        FileUpload.hasOne(Doctor, {
+            foreignKey: 'Signature'
+        });
+        Country.hasOne(Doctor, {
+            foreignKey: 'CountryID'
+        });
         UserAccount.hasOne(Doctor, {
+            foreignKey: 'UserAccountID'
+        });
+        Doctor.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
         });
         /* End Doctor */

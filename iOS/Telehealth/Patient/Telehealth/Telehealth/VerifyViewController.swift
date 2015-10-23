@@ -20,7 +20,7 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
     let colorCustom = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
     
     
-    let verifyPhoneNumberController = VerifyPhoneNumberController()
+    let verifyPhoneNumberController = GetAndPostDataController()
     
     
     override func viewDidLoad() {
@@ -69,20 +69,23 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                     let defaults = NSUserDefaults.standardUserDefaults()
                     let uid = response["uid"].string
                     let token = response["token"].string
+                    let patientUID = response["patientUID"].string
                     
                     //Save activated in localstorage
                     defaults.setValue("Verified", forKey: "verifyUser")
                     defaults.setValue(uid, forKey: "uid")
                     defaults.setValue(token, forKey: "token")
+                    defaults.setValue(patientUID, forKey: "patientUID")
                     defaults.synchronize()
+                    
                     //Change to home view by segue
-                    self.performSegueWithIdentifier("VerifyToHomeSegue", sender: self)
+                    self.performSegueWithIdentifier("VerifyToProfileSegue", sender: self)
                 }else {
                     self.view.hideLoading()
                     if response["TimeOut"] ==  "Request Time Out" {
                         self.alertMessage("Error", message: "Request Time Out")
                     }else {
-                        let message : String = String(response["message"])
+                        let message : String = String(response["ErrorsList"][0])
                         self.textFieldVerifyCode.text = ""
                         self.alertMessage("Error", message: message)
                         
@@ -115,6 +118,13 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
         
         self.presentViewController(alertController, animated: true) {
             
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "VerifyToProfileSegue" {
+            let profile = segue.destinationViewController as! InformationViewController
+            profile.messageFrom = "VerifyToProfile"
         }
     }
     

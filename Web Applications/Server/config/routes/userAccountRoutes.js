@@ -40,6 +40,16 @@ module.exports={
 		action:'EnableUserAccount'
 	},
 
+	'delete /api/user-account/RemoveIdentifierImage':{
+		controller:'UserAccount/v0_1/UserAccountController',
+		action:'RemoveIdentifierImage'
+	},
+
+	'get /api/user-account/GetIdentifierImageInfo':{
+		controller:'UserAccount/v0_1/UserAccountController',
+		action:'GetIdentifierImageInfo'
+	},
+
 	'put /api/user-activation/DeactivationUserAccount':{
 		controller:'UserAccount/v0_1/UserActivationController',
 		action:'DeactivationUserAccount'
@@ -84,10 +94,12 @@ module.exports={
     	action:'CreateUserActivation'
 	},
 
-	'get /api/user-activation/activation-web':{
+	
+	'get /api/user-activation/activation':{
 		controller:'UserAccount/v0_1/UserActivationController',
-		action:'ActivationWeb'
+    	action:'Activation'
 	},
+
 
 
 	'get /test':'TestController.test',

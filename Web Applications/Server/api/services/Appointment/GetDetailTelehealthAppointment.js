@@ -14,8 +14,8 @@ module.exports = function(appointmentUID) {
                 include: [{
                     model: PatientAppointment,
                     attributes: ['UID', 'FirstName', 'MiddleName', 'LastName',
-                        'DOB', 'Email', 'PhoneNumber', 'Address', 'Suburb', 'Postcode',
-                        'Email', 'PhoneNumber', 'HomePhoneNumber'
+                        'DOB', 'Email', 'Address1', 'Address2', 'Suburb', 'Postcode',
+                        'Email', 'WorkPhoneNumber', 'HomePhoneNumber'
                     ],
                     required: false,
                 }, {
@@ -23,17 +23,26 @@ module.exports = function(appointmentUID) {
                     attributes: ['Private', 'Public', 'DVA', 'WorkersComp', 'MVIT'],
                     required: false
                 }, {
-                    model: PreferedPlasticSurgeon,
+                    model: PreferredPractitioner,
                     attributes: ['Name'],
                     required: false
                 }, {
                     model: ClinicalDetail,
                     attributes: ['UID', 'Section', 'Category', 'Type', 'Name', 'Value', 'ClinicalNote', 'Description'],
                     required: false
+                }, {
+                    model: Doctor,
+                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName',
+                        'HealthLink', 'Address1', 'Address2', 'WorkPhoneNumber',
+                        'Postcode', 'ProviderNumber', 'Signature'
+                    ],
+                    required: false
                 }]
             }, {
                 model: Doctor,
-                attributes: ['ID', 'UID', 'FirstName', 'MiddleName', 'LastName', 'DOB', 'Type', 'Email', 'HomePhoneNumber'],
+                attributes: ['ID', 'UID', 'FirstName', 'MiddleName', 'LastName',
+                    'DOB', 'Type', 'Email', 'HomePhoneNumber', 'WorkPhoneNumber'
+                ],
                 required: false,
                 include: [{
                     model: Department,
@@ -43,7 +52,7 @@ module.exports = function(appointmentUID) {
             }, {
                 model: Patient,
                 attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB',
-                    'Gender', 'Address1', 'Address2', 'Suburb', 'Postcode', 'Email', 'HomePhoneNumber'
+                    'Gender', 'Address1', 'Address2', 'Suburb', 'Postcode', 'Email', 'HomePhoneNumber', 'WorkPhoneNumber'
                 ],
                 required: false,
                 include: [{
@@ -53,7 +62,14 @@ module.exports = function(appointmentUID) {
                 }]
             }, {
                 model: FileUpload,
-                required: false
+                required: false,
+                include: [{
+                    model: MedicalImage,
+                    required: false
+                }, {
+                    model: DocumentFile,
+                    required: false
+                }]
             }],
             where: {
                 UID: appointmentUID

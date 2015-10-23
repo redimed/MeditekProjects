@@ -1,12 +1,17 @@
+var crypto = require('crypto'),
+    algorithm = 'aes-256-ctr';
+var zlib = require('zlib');
+var fs = require('fs');
+
 /*
 check data request
 input: request from client
 output: false: if data miss or parse failed
         data: if exist data and parse success
 */
-
 /**
- * Kiem tra xem bien hop le hay khong
+ * Kiem tra xem bien hop le hay khong 
+ * 
  */
 function checkData(value) {
     var result = true;
@@ -17,7 +22,6 @@ function checkData(value) {
     }
     return result;
 }
-
 /**
  * Kiem tra danh sach data truyen vao hop le hay kkhong
  */
@@ -46,23 +50,18 @@ function exlog() {
 }
 
 function exFileJSON(data, fileName) {
-
     var file = './temp/' + fileName;
     var obj = {
         name: 'JP'
     }
-
     jf.writeFile(file, data, function(err) {
         console.log(err);
     })
 }
-
 module.exports = {
     CheckPostRequest: function(request) {
         var data;
-        if (!_.isUndefined(request) &&
-            !_.isUndefined(request.body) &&
-            !_.isUndefined(request.body.data)) {
+        if (!_.isUndefined(request) && !_.isUndefined(request.body) && !_.isUndefined(request.body.data)) {
             data = request.body.data;
             if (!_.isObject(data)) {
                 try {
@@ -77,14 +76,11 @@ module.exports = {
             return false;
         }
     },
-
     CheckExistData: function(data) {
         return (!_.isUndefined(data) && !_.isNull(data));
     },
     GetFullName: function(firstName, middleName, lastName) {
-        return (!_.isNull(firstName) && !_.isUndefined(firstName) && !_.isEmpty(firstName)) ? firstName : '' +
-            (!_.isNull(middleName) && !_.isUndefined(middleName) && !_.isEmpty(middleName)) ? ' ' + middleName : '' +
-            (!_.isNull(lastName) && !_.isUndefined(lastName) && !_.isEmpty(lastName)) ? ' ' + lastName : '';
+        return (!_.isNull(firstName) && !_.isUndefined(firstName) && !_.isEmpty(firstName)) ? firstName : '' + (!_.isNull(middleName) && !_.isUndefined(middleName) && !_.isEmpty(middleName)) ? ' ' + middleName : '' + (!_.isNull(lastName) && !_.isUndefined(lastName) && !_.isEmpty(lastName)) ? ' ' + lastName : '';
     },
     //define regex pattern
     regexPattern: {
@@ -94,8 +90,7 @@ module.exports = {
         //  mysite@you.me.net
         //reference from: http://www.w3resource.com/javascript/form/email-validation.php
         email: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        date: /^(\d{4})-(\d{1,2})-(\d{1,2})$/,
-
+        date: /^(\d{4})\/(\d{1,2})\/(\d{1,2})$/,
         //fullPhonePattern example:
         //  (+351) 282 43 50 50
         //  90191919908
@@ -110,24 +105,26 @@ module.exports = {
         //  (123)8575973
         //  (0055)(123)8575973
         //reference from: http://stackoverflow.com/questions/14639973/javascript-regex-what-to-use-to-validate-a-phone-number
-
         //international phone number
         fullPhoneNumber: /^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i,
-
         //autralian phone number
         auPhoneNumber: /^(\+61|0061|0)?4[0-9]{8}$/,
-
         //except (,),whitespace,- in phone number
         phoneExceptChars: /[\(\)\s\-]/g,
-
         //autralian home phone number
-        auHomePhoneNumber: /^[1-9]{9}$/
+        auHomePhoneNumber: /^[1-9]{9}$/,
+
+        //character
+        character: /^[a-zA-Z]{0,255}$/,
+
+        //address
+        address: /^[a-zA-Z0-9\s,'-]{0,255}$/,
+
+        //postcode
+        postcode: /^[0-9]{4}$/
     },
-
     checkData: checkData,
-
     checkListData: checkListData,
-
     const: {
         systemType: {
             ios: 'IOS',
@@ -135,21 +132,38 @@ module.exports = {
             android: 'ARD'
         },
 
+        verificationMethod:{
+            token:'TOKEN',
+            code:'CODE'
+        },
+
         roles: {
             admin: 'ADMIN',
             assistant: 'ASSISTANT',
-            doctor: 'DOCTOR',
-            gp: 'GP',
+            internalPractitioner: 'INTERNAL_PRACTITIONER', //DOCTOR
+            externalPractitioner: 'EXTERTAL_PRACTITIONER', //GP
             patient: 'PATIENT',
-            internalPractitional: 5,
-            externalPractiction: 6,
-        }
+            clinicTelehealth:'CLINIC_TELEHEALTH'
+        },
+        fileType: {
+            image: 'MedicalImage',
+            document: 'MedicalDocument',
+            avatar: 'ProfileImage',
+            signature: 'Signature'
+        },
+        imageExt: ['jpg','png','gif','webp','tif','bmp','psd','jxr'],
+
+        verificationCodeLength:6,
+        
+        verificationTokenLength:150,
+
+        tokenExpired:15, //seconds
+
+        codeExpired:3, //Số lần có thể nhập sai
+
     },
-
     exlog: exlog,
-
     exFileJSON: exFileJSON,
-
     /**
      * copyAttrsValue: 
      * So sánh 2 object destination và source, nếu 2 object có attribute nào trùng nhau
@@ -167,11 +181,8 @@ module.exports = {
         } else {
             destination = {};
         }
-
         return destination;
     },
-
-
     /**
      * cleanObject: xóa những thuộc tính nào có giá trị là null, undefined, '' 
      * hoặc giá trị là object rỗng {}
@@ -188,7 +199,6 @@ module.exports = {
         }
         return obj;
     },
-
     /**
      * rationalizeObject:
      * Hợp lệ hóa destination object bằng source object
@@ -207,11 +217,8 @@ module.exports = {
         } else {
             destination = {};
         }
-
         return destination;
     },
-
-
     /**
      * Kiểm tra các attributes của object có giá trị bằng một trong các giá trị trong mảng corrects
      * hay không
@@ -234,21 +241,112 @@ module.exports = {
             result = false;
             return result;
         }
-
     },
-
     /*
         get-listcountry: lay danh sach country 
     */
     getListCountry: function() {
-        return Country.findAll({})
-            .then(function(result) {
-                return result;
-            }, function(err) {
-                var error = new Error("getListCountry.error");
-                error.pushErrors("Country.findAll.error");
-                throw error;
-            })
+        return Country.findAll({}).then(function(result) {
+            return result;
+        }, function(err) {
+            var error = new Error("getListCountry.error");
+            error.pushErrors("Country.findAll.error");
+            throw error;
+        })
+    },
+    parseAuMobilePhone: function(PhoneNumber) {
+        if (!checkData(PhoneNumber)) return null;
+        var auPhoneNumberPattern = new RegExp(this.regexPattern.auPhoneNumber);
+        PhoneNumber = PhoneNumber.replace(this.regexPattern.phoneExceptChars, '');
+        if (!auPhoneNumberPattern.test(PhoneNumber)) {
+            return null;
+        } else {
+            PhoneNumber = PhoneNumber.slice(-9);
+            PhoneNumber = '+61' + PhoneNumber;
+            return PhoneNumber;
+        }
+    },
+    isValidEmail: function(Email) {
+        if (!checkData(Email)) return false;
+        var emailPattern = new RegExp(this.regexPattern.email);
+        if (emailPattern.test(Email)) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+    /*
+        Encrypt file với algorithm AES-256 và password được cung cấp
+        -info: là 1 object bao gồm [inputFile, outputFile, password];
+        -callback: callback trả về
+    */
+    EncryptFile: function(info, callback) {
+        if (!info.inputFile || !info.outputFile || !info.password) {
+            var err = new Error("EncryptFile.Error");
+            err.pushError("Invalid Params!");
+            return callback(err);
+        };
+        fs.access(info.inputFile, function(err) {
+            if (err) {
+                var err = new Error("EncryptFile.Error");
+                err.pushError("File Is Not Exist!");
+                return callback(err);
+            }
+            var inputStream = fs.createReadStream(info.inputFile);
+            var outputStream = fs.createWriteStream(info.outputFile);
+            var encrypt = crypto.createCipher(algorithm, info.password);
+            inputStream.on('data', function(data) {
+                var buf = new Buffer(encrypt.update(data), 'binary');
+                outputStream.write(buf);
+            }).on('end', function() {
+                var buf = new Buffer(encrypt.final('binary'), 'binary');
+                zlib.gzip(buf, {
+                    level: 9
+                }, function(err, result) {
+                    if (err) throw err;
+                    outputStream.write(buf);
+                    outputStream.end();
+                    outputStream.on('close', function() {
+                        callback();
+                    })
+                });
+            });
+        })
+    },
+    /*
+        Decrypt file với algorithm AES-256 và password được cung cấp
+        -info: là 1 object bao gồm [inputFile, outputFile, password];
+        -callback: callback trả về
+    */
+    DecryptFile: function(info, callback) {
+        if (!info.inputFile || !info.outputFile || !info.password) {
+            var err = new Error("DecryptFile.Error");
+            err.pushError("Invalid Params!");
+            return callback(err);
+        };
+        fs.access(info.inputFile, function(err) {
+            if (err) {
+                var err = new Error("DecryptFile.Error");
+                err.pushError("File Is Not Exist!");
+                return callback(err);
+            }
+            var inputStream = fs.createReadStream(info.inputFile);
+            var outputStream = fs.createWriteStream(info.outputFile);
+            var decrypt = crypto.createDecipher(algorithm, info.password)
+            inputStream.on('data', function(data) {
+                var buf = new Buffer(decrypt.update(data), 'binary');
+                outputStream.write(buf);
+            }).on('end', function() {
+                var buf = new Buffer(decrypt.final('binary'), 'binary');
+                zlib.gunzip(buf, function(err, result) {
+                    if (err) throw err;
+                    outputStream.write(buf);
+                    outputStream.end();
+                    outputStream.on('close', function() {
+                        callback();
+                    });
+                });
+            });
+        })
     }
-
 }

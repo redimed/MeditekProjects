@@ -16,72 +16,25 @@
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.policies.html
  */
 
-
-module.exports.policies = {
-
-  '*': true,//bật lên khi ở chế độ develop không cần login phân quyền
-
-  // 'AuthController': {
-  //   'test': 'isAuthenticated'
-  // },
-
-  // '*': "hasToken", //bật lên khi relase, hầu hết tất cả api đều phải có token
-  
-  // 'UserAccount/UserAccountController': {
-  //     "createUser": true,
-  //     "Test":true
-  // },
-  // 'UserAccount/AuthController': {
-  //     '*': true,
-  // },
-  
-  'UserAccount/v0_1/UserAccountController':{
-    'Test':'checkVersion',
-    'TestURL':'checkVersion',
-    'CreateUserAccount':'hasToken',
-    'UpdateUserAccount':'hasToken'
-  },
-  
-  'TestController':{
-      'test':['hasToken'],
-      'testAdmin':['hasToken','isAdmin'],
-      'testAssistant':['hasToken','isAssistant'],
-      'testGp':['hasToken','isGp'],
-      'testDoctor':['hasToken','isDoctor'],
-      'testPatient':['hasToken','isPatient']
-  },
-
-  'Authorization/v0_1/ModuleController':{
-    'GetModulesForUser':['hasToken']
-  }
-
-  /***************************************************************************
-  *                                                                          *
-  * Default policy for all controllers and actions (`true` allows public     *
-  * access)                                                                  *
-  *                                                                          *
-  ***************************************************************************/
-
-  // '*': true,
-
-  /***************************************************************************
-  *                                                                          *
-  * Here's an example of mapping some policies to run before a controller    *
-  * and its actions                                                          *
-  *                                                                          *
-  ***************************************************************************/
-	// RabbitController: {
-
-		// Apply the `false` policy as the default for all of RabbitController's actions
-		// (`false` prevents all access, which ensures that nothing bad happens to our rabbits)
-		// '*': false,
-
-		// For the action `nurture`, apply the 'isRabbitMother' policy
-		// (this overrides `false` above)
-		// nurture	: 'isRabbitMother',
-
-		// Apply the `isNiceToAnimals` AND `hasRabbitFood` policies
-		// before letting any users feed our rabbits
-		// feed : ['isNiceToAnimals', 'hasRabbitFood']
-	// }
+var _ = require('lodash');
+var policies = {
+    '*': 'hasToken',//bật lên khi ở chế độ develop không cần login phân quyền
+    // '*': "hasToken", //bật lên khi relase, hầu hết tất cả api đều phải có token
 };
+
+//Begin module UserAccount
+var userAccountPolicies = require('./policies/userAccountPolicies');
+_.extend(policies, userAccountPolicies);
+//End module UserAccount
+
+//Begin module Test
+var testPolicies = require('./policies/testPolicies');
+_.extend(policies, testPolicies);
+//End module Test
+
+//Begin module Authorization
+var authorizationPolicies = require('./policies/authorizationPolicies');
+_.extend(policies, authorizationPolicies);
+//End module Authorization
+
+module.exports.policies = policies;

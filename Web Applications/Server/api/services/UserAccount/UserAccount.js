@@ -278,6 +278,7 @@ module.exports = {
 			return checkPhoneNumber(userInfo.PhoneNumber);
 		})
 		.then(function(user){
+			userInfo.Enable='Y';
 			return UserAccount.create(userInfo,{transaction:transaction})
 			.then(function(data){
 				return data;
@@ -465,34 +466,86 @@ module.exports = {
 	 * chỉ cần 1 trong 4 tiêu chí được cung cấp thì user tương ứng sẽ được trả về
 	 * Input:
 	 * 	criteria: là json chứa 1 trong các thuộc tính [UID, UserName, Email, Phone]
+	 * 	attributes: chứa các field muốn trả về
 	 * 	transaction: nếu được cung cấp thì sẽ áp dụng transaction vào các câu truy vấn
 	 * Output:
-	 * 	if success return promise update UserAccount
+	 * 	if success return promise getOne UserAccount
 	 * 	if error throw err;
 	 * 	NOTES:
 	 * 		CHÚ Ý, KHÔNG LẤY USER ACCOUNT THÔNG QUA ID VÌ ID THEO CƠ CHẾ TỰ TĂNG, NHƯ THẾ
 	 * 	 	SẼ KHÔNG AN TOÀN VÌ NGƯỜI DÙNG CÓ THỂ DÙNG TOOL ĐỂ TỰ ĐỘNG ĐIỀN ID
 	 */
-	GetUserAccountDetails:function(criteria,transaction)
+	GetUserAccountDetails:function(criteria,attributes,transaction)
 	{
-		var whereClause={};
-		if(criteria.UID)
-			whereClause.UID=criteria.UID;
-		else if(criteria.UserName)
-			whereClause.UserName=criteria.UserName;
-		else if(criteria.Email)
-			whereClause.Email=criteria.Email;
-		else if(criteria.PhoneNumber)
-			whereClause.PhoneNumber=criteria.PhoneNumber;
-		else
+		var error=new Error('GetUserAccountDetails.Error');
+		var whereClause={Enable:'Y'};
+
+		function Validation()
 		{
-			var err=new Error('GetUserAccountDetails.Error');
-			err.pushError('GetUserAccountDetails.criteriaNotFound');
-			throw err;
+			var q=$q.defer();
+			try{
+				if(criteria.UID)
+					whereClause.UID=criteria.UID;
+				else if(criteria.UserName)
+					whereClause.UserName=criteria.UserName;
+				else if(criteria.Email)
+				{
+					if(o.isValidEmail(criteria.Email))
+					{
+						whereClause.Email=criteria.Email;
+					}
+					else
+					{
+						error.pushError("GetUserAccountDetails.emailInvalid");
+					}
+				}
+				else if(criteria.PhoneNumber)
+				{
+					criteria.PhoneNumber=o.parseAuMobilePhone(criteria.PhoneNumber);
+					console.log(criteria.PhoneNumber);
+					if(criteria.PhoneNumber)
+						whereClause.PhoneNumber=criteria.PhoneNumber;
+					else{
+						error.pushError("GetUserAccountDetails.phoneNumberInvalid");
+					}
+				}
+				else
+				{
+					error.pushError('GetUserAccountDetails.criteriaNotFound');
+				}
+
+				if(error.getErrors().length>0)
+				{
+					throw error;
+				}
+				else
+				{
+					q.resolve({status:'success'});
+				}
+			}
+			catch(err){
+				q.reject(err);
+			}
+			
+			return q.promise;
 		}
-		return UserAccount.findOne({
-			where:criteria
-		},{transaction:transaction});
+		
+		return Validation()
+		.then(function(data){
+			return UserAccount.findOne({
+				where:whereClause,
+				attributes:attributes
+			},{transaction:transaction})
+			.then(function(user){
+				return user;
+			},function(err){
+				o.exlog(err);
+				error.pushError("GetUserAccountDetails.queryError");
+				throw error;
+			})
+		},function(err){
+			throw err;
+		})
 	},
 
 
@@ -577,5 +630,278 @@ module.exports = {
 		},function(err){
 			throw err;
 		})
-	}
+	},
+
+
+	/**
+	 * RemoveIdentifierImage: dùng để xóa profile image và signature image của user
+	 * input:
+	 * - criteria: {UserUID|UserName|Email|PhoneNumber, Type}
+	 * 		+Type: HelperService.const.fileType.avatar, HelperService.const.fileType.signature
+	 * -transaction
+	 * output
+	 * - Nếu thành công trả về {status:'success'}
+	 * - Nếu thất bại quăng về error:
+	 * 		error.errors[0]:
+	 *			+ RemoveIdentifierImage.emailInvalid
+	 *			+ RemoveIdentifierImage.phoneNumberInvalid
+	 *			+ RemoveIdentifierImage.userInfoNotProvided
+	 *			+ RemoveIdentifierImage.typeInvalid
+	 *			+ RemoveIdentifierImage.typeNotProvided
+	 *			+ RemoveIdentifierImage.imageNotFound
+	 *			+ RemoveIdentifierImage.fileUploadUpdateError
+	 *			+ RemoveIdentifierImage.userNotFound
+	 *			+ RemoveIdentifierImage.userQueryError
+	 */
+	RemoveIdentifierImage:function(criteria,transaction)
+	{
+		var error=new Error("RemoveIdentifierImage.Error");
+		var whereClause={};
+		var Type=null;
+		var Validation=function()
+		{
+			var q=$q.defer();
+			try
+			{
+				if(o.checkData(criteria.UserUID))
+				{
+					whereClause.UID=criteria.UserUID;
+				}
+				else if(o.checkData(criteria.UserName))
+				{
+					whereClause.UserName=criteria.UserName;
+				}
+				else if(o.checkData(criteria.Email))
+				{
+					if(o.isValidEmail(criteria.Email))
+					{
+						whereClause.Email=criteria.Email;
+					}
+					else
+					{
+						error.pushError("RemoveIdentifierImage.emailInvalid");
+						throw error;
+					}
+				}
+				else if(o.checkData(criteria.PhoneNumber))
+				{
+					criteria.PhoneNumber=o.parseAuMobilePhone(criteria.PhoneNumber);
+					if(criteria.PhoneNumber)
+					{
+						whereClause.PhoneNumber=criteria.PhoneNumber;
+					}
+					else
+					{
+						error.pushError("RemoveIdentifierImage.phoneNumberInvalid");
+						throw error;
+					}
+				}
+				else
+				{
+					error.pushError("RemoveIdentifierImage.userInfoNotProvided");
+					throw error;
+				}
+				if(o.checkData(criteria.Type))
+				{
+					if([o.const.fileType.avatar,o.const.fileType.signature].indexOf(criteria.Type)>=0)
+					{
+						Type=criteria.Type;
+					}
+					else 
+					{
+						error.pushError("RemoveIdentifierImage.typeInvalid");
+						throw error;
+					}
+				}
+				else
+				{
+					error.pushError("RemoveIdentifierImage.typeNotProvided");
+					throw error;
+				}
+
+				q.resolve({status:"success"});
+
+			}
+			catch(err)
+			{
+				q.reject(err);
+			}
+			return q.promise;
+		}
+
+		return Validation()
+		.then(function(data){
+			return Services.UserAccount.GetUserAccountDetails(whereClause,null,transaction)
+			.then(function(user){
+				if(o.checkData(user))
+				{
+					return FileUpload.update({Enable:'N'},{
+						where:{
+							UserAccountID:user.ID,
+							FileType:Type
+						}
+					},{transaction:transaction})
+					.then(function(result){
+						if(result[0]>0)
+							return {status:'success'};
+						else
+						{
+							error.pushError("RemoveIdentifierImage.imageNotFound");
+							throw error;
+						}
+					},function(err){
+						o.exlog(err);
+						error.pushError("RemoveIdentifierImage.fileUploadUpdateError");
+						throw error;
+					})
+				}
+				else
+				{
+					error.pushError("RemoveIdentifierImage.userNotFound");
+					throw error;
+				}
+			},function(err){
+				o.exlog(err);
+				error.pushError("RemoveIdentifierImage.userQueryError");
+				throw error;
+			})
+		},function(err){
+			throw err;
+		})
+		
+	},
+
+	/**
+	 * GetIdentifierImageInfo: dùng để lấy thông tin profile image và signature image của user
+	 * input:
+	 * - criteria: {UserUID|UserName|Email|PhoneNumber, Type}
+	 * 		+Type: HelperService.const.fileType.avatar, HelperService.const.fileType.signature
+	 * -transaction
+	 * output
+	 * - Nếu thành công trả thông tin file, thông tin file có thể null nếu không tìm thấy trong database
+	 * - Nếu thất bại quăng về error:
+	 * 		error.errors[0]:
+	 *			+ GetIdentifierImageInfo.emailInvalid
+	 *			+ GetIdentifierImageInfo.phoneNumberInvalid
+	 *			+ GetIdentifierImageInfo.userInfoNotProvided
+	 *			+ GetIdentifierImageInfo.typeInvalid
+	 *			+ GetIdentifierImageInfo.typeNotProvided
+	 *			+ GetIdentifierImageInfo.fileUploadQueryError
+	 *			+ GetIdentifierImageInfo.userNotFound
+	 *			+ GetIdentifierImageInfo.userQueryError
+	 */
+	GetIdentifierImageInfo:function(criteria,attributes,transaction)
+	{
+		var error=new Error("RemoveIdentifierImage.Error");
+		var whereClause={};
+		var Type=null;
+		var Validation=function()
+		{
+			var q=$q.defer();
+			try
+			{
+				if(o.checkData(criteria.UserUID))
+				{
+					whereClause.UID=criteria.UserUID;
+				}
+				else if(o.checkData(criteria.UserName))
+				{
+					whereClause.UserName=criteria.UserName;
+				}
+				else if(o.checkData(criteria.Email))
+				{
+					if(o.isValidEmail(criteria.Email))
+					{
+						whereClause.Email=criteria.Email;
+					}
+					else
+					{
+						error.pushError("GetIdentifierImageInfo.emailInvalid");
+						throw error;
+					}
+				}
+				else if(o.checkData(criteria.PhoneNumber))
+				{
+					criteria.PhoneNumber=o.parseAuMobilePhone(criteria.PhoneNumber);
+					if(criteria.PhoneNumber)
+					{
+						whereClause.PhoneNumber=criteria.PhoneNumber;
+					}
+					else
+					{
+						error.pushError("GetIdentifierImageInfo.phoneNumberInvalid");
+						throw error;
+					}
+				}
+				else
+				{
+					error.pushError("GetIdentifierImageInfo.userInfoNotProvided");
+					throw error;
+				}
+				if(o.checkData(criteria.Type))
+				{
+					if([o.const.fileType.avatar,o.const.fileType.signature].indexOf(criteria.Type)>=0)
+					{
+						Type=criteria.Type;
+					}
+					else 
+					{
+						error.pushError("GetIdentifierImageInfo.typeInvalid");
+						throw error;
+					}
+				}
+				else
+				{
+					error.pushError("GetIdentifierImageInfo.typeNotProvided");
+					throw error;
+				}
+
+				q.resolve({status:"success"});
+
+			}
+			catch(err)
+			{
+				q.reject(err);
+			}
+			return q.promise;
+		}
+
+		return Validation()
+		.then(function(data){
+			return Services.UserAccount.GetUserAccountDetails(whereClause,null,transaction)
+			.then(function(user){
+				if(o.checkData(user))
+				{
+					return FileUpload.findOne({
+						where:{
+							UserAccountID:user.ID,
+							FileType:Type,
+							Enable:'Y'
+						},
+						attributes:attributes
+					},{transaction:transaction})
+					.then(function(file){
+						return file;
+					},function(err){
+						o.exlog(err);
+						error.pushError("GetIdentifierImageInfo.fileUploadQueryError");
+						throw error;
+					})
+				}
+				else
+				{
+					error.pushError("GetIdentifierImageInfo.userNotFound");
+					throw error;
+				}
+			},function(err){
+				o.exlog(err);
+				error.pushError("GetIdentifierImageInfo.userQueryError");
+				throw error;
+			})
+		},function(err){
+			throw err;
+		})
+	},
+
+
 }

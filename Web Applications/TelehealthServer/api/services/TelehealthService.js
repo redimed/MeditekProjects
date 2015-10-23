@@ -22,7 +22,7 @@ module.exports = {
             }
         });
     },
-    GetAppointmentsByPatient: function(patientUID, limit) {
+    GetAppointmentsByPatient: function(patientUID, limit, coreAuth) {
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-list',
             method: 'POST',
@@ -45,17 +45,18 @@ module.exports = {
                     }],
                     Limit: limit
                 }
-            }
+            },
+            headers: !coreAuth ? {}:{'Authorization': coreAuth}
         })
     },
-    GetAppointmentDetails: function(apptUID) {
+    GetAppointmentDetails: function(apptUID, coreAuth) {
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-detail/' + apptUID,
             method: 'GET',
-            body: {}
+            headers: !coreAuth ? {}:{'Authorization': coreAuth}
         })
     },
-    GetAppointmentList: function() {
+    GetAppointmentList: function(coreAuth) {
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-list',
             method: 'POST',
@@ -74,21 +75,24 @@ module.exports = {
                         }
                     }]
                 }
-            }
+            },
+            headers: !coreAuth ? {}:{'Authorization': coreAuth}
         });
     },
-    GetOnlineUsers: function() {
+    GetOnlineUsers: function(coreAuth) {
         var appts = [];
-        TelehealthService.GetAppointmentList().then(function(response) {
+        TelehealthService.GetAppointmentList(coreAuth).then(function(response) {
             var data = response.getBody();
             if (data.count > 0) {
                 appts = data.rows;
                 TelehealthUser.findAll().then(function(teleUsers) {
                     for (var i = 0; i < teleUsers.length; i++) {
                         for (var j = 0; j < appts.length; j++) {
-                            if (teleUsers[i].userAccountID == appts[j].Patients[0].UserAccount.ID) {
-                                appts[j].IsOnline = 0;
-                                appts[j].TeleUID = teleUsers[i].UID;
+                            if (appts[j].Patients.length > 0 && appts[j].Patients[0].UserAccount) {
+                                if (teleUsers[i].userAccountID == appts[j].Patients[0].UserAccount.ID) {
+                                    appts[j].IsOnline = 0;
+                                    appts[j].TeleUID = teleUsers[i].UID;
+                                }
                             }
                         }
                     }
@@ -104,7 +108,9 @@ module.exports = {
     MakeRequest: function(info) {
         return requestify.request(config.CoreAPI + info.path, {
             method: info.method,
-            body: info.body,
+            body: !info.body ? null : info.body,
+            params: !info.params ? null : info.params,
+            headers: !info.headers ? null : info.headers,
             timeout: 1000,
             dataType: 'json'
         })

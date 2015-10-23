@@ -293,6 +293,7 @@ module.exports = {
 			if(isCreateByName==false && isCreateByEmail==false){
 				if(user.length > 0) {
 					info.UserAccountID = user[0].ID;
+					info.UserAccountUID = user[0].UID;
 					return Patient.create(info,transaction);
 				}
 				else{
@@ -308,6 +309,7 @@ module.exports = {
 					return Services.UserAccount.CreateUserAccount(userInfo,transaction)
 					.then(function(user){
 						info.UserAccountID = user.ID;
+						info.UserAccountUID = user.UID;
 						return Patient.create(info,transaction);
 					},function(err){
 						throw err;
@@ -316,13 +318,17 @@ module.exports = {
 			}
 			else{
 				info.UserAccountID = user.ID;
+				info.UserAccountUID = user.UID;
 				return Patient.create(info,transaction);
 			}
 		},function(err){
 			throw err;
 		})
 		.then(function(result){
-			return result;
+			return {
+				result:result,
+				UserAccountUID:info.UserAccountUID
+			};
 		}, function(err){
 			throw err;
 		})

@@ -7,16 +7,32 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
             scope.currentPage = 1;
             scope.numPerPage = 20;
             scope.maxSize = 10;
+
+            scope.typeSubmitDate = 'DESC';
+            scope.typeAppointmentDate = 'DESC';
+            scope.typeSubmitDateOther = null;
+            scope.typeAppointmentOther = null;
+            scope.sortDataTable = function(Name,Type){
+                if (Name === 'SubmitDate') {
+                  Type == 'DESC' ? scope.typeSubmitDate = 'ASC' : scope.typeSubmitDate = 'DESC'; 
+                   scope.typeAppointmentDateOther = null; 
+                   scope.typeSubmitDateOther = scope.typeSubmitDate;
+                   scope.filter()
+                };
+                if(Name === 'AppointmentDate') {
+                  Type == 'DESC' ? scope.typeAppointmentDate = 'ASC' : scope.typeAppointmentDate = 'DESC'; 
+                  scope.typeSubmitDateOther = null;
+                  scope.typeAppointmentDateOther = scope.typeAppointmentDate;
+                  scope.filter()
+                };
+                
+            };
+
             scope.filteredTodos = [];
             var data = {
-                Filter: [{
-                    Appointment: {
-                        CreatedBy: 2
-                    }
-                }],
                 Order: [{
                     Appointment: {
-                        RequestDate: "DESC"
+                        RequestDate: 'DESC'
                     }
                 }]
             };
@@ -42,6 +58,7 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
             }
             scope.load()
             scope.filter = function() {
+
                 var submit_from_date = null
                 var submit_to_date = null
                 var appointment_from_date = null
@@ -60,6 +77,12 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
                 };
                 var postData = {
                         limit: 100,
+                        Order: [{
+                            Appointment: {
+                               RequestDate: scope.typeSubmitDateOther,
+                               FromTime:scope.typeAppointmentDateOther
+                            }
+                        }],
                         Search: [{
                             PatientAppointment: {
                                 FullName: scope.infoAppointment.patient

@@ -19,13 +19,19 @@ angular.module("app.authentication.appointment.services",[])
 		};
 		//Get Detail Appointment
 		services.getImage = function(){
-			return "http://192.168.1.2:3005/api/downloadFile/400/"
+			return "http://192.168.1.2:3005/api/downloadFile/"
 		};
 		services.ListAppointment = function(){
 			return api.one('appointment-telehealth-list').get();
-		}
+		};
+		services.ListDoctor = function(){
+			return api.one('doctorappointment').get();
+		};
+		services.getDoctorById = function(data){
+			return api.all('doctorIdappointment').post({data:data});
+		};
 		services.SendRequest = function(requestInfo){
 			return api.all('appointment-telehealth-request').post({data:requestInfo});
-		}
+		};
 		return services;
 	});

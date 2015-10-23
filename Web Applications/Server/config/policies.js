@@ -43,3 +43,4 @@ var appointmentPolicies = require('./policies/AppointmentPolicies');
 _.extend(policies, appointmentPolicies);
 //End module Appointment
 module.exports.policies = policies;
+//

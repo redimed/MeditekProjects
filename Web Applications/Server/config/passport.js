@@ -1,7 +1,7 @@
 var passport = require('passport'),
 LocalStrategy = require('passport-local').Strategy,
 bcrypt = require('bcrypt-nodejs');
-
+var o=require("../api/services/HelperService");
 /**
  * passport.serializeUser:
  * only the user ID is serialized to the session, keeping the amount of data 
@@ -41,33 +41,48 @@ passport.deserializeUser(function(ID, done) {
 
 passport.use(new LocalStrategy({
 		usernameField: 'UserName',
-		passwordField: 'Password'
+		passwordField: 'Password',
+		passReqToCallback: true
 	},
-	function(u, p, done) {
+	function(req, u, p, done) {//req: ..., UserUID, DeviceID, VerificationToken
 		console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>Passport authentication");
 		//Kiểm tra user đang login bằng email hay phoneNumber hay username
 		var whereClause={};
-		var emailPattern = new RegExp(HelperService.regexPattern.email);
-		if(emailPattern.test(u))
+		var loginInfo=req.body;
+		if(o.checkData(loginInfo.UserUID))
 		{
-			console.log("Login with email");
-			whereClause.Email=u;
+			//Trường hợp login bằng mobile (UserUID, DeviceID, VerificationToken)
+			whereClause.UID=loginInfo.UserUID;
+			if(!o.checkData(loginInfo.DeviceID))
+			{
+				var err=new Error("DeviceID.notProvided");
+				return done(null, false,err);
+			}
 		}
 		else
 		{
-			var auPhoneNumberPattern=new RegExp(HelperService.regexPattern.auPhoneNumber);
-			var phoneTest=u.replace(HelperService.regexPattern.phoneExceptChars,'');
-			if(auPhoneNumberPattern.test(phoneTest))
+			//Trường hợp login bằng phương pháp userName, password thông thường
+			if(o.isValidEmail(u))
 			{
-				console.log("Login with phone number");
-				phoneTest=phoneTest.slice(-9);
-				phoneTest='+61'+phoneTest;
-				whereClause.PhoneNumber=phoneTest;
+				console.log("Login with email");
+				whereClause.Email=u;
 			}
 			else
 			{
-				console.log("Login with username");
-				whereClause.UserName=u;
+				var phoneTest=u;
+				phoneTest=o.parseAuMobilePhone(phoneTest);
+				if(o.checkData(phoneTest))
+				{
+					console.log("Login with phone number");
+					phoneTest=phoneTest.slice(-9);
+					phoneTest='+61'+phoneTest;
+					whereClause.PhoneNumber=phoneTest;
+				}
+				else
+				{
+					console.log("Login with username");
+					whereClause.UserName=u;
+				}
 			}
 		}
 		console.log(whereClause);
@@ -82,38 +97,92 @@ passport.use(new LocalStrategy({
 				}
 			}
 		})
-		.then(function(user){
+		.then(function(user)
+		{
 			if (!user) {
 				var err=new Error("User.notFound");
 				return done(null, false, err);
 			}
-			bcrypt.compare(p, user.Password, function (err, res) {
-				if (!res)
-				{
-					var err=new Error("Password.Invalid");
-					return done(null, false,err);
-				}
-					
-				var listRoles=[];
-				_.each(user.RelUserRoles,function(item){
-					listRoles.push(item.Role);
-				});
 
-
-				var returnUser = {
-					ID:user.ID,
-					UID:user.UID,
-					UserName: user.UserName,
-					Activated:user.Activated,
-					roles:listRoles
-				};
-				console.log("Login success");
-				return done(null, returnUser, {
-						message: 'Logged In Successfully'
-					});
+			//Chuẩn bị thông tin trả về
+			var listRoles=[];
+			_.each(user.RelUserRoles,function(item){
+				listRoles.push(item.Role);
 			});
+
+			var returnUser = {
+				ID:user.ID,
+				UID:user.UID,
+				UserName: user.UserName,
+				Activated:user.Activated,
+				roles:listRoles
+			};
+			//----------------------------
+
+			//Kiểm tra user login bằng mobile hay web
+			if(loginInfo.UserUID)
+			{
+				//Nếu bằng mobile thì kiểm tra token activation
+				UserActivation.findOne({
+					where:{
+						UserAccountID:user.ID,
+						DeviceID:loginInfo.DeviceID
+					}	
+				})
+				.then(function(activation){
+					if(activation)
+					{
+						if(activation.CodeExpired>0)
+						{
+							if(loginInfo.VerificationToken==activation.VerificationToken)
+							{
+								console.log("Login via mobile success");
+								return done(null, returnUser, {
+									message: 'Logged In via Mobile Successfully'
+								});
+							}
+							else
+							{
+								var err=new Error("VerificationToken.invalid");
+								return done(null, false,err);
+							}
+						}
+						else
+						{
+							var err=new Error("Activation.expired");
+							return done(null, false,err);
+						}
+						
+					}
+					else
+					{
+						var err=new Error("Activation.notFound");
+						return done(null, false,err);
+					}
+				},function(err){
+					return done(err);
+				})
+			}
+			else
+			{
+				bcrypt.compare(p, user.Password, function (err, res) 
+				{
+					if (!res)
+					{
+						var err=new Error("Password.Invalid");
+						return done(null, false,err);
+					}
+					console.log("Login via web success");
+					return done(null, returnUser, {
+						message: 'Logged In via Web Successfully'
+					});
+				});
+			}
+			
 		},function(err){
-			return done(err);
+			o.exlog(err);
+			var error=new Error("UserAccount.queryError");
+			return done(error);
 		})
 	}
 ));

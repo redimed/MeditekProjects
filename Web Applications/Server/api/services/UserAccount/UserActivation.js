@@ -447,7 +447,7 @@ module.exports = {
 									{
 										return user.updateAttributes({Activated:"Y"},{transaction:transaction})
 										.then(function(data){
-											return {status:'success'};
+											return {status:'success',VerificationCode:VerificationCode};
 										},function(err){
 											o.exlog(err);
 											error.pushError("Activation.userUpdateError");

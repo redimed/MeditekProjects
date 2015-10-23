@@ -1,12 +1,12 @@
 module.exports={
 	'UserAccount/v0_1/UserAccountController':{
-	    'Test':['hasToken','isActivated','isAdmin'],
+	    'Test':['hasToken','isAdminOrAssistant'],
 	    'TestURL':'checkVersion',
-	    'CreateUserAccount':['isAdmin'],
-	    'DisableUserAccount':['isAdmin'],
-	    'EnableUserAccount':['isAdmin'],
-	    'GetListUsers':['isAdmin'],
-	    'RemoveIdentifierImage':['isAdmin']
+	    'CreateUserAccount':['hasToken','isAdmin'],
+	    'DisableUserAccount':['hasToken','isAdmin'],
+	    'EnableUserAccount':['hasToken','isAdmin'],
+	    'GetListUsers':['hasToken','isAdmin'],
+	    'RemoveIdentifierImage':['hasToken','isAdmin']
   	},
 
   	'UserAccount/v0_1/UserActivationController':{
@@ -21,7 +21,7 @@ module.exports={
   	'UserAccount/v0_1/UserActivationController':{
   		'CreateUserActivation':true,
   		'Activation':true,
-  		'DeactivationUserAccount':['isAdmin'],
-  		'ActivationUserAccount':['isAdmin']
+  		'DeactivationUserAccount':['hasToken','isAdmin'],
+  		'ActivationUserAccount':['hasToken','isAdmin']
   	},
 }

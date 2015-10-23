@@ -7,7 +7,7 @@
 		</div>
 		<div class="actions">
 			<a href="javascript:;" class="btn btn-circle red btn-sm" ng-click="toggleFilter()"><i class="fa fa-filter"></i> Filter</a>
-			<a  href="javascript:;" class="btn btn-circle blue btn-sm" ui-sref="authentication.patient.create" ng-show="isShowCreateButton">
+			<a  href="javascript:;" class="btn btn-circle blue btn-sm" ng-click="createPatient()" ng-show="isShowCreateButton">
 			<i class="glyphicon glyphicon-plus"></i> Create</a>
 			<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
 		</div>
@@ -98,4 +98,7 @@
 <!-- end content page -->
 <script type="text/ng-template " id="patientListmodal">
     <patient-listmodal on-uid="ID" action="action" on-cancel="close"></patient-listmodal>
+</script>
+<script type="text/ng-template " id="patientCreatemodal">
+    <patient-create appointment="appointment"></patient-create>
 </script>

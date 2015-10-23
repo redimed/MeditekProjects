@@ -1,45 +1,86 @@
 var app = angular.module('app.authentication.appointment.list.modal.controller', []);
-app.controller('showImageController', function($scope, $modalInstance){
+app.controller('showImageController', function($scope, $modalInstance,toastr,LinkUID){
+      $scope.LinkUID = LinkUID
       $scope.cancel = function(){
             $modalInstance.dismiss('cancel');
       }
 
-      $scope.ok = function(){
-            $modalInstance.close(list);
+      $scope.Vieww = function(LinkUID){
+            var newWindow = window.open("");
+            newWindow.document.write("<img class='img-responsive' src='"+LinkUID+"'>");
       }
 })
 app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstance, getid, AppointmentService, CommonService, $cookies, toastr) {
 
-	$modalInstance.rendered.then(function(){
-		//App.initComponents(); // init core components
-	    ComponentsDateTimePickers.init(); // init todo page
-	    ComponentsSelect2.init(); // init todo page
-	    ComponentsBootstrapSelect.init(); // init todo page
-	    Portfolio.init();
-	});
-
+    $modalInstance.rendered.then(function() {
+        //App.initComponents(); // init core components
+        ComponentsDateTimePickers.init(); // init todo page
+        ComponentsSelect2.init(); // init todo page
+        ComponentsBootstrapSelect.init(); // init todo page
+        Portfolio.init();
+        //ComponentsDropdowns.init(); // init todo page
+    });
+     $scope.ViewDoc = function(Url,UID){
+            var LinkUID = Url + UID
+            window.open(LinkUID);
+      }
     $scope.modal_close = function() {
         $modalInstance.close();
     };
     $scope.close = function() {
         $modalInstance.close();
     };
+
     // console.log("=======",FormWizard.init());
     //createNewPatient : open popup create patient
-    $scope.createNewPatient = function() {
-        $modal.open({
+    $scope.selectPatient = function() {
+        var modalInstance = $modal.open({
             animation: true,
-            templateUrl: '../modules/appointment/views/appointmentCreatePatientModal.html',
+            templateUrl: '../modules/appointment/views/appointmentSelectPatientModal.html',
             controller: function($scope,$modalInstance) {
-                
+                $scope.patient = {
+                    runIfSuccess : function (data) {
+                        $modalInstance.close({status:'success',data:data});
+                    }
+                };
             },
             windowClass: 'app-modal-window'
 
         });
+        modalInstance.result.then(function (data) {
+            if (data.status == 'success') {
+                $scope.appointment.Patient=[];
+                $scope.appointment.Patient.push({UID:data.data.data.UID});
+                toastr.success("Select patient successfully!","success");
+                console.log('$scope.appointment.Patient',$scope.appointment.Patient);
+            };
+        });
     };
-    $scope.Url = AppointmentService.getImage()
 
+    $scope.loadAllDoctor = function () {
+        AppointmentService.ListDoctor().then(function (data) {
+            $scope.listDoctor = data;
+            console.log('$scope.listDoctor',$scope.listDoctor);
+        });
+    }
+
+    $scope.loadAllDoctor();
+
+    $scope.selectTreatingPractitioner = function  (data) {
+        AppointmentService.getDoctorById({UID: data}).then(function (data) {
+            $scope.appointment.Doctors[0] = data[0];
+        })
+    }
+
+    $scope.Url = AppointmentService.getImage()
+    $scope.checkRoleUpdate = true
     $scope.tab_body_part = 'all';
+    if($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' 
+      || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' 
+      || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER'){
+      $scope.checkRoleUpdate = false
+    }
+    
     $scope.ShowData = {
         DateTimeAppointmentDate: null,
         PatientsFullName: null,
@@ -58,7 +99,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         AppointmentService.getDetailApppointment(getid).then(function(response) {
             $scope.Temp = angular.copy(response.data)
             $scope.appointment = angular.copy(response.data);
-            
+            console.log($scope.appointment)
             if ($scope.appointment.Patients.length != 0) {
                 $scope.ShowData.isLinkPatient = true
                 $scope.appointment.TelehealthAppointment.PatientAppointment = angular.copy($scope.appointment.Patients[0])
@@ -133,13 +174,18 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         }
     }
     $scope.appointmentload.load();
-    $scope.showImage = function(Link){
-      console.log(Link)
-            $modal.open({
-                  templateUrl: 'showImageTemplate',
-                  controller: 'showImageController',
-                  size: 'lg'
-            })
+    $scope.showImage = function(Link,UID){
+      var LinkUID = Link+UID
+      $modal.open({
+            templateUrl: 'showImageTemplate',
+            controller: 'showImageController',
+            windowClass: 'app-modal-window-full',
+            resolve: {
+                  LinkUID: function(){
+                        return LinkUID;
+                  }
+            }
+      })
       }
     $scope.updateAppointment = function() {
 

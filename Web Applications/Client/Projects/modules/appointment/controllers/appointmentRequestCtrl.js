@@ -115,6 +115,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
 
     $scope.SendRequestUploadFile = function () {
         for (var i = 0; i < uploader.queue.length; i++) {
+            console.log(' uploader.queue', uploader.queue);
             var item = uploader.queue[i];
             item.formData[i] = {};
             item.formData[i].userUID = $cookies.getObject('userInfo').UID;
@@ -174,7 +175,6 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
         };
     };
     uploader.onCompleteAll = function() {
-        console.log('aaaaaaaaaaaaaaaaaaaaaa');
         $scope.sendRequestAppointment();
     };
 

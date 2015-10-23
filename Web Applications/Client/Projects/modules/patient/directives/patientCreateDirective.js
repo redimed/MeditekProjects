@@ -1,8 +1,12 @@
 var app = angular.module('app.authentication.patient.create.directive',[]);
 app.directive('patientCreate',function(toastr, PatientService, $state, $timeout){
 	return {
+		scope :{
+			appointment:'='
+		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
+			scope.data ={};
 			scope.er={};
 			scope.ermsg={};
 			scope.isShowNext=false;
@@ -71,10 +75,15 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout)
 				.then(function(result){
 					return PatientService.createPatient(data)
 					.then(function(success){
-						toastr.success("Create Successful!!","SUCCESS");
-						$state.go('authentication.patient.list',null, {
-		           			'reload': true
-		        		});
+						if (scope.appointment) {
+							scope.appointment.runIfSuccess(success.data);
+						}else{
+							toastr.success("Create Successful!!","SUCCESS");
+							$state.go('authentication.patient.list',null, {
+			           			'reload': true
+			        		});
+						};
+						
 					},function(err){
 						scope.er={};
 						scope.ermsg={};

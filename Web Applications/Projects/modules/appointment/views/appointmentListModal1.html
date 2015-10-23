@@ -1,0 +1,963 @@
+<div class="modal-content">
+	<div class="modal-header my-modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="modal_close()"></button>
+		<h4 class="modal-title"><b><i class="glyphicon glyphicon-pencil"></i>  Telehealth Appointments</b></h4>
+	</div>
+	<!-- <div class="modal-body" style="overflow-y:scroll; overflow-x:hidden; max-height:400px;"> -->
+	<div class="modal-body">
+		<!--  -->
+		<div class="tabbable">
+			<ul class="nav nav-tabs nav-tabs-lg">
+				<li  class="active">
+					<a href="index.html#appointment" data-toggle="tab" aria-expanded="true">
+					Appointment
+					</a>
+				</li>
+				<li class="">
+					<a href="index.html#clinical_medical" data-toggle="tab" aria-expanded="false">
+					Clinical & Medical
+					</a>
+				</li>
+				<li class="">
+					<a href="index.html#patient" data-toggle="tab" aria-expanded="false">
+					Patient 
+					</a>
+				</li>
+				<li class="">
+					<a href="index.html#Treating_Practitioner" data-toggle="tab" aria-expanded="false">
+					Treating Practitioner 
+					</a>
+				</li>
+				<li class="">
+					<a href="index.html#medical_image" data-toggle="tab" aria-expanded="false">
+					Medical Images
+					</a>
+				</li>
+				<li class="">
+					<a href="index.html#referring_practitioner" data-toggle="tab" aria-expanded="false">
+						Referring Practitioner
+					</a>
+				</li>
+				<li class="">
+					<a href="index.html#present_complain_and_allergy" data-toggle="tab" aria-expanded="false">
+						Present Complain & Allergy
+					</a>
+				</li>
+			</ul>
+			<div class="tab-content" style="padding: 0 1%; margin: 0 auto">
+				<div class="tab-pane active" id="appointment">
+					<div class="row">&nbsp;</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="time" class="control-label">Duration Of Referral</label>
+										<div class="form-control">
+											<!-- <i class="fa fa-calendar-o"></i> -->
+											<!-- &nbsp;&nbsp; --><span class="label label-lg label-info">{{appointment.TelehealthAppointment.RefDurationOfReferal}} month </span>
+										</div>
+										<!-- <div class="form-control-focus"></div> -->
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group ">
+										<label for="time" class="control-label">Status</label>
+										<select class="bs-select form-control" data-show-subtext="true" ng-model="">
+											<option data-content=" <span class='label lable-sm label-warning'>Pending </span>" value="Pending">Pending</option>
+											<option data-content=" <span class='label lable-lg label-default'>Calling </span>" value="Calling">Calling</option>
+											<option data-content=" <span class='label lable-lg label-success'>Booked </span>" value="Booked">Booked</option>
+											<option data-content=" <span class='label lable-sm label-danger'>Cancel </span>" value="Cancel">Cancel</option>
+											<option data-content=" <span class='label lable-sm label-info'>Finish </span>" value="Finish">Finish</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group  ">
+										<label class="control-label">Request Date</label>
+										<div class="input-icon">
+											<i class="fa fa-calendar"></i>
+											<input type="text" class="form-control form-control-inline date-picker" value="01/01/2015">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="control-label">Appointment Date</label>
+										<div class="input-icon">
+											<i class="fa fa-calendar"></i>
+											<input class="form-control form-control-inline date-picker" size="16" type="text" value="01/02/2015"/>
+										</div>
+										
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="control-label">Appointment Time</label>
+										<div class="input-icon">
+											<i class="fa fa-clock-o"></i>
+											<input type="text" class="form-control timepicker timepicker-default">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">&nbsp;</label>
+											<div class="form-control" style="border: none;">
+												<input type="checkbox" class="icheck" id="Correspondence" checked="true"> 
+												<label for="Correspondence">Correspondence</label>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group ">
+										<label class="control-label">Patient</label>
+										<!-- <div class="input-icon"> -->
+											<!-- <i class="fa fa-smile-o"></i> -->
+											<input type="text" class="form-control"  value="Hana Montana" disabled="true">
+										<!-- </div> -->
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group ">
+										<label class="control-label">Referring Practitioner</label>
+										<!-- <div class="input-icon"> -->
+											<!-- <i class="icon-plus"></i> -->
+											<input type="text" class="form-control"  value="Shen Woo" disabled="true">
+										<!-- </div> -->
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label class="control-label">Fund</label>
+										<select class="form-control">
+											<option value='ACA'>ACA Health Benefits Fund</option>
+											<option value='AHM'>ahm Health Insurance</option>
+											<option value='AUF'>Australian Unity Health Limited</option>
+											<option value='BUP'>Bupa Australia Pty Ltd</option>
+											<option value='CBH'>CBHS Health Fund Limited</option>
+											<option value='CDH'>CDH Benefits Fund</option>
+											<option value='CPS'>CUA Health Limited</option>
+											<option value='AHB'>Defence Health Limited</option>
+											<option value='AMA'>Doctors' Health Fund</option>
+											<option value='GMF'>GMF Health</option>
+											<option value='GMH'>GMHBA Limited</option>
+											<option value='FAI'>Grand United Corporate Health</option>
+											<option value='HBF'>HBF Health Limited</option>
+											<option value='HCF'>HCF</option>
+											<option value='HCI'>Health Care Insurance Limited</option>
+											<option value='HIF'>Health Insurance Fund of Australia Limited</option>
+											<option value='SPS'>Health Partners</option>
+											<option value='HEA'>health.com.au</option>
+											<option value='LHS'>Latrobe Health Services</option>
+											<option value='MBP'>Medibank Private Limited</option>
+											<option value='MDH'>Mildura Health Fund</option>
+											<option value='OMF'>National Health Benefits Australia Pty Ltd (onemedifund)</option>
+											<option value='NHB'>Navy Health Ltd</option>
+											<option value='NIB'>NIB Health Funds Ltd.</option>
+											<option value='LHM'>Peoplecare Health Insurance</option>
+											<option value='PWA'>Phoenix Health Fund Limited</option>
+											<option value='SPE'>Police Health</option>
+											<option value='QCH'>Queensland Country Health Fund Ltd</option>
+											<option value='RTE'>Railway and Transport Health Fund Limited</option>
+											<option value='RBH'>Reserve Bank Health Society Ltd</option>
+											<option value='SLM'>St.Lukes Health</option>
+											<option value='NTF'>Teachers Health Fund</option>
+											<option value='TFS'>Transport Health Pty Ltd</option>
+											<option value='QTU'>TUH</option>
+											<option value='WFD'>Westfund Limited</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="row" style="text-align: right;">
+								<h4 class="caption col-md-12"><b>Examination Required</b></h4>
+								<div class="col-md-12">
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												Private&nbsp;&nbsp;<input type="checkbox" checked="true" class="icheck">  
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												Public&nbsp;&nbsp;<input type="checkbox" class="icheck">  
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												DVA&nbsp;&nbsp;<input type="checkbox" class="icheck">  
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												Workers Comp&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												MVIT&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="row" style="text-align: right;">
+								<h4 class="caption col-md-12"><b>Preferred Plastic Surgeon</b></h4>
+								<div class="col-md-12">
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												First Surgeon Available&nbsp;&nbsp;<input type="checkbox" class="icheck">  
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												Mr Hanh Nguyen&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												Mr Adrian Brooks&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												Mr Dan Luo&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="checkbox-list">
+											<label class="control-label">
+												Ms Sharon Chu&nbsp;&nbsp;<input type="checkbox" class="icheck"> 
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="tab-pane" id="clinical_medical">
+					<div class="row">&nbsp;</div>
+					<!-- begin column 1 -->
+	            	<div class="form-group col-md-4">
+						<textarea class="form-control" rows="7">Clinical Details & Relevant Medical History</textarea>
+						<br><br>
+						<table class="table table-striped table-hover">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Doc Name</th>
+									<th>Date</th>
+									<th>View</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>Trauma.doc</td>
+									<td>01/01/2015 01:01:01</td>
+									<td><button class="btn">View</button></td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>Skin cancer.png</td>
+									<td>01/01/2015 01:01:02</td>
+									<td><button class="btn">View</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- end column 1 -->
+
+					<!-- begin column 2 -->
+					<div class="form-group form-md-checkboxes col-md-4">
+
+						<div class="caption">
+	            			<h4><b>Trauma</b></h4>
+	            		</div>
+	            		<div class="form-group">
+	            			<div class="checkbox-list">
+	            				<label class="control-label">
+	            					<input type="checkbox" checked="true" class="icheck">&nbsp;&nbsp;Dislocation
+	            				</label>
+	            			</div>
+	            		</div>
+						<div class="form-group">
+							<label for="fracture" class="control-label">Fracture</label>
+							<!-- <div class="input-icon"> -->
+								<!--<i class="fa fa-font"></i>-->
+								<input type="text" class="form-control" id="fracture">
+							<!-- </div> -->
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Open</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Closed</label>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Displaced</label>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="caption">
+	            			<label><b>Lacerations</b></label>
+	            		</div>
+	            		<div class="row">
+	            			<div class="col-md-3">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Hand</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Nerve</label>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Tendon / muscle</label>
+								</div>
+							</div>
+	            		</div>
+	            		<div class="row">
+	            			<div class="col-md-3">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Facial</label>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck">&nbsp;&nbsp;Skin loss</label>
+								</div>
+							</div>
+	            		</div>
+	            		<div class="row">
+	            			<div class="col-md-12">
+	            				<div class="form-inline">
+		            				<div class="checkbox">
+										<label class="control-label"><input type="checkbox" class="icheck"> Other</label>
+									</div>
+									&nbsp;&nbsp;&nbsp;
+									<div class="form-group">
+										<input type="text" class="form-control input-sm" placeholder="Other">
+									</div>
+								</div>
+	            			</div>
+	            		</div>
+					</div>
+					<!-- end column 2 -->
+
+					<!-- begin column 3 -->
+					<div class="form-group form-md-checkboxes col-md-4">
+
+						<div class="caption">
+	            			<h4><b>Elective</b></h4>
+	            		</div>
+
+	            		<div class="caption">
+	            			<label><b>Skin cancer</b></label>
+	            		</div>
+
+	            		<div class="row">
+	            			<div class="col-md-6">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck"> BCC / SCC</label>
+								</div>
+	            			</div>
+	            			<div class="col-md-6">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck"> Melanoma</label>
+								</div>
+	            			</div>
+	            			<div class="col-md-12">
+	            				<div class="form-inline">
+		            				<div class="checkbox">
+										<label class="control-label"><input type="checkbox" class="icheck"> Other</label>
+									</div>
+									&nbsp;&nbsp;&nbsp;
+									<div class="form-group">
+										<input type="text" class="form-control input-sm" placeholder="Other">
+									</div>
+								</div>
+	            			</div>
+	            		</div>
+	            		<br>
+	            		<div class="caption">
+	            			<label><b>Hand condition</b></label>
+	            		</div>
+	            		<div class="row">
+	            			<div class="col-md-6">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck"> Ganglion</label>
+								</div>
+	            			</div>
+	            			<div class="col-md-6">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck"> Arthritis</label>
+								</div>
+	            			</div>
+	            			<div class="col-md-6">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck"> DeQuervains / Trigger</label>
+								</div>
+	            			</div>
+	            			<div class="col-md-6">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck"> Contracture</label>
+								</div>
+	            			</div>
+	            		</div>
+	            		<br>
+						<div class="caption">
+	            			<label><b>PNS</b></label>
+	            		</div>
+	            		<div class="row">
+	            			<div class="col-md-5">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck"> Carpal Tunnel</label>
+								</div>
+	            			</div>
+	            			<div class="col-md-7">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck"> Cubital Tunnel</label>
+								</div>
+	            			</div>
+	            			<div class="col-md-5">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck"> Tarsal Tunnel</label>
+								</div>
+	            			</div>
+	            			<div class="col-md-7">
+	            				<div class="checkbox">
+									<label class="control-label"><input type="checkbox" class="icheck"> Complex Reconstructive Case</label>
+								</div>
+	            			</div>
+	            			<div class="col-md-12">
+	            				<div class="form-inline">
+		            				<div class="checkbox">
+										<label class="control-label"><input type="checkbox" class="icheck"> Other</label>
+									</div>
+									&nbsp;&nbsp;&nbsp;
+									<div class="form-group">
+										<input type="text" class="form-control input-sm" placeholder="Other">
+									</div>
+								</div>
+	            			</div>
+	            		</div>
+	            	</div>
+					<!-- end column 3 -->
+				</div>
+
+				<div class="tab-pane" id="patient">
+					<div class="row">&nbsp;</div>
+					<div class="row">
+						<div class="col-md-2">
+							<div class="form-group ">
+								<label class="control-label">First Name</label>
+								<!-- <div class="input-icon"> -->
+									<!--<i class="fa fa-font"></i>-->
+									<input type="text" class="form-control" placeholder="First Name" value="Hanna">
+								<!-- </div> -->
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label class="control-label">Last Name</label>
+								<!-- <div class="input-icon"> -->
+									<!--<i class="fa fa-font"></i>-->
+									<input type="text" class="form-control" placeholder="Last Name" value="Montana">
+								<!-- </div> -->
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group ">
+								<label class="control-label">Date of Birth</label>
+								<div class="input-icon">
+									<i class="fa fa-calendar"></i>
+									<input type="text" class="form-control form-control-inline date-picker" value="01/01/2015">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Address</label>
+								<div class="input-icon">
+									<i class="fa fa-send"></i>
+									<input type="text" class="form-control" placeholder="Address" value="01 Elizabeth Street Australia">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-2">
+							<div class="form-group ">
+								<label class="control-label">Suburb</label>
+								<!-- <div class="input-icon"> -->
+									<!-- <i class="fa fa-tree"></i> -->
+									<input type="text" class="form-control" value="01234">
+								<!-- </div> -->
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group ">
+								<label class="control-label">Postcode</label>
+								<!-- <div class="input-icon"> -->
+									<!-- <i class="fa fa-sort-amount-desc"></i> -->
+									<input type="number" class="form-control" value="1234">
+								<!-- </div> -->
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group ">
+								<label class="control-label">Contact Number (M)</label>
+								<div class="input-icon">
+									<i class="icon-call-end"></i>
+									<input type="text" class="form-control"  value="04 2727 2727">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group ">
+								<label class="control-label">Contact Number (H)</label>
+								<div class="input-icon">
+									<i class="icon-call-end"></i>
+									<input type="text" class="form-control"  value="08 9999 9999">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group ">
+								<label class="control-label">Email Address</label>
+								<div class="input-icon">
+									<i class="fa fa-envelope"></i>
+									<input type="text" class="form-control"  value="hanamontana@gmail.com">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="tab-pane" id="Treating_Practitioner">
+					<div class="row">&nbsp;</div>
+					<div class="row">
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="control-label">Doctor Type</label>
+								<select size="1" class="form-control " >
+									<option value="1">Plastic Surgeons</option>
+									<option value="2">Orthopaedic Surgeons</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label class="control-label">Doctor List</label>
+								<select size="5" class="form-control">
+									<option value="1">Dr. Hanh Nguyen</option>
+									<option value="2">Dr. Adrian Brooks</option>
+									<option value="3">Dr. Daniel Luo</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-9">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="control-label">First Name</label>
+										<!-- <div class="input-icon"> -->
+											<!--<i class="fa fa-font"></i>-->
+											<input type="text" placeholder="First Name" value="Hanh" disabled="true" class="form-control">
+										<!-- </div> -->
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="control-label">Last Name</label>
+										<!-- <div class="input-icon"> -->
+											<!--<i class="fa fa-font"></i>-->
+											<input type="text" placeholder="Last Name" value="Nguyen" disabled="true" class="form-control">
+										<!-- </div> -->
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="control-label">Contact Number (M)</label>
+										<!-- <div class="input-icon"> -->
+											<!--<i class="fa fa-font"></i>-->
+											<input type="text" placeholder="Contact Number (M)" value="08 2727 2727" disabled="true" class="form-control">
+										<!-- </div> -->
+									</div>
+								</div>	
+								<div class="col-md-12">
+									<div class="form-group">
+										<label class="control-label">Department</label>
+										<!-- <div class="input-icon"> -->
+											<!--<i class="fa fa-font"></i>-->
+											<input type="text" placeholder="Department" value="MBBS, FRACS (Plastic Surgeon)" disabled="true" class="form-control">
+										<!-- </div> -->
+									</div>
+								</div>							
+							</div>
+						</div>
+					</div>
+					<div class="row">&nbsp;</div>
+				</div>
+
+				<div class="tab-pane" id="medical_image" style="overflow-y:scroll; overflow-x:hidden; max-height:400px;">
+					<div class="row">&nbsp;</div>
+					<!-- BEGIN FILTER -->
+					<div class="margin-top-10">
+						<ul class="mix-filter">
+							<li class="filter" data-filter="category_1">
+								Arm
+							</li>
+							<li class="filter" data-filter="category_2">
+								Foot
+							</li>
+							<li class="filter" data-filter="category_3">
+								Head
+							</li>
+							<li class="filter active" data-filter="category_3 category_1">
+								All
+							</li>
+						</ul>
+						<div class="row mix-grid" style="   ">
+							<div class="col-md-2 col-sm-2 mix category_1 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/0.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto odio</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="assets/img/0.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 mix category_3 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/1.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto accusamus</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="assets/img/1.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/2.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto accusamus</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/2.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/3.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto accusamus</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/3.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/4.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto accusamus</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/4.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/5.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto accusamus</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/5.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/6.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto accusamus</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/6.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/8.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto accusamus</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/8.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/9.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto accusamus</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/9.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/10.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto accusamus</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/10.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/11.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto accusamus</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/11.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/12.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto accusamus</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/12.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/13.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto accusamus</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/13.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 mix category_1 category_2 mix_all" style=" display: block; opacity: 1;">
+								<div class="mix-inner">
+									<img class="img-responsive" src="assets/img/14.jpg" alt="" style="height:200px;">
+									<div class="mix-details">
+										<h4>Cascusamus et iusto accusamus</h4>
+										<a class="mix-link">
+										<i class="fa fa-link"></i>
+										</a>
+										<a class="mix-preview fancybox-button" href="theme/assets/admin/pages/media/works/14.jpg" title="Project Name" data-rel="fancybox-button">
+										<i class="fa fa-search"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- END FILTER -->
+				</div>
+
+				<div class="tab-pane" id="referring_practitioner">
+					<div class="row">&nbsp;</div>
+					<div class="row">
+		            	<div class="col-md-6">
+			            	<div class="form-group ">	
+			            		<label class="form-label">Name</label>							            		
+			            		<input type="text" class="form-control" placeholder="Name" value="Shen Woo">
+			            	</div>
+		            	</div>
+		            	<div class="col-md-6">
+			            	<div class="form-group ">
+			            		<label class="control-label">Healthlink ID</label>								            		
+			            		<input type="text" class="form-control" placeholder="Healthlink ID" value="redimspc">
+			            	</div>
+		            	</div>
+		            </div>
+		            <div class="row">
+		            	<div class="col-md-12">
+			            	<div class="form-group ">	
+			            		<label class="control-label">Address</label>							            		
+			            		<input type="text" class="form-control" placeholder="Address" value="01 Elizabeth Street Australia">
+			            	</div>
+		            	</div>
+		            </div>
+		            <div class="row">
+		            	<div class="col-md-4">
+			            	<div class="form-group ">
+			            		<label class="control-label">Telephone</label>								            		
+			            		<input type="text" class="form-control" placeholder="Telephone" value="04 2727 2727">
+			            	</div>
+		            	</div>
+		            	<div class="col-md-4">
+			            	<div class="form-group ">
+			            		<label class="control-label">Postcode</label>								            		
+			            		<input type="number" class="form-control" placeholder="Postcode" value="1234">
+			            	</div>
+		            	</div>
+		            	<div class="col-md-4">
+			            	<div class="form-group ">				
+			            		<label class="control-label">Provider Number</label>				            		
+			            		<input type="number" class="form-control" placeholder="number" value="1234">
+			            	</div>
+			            </div>
+		            </div>
+		            <div class="row">
+			            <div class="col-md-8">
+			            	<div class="form-group ">	
+			            		<label class="control-label">Signature</label>							            		
+			            		<input type="text" class="form-control" placeholder="Signature">
+			            	</div>
+			            </div>
+		            	<div class="col-md-4">
+			            	<div class="form-group ">	
+			            		<label class="control-label">Date</label>							            		
+			            		<input type="text" class="form-control" placeholder="Date" value="01/01/2015">
+			            	</div>
+			            </div>
+		            </div>
+		            <div class="row">&nbsp;</div>
+				</div>
+
+				<div class="tab-pane" id="present_complain_and_allergy">
+					<div class="row">
+						<div class="col-md-6">
+							<label class="label-control">History of Present Complain</label>
+							<div class="form-group">
+								<textarea class="form-control" rows="10" >eneral medical history</textarea>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<label class="label-control">Allergy</label>
+							<div class="form-group">
+								<textarea class="form-control" rows="10">Fur allergies,....</textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--  -->
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn default" data-dismiss="modal" ng-click="close()"><i class="icon-action-undo"></i> Close</button>
+		<button type="button" class="btn green"><i class="glyphicon glyphicon-save"></i> Save changes</button>
+	</div>
+</div>
+
+<script>
+	// Metronic.setAssetsPath('./theme/assets/'); // Set the assets folder path			
+	// ComponentsFormTools.init();
+	//ComponentsDropdowns.init(); // init todo page
+	// //FormiCheck.init(); // init page demo
+	ComponentsPickers.init(); // init todo page
+	Portfolio.init(); // coi hinh
+
+	Metronic.initAjax();
+	//ComponentsFormTools.init();
+	ComponentsDropdowns.init(); // init todo page
+	//FormiCheck.init(); // init page demo
+</script>

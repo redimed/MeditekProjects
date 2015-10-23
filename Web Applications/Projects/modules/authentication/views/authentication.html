@@ -1,0 +1,55 @@
+<!-- BEGIN PAGE SPINNER -->
+<!-- <div ng-spinner-bar class="page-spinner-bar">
+	<div class="bounce1"></div>
+	<div class="bounce2"></div>
+	<div class="bounce3"></div>
+</div> -->
+<!-- END PAGE SPINNER -->
+
+
+<!-- BEGIN HEADER -->
+<div ng-include="'common/tpl/header.html'" class="page-header navbar navbar-fixed-top">
+</div>
+<!-- END HEADER -->
+
+<div class="clearfix">
+</div>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+
+	<!-- BEGIN SIDEBAR -->
+	<div ng-include="'common/tpl/sidebar.html'"  class="page-sidebar-wrapper">			
+	</div>
+	<!-- END SIDEBAR -->
+
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+		<div class="page-content">
+			<!-- BEGIN STYLE CUSTOMIZER(optional) -->
+			<div ng-include="'common/tpl/theme-panel.html'" class="theme-panel hidden-xs hidden-sm">		
+			</div>
+			<!-- END STYLE CUSTOMIZER -->
+					
+			<!-- BEGIN ACTUAL CONTENT -->
+			<div ui-view>
+			</div> 
+			<!-- END ACTUAL CONTENT -->
+		</div>	
+	</div>
+	<!-- END CONTENT -->
+	
+	<!-- BEGIN QUICK SIDEBAR -->
+	<!-- <a href="javascript:;" class="page-quick-sidebar-toggler"><i class="icon-close"></i></a>
+	<div ng-include="'common/tpl/quick-sidebar.html'" class="page-quick-sidebar-wrapper"></div> -->
+	<!-- END QUICK SIDEBAR -->
+</div>
+<!-- END CONTAINER -->
+
+<!-- BEGIN FOOTER -->
+<div ng-include="'common/tpl/footer.html'" class="page-footer">
+</div>
+<!-- END FOOTER -->
+
+<script type="text/javascript">
+    document.body.className = "page-header-fixed page-quick-sidebar-over-content";
+</script>

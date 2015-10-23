@@ -21,10 +21,14 @@ import butterknife.ButterKnife;
  */
 public class CustomAlertDialog extends Dialog {
 
-    @Bind(R.id.dialogBackground) CardView dialogBackground;
-    @Bind(R.id.dialogIcon) ImageView dialogIcon;
-    @Bind(R.id.dialogMessage) TextView dialogMessage;
-    @Bind(R.id.dialogBtnClose) Button dialogBtnClose;
+    @Bind(R.id.dialogBackground)
+    CardView dialogBackground;
+    @Bind(R.id.dialogIcon)
+    ImageView dialogIcon;
+    @Bind(R.id.dialogMessage)
+    TextView dialogMessage;
+    @Bind(R.id.dialogBtnClose)
+    Button dialogBtnClose;
 
     private State state;
     private String message = "";
@@ -57,13 +61,13 @@ public class CustomAlertDialog extends Dialog {
             }
         });
 
-        if (state.equals(State.Success)){
-            dialogBackground.setCardBackgroundColor(ContextCompat.getColor(context,R.color.success));
+        if (state.equals(State.Success)) {
+            dialogBackground.setCardBackgroundColor(ContextCompat.getColor(context, R.color.success));
             dialogIcon.setImageResource(R.drawable.icon_success);
-        }else if (state.equals(State.Error)){
-            dialogBackground.setCardBackgroundColor(ContextCompat.getColor(context,R.color.error));
+        } else if (state.equals(State.Error)) {
+            dialogBackground.setCardBackgroundColor(ContextCompat.getColor(context, R.color.error));
             dialogIcon.setImageResource(R.drawable.icon_close_error);
-        }else if (state.equals(State.Warning)){
+        } else if (state.equals(State.Warning)) {
             dialogBackground.setCardBackgroundColor(ContextCompat.getColor(context, R.color.warning));
             dialogIcon.setImageResource(R.drawable.icon_warning);
         }

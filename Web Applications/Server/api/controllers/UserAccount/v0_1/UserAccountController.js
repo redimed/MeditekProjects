@@ -298,7 +298,6 @@ module.exports = {
 	 * input:
 	 * - req.body: {UserUID|UserName|Email|PhoneNumber, Type}
 	 * 		+Type: HelperService.const.fileType.avatar, HelperService.const.fileType.signature
-	 * -transaction
 	 * output
 	 * - Nếu thành công trả về {status:'success'}
 	 * - Nếu thất bại quăng về error:
@@ -332,6 +331,31 @@ module.exports = {
 		
 	},
 
-	
-	
+	/**
+	 * GetIdentifierImageInfo: dùng để lấy thông tin profile image và signature image của user
+	 * input:
+	 * - req.query: {UserUID|UserName|Email|PhoneNumber, Type}
+	 * 			+Type: HelperService.const.fileType.avatar, HelperService.const.fileType.signature
+	 * output
+	 * - Nếu thành công trả thông tin file, thông tin file có thể null nếu không tìm thấy trong database
+	 * - Nếu thất bại quăng về error:
+	 * 		error.errors[0]:
+	 *			+ GetIdentifierImageInfo.emailInvalid
+	 *			+ GetIdentifierImageInfo.phoneNumberInvalid
+	 *			+ GetIdentifierImageInfo.userInfoNotProvided
+	 *			+ GetIdentifierImageInfo.typeInvalid
+	 *			+ GetIdentifierImageInfo.typeNotProvided
+	 *			+ GetIdentifierImageInfo.fileUploadQueryError
+	 *			+ GetIdentifierImageInfo.userNotFound
+	 *			+ GetIdentifierImageInfo.userQueryError
+	 */
+	GetIdentifierImageInfo:function(req,res){
+		var criteria=req.query;
+		Services.UserAccount.GetIdentifierImageInfo(criteria)
+		.then(function(data){
+			res.ok(data);
+		},function(err){
+			res.serverError(ErrorWrap(err));
+		})
+	}
 }

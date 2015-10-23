@@ -12,45 +12,34 @@ passport.use(new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, function(req, u, p, done) {
-    var whereOpts = u.indexOf('@') > -1 ? {
-        email: u
-    } : {
-        userName: u
-    };
-    UserAccount.find({
-        where: whereOpts
-    }).then(function(user) {
-        if (user) {
-            bcrypt.compare(p.toString(), user.password, function(err, check) {
-                if (check) {
-                    TelehealthUser.find({
-                        where: {
-                            userAccountID: user.ID
-                        },
-                        attributes: ["UID", "userAccountID"]
-                    }).then(function(teleUser) {
-                        if (teleUser) {
-                            var returnUser = {
-                                UID: teleUser.UID,
-                                UserUID: user.UID
-                            }
-                            return done(null, returnUser, {
-                                message: 'Logged In Successfully!'
-                            });
-                        } else return done(null, false, {
-                            message: 'Wrong Username Or Password!'
-                        });
-                    }).catch(function(err) {
-                        return done(err);
-                    })
-                } else return done(null, false, {
-                    message: 'Wrong Username Or Password!'
-                });
-            });
-        } else return done(null, false, {
-            message: 'User Is Not Exist!'
-        });
+    TelehealthService.MakeRequest({
+        path: '/api/login',
+        method: 'POST',
+        body: {
+            'UserName': u,
+            'Password': p
+        }
+    }).then(function(response) {
+        var data = response.getBody();
+        var user = data.user;
+        TelehealthUser.find({
+            where: {
+                userAccountID: user.ID
+            },
+            attributes: ['UID']
+        }).then(function(teleUser) {
+            if (teleUser) {
+                user.UserUID = user.UID;
+                user.UID = teleUser.UID;
+                data.user = user;
+                return done(null, data, response.getBody().message);
+            } else return done(null, false, {
+                message: 'Wrong Username Or Password!'
+            })
+        }).catch(function(err) {
+            return done(err);
+        })
     }).catch(function(err) {
-        return done(err);
+        return done(null, false, err.getBody());
     })
 }));

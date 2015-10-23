@@ -2,21 +2,21 @@ var o=require("../services/HelperService");
 var ErrorWrap=require("../services/ErrorWrap");
 module.exports = function(req, res, next) {
     var error=new Error("Policies.Error");
-    if(o.checkData(req.user))
+    if(req.user)
     {
-        var isPatient=false;
+        var roleAccepted=[o.const.roles.admin,o.const.roles.assistant];
+        var flag=false;
         _.each(req.user.roles,function(role){
-            if(role.RoleCode==o.const.roles.patient)
-                isPatient=true;
+            if(_.intersection([role.RoleCode],roleAccepted).length>0)
+                flag=true;
         });
-        if (isPatient) 
-        {
+        if (flag) {
             return next();
         }
         else
         {
             
-            error.pushError("Policies.notPatient");
+            error.pushError("Policies.notAdminOrAssistant");
             return res.unauthor(ErrorWrap(error));
         }
     }
@@ -25,4 +25,5 @@ module.exports = function(req, res, next) {
         error.pushError("Policies.notLogin");
         return res.unauthor(ErrorWrap(error));
     }
+    
 };

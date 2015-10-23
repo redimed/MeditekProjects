@@ -16,18 +16,22 @@
 		<!-- begin filter -->
 		<span ng-hide="toggle">
 			<div class="table-scrollable">
-				<table class="table table-bordered table-hover">
+				<table class="table table-hover">
 					<thead>
 						<tr style="width:100%;">
 							<th ng-repeat="i in items">
 								<label class="label-control">{{i.name}} </label>
 							</th>
+							<th style="width:10%;">Enable</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr style="width:100%;">
 							<td ng-repeat="i in items">
 								<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-change="Search(search)">
+							</td>
+							<td style="width:10%;">
+								<select class="form-control" ng-change="Search(search)" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select>
 							</td>
 						</tr>
 					</tbody>
@@ -69,7 +73,7 @@
 			</div>
 			<div class="col-md-7 col-sm-12">
 				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-					<pagination 
+					<uib-pagination 
 					boundary-links="true" 
 					total-items="count" 
 					ng-model="searchObjectMap.currentPage" 
@@ -80,7 +84,7 @@
 					last-text="&raquo; " 
 					items-per-page="searchObjectMap.limit" 
 					max-size="searchObjectMap.maxSize"
-					ng-change="setPage()"></pagination>
+					ng-change="setPage()"></uib-pagination>
 				</div>
 			</div>
 		</div>

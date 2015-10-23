@@ -7,8 +7,23 @@ module.exports = {
 	CreatePatient : function(req, res) {
 		var data = req.body.data;
 		Services.Patient.CreatePatient(data)
-		.then(function(info){
-			res.ok({status:200, message:"success",data:info.UID});
+		.then(function(patient){
+			if(patient!==undefined && patient!==null && patient!=='' && patient.length!==0){
+				var info = {
+					UID       : patient.UID,
+					FirstName : patient.FirstName,
+					LastName  : Patient.LastName,
+					DOB       : patient.DOB,
+					Address1  : patient.Address1,
+					Address2  : patient.Address2
+				};
+				res.ok({status:200, message:"success",data:info});
+			}
+			else{
+				var err = new Error("SERVER ERROR");
+				err.errors="Server Error";
+				res.notFound({status:404,message:ErrorWrap(err)});
+			}
 		})
 		.catch(function(err){
 			res.serverError({status:500, message:ErrorWrap(err)});

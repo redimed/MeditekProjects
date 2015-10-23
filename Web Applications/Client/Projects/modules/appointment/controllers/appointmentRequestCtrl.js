@@ -126,7 +126,8 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
 
 
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://telehealthvietnam.com.vn:3005/api/uploadFile',
+        url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
+        // url: 'http://telehealthvietnam.com.vn:3005/api/uploadFile',
         alias: 'uploadFile'
     });
 

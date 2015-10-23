@@ -19,7 +19,8 @@ angular.module("app.authentication.appointment.services",[])
 		};
 		//Get Detail Appointment
 		services.getImage = function(){
-			return "http://192.168.1.2:3005/api/downloadFile/"
+			// return "http://192.168.1.2:3005/api/downloadFile/"
+			return "http://testapp.redimed.com.au:3005/api/downloadFile/"
 		};
 		services.ListAppointment = function(){
 			return api.one('appointment-telehealth-list').get();

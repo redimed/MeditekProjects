@@ -13,13 +13,13 @@ import org.json.JSONObject;
 /**
  * Created by luann on 9/23/2015.
  */
-public class MyApplication extends Application{
+public class MyApplication extends Application {
 
     private TelehealthUser telehealthUser;
 
     private static MyApplication myApplication;
 
-    public static MyApplication getInstance(){
+    public static MyApplication getInstance() {
         return myApplication;
     }
 

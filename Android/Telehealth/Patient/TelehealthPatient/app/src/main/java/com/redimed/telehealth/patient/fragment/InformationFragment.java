@@ -2,23 +2,27 @@ package com.redimed.telehealth.patient.fragment;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.google.gson.Gson;
 import com.redimed.telehealth.patient.MainActivity;
@@ -27,12 +31,10 @@ import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,9 +53,10 @@ public class InformationFragment extends Fragment implements View.OnClickListene
     private RegisterApi restClient;
     private Gson gson;
     private Patient[] patients;
+    private boolean refreshToggle = true;
 
     @Bind(R.id.layoutProfile)
-    RelativeLayout layoutProfile;
+    LinearLayout layoutProfile;
     @Bind(R.id.txtFirstName)
     EditText txtFirstName;
     @Bind(R.id.txtLastName)
@@ -84,17 +87,22 @@ public class InformationFragment extends Fragment implements View.OnClickListene
     TextInputLayout errAddress2;
     @Bind(R.id.btnSubmit)
     Button btnSubmit;
+    @Bind(R.id.swipeInfo)
+    SwipeRefreshLayout swipeInfo;
+    @Bind(R.id.scrollViewInfo)
+    ScrollView scrollViewInfo;
 
     public InformationFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        v = inflater.inflate(R.layout.fragment_information, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         restClient = RESTClient.getRegisterApi();
+
+        v = inflater.inflate(R.layout.fragment_information, container, false);
         ButterKnife.bind(this, v);
 
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -114,6 +122,37 @@ public class InformationFragment extends Fragment implements View.OnClickListene
         errAddress2.setOnFocusChangeListener(this);
 
         DisplayPatientInfo();
+
+        swipeInfo.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                DisplayPatientInfo();
+            }
+        });
+
+        swipeInfo.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        scrollViewInfo.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollViewInfo.fullScroll(ScrollView.FOCUS_UP);
+                scrollViewInfo.scrollTo(0, 0);
+            }
+        });
+
+        scrollViewInfo.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                int scrollY = scrollViewInfo.getScrollY();
+                if (scrollY == 0){
+                    swipeInfo.setEnabled(true);
+                }else swipeInfo.setEnabled(false);
+            }
+        });
+
         return v;
     }
 
@@ -122,7 +161,7 @@ public class InformationFragment extends Fragment implements View.OnClickListene
         gson = new Gson();
         patients = gson.fromJson(sharedPreferences.getString("info", null), Patient[].class);
         String DOB = "N/A";
-        for (int i = 0; i < patients.length; i++){
+        for (int i = 0; i < patients.length; i++) {
             txtFirstName.setText(patients[i].getFirstName() == null ? "NONE" : patients[i].getFirstName());
             txtLastName.setText(patients[i].getLastName() == null ? "NONE" : patients[i].getLastName());
             txtPhone.setText(patients[i].getUserAccount().getPhoneNumber() == null ? "NONE" : patients[i].getUserAccount().getPhoneNumber());
@@ -131,13 +170,14 @@ public class InformationFragment extends Fragment implements View.OnClickListene
             txtAddress1.setText(patients[i].getAddress1() == null ? "NONE" : patients[i].getAddress1());
             txtAddress2.setText(patients[i].getAddress2() == null ? "NONE" : patients[i].getAddress2());
         }
+        swipeInfo.setRefreshing(false);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnSubmit:
-                startActivity(new Intent(v.getContext(), MainActivity.class));
+                ((MainActivity) v.getContext()).Display(0);
                 break;
             case R.id.txtDOB:
                 DisplayDatePickerDialog();
@@ -202,7 +242,7 @@ public class InformationFragment extends Fragment implements View.OnClickListene
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.layoutProfile:
                 hideKeyboard(v);
                 break;
@@ -213,10 +253,11 @@ public class InformationFragment extends Fragment implements View.OnClickListene
     }
 
     private void hideKeyboard(View v) {
-        InputMethodManager in = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager in = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         in.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
+    // TODO: 10/23/2015 click edit text can't back home
     @Override
     public void onResume() {
         super.onResume();

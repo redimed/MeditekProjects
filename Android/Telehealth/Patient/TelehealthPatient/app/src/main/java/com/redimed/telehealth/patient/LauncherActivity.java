@@ -1,9 +1,13 @@
 package com.redimed.telehealth.patient;
 
 import android.animation.ObjectAnimator;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -45,16 +49,21 @@ public class LauncherActivity extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                File xmlUser = new File("/data/data/" + getApplicationContext().getPackageName() + "/shared_prefs/TelehealthUser.xml");
-                if (xmlUser.exists()) {
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    finish();
-                } else {
-                    startActivity(new Intent(getApplicationContext(), ActivationActivity.class));
-                    finish();
-                }
+                CheckExistsData();
             }
         }, 3500);
+
+    }
+
+    private void CheckExistsData(){
+        File xmlUser = new File("/data/data/" + getApplicationContext().getPackageName() + "/shared_prefs/TelehealthUser.xml");
+        if (xmlUser.exists()) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        } else {
+            startActivity(new Intent(getApplicationContext(), ActivationActivity.class));
+            finish();
+        }
     }
 
     private void AnimationLogo() {

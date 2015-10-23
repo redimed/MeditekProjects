@@ -91,20 +91,40 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStop() {
         super.onStop();
-        if(sessionOpenTok != null)
+        if (sessionOpenTok != null)
             sessionOpenTok.disconnect();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        int position = vfCall.getCurrentView().getId();
-        if (position == 0){
+        int position = vfCall.getDisplayedChild();
+        Log.d(TAG, position + " ");
+        if (position == 0) {
             DeclineCommunication("decline");
         }
-        else {
-            DeclineCommunication("end");
+        if (position == 1) {
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("from", from);
+            params.put("to", to);
+            params.put("message", "end");
+            try {
+                SocketService.sendData("socket/messageTransfer", params);
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+            publisher = null;
+            subscriber = null;
+            streamOpenTok.clear();
+            sessionOpenTok.disconnect();
+            finish();
+            sendBroadcast(new Intent("Restart_Socket_Service"));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 
     //    Initialize Session ID, API Key, Token
@@ -120,29 +140,13 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 nameCaller = i.getExtras().getString("fromName");
                 lblCaller.setText(nameCaller == null ? "Calling...." : nameCaller + "calling....");
             }
-            if (i.getExtras().getString("message").equalsIgnoreCase("end")){
-                publisher = null;
-                subscriber = null;
-                streamOpenTok.clear();
-                sessionOpenTok.disconnect();
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
+            if (i.getExtras().getString("message").equalsIgnoreCase("cancel")) {
+                DeclineCommunication("cancel");
+            }
+            if (i.getExtras().getString("message").equalsIgnoreCase("end")) {
+                EndCommunication();
             }
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (sessionOpenTok != null) {
-            int position = vfCall.getCurrentView().getId();
-            if (position == 0){
-                DeclineCommunication("decline");
-            }
-            else {
-                DeclineCommunication("end");
-            }
-        }
-        super.onBackPressed();
     }
 
     @Override
@@ -161,7 +165,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 MuteCommunication();
                 break;
             case R.id.fabEndCall:
-                DeclineCommunication("end");
+                EndCommunication();
                 break;
         }
     }
@@ -181,22 +185,17 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    //    Refuse appointment
-    private void DeclineCommunication(String message) {
+    private void EndCommunication() {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("from", from);
         params.put("to", to);
-        params.put("message", message);
+        params.put("message", "end");
         try {
             SocketService.sendData("socket/messageTransfer", params);
             publisher = null;
             subscriber = null;
             streamOpenTok.clear();
-            if (message == "end") {
-                sessionOpenTok.disconnect();
-            }else {
-                sessionOpenTok = null;
-            }
+            sessionOpenTok.disconnect();
             startActivity(new Intent(this, MainActivity.class));
             finish();
         } catch (Throwable throwable) {
@@ -204,15 +203,40 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //    Refuse appointment
+    private void DeclineCommunication(String message) {
+        if (message.equalsIgnoreCase("decline")) {
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("from", from);
+            params.put("to", to);
+            params.put("message", message);
+            try {
+                SocketService.sendData("socket/messageTransfer", params);
+                publisher = null;
+                subscriber = null;
+                streamOpenTok.clear();
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        } else {
+            publisher = null;
+            subscriber = null;
+            streamOpenTok.clear();
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+    }
+
     //Click button hold on a call
     private void HoldCommunication() {
-        if (publisher.getPublishVideo() == true){
+        if (publisher.getPublishVideo() == true) {
             publisher.setPublishAudio(false);
             subscriber.setSubscribeToAudio(false);
             publisher.setPublishVideo(false);
             fabMute.setImageResource(R.drawable.icon_mute);
-        }
-        else {
+        } else {
             publisher.setPublishAudio(true);
             subscriber.setSubscribeToAudio(true);
             publisher.setPublishVideo(true);

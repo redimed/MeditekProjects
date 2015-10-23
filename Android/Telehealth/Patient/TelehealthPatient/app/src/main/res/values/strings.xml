@@ -11,9 +11,16 @@
     <!-- Error-->
     <string name="error_network">Network Error</string>
     <string name="error_no_response">No Response From Server</string>
+    <string name="error_network_http_error">Network Http Error</string>
+    <string name="error_unknown">Error Unknown</string>
     <string name="alert_wrong_phone">Phone Number Invalid</string>
     <string name="empty_email">Please Input Your Email</string>
     <string name="error_email">Email Invalid</string>
+
+    <!-- Connection Dialog-->
+    <string name="btn_primary">Settings</string>
+    <string name="btn_foreign">Skip</string>
+    <string name="message_connection">Please turn on Wifi or Cellular in your device settings to use full our service!</string>
 
     <!-- Fontello icons -->
     <string name="fontello_search">&#xe816;</string>
@@ -81,7 +88,8 @@
     <string name="lbl_doctor">Doctor:</string>
     <string name="lbl_email">Email:</string>
     <string name="lbl_work">Work Phone:</string>
-    <string name="btn_upload">Upload Image</string>
+    <string name="btn_view">View Image</string>
     <string name="title_activity_model">ModelActivity</string>
 
+    <!-- Image Appointment Layout-->
 </resources>

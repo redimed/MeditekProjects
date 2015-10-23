@@ -1,6 +1,9 @@
 var app = angular.module('app.authentication.patient.create.directive',[]);
 app.directive('patientCreate',function(toastr, PatientService, $state, $timeout, $cookies){
 	return {
+		scope :{
+			appointment:'='
+		},
 		restrict: "EA",
 		controller:function($scope,FileUploader)
 		{
@@ -55,6 +58,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		    };
 		},
 		link: function(scope, elem, attrs){
+			scope.data ={};
 			scope.er={};
 			scope.ermsg={};
 			scope.isShowNext=false;
@@ -128,6 +132,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 				.then(function(result){
 					return PatientService.createPatient(data)
 					.then(function(success){
+<<<<<<< HEAD
 						for (var i = 0; i < scope.uploader.queue.length; i++) 
 			            {
 			                var item=scope.uploader.queue[i];
@@ -140,6 +145,17 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						$state.go('authentication.patient.list',null, {
 		           			'reload': true
 		        		});
+=======
+						if (scope.appointment) {
+							scope.appointment.runIfSuccess(success.data);
+						}else{
+							toastr.success("Create Successful!!","SUCCESS");
+							$state.go('authentication.patient.list',null, {
+			           			'reload': true
+			        		});
+						};
+						
+>>>>>>> f0d987c5c23007f10d50010cd80c52241d2c20c7
 					},function(err){
 						scope.er={};
 						scope.ermsg={};

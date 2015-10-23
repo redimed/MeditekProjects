@@ -39,17 +39,24 @@ public class SocketService extends Service {
     private static Socket socket;
     private Intent i;
     private static SharedPreferences uidTelehealth;
+    private String auth, core;
 
-    static {
-        initializeSocket();
-    }
+//    static {
+//        initializeSocket();
+//    }
 
-    private static void initializeSocket() {
+    private void initializeSocket() {
+        uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
+        auth = uidTelehealth.getString("token", null);
+        core = uidTelehealth.getString("coreToken", null);
+
         try {
             IO.Options opts = new IO.Options();
             opts.forceNew = true;
             opts.reconnection = true;
-            opts.query = "__sails_io_sdk_version=0.11.0";
+            opts.query = "__sails_io_sdk_version=0.11.0,Authorization=" + auth + ",CoreAuth=" + core + '"';
+//            opts.query = "Authorization:" + auth;
+//            opts.query = "CoreAuth:" + core;
             socket = IO.socket(Config.socketURL, opts);
             socket.connect();
         } catch (URISyntaxException e) {
@@ -66,11 +73,12 @@ public class SocketService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        uidTelehealth =  getSharedPreferences("TelehealthUser", MODE_PRIVATE);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        initializeSocket();
+
         socket.on("receiveMessage", onReceiveMessage);
         socket.on("errorMsg", onReceiveError);
         socket.on(Socket.EVENT_CONNECT, onConnect);
@@ -159,32 +167,38 @@ public class SocketService extends Service {
         @Override
         public void call(Object... args) {
             JSONObject data = (JSONObject) args[0];
-        try {
-            String message = data.get("message").toString();
-            if (message.equalsIgnoreCase("call")){
-                i = new Intent(getApplicationContext(), CallActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("apiKey", data.get("apiKey").toString());
-                i.putExtra("sessionId", data.get("sessionId").toString());
-                i.putExtra("token", data.get("token").toString());
-                i.putExtra("to", data.get("from").toString());
-                i.putExtra("from", uidTelehealth.getString("uid", null));
-                i.putExtra("message", data.get("message").toString());
-                i.putExtra("fromName", data.get("fromName").toString());
-                Log.d(TAG, message.toString());
-                startActivity(i);
+            try {
+                String message = data.get("message").toString();
+                if (message.equalsIgnoreCase("call")){
+                    i = new Intent(getApplicationContext(), CallActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("apiKey", data.get("apiKey").toString());
+                    i.putExtra("sessionId", data.get("sessionId").toString());
+                    i.putExtra("token", data.get("token").toString());
+                    i.putExtra("to", data.get("from").toString());
+                    i.putExtra("from", uidTelehealth.getString("uid", null));
+                    i.putExtra("message", data.get("message").toString());
+                    i.putExtra("fromName", data.get("fromName").toString());
+                    startActivity(i);
+                }
+                if (message.equalsIgnoreCase("cancel")){
+                    Log.d(TAG, message.toString());
+                    i = new Intent(getApplicationContext(), CallActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("message", data.get("message").toString());
+                    JoinRoom();
+                    startActivity(i);
+                }
+                if (message.equalsIgnoreCase("end")){
+                    i = new Intent(getApplicationContext(), MainActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("message", data.get("message").toString());
+                    JoinRoom();
+                    startActivity(i);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            if (message.equalsIgnoreCase("end")){
-                i = new Intent(getApplicationContext(), MainActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("message", data.get("message").toString());
-                JoinRoom();
-                startActivity(i);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Log.d("Socket Receive Message", data.toString());
         }
     };
 

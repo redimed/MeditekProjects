@@ -1,11 +1,12 @@
 var app = angular.module('app.authentication.patient.list.directive',[]);
-app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies){
+app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies, $state){
 	return {
 		scope :{
 			items:'=onItem',
 			isShowCreateButton:'=onCreate',
 			isShowSelectButton:'=onSelect',
-			uidReturn:'='
+			uidReturn:'=',
+			appointment:'='
 		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
@@ -106,13 +107,68 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			};
 
 			scope.selectPatient = function(patientUID){
-				if(scope.uidReturn==patientUID){
-					scope.uidReturn='';
+				if(!scope.appointment){
+					if(scope.uidReturn==patientUID){
+						scope.uidReturn='';
+					}
+					else{
+						scope.uidReturn=patientUID;
+					}
 				}
 				else{
 					scope.uidReturn=patientUID;
+					swal({   
+						title: "Are you sure?", 
+						text: "Are you want to link this patient to the current appointment?" ,
+						type: "warning",   
+						showCancelButton: true,   
+						confirmButtonColor: "#DD6B55",   
+						confirmButtonText: "Ok",   
+						cancelButtonText: "Cancel",   
+						closeOnConfirm: true,   
+						closeOnCancel: true 
+					}, 
+					function(isConfirm){   
+						if (isConfirm) {  
+							scope.uidReturn=patientUID;   
+							scope.appointment.runIfSuccess({data:{UID:patientUID}});
+						}else{
+
+							scope.uidReturn='';
+							scope.init();
+						}
+						console.log(scope.uidReturn);
+					});
 				}
+				
 			};
+
+			scope.createPatient= function () {
+				if (scope.appointment) {
+					var modalInstance = $uibModal.open({
+						templateUrl: 'patientCreatemodal',
+						controller: function($scope,$modalInstance){
+							$scope.close = function() {
+								modalInstance.close();
+							};
+							$scope.appointment = {
+								runIfSuccess : function (data) {
+									console.log('patient nênnenenene',data);
+									$modalInstance.close({status:'success',data:data});
+
+								}
+							}
+						},
+						windowClass: 'app-modal-window'
+						//size: 'lg',
+					});
+					modalInstance.result.then(function (data) {
+				      	scope.appointment.runIfSuccess(data);
+				    });
+				}else{
+					$state.go('authentication.patient.create');
+				}
+			}
 
 			scope.init();
 		},

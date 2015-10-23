@@ -33,9 +33,11 @@ import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.picker.CountryPicker;
 import com.redimed.telehealth.patient.picker.CountryPickerListener;
+import com.redimed.telehealth.patient.service.RegistrationIntentService;
 import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
 import com.redimed.telehealth.patient.utils.CustomAlertDialog;
+import com.redimed.telehealth.patient.utils.DialogConnection;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -235,19 +237,17 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if (error != null){
-                        String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
-                        try {
-                            JSONObject dataObject = new JSONObject(json);
-                            String message = (String.valueOf(((MyApplication) getApplicationContext()).isJSONValid(dataObject.optString("ErrorsList"))) == null ) ? error.getMessage() : dataObject.optString("ErrorsList");
-                            Log.d(TAG, message);
-                            new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, message).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
+                        new DialogConnection(ActivationActivity.this).show();
+                    } else {
+                        new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
                     }
                 }
             });
+        }
+        else {
+            new DialogConnection(ActivationActivity.this).show();
+            startService(new Intent(getApplicationContext(), RegistrationIntentService.class));
         }
     }
 
@@ -267,8 +267,10 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                         if (status.equalsIgnoreCase("success")) {
                             SharedPreferences.Editor uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE).edit();
                             uidTelehealth.putString("uid", jsonObject.get("uid").getAsString());
-                            uidTelehealth.putString("token", jsonObject.get("token").getAsString());
+                            uidTelehealth.putString("accountUID", jsonObject.get("userUID").getAsString());
                             uidTelehealth.putString("patientUID", jsonObject.get("patientUID").getAsString());
+                            uidTelehealth.putString("token", jsonObject.get("token").getAsString());
+                            uidTelehealth.putString("coreToken", jsonObject.get("coreToken").getAsString());
                             uidTelehealth.apply();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
@@ -277,16 +279,10 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
                     @Override
                     public void failure(RetrofitError error) {
-                        if (error != null){
-                            String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
-                            try {
-                                JSONObject dataObject = new JSONObject(json);
-                                String message = (String.valueOf(((MyApplication) getApplicationContext()).isJSONValid(dataObject.optString("ErrorsList"))) == null ) ? error.getMessage() : dataObject.optString("ErrorsList");
-                                Log.d(TAG, message);
-                                new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, message).show();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
+                            new DialogConnection(ActivationActivity.this).show();
+                        } else {
+                            new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
                         }
                     }
                 });

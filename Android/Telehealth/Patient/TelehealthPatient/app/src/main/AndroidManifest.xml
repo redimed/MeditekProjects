@@ -49,6 +49,7 @@
             android:label="@string/title_activity_call"
             android:screenOrientation="portrait" />
         <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".ModelActivity"

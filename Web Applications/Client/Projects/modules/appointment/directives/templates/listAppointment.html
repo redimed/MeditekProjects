@@ -81,11 +81,21 @@
 			<thead>
 				<tr>
 					<th width="1">#</th>
-					<th>Patient</th>
+					<th>
+						Patient
+					</th>
 					<th>Treating Practictioner</th>
-					<th>Submit Date</th>
+					<th>
+						Submit Date
+						<i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('SubmitDate','ASC')" ng-show="typeSubmitDate == 'ASC'"></i>
+						<i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('SubmitDate','DESC')" ng-show="typeSubmitDate == 'DESC'"></i>
+					</th>
 					<th>Status</th>
-					<th>Appointment Date</th>
+					<th>
+						Appointment Date
+						<i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('AppointmentDate','ASC')" ng-show="typeAppointmentDate == 'ASC'"></i>
+						<i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('AppointmentDate','DESC')" ng-show="typeAppointmentDate == 'DESC'"></i>
+					</th>
 					<th>Correspondence</th>
 				</tr>
 			</thead>
@@ -94,7 +104,7 @@
 				<tr ng-repeat="p in appointments" ng-click="openAppointmentModal(p.UID)">
 					<td>{{$index +1}}</td>
 					<td>{{p.TelehealthAppointment.PatientAppointment.FirstName}} {{p.TelehealthAppointment.PatientAppointment.LastName}}</td>
-					<td>{{p.TelehealthAppointment.RefName}}</td>
+					<td>{{((p.Doctors[0].Title !=null)?p.Doctors[0].Title:"")+" "+((p.Doctors[0].FirstName != null)?p.Doctors[0].FirstName:"") +" "+((p.Doctors[0].LastName != null)?p.Doctors[0].LastName:"")}}</td>
 					<td>{{p.RequestDate | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td>
 					<td> 
 						  <span ng-if="p.Status == 'Watting for approve'" class="label label-default">Watting for approve</span>
@@ -102,7 +112,7 @@
 					      <span ng-if="p.Status == 'Calling'" class="label label-default">Calling</span>
 					      <span ng-if="p.Status == 'Pending'" class="label label-warning">Pending</span>
 					      <span ng-if="p.Status == 'Cancelled'" class="label label-danger">Cancelled</span>
-					      <span ng-if="p.Status == 'Finished'" class="label label-primary">Finished</span>
+					      <span ng-if="p.Status == 'Finish'" class="label label-primary">Finish</span>
 					</td>
 					<td>{{p.FromTime | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td>
 					<td ng-show="p.TelehealthAppointment.Correspondence == 'Y'" style="text-align:center">

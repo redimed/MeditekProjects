@@ -46,18 +46,14 @@ module.exports = {
                     Limit: limit
                 }
             },
-            headers: {
-                'Authorization': coreAuth
-            }
+            headers: !coreAuth ? {}:{'Authorization': coreAuth}
         })
     },
     GetAppointmentDetails: function(apptUID, coreAuth) {
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-detail/' + apptUID,
             method: 'GET',
-            headers: {
-                'Authorization': coreAuth
-            }
+            headers: !coreAuth ? {}:{'Authorization': coreAuth}
         })
     },
     GetAppointmentList: function(coreAuth) {
@@ -80,9 +76,7 @@ module.exports = {
                     }]
                 }
             },
-            headers: {
-                'Authorization': coreAuth
-            }
+            headers: !coreAuth ? {}:{'Authorization': coreAuth}
         });
     },
     GetOnlineUsers: function(coreAuth) {

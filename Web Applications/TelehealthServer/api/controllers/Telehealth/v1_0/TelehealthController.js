@@ -63,9 +63,7 @@ module.exports = {
                                     'UID': user.UID
                                 }
                             },
-                            headers: {
-                                'Authorization': req.headers.coreauth
-                            }
+                            headers: !req.headers.coreauth ? {}:{'Authorization': req.headers.coreauth}
                         }).then(function(response) {
                             res.json(response.getCode(), response.getBody());
                         }).catch(function(err) {

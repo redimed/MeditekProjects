@@ -109,7 +109,8 @@ module.exports.sockets = {
      *                                                                          *
      ***************************************************************************/
     afterDisconnect: function(session, socket, cb) {
-        TelehealthService.GetOnlineUsers();
+        var socketQuery = socket.handshake.query;
+        TelehealthService.GetOnlineUsers(socketQuery.CoreAuth);
         return cb();
     },
     /***************************************************************************

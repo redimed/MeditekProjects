@@ -12,24 +12,29 @@ module.exports = {
             });
             return;
         }
+        var socketQuery = req.socket.handshake.query;
         var uid = req.param('uid');
         if (uid) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 if (teleUser) {
                     sails.sockets.join(req.socket, uid);
                     sails.sockets.leave(req.socket, req.socket.id);
-                    TelehealthService.GetOnlineUsers();
-                } else sails.sockets.emit(req.socket, 'errorMsg', {
-                    msg: 'User Not Exist!'
-                });
+                    TelehealthService.GetOnlineUsers(socketQuery.CoreAuth);
+                } else {
+                    sails.sockets.emit(req.socket, 'errorMsg', {
+                        msg: 'User Not Exist!'
+                    });
+                }
             }).catch(function(err) {
                 sails.sockets.emit(req.socket, 'errorMsg', {
                     msg: err
                 });
             })
-        } else sails.sockets.emit(req.socket, 'errorMsg', {
-            msg: 'Invalid Parameters!'
-        });
+        } else {
+            sails.sockets.emit(req.socket, 'errorMsg', {
+                msg: 'Invalid Parameters!'
+            });
+        }
     },
     MessageTransfer: function(req, res) {
         if (!req.isSocket) {
@@ -76,7 +81,8 @@ module.exports = {
             });
             return;
         }
-        TelehealthService.GetOnlineUsers();
+        var socketQuery = req.socket.handshake.query;
+        TelehealthService.GetOnlineUsers(socketQuery.CoreAuth);
     },
     GenerateConferenceSession: function(req, res) {
         opentok.createSession({

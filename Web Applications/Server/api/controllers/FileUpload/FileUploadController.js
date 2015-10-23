@@ -3,37 +3,11 @@ var mkdirp = require('mkdirp');
 var fs = require('fs');
 var gm = require('gm');
 var rootPath = process.cwd();
-var uploadDir = rootPath + '/upload_files/';
-
-function resizeImage(filePath, fileName, fileExt) {
-    var arrSize = [200, 400, 600];
-    gm(filePath).size(function(err, size) {
-        if (err) throw err;
-        _.each(arrSize, function(w, i) {
-            var dest = uploadDir + '/' + fileName + '_' + w + '.' + fileExt;
-            gm(filePath).resizeExact(w, Math.round((size.height / size.width) * w)).write(dest, function(err) {
-                if (err) throw err;
-                HelperService.EncryptFile({
-                    inputFile: dest,
-                    outputFile: uploadDir + fileName + '_' + w,
-                    password: fileName
-                }, function(err) {
-                    if (err) throw err;
-                    fs.access(dest, function(err) {
-                        if (!err) fs.unlink(dest);
-                    })
-                    if (i == (arrSize.length - 1)) {
-                        fs.access(filePath, function(err) {
-                            if (!err) fs.unlink(filePath);
-                        })
-                    }
-                })
-            })
-        })
-    })
-}
+var constFileType = HelperService.const.fileType;
+var constImgExt = HelperService.const.imageExt;
 module.exports = {
     UploadFile: function(req, res) {
+        var uploadDir = rootPath + '/upload_files/';
         mkdirp(uploadDir, function(err) {
             if (err) return res.serverError(ErrorWrap(err));
             var params = req.params.all();
@@ -48,7 +22,7 @@ module.exports = {
                     err.pushError("No File Was Uploaded!");
                     return res.serverError(ErrorWrap(err));
                 }
-                if (!params.userUID || !params.fileType || !_.contains(HelperService.const.fileType, params.fileType)) {
+                if (!params.userUID || !params.fileType || !_.contains(constFileType, params.fileType)) {
                     fs.access(uploadedFiles[0].fd, function(err) {
                         if (!err) fs.unlink(uploadedFiles[0].fd);
                     })
@@ -64,8 +38,8 @@ module.exports = {
                         var fileName = decodeURIComponent(uploadedFiles[0].filename);
                         var fileExt = uploadedFiles[0].filename.split('.')[1];
                         var fileType = params.fileType;
-                        if (!_.contains(HelperService.const.imageExt, fileExt)) fileType = HelperService.const.fileType.document;
-                        if (_.contains(HelperService.const.imageExt, fileExt) && fileType == HelperService.const.fileType.document) fileType = HelperService.const.fileType.image;
+                        if (!_.contains(constImgExt, fileExt)) fileType = constFileType.document;
+                        if (_.contains(constImgExt, fileExt) && fileType == constFileType.document) fileType = constFileType.image;
                         HelperService.EncryptFile({
                             inputFile: uploadedFiles[0].fd,
                             outputFile: uploadDir + fileUID,
@@ -107,28 +81,12 @@ module.exports = {
                                     }, {
                                         transaction: t
                                     }).then(function(file) {
-                                        if (fileType == HelperService.const.fileType.image) return medicalImageCheck(!params.bodyPart ? null : params.bodyPart, file.ID);
-                                        else if (fileType == HelperService.const.fileType.document) return documentCheck(!params.docType ? null : params.docType, file.ID);
+                                        if (fileType == constFileType.image) return medicalImageCheck(!params.bodyPart ? null : params.bodyPart, file.ID);
+                                        else if (fileType == constFileType.document) return documentCheck(!params.docType ? null : params.docType, file.ID);
                                     })
                                 }
                                 return startTransaction().then(function(data) {
                                     t.commit();
-                                    if (_.contains(HelperService.const.imageExt, fileExt)) {
-                                        mkdirp(rootPath + '/temp', function(err) {
-                                            if (err) throw err;
-                                            HelperService.DecryptFile({
-                                                inputFile: uploadDir + fileUID,
-                                                outputFile: rootPath + '/temp/' + fileUID + '.' + fileExt,
-                                                password: fileUID
-                                            }, function(err) {
-                                                if (err) throw err;
-                                                fs.access(rootPath + '/temp/' + fileUID + '.' + fileExt, function(err) {
-                                                    if (err) throw err
-                                                    resizeImage(rootPath + '/temp/' + fileUID + '.' + fileExt, fileUID, fileExt);
-                                                })
-                                            })
-                                        })
-                                    }
                                     return res.ok({
                                         status: 'success',
                                         fileUID: fileUID
@@ -161,40 +119,18 @@ module.exports = {
     },
     DownloadFile: function(req, res) {
         var params = req.params.all();
-        mkdirp(rootPath + '/temp', function(err) {
-            if (err) return res.serverError(ErrorWrap(err));
-            FileUpload.find({
-                where: {
-                    UID: params.fileUID,
-                    Enable: 'Y'
-                }
-            }).then(function(file) {
-                if (file) {
-                    var dest = rootPath + '/' + file.FileLocation;
-                    if (_.contains(HelperService.const.imageExt, file.FileExtension)) dest = !params.size ? rootPath + '/' + file.FileLocation : rootPath + '/' + file.FileLocation + '_' + params.size
+        Services.FileUpload.DownloadFile({
+                output: rootPath + '/temp/',
+                fileUID: params.fileUID,
+                size: params.size
+            }, function(err,output) {
+                if (err) return res.serverError(ErrorWrap(err));
+                res.download(output, function(err) {
                     if (err) return res.serverError(ErrorWrap(err));
-                    HelperService.DecryptFile({
-                        inputFile: dest,
-                        outputFile: rootPath + '/temp/' + file.FileName,
-                        password: file.UID
-                    }, function(err) {
-                        if (err) return res.serverError(ErrorWrap(err));
-                        res.download(rootPath + '/temp/' + file.FileName, function(err) {
-                            if (err) return res.serverError(ErrorWrap(err));
-                            fs.access(rootPath + '/temp/' + file.FileName, file.FileName, function(err) {
-                                if (!err) fs.unlink(rootPath + '/temp/' + file.FileName);
-                            })
-                        });
-                    })
-                } else {
-                    var err = new Error("FileUpload.DownloadFile.Error");
-                    err.pushError("File Not Exist!");
-                    return res.serverError(ErrorWrap(err));
-                }
-            }).catch(function(err) {
-                return res.serverError(ErrorWrap(err));
+                    if(fs.statSync(output).isFile())
+                        fs.unlinkSync(output);
+                });
             })
-        })
     },
     EnableFile: function(req, res) {
         var params = req.params.all();

@@ -40,6 +40,11 @@ module.exports={
 		action:'EnableUserAccount'
 	},
 
+	'delete /api/user-account/RemoveIdentifierImage':{
+		controller:'UserAccount/v0_1/UserAccountController',
+		action:'RemoveIdentifierImage'
+	},
+
 	'put /api/user-activation/DeactivationUserAccount':{
 		controller:'UserAccount/v0_1/UserActivationController',
 		action:'DeactivationUserAccount'

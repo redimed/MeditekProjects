@@ -1,7 +1,7 @@
-module.exports = function(data) {
+module.exports = function(data, userInfo) {
     var $q = require('q');
     var defer = $q.defer();
-    var pagination = Services.GetPaginationAppointment(data);
+    var pagination = Services.GetPaginationAppointment(data, userInfo);
     //get limit, offset
     Appointment.findAndCountAll({
             attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status', 'Enable'],

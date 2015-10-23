@@ -132,9 +132,9 @@ module.exports = {
             android: 'ARD'
         },
 
-        verificationMethod:{
-            token:'TOKEN',
-            code:'CODE'
+        verificationMethod: {
+            token: 'TOKEN',
+            code: 'CODE'
         },
 
         roles: {
@@ -143,7 +143,7 @@ module.exports = {
             internalPractitioner: 'INTERNAL_PRACTITIONER', //DOCTOR
             externalPractitioner: 'EXTERTAL_PRACTITIONER', //GP
             patient: 'PATIENT',
-            clinicTelehealth:'CLINIC_TELEHEALTH'
+            clinicTelehealth: 'CLINIC_TELEHEALTH'
         },
         fileType: {
             image: 'MedicalImage',
@@ -151,15 +151,15 @@ module.exports = {
             avatar: 'ProfileImage',
             signature: 'Signature'
         },
-        imageExt: ['jpg','png','gif','webp','tif','bmp','psd','jxr'],
+        imageExt: ['jpg', 'png', 'gif', 'webp', 'tif', 'bmp', 'psd', 'jxr'],
 
-        verificationCodeLength:6,
-        
-        verificationTokenLength:150,
+        verificationCodeLength: 6,
 
-        tokenExpired:15, //seconds
+        verificationTokenLength: 150,
 
-        codeExpired:3, //Số lần có thể nhập sai
+        tokenExpired: 15, //seconds
+
+        codeExpired: 3, //Số lần có thể nhập sai
 
     },
     exlog: exlog,
@@ -348,5 +348,34 @@ module.exports = {
                 });
             });
         })
+    },
+    GetRole: function(roles) {
+        if (_.isArray(roles)) {
+            var result = {
+                isAdmin: false,
+                isAssistant: false,
+                isInternalPractitioner: false,
+                isExternalPractitioner: false
+            };
+            roles.forEach(function(role, index) {
+                switch (role.RoleCode) {
+                    case 'ADMIN':
+                        result.isAdmin = true;
+                        break;
+                    case 'ASSISTANT':
+                        result.isAssistant = true;
+                        break;
+                    case 'INTERNAL_PRACTITIONER':
+                        result.isInternalPractitioner = true;
+                        break;
+                    case 'EXTERTAL_PRACTITIONER':
+                        result.isExternalPractitioner = true;
+                        break;
+                    default:
+                        break;
+                }
+            });
+            return result;
+        }
     }
 }

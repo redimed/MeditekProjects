@@ -14,7 +14,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout)
 			};
 			//event timeout will call after this template's directive rendered
 			$timeout(function(){
-				Metronic.setAssetsPath('theme/assets/'); // Set the assets folder path	
+				App.setAssetsPath('theme/assets/'); // Set the assets folder path	
 				FormWizard.init(); // form step
 			},0); 
 			scope.checkPhone = function(data) {

@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.patient.list.modal.directive',[]);
-app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService){
+app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $timeout){
 	return{
 		restrict: 'EA',
         scope: {
@@ -19,6 +19,13 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			scope.infoClear = function() {
 			    return !angular.equals(clearInfo, scope.info);
 		    },
+
+		    $timeout(function(){
+		    	App.initComponents(); // init core components
+		    	ComponentsSelect2.init(); // init todo page
+	            ComponentsBootstrapSelect.init(); // init todo page
+	            ComponentsDateTimePickers.init(); // init todo page
+		    },0);
 
 		    scope.savechange = function(Patient){
 				PatientService.validate(Patient)

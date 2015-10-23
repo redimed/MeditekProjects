@@ -31,7 +31,10 @@ module.exports = {
 					res.ok({status:200,message:"success",data:info.rows,count:info.count});
 			}
 			else
-				res.notFound({status:404,message:"not Found"});
+				var err = new Error();
+				err.message="SERVER ERROR";
+				err.errors="Server Error";
+				res.notFound({status:404, message:ErrorWrap(err)});
 		})
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});
@@ -51,7 +54,10 @@ module.exports = {
 			if(result[0] > 0)
 				res.ok({status:200,message:"success"});
 			else
-				res.notFound({status:404,message:"not Found"});
+				var err = new Error();
+				err.message="SERVER ERROR";
+				err.errors="Server Error";
+				res.notFound({status:404, message:ErrorWrap(err)});
 		})
 		.catch(function(err){
 			return res.serverError({status:500,message:ErrorWrap(err)});
@@ -70,7 +76,10 @@ module.exports = {
 			if(info!=null && info!=undefined && info!=''){
 				res.ok({status:200, message:"success", data:info});
 			} else {
-				res.notFound({status:404, message:"not Found"});
+				var err = new Error();
+				err.message="SERVER ERROR";
+				err.errors="Server Error";
+				res.notFound({status:404, message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){
@@ -90,7 +99,10 @@ module.exports = {
 			if(info!=null && info!=undefined && info!='' && info.length!=0){
 				res.ok({status:200, message:"success", data:info});
 			} else {
-				res.notFound({status:404, message:"not Found"});
+				var err = new Error();
+				err.message="SERVER ERROR";
+				err.errors="Server Error";
+				res.notFound({status:404, message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){
@@ -133,7 +145,10 @@ module.exports = {
 			if(result!==undefined && result!==null && result!=='')
 				res.ok({status:200,message:"success",data:result.rows,count:result.count});
 			else
-				res.notFound({status:404,message:"not found"});
+				var err = new Error();
+				err.message="SERVER ERROR";
+				err.errors="Server Error";
+				res.notFound({status:404, message:ErrorWrap(err)});
 		})
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});
@@ -153,7 +168,10 @@ module.exports = {
 				res.ok({status:200,message:"success",data:result});
 			}
 			else{
-				res.notFound({status:404,message:"not found"});
+				var err = new Error();
+				err.message="SERVER ERROR";
+				err.errors="Server Error";
+				res.notFound({status:404, message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){
@@ -167,7 +185,10 @@ module.exports = {
 			if(result!==undefined && result!==null && result!=='' && result.length!==0)
 				res.ok({status:200,message:"success",data:result});
 			else
-				res.notFound({status:404,message:"not found"});
+				var err = new Error();
+				err.message="SERVER ERROR";
+				err.errors="Server Error";
+				res.notFound({status:404, message:ErrorWrap(err)});
 		})
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});

@@ -96,7 +96,12 @@ app.directive('patientList', function(PatientService, $modal, toastr,$cookies){
 			};
 
 			scope.selectPatient = function(patientUID){
-				scope.uidReturn=patientUID;
+				if(scope.uidReturn==patientUID){
+					scope.uidReturn='';
+				}
+				else{
+					scope.uidReturn=patientUID;
+				}
 			};
 
 			scope.init();

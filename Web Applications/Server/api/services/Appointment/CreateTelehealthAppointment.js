@@ -1,4 +1,4 @@
-module.exports = function(data) {
+module.exports = function(data, userInfo) {
     var $q = require('q');
     var telehealthApointmentCreated;
     var preferringPractitioner;
@@ -7,8 +7,8 @@ module.exports = function(data) {
     return sequelize.transaction()
         .then(function(t) {
             var defer = $q.defer();
-            if (HelperService.CheckExistData(data.UserInfo) &&
-                HelperService.CheckExistData(data.UserInfo.UID)) {
+            if (HelperService.CheckExistData(userInfo) &&
+                HelperService.CheckExistData(userInfo.UID)) {
                 //find information PreferringPractitioner
                 UserAccount.findOne({
                         attributes: ['ID'],
@@ -21,7 +21,7 @@ module.exports = function(data) {
                             required: true
                         }],
                         where: {
-                            UID: data.UserInfo.UID
+                            UID: userInfo.UID
                         },
                         transaction: t
                     })

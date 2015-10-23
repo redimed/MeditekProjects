@@ -88,25 +88,29 @@
 											<!-- begin avatar -->
 											<div class="col-md-4">
 												<!-- avatar -->
-												<div class="form-group">
-													<div class="fileinput fileinput-new" data-provides="fileinput">
-														<div class="fileinput-new thumbnail" style="width: 350px; height: 350px;">
-															<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
-														</div>
-														<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 400px; max-height: 400px;">
-														</div>
-														<div>
-															<span class="btn green btn-file">
-																<span class="fileinput-new">
-																Select Image </span>
-																<span class="fileinput-exists">
-																Change </span>
-																<input type="file" name="...">
-															</span>
-															<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">Remove </a>
+												<div ng-form name="checkInForm" novalidate>
+													
+													<div class="form-group">
+														<div class="fileinput fileinput-new" data-provides="fileinput">
+															<div class="fileinput-new thumbnail" style="width: 350px; height: 350px;">
+																
+															</div>
+															<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 400px; max-height: 400px;">
+															</div>
+															<div>
+																<span class="btn green btn-file">
+																	<span class="fileinput-new">
+																	Select Image </span>
+																	<span class="fileinput-exists">
+																	Change </span>
+																	 <input type="file" nv-file-select="" uploader="uploader" />
+																</span>
+																<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">Remove </a>
+															</div>
 														</div>
 													</div>
 												</div>
+												
 											</div>
 											<!-- end avatar -->
 											<!-- begin basic -->

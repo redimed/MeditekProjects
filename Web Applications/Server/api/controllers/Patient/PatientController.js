@@ -9,13 +9,16 @@ module.exports = {
 		Services.Patient.CreatePatient(data)
 		.then(function(patient){
 			if(patient!==undefined && patient!==null && patient!=='' && patient.length!==0){
+				console.log(patient.result);
+				console.log(patient.UserAccountUID);
 				var info = {
-					UID       : patient.UID,
-					FirstName : patient.FirstName,
-					LastName  : patient.LastName,
-					DOB       : patient.DOB,
-					Address1  : patient.Address1,
-					Address2  : patient.Address2
+					UID            : patient.result.UID,
+					FirstName      : patient.result.FirstName,
+					LastName       : patient.result.LastName,
+					DOB            : patient.result.DOB,
+					Address1       : patient.result.Address1,
+					Address2       : patient.result.Address2,
+					UserAccountUID : patient.UserAccountUID
 				};
 				res.ok({status:200, message:"success",data:info});
 			}

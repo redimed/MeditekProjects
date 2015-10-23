@@ -48,10 +48,10 @@ customLogger.add(Mail, {
     password: 'meditek123456',
     subject: 'Debug Production',
     from: 'Meditek Production <meditek.manage.system@gmail.com>',
-    to: 'ThanhDev <thanh.dev.meditek@gmail.com>',
+    to: 'ThanhDev <thanh.dev.meditek@gmail.com>, Khuong PM <thekhuong@gmail.com>, GiangDev <thanh.dev.meditek@gmail.com>',
     level: 'error'
 });
-customLogger.on('logging', function(transport, level, msg, meta) {
+/*customLogger.on('logging', function(transport, level, msg, meta) {
     switch (transport.name) {
         case 'mail':
             var callback = function(err) {
@@ -68,7 +68,7 @@ customLogger.on('logging', function(transport, level, msg, meta) {
         default:
             break;
     }
-});
+});*/
 var log = {};
 if (process.env.NODE_ENV === 'production') {
     log['custom'] = customLogger;

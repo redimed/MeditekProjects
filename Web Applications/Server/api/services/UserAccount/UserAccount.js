@@ -630,5 +630,144 @@ module.exports = {
 		},function(err){
 			throw err;
 		})
-	}
+	},
+
+
+	/**
+	 * RemoveIdentifierImage: dùng để xóa profile image và signature image của user
+	 * input:
+	 * - criteria: {UserUID|UserName|Email|PhoneNumber, Type}
+	 * 		+Type: HelperService.const.fileType.avatar, HelperService.const.fileType.signature
+	 * -transaction
+	 * output
+	 * - Nếu thành công trả về {status:'success'}
+	 * - Nếu thất bại quăng về error:
+	 * 		error.errors[0]:
+	 *			+ RemoveIdentifierImage.emailInvalid
+	 *			+ RemoveIdentifierImage.phoneNumberInvalid
+	 *			+ RemoveIdentifierImage.userInfoNotProvided
+	 *			+ RemoveIdentifierImage.typeInvalid
+	 *			+ RemoveIdentifierImage.typeNotProvided
+	 *			+ RemoveIdentifierImage.imageNotFound
+	 *			+ RemoveIdentifierImage.fileUploadUpdateError
+	 *			+ RemoveIdentifierImage.userNotFound
+	 *			+ RemoveIdentifierImage.userQueryError
+	 */
+	RemoveIdentifierImage:function(criteria,transaction)
+	{
+		var error=new Error("RemoveIdentifierImage.Error");
+		var whereClause={};
+		var Type=null;
+		var Validation=function()
+		{
+			var q=$q.defer();
+			try
+			{
+				if(o.checkData(criteria.UserUID))
+				{
+					whereClause.UID=criteria.UserUID;
+				}
+				else if(o.checkData(criteria.UserName))
+				{
+					whereClause.UserName=criteria.UserName;
+				}
+				else if(o.checkData(criteria.Email))
+				{
+					if(o.isValidEmail(criteria.Email))
+					{
+						whereClause.Email=criteria.Email;
+					}
+					else
+					{
+						error.pushError("RemoveIdentifierImage.emailInvalid");
+						throw error;
+					}
+				}
+				else if(o.checkData(criteria.PhoneNumber))
+				{
+					criteria.PhoneNumber=o.parseAuMobilePhone(criteria.PhoneNumber);
+					if(criteria.PhoneNumber)
+					{
+						whereClause.PhoneNumber=criteria.PhoneNumber;
+					}
+					else
+					{
+						error.pushError("RemoveIdentifierImage.phoneNumberInvalid");
+						throw error;
+					}
+				}
+				else
+				{
+					error.pushError("RemoveIdentifierImage.userInfoNotProvided");
+					throw error;
+				}
+				if(o.checkData(criteria.Type))
+				{
+					if([o.const.fileType.avatar,o.const.fileType.signature].indexOf(criteria.Type)>=0)
+					{
+						Type=criteria.Type;
+					}
+					else 
+					{
+						error.pushError("RemoveIdentifierImage.typeInvalid");
+						throw error;
+					}
+				}
+				else
+				{
+					error.pushError("RemoveIdentifierImage.typeNotProvided");
+					throw error;
+				}
+
+				q.resolve({status:"success"});
+
+			}
+			catch(err)
+			{
+				q.reject(err);
+			}
+			return q.promise;
+		}
+
+		return Validation()
+		.then(function(data){
+			return Services.UserAccount.GetUserAccountDetails(whereClause,null,transaction)
+			.then(function(user){
+				if(o.checkData(user))
+				{
+					return FileUpload.update({Enable:'N'},{
+						where:{
+							UserAccountID:user.ID,
+							FileType:Type
+						}
+					},{transaction:transaction})
+					.then(function(result){
+						if(result[0]>0)
+							return {status:'success'};
+						else
+						{
+							error.pushError("RemoveIdentifierImage.imageNotFound");
+							throw error;
+						}
+					},function(err){
+						o.exlog(err);
+						error.pushError("RemoveIdentifierImage.fileUploadUpdateError");
+						throw error;
+					})
+				}
+				else
+				{
+					error.pushError("RemoveIdentifierImage.userNotFound");
+					throw error;
+				}
+			},function(err){
+				o.exlog(err);
+				error.pushError("RemoveIdentifierImage.userQueryError");
+				throw error;
+			})
+		},function(err){
+			throw err;
+		})
+		
+	},
 }

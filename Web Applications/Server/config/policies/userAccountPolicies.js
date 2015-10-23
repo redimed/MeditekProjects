@@ -7,6 +7,6 @@ module.exports={
   	},
 
   	'UserAccount/v0_1/UserActivationController':{
-	    'CreateUserActivation':['hasToken','checkVersion'],
+	    // 'CreateUserActivation':['hasToken','checkVersion'],
   	},
 }

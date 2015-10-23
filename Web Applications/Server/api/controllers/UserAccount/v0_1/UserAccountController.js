@@ -1,6 +1,7 @@
 var regexp = require('node-regexp');
 var underscore=require('underscore');
 var moment=require('moment');
+var o=require("../../../services/HelperService");
 module.exports = {
 	Test:function(req,res)
 	{
@@ -281,7 +282,7 @@ module.exports = {
 		{
 			var err=new Error("GetListUsers.Error");
 			err.pushError("Request.missingParams");
-			return res.badRequest(ErrorWrap(err));S
+			return res.badRequest(ErrorWrap(err));
 		}
 		Services.UserAccount.GetListUsers(clause)
 		.then(function(data){
@@ -289,6 +290,48 @@ module.exports = {
 		},function(err){
 			res.serverError(ErrorWrap(err));
 		});
-	}
+	},
+
+
+	/**
+	 * RemoveIdentifierImage: dùng để xóa profile image và signature image của user
+	 * input:
+	 * - req.body: {UserUID|UserName|Email|PhoneNumber, Type}
+	 * 		+Type: HelperService.const.fileType.avatar, HelperService.const.fileType.signature
+	 * -transaction
+	 * output
+	 * - Nếu thành công trả về {status:'success'}
+	 * - Nếu thất bại quăng về error:
+	 * 		error.errors[0]:
+	 *			+ RemoveIdentifierImage.emailInvalid
+	 *			+ RemoveIdentifierImage.phoneNumberInvalid
+	 *			+ RemoveIdentifierImage.userInfoNotProvided
+	 *			+ RemoveIdentifierImage.typeInvalid
+	 *			+ RemoveIdentifierImage.typeNotProvided
+	 *			+ RemoveIdentifierImage.imageNotFound
+	 *			+ RemoveIdentifierImage.fileUploadUpdateError
+	 *			+ RemoveIdentifierImage.userNotFound
+	 *			+ RemoveIdentifierImage.userQueryError
+	 */
+	RemoveIdentifierImage:function(req,res){
+		var criteria=req.body;
+		sequelize.transaction().then(function(t){
+			Services.UserAccount.RemoveIdentifierImage(criteria,t)
+			.then(function(result){
+				t.commit();
+				res.ok(result);
+			},function(err){
+				t.rollback();
+				res.serverError(ErrorWrap(err));
+			})
+		},function(err){
+			var error=new Error("RemoveIdentifierImage.Error");
+			error.pushError("RemoveIdentifierImage.transactionBeginError");
+			res.serverError(ErrorWrap(error));
+		})
+		
+	},
+
+	
 	
 }

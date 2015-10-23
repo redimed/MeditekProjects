@@ -106,7 +106,7 @@ module.exports = {
         },
         Postcode: {
             type: Sequelize.STRING(10),
-            allowNull: false,
+            allowNull: true,
             validate: {
                 len: {
                     args: [0, 10],

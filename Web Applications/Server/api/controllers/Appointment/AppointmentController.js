@@ -80,7 +80,7 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
-            var role = HelperService.GetRole(userInfo.roles);
+            var role = HelperService.GetRole(req.user.roles);
             if (role.isInternalPractitioner ||
                 role.isAdmin ||
                 role.isAssistant) {

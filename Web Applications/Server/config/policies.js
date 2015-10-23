@@ -18,7 +18,7 @@
 
 var _ = require('lodash');
 var policies = {
-    '*': true,//bật lên khi ở chế độ develop không cần login phân quyền
+    '*': 'hasToken',//bật lên khi ở chế độ develop không cần login phân quyền
     // '*': "hasToken", //bật lên khi relase, hầu hết tất cả api đều phải có token
 };
 

@@ -74,7 +74,17 @@ module.exports = {
                 }
             }
         },
-        Address: {
+        Address1: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Address2: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
@@ -117,7 +127,7 @@ module.exports = {
                 }
             }
         },
-        PhoneNumber: {
+        HomePhoneNumber: {
             type: Sequelize.STRING(20),
             allowNull: true,
             validate: {
@@ -127,7 +137,7 @@ module.exports = {
                 }
             }
         },
-        HomePhoneNumber: {
+        WorkPhoneNumber: {
             type: Sequelize.STRING(20),
             allowNull: true,
             validate: {

@@ -2,7 +2,8 @@ angular.module('app.authentication.doctor',[
 	'app.authentication.doctor.service',
 	'app.authentication.doctor.controller',
 	'app.authentication.doctor.directive.list',
-	'app.authentication.doctor.directive.create'
+	'app.authentication.doctor.directive.create',
+	'app.authentication.doctor.directive.detail'
 ])
 
 .config(function($stateProvider, $urlRouterProvider){

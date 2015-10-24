@@ -37,4 +37,13 @@ var UploadRoutes = require('./routes/FileUploadRoutes')
 _.extend(routes, UploadRoutes);
 // End Module File Upload
 
+/*
+    ------------------ Register -----------------------
+*/
+var RegisterRoutes = require('./routes/RegisterRoutes');
+_.extend(routes, RegisterRoutes);
+/*
+    ------------------ End Register -------------------
+    -------------------------------------------------
+*/
 module.exports.routes = routes;

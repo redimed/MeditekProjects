@@ -39,7 +39,7 @@ app.config(function($stateProvider,$urlRouterProvider){
 			views: {
 				'main-content': {
 					templateUrl: 'modules/unAuthentication/views/activation.html',
-
+					controller: 'activationCtrl'
 				}
 			}
 		})
@@ -47,8 +47,7 @@ app.config(function($stateProvider,$urlRouterProvider){
 			url: '/forgot',
 			views: {
 				'main-content': {
-					templateUrl: 'modules/unAuthentication/views/forgot.html',
-
+					templateUrl: 'modules/unAuthentication/views/forgot.html'
 				}
 			}
 		});

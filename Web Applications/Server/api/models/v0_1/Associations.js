@@ -84,7 +84,9 @@ module.exports = {
         FileUpload.hasOne(MedicalImage, {
             foreignKey: 'FileUploadID'
         });
-
+        UserAccount.hasMany(FileUpload, {
+            foreignKey: 'UserAccountID'
+        });
         //association Patient - UserAccount
         Patient.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'

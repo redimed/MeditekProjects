@@ -1,0 +1,338 @@
+<div class="modal-content">
+	<div class="modal-header my-modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="modal_close()"></button>
+		<h4 class="modal-title"><b><i class="icon-note"></i> Doctor Details</b></h4>
+	</div>
+	<!-- <div class="modal-body" style="overflow-y:scroll; overflow-x:hidden; max-height:400px;"> -->
+	<div class="modal-body">
+		<div class="form">
+			<!-- form -->
+			<form class="form-horizontal" role="form">
+				<div class="form-body">
+					<div class="tab-content">
+						<div class="tabbable">
+							<!-- header tab -->
+							<ul class="nav nav-tabs nav-tabs-lg">
+								<li class="active">
+									<a href="index.html#User_info" data-toggle="tab" aria-expanded="true">User Account </a>
+								</li>
+								<li class="">
+									<a href="index.html#Personal_info" data-toggle="tab" aria-expanded="false">Personal Information </a>
+								</li>
+								<!-- <li class="">
+									<a href="index.html#Specialist_info" data-toggle="tab" aria-expanded="false">Specialist Information </a>
+								</li> -->
+							</ul>
+							<!-- end header tab -->
+							<!-- content tab -->
+							<div class="tab-content">
+								<div class="tab-pane active" id="User_info">
+									<div style="margin:3em;">
+										<div class="row">
+											<div class="col-md-3">
+												<!-- ProfileImage -->
+												<div class="form-group">
+													<div class="fileinput fileinput-new" data-provides="fileinput">
+														<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
+															<img ng-src="{{profileImage}}">
+														</div>
+														<div>
+															<span class="btn green btn-file">
+															<span class="fileinput-new">
+															Select Image </span>
+															<span class="fileinput-exists">
+															Change </span>
+															<input type="file" nv-file-select uploader="uploaders">
+															</span>
+															<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+															Remove </a>
+														</div>
+														<br>												
+
+													</div>
+													<div class="clearfix margin-top-10"></div>
+												</div>
+												<!-- end ProfileImage -->
+											</div>
+											<div class="col-md-9">
+												<!-- Begin Username -->
+												<div class="form-group">
+													<label class="control-label col-md-3">Username</label>
+													<div class="col-md-4">
+														<div class="input-icon">
+															<i class="fa fa-user"></i>
+															<input type="text" class="form-control" placeholder="Username" ng-model="info.UserAccount.UserName" disabled>
+														</div>
+													</div>
+												</div>
+												<!-- End Username -->
+												<!-- Begin Email -->
+												<div class="form-group">
+													<label class="control-label col-md-3">Email</label>
+													<div class="col-md-4">
+														<div class="input-icon">
+															<i class="fa fa-envelope"></i>
+															<input type="text" class="form-control" placeholder="Email" ng-model="info.Email" disabled>
+														</div>
+													</div>
+												</div>
+												<!-- End Email -->
+												<!-- Begin Mobile -->
+												<div class="form-group">
+													<label class="control-label col-md-3">Mobile</label>
+													<div class="col-md-4">
+														<div class="input-icon">
+															<i class="icon-call-end"></i>
+															<input type="text" class="form-control" placeholder="Mobile" ng-model="info.UserAccount.PhoneNumber" disabled>
+														</div>
+													</div>
+												</div>
+												<!-- End Mobile -->
+												<!-- Begin Enable -->
+												<div class="form-group">
+													<label class="control-label col-md-3">&nbsp;</label>
+													<div class="col-md-4">
+														<div class="checkbox">
+															<label class="label-control">
+														      <input type="checkbox" ng-model="info.Enable" ng-true-value="'Y'" ng-false-value="'N'"> Enable
+														    </label>
+														</div>
+													</div>
+												</div>
+												<!-- End Enable -->
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane" id="Personal_info">
+									<div style="margin:2em;">
+										<div class="row">
+											<div class="col-md-4">
+												<h4><b>Personal Information</b></h4>
+												<hr>
+												<!-- begin title -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Title</label>
+													<div class="col-md-7">
+														<select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title">
+															<option value="">Select Title</option>
+														</select>
+													</div>
+												</div>
+												<!-- end title -->
+												<!-- Begin Firstname -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Firstname</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" placeholder="Firstname" ng-model="info.FirstName">
+													</div>
+												</div>
+												<!-- End Firstname -->
+												<!-- Begin Middlename -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Middlename</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" placeholder="Middlename" ng-model="info.MiddleName">
+													</div>
+												</div>
+												<!-- End Middlename -->
+												<!-- Begin Surname -->
+												<div class="form-group ">
+													<label class="control-label col-md-5">Lastname</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" placeholder="Lastname" ng-model="info.LastName">
+													</div>
+												</div>
+												<!-- End Surname -->
+												<!-- begin DOB -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Date of Birth</label>
+													<div class="col-md-7">
+														<div class="input-icon">
+															<i class="fa fa-calendar"></i>
+	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="info.DOB">
+														</div>
+													</div>
+												</div>
+												<!-- end DOB -->
+												<!-- Healthlink ID -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Healthlink ID</label>
+													<div class="col-md-7">
+														<input type="text" placeholder="Healthlink ID" class="form-control" ng-model="info.HealthLinkID" disabled>
+													</div>
+												</div>
+												<!-- End Healthlink ID -->
+												<!--  Clinical Department-->
+												<div class="form-group">
+													<label class="control-label col-md-5">Clinical Department</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" disabled placeholder="Clinical Department" ng-model="info.Department">
+													</div>
+												</div>
+												<!-- end Clinical Department -->
+												<!-- Provider Number -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Provider Number</label>
+													<div class="col-md-7">
+														<input type="text" placeholder="Provider Number" class="form-control" only-number ng-model="info.ProviderNumber">
+													</div>
+												</div>
+												<!-- Provider Number -->
+												<!-- Type -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Type</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" placeholder="Type" disabled ng-model="info.Type">
+													</div>
+												</div>
+												<!-- End Type -->
+											</div>
+											<div class="col-md-4">
+												<h4><b>Contact Information</b></h4>
+												<hr>
+												<!-- Begin Address1 -->
+												<div class="form-group ">
+													<label class="control-label col-md-5">Address1</label>
+													<div class="col-md-7">
+														<div class="input-icon">
+															<i class="fa  fa-paper-plane"></i>
+															<input type="text" class="form-control" placeholder="Address1" ng-model="info.Address1">
+														</div>
+													</div>
+												</div>
+												<!-- End Address1 -->
+												<!-- Begin Address2 -->
+												<div class="form-group ">
+													<label class="control-label col-md-5">Address2</label>
+													<div class="col-md-7">
+														<div class="input-icon">
+															<i class="fa  fa-paper-plane"></i>
+															<input type="text" class="form-control" placeholder="Address2" ng-model="info.Address2">
+														</div>
+													</div>
+												</div>
+												<!-- End Address2 -->
+												<!-- begin Email -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Email</label>
+													<div class="col-md-7">
+														<div class="input-icon">
+															<i class="fa fa-envelope"></i>
+															<input type="text" class="form-control" placeholder="Email" disabled ng-model="info.Email">
+														</div>
+													</div>
+												</div>
+												<!-- end Email -->
+												<!-- begin Homephone -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Homephone</label>
+													<div class="col-md-7">
+														<div class="input-icon">
+															<i class="icon-call-end"></i>
+															<input type="text" class="form-control" placeholder="Homephone" maxlength="9" ng-model="info.HomePhoneNumber">
+														</div>
+													</div>
+												</div>
+												<!-- end Homephone -->
+												<!-- begin Workphone -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Workphone</label>
+													<div class="col-md-7">
+														<div class="input-icon">
+															<i class="icon-call-end"></i>
+															<input type="text" class="form-control" placeholder="Workphone" maxlength="9" ng-model="info.WorkPhoneNumber">
+														</div>
+													</div>
+												</div>
+												<!-- end Workphone -->
+												<!-- begin Postcode -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Postcode</label>
+													<div class="col-md-7">
+														<input type="text" maxlength="4" class="form-control" placeholder="Postcode" ng-model="info.Postcode">
+													</div>
+												</div>
+												<!-- end Postcode -->
+												<!-- begin Suburb -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Suburb</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" placeholder="Suburb" ng-model="info.Suburb">
+													</div>
+												</div>
+												<!-- end Suburb -->
+												<!-- begin State -->
+												<div class="form-group">
+													<label class="control-label col-md-5">State</label>
+													<div class="col-md-7">
+														<input type="text" class="form-control" placeholder="State" ng-model="info.State">
+													</div>
+												</div>
+												<!-- end State -->
+												<!-- begin Country -->
+												<div class="form-group">
+													<label class="control-label col-md-5">Country</label>
+													<div class="col-md-7">
+														<!-- <select id="select2_sample4" class="select2 form-control" > -->
+														<select class="select2 form-control" ng-options="c.ID as c.ShortName for c in country" ng-model="info.CountryID">
+															<option value="">Select Country</option>
+														</select>
+													</div>
+												</div>
+												<!-- end Country -->
+											</div>
+											<div class="col-md-4">
+												<h4><b>Signature</b></h4>
+												<hr>
+												<!-- signature -->
+												<div class="form-group">
+													<div class="fileinput fileinput-new" data-provides="fileinput">
+														<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
+															<img ng-src="{{signature}}">
+														</div>
+														<div>
+															<span class="btn green btn-file">
+															<span class="fileinput-new">
+															Signature </span>
+															<span class="fileinput-exists">
+															Change </span>
+															<input type="file" nv-file-select uploader="uploader">
+															</span>
+															<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+															Remove </a>
+														</div>
+														<br>												
+
+													</div>
+													<div class="clearfix margin-top-10"></div>
+												</div>
+												<!-- end signature -->
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="tab-pane" id="Specialist_info">
+								</div> -->
+							</div>
+							<!-- end content tab -->
+						</div>
+					</div>
+				</div>
+				<!-- <div class="form-actions">
+				</div> -->
+			</form>
+			<!-- end form -->
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onCancel()"><i class="icon-action-undo"></i> Close</button>
+		<button type="button" class="btn btn-success" ng-click="save(info)"><i class="glyphicon glyphicon-save"></i> Save changes</button>
+	</div>
+</div>
+<script>
+	//Metronic.setAssetsPath('theme/assets/'); // Set the assets folder path
+	//Metronic.initAjax();
+	// ComponentsDropdowns.init(); // init todo page
+	ComponentsDateTimePickers.init(); // init todo page
+</script>

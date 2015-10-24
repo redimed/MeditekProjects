@@ -127,7 +127,7 @@ app
 
         $rootScope.$on('$stateChangeSuccess', function(e, toState, toParams, fromState, fromParams) {
             if (!$cookies.get("userInfo")) {
-                if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register") {
+                if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register" && toState.name !== "unAuthentication.activation") {
                     e.preventDefault();
                     $state.go("unAuthentication.login", null, {
                         location: "replace",

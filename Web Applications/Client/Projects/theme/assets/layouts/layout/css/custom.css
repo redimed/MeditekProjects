@@ -79,7 +79,20 @@
 .page-header.navbar.navbar-fixed-top, .page-header.navbar.navbar-static-top {
     z-index: 995 !important;
 }
-
+/*portfilo*/
+.mix-grid .mix .mix-details {
+    background-color: rgba(126,126,126,0.5) !important;
+}
+.mix-grid .mix a.mix-link, .mix-grid .mix a.mix-preview {
+    background: #ccc;
+}
+.nav-tabs>li>a {
+    background-color: #eee;
+}
+/*custom time picker*/
+.bootstrap-timepicker-widget.dropdown-menu.open {
+    z-index: 1050 !important;
+}
 /*phan quoc chien*/
 .sweet-alert .sa-icon{
     border-radius: 50% !important;

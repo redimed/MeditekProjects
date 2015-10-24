@@ -46,7 +46,7 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
             }
             scope.load = function() {
                 AppointmentService.loadListAppointment(data).then(function(response) {
-                    console.log(response.rows)
+                    
                     scope.filteredTodos = response.rows;
                     scope.appointments = response.rows;
                     scope.$watch("currentPage + numPerPage", function() {

@@ -60,7 +60,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
     $scope.loadAllDoctor = function () {
         AppointmentService.ListDoctor().then(function (data) {
             $scope.listDoctor = data;
-            console.log('$scope.listDoctor',$scope.listDoctor);
+            //console.log('$scope.listDoctor',$scope.listDoctor);
         });
     }
 
@@ -84,7 +84,8 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
     $scope.ShowData = {
         DateTimeAppointmentDate: null,
         PatientsFullName: null,
-        isLinkPatient: false
+        isLinkPatient: false,
+        PreferredPractitionersTemp:[]
     }
     $scope.appointment = null
     $scope.Other = {
@@ -99,12 +100,11 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         AppointmentService.getDetailApppointment(getid).then(function(response) {
             $scope.Temp = angular.copy(response.data)
             $scope.appointment = angular.copy(response.data);
-            console.log($scope.appointment)
+            
             if ($scope.appointment.Patients.length != 0) {
                 $scope.ShowData.isLinkPatient = true
                 $scope.appointment.TelehealthAppointment.PatientAppointment = angular.copy($scope.appointment.Patients[0])
             }
-
             $scope.appointment.TelehealthAppointment.ClinicalDetails = {}
             $scope.Temp.TelehealthAppointment.ClinicalDetails.forEach(function(valueRes, indexRes) {
                 if (valueRes != null && valueRes != undefined) {
@@ -139,7 +139,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
                     }
                 })
             })
-            $scope.appointment.TelehealthAppointment.PreferredPractitioners = angular.copy(listDoctor);
+             $scope.ShowData.PreferredPractitionersTemp= angular.copy(listDoctor);
             checkOtherInput()
         });
     }
@@ -203,14 +203,15 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             UID: $cookies.getObject("userInfo").UID
         }
 
-        var PreferredPractitionersTemp = []
+        var PreferredPractitioners = []
 
-        $scope.appointment.TelehealthAppointment.PreferredPractitioners.forEach(function(valueRes, indexRes) {
+        $scope.ShowData.PreferredPractitionersTemp.forEach(function(valueRes, indexRes) {
             if (valueRes.Value == "Y") {
-                PreferredPractitionersTemp.push(valueRes)
+                PreferredPractitioners.push(valueRes)
             }
         })
-        $scope.appointment.TelehealthAppointment.PreferredPractitioners = angular.copy(PreferredPractitionersTemp)
+        //console.log(PreferredPractitioners)
+        $scope.appointment.TelehealthAppointment.PreferredPractitioners = angular.copy(PreferredPractitioners)
 
         var ClinicalDetailsTemp = []
         for (var key in $scope.appointment.TelehealthAppointment.ClinicalDetails) {
@@ -240,7 +241,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         if ($scope.ShowData.isLinkPatient) {
             $scope.appointment.TelehealthAppointment.PatientAppointment = []
         };
-        
+        $scope.appointment.RequestDate = moment($scope.appointment.RequestDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z')
         $scope.appointment.TelehealthAppointment.ClinicalDetails = angular.copy(ClinicalDetailsTemp)
         var postData = {
             data: $scope.appointment

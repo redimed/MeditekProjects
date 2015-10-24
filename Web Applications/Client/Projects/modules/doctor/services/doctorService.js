@@ -83,14 +83,14 @@ angular.module('app.authentication.doctor.service', [])
 			}
 
 			// MiddleName
-			if(info.MiddleName) {
-				if(info.MiddleName.length < 0 || info.MiddleName.length > 100) {
-					error.push({field:'MiddleName', message:'MiddleName.length'});
-				}
-			}
-			else {
-				error.push({field:'MiddleName', message:'required'});
-			}
+			// if(info.MiddleName) {
+			// 	if(info.MiddleName.length < 0 || info.MiddleName.length > 100) {
+			// 		error.push({field:'MiddleName', message:'MiddleName.length'});
+			// 	}
+			// }
+			// else {
+			// 	error.push({field:'MiddleName', message:'required'});
+			// }
 
 			// LastName
 			if(info.LastName) {

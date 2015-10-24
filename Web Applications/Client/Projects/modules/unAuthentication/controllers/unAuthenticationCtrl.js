@@ -105,15 +105,15 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			}
 
 			//validate MiddleName
-			if(info.MiddleName){
-				if(info.MiddleName.length < 0 || info.MiddleName.length > 100){
-					error.push({field:"MiddleName",message:"length"});
-					toastr.error('MiddleName is too long or too short');
-				}
-			}
-			else {
-				error.push({field:"MiddleName",message:"required"});
-			}
+			// if(info.MiddleName){
+			// 	if(info.MiddleName.length < 0 || info.MiddleName.length > 100){
+			// 		error.push({field:"MiddleName",message:"length"});
+			// 		toastr.error('MiddleName is too long or too short');
+			// 	}
+			// }
+			// else {
+			// 	error.push({field:"MiddleName",message:"required"});
+			// }
 
 			//validate Lastname
 			if(info.LastName){

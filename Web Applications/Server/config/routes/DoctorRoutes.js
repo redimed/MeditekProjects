@@ -4,57 +4,47 @@ module.exports = {
 		controller:'Doctor/DoctorController',
     	action:'GetDoctor'
 	},
-	'post /api/checkPhone': {
-		controller:'Doctor/DoctorController',
-    	action:'CheckPhone'
-	},
-	'post /api/checkEmail': {
-		controller:'Doctor/DoctorController',
-    	action:'CheckEmail'
-	},
-	'post /api/checkphoneUserAccount': {
-		controller:'Doctor/DoctorController',
-    	action:'CheckPhoneUserAccount'
-	},
 	'get /api/doctorappointment': {
 		controller:'Doctor/DoctorController',
-    	action:'doctorAppointment'
+    	action:'DoctorAppointment'
 	},
 	'post /api/doctorIdappointment': {
 		controller:'Doctor/DoctorController',
-    	action:'doctorIDAppointment'
-	}
-	// 'post /api/getbyidDoctor': {
-	// 	controller:'Doctor/DoctorController',
- //    	action:'GetByIdDoctor'
-	// },
-	// 'post /api/createDoctor': {
-	// 	controller:'Doctor/DoctorController',
-	// 	action:'CreateDoctor'
-	// }
-	// 'post /api/createDoctor': {
-	// 	controller:'Doctor/DoctorController',
- //    	action:'CreateDoctor'
-	// }
-	// 'post /api/sendsms': {
-	// 	controller:'Doctor/DoctorController',
-	// 	action:'SendSMS'
-	// }
-	// 'post /api/createDoctors': {
-	// 	controller:'Doctor/DoctorController',
- //    	action:'CreateDoctors'
-	// },
-	// 'post /api/updateDoctor': {
-	// 	controller:'Doctor/DoctorController',
- //    	action:'UpdateDoctor'
-	// },
-	// 'post /api/searchDoctor': {
-	// 	controller:'Doctor/DoctorController',
- //    	action:'SearchDoctor'
-	// }
-	// 'post /api/endisableDoctor': {
-	// 	controller:'Doctor/DoctorController',
- //    	action:'StatusDoctor'
-	// }
+    	action:'DoctorIDAppointment'
+	},
+	'get /api/listCountry': {
+		controller:'Doctor/DoctorController',
+		action:'ListCountry'
+	},
+	'get /api/getdepartment': {
+		controller:'Doctor/DoctorController',
+		action:'GetDepartment'
+	},
+	'post /api/createDoctor': {
+		controller:'Doctor/DoctorController',
+		action:'CreateDoctor'
+	},
+	'post /api/getbyidDoctor': {
+		controller:'Doctor/DoctorController',
+    	action:'GetBy'
+	},
+	'post /api/updateDoctor': {
+		controller:'Doctor/DoctorController',
+    	action:'UpdateDoctor'
+	},
+	'post /api/getFile': {
+		controller:'Doctor/DoctorController',
+    	action:'GetFile'
+	},
+	'post /api/removeImage': {
+		controller:'Doctor/DoctorController',
+    	action:'RemoveImage'
+	},
+	'post /api/getRoleDoctor': {
+		controller:'Doctor/DoctorController',
+    	action:'GetRoleDoctor'
+	},
+	
+	
 
 };

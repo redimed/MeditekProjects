@@ -27,7 +27,7 @@ class ViewController: UIViewController,patientDetailViewDelegate,NSXMLParserDele
         
         // UI settings
         //urgentButton.layer.cornerRadius = 0.5 * urgentButton.bounds.size.width
-        urgentCareLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
+        //urgentCareLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         if let path = NSBundle.mainBundle().pathForResource("Suburb", ofType: "json")
@@ -49,6 +49,14 @@ class ViewController: UIViewController,patientDetailViewDelegate,NSXMLParserDele
     override func viewWillDisappear(animated: Bool) {
        
     }
+    @IBAction func callUsButton(sender: AnyObject) {
+        if let phoneCallURL:NSURL = NSURL(string: "tel://\(RestApiManager.sharedInstance.phoneNumber)") {
+            let application:UIApplication = UIApplication.sharedApplication()
+            if (application.canOpenURL(phoneCallURL)) {
+                application.openURL(phoneCallURL);
+            }
+        }
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
@@ -57,10 +65,16 @@ class ViewController: UIViewController,patientDetailViewDelegate,NSXMLParserDele
             var moreDetail  = segue.destinationViewController as! WorkInjuryViewController
             moreDetail.suburb  = suburbs
         }
-        if(segue.identifier == "urgentCare"){
+        if(segue.identifier == "plasticinjury"){
             var moreDetail  = segue.destinationViewController as! PatientDetailViewController
-            moreDetail.informationData["title"] = "Urgent Care Clinic Booking"
-            moreDetail.informationData["urgentRequestType"] = "UrgentCare"
+            moreDetail.informationData["title"] = "Plastic Injury Clinic Booking"
+            moreDetail.informationData["urgentRequestType"] = "Plasticinjury"
+            moreDetail.suburb  = suburbs
+        }
+        if(segue.identifier == "orthopaedic"){
+            var moreDetail  = segue.destinationViewController as! PatientDetailViewController
+            moreDetail.informationData["title"] = "Orthopaedic Clinic Booking"
+            moreDetail.informationData["urgentRequestType"] = "Orthopaedic"
             moreDetail.suburb  = suburbs
         }
         if(segue.identifier == "sportInjury"){

@@ -38,11 +38,16 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     var datePicker = UIDatePicker()
     var serviceType = ""
     var gPReferral:String = "Y"
-    var baseUrl:String = "http://testapp.redimed.com.au:3001/api/urgent-care/urgent-request"
+    var physiotherapy:String = "N"
+    var specialist:String = "N"
+    var handTherapy:String = "N"
+    var comparePersonal = true
     var blueColorCustom:UIColor = UIColor(red: 41/255, green: 128/255, blue: 185/255, alpha: 1.0)
     var redColorCuston:UIColor = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
     var phoneNumber = ""
     var checkDOB = true
+    var checkSeacrh = true
+    var dateofbirth: String = ""
     let delegate:patientDetailViewDelegate? = nil
     var informationData: Dictionary<String, String> = [:]
     var patientInformation: Dictionary<String, String> = [:]
@@ -84,12 +89,29 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         cancelSuburbButton.hidden = true
         imageCancel.hidden = true
         
+        getSuburbData()
+        setPersonalInformation()
+    }
+    func getSuburbData(){
         for var i = 0; i < suburb.count; ++i {
             let a = suburb[i]["name"] as! String
             pastUrls.append(a)
         }
     }
-    
+    func setPersonalInformation(){
+        var data:Dictionary<String,String>  = RestApiManager.sharedInstance.getPersonalData() as! Dictionary<String, String>
+        if(!data.isEmpty){
+            firstNameTextField.text = data["firstName"]
+            lastNameTextField.text = data["lastName"]
+            dobTextField.text = data["DOB"]
+            emailTextField.text = data["email"]
+            surburbTextField.text = data["suburb"]
+            contactPhoneTextField.text =  data["phoneNumber"]
+            OutTextField(firstNameTextField, validateImage: firstNameImage)
+            OutTextField(lastNameTextField, validateImage: lastNameImage)
+            OutTextField(contactPhoneTextField, validateImage: contactPhoneImage)
+        }
+    }
     @IBAction func cancelSuburbButton(sender: AnyObject) {
         autocompleteTableView.hidden = true
         cancelSuburbButton.hidden = true
@@ -97,23 +119,6 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     }
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
-        if(textField == surburbTextField){
-            if(autocompleteUrls.count > 0){
-                var scrollPoint : CGPoint = CGPointMake(0, self.surburbTextField.frame.origin.y - 70)
-                self.scrollView.setContentOffset(scrollPoint, animated: true)
-                autocompleteTableView.hidden = false
-                cancelSuburbButton.hidden = false
-                imageCancel.hidden = false
-            }else{
-                autocompleteTableView.hidden = true
-                cancelSuburbButton.hidden = true
-                imageCancel.hidden = true
-            }
-        }
-        
-        var substring = (textField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
-        searchAutocompleteEntriesWithSubstring(substring)
-        
         return true
     }
     func searchAutocompleteEntriesWithSubstring(substring: String)
@@ -169,6 +174,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         if(sender.tag == 101){
             ChangeImageButton(yesReferralButton, nameImage: "checked")
             ChangeImageButton(noReferralButton, nameImage: "unchecked")
+            gPReferral = "Y"
         }else{
             ChangeImageButton(yesReferralButton, nameImage: "unchecked")
             ChangeImageButton(noReferralButton, nameImage: "checked")
@@ -292,7 +298,15 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         alert.show()
 
     }
-    
+    //GET NowDate
+    func NowDate()->String{
+        var nowdate = NSDate()
+        var DateString:String = ""
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+        DateString = dateFormatter.stringFromDate(nowdate)
+        return DateString
+    }
     //show date picker
      func DatepickerMode(){
         dobTextField.tintColor = UIColor.clearColor()
@@ -319,7 +333,10 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     //Done button in datepicker
     func doneClick() {
         var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        var SaveDatetime = NSDateFormatter()
+        SaveDatetime.dateFormat = "dd/MM/yyyy"
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        dateofbirth = SaveDatetime.stringFromDate(datePicker.date)
         dobTextField.text = dateFormatter.stringFromDate(datePicker.date)
         dobTextField.resignFirstResponder()
         if(compareDate(datePicker.date)){
@@ -349,7 +366,8 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     }
     
     //validate email
-    func isValidEmail(mail:String) -> Bool {
+    func isValidEmail(var mail:String) -> Bool {
+        mail = mail.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluateWithObject(mail)
@@ -358,38 +376,32 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
     //when check service type
     @IBAction func ChoosePSH(sender: AnyObject) {
 
-        if(sender.tag == 203){
-            if(serviceType != "PHY"){
-                ChangeImageButton(physiotherapyButton, nameImage: "checked")
-                ChangeImageButton(specialistButton, nameImage: "unchecked")
-                ChangeImageButton(handTherapistButton, nameImage: "unchecked")
-                serviceType = "PHY"
+        if(sender.tag == 303){
+            if(physiotherapy == "N"){
+                ChangeImageButton(physiotherapyButton, nameImage: "checkboxed")
+                physiotherapy = "Y"
             }else{
-                ChangeImageButton(physiotherapyButton, nameImage: "unchecked")
-                serviceType = "null"
+                ChangeImageButton(physiotherapyButton, nameImage: "checkbox")
+                physiotherapy = "N"
             }
         }
-        if(sender.tag == 204){
-            if(serviceType != "SPE"){
-                ChangeImageButton(specialistButton, nameImage: "checked")
-                ChangeImageButton(physiotherapyButton, nameImage: "unchecked")
-                ChangeImageButton(handTherapistButton, nameImage: "unchecked")
-                serviceType = "SPE"
+        if(sender.tag == 304){
+            if(specialist == "N"){
+                ChangeImageButton(specialistButton, nameImage: "checkboxed")
+                specialist = "Y"
             }else{
-                ChangeImageButton(specialistButton, nameImage: "unchecked")
-                serviceType = "null"
+                ChangeImageButton(specialistButton, nameImage: "checkbox")
+                specialist = "N"
             }
             
         }
-        if(sender.tag == 205){
-            if(serviceType != "HAN"){
-                ChangeImageButton(handTherapistButton, nameImage: "checked")
-                ChangeImageButton(physiotherapyButton, nameImage: "unchecked")
-                ChangeImageButton(specialistButton, nameImage: "unchecked")
-                serviceType = "HAN"
+        if(sender.tag == 305){
+            if(handTherapy == "N"){
+                ChangeImageButton(handTherapistButton, nameImage: "checkboxed")
+                handTherapy = "Y"
             }else{
-                ChangeImageButton(handTherapistButton, nameImage: "unchecked")
-                serviceType = "null"
+                ChangeImageButton(handTherapistButton, nameImage: "checkbox")
+                handTherapy = "N"
             }
         }
     }
@@ -471,20 +483,47 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         }
     }
     
+    @IBAction func SuburbChange(sender: AnyObject) {
+        if(checkSeacrh != true){
+            searchAutocompleteEntriesWithSubstring(surburbTextField.text)
+        }
+        if(autocompleteUrls.count > 0){
+            var scrollPoint : CGPoint = CGPointMake(0, self.surburbTextField.frame.origin.y - 70)
+            self.scrollView.setContentOffset(scrollPoint, animated: true)
+            autocompleteTableView.hidden = false
+            cancelSuburbButton.hidden = false
+            imageCancel.hidden = false
+        }else{
+            autocompleteTableView.hidden = true
+            cancelSuburbButton.hidden = true
+            imageCancel.hidden = true
+        }
+        if(checkSeacrh == true){
+            searchAutocompleteEntriesWithSubstring(surburbTextField.text)
+            checkSeacrh = false
+        }
+
+        
+    }
     func MakeAppointMentSubmit(){
        // print(patientInformation)
         view.endEditing(true)
-        patientInformation["firstName"] = firstNameTextField.text
-        patientInformation["lastName"] = lastNameTextField.text
+        patientInformation["firstName"] = firstNameTextField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        patientInformation["lastName"] = lastNameTextField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         patientInformation["phoneNumber"] = "+61" + phoneNumber
-        patientInformation["email"] = emailTextField.text.lowercaseString
+        patientInformation["email"] = emailTextField.text.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         patientInformation["DOB"] = dobTextField.text
-        patientInformation["suburb"] = surburbTextField.text
-        patientInformation["GPReferal"] = gPReferral
+        patientInformation["suburb"] = surburbTextField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        patientInformation["GPReferral"] = gPReferral
         patientInformation["description"] = descriptionTextView.text
-        patientInformation["serviceType"] = serviceType
+        patientInformation["physiotherapy"] = physiotherapy
+        patientInformation["specialist"] = specialist
+        patientInformation["handTherapy"] = handTherapy
         patientInformation["urgentRequestType"] = informationData["urgentRequestType"]
-        
+        patientInformation["requestDate"] = NowDate()
+  
+        comparePersonal = RestApiManager.sharedInstance.compareChangeValue(RestApiManager.sharedInstance.getPersonalData() as! Dictionary<String, String>, dataCompare: patientInformation)
+
         if(!isConnectedToNetwork()){
             let alertController = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet ", preferredStyle: .Alert)
             
@@ -503,7 +542,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
             }
 
         }else{
-            var request = NSMutableURLRequest(URL: NSURL(string: baseUrl)!)
+            var request = NSMutableURLRequest(URL: NSURL(string: RestApiManager.sharedInstance.url)!)
             var session = NSURLSession.sharedSession()
             request.HTTPMethod = "POST"
             var checkSuccess:NSString = "true"
@@ -560,7 +599,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
                         }else{
                             alert.dismissWithClickedButtonIndex(-1, animated: true)
                             dispatch_sync(dispatch_get_main_queue(), { () -> Void in
-                                self.AlertShow("Notification", message: "Error ! Please check your connection and try again", addButtonWithTitle: "OK")
+                                NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "errorAlert", userInfo: nil, repeats: false)
                             })
                             
                             
@@ -577,16 +616,26 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         }
 
         }
+    func errorAlert(){
+        self.AlertShow("Notification", message: "Error ! Please check your connection and try again", addButtonWithTitle: "OK")
+    }
     func successAlert(){
         
         let alertController = UIAlertController(title: "Success", message: "Please be informed that your enquiry has been received and our Redimed staff will contact you shortly.", preferredStyle: .Alert)
         
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+       
+        let SaveAction = UIAlertAction(title: "Save Information", style: .Destructive) { (action) in
+            RestApiManager.sharedInstance.setPersonalData(self.patientInformation,date: self.dobTextField.text)
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        if(!comparePersonal){
+            alertController.addAction(SaveAction)
+        }
+        let OKAction = UIAlertAction(title: "Close", style: .Default) { (action) in
             
             self.dismissViewControllerAnimated(true, completion: nil)
         }
         alertController.addAction(OKAction)
-        
         self.presentViewController(alertController, animated: true) {
             // ...
         }

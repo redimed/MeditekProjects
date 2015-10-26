@@ -226,13 +226,11 @@ module.exports = {
         require('getmac').getMac(function(err, macaddr) {
             UrgentRequest.update({
                     status: 'pending',
-                    confirmUserName: null
+                    confirmUserName: null,
+                    UID: req.params.id
                 }, {
                     status: 'confirmed',
                     confirmUserName: macaddr
-                })
-                .where({
-                    UID: req.params.id
                 })
                 .exec(function(err, URUpdated) {
                     if (err) {

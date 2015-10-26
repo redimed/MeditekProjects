@@ -52,5 +52,9 @@ _.extend(policies, fileUploadPolicies);
 var commonPolicies = require('./policies/commonPolicies');
 _.extend(policies, commonPolicies);
 //End module Common
+//Begin module Register
+var registerPolicies = require('./policies/RegisterPolicies');
+_.extend(policies, registerPolicies);
+//End module Register
 module.exports.policies = policies;
-//
+

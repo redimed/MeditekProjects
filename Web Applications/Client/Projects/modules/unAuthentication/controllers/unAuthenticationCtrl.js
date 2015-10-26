@@ -126,15 +126,15 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 				error.push({field:"LastName",message:"required"});
 			}
 
-			//validate HealthlinkID
-			if(info.HealthlinkID){
-				if(info.HealthlinkID.length < 0 || info.HealthlinkID.length > 255){
-					error.push({field:"HealthlinkID",message:"length"});
-					toastr.error('HealthlinkID is too long or too short');
+			//validate HealthLinkID
+			if(info.HealthLinkID){
+				if(info.HealthLinkID.length < 0 || info.HealthLinkID.length > 255){
+					error.push({field:"HealthLinkID",message:"length"});
+					toastr.error('HealthLinkID is too long or too short');
 				}
 			}
 			else {
-				error.push({field:"HealthlinkID",message:"required"});
+				error.push({field:"HealthLinkID",message:"required"});
 			}
 
 			//validate ProviderNumber

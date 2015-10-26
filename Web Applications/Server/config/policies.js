@@ -42,5 +42,10 @@ _.extend(policies, authorizationPolicies);
 var appointmentPolicies = require('./policies/AppointmentPolicies');
 _.extend(policies, appointmentPolicies);
 //End module Appointment
+
+//Begin module FileUpload
+var fileUploadPolicies = require('./policies/fileUploadPolicies');
+_.extend(policies, fileUploadPolicies);
+//End module FileUpload
 module.exports.policies = policies;
 //

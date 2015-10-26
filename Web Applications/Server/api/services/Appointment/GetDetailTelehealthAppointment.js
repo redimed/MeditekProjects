@@ -1,3 +1,9 @@
+/*
+GetDetailTelehealthAppointment - services: Get information details for Telehealth Appointment
+input: UID Appointment
+output: - success: information details Telehealth Appointment
+        -failed: [transaction] get details Telehealth Appointment, error message
+ */
 module.exports = function(appointmentUID) {
     var $q = require('q');
     var defer = $q.defer();

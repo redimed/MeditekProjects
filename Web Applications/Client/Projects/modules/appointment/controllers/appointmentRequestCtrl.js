@@ -65,7 +65,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
         console.log($scope.requestInfo.FileUploads);
         $scope.requestInfo.RequestDate = moment(new Date()).format("YYYY-MM-DD hh:mm:ss Z");
         $scope.requestInfo.TelehealthAppointment.RefDate = moment(new Date()).format("YYYY-MM-DD hh:mm:ss Z");
-        $scope.requestInfo.TelehealthAppointment.PatientAppointment.DOB = moment($scope.patientAppointmentDOBTemp, 'YYYY-MM-DD').format("YYYY-MM-DD hh:mm:ss Z");
+        $scope.requestInfo.TelehealthAppointment.PatientAppointment.DOB = moment($scope.patientAppointmentDOBTemp, 'DD-MM-YYYY').format("YYYY-MM-DD hh:mm:ss Z");
 
         $scope.requestInfo.TelehealthAppointment.PreferredPractitioner = [];
         $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];

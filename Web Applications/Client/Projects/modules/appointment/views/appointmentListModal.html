@@ -599,7 +599,7 @@
 							</div>
 							<div class="form-group form-md-line-input ">
 								<select size="5" class="form-control">
-									<option ng-repeat="item in listDoctor | filter:doctorType" ng-click="selectTreatingPractitioner(item.UID)">{{((item.Title !=null)?item.Title:"")+" "+((item.FirstName != null)?item.FirstName:"") +" "+((item.LastName != null)?item.LastName:"")}}</option>
+									<option ng-repeat="item in listDoctorTreatingPractitioner | filter:doctorType" ng-click="selectTreatingPractitioner(item.UID)">{{((item.Title !=null)?item.Title:"")+" "+((item.FirstName != null)?item.FirstName:"") +" "+((item.LastName != null)?item.LastName:"")}}</option>
 								</select>
 								<label class="control-label">Doctor List</label>
 							</div>

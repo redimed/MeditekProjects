@@ -62,10 +62,10 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         });
     };
 
-    $scope.loadAllDoctor = function() {
-        AppointmentService.ListDoctor().then(function(data) {
-            $scope.listDoctor = data;
-            //console.log('$scope.listDoctor',$scope.listDoctor);
+    $scope.loadAllDoctor = function () {
+        AppointmentService.ListDoctor().then(function (data) {
+            $scope.listDoctorTreatingPractitioner = data;
+            console.log('$scope.listDoctor',$scope.listDoctorTreatingPractitioner);
         });
     }
 
@@ -100,7 +100,8 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
     }
 
     var ClinicalDetails = CommonService.GetClinicalDetails();
-    var listDoctor = CommonService.GetNamDoctor()
+    var listDoctor = CommonService.GetNamDoctor();
+    console.log('listDoctor',listDoctor);
     var load = function() {
         AppointmentService.getDetailApppointment(getid).then(function(response) {
             $scope.Temp = angular.copy(response.data)

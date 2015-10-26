@@ -137,7 +137,6 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 							scope.uidReturn='';
 							scope.init();
 						}
-						console.log(scope.uidReturn);
 					});
 				}
 				
@@ -153,9 +152,10 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 							};
 							$scope.appointment = {
 								runIfSuccess : function (data) {
-									console.log('patient nênnenenene',data);
 									$modalInstance.close({status:'success',data:data});
-
+								},
+								runIfClose : function () {
+									$modalInstance.dismiss('cancel');
 								}
 							}
 						},
@@ -163,14 +163,16 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						//size: 'lg',
 					});
 					modalInstance.result.then(function (data) {
-				      	scope.appointment.runIfSuccess(data);
+						if (data) {
+				      		scope.appointment.runIfSuccess(data);
+						};
 				    });
 				}else{
 					$state.go('authentication.patient.create');
 				}
 			}
 
-			scope.init();
+			scope.init();	
 		},
 		templateUrl:"modules/patient/directives/template/patientList.html"
 	};

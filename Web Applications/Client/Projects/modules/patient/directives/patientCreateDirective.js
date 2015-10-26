@@ -9,8 +9,8 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		{
 			// Profile Image
 		    var uploader = $scope.uploader = new FileUploader({
-		    	url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
-		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	// url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
+		    	url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	alias : 'uploadFile'
 		    });
 
@@ -123,9 +123,14 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 			};
 
 			scope.Cancel = function() {
-				$state.go('authentication.patient.list',null, {
-		            'reload': true
-		        });
+				if (appointment) {
+					scope.appointment.runIfClose();
+				}else{
+					$state.go('authentication.patient.list',null, {
+			            'reload': true
+			        });
+				};
+				
 			};
 
 			scope.createPatient = function(data) {
@@ -170,11 +175,6 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 					}
 				});
 			};
-
-			
-		    
-
-
 		},
 		templateUrl:"modules/patient/directives/template/patientCreate.html"
 	}

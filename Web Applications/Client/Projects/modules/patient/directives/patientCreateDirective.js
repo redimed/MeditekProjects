@@ -1,15 +1,16 @@
 var app = angular.module('app.authentication.patient.create.directive',[]);
-app.directive('patientCreate',function(toastr, PatientService, $state, $timeout, $cookies){
+app.directive('patientCreate',function(toastr, PatientService, $state, $timeout, $cookies, AuthenticationService){
 	return {
 		scope :{
-			appointment:'='
+			appointment:'=',
+			abc:'=onItem'
 		},
 		restrict: "EA",
-		controller:function($scope,FileUploader)
-		{
+		controller:function($scope, FileUploader) {
 			// Profile Image
 		    var uploader = $scope.uploader = new FileUploader({
 		    	url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
+		    	headers:{Authorization:'Bearer '+$cookies.get("token")},
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	alias : 'uploadFile'
 		    });
@@ -59,6 +60,18 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		    };
 		},
 		link: function(scope, elem, attrs){
+			scope.titles = [
+				{id:"0", name:'Mr'},
+				{id:"1", name:'Mrs'},
+				{id:"2", name:'Ms'},
+				{id:"3", name:'Dr'}
+			];
+			AuthenticationService.getListCountry().then(function(response){
+				console.log(response);
+				scope.countries = response.data;
+			},function(err){
+				console.log("Server Error");
+			})
 			scope.data ={};
 			scope.er={};
 			scope.ermsg={};
@@ -91,13 +104,13 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 							if(result.data.isCreated==false){
 								scope.er ='';
 								scope.ermsg='';
-								toastr.success("Phone number can user to create patient","SUCCESS");
+								toastr.success("Phone Number can be choose to create patient","SUCCESS");
 								scope.isShowEmail = result.data.data.Email;
 								scope.data.Email = result.data.data.Email;
 								scope.isShowNext = true;
 							}
 							else{
-								toastr.error("Phone Number da duoc tao patient","ERROR");
+								toastr.error("Phone Number was used to create patient","ERROR");
 								scope.isBlockStep1 =false;
 							}
 						}
@@ -131,6 +144,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 			scope.createPatient = function(data) {
 				return PatientService.validate(data)
 				.then(function(result){
+					data.DOB = moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss');
 					return PatientService.createPatient(data)
 					.then(function(success){
 						for (var i = 0; i < scope.uploader.queue.length; i++) 

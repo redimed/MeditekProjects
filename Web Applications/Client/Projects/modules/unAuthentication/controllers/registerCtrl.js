@@ -1,7 +1,7 @@
 var app = angular.module('app.unAuthentication.register.controller', [
 ]);
 
-app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, UnauthenticatedService){
+app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $cookies,UnauthenticatedService){
 	
 	// List country
 	UnauthenticatedService.listCountry()
@@ -69,106 +69,110 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, Un
 	}
 
 	// Signature
-	var uploader = $scope.uploader = new FileUploader({
-		url: 'http://192.168.1.2:3005/api/uploadFile',
-        // url: 'http://localhost:3005/api/uploadFile',
-		alias : 'uploadFile'
-	});
+	// var uploader = $scope.uploader = new FileUploader({
+	// 	// url: 'http://192.168.1.2:3005/api/uploadFile',
+ //        url: 'http://localhost:3005/api/uploadFile',
+           //url: 'http://testapp.redimed.com.au:3005/api/uploadFile', 
+	// 	//headers:{Authorization:'Bearer '+$cookies.get("token")},
+ //        alias : 'uploadFile'
+	// });
 	
 	// FILTERS
-    uploader.filters.push({
-        name: 'customFilter',
-        fn: function (item /*{File|FileLikeObject}*/, options) {
-            return this.queue.length < 10;
-        }
-    });
+    // uploader.filters.push({
+    //     name: 'customFilter',
+    //     fn: function (item /*{File|FileLikeObject}*/, options) {
+    //         return this.queue.length < 10;
+    //     }
+    // });
 
     // CALLBACKS
-    uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-        // console.info('onWhenAddingFileFailed', item, filter, options);
-    };
-    uploader.onAfterAddingFile = function (fileItem) {
-        // console.info('onAfterAddingFile', fileItem);
-    };
+    // uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+    //     // console.info('onWhenAddingFileFailed', item, filter, options);
+    // };
+    // uploader.onAfterAddingFile = function (fileItem) {
+    //     // console.info('onAfterAddingFile', fileItem);
+    // };
 
-    uploader.onAfterAddingAll = function (addedFileItems) {
-        // console.info('onAfterAddingAll', addedFileItems);
-    };
-    uploader.onBeforeUploadItem = function (item) {
-        // console.info('onBeforeUploadItem', item);
-    };
-    uploader.onProgressItem = function (fileItem, progress) {
-        // console.info('onProgressItem', fileItem, progress);
-    };
-    uploader.onProgressAll = function (progress) {
-        // console.info('onProgressAll', progress);
-    };
-    uploader.onSuccessItem = function (fileItem, response, status, headers) {
-        // console.info('onSuccessItem', fileItem, response, status, headers);
-    };
-    uploader.onErrorItem = function (fileItem, response, status, headers) {
-        // console.info('onErrorItem', fileItem, response, status, headers);
-    };
-    uploader.onCancelItem = function (fileItem, response, status, headers) {
-        // console.info('onCancelItem', fileItem, response, status, headers);
-    };
-    uploader.onCompleteItem = function (fileItem, response, status, headers) {
-        // console.info('onCompleteItem', fileItem, response, status, headers);
-    };
-    uploader.onCompleteAll = function () {
-        // console.info('onCompleteAll');
-    };
+    // uploader.onAfterAddingAll = function (addedFileItems) {
+    //     // console.info('onAfterAddingAll', addedFileItems);
+    // };
+    // uploader.onBeforeUploadItem = function (item) {
+    //     // console.info('onBeforeUploadItem', item);
+    // };
+    // uploader.onProgressItem = function (fileItem, progress) {
+    //     // console.info('onProgressItem', fileItem, progress);
+    // };
+    // uploader.onProgressAll = function (progress) {
+    //     // console.info('onProgressAll', progress);
+    // };
+    // uploader.onSuccessItem = function (fileItem, response, status, headers) {
+    //     // console.info('onSuccessItem', fileItem, response, status, headers);
+    // };
+    // uploader.onErrorItem = function (fileItem, response, status, headers) {
+    //     // console.info('onErrorItem', fileItem, response, status, headers);
+    // };
+    // uploader.onCancelItem = function (fileItem, response, status, headers) {
+    //     // console.info('onCancelItem', fileItem, response, status, headers);
+    // };
+    // uploader.onCompleteItem = function (fileItem, response, status, headers) {
+    //     // console.info('onCompleteItem', fileItem, response, status, headers);
+    // };
+    // uploader.onCompleteAll = function () {
+    //     // console.info('onCompleteAll');
+    // };
 
     // Profile Image
-    var uploaders = $scope.uploaders = new FileUploader({
-    	url: 'http://192.168.1.2:3005/api/uploadFile',
-        // url: 'http://localhost:3005/api/uploadFile',
-    	alias : 'uploadFile'
-    });
+ //    var uploaders = $scope.uploaders = new FileUploader({
+ //    	// url: 'http://192.168.1.2:3005/api/uploadFile',
+ //        url: 'http://localhost:3005/api/uploadFile',
+ //url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
+ //        headers:{Authorization:'Bearer '+$cookies.get("token")},
+ //    	alias : 'uploadFile'
+ //    });
 	
-	// FILTERS
-    uploaders.filters.push({
-        name: 'customFilter',
-        fn: function (item /*{File|FileLikeObject}*/, options) {
-            return this.queue.length < 10;
-        }
-    });
+	// // FILTERS
+ //    uploaders.filters.push({
+ //        name: 'customFilter',
+ //        fn: function (item /*{File|FileLikeObject}*/, options) {
+ //            return this.queue.length < 10;
+ //        }
+ //    });
 
     // CALLBACKS
-    uploaders.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-        // console.info('onWhenAddingFileFailed', item, filter, options);
-    };
-    uploaders.onAfterAddingFile = function (fileItem) {
-        // console.info('onAfterAddingFile', fileItem);
-    };
+    // uploaders.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+    //     // console.info('onWhenAddingFileFailed', item, filter, options);
+    // };
+    // uploaders.onAfterAddingFile = function (fileItem) {
+    //     // console.info('onAfterAddingFile', fileItem);
+    // };
 
-    uploaders.onAfterAddingAll = function (addedFileItems) {
-        // console.info('onAfterAddingAll', addedFileItems);
-    };
-    uploaders.onBeforeUploadItem = function (item) {
-        // console.info('onBeforeUploadItem', item);
-    };
-    uploaders.onProgressItem = function (fileItem, progress) {
-        // console.info('onProgressItem', fileItem, progress);
-    };
-    uploaders.onProgressAll = function (progress) {
-        // console.info('onProgressAll', progress);
-    };
-    uploaders.onSuccessItem = function (fileItem, response, status, headers) {
-        // console.info('onSuccessItem', fileItem, response, status, headers);
-    };
-    uploaders.onErrorItem = function (fileItem, response, status, headers) {
-        // console.info('onErrorItem', fileItem, response, status, headers);
-    };
-    uploaders.onCancelItem = function (fileItem, response, status, headers) {
-        // console.info('onCancelItem', fileItem, response, status, headers);
-    };
-    uploaders.onCompleteItem = function (fileItem, response, status, headers) {
-        // console.info('onCompleteItem', fileItem, response, status, headers);
-    };
-    uploaders.onCompleteAll = function () {
-        // console.info('onCompleteAll');
-    };
+    // uploaders.onAfterAddingAll = function (addedFileItems) {
+    //     // console.info('onAfterAddingAll', addedFileItems);
+    // };
+    // uploaders.onBeforeUploadItem = function (item) {
+    //     // console.info('onBeforeUploadItem', item);
+    // };
+    // uploaders.onProgressItem = function (fileItem, progress) {
+    //     // console.info('onProgressItem', fileItem, progress);
+    // };
+    // uploaders.onProgressAll = function (progress) {
+    //     // console.info('onProgressAll', progress);
+    // };
+    // uploaders.onSuccessItem = function (fileItem, response, status, headers) {
+    //     // console.info('onSuccessItem', fileItem, response, status, headers);
+    // };
+    // uploaders.onErrorItem = function (fileItem, response, status, headers) {
+    //     // console.info('onErrorItem', fileItem, response, status, headers);
+    // };
+    // uploaders.onCancelItem = function (fileItem, response, status, headers) {
+    //     // console.info('onCancelItem', fileItem, response, status, headers);
+    // };
+    // uploaders.onCompleteItem = function (fileItem, response, status, headers) {
+    //     // console.info('onCompleteItem', fileItem, response, status, headers);
+    // };
+    // uploaders.onCompleteAll = function () {
+    //     // console.info('onCompleteAll');
+    // };
 
 	$scope.save = function(data) {
 
@@ -178,26 +182,27 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, Un
 		UnauthenticatedService.createAccount(data)
 		.then(function(result) {
 
-			for (var i = 0; i < uploader.queue.length; i++) 
-            {
-                var item=uploader.queue[i];
-                item.formData[i]={};
-                item.formData[i].userUID = result.data.UID;
-                item.formData[i].fileType = 'ProfileImage';
-            }
-			uploader.uploadAll();
+			// for (var i = 0; i < uploader.queue.length; i++) 
+   //          {
+   //              var item=uploader.queue[i];
+   //              item.formData[i]={};
+   //              item.formData[i].userUID = result.data.UID;
+   //              item.formData[i].fileType = 'ProfileImage';
+   //          }
+			// uploader.uploadAll();
 
-            for (var i = 0; i < uploaders.queue.length; i++) 
-            {
-                var item=uploaders.queue[i];
-                item.formData[i]={};
-                item.formData[i].userUID = result.data.UID;
-                item.formData[i].fileType = 'Signature';
-            }
-            uploaders.uploadAll();
+   //          for (var i = 0; i < uploaders.queue.length; i++) 
+   //          {
+   //              var item=uploaders.queue[i];
+   //              item.formData[i]={};
+   //              item.formData[i].userUID = result.data.UID;
+   //              item.formData[i].fileType = 'Signature';
+   //          }
+   //          uploaders.uploadAll();
 
 			var info = {
 				PhoneNumber: data.PhoneNumber,
+                // PhoneNumber: '+840936767117',
 				content: result.data.VerificationCode
 			};
 

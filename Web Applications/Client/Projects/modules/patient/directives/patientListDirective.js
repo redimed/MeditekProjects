@@ -11,9 +11,11 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 		restrict: "EA",
 		link: function(scope, elem, attrs){
 			scope.search ={};
+			scope.fieldSort;
+			scope.checked='true';
 			scope.itemDefault = [
-				{field:"FirstName",name:"First Name"},
-				{field:"LastName",name:"Last Name"},
+				{field:"FirstName",name:"Firstname"},
+				{field:"LastName",name:"Lastname"},
 				{field:"Gender",name:"Gender"},
 				{field:"UserAccount",name:"Mobile"},
 				{field:"Email",name:"Email"}
@@ -98,9 +100,16 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			};
 
 			scope.sort = function(field,sort) {
+				scope.isClickASC = false;
+				scope.isClickDESC = false;
+				scope.fieldSort = field;
 				if(field=='UserAccount'){
 					field = 'PhoneNumber';
 				}
+				if(sort==="ASC")
+					scope.isClickASC = true;
+				else
+					scope.isClickDESC = true;
 				var data = field+" "+sort;
 				scope.searchObjectMap.order = data;
 				scope.loadList(scope.searchObjectMap);
@@ -153,11 +162,9 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 							};
 							$scope.appointment = {
 								runIfSuccess : function (data) {
-									console.log('patient nênnenenene',data);
 									$modalInstance.close({status:'success',data:data});
-
 								}
-							}
+							};
 						},
 						windowClass: 'app-modal-window'
 						//size: 'lg',
@@ -166,6 +173,8 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				      	scope.appointment.runIfSuccess(data);
 				    });
 				}else{
+					scope.aaaa ="asdasd";
+					
 					$state.go('authentication.patient.create');
 				}
 			}

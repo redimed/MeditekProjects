@@ -31,7 +31,7 @@ module.exports = function(data, userInfo) {
                     .then(function(preferPractitionerObj) {
                         if (HelperService.CheckExistData(preferPractitionerObj) &&
                             HelperService.CheckExistData(preferPractitionerObj.Doctor)) {
-                            preferringPractitionerObject = preferPractitionerObj.Doctor;
+                            preferringPractitionerObject = preferPractitionerObj;
                             //get Appointment object
                             return Appointment.findOne({
                                 attributes: ['ID'],

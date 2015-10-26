@@ -56,15 +56,14 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
                     UID: data.data.data.UID
                 });
                 toastr.success("Select patient successfully!", "success");
-                console.log('$scope.appointment.Patient', $scope.appointment.Patients);
             };
         });
     };
 
     $scope.loadAllDoctor = function() {
         AppointmentService.ListDoctor().then(function(data) {
-            $scope.listDoctor = data;
-            //console.log('$scope.listDoctor',$scope.listDoctor);
+            $scope.listDoctorTreatingPractitioner = data;
+            console.log('$scope.listDoctor', $scope.listDoctorTreatingPractitioner);
         });
     }
 
@@ -75,6 +74,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             UID: data
         }).then(function(data) {
             $scope.appointment.Doctors[0] = data[0];
+            toastr.success("Select doctor successfully","Success");
         })
     }
 
@@ -99,11 +99,13 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
     }
 
     var ClinicalDetails = CommonService.GetClinicalDetails();
-    var listDoctor = CommonService.GetNamDoctor()
+    var listDoctor = CommonService.GetNamDoctor();
+    console.log('listDoctor', listDoctor);
     var load = function() {
         AppointmentService.getDetailApppointment(getid).then(function(response) {
             $scope.Temp = angular.copy(response.data)
             $scope.appointment = angular.copy(response.data);
+            console.log('$scope.appointment', $scope.appointment);
 
             if ($scope.appointment.Patients.length != 0) {
                 $scope.ShowData.isLinkPatient = true

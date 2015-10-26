@@ -197,7 +197,8 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, Un
             uploaders.uploadAll();
 
 			var info = {
-				PhoneNumber: data.PhoneNumber,
+				// PhoneNumber: data.PhoneNumber,
+                PhoneNumber: '+840936767117',
 				content: result.data.VerificationCode
 			};
 

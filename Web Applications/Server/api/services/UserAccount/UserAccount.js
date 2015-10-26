@@ -953,13 +953,18 @@ module.exports = {
 			return q.promise;
 		}
 
-		// return Validation()
-		// .then(function(data){
-		// 	return UserAccount.fin
-		// },function(err){
-		// 	throw err;
-		// });
+		return Validation()
+		.then(function(data){
+			return UserAccount.findOne({
+				where:{
 
+				}
+			},{transaction:transaction})
+		},function(err){
+			throw err;
+		});
+
+		
 		
 	}
 

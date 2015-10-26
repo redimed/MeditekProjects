@@ -1,13 +1,21 @@
 <script type="text/ng-template" id="nodes_renderer.html">
 
-	<a href="javascript:;" ui-sref="{{node.state}}">
-		<i ng-class="node.icon"></i>
-		<span class="title">{{node.name}}</span>
-		<span class="arrow "></span>
-	</a>
 	
-    <ul ng-if="node.nodes" class="sub-menu">
-        <li  ng-repeat="(key,node) in node.nodes" ng-include="'nodes_renderer.html'">
+	<a ng-if="node.state" href="javascript:;" ui-sref="{{node.state||null}}" class="nav-link nav-toggle">
+        <i ng-class="node.icon"></i>
+        <span class="title">{{node.name}}</span>
+        <span class="arrow"></span>
+    </a>
+
+    <a ng-if="!node.state" href="javascript:;" class="nav-link nav-toggle">
+        <i ng-class="node.icon"></i>
+        <span class="title">{{node.name}}</span>
+        <span class="arrow"></span>
+    </a>
+		
+	
+    <ul  ng-if="node.nodes" class="sub-menu">
+        <li class="nav-item"  ng-repeat="(key,node) in node.nodes" ng-include="'nodes_renderer.html'">
         </li>
     </ul>
 </script>
@@ -48,6 +56,10 @@
 	</li>
 
 
-    <li  ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'">
+    <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'">
     </li>
 </ul>
+
+<script>
+	Layout.init(); // init current layout
+</script>

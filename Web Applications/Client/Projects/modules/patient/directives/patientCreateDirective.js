@@ -144,6 +144,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 			scope.createPatient = function(data) {
 				return PatientService.validate(data)
 				.then(function(result){
+					data.DOB = moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss');
 					return PatientService.createPatient(data)
 					.then(function(success){
 						for (var i = 0; i < scope.uploader.queue.length; i++) 

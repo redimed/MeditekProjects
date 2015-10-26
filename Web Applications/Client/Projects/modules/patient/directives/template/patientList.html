@@ -60,8 +60,8 @@
 					<td style="width:10%;" ng-click="clickOpen(p.UID)">{{p.stt}}</td>
 					<td ng-repeat="i in items" ng-click="clickOpen(p.UID)">{{i.field=='UserAccount'?p[i.field]['PhoneNumber']:i.field!='Gender'?p[i.field]:p[i.field]=='M'?'Male':'Female'}}</td>
 					<td style="width:10%; text-align:center;" ng-if="isShowSelectButton" >
-						
-					<input type="checkbox" class="form-control" style="width:30%;" />
+						<!-- <i ng-click="selectPatient(p.UID)" ng-class="{'glyphicon glyphicon-ok is-Selected':p.UID === uidReturn,'glyphicon glyphicon-remove is-notSelected':p.UID !== uidReturn}"></i> -->
+						<input type="checkbox" class="form-control" ng-model="checked" style="width:30%;"/>
 					</td>
 				</tr>
 			</tbody>

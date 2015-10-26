@@ -256,6 +256,7 @@ module.exports = {
 			Enable          : "Y",
 			CreatedDate     : moment(new Date(),'YYYY-MM-DD HH:mm:ss ZZ').toDate()
 		};
+		console.log(info);
 		return Services.Patient.validation(data)
 		.then(function(success){
 			if(data.PhoneNumber){

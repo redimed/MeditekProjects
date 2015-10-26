@@ -5,6 +5,7 @@ angular.module('app.authentication.patient.services',[])
 	var characterRegex = /^[a-zA-Z]{0,255}$/;
 	var addressRegex = /^[a-zA-Z0-9\s,'-]{0,255}$/;
 	var postcodeRegex = /^[0-9]{4}$/;
+	var postData ={};
 
 	PatientService.validate = function(info) {
 		var error = [];
@@ -229,6 +230,14 @@ angular.module('app.authentication.patient.services',[])
 		}
 		return q.promise;
 	};
+
+	PatientService.postDatatoDirective = function(info) {
+		postData = info;
+	};
+
+	PatientService.getDatatoDirective = function(){
+		return postData;
+	}
 
 	PatientService.detailPatient = function(data){
 		var detailPatient = api.all("patient/detail-patient");

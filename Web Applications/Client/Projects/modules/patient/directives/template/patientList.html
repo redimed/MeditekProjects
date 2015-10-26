@@ -14,21 +14,23 @@
 	</div>
 	<div class="portlet-body">
 		<!-- begin filter -->
-		<!-- <span ng-hide="toggle">
+		<span ng-hide="toggle">
 			<div class="table-scrollable">
 				<table class="table table-hover">
 					<thead>
 						<tr style="width:100%;">
-							<th ng-repeat="i in items">{{i.name}} </th>
+							<th ng-repeat="i in items">
+								<label class="label-control">{{i.name}} </label>
+							</th>
 							<th style="width:10%;">Enable</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<tr style="width:100%;">
 							<td ng-repeat="i in items">
 								<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-change="Search(search)">
 							</td>
-							<td>
+							<td style="width:10%;">
 								<select class="form-control" ng-change="Search(search)" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select>
 							</td>
 						</tr>
@@ -36,30 +38,20 @@
 				</table>
 			</div>
         </span>
-        <span ng-show="toggle"></span> -->
+        <span ng-show="toggle"></span>
         <!-- end filter -->
 		<!-- begin table -->
 		<div class="table-scrollable">
 			<table class="table table-bordered table-hover">
 			<thead>
-				<tr>
-					<th width="5%">#</th>
+				<tr style="width:100%;">
+					<th style="width:10%;">#</th>
 					<th ng-repeat="i in items">
 						<label>{{i.name}} </label>
 						<span class="glyphicon glyphicon-chevron-up" ng-click="sort(i.field,'ASC')" style="float: right; margin-top: -4px;" ng-class="{'sort':fieldSort === i.field && isClickASC ==true}" ></span>
 	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sort(i.field,'DESC')" style="float: right; margin-top: 9px; margin-right: -14px;" ng-class="{'sort':fieldSort === i.field && isClickDESC ==true}"></span>
  					</th>
- 					<th width="10%" ng-if="isShowSelectButton">Enable</th>
-				</tr>
-				<tr ng-hide="toggle">
-					<td></td>
-					<td ng-repeat="i in items">
-						<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-change="Search(search)">
-					</td>
-					<td>
-						<select class="form-control" ng-change="Search(search)" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose">
-						</select>
-					</td>
+ 					<th ng-if="isShowSelectButton">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -70,7 +62,6 @@
 					<td style="width:10%; text-align:center;" ng-if="isShowSelectButton" >
 						<i ng-click="selectPatient(p.UID)"style="font-size:150%;" ng-class="{'glyphicon glyphicon-check':p.UID === uidReturn,'glyphicon glyphicon-unchecked':p.UID !== uidReturn}"></i>
 						<!-- <input type="checkbox" class="form-control" ng-model="checked" style="width:30%;" ng-click="selectPatient(p.UID)"/> -->
-
 					</td>
 				</tr>
 			</tbody>

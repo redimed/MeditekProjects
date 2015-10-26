@@ -120,17 +120,18 @@ module.exports = {
     DownloadFile: function(req, res) {
         var params = req.params.all();
         Services.FileUpload.DownloadFile({
-                output: rootPath + '/temp/',
-                fileUID: params.fileUID,
-                size: params.size
-            }, function(err,output) {
-                if (err) return res.serverError(ErrorWrap(err));
-                res.download(output, function(err) {
-                    if (err) return res.serverError(ErrorWrap(err));
-                    if(fs.statSync(output).isFile())
-                        fs.unlinkSync(output);
-                });
+            output: rootPath + '/download/',
+            fileUID: params.fileUID,
+            size: params.size
+        }, function(err, output, fileName) {
+            if (err) return res.serverError(ErrorWrap(err));
+            res.attachment(fileName);
+            var file = fs.createReadStream(output);
+            file.on('end', function() {
+                if (fs.statSync(output).isFile()) fs.unlinkSync(output);
             })
+            file.pipe(res);
+        })
     },
     EnableFile: function(req, res) {
         var params = req.params.all();

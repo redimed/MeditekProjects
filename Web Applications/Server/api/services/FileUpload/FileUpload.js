@@ -9,7 +9,7 @@ module.exports = {
         if(!info.output || !info.fileUID){
             var err = new Error("DownloadFile.Error");
             err.pushError("Invalid Params!");
-            return callback(err,undefined);
+            return callback(err,undefined,undefined);
         }
         mkdirp(info.output, function(err) {
             if (err) return res.serverError(ErrorWrap(err));
@@ -27,26 +27,26 @@ module.exports = {
                         outputFile: output,
                         password: file.UID
                     }, function(err) {
-                        if (err) return callback(err,undefined);
+                        if (err) return callback(err,undefined,undefined);
                         if (_.contains(HelperService.const.imageExt, file.FileExtension) && info.size) {
                             gm(output).size(function(err, size) {
-                                if (err) return callback(err,undefined);
+                                if (err) return callback(err,undefined,undefined);
                                 gm(output).resizeExact(info.size, Math.round((size.height / size.width) * info.size)).write(output, function(err) {
-                                    if (err) return callback(err,undefined);
-                                    return callback(undefined,output);
+                                    if (err) return callback(err,undefined,undefined);
+                                    return callback(undefined,output,file.FileName);
                                 })
                             })
                         } else {
-                            return callback(undefined,output);
+                            return callback(undefined,output,file.FileName);
                         }
                     })
                 } else {
                     var err = new Error("FileUpload.DownloadFile.Error");
                     err.pushError("File Not Exist!");
-                    return callback(err,undefined);
+                    return callback(err,undefined,undefined);
                 }
             }).catch(function(err) {
-                return callback(err,undefined);
+                return callback(err,undefined,undefined);
             })
         })
     }

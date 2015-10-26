@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.patient.create.directive',[]);
-app.directive('patientCreate',function(toastr, PatientService, $state, $timeout, $cookies){
+app.directive('patientCreate',function(toastr, PatientService, $state, $timeout, $cookies, AuthenticationService){
 	return {
 		scope :{
 			appointment:'=',
@@ -60,7 +60,18 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		    };
 		},
 		link: function(scope, elem, attrs){
-			console.log(scope.abc);
+			scope.titles = [
+				{id:"0", name:'Mr'},
+				{id:"1", name:'Mrs'},
+				{id:"2", name:'Ms'},
+				{id:"3", name:'Dr'}
+			];
+			AuthenticationService.getListCountry().then(function(response){
+				console.log(response);
+				scope.countries = response.data;
+			},function(err){
+				console.log("Server Error");
+			})
 			scope.data ={};
 			scope.er={};
 			scope.ermsg={};

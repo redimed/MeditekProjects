@@ -12,7 +12,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 		link: function(scope, elem, attrs){
 			scope.search ={};
 			scope.fieldSort;
-			scope.defaultData="asdasdsa";
+			scope.checked='true';
 			scope.itemDefault = [
 				{field:"FirstName",name:"First Name"},
 				{field:"LastName",name:"Last Name"},
@@ -173,6 +173,8 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				      	scope.appointment.runIfSuccess(data);
 				    });
 				}else{
+					scope.aaaa ="asdasd";
+					
 					$state.go('authentication.patient.create');
 				}
 			}

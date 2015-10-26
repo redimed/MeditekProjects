@@ -56,7 +56,6 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
                     UID: data.data.data.UID
                 });
                 toastr.success("Select patient successfully!", "success");
-                console.log('$scope.appointment.Patient', $scope.appointment.Patients);
             };
         });
     };

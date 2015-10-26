@@ -120,7 +120,7 @@ app
         //     }
         //     return false;
         // });
-        // END RESTANGULAR ERROR HANDLING ----------------
+        // END RESTANGULAR ERROR HANDLING --------------------
 
         $rootScope.$state = $state; // state to be accessed from view
         $rootScope.$settings = settings; // state to be accessed from view

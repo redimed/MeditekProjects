@@ -17,8 +17,6 @@
             android:layout_height="match_parent"
             android:background="@color/callBackground">
 
-
-
             <ImageView
                 android:id="@+id/imgLogoCall"
                 android:layout_centerHorizontal="true"
@@ -49,7 +47,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 app:backgroundTint="@color/declineFone"
                 android:src="@drawable/icon_end_call"/>
 

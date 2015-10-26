@@ -13,7 +13,7 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.CreateTelehealthAppointment(data)
+            Services.CreateTelehealthAppointment(data, req.user)
                 .then(function(success) {
                     success.transaction.commit();
                     res.ok('success');
@@ -37,7 +37,7 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.GetListTelehealthAppointment(data)
+            Services.GetListTelehealthAppointment(data, req.user)
                 .then(function(success) {
                     res.ok(success.data);
                 })
@@ -80,18 +80,26 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.UpdateTelehealthAppointment(data)
-                .then(function(success) {
-                    success.transaction.commit();
-                    res.ok('success');
-                })
-                .catch(function(err) {
-                    if (HelperService.CheckPostRequest(err) &&
-                        HelperService.CheckPostRequest(err.transaction)) {
-                        err.transaction.rollback();
-                    }
-                    res.serverError(ErrorWrap(err.error));
-                });
+            var role = HelperService.GetRole(req.user.roles);
+            if (role.isInternalPractitioner ||
+                role.isAdmin ||
+                role.isAssistant) {
+                Services.UpdateTelehealthAppointment(data, req.user)
+                    .then(function(success) {
+                        success.transaction.commit();
+                        res.ok('success');
+                    })
+                    .catch(function(err) {
+                        if (HelperService.CheckPostRequest(err) &&
+                            HelperService.CheckPostRequest(err.transaction)) {
+                            err.transaction.rollback();
+                        }
+                        res.serverError(ErrorWrap(err.error));
+                    });
+            } else {
+                res.serverError('failed');
+            }
+
         }
     },
     /*

@@ -4,8 +4,8 @@ var app = angular.module('app.authentication.appointment.request.controller', [
 
 app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal) {
 
-	$scope.doctors = [];
-	$scope.details = [];
+    $scope.doctors = [];
+    $scope.details = [];
 
     $scope.requestInfo = {
         RequestDate: null,
@@ -18,7 +18,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
                 DOB: null,
                 Email: null,
                 PhoneNumber: null,
-                Address: null,
+                Address1: null,
                 Suburb: null,
                 Postcode: null,
                 HomePhoneNumber: null
@@ -34,7 +34,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
         UserInfo: {
             UID: $cookies.getObject('userInfo').UID
         },
-        Patient:{UID: '64551c71-70cb-4f66-9ba1-50e1d5b67ccc'}
+        FileUploads:[]
     }
 
     $scope.checkElectiveOther = false;
@@ -52,38 +52,42 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
             $scope.details[4].data[4].value = null;
         }
     };
+
+
+    $scope.SubmitRequest = function () {
+        ((uploader.queue.length >0)?$scope.SendRequestUploadFile():$scope.sendRequestAppointment());
+    }
+
+
     $scope.sendRequestAppointment = function() {
+
+        console.log($scope.requestInfo.FileUploads);
         $scope.requestInfo.RequestDate = moment(new Date()).format("YYYY-MM-DD hh:mm:ss Z");
         $scope.requestInfo.TelehealthAppointment.RefDate = moment(new Date()).format("YYYY-MM-DD hh:mm:ss Z");
-        $scope.requestInfo.TelehealthAppointment.PatientAppointment.DOB = moment($scope.patientAppointmentDOBTemp).format("YYYY-MM-DD hh:mm:ss Z");
+        $scope.requestInfo.TelehealthAppointment.PatientAppointment.DOB = moment($scope.patientAppointmentDOBTemp,'YYYY-MM-DD').format("YYYY-MM-DD hh:mm:ss Z");
 
-        $scope.requestInfo.TelehealthAppointment.PreferedPlasticSurgeon = [];
+        $scope.requestInfo.TelehealthAppointment.PreferredPractitioner = [];
         $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];
-    	$scope.requestInfo.FileUploads = [{
-            UID:"057e517f-abf6-4f67-a25a-cbf7304ff648"
-        },{
-            UID:"089abbf3-bc8a-4ef1-b1c1-32d2df2f33d2"
-        }];
-
-    	_.forEach($scope.doctors, function(item) {
-		  	if (item != undefined || item != null) {
+        console.log('data', $scope.requestInfo);
+        _.forEach($scope.doctors, function(item) {
+            if (item != undefined || item != null) {
                 var data = {
-                    Name : item
+                    Name: item
                 }
-		  		$scope.requestInfo.TelehealthAppointment.PreferedPlasticSurgeon.push(data);
-		  	};
-		});
+                $scope.requestInfo.TelehealthAppointment.PreferredPractitioner.push(data);
+            };
+        });
 
         _.forEach($scope.details, function(item) {
-            _.forEach(item.data,function(p){
-                if(p.value){
+            _.forEach(item.data, function(p) {
+                if (p.value) {
                     var data = {
                         Section: "Clinical Details",
                         Category: "Telehealth Appointment",
                         Type: item.type,
                         Name: p.name,
                         Value: p.value,
-                        ClinicalNote: ($scope.ClinicalNote)?$scope.ClinicalNote:null,
+                        ClinicalNote: ($scope.ClinicalNote) ? $scope.ClinicalNote : null,
                         Description: null
                     }
                     $scope.requestInfo.TelehealthAppointment.ClinicalDetails.push(data);
@@ -91,41 +95,54 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
             })
         });
 
-        AppointmentService.SendRequest($scope.requestInfo).then(function(data){
-            swal({   
-                title: "Success",   
-                text: "Send Request Successfully!",   
+        AppointmentService.SendRequest($scope.requestInfo).then(function(data) {
+            swal({
+                title: "Success",
+                text: "Send Request Successfully!",
                 type: "success",
-                showLoaderOnConfirm: true, 
-            }, function(){   
+                showLoaderOnConfirm: true,
+            }, function() {
                 $state.go("authentication.appointment.list");
             });
-        },function (error) {
-            swal({   
-                title: "Error",   
-                text: "Send Request Error!",   
+        }, function(error) {
+            swal({
+                title: "Error",
+                text: "Send Request Error!",
                 type: "error"
             });
         });
+    };
+
+    $scope.SendRequestUploadFile = function () {
+        for (var i = 0; i < uploader.queue.length; i++) {
+            console.log(' uploader.queue', uploader.queue);
+            var item = uploader.queue[i];
+            item.formData[i] = {};
+            item.formData[i].userUID = $cookies.getObject('userInfo').UID;
+            item.formData[i].fileType = 'MedicalImage';
+        };
+        uploader.uploadAll();
     }
 
+
     var uploader = $scope.uploader = new FileUploader({
-            url: 'theme/assets/global/plugins/angularjs/plugins/angular-file-upload/upload.php'
-        });
+        url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
+        // url: 'http://telehealthvietnam.com.vn:3005/api/uploadFile',
+        alias: 'uploadFile'
+    });
 
     // FILTERS
 
     uploader.filters.push({
-        name: 'imageFilter',
-        fn: function(item /*{File|FileLikeObject}*/, options) {
-            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-            return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+        name: 'customFilter',
+        fn: function(item /*{File|FileLikeObject}*/ , options) {
+            return this.queue.length < 10;
         }
     });
 
     // CALLBACKS
 
-    uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+    uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
         console.info('onWhenAddingFileFailed', item, filter, options);
     };
     uploader.onAfterAddingFile = function(fileItem) {
@@ -154,22 +171,25 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
     };
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
         console.info('onCompleteItem', fileItem, response, status, headers);
+        if (response.status == 'success') {
+            $scope.requestInfo.FileUploads.push({UID:response.fileUID});
+        };
     };
     uploader.onCompleteAll = function() {
-        console.info('onCompleteAll');
+        $scope.sendRequestAppointment();
     };
 
     console.info('uploader', uploader);
 
-    $scope.ModalBodyPart = function(){
+    $scope.ModalBodyPart = function() {
         var modalInstance = $modal.open({
             animation: true,
-            templateUrl:'modules/appointment/views/appointmentRequestModal.html',
+            templateUrl: 'modules/appointment/views/appointmentRequestModal.html',
             controller: 'appointmentRequestModalCtrl',
             //windowClass : 'app-modal-window',
             size: 'lg',
             resolve: {
-                getid: function(){
+                getid: function() {
                     return true;
                 }
             }

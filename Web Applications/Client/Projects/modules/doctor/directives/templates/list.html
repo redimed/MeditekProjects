@@ -29,37 +29,7 @@
 		</div>
 	</div>
 	<div class="portlet-body">
-		<!-- begin filter -->
-		<span ng-hide="toggle">
-            <div class="row">
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">Firstname</label>
-						<input ng-model="doctor.search.FirstName" ng-enter="doctor.onSearch()" class="form-control" placeholder="Firstname">
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">Lastname</label>
-						<input ng-model="doctor.search.LastName" ng-enter="doctor.onSearch()" class="form-control" placeholder="Lastname">
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">Mobile</label>
-						<input ng-model="doctor.search.PhoneNumber" ng-enter="doctor.onSearch()" class="form-control" placeholder="Mobile">
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">Email</label>
-						<input ng-model="doctor.search.Email" ng-enter="doctor.onSearch()" class="form-control" placeholder="Email">
-					</div>
-				</div>
-			</div>
-        </span>
-        <span ng-show="toggle"></span>
-        <!-- end filter -->
+		
 		<!-- begin table -->
 		<div class="table-scrollable">
 			<table class="table table-bordered table-hover">
@@ -68,43 +38,43 @@
 					<th>#</th>
 					<th>
 						Firstname
-						<a ng-if="doctor.search.sortFisrtName === 'ASC'" ng-click="doctor.sortBy({field:'sortFisrtName', sort: 'DESC'})">
-							<i class="fa fa-sort-asc"></i>
-						</a>
-						<a ng-if="doctor.search.sortFisrtName === 'DESC'" ng-click="doctor.sortBy({field:'sortFisrtName', sort: 'ASC'})">
-							<i class="fa fa-sort-desc"></i>
-						</a>
+						<span class="glyphicon glyphicon-triangle-bottom" ng-if="doctor.search.sortFisrtName === 'ASC'" ng-click="doctor.sortBy({field:'sortFisrtName', sort: 'DESC'})" style="float: right; margin-top: 9px;"></span>
+	 					<span class="glyphicon glyphicon-triangle-top" ng-if="doctor.search.sortFisrtName === 'DESC'" ng-click="doctor.sortBy({field:'sortFisrtName', sort: 'ASC'})" style="float: right; margin-top: -4px; margin-right: -4px;"></span>
 					</th>
 					<th>
 						Lastname
-						<a ng-if="doctor.search.sortLastName === 'ASC'" ng-click="doctor.sortBy({field:'sortLastName', sort: 'DESC'})">
-							<i class="fa fa-sort-asc"></i>
-						</a>
-						<a ng-if="doctor.search.sortLastName === 'DESC'" ng-click="doctor.sortBy({field:'sortLastName', sort: 'ASC'})">
-							<i class="fa fa-sort-desc"></i>
-						</a>
+						<span class="glyphicon glyphicon-triangle-bottom" ng-if="doctor.search.sortLastName === 'ASC'" ng-click="doctor.sortBy({field:'sortLastName', sort: 'DESC'})" style="float: right; margin-top: 9px;"></span>
+	 					<span class="glyphicon glyphicon-triangle-top" ng-if="doctor.search.sortLastName === 'DESC'" ng-click="doctor.sortBy({field:'sortLastName', sort: 'ASC'})" style="float: right; margin-top: -4px; margin-right: -4px;"></span>
 					</th>
 					<th>Mobile</th>
 					<th>
 						Email
-						<a ng-if="doctor.search.sortEmail === 'ASC'" ng-click="doctor.sortBy({field:'sortEmail', sort: 'DESC'})">
-							<i class="fa fa-sort-asc"></i>
-						</a>
-						<a ng-if="doctor.search.sortEmail === 'DESC'" ng-click="doctor.sortBy({field:'sortEmail', sort: 'ASC'})">
-							<i class="fa fa-sort-desc"></i>
+						<span class="glyphicon glyphicon-triangle-bottom" ng-if="doctor.search.sortEmail === 'ASC'" ng-click="doctor.sortBy({field:'sortEmail', sort: 'DESC'})" style="float: right; margin-top: 9px;"></span>
+	 					<span class="glyphicon glyphicon-triangle-top" ng-if="doctor.search.sortEmail === 'DESC'" ng-click="doctor.sortBy({field:'sortEmail', sort: 'ASC'})" style="float: right; margin-top: -4px; margin-right: -4px;"></span>
 						</a>
 					</th>
+					<th>Type</th>
 					<th>Enable</th>
+				</tr>
+				<tr ng-hide="toggle">
+					<td></td>
+					<td><input ng-model="doctor.search.FirstName" ng-enter="doctor.onSearch()" class="form-control" placeholder="Firstname"></td>
+					<td><input ng-model="doctor.search.LastName" ng-enter="doctor.onSearch()" class="form-control" placeholder="Lastname"></td>
+					<td><input ng-model="doctor.search.PhoneNumber" ng-enter="doctor.onSearch()" class="form-control" placeholder="Mobile"></td>
+					<td><input ng-model="doctor.search.Email" ng-enter="doctor.onSearch()" class="form-control" placeholder="Email"></td>
+					<td></td>
+					<td></td>
 				</tr>
 			</thead>
 			<tbody>
 			<tbody>
-				<tr ng-repeat="row in doctor.list" ng-click="openModalDoctor()">
+				<tr ng-repeat="row in doctor.list" ng-click="doctor.dialog.editModal(row)">
 					<td>&nbsp;</td>
 					<td>{{ row.FirstName }}</td>
 					<td>{{ row.LastName }}</td>
 					<td>{{ row.UserAccount.PhoneNumber }}</td>
 					<td>{{ row.Email }}</td>
+					<td>{{ doctor.type }}</td>
 					<td>
 						<span ng-if="row.Enable != 'N'">
 							<i class="fa fa-check"></i>
@@ -135,3 +105,6 @@
 	</div>
 </div>
 <!-- end content page -->
+<script type="text/ng-template" id="doctorModal">
+	<doctor-detail doctor-id="doctor.id" account-id="doctor.accid" department-id="doctor.depid" success="doctor.success" on-cancel="cancel"></doctor-detail>
+</script>

@@ -226,13 +226,11 @@ module.exports = {
         require('getmac').getMac(function(err, macaddr) {
             UrgentRequest.update({
                     status: 'pending',
-                    confirmUserName: null
+                    confirmUserName: null,
+                    UID: req.params.id
                 }, {
                     status: 'confirmed',
                     confirmUserName: macaddr
-                })
-                .where({
-                    UID: req.params.id
                 })
                 .exec(function(err, URUpdated) {
                     if (err) {
@@ -245,7 +243,7 @@ module.exports = {
                             var htmlConfirmed =
                                 '<table><tr><td><b>Confirmed Success</b></td></tr>' +
                                 '<tr><td>UrgentCare Type: ' + (URUpdated[0].urgentRequestType === null ? '' : URUpdated[0].urgentRequestType) + '</td></tr>' +
-                                '<tr><td>Patient Name: ' + URUpdated[0].lastName + ' ' + URUpdated[0].firstName + '</td></tr>' +
+                                '<tr><td>Patient Name: ' + URUpdated[0].firstName + ' ' + URUpdated[0].lastName + '</td></tr>' +
                                 '<tr><td>Request Date: ' + URUpdated[0].requestDate + '</td></tr>' +
                                 '<tr><td>Phone Number: ' + URUpdated[0].phoneNumber + '</td></tr>' +
                                 '</td></tr></table>';

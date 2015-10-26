@@ -14,5 +14,7 @@ module.exports = {
     Module:require('./Authorization/v0_1/Module'),
     Role: require('./Authorization/v0_1/Role'),
     UserRole: require('./Authorization/v0_1/UserRole'),
-    Doctor:require('./Doctor/Doctor')
+    Doctor:require('./Doctor/Doctor'),
+    FileUpload:require('./FileUpload/FileUpload'),
+    Register:require('./Register/Register')
 };

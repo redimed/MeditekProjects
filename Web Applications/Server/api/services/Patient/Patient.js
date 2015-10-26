@@ -14,15 +14,22 @@ module.exports = {
 		output: validate patient's information
 	*/
 	validation : function(data) {
+		var character = new RegExp(check.regexPattern.character);
+		var address   = new RegExp(check.regexPattern.address);
+		var postcode  = new RegExp(check.regexPattern.postcode);
 		var q = $q.defer();
 		var errors = [];
 		//create a error with contain a list errors input
 		var err = new Error("ERRORS");
 		try {
-			//validate FirstName
+			// validate FirstName
 			if(data.FirstName){
 				if(data.FirstName.length < 0 || data.FirstName.length > 50){
-					errors.push({field:"FirstName",message:"Patient.FirstName.length"});
+					errors.push({field:"FirstName",message:"max length"});
+					err.pushErrors(errors);
+				}
+				if(!character.test(data.FirstName)){
+					errors.push({field:"FirstName",message:"invalid value"});
 					err.pushErrors(errors);
 				}
 			}
@@ -30,7 +37,11 @@ module.exports = {
 			//validate MiddleName
 			if(data.MiddleName){
 				if(data.MiddleName.length < 0 || data.MiddleName.length > 100){
-					errors.push({field:"MiddleName",message:"Patient.MiddleName.length"});
+					errors.push({field:"MiddleName",message:"max length"});
+					err.pushErrors(errors);
+				}
+				if(!character.test(data.MiddleName)){
+					errors.push({field:"MiddleName",message:"invalid value"});
 					err.pushErrors(errors);
 				}
 			}
@@ -38,7 +49,11 @@ module.exports = {
 			//validate LastName
 			if(data.LastName){
 				if(data.LastName.length < 0 || data.LastName.length > 50){
-					errors.push({field:"LastName",message:"Patient.LastName.length"});
+					errors.push({field:"LastName",message:"max length"});
+					err.pushErrors(errors);
+				}
+				if(!character.test(data.LastName)){
+					errors.push({field:"LastName",message:"invalid value"});
 					err.pushErrors(errors);
 				}
 			}
@@ -46,7 +61,7 @@ module.exports = {
 			//validate Gender
 			if(data.Gender){
 				if(data.Gender != "F" && data.Gender != "M"){
-					errors.push({field:"Gender",message:"Patient.Gender.valuesField"});
+					errors.push({field:"Gender",message:"invalid value"});
 					err.pushErrors(errors);
 				}
 			}
@@ -54,7 +69,11 @@ module.exports = {
 			//validate Address1
 			if(data.Address1){
 				if(data.Address1.length < 0 || data.Address1.length > 255){
-					errors.push({field:"Address1",message:"Patient.Address1.length"});
+					errors.push({field:"Address1",message:"max length"});
+					err.pushErrors(errors);
+				}
+				if(!address.test(data.Address1)){
+					errors.push({field:"Address1",message:"invalid value"});
 					err.pushErrors(errors);
 				}
 			}
@@ -62,7 +81,11 @@ module.exports = {
 			//validate Address2
 			if(data.Address2){
 				if(data.Address2.length < 0 || data.Address2.length > 255){
-					errors.push({field:"Address2",message:"Patient.Address2.length"});
+					errors.push({field:"Address2",message:"max length"});
+					err.pushErrors(errors);
+				}
+				if(!address.test(data.Address2)){
+					errors.push({field:"Address2",message:"invalid value"});
 					err.pushErrors(errors);
 				}
 			}
@@ -70,7 +93,11 @@ module.exports = {
 			//validate Occupation
 			if(data.Occupation){
 				if(data.Occupation.length < 0 || data.Occupation.length > 255){
-					errors.push({field:"Occupation",message:"Patient.Occupation.length"});
+					errors.push({field:"Occupation",message:"max length"});
+					err.pushErrors(errors);
+				}
+				if(!character.test(data.Occupation)){
+					errors.push({field:"Occupation",message:"invalid value"});
 					err.pushErrors(errors);
 				}
 			}
@@ -78,7 +105,7 @@ module.exports = {
 			//validate Suburb
 			if(data.Suburb){
 				if(data.Suburb.length < 0 || data.Suburb.length > 100){
-					errors.push({field:"Suburb",message:"Patient.Suburb.length"});
+					errors.push({field:"Suburb",message:"max length"});
 					err.pushErrors(errors);
 				}
 			}
@@ -86,17 +113,21 @@ module.exports = {
 			//validate Postcode
 			if(data.Postcode){
 				if(data.Postcode.length < 0 || data.Postcode.length > 100){
-					errors.push({field:"Postcode",message:"Patient.Postcode.length"});
+					errors.push({field:"Postcode",message:"max length"});
+					err.pushErrors(errors);
+				}
+				if(!postcode.test(data.Postcode)){
+					errors.push({field:"Postcode",message:"invalid value"});
 					err.pushErrors(errors);
 				}
 			}
 
 			//validate Email? hoi a Tan su dung exception
 			if(data.Email){
-				var EmailPattern=new RegExp(HelperService.regexPattern.email);
-				var Email=data.Email.replace(HelperService.regexPattern.phoneExceptChars,'');
+				var EmailPattern=new RegExp(check.regexPattern.email);
+				var Email=data.Email.replace(check.regexPattern.phoneExceptChars,'');
 				if(!EmailPattern.test(Email)){
-					errors.push({field:"Email",message:"Patient.Email.invalid-values"});
+					errors.push({field:"Email",message:"invalid value"});
 					err.pushErrors(errors);
 					throw err;
 				}
@@ -105,17 +136,21 @@ module.exports = {
 			//validte State
 			if(data.State){
 				if(data.State.length < 0 || data.State.length > 255){
-					errors.push({field:"State",message:"Patient.State.length"});
+					errors.push({field:"State",message:"max length"});
+					err.pushErrors(errors);
+				}
+				if(!character.test(data.State)){
+					errors.push({field:"State",message:"invalid value"});
 					err.pushErrors(errors);
 				}
 			}
 
 			//validate HomePhoneNumber? hoi a Tan su dung exception
 			if(data.HomePhoneNumber){
-				var auHomePhoneNumberPattern=new RegExp(HelperService.regexPattern.auHomePhoneNumber);
-				var HomePhone=data.HomePhoneNumber.replace(HelperService.regexPattern.phoneExceptChars,'');
+				var auHomePhoneNumberPattern=new RegExp(check.regexPattern.auHomePhoneNumber);
+				var HomePhone=data.HomePhoneNumber.replace(check.regexPattern.phoneExceptChars,'');
 				if(!auHomePhoneNumberPattern.test(HomePhone)){
-					errors.push({field:"HomePhoneNumber",message:"Patient.HomePhoneNumber.invalid-values"});
+					errors.push({field:"HomePhoneNumber",message:"invalid value"});
 					err.pushErrors(errors);
 					throw err;
 				}
@@ -123,10 +158,10 @@ module.exports = {
 
 			//validate HomePhoneNumber? hoi a Tan su dung exception
 			if(data.WorkPhoneNumber){
-				var auWorkPhoneNumberPattern=new RegExp(HelperService.regexPattern.auHomePhoneNumber);
-				var WorkPhoneNumber=data.WorkPhoneNumber.replace(HelperService.regexPattern.phoneExceptChars,'');
+				var auWorkPhoneNumberPattern=new RegExp(check.regexPattern.auHomePhoneNumber);
+				var WorkPhoneNumber=data.WorkPhoneNumber.replace(check.regexPattern.phoneExceptChars,'');
 				if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
-					errors.push({field:"WorkPhoneNumber",message:"Patient.WorkPhoneNumber.invalid-values"});
+					errors.push({field:"WorkPhoneNumber",message:"invalid value"});
 					err.pushErrors(errors);
 					throw err;
 				}
@@ -205,7 +240,7 @@ module.exports = {
 			FirstName       : data.FirstName,
 			MiddleName      : data.MiddleName,
 			LastName        : data.LastName,
-			DOB             : moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss'),
+			DOB             : data.DOB?moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss'):null,
 			Gender          : data.Gender,
 			Occupation      : data.Occupation,
 			HomePhoneNumber : data.HomePhoneNumber,
@@ -258,6 +293,7 @@ module.exports = {
 			if(isCreateByName==false && isCreateByEmail==false){
 				if(user.length > 0) {
 					info.UserAccountID = user[0].ID;
+					info.UserAccountUID = user[0].UID;
 					return Patient.create(info,transaction);
 				}
 				else{
@@ -273,6 +309,7 @@ module.exports = {
 					return Services.UserAccount.CreateUserAccount(userInfo,transaction)
 					.then(function(user){
 						info.UserAccountID = user.ID;
+						info.UserAccountUID = user.UID;
 						return Patient.create(info,transaction);
 					},function(err){
 						throw err;
@@ -281,13 +318,17 @@ module.exports = {
 			}
 			else{
 				info.UserAccountID = user.ID;
+				info.UserAccountUID = user.UID;
 				return Patient.create(info,transaction);
 			}
 		},function(err){
 			throw err;
 		})
 		.then(function(result){
-			return result;
+			return {
+				result:result,
+				UserAccountUID:info.UserAccountUID
+			};
 		}, function(err){
 			throw err;
 		})
@@ -303,7 +344,7 @@ module.exports = {
 		if(check.checkData(data.values)){
 			var PhoneNumberPattern1=new RegExp(/^4[0-9]{8}$/);
 			var PhoneNumberPattern2=new RegExp(/^(\+61|0061|0)?4[0-9]{8}$/);
-			var PhoneNumber=data.values.replace(HelperService.regexPattern.phoneExceptChars,'');
+			var PhoneNumber=data.values.replace(check.regexPattern.phoneExceptChars,'');
 			if(PhoneNumberPattern1.test(PhoneNumber)||PhoneNumberPattern2.test(PhoneNumber)){
 				if(data.values.substr(0,3)=='+61'){
 					return Services.UserAccount.FindByPhoneNumber(data.values)

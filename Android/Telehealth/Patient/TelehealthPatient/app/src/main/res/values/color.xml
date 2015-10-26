@@ -24,12 +24,33 @@
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#B42047</color>
 
-    <!-- Dialog Color-->
+    <!-- Dialog Alert Color-->
     <color name="success">#2196f3</color>
     <color name="error">#F44336</color>
     <color name="warning">#FFB300</color>
 
+    <!-- Dialog Connection Color-->
+    <color name="bg_primary_alert">#0B4F66</color>
+    <color name="bg_foreign_alert">#0D6480</color>
+    <color name="btn_settings">#E96220</color>
+    <color name="btn_skip">#0B4F66</color>
+
     <!-- Status Color-->
     <color name="approved">#00703C</color>
     <color name="unapproved">#F44336</color>
+
+    <!-- Progress Bar-->
+    <color name="cpb_grey">#ffdedede</color>
+    <color name="cpb_bg">#67000000</color>
+    <color name="cpb_border">#32000000</color>
+    <color name="cpb_blue_dark">#ff00719b</color>
+    <color name="cpb_red">#ffff4444</color>
+    <color name="cpb_red_dark">#ffcd3a3a</color>
+    <color name="cpb_green">#ff99cc00</color>
+    <color name="cpb_green_dark">#ff6d9b00</color>
+    <color name="cpb_white">@android:color/white</color>
+    <color name="material_purple_500">#8f3e97</color>
+    <color name="main_color_500_20_percent">#338f3e97</color>
+    <color name="white_30_percent">#4Dffffff</color>
+    <color name="material_grey_700">#616161</color>
 </resources>

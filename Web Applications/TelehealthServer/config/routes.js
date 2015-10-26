@@ -48,5 +48,10 @@ module.exports.routes = {
     'GET /api/telehealth/socket/generateSession': {
         controller: 'SocketController',
         action: 'GenerateConferenceSession'
+    },
+    //=================Telehealth Appointment============================
+    'POST /api/telehealth/appointment/updateFile':{
+        controller: 'Telehealth/v1_0/AppointmentController',
+        action: 'UpdateFile'
     }
 };

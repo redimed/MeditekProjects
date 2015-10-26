@@ -3,11 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Framelayout to display Fragments -->
-    <FrameLayout
-        android:id="@+id/frame_container"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/all_background">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/logo_redimed" />
+
+        <!-- Framelayout to display Fragments -->
+        <FrameLayout
+            android:id="@+id/frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 
     <!-- Listview to display slider menu -->
     <RelativeLayout
@@ -15,7 +31,7 @@
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="left|start"
-        android:background="@drawable/category_background"
+        android:background="@drawable/all_background"
         android:orientation="horizontal">
 
         <ImageButton

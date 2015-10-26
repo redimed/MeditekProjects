@@ -1,0 +1,10 @@
+module.exports={
+	'TestController':{
+		'test':['hasToken'],
+		'testAdmin':['hasToken','isAdmin'],
+		'testAssistant':['hasToken','isAssistant'],
+		'testGp':['hasToken','isExternalPractitioner'],
+		'testDoctor':['hasToken','isInternalPractitioner'],
+		'testPatient':['hasToken','isPatient']
+  	},
+}

@@ -1,41 +1,30 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameProfile"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/swipeInfo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context="com.redimed.telehealth.patient.fragment.InformationFragment">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-
-        <ImageView
-            android:id="@+id/backgroundImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/category_background" />
-
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="?android:actionBarSize"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/logo_redimed" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/logo">
+            android:id="@+id/scrollViewInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isScrollContainer="false"
+            android:scrollbars="none">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/layoutProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/layoutUserName"
@@ -111,9 +100,9 @@
                             android:id="@+id/txtPhone"
                             android:layout_width="300dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
                             android:editable="false"
                             android:enabled="false"
-                            android:layout_gravity="bottom"
                             android:hint="Phone Number"
                             android:inputType="number"
                             android:maxLength="15"
@@ -252,21 +241,21 @@
                     android:layout_width="300dp"
                     android:layout_height="?android:actionBarSize"
                     android:layout_alignParentBottom="true"
-                    android:layout_below="@id/layoutAddress"
                     android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="15dp"
                     android:background="#67000000"
                     android:fontFamily="sans-serif-light"
-                    android:orientation="horizontal"
-                    android:text="@string/btn_submit"
+                    android:text="Close"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="17sp"
                     android:textStyle="bold" />
-            </RelativeLayout>
+
+            </LinearLayout>
 
         </ScrollView>
 
     </RelativeLayout>
 
-</FrameLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

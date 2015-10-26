@@ -7,15 +7,7 @@
     <RelativeLayout
         android:id="@+id/homeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/category_background">
-
-        <ImageView
-            android:id="@+id/imgViewLogo"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/logo_redimed" />
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -61,6 +53,7 @@
                     android:layout_height="110dp"
                     android:layout_marginRight="40dp"
                     android:text="@string/orange_btn"
+                    android:textAllCaps="false"
                     android:textColor="@color/lightFont"
                     style="?android:borderlessButtonStyle"
                     android:background="@drawable/orange_bg" />

@@ -4,11 +4,21 @@ module.exports = {
             type: Sequelize.BIGINT(20),
             autoIncrement: true,
             allowNull: false,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            },
             primaryKey: true
         },
         DoctorID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            },
             references: {
                 model: 'Doctor',
                 key: 'ID'
@@ -17,6 +27,11 @@ module.exports = {
         AppointmentID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            },
             references: {
                 model: 'Appointment',
                 key: 'ID'
@@ -26,6 +41,7 @@ module.exports = {
     associations: function() {},
     options: {
         tableName: 'RelDoctorAppointment',
-        timestamps: false
+        timestamps: false,
+        hooks: {}
     }
 };

@@ -47,7 +47,7 @@ module.exports.cors = {
      *                                                                          *
      ***************************************************************************/
 
-    origin: 'http://localhost:8000,http://localhost:8001,http://localhost:3004, http://192.168.1.2:3004, http://telehealvietnam.com.vn:3004, http://testapp.redimed.com.au:3004',
+    origin: 'http://localhost:8000,http://localhost:8001,http://localhost:3004, http://192.168.1.2:3004, http://telehealvietnam.com.vn:3004, http://testapp.redimed.com.au:3004, http://testapp.redimed.com.au:3007',
 
     /***************************************************************************
      *                                                                          *

@@ -26,7 +26,7 @@
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form action="#" class="form-horizontal" id="submit_form" method="POST">
+				<form class="form-horizontal" id="submit_form" role="form">
 					<div class="form-wizard">
 						<div class="form-body">
 							<ul class="nav nav-pills nav-justified steps">
@@ -65,407 +65,205 @@
 									Your form validation is successful!
 								</div>
 								<div class="tab-pane active" id="tab1">
+									<!-- country -->
+									<div class="form-group">
+										<label class="control-label col-md-4">Title</label>
+										<div class="col-md-4">
+											<select class="select2 form-control" ng-model="data.Title" ng-options="options.id as options.name for options in title" ng-disabled="isBlockStep2">
+												<option value="">Select Title</option>
+											</select>
+										</div>
+									</div>
+									<!-- end country -->
 									<!-- Begin Firstname -->
 									<div class="form-group">
 										<label class="control-label col-md-4">Firstname <span class="required">* </span></label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" placeholder="Firstname" ng-model="data.FirstName" ng-style="er.FirstName" ng-disabled="isBlockStep1">
-											<span class="help-block">Provide your Firstname </span>
+											<input type="text" class="form-control" placeholder="Firstname" ng-model="data.FirstName" ng-keyup="upper(data.FirstName)" ng-disabled="isBlockStep1">
 										</div>
 									</div>
 									<!-- End Firstname -->
-									<!-- Begin Surname -->
-										<div class="form-group ">
-											<label class="control-label col-md-4">Surname <span class="required">* </span></label>
-											<div class="col-md-4">
-												<input type="text" class="form-control" placeholder="Surname" ng-model="data.LastName" ng-style="er.LastName" ng-disabled="isBlockStep1">
-												<span class="help-block">Provide your Surname </span>
-											</div>
-										</div>
-									<!-- End Surname -->
 									<!-- Begin Middlename -->
 									<div class="form-group">
-										<label class="control-label col-md-4">Middlename <span class="required">* </span></label>
+										<label class="control-label col-md-4">Middlename</label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" placeholder="Middlename" ng-model="data.MiddleName" ng-style="er.MiddleName" ng-disabled="isBlockStep1">
-											<span class="help-block">Provide your Middlename </span>
+											<input type="text" class="form-control" placeholder="Middlename" ng-model="data.MiddleName" ng-disabled="isBlockStep1">
 										</div>
 									</div>
 									<!-- End Middlename -->
+									<!-- Begin Surname -->
+										<div class="form-group ">
+											<label class="control-label col-md-4">Lastname <span class="required">* </span></label>
+											<div class="col-md-4">
+												<input type="text" class="form-control" placeholder="Lastname" ng-model="data.LastName" ng-disabled="isBlockStep1">
+											</div>
+										</div>
+									<!-- End Surname -->
 									<!-- begin MobilePhone -->
 									<div class="form-group">
 										<label class="control-label col-md-4">MobilePhone <span class="required">* </span></label>
 										<div class="col-md-4">
 											<div class="input-icon">
 												<i class="icon-call-end"></i>
-												<input type="text" class="form-control" placeholder="+614 8888 8888" ng-model="data.PhoneNumber" ng-style="er.PhoneNumber" ng-disabled="isBlockStep1">
-												<span class="help-block">Provide your Mobilephone </span>
+												<input type="text" class="form-control" placeholder="+614 8888 8888" ng-model="data.PhoneNumber" maxlength="17" ng-disabled="isBlockStep1">
 											</div>
 										</div>
 									</div>
 									<!-- end MobilePhone -->
+									<!-- begin Email -->
+									<div class="form-group">
+										<label class="control-label col-md-4">Email</label>
+										<div class="col-md-4">
+											<div class="input-icon">
+												<i class="fa fa-envelope"></i>
+												<input type="text" class="form-control" placeholder="Email" ng-model="data.Email" ng-disabled="isBlockStep2">
+											</div>
+										</div>
+									</div>
+									<!-- end Email -->
 								</div>
 								<div class="tab-pane" id="tab2">
 									<div style="margin:3em;">
 										<div class="row">
-											<!-- Healthlink ID -->
-											<div class="form-group">
-												<label class="control-label col-md-3">Healthlink ID</label>
-												<div class="col-md-4">
-													<input type="text" placeholder="Healthlink ID" class="form-control" ng-model="data.HealthLinkID" ng-style="er.HealthLinkID" ng-disabled="isBlockStep2">
+											<div class="col-md-4">
+												<!-- profileImage -->
+												<div class="form-group">
+													<div class="fileinput fileinput-new" data-provides="fileinput">
+														<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
+															<img src="theme/assets/global/images/no_person.jpg">
+														</div>
+														<div>
+															<span class="btn green btn-file">
+															<span class="fileinput-new">
+															Select Image </span>
+															<span class="fileinput-exists">
+															Change </span>
+															<input type="file" nv-file-select uploader="uploaders">
+															</span>
+															<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+															Remove </a>
+														</div>
+													</div>
+													<div class="clearfix margin-top-10"></div>
 												</div>
+												<!-- end profileImage -->
 											</div>
-											<!-- End Healthlink ID -->
-											<!-- Begin Address1 -->
-											<div class="form-group ">
-												<label class="control-label col-md-3">Address1</label>
-												<div class="col-md-4">
-													<div class="input-icon">
-														<i class="fa  fa-paper-plane"></i>
-														<input type="text" class="form-control" placeholder="Address1" ng-model="data.Address1" ng-style="er.Address1" ng-disabled="isBlockStep2">
+											<div class="col-md-4">
+												<!-- Healthlink ID -->
+												<div class="form-group">
+													<label class="control-label col-md-3">Healthlink ID</label>
+													<div class="col-md-9">
+														<input type="text" placeholder="Healthlink ID" class="form-control" only-number ng-model="data.HealthLinkID" ng-disabled="isBlockStep2">
 													</div>
 												</div>
-											</div>
-											<!-- End Address1 -->
-											<!-- Begin Address2 -->
-											<div class="form-group ">
-												<label class="control-label col-md-3">Address2</label>
-												<div class="col-md-4">
-													<div class="input-icon">
-														<i class="fa  fa-paper-plane"></i>
-														<input type="text" class="form-control" placeholder="Address2" ng-model="data.Address2" ng-style="er.Address2" ng-disabled="isBlockStep2">
+												<!-- End Healthlink ID -->
+												<!-- begin DOB -->
+												<div class="form-group">
+													<label class="control-label col-md-3">Date of Birth</label>
+													<div class="col-md-9">
+														<div class="input-icon">
+															<i class="fa fa-calendar"></i>
+	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="data.DOB">
+														</div>
 													</div>
 												</div>
-											</div>
-											<!-- End Address2 -->
-											<!-- begin Email -->
-											<div class="form-group">
-												<label class="control-label col-md-3">Email</label>
-												<div class="col-md-4">
-													<div class="input-icon">
-														<i class="fa fa-envelope"></i>
-														<input type="text" class="form-control" placeholder="Email" ng-model="data.Email" ng-style="er.Email" ng-disabled="isBlockStep2">
+												<!-- end DOB -->
+												<!-- Begin Address1 -->
+												<div class="form-group ">
+													<label class="control-label col-md-3">Address1</label>
+													<div class="col-md-9">
+														<div class="input-icon">
+															<i class="fa  fa-paper-plane"></i>
+															<input type="text" class="form-control" placeholder="Address1" ng-model="data.Address1" ng-disabled="isBlockStep2">
+														</div>
 													</div>
 												</div>
-											</div>
-											<!-- end Email -->
-											<!-- begin Homephone -->
-											<div class="form-group">
-												<label class="control-label col-md-3">Homephone</label>
-												<div class="col-md-4">
-													<div class="input-icon">
-														<i class="icon-call-end"></i>
-														<input type="text" class="form-control" placeholder="+61 8888 8888" ng-model="data.Homephone" ng-style="er.Homephone" ng-disabled="isBlockStep2">
+												<!-- End Address1 -->
+												<!-- Begin Address2 -->
+												<div class="form-group ">
+													<label class="control-label col-md-3">Address2</label>
+													<div class="col-md-9">
+														<div class="input-icon">
+															<i class="fa  fa-paper-plane"></i>
+															<input type="text" class="form-control" placeholder="Address2" ng-model="data.Address2" ng-disabled="isBlockStep2">
+														</div>
 													</div>
 												</div>
+												<!-- End Address2 -->
 											</div>
-											<!-- end Homephone -->
-											<!-- begin Workphone -->
-											<div class="form-group">
-												<label class="control-label col-md-3">Workphone</label>
-												<div class="col-md-4">
-													<div class="input-icon">
-														<i class="icon-call-end"></i>
-														<input type="text" class="form-control" placeholder="+61 8888 8888" ng-model="data.Workphone" ng-style="er.Workphone" ng-disabled="isBlockStep2">
+											<div class="col-md-4">
+												
+												
+												
+												<!-- begin Homephone -->
+												<div class="form-group">
+													<label class="control-label col-md-3">Homephone</label>
+													<div class="col-md-9">
+														<div class="input-icon">
+															<i class="icon-call-end"></i>
+															<input type="text" class="form-control" placeholder="Homephone" maxlength="9" ng-model="data.HomePhoneNumber" ng-disabled="isBlockStep2">
+														</div>
 													</div>
 												</div>
-											</div>
-											<!-- end Workphone -->
-											<!-- begin Postcode -->
-											<div class="form-group">
-												<label class="control-label col-md-3">Postcode</label>
-												<div class="col-md-4">
-													<input type="text" class="form-control" placeholder="Postcode" ng-model="data.Postcode" ng-style="er.Postcode" ng-disabled="isBlockStep2">
+												<!-- end Homephone -->
+												<!-- begin Workphone -->
+												<div class="form-group">
+													<label class="control-label col-md-3">Workphone</label>
+													<div class="col-md-9">
+														<div class="input-icon">
+															<i class="icon-call-end"></i>
+															<input type="text" class="form-control" placeholder="Workphone" maxlength="9" ng-model="data.WorkPhoneNumber" ng-disabled="isBlockStep2">
+														</div>
+													</div>
 												</div>
-											</div>
-											<!-- end Postcode -->
-											<!-- begin Suburb -->
-											<div class="form-group">
-												<label class="control-label col-md-3">Suburb</label>
-												<div class="col-md-4">
-													<input type="text" class="form-control" placeholder="Suburb" ng-model="data.Suburb" ng-style="er.Suburb" ng-disabled="isBlockStep2">
+												<!-- end Workphone -->
+												<!-- begin Postcode -->
+												<div class="form-group">
+													<label class="control-label col-md-3">Postcode</label>
+													<div class="col-md-9">
+														<input type="text" class="form-control" placeholder="Postcode" ng-model="data.Postcode" maxlength="4" ng-disabled="isBlockStep2">
+													</div>
 												</div>
-											</div>
-											<!-- end Suburb -->
-											<!-- begin State -->
-											<div class="form-group">
-												<label class="control-label col-md-3">State</label>
-												<div class="col-md-4">
-													<input type="text" class="form-control" placeholder="State" ng-model="data.State" ng-style="er.State" ng-disabled="isBlockStep2">
+												<!-- end Postcode -->
+												<!-- begin Suburb -->
+												<div class="form-group">
+													<label class="control-label col-md-3">Suburb</label>
+													<div class="col-md-9">
+														<input type="text" class="form-control" placeholder="Suburb" ng-model="data.Suburb" ng-disabled="isBlockStep2">
+													</div>
 												</div>
-											</div>
-											<!-- end State -->
-											<!-- country -->
-											<div class="form-group">
-												<label class="control-label col-md-3">Country</label>
-												<div class="col-md-4">
-													<select id="select2_sample4" class="select2 form-control" ng-model="data.CountryID" ng-style="er.CountryID" ng-disabled="isBlockStep2">
-														<option value=""></option>
-														<option value="AF">Afghanistan</option>
-														<option value="AL">Albania</option>
-														<option value="DZ">Algeria</option>
-														<option value="AS">American Samoa</option>
-														<option value="AD">Andorra</option>
-														<option value="AO">Angola</option>
-														<option value="AI">Anguilla</option>
-														<option value="AR">Argentina</option>
-														<option value="AM">Armenia</option>
-														<option value="AW">Aruba</option>
-														<option value="AU">Australia</option>
-														<option value="AT">Austria</option>
-														<option value="AZ">Azerbaijan</option>
-														<option value="BS">Bahamas</option>
-														<option value="BH">Bahrain</option>
-														<option value="BD">Bangladesh</option>
-														<option value="BB">Barbados</option>
-														<option value="BY">Belarus</option>
-														<option value="BE">Belgium</option>
-														<option value="BZ">Belize</option>
-														<option value="BJ">Benin</option>
-														<option value="BM">Bermuda</option>
-														<option value="BT">Bhutan</option>
-														<option value="BO">Bolivia</option>
-														<option value="BA">Bosnia and Herzegowina</option>
-														<option value="BW">Botswana</option>
-														<option value="BV">Bouvet Island</option>
-														<option value="BR">Brazil</option>
-														<option value="IO">British Indian Ocean Territory</option>
-														<option value="BN">Brunei Darussalam</option>
-														<option value="BG">Bulgaria</option>
-														<option value="BF">Burkina Faso</option>
-														<option value="BI">Burundi</option>
-														<option value="KH">Cambodia</option>
-														<option value="CM">Cameroon</option>
-														<option value="CA">Canada</option>
-														<option value="CV">Cape Verde</option>
-														<option value="KY">Cayman Islands</option>
-														<option value="CF">Central African Republic</option>
-														<option value="TD">Chad</option>
-														<option value="CL">Chile</option>
-														<option value="CN">China</option>
-														<option value="CX">Christmas Island</option>
-														<option value="CC">Cocos (Keeling) Islands</option>
-														<option value="CO">Colombia</option>
-														<option value="KM">Comoros</option>
-														<option value="CG">Congo</option>
-														<option value="CD">Congo, the Democratic Republic of the</option>
-														<option value="CK">Cook Islands</option>
-														<option value="CR">Costa Rica</option>
-														<option value="CI">Cote d'Ivoire</option>
-														<option value="HR">Croatia (Hrvatska)</option>
-														<option value="CU">Cuba</option>
-														<option value="CY">Cyprus</option>
-														<option value="CZ">Czech Republic</option>
-														<option value="DK">Denmark</option>
-														<option value="DJ">Djibouti</option>
-														<option value="DM">Dominica</option>
-														<option value="DO">Dominican Republic</option>
-														<option value="EC">Ecuador</option>
-														<option value="EG">Egypt</option>
-														<option value="SV">El Salvador</option>
-														<option value="GQ">Equatorial Guinea</option>
-														<option value="ER">Eritrea</option>
-														<option value="EE">Estonia</option>
-														<option value="ET">Ethiopia</option>
-														<option value="FK">Falkland Islands (Malvinas)</option>
-														<option value="FO">Faroe Islands</option>
-														<option value="FJ">Fiji</option>
-														<option value="FI">Finland</option>
-														<option value="FR">France</option>
-														<option value="GF">French Guiana</option>
-														<option value="PF">French Polynesia</option>
-														<option value="TF">French Southern Territories</option>
-														<option value="GA">Gabon</option>
-														<option value="GM">Gambia</option>
-														<option value="GE">Georgia</option>
-														<option value="DE">Germany</option>
-														<option value="GH">Ghana</option>
-														<option value="GI">Gibraltar</option>
-														<option value="GR">Greece</option>
-														<option value="GL">Greenland</option>
-														<option value="GD">Grenada</option>
-														<option value="GP">Guadeloupe</option>
-														<option value="GU">Guam</option>
-														<option value="GT">Guatemala</option>
-														<option value="GN">Guinea</option>
-														<option value="GW">Guinea-Bissau</option>
-														<option value="GY">Guyana</option>
-														<option value="HT">Haiti</option>
-														<option value="HM">Heard and Mc Donald Islands</option>
-														<option value="VA">Holy See (Vatican City State)</option>
-														<option value="HN">Honduras</option>
-														<option value="HK">Hong Kong</option>
-														<option value="HU">Hungary</option>
-														<option value="IS">Iceland</option>
-														<option value="IN">India</option>
-														<option value="ID">Indonesia</option>
-														<option value="IR">Iran (Islamic Republic of)</option>
-														<option value="IQ">Iraq</option>
-														<option value="IE">Ireland</option>
-														<option value="IL">Israel</option>
-														<option value="IT">Italy</option>
-														<option value="JM">Jamaica</option>
-														<option value="JP">Japan</option>
-														<option value="JO">Jordan</option>
-														<option value="KZ">Kazakhstan</option>
-														<option value="KE">Kenya</option>
-														<option value="KI">Kiribati</option>
-														<option value="KP">Korea, Democratic People's Republic of</option>
-														<option value="KR">Korea, Republic of</option>
-														<option value="KW">Kuwait</option>
-														<option value="KG">Kyrgyzstan</option>
-														<option value="LA">Lao People's Democratic Republic</option>
-														<option value="LV">Latvia</option>
-														<option value="LB">Lebanon</option>
-														<option value="LS">Lesotho</option>
-														<option value="LR">Liberia</option>
-														<option value="LY">Libyan Arab Jamahiriya</option>
-														<option value="LI">Liechtenstein</option>
-														<option value="LT">Lithuania</option>
-														<option value="LU">Luxembourg</option>
-														<option value="MO">Macau</option>
-														<option value="MK">Macedonia, The Former Yugoslav Republic of</option>
-														<option value="MG">Madagascar</option>
-														<option value="MW">Malawi</option>
-														<option value="MY">Malaysia</option>
-														<option value="MV">Maldives</option>
-														<option value="ML">Mali</option>
-														<option value="MT">Malta</option>
-														<option value="MH">Marshall Islands</option>
-														<option value="MQ">Martinique</option>
-														<option value="MR">Mauritania</option>
-														<option value="MU">Mauritius</option>
-														<option value="YT">Mayotte</option>
-														<option value="MX">Mexico</option>
-														<option value="FM">Micronesia, Federated States of</option>
-														<option value="MD">Moldova, Republic of</option>
-														<option value="MC">Monaco</option>
-														<option value="MN">Mongolia</option>
-														<option value="MS">Montserrat</option>
-														<option value="MA">Morocco</option>
-														<option value="MZ">Mozambique</option>
-														<option value="MM">Myanmar</option>
-														<option value="NA">Namibia</option>
-														<option value="NR">Nauru</option>
-														<option value="NP">Nepal</option>
-														<option value="NL">Netherlands</option>
-														<option value="AN">Netherlands Antilles</option>
-														<option value="NC">New Caledonia</option>
-														<option value="NZ">New Zealand</option>
-														<option value="NI">Nicaragua</option>
-														<option value="NE">Niger</option>
-														<option value="NG">Nigeria</option>
-														<option value="NU">Niue</option>
-														<option value="NF">Norfolk Island</option>
-														<option value="MP">Northern Mariana Islands</option>
-														<option value="NO">Norway</option>
-														<option value="OM">Oman</option>
-														<option value="PK">Pakistan</option>
-														<option value="PW">Palau</option>
-														<option value="PA">Panama</option>
-														<option value="PG">Papua New Guinea</option>
-														<option value="PY">Paraguay</option>
-														<option value="PE">Peru</option>
-														<option value="PH">Philippines</option>
-														<option value="PN">Pitcairn</option>
-														<option value="PL">Poland</option>
-														<option value="PT">Portugal</option>
-														<option value="PR">Puerto Rico</option>
-														<option value="QA">Qatar</option>
-														<option value="RE">Reunion</option>
-														<option value="RO">Romania</option>
-														<option value="RU">Russian Federation</option>
-														<option value="RW">Rwanda</option>
-														<option value="KN">Saint Kitts and Nevis</option>
-														<option value="LC">Saint LUCIA</option>
-														<option value="VC">Saint Vincent and the Grenadines</option>
-														<option value="WS">Samoa</option>
-														<option value="SM">San Marino</option>
-														<option value="ST">Sao Tome and Principe</option>
-														<option value="SA">Saudi Arabia</option>
-														<option value="SN">Senegal</option>
-														<option value="SC">Seychelles</option>
-														<option value="SL">Sierra Leone</option>
-														<option value="SG">Singapore</option>
-														<option value="SK">Slovakia (Slovak Republic)</option>
-														<option value="SI">Slovenia</option>
-														<option value="SB">Solomon Islands</option>
-														<option value="SO">Somalia</option>
-														<option value="ZA">South Africa</option>
-														<option value="GS">South Georgia and the South Sandwich Islands</option>
-														<option value="ES">Spain</option>
-														<option value="LK">Sri Lanka</option>
-														<option value="SH">St. Helena</option>
-														<option value="PM">St. Pierre and Miquelon</option>
-														<option value="SD">Sudan</option>
-														<option value="SR">Suriname</option>
-														<option value="SJ">Svalbard and Jan Mayen Islands</option>
-														<option value="SZ">Swaziland</option>
-														<option value="SE">Sweden</option>
-														<option value="CH">Switzerland</option>
-														<option value="SY">Syrian Arab Republic</option>
-														<option value="TW">Taiwan, Province of China</option>
-														<option value="TJ">Tajikistan</option>
-														<option value="TZ">Tanzania, United Republic of</option>
-														<option value="TH">Thailand</option>
-														<option value="TG">Togo</option>
-														<option value="TK">Tokelau</option>
-														<option value="TO">Tonga</option>
-														<option value="TT">Trinidad and Tobago</option>
-														<option value="TN">Tunisia</option>
-														<option value="TR">Turkey</option>
-														<option value="TM">Turkmenistan</option>
-														<option value="TC">Turks and Caicos Islands</option>
-														<option value="TV">Tuvalu</option>
-														<option value="UG">Uganda</option>
-														<option value="UA">Ukraine</option>
-														<option value="AE">United Arab Emirates</option>
-														<option value="GB">United Kingdom</option>
-														<option value="US">United States</option>
-														<option value="UM">United States Minor Outlying Islands</option>
-														<option value="UY">Uruguay</option>
-														<option value="UZ">Uzbekistan</option>
-														<option value="VU">Vanuatu</option>
-														<option value="VE">Venezuela</option>
-														<option value="VN">Viet Nam</option>
-														<option value="VG">Virgin Islands (British)</option>
-														<option value="VI">Virgin Islands (U.S.)</option>
-														<option value="WF">Wallis and Futuna Islands</option>
-														<option value="EH">Western Sahara</option>
-														<option value="YE">Yemen</option>
-														<option value="ZM">Zambia</option>
-														<option value="ZW">Zimbabwe</option>
-													</select>
+												<!-- end Suburb -->
+												<!-- begin State -->
+												<div class="form-group">
+													<label class="control-label col-md-3">State</label>
+													<div class="col-md-9">
+														<input type="text" class="form-control" placeholder="State" ng-model="data.State" ng-disabled="isBlockStep2">
+													</div>
 												</div>
+												<!-- end State -->
+												<!-- country -->
+												<div class="form-group">
+													<label class="control-label col-md-3">Country</label>
+													<div class="col-md-9">
+														<select class="select2 form-control" ng-model="data.CountryID" ng-disabled="isBlockStep2" ng-options="c.ID as c.ShortName for c in country">
+															<option value="">Select Country</option>
+														</select>
+													</div>
+												</div>
+												<!-- end country -->
 											</div>
-											<!-- end country -->
 										</div>
 									</div>
 								</div>
 								<div class="tab-pane" id="tab3">
 									<div style="margin:3em;">
 										<div class="row">
-											<!-- Begin Enable -->
-											<div class="form-group">
-												<label class="control-label col-md-3">Enable</label>
-												<div class="col-md-4">
-													<div class="form-control" style="border: none;">
-														<label class="label-control my-checkbox">
-													      <input type="checkbox" class="icheck">
-													    </label>
-													</div>
-												</div>
-											</div>
-											<!-- End Enable -->
 											<!--  Clinical Department-->
 											<div class="form-group">
 												<label class="control-label col-md-3">Clinical Department</label>
 												<div class="col-md-4">
-													<select class="form-control" ng-model="data.Department" ng-style="er.Department">
-														<option value=""></option>
-														<option value="1">Doctor</option>
-														<option value="2">Dept</option>
-														<option value="3">Physio</option>
+													<select class="form-control" ng-model="data.DepartmentID" ng-options="d.ID as d.DepartmentName for d in department">
+														<option value="">Clinical Department</option>
 													</select>
 												</div>
 											</div>
@@ -474,7 +272,7 @@
 											<div class="form-group">
 												<label class="control-label col-md-3">Provider Number</label>
 												<div class="col-md-4">
-													<input type="text" placeholder="Provider Number" class="form-control" ng-model="data.ProviderNumber" ng-style="er.ProviderNumber">
+													<input type="text" placeholder="Provider Number" class="form-control" only-number ng-model="data.ProviderNumber">
 												</div>
 											</div>
 											<!-- Provider Number -->
@@ -482,8 +280,22 @@
 											<div class="form-group">
 												<label class="control-label col-md-3">Type</label>
 												<div class="col-md-4">
-													<select class="form-control">
-														<option value="GP">GP</option>
+													<select class="form-control" ng-model="data.Type">
+														<option value="">Type</option>
+														<option value="EXTERTAL_PRACTITIONER">External Practition</option>
+														<option value="INTERNAL_PRACTITIONER">Internal Practition</option>
+													</select>
+												</div>
+											</div>
+											<!-- End Type -->
+											<!-- Type -->
+											<div class="form-group">
+												<label class="control-label col-md-3">Speciality</label>
+												<div class="col-md-4">
+													<select class="form-control" ng-model="data.Speciality">
+														<option value="">Type</option>
+														<option value="PlasticSurgeon">Plastic Surgeons</option>
+														<option value="OrthopaedicSurgeon">Orthopaedic Surgeon</option>
 													</select>
 												</div>
 											</div>
@@ -492,23 +304,25 @@
 											<div class="form-group">
 												<label class="control-label col-md-3">Signature</label>
 												<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
+													<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
+															<img src="theme/assets/global/images/no_image.png">
+														</div>
 													<div>
 														<span class="btn green btn-file">
 														<span class="fileinput-new">
-														Select Image </span>
+														Signature </span>
 														<span class="fileinput-exists">
 														Change </span>
-														<input type="file" name="...">
+														<input type="file" nv-file-select uploader="uploader">
 														</span>
 														<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
 														Remove </a>
 													</div>
-													<br>
-													<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 500px; height: 150px;"></div>
-												</div>
+													<br>												</div>
 												<div class="clearfix margin-top-10"></div>
 											</div>
 											<!-- end signature -->
+											
 										</div>
 									</div>
 								</div>
@@ -517,23 +331,29 @@
 						<div class="form-actions">
 							<div class="row">
 								<div class="col-md-offset-4 col-md-9">
-									<a href="javascript:;" ng-click="Back()" class="btn default button-previous">
-									<i class="m-icon-swapleft"></i> Back </a>
+									<!--<a href="javascript:;" ng-click="Back()" class="btn default button-previous">
+									<i class="m-icon-swapleft"></i> Back </a>-->
+
 									<!--Step 1-->
-									<a href="javascript:;" class="btn blue" ng-click="show()" ng-show="isShowNext">
+									<a href="javascript:;" class="btn blue" ng-click="show(data)" ng-show="isShowNext">
 									Verify <i class="m-icon-swapright m-icon-white"></i>
 									</a>
-									<a href="javascript:;" class="btn blue button-next" ng-show=" isShowNext2" ng-click="show2()">
+									<a href="javascript:;" class="btn blue button-next" ng-show="isShowNext2" ng-click="show2()">
 									Continue <i class="m-icon-swapright m-icon-white"></i>
 									</a>
-									<a href="javascript:;" class="btn blue" ng-show="isShowNext3" ng-click="show3()">
+									<a href="javascript:;" class="btn default button-previous" ng-show="isShowBack3" ng-click="back_1()"><i class="m-icon-swapleft"></i> Back </a>
+									<a href="javascript:;" class="btn blue" ng-show="isShowNext3" ng-click="show3(data)">
 									Confirm <i class="m-icon-swapright m-icon-white"></i>
 									</a>
 									<a href="javascript:;" class="btn blue button-next" ng-show="isShowNext4" ng-click="show4()">
 									Continue <i class="m-icon-swapright m-icon-white"></i>
 									</a>
 									<!--step 2-->
-									<a href="javascript:;" class="btn green" ng-show="isShowCreate" ng-click="createPatient(data)">
+									<a href="javascript:;" class="btn default button-previous" ng-show="isShowBack4" ng-click="back_2()"><i class="m-icon-swapleft"></i> Back </a>
+									<!--<a href="javascript:;" class="btn blue" ng-show="isShowNext5" ng-click="show5(data)">
+									Confirm <i class="m-icon-swapright m-icon-white"></i>
+									</a>-->
+									<a href="javascript:;" class="btn green" ng-show="isShowCreate" ng-click="create(data)">
 									Create <i class="m-icon-swapright m-icon-white"></i>
 									</a>
 								</div>
@@ -549,6 +369,6 @@
 
 
 <script type="text/javascript">
-Metronic.setAssetsPath('theme/assets/'); // Set the assets folder path	
 FormWizard.init(); // form step
+ComponentsDateTimePickers.init(); // init todo page
 </script>

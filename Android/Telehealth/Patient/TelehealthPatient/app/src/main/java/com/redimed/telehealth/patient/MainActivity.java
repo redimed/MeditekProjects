@@ -2,7 +2,6 @@ package com.redimed.telehealth.patient;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -14,14 +13,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebBackForwardList;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.fragment.FAQsFragment;
 import com.redimed.telehealth.patient.fragment.HomeFragment;
@@ -32,21 +30,18 @@ import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.CustomAlertDialog;
+import com.redimed.telehealth.patient.utils.DialogConnection;
 import com.redimed.telehealth.patient.utils.RVAdapter;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.mime.TypedByteArray;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -59,7 +54,6 @@ public class MainActivity extends AppCompatActivity{
     private TelehealthUser telehealthUser;
     private SharedPreferences uidTelehealth;
     private Gson gson;
-    private boolean flagImageViewDrawer;
 
     @Bind(R.id.frame_container)
     FrameLayout main_contain;
@@ -72,8 +66,11 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getIntent().setAction("Already created");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         startService(new Intent(getApplicationContext(), SocketService.class));
         ButterKnife.bind(this);
         initializeData();
@@ -86,31 +83,29 @@ public class MainActivity extends AppCompatActivity{
         rvCategories.setAdapter(rvAdapter);
 
         DisplayDrawer();
-        Display(0);
-
         GetDetailsPatient();
     }
 
     private void initializeData(){
         categories = new ArrayList<Category>();
-        categories.add(new Category(R.drawable.share_image_icon, "Home", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.person_icon, "Home", R.drawable.circled_chevron_right_icon));
         categories.add(new Category(R.drawable.person_icon, "Information", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.share_image_icon, "Telehealth", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.person_icon, "Telehealth", R.drawable.circled_chevron_right_icon));
         categories.add(new Category(R.drawable.person_icon, "FAQs", R.drawable.circled_chevron_right_icon));
     }
 
     private void GetDetailsPatient() {
-        String headerToken = "";
+        String authToken = "", coreToken = "";
         uidTelehealth = this.getSharedPreferences("TelehealthUser", MODE_PRIVATE);
         gson = new Gson();
 
         telehealthUser = new TelehealthUser();
         telehealthUser.setUID(uidTelehealth.getString("uid", null));
-        headerToken = "Bearer " + uidTelehealth.getString("token", null);
-
+        authToken = "Bearer " + uidTelehealth.getString("token", null);
+        coreToken = "Bearer " + uidTelehealth.getString("coreToken", null);
         JsonObject patientJSON = new JsonObject();
         patientJSON.addProperty("data", gson.toJson(telehealthUser));
-        restClient.getDetailsPatient(patientJSON, headerToken, new Callback<JsonObject>() {
+        restClient.getDetailsPatient(authToken, coreToken, patientJSON,  new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 String message = jsonObject.get("message").getAsString();
@@ -118,25 +113,33 @@ public class MainActivity extends AppCompatActivity{
                     SharedPreferences.Editor patientInfo = getSharedPreferences("PatientInfo", MODE_PRIVATE).edit();
                     patientInfo.putString("info", jsonObject.get("data").toString());
                     patientInfo.commit();
+                    Display(1);
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if (error != null){
-                    String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
-                    try {
-                        JSONObject dataObject = new JSONObject(json);
-                        String message = (String.valueOf(((MyApplication) getApplicationContext()).isJSONValid(dataObject.optString("ErrorsList"))) == null ) ? error.getMessage() : dataObject.optString("ErrorsList");
-                        Log.d(TAG, message);
-                        new CustomAlertDialog(MainActivity.this, CustomAlertDialog.State.Error, message).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
+                    new DialogConnection(MainActivity.this).show();
+                } else {
+                    new CustomAlertDialog(MainActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
                 }
             }
         });
     }
+
+    // TODO: 10/21/2015  
+//    @Override
+//    protected void onResume() {
+//        String action = getIntent().getAction();
+//        if (action == null || !action.equals("Already created")){
+//            Intent intent = new Intent(this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }else
+//            getIntent().setAction(null);
+//        super.onResume();
+//    }
 
     //Initialize Drawer
     private void DisplayDrawer() {

@@ -1,4 +1,4 @@
-module.exports = function(data) {
+module.exports = function(data, userInfo) {
     var moment = require('moment');
     var pagination = {
         filterAppointment: [],
@@ -196,7 +196,8 @@ module.exports = function(data) {
                                 }
                                 if (moment(range[keyModel][keyRange][1], 'YYYY-MM-DD Z', true).isValid() ||
                                     moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                                    end = moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                    end = moment(range[keyModel][keyRange][1], 'YYYY-MM-DD HH:mm:ss Z');
+                                    end = moment(end).add(1, 'day').toDate();
                                 }
                             } else {
                                 start = range[keyModel][keyRange][0];
@@ -208,7 +209,7 @@ module.exports = function(data) {
                                 tempRange[keyRange]['$gte'] = start;
                             }
                             if (HelperService.CheckExistData(end)) {
-                                tempRange[keyRange]['$lte'] = end;
+                                tempRange[keyRange]['$lt'] = end;
                             }
                             if (HelperService.CheckExistData(tempRange[keyRange]) &&
                                 !_.isEmpty(tempRange[keyRange])) {
@@ -238,6 +239,26 @@ module.exports = function(data) {
 
             }
         });
+    }
+    //add roles
+    var role = HelperService.GetRole(userInfo.roles);
+    if (role.isInternalPractitioner) {
+        var filterRoleTemp = {
+            '$and': {
+                ID: userInfo.ID
+            }
+        };
+        pagination.filterDoctor.push(filterRoleTemp);
+    } else if (role.isExternalPractitioner) {
+        var filterRoleTemp = {
+            '$and': {
+                CreatedBy: userInfo.ID
+            }
+        };
+        pagination.filterAppointment.push(filterRoleTemp);
+    } else if (!role.isAdmin &&
+        !role.isAssistant) {
+        pagination.limit = 0;
     }
     return pagination;
 };

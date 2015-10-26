@@ -9,7 +9,7 @@ module.exports = {
         return {
             SiteID: data.SiteID,
             RequestDate: data.RequestDate,
-            Status: 'Watting for approval',
+            Status: 'Waitting for Approval',
             Enable: 'Y'
         };
     },

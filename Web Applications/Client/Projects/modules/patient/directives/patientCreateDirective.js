@@ -9,9 +9,9 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		controller:function($scope, FileUploader) {
 			// Profile Image
 		    var uploader = $scope.uploader = new FileUploader({
-		    	url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
+		    	// url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
+		    	url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	headers:{Authorization:'Bearer '+$cookies.get("token")},
-		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	alias : 'uploadFile'
 		    });
 
@@ -44,7 +44,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		        // console.info('onProgressAll', progress);
 		    };
 		    uploader.onSuccessItem = function (fileItem, response, status, headers) {
-		        // console.info('onSuccessItem', fileItem, response, status, headers);
+		        console.info('onSuccessItem', fileItem, response, status, headers);
 		    };
 		    uploader.onErrorItem = function (fileItem, response, status, headers) {
 		        // console.info('onErrorItem', fileItem, response, status, headers);
@@ -56,7 +56,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		        // console.info('onCompleteItem', fileItem, response, status, headers);
 		    };
 		    uploader.onCompleteAll = function () {
-		        // console.info('onCompleteAll');
+		        console.info('onCompleteAll');
 		    };
 		},
 		link: function(scope, elem, attrs){
@@ -71,7 +71,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 				scope.countries = response.data;
 			},function(err){
 				console.log("Server Error");
-			})
+			});
 			scope.data ={};
 			scope.er={};
 			scope.ermsg={};
@@ -86,11 +86,12 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 			$timeout(function(){
 				App.setAssetsPath('theme/assets/'); // Set the assets folder path	
 				FormWizard.init(); // form step
-			},0); 
+			},0);
 
-			
-
-
+			var input = PatientService.getDatatoDirective();
+			if(input){
+				scope.data = angular.copy(input);
+			}
 
 			scope.checkPhone = function(data) {
 				PatientService.validateCheckPhone(data)
@@ -147,13 +148,9 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 					data.DOB = moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss');
 					return PatientService.createPatient(data)
 					.then(function(success){
-						for (var i = 0; i < scope.uploader.queue.length; i++) 
-			            {
-			                var item=scope.uploader.queue[i];
-			                item.formData[i]={};
-			                item.formData[i].userUID = success.data.UserAccountUID;
-			                item.formData[i].fileType = 'ProfileImage';
-			            }
+			            scope.uploader.queue[0].formData[0]={};
+						scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
+						scope.uploader.queue[0].formData[0].userUID = success.data.UserAccountUID;
 						scope.uploader.uploadAll();
 						if (scope.appointment) {
 							scope.appointment.runIfSuccess(success.data);
@@ -184,10 +181,6 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 					}
 				});
 			};
-
-			
-		    
-
 
 		},
 		templateUrl:"modules/patient/directives/template/patientCreate.html"

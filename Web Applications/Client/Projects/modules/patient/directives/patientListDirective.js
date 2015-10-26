@@ -14,8 +14,8 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			scope.fieldSort;
 			scope.checked='true';
 			scope.itemDefault = [
-				{field:"FirstName",name:"First Name"},
-				{field:"LastName",name:"Last Name"},
+				{field:"FirstName",name:"Firstname"},
+				{field:"LastName",name:"Lastname"},
 				{field:"Gender",name:"Gender"},
 				{field:"UserAccount",name:"Mobile"},
 				{field:"Email",name:"Email"}

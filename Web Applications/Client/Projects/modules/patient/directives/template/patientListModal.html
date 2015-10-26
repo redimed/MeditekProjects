@@ -29,14 +29,15 @@
 								<div class="tab-pane active" id="Personal_info">
 									<div style="margin:3em;">
 										<div class="row">
-											<div class="col-md-4">
+											<div class="col-md-3">
 												<!-- avatar -->
 												<div class="row">
 													<div class="col-md-12">
 														<div class="form-group">
 														<div class="fileinput fileinput-new" data-provides="fileinput">
-															<div class="fileinput-new thumbnail" style="width: 200%; height: 300px;">
+															<div class="fileinput-new thumbnail" style="width: 100%; height: 100%;">
 																<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
+																<img src="theme/assets/global/images/no_person.jpg">
 															</div>
 															<div class="fileinput-preview fileinput-exists thumbnail">
 															</div>
@@ -69,27 +70,29 @@
 									            <!-- end title -->
 												<!-- First Name -->
 												<div class="form-group">
-													<label class="control-label col-md-4">First Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="First Name" ng-model="info.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName=''" ><span style="color:red;">{{ermsg.FirstName}}</span></div>
+													<label class="control-label col-md-4">Firstname</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Firstname" ng-model="info.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName=''" ><span style="color:red;">{{ermsg.FirstName}}</span></div>
 												</div>
 												<!-- end First Name -->
-												<!-- Sur Name -->
+												<!-- Middlename -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Sur Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Sur Name" ng-model="info.LastName" ng-style="er.LastName" ng-change="ermsg.LastName=''" ><span style="color:red;">{{ermsg.LastName}}</span></div>
-												</div>
-												<!-- end Sur Name -->
-												<!-- Middle Name -->
-												<div class="form-group">
-													<label class="control-label col-md-4">Middle Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Middle Name" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName=''" ><span style="color:red;">{{ermsg.MiddleName}}</span></div>
+													<label class="control-label col-md-4">Middlename</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Middlename" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName=''" ><span style="color:red;">{{ermsg.MiddleName}}</span></div>
 												</div>
 												<!-- end Middle Name -->
+												<!-- Lastname -->
+												<div class="form-group">
+													<label class="control-label col-md-4">Lastname</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Lastname" ng-model="info.LastName" ng-style="er.LastName" ng-change="ermsg.LastName=''" ><span style="color:red;">{{ermsg.LastName}}</span></div>
+												</div>
+												<!-- end Lastname -->
 												<!-- Date of Birth -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Date of Birth</label>
 													<div class="col-md-8">
-														<input ng-model="info.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" ng-style="er.DOB" ng-change="ermsg.DOB=''"><span style="color:red;">{{ermsg.DOB}}</span>
+														<!-- <input ng-model="info.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" ng-style="er.DOB" ng-change="ermsg.DOB=''"> -->
+														<input ng-model="info.DOB" type="text" class="form-control date-picker" name="dob" datepicker-popup="dd/MM/yyyy" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" ng-style="er.DOB" ng-change="ermsg.DOB=''">
+														<span style="color:red;">{{ermsg.DOB}}</span>
 													</div>
 												</div>
 												<!-- end Date of Birth -->
@@ -111,7 +114,7 @@
 												</div>
 												<!-- end Occupation -->
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-4 ">
 												<h4><b>Contact Information</b></h4>
 												<hr>
 												<!-- Email -->
@@ -120,18 +123,18 @@
 													<div class="col-md-8"><input type="text" class="form-control" placeholder="Email" ng-disabled="true" ng-model="info.Email"></div>
 												</div>
 												<!-- end Email -->
-												<!-- Home Phone -->
+												<!-- Homephone -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Home Phone</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber=''"><span style="color:red;">{{ermsg.HomePhoneNumber}}</span></div>
+													<label class="control-label col-md-4">Homephone</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Homephone" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber=''"><span style="color:red;">{{ermsg.HomePhoneNumber}}</span></div>
 												</div>
-												<!-- end Home Phone -->
-												<!-- Mobile Phone -->
+												<!-- end Homephone -->
+												<!-- Mobilephone -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Mobile Phone</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Mobile Phone" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber"></div>
+													<label class="control-label col-md-4">Mobilephone</label>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Mobilephone" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber"></div>
 												</div>
-												<!-- end Mobile Phone -->
+												<!-- end Mobilephone -->
 												<!-- Address1 -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Address1</label>

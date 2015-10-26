@@ -54,9 +54,51 @@
 		<span class="arrow open"></span>
 		</a>
 	</li>
+	<li class="nav-item">
+        <a href="javascript:;" class="nav-link nav-toggle">
+            <i class="icon-wallet"></i>
+            <span class="title">Portlets</span>
+            <span class="arrow"></span>
+        </a>
+        <ul class="sub-menu">
+            <li class=" ">
+                <a href="portlet_boxed.html" class="nav-link ">
+                    <span class="title">Boxed Portlets</span>
+                </a>
+            </li>
+            <li class=" ">
+                <a href="portlet_light.html" class="nav-link ">
+                    <span class="title">Light Portlets</span>
+                </a>
+            </li>
+            <li class=" ">
+                <a href="portlet_solid.html" class="nav-link ">
+                    <span class="title">Solid Portlets</span>
+                </a>
+            </li>
+            <li class=" ">
+                <a href="portlet_ajax.html" class="nav-link ">
+                    <span class="title">Ajax Portlets</span>
+                </a>
+            </li>
+            <li class="">
+                <a href="portlet_draggable.html" class="nav-link ">
+                    <span class="title">Draggable Portlets</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
 
 
     <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'">
+    </li>
+    <li class="nav-item">
+    	<a href="javascript:;" ui-sref="authentication.user.profile" class="nav-link">
+            <i class="icon-user"></i>
+            <span class="title">User Profile</span>
+            <span class="arrow"></span>
+        </a>
     </li>
 </ul>
 

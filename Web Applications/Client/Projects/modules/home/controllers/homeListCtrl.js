@@ -7,23 +7,29 @@ app.controller('homeListCtrl', function($scope){
 	$scope.testDialog=function()
 	{
 		$scope.data.showDialog()
-		.then(function(data){
-			switch(data){
-				case 'yes':
-					alert("yes ne");
-				break;
-				case 'no':
-					alert("no ne");
-				break;
-				case 'cancel':
-					alert("cancel ne");
-				break;
-				case 'ok':
-					alert("ok ne");
-				break;
-			}
-		},function(err){
-			alert(err);
-		})
-	}
+			.then(function(data){
+				switch(data){
+					case 'yes':
+						alert("yes ne");
+					break;
+					case 'no':
+						alert("no ne");
+					break;
+					case 'cancel':
+						alert("cancel ne");
+					break;
+					case 'ok':
+						alert("ok ne");
+					break;
+				}
+			},function(err){
+				alert(err);
+			});
+	};
+});
+
+app.directive('myDirective', function () {
+    return {
+        template : 'dsdsd',
+    }
 });

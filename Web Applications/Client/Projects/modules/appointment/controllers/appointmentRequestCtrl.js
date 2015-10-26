@@ -69,7 +69,6 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
 
         $scope.requestInfo.TelehealthAppointment.PreferredPractitioner = [];
         $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];
-        console.log('data', $scope.requestInfo);
         _.forEach($scope.doctors, function(item) {
             if (item != undefined || item != null) {
                 var data = {
@@ -95,7 +94,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
                 }
             })
         });
-
+        console.log('data', $scope.requestInfo);
         AppointmentService.SendRequest($scope.requestInfo).then(function(data) {
             $scope.laddaLoadingBar = false;
             swal({

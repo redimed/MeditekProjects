@@ -2,15 +2,16 @@ var app = angular.module('app.authentication.patient.create.directive',[]);
 app.directive('patientCreate',function(toastr, PatientService, $state, $timeout, $cookies){
 	return {
 		scope :{
-			appointment:'='
+			appointment:'=',
+			abc:'=onItem'
 		},
 		restrict: "EA",
-		controller:function($scope,FileUploader)
-		{
+		controller:function($scope, FileUploader) {
 			// Profile Image
 		    var uploader = $scope.uploader = new FileUploader({
-		    	// url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
-		    	url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
+		    	headers:{Authorization:'Bearer '+$cookies.get("token")},
+		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	alias : 'uploadFile'
 		    });
 
@@ -59,6 +60,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		    };
 		},
 		link: function(scope, elem, attrs){
+			console.log(scope.abc);
 			scope.data ={};
 			scope.er={};
 			scope.ermsg={};
@@ -91,13 +93,13 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 							if(result.data.isCreated==false){
 								scope.er ='';
 								scope.ermsg='';
-								toastr.success("Phone number can user to create patient","SUCCESS");
+								toastr.success("Phone Number can be choose to create patient","SUCCESS");
 								scope.isShowEmail = result.data.data.Email;
 								scope.data.Email = result.data.data.Email;
 								scope.isShowNext = true;
 							}
 							else{
-								toastr.error("Phone Number da duoc tao patient","ERROR");
+								toastr.error("Phone Number was used to create patient","ERROR");
 								scope.isBlockStep1 =false;
 							}
 						}
@@ -123,14 +125,9 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 			};
 
 			scope.Cancel = function() {
-				if (appointment) {
-					scope.appointment.runIfClose();
-				}else{
-					$state.go('authentication.patient.list',null, {
-			            'reload': true
-			        });
-				};
-				
+				$state.go('authentication.patient.list',null, {
+		            'reload': true
+		        });
 			};
 
 			scope.createPatient = function(data) {
@@ -175,6 +172,11 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 					}
 				});
 			};
+
+			
+		    
+
+
 		},
 		templateUrl:"modules/patient/directives/template/patientCreate.html"
 	}

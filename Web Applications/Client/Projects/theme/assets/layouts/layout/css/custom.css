@@ -123,3 +123,11 @@
 .is-notSelected{
     color: red;
 }
+
+span.glyphicon:hover {
+    color: #00BFFF;
+}
+
+.sort {
+    color: #00BFFF !important;
+}

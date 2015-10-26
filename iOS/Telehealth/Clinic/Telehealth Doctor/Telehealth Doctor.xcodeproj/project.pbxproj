@@ -36,6 +36,8 @@
 		0045A2E61BCF8FC900AC4028 /* MedicalImage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0045A2E51BCF8FC900AC4028 /* MedicalImage.xib */; settings = {ASSET_TAGS = (); }; };
 		0045A2E81BCF8FD100AC4028 /* PatientTabVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0045A2E71BCF8FD100AC4028 /* PatientTabVC.xib */; settings = {ASSET_TAGS = (); }; };
 		004F6D191BB9A02200242CE9 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004F6D181BB9A02200242CE9 /* CustomViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		0061A4441BD7773100617B25 /* MedicalImageCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0061A4421BD7773100617B25 /* MedicalImageCVC.swift */; settings = {ASSET_TAGS = (); }; };
+		0061A4451BD7773100617B25 /* MedicalImageCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0061A4431BD7773100617B25 /* MedicalImageCVC.xib */; settings = {ASSET_TAGS = (); }; };
 		008FB2351BB93E3A00684968 /* TOPVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008FB2341BB93E3A00684968 /* TOPVCViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		008FB2371BB93F4500684968 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2361BB93F4500684968 /* AudioToolbox.framework */; };
 		008FB2391BB93F4B00684968 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2381BB93F4B00684968 /* AVFoundation.framework */; };
@@ -53,6 +55,8 @@
 		008FB2511BB9401000684968 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2501BB9401000684968 /* UIKit.framework */; };
 		008FB2531BB9401900684968 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2521BB9401900684968 /* VideoToolbox.framework */; };
 		00A9E5B81BC3720A0055A594 /* AppointmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A9E5B71BC3720A0055A594 /* AppointmentTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		00B0AFAC1BDA2B5600871786 /* DetailImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B0AFAA1BDA2B5600871786 /* DetailImageVC.swift */; settings = {ASSET_TAGS = (); }; };
+		00B0AFAD1BDA2B5600871786 /* DetailImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00B0AFAB1BDA2B5600871786 /* DetailImageVC.xib */; settings = {ASSET_TAGS = (); }; };
 		00B9917F1BC2E3AD0025EA7F /* OnlineUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B9917E1BC2E3AD0025EA7F /* OnlineUsers.swift */; settings = {ASSET_TAGS = (); }; };
 		00C9599D1BD0E5B000E3FFAD /* call.wav in Resources */ = {isa = PBXBuildFile; fileRef = 00C9599C1BD0E5B000E3FFAD /* call.wav */; settings = {ASSET_TAGS = (); }; };
 		00D512771BB4E6100068942D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D512761BB4E6100068942D /* ProfileViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -120,6 +124,8 @@
 		0045A2E51BCF8FC900AC4028 /* MedicalImage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MedicalImage.xib; sourceTree = "<group>"; };
 		0045A2E71BCF8FD100AC4028 /* PatientTabVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PatientTabVC.xib; sourceTree = "<group>"; };
 		004F6D181BB9A02200242CE9 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
+		0061A4421BD7773100617B25 /* MedicalImageCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicalImageCVC.swift; sourceTree = "<group>"; };
+		0061A4431BD7773100617B25 /* MedicalImageCVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MedicalImageCVC.xib; sourceTree = "<group>"; };
 		008FB2341BB93E3A00684968 /* TOPVCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOPVCViewController.swift; sourceTree = "<group>"; };
 		008FB2361BB93F4500684968 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		008FB2381BB93F4B00684968 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -138,6 +144,8 @@
 		008FB2521BB9401900684968 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		009398E41BBA9384005481E2 /* Telehealth Doctor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Telehealth Doctor-Bridging-Header.h"; sourceTree = "<group>"; };
 		00A9E5B71BC3720A0055A594 /* AppointmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentTableViewCell.swift; sourceTree = "<group>"; };
+		00B0AFAA1BDA2B5600871786 /* DetailImageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailImageVC.swift; sourceTree = "<group>"; };
+		00B0AFAB1BDA2B5600871786 /* DetailImageVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailImageVC.xib; sourceTree = "<group>"; };
 		00B9917E1BC2E3AD0025EA7F /* OnlineUsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineUsers.swift; sourceTree = "<group>"; };
 		00C9599C1BD0E5B000E3FFAD /* call.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = call.wav; sourceTree = "<group>"; };
 		00D512761BB4E6100068942D /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -248,8 +256,12 @@
 		003A7F5C1BD2947E009B1738 /* MedicalImage */ = {
 			isa = PBXGroup;
 			children = (
-				0045A2E51BCF8FC900AC4028 /* MedicalImage.xib */,
 				003A7F561BD29434009B1738 /* MedicalImage.swift */,
+				0045A2E51BCF8FC900AC4028 /* MedicalImage.xib */,
+				0061A4421BD7773100617B25 /* MedicalImageCVC.swift */,
+				0061A4431BD7773100617B25 /* MedicalImageCVC.xib */,
+				00B0AFAA1BDA2B5600871786 /* DetailImageVC.swift */,
+				00B0AFAB1BDA2B5600871786 /* DetailImageVC.xib */,
 			);
 			name = MedicalImage;
 			sourceTree = "<group>";
@@ -559,7 +571,7 @@
 				TargetAttributes = {
 					AFF21D781BB12D8B006A190E = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 27TYHQV638;
+						DevelopmentTeam = UA7AB584U5;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -606,10 +618,12 @@
 				00C9599D1BD0E5B000E3FFAD /* call.wav in Resources */,
 				0045A2E41BCF8FB200AC4028 /* PresentComplain.xib in Resources */,
 				0045A2E61BCF8FC900AC4028 /* MedicalImage.xib in Resources */,
+				00B0AFAD1BDA2B5600871786 /* DetailImageVC.xib in Resources */,
 				001C28CC1BCEAD4D005A82D7 /* video.mp4 in Resources */,
 				AFF21D871BB12D8B006A190E /* Assets.xcassets in Resources */,
 				0045A2E81BCF8FD100AC4028 /* PatientTabVC.xib in Resources */,
 				AFF21D821BB12D8B006A190E /* Main.storyboard in Resources */,
+				0061A4451BD7773100617B25 /* MedicalImageCVC.xib in Resources */,
 				0045A2E01BCF8C5700AC4028 /* Appointment.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -686,6 +700,7 @@
 				002908731BC2552A00FED16E /* DTIAnimPulse.swift in Sources */,
 				002053431BBBBE2B00679E10 /* JSSAlertView.swift in Sources */,
 				AFF21DEA1BB145B1006A190E /* AppointmentListViewController.swift in Sources */,
+				0061A4441BD7773100617B25 /* MedicalImageCVC.swift in Sources */,
 				00D5127D1BB4E7610068942D /* GlobalConstants.swift in Sources */,
 				AFF21D7F1BB12D8B006A190E /* LoginViewController.swift in Sources */,
 				002908781BC2552A00FED16E /* DTIAnimWp8.swift in Sources */,
@@ -707,6 +722,7 @@
 				008FB2351BB93E3A00684968 /* TOPVCViewController.swift in Sources */,
 				0045A2DE1BCF88BC00AC4028 /* DetailAppointmentVC.swift in Sources */,
 				00D5127B1BB4E6560068942D /* MakeCallController.swift in Sources */,
+				00B0AFAC1BDA2B5600871786 /* DetailImageVC.swift in Sources */,
 				0029086E1BC2552A00FED16E /* CALayer+DTI.swift in Sources */,
 				00D512771BB4E6100068942D /* ProfileViewController.swift in Sources */,
 				00A9E5B81BC3720A0055A594 /* AppointmentTableViewCell.swift in Sources */,

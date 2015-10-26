@@ -9,12 +9,14 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import ReachabilitySwift
 
 class AppointmentListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var refreshControl : UIRefreshControl!
     let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("infoDoctor") as! NSDictionary
+    let reachability = Reachability.reachabilityForInternetConnection()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +39,10 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         navigationController?.setNavigationBarHidden(false, animated: true)
         
         request(.GET, GENERATESESSION, headers: SingleTon.headers).responseJSON() { response in
-            let data = response.2.value!["data"] as! NSDictionary
-            SingleTon.infoOpentok = JSON(data)
+            if let data = response.2.value {
+                let readableJSON = data["data"] as! NSDictionary
+                SingleTon.infoOpentok = JSON(readableJSON)
+            }
         }
     }
     
@@ -98,6 +102,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
             }
         }
     }
+    
     @IBAction func detailAppointment(sender: AnyObject) {
         let initViewController : UISplitViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("splitViewController") as! UISplitViewController
         self.presentViewController(initViewController, animated: true, completion: nil)

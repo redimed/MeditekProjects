@@ -16,7 +16,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var buttonLogin: UIButton!
+    @IBOutlet weak var buttonLogin: DesignableButton!
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var lockImage: UIImageView!
     @IBOutlet weak var doctorImage: UIImageView!
@@ -131,15 +131,11 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         if let reachability = reachability {
             if reachability.isReachable() {
                 NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "LoginMain", userInfo: nil, repeats: false)
-                if reachability.isReachableViaWiFi() {
-                    print("Reachable via Wifi")
-                } else {
-                    print("Reachable via Celluar")
-                }
             } else {
                 AlertWarningNetwork()
                 self.loading.stopActivity(true)
                 self.logoImage.hidden = false
+                self.buttonLogin.enabled = true
             }
         }
     }
@@ -154,25 +150,27 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             .validate(contentType: ["application/json"])
             .responseJSON { response -> Void in
                 self.loading.stopActivity(true)
-                self.logoImage.hidden = false
                 
                 switch response.2 {
                 case .Success:
                     let userJSON = JSON(response.2.value!["user"] as! NSDictionary)
                     var user = [String: String]()
-                    
                     for (key, object) in userJSON {
                         user[key] = object.stringValue
                     }
                     let token = response.2.value!["token"] as! String
-                    
+                    let coreToken = response.2.value!["coreToken"] as! String
+                    AUTHTOKEN = token
+                    COREAUTH = coreToken
                     self.userDefault.setObject(user, forKey: "infoDoctor")
                     self.userDefault.setValue(token, forKey: "token")
                     
                     SingleTon.headers = [
                         "Authorization": "Bearer \(token)",
-                        "Content-Type": "application/x-www-form-urlencoded"
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "CoreAuth": "Bearer \(coreToken)"
                     ]
+                    
                     let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
                     self.presentViewController(initViewController, animated: true, completion: nil)
                     break
@@ -190,6 +188,10 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     break
                 }
         }
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
     
     func errorLogin(message: String) {

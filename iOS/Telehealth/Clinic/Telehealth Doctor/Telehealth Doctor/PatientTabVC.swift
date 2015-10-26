@@ -14,19 +14,36 @@ class PatientTabVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let patient = SingleTon.detailAppointMentObj["Patients"][0]
-        print(patient.count)
-        let bottomBorder = CALayer()
-        bottomBorder.backgroundColor = UIColor.blackColor().CGColor
         for aLabel : UILabel in dataPatient {
             let currTextLabel : String! = aLabel.text
-            bottomBorder.frame = CGRectMake(0.0, aLabel.frame.height - 1, aLabel.frame.size.width, 0.5)
-            print(bottomBorder.frame)
-            aLabel.layer.addSublayer(bottomBorder)
             for var i = 0; i < patient.count; i++ {
                 aLabel.text = patient[currTextLabel].stringValue
+                if currTextLabel == "DOB" {
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.timeZone = NSTimeZone(name: "UTC")
+                    dateFormatter.dateFormat = "yyyy-MM-dd' 'HH:mm:ss"
+                    if let datePublished = dateFormatter.dateFromString(patient[currTextLabel].stringValue) {
+                        dateFormatter.dateFormat = "MMM dd, yyyy"
+                        let dateFormated = dateFormatter.stringFromDate(datePublished)
+                        aLabel.text = dateFormated
+                    }
+                }
+                if aLabel.text != nil && !aLabel.text!.isEmpty {
+                    let border = CALayer()
+                    let width = CGFloat(1.0)
+                    border.borderColor = UIColor.blackColor().CGColor
+                    border.frame = CGRect(x: 0, y: aLabel.frame.size.height - width, width:  aLabel.frame.size.width, height: width)
+                    border.borderWidth = 0.5
+                    aLabel.layer.addSublayer(border)
+                    aLabel.layer.masksToBounds = true
+                }
+                
             }
         }
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {

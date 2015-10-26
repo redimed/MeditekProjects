@@ -7,29 +7,42 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
-class MedicalImage: UIViewController {
-
+class MedicalImage: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    @IBOutlet var collectionView: UICollectionView!
+    var dataImage: [NSData] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        self.collectionView.registerNib(UINib(nibName: "MedicalImageCVC", bundle: nil), forCellWithReuseIdentifier: "cellCollect")
+        self.collectionView.backgroundColor = UIColor.clearColor()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell: MedicalImageCVC = collectionView.dequeueReusableCellWithReuseIdentifier("cellCollect", forIndexPath: indexPath) as! MedicalImageCVC
+        if let imgSrc: NSData = SingleTon.imgDataMedical[indexPath.row] {
+            cell.mediImage.image = UIImage(data: imgSrc)
+        }
+        return cell
     }
-    */
-
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return SingleTon.imgDataMedical.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let detailImgVC = DetailImageVC(nibName: "DetailImageVC", bundle: nil)
+        detailImgVC.indexSelect = indexPath.row
+        detailImgVC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+        presentViewController(detailImgVC, animated: true, completion: nil)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
 }

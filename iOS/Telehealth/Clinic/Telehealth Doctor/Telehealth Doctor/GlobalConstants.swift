@@ -8,13 +8,18 @@
 
 import Foundation
 
-let STRING_URL_SERVER = "http://testapp.redimed.com.au:3009"
+let STRING_URL_SERVER = "http://telehealthvietnam.com.vn:3009"
+
+/// temp for download image
+let URL_DOWNLOAD_IMAGE = "http://telehealthvietnam.com.vn:3005"
 
 let AUTHORIZATION = STRING_URL_SERVER + "/api/telehealth/user/login"
 
 let GENERATESESSION = STRING_URL_SERVER + "/api/telehealth/socket/generateSession"
 
 let APPOINTMENT_DETAIL = STRING_URL_SERVER + "/api/telehealth/user/appointmentDetails"
+
+let DOWNLOAD_IMAGE_APPOINTMENT = URL_DOWNLOAD_IMAGE + "/api/downloadFile/"
 
 /// Socket Emit
 let GET_ONLINE_USERS : NSDictionary = ["url": "/api/telehealth/socket/onlineList"]
@@ -25,12 +30,15 @@ let MAKE_CALL = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@
 
 let JOIN_ROOM = "/api/telehealth/socket/joinRoom?uid=%@"
 
+var AUTHTOKEN = ""
+var COREAUTH = ""
+
 func formatString(dateString: String) -> String {
     let dateFormatter = NSDateFormatter()
+    dateFormatter.timeZone = NSTimeZone(name: "UTC")
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000Z"
     if let datePublished = dateFormatter.dateFromString(dateString) {
         dateFormatter.dateFormat = "MMM dd, yyyy 'at' h:mm a"
-        dateFormatter.timeZone = NSTimeZone(name: "UTC")
         let dateFormated = dateFormatter.stringFromDate(datePublished)
         return dateFormated
     }
@@ -41,6 +49,6 @@ func formatString(dateString: String) -> String {
 *  Alert Title and Message for JSSAlertView
 */
 
-var warning_Network = (title: "Not Connection", mess: "Unable to connect to the Internet")
+var warning_Network = (title: "No Connection", mess: "Unable to connect to the Internet")
 var connection_Server = (title: "Error")
 

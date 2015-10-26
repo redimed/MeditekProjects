@@ -8,6 +8,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PresentComplain" customModule="Telehealth_Doctor" customModuleProvider="target">
             <connections>
                 <outlet property="view" destination="iN0-l3-epB" id="SL6-ip-5lq"/>
+                <outletCollection property="textViewCollect" destination="ani-Og-tcu" collectionClass="NSMutableArray" id="5PK-xe-MDc"/>
+                <outletCollection property="textViewCollect" destination="VHF-X2-lbM" collectionClass="NSMutableArray" id="2Lj-Oc-krG"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -15,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="744" height="713"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ani-Og-tcu">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="10" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="PresentComplain" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ani-Og-tcu">
                     <rect key="frame" x="31" y="119" width="692" height="187"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -29,7 +31,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </textView>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="VHF-X2-lbM">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="11" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Allergy" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="VHF-X2-lbM">
                     <rect key="frame" x="22" y="360" width="701" height="187"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>

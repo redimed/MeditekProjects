@@ -565,7 +565,7 @@
                                 </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uN5-Z4-dEX">
-                                <rect key="frame" x="353" y="94" width="319" height="76"/>
+                                <rect key="frame" x="20" y="94" width="984" height="76"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="45"/>
                                 <color key="textColor" red="0.98857717803030298" green="0.98857717803030298" blue="0.98857717803030298" alpha="1" colorSpace="calibratedRGB"/>
@@ -600,18 +600,23 @@
                                 </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calling to..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWs-ze-mmq">
-                                <rect key="frame" x="397" y="55" width="231" height="45"/>
+                                <rect key="frame" x="20" y="55" width="984" height="45"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="25"/>
                                 <color key="textColor" red="0.98857717803030298" green="0.98857717803030298" blue="0.98857717803030298" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="no-camera-100" translatesAutoresizingMaskIntoConstraints="NO" id="ICh-OM-Xhc">
+                                <rect key="frame" x="462" y="226" width="100" height="100"/>
+                                <animations/>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="ouA-JP-9Yc"/>
                     <connections>
+                        <outlet property="imageNoCameraSubscriber" destination="ICh-OM-Xhc" id="gak-Nd-eq3"/>
                         <outlet property="nameLabelCall" destination="uN5-Z4-dEX" id="OOD-oe-FxV"/>
                         <outlet property="titleLabelCall" destination="iWs-ze-mmq" id="nvE-bl-Raj"/>
                         <outletCollection property="controllerButtonCall" destination="cox-7j-fH5" collectionClass="NSMutableArray" id="Io9-oj-Uoa"/>
@@ -641,39 +646,39 @@
                                 <rect key="frame" x="280" y="64" width="744" height="704"/>
                                 <animations/>
                             </containerView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJI-NY-R7v">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background-menu" translatesAutoresizingMaskIntoConstraints="NO" id="gJI-NY-R7v">
                                 <rect key="frame" x="0.0" y="64" width="281" height="704"/>
                                 <animations/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zlk-x5-SnA" userLabel="basic infomation">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zlk-x5-SnA" userLabel="appointment">
                                 <rect key="frame" x="0.0" y="64" width="280" height="142"/>
                                 <animations/>
                                 <connections>
                                     <action selector="viewOption:" destination="WJh-Re-2WR" eventType="touchDown" id="jLW-kU-YSc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="adS-Zq-RdK" userLabel="clinical detail">
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="adS-Zq-RdK" userLabel="clinicalMedical">
                                 <rect key="frame" x="0.0" y="206" width="280" height="142"/>
                                 <animations/>
                                 <connections>
                                     <action selector="viewOption:" destination="WJh-Re-2WR" eventType="touchDown" id="mc9-Xc-4sO"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9o-lW-u0D" userLabel="present complain">
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9o-lW-u0D" userLabel="presentComplain">
                                 <rect key="frame" x="0.0" y="348" width="280" height="142"/>
                                 <animations/>
                                 <connections>
                                     <action selector="viewOption:" destination="WJh-Re-2WR" eventType="touchDown" id="bJH-5M-yrN"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3lh-wB-w8E" userLabel="medical image">
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3lh-wB-w8E" userLabel="medicalImage">
                                 <rect key="frame" x="0.0" y="490" width="280" height="142"/>
                                 <animations/>
                                 <connections>
                                     <action selector="viewOption:" destination="WJh-Re-2WR" eventType="touchDown" id="nqu-YY-IDy"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mea-V0-eBA" userLabel="patient">
+                            <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mea-V0-eBA" userLabel="patient">
                                 <rect key="frame" x="0.0" y="632" width="280" height="142"/>
                                 <animations/>
                                 <connections>
@@ -743,6 +748,11 @@
                     <connections>
                         <outlet property="containerView" destination="3ye-98-Yfs" id="khw-bI-JDW"/>
                         <outlet property="gradientBackground" destination="gJI-NY-R7v" id="Wky-wv-Whn"/>
+                        <outletCollection property="btnCollectMenu" destination="zlk-x5-SnA" collectionClass="NSMutableArray" id="7yk-Cf-nT4"/>
+                        <outletCollection property="btnCollectMenu" destination="adS-Zq-RdK" collectionClass="NSMutableArray" id="AH9-NA-63b"/>
+                        <outletCollection property="btnCollectMenu" destination="S9o-lW-u0D" collectionClass="NSMutableArray" id="ROB-21-aA7"/>
+                        <outletCollection property="btnCollectMenu" destination="3lh-wB-w8E" collectionClass="NSMutableArray" id="Wc3-8u-34n"/>
+                        <outletCollection property="btnCollectMenu" destination="Mea-V0-eBA" collectionClass="NSMutableArray" id="aPw-kR-tws"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IgS-zC-odK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -831,6 +841,7 @@
         <image name="20140710110803-mui" width="450" height="256"/>
         <image name="Forward-100 (1)" width="100" height="100"/>
         <image name="background" width="1024" height="768"/>
+        <image name="background-menu" width="768" height="1024"/>
         <image name="basic-info" width="100" height="100"/>
         <image name="call-back" width="32" height="32"/>
         <image name="camera-off" width="32" height="32"/>
@@ -843,6 +854,7 @@
         <image name="logo" width="320" height="62"/>
         <image name="medical-image" width="100" height="100"/>
         <image name="mic-off" width="32" height="32"/>
+        <image name="no-camera-100" width="100" height="100"/>
         <image name="patient" width="100" height="100"/>
         <image name="present-complain" width="100" height="100"/>
         <image name="tai-của-mình" width="500" height="375"/>

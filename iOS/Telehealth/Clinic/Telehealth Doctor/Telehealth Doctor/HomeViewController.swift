@@ -60,7 +60,11 @@ class HomeViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
             SingleTon.socket.onAny {
-                print("on any events: \($0.event) with items \($0.items)")
+                if let event: String! = $0.event {
+                    if event != "online_users" {
+                        print("on any events: \($0.event) with items \($0.items)")
+                    }
+                }
             }
             
             SingleTon.socket.on("connect") {data, ack in
@@ -95,7 +99,6 @@ class HomeViewController: UIViewController {
             
             SingleTon.socket.on("receiveMessage") { data, ack in
                 let result = JSON(data[0])
-                print(result)
                 NSNotificationCenter.defaultCenter().postNotificationName("handleCallNotification", object: nil, userInfo: ["message": result["message"].stringValue])
             }
             

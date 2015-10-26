@@ -1,3 +1,9 @@
+/*
+GetListTelehealthAppointment: get list Telehealth Appointment
+input: information filter Telehealth Appointment
+output: -success: list appointment with condition received
+        -failed: error message
+*/
 module.exports = function(data, userInfo) {
     var $q = require('q');
     var defer = $q.defer();

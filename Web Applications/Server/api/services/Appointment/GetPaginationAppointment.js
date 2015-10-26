@@ -1,3 +1,8 @@
+/*
+GetPaginationAppointment: get information pagination list [WA, Telehealth] Appointment
+input: information WA Appointment
+output: object pagination with condition received
+ */
 module.exports = function(data, userInfo) {
     var moment = require('moment');
     var pagination = {

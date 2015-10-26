@@ -1,3 +1,9 @@
+/*
+CreateTelehealthAppointment - services: Create new Telehealth Appointment
+input: information Telehealth Appointment, information user created Telehealth Appointment
+output: -success: transaction created Telehealth Appointment
+        -failed: [transaction] created Telehealth Appointment, error message
+*/
 module.exports = function(data, userInfo) {
     var $q = require('q');
     var telehealthApointmentCreated;

@@ -1,3 +1,9 @@
+/*
+UpdateTelehealthAppointment: update Telehealth Appointment
+input: information update Telehealth Appointment
+output: -success: transaction update Telehealth Appointment
+        -failed: [transaction] update Telehealth Appointment, error message
+ */
 module.exports = function(data, userInfo) {
     var $q = require('q');
     var preferringPractitionerObject;

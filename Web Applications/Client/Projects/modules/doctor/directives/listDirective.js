@@ -69,7 +69,11 @@ angular.module('app.authentication.doctor.directive.list', [])
 					angular.forEach(response.data.rows, function(value, index) {
 						doctorService.getroleDoctor(response.data.rows[index].UserAccountID)
 						.then(function(responsies) {
-							scope.doctor.type = responsies.Role.RoleName;
+							if( responsies == '' || responsies == null || responsies == undefined ) {
+								scope.doctor.typies = '';
+							} else{
+								scope.doctor.typies = responsies.Role.RoleName;
+							}
 						}, function(error) {});
 					});
 					
@@ -135,7 +139,7 @@ angular.module('app.authentication.doctor.directive.list', [])
 
 				count: 0,
 				list: [],
-				type: '',
+				typies: '',
 				search: angular.copy(search),
 				loading: false,
 				dialog: {

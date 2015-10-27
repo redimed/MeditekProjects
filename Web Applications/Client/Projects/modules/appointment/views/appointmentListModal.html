@@ -500,19 +500,19 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.FirstName" placeholder="First Name" ng-disabled="ShowData.isLinkPatient">
+                                    <input type="text" class="form-control" ng-model="ShowData.patient.FirstName" placeholder="First Name" ng-disabled="ShowData.isLinkPatient">
                                     <label class="control-label">First Name</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.MiddleName" placeholder="Middle Name" ng-disabled="ShowData.isLinkPatient">
+                                    <input type="text" class="form-control" ng-model="ShowData.patient.MiddleName" placeholder="Middle Name" ng-disabled="ShowData.isLinkPatient">
                                     <label class="control-label">Middle Name</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group form-md-line-input ">
-                                    <input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.LastName" placeholder="Last Name" ng-disabled="ShowData.isLinkPatient">
+                                    <input type="text" class="form-control" ng-model="ShowData.patient.LastName" placeholder="Last Name" ng-disabled="ShowData.isLinkPatient">
                                     <label class="control-label">Last Name</label>
                                 </div>
                             </div>
@@ -520,7 +520,7 @@
                                 <div class="form-group form-md-line-input  ">
                                     <div class="input-icon">
                                         <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control form-control-inline date-picker" ng-model="appointment.TelehealthAppointment.PatientAppointment.DOB" ng-disabled="ShowData.isLinkPatient" data-date-format="dd/mm/yyyy">
+                                        <input type="text" class="form-control form-control-inline date-picker" ng-model="ShowData.patient.DOB" ng-disabled="ShowData.isLinkPatient" data-date-format="dd/mm/yyyy">
                                         <label class="control-label">Date of Birth</label>
                                     </div>
                                 </div>
@@ -529,7 +529,7 @@
                                 <div class="form-group form-md-line-input  ">
                                     <div class="input-icon">
                                         <i class="fa fa-mobile"></i>
-                                        <input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.WorkPhoneNumber" ng-disabled="ShowData.isLinkPatient">
+                                        <input type="text" class="form-control" ng-model="ShowData.patient.WorkPhoneNumber" ng-disabled="ShowData.isLinkPatient">
                                         <label class="control-label">Contact Number (M)</label>
                                     </div>
                                 </div>
@@ -538,7 +538,7 @@
                                 <div class="form-group form-md-line-input  ">
                                     <div class="input-icon">
                                         <i class="fa fa-phone"></i>
-                                        <input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.HomePhoneNumber" ng-disabled="ShowData.isLinkPatient">
+                                        <input type="text" class="form-control" ng-model="ShowData.patient.HomePhoneNumber" ng-disabled="ShowData.isLinkPatient">
                                         <label class="control-label">Contact Number (H)</label>
                                     </div>
                                 </div>
@@ -547,7 +547,7 @@
                                 <div class="form-group form-md-line-input  ">
                                     <div class="input-icon">
                                         <i class="fa fa-envelope"></i>
-                                        <input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Email" ng-disabled="ShowData.isLinkPatient">
+                                        <input type="text" class="form-control" ng-model="ShowData.patient.Email" ng-disabled="ShowData.isLinkPatient">
                                         <label class="control-label">Email Address</label>
                                     </div>
                                 </div>
@@ -556,7 +556,7 @@
                                 <div class="form-group form-md-line-input ">
                                     <div class="input-icon">
                                         <i class="fa fa-send"></i>
-                                        <input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Address1" placeholder="Address1" ng-disabled="ShowData.isLinkPatient">
+                                        <input type="text" class="form-control" ng-model="ShowData.patient.Address1" placeholder="Address1" ng-disabled="ShowData.isLinkPatient">
                                         <label class="control-label">Address1</label>
                                     </div>
                                 </div>
@@ -565,7 +565,7 @@
                                 <div class="form-group form-md-line-input ">
                                     <div class="input-icon">
                                         <i class="fa fa-send"></i>
-                                        <input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Address2" placeholder="Address2" ng-disabled="ShowData.isLinkPatient">
+                                        <input type="text" class="form-control" ng-model="ShowData.patient.Address2" placeholder="Address2" ng-disabled="ShowData.isLinkPatient">
                                         <label class="control-label">Address2</label>
                                     </div>
                                 </div>
@@ -574,13 +574,13 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Suburb" ng-disabled="ShowData.isLinkPatient">
+                                    <input type="text" class="form-control" ng-model="ShowData.patient.Suburb" ng-disabled="ShowData.isLinkPatient">
                                     <label class="control-label">Suburb</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" ng-model="appointment.TelehealthAppointment.PatientAppointment.Postcode" ng-disabled="ShowData.isLinkPatient">
+                                    <input type="text" class="form-control" ng-model="ShowData.patient.Postcode" ng-disabled="ShowData.isLinkPatient">
                                     <label class="control-label">Postcode</label>
                                 </div>
                             </div>
@@ -1083,7 +1083,7 @@
         <button type="button" class="btn default" data-dismiss="modal" ng-click="close()">
             <i class="icon-action-undo"></i> Close
         </button>
-        <button type="button" class="btn green" ng-click="updateAppointment()" ng-show="!checkRoleUpdate">
+        <button type="button" class="btn green" ng-click="submitUpdate()" ng-show="!checkRoleUpdate">
             <i class="glyphicon glyphicon-save"></i> Save changes
         </button>
     </div>

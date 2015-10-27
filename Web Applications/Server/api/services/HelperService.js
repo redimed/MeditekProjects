@@ -218,6 +218,29 @@ module.exports = {
         }
         return destination;
     },
+
+    /**
+     * chuyển các thuộc tính của object thành mảng key_value
+     * Ví dụ: {name:'abc',address:'vietnam'}==>[{name:'abc'},{address:'vietnam'}]
+     * @param  {[type]} obj [description]
+     * @return {[type]}     [description]
+     */
+    splitAttributesToObjects:function(obj)
+    {
+        var list=[];
+        if(_.isObject(obj))
+        {
+            for(var key in obj)
+            {
+                var item={};
+                item[key]=obj[key];
+                list.push(item);
+            }
+        }
+        return list;
+    },
+
+
     /**
      * Kiểm tra các attributes của object có giá trị bằng một trong các giá trị trong mảng corrects
      * hay không

@@ -907,6 +907,7 @@ module.exports = {
 	CheckExistUser:function(criteria,attributes,transaction)
 	{
 		var error=new Error("CheckExistUser.Error");
+		var whereClause=[];
 		function Validation()
 		{
 			var q=$q.defer();
@@ -937,7 +938,9 @@ module.exports = {
 							throw error;
 						}
 					}
+					whereClause=o.splitAttributesToObjects(criteria);
 					q.resolve({status:'success'});
+					
 				}
 				else
 				{
@@ -957,9 +960,16 @@ module.exports = {
 		.then(function(data){
 			return UserAccount.findOne({
 				where:{
-
+					$or:whereClause
 				}
 			},{transaction:transaction})
+			.then(function(user){
+				return user;
+			},function(err){
+				o.exlog(err);
+				error.pushError("CheckExistUser.userQueryError");
+				throw error;
+			});
 		},function(err){
 			throw err;
 		});

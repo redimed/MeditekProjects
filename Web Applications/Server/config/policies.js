@@ -56,5 +56,9 @@ _.extend(policies, commonPolicies);
 var registerPolicies = require('./policies/RegisterPolicies');
 _.extend(policies, registerPolicies);
 //End module Register
+//Begin module Doctor
+var registerPolicies = require('./policies/doctorPolicies');
+_.extend(policies, registerPolicies);
+//End module Doctor
 module.exports.policies = policies;
 

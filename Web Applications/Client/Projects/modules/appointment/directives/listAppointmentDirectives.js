@@ -134,6 +134,14 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
 
                 modalInstance.result.then(function(responseData) {
                     if (responseData == 'success') {
+                         scope.infoAppointment = {
+                            patient: null,
+                            doctor: null,
+                            submit_from_date: null,
+                            submit_to_date: null,
+                            appointment_from_date: null,
+                            appointment_to_date: null
+                        }
                         scope.load()
                     };
                 }, function(data) {})

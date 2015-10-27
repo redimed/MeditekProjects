@@ -149,12 +149,11 @@ module.exports = {
 				data.CreatedDate = dated;
 				data.CreatedBy = req.user?req.user.ID:null;
 				data.UserAccountID = result.ID;
-				 if(data.Title) {
-				 	data.Title = data.Title.toString();
-				 } else {
-				 	data.Title = '';
-				 }
-				//data.Speciality = HelperService.EXTERTAL_PRACTITIONER;
+				if(data.Title) {
+					data.Title = data.Title.toString();
+				} else {
+					data.Title = '';
+				}
 
 				Services.Doctor.CreateDoctor(data)
 				.then(function(success) {

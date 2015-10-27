@@ -2,7 +2,7 @@ var app = angular.module('app.authentication.appointment.request.controller', [
     'app.authentication.appointment.request.modal.controller'
 ]);
 
-app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval) {
+app.controller('appointmentRequestCtrl', function($scope, $cookies, CommonService, AppointmentService, $state, FileUploader, $modal, $interval) {
 
     $scope.doctors = [];
     $scope.details = [];
@@ -65,11 +65,9 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
         console.log($scope.requestInfo.FileUploads);
         $scope.requestInfo.RequestDate = moment(new Date()).format("YYYY-MM-DD hh:mm:ss Z");
         $scope.requestInfo.TelehealthAppointment.RefDate = moment(new Date()).format("YYYY-MM-DD hh:mm:ss Z");
-        $scope.requestInfo.TelehealthAppointment.PatientAppointment.DOB = moment($scope.patientAppointmentDOBTemp, 'YYYY-MM-DD').format("YYYY-MM-DD hh:mm:ss Z");
 
         $scope.requestInfo.TelehealthAppointment.PreferredPractitioner = [];
         $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];
-        console.log('data', $scope.requestInfo);
         _.forEach($scope.doctors, function(item) {
             if (item != undefined || item != null) {
                 var data = {
@@ -95,7 +93,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
                 }
             })
         });
-
+        console.log('data', $scope.requestInfo);
         AppointmentService.SendRequest($scope.requestInfo).then(function(data) {
             $scope.laddaLoadingBar = false;
             swal({
@@ -129,9 +127,8 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
 
 
     var uploader = $scope.uploader = new FileUploader({
-        // url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
+        url: CommonService.ApiUploadFile,
         headers:{Authorization:('Bearer '+$cookies.get("token"))},
-        url: 'http://telehealthvietnam.com.vn:3005/api/uploadFile',
         alias: 'uploadFile'
     });
 

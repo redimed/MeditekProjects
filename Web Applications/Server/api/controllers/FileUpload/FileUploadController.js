@@ -120,7 +120,7 @@ module.exports = {
     DownloadFile: function(req, res) {
         var params = req.params.all();
         Services.FileUpload.DownloadFile({
-            output: rootPath + '/download/',
+            output: rootPath + '/temp/',
             fileUID: params.fileUID,
             size: params.size
         }, function(err, output, fileName) {

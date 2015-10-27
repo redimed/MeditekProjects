@@ -1,5 +1,5 @@
 <!-- BEGIN LOGIN FORM -->
-<form class="login-form my-login-form" name="loginForm" ng-submit="login()" novalidate>
+<form class="login-form my-login-form" name="loginForm" ng-submit="login()" role="form" novalidate>
     <h3 class="form-title"><b>Login to your account</b></h3>
     <div class="alert alert-danger display-hide">
         <button class="close" data-close="alert"></button>
@@ -10,7 +10,7 @@
         <label class="control-label visible-ie8 visible-ie9">Username</label>
         <div class="input-icon">
             <i class="fa fa-user"></i>
-            <input class="form-control placeholder-no-fix" ng-model="user.UserName" type="text" autocomplete="off" placeholder="Username" name="username" required ng-pattern="/^\s*\S+\s*$/"/>
+            <input ng-enter="login()" class="form-control placeholder-no-fix" ng-model="user.UserName" type="text" autocomplete="off" placeholder="Username" name="username" required ng-pattern="/^\s*\S+\s*$/"/>
         </div>
         <span ng-show="showClickedValidation">
         	<span for="username" ng-show="loginForm.username.$error.required" class="help-block">Username is required.</span>
@@ -21,7 +21,7 @@
         <label class="control-label visible-ie8 visible-ie9">Password</label>
         <div class="input-icon">
             <i class="fa fa-lock"></i>
-            <input class="form-control placeholder-no-fix" ng-model="user.Password" type="password" autocomplete="off" placeholder="Password" required name="password" />
+            <input ng-enter="login()" class="form-control placeholder-no-fix" ng-model="user.Password" type="password" autocomplete="off" placeholder="Password" required name="password" />
         </div>
         <span ng-show="showClickedValidation && loginForm.password.$invalid">
         	<span for="password" class="help-block">Password is required.</span>

@@ -8,9 +8,10 @@
 
 import UIKit
 
-class DetailImageVC: UIViewController {
+class DetailImageVC: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet var imageView: UIImageView!
+    @IBOutlet var scrollViewImg: UIScrollView!
     var indexSelect: Int!
     
     override func viewDidLoad() {
@@ -18,7 +19,14 @@ class DetailImageVC: UIViewController {
         
         let imgSrc: NSData = SingleTon.imgDataMedical[indexSelect]
         imageView.image = UIImage(data: imgSrc)
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        
+        scrollViewImg.minimumZoomScale = 1.0
+        scrollViewImg.maximumZoomScale = 6.0
+        
+    }
+    
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return self.imageView
     }
     
     override func didReceiveMemoryWarning() {
@@ -26,6 +34,6 @@ class DetailImageVC: UIViewController {
     }
     
     @IBAction func backPopController(sender: AnyObject) {
-        self.dismissViewControllerAnimated(false, completion: nil)
+        self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
     }
 }

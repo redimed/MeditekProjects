@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import Alamofire
 
 class Appointment: UIViewController {
     
@@ -31,31 +32,19 @@ class Appointment: UIViewController {
         fullName =  patient["FirstName"].stringValue + " " + patient["MiddleName"].stringValue + " " + patient["LastName"].stringValue
         fund = SingleTon.detailAppointMentObj["TelehealthAppointment"]["Fund"].stringValue
         
-        var fileUploads = SingleTon.detailAppointMentObj["FileUploads"]
-        
-        SingleTon.imgDataMedical = []        
-        for var i = 0; i < fileUploads.count; ++i {
-            let uid = fileUploads[i]["UID"].stringValue
-            if let url = NSURL(string: "\(DOWNLOAD_IMAGE_APPOINTMENT)\(uid)") {
-                if let data = NSData(contentsOfURL: url){
-                    SingleTon.imgDataMedical.append(data)
-                }
-            }
-        }
-        
         loadData()
     }
     
     func loadData() {
-        for aLabel: UILabel in label {
-            
-            let titleLabel: String! = aLabel.text
-            
-            for (key,_) in appointment {
-                if key == "FromTime" {
-                    appointTime = formatString(appointment[titleLabel].stringValue).componentsSeparatedByString("at")
-                }
+        for (key,_) in appointment {
+            if key == "FromTime" {
+                appointTime = formatString(appointment["FromTime"].stringValue).componentsSeparatedByString("at")
             }
+        }
+        
+        for aLabel: UILabel in self.label {
+
+            let titleLabel: String! = aLabel.text
             
             for var i = 0; i < appointment.count; ++i {
                 switch aLabel.tag {
@@ -66,13 +55,13 @@ class Appointment: UIViewController {
                 case 12:
                     aLabel.text = formatString(appointment[titleLabel].stringValue)
                 case 13:
-                    aLabel.text = appointTime[0].stringValue
+                    aLabel.text = appointTime[0] as? String
                 case 14:
-                    aLabel.text = appointTime[1].stringValue
+                    aLabel.text = appointTime[1] as? String
                 case 15:
-                    aLabel.text = appointment["TelehealthAppointment"][titleLabel].stringValue
+                    aLabel.text = teleAppoint[titleLabel].stringValue
                 case 16:
-                    aLabel.text = appointment["TelehealthAppointment"][titleLabel].stringValue
+                    aLabel.text = teleAppoint[titleLabel].stringValue
                 default:
                     aLabel.text = appointment[titleLabel].stringValue
                 }
@@ -118,7 +107,7 @@ class Appointment: UIViewController {
             }
         }
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

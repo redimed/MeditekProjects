@@ -43,14 +43,8 @@
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Work Phone Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ftf-Cd-AFs">
-                    <rect key="frame" x="8" y="221" width="203" height="38"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Home Phone Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78Y-nE-B8e">
-                    <rect key="frame" x="409" y="221" width="203" height="38"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Phone Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ftf-Cd-AFs">
+                    <rect key="frame" x="8" y="221" width="175" height="38"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                     <nil key="highlightedColor"/>
@@ -128,15 +122,15 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="WorkPhoneNumber" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oI-8I-xOm">
-                    <rect key="frame" x="219" y="229" width="188" height="30"/>
+                <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PhoneNumber" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oI-8I-xOm">
+                    <rect key="frame" x="191" y="229" width="233" height="30"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" tag="8" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="HomePhoneNumber" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nLq-fL-gGQ">
-                    <rect key="frame" x="620" y="229" width="116" height="30"/>
+                    <rect key="frame" x="575" y="229" width="169" height="30"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -151,6 +145,12 @@
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Address 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgz-aY-UfF">
                     <rect key="frame" x="8" y="351" width="175" height="38"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Home Phone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78Y-nE-B8e">
+                    <rect key="frame" x="432" y="221" width="128" height="38"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                     <nil key="highlightedColor"/>

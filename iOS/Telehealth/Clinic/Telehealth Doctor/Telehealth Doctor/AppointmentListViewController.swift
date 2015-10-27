@@ -27,6 +27,8 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "reloadDataTable", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadTable:", name: "reloadDataTable", object: nil)
         
+        SingleTon.socket.emit("get", ["url":"/api/telehealth/socket/onlineList"])
+        
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Refresh Appointment List")
         self.refreshControl.addTarget(self, action: "emitOnlineUser:", forControlEvents: UIControlEvents.ValueChanged)

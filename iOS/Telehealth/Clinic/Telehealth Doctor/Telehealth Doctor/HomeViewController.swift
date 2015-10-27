@@ -58,7 +58,6 @@ class HomeViewController: UIViewController {
         let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("infoDoctor") as! NSDictionary
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            
             SingleTon.socket.onAny {
                 if let event: String! = $0.event {
                     if event != "online_users" {

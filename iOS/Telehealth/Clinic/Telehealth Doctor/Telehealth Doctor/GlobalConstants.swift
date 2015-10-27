@@ -8,10 +8,10 @@
 
 import Foundation
 
-let STRING_URL_SERVER = "http://telehealthvietnam.com.vn:3009"
+let STRING_URL_SERVER = "http://testapp.redimed.com.au:3009"
 
 /// temp for download image
-let URL_DOWNLOAD_IMAGE = "http://telehealthvietnam.com.vn:3005"
+let URL_DOWNLOAD_IMAGE = "http://testapp.redimed.com.au:3005"
 
 let AUTHORIZATION = STRING_URL_SERVER + "/api/telehealth/user/login"
 

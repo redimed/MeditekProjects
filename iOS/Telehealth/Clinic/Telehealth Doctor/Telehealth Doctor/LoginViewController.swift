@@ -150,6 +150,18 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             .validate(contentType: ["application/json"])
             .responseJSON { response -> Void in
                 self.loading.stopActivity(true)
+                self.logoImage.hidden = false
+                
+                //                print(response.2.debugDescription)
+                //                let splitFirst = response.2.debugDescription.componentsSeparatedByString("{")
+                //                let splitSecond = splitFirst[2].componentsSeparatedByString(",")
+                //                let splitThird = splitSecond[0].componentsSeparatedByString(":")
+                //                print(splitThird[1])
+                //                if splitThird[1] == " \"User.notFound\"" {
+                //                    print("User not found")
+                //                } else if splitThird[1] == " \"Password.Invalid\"" {
+                //                    print("Wrong pass")
+                //                }
                 
                 switch response.2 {
                 case .Success:
@@ -175,17 +187,24 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     self.presentViewController(initViewController, animated: true, completion: nil)
                     break
                 case .Failure(_, let error):
-                    if let err : Int = (error as NSError).code {
-                        switch err {
-                        case -6003:
+                    if let codeErr: Int = response.1?.statusCode {
+                        switch codeErr{
+                        case 401:
                             self.errorLogin("Username or password invalid")
-                            break
+                            break;
                         default:
                             self.errorLogin("\((error as NSError).code) - \((error as NSError).localizedDescription)")
                             break
                         }
+                    } else {
+                        if let err : Int = (error as NSError).code {
+                            switch err {
+                            default:
+                                self.errorLogin("\((error as NSError).code) - \((error as NSError).localizedDescription)")
+                                break
+                            }
+                        }
                     }
-                    break
                 }
         }
     }

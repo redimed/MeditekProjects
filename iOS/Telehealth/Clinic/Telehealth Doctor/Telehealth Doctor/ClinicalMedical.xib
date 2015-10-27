@@ -84,7 +84,7 @@
                     <state key="normal" title="BCC/SCC" image="check"/>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="BCC/ SCC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49d-9f-eIe">
-                    <rect key="frame" x="520" y="174" width="78" height="21"/>
+                    <rect key="frame" x="520" y="174" width="206" height="21"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -333,14 +333,14 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hand Condition" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IrJ-fs-2Si">
-                    <rect key="frame" x="454" y="294" width="119" height="21"/>
+                    <rect key="frame" x="454" y="294" width="144" height="21"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PNS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sGN-8W-KaL">
-                    <rect key="frame" x="454" y="465" width="34" height="21"/>
+                    <rect key="frame" x="454" y="465" width="52" height="21"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>

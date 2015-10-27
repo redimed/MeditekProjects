@@ -82,7 +82,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         */
         imgViewOffCamera = UIImageView(frame: CGRectMake((videoWidth / 2) - 16, (videoHeight / 2) - 16 , 32, 32))
         imgViewOffCamera.image = UIImage(named: "no-camera-100")
-    
+        
     }
     
     func playSoundCall() {
@@ -187,15 +187,20 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     function for action controller button call
     */
     @IBAction func actionControllerButton(sender: UIButton) {
+        
         switch sender.tag {
         case 0: // mic
             publisher!.publishAudio = !publisher!.publishAudio
             if(publisher!.publishAudio) {
                 sender.backgroundColor = UIColor(hex: "CCCC")
                 sender.tintColor = UIColor.whiteColor()
-                offMicView.removeFromSuperview()
+                if subscriber != nil {
+                    offMicView.removeFromSuperview()
+                }
             } else {
-                publisher!.view.addSubview(offMicView)
+                if subscriber != nil {
+                    publisher!.view.addSubview(offMicView)
+                }
                 sender.backgroundColor = UIColor(hex: "8E8E93")
                 sender.tintColor = UIColor.grayColor()
             }
@@ -214,13 +219,17 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             if(publisher!.publishVideo) {
                 sender.backgroundColor = UIColor(hex: "CCCC")
                 sender.tintColor = UIColor.whiteColor()
-                imgViewOffCamera.removeFromSuperview()
-                screenCaptureForPublisher.removeFromSuperview()
+                if subscriber != nil {
+                    imgViewOffCamera.removeFromSuperview()
+                    screenCaptureForPublisher.removeFromSuperview()
+                }
             } else {
-                screenCaptureForPublisher = publisher!.view.snapshotViewAfterScreenUpdates(true)
-                customUI.BlurLayer(screenCaptureForPublisher)
-                publisher!.view.addSubview(screenCaptureForPublisher)
-                publisher!.view.addSubview(imgViewOffCamera)
+                if subscriber != nil {
+                    screenCaptureForPublisher = publisher!.view.snapshotViewAfterScreenUpdates(true)
+                    customUI.BlurLayer(screenCaptureForPublisher)
+                    publisher!.view.addSubview(screenCaptureForPublisher)
+                    publisher!.view.addSubview(imgViewOffCamera)
+                }
                 sender.backgroundColor = UIColor(hex: "8E8E93")
                 sender.tintColor = UIColor.grayColor()
             }
@@ -386,6 +395,9 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     
     func session(session: OTSession, didFailWithError error: OTError) {
         NSLog("session didFailWithError (%@)", error)
+        let alert = UIAlertView(title: "Error", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK")
+        alert.show()
+        self.navigationController!.popViewControllerAnimated(true)
         loading.stopActivity(true)
     }
     

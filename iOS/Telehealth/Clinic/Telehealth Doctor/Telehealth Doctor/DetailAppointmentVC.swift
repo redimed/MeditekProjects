@@ -20,11 +20,6 @@ class DetailAppointmentVC: UIViewController {
     
     var xibVC : UIViewController!
     var uidUser : Int?
-    var appointment = Appointment()
-    var clinicalMedical = ClinicalMedical()
-    var patient = PatientTabVC()
-    var medicalImage = MedicalImage()
-    var presentComplain = PresentComplain()
     let loading: DTIActivityIndicatorView = DTIActivityIndicatorView()
     var customUI: CustomViewController = CustomViewController()
     
@@ -33,6 +28,7 @@ class DetailAppointmentVC: UIViewController {
         
         customUI.BlurLayer(gradientBackground)
         let param = ["data": ["uid": SingleTon.onlineUser_Singleton[uidUser!].appointmentUID]]
+        
         request(.POST, APPOINTMENT_DETAIL, headers: SingleTon.headers, parameters: param)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
@@ -53,14 +49,44 @@ class DetailAppointmentVC: UIViewController {
     }
     
     func loadXibView() {
-        loadXib(appointment)
-        for button in btnCollectMenu {
+        
+        for button in self.btnCollectMenu {
             button.enabled = true
             if button.tag == 0 {
-                animateButtonSelect(button)
+                self.animateButtonSelect(button)
             }
         }
-        loading.stopActivity(false)
+        
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            var fileUploads = SingleTon.detailAppointMentObj["FileUploads"]
+            let header = ["Authorization":"Bearer \(COREAUTH)"]
+            SingleTon.imgDataMedical = []
+            for var i = 0; i < fileUploads.count; ++i {
+                let uid = fileUploads[i]["UID"].stringValue
+                let url = NSURL(string: "\(DOWNLOAD_IMAGE_APPOINTMENT)\(uid)")
+                request(.GET, url!, headers: header)
+                    .validate(statusCode: 200..<300)
+                    .response() { response in
+                        if let res = response.1 {
+                            if res.statusCode == 200 {
+                                if let data: NSData? = response.2 {
+                                    if data != nil {
+                                        SingleTon.imgDataMedical.append(data!)
+                                    }
+                                }
+                            }
+                        }
+                }
+            }
+        }
+        
+        self.xibVC = Appointment(nibName: "Appointment", bundle: nil)
+        self.containerView.addSubview(self.xibVC.view)
+        loading.stopActivity(true)
+    }
+    
+    func hardProcessingWithString(data: NSData, completion: (result: Int) -> Void) {
+        completion(result: 0)
     }
     
     override func didReceiveMemoryWarning() {
@@ -76,23 +102,28 @@ class DetailAppointmentVC: UIViewController {
         switch sender.tag {
         case 0:
             animateButtonSelect(sender)
-            loadXib(appointment)
+            xibVC = Appointment(nibName: "Appointment", bundle: nil)
+            containerView.addSubview(xibVC.view)
             break;
         case 1:
             animateButtonSelect(sender)
-            loadXib(clinicalMedical)
+            xibVC = ClinicalMedical(nibName: "ClinicalMedical", bundle: nil)
+            containerView.addSubview(xibVC.view)
             break;
         case 2:
             animateButtonSelect(sender)
-            loadXib(presentComplain)
+            xibVC = PresentComplain(nibName: "PresentComplain", bundle: nil)
+            containerView.addSubview(xibVC.view)
             break;
         case 3:
             animateButtonSelect(sender)
-            loadXib(medicalImage)
+            xibVC = MedicalImage(nibName: "MedicalImage", bundle: nil)
+            containerView.addSubview(xibVC.view)
             break;
         case 4:
             animateButtonSelect(sender)
-            loadXib(patient)
+            xibVC = PatientTabVC(nibName: "PatientTabVC", bundle: nil)
+            containerView.addSubview(xibVC.view)
             break;
         default:
             
@@ -132,8 +163,7 @@ class DetailAppointmentVC: UIViewController {
         }
     }
     
-    func loadXib(nameXib: UIViewController) {
-        xibVC = nameXib
-        containerView.addSubview(xibVC.view)
+    func loadXib(controllerChange: UIViewController) {
+        
     }
 }

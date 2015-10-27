@@ -2,7 +2,7 @@ var app = angular.module('app.authentication.appointment.request.controller', [
     'app.authentication.appointment.request.modal.controller'
 ]);
 
-app.controller('appointmentRequestCtrl', function($scope, $cookies, commonService, AppointmentService, $state, FileUploader, $modal, $interval) {
+app.controller('appointmentRequestCtrl', function($scope, $cookies, CommonService, AppointmentService, $state, FileUploader, $modal, $interval) {
 
     $scope.doctors = [];
     $scope.details = [];
@@ -65,7 +65,6 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, commonServic
         console.log($scope.requestInfo.FileUploads);
         $scope.requestInfo.RequestDate = moment(new Date()).format("YYYY-MM-DD hh:mm:ss Z");
         $scope.requestInfo.TelehealthAppointment.RefDate = moment(new Date()).format("YYYY-MM-DD hh:mm:ss Z");
-        $scope.requestInfo.TelehealthAppointment.PatientAppointment.DOB = moment($scope.patientAppointmentDOBTemp, "DD-MM-YYYY").format("YYYY-MM-DD hh:mm:ss Z");
 
         $scope.requestInfo.TelehealthAppointment.PreferredPractitioner = [];
         $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];
@@ -128,7 +127,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, commonServic
 
 
     var uploader = $scope.uploader = new FileUploader({
-        url: commonService.ApiUploadFile,
+        url: CommonService.ApiUploadFile,
         headers:{Authorization:('Bearer '+$cookies.get("token"))},
         alias: 'uploadFile'
     });

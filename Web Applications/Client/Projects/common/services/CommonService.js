@@ -232,10 +232,8 @@ angular.module("app.common.CommonService", [])
             return list
         }
 
-        commonService.ApiUploadFile = function () {
-            return 'http://testapp.redimed.com.au:3005/api/uploadFile';
-            // return 'http://telehealthvietnam.com.vn:3005/api/uploadFile';
-        }
+        commonService.ApiUploadFile = 'http://testapp.redimed.com.au:3005/api/uploadFile';
+        // commonService.ApiUploadFile = 'http://telehealthvietnam.com.vn:3005/api/uploadFile';
 
         return commonService;
     })

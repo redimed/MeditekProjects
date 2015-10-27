@@ -88,7 +88,8 @@
 												<div class="form-group">
 													<label class="control-label col-md-4">Date of Birth</label>
 													<div class="col-md-8">
-														<input ng-model="info.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" ng-style="er.DOB" ng-change="ermsg.DOB=''"><span style="color:red;">{{ermsg.DOB}}</span>
+														<input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB=''" / readonly>
+														<span style="color:red;">{{ermsg.DOB}}</span>
 													</div>
 												</div>
 												<!-- end Date of Birth -->

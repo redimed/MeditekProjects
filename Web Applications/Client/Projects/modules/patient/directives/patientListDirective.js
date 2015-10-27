@@ -73,7 +73,8 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			// 	FirstName:"Giang",
 			// 	LastName:"Vo",
 			// 	MiddleName:"Truong",
-			// 	PhoneNumber:"+61432657849"
+			// 	PhoneNumber:"+61432657849",
+			// 	DOB:"24/12/2015"
 			// };
 			// PatientService.postDatatoDirective(aaa);
 			scope.setPage = function() {
@@ -96,13 +97,14 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				});
 			};
 
-			scope.Search = function(data){
-				if(data.UserAccount){
-					data.PhoneNumber = data.UserAccount;
+			scope.Search = function(data,e){
+				if(e==13){
+					if(data.UserAccount){
+						data.PhoneNumber = data.UserAccount;
+					}
+					scope.searchObjectMap.Search = data;
+					scope.loadList(scope.searchObjectMap);
 				}
-				scope.searchObjectMap.Search = data;
-				scope.loadList(scope.searchObjectMap);
-
 			};
 
 			scope.sort = function(field,sort) {

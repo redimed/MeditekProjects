@@ -28,10 +28,10 @@
 					<tbody>
 						<tr style="width:100%;">
 							<td ng-repeat="i in items">
-								<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-change="Search(search)">
+								<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-keypress="Search(search,$event.which)">
 							</td>
 							<td style="width:10%;">
-								<select class="form-control" ng-change="Search(search)" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select>
+								<select class="form-control" ng-keypress="Search(search,$event.which)" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select>
 							</td>
 						</tr>
 					</tbody>

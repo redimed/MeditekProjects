@@ -2,7 +2,7 @@ var app = angular.module('app.authentication.appointment.request.controller', [
     'app.authentication.appointment.request.modal.controller'
 ]);
 
-app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval) {
+app.controller('appointmentRequestCtrl', function($scope, $cookies, commonService, AppointmentService, $state, FileUploader, $modal, $interval) {
 
     $scope.doctors = [];
     $scope.details = [];
@@ -128,9 +128,8 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
 
 
     var uploader = $scope.uploader = new FileUploader({
-        // url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
+        url: commonService.ApiUploadFile,
         headers:{Authorization:('Bearer '+$cookies.get("token"))},
-        url: 'http://telehealthvietnam.com.vn:3005/api/uploadFile',
         alias: 'uploadFile'
     });
 

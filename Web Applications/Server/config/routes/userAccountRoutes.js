@@ -50,6 +50,11 @@ module.exports={
 		action:'GetIdentifierImageInfo'
 	},
 
+	'get /api/user-account/CheckExistUser':{
+		controller:'UserAccount/v0_1/UserAccountController',
+		action:'CheckExistUser'
+	},
+
 	'put /api/user-activation/DeactivationUserAccount':{
 		controller:'UserAccount/v0_1/UserActivationController',
 		action:'DeactivationUserAccount'

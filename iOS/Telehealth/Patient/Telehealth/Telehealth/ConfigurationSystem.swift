@@ -8,22 +8,22 @@
 
 import UIKit
 import SwiftyJSON
+import Alamofire
+import SystemConfiguration
 
 let config = ConfigurationSystem()
 var savedData  = saveData()
 let defaults = NSUserDefaults.standardUserDefaults()
 var tokens = String()
-
+var coreTokens = String()
+var PatientInfo : Patient!
 
 struct ConfigurationSystem {
-    static let Http = "http://testapp.redimed.com.au:3009"
+    static let Http_3009 = "http://testapp.redimed.com.au:3009"
+    static let Http_3005 =  "http://testapp.redimed.com.au:3005"
     let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
     
-    let headers = [
-        "Authorization": "Bearer \(tokens)",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Version" : "1.0"
-    ]
+
     //change border color textfield
     func borderTextFieldValid(textField:DesignableTextField,color:UIColor){
         textField.layer.borderColor = color.CGColor
@@ -59,26 +59,27 @@ struct ConfigurationSystem {
             return false
         }
     }
-}
-//class handle get and set data calling
-class saveData {
-    var data: JSON = ""
-    init(){}
-    init(data:JSON){
-        self.data = data
+    
+    static func isConnectedToNetwork() -> Bool {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        let defaultRouteReachability = withUnsafePointer(&zeroAddress) {
+            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+        }
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
+        let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
+        return (isReachable && !needsConnection)
     }
+    
+
 }
 
-class AppointmentList {
-     var UIDApointment,ToTime,Status,FromTime,NameDoctor: String!
-    init(UIDApointment:String,ToTime:String,Status:String,FromTime:String,NameDoctor:String){
-        self.UIDApointment = UIDApointment
-        self.ToTime = ToTime
-        self.Status = Status
-        self.FromTime = FromTime
-        self.NameDoctor = NameDoctor
-    }
-}
+
 
 
 

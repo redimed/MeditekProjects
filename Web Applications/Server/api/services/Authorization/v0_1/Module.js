@@ -17,7 +17,7 @@ var modules=[
 		order:'3',
 		roles:[
 			'ADMIN',
-			'GP',
+			'EXTERTAL_PRACTITIONER',
 			'ASSISTANT'
 		]
 	},
@@ -29,7 +29,7 @@ var modules=[
 		order:'1',
 		roles:[
 			'ADMIN',
-			'GP',
+			'EXTERTAL_PRACTITIONER',
 			'ASSISTANT'
 		]
 	},
@@ -40,7 +40,7 @@ var modules=[
 		parent:'3',
 		order:'2',
 		roles:[
-			'GP',
+			'EXTERTAL_PRACTITIONER',
 		]
 	},
 	{

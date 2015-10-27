@@ -195,17 +195,17 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="common/directives/common.js"></script>
         <!--END COMMON SERVICE-->
 
-        <!-- BEGIN lockScreen -->
-        <script src="common/views/lockScreenCtrl.js"></script>
-        <!-- END lockScreen -->
-
-        <!-- BEGIN MODULE unAuthentication -->
-        <script src="modules/unAuthentication/unAuthentication.js" ></script>
-        <script type="text/javascript" src="modules/unAuthentication/services/unAuthenticateService.js"></script>
-        <script src="modules/unAuthentication/controllers/unAuthenticationCtrl.js"></script>
-        <script src="modules/unAuthentication/controllers/loginCtrl.js"></script>
-        <script src="modules/unAuthentication/controllers/registerCtrl.js"></script>
-        <!-- END MODULE unAuthentication -->
+		<!-- BEGIN lockScreen -->
+		<script src="common/views/lockScreenCtrl.js"></script>
+		<!-- END lockScreen -->
+		<!-- BEGIN MODULE unAuthentication -->
+		<script src="modules/unAuthentication/unAuthentication.js" ></script>
+		<script type="text/javascript" src="modules/unAuthentication/services/unAuthenticateService.js"></script>
+		<script src="modules/unAuthentication/controllers/unAuthenticationCtrl.js"></script>
+		<script src="modules/unAuthentication/controllers/loginCtrl.js"></script>
+		<script src="modules/unAuthentication/controllers/registerCtrl.js"></script>
+		<script src="modules/unAuthentication/controllers/activationCtrl.js"></script>
+		<!-- END MODULE unAuthentication -->
 
         <!-- BEGIN MODULE authentication -->
         <script src="modules/authentication/authentication.js" ></script>
@@ -241,7 +241,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="modules/doctor/controllers/doctorProfileCtrl.js"></script>
         <script src="modules/doctor/directives/listDirective.js"></script>
         <script src="modules/doctor/directives/createDirective.js"></script>
-
+        <script src="modules/doctor/directives/detailDirective.js"></script>
         <!-- END MODULE doctor -->
 
         <!-- BEGIN MODULE patient -->
@@ -261,8 +261,17 @@ License: You must have a valid license purchased only from themeforest(the above
 		<script src="modules/user/controllers/userCtrl.js"></script>
 		<script src="modules/user/controllers/userListCtrl.js"></script>
 		<script src="modules/user/controllers/userListDetailCtrl.js"></script>
-		<script src="modules/user/controllers/userProfileCtrl.js"></script>
+		<script src="modules/user/controllers/userDetailCtrl.js"></script>
+        <script src="modules/user/controllers/userProfileCtrl.js"></script>
 		<!-- END MODULE user -->
+
+        <!-- BEGIN MODULE WAAppointment -->
+        <script src="modules/WAAppointment/WAAppointment.js" ></script>
+        <script src="modules/WAAppointment/controllers/WAAppointmentCtrl.js"></script>
+        <script src="modules/WAAppointment/controllers/WAAppointmentListCtrl.js"></script>
+        <script src="modules/WAAppointment/controllers/WAAppointmentListDetailCtrl.js"></script>
+        <script src="modules/WAAppointment/controllers/WAAppointmentGPCtrl.js"></script>
+        <!-- END MODULE WAAppointment -->
 
 
         <!-- END CORE ANGULARJS PLUGINS -->

@@ -60,7 +60,7 @@ module.exports = {
             type: Sequelize.STRING(45),
             allowNull: true,
             validate: {
-                is:/^(\d{4})-(\d{1,2})-(\d{1,2}) 00:00:00$/
+                is:/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/
             }
         },
         Gender: {

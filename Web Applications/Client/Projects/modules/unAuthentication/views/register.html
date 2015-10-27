@@ -6,15 +6,15 @@
             <h4><span class="my-step-number">1</span><b>User Account</b></h4></div>
         <div class="col-md-4 col-sm-4">
             <h4><span class="my-step-number">2</span><b>Personal Info</b></h4></div>
-        <div class="col-md-4 col-sm-4">
-            <h4><span class="my-step-number">3</span><b>Signature</b></h4></div>
+        <!--<div class="col-md-4 col-sm-4">
+            <h4><span class="my-step-number">3</span><b>Signature</b></h4></div>-->
     </div>
     <div ng-show="step==1">
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="progress progress-sm progress-striped active">
-                    <div class="progress-bar progress-bar-danger " style="width: 30%">
-                        <span class="sr-only">35% Complete (success) </span>
+                    <div class="progress-bar progress-bar-danger " style="width: 50%">
+                        <span class="sr-only">50% Complete (success) </span>
                     </div>
                     <!-- <div class="progress-bar progress-bar-warning" style="width: 40%">
 						<span class="sr-only">20% Complete (warning) </span>
@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="Username" value="">
+                    <input class="form-control" ng-model="data.UserName" />
                     <label for="Username">Username</label>
                     <!-- <span class="help-block">Error Username</span> -->
                 </div>
@@ -37,14 +37,14 @@
         <div class="row">
             <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="password" autocomplete="off" class="form-control" id="Password" value="">
+                    <input class="form-control" type="password" id="register_password" ng-model="data.Password" />
                     <label for="Password">Password</label>
                     <!-- <span class="help-block">Error Password</span> -->
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="password" autocomplete="off" class="form-control" id="RePassword" value="">
+                    <input class="form-control" type="password" ng-model="data.RePassword" />
                     <label for="RePassword">Re-type Your Password</label>
                     <!-- <span class="help-block">Error Re-type Your Password</span> -->
                 </div>
@@ -53,14 +53,14 @@
         <div class="row">
             <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="Mobile" value="">
+                    <input type="input" class="form-control" id="txtMobile" maxlength="17" ng-model="data.PhoneNumber">
                     <label for="Mobile">Mobile</label>
                     <!-- <span class="help-block">Error Mobile</span> -->
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="Email" value="">
+                    <input id="txtEmail" class="form-control" type="text" ng-model="data.Email" />
                     <label for="Email">Email</label>
                     <!-- <span class="help-block">Error Mobile</span> -->
                 </div>
@@ -69,88 +69,70 @@
         <hr>
         <div class="form-actions">
             <a href="" id="register-back-btn" class="btn btn-default pull" ui-sref="unAuthentication.login"><i class="m-icon-swapleft"></i> Cancel </a>
-            <button type="submit" id="register-submit-btn" class="btn blue pull-right" ng-click="btn_next()">Continue <i class="m-icon-swapright m-icon-white"></i></button>
+            <button type="submit" id="register-submit-btn" class="btn blue pull-right" ng-click="checkUser(data)">Continue <i class="m-icon-swapright m-icon-white"></i></button>
         </div>
     </div>
     <div ng-show="step==2">
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="progress progress-sm progress-striped active">
-                    <div class="progress-bar progress-bar-danger" style="width: 30%">
-                        <span class="sr-only">35% Complete (success) </span>
+                    <div class="progress-bar progress-bar-danger" style="width: 50%">
+                        <span class="sr-only">50% Complete (success) </span>
                     </div>
-                    <div class="progress-bar progress-bar-warning" style="width: 50%">
+                    <!--<div class="progress-bar progress-bar-warning" style="width: 50%">
                         <span class="sr-only">20% Complete (warning) </span>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="Firstname" value="">
+                    <input type="input" class="form-control" id="txtFirstName" ng-model="data.FirstName">
                     <label for="Firstname">Firstname</label>
                     <!-- <span class="help-block">Error Firstname</span> -->
                 </div>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="Middlename" value="">
+                    <input type="input" class="form-control" id="txtMiddlename" ng-model="data.MiddleName">
                     <label for="Middlename">Middlename</label>
                     <!-- <span class="help-block">Error Middlename</span> -->
                 </div>
             </div>
-            <div class="col-md-4 col-sm-4">
+        </div>
+        <div class="row">
+            <!-- LastName -->
+            <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="Lastname" value="">
+                    <input type="input" class="form-control" id="txtLastName" ng-model="data.LastName">
                     <label for="Lastname">Lastname</label>
                     <!-- <span class="help-block">Error Lastname</span> -->
                 </div>
             </div>
+            <!-- LastName -->
+            <!--  Clinical Department-->
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    <select ng-model="data.DepartmentID" ng-options="d.ID as d.DepartmentName for d in department" id="department" class="form-control">
+                        <option value=""></option>
+                    </select>
+                    <label for="department">Clinical Department</label>
+                </div>
+            </div>
+            <!-- end Clinical Department -->
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="Workphone" value="">
-                    <label for="Workphone">Workphone</label>
-                    <!-- <span class="help-block">Error Workphone</span> -->
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="Homephone" value="">
-                    <label for="Homephone">Homephone</label>
-                    <!-- <span class="help-block">Error Homephone</span> -->
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="Address1" value="">
-                    <label for="Address1">Address1</label>
-                    <!-- <span class="help-block">Error Address1</span> -->
-                </div>
-            </div>
-            <div class="col-md-12 col-sm-12">
-                <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="Address2" value="">
-                    <label for="Address2">Address2</label>
-                    <!-- <span class="help-block">Error Address2</span> -->
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="HealthlinkID" value="">
+                    <input id="txtHealthlinkID" class="form-control" type="text" ng-model="data.HealthLinkID">
                     <label for="HealthlinkID">Healthlink ID</label>
                     <!-- <span class="help-block">Error HealthlinkID</span> -->
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="Providernumber" value="">
+                    <input type="input" only-number class="form-control" id="txtProviderNumber" ng-model="data.ProviderNumber">
                     <label for="Providernumber">Providernumber</label>
                     <!-- <span class="help-block">Error Providernumber</span> -->
                 </div>
@@ -159,14 +141,47 @@
         <div class="row">
             <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="Postcode" value="">
+                    <input type="input" maxlength="9" class="form-control" id="txtWorkphone" ng-model="data.WorkPhoneNumber">
+                    <label for="Workphone">Workphone</label>
+                    <!-- <span class="help-block">Error Workphone</span> -->
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    <input type="input" maxlength="9" class="form-control" id="txtWorkphone" ng-model="data.HomePhoneNumber">
+                    <label for="Homephone">Homephone</label>
+                    <!-- <span class="help-block">Error Homephone</span> -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    <input class="form-control" type="text" ng-model="data.Address1">
+                    <label for="Address1">Address1</label>
+                    <!-- <span class="help-block">Error Address1</span> -->
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    <input class="form-control" type="text" ng-model="data.Address2">
+                    <label for="Address2">Address2</label>
+                    <!-- <span class="help-block">Error Address2</span> -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    <input id="txtPostcode" maxlength="4" class="form-control" type="text" ng-model="data.Postcode">
                     <label for="Postcode">Postcode</label>
                     <!-- <span class="help-block">Error Postcode</span> -->
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="text" autocomplete="off" class="form-control" id="Suburb" value="">
+                    <input id="txtSuburb" class="form-control" type="text" ng-model="data.Suburb">
                     <label for="Suburb">Suburb</label>
                     <!-- <span class="help-block">Error Suburb</span> -->
                 </div>
@@ -175,7 +190,7 @@
         <div class="row">
             <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <select name="States" id="States" class="form-control">
+                    <select ng-model="data.State" id="States" class="form-control">
                         <option value=""></option>
                         <option value="Victoria">Victoria</option>
                         <option value="New_South_Wales">New South Wales</option>
@@ -191,242 +206,8 @@
             </div>
             <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <select name="country" id="Country" class="form-control edited">
+                    <select ng-model="data.CountryID" ng-options="c.ID as c.ShortName for c in country" id="Country" class="form-control edited" disabled>
                         <option value=""></option>
-                        <option value="AF">Afghanistan</option>
-                        <option value="AL">Albania</option>
-                        <option value="DZ">Algeria</option>
-                        <option value="AS">American Samoa</option>
-                        <option value="AD">Andorra</option>
-                        <option value="AO">Angola</option>
-                        <option value="AI">Anguilla</option>
-                        <option value="AR">Argentina</option>
-                        <option value="AM">Armenia</option>
-                        <option value="AW">Aruba</option>
-                        <option value="AU" selected="true">Australia</option>
-                        <option value="AT">Austria</option>
-                        <option value="AZ">Azerbaijan</option>
-                        <option value="BS">Bahamas</option>
-                        <option value="BH">Bahrain</option>
-                        <option value="BD">Bangladesh</option>
-                        <option value="BB">Barbados</option>
-                        <option value="BY">Belarus</option>
-                        <option value="BE">Belgium</option>
-                        <option value="BZ">Belize</option>
-                        <option value="BJ">Benin</option>
-                        <option value="BM">Bermuda</option>
-                        <option value="BT">Bhutan</option>
-                        <option value="BO">Bolivia</option>
-                        <option value="BA">Bosnia and Herzegowina</option>
-                        <option value="BW">Botswana</option>
-                        <option value="BV">Bouvet Island</option>
-                        <option value="BR">Brazil</option>
-                        <option value="IO">British Indian Ocean Territory</option>
-                        <option value="BN">Brunei Darussalam</option>
-                        <option value="BG">Bulgaria</option>
-                        <option value="BF">Burkina Faso</option>
-                        <option value="BI">Burundi</option>
-                        <option value="KH">Cambodia</option>
-                        <option value="CM">Cameroon</option>
-                        <option value="CA">Canada</option>
-                        <option value="CV">Cape Verde</option>
-                        <option value="KY">Cayman Islands</option>
-                        <option value="CF">Central African Republic</option>
-                        <option value="TD">Chad</option>
-                        <option value="CL">Chile</option>
-                        <option value="CN">China</option>
-                        <option value="CX">Christmas Island</option>
-                        <option value="CC">Cocos (Keeling) Islands</option>
-                        <option value="CO">Colombia</option>
-                        <option value="KM">Comoros</option>
-                        <option value="CG">Congo</option>
-                        <option value="CD">Congo, the Democratic Republic of the</option>
-                        <option value="CK">Cook Islands</option>
-                        <option value="CR">Costa Rica</option>
-                        <option value="CI">Cote d'Ivoire</option>
-                        <option value="HR">Croatia (Hrvatska)</option>
-                        <option value="CU">Cuba</option>
-                        <option value="CY">Cyprus</option>
-                        <option value="CZ">Czech Republic</option>
-                        <option value="DK">Denmark</option>
-                        <option value="DJ">Djibouti</option>
-                        <option value="DM">Dominica</option>
-                        <option value="DO">Dominican Republic</option>
-                        <option value="EC">Ecuador</option>
-                        <option value="EG">Egypt</option>
-                        <option value="SV">El Salvador</option>
-                        <option value="GQ">Equatorial Guinea</option>
-                        <option value="ER">Eritrea</option>
-                        <option value="EE">Estonia</option>
-                        <option value="ET">Ethiopia</option>
-                        <option value="FK">Falkland Islands (Malvinas)</option>
-                        <option value="FO">Faroe Islands</option>
-                        <option value="FJ">Fiji</option>
-                        <option value="FI">Finland</option>
-                        <option value="FR">France</option>
-                        <option value="GF">French Guiana</option>
-                        <option value="PF">French Polynesia</option>
-                        <option value="TF">French Southern Territories</option>
-                        <option value="GA">Gabon</option>
-                        <option value="GM">Gambia</option>
-                        <option value="GE">Georgia</option>
-                        <option value="DE">Germany</option>
-                        <option value="GH">Ghana</option>
-                        <option value="GI">Gibraltar</option>
-                        <option value="GR">Greece</option>
-                        <option value="GL">Greenland</option>
-                        <option value="GD">Grenada</option>
-                        <option value="GP">Guadeloupe</option>
-                        <option value="GU">Guam</option>
-                        <option value="GT">Guatemala</option>
-                        <option value="GN">Guinea</option>
-                        <option value="GW">Guinea-Bissau</option>
-                        <option value="GY">Guyana</option>
-                        <option value="HT">Haiti</option>
-                        <option value="HM">Heard and Mc Donald Islands</option>
-                        <option value="VA">Holy See (Vatican City State)</option>
-                        <option value="HN">Honduras</option>
-                        <option value="HK">Hong Kong</option>
-                        <option value="HU">Hungary</option>
-                        <option value="IS">Iceland</option>
-                        <option value="IN">India</option>
-                        <option value="ID">Indonesia</option>
-                        <option value="IR">Iran (Islamic Republic of)</option>
-                        <option value="IQ">Iraq</option>
-                        <option value="IE">Ireland</option>
-                        <option value="IL">Israel</option>
-                        <option value="IT">Italy</option>
-                        <option value="JM">Jamaica</option>
-                        <option value="JP">Japan</option>
-                        <option value="JO">Jordan</option>
-                        <option value="KZ">Kazakhstan</option>
-                        <option value="KE">Kenya</option>
-                        <option value="KI">Kiribati</option>
-                        <option value="KP">Korea, Democratic People's Republic of</option>
-                        <option value="KR">Korea, Republic of</option>
-                        <option value="KW">Kuwait</option>
-                        <option value="KG">Kyrgyzstan</option>
-                        <option value="LA">Lao People's Democratic Republic</option>
-                        <option value="LV">Latvia</option>
-                        <option value="LB">Lebanon</option>
-                        <option value="LS">Lesotho</option>
-                        <option value="LR">Liberia</option>
-                        <option value="LY">Libyan Arab Jamahiriya</option>
-                        <option value="LI">Liechtenstein</option>
-                        <option value="LT">Lithuania</option>
-                        <option value="LU">Luxembourg</option>
-                        <option value="MO">Macau</option>
-                        <option value="MK">Macedonia, The Former Yugoslav Republic of</option>
-                        <option value="MG">Madagascar</option>
-                        <option value="MW">Malawi</option>
-                        <option value="MY">Malaysia</option>
-                        <option value="MV">Maldives</option>
-                        <option value="ML">Mali</option>
-                        <option value="MT">Malta</option>
-                        <option value="MH">Marshall Islands</option>
-                        <option value="MQ">Martinique</option>
-                        <option value="MR">Mauritania</option>
-                        <option value="MU">Mauritius</option>
-                        <option value="YT">Mayotte</option>
-                        <option value="MX">Mexico</option>
-                        <option value="FM">Micronesia, Federated States of</option>
-                        <option value="MD">Moldova, Republic of</option>
-                        <option value="MC">Monaco</option>
-                        <option value="MN">Mongolia</option>
-                        <option value="MS">Montserrat</option>
-                        <option value="MA">Morocco</option>
-                        <option value="MZ">Mozambique</option>
-                        <option value="MM">Myanmar</option>
-                        <option value="NA">Namibia</option>
-                        <option value="NR">Nauru</option>
-                        <option value="NP">Nepal</option>
-                        <option value="NL">Netherlands</option>
-                        <option value="AN">Netherlands Antilles</option>
-                        <option value="NC">New Caledonia</option>
-                        <option value="NZ">New Zealand</option>
-                        <option value="NI">Nicaragua</option>
-                        <option value="NE">Niger</option>
-                        <option value="NG">Nigeria</option>
-                        <option value="NU">Niue</option>
-                        <option value="NF">Norfolk Island</option>
-                        <option value="MP">Northern Mariana Islands</option>
-                        <option value="NO">Norway</option>
-                        <option value="OM">Oman</option>
-                        <option value="PK">Pakistan</option>
-                        <option value="PW">Palau</option>
-                        <option value="PA">Panama</option>
-                        <option value="PG">Papua New Guinea</option>
-                        <option value="PY">Paraguay</option>
-                        <option value="PE">Peru</option>
-                        <option value="PH">Philippines</option>
-                        <option value="PN">Pitcairn</option>
-                        <option value="PL">Poland</option>
-                        <option value="PT">Portugal</option>
-                        <option value="PR">Puerto Rico</option>
-                        <option value="QA">Qatar</option>
-                        <option value="RE">Reunion</option>
-                        <option value="RO">Romania</option>
-                        <option value="RU">Russian Federation</option>
-                        <option value="RW">Rwanda</option>
-                        <option value="KN">Saint Kitts and Nevis</option>
-                        <option value="LC">Saint LUCIA</option>
-                        <option value="VC">Saint Vincent and the Grenadines</option>
-                        <option value="WS">Samoa</option>
-                        <option value="SM">San Marino</option>
-                        <option value="ST">Sao Tome and Principe</option>
-                        <option value="SA">Saudi Arabia</option>
-                        <option value="SN">Senegal</option>
-                        <option value="SC">Seychelles</option>
-                        <option value="SL">Sierra Leone</option>
-                        <option value="SG">Singapore</option>
-                        <option value="SK">Slovakia (Slovak Republic)</option>
-                        <option value="SI">Slovenia</option>
-                        <option value="SB">Solomon Islands</option>
-                        <option value="SO">Somalia</option>
-                        <option value="ZA">South Africa</option>
-                        <option value="GS">South Georgia and the South Sandwich Islands</option>
-                        <option value="ES">Spain</option>
-                        <option value="LK">Sri Lanka</option>
-                        <option value="SH">St. Helena</option>
-                        <option value="PM">St. Pierre and Miquelon</option>
-                        <option value="SD">Sudan</option>
-                        <option value="SR">Suriname</option>
-                        <option value="SJ">Svalbard and Jan Mayen Islands</option>
-                        <option value="SZ">Swaziland</option>
-                        <option value="SE">Sweden</option>
-                        <option value="CH">Switzerland</option>
-                        <option value="SY">Syrian Arab Republic</option>
-                        <option value="TW">Taiwan, Province of China</option>
-                        <option value="TJ">Tajikistan</option>
-                        <option value="TZ">Tanzania, United Republic of</option>
-                        <option value="TH">Thailand</option>
-                        <option value="TG">Togo</option>
-                        <option value="TK">Tokelau</option>
-                        <option value="TO">Tonga</option>
-                        <option value="TT">Trinidad and Tobago</option>
-                        <option value="TN">Tunisia</option>
-                        <option value="TR">Turkey</option>
-                        <option value="TM">Turkmenistan</option>
-                        <option value="TC">Turks and Caicos Islands</option>
-                        <option value="TV">Tuvalu</option>
-                        <option value="UG">Uganda</option>
-                        <option value="UA">Ukraine</option>
-                        <option value="AE">United Arab Emirates</option>
-                        <option value="GB">United Kingdom</option>
-                        <option value="US">United States</option>
-                        <option value="UM">United States Minor Outlying Islands</option>
-                        <option value="UY">Uruguay</option>
-                        <option value="UZ">Uzbekistan</option>
-                        <option value="VU">Vanuatu</option>
-                        <option value="VE">Venezuela</option>
-                        <option value="VN">Viet Nam</option>
-                        <option value="VG">Virgin Islands (British)</option>
-                        <option value="VI">Virgin Islands (U.S.)</option>
-                        <option value="WF">Wallis and Futuna Islands</option>
-                        <option value="EH">Western Sahara</option>
-                        <option value="YE">Yemen</option>
-                        <option value="ZM">Zambia</option>
-                        <option value="ZW">Zimbabwe</option>
                     </select>
                     <label for="Country">Country</label>
                     <!-- <span class="help-block">Error Country</span> -->
@@ -437,10 +218,10 @@
         <div class="form-actions">
             <a href="" id="register-back-btn" class="btn btn-default pull" ng-click="btn_back()"><i class="m-icon-swapleft"></i> Back</a>
             <!-- <button type="submit" id="register-submit-btn" class="btn green pull-right">Register <i class="m-icon-swapright m-icon-white"></i></button> -->
-            <button type="submit" id="register-submit-btn" class="btn blue pull-right" ng-click="btn_next()">Continue <i class="m-icon-swapright m-icon-white"></i></button>
+            <button type="submit" id="register-submit-btn" class="btn blue pull-right" ng-click="save(data)">Continue <i class="m-icon-swapright m-icon-white"></i></button>
         </div>
     </div>
-    <div ng-show="step==3">
+    <!--<div ng-show="step==3">
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="progress progress-sm progress-striped active">
@@ -455,47 +236,43 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
+        </div>-->
+        <!--<div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="form-group ">
                     <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div>
-                            <span class="btn green btn-file">
-							<span class="fileinput-new">
-							Signature </span>
-                            <span class="fileinput-exists">
-							Change </span>
-                            <input type="file" name="...">
-                            </span>
-                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-							Remove </a>
+                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 400px; height: 150px;">
+                           <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
                         </div>
                         <br>
-                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
-                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+                        <div style="text-align:right;">
+                            <span class="btn green btn-file">
+                            <span class="fileinput-new">
+                            Signature </span>
+                            <span class="fileinput-exists">
+                            Change </span>
+                            <input type="file" nv-file-select uploader="uploader">
+                            </span>
+                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+                            Remove </a>
                         </div>
                     </div>
                     <div class="clearfix margin-top-10">
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
+        </div>-->
+        <!--<div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
-                	<p class="help-block">
-                        <span class="recaptcha_only_if_image"> Enter the words above </span><br>
-                        <span class="recaptcha_only_if_audio"> Enter the numbers you hear </span>
-                    </p>
                     <!-- BEGIN REPCAPTCHA -->
-                    <div id="recaptcha_widget" class="form-recaptcha">
-                        <div class="form-recaptcha-img" style="width: 375px">
+                    <!--<div id="recaptcha_widget" class="form-recaptcha">
+                        <div class="form-recaptcha-img" style="width: 400px">
                             <a id="recaptcha_image" href="javascript:;"> </a>
                             <div class="recaptcha_only_if_incorrect_sol display-none" style="color:red"> Incorrect please try again </div>
                         </div>
-                        <div class="input-group" style="width: 375px">
-                            <input type="text" class="form-control" id="recaptcha_response_field" name="recaptcha_response_field">
+                        <div class="input-group" style="width: 400px">
+                            <input type="text" class="form-control" id="recaptcha_response_field" ng-model="recaptcha_response_field">
                             <div class="input-group-btn">
                                 <a class="btn default" href="javascript:Recaptcha.reload()">
                                     <i class="fa fa-refresh"></i>
@@ -512,16 +289,20 @@
                             </div>
                         </div>
                     </div>
+                    <p class="help-block">
+                        <span class="recaptcha_only_if_image"> Enter the words above </span><br>
+                        <span class="recaptcha_only_if_audio"> Enter the numbers you hear </span>
+                    </p>
                     <!-- END REPCAPTCHA -->
-                </div>
+        <!--        </div>
             </div>
         </div>
-        <hr>
-        <div class="form-actions">
+        <hr>-->
+        <!--<div class="form-actions">
             <a href="" id="register-back-btn" class="btn btn-default pull" ng-click="btn_back()"><i class="m-icon-swapleft"></i> Back</a>
-            <button type="submit" id="register-submit-btn" class="btn green pull-right">Register <i class="m-icon-swapright m-icon-white"></i></button>
+            <button type="submit" id="register-submit-btn" class="btn green pull-right" ng-click="save(data)">Register <i class="m-icon-swapright m-icon-white"></i></button>
         </div>
-    </div>
+    </div>-->
 </form>
 <style type="text/css">
 @media (min-width: 1368px) {

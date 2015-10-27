@@ -2,7 +2,6 @@ var crypto = require('crypto'),
     algorithm = 'aes-256-ctr';
 var zlib = require('zlib');
 var fs = require('fs');
-
 /*
 check data request
 input: request from client
@@ -132,9 +131,9 @@ module.exports = {
             android: 'ARD'
         },
 
-        verificationMethod:{
-            token:'TOKEN',
-            code:'CODE'
+        verificationMethod: {
+            token: 'TOKEN',
+            code: 'CODE'
         },
 
         roles: {
@@ -143,7 +142,7 @@ module.exports = {
             internalPractitioner: 'INTERNAL_PRACTITIONER', //DOCTOR
             externalPractitioner: 'EXTERTAL_PRACTITIONER', //GP
             patient: 'PATIENT',
-            clinicTelehealth:'CLINIC_TELEHEALTH'
+            clinicTelehealth: 'CLINIC_TELEHEALTH'
         },
         fileType: {
             image: 'MedicalImage',
@@ -151,15 +150,15 @@ module.exports = {
             avatar: 'ProfileImage',
             signature: 'Signature'
         },
-        imageExt: ['jpg','png','gif','webp','tif','bmp','psd','jxr'],
+        imageExt: ['jpg', 'png', 'gif', 'webp', 'tif', 'bmp', 'psd', 'jxr'],
 
-        verificationCodeLength:6,
-        
-        verificationTokenLength:150,
+        verificationCodeLength: 6,
 
-        tokenExpired:15, //seconds
+        verificationTokenLength: 150,
 
-        codeExpired:3, //Số lần có thể nhập sai
+        tokenExpired: 15, //seconds
+
+        codeExpired: 3, //Số lần có thể nhập sai
 
     },
     exlog: exlog,
@@ -219,6 +218,29 @@ module.exports = {
         }
         return destination;
     },
+
+    /**
+     * chuyển các thuộc tính của object thành mảng key_value
+     * Ví dụ: {name:'abc',address:'vietnam'}==>[{name:'abc'},{address:'vietnam'}]
+     * @param  {[type]} obj [description]
+     * @return {[type]}     [description]
+     */
+    splitAttributesToObjects:function(obj)
+    {
+        var list=[];
+        if(_.isObject(obj))
+        {
+            for(var key in obj)
+            {
+                var item={};
+                item[key]=obj[key];
+                list.push(item);
+            }
+        }
+        return list;
+    },
+
+
     /**
      * Kiểm tra các attributes của object có giá trị bằng một trong các giá trị trong mảng corrects
      * hay không
@@ -348,5 +370,34 @@ module.exports = {
                 });
             });
         })
+    },
+    GetRole: function(roles) {
+        if (_.isArray(roles)) {
+            var result = {
+                isAdmin: false,
+                isAssistant: false,
+                isInternalPractitioner: false,
+                isExternalPractitioner: false
+            };
+            roles.forEach(function(role, index) {
+                switch (role.RoleCode) {
+                    case 'ADMIN':
+                        result.isAdmin = true;
+                        break;
+                    case 'ASSISTANT':
+                        result.isAssistant = true;
+                        break;
+                    case 'INTERNAL_PRACTITIONER':
+                        result.isInternalPractitioner = true;
+                        break;
+                    case 'EXTERTAL_PRACTITIONER':
+                        result.isExternalPractitioner = true;
+                        break;
+                    default:
+                        break;
+                }
+            });
+            return result;
+        }
     }
 }

@@ -1,4 +1,9 @@
-module.exports = function(data) {
+/*
+GetPaginationAppointment: get information pagination list [WA, Telehealth] Appointment
+input: information WA Appointment
+output: object pagination with condition received
+ */
+module.exports = function(data, userInfo) {
     var moment = require('moment');
     var pagination = {
         filterAppointment: [],
@@ -239,6 +244,26 @@ module.exports = function(data) {
 
             }
         });
+    }
+    //add roles
+    var role = HelperService.GetRole(userInfo.roles);
+    if (role.isInternalPractitioner) {
+        var filterRoleTemp = {
+            '$and': {
+                ID: userInfo.ID
+            }
+        };
+        pagination.filterDoctor.push(filterRoleTemp);
+    } else if (role.isExternalPractitioner) {
+        var filterRoleTemp = {
+            '$and': {
+                CreatedBy: userInfo.ID
+            }
+        };
+        pagination.filterAppointment.push(filterRoleTemp);
+    } else if (!role.isAdmin &&
+        !role.isAssistant) {
+        pagination.limit = 0;
     }
     return pagination;
 };

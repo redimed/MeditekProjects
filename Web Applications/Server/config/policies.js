@@ -19,6 +19,7 @@
 var _ = require('lodash');
 var policies = {
     '*': 'hasToken',//bật lên khi ở chế độ develop không cần login phân quyền
+    // '*': true, //bật lên khi ở chế độ develop không cần login phân quyền
     // '*': "hasToken", //bật lên khi relase, hầu hết tất cả api đều phải có token
 };
 
@@ -37,4 +38,27 @@ var authorizationPolicies = require('./policies/authorizationPolicies');
 _.extend(policies, authorizationPolicies);
 //End module Authorization
 
+//Begin module Appointment
+var appointmentPolicies = require('./policies/AppointmentPolicies');
+_.extend(policies, appointmentPolicies);
+//End module Appointment
+
+//Begin module FileUpload
+var fileUploadPolicies = require('./policies/fileUploadPolicies');
+_.extend(policies, fileUploadPolicies);
+//End module FileUpload
+
+//Begin module Common
+var commonPolicies = require('./policies/commonPolicies');
+_.extend(policies, commonPolicies);
+//End module Common
+//Begin module Register
+var registerPolicies = require('./policies/RegisterPolicies');
+_.extend(policies, registerPolicies);
+//End module Register
+//Begin module Doctor
+var registerPolicies = require('./policies/doctorPolicies');
+_.extend(policies, registerPolicies);
+//End module Doctor
 module.exports.policies = policies;
+

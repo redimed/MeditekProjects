@@ -1,19 +1,16 @@
 module.exports = {
     /*
-    RequestAppointment: save information patient, 
-    create new appointment, create telehealth appointment,
-    link telehealth appointment with appointment created, 
-    send email and notification for admin system
-    input: information patient
-    outout: -success: request apppointment success
-            -failed: request appointment error
+    RequestAppointment - Controller: request new Appointment for Telehealth Appointment
+    input: infomation new Telehealth Appointment, infomation created
+    output: -success: transaction created new Telehealth Appointment
+            -error: [transaction] created new Telehealth Appointment, error message
     */
     RequestAppointment: function(req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.CreateTelehealthAppointment(data)
+            Services.CreateTelehealthAppointment(data, req.user)
                 .then(function(success) {
                     success.transaction.commit();
                     res.ok('success');
@@ -28,16 +25,17 @@ module.exports = {
         }
     },
     /*
-    GetListTelehealthAppointment: get list appointment with condition receive
-    inpput: information pagination, search, .....
-    output: list appointment via condition
+    GetListTelehealthAppointment - Controller: get list appointment with condition received
+    input: information filter list appointment, information user filter
+    output: -success: list Telehealth Appointment
+            -error: [transaction] load list Telehealth Appointment, error message.
     */
     GetListTelehealthAppointment: function(req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.GetListTelehealthAppointment(data)
+            Services.GetListTelehealthAppointment(data, req.user)
                 .then(function(success) {
                     res.ok(success.data);
                 })
@@ -51,9 +49,10 @@ module.exports = {
         }
     },
     /*
-    GetDetailTelehealthAppointment: get information detail telehealth appointment
-    input: UID appointment
-    output: detail information telehealth appointment
+    GetDetailTelehealthAppointment - Controller: get information detail Telehealth Appointment
+    input: UID Telehealth Appointment
+    output: -success: information details Telehealth Appointment
+            -error: [transaction] information details Telehealth Appointment, error message
     */
     GetDetailTelehealthAppointment: function(req, res) {
         var UID = req.params.UID;
@@ -70,35 +69,43 @@ module.exports = {
             });
     },
     /*
-    UpdateTelehealthAppointment: Update information telehealth appointment
+    UpdateTelehealthAppointment - Controller: Update information Telehealth Appointment
     input: new information telehealth appointment
-    output: - success: update telehealth appointment success
-            - error: updated telehealth appointment failed
+    output: - success: transaction updated Telehealth Appointment
+            - failed: [transaction] updated Telehealth Appointment, error message
     */
     UpdateTelehealthAppointment: function(req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.UpdateTelehealthAppointment(data)
-                .then(function(success) {
-                    success.transaction.commit();
-                    res.ok('success');
-                })
-                .catch(function(err) {
-                    if (HelperService.CheckPostRequest(err) &&
-                        HelperService.CheckPostRequest(err.transaction)) {
-                        err.transaction.rollback();
-                    }
-                    res.serverError(ErrorWrap(err.error));
-                });
+            var role = HelperService.GetRole(req.user.roles);
+            if (role.isInternalPractitioner ||
+                role.isAdmin ||
+                role.isAssistant) {
+                Services.UpdateTelehealthAppointment(data, req.user)
+                    .then(function(success) {
+                        success.transaction.commit();
+                        res.ok('success');
+                    })
+                    .catch(function(err) {
+                        if (HelperService.CheckPostRequest(err) &&
+                            HelperService.CheckPostRequest(err.transaction)) {
+                            err.transaction.rollback();
+                        }
+                        res.serverError(ErrorWrap(err.error));
+                    });
+            } else {
+                res.serverError('failed');
+            }
+
         }
     },
     /*
-    DeleteTelehealthAppointment: delete Telehealth Appointment
+    DeleteTelehealthAppointment - Controller: Delete  a Telehealth Appointment
     input: UID Appointment
-    output: - success: response status success
-            - error: response status failed
+    output: - success: transaction updated Enable is 'N' Telehealth Appointment
+            - error: [transaction] updated Enable is 'N' Telehealth Appointment, error message
     */
     DeleteTelehealthAppointment: function(req, res) {
         var data = HelperService.CheckPostRequest(req);

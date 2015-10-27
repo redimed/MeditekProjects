@@ -19,13 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let reachability = Reachability.reachabilityForInternetConnection()
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
         //        let userName = userDefaultsLogin.valueForKey(KeyNSUserDefault.userNameKey) as? String
         //        if userName == "" {
-        let controllerId = "LoginView"
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let initViewController : UIViewController = storyBoard.instantiateViewControllerWithIdentifier(controllerId) as UIViewController
-        self.window?.rootViewController = initViewController
+        let loginVC : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginView") as UIViewController
+        self.window?.rootViewController = loginVC
         
         //        } else {
         //            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -39,11 +37,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(application: UIApplication) {
+        UIApplication.sharedApplication().idleTimerDisabled = true
+        print("enter background")
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
+        print("enter foreground")
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
     

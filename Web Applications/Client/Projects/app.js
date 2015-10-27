@@ -57,8 +57,8 @@ app
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
         // END CORS PROXY
         //RESTANGULAR DEFAULT
-        // RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3005");
-        RestangularProvider.setBaseUrl("http://telehealthvietnam.com.vn:3005");
+        RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3005");
+        // RestangularProvider.setBaseUrl("http://telehealthvietnam.com.vn:3005");
         $urlRouterProvider.otherwise('');
         $stateProvider.state('sys', {
             url: '',
@@ -120,14 +120,14 @@ app
         //     }
         //     return false;
         // });
-        // END RESTANGULAR ERROR HANDLING
+        // END RESTANGULAR ERROR HANDLING --------------------
 
         $rootScope.$state = $state; // state to be accessed from view
         $rootScope.$settings = settings; // state to be accessed from view
 
         $rootScope.$on('$stateChangeSuccess', function(e, toState, toParams, fromState, fromParams) {
             if (!$cookies.get("userInfo")) {
-                if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register") {
+                if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register" && toState.name !== "unAuthentication.activation") {
                     e.preventDefault();
                     $state.go("unAuthentication.login", null, {
                         location: "replace",

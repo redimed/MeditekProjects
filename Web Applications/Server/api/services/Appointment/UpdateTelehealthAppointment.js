@@ -1,4 +1,10 @@
-module.exports = function(data) {
+/*
+UpdateTelehealthAppointment: update Telehealth Appointment
+input: information update Telehealth Appointment
+output: -success: transaction update Telehealth Appointment
+        -failed: [transaction] update Telehealth Appointment, error message
+ */
+module.exports = function(data, userInfo) {
     var $q = require('q');
     var preferringPractitionerObject;
     var appointmentObject;
@@ -7,8 +13,8 @@ module.exports = function(data) {
     return sequelize.transaction()
         .then(function(t) {
             var defer = $q.defer();
-            if (HelperService.CheckExistData(data.UserInfo) &&
-                HelperService.CheckExistData(data.UserInfo.UID)) {
+            if (HelperService.CheckExistData(userInfo) &&
+                HelperService.CheckExistData(userInfo.UID)) {
                 //get PreferringPractitioner object
                 UserAccount.findOne({
                         attributes: ['ID'],
@@ -18,14 +24,14 @@ module.exports = function(data) {
                             required: true
                         }],
                         where: {
-                            UID: data.UserInfo.UID
+                            UID: userInfo.UID
                         },
                         transaction: t
                     })
                     .then(function(preferPractitionerObj) {
                         if (HelperService.CheckExistData(preferPractitionerObj) &&
                             HelperService.CheckExistData(preferPractitionerObj.Doctor)) {
-                            preferringPractitionerObject = preferPractitionerObj.Doctor;
+                            preferringPractitionerObject = preferPractitionerObj;
                             //get Appointment object
                             return Appointment.findOne({
                                 attributes: ['ID'],

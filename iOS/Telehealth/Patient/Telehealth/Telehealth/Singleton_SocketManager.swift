@@ -11,7 +11,7 @@ import Socket_IO_Client_Swift
 
 class Singleton_SocketManager:UIViewController {
     static let shareInstance = Singleton_SocketManager()
-    let socket = SocketIOClient(socketURL: ConfigurationSystem.Http,opts: ["connectParams": ["__sails_io_sdk_version": "0.11.0"]])
+    let socket = SocketIOClient(socketURL: ConfigurationSystem.Http_3009,opts: ["connectParams": ["__sails_io_sdk_version": "0.11.0", "Authorization":"Bearer \(tokens)", "CoreAuth": "Bearer \(coreTokens)"]])
     
 }
 let sharedSocket = Singleton_SocketManager()

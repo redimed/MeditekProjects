@@ -1,13 +1,23 @@
 var moment = require('moment');
 module.exports = {
+    /*
+    AppointmentCreate - services: get object to create new Appointment
+    input: information Appointment
+    output: object Appointment
+    */
     AppointmentCreate: function(data) {
         return {
             SiteID: data.SiteID,
             RequestDate: data.RequestDate,
-            Status: 'Watting for approval',
+            Status: 'Waitting for Approval',
             Enable: 'Y'
         };
     },
+    /*
+    AppointmentUpdate - services: get object to update Appointment
+    input: information Appointment
+    output: object Appointment
+    */
     AppointmentUpdate: function(data) {
         return {
             RequestDate: HelperService.CheckExistData(data.RequestDate) ? moment(data.RequestDate, 'YYYY-MM-DD HH:mm:ss Z').toDate() : null,
@@ -17,6 +27,11 @@ module.exports = {
             Status: data.Status
         };
     },
+    /*
+    TelehealthAppointmentCreate - services: get object to create Telehealth Appointment
+    input: information Telehealth Appointment
+    output: object Telehealth Appointment
+    */
     TelehealthAppointmentCreate: function(data) {
         var FullName = HelperService.GetFullName(data.FirstName, data.MiddleName, data.LastName);
         return {
@@ -33,6 +48,11 @@ module.exports = {
             Enable: 'Y'
         };
     },
+    /*
+    TelehealthAppointmentUpdate - services: get object to update Telehealth Appointment
+    input: information Telehealth Appointment
+    output: object Telehealth Appointment
+    */
     TelehealthAppointmentUpdate: function(data) {
         return {
             RefDurationOfReferal: data.RefDurationOfReferal,
@@ -42,6 +62,11 @@ module.exports = {
             PresentComplain: data.PresentComplain
         };
     },
+    /*
+    PatientAppointmentCreate - services: get object to create PatientAppointment
+    input: information PatientAppointment
+    output: object PatientAppointment
+    */
     PatientAppointmentCreate: function(data) {
         return {
             FirstName: data.FirstName,
@@ -57,6 +82,11 @@ module.exports = {
             HomePhoneNumber: data.HomePhoneNumber
         };
     },
+    /*
+    PatientAppointmentUpdate - services: get object to update PatientAppointment
+    input: information PatientAppointment
+    output: object PatientAppointment
+    */
     PatientAppointmentUpdate: function(data) {
         return {
             FirstName: data.FirstName,
@@ -72,6 +102,11 @@ module.exports = {
             HomePhoneNumber: data.HomePhoneNumber
         };
     },
+    /*
+    ExaminationRequired - services: get object to create, update ExaminationRequired
+    input: information ExaminationRequired
+    output: object ExaminationRequired
+    */
     ExaminationRequired: function(data) {
         return {
             Private: data.Private,
@@ -81,6 +116,11 @@ module.exports = {
             MVIT: data.MVIT
         };
     },
+    /*
+    PreferredPractitioners - services: get object to create, update PreferredPractitioners
+    input: information PreferredPractitioners
+    output: object PreferredPractitioners
+    */
     PreferredPractitioners: function(teleApptID, data) {
         data.forEach(function(value, index) {
             data[index].UID = UUIDService.Create();
@@ -88,6 +128,11 @@ module.exports = {
         });
         return data;
     },
+    /*
+    ClinicalDetails - services: get object to create, update ClinicalDetails
+    input: information ClinicalDetails
+    output: object ClinicalDetails
+    */
     ClinicalDetails: function(teleApptID, createdBy, data) {
         data.forEach(function(value, index) {
             data[index].UID = UUIDService.Create();
@@ -95,27 +140,5 @@ module.exports = {
             data[index].CreatedBy = createdBy;
         });
         return data;
-    },
-    PatientCreate: function(data) {
-        return {
-            FirstName: data.FirstName,
-            MiddleName: data.MiddleName,
-            LastName: data.LastName,
-            DOB: data.DOB,
-            Address: data.Address,
-            Suburb: data.Suburb,
-            PostCode: data.PostCode,
-            HomePhoneNumber: data.HomePhoneNumber,
-            Email: data.Email
-        };
-    },
-    DoctorCreate: function(data) {
-        return {
-            FirstName: data.FirstName,
-            MiddleName: data.MiddleName,
-            LastName: data.LastName,
-            Phone: data.Phone,
-            DepartmentID: data.DepartmentID
-        };
     }
 };

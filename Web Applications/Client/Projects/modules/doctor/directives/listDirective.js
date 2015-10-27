@@ -1,5 +1,27 @@
 angular.module('app.authentication.doctor.directive.list', [])
-.directive('doctorList', function(doctorService, $filter, $modal, $state) {
+.controller('ModalDoctor', function($scope, $modalInstance, list) {
+
+	// cancel
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
+	}
+	
+	// Variable
+	$scope.doctor = {
+		id: list.UID,
+		accid: list.UserAccountID, // UserAccountID
+		depid: list.DepartmentID, // DepartmentID
+		success: false
+	}
+
+	$scope.$watch('doctor.success', function(success) {
+		if(success)
+			$modalInstance.close('success');
+	})
+
+})
+
+.directive('doctorList', function(doctorService, $filter, $modal, $state, toastr) {
 
 	return {
 
@@ -24,7 +46,8 @@ angular.module('app.authentication.doctor.directive.list', [])
 				PhoneNumber: '',
 				sortFisrtName: 'DESC',
 				sortLastName: 'DESC',
-				sortEmail: 'DESC'
+				sortEmail: 'DESC',
+				sortEnable: 'Y'
 
 			}
 
@@ -42,7 +65,17 @@ angular.module('app.authentication.doctor.directive.list', [])
 				.then(function(response) {
 					scope.doctor.list = response.data.rows;
 					scope.doctor.count = response.data.count;
-					console.log(scope.doctor.list);
+					angular.forEach(response.data.rows, function(value, index) {
+						doctorService.getroleDoctor(response.data.rows[index].UserAccountID)
+						.then(function(responsies) {
+							if( responsies == '' || responsies == null || responsies == undefined ) {
+								scope.doctor.typies = '';
+							} else{
+								scope.doctor.typies = responsies.Role.RoleName;
+							}
+						}, function(error) {});
+					});
+					
 				}, function(error) {})
 
 			}
@@ -69,17 +102,50 @@ angular.module('app.authentication.doctor.directive.list', [])
 						scope.doctor.search.sortEmail = options.sort;
 						break;
 					}
+					case 'sortEnable': {
+						scope.doctor.search.sortEnable = options.sort;
+						break;
+					}
 				}
 				scope.doctor.load();
 			}
+
+			// Modal Detail
+			var editModal = function(list){
+				$modal.open({
+					templateUrl: 'doctorModal',
+					controller: 'ModalDoctor',
+					windowClass: 'app-modal-window',
+					resolve: {
+						list: function() {
+							return list;
+						},
+
+					}
+				})
+				.result.then(function(response) {
+					if(response === 'success') {
+						toastr.success('Update Successfully');
+						scope.doctor.load();
+					}
+				})
+			};
+
+			// End Modal
 
 			// Variable
 			scope.doctor = {
 
 				count: 0,
 				list: [],
+				typies: '',
 				search: angular.copy(search),
 				loading: false,
+				dialog: {
+					editModal: function(list) {
+						editModal(list);
+					}
+				},
 				load: function(){ 
 					load();
 				},
@@ -95,34 +161,6 @@ angular.module('app.authentication.doctor.directive.list', [])
 			// Load data
 			scope.doctor.load();
 
-			// Modal
-			scope.openModalDoctor = function(UID){
-				var modalInstance = $modal.open({
-					animation : true,
-					templateUrl: 'modules/doctor/views/doctorModal.html',
-					controller: function($scope, $modalInstance) {
-						$scope.modal_close = function(){
-							$modalInstance.close();
-						}
-						$scope.close = function(){
-							$modalInstance.close();
-						}
-					},
-					windowClass: 'app-modal-window',
-					resolve: {
-						data: function(){
-							return UID;
-						}
-					}
-				});
-			};
-
-			scope.toggle = true;
-			scope.toggleFilter = function(){
-				scope.toggle = scope.toggle === false ? true : false;
-			}
-			// End Modal
-
 			// Reload Data
 			scope.$watch('reload', function(reload) {
 				if(reload) {
@@ -130,6 +168,11 @@ angular.module('app.authentication.doctor.directive.list', [])
 					scope.doctor.load();
 				}
 			})
+
+			scope.toggle = true;
+			scope.toggleFilter = function(){
+				scope.toggle = scope.toggle === false ? true : false;
+			}
 
 		} // end link
 

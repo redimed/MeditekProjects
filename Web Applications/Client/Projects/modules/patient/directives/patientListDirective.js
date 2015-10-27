@@ -1,15 +1,18 @@
 var app = angular.module('app.authentication.patient.list.directive',[]);
-app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies){
+app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies, $state){
 	return {
 		scope :{
 			items:'=onItem',
 			isShowCreateButton:'=onCreate',
 			isShowSelectButton:'=onSelect',
-			uidReturn:'='
+			uidReturn:'=',
+			appointment:'='
 		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
-			scope.search ={};
+			scope.search  = {};
+			scope.checked = {};
+			scope.fieldSort;
 			scope.itemDefault = [
 				{field:"FirstName",name:"First Name"},
 				{field:"LastName",name:"Last Name"},
@@ -66,7 +69,14 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			scope.toggleFilter = function(){
 				scope.toggle = scope.toggle === false ? true : false;
 			};
-
+			// var aaa = {
+			// 	FirstName:"Giang",
+			// 	LastName:"Vo",
+			// 	MiddleName:"Truong",
+			// 	PhoneNumber:"+61432657849",
+			// 	DOB:"24/12/2015"
+			// };
+			// PatientService.postDatatoDirective(aaa);
 			scope.setPage = function() {
 	            scope.searchObjectMap.offset = (scope.searchObjectMap.currentPage - 1) * scope.searchObjectMap.limit;
 	            scope.loadList(scope.searchObjectMap);
@@ -87,32 +97,97 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				});
 			};
 
-			scope.Search = function(data){
-				if(data.UserAccount){
-					data.PhoneNumber = data.UserAccount;
+			scope.Search = function(data,e){
+				if(e==13){
+					if(data.UserAccount){
+						data.PhoneNumber = data.UserAccount;
+					}
+					scope.searchObjectMap.Search = data;
+					scope.loadList(scope.searchObjectMap);
 				}
-				scope.searchObjectMap.Search = data;
-				scope.loadList(scope.searchObjectMap);
-
 			};
 
 			scope.sort = function(field,sort) {
+				scope.isClickASC = false;
+				scope.isClickDESC = false;
+				scope.fieldSort = field;
 				if(field=='UserAccount'){
 					field = 'PhoneNumber';
 				}
+				if(sort==="ASC")
+					scope.isClickASC = true;
+				else
+					scope.isClickDESC = true;
 				var data = field+" "+sort;
 				scope.searchObjectMap.order = data;
 				scope.loadList(scope.searchObjectMap);
 			};
 
 			scope.selectPatient = function(patientUID){
-				if(scope.uidReturn==patientUID){
-					scope.uidReturn='';
+				if(!scope.appointment){
+					if(scope.uidReturn==patientUID){
+						scope.uidReturn='';
+						scope.checked = false;
+					}
+					else{
+						scope.checked = true;
+						scope.uidReturn=patientUID;
+					}
 				}
 				else{
 					scope.uidReturn=patientUID;
+					swal({   
+						title: "Are you sure?", 
+						text: "Are you want to link this patient to the current appointment?" ,
+						type: "warning",   
+						showCancelButton: true,   
+						confirmButtonColor: "#DD6B55",   
+						confirmButtonText: "Ok",   
+						cancelButtonText: "Cancel",   
+						closeOnConfirm: true,   
+						closeOnCancel: true 
+					}, 
+					function(isConfirm){   
+						if (isConfirm) {  
+							scope.uidReturn=patientUID;   
+							scope.appointment.runIfSuccess({data:{UID:patientUID}});
+						}else{
+
+							scope.uidReturn='';
+							scope.init();
+						}
+						console.log(scope.uidReturn);
+					});
 				}
+				
 			};
+
+			scope.createPatient= function () {
+				if (scope.appointment) {
+					var modalInstance = $uibModal.open({
+						templateUrl: 'patientCreatemodal',
+						controller: function($scope,$modalInstance){
+							$scope.close = function() {
+								modalInstance.close();
+							};
+							$scope.appointment = {
+								runIfSuccess : function (data) {
+									$modalInstance.close({status:'success',data:data});
+								}
+							};
+						},
+						windowClass: 'app-modal-window'
+						//size: 'lg',
+					});
+					modalInstance.result.then(function (data) {
+				      	scope.appointment.runIfSuccess(data);
+				    });
+				}else{
+					scope.aaaa ="asdasd";
+
+					$state.go('authentication.patient.create');
+				}
+			}
 
 			scope.init();
 		},

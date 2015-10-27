@@ -1,4 +1,10 @@
-module.exports = function(data) {
+/*
+CreateTelehealthAppointment - services: Create new Telehealth Appointment
+input: information Telehealth Appointment, information user created Telehealth Appointment
+output: -success: transaction created Telehealth Appointment
+        -failed: [transaction] created Telehealth Appointment, error message
+*/
+module.exports = function(data, userInfo) {
     var $q = require('q');
     var telehealthApointmentCreated;
     var preferringPractitioner;
@@ -7,8 +13,8 @@ module.exports = function(data) {
     return sequelize.transaction()
         .then(function(t) {
             var defer = $q.defer();
-            if (HelperService.CheckExistData(data.UserInfo) &&
-                HelperService.CheckExistData(data.UserInfo.UID)) {
+            if (HelperService.CheckExistData(userInfo) &&
+                HelperService.CheckExistData(userInfo.UID)) {
                 //find information PreferringPractitioner
                 UserAccount.findOne({
                         attributes: ['ID'],
@@ -21,16 +27,16 @@ module.exports = function(data) {
                             required: true
                         }],
                         where: {
-                            UID: data.UserInfo.UID
+                            UID: userInfo.UID
                         },
                         transaction: t
                     })
                     .then(function(preferPractitioner) {
                         if (HelperService.CheckExistData(preferPractitioner) &&
                             HelperService.CheckExistData(preferPractitioner.Doctor)) {
-                            preferringPractitioner = preferPractitioner.Doctor;
-                            preferringPractitioner.RefDate = data.TelehealthAppointment.RefDate;
-                            preferringPractitioner.RefDurationOfReferal = data.TelehealthAppointment.RefDurationOfReferal;
+                            preferringPractitioner = preferPractitioner;
+                            preferringPractitioner.Doctor.RefDate = data.TelehealthAppointment.RefDate;
+                            preferringPractitioner.Doctor.RefDurationOfReferal = data.TelehealthAppointment.RefDurationOfReferal;
                             var dataAppointment = Services.GetDataAppointment.AppointmentCreate(data);
                             dataAppointment.UID = UUIDService.Create();
                             dataAppointment.CreatedBy = preferringPractitioner.ID;
@@ -95,7 +101,7 @@ module.exports = function(data) {
                         if (HelperService.CheckExistData(data.TelehealthAppointment) &&
                             HelperService.CheckExistData(appointmentCreated)) {
                             var dataTelehealthAppointment =
-                                Services.GetDataAppointment.TelehealthAppointmentCreate(preferringPractitioner);
+                                Services.GetDataAppointment.TelehealthAppointmentCreate(preferringPractitioner.Doctor);
                             dataTelehealthAppointment.UID = UUIDService.Create();
                             dataTelehealthAppointment.CreatedBy = preferringPractitioner.ID;
                             /*
@@ -125,7 +131,7 @@ module.exports = function(data) {
                             created associated PreferringPractitioner 
                             via Model RelTelehealthAppointmentDoctor
                             */
-                            return telehealthApointmentCreated.addDoctor(preferringPractitioner.ID, {
+                            return telehealthApointmentCreated.addDoctor(preferringPractitioner.Doctor.ID, {
                                 transaction: t
                             });
                         }

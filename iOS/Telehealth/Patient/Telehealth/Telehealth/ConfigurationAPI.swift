@@ -19,7 +19,9 @@ struct UrlInformationPatient  {
     static let getInformationPatientByUID = "/api/telehealth/user/details"
     static let getAppointmentList = "/api/telehealth/user/appointments"
     static let getAppointmentDetails = "/api/telehealth/user/appointmentDetails"
-    static let uploadImage = "http://192.168.1.130:3005/api/uploadFile"
+    static let uploadImage =  "/api/uploadFile"
+    static let updateImageToAppointment = "/api/telehealth/appointment/updateFile"
+    static let downloadImage = "/api/downloadFile/400"
 }
 
 //Giap: API Socket
@@ -27,12 +29,19 @@ struct UrlAPISocket  {
     static let joinRoom = "/api/telehealth/socket/joinRoom?uid=%@"
     static let emitAnswer = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
 }
+
 //Giap: Group Message in system
 struct MessageString  {
     static let CallAnswer = "answer"
     static let CallEndCall = "end"
     static let Decline = "decline"
     static let Call = "call"
+    static let Cancel = "cancel"
+}
+
+struct ErrorMessage {
+    static let NoData = "Can't get data"
+    static let TimeOut = "Request Time Out"
 }
 
 //Giap: Group Hash Value Number 0 - 9 and delete
@@ -49,10 +58,19 @@ struct numberHashValue  {
     static let number9 = 942
     static let delete = 0
 }
+//Giap: Icon FontAwsome
 struct FAIcon {
     static let volume_off = "\u{f026}"
     static let volume_up = "\u{f028}"
     static let pause = "\u{f04c}"
     static let play = "\u{f04b}"
+    static let fa_close = "\u{f00d}"
+}
+struct formatTime {
+    static let dateTime = "yyyy-MM-dd HH:mm:ss"
+    static let dateTimeZone = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    static let formatDate = "dd/MM/yyyy"
+    static let formatDateTime = "dd/MM/yyyy HH:mm"
+    static let formatTime = "HH:mm"
 }
 

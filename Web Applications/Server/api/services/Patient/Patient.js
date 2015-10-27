@@ -90,6 +90,13 @@ module.exports = {
 				}
 			}
 
+			if(data.DOB!=null && data.DOB!=undefined){
+				if(!/^(\d{1,2})[/](\d{1,2})[/](\d{1,2})/.test(data.DOB)){
+					errors.push({field:"DOB",message:"invalid value"});
+					err.pushErrors(errors);
+				}
+			}
+
 			//validate Occupation
 			if(data.Occupation){
 				if(data.Occupation.length < 0 || data.Occupation.length > 255){
@@ -240,7 +247,7 @@ module.exports = {
 			FirstName       : data.FirstName,
 			MiddleName      : data.MiddleName,
 			LastName        : data.LastName,
-			DOB             : data.DOB?moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss'):null,
+			DOB             : data.DOB?data.DOB:null,
 			Gender          : data.Gender,
 			Occupation      : data.Occupation,
 			HomePhoneNumber : data.HomePhoneNumber,
@@ -254,18 +261,12 @@ module.exports = {
 			Address2        : data.Address2,
 			State           : data.State,
 			Enable          : "Y",
-			CreatedDate     : moment(new Date(),'YYYY-MM-DD HH:mm:ss ZZ').toDate()
+			CreatedDate     : new Date()
 		};
 		return Services.Patient.validation(data)
 		.then(function(success){
 			if(data.PhoneNumber){
-				if(data.PhoneNumber.substr(0,3)=='+61'){
-					return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
-				}
-				else{
-					data.PhoneNumber = '+61'+data.PhoneNumber;
-					return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
-				}
+				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
 			}
 			else{
 				if(data.Email){
@@ -293,6 +294,7 @@ module.exports = {
 			if(isCreateByName==false && isCreateByEmail==false){
 				if(user.length > 0) {
 					info.UserAccountID = user[0].ID;
+					info.UserAccountUID = user[0].UID;
 					return Patient.create(info,transaction);
 				}
 				else{
@@ -308,6 +310,7 @@ module.exports = {
 					return Services.UserAccount.CreateUserAccount(userInfo,transaction)
 					.then(function(user){
 						info.UserAccountID = user.ID;
+						info.UserAccountUID = user.UID;
 						return Patient.create(info,transaction);
 					},function(err){
 						throw err;
@@ -316,13 +319,17 @@ module.exports = {
 			}
 			else{
 				info.UserAccountID = user.ID;
+				info.UserAccountUID = user.UID;
 				return Patient.create(info,transaction);
 			}
 		},function(err){
 			throw err;
 		})
 		.then(function(result){
-			return result;
+			return {
+				result:result,
+				UserAccountUID:info.UserAccountUID
+			};
 		}, function(err){
 			throw err;
 		})
@@ -500,9 +507,8 @@ module.exports = {
 	UpdatePatient : function(data, transaction) {
 		if(check.checkData(data)){
 			data.ModifiedDate = new Date();
-			// var DOB = moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
+			data.DOB =moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').format('DD/MM/YYYY');
 			//get data not required
-			data.DOB = moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss');
 			var patientInfo={
 				ID              : data.ID,
 				Title           : data.Title,
@@ -647,7 +653,7 @@ module.exports = {
 		return Services.Patient.validation(data)
 		.then(function(success){
 			if(check.checkData(data.PhoneNumber)){
-				data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
+				// data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
 				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction)
 				.then(function(user){
 					if(check.checkData(user)){

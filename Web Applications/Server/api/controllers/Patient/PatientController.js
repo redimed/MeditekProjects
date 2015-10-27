@@ -9,13 +9,16 @@ module.exports = {
 		Services.Patient.CreatePatient(data)
 		.then(function(patient){
 			if(patient!==undefined && patient!==null && patient!=='' && patient.length!==0){
+				console.log(patient.result);
+				console.log(patient.UserAccountUID);
 				var info = {
-					UID       : patient.UID,
-					FirstName : patient.FirstName,
-					LastName  : patient.LastName,
-					DOB       : patient.DOB,
-					Address1  : patient.Address1,
-					Address2  : patient.Address2
+					UID            : patient.result.UID,
+					FirstName      : patient.result.FirstName,
+					LastName       : patient.result.LastName,
+					DOB            : patient.result.DOB,
+					Address1       : patient.result.Address1,
+					Address2       : patient.result.Address2,
+					UserAccountUID : patient.UserAccountUID
 				};
 				res.ok({status:200, message:"success",data:info});
 			}
@@ -111,7 +114,26 @@ module.exports = {
 		Services.Patient.DetailPatient(data)
 		.then(function(info){
 			if(info!=null && info!=undefined && info!='' && info.length!=0){
-				res.ok({status:200, message:"success", data:info});
+				FileUpload.findAll({
+					where:{
+						UserAccountID : info[0].UserAccountID
+					}
+				})
+				.then(function(success){
+					if(success!==undefined && success!==null && success!=='' && success.length!==0){
+						info[0].dataValues.FileUID = success[0].UID?success[0].UID:null;
+						res.ok({status:200, message:"success", data:info});
+					}
+					else{
+						info[0].dataValues.FileUID = null;
+						res.ok({status:200, message:"success", data:info});
+					}
+				},function(err){
+					var err = new Error("SERVER ERROR");
+					err.pushErrors("Server Error");
+					res.notFound({status:404,message:ErrorWrap(err)});
+				});
+				
 			} else {
 				var err = new Error("SERVER ERROR");
 				err.pushErrors("Server Error");

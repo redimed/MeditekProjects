@@ -18,7 +18,7 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var textFieldVerifyCode: DesignableTextField!
     //Color red
     let colorCustom = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
-    
+    var phoneNumber = String()
     
     let verifyPhoneNumberController = GetAndPostDataController()
     
@@ -61,7 +61,7 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
             
             view.showLoading()
             //Send request phone number to server
-            verifyPhoneNumberController.CheckVerifyPhoneNumber(textFieldVerifyCode.text!,deviceID: config.deviceID!){
+            verifyPhoneNumberController.CheckVerifyPhoneNumber(textFieldVerifyCode.text!,deviceID: config.deviceID!,phoneNumber:phoneNumber){
                 response in
                 print(response)
                 if response["status"] == "success"{
@@ -70,20 +70,24 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                     let uid = response["uid"].string
                     let token = response["token"].string
                     let patientUID = response["patientUID"].string
+                    let userUID = response["userUID"].string
+                    let coreToken = response["coreToken"].string
                     
                     //Save activated in localstorage
                     defaults.setValue("Verified", forKey: "verifyUser")
                     defaults.setValue(uid, forKey: "uid")
                     defaults.setValue(token, forKey: "token")
                     defaults.setValue(patientUID, forKey: "patientUID")
+                    defaults.setValue(userUID, forKey: "userUID")
+                    defaults.setValue(coreToken, forKey: "coreToken")
                     defaults.synchronize()
                     
                     //Change to home view by segue
-                    self.performSegueWithIdentifier("VerifyToProfileSegue", sender: self)
+                    self.performSegueWithIdentifier("VerifyToHomeSegue", sender: self)
                 }else {
                     self.view.hideLoading()
-                    if response["TimeOut"] ==  "Request Time Out" {
-                        self.alertMessage("Error", message: "Request Time Out")
+                    if response["TimeOut"].string ==  ErrorMessage.TimeOut {
+                        self.alertMessage("Error", message: ErrorMessage.TimeOut)
                     }else {
                         let message : String = String(response["ErrorsList"][0])
                         self.textFieldVerifyCode.text = ""

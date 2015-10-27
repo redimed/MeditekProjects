@@ -8,13 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		50B38E783E64ABD83BAA0BD6 /* Pods_Telehealth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */; };
-		AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */ = {isa = PBXBuildFile; fileRef = AF3902F51BCDE8DD00173A58 /* FAQs.html */; settings = {ASSET_TAGS = (); }; };
+		AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */; };
+		AF00C3F91BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3F81BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift */; };
+		AF00C3FB1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */; };
+		AF00C3FD1BD9F1DE0001A7F4 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */; };
+		AF00C3FF1BDA13A20001A7F4 /* BodyUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3FE1BDA13A20001A7F4 /* BodyUploadViewController.swift */; };
+		AF00C4041BDA16150001A7F4 /* backBody.png in Resources */ = {isa = PBXBuildFile; fileRef = AF00C4001BDA16150001A7F4 /* backBody.png */; };
+		AF00C4051BDA16150001A7F4 /* frontBody.png in Resources */ = {isa = PBXBuildFile; fileRef = AF00C4011BDA16150001A7F4 /* frontBody.png */; };
+		AF00C4061BDA16150001A7F4 /* leftBody.png in Resources */ = {isa = PBXBuildFile; fileRef = AF00C4021BDA16150001A7F4 /* leftBody.png */; };
+		AF00C4071BDA16150001A7F4 /* rightBody.png in Resources */ = {isa = PBXBuildFile; fileRef = AF00C4031BDA16150001A7F4 /* rightBody.png */; };
+		AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */ = {isa = PBXBuildFile; fileRef = AF3902F51BCDE8DD00173A58 /* FAQs.html */; };
+		AF3DA2FF1BD8C738006C1071 /* MAActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3DA2FE1BD8C738006C1071 /* MAActivityIndicatorView.swift */; };
+		AF4498AA1BDF11CE005A905E /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4498A91BDF11CE005A905E /* Patient.swift */; };
+		AF4498AC1BDF11FE005A905E /* Appointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4498AB1BDF11FE005A905E /* Appointment.swift */; };
+		AF4498AE1BDF1238005A905E /* Call.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4498AD1BDF1238005A905E /* Call.swift */; };
 		AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */; };
-		AF5AD22E1BCB97290054B4C3 /* ExtensionHandleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */; settings = {ASSET_TAGS = (); }; };
-		AF7726081BCE5E42007F29AC /* AppointmentListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7726061BCE5E42007F29AC /* AppointmentListTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		AF7726091BCE5E42007F29AC /* DetailAppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7726071BCE5E42007F29AC /* DetailAppointmentViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		AF840FF11BCCA39900F69EF8 /* FAQsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		AF5AD22E1BCB97290054B4C3 /* ExtensionHandleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */; };
+		AF7726081BCE5E42007F29AC /* AppointmentListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7726061BCE5E42007F29AC /* AppointmentListTableViewController.swift */; };
+		AF840FF11BCCA39900F69EF8 /* FAQsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */; };
 		AF943FF11BBA6221003F3B07 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FF01BBA6221003F3B07 /* OpenTok.framework */; };
 		AF943FF31BBA6376003F3B07 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FF21BBA6376003F3B07 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		AF943FF51BBA637F003F3B07 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FF41BBA637F003F3B07 /* AVFoundation.framework */; };
@@ -31,13 +42,15 @@
 		AF94400B1BBA645E003F3B07 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF94400A1BBA645E003F3B07 /* SystemConfiguration.framework */; };
 		AF94400D1BBA6468003F3B07 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF94400C1BBA6468003F3B07 /* UIKit.framework */; };
 		AF94400F1BBA6472003F3B07 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF94400E1BBA6472003F3B07 /* VideoToolbox.framework */; };
-		AF9440171BBA6972003F3B07 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9440161BBA6972003F3B07 /* OpenTok.framework */; settings = {ASSET_TAGS = (); }; };
-		AF9F48FC1BB509220044D72F /* GetAndPostDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FB1BB509220044D72F /* GetAndPostDataController.swift */; settings = {ASSET_TAGS = (); }; };
-		AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */; settings = {ASSET_TAGS = (); }; };
-		AFB63C671BC25CD700A1541B /* AnswerCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB63C661BC25CD700A1541B /* AnswerCallViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		AFED98241BBE71400042B613 /* Singleton_SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEDCB1C1BBA2E89007D584D /* NavigationHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEDCB201BBA392C007D584D /* NavigationLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		AF9440171BBA6972003F3B07 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9440161BBA6972003F3B07 /* OpenTok.framework */; };
+		AF9F48FC1BB509220044D72F /* GetAndPostDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FB1BB509220044D72F /* GetAndPostDataController.swift */; };
+		AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */; };
+		AFEBD1DD1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEBD1DC1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift */; };
+		AFEBD1E11BD5E112005FE581 /* MyPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEBD1DF1BD5E112005FE581 /* MyPopupViewController.swift */; };
+		AFEBD1E21BD5E112005FE581 /* MyPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFEBD1E01BD5E112005FE581 /* MyPopupViewController.xib */; };
+		AFED98241BBE71400042B613 /* Singleton_SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */; };
+		AFEDCB1C1BBA2E89007D584D /* NavigationHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */; };
+		AFEDCB201BBA392C007D584D /* NavigationLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */; };
 		AFEE34D71BB0413600471592 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34D61BB0413600471592 /* AppDelegate.swift */; };
 		AFEE34D91BB0413600471592 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34D81BB0413600471592 /* ViewController.swift */; };
 		AFEE34DC1BB0413600471592 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFEE34DA1BB0413600471592 /* Main.storyboard */; };
@@ -46,45 +59,47 @@
 		AFEE34E41BB0413600471592 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFEE34E21BB0413600471592 /* LaunchScreen.storyboard */; };
 		AFEE34EF1BB0413600471592 /* TelehealthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34EE1BB0413600471592 /* TelehealthTests.swift */; };
 		AFEE34FA1BB0413600471592 /* TelehealthUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE34F91BB0413600471592 /* TelehealthUITests.swift */; };
-		AFEE35261BB0415D00471592 /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35081BB0415D00471592 /* AsyncButton.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35271BB0415D00471592 /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35091BB0415D00471592 /* AsyncImageView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35281BB0415D00471592 /* AutoTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350A1BB0415D00471592 /* AutoTextView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35291BB0415D00471592 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350B1BB0415D00471592 /* BlurView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE352A1BB0415D00471592 /* DesignableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350C1BB0415D00471592 /* DesignableButton.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE352B1BB0415D00471592 /* DesignableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350D1BB0415D00471592 /* DesignableImageView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE352C1BB0415D00471592 /* DesignableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350E1BB0415D00471592 /* DesignableLabel.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE352D1BB0415D00471592 /* DesignableTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350F1BB0415D00471592 /* DesignableTabBarController.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE352E1BB0415D00471592 /* DesignableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35101BB0415D00471592 /* DesignableTextField.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE352F1BB0415D00471592 /* DesignableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35111BB0415D00471592 /* DesignableTextView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35301BB0415D00471592 /* DesignableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35121BB0415D00471592 /* DesignableView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35311BB0415D00471592 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35131BB0415D00471592 /* ImageLoader.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35321BB0415D00471592 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AFEE35141BB0415D00471592 /* Info.plist */; settings = {ASSET_TAGS = (); }; };
-		AFEE35331BB0415D00471592 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35151BB0415D00471592 /* KeyboardLayoutConstraint.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35341BB0415D00471592 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35161BB0415D00471592 /* LoadingView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35351BB0415D00471592 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFEE35171BB0415D00471592 /* LoadingView.xib */; settings = {ASSET_TAGS = (); }; };
-		AFEE35361BB0415D00471592 /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35181BB0415D00471592 /* Misc.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35371BB0415D00471592 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35191BB0415D00471592 /* SoundPlayer.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35381BB0415D00471592 /* Spring.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351B1BB0415D00471592 /* Spring.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35391BB0415D00471592 /* SpringAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351C1BB0415D00471592 /* SpringAnimation.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE353A1BB0415D00471592 /* SpringButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351D1BB0415D00471592 /* SpringButton.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE353B1BB0415D00471592 /* SpringImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351E1BB0415D00471592 /* SpringImageView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE353C1BB0415D00471592 /* SpringLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351F1BB0415D00471592 /* SpringLabel.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE353D1BB0415D00471592 /* SpringTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35201BB0415D00471592 /* SpringTextField.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE353E1BB0415D00471592 /* SpringTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35211BB0415D00471592 /* SpringTextView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE353F1BB0415D00471592 /* SpringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35221BB0415D00471592 /* SpringView.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35401BB0415D00471592 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35231BB0415D00471592 /* TransitionManager.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35411BB0415D00471592 /* TransitionZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35241BB0415D00471592 /* TransitionZoom.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35421BB0415D00471592 /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35251BB0415D00471592 /* UnwindSegue.swift */; settings = {ASSET_TAGS = (); }; };
-		AFEE35441BB0577A00471592 /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35431BB0577A00471592 /* VerifyViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF10DB21BB241DA005E9838 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DB11BB241DA005E9838 /* InformationViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF10DF11BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DEA1BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m */; settings = {ASSET_TAGS = (); }; };
-		AFF10DF21BB24414005E9838 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DEC1BB24414005E9838 /* TPKeyboardAvoidingScrollView.m */; settings = {ASSET_TAGS = (); }; };
-		AFF10DF31BB24414005E9838 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DEE1BB24414005E9838 /* TPKeyboardAvoidingTableView.m */; settings = {ASSET_TAGS = (); }; };
-		AFF10DF41BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DF01BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; settings = {ASSET_TAGS = (); }; };
+		AFEE35261BB0415D00471592 /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35081BB0415D00471592 /* AsyncButton.swift */; };
+		AFEE35271BB0415D00471592 /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35091BB0415D00471592 /* AsyncImageView.swift */; };
+		AFEE35281BB0415D00471592 /* AutoTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350A1BB0415D00471592 /* AutoTextView.swift */; };
+		AFEE35291BB0415D00471592 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350B1BB0415D00471592 /* BlurView.swift */; };
+		AFEE352A1BB0415D00471592 /* DesignableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350C1BB0415D00471592 /* DesignableButton.swift */; };
+		AFEE352B1BB0415D00471592 /* DesignableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350D1BB0415D00471592 /* DesignableImageView.swift */; };
+		AFEE352C1BB0415D00471592 /* DesignableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350E1BB0415D00471592 /* DesignableLabel.swift */; };
+		AFEE352D1BB0415D00471592 /* DesignableTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE350F1BB0415D00471592 /* DesignableTabBarController.swift */; };
+		AFEE352E1BB0415D00471592 /* DesignableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35101BB0415D00471592 /* DesignableTextField.swift */; };
+		AFEE352F1BB0415D00471592 /* DesignableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35111BB0415D00471592 /* DesignableTextView.swift */; };
+		AFEE35301BB0415D00471592 /* DesignableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35121BB0415D00471592 /* DesignableView.swift */; };
+		AFEE35311BB0415D00471592 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35131BB0415D00471592 /* ImageLoader.swift */; };
+		AFEE35321BB0415D00471592 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AFEE35141BB0415D00471592 /* Info.plist */; };
+		AFEE35331BB0415D00471592 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35151BB0415D00471592 /* KeyboardLayoutConstraint.swift */; };
+		AFEE35341BB0415D00471592 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35161BB0415D00471592 /* LoadingView.swift */; };
+		AFEE35351BB0415D00471592 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFEE35171BB0415D00471592 /* LoadingView.xib */; };
+		AFEE35361BB0415D00471592 /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35181BB0415D00471592 /* Misc.swift */; };
+		AFEE35371BB0415D00471592 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35191BB0415D00471592 /* SoundPlayer.swift */; };
+		AFEE35381BB0415D00471592 /* Spring.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351B1BB0415D00471592 /* Spring.swift */; };
+		AFEE35391BB0415D00471592 /* SpringAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351C1BB0415D00471592 /* SpringAnimation.swift */; };
+		AFEE353A1BB0415D00471592 /* SpringButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351D1BB0415D00471592 /* SpringButton.swift */; };
+		AFEE353B1BB0415D00471592 /* SpringImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351E1BB0415D00471592 /* SpringImageView.swift */; };
+		AFEE353C1BB0415D00471592 /* SpringLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE351F1BB0415D00471592 /* SpringLabel.swift */; };
+		AFEE353D1BB0415D00471592 /* SpringTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35201BB0415D00471592 /* SpringTextField.swift */; };
+		AFEE353E1BB0415D00471592 /* SpringTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35211BB0415D00471592 /* SpringTextView.swift */; };
+		AFEE353F1BB0415D00471592 /* SpringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35221BB0415D00471592 /* SpringView.swift */; };
+		AFEE35401BB0415D00471592 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35231BB0415D00471592 /* TransitionManager.swift */; };
+		AFEE35411BB0415D00471592 /* TransitionZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35241BB0415D00471592 /* TransitionZoom.swift */; };
+		AFEE35421BB0415D00471592 /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35251BB0415D00471592 /* UnwindSegue.swift */; };
+		AFEE35441BB0577A00471592 /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEE35431BB0577A00471592 /* VerifyViewController.swift */; };
+		AFF10DB21BB241DA005E9838 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DB11BB241DA005E9838 /* InformationViewController.swift */; };
+		AFF10DF11BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DEA1BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m */; };
+		AFF10DF21BB24414005E9838 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DEC1BB24414005E9838 /* TPKeyboardAvoidingScrollView.m */; };
+		AFF10DF31BB24414005E9838 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DEE1BB24414005E9838 /* TPKeyboardAvoidingTableView.m */; };
+		AFF10DF41BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF10DF01BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
 		AFF18ADB1BC22CC4006F2590 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFF18ADA1BC22CC4006F2590 /* CoreLocation.framework */; };
-		AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D2F1BB1068A006A190E /* HomeViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D311BB129DB006A190E /* ScreenCallingViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		AFF27E081BB3E5D000B325E8 /* ConfigurationSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */; settings = {ASSET_TAGS = (); }; };
+		AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D2F1BB1068A006A190E /* HomeViewController.swift */; };
+		AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D311BB129DB006A190E /* ScreenCallingViewController.swift */; };
+		AFF27E081BB3E5D000B325E8 /* ConfigurationSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */; };
+		AFFDC22D1BD7781000DA3236 /* Appoint.png in Resources */ = {isa = PBXBuildFile; fileRef = AFFDC22C1BD7781000DA3236 /* Appoint.png */; };
+		AFFDC2311BD7964D00DA3236 /* 3837-11.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AFFDC2301BD7964D00DA3236 /* 3837-11.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,11 +122,22 @@
 /* Begin PBXFileReference section */
 		16359AE3B22CF82C7E96ECA2 /* Pods-Telehealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.debug.xcconfig"; sourceTree = "<group>"; };
 		AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListTableViewCell.swift; sourceTree = "<group>"; };
+		AF00C3F81BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentDetailsViewController.swift; sourceTree = "<group>"; };
+		AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
+		AF00C3FE1BDA13A20001A7F4 /* BodyUploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BodyUploadViewController.swift; sourceTree = "<group>"; };
+		AF00C4001BDA16150001A7F4 /* backBody.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backBody.png; sourceTree = "<group>"; };
+		AF00C4011BDA16150001A7F4 /* frontBody.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frontBody.png; sourceTree = "<group>"; };
+		AF00C4021BDA16150001A7F4 /* leftBody.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftBody.png; sourceTree = "<group>"; };
+		AF00C4031BDA16150001A7F4 /* rightBody.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightBody.png; sourceTree = "<group>"; };
 		AF3902F51BCDE8DD00173A58 /* FAQs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = FAQs.html; sourceTree = "<group>"; };
+		AF3DA2FE1BD8C738006C1071 /* MAActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAActivityIndicatorView.swift; sourceTree = "<group>"; };
+		AF4498A91BDF11CE005A905E /* Patient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
+		AF4498AB1BDF11FE005A905E /* Appointment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appointment.swift; sourceTree = "<group>"; };
+		AF4498AD1BDF1238005A905E /* Call.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Call.swift; sourceTree = "<group>"; };
 		AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
 		AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionHandleData.swift; sourceTree = "<group>"; };
 		AF7726061BCE5E42007F29AC /* AppointmentListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListTableViewController.swift; sourceTree = "<group>"; };
-		AF7726071BCE5E42007F29AC /* DetailAppointmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailAppointmentViewController.swift; sourceTree = "<group>"; };
 		AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQsViewController.swift; sourceTree = "<group>"; };
 		AF943FF01BBA6221003F3B07 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = "../../../../../OpenTok-iOS-2.6.0/OpenTok.framework"; sourceTree = "<group>"; };
 		AF943FF21BBA6376003F3B07 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -133,7 +159,9 @@
 		AF9440211BBA7DD8003F3B07 /* Telehealth-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Telehealth-Bridging-Header.h"; sourceTree = "<group>"; };
 		AF9F48FB1BB509220044D72F /* GetAndPostDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAndPostDataController.swift; sourceTree = "<group>"; };
 		AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationAPI.swift; sourceTree = "<group>"; };
-		AFB63C661BC25CD700A1541B /* AnswerCallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerCallViewController.swift; sourceTree = "<group>"; };
+		AFEBD1DC1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIVViewController-SLPopup.swift"; path = "../UIVViewController-SLPopup.swift"; sourceTree = "<group>"; };
+		AFEBD1DF1BD5E112005FE581 /* MyPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPopupViewController.swift; sourceTree = "<group>"; };
+		AFEBD1E01BD5E112005FE581 /* MyPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPopupViewController.xib; sourceTree = "<group>"; };
 		AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singleton_SocketManager.swift; sourceTree = "<group>"; };
 		AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationHomeViewController.swift; sourceTree = "<group>"; };
 		AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationLoginViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +223,8 @@
 		AFF21D2F1BB1068A006A190E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		AFF21D311BB129DB006A190E /* ScreenCallingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenCallingViewController.swift; sourceTree = "<group>"; };
 		AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationSystem.swift; sourceTree = "<group>"; };
+		AFFDC22C1BD7781000DA3236 /* Appoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Appoint.png; sourceTree = "<group>"; };
+		AFFDC2301BD7964D00DA3236 /* 3837-11.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "3837-11.jpg"; sourceTree = "<group>"; };
 		C8FFC31A755811601F972F1F /* Pods-Telehealth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.release.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.release.xcconfig"; sourceTree = "<group>"; };
 		F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Telehealth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -277,9 +307,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AF4498A61BDF111A005A905E /* API */ = {
+			isa = PBXGroup;
+			children = (
+				AF9F48FB1BB509220044D72F /* GetAndPostDataController.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
+		AF4498A71BDF1141005A905E /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				AF7726061BCE5E42007F29AC /* AppointmentListTableViewController.swift */,
+				AFEE34D61BB0413600471592 /* AppDelegate.swift */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		AF4498A81BDF115B005A905E /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				AFEE34DA1BB0413600471592 /* Main.storyboard */,
+				AFEE34E21BB0413600471592 /* LaunchScreen.storyboard */,
+			);
+			name = Layout;
+			sourceTree = "<group>";
+		};
 		AF78A2F61BC36807003E4E98 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AFFDC22B1BD7780800DA3236 /* Image */,
 				AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */,
 				AF3902F51BCDE8DD00173A58 /* FAQs.html */,
 			);
@@ -293,6 +350,17 @@
 				AF9440211BBA7DD8003F3B07 /* Telehealth-Bridging-Header.h */,
 			);
 			name = "Supporting File";
+			sourceTree = "<group>";
+		};
+		AFEBD1DE1BD5E112005FE581 /* MyPopupViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AFEBD1DC1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift */,
+				AF3DA2FE1BD8C738006C1071 /* MAActivityIndicatorView.swift */,
+				AFEBD1DF1BD5E112005FE581 /* MyPopupViewController.swift */,
+				AFEBD1E01BD5E112005FE581 /* MyPopupViewController.xib */,
+			);
+			path = MyPopupViewController;
 			sourceTree = "<group>";
 		};
 		AFEE34CA1BB0413600471592 = {
@@ -320,16 +388,16 @@
 		AFEE34D51BB0413600471592 /* Telehealth */ = {
 			isa = PBXGroup;
 			children = (
+				AF4498A71BDF1141005A905E /* Other */,
 				AF78A2F61BC36807003E4E98 /* Sources */,
 				AFF27DFA1BB39C6600B325E8 /* Utilities */,
 				AFF27DF91BB39C5500B325E8 /* Library */,
 				AFF27DF61BB39C2E00B325E8 /* Views */,
 				AFF27DF71BB39C3A00B325E8 /* Controllers */,
+				AF4498A81BDF115B005A905E /* Layout */,
 				AFF27DF81BB39C4600B325E8 /* Model */,
-				AFEE34D61BB0413600471592 /* AppDelegate.swift */,
-				AFEE34DA1BB0413600471592 /* Main.storyboard */,
+				AF4498A61BDF111A005A905E /* API */,
 				AFEE34E01BB0413600471592 /* Assets.xcassets */,
-				AFEE34E21BB0413600471592 /* LaunchScreen.storyboard */,
 				AFEE34DD1BB0413600471592 /* Telehealth.xcdatamodeld */,
 				AF9440181BBA79AF003F3B07 /* Supporting File */,
 			);
@@ -409,7 +477,9 @@
 		AFF27DF61BB39C2E00B325E8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AFEBD1DE1BD5E112005FE581 /* MyPopupViewController */,
 				AF0051591BCF575300370B14 /* AppointmentListTableViewCell.swift */,
+				AF00C3F81BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -417,8 +487,7 @@
 		AFF27DF71BB39C3A00B325E8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				AF7726061BCE5E42007F29AC /* AppointmentListTableViewController.swift */,
-				AF7726071BCE5E42007F29AC /* DetailAppointmentViewController.swift */,
+				AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */,
 				AFEE34D81BB0413600471592 /* ViewController.swift */,
 				AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */,
 				AFF10DB11BB241DA005E9838 /* InformationViewController.swift */,
@@ -427,8 +496,9 @@
 				AFF21D2F1BB1068A006A190E /* HomeViewController.swift */,
 				AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */,
 				AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */,
-				AFB63C661BC25CD700A1541B /* AnswerCallViewController.swift */,
 				AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */,
+				AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */,
+				AF00C3FE1BDA13A20001A7F4 /* BodyUploadViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -436,7 +506,9 @@
 		AFF27DF81BB39C4600B325E8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AF9F48FB1BB509220044D72F /* GetAndPostDataController.swift */,
+				AF4498A91BDF11CE005A905E /* Patient.swift */,
+				AF4498AB1BDF11FE005A905E /* Appointment.swift */,
+				AF4498AD1BDF1238005A905E /* Call.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -459,6 +531,19 @@
 				AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		AFFDC22B1BD7780800DA3236 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				AF00C4001BDA16150001A7F4 /* backBody.png */,
+				AF00C4011BDA16150001A7F4 /* frontBody.png */,
+				AF00C4021BDA16150001A7F4 /* leftBody.png */,
+				AF00C4031BDA16150001A7F4 /* rightBody.png */,
+				AFFDC2301BD7964D00DA3236 /* 3837-11.jpg */,
+				AFFDC22C1BD7781000DA3236 /* Appoint.png */,
+			);
+			name = Image;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -576,13 +661,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFFDC2311BD7964D00DA3236 /* 3837-11.jpg in Resources */,
 				AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */,
 				AFEE35321BB0415D00471592 /* Info.plist in Resources */,
+				AF00C4061BDA16150001A7F4 /* leftBody.png in Resources */,
+				AFFDC22D1BD7781000DA3236 /* Appoint.png in Resources */,
 				AFEE34E41BB0413600471592 /* LaunchScreen.storyboard in Resources */,
+				AFEBD1E21BD5E112005FE581 /* MyPopupViewController.xib in Resources */,
 				AFEE34E11BB0413600471592 /* Assets.xcassets in Resources */,
 				AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */,
 				AFEE34DC1BB0413600471592 /* Main.storyboard in Resources */,
+				AF00C4071BDA16150001A7F4 /* rightBody.png in Resources */,
+				AF00C4041BDA16150001A7F4 /* backBody.png in Resources */,
 				AFEE35351BB0415D00471592 /* LoadingView.xib in Resources */,
+				AF00C4051BDA16150001A7F4 /* frontBody.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,6 +750,7 @@
 				AFEE352C1BB0415D00471592 /* DesignableLabel.swift in Sources */,
 				AFEE353B1BB0415D00471592 /* SpringImageView.swift in Sources */,
 				AFEE35281BB0415D00471592 /* AutoTextView.swift in Sources */,
+				AF00C3F91BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift in Sources */,
 				AFEE35311BB0415D00471592 /* ImageLoader.swift in Sources */,
 				AFEE35361BB0415D00471592 /* Misc.swift in Sources */,
 				AFEE35291BB0415D00471592 /* BlurView.swift in Sources */,
@@ -665,9 +758,10 @@
 				AFEE35341BB0415D00471592 /* LoadingView.swift in Sources */,
 				AFEE353D1BB0415D00471592 /* SpringTextField.swift in Sources */,
 				AFEE35381BB0415D00471592 /* Spring.swift in Sources */,
-				AFB63C671BC25CD700A1541B /* AnswerCallViewController.swift in Sources */,
+				AFEBD1E11BD5E112005FE581 /* MyPopupViewController.swift in Sources */,
 				AFEE34DF1BB0413600471592 /* Telehealth.xcdatamodeld in Sources */,
 				AFEE35371BB0415D00471592 /* SoundPlayer.swift in Sources */,
+				AF4498AA1BDF11CE005A905E /* Patient.swift in Sources */,
 				AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */,
 				AFEDCB1C1BBA2E89007D584D /* NavigationHomeViewController.swift in Sources */,
 				AFF10DF31BB24414005E9838 /* TPKeyboardAvoidingTableView.m in Sources */,
@@ -678,7 +772,10 @@
 				AFEE35411BB0415D00471592 /* TransitionZoom.swift in Sources */,
 				AF7726081BCE5E42007F29AC /* AppointmentListTableViewController.swift in Sources */,
 				AFEE352E1BB0415D00471592 /* DesignableTextField.swift in Sources */,
+				AF00C3FD1BD9F1DE0001A7F4 /* ImageDetailViewController.swift in Sources */,
+				AF3DA2FF1BD8C738006C1071 /* MAActivityIndicatorView.swift in Sources */,
 				AFEE35401BB0415D00471592 /* TransitionManager.swift in Sources */,
+				AFEBD1DD1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift in Sources */,
 				AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */,
 				AFF10DF11BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m in Sources */,
 				AFEE353C1BB0415D00471592 /* SpringLabel.swift in Sources */,
@@ -687,18 +784,21 @@
 				AFEE35441BB0577A00471592 /* VerifyViewController.swift in Sources */,
 				AFEE35271BB0415D00471592 /* AsyncImageView.swift in Sources */,
 				AF840FF11BCCA39900F69EF8 /* FAQsViewController.swift in Sources */,
+				AF4498AE1BDF1238005A905E /* Call.swift in Sources */,
 				AFEDCB201BBA392C007D584D /* NavigationLoginViewController.swift in Sources */,
 				AFEE352F1BB0415D00471592 /* DesignableTextView.swift in Sources */,
+				AF00C3FB1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift in Sources */,
 				AFF10DF41BB24414005E9838 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				AFEE353F1BB0415D00471592 /* SpringView.swift in Sources */,
 				AFEE353E1BB0415D00471592 /* SpringTextView.swift in Sources */,
 				AFEE35331BB0415D00471592 /* KeyboardLayoutConstraint.swift in Sources */,
+				AF00C3FF1BDA13A20001A7F4 /* BodyUploadViewController.swift in Sources */,
 				AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */,
 				AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */,
-				AF7726091BCE5E42007F29AC /* DetailAppointmentViewController.swift in Sources */,
 				AFEE353A1BB0415D00471592 /* SpringButton.swift in Sources */,
 				AFEE35391BB0415D00471592 /* SpringAnimation.swift in Sources */,
 				AF5AD22E1BCB97290054B4C3 /* ExtensionHandleData.swift in Sources */,
+				AF4498AC1BDF11FE005A905E /* Appointment.swift in Sources */,
 				AFED98241BBE71400042B613 /* Singleton_SocketManager.swift in Sources */,
 				AFEE352B1BB0415D00471592 /* DesignableImageView.swift in Sources */,
 				AFF10DF21BB24414005E9838 /* TPKeyboardAvoidingScrollView.m in Sources */,
@@ -848,6 +948,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -858,6 +959,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = au.com.redimed.telehealthPatient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Telehealth/Telehealth-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
@@ -870,7 +972,8 @@
 			baseConfigurationReference = C8FFC31A755811601F972F1F /* Pods-Telehealth.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -881,6 +984,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = au.com.redimed.telehealthPatient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Telehealth/Telehealth-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";

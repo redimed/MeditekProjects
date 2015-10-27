@@ -77,6 +77,13 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 			scope.ermsg={};
 			scope.isShowNext=false;
 			scope.isBlockStep1 =false;
+			if(scope.appointment){
+				var input = PatientService.getDatatoDirective();
+				if(input){
+					scope.data = angular.copy(input);
+				}
+			}
+
 			scope.Back = function() {
 				scope.isShowNext=false;
 				scope.isShowCreate=false;
@@ -88,11 +95,6 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 				FormWizard.init(); // form step
 				ComponentsDateTimePickers.init();
 			},0);
-
-			var input = PatientService.getDatatoDirective();
-			if(input){
-				scope.data = angular.copy(input);
-			}
 
 			scope.checkPhone = function(data) {
 				PatientService.validateCheckPhone(data)

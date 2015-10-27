@@ -104,7 +104,7 @@
                             <td ng-show="p.Patients.length === 0">{{p.TelehealthAppointment.PatientAppointment.FirstName}} {{p.TelehealthAppointment.PatientAppointment.LastName}}</td>
                             <td ng-show="p.Patients.length !== 0">{{p.Patients[0].FirstName}} {{p.Patients[0].LastName}}</td>
                             <td>{{((p.Doctors[0].Title !=null)?p.Doctors[0].Title:"")+" "+((p.Doctors[0].FirstName != null)?p.Doctors[0].FirstName:"") +" "+((p.Doctors[0].LastName != null)?p.Doctors[0].LastName:"")}}</td>
-                            <td>{{p.RequestDate | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td>
+                            <td>{{p.RequestDate | date: 'dd/MM/yyyy'}}</td>
                             <td>
                                 <span ng-if="p.Status == 'Approved'" class="label label-success">Booked</span>
                                 <span ng-if="p.Status == 'Calling'" class="label label-default">Calling</span>

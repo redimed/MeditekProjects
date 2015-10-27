@@ -90,6 +90,17 @@ module.exports = {
 				}
 			}
 
+			if(data.DOB){
+				if(!/^(\d{4})-(\d{1,2})-(\d{1,2}) 00:00:00$/.test(data.DOB)){
+					errors.push({field:"DOB",message:"invalid value"});
+					err.pushErrors(errors);
+				}
+				if(data.DOB==undefined){
+					errors.push({field:"DOB",message:"invalid value"});
+					err.pushErrors(errors);
+				}
+			}
+
 			//validate Occupation
 			if(data.Occupation){
 				if(data.Occupation.length < 0 || data.Occupation.length > 255){

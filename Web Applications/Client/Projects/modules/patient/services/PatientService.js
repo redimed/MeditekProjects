@@ -56,10 +56,10 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"Gender",message:"invalid value"});
 				}
 			}
-			//validate DOB
-			if(info.DOB==undefined && info.DOB!==null){
-				error.push({field:"DOB",message:"invalid value"});
-			}
+			// //validate DOB
+			// if(info.DOB==undefined){
+			// 	error.push({field:"DOB",message:"invalid value"});
+			// }
 
 			//validate Address1
 			if(info.Address1){

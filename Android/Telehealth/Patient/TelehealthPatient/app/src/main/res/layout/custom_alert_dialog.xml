@@ -35,7 +35,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_margin="10dp"
-                android:background="@drawable/icon_close_error" />
+                android:background="@drawable/close_window_icon" />
 
         </RelativeLayout>
 

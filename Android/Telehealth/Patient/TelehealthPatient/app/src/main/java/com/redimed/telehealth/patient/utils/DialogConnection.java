@@ -3,8 +3,10 @@ package com.redimed.telehealth.patient.utils;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,8 +40,12 @@ public class DialogConnection extends Dialog implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_connection_dialog);
         ButterKnife.bind(this);
+
+        btnSettings.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.btn_settings), PorterDuff.Mode.MULTIPLY);
+        btnSkip.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.btn_skip), PorterDuff.Mode.MULTIPLY);
 
         btnSettings.setOnClickListener(this);
         btnSkip.setOnClickListener(this);

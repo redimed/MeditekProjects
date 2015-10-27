@@ -89,7 +89,11 @@
     <string name="lbl_email">Email:</string>
     <string name="lbl_work">Work Phone:</string>
     <string name="btn_view">View Image</string>
+    <!--Dialog Appointment-->
+    <string name="title_dialog_appt">Alert!</string>
+    <string name="message_dialog_appt">Sorry there is no appointment in this time.</string>
+
+    <!-- Model Layout-->
     <string name="title_activity_model">ModelActivity</string>
 
-    <!-- Image Appointment Layout-->
 </resources>

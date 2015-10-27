@@ -26,8 +26,12 @@ public class RetrofitErrorHandler implements ErrorHandler {
     public Throwable handleError(RetrofitError cause) {
         String errorDescription;
 
-        if (cause.isNetworkError()) {
-            errorDescription = "Network Error";
+        if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
+            if (cause.getCause() instanceof SocketTimeoutException){
+                errorDescription = "Network Timeout";
+            } else {
+                errorDescription = "Network Error";
+            }
         } else {
             if (cause.getResponse() == null) {
                 errorDescription = "No Response From Server";

@@ -1,8 +1,6 @@
-var app = angular.module('app.authentication.user.Profile.controller',[
+var app = angular.module('app.authentication.user.profile.controller',[
 ]);
 
-app.controller('userProfileCtrl', function($scope, $modal){
-	$scope.toggle = true;
-	$scope.changePass = function(){ $scope.toggle = false; }
-	$scope.backProfile = function(){ $scope.toggle = true; }
+app.controller('userProfileCtrl', function(){
+	console.log('userProfileCtrl');
 });

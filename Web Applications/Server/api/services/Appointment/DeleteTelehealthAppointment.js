@@ -1,3 +1,9 @@
+/*
+DeleteTelehealthAppointment - services: Deleted a Telehealth Appointment
+input: UID Telehealth Appointment
+output: -success: transaction deleted Teleheath Appointment
+        -failed: [transaction] deleted Telehealth Appointment, error message
+*/
 module.exports = function(data) {
     var $q = require('q');
     var defer = $q.defer();

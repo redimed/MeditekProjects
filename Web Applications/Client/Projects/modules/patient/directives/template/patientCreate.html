@@ -4,7 +4,8 @@
 		<div class="portlet light bordered" id="form_wizard_1">
 			<div class="portlet-title">
 				<div class="caption font-green">
-					<i class="fa fa-plus-circle font-green"></i> Create New Patient - <span class="step-title">Step 1 of 2 </span>
+					<i class="icon-user-follow font-green"></i> 
+					<span class="caption-subject bold uppercase"> Create New Patient - </span><span class="step-title">Step 1 of 2 </span>
 				</div>
 				<div class="tools hidden-xs">
 					<a href="javascript:;" class="collapse"></a>
@@ -19,7 +20,7 @@
 									<a href="#tab1" data-toggle="tab" class="step">
 									<span class="number">1 </span>
 									<span class="desc">
-									<i class="fa fa-check"></i> Validation </span>
+									<i class="fa fa-check"></i> User Account </span>
 									</a>
 								</li>
 								<li>
@@ -30,8 +31,8 @@
 									</a>
 								</li>
 							</ul>
-							<div id="bar" class="progress progress-striped active" role="progressbar">
-								<div class="progress-bar progress-bar-success"></div>
+							<div id="bar" class="progress progress-sm progress-striped active" role="progressbar">
+								<div class="progress-bar progress-bar-info"></div>
 							</div>
 							<div class="tab-content">
 								<div class="alert alert-danger display-none">
@@ -45,32 +46,32 @@
 								<div class="tab-pane active" id="tab1">
 									<!-- Begin Firstname -->
 									<div class="form-group">
-										<label class="control-label col-md-4">FirstName <span class="required">* </span></label>
+										<label class="control-label col-md-4">Firstname <span class="required">* </span></label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" name="Firstname" placeholder="FirstName"ng-model="data.FirstName" ng-style="er.FirstName" ng-disabled="isBlockStep1" ng-change="ermsg.FirstName=''" /><span style="color:red;">{{ermsg.FirstName}}</span>
-											<span class="help-block">Provide your FirstName </span>
+											<input type="text" class="form-control" name="Firstname" placeholder="Firstname"ng-model="data.FirstName" ng-style="er.FirstName" ng-disabled="isBlockStep1" ng-change="ermsg.FirstName=''" /><span style="color:red;">{{ermsg.FirstName}}</span>
+											<span class="help-block">Provide your Firstname </span>
 										</div>
 									</div>
 									<!-- End Firstname -->
-									<!-- Begin Surname -->
-									<div class="form-group ">
-										<label class="control-label col-md-4">SurName <span class="required">* </span></label>
-										<div class="col-md-4">
-											<input type="text" class="form-control" name="Surname" placeholder="SurName" ng-model="data.LastName" ng-style="er.LastName" ng-disabled="isBlockStep1" ng-change="ermsg.LastName=''" /><span style="color:red;">{{ermsg.LastName}}</span>
-											<span class="help-block">Provide your SurName </span>
-										</div>
-									</div>
-									<!-- End Surname -->
 									<!-- Begin Middlename -->
 									<div class="form-group">
-										<label class="control-label col-md-4">MiddleName <span class="required">* </span></label>
+										<label class="control-label col-md-4">Middlename <span class="required">* </span></label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" placeholder="MiddleName"ng-model="data.MiddleName" ng-style="er.MiddleName" ng-disabled="isBlockStep1" ng-change="ermsg.MiddleName=''" />
+											<input type="text" class="form-control" placeholder="Middlename"ng-model="data.MiddleName" ng-style="er.MiddleName" ng-disabled="isBlockStep1" ng-change="ermsg.MiddleName=''" />
 											<span style="color:red;">{{ermsg.MiddleName}}</span>
 											<span class="help-block">Provide your MiddleName </span>
 										</div>
 									</div>
 									<!-- End Middlename -->
+									<!-- Begin Lastname -->
+									<div class="form-group ">
+										<label class="control-label col-md-4">Lastname <span class="required">* </span></label>
+										<div class="col-md-4">
+											<input type="text" class="form-control" name="Lastname" placeholder="Lastname" ng-model="data.LastName" ng-style="er.LastName" ng-disabled="isBlockStep1" ng-change="ermsg.LastName=''" /><span style="color:red;">{{ermsg.LastName}}</span>
+											<span class="help-block">Provide your Lastname </span>
+										</div>
+									</div>
+									<!-- End Lastname -->
 									<!-- begin phone -->
 									<div class="form-group">
 										<label class="control-label col-md-4">Mobilephone <span class="required">* </span>
@@ -86,16 +87,16 @@
 									<div style="margin:3em;">
 										<div class="row">
 											<!-- begin avatar -->
-											<div class="col-md-4">
+											<div class="col-md-3">
 												<!-- avatar -->
 												<div ng-form name="checkInForm" novalidate>
 													
 													<div class="form-group">
 														<div class="fileinput fileinput-new" data-provides="fileinput">
-															<div class="fileinput-new thumbnail" style="width: 350px; height: 350px;">
+															<div class="fileinput-new thumbnail" style="width: 300px; height: 300px;">
 																
 															</div>
-															<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 400px; max-height: 400px;">
+															<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 300px; max-height: 300px;">
 															</div>
 															<div>
 																<span class="btn green btn-file">
@@ -127,31 +128,31 @@
 									            <!-- end title -->
 												<!-- Begin First name -->
 												<div class="form-group">
-													<label class="control-label col-md-4">First Name</label>
+													<label class="control-label col-md-4">Firstname</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="First Name"ng-model="data.FirstName" ng-style="er.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName=''" />
+														<input type="text" class="form-control" placeholder="Firstname"ng-model="data.FirstName" ng-style="er.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName=''" />
 														<span style="color:red;">{{ermsg.FirstName}}</span>
 													</div>
 												</div>
 												<!-- End First name -->
-												<!-- Begin Sur name -->
-												<div class="form-group ">
-													<label class="control-label col-md-4">Sur Name</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="Sur Name" ng-model="data.LastName" ng-style="er.LastName" ng-change="ermsg.LastName=''" />
-														<span style="color:red;">{{ermsg.LastName}}</span>
-													</div>
-												</div>
-												<!-- End Sur name -->
 												<!-- Begin Middle name -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Middle Name</label>
+													<label class="control-label col-md-4">Middlename</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="Middle Name" ng-model="data.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName=''" />
+														<input type="text" class="form-control" placeholder="Middlename" ng-model="data.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName=''" />
 														<span style="color:red;">{{ermsg.MiddleName}}</span>
 													</div>
 												</div>
 												<!-- End Middle name -->
+												<!-- Begin Sur name -->
+												<div class="form-group ">
+													<label class="control-label col-md-4">Lastname</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control" placeholder="Lastname" ng-model="data.LastName" ng-style="er.LastName" ng-change="ermsg.LastName=''" />
+														<span style="color:red;">{{ermsg.LastName}}</span>
+													</div>
+												</div>
+												<!-- End Sur name -->
 												<!-- Date of Birth -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Date of Birth</label>
@@ -197,11 +198,11 @@
 												<!-- end Email -->
 												<!-- begin Home Phone -->
 												<div class="form-group">
-													<label class="control-label col-md-3">Home Phone</label>
+													<label class="control-label col-md-3">Homephone</label>
 													<div class="col-md-8">
 														<div class="input-icon">
-															<i class="icon-call-end"></i>
-															<input type="text" class="form-control" placeholder="Home Phone" ng-model="data.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber=''" />
+															<i class="fa fa-phone"></i>
+															<input type="text" class="form-control" placeholder="Homephone" ng-model="data.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber=''" />
 														<span style="color:red;">{{ermsg.HomePhoneNumber}}</span>
 														</div>
 													</div>
@@ -212,7 +213,7 @@
 													<label class="control-label col-md-3">Mobile</label>
 													<div class="col-md-8">
 														<div class="input-icon">
-															<i class="icon-call-end"></i>
+															<i class="fa fa-mobile"></i>
 															<input type="text" class="form-control" placeholder="Mobile" ng-disabled="true" ng-model="data.PhoneNumber" ng-style="er.PhoneNumber">
 														</div>
 													</div>
@@ -220,11 +221,11 @@
 												<!-- end Mobile -->
 												<!-- begin WorkPhone -->
 												<div class="form-group">
-													<label class="control-label col-md-3">WorkPhone</label>
+													<label class="control-label col-md-3">Workphone</label>
 													<div class="col-md-8">
 														<div class="input-icon">
-															<i class="icon-call-end"></i>
-															<input type="text" class="form-control" placeholder="WorkPhone" ng-model="data.WorkPhoneNumber" ng-style="er.WorkPhoneNumber" ng-change="ermsg.WorkPhoneNumber=''" />
+															<i class="fa fa-phone"></i>
+															<input type="text" class="form-control" placeholder="Workphone" ng-model="data.WorkPhoneNumber" ng-style="er.WorkPhoneNumber" ng-change="ermsg.WorkPhoneNumber=''" />
 														<span style="color:red;">{{ermsg.WorkPhoneNumber}}</span>
 														</div>
 													</div>

@@ -6,15 +6,15 @@
             <h4><span class="my-step-number">1</span><b>User Account</b></h4></div>
         <div class="col-md-4 col-sm-4">
             <h4><span class="my-step-number">2</span><b>Personal Info</b></h4></div>
-        <div class="col-md-4 col-sm-4">
-            <h4><span class="my-step-number">3</span><b>Signature</b></h4></div>
+        <!--<div class="col-md-4 col-sm-4">
+            <h4><span class="my-step-number">3</span><b>Signature</b></h4></div>-->
     </div>
     <div ng-show="step==1">
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="progress progress-sm progress-striped active">
-                    <div class="progress-bar progress-bar-danger " style="width: 30%">
-                        <span class="sr-only">35% Complete (success) </span>
+                    <div class="progress-bar progress-bar-danger " style="width: 50%">
+                        <span class="sr-only">50% Complete (success) </span>
                     </div>
                     <!-- <div class="progress-bar progress-bar-warning" style="width: 40%">
 						<span class="sr-only">20% Complete (warning) </span>
@@ -76,71 +76,56 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="progress progress-sm progress-striped active">
-                    <div class="progress-bar progress-bar-danger" style="width: 30%">
-                        <span class="sr-only">35% Complete (success) </span>
+                    <div class="progress-bar progress-bar-danger" style="width: 50%">
+                        <span class="sr-only">50% Complete (success) </span>
                     </div>
-                    <div class="progress-bar progress-bar-warning" style="width: 50%">
+                    <!--<div class="progress-bar progress-bar-warning" style="width: 50%">
                         <span class="sr-only">20% Complete (warning) </span>
-                    </div>
+                    </div>-->
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5 col-sm-12">
-                <br>
-                <div class="form-group ">
-                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 200px;">
-                            <!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> -->
-                            <img src="{{settings.globalPath}}/images/no_image.png" width="200px" height="200px">
-                        </div>
-                        <br>
-                        <div>
-                            <span class="btn green btn-file">
-                            <span class="fileinput-new">
-                            Select Image </span>
-                            <span class="fileinput-exists">
-                            Change </span>
-                            <input type="file" nv-file-select uploader="uploaders">
-                            </span>
-                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-                            Remove </a>
-                        </div>
-                    </div>
-                    <div class="clearfix margin-top-10">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-7 col-sm-12">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group form-md-line-input form-md-floating-label">
-                            <input type="input" class="form-control" id="txtFirstName" ng-model="data.FirstName">
-                            <label for="Firstname">Firstname</label>
-                            <!-- <span class="help-block">Error Firstname</span> -->
-                        </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group form-md-line-input form-md-floating-label">
-                            <input type="input" class="form-control" id="txtMiddlename" ng-model="data.MiddleName">
-                            <label for="Middlename">Middlename</label>
-                            <!-- <span class="help-block">Error Middlename</span> -->
-                        </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group form-md-line-input form-md-floating-label">
-                            <input type="input" class="form-control" id="txtLastName" ng-model="data.LastName">
-                            <label for="Lastname">Lastname</label>
-                            <!-- <span class="help-block">Error Lastname</span> -->
-                        </div>
-                    </div>
-                </div>
-            </div> 
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input form-md-floating-label">
-                    <input id="txtHealthlinkID" only-number class="form-control" type="text" ng-model="data.HealthlinkID">
+                    <input type="input" class="form-control" id="txtFirstName" ng-model="data.FirstName">
+                    <label for="Firstname">Firstname</label>
+                    <!-- <span class="help-block">Error Firstname</span> -->
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    <input type="input" class="form-control" id="txtMiddlename" ng-model="data.MiddleName">
+                    <label for="Middlename">Middlename</label>
+                    <!-- <span class="help-block">Error Middlename</span> -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- LastName -->
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    <input type="input" class="form-control" id="txtLastName" ng-model="data.LastName">
+                    <label for="Lastname">Lastname</label>
+                    <!-- <span class="help-block">Error Lastname</span> -->
+                </div>
+            </div>
+            <!-- LastName -->
+            <!--  Clinical Department-->
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    <select ng-model="data.DepartmentID" ng-options="d.ID as d.DepartmentName for d in department" id="department" class="form-control">
+                        <option value=""></option>
+                    </select>
+                    <label for="department">Clinical Department</label>
+                </div>
+            </div>
+            <!-- end Clinical Department -->
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group form-md-line-input form-md-floating-label">
+                    <input id="txtHealthlinkID" class="form-control" type="text" ng-model="data.HealthLinkID">
                     <label for="HealthlinkID">Healthlink ID</label>
                     <!-- <span class="help-block">Error HealthlinkID</span> -->
                 </div>
@@ -233,10 +218,10 @@
         <div class="form-actions">
             <a href="" id="register-back-btn" class="btn btn-default pull" ng-click="btn_back()"><i class="m-icon-swapleft"></i> Back</a>
             <!-- <button type="submit" id="register-submit-btn" class="btn green pull-right">Register <i class="m-icon-swapright m-icon-white"></i></button> -->
-            <button type="submit" id="register-submit-btn" class="btn blue pull-right" ng-click="checkInfo(data)">Continue <i class="m-icon-swapright m-icon-white"></i></button>
+            <button type="submit" id="register-submit-btn" class="btn blue pull-right" ng-click="save(data)">Continue <i class="m-icon-swapright m-icon-white"></i></button>
         </div>
     </div>
-    <div ng-show="step==3">
+    <!--<div ng-show="step==3">
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="progress progress-sm progress-striped active">
@@ -251,13 +236,13 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
+        </div>-->
+        <!--<div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="form-group ">
                     <div class="fileinput fileinput-new" data-provides="fileinput">
                         <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 400px; height: 150px;">
-                            <!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> -->
+                           <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
                         </div>
                         <br>
                         <div style="text-align:right;">
@@ -276,7 +261,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <!--<div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
@@ -313,11 +298,11 @@
             </div>
         </div>
         <hr>-->
-        <div class="form-actions">
+        <!--<div class="form-actions">
             <a href="" id="register-back-btn" class="btn btn-default pull" ng-click="btn_back()"><i class="m-icon-swapleft"></i> Back</a>
             <button type="submit" id="register-submit-btn" class="btn green pull-right" ng-click="save(data)">Register <i class="m-icon-swapright m-icon-white"></i></button>
         </div>
-    </div>
+    </div>-->
 </form>
 <style type="text/css">
 @media (min-width: 1368px) {

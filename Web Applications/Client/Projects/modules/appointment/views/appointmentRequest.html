@@ -105,7 +105,7 @@
                                                                         <label class="control-label">Date of Birth<span class="required"> * </span></label>
                                                                         <div class="input-icon">
                                                                             <i class="fa fa-calendar"></i>
-                                                                            <input type="text" class="form-control date-picker" placeholder="Date of Birth" ng-model="patientAppointmentDOBTemp" name="DOB" data-date-format="dd/mm/yyyy">
+                                                                            <input type="text" class="form-control date-picker" placeholder="Date of Birth" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.DOB" name="DOB" data-date-format="dd/mm/yyyy">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -157,7 +157,7 @@
                                                                         <label class="control-label">Contact Number (Mobile)<span class="required"> * </span></label>
                                                                         <div class="input-icon">
                                                                             <i class="icon-call-end"></i>
-                                                                            <input type="text" class="form-control" placeholder="Contact Number (Mobile)" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PhoneNumber" name="PhoneNumber">
+                                                                            <input type="text" class="form-control" placeholder="Contact Number (Mobile)" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.WorkPhoneNumber" name="PhoneNumber">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -705,25 +705,25 @@
                                     </div>
                                     <div class="form-group" ng-if="doctors[1]">
                                         <label class="control-label col-md-3"></label>
-                                         <div class="col-md-4">
+                                        <div class="col-md-4">
                                             <p class="form-control-static">Mr Hanh Nguyen</p>
                                         </div>
                                     </div>
                                     <div class="form-group" ng-if="doctors[2]">
                                         <label class="control-label col-md-3"></label>
-                                         <div class="col-md-4">
+                                        <div class="col-md-4">
                                             <p class="form-control-static">Mr Adrian Brooks</p>
                                         </div>
                                     </div>
                                     <div class="form-group" ng-if="doctors[3]">
                                         <label class="control-label col-md-3"></label>
-                                         <div class="col-md-4">
+                                        <div class="col-md-4">
                                             <p class="form-control-static">Mr Dan Luo</p>
                                         </div>
                                     </div>
                                     <div class="form-group" ng-if="doctors[4]">
                                         <label class="control-label col-md-3"></label>
-                                         <div class="col-md-4">
+                                        <div class="col-md-4">
                                             <p class="form-control-static">Ms Sharon Chu</p>
                                         </div>
                                     </div>
@@ -806,7 +806,7 @@
                                     <h4 class="form-section" ng-if="uploader.queue.length>0">Attach Documents and Images</h4>
                                     <div class="form-group" ng-repeat="item in uploader.queue">
                                         <label class="control-label col-md-3"></label>
-                                         <div class="col-md-4">
+                                        <div class="col-md-4">
                                             <p class="form-control-static">{{ item.file.name }}</p>
                                         </div>
                                     </div>
@@ -821,9 +821,9 @@
                                     <a href="javascript:;" class="btn btn-outline green button-next"> Confirm
                                         <i class="fa fa-angle-right"></i>
                                     </a>
-                                    <a class="btn green button-submit" style="display: none;" ng-click="SubmitRequest()">
-                                        <i class="fa fa-check"></i> Send
-                                    </a>
+                                    <button ng-click="SubmitRequest();" style="display: none;" ladda-button="laddaLoadingBar" data-style="expand-right" class="btn green button-submit ladda-button">
+                                        <span class="ladda-label"><i class="fa fa-check"></i> Send</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>

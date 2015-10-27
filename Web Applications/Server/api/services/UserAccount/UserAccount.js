@@ -904,4 +904,78 @@ module.exports = {
 	},
 
 
+	CheckExistUser:function(criteria,attributes,transaction)
+	{
+		var error=new Error("CheckExistUser.Error");
+		var whereClause=[];
+		function Validation()
+		{
+			var q=$q.defer();
+			try
+			{
+				var criteriaValidation={
+					UserName:null,
+					Email:null,
+					PhoneNumber:null
+				}
+				o.rationalizeObject(criteria,criteriaValidation);
+				if(_.isObject(criteria) && !_.isEmpty(criteria))
+				{
+					if(o.checkData(criteria.PhoneNumber))
+					{
+						criteria.PhoneNumber=o.parseAuMobilePhone(criteria.PhoneNumber);
+						if(!o.checkData(criteria.PhoneNumber))
+						{
+							error.pushError("CheckExistUser.phoneNumberInvalid");
+							throw error;
+						}
+					}
+					if(o.checkData(criteria.Email))
+					{
+						if(!o.isValidEmail(criteria.Email))
+						{
+							error.pushError("CheckExistUser.emailInvalid");
+							throw error;
+						}
+					}
+					whereClause=o.splitAttributesToObjects(criteria);
+					q.resolve({status:'success'});
+					
+				}
+				else
+				{
+					error.pushError("CheckExistUser.paramsNotFound");
+					throw error;
+				}
+			}
+			catch(err)
+			{
+				q.reject(err);
+			}
+			
+			return q.promise;
+		}
+
+		return Validation()
+		.then(function(data){
+			return UserAccount.findOne({
+				where:{
+					$or:whereClause
+				}
+			},{transaction:transaction})
+			.then(function(user){
+				return user;
+			},function(err){
+				o.exlog(err);
+				error.pushError("CheckExistUser.userQueryError");
+				throw error;
+			});
+		},function(err){
+			throw err;
+		});
+
+		
+		
+	}
+
 }

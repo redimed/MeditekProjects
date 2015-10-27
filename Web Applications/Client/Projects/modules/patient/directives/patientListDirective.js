@@ -10,7 +10,9 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
-			scope.search ={};
+			scope.search  = {};
+			scope.checked = {};
+			scope.fieldSort;
 			scope.itemDefault = [
 				{field:"FirstName",name:"First Name"},
 				{field:"LastName",name:"Last Name"},
@@ -67,7 +69,13 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			scope.toggleFilter = function(){
 				scope.toggle = scope.toggle === false ? true : false;
 			};
-
+			// var aaa = {
+			// 	FirstName:"Giang",
+			// 	LastName:"Vo",
+			// 	MiddleName:"Truong",
+			// 	PhoneNumber:"+61432657849"
+			// };
+			// PatientService.postDatatoDirective(aaa);
 			scope.setPage = function() {
 	            scope.searchObjectMap.offset = (scope.searchObjectMap.currentPage - 1) * scope.searchObjectMap.limit;
 	            scope.loadList(scope.searchObjectMap);
@@ -98,9 +106,16 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			};
 
 			scope.sort = function(field,sort) {
+				scope.isClickASC = false;
+				scope.isClickDESC = false;
+				scope.fieldSort = field;
 				if(field=='UserAccount'){
 					field = 'PhoneNumber';
 				}
+				if(sort==="ASC")
+					scope.isClickASC = true;
+				else
+					scope.isClickDESC = true;
 				var data = field+" "+sort;
 				scope.searchObjectMap.order = data;
 				scope.loadList(scope.searchObjectMap);
@@ -110,8 +125,10 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				if(!scope.appointment){
 					if(scope.uidReturn==patientUID){
 						scope.uidReturn='';
+						scope.checked = false;
 					}
 					else{
+						scope.checked = true;
 						scope.uidReturn=patientUID;
 					}
 				}
@@ -153,11 +170,9 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 							};
 							$scope.appointment = {
 								runIfSuccess : function (data) {
-									console.log('patient nênnenenene',data);
 									$modalInstance.close({status:'success',data:data});
-
 								}
-							}
+							};
 						},
 						windowClass: 'app-modal-window'
 						//size: 'lg',
@@ -166,6 +181,8 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				      	scope.appointment.runIfSuccess(data);
 				    });
 				}else{
+					scope.aaaa ="asdasd";
+
 					$state.go('authentication.patient.create');
 				}
 			}

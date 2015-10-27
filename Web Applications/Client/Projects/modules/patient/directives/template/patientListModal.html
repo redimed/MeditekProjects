@@ -31,26 +31,25 @@
 										<div class="row">
 											<div class="col-md-4">
 												<!-- avatar -->
-												<div class="row">
-													<div class="col-md-12">
-														<div class="form-group">
+												<div ng-form name="checkInForm" novalidate>
+													
+													<div class="form-group">
 														<div class="fileinput fileinput-new" data-provides="fileinput">
-															<div class="fileinput-new thumbnail" style="width: 200%; height: 300px;">
-																<!-- <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/> -->
+															<div class="fileinput-new thumbnail" style="width: 300px; height: 300px;" ng-if="info.img===null">
 															</div>
-															<div class="fileinput-preview fileinput-exists thumbnail">
+															<div class="fileinput-preview fileinput-exists thumbnail" style="max-width:350px;" ng-hide="uploader.queue.length==0" >
 															</div>
+															<img ng-src="{{info.img}}" style="max-width:350px;" ng-show="uploader.queue.length==0">
 															<div>
-																<span class="btn default btn-file">
+																<span class="btn green btn-file">
 																	<span class="fileinput-new">
 																	Select Image </span>
 																	<span class="fileinput-exists">
 																	Change </span>
-																	<input type="file" name="...">
+																	 <input type="file" nv-file-select="" uploader="uploader" />
 																</span>
 																<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">Remove </a>
 															</div>
-														</div>
 														</div>
 													</div>
 												</div>
@@ -189,7 +188,7 @@
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onCancel()"><i class="icon-action-undo"></i> Close</button>
-		<button type="button" class="btn btn-success" ng-disabled="infoChanged()||!infoClear()" ng-click="savechange(info)" ><i class="glyphicon glyphicon-save"></i> Save changes</button>
+		<button type="button" class="btn btn-success" ng-disabled="infoChanged()||!infoClear()" ng-click="savechange()" ><i class="glyphicon glyphicon-save"></i> Save changes</button>
 	</div>
 </div>
 

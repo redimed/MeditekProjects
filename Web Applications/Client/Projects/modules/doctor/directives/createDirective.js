@@ -1,5 +1,5 @@
 angular.module('app.authentication.doctor.directive.create', [])
-.directive('doctorCreate', function(doctorService, UnauthenticatedService, CommonService, $filter, toastr, $stateParams, $modal, $state) {
+.directive('doctorCreate', function(doctorService, UnauthenticatedService, CommonService, $cookies, $filter, toastr, $stateParams, $modal, $state) {
 
 	return {
 		//
@@ -12,7 +12,10 @@ angular.module('app.authentication.doctor.directive.create', [])
 
 			// Signature
 			var uploader = $scope.uploader = new FileUploader({
-				url: 'http://192.168.1.2:3005/api/uploadFile',
+				// url: 'http://192.168.1.2:3005/api/uploadFile',
+				// url : 'http://testapp.redimed.com.au:3005/api/uploadFile',
+				url: 'http://localhost:3005/api/uploadFile',
+				headers:{Authorization:'Bearer '+$cookies.get("token")},
 				alias : 'uploadFile'
 			});
 			
@@ -62,7 +65,10 @@ angular.module('app.authentication.doctor.directive.create', [])
 
 		    // Profile Image
 		    var uploaders = $scope.uploaders = new FileUploader({
-		    	url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	// url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
+		    	url: 'http://localhost:3005/api/uploadFile',
+		    	headers:{Authorization:'Bearer '+$cookies.get("token")},
 		    	alias : 'uploadFile'
 		    });
 			
@@ -138,17 +144,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 
 						toastr.success('Create Successfull');
 						$state.go('authentication.doctor.list');
-					}, function(err) {
-						if(err.data.ErrorsList[0] == 'UserName.duplicate') {
-			                toastr.error('UserName already exists');
-			            }
-			            if(err.data.ErrorsList[0] == 'Email.duplicate') {
-			                toastr.error('Email already exists');
-			            }
-			            if(err.data.ErrorsList[0] == 'PhoneNumber.duplicate') {
-			                toastr.error('PhoneNumber already exists');
-			            }
-					});
+					}, function(err) {});
 
 				}, function(err) {
 					toastr.error('Information not empty');
@@ -158,10 +154,6 @@ angular.module('app.authentication.doctor.directive.create', [])
 
 		},
 		link: function(scope, ele, attr) {
-
-			scope.upper = function capitalizeFirstLetter(string) {
-			    return string.charAt(0).toUpperCase() + string.slice(1);
-			  }
 
 			scope.er={};
 			scope.isShowNext=true;
@@ -195,7 +187,13 @@ angular.module('app.authentication.doctor.directive.create', [])
 			}
 
 			// Title
-			scope.title = CommonService.getTitles();
+			scope.titles = [
+				{id:"0", name:"Mr"},
+				{id:"1", name:"Mrs"},
+				{id:"2", name:"Ms"},
+				{id:"3", name:"Dr"}
+			];
+
 			// Country List
 			doctorService.listCountry()
 			.then(function(result) {
@@ -235,10 +233,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 						
 					}, function(err) {});
 					
-
-				}, function(err) {
-					toastr.error('Information not empty');
-				});
+				}, function(err) {});
 			
 			};
 			scope.show2 = function(){
@@ -252,9 +247,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 				.then(function(success) {
 					scope.isShowNext3=false;
 					scope.isShowNext4=true;
-				}, function(err) {
-					toastr.error('Information not empty');
-				});
+				}, function(err) {});
 				
 			};
 
@@ -271,9 +264,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 				.then(function(success) {
 					scope.isShowNext5=false;
 					scope.isShowCreate=true;
-				}, function(err) {
-					toastr.error('Information not empty');
-				});
+				}, function(err) {});
 			};		
 
 		} // end link

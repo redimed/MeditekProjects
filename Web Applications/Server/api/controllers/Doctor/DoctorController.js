@@ -109,9 +109,17 @@ module.exports = {
 			var info_id = {
 				ID: result.ID
 			};
-			var info_role = {
-				RoleCode: data.Type
-			};
+
+			if(data.Type == 'INTERNAL_PRACTITIONER') {
+				var info_role = {
+					RoleCode: data.Type,
+					SiteId: '1'
+				};
+			} else {
+				var info_role = {
+					RoleCode: data.Type
+				};
+			}
 
 			Services.UserRole.CreateUserRoleWhenCreateUser(result, info_role)
 			.then(function(success) {

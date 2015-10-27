@@ -2,7 +2,7 @@ var app = angular.module('app.authentication.appointment.request.controller', [
     'app.authentication.appointment.request.modal.controller'
 ]);
 
-app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal) {
+app.controller('appointmentRequestCtrl', function($scope, $cookies, CommonService, AppointmentService, $state, FileUploader, $modal, $interval) {
 
     $scope.doctors = [];
     $scope.details = [];
@@ -34,7 +34,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
         UserInfo: {
             UID: $cookies.getObject('userInfo').UID
         },
-        FileUploads:[]
+        FileUploads: []
     }
 
     $scope.checkElectiveOther = false;
@@ -54,8 +54,9 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
     };
 
 
-    $scope.SubmitRequest = function () {
-        ((uploader.queue.length >0)?$scope.SendRequestUploadFile():$scope.sendRequestAppointment());
+    $scope.SubmitRequest = function() {
+         $scope.laddaLoadingBar = true;
+        ((uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.sendRequestAppointment());
     }
 
 
@@ -64,11 +65,9 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
         console.log($scope.requestInfo.FileUploads);
         $scope.requestInfo.RequestDate = moment(new Date()).format("YYYY-MM-DD hh:mm:ss Z");
         $scope.requestInfo.TelehealthAppointment.RefDate = moment(new Date()).format("YYYY-MM-DD hh:mm:ss Z");
-        $scope.requestInfo.TelehealthAppointment.PatientAppointment.DOB = moment($scope.patientAppointmentDOBTemp,'YYYY-MM-DD').format("YYYY-MM-DD hh:mm:ss Z");
 
         $scope.requestInfo.TelehealthAppointment.PreferredPractitioner = [];
         $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];
-        console.log('data', $scope.requestInfo);
         _.forEach($scope.doctors, function(item) {
             if (item != undefined || item != null) {
                 var data = {
@@ -94,8 +93,9 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
                 }
             })
         });
-
+        console.log('data', $scope.requestInfo);
         AppointmentService.SendRequest($scope.requestInfo).then(function(data) {
+            $scope.laddaLoadingBar = false;
             swal({
                 title: "Success",
                 text: "Send Request Successfully!",
@@ -105,6 +105,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
                 $state.go("authentication.appointment.list");
             });
         }, function(error) {
+            $scope.laddaLoadingBar = false;
             swal({
                 title: "Error",
                 text: "Send Request Error!",
@@ -113,7 +114,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
         });
     };
 
-    $scope.SendRequestUploadFile = function () {
+    $scope.SendRequestUploadFile = function() {
         for (var i = 0; i < uploader.queue.length; i++) {
             console.log(' uploader.queue', uploader.queue);
             var item = uploader.queue[i];
@@ -126,8 +127,8 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
 
 
     var uploader = $scope.uploader = new FileUploader({
-        url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
-        // url: 'http://telehealthvietnam.com.vn:3005/api/uploadFile',
+        url: CommonService.ApiUploadFile,
+        headers:{Authorization:('Bearer '+$cookies.get("token"))},
         alias: 'uploadFile'
     });
 
@@ -172,7 +173,9 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
         console.info('onCompleteItem', fileItem, response, status, headers);
         if (response.status == 'success') {
-            $scope.requestInfo.FileUploads.push({UID:response.fileUID});
+            $scope.requestInfo.FileUploads.push({
+                UID: response.fileUID
+            });
         };
     };
     uploader.onCompleteAll = function() {
@@ -195,5 +198,4 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
             }
         });
     };
-
 });

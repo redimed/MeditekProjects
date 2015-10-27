@@ -135,36 +135,55 @@ module.exports = {
 		Services.UserAccount.CreateUserAccount(userInfo)
 		.then(function(result) {
 
-			data.CreatedDate = dated;
-			data.CreatedBy = req.user?req.user.ID:null;
-			data.UserAccountID = result.ID;
-			data.Speciality = HelperService.EXTERTAL_PRACTITIONER;
+			// Create Role
+			var info_id = {
+				ID: result.ID
+			};
+			var info_role = {
+				RoleCode: data.Type
+			};
 
-			Services.Doctor.CreateDoctor(data)
+			Services.UserRole.CreateUserRoleWhenCreateUser(result, info_role)
 			.then(function(success) {
-				var info_actv = {
-					UserUID: result.UID,
-					Type: HelperService.const.systemType.website,
-					CreatedBy: result.ID
-				};
 
-				// Activation
-				Services.UserActivation
-				.CreateUserActivation(info_actv)
-				.then(function(result_actv) {
-					var info_show = {
-						UID: result.UID,
-						VerificationCode: result_actv.VerificationCode
+				data.CreatedDate = dated;
+				data.CreatedBy = req.user?req.user.ID:null;
+				data.UserAccountID = result.ID;
+				if(data.Title) {
+					data.Title = data.Title.toString();
+				} else {
+					data.Title = '';
+				}
+
+				Services.Doctor.CreateDoctor(data)
+				.then(function(success) {
+					var info_actv = {
+						UserUID: result.UID,
+						Type: HelperService.const.systemType.website,
+						CreatedBy: result.ID
 					};
 
-					res.ok({
-						data: info_show
+					// Activation
+					Services.UserActivation
+					.CreateUserActivation(info_actv)
+					.then(function(result_actv) {
+						var info_show = {
+							UID: result.UID,
+							VerificationCode: result_actv.VerificationCode
+						};
+
+						res.ok({
+							data: info_show
+						});
+					})
+					.catch(function(err) {
+						res.serverError(ErrorWrap(err));
 					});
+
 				})
 				.catch(function(err) {
 					res.serverError(ErrorWrap(err));
 				});
-
 			})
 			.catch(function(err) {
 				res.serverError(ErrorWrap(err));

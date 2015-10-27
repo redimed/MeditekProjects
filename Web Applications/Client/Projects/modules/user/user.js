@@ -15,11 +15,11 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'modules/user/views/userList.html',
 			controller: 'userListCtrl'
 		})
-		// .state('authentication.user.list.detail', {
-		// 	url: '/detail',
-		// 	templateUrl: 'modules/user/views/userListDetail.html',
-		// 	controller: 'userListDetailCtrl'
-		// })
+		.state('authentication.user.detail', {
+			url: '/detail',
+			templateUrl: 'modules/user/views/userDetail.html',
+			controller: 'userDetailCtrl'
+		})
 		.state('authentication.user.profile', {
 			url: '/profile',
 			templateUrl: 'modules/user/views/userProfile.html',

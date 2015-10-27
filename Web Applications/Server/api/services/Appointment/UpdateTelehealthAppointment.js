@@ -1,3 +1,9 @@
+/*
+UpdateTelehealthAppointment: update Telehealth Appointment
+input: information update Telehealth Appointment
+output: -success: transaction update Telehealth Appointment
+        -failed: [transaction] update Telehealth Appointment, error message
+ */
 module.exports = function(data, userInfo) {
     var $q = require('q');
     var preferringPractitionerObject;
@@ -25,7 +31,7 @@ module.exports = function(data, userInfo) {
                     .then(function(preferPractitionerObj) {
                         if (HelperService.CheckExistData(preferPractitionerObj) &&
                             HelperService.CheckExistData(preferPractitionerObj.Doctor)) {
-                            preferringPractitionerObject = preferPractitionerObj.Doctor;
+                            preferringPractitionerObject = preferPractitionerObj;
                             //get Appointment object
                             return Appointment.findOne({
                                 attributes: ['ID'],

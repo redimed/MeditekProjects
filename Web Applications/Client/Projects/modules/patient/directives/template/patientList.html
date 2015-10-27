@@ -48,8 +48,8 @@
 					<th style="width:10%;">#</th>
 					<th ng-repeat="i in items">
 						<label>{{i.name}} </label>
-						<span class="glyphicon glyphicon-chevron-up" ng-click="sort(i.field,'ASC')" style="float: right; margin-top: -4px;"></span>
-	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sort(i.field,'DESC')" style="float: right; margin-top: 9px; margin-right: -14px;"></span>
+						<span class="glyphicon glyphicon-chevron-up" ng-click="sort(i.field,'ASC')" style="float: right; margin-top: -4px;" ng-class="{'sort':fieldSort === i.field && isClickASC ==true}" ></span>
+	 					<span class="glyphicon glyphicon-chevron-down" ng-click="sort(i.field,'DESC')" style="float: right; margin-top: 9px; margin-right: -14px;" ng-class="{'sort':fieldSort === i.field && isClickDESC ==true}"></span>
  					</th>
  					<th ng-if="isShowSelectButton">&nbsp;</th>
 				</tr>
@@ -57,10 +57,11 @@
 			<tbody>
 			<tbody>
 				<tr ng-repeat="p in patients" style="width:100%;margin-top: -50px;margin-left: -50px;" ng-class="{'is-Choose': p.UID === uidReturn}">
-					<td style="width:10%;" ng-click="clickOpen(p.UID)">{{p.stt}}</td>
+					<td ng-click="clickOpen(p.UID)">{{p.stt}}</td>
 					<td ng-repeat="i in items" ng-click="clickOpen(p.UID)">{{i.field=='UserAccount'?p[i.field]['PhoneNumber']:i.field!='Gender'?p[i.field]:p[i.field]=='M'?'Male':'Female'}}</td>
 					<td style="width:10%; text-align:center;" ng-if="isShowSelectButton" >
-						<i ng-click="selectPatient(p.UID)" ng-class="{'glyphicon glyphicon-ok is-Selected':p.UID === uidReturn,'glyphicon glyphicon-remove is-notSelected':p.UID !== uidReturn}"></i>
+						<i ng-click="selectPatient(p.UID)"style="font-size:150%;" ng-class="{'glyphicon glyphicon-check':p.UID === uidReturn,'glyphicon glyphicon-unchecked':p.UID !== uidReturn}"></i>
+						<!-- <input type="checkbox" class="form-control" ng-model="checked" style="width:30%;" ng-click="selectPatient(p.UID)"/> -->
 					</td>
 				</tr>
 			</tbody>
@@ -71,7 +72,7 @@
 			<div class="col-md-5 col-sm-12">
 				&nbsp;
 			</div>
-			<div class="col-md-7 col-sm-12">
+			<div class="col-md-7 col-sm-12" style="text-align:right">
 				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
 					<uib-pagination 
 					boundary-links="true" 
@@ -100,5 +101,5 @@
     <patient-listmodal on-uid="ID" action="action" on-cancel="close"></patient-listmodal>
 </script>
 <script type="text/ng-template " id="patientCreatemodal">
-    <patient-create appointment="appointment"></patient-create>
+    <patient-create appointment="appointment" on-item="true" ></patient-create>
 </script>

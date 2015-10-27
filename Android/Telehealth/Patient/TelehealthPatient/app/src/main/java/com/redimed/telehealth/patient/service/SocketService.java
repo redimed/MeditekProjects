@@ -54,10 +54,11 @@ public class SocketService extends Service {
             IO.Options opts = new IO.Options();
             opts.forceNew = true;
             opts.reconnection = true;
-            opts.query = "__sails_io_sdk_version=0.11.0,Authorization=" + auth + ",CoreAuth=" + core + '"';
-//            opts.query = "Authorization:" + auth;
-//            opts.query = "CoreAuth:" + core;
+            opts.query = "__sails_io_sdk_version=0.11.0";
+//            opts.query = "Authorization=" + auth;
+//            opts.query = "CoreAuth=" + core;
             socket = IO.socket(Config.socketURL, opts);
+            Log.d(TAG, socket + "");
             socket.connect();
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -72,13 +73,12 @@ public class SocketService extends Service {
 
     @Override
     public void onCreate() {
+        initializeSocket();
         super.onCreate();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        initializeSocket();
-
         socket.on("receiveMessage", onReceiveMessage);
         socket.on("errorMsg", onReceiveError);
         socket.on(Socket.EVENT_CONNECT, onConnect);
@@ -109,14 +109,14 @@ public class SocketService extends Service {
     }
 
     public static void JoinRoom() {
-            try {
-                Map<String, Object> params = new HashMap<String, Object>();
-                params.put("uid", uidTelehealth.getString("uid", null));
-                SocketService.sendData("socket/joinRoom", params);
-                Log.d(TAG, params.toString());
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
+        try {
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("uid", uidTelehealth.getString("uid", null));
+            SocketService.sendData("socket/joinRoom", params);
+            Log.d(TAG, params.toString());
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 
     private Emitter.Listener onConnect = new Emitter.Listener() {
@@ -169,7 +169,7 @@ public class SocketService extends Service {
             JSONObject data = (JSONObject) args[0];
             try {
                 String message = data.get("message").toString();
-                if (message.equalsIgnoreCase("call")){
+                if (message.equalsIgnoreCase("call")) {
                     i = new Intent(getApplicationContext(), CallActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("apiKey", data.get("apiKey").toString());
@@ -181,7 +181,7 @@ public class SocketService extends Service {
                     i.putExtra("fromName", data.get("fromName").toString());
                     startActivity(i);
                 }
-                if (message.equalsIgnoreCase("cancel")){
+                if (message.equalsIgnoreCase("cancel")) {
                     Log.d(TAG, message.toString());
                     i = new Intent(getApplicationContext(), CallActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -189,7 +189,7 @@ public class SocketService extends Service {
                     JoinRoom();
                     startActivity(i);
                 }
-                if (message.equalsIgnoreCase("end")){
+                if (message.equalsIgnoreCase("end")) {
                     i = new Intent(getApplicationContext(), MainActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("message", data.get("message").toString());

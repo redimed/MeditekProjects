@@ -102,8 +102,8 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         ButterKnife.bind(this);
         layoutContainer.setAnimateFirstView(true);
 
-        phoneCode = "+84";
-        lblPhoneCode.setText("(+84)");
+        phoneCode = "+61";
+        lblPhoneCode.setText("(+61)");
 
         countryPicker = CountryPicker.newInstance("Select Country");
         countryPicker.setListener(new CountryPickerListener() {

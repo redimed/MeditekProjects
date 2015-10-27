@@ -21,7 +21,6 @@ import retrofit.client.OkClient;
 public class RESTClient {
     private static RestAdapter restAdapter, restAdapterUpload;
     private static OkHttpClient okHttpClient;
-    private SharedPreferences uidTelehealth;
 
     static {
         setupRestClient();

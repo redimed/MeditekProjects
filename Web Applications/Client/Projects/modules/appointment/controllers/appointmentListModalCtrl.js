@@ -57,6 +57,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         });
         modalInstance.result.then(function(data) {
             if (data.status == 'success') {
+                $scope.appointment.Patients = [];
                 $scope.appointment.Patients.push({
                     UID: data.data.data.UID
                 });
@@ -65,8 +66,8 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
                     UID: data.data.data.UID
                 }).then(function(data) {
                     if (data.message == 'success') {
-                        $scope.appointment.TelehealthAppointment.PatientAppointment = data.data[0];
-                        console.log($scope.appointment.TelehealthAppointment.PatientAppointment);
+                        $scope.ShowData.patient = data.data[0];
+                        console.log('ShowData.patient',$scope.ShowData.patient);
                     };
                 })
                 toastr.success("Select patient successfully!", "success");
@@ -105,7 +106,8 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         DateTimeAppointmentDate: null,
         PatientsFullName: null,
         isLinkPatient: false,
-        PreferredPractitionersTemp: []
+        PreferredPractitionersTemp: [],
+        patient:[]
     }
     $scope.appointment = null
     $scope.Other = {
@@ -125,7 +127,9 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
 
             if ($scope.appointment.Patients.length != 0) {
                 $scope.ShowData.isLinkPatient = true
-                $scope.appointment.TelehealthAppointment.PatientAppointment = angular.copy($scope.appointment.Patients[0])
+                $scope.ShowData.patient = angular.copy($scope.appointment.Patients[0])
+            }else{
+                $scope.ShowData.patient = angular.copy($scope.appointment.TelehealthAppointment.PatientAppointment)
             }
             if (checkDateUndefined($scope.appointment.TelehealthAppointment)) {
                 $scope.appointment.TelehealthAppointment.ClinicalDetails = {}
@@ -151,7 +155,9 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
                 })
                 checkOtherInput()
             }
-
+            if (!$scope.ShowData.isLinkPatient) {
+                $scope.appointment.TelehealthAppointment.PatientAppointment = $scope.ShowData.patient
+            };
             $scope.referringPractitionerDateTemp = formatDate($scope.appointment.Doctors.RefDate);
 
             if ($scope.appointment.RequestDate) {
@@ -216,16 +222,25 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             }
         })
     }
-    $scope.updateAppointment = function() {
 
-         if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate != '') {
-            console.log($scope.ShowData.DateTimeAppointmentDateTime)
-            var Time = moment($scope.ShowData.DateTimeAppointmentDateTime, ["HH:mm:ss A"]).format("HH:mm:ss");
-            var StringAppointmentDateTime = $scope.ShowData.DateTimeAppointmentDate + ' ' + Time + ' Z';
-            $scope.appointment.FromTime = moment(StringAppointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").utc().format('YYYY-MM-DD HH:mm:ss Z');
-        }else{
-            $scope.appointment.FromTime = null
-        };
+    $scope.submitUpdate = function () {
+        swal({
+            title: "Are you sure ?",
+            text: "Update Appointment",
+            type: "info",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true,
+        },
+        function() {
+            $scope.updateAppointment();
+        });
+    }
+
+    $scope.updateAppointment = function() {
+        var Time = moment($scope.ShowData.DateTimeAppointmentDateTime, ["HH:mm:ss A"]).format("HH:mm:ss");
+        var StringAppointmentDateTime = $scope.ShowData.DateTimeAppointmentDate + ' ' + Time + ' Z';
+        $scope.appointment.FromTime = moment(StringAppointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").utc().format('YYYY-MM-DD HH:mm:ss Z');
         if ($scope.appointment.Status == "Approved") {
             $scope.appointment.ApprovalDate = moment().format('YYYY-MM-DD HH:mm:ss Z')
         } else {
@@ -284,9 +299,9 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             if (countCliniDetail == 0) {
                 ClinicalDetailsTemp = []
             }
-            if ($scope.ShowData.isLinkPatient) {
-                $scope.appointment.TelehealthAppointment.PatientAppointment = []
-            };
+            // if ($scope.ShowData.isLinkPatient) {
+            //     $scope.appointment.TelehealthAppointment.PatientAppointment = []
+            // };
             $scope.appointment.RequestDate = moment($scope.appointment.RequestDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z')
                 //$scope.appointment.RequestDate = moment($scope.appointment.RequestDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z')
             $scope.appointment.TelehealthAppointment.ClinicalDetails = angular.copy(ClinicalDetailsTemp)
@@ -294,23 +309,13 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
                 data: $scope.appointment
             }
             console.log("$scope.appointment", $scope.appointment);
-            swal({
-                    title: "Are you sure ?",
-                    text: "Update Appointment",
-                    type: "info",
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    showLoaderOnConfirm: true,
-                },
-                function() {
-                    AppointmentService.upDateApppointment(postData).then(function(response) {
-                        if (response == 'success') {
-                            $modalInstance.close('success');
-                            swal("Success.");
-                        };
+            AppointmentService.upDateApppointment(postData).then(function(response) {
+                if (response == 'success') {
+                    $modalInstance.close('success');
+                    swal("Success.");
+                };
 
-                    })
-                });
+            })
         };
     }
 });

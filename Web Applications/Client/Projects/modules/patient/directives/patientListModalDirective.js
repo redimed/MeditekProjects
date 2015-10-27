@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.patient.list.modal.directive',[]);
-app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $timeout, $cookies){
+app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $timeout, $cookies, CommonService){
 	return{
 		restrict: 'EA',
         scope: {
@@ -113,12 +113,11 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				console.log(scope.uploader.queue.length);
 				if(response.message=="success"){
 					scope.info = response.data[0];
-					scope.info.img = scope.info.FileUID?'http://192.168.1.2:3005/api/downloadFile/300/'+scope.info.FileUID:null;
+					scope.info.img = scope.info.FileUID?CommonService.ApiUploadFile+scope.info.FileUID:null;
 					scope.info.img_change=false;
 					scope.info.DOB = new Date(scope.info.DOB);
 					
 					oriInfo = angular.copy(scope.info);
-					console.log(scope.uploader.queue);
 				}
 				else{
 					console.log(response.message);

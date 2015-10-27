@@ -80,7 +80,12 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 
 		    scope.changeImg = function(){
 		    	console.log(scope.uploader);
-		    }
+		    };
+
+		    scope.checkDataNull = function(name){
+		    	if(scope.info[name].length==0)
+		    		scope.info[name] = null;
+		    };
 
 		    scope.savechange = function(){
 				PatientService.validate(scope.info)

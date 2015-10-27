@@ -513,9 +513,8 @@ module.exports = {
 	UpdatePatient : function(data, transaction) {
 		if(check.checkData(data)){
 			data.ModifiedDate = new Date();
-			// var DOB = moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
+			data.DOB =moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').format('DD/MM/YYYY');
 			//get data not required
-			data.DOB = moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss');
 			var patientInfo={
 				ID              : data.ID,
 				Title           : data.Title,

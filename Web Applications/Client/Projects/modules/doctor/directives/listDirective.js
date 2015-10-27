@@ -63,7 +63,6 @@ angular.module('app.authentication.doctor.directive.list', [])
 				var data = angular.copy(scope.doctor.search);
 				doctorService.getList(data)
 				.then(function(response) {
-					console.log(response.data.rows);
 					scope.doctor.list = response.data.rows;
 					scope.doctor.count = response.data.count;
 					angular.forEach(response.data.rows, function(value, index) {

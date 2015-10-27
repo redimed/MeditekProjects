@@ -21,6 +21,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			}
 			else {
 				error.push({field:"UserName",message:"required"});
+				toastr.error('UserName is required');
 			}
 
 			//validate Password
@@ -31,11 +32,12 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 				}
 				if(info.Password.length < 0 || info.Password.length > 256){
 					error.push({field:"Password",message:"length"});
-					toastr.error('Password is too long or too short');
+					toastr.error('Password is required');
 				}
 			}
 			else {
 				error.push({field:"Password",message:"required"});
+				toastr.error('UserName is required');
 			}
 
 			//validate RePassword
@@ -47,6 +49,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			}
 			else {
 				error.push({field:"RePassword",message:"required"});
+				toastr.error('RePassword is required');
 			}
 
 			//validate PhoneNumber
@@ -60,6 +63,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			}
 			else{
 				error.push({field:"PhoneNumber",message:"required"});
+				toastr.error('MobilePhone is required');
 			}
 
 			if(info.Email){
@@ -72,6 +76,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			}
 			else {
 				error.push({field:"Email",message:"Email.required"});
+				toastr.error('Email is required');
 			}
 
 			if(error.length>0){
@@ -102,18 +107,16 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			}
 			else {
 				error.push({field:"FirstName",message:"required"});
+				toastr.error('FirstName is required');
 			}
 
 			//validate MiddleName
-			// if(info.MiddleName){
-			// 	if(info.MiddleName.length < 0 || info.MiddleName.length > 100){
-			// 		error.push({field:"MiddleName",message:"length"});
-			// 		toastr.error('MiddleName is too long or too short');
-			// 	}
-			// }
-			// else {
-			// 	error.push({field:"MiddleName",message:"required"});
-			// }
+			if(info.MiddleName){
+				if(info.MiddleName.length > 100){
+					error.push({field:"MiddleName",message:"length"});
+					toastr.error('MiddleName is too long');
+				}
+			}
 
 			//validate Lastname
 			if(info.LastName){
@@ -124,17 +127,30 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			}
 			else {
 				error.push({field:"LastName",message:"required"});
+				toastr.error('LastName is required');
+			}
+
+			//validate Department
+			if(info.DepartmentID){
+				if(info.DepartmentID.length < 0){
+					error.push({field:"DepartmentID",message:"length"});
+				}
+			}
+			else {
+				error.push({field:"DepartmentID",message:"required"});
+				toastr.error('Department is required');
 			}
 
 			//validate HealthLinkID
 			if(info.HealthLinkID){
 				if(info.HealthLinkID.length < 0 || info.HealthLinkID.length > 255){
 					error.push({field:"HealthLinkID",message:"length"});
-					toastr.error('HealthLinkID is too long or too short');
+					toastr.error('HealthLink ID is too long or too short');
 				}
 			}
 			else {
 				error.push({field:"HealthLinkID",message:"required"});
+				toastr.error('HealthLink ID is required');
 			}
 
 			//validate ProviderNumber
@@ -146,54 +162,47 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			}
 			else {
 				error.push({field:"ProviderNumber",message:"required"});
+				toastr.error('ProviderNumber is required');
 			}
 
 			//validate WorkPhoneNumber
 			if(info.WorkPhoneNumber){
-				var auPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
-				var PhoneNumber=info.WorkPhoneNumber.replace('/[\(\)\s\-]/g','');
-				if(!auPhoneNumberPattern.test(PhoneNumber)){
-					error.push({field:"WorkPhoneNumber",message:"WorkPhoneNumber.invalid-value"});
-					toastr.error('WorkPhone not invalid');
+				if(info.WorkPhoneNumber.length > 0){
+					var auPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var PhoneNumber=info.WorkPhoneNumber.replace('/[\(\)\s\-]/g','');
+					if(!auPhoneNumberPattern.test(PhoneNumber)){
+						error.push({field:"WorkPhoneNumber",message:"WorkPhoneNumber.invalid-value"});
+						toastr.error('WorkPhone not invalid');
+					}
 				}
-			}
-			else {
-				error.push({field:"WorkPhoneNumber",message:"required"});
 			}
 
 			//validate Homephone
 			if(info.HomePhoneNumber){
-				var auPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
-				var PhoneNumber=info.HomePhoneNumber.replace('/[\(\)\s\-]/g','');
-				if(!auPhoneNumberPattern.test(PhoneNumber)){
-					error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.invalid-value"});
-					toastr.error('HomePhone not invalid');
+				if(info.HomePhoneNumber.length > 0) {
+					var auPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var PhoneNumber=info.HomePhoneNumber.replace('/[\(\)\s\-]/g','');
+					if(!auPhoneNumberPattern.test(PhoneNumber)){
+						error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.invalid-value"});
+						toastr.error('HomePhone not invalid');
+					}
 				}
-			}
-			else {
-				error.push({field:"HomePhoneNumber",message:"required"});
 			}
 
 			//validate Address1
 			if(info.Address1){
-				if(info.Address1.length < 0 || info.Address1.length > 255){
+				if(info.Address1.length > 255){
 					error.push({field:"Address1",message:"length"});
-					toastr.error('Address1 is too long or too short');
+					toastr.error('Address1 is too long');
 				}
-			}
-			else {
-				error.push({field:"Address1",message:"required"});
 			}
 
 			//validate Address2
 			if(info.Address2){
-				if(info.Address2.length < 0 || info.Address2.length > 255){
+				if(info.Address2.length > 255){
 					error.push({field:"Address2",message:"length"});
-					toastr.error('Address2 is too long or too short');
+					toastr.error('Address2 is too long');
 				}
-			}
-			else {
-				error.push({field:"Address2",message:"required"});
 			}
 
 			//validate Postcode
@@ -205,6 +214,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			}
 			else {
 				error.push({field:"Postcode",message:"required"});
+				toastr.error('Postcode is required');
 			}
 
 			//validate Suburb
@@ -216,6 +226,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			}
 			else {
 				error.push({field:"Suburb",message:"required"});
+				toastr.error('Suburb is required');
 			}
 
 			//validate State
@@ -227,6 +238,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			}
 			else {
 				error.push({field:"State",message:"required"});
+				toastr.error('State is required');
 			}
 
 			//validate CountryID
@@ -237,6 +249,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			}
 			else {
 				error.push({field:"CountryID",message:"required"});
+				toastr.error('Country is required');
 			}
 
 			if(error.length>0){

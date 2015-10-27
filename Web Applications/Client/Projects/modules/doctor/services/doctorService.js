@@ -54,165 +54,6 @@ angular.module('app.authentication.doctor.service', [])
 		return instanceApi.post({data: data});
 	}
 
-	// Validate 
-	services.validinfo= function(info) {
-
-		var error = [];
-		var q = $q.defer();
-
-		try {
-
-			// Title
-			if(info.Title) {
-				if(info.Title.length < 0) {
-					error.push({field:'Title', message:'Title.length'});
-				}
-			}
-			else {
-				error.push({field:'Title', message:'required'});
-			}
-
-			// FirstName
-			if(info.FirstName) {
-				if(info.FirstName.length < 0 || info.FirstName.length > 50) {
-					error.push({field:'FirstName', message:'FirstName.length'});
-				}
-			}
-			else {
-				error.push({field:'FirstName', message:'required'});
-			}
-
-			// MiddleName
-			// if(info.MiddleName) {
-			// 	if(info.MiddleName.length < 0 || info.MiddleName.length > 100) {
-			// 		error.push({field:'MiddleName', message:'MiddleName.length'});
-			// 	}
-			// }
-			// else {
-			// 	error.push({field:'MiddleName', message:'required'});
-			// }
-
-			// LastName
-			if(info.LastName) {
-				if(info.LastName.length < 0 || info.LastName.length > 255) {
-					error.push({field:'LastName', message:'LastName.length'});
-				}
-			}
-			else {
-				error.push({field:'LastName', message:'required'});
-			}
-
-			// ProviderNumber
-			if(info.ProviderNumber) {
-				if(info.ProviderNumber.length < 0 || info.ProviderNumber.length > 255) {
-					error.push({field:'ProviderNumber', message:'ProviderNumber.length'});
-				}
-			}
-			else {
-				error.push({field:'ProviderNumber', message:'required'});
-			}
-
-			// Address1
-			if(info.Address1) {
-				if(info.Address1.length < 0 || info.Address1.length > 255) {
-					error.push({field:'Address1', message:'Address1.length'});
-				}
-			}
-			else {
-				error.push({field:'Address1', message:'required'});
-			}
-
-			// Address2
-			if(info.Address2) {
-				if(info.Address2.length < 0 || info.Address2.length > 255) {
-					error.push({field:'Address2', message:'Address2.length'});
-				}
-			}
-			else {
-				error.push({field:'Address2', message:'required'});
-			}
-
-			// HomePhoneNumber
-			if(info.HomePhoneNumber) {
-				var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
-				var HomePhone=info.HomePhoneNumber.replace('/[\(\)\s\-]/g','');
-				if(!auHomePhoneNumberPattern.test(HomePhone)){
-					error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.invalid-value"});
-					toastr.error('HomePhoneNumber not invalid');
-				}
-			}
-			else {
-				error.push({field:'HomePhoneNumber', message:'required'});
-			}
-
-			// WorkPhoneNumber
-			if(info.WorkPhoneNumber) {
-				var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
-				var WorkPhone=info.WorkPhoneNumber.replace('/[\(\)\s\-]/g','');
-				if(!auHomePhoneNumberPattern.test(WorkPhone)){
-					error.push({field:"WorkPhoneNumber",message:"WorkPhoneNumber.invalid-value"});
-					toastr.error('WorkPhoneNumber not invalid');
-				}
-			}
-			else {
-				error.push({field:'WorkPhoneNumber', message:'required'});
-			}
-
-			// Postcode
-			if(info.Postcode) {
-				if(info.Postcode.length < 0 || info.Postcode.length > 4) {
-					error.push({field:'Postcode', message:'Postcode.length'});
-				}
-			}
-			else {
-				error.push({field:'Postcode', message:'required'});
-			}
-
-			// Suburb
-			if(info.Suburb) {
-				if(info.Suburb.length < 0 || info.Suburb.length > 100) {
-					error.push({field:'Suburb', message:'Suburb.length'});
-				}
-			}
-			else {
-				error.push({field:'Suburb', message:'required'});
-			}
-
-			// State
-			if(info.State) {
-				if(info.State.length < 0 || info.State.length > 100) {
-					error.push({field:'State', message:'State.length'});
-				}
-			}
-			else {
-				error.push({field:'State', message:'required'});
-			}
-
-			// CountryID
-			if(info.CountryID) {
-				if(info.CountryID.length < 0) {
-					error.push({field:'CountryID', message:'CountryID.length'});
-				}
-			}
-			else {
-				error.push({field:'CountryID', message:'required'});
-			}
-
-			if(error.length>0){
-				throw error;
-			}
-			else{
-				q.resolve({status:'success'});
-			}
-
-		}
-		catch(error){
-			q.reject(error);
-		}
-		return q.promise;
-
-	};
-
 	// Check Create Step 1
 	services.validateCheckPhone = function(info) {
 		
@@ -223,13 +64,10 @@ angular.module('app.authentication.doctor.service', [])
 		try {
 
 			//validate Title
-			if(info.Title){
-				if(info.Title.length < 0){
-					error.push({field:"Title",message:"length"});
-				}
-			}
-			else {
-				error.push({field:"Title",message:"required"});
+			if(info.Titles){
+			} else {
+				error.push({field:"Titles",message:"required"});
+				toastr.error('Titles is required');
 			}
 			
 			//validate FirstName
@@ -240,17 +78,15 @@ angular.module('app.authentication.doctor.service', [])
 			}
 			else {
 				error.push({field:"FirstName",message:"required"});
+				toastr.error('FirstName is required');
 			}
 
 			//validate MiddleName
-			// if(info.MiddleName){
-			// 	if(info.MiddleName.length < 0 || info.MiddleName.length > 100){
-			// 		error.push({field:"MiddleName",message:"length"});
-			// 	}
-			// }
-			// else {
-			// 	error.push({field:"MiddleName",message:"required"});
-			// }
+			if(info.MiddleName){
+				if(info.MiddleName.length > 100){
+					error.push({field:"MiddleName",message:"length"});
+				}
+			}
 
 			//validate LastName
 			if(info.LastName){
@@ -260,6 +96,7 @@ angular.module('app.authentication.doctor.service', [])
 			}
 			else {
 				error.push({field:"LastName",message:"required"});
+				toastr.error('LastName is required');
 			}
 
 			//validate PhoneNumber
@@ -273,6 +110,7 @@ angular.module('app.authentication.doctor.service', [])
 			}
 			else{
 				error.push({field:"PhoneNumber",message:"required"});
+				toastr.error('PhoneNumber is required');
 			}
 
 			//validate Email
@@ -285,7 +123,8 @@ angular.module('app.authentication.doctor.service', [])
 				}
 			}
 			else {
-				error.push({field:"Email",message:"Email.required"});
+				error.push({field:"Email",message:"required"});
+				toastr.error('Email is required');
 			}
 
 			if(error.length>0){
@@ -319,27 +158,22 @@ angular.module('app.authentication.doctor.service', [])
 			}
 			else {
 				error.push({field:"HealthLinkID",message:"HealthLinkID.required"});
+				toastr.error('HealthLink ID is required');
 			}
 
 			//validate Address1
-			// if(info.Address1){
-			// 	if(info.Address1.length < 0 || info.Address1.length > 255){
-			// 		error.push({field:"Address1",message:"Address1.length"});
-			// 	}
-			// }
-			// else {
-			// 	error.push({field:"Address1",message:"Address1.required"});
-			// }
+			if(info.Address1){
+				if(info.Address1.length > 255){
+					error.push({field:"Address1",message:"Address1.length"});
+				}
+			}
 
 			//validate Address2
-			// if(info.Address2){
-			// 	if(info.Address2.length < 0 || info.Address2.length > 255){
-			// 		error.push({field:"Address2",message:"Address2.length"});
-			// 	}
-			// }
-			// else {
-			// 	error.push({field:"Address2",message:"Address2.required"});
-			// }
+			if(info.Address2){
+				if(info.Address2.length > 255){
+					error.push({field:"Address2",message:"Address2.length"});
+				}
+			}
 
 			//validate DOB
 			if(info.DOB){
@@ -349,32 +183,31 @@ angular.module('app.authentication.doctor.service', [])
 			}
 			else {
 				error.push({field:"DOB",message:"DOB.required"});
+				toastr.error('Date of Birth is required');
 			}
 
 			//validate HomePhoneNumber
 			if(info.HomePhoneNumber){
-				var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
-				var HomePhone=info.HomePhoneNumber.replace('/[\(\)\s\-]/g','');
-				if(!auHomePhoneNumberPattern.test(HomePhone)){
-					error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.invalid-value"});
-					toastr.error('HomePhoneNumber not invalid');
+				if(info.HomePhoneNumber.length > 0) {
+					var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var HomePhone=info.HomePhoneNumber.replace('/[\(\)\s\-]/g','');
+					if(!auHomePhoneNumberPattern.test(HomePhone)){
+						error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.invalid-value"});
+						toastr.error('HomePhoneNumber not invalid');
+					}
 				}
-			}
-			else {
-				error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.required"});
 			}
 
 			//validate WorkPhoneNumber
 			if(info.WorkPhoneNumber){
-				var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
-				var WorkPhone=info.WorkPhoneNumber.replace('/[\(\)\s\-]/g','');
-				if(!auWorkPhoneNumberPattern.test(WorkPhone)){
-					error.push({field:"WorkPhoneNumber",message:"WorkPhoneNumber.invalid-value"});
-					toastr.error('WorkPhoneNumber not invalid');
+				if(info.WorkPhoneNumber.length > 0) {
+					var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var WorkPhone=info.WorkPhoneNumber.replace('/[\(\)\s\-]/g','');
+					if(!auWorkPhoneNumberPattern.test(WorkPhone)){
+						error.push({field:"WorkPhoneNumber",message:"WorkPhoneNumber.invalid-value"});
+						toastr.error('WorkPhoneNumber not invalid');
+					}
 				}
-			}
-			else {
-				error.push({field:"WorkPhoneNumber",message:"WorkPhoneNumber.required"});
 			}
 
 			//validate Postcode
@@ -385,6 +218,7 @@ angular.module('app.authentication.doctor.service', [])
 			}
 			else {
 				error.push({field:"Postcode",message:"Postcode.required"});
+				toastr.error('Postcode is required');
 			}
 
 
@@ -396,6 +230,7 @@ angular.module('app.authentication.doctor.service', [])
 			}
 			else {
 				error.push({field:"Suburb",message:"Suburb.required"});
+				toastr.error('Suburb is required');
 			}
 
 			//validate State
@@ -406,6 +241,7 @@ angular.module('app.authentication.doctor.service', [])
 			}
 			else {
 				error.push({field:"State",message:"State.required"});
+				toastr.error('State is required');
 			}
 
 			//validate CountryID
@@ -416,6 +252,7 @@ angular.module('app.authentication.doctor.service', [])
 			}
 			else {
 				error.push({field:"CountryID",message:"CountryID.required"});
+				toastr.error('Country is required');
 			}
 
 			if(error.length>0){
@@ -449,6 +286,7 @@ angular.module('app.authentication.doctor.service', [])
 			}
 			else{
 				error.push({field:"DepartmentID",message:"required"});
+				toastr.error('Department is required');
 			}
 
 			// validate ProviderNumber
@@ -459,6 +297,7 @@ angular.module('app.authentication.doctor.service', [])
 			}
 			else{
 				error.push({field:"ProviderNumber",message:"required"});
+				toastr.error('ProviderNumber is required');
 			}
 
 			// validate Type
@@ -469,6 +308,7 @@ angular.module('app.authentication.doctor.service', [])
 			}
 			else{
 				error.push({field:"Type",message:"required"});
+				toastr.error('Type is required');
 			}
 
 			// validate Speciality
@@ -479,6 +319,7 @@ angular.module('app.authentication.doctor.service', [])
 			}
 			else{
 				error.push({field:"Speciality",message:"required"});
+				toastr.error('Speciality is required');
 			}
 			
 			if(error.length>0){
@@ -493,6 +334,165 @@ angular.module('app.authentication.doctor.service', [])
 			q.reject(error);
 		}
 		return q.promise;
+	};
+
+	// Validate 
+	services.validinfo= function(info) {
+
+		var error = [];
+		var q = $q.defer();
+
+		try {
+
+			// Title
+			if(info.Title) {
+				if(info.Title.length < 0) {
+					error.push({field:'Title', message:'Title.length'});
+				}
+			}
+			else {
+				error.push({field:'Title', message:'required'});
+				toastr.error('Title is required');
+			}
+
+			// FirstName
+			if(info.FirstName) {
+				if(info.FirstName.length < 0 || info.FirstName.length > 50) {
+					error.push({field:'FirstName', message:'FirstName.length'});
+				}
+			}
+			else {
+				error.push({field:'FirstName', message:'required'});
+				toastr.error('FirstName is required');
+			}
+
+			// MiddleName
+			if(info.MiddleName) {
+				if(info.MiddleName.length > 100) {
+					error.push({field:'MiddleName', message:'MiddleName.length'});
+					toastr.error('MiddleName is too long');
+				}
+			}
+
+			// LastName
+			if(info.LastName) {
+				if(info.LastName.length < 0 || info.LastName.length > 255) {
+					error.push({field:'LastName', message:'LastName.length'});
+				}
+			}
+			else {
+				error.push({field:'LastName', message:'required'});
+				toastr.error('LastName is required');
+			}
+
+			// ProviderNumber
+			if(info.ProviderNumber) {
+				if(info.ProviderNumber.length < 0 || info.ProviderNumber.length > 255) {
+					error.push({field:'ProviderNumber', message:'ProviderNumber.length'});
+				}
+			}
+			else {
+				error.push({field:'ProviderNumber', message:'required'});
+				toastr.error('ProviderNumber is required');
+			}
+
+			// Address1
+			if(info.Address1) {
+				if(info.Address1.length > 255) {
+					error.push({field:'Address1', message:'Address1.length'});
+					toastr.error('Address1 is too long');
+				}
+			}
+
+			// Address2
+			if(info.Address2) {
+				if(info.Address2.length > 255) {
+					error.push({field:'Address2', message:'Address2.length'});
+					toastr.error('Address2 is too long');
+				}
+			}
+
+			// HomePhoneNumber
+			if(info.HomePhoneNumber) {
+				if(info.HomePhoneNumber.length > 0){
+					var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var HomePhone=info.HomePhoneNumber.replace('/[\(\)\s\-]/g','');
+					if(!auHomePhoneNumberPattern.test(HomePhone)){
+						error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.invalid-value"});
+						toastr.error('HomePhoneNumber not invalid');
+					}
+				}
+			}
+
+			// WorkPhoneNumber
+			if(info.WorkPhoneNumber) {
+				if(info.WorkPhoneNumber.length > 0){
+					var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var WorkPhone=info.WorkPhoneNumber.replace('/[\(\)\s\-]/g','');
+					if(!auHomePhoneNumberPattern.test(WorkPhone)){
+						error.push({field:"WorkPhoneNumber",message:"WorkPhoneNumber.invalid-value"});
+						toastr.error('WorkPhoneNumber not invalid');
+					}
+				}
+			}
+
+			// Postcode
+			if(info.Postcode) {
+				if(info.Postcode.length < 0 || info.Postcode.length > 4) {
+					error.push({field:'Postcode', message:'Postcode.length'});
+				}
+			}
+			else {
+				error.push({field:'Postcode', message:'required'});
+				toastr.error('Postcode is required');
+			}
+
+			// Suburb
+			if(info.Suburb) {
+				if(info.Suburb.length < 0 || info.Suburb.length > 100) {
+					error.push({field:'Suburb', message:'Suburb.length'});
+				}
+			}
+			else {
+				error.push({field:'Suburb', message:'required'});
+				toastr.error('Suburb is required');
+			}
+
+			// State
+			if(info.State) {
+				if(info.State.length < 0 || info.State.length > 100) {
+					error.push({field:'State', message:'State.length'});
+				}
+			}
+			else {
+				error.push({field:'State', message:'required'});
+				toastr.error('State is required');
+			}
+
+			// CountryID
+			if(info.CountryID) {
+				if(info.CountryID.length < 0) {
+					error.push({field:'CountryID', message:'CountryID.length'});
+				}
+			}
+			else {
+				error.push({field:'CountryID', message:'required'});
+				toastr.error('Country is required');
+			}
+
+			if(error.length>0){
+				throw error;
+			}
+			else{
+				q.resolve({status:'success'});
+			}
+
+		}
+		catch(error){
+			q.reject(error);
+		}
+		return q.promise;
+
 	};
 
 	return services;

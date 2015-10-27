@@ -191,9 +191,15 @@ angular.module('app.authentication.doctor.directive.detail', [])
 			doctorService.getByidDoctor(info_list)
 			.then(function(result) {
 				scope.info = angular.copy(result[0]);
-				scope.info.HealthLinkID = result[0].HealthLink;
-				scope.info.Title = parseInt(result[0].Title);
-				scope.info.Department = result[0].Department.DepartmentName;	
+				if(result[0].HealthLink !== 'undefined') {
+					scope.info.HealthLinkID = result[0].HealthLink;
+				}
+				if(result[0].Title !== 'undefined') {
+					scope.info.Title = parseInt(result[0].Title);
+				}
+				if(result[0].Department.DepartmentName !== 'undefined') {
+					scope.info.Department = result[0].Department.DepartmentName;
+				}
 			}, function(err) {});
 
 			doctorService.getFile(info_list)
@@ -211,7 +217,12 @@ angular.module('app.authentication.doctor.directive.detail', [])
 			}, function(err) {});
 
 			// Title
-			scope.titles = CommonService.getTitles();
+			scope.titles = [
+				{id:"0", name:"Mr"},
+				{id:"1", name:"Mrs"},
+				{id:"2", name:"Ms"},
+				{id:"3", name:"Dr"}
+			];
 
 			// Country List
 			doctorService.listCountry()

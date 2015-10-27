@@ -69,7 +69,7 @@
 									<div class="form-group">
 										<label class="control-label col-md-4">Title</label>
 										<div class="col-md-4">
-											<select class="select2 form-control" ng-model="data.Title" ng-options="options.id as options.name for options in title" ng-disabled="isBlockStep2">
+											<select class="select2 form-control" ng-model="data.Titles" ng-disabled="isBlockStep2" ng-options="options.id as options.name for options in titles">
 												<option value="">Select Title</option>
 											</select>
 										</div>
@@ -153,7 +153,7 @@
 												<div class="form-group">
 													<label class="control-label col-md-3">Healthlink ID</label>
 													<div class="col-md-9">
-														<input type="text" placeholder="Healthlink ID" class="form-control" only-number ng-model="data.HealthLinkID" ng-disabled="isBlockStep2">
+														<input type="text" placeholder="Healthlink ID" class="form-control" ng-model="data.HealthLinkID" ng-disabled="isBlockStep2">
 													</div>
 												</div>
 												<!-- End Healthlink ID -->
@@ -294,7 +294,7 @@
 												<div class="col-md-4">
 													<select class="form-control" ng-model="data.Speciality">
 														<option value="">Type</option>
-														<option value="PlasticSurgeon">Plastic Surgeons</option>
+														<option value="PlasticSurgeon">Plastic Surgeon</option>
 														<option value="OrthopaedicSurgeon">Orthopaedic Surgeon</option>
 													</select>
 												</div>

@@ -21,7 +21,7 @@ module.exports = {
             }).then(function(file) {
                 if (file) {
                     var input = rootPath + '/' + file.FileLocation;
-                    var output = info.output + (info.output.substr(info.output.length-1) == '/'?'':'/') + file.FileName;
+                    var output = info.output + (info.output.substr(info.output.length-1) == '/'?'':'/') + file.UID + '_' + Date.now() + '.' + file.FileExtension;
                     HelperService.DecryptFile({
                         inputFile: input,
                         outputFile: output,

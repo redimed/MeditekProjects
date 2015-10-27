@@ -90,8 +90,8 @@ module.exports = {
 				}
 			}
 
-			if(data.DOB!=null && data.DOB!=undefined){
-				if(!/^(\d{1,2})[/](\d{1,2})[/](\d{1,2})/.test(data.DOB)){
+			if(data.DOB){
+				if(!/^(\d{1,2})[/](\d{1,2})[/](\d{4})/.test(data.DOB)){
 					errors.push({field:"DOB",message:"invalid value"});
 					err.pushErrors(errors);
 				}
@@ -568,11 +568,7 @@ module.exports = {
 					},
 					transaction:transaction,
 					include: [
-						{
-			            	model: Country,
-			                attributes: [ 'ShortName'],
-			                required: true
-			            },{
+						 {
 			            	model: UserAccount,
 			            	attributes: ['PhoneNumber'],
 			            	required: true
@@ -700,6 +696,16 @@ module.exports = {
 		},function(err){
 			throw err;
 		})
+	},
+
+	getfileUID: function(data){
+		if(check.checkData(data.UserAccountID)){
+			return FileUpload.findAll({
+				where :{
+					UserAccountID : data.UserAccountID
+				}
+			});
+		}
 	}
 
 

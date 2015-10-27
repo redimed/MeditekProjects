@@ -230,6 +230,23 @@ module.exports = {
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});
 		})
+	},
+
+	getfileUID: function(req, res) {
+		var data = req.body.data;
+		Services.Patient.getfileUID(data)
+		.then(function(result){
+			if(result!=undefined){
+				if(result==null || result.length==0 || result==''){
+					res.ok({status:200,message:"success",data:result});
+				}
+				else
+					res.ok({status:200,message:"success",data:result});
+			}
+		})
+		.catch(function(err){
+			res.serverError({status:500,message:ErrorWrap(err)});
+		})
 	}
 
 };

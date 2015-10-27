@@ -240,7 +240,10 @@ angular.module('app.authentication.patient.services',[])
 			FirstName:postData.FirstName,
 			LastName:postData.LastName,
 			PhoneNumber:postData.WorkPhoneNumber,
-			DOB:postData.DOB
+			DOB:postData.DOB,
+			Address1:postData.Address1,
+			Suburb:postData.Suburb,
+			Postcode:postData.Postcode
 		};
 		return info;
 	}

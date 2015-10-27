@@ -86,6 +86,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 			$timeout(function(){
 				App.setAssetsPath('theme/assets/'); // Set the assets folder path	
 				FormWizard.init(); // form step
+				ComponentsDateTimePickers.init();
 			},0);
 
 			var input = PatientService.getDatatoDirective();
@@ -109,7 +110,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 								scope.isShowEmail = result.data.data.Email;
 								scope.data.Email = result.data.data.Email;
 								scope.isShowNext = true;
-								scope.data.DOB = new Date('1/1/1990');
+								// scope.data.DOB = new Date('1/1/1990');
 							}
 							else{
 								toastr.error("Phone Number was used to create patient","ERROR");
@@ -151,13 +152,6 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 			scope.createPatient = function(data) {
 				return PatientService.validate(data)
 				.then(function(result){
-					if(data.DOB){
-						if(data.DOB!=null)
-							data.DOB = moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss');
-					}
-					else{
-						data.DOB = "invalid Date";
-					}
 					return PatientService.createPatient(data)
 					.then(function(success){
 						if(scope.uploader.queue[0]!==undefined && scope.uploader.queue[0]!==null && 

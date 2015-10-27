@@ -80,9 +80,15 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 
 		    scope.changeImg = function(){
 		    	console.log(scope.uploader);
-		    }
+		    };
+
+		    scope.checkDataNull = function(name){
+		    	if(scope.info[name].length==0)
+		    		scope.info[name] = null;
+		    };
 
 		    scope.savechange = function(){
+		    	console.log(scope.info);
 				PatientService.validate(scope.info)
 					.then(function(result){
 						scope.er ='';
@@ -113,7 +119,6 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			},
 
 			PatientService.detailPatient(data).then(function(response){
-				console.log(scope.uploader.queue.length);
 				if(response.message=="success"){
 					scope.info = response.data[0];
 					scope.info.img = scope.info.FileUID?CommonService.ApiUploadFile+scope.info.FileUID:null;

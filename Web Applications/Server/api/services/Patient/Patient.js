@@ -247,7 +247,7 @@ module.exports = {
 			FirstName       : data.FirstName,
 			MiddleName      : data.MiddleName,
 			LastName        : data.LastName,
-			DOB             : data.DOB?moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss'):null,
+			DOB             : data.DOB?data.DOB:null,
 			Gender          : data.Gender,
 			Occupation      : data.Occupation,
 			HomePhoneNumber : data.HomePhoneNumber,
@@ -266,13 +266,7 @@ module.exports = {
 		return Services.Patient.validation(data)
 		.then(function(success){
 			if(data.PhoneNumber){
-				if(data.PhoneNumber.substr(0,3)=='+61'){
-					return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
-				}
-				else{
-					data.PhoneNumber = '+61'+data.PhoneNumber;
-					return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
-				}
+				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
 			}
 			else{
 				if(data.Email){
@@ -513,9 +507,8 @@ module.exports = {
 	UpdatePatient : function(data, transaction) {
 		if(check.checkData(data)){
 			data.ModifiedDate = new Date();
-			// var DOB = moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
+			data.DOB =moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').format('DD/MM/YYYY');
 			//get data not required
-			data.DOB = moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss');
 			var patientInfo={
 				ID              : data.ID,
 				Title           : data.Title,

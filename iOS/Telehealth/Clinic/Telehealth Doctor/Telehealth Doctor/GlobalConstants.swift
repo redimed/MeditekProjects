@@ -10,63 +10,45 @@ import Foundation
 
 let STRING_URL_SERVER = "http://testapp.redimed.com.au:3009"
 
-let AUTHORIZATION = STRING_URL_SERVER + "/telehealth/user/login"
+/// temp for download image
+let URL_DOWNLOAD_IMAGE = "http://testapp.redimed.com.au:3005"
 
-let GENERATESESSION = STRING_URL_SERVER + "/telehealth/socket/generateSession"
+let AUTHORIZATION = STRING_URL_SERVER + "/api/telehealth/user/login"
+
+let GENERATESESSION = STRING_URL_SERVER + "/api/telehealth/socket/generateSession"
+
+let APPOINTMENT_DETAIL = STRING_URL_SERVER + "/api/telehealth/user/appointmentDetails"
+
+let DOWNLOAD_IMAGE_APPOINTMENT = URL_DOWNLOAD_IMAGE + "/api/downloadFile/"
 
 /// Socket Emit
-let GET_ONLINE_USERS : NSDictionary = ["url": "/telehealth/socket/onlineList"]
+let GET_ONLINE_USERS : NSDictionary = ["url": "/api/telehealth/socket/onlineList"]
 
-let TRANSFER_CALL = "/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
+let TRANSFER_IN_CALL = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
 
-let JOIN_ROOM = "/telehealth/socket/joinRoom?phone=%@"
+let MAKE_CALL = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@&sessionId=%@&fromName=%@"
 
-func emitSocket(url: String, parameters: [String: AnyObject]){
+let JOIN_ROOM = "/api/telehealth/socket/joinRoom?uid=%@"
 
-    let parameterString = parameters.stringFromHttpParameters()
-    print(url)
-        print(parameterString)
-    let requestURL = NSURL(string:"\(url)?\(parameterString)")!
-    
-//    var URL = "\(url)"
-//    for var i = 0; i < param.count; ++i {
-//        let paramUrl = param[i] as! String
-//        URL.appendContentsOf(paramUrl)
-//    }
-//    let dictionNary : NSDictionary = ["url": URL]
-    print(requestURL)
-}
+var AUTHTOKEN = ""
+var COREAUTH = ""
 
-extension String {
-    
-    func stringByAddingPercentEncodingForURLQueryValue() -> String? {
-        let characterSet = NSMutableCharacterSet.alphanumericCharacterSet()
-        characterSet.addCharactersInString("-._~")
-        
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(characterSet)
+func formatString(dateString: String) -> String {
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.timeZone = NSTimeZone(name: "UTC")
+    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000Z"
+    if let datePublished = dateFormatter.dateFromString(dateString) {
+        dateFormatter.dateFormat = "MMM dd, yyyy 'at' h:mm a"
+        let dateFormated = dateFormatter.stringFromDate(datePublished)
+        return dateFormated
     }
-    
+    return ""
 }
-
-extension Dictionary {
-    
-    func stringFromHttpParameters() -> String {
-        let parameterArray = self.map { (key, value) -> String in
-            let percentEscapedKey = (key as! String).stringByAddingPercentEncodingForURLQueryValue()!
-            let percentEscapedValue = (value as! String).stringByAddingPercentEncodingForURLQueryValue()!
-            return "\(percentEscapedKey)=\(percentEscapedValue)"
-        }
-        
-        return parameterArray.joinWithSeparator("&")
-    }
-    
-}
-
 
 /**
 *  Alert Title and Message for JSSAlertView
 */
 
-var warning_Network = (title: "Not Connection", mess: "Unable to connect to the Internet")
+var warning_Network = (title: "No Connection", mess: "Unable to connect to the Internet")
 var connection_Server = (title: "Error")
 

@@ -21,8 +21,9 @@ class GetAndPostDataController {
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         let parameters = [
             "data": [
-//                "phone":"+61"+phoneNumber,
-              "phone":"+841654901590",
+                "phone":"+61"+phoneNumber,
+//                "phone":"+841654901590",
+
                 "deviceId":deviceID,
                 "deviceType": "ios"
             ]

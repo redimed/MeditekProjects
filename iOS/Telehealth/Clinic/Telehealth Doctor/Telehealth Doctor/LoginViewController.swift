@@ -16,7 +16,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var buttonLogin: UIButton!
+    @IBOutlet weak var buttonLogin: DesignableButton!
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var lockImage: UIImageView!
     @IBOutlet weak var doctorImage: UIImageView!
@@ -25,10 +25,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var errorLoginLabel: UILabel!
     
     let customUIViewController : CustomViewController = CustomViewController()
-    let appDelegate : AppDelegate = AppDelegate()
     let reachability = Reachability.reachabilityForInternetConnection()
     // declare loading indicator
-    let loading: DTIActivityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:220.0, y:65.0, width:80.0, height:80.0))
+    let loading: DTIActivityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:210.0, y:65.0, width:80.0, height:80.0))
     let userDefault = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
@@ -44,6 +43,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         
         self.usernameTextField.delegate = self
         self.passwordTextField.delegate = self
+        self.usernameTextField.becomeFirstResponder()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:", name: ReachabilityChangedNotification, object: reachability)
         reachability?.startNotifier()
@@ -74,19 +74,19 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        usernameTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
-        performAction()
-        return true
-    }
-    
     func performAction() {
         if(!usernameTextField.text!.isEmpty && !passwordTextField.text!.isEmpty){
             LoginButtonAction(buttonLogin)
         } else {
             print("No go func Login")
         }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        usernameTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        performAction()
+        return true
     }
     
     @IBAction func textFieldEditingChange(sender: AnyObject) {
@@ -124,22 +124,18 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         passwordTextField.resignFirstResponder()
         logoImage.hidden = true
         self.viewModal.addSubview(self.loading)
-        loading.indicatorColor = UIColor.redColor()
-        loading.indicatorStyle = DTIIndicatorStyle.convInv(.chasingDots)
+        loading.indicatorColor = UIColor(hex: "34AADC")
+        loading.indicatorStyle = DTIIndicatorStyle.convInv(.spotify)
         loading.startActivity()
         
         if let reachability = reachability {
             if reachability.isReachable() {
                 NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "LoginMain", userInfo: nil, repeats: false)
-                if reachability.isReachableViaWiFi() {
-                    print("Reachable via Wifi")
-                } else {
-                    print("Reachable via Celluar")
-                }
             } else {
                 AlertWarningNetwork()
                 self.loading.stopActivity(true)
                 self.logoImage.hidden = false
+                self.buttonLogin.enabled = true
             }
         }
     }
@@ -156,31 +152,65 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 self.loading.stopActivity(true)
                 self.logoImage.hidden = false
                 
+                //                print(response.2.debugDescription)
+                //                let splitFirst = response.2.debugDescription.componentsSeparatedByString("{")
+                //                let splitSecond = splitFirst[2].componentsSeparatedByString(",")
+                //                let splitThird = splitSecond[0].componentsSeparatedByString(":")
+                //                print(splitThird[1])
+                //                if splitThird[1] == " \"User.notFound\"" {
+                //                    print("User not found")
+                //                } else if splitThird[1] == " \"Password.Invalid\"" {
+                //                    print("Wrong pass")
+                //                }
+                
                 switch response.2 {
                 case .Success:
                     let userJSON = JSON(response.2.value!["user"] as! NSDictionary)
                     var user = [String: String]()
-                    
                     for (key, object) in userJSON {
                         user[key] = object.stringValue
                     }
                     let token = response.2.value!["token"] as! String
-                    
+                    let coreToken = response.2.value!["coreToken"] as! String
+                    AUTHTOKEN = token
+                    COREAUTH = coreToken
                     self.userDefault.setObject(user, forKey: "infoDoctor")
                     self.userDefault.setValue(token, forKey: "token")
                     
                     SingleTon.headers = [
                         "Authorization": "Bearer \(token)",
-                        "Content-Type": "application/x-www-form-urlencoded"
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "CoreAuth": "Bearer \(coreToken)"
                     ]
+                    
                     let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
                     self.presentViewController(initViewController, animated: true, completion: nil)
                     break
-                case .Failure( _, let error):
-                    self.errorLogin("\((error as NSError).code) - \((error as NSError).localizedDescription)")
-                    break
+                case .Failure(_, let error):
+                    if let codeErr: Int = response.1?.statusCode {
+                        switch codeErr{
+                        case 401:
+                            self.errorLogin("Username or password invalid")
+                            break;
+                        default:
+                            self.errorLogin("\((error as NSError).code) - \((error as NSError).localizedDescription)")
+                            break
+                        }
+                    } else {
+                        if let err : Int = (error as NSError).code {
+                            switch err {
+                            default:
+                                self.errorLogin("\((error as NSError).code) - \((error as NSError).localizedDescription)")
+                                break
+                            }
+                        }
+                    }
                 }
         }
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
     
     func errorLogin(message: String) {

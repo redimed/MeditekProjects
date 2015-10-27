@@ -34,35 +34,45 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>UIView+draggable.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0C66C30381F86C3D642FC983CCADEBB6</key>
+		<key>0E0122060211AB54291718057C4F4815</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4ADDC830F1F3957A877DC0A28F0CBD4E</key>
+		<key>4B2F30D90D85A544E9EFE2A49D392C25</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>93208DF5F66C021BD60146424D07E751</key>
+		<key>6CB01258815799101A2CE2989DD85952</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B9A04D3C9B208813656510FDA8ADAE02</key>
+		<key>7DA4E7B777A41446C3D276831B73B691</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E7243299882B241BA4979377E21B54D3</key>
+		<key>9CEA2248399891F7CE0C275267D3E40A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EEC9E21317B9A07C586D824B068B9797</key>
+		<key>C8C1ED446CAF6FFA017D21C65D2CBF46</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CD3D5F09E1DA0E941372C29090CE701E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

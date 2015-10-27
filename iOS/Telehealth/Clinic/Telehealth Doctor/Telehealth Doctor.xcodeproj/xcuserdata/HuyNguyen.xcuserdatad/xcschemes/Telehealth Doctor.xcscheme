@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AFF21D8F1BB12D8B006A190E"
-               BuildableName = "Telehealth DoctorTests.xctest"
+               BuildableName = "Telehealth Doctor.xctest"
                BlueprintName = "Telehealth DoctorTests"
                ReferencedContainer = "container:Telehealth Doctor.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AFF21D9A1BB12D8B006A190E"
-               BuildableName = "Telehealth DoctorUITests.xctest"
+               BuildableName = "Telehealth Doctor.xctest"
                BlueprintName = "Telehealth DoctorUITests"
                ReferencedContainer = "container:Telehealth Doctor.xcodeproj">
             </BuildableReference>

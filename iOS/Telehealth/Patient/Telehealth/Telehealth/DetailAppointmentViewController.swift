@@ -151,14 +151,6 @@ class DetailAppointmentViewController: UIViewController,UIAlertViewDelegate,UIIm
         
     }
     
-    func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64)
-    {
-        let uploadProgress:Float = Float(totalBytesSent) / Float(totalBytesExpectedToSend)
-            print(uploadProgress)
-//        imageUploadProgressView.progress = uploadProgress
-//        let progressPercent = Int(uploadProgress*100)
-//        progressLabel.text = "\(progressPercent)%"
-        
     }
    
 

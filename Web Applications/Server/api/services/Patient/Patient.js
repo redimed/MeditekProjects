@@ -90,12 +90,8 @@ module.exports = {
 				}
 			}
 
-			if(data.DOB){
+			if(data.DOB!=null && data.DOB!=undefined){
 				if(!/^(\d{4})-(\d{1,2})-(\d{1,2}) 00:00:00$/.test(data.DOB)){
-					errors.push({field:"DOB",message:"invalid value"});
-					err.pushErrors(errors);
-				}
-				if(data.DOB==undefined){
 					errors.push({field:"DOB",message:"invalid value"});
 					err.pushErrors(errors);
 				}
@@ -265,9 +261,8 @@ module.exports = {
 			Address2        : data.Address2,
 			State           : data.State,
 			Enable          : "Y",
-			CreatedDate     : moment(new Date(),'YYYY-MM-DD HH:mm:ss ZZ').toDate()
+			CreatedDate     : new Date()
 		};
-		console.log(info);
 		return Services.Patient.validation(data)
 		.then(function(success){
 			if(data.PhoneNumber){

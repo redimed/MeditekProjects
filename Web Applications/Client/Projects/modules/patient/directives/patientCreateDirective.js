@@ -149,10 +149,15 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 			}
 
 			scope.createPatient = function(data) {
-				console.log(data);
 				return PatientService.validate(data)
 				.then(function(result){
-					data.DOB = data.DOB!=undefined?moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss'):undefined;
+					if(data.DOB){
+						if(data.DOB!=null)
+							data.DOB = moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss');
+					}
+					else{
+						data.DOB = "invalid Date";
+					}
 					return PatientService.createPatient(data)
 					.then(function(success){
 						if(scope.uploader.queue[0]!==undefined && scope.uploader.queue[0]!==null && 

@@ -1,5 +1,5 @@
 module.exports = function(objCreated) {
-    return objCreated.telehealthAppointmentCreated.bulkCreate(objCreated.data, {
+    return PreferredPractitioner.bulkCreate(objCreated.data, {
         transaction: objCreated.transaction
     });
 };

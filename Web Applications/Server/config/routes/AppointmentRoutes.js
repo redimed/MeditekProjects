@@ -15,11 +15,11 @@ module.exports = {
     },
     'post /api/appointment-telehealth-update': {
         controller: 'Appointment/AppointmentController',
-        action: 'UpdateTelehealthAppointment'
+        action: 'UpdateRequestTelehealthAppointment'
     },
-    'post /api/appointment-telehealth-delete': {
+    'post /api/appointment-telehealth-disable': {
         controller: 'Appointment/AppointmentController',
-        action: 'DeleteTelehealthAppointment'
+        action: 'DisableTelehealthAppointment'
     },
     'post /api/appointment-wa-request': {
         controller: 'Appointment/AppointmentController',
@@ -39,8 +39,8 @@ module.exports = {
         controller: 'Appointment/AppointmentController',
         action: 'UpdateWAAppointment'
     },
-    'post /api/appointment-wa-delete': {
+    'post /api/appointment-wa-disable': {
         controller: 'Appointment/AppointmentController',
-        action: 'DeleteWAAppointment'
+        action: 'DisableWAAppointment'
     },
 };

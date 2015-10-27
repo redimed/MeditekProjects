@@ -1,6 +1,6 @@
 module.exports = function(objCreate) {
-    return objCreate.telehealthAppointmentCreated.createPatientAppointment(
-        objCreate.dataTelehealthPatientAppointment, {
+    return objCreate.telehealthApointmentCreated.createPatientAppointment(
+        objCreate.data, {
             transaction: objCreate.transaction
         });
 };

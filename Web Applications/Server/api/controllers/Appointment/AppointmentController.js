@@ -10,7 +10,7 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.CreateTelehealthAppointment(data, req.user)
+            Services.RequestTelehealthAppointment(data, req.user)
                 .then(function(success) {
                     success.transaction.commit();
                     res.ok('success');
@@ -69,12 +69,12 @@ module.exports = {
             });
     },
     /*
-    UpdateTelehealthAppointment - Controller: Update information Telehealth Appointment
+    UpdateRequestTelehealthAppointment - Controller: Update information Telehealth Appointment
     input: new information telehealth appointment
     output: - success: transaction updated Telehealth Appointment
             - failed: [transaction] updated Telehealth Appointment, error message
     */
-    UpdateTelehealthAppointment: function(req, res) {
+    UpdateRequestTelehealthAppointment: function(req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
@@ -83,7 +83,7 @@ module.exports = {
             if (role.isInternalPractitioner ||
                 role.isAdmin ||
                 role.isAssistant) {
-                Services.UpdateTelehealthAppointment(data, req.user)
+                Services.UpdateRequestTelehealthAppointment(data, req.user)
                     .then(function(success) {
                         success.transaction.commit();
                         res.ok('success');
@@ -102,17 +102,17 @@ module.exports = {
         }
     },
     /*
-    DeleteTelehealthAppointment - Controller: Delete  a Telehealth Appointment
+    DisableTelehealthAppointment - Controller: Delete  a Telehealth Appointment
     input: UID Appointment
     output: - success: transaction updated Enable is 'N' Telehealth Appointment
             - error: [transaction] updated Enable is 'N' Telehealth Appointment, error message
     */
-    DeleteTelehealthAppointment: function(req, res) {
+    DisableTelehealthAppointment: function(req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.DeleteTelehealthAppointment(data)
+            Services.DisableTelehealthAppointment(data)
                 .then(function(success) {
                     success.transaction.commit();
                     res.ok('success');
@@ -160,5 +160,5 @@ module.exports = {
     output: - success: transaction updated Enable is 'N' WA Appointment
             - error: [transaction] updated Enable is 'N' WA Appointment, error message
     */
-    DeleteWAAppointment: function(req, res) {}
+    DisableWAAppointment: function(req, res) {}
 };

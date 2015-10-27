@@ -11,7 +11,7 @@ module.exports = function(objectFind) {
             required: true
         }],
         where: {
-            UID: objectFind.UID
+            UID: objectFind.data
         },
         transaction: objectFind.transaction
     });

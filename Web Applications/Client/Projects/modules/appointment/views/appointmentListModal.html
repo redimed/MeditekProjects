@@ -73,7 +73,7 @@
 									<div class="form-group form-md-line-input   ">
 										<div class="input-icon">
 											<i class="fa fa-calendar"></i>
-											<input type="text" class="form-control form-control-inline date-picker" ng-model="appointment.RequestDate" id="RequestDate">
+											<input type="text" class="form-control form-control-inline date-picker" data-date-start-date="0d" data-date-format="dd/mm/yyyy" ng-model="appointment.RequestDate" id="RequestDate">
 											<label class="control-label">Request Date</label>
 										</div>
 									</div>
@@ -84,7 +84,7 @@
 									<div class="form-group form-md-line-input ">
 										<div class="input-icon">
 											<i class="fa fa-calendar"></i>
-											<input class="form-control form-control-inline date-picker" size="16" type="text" ng-model="ShowData.DateTimeAppointmentDate" id="DateTimeAppointmentDate"/>
+											<input class="form-control form-control-inline date-picker" size="16" type="text" data-date-start-date="0d" data-date-format="dd/mm/yyyy" ng-model="ShowData.DateTimeAppointmentDate" id="DateTimeAppointmentDate"/>
 											<label class="control-label">Appointment Date</label>
 										</div>
 										

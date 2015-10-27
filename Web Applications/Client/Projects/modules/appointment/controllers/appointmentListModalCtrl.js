@@ -10,7 +10,7 @@ app.controller('showImageController', function($scope, $modalInstance, toastr, L
         newWindow.document.write("<img class='img-responsive' src='" + LinkUID + "'>");
     }
 })
-app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstance, getid, AppointmentService, CommonService, $cookies, toastr) {
+app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstance, getid, AppointmentService, CommonService, $cookies, toastr, PatientService) {
 
     $modalInstance.rendered.then(function() {
         //App.initComponents(); // init core components
@@ -47,7 +47,12 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
                     }
                 };
             },
-            windowClass: 'app-modal-window'
+            windowClass: 'app-modal-window',
+            resolve: {
+                patientInfo: function() {
+                    PatientService.postDatatoDirective($scope.appointment.TelehealthAppointment.PatientAppointment);
+                }
+            }
 
         });
         modalInstance.result.then(function(data) {
@@ -55,6 +60,15 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
                 $scope.appointment.Patients.push({
                     UID: data.data.data.UID
                 });
+                $scope.ShowData.isLinkPatient = true;
+                AppointmentService.GetDetailPatientByUid({
+                    UID: data.data.data.UID
+                }).then(function(data) {
+                    if (data.message == 'success') {
+                        $scope.appointment.TelehealthAppointment.PatientAppointment = data.data[0];
+                        console.log($scope.appointment.TelehealthAppointment.PatientAppointment);
+                    };
+                })
                 toastr.success("Select patient successfully!", "success");
             };
         });

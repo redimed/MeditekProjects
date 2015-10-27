@@ -91,7 +91,7 @@ module.exports = {
 			}
 
 			if(data.DOB!=null && data.DOB!=undefined){
-				if(!/^(\d{4})-(\d{1,2})-(\d{1,2}) 00:00:00$/.test(data.DOB)){
+				if(!/^(\d{1,2})[/](\d{1,2})[/](\d{1,2})/.test(data.DOB)){
 					errors.push({field:"DOB",message:"invalid value"});
 					err.pushErrors(errors);
 				}
@@ -660,7 +660,7 @@ module.exports = {
 		return Services.Patient.validation(data)
 		.then(function(success){
 			if(check.checkData(data.PhoneNumber)){
-				data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
+				// data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
 				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction)
 				.then(function(user){
 					if(check.checkData(user)){

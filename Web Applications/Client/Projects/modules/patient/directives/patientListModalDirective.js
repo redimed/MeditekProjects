@@ -88,10 +88,13 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						scope.er ='';
 						scope.ermsg ='';
 						PatientService.updatePatient(scope.info).then(function(response){
-							scope.uploader.queue[0].formData[0]={};
-							scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
-							scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccountUID;
-							scope.uploader.uploadAll();
+							if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
+							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
+								scope.uploader.queue[0].formData[0]={};
+								scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
+								scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+								scope.uploader.uploadAll();
+							}
 							toastr.success("update success!!!","SUCCESS");
 							scope.onCancel();
 						},function(err){

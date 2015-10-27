@@ -1,0 +1,33 @@
+<div class="tabbable-line tabbable-full-width">
+	<ul class="nav nav-tabs">
+	    <li class="active">
+	        <a href="a#confirm_practitioner" data-toggle="tab"> Practitioners' Detail </a>
+	    </li>
+	    <li>
+	        <a href="a#confirm_patient" data-toggle="tab"> Patient Details </a>
+	    </li>
+	    <li>
+	        <a href="a#confirm_referral" data-toggle="tab"> Referral Details </a>
+	    </li>
+	    <li>
+	        <a href="a#confirm_clinical" data-toggle="tab"> Clinical Information </a>
+	    </li>
+	</ul>
+	<div class="tab-content">
+	    <div class="tab-pane active" id="confirm_practitioner">
+	       <div ng-include="'modules/WAAppointment/views/WAAppointmentGP_Confirm_PractitionersDetail.html'"></div>
+	    </div>
+	    
+	    <div class="tab-pane" id="confirm_patient">
+	        <div ng-include="'modules/WAAppointment/views/WAAppointmentGP_Confirm_PatientDetails.html'"></div>
+	    </div>
+	    
+	    <div class="tab-pane" id="confirm_referral">
+	        <div ng-include="'modules/WAAppointment/views/WAAppointmentGP_Confirm_ReferralDetails.html'"></div>
+	    </div>
+	    
+	    <div class="tab-pane" id="confirm_clinical">
+	    	<div ng-include="'modules/WAAppointment/views/WAAppointmentGP_Confirm_ClinicalInformation.html'"></div>
+	    </div>
+	</div>
+</div>

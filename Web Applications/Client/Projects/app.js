@@ -155,5 +155,8 @@ app
             ComponentsDateTimePickers.init(); // init todo page
             FormWizard.init(); // form step
         });
+        $rootScope.$on('$includeContentLoaded', function() {
+            App.initAjax();
+        });
     })
     

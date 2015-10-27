@@ -4,5 +4,5 @@ var app = angular.module('app.authentication.WAAppointment.controller',[
 ]);
 
 app.controller('WAAppointmentCtrl', function(){
-	console.log('WAAppointmentCtrl');
+	
 });

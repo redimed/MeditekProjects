@@ -1,12 +1,13 @@
 module.exports={
 	'UserAccount/v0_1/UserAccountController':{
-	    'Test':['hasToken','isAdminOrAssistant'],
+	    'Test':['checkCookieToken'],
 	    'TestURL':'checkVersion',
 	    'CreateUserAccount':['hasToken','isAdmin'],
 	    'DisableUserAccount':['hasToken','isAdmin'],
 	    'EnableUserAccount':['hasToken','isAdmin'],
 	    'GetListUsers':['hasToken','isAdmin'],
-	    'RemoveIdentifierImage':['hasToken','isAdmin']
+	    'RemoveIdentifierImage':['hasToken','isAdmin'],
+      'CheckExistUser':true,
   	},
 
   	'UserAccount/v0_1/UserActivationController':{

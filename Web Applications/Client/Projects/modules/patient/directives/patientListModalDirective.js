@@ -123,8 +123,6 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					scope.info = response.data[0];
 					scope.info.img = scope.info.FileUID?CommonService.ApiUploadFile+scope.info.FileUID:null;
 					scope.info.img_change=false;
-					scope.info.DOB = new Date(scope.info.DOB);
-					
 					oriInfo = angular.copy(scope.info);
 				}
 				else{

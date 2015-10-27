@@ -109,6 +109,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 								scope.isShowEmail = result.data.data.Email;
 								scope.data.Email = result.data.data.Email;
 								scope.isShowNext = true;
+								scope.data.DOB = new Date('1/1/1990');
 							}
 							else{
 								toastr.error("Phone Number was used to create patient","ERROR");
@@ -142,16 +143,25 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		        });
 			};
 
+			scope.aaaa = function(){
+				scope.ermsg.DOB='';
+				console.log(scope.data.DOB);
+			}
+
 			scope.createPatient = function(data) {
+				console.log(data);
 				return PatientService.validate(data)
 				.then(function(result){
-					data.DOB = moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss');
+					data.DOB = data.DOB!=undefined?moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss'):undefined;
 					return PatientService.createPatient(data)
 					.then(function(success){
-			            scope.uploader.queue[0].formData[0]={};
-						scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
-						scope.uploader.queue[0].formData[0].userUID = success.data.UserAccountUID;
-						scope.uploader.uploadAll();
+						if(scope.uploader.queue[0]!==undefined && scope.uploader.queue[0]!==null && 
+							scope.uploader.queue[0]!=='' && scope.uploader.queue[0].length!==0){
+				            scope.uploader.queue[0].formData[0]={};
+							scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
+							scope.uploader.queue[0].formData[0].userUID = success.data.UserAccountUID;
+							scope.uploader.uploadAll();
+						}
 						if (scope.appointment) {
 							scope.appointment.runIfSuccess(success.data);
 						}else{

@@ -114,13 +114,6 @@ module.exports = {
         Patient.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
         });
-        //Patient - Country
-        Country.hasOne(Patient, {
-            foreignKey: 'CountryID'
-        });
-        Patient.belongsTo(Country, {
-            foreignKey: 'CountryID'
-        })
 
         /* Doctor */
         FileUpload.hasOne(Doctor, {

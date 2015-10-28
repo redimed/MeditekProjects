@@ -2,7 +2,7 @@ var app = angular.module('app.authentication.appointment.request.controller', [
     'app.authentication.appointment.request.modal.controller'
 ]);
 
-app.controller('appointmentRequestCtrl', function($scope, $cookies, CommonService, AppointmentService, $state, FileUploader, $modal, $interval) {
+app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval) {
 
     $scope.userInfo = $cookies.getObject('userInfo');
     console.log('$scope.userInfo',$scope.userInfo);
@@ -127,9 +127,8 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, CommonServic
         uploader.uploadAll();
     }
 
-
     var uploader = $scope.uploader = new FileUploader({
-        url: CommonService.ApiUploadFile,
+        url: o.const.uploadFileUrl,
         headers:{Authorization:('Bearer '+$cookies.get("token"))},
         alias: 'uploadFile'
     });

@@ -58,7 +58,6 @@ app
         // END CORS PROXY
         //RESTANGULAR DEFAULT
         RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3005");
-        // RestangularProvider.setBaseUrl("http://telehealthvietnam.com.vn:3005");
         $urlRouterProvider.otherwise('');
         $stateProvider.state('sys', {
             url: '',
@@ -134,7 +133,7 @@ app
                         reload: true
                     });
                 }
-            } else {
+            } else if($cookies.get("userInfo") && $cookies.get("userInfo").Activated == 'Y'){
                 if (toState.name == "unAuthentication.login" || toState.name == "unAuthentication.register") {
                     e.preventDefault();
                     $state.go("authentication.home.list", null, {

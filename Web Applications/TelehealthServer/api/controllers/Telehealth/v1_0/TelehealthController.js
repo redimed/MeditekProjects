@@ -63,7 +63,9 @@ module.exports = {
                                     'UID': user.UID
                                 }
                             },
-                            headers: !req.headers.coreauth ? {}:{'Authorization': req.headers.coreauth}
+                            headers: !req.headers.coreauth ? {} : {
+                                'Authorization': req.headers.coreauth
+                            }
                         }).then(function(response) {
                             res.json(response.getCode(), response.getBody());
                         }).catch(function(err) {
@@ -130,6 +132,8 @@ module.exports = {
         });
     },
     TelehealthLogin: function(req, res) {
+        var deviceId = req.headers.deviceid;
+        var deviceType = req.headers.devicetype;
         passport.authenticate('local', function(err, u, info) {
             if ((err) || (!u)) {
                 if (!err) var err = info;
@@ -138,16 +142,29 @@ module.exports = {
             req.logIn(u, function(err) {
                 if (err) res.unauthorize(err);
                 else {
-                    var token = jwt.sign(u.user, config.TokenSecret, {
-                        expiresIn: 3600 * 24
-                    });
-                    res.ok({
-                        status: 'success',
-                        message: info.message,
-                        user: u.user,
-                        coreToken: u.token,
-                        token: token
-                    });
+                    if(!deviceType || !deviceId){
+                        var err = new Error("TelehealthLogin");
+                        err.pushError("Invalid Params");
+                        return res.serverError(ErrorWrap(err));
+                    }
+                    TelehealthService.GenerateJWT({
+                        deviceID: deviceId,
+                        payload: u.user,
+                        expired: 3600 * 24 * 100,
+                        type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS',
+                        userID: u.user.ID
+                    })
+                    .then(function(token) {
+                        res.ok({
+                            status: 'success',
+                            message: info.message,
+                            user: u.user,
+                            coreToken: u.token,
+                            token: token
+                        });
+                    }).catch(function(err) {
+                        res.serverError(ErrorWrap(err));
+                    })
                 }
             });
         })(req, res);
@@ -204,8 +221,8 @@ module.exports = {
         }
         var info = HelperService.toJson(req.body.data);
         var phoneNumber = info.phone;
-        var deviceId = info.deviceid;
-        var deviceType = info.devicetype;
+        var deviceId = req.headers.deviceid;
+        var deviceType = req.headers.devicetype;
         var phoneRegex = /^\+[0-9]{9,15}$/;
         if (phoneNumber && phoneNumber.match(phoneRegex) && deviceId && deviceType && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
             UserAccount.find({
@@ -259,8 +276,8 @@ module.exports = {
         var info = HelperService.toJson(req.body.data);
         var phoneNumber = info.phone;
         var verifyCode = info.code;
-        var deviceId = info.deviceid;
-        var deviceType = info.devicetype;
+        var deviceId = req.headers.deviceid;
+        var deviceType = req.headers.devicetype;
         var phoneRegex = /^\+[0-9]{9,15}$/;
         if (phoneNumber && phoneNumber.match(phoneRegex) && verifyCode && deviceId && deviceType && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
             UserAccount.find({
@@ -297,23 +314,30 @@ module.exports = {
                                             'UserName': 1,
                                             'Password': 2,
                                             'UserUID': user.UID,
-                                            'DeviceID': deviceId,
+                                            'DeviceID': deviceId, 
                                             'VerificationToken': data.VerificationToken
                                         }
                                     }).then(function(response) {
-                                        var token = jwt.sign(teleUser, config.TokenSecret, {
-                                            expiresIn: 3600 * 24
-                                        });
-                                        var returnJson = {
-                                            status: 'success',
-                                            message: 'User Activated',
-                                            uid: teleUser.UID,
-                                            userUID: response.getBody().user.UID,
-                                            patientUID: patient.UID,
-                                            token: token,
-                                            coreToken: response.getBody().token
-                                        }
-                                        res.ok(returnJson);
+                                        TelehealthService.GenerateJWT({
+                                            deviceID: deviceId,
+                                            payload: teleUser,
+                                            expired: 3600 * 24 * 100,
+                                            type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS',
+                                            userID: user.ID
+                                        }).then(function(token) {
+                                            var returnJson = {
+                                                status: 'success',
+                                                message: 'User Activated',
+                                                uid: teleUser.UID,
+                                                userUID: response.getBody().user.UID,
+                                                patientUID: patient.UID,
+                                                token: token,
+                                                coreToken: response.getBody().token
+                                            }
+                                            res.ok(returnJson);
+                                        }).catch(function(err) {
+                                            res.serverError(err);
+                                        })
                                     })
                                 }).catch(function(err) {
                                     return res.serverError(ErrorWrap(err));

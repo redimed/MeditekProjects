@@ -95,7 +95,9 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
     $scope.Url = AppointmentService.getImage()
     $scope.checkRoleUpdate = true
     $scope.tab_body_part = 'all';
-    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
+    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' 
+        || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' 
+        || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
         $scope.checkRoleUpdate = false
     }
 
@@ -155,10 +157,12 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             if ($scope.appointment.RequestDate) {
                 $scope.appointment.RequestDate = formatDate($scope.appointment.RequestDate)
             }
-            if (response.data.FromTime) {
+            if (AppointmentService.checkDateUndefined($scope.appointment.FromTime)) {
                 var DateTime = angular.copy(response.data.FromTime);
                 $scope.ShowData.DateTimeAppointmentDate = moment(DateTime, "YYYY-MM-DD HH:mm:ss Z").utc().format("DD/MM/YYYY");
                 $scope.ShowData.DateTimeAppointmentDateTime = moment(DateTime).utc().format('h:mm:ss A');
+            }else{
+                $scope.ShowData.DateTimeAppointmentDateTime = null
             }
 
 
@@ -173,10 +177,12 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         return true
     }
     var checkOtherInput = function() {
-        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Others']) && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Others'].Value) {
+        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Others']) 
+            && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Others'].Value) {
             $scope.Other.LacerationsOther = 'Y'
         };
-        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other']) && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'].Value) {
+        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other']) 
+            && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'].Value) {
             $scope.Other.SkincancerOther = 'Y'
         };
         if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.PNS.Other']) &&
@@ -212,9 +218,11 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
     }
     $scope.updateAppointment = function() {
 
-        var Time = moment($scope.ShowData.DateTimeAppointmentDateTime, ["HH:mm:ss A"]).format("HH:mm:ss");
-        var StringAppointmentDateTime = $scope.ShowData.DateTimeAppointmentDate + ' ' + Time + ' Z';
-        $scope.appointment.FromTime = moment(StringAppointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").utc().format('YYYY-MM-DD HH:mm:ss Z');
+         if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate != '') {
+           var Time = moment($scope.ShowData.DateTimeAppointmentDateTime, ["HH:mm:ss A"]).format("HH:mm:ss");
+            var StringAppointmentDateTime = $scope.ShowData.DateTimeAppointmentDate + ' ' + Time + ' Z';
+            $scope.appointment.FromTime = moment(StringAppointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").utc().format('YYYY-MM-DD HH:mm:ss Z');
+        };
         if ($scope.appointment.Status == "Approved") {
             $scope.appointment.ApprovalDate = moment().format('YYYY-MM-DD HH:mm:ss Z')
         } else {

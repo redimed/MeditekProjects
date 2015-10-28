@@ -50,27 +50,28 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             windowClass: 'app-modal-window',
             resolve: {
                 patientInfo: function() {
-                    PatientService.postDatatoDirective($scope.appointment.TelehealthAppointment.PatientAppointment);
+                    PatientService.postDatatoDirective($scope.ShowData.patient);
                 }
             }
 
         });
         modalInstance.result.then(function(data) {
             if (data.status == 'success') {
-                $scope.appointment.Patients = [];
-                $scope.appointment.Patients.push({
-                    UID: data.data.data.UID
-                });
                 $scope.ShowData.isLinkPatient = true;
+                var patientUid = data.data.UID;
                 AppointmentService.GetDetailPatientByUid({
-                    UID: data.data.data.UID
+                    UID: patientUid
                 }).then(function(data) {
                     if (data.message == 'success') {
+                        $scope.appointment.Patients = [];
                         $scope.ShowData.patient = data.data[0];
-                        console.log('ShowData.patient',$scope.ShowData.patient);
+                        $scope.ShowData.patient.WorkPhoneNumber = data.data[0].UserAccount.PhoneNumber;
+                        $scope.appointment.Patients.push({
+                            UID: patientUid
+                        });
+                        toastr.success("Select patient successfully!", "success");
                     };
                 })
-                toastr.success("Select patient successfully!", "success");
             };
         });
     };

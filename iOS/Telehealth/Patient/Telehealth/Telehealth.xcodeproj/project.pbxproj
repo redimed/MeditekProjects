@@ -98,8 +98,6 @@
 		AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D2F1BB1068A006A190E /* HomeViewController.swift */; };
 		AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D311BB129DB006A190E /* ScreenCallingViewController.swift */; };
 		AFF27E081BB3E5D000B325E8 /* ConfigurationSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */; };
-		AFFDC22D1BD7781000DA3236 /* Appoint.png in Resources */ = {isa = PBXBuildFile; fileRef = AFFDC22C1BD7781000DA3236 /* Appoint.png */; };
-		AFFDC2311BD7964D00DA3236 /* 3837-11.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AFFDC2301BD7964D00DA3236 /* 3837-11.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -223,8 +221,6 @@
 		AFF21D2F1BB1068A006A190E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		AFF21D311BB129DB006A190E /* ScreenCallingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenCallingViewController.swift; sourceTree = "<group>"; };
 		AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationSystem.swift; sourceTree = "<group>"; };
-		AFFDC22C1BD7781000DA3236 /* Appoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Appoint.png; sourceTree = "<group>"; };
-		AFFDC2301BD7964D00DA3236 /* 3837-11.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "3837-11.jpg"; sourceTree = "<group>"; };
 		C8FFC31A755811601F972F1F /* Pods-Telehealth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth.release.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth/Pods-Telehealth.release.xcconfig"; sourceTree = "<group>"; };
 		F52475754F864F9F2FD1E064 /* Pods_Telehealth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Telehealth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -495,7 +491,6 @@
 				AFEE35431BB0577A00471592 /* VerifyViewController.swift */,
 				AFF21D2F1BB1068A006A190E /* HomeViewController.swift */,
 				AFEDCB1F1BBA392C007D584D /* NavigationLoginViewController.swift */,
-				AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */,
 				AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */,
 				AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */,
 				AF00C3FE1BDA13A20001A7F4 /* BodyUploadViewController.swift */,
@@ -529,6 +524,7 @@
 				AFF27E071BB3E5D000B325E8 /* ConfigurationSystem.swift */,
 				AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */,
 				AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */,
+				AFED98231BBE71400042B613 /* Singleton_SocketManager.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -540,8 +536,6 @@
 				AF00C4011BDA16150001A7F4 /* frontBody.png */,
 				AF00C4021BDA16150001A7F4 /* leftBody.png */,
 				AF00C4031BDA16150001A7F4 /* rightBody.png */,
-				AFFDC2301BD7964D00DA3236 /* 3837-11.jpg */,
-				AFFDC22C1BD7781000DA3236 /* Appoint.png */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -661,11 +655,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AFFDC2311BD7964D00DA3236 /* 3837-11.jpg in Resources */,
 				AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */,
 				AFEE35321BB0415D00471592 /* Info.plist in Resources */,
 				AF00C4061BDA16150001A7F4 /* leftBody.png in Resources */,
-				AFFDC22D1BD7781000DA3236 /* Appoint.png in Resources */,
 				AFEE34E41BB0413600471592 /* LaunchScreen.storyboard in Resources */,
 				AFEBD1E21BD5E112005FE581 /* MyPopupViewController.xib in Resources */,
 				AFEE34E11BB0413600471592 /* Assets.xcassets in Resources */,

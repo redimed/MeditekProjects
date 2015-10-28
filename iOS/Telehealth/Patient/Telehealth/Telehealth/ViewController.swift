@@ -18,17 +18,18 @@ class ViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var viewPhoneNumber: DesignableView!
     var phoneNumber = String()
     
+    @IBOutlet weak var versionBuildLabel: UILabel!
     
     let api = GetAndPostDataController()
     //Color is red
     let colorCustom = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
     
-    //-------------------------------------------------//
     
     override func viewDidLoad() {
         super.viewDidLoad()
         phoneTextField.delegate = self
         
+        versionBuildLabel.text = MessageString.VersionAndBuild
         
     }
     

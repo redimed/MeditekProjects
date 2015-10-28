@@ -26,50 +26,8 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         if let coreToken = defaults.valueForKey("coreToken") as? String {
             coreTokens = coreToken
         }
-        if  ConfigurationSystem.isConnectedToNetwork() == true {
-            print("True")
-        }else {
-            print("False")
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            // Called on every event
-            sharedSocket.socket.onAny {
-                //                print("got event: \($0.event) with items \($0.items)")
-                let a = $0.event
-                let b = $0.items
-            }
-            // Socket Events
-            sharedSocket.socket.on("connect") {data, ack in
-                print("socket connected")
-                print("\(self.uid)")
-                let modifieldURLString = NSString(format: UrlAPISocket.joinRoom, self.uid) as String
-                let dictionNary : NSDictionary = ["url": modifieldURLString]
-                sharedSocket.socket.emit("get", dictionNary)
-            }
-            
-            sharedSocket.socket.on("receiveMessage"){data, ack in
-                print("calling to me")
-                let dataCalling = JSON(data)
-                
-                let message : String = data[0]["message"] as! String
-                print("message:",message)
-                if message == MessageString.Call {
-                    //save data to temp class
-                    savedData = saveData(data: dataCalling)
-                    self.displayViewController(.TopBottom)
-                        NSNotificationCenter.defaultCenter().postNotificationName("AnswerCall", object: self)
-                }else if message == MessageString.CallEndCall {
-                        NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
-                }else if message == MessageString.Cancel {
-                        NSNotificationCenter.defaultCenter().postNotificationName("cancelCall", object: self)
-                }
-                
-            }
-        })
-        //Socket connecting
-        sharedSocket.socket.connect()
-
+        openSocket()
+       
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -102,7 +60,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
 
     @IBAction func ContactUsAction(sender: AnyObject) {
        
-        callAlertMessage("", message: "You want to contact us?")
+        callAlertMessage("", message: MessageString.QuestionCallPhone)
     }
     
     //Giap: Show alert message
@@ -124,7 +82,6 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     
     //MARK: MyPopupViewControllerProtocol
     func pressOK(sender: MyPopupViewController) {
-        print("press OK", terminator: "\n")
       self.dismissPopupViewController(.Fade)
         emitDataToServer(MessageString.CallAnswer, uidFrom: uid, uuidTo: savedData.data[0]["from"].string!)
         let homeMain = self.storyboard?.instantiateViewControllerWithIdentifier("ScreenCallingStoryboard") as! ScreenCallingViewController
@@ -132,10 +89,8 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         
     }
     func pressCancel(sender: MyPopupViewController) {
-        print("press Cancel", terminator: "\n")
          emitDataToServer(MessageString.Decline, uidFrom: uid, uuidTo: savedData.data[0]["from"].string!)
             self.dismissPopupViewController(.Fade)
-        
     }
 
     func emitDataToServer(message:String,uidFrom:String,uuidTo:String){
@@ -143,7 +98,47 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         let dictionNary : NSDictionary = ["url": modifieldURLString]
         sharedSocket.socket.emit("get", dictionNary)
     }
+    
+    func openSocket() {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            // Called on every event
+            sharedSocket.socket.onAny {
+                //                print("got event: \($0.event) with items \($0.items)")
+                let a = $0.event
+                let b = $0.items
+            }
+            // Socket Events
+            sharedSocket.socket.on("connect") {data, ack in
+                print("socket connected")
+                print("\(self.uid)")
+                let modifieldURLString = NSString(format: UrlAPISocket.joinRoom, self.uid) as String
+                let dictionNary : NSDictionary = ["url": modifieldURLString]
+                sharedSocket.socket.emit("get", dictionNary)
+            }
+            
+            sharedSocket.socket.on("receiveMessage"){data, ack in
+                print("calling to me")
+                let dataCalling = JSON(data)
+                
+                let message : String = data[0]["message"] as! String
+                print("message:",message)
+                if message == MessageString.Call {
+                    //save data to temp class
+                    savedData = saveData(data: dataCalling)
+                    self.displayViewController(.TopBottom)
+                    NSNotificationCenter.defaultCenter().postNotificationName("AnswerCall", object: self)
+                }else if message == MessageString.CallEndCall {
+                    NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
+                }else if message == MessageString.Cancel {
+                    NSNotificationCenter.defaultCenter().postNotificationName("cancelCall", object: self)
+                }
+                
+            }
+        })
+        //Socket connecting
+        sharedSocket.socket.connect()
 
+    }
 
    
 

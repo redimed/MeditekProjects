@@ -16,19 +16,26 @@ class BodyUploadViewController: UIViewController {
     var imageSelect : UIImage!
     let appointmentApi = GetAndPostDataController()
     var appointmentID = String()
-    
+    @IBOutlet var myGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var image: UIImageView!
      var delegate : reloadCollectionDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         image.image = imageSelect
+        image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "didTapImage:"))
+        image.userInteractionEnabled = true
         
     }
-
+    
+    func didTapImage(gesture: UIGestureRecognizer) {
+        let point = gesture.locationInView(gesture.view)
+        print(point)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     @IBAction func UploadImageButton(sender: AnyObject) {
          view.showLoading()
@@ -36,7 +43,6 @@ class BodyUploadViewController: UIViewController {
             appointmentApi.uploadImage(image.image!,userUID: userUID){
                 response in
                 if response["status"] == "success"{
-                    print(response["fileUID"])
                     self.appointmentApi.updateImageToAppointment(response["fileUID"].string!, apptID: self.appointmentID){
                         response in
                         if response["status"] == "success"{
@@ -48,7 +54,8 @@ class BodyUploadViewController: UIViewController {
                         }
                     }
                 }else {
-                    
+                    self.view.hideLoading()
+                    print("error",response)
                 }
                 
             }

@@ -13,7 +13,6 @@ module.exports = {
 
 		// Information
 		var postData = req.body.data;
-
 		Services
 			.Doctor
 				.findallDoctor(postData)
@@ -74,7 +73,7 @@ module.exports = {
 	*/
 	GetDepartment: function(req, res) {
 
-		Services.Doctor.GetDepartment()
+		Services.Doctor.GetAllDepartment()
 		.then(function(result) {
 			res.ok(result);
 		})
@@ -102,51 +101,57 @@ module.exports = {
 		};
 		
 		// Create Account
-		Services.UserAccount.CreateUserAccount(userInfo)
-		.then(function(result) {
-
-			// Create Role
-			var info_id = {
-				ID: result.ID
-			};
-
-			if(data.Type == 'INTERNAL_PRACTITIONER') {
-				var info_role = {
-					RoleCode: data.Type,
-					SiteId: '1'
-				};
-			} else {
-				var info_role = {
-					RoleCode: data.Type
-				};
-			}
-
-			Services.UserRole.CreateUserRoleWhenCreateUser(result, info_role)
-			.then(function(success) {
+		sequelize.transaction().then(function(t){
+					
+			return Services.UserAccount.CreateUserAccount(userInfo, t)
+			.then(function(result) {
 				
-				// Create Doctor
-				data.CreatedDate = moment(new Date(), 'YYYY-MM-DD HH:mm:ss Z');
-				data.CreatedBy = req.user?req.user.ID:null;
-				data.UserAccountID = result.ID;
+				// Create Role
+				var info_id = {
+					ID: result.ID
+				};
 
-				Services.Doctor.CreateDoctor(data)
-				.then(function(resultd) {
-					var info_show = {
-						UID: result.UID
-					}
-					res.ok(info_show);
+				if(data.Type == 'INTERNAL_PRACTITIONER') {
+					var info_role = {
+						RoleCode: data.Type,
+						SiteId: '1'
+					};
+				} else {
+					var info_role = {
+						RoleCode: data.Type
+					};
+				}
+
+				Services.UserRole.CreateUserRoleWhenCreateUser(result, info_role, t)
+				.then(function(success) {
+					// Create Doctor
+					data.CreatedDate = moment(new Date(), 'YYYY-MM-DD HH:mm:ss Z');
+					data.CreatedBy = req.user?req.user.ID:null;
+					data.UserAccountID = result.ID;
+					Services.Doctor.CreateDoctor(data, t)
+					.then(function(resultd) {
+						t.commit();
+						var info_show = {
+							UID: result.UID
+						}
+						res.ok(info_show);
+					})
+					.catch(function(err) {
+						t.rollback();
+						res.serverError(ErrorWrap(err));
+					});
 				})
 				.catch(function(err) {
+					t.rollback();
 					res.serverError(ErrorWrap(err));
 				});
+				
 			})
 			.catch(function(err) {
+				t.rollback();
 				res.serverError(ErrorWrap(err));
 			});
-			
-		})
-		.catch(function(err) {
-			res.serverError(ErrorWrap(err));
+
 		});
 		
 	},
@@ -260,6 +265,23 @@ module.exports = {
 			res.serverError(ErrorWrap(err));
 		});
 
-	}
+	},
+	/*
+		GetOneDepartment: Get department by DeparmentID's doctor
+		Input: DepartmentID
+		Ouput: Data's Department
+	*/
+	GetOneDepartment: function(req, res) {
+	
+		var data = req.body.data;
 
+		Services.Doctor.GetDepartment(data)
+		.then(function(result) {
+			res.ok(result);
+		})
+		.catch(function(err) {
+			res.serverError(ErrorWrap(err));
+		});
+	
+	}
 };

@@ -12,6 +12,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 		link: function(scope, elem, attrs){
 			scope.search  = {};
 			scope.checked = {};
+			scope.flag = 13;
 			scope.fieldSort;
 			scope.itemDefault = [
 				{field:"FirstName",name:"First Name"},
@@ -150,13 +151,12 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 					function(isConfirm){   
 						if (isConfirm) {  
 							scope.uidReturn=patientUID;   
-							scope.appointment.runIfSuccess({data:{UID:patientUID}});
+							scope.appointment.runIfSuccess({UID:patientUID});
 						}else{
 
 							scope.uidReturn='';
 							scope.init();
 						}
-						console.log(scope.uidReturn);
 					});
 				}
 				
@@ -168,11 +168,14 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						templateUrl: 'patientCreatemodal',
 						controller: function($scope,$modalInstance){
 							$scope.close = function() {
-								modalInstance.close();
+								$modalInstance.close();
 							};
 							$scope.appointment = {
 								runIfSuccess : function (data) {
 									$modalInstance.close({status:'success',data:data});
+								},
+								runIfClose : function () {
+									$modalInstance.close();
 								}
 							};
 						},
@@ -180,7 +183,9 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						//size: 'lg',
 					});
 					modalInstance.result.then(function (data) {
-				      	scope.appointment.runIfSuccess(data);
+						if (data && data.status == 'success') {
+				      		scope.appointment.runIfSuccess(data.data);
+						};
 				    });
 				}else{
 					scope.aaaa ="asdasd";

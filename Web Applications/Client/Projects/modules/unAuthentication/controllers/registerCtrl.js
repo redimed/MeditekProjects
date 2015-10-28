@@ -1,7 +1,7 @@
 var app = angular.module('app.unAuthentication.register.controller', [
 ]);
 
-app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $cookies, doctorService, UnauthenticatedService){
+app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $cookies, CommonService, doctorService, UnauthenticatedService){
 	
 	// List country
 	UnauthenticatedService.listCountry()
@@ -10,18 +10,19 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 		$scope.data.CountryID = 14;
 	}, function(err) {});
 
-    // Department List
-    doctorService.listDepartment()
-    .then(function(result) {
-        $scope.department = result;
-    }, function(err) {});
+    // Back
+    $scope.stepback_one = function() {
+    	$state.go('unAuthentication.login', {
+    		reload: true
+    	});
+    }
 
 	// Check MobilePhone
 	$scope.checkUser = function(data) {
 
 		$scope.validateCheck(data)
 		.then(function(success) {
-			
+
 			UnauthenticatedService.checkUserNameAccount(data)
 			.then(function(result) {
 
@@ -75,7 +76,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
                 var info = {
                     PhoneNumber: data.PhoneNumber,
                     // PhoneNumber: '+840936767117',
-                    content: result.data.VerificationCode
+                    content: CommonService.contentVerify+ ' ' +result.data.VerificationCode
                 };
 
                 UnauthenticatedService.sendSms(info)

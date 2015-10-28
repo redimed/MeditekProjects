@@ -8,7 +8,7 @@
 
 import Foundation
 import SwiftyJSON
-import Alamofire
+
 //class handle get and set data calling
 class saveData {
     var data: JSON = ""

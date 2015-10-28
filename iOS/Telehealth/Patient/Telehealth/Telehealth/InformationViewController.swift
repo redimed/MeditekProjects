@@ -37,7 +37,7 @@ class InformationViewController: UIViewController {
                 if response["message"] == "success" {
                     self.view.hideLoading()
                     self.fullName.text = PatientInfo.FirstName + " " + PatientInfo.MiddleName + " " + PatientInfo.LastName
-                    self.dobLabel.text = (PatientInfo.DOB).toDateTimeZone(formatTime.dateTime, format: formatTime.formatDate)
+                    self.dobLabel.text = (PatientInfo.DOB)
                     self.suburbLabel.text = PatientInfo.Suburb
                     self.postCodeLabel.text = PatientInfo.Postcode
                     self.countryLabel.text = PatientInfo.Country

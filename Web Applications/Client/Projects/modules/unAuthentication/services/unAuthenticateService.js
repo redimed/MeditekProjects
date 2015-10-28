@@ -37,6 +37,6 @@ angular.module('app.unAuthentication.service', [])
          var instanceApi = api.all('createCode');
         return instanceApi.post({data: data});
     }
-
+    
     return services;
 })

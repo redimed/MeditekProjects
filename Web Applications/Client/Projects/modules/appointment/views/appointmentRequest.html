@@ -739,66 +739,95 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6" ng-if="details[1].data[0].value =='Y' || details[1].data[1].value =='Y' || details[1].data[2].value =='Y' || details[1].data[3].value =='Y' || details[1].data[4].value =='Y' || details[1].data[5].value || details[0].data[0].value =='Y' || details[0].data[1].value || details[0].data[2].value =='Y' || details[0].data[3].value =='Y' || details[0].data[4].value =='Y'">
                                             <div class="form-group">
-                                                <label class="control-label col-md-3" ng-if="details[0].type"><b>Trauma</b></label>
+                                                <span class="col-md-7"></span>
+                                                <label class="control-label" ng-if="details[0].type"><b>Trauma</b></label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[0].data[0].value =='Y'">Dislocation</label>
+                                                <span class="col-md-8"></span>
+                                                <label class="control-label" ng-if="details[0].data[0].value =='Y'">Dislocation</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[0].data[1].value">Fracture : {{details[0].data[1].value}}</label>
+                                                <span class="col-md-8"></span>
+                                                <label class="control-label" ng-if="details[0].data[1].value">Fracture : {{details[0].data[1].value}}</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[0].data[2].value =='Y'">Open</label>
+                                                <span class="col-md-8"></span>
+                                                <label class="control-label" ng-if="details[0].data[2].value =='Y'">Open</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[0].data[3].value =='Y'">Closed</label>
+                                                <span class="col-md-8"></span>
+                                                <label class="control-label" ng-if="details[0].data[3].value =='Y'">Closed</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[0].data[4].value =='Y'">Displaced</label>
+                                                <span class="col-md-8"></span>
+                                                <label class="control-label" ng-if="details[0].data[4].value =='Y'">Displaced</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-5" ng-if="details[1].data[0].value =='Y' || details[1].data[1].value =='Y' || details[1].data[2].value =='Y' || details[1].data[3].value =='Y' || details[1].data[4].value =='Y' || details[1].data[5].value"><b>Lacerations</b></label>
+                                                <span class="col-md-8"></span>
+                                                <label class="control-label" ng-if="details[1].data[0].value =='Y' || details[1].data[1].value =='Y' || details[1].data[2].value =='Y' || details[1].data[3].value =='Y' || details[1].data[4].value =='Y' || details[1].data[5].value"><b>Lacerations</b></label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[1].data[0].value =='Y'"> Hand</label>
+                                                <span class="col-md-9"></span>
+                                                <label class="control-label" ng-if="details[1].data[0].value =='Y'"> Hand</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[1].data[1].value =='Y'"> Nerve</label>
+                                                <span class="col-md-9"></span>
+                                                <label class="control-label" ng-if="details[1].data[1].value =='Y'"> Nerve</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[1].data[2].value =='Y'"> Tendon/muscle</label>
+                                                <span class="col-md-9"></span>
+                                                <label class="control-label" ng-if="details[1].data[2].value =='Y'"> Tendon/muscle</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[1].data[3].value =='Y'"> Facial</label>
+                                                <span class="col-md-9"></span>
+                                                <label class="control-label" ng-if="details[1].data[3].value =='Y'"> Facial</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[1].data[4].value =='Y'"> Skin Loss</label>
+                                                <span class="col-md-9"></span>
+                                                <label class="control-label" ng-if="details[1].data[4].value =='Y'"> Skin Loss</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[1].data[5].value"> Other : {{details[1].data[5].value}}</label>
+                                                <span class="col-md-9"></span>
+                                                <label class="control-label" ng-if="details[1].data[5].value"> Other : {{details[1].data[5].value}}</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
-                                                <label class="control-label col-md-3" ng-if="details[2].data[0].value =='Y' || details[2].data[1].value =='Y' || details[2].data[2].value || details[3].data[0].value =='Y' || details[3].data[1].value =='Y' || details[3].data[2].value =='Y' || details[3].data[3].value =='Y' || details[4].data[0].value =='Y' || details[4].data[1].value =='Y' || details[4].data[2].value =='Y' || details[4].data[3].value =='Y' || details[4].data[4].value"><b>Elective</b></label>
+                                                <span class="col-md-1"></span>
+                                                <label class="control-label" ng-if="details[2].data[0].value =='Y' || details[2].data[1].value =='Y' || details[2].data[2].value || details[3].data[0].value =='Y' || details[3].data[1].value =='Y' || details[3].data[2].value =='Y' || details[3].data[3].value =='Y' || details[4].data[0].value =='Y' || details[4].data[1].value =='Y' || details[4].data[2].value =='Y' || details[4].data[3].value =='Y' || details[4].data[4].value"><b>Elective</b></label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-5" ng-if="details[2].data[0].value =='Y' || details[2].data[1].value =='Y' || details[2].data[2].value"><b>Skin cancer</b></label>
+                                                <span class="col-md-2"></span>
+                                                <label class="control-label" ng-if="details[2].data[0].value =='Y' || details[2].data[1].value =='Y' || details[2].data[2].value"><b>Skin cancer</b></label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[2].data[0].value =='Y'">BCC / SCC</label>
+                                                <span class="col-md-3"></span>
+                                                <label class="control-label" ng-if="details[2].data[0].value =='Y'">BCC / SCC</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[2].data[1].value =='Y'">Melanoma</label>
+                                                <span class="col-md-3"></span>
+                                                <label class="control-label" ng-if="details[2].data[1].value =='Y'">Melanoma</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[2].data[2].value">Other :{{details[2].data[2].value}}</label>
+                                                <span class="col-md-3"></span>
+                                                <label class="control-label" ng-if="details[2].data[2].value">Other :{{details[2].data[2].value}}</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-5" ng-if="details[3].data[0].value =='Y' || details[3].data[1].value =='Y' || details[3].data[2].value =='Y' || details[3].data[3].value =='Y'"><b>Hand condition</b></label>
+                                                <span class="col-md-2"></span>
+                                                <label class="control-label" ng-if="details[3].data[0].value =='Y' || details[3].data[1].value =='Y' || details[3].data[2].value =='Y' || details[3].data[3].value =='Y'"><b>Hand condition</b></label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[3].data[0].value =='Y'">Ganglion</label>
+                                                <span class="col-md-3"></span>
+                                                <label class="control-label" ng-if="details[3].data[0].value =='Y'">Ganglion</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[3].data[1].value =='Y'">Arthritis</label>
+                                                <span class="col-md-3"></span>
+                                                <label class="control-label" ng-if="details[3].data[1].value =='Y'">Arthritis</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[3].data[2].value =='Y'">DeQuervains / Trigger</label>
+                                                <span class="col-md-3"></span>
+                                                <label class="control-label" ng-if="details[3].data[2].value =='Y'">DeQuervains / Trigger</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[3].data[3].value =='Y'">Contracture</label>
+                                                <span class="col-md-3"></span>
+                                                <label class="control-label" ng-if="details[3].data[3].value =='Y'">Contracture</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-5" ng-if="details[4].data[0].value =='Y' || details[4].data[1].value =='Y' || details[4].data[2].value =='Y' || details[4].data[3].value =='Y' || details[4].data[4].value"><b>PNS</b></label>
+                                                <span class="col-md-2"></span>
+                                                <label class="control-label" ng-if="details[4].data[0].value =='Y' || details[4].data[1].value =='Y' || details[4].data[2].value =='Y' || details[4].data[3].value =='Y' || details[4].data[4].value"><b>PNS</b></label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[4].data[0].value =='Y'">Carpal Tunnel</label>
+                                                <span class="col-md-3"></span>
+                                                <label class="control-label" ng-if="details[4].data[0].value =='Y'">Carpal Tunnel</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[4].data[1].value =='Y'">Cubital Tunnel</label>
+                                                <span class="col-md-3"></span>
+                                                <label class="control-label" ng-if="details[4].data[1].value =='Y'">Cubital Tunnel</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[4].data[2].value =='Y'">Tarsal Tunnel</label>
+                                                <span class="col-md-3"></span>
+                                                <label class="control-label" ng-if="details[4].data[2].value =='Y'">Tarsal Tunnel</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[4].data[3].value =='Y'">Complex Reconstructive Case</label>
+                                                <span class="col-md-3"></span>
+                                                <label class="control-label" ng-if="details[4].data[3].value =='Y'">Complex Reconstructive Case</label>
                                                 <div class="clearfix"></div>
-                                                <label class="control-label col-md-7" ng-if="details[4].data[4].value">Other :{{details[4].data[4].value}}</label>
+                                                <span class="col-md-3"></span>
+                                                <label class="control-label" ng-if="details[4].data[4].value">Other :{{details[4].data[4].value}}</label>
                                                 <div class="clearfix"></div>
                                             </div>
                                         </div>
@@ -810,6 +839,10 @@
                                             <p class="form-control-static">{{ item.file.name }}</p>
                                         </div>
                                     </div>
+                                   <!--  <h4 class="form-section">Referring Practitioner</h4>
+                                    <div class="form-group" ng-repeat="item in uploader.queue">
+                                       asdasd
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

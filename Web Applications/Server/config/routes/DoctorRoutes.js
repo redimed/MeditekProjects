@@ -44,7 +44,10 @@ module.exports = {
 		controller:'Doctor/DoctorController',
     	action:'GetRoleDoctor'
 	},
-	
+	'post /api/getOneDepartment': {
+		controller:'Doctor/DoctorController',
+		action:'GetOneDepartment'
+	}
 	
 
 };

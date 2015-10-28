@@ -100,7 +100,7 @@
                 <tbody>
                     <tbody>
                         <tr ng-repeat="p in appointments" ng-click="openAppointmentModal(p.UID)">
-                            <td>{{$index+1}}</td>
+                            <td>{{($index+1)+ 20*(currentPage-1)}}</td>
                             <td ng-show="p.Patients.length === 0">{{p.TelehealthAppointment.PatientAppointment.FirstName}} {{p.TelehealthAppointment.PatientAppointment.LastName}}</td>
                             <td ng-show="p.Patients.length !== 0">{{p.Patients[0].FirstName}} {{p.Patients[0].LastName}}</td>
                             <td>{{((p.Doctors[0].Title !=null)?p.Doctors[0].Title:"")+" "+((p.Doctors[0].FirstName != null)?p.Doctors[0].FirstName:"") +" "+((p.Doctors[0].LastName != null)?p.Doctors[0].LastName:"")}}</td>
@@ -115,11 +115,9 @@
                             <td>{{p.FromTime | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td>
                             <td ng-show="p.TelehealthAppointment.Correspondence == 'Y'" style="text-align:center">
                                 <span class="text-success"><i class="fa fa-check"></i></span>
-                                <!-- <input type="checkbox" class="checkboxes" value="Y" checked="true"> -->
                             </td>
                             <td ng-show="p.TelehealthAppointment.Correspondence !== 'Y'" style="text-align:center">
                                 <span class="text-danger"><i class="fa fa-remove"></i></span>
-                                <!-- <input type="checkbox" class="checkboxes" value="Y" checked="true"> -->
                             </td>
                         </tr>
                     </tbody>

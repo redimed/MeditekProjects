@@ -24,40 +24,40 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		    });
 
 		    // CALLBACKS
-		    uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-		        // console.info('onWhenAddingFileFailed', item, filter, options);
-		    };
-		    uploader.onAfterAddingFile = function (fileItem) {
-		        // console.info('onAfterAddingFile', fileItem);
-		    };
+		    // uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+		    //     // console.info('onWhenAddingFileFailed', item, filter, options);
+		    // };
+		    // uploader.onAfterAddingFile = function (fileItem) {
+		    //     // console.info('onAfterAddingFile', fileItem);
+		    // };
 
-		    uploader.onAfterAddingAll = function (addedFileItems) {
-		        // console.info('onAfterAddingAll', addedFileItems);
-		    };
-		    uploader.onBeforeUploadItem = function (item) {
-		        // console.info('onBeforeUploadItem', item);
-		    };
-		    uploader.onProgressItem = function (fileItem, progress) {
-		        // console.info('onProgressItem', fileItem, progress);
-		    };
-		    uploader.onProgressAll = function (progress) {
-		        // console.info('onProgressAll', progress);
-		    };
-		    uploader.onSuccessItem = function (fileItem, response, status, headers) {
-		        console.info('onSuccessItem', fileItem, response, status, headers);
-		    };
-		    uploader.onErrorItem = function (fileItem, response, status, headers) {
-		        // console.info('onErrorItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCancelItem = function (fileItem, response, status, headers) {
-		        // console.info('onCancelItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
-		        // console.info('onCompleteItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCompleteAll = function () {
-		        console.info('onCompleteAll');
-		    };
+		    // uploader.onAfterAddingAll = function (addedFileItems) {
+		    //     // console.info('onAfterAddingAll', addedFileItems);
+		    // };
+		    // uploader.onBeforeUploadItem = function (item) {
+		    //     // console.info('onBeforeUploadItem', item);
+		    // };
+		    // uploader.onProgressItem = function (fileItem, progress) {
+		    //     // console.info('onProgressItem', fileItem, progress);
+		    // };
+		    // uploader.onProgressAll = function (progress) {
+		    //     // console.info('onProgressAll', progress);
+		    // };
+		    // uploader.onSuccessItem = function (fileItem, response, status, headers) {
+		    //     console.info('onSuccessItem', fileItem, response, status, headers);
+		    // };
+		    // uploader.onErrorItem = function (fileItem, response, status, headers) {
+		    //     // console.info('onErrorItem', fileItem, response, status, headers);
+		    // };
+		    // uploader.onCancelItem = function (fileItem, response, status, headers) {
+		    //     // console.info('onCancelItem', fileItem, response, status, headers);
+		    // };
+		    // uploader.onCompleteItem = function (fileItem, response, status, headers) {
+		    //     // console.info('onCompleteItem', fileItem, response, status, headers);
+		    // };
+		    // uploader.onCompleteAll = function () {
+		    //     console.info('onCompleteAll');
+		    // };
 		},
 		link: function(scope, elem, attrs){
 			scope.titles = [
@@ -67,7 +67,6 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 				{id:"3", name:'Dr'}
 			];
 			AuthenticationService.getListCountry().then(function(response){
-				console.log(response);
 				scope.countries = response.data;
 			},function(err){
 				console.log("Server Error");
@@ -97,6 +96,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 			},0);
 
 			scope.checkPhone = function(data) {
+				scope.loadingCheck = true;
 				PatientService.validateCheckPhone(data)
 				.then(function(success){
 					scope.er ='';
@@ -108,6 +108,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 							if(result.data.isCreated==false){
 								scope.er ='';
 								scope.ermsg='';
+								scope.loadingCheck = false;
 								toastr.success("Phone Number can be choose to create patient","SUCCESS");
 								scope.isShowEmail = result.data.data.Email;
 								scope.data.Email = result.data.data.Email;
@@ -129,6 +130,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						}
 					});
 				},function (err){
+					scope.loadingCheck = false;
 					scope.er={};
 					scope.ermsg={};
 					toastr.error("Please check data again.","ERROR");
@@ -140,22 +142,25 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 				
 			};
 
-			scope.Cancel = function() {
-				$state.go('authentication.patient.list',null, {
-		            'reload': true
-		        });
-			};
+            scope.Cancel = function() {
+                if (scope.appointment) {
+                	scope.appointment.runIfClose();
+                } else {
+                    $state.go('authentication.patient.list', null, {
+                        'reload': true
+                    });
+                };
+            };
 
-			scope.aaaa = function(){
-				scope.ermsg.DOB='';
-				console.log(scope.data.DOB);
-			}
+
 
 			scope.createPatient = function(data) {
+				scope.loadingCreate = true;
 				return PatientService.validate(data)
 				.then(function(result){
 					return PatientService.createPatient(data)
 					.then(function(success){
+						scope.loadingCreate = false;
 						if(scope.uploader.queue[0]!==undefined && scope.uploader.queue[0]!==null && 
 							scope.uploader.queue[0]!=='' && scope.uploader.queue[0].length!==0){
 				            scope.uploader.queue[0].formData[0]={};
@@ -174,6 +179,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 					},function(err){
 						scope.er={};
 						scope.ermsg={};
+						scope.loadingCreate = false;
 						toastr.error("Please check data again.","ERROR");
 						scope.er = scope.er?scope.er:{};
 						for(var i = 0; i < err.data.message.ErrorsList.length; i++){
@@ -182,6 +188,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						}
 					});
 				},function(err){
+					scope.loadingCreate = false;
 					scope.er={};
 					scope.ermsg={};
 					toastr.error("Please check data again.","ERROR");

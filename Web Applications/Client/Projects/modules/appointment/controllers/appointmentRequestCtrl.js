@@ -4,6 +4,8 @@ var app = angular.module('app.authentication.appointment.request.controller', [
 
 app.controller('appointmentRequestCtrl', function($scope, $cookies, CommonService, AppointmentService, $state, FileUploader, $modal, $interval) {
 
+    $scope.userInfo = $cookies.getObject('userInfo');
+    console.log('$scope.userInfo',$scope.userInfo);
     $scope.doctors = [];
     $scope.details = [];
 
@@ -32,7 +34,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, CommonServic
             }
         },
         UserInfo: {
-            UID: $cookies.getObject('userInfo').UID
+            UID: $scope.userInfo.UID
         },
         FileUploads: []
     }

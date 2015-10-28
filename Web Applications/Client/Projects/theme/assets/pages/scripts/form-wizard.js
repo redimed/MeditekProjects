@@ -52,7 +52,9 @@ var FormWizard = function () {
                     },
                     Postcode: {
                         required: true,
-                        maxlength:10
+                        maxlength:10,
+                        number:true,
+                        minlength:4
                     },
                     PhoneNumber: {
                         required: true,

@@ -12,6 +12,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 		link: function(scope, elem, attrs){
 			scope.search  = {};
 			scope.checked = {};
+			scope.flag = 13;
 			scope.fieldSort;
 			scope.itemDefault = [
 				{field:"FirstName",name:"First Name"},
@@ -156,7 +157,6 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 							scope.uidReturn='';
 							scope.init();
 						}
-						console.log(scope.uidReturn);
 					});
 				}
 				

@@ -1,27 +1,20 @@
 package com.redimed.telehealth.patient.service;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.redimed.telehealth.patient.CallActivity;
-import com.redimed.telehealth.patient.LauncherActivity;
 import com.redimed.telehealth.patient.MainActivity;
-import com.redimed.telehealth.patient.MyApplication;
-import com.redimed.telehealth.patient.fragment.HomeFragment;
-import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.utils.Config;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,10 +34,6 @@ public class SocketService extends Service {
     private static SharedPreferences uidTelehealth;
     private String auth, core;
 
-//    static {
-//        initializeSocket();
-//    }
-
     private void initializeSocket() {
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
         auth = uidTelehealth.getString("token", null);
@@ -54,11 +43,8 @@ public class SocketService extends Service {
             IO.Options opts = new IO.Options();
             opts.forceNew = true;
             opts.reconnection = true;
-            opts.query = "__sails_io_sdk_version=0.11.0";
-//            opts.query = "Authorization=" + auth;
-//            opts.query = "CoreAuth=" + core;
+            opts.query = "__sails_io_sdk_version=0.11.0&Authorization=Bearer " + auth + "&CoreAuth=Bearer " + core;
             socket = IO.socket(Config.socketURL, opts);
-            Log.d(TAG, socket + "");
             socket.connect();
         } catch (URISyntaxException e) {
             e.printStackTrace();

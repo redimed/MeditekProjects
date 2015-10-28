@@ -13,8 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.webkit.WebBackForwardList;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -26,12 +26,15 @@ import com.redimed.telehealth.patient.fragment.HomeFragment;
 import com.redimed.telehealth.patient.fragment.InformationFragment;
 import com.redimed.telehealth.patient.fragment.TelehealthFragment;
 import com.redimed.telehealth.patient.models.Category;
+import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.SocketService;
+import com.redimed.telehealth.patient.utils.CircleTransform;
 import com.redimed.telehealth.patient.utils.CustomAlertDialog;
 import com.redimed.telehealth.patient.utils.DialogConnection;
 import com.redimed.telehealth.patient.utils.RVAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +48,7 @@ import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity{
 
-    private String TAG ="MAIN";
+    private String TAG ="MAIN", firstName, lastName;
     private ActionBarDrawerToggle actionDrawerToggle;
     private RegisterApi restClient;
     private LinearLayoutManager layoutManagerCategories;
@@ -54,6 +57,8 @@ public class MainActivity extends AppCompatActivity{
     private TelehealthUser telehealthUser;
     private SharedPreferences uidTelehealth;
     private Gson gson;
+    private Fragment fragment;
+    private boolean resumeHasRun = false;
 
     @Bind(R.id.frame_container)
     FrameLayout main_contain;
@@ -63,10 +68,11 @@ public class MainActivity extends AppCompatActivity{
     RecyclerView rvCategories;
     @Bind(R.id.lblNamePatient)
     TextView lblNamePatient;
+    @Bind(R.id.avatarPatient)
+    ImageView avatarPatient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getIntent().setAction("Already created");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -84,6 +90,8 @@ public class MainActivity extends AppCompatActivity{
 
         DisplayDrawer();
         GetDetailsPatient();
+
+        Display(1);
     }
 
     private void initializeData(){
@@ -95,17 +103,15 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void GetDetailsPatient() {
-        String authToken = "", coreToken = "";
         uidTelehealth = this.getSharedPreferences("TelehealthUser", MODE_PRIVATE);
         gson = new Gson();
 
         telehealthUser = new TelehealthUser();
         telehealthUser.setUID(uidTelehealth.getString("uid", null));
-        authToken = "Bearer " + uidTelehealth.getString("token", null);
-        coreToken = "Bearer " + uidTelehealth.getString("coreToken", null);
+
         JsonObject patientJSON = new JsonObject();
         patientJSON.addProperty("data", gson.toJson(telehealthUser));
-        restClient.getDetailsPatient(authToken, coreToken, patientJSON,  new Callback<JsonObject>() {
+        restClient.getDetailsPatient(patientJSON, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 String message = jsonObject.get("message").getAsString();
@@ -113,7 +119,7 @@ public class MainActivity extends AppCompatActivity{
                     SharedPreferences.Editor patientInfo = getSharedPreferences("PatientInfo", MODE_PRIVATE).edit();
                     patientInfo.putString("info", jsonObject.get("data").toString());
                     patientInfo.commit();
-                    Display(1);
+                    DisplaySoftInfoPatient(jsonObject.get("data").toString());
                 }
             }
 
@@ -128,18 +134,27 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
-    // TODO: 10/21/2015  
-//    @Override
-//    protected void onResume() {
-//        String action = getIntent().getAction();
-//        if (action == null || !action.equals("Already created")){
-//            Intent intent = new Intent(this, MainActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }else
-//            getIntent().setAction(null);
-//        super.onResume();
-//    }
+    private void DisplaySoftInfoPatient(String data){
+        Patient[] patients = gson.fromJson(data, Patient[].class);
+        for (Patient patient: patients){
+            firstName = patient.getFirstName() == null ? " " : patient.getFirstName();
+            lastName = patient.getLastName() == null ? " " : patient.getLastName();
+        }
+        lblNamePatient.setText(firstName + " " + lastName);
+
+        Picasso.with(this).load(R.drawable.blank_avatar)
+                .transform(new CircleTransform())
+                .resize(200, 200)
+                .centerCrop()
+                .into(avatarPatient);
+
+        avatarPatient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 10/28/2015  update avatar
+            }
+        });
+    }
 
     //Initialize Drawer
     private void DisplayDrawer() {
@@ -166,13 +181,15 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void Display(int position){
-        Fragment fragment = null;
         switch (position) {
             case 0:
                 fragment = new HomeFragment();
                 break;
             case 1:
+                Bundle bundle = new Bundle();
+                bundle.putString("telehealthUID", uidTelehealth.getString("uid", null));
                 fragment = new InformationFragment();
+                fragment.setArguments(bundle);
                 break;
             case 2:
                 fragment = new TelehealthFragment();
@@ -185,7 +202,7 @@ public class MainActivity extends AppCompatActivity{
         }
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(null).commit();
             drawerCategories.closeDrawer(Gravity.LEFT);
         } else {
             Log.e("MainActivity", "Error in creating fragment");

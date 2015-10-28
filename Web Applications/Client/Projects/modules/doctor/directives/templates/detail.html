@@ -114,8 +114,8 @@
 												<div class="form-group">
 													<label class="control-label col-md-5">Title</label>
 													<div class="col-md-7">
-														<select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title">
-															<option value="">Select Title</option>
+														<select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Titles">
+															<option value=''>Select Title</option>
 														</select>
 													</div>
 												</div>
@@ -150,7 +150,7 @@
 													<div class="col-md-7">
 														<div class="input-icon">
 															<i class="fa fa-calendar"></i>
-	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="info.DOB">
+	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="info.DOB" ng-pattern="/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/">
 														</div>
 													</div>
 												</div>
@@ -175,7 +175,7 @@
 												<div class="form-group">
 													<label class="control-label col-md-5">Provider Number</label>
 													<div class="col-md-7">
-														<input type="text" placeholder="Provider Number" class="form-control" only-number ng-model="info.ProviderNumber">
+														<input type="text" placeholder="Provider Number" class="form-control" ng-model="info.ProviderNumber">
 													</div>
 												</div>
 												<!-- Provider Number -->

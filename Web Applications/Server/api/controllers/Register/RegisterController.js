@@ -35,6 +35,8 @@ module.exports = {
 
 	/*
 		SendSMS
+		Input: PhoneNumber and Verify
+		Ouput: success or error
 	*/
 	SendSMS: function(req, res) {
         if (typeof req.body.data == 'undefined' || !toJson(req.body.data)) {
@@ -125,73 +127,79 @@ module.exports = {
 		var data = req.body.data;
 		var dated = moment(data.CreatedDate, 'YYYY-MM-DD HH:mm:ss Z');
 
+		// Variable
 		var userInfo={
 			UserName: data.UserName,
 			Email: data.Email,
 			PhoneNumber: data.PhoneNumber,
 			Password: data.Password
 		};
-		
-		Services.UserAccount.CreateUserAccount(userInfo)
-		.then(function(result) {
+		// Create Account
+		sequelize.transaction().then(function(t){
+			return Services.UserAccount.CreateUserAccount(userInfo, t)
+			.then(function(result) {
 
-			// Create Role
-			var info_id = {
-				ID: result.ID
-			};
-			var info_role = {
-				RoleCode: data.Type
-			};
-
-			Services.UserRole.CreateUserRoleWhenCreateUser(result, info_role)
-			.then(function(success) {
-
-				data.CreatedDate = dated;
-				data.CreatedBy = req.user?req.user.ID:null;
-				data.UserAccountID = result.ID;
-				if(data.Title) {
-					data.Title = data.Title.toString();
-				} else {
-					data.Title = '';
-				}
-
-				Services.Doctor.CreateDoctor(data)
+				// Create Role
+				var info_id = {
+					ID: result.ID
+				};
+				var info_role = {
+					RoleCode: data.Type
+				};
+				// Create Role
+				Services.UserRole.CreateUserRoleWhenCreateUser(result, info_role, t)
 				.then(function(success) {
-					var info_actv = {
-						UserUID: result.UID,
-						Type: HelperService.const.systemType.website,
-						CreatedBy: result.ID
-					};
 
-					// Activation
-					Services.UserActivation
-					.CreateUserActivation(info_actv)
-					.then(function(result_actv) {
-						var info_show = {
-							UID: result.UID,
-							VerificationCode: result_actv.VerificationCode
+					data.CreatedDate = dated;
+					data.CreatedBy = req.user?req.user.ID:null;
+					data.UserAccountID = result.ID;
+					if(data.Title) {
+						data.Title = data.Title.toString();
+					} else {
+						data.Title = '';
+					}
+					// Create Doctor
+					Services.Doctor.CreateDoctor(data, t)
+					.then(function(success) {
+						t.commit();
+						var info_actv = {
+							UserUID: result.UID,
+							Type: HelperService.const.systemType.website,
+							CreatedBy: result.ID
 						};
 
-						res.ok({
-							data: info_show
+						// Activation
+						Services.UserActivation.CreateUserActivation(info_actv)
+						.then(function(result_actv) {
+							
+							var info_show = {
+								UID: result.UID,
+								VerificationCode: result_actv.VerificationCode
+							};
+
+							res.ok({
+								data: info_show
+							});
+						})
+						.catch(function(err) {
+							res.serverError(ErrorWrap(err));
 						});
+
 					})
 					.catch(function(err) {
+						t.rollback();
 						res.serverError(ErrorWrap(err));
 					});
-
 				})
 				.catch(function(err) {
+					t.rollback();
 					res.serverError(ErrorWrap(err));
 				});
 			})
 			.catch(function(err) {
+				t.rollback();
 				res.serverError(ErrorWrap(err));
 			});
-
-		})
-		.catch(function(err) {
-			res.serverError(ErrorWrap(err));
 		});
 
 	},
@@ -203,16 +211,14 @@ module.exports = {
 	ConfirmActivated: function(req, res) {
 
 		var data = req.body.data;
-
+		// Variable
 		var info = {
 			UserUID: data.UserUID,
 			SystemType: HelperService.const.systemType.website,
 			VerificationCode: data.VerificationCode,
 			Method: HelperService.const.verificationMethod.code
 		};
-
-		console.log(info);
-
+		// Confirm Activate Code
 		Services.UserActivation.Activation(info)
 		.then(function(result) {
 			res.ok(result);
@@ -224,7 +230,8 @@ module.exports = {
 	},
 	/*
 		CreateCode: Create new verifyCode
-		Input: UID, 
+		Input: UID
+		Output: UID, VerificationCode
 	*/
 	CreateCode: function(req, res) {
 

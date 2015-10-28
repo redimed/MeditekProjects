@@ -44,10 +44,9 @@ angular.module('app.authentication.doctor.directive.list', [])
 				LastName: '',
 				Email: '',
 				PhoneNumber: '',
-				sortFisrtName: 'DESC',
+				sortFirstName: 'DESC',
 				sortLastName: 'DESC',
-				sortEmail: 'DESC',
-				sortEnable: 'Y'
+				sortEmail: 'DESC'
 
 			}
 
@@ -90,8 +89,8 @@ angular.module('app.authentication.doctor.directive.list', [])
 			// Sort
 			var sortBy = function(options) {
 				switch(options.field) {
-					case 'sortFisrtName' : {
-						scope.doctor.search.sortFisrtName = options.sort;
+					case 'sortFirstName' : {
+						scope.doctor.search.sortFirstName = options.sort;
 						break;
 					}
 					case 'sortLastName': {
@@ -100,10 +99,6 @@ angular.module('app.authentication.doctor.directive.list', [])
 					}
 					case 'sortEmail': {
 						scope.doctor.search.sortEmail = options.sort;
-						break;
-					}
-					case 'sortEnable': {
-						scope.doctor.search.sortEnable = options.sort;
 						break;
 					}
 				}

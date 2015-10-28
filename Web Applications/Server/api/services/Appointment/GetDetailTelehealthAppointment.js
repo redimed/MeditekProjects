@@ -8,62 +8,48 @@ module.exports = function(appointmentUID) {
     var $q = require('q');
     var defer = $q.defer();
     Appointment.findOne({
-            attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status', 'CreatedDate'],
+            attributes: Services.AttributesTeleAppt.Appointment(),
             include: [{
                 model: TelehealthAppointment,
-                attributes: ['UID', 'Fund', 'Correspondence', 'RefName',
-                    'RefHealthLink', 'RefAddress', 'RefTelePhone',
-                    'RefPostCode', 'RefSignature', 'RefDate', 'RefProviderNumber',
-                    'RefDurationOfReferal', 'PresentComplain', 'Allergy'
-                ],
+                attributes: Services.AttributesTeleAppt.TelehealthAppointment(),
                 required: false,
                 include: [{
                     model: PatientAppointment,
-                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName',
-                        'DOB', 'Email', 'Address1', 'Address2', 'Suburb', 'Postcode',
-                        'Email', 'WorkPhoneNumber', 'HomePhoneNumber'
-                    ],
+                    attributes: Services.AttributesTeleAppt.PatientAppt,
                     required: false,
                 }, {
                     model: ExaminationRequired,
-                    attributes: ['Private', 'Public', 'DVA', 'WorkersComp', 'MVIT'],
+                    attributes: Services.AttributesTeleAppt.ExaminationRequired,
                     required: false
                 }, {
                     model: PreferredPractitioner,
-                    attributes: ['Name'],
+                    attributes: Services.AttributesTeleAppt.PreferredPractitioner,
                     required: false
                 }, {
                     model: ClinicalDetail,
-                    attributes: ['UID', 'Section', 'Category', 'Type', 'Name', 'Value', 'ClinicalNote', 'Description'],
+                    attributes: Services.AttributesTeleAppt.ClinicalDetail,
                     required: false
                 }, {
                     model: Doctor,
-                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName',
-                        'HealthLink', 'Address1', 'Address2', 'WorkPhoneNumber',
-                        'Postcode', 'ProviderNumber', 'Signature'
-                    ],
+                    attributes: Services.AttributesTeleAppt.Doctor,
                     required: false
                 }]
             }, {
                 model: Doctor,
-                attributes: ['ID', 'UID', 'FirstName', 'MiddleName', 'LastName',
-                    'DOB', 'Type', 'Email', 'HomePhoneNumber', 'WorkPhoneNumber'
-                ],
+                attributes: Services.AttributesTeleAppt.Doctor,
                 required: false,
                 include: [{
                     model: Department,
-                    attributes: ['ID', 'UID', 'DepartmentCode', 'DepartmentName', 'Description'],
+                    attributes: Services.AttributesTeleAppt.Department,
                     required: false
                 }]
             }, {
                 model: Patient,
-                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB',
-                    'Gender', 'Address1', 'Address2', 'Suburb', 'Postcode', 'Email', 'HomePhoneNumber', 'WorkPhoneNumber'
-                ],
+                attributes: Services.AttributesTeleAppt.Patient,
                 required: false,
                 include: [{
                     model: UserAccount,
-                    attributes: ['UserName', 'Email', 'PhoneNumber', 'Activated'],
+                    attributes: Services.AttributesTeleAppt.UserAccount,
                     required: false
                 }]
             }, {

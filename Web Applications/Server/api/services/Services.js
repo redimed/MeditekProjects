@@ -36,5 +36,6 @@ module.exports = {
     UpdateClinicalDetail: require('./Appointment/UpdateClinicalDetail'),
     UpdateExaminationRequired: require('./Appointment/UpdateExaminationRequired'),
     UpdatePreferredPractitioner: require('./Appointment/UpdatePreferredPractitioner'),
-    UpdateTelehealthPatientAppointment: require('./Appointment/UpdateTelehealthPatientAppointment')
+    UpdateTelehealthPatientAppointment: require('./Appointment/UpdateTelehealthPatientAppointment'),
+    AttributesTeleAppt: require('./Appointment/AttributesTeleAppt')
 };

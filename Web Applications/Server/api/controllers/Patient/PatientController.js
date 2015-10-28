@@ -9,8 +9,6 @@ module.exports = {
 		Services.Patient.CreatePatient(data)
 		.then(function(patient){
 			if(patient!==undefined && patient!==null && patient!=='' && patient.length!==0){
-				console.log(patient.result);
-				console.log(patient.UserAccountUID);
 				var info = {
 					UID            : patient.result.UID,
 					FirstName      : patient.result.FirstName,
@@ -116,7 +114,8 @@ module.exports = {
 			if(info!=null && info!=undefined && info!='' && info.length!=0){
 				FileUpload.findAll({
 					where:{
-						UserAccountID : info[0].UserAccountID
+						UserAccountID : info[0].UserAccountID,
+						Enable : 'Y'
 					}
 				})
 				.then(function(success){

@@ -31,7 +31,7 @@
 								<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-keypress="Search(search,$event.which)">
 							</td>
 							<td style="width:10%;">
-								<select class="form-control" ng-keypress="Search(search,$event.which)" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select>
+								<select class="form-control" ng-change="Search(search,flag)" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select>
 							</td>
 						</tr>
 					</tbody>
@@ -60,7 +60,7 @@
 					<td ng-click="clickOpen(p.UID)">{{p.stt}}</td>
 					<td ng-repeat="i in items" ng-click="clickOpen(p.UID)">{{i.field=='UserAccount'?p[i.field]['PhoneNumber']:i.field!='Gender'?p[i.field]:p[i.field]=='M'?'Male':'Female'}}</td>
 					<td style="width:10%; text-align:center;" ng-if="isShowSelectButton" >
-						<i ng-click="selectPatient(p.UID)"style="font-size:150%;" ng-class="{'glyphicon glyphicon-check':p.UID === uidReturn,'glyphicon glyphicon-unchecked':p.UID !== uidReturn}"></i>
+						<i ng-click="selectPatient(p.UID)"style="font-size:150%;" ng-class="{'fa fa-check-square-o':p.UID === uidReturn,'fa fa-square-o':p.UID !== uidReturn}"></i>
 						<!-- <input type="checkbox" class="form-control" ng-model="checked" style="width:30%;" ng-click="selectPatient(p.UID)"/> -->
 					</td>
 				</tr>

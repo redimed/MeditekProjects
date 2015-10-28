@@ -67,7 +67,6 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 				{id:"3", name:'Dr'}
 			];
 			AuthenticationService.getListCountry().then(function(response){
-				console.log(response);
 				scope.countries = response.data;
 			},function(err){
 				console.log("Server Error");
@@ -148,7 +147,6 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 
 			scope.aaaa = function(){
 				scope.ermsg.DOB='';
-				console.log(scope.data.DOB);
 			}
 
 			scope.createPatient = function(data) {

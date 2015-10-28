@@ -2,6 +2,17 @@ var app = angular.module('app.authentication.WAAppointment.GP.controller',[
 ]);
 
 app.controller('WAAppointmentGPCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval){
+
+    $scope.Skin_cancer_Others = false;
+    $scope.info = {};
+
+    $scope.click_other = function(){
+        console.log($scope.info.txtSkin_cancer_Others)
+        // $scope.Skin_cancer_Others = !$scope.Skin_cancer_Others;
+        // $scope.txtSkin_cancer_Others = '';
+    }
+
+    
 	$scope.SendRequestUploadFile = function() {
         for (var i = 0; i < uploader.queue.length; i++) {
             console.log(' uploader.queue', uploader.queue);

@@ -1,425 +1,245 @@
-<div class="panel-group accordion" id="clinical_info">
-    <!-- 1 -->
+<div class="panel group">
+    <!-- relevant past medical history -->
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h4 class="panel-title uppercase bold">
-                <a class="accordion-toggle accordion-toggle-styled" 
-                    data-toggle="collapse" 
-                    data-parent="#clinical_info" 
-                    href="WAAppointment/GP#clinical_info_1">
-                    <b>Relevant Past Medical History</b>
-                </a>
-            </h4>
+            <h3 class="panel-title uppercase bold">relevant past medical history</h3>
         </div>
-        <div id="clinical_info_1" class="panel-collapse in">
-            <div class="panel-body" style="padding:2em;">
-                <div class="row">
-                    <div class="col-md-4 col-sm-4">
-                        <div class="form-group">
-                            <label class="control-label">
-                                <b></b>
-                            </label>
-                            <textarea class="form-control" rows="10">Up load referral letter
-                            </textarea>
-                        </div>
+        <div class="panel-body" style="padding: 2em;">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">
+                            <b></b>
+                        </label>
+                        <textarea class="form-control" rows="10" disabled>Up load referral letter
+                        </textarea>
                     </div>
-                    <div class="col-md-8 col-sm-8">
-                        <div class="table-scrollable table-scrollable-borderless">
-                            <table class="table table-hover table-light">
-                                <thead>
-                                    <tr class="uppercase">
-                                        <th width="30%">Name</th>
-                                        <th ng-show="uploader.isHTML5">Size</th>
-                                        <th>Date</th>
-                                        <th>Body Part</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="item in uploader.queue">
-                                        <td><strong>{{ item.file.name }}</strong></td>
-                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                                        <td>
-                                            {{}}
-                                        </td>
-                                        <td nowrap>
-                                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                                <span class="glyphicon glyphicon-trash"></span> Remove
-                                            </button>
-                                            <button class="btn blue btn-xs" ng-click="ModalBodyPart()">
-                                                <span class="fa fa-file-image-o"></span> Select Body Part
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div>
-                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-                        </div>
-                        <div class="input-inline">
-                            <div class="input-icon">
-                                <span class="btn blue-soft btn-file">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                    <span class="fileinput-new">&nbsp;Select Document</span>
-                                <input type="file" nv-file-select="" uploader="uploader" multiple/>
-                                </span>
-                                <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                                    <span class="glyphicon glyphicon-trash"></span> Remove all
-                                </button>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th width="30%">Name</th>
+                                    <th ng-show="uploader.isHTML5">Size</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 2 -->
+    <!-- relevant social factors -->
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h4 class="panel-title uppercase bold">
-                <a class="accordion-toggle accordion-toggle-styled collapsed" 
-                    data-toggle="collapse" 
-                    data-parent="#clinical_info" 
-                    href="WAAppointment/GP#clinical_info_2"> 
-                    <b>Relevant Social Factors</b>
-                </a>
-            </h4>
+            <h3 class="panel-title uppercase bold">relevant social factors</h3>
         </div>
-        <div id="clinical_info_2" class="panel-collapse collapse">
-            <div class="panel-body" style="padding:2em;">
-                <div class="row">
-                    <div class="col-md-4 col-sm-4">
-                        <div class="form-group">
-                            <label class="control-label">
-                                <b></b>
-                            </label>
-                            <textarea class="form-control" rows="10">Up load referral letter
-                            </textarea>
-                        </div>
+        <div class="panel-body" style="padding: 2em;">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">
+                            <b></b>
+                        </label>
+                        <textarea class="form-control" rows="10" disabled>Up load referral letter
+                        </textarea>
                     </div>
-                    <div class="col-md-8 col-sm-8">
-                        <div class="table-scrollable table-scrollable-borderless">
-                            <table class="table table-hover table-light">
-                                <thead>
-                                    <tr class="uppercase">
-                                        <th width="30%">Name</th>
-                                        <th ng-show="uploader.isHTML5">Size</th>
-                                        <th>Date</th>
-                                        <th>Body Part</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="item in uploader.queue">
-                                        <td><strong>{{ item.file.name }}</strong></td>
-                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                                        <td>
-                                            {{}}
-                                        </td>
-                                        <td nowrap>
-                                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                                <span class="glyphicon glyphicon-trash"></span> Remove
-                                            </button>
-                                            <button class="btn blue btn-xs" ng-click="ModalBodyPart()">
-                                                <span class="fa fa-file-image-o"></span> Select Body Part
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div>
-                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-                        </div>
-                        <div class="input-inline">
-                            <div class="input-icon">
-                                <span class="btn blue-soft btn-file">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                    <span class="fileinput-new">&nbsp;Select Document</span>
-                                <input type="file" nv-file-select="" uploader="uploader" multiple/>
-                                </span>
-                                <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                                    <span class="glyphicon glyphicon-trash"></span> Remove all
-                                </button>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th width="30%">Name</th>
+                                    <th ng-show="uploader.isHTML5">Size</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 3 -->
+    <!-- allergies -->
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h4 class="panel-title uppercase bold">
-                <a class="accordion-toggle accordion-toggle-styled collapsed" 
-                    data-toggle="collapse" 
-                    data-parent="#clinical_info" 
-                    href="WAAppointment/GP#clinical_info_3"> 
-                    <b>Allergies</b>
-                </a>
-            </h4>
+            <h3 class="panel-title uppercase bold">allergies</h3>
         </div>
-        <div id="clinical_info_3" class="panel-collapse collapse">
-            <div class="panel-body" style="padding:2em;">
-                <div class="row">
-                    <div class="col-md-4 col-sm-4">
-                        <div class="form-group">
-                            <label class="control-label">
-                                <b></b>
-                            </label>
-                            <textarea class="form-control" rows="10">
-                            </textarea>
-                        </div>
+        <div class="panel-body" style="padding: 2em;">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">
+                            <b></b>
+                        </label>
+                        <textarea class="form-control" rows="10" disabled>
+                        </textarea>
                     </div>
-                    <div class="col-md-8 col-sm-8">
-                        <div class="table-scrollable table-scrollable-borderless">
-                            <table class="table table-hover table-light">
-                                <thead>
-                                    <tr class="uppercase">
-                                        <th width="30%">Name</th>
-                                        <th ng-show="uploader.isHTML5">Size</th>
-                                        <th>Date</th>
-                                        <th>Body Part</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="item in uploader.queue">
-                                        <td><strong>{{ item.file.name }}</strong></td>
-                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                                        <td>
-                                            {{}}
-                                        </td>
-                                        <td nowrap>
-                                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                                <span class="glyphicon glyphicon-trash"></span> Remove
-                                            </button>
-                                            <button class="btn blue btn-xs" ng-click="ModalBodyPart()">
-                                                <span class="fa fa-file-image-o"></span> Select Body Part
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div>
-                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-                        </div>
-                        <div class="input-inline">
-                            <div class="input-icon">
-                                <span class="btn blue-soft btn-file">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                    <span class="fileinput-new">&nbsp;Select Document</span>
-                                <input type="file" nv-file-select="" uploader="uploader" multiple/>
-                                </span>
-                                <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                                    <span class="glyphicon glyphicon-trash"></span> Remove all
-                                </button>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th width="30%">Name</th>
+                                    <th ng-show="uploader.isHTML5">Size</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 4 -->
+    <!-- current medication -->
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h4 class="panel-title uppercase bold">
-                <a class="accordion-toggle accordion-toggle-styled collapsed" 
-                    data-toggle="collapse" 
-                    data-parent="#clinical_info" 
-                    href="WAAppointment/GP#clinical_info_4"> 
-                    <b>Current Medication</b>
-                </a>
-            </h4>
+            <h3 class="panel-title uppercase bold">current medication</h3>
         </div>
-        <div id="clinical_info_4" class="panel-collapse collapse">
-            <div class="panel-body" style="padding:2em;">
-                <div class="row">
-                    <div class="col-md-4 col-sm-4">
-                        <div class="form-group">
-                            <label class="control-label">
-                                <b></b>
-                            </label>
-                            <textarea class="form-control" rows="10">
-                            </textarea>
-                        </div>
+        <div class="panel-body" style="padding: 2em;"> 
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">
+                            <b></b>
+                        </label>
+                        <textarea class="form-control" rows="10" disabled>
+                        </textarea>
                     </div>
-                    <div class="col-md-8 col-sm-8">
-                        <div class="table-scrollable table-scrollable-borderless">
-                            <table class="table table-hover table-light">
-                                <thead>
-                                    <tr class="uppercase">
-                                        <th width="30%">Name</th>
-                                        <th ng-show="uploader.isHTML5">Size</th>
-                                        <th>Date</th>
-                                        <th>Body Part</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="item in uploader.queue">
-                                        <td><strong>{{ item.file.name }}</strong></td>
-                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                                        <td>
-                                            {{}}
-                                        </td>
-                                        <td nowrap>
-                                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                                <span class="glyphicon glyphicon-trash"></span> Remove
-                                            </button>
-                                            <button class="btn blue btn-xs" ng-click="ModalBodyPart()">
-                                                <span class="fa fa-file-image-o"></span> Select Body Part
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div>
-                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-                        </div>
-                        <div class="input-inline">
-                            <div class="input-icon">
-                                <span class="btn blue-soft btn-file">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                    <span class="fileinput-new">&nbsp;Select Document</span>
-                                <input type="file" nv-file-select="" uploader="uploader" multiple/>
-                                </span>
-                                <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                                    <span class="glyphicon glyphicon-trash"></span> Remove all
-                                </button>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th width="30%">Name</th>
+                                    <th ng-show="uploader.isHTML5">Size</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 5 -->
+    <!-- relevant investigation and tests (please attach results) -->
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h4 class="panel-title uppercase bold">
-                <a class="accordion-toggle accordion-toggle-styled collapsed" 
-                    data-toggle="collapse" 
-                    data-parent="#clinical_info" 
-                    href="WAAppointment/GP#clinical_info_5"> 
-                    <b>Relevant Investigations and Tests (please attach results)</b>
-                </a>
-            </h4>
+            <h3 class="panel-title uppercase bold">relevant investigation and tests (please attach results)</h3>
         </div>
-        <div id="clinical_info_5" class="panel-collapse collapse">
-            <div class="panel-body" style="padding:2em;">
-                <div class="row">
-                    <div class="col-md-4 col-sm-4">
-                        <div class="form-group">
-                            <label class="control-label">
-                                <b></b>
-                            </label>
-                            <textarea class="form-control" rows="10">
-                            </textarea>
-                        </div>
+        <div class="panel-body" style="padding: 2em;">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">
+                            <b></b>
+                        </label>
+                        <textarea class="form-control" rows="10" disabled>
+                        </textarea>
                     </div>
-                    <div class="col-md-8 col-sm-8">
-                        <div class="table-scrollable table-scrollable-borderless">
-                            <table class="table table-hover table-light">
-                                <thead>
-                                    <tr class="uppercase">
-                                        <th width="30%">Name</th>
-                                        <th ng-show="uploader.isHTML5">Size</th>
-                                        <th>Date</th>
-                                        <th>Body Part</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="item in uploader.queue">
-                                        <td><strong>{{ item.file.name }}</strong></td>
-                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                                        <td>
-                                            {{}}
-                                        </td>
-                                        <td nowrap>
-                                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                                <span class="glyphicon glyphicon-trash"></span> Remove
-                                            </button>
-                                            <button class="btn blue btn-xs" ng-click="ModalBodyPart()">
-                                                <span class="fa fa-file-image-o"></span> Select Body Part
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div>
-                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-                        </div>
-                        <div class="input-inline">
-                            <div class="input-icon">
-                                <span class="btn blue-soft btn-file">
-                                    <i class="glyphicon glyphicon-folder-open"></i>
-                                    <span class="fileinput-new">&nbsp;Select Document</span>
-                                <input type="file" nv-file-select="" uploader="uploader" multiple/>
-                                </span>
-                                <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                                    <span class="glyphicon glyphicon-trash"></span> Remove all
-                                </button>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th width="30%">Name</th>
+                                    <th ng-show="uploader.isHTML5">Size</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 6 -->
+    <!-- pathology provider and radiology provider -->
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h4 class="panel-title uppercase bold">
-                <a class="accordion-toggle accordion-toggle-styled collapsed" 
-                    data-toggle="collapse" 
-                    data-parent="#clinical_info" 
-                    href="WAAppointment/GP#clinical_info_6"> 
-                    Pathology provider and Radiology provider
-                </a>
-            </h4>
+            <h3 class="panel-title uppercase bold">pathology provider and radiology provider</h3>
         </div>
-        <div id="clinical_info_6" class="panel-collapse collapse">
-            <div class="panel-body" style="padding:2em;">
-                <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group form-md-line-input">
-                            <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="Pathology provider">
-                                <label class="control-label">Pathology provider</label>
-                                <div class="form-control-focus"> </div>
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </div>
+        <div class="panel-body" style="padding: 2em;">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group form-md-line-input">
+                        <div class="input-icon">
+                            <div class="form-control" data-display="">...</div>
+                            <label class="control-label">Pathology provider</label>
+                            <i class="glyphicon glyphicon-pencil"></i>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group form-md-line-input">
-                            <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="Radiology provider">
-                                <label class="control-label">Radiology provider</label>
-                                <div class="form-control-focus"> </div>
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group form-md-line-input">
+                        <div class="input-icon">
+                            <div class="form-control" data-display="">...</div>
+                            <label class="control-label">Radiology provider</label>
+                            <i class="glyphicon glyphicon-pencil"></i>
                         </div>
                     </div>
-                    <div class="col-md-12 col-sm-12">
-                        <label class="control-label">Other Notes</label>
-                        <textarea class="form-control" rows="5"></textarea>
-                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <label class="control-label">Other Notes</label>
+                    <textarea class="form-control" rows="5" disabled></textarea>
                 </div>
             </div>
         </div>
     </div>
 </div>
+

@@ -23,9 +23,6 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    });
 
 		    // CALLBACKS
-		    uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-		        console.info('onWhenAddingFileFailed', item, filter, options);
-		    };
 		    uploader.onAfterAddingFile = function (fileItem) {
 		    	if($scope.info.img){
 		    		PatientService.getfileUID($scope.info).then(function(response){
@@ -37,34 +34,10 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    		$scope.info.img_change = false;
 		    	}
 		    };
+		    // uploader.onSuccessItem = function (fileItem, response, status, headers) {
+		    //     console.info('onSuccessItem', fileItem, response, status, headers);
+		    // };
 
-		    uploader.onAfterAddingAll = function (addedFileItems) {
-		        console.info('onAfterAddingAll', addedFileItems);
-		    };
-		    uploader.onBeforeUploadItem = function (item) {
-		        console.info('onBeforeUploadItem', item);
-		    };
-		    uploader.onProgressItem = function (fileItem, progress) {
-		        console.info('onProgressItem', fileItem, progress);
-		    };
-		    uploader.onProgressAll = function (progress) {
-		        console.info('onProgressAll', progress);
-		    };
-		    uploader.onSuccessItem = function (fileItem, response, status, headers) {
-		        console.info('onSuccessItem', fileItem, response, status, headers);
-		    };
-		    uploader.onErrorItem = function (fileItem, response, status, headers) {
-		        console.info('onErrorItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCancelItem = function (fileItem, response, status, headers) {
-		        console.info('onCancelItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
-		        console.info('onCompleteItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCompleteAll = function () {
-		        console.info('onCompleteAll');
-		    };
 		},
 		link: function(scope, elem, attrs){
 			scope.imgDelete;
@@ -81,7 +54,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    };
 
 		    scope.removeImg = function(){
-		    	scope.info.img_change =false;
+		    	scope.info.img_change =null;
 		    	scope.uploader.queue.length = 0;
 		    }
 
@@ -105,17 +78,25 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						PatientService.updatePatient(scope.info).then(function(response){
 							if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
 							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
-							   	$http({
-								  method: 'GET',
-								  url: 'http://192.168.1.2:3005/api/enableFile/false/'+scope.imgDelete
-								}).then(function (response) {
+							   	if(scope.info.img){
+								   	$http({
+									  method: 'GET',
+									  url: 'http://192.168.1.2:3005/api/enableFile/false/'+scope.imgDelete
+									}).then(function (response) {
+										scope.uploader.queue[0].formData[0]={};
+										scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
+										scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+										scope.uploader.uploadAll();
+									},function (err) {
+										console.log(err);
+									});
+								}
+								else{
 									scope.uploader.queue[0].formData[0]={};
 									scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
 									scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
 									scope.uploader.uploadAll();
-								},function (err) {
-									console.log(err);
-								});
+								}
 							}
 							toastr.success("update success!!!","SUCCESS");
 							scope.onCancel();
@@ -138,7 +119,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				if(response.message=="success"){
 					scope.info = response.data[0];
 					scope.info.img = scope.info.FileUID?" http://192.168.1.2:3005/api/downloadFile/300/"+scope.info.FileUID:null;
-					scope.info.img_change=false;
+					scope.info.img_change = null;
 					oriInfo = angular.copy(scope.info);
 				}
 				else{

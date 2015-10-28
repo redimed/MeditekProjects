@@ -47,7 +47,7 @@ passport.use(new LocalStrategy({
 	function(req, u, p, done) {//req: ..., UserUID, DeviceID, VerificationToken
 		console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>Passport authentication");
 		//Kiểm tra user đang login bằng email hay phoneNumber hay username
-		var whereClause={};
+		var whereClause={Enable:'Y'};
 		var loginInfo=req.body;
 		if(o.checkData(loginInfo.UserUID))
 		{

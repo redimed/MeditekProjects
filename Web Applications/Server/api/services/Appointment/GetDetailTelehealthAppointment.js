@@ -4,9 +4,43 @@ input: UID Appointment
 output: - success: information details Telehealth Appointment
         -failed: [transaction] get details Telehealth Appointment, error message
  */
-module.exports = function(appointmentUID) {
+module.exports = function(appointmentUID, userInfo) {
     var $q = require('q');
     var defer = $q.defer();
+    //add roles
+    var filter = {
+        InternalPractitioner: [],
+        ExternalPractitioner: [],
+        Appointment: [{
+            '$and': {
+                UID: appointmentUID
+            }
+        }]
+    };
+    var role = HelperService.GetRole(userInfo.roles);
+    if (role.isInternalPractitioner) {
+        var filterRoleTemp = {
+            '$and': {
+                ID: userInfo.ID
+            }
+        };
+        filter.InternalPractitioner.push(filterRoleTemp);
+    } else if (role.isExternalPractitioner) {
+        var filterRoleTemp = {
+            '$and': {
+                CreatedBy: userInfo.ID
+            }
+        };
+        filter.ExternalPractitioner.push(filterRoleTemp);
+    } else if (!role.isAdmin &&
+        !role.isAssistant) {
+        var filterRoleTemp = {
+            '$and': {
+                UID: null
+            }
+        };
+        filter.Appointment.push(filterRoleTemp);
+    }
     Appointment.findOne({
             attributes: Services.AttributesTeleAppt.Appointment(),
             include: [{
@@ -32,7 +66,8 @@ module.exports = function(appointmentUID) {
                 }, {
                     model: Doctor,
                     attributes: Services.AttributesTeleAppt.Doctor(),
-                    required: false
+                    required: false,
+                    where: filter.ExternalPractitioner
                 }]
             }, {
                 model: Doctor,
@@ -42,7 +77,8 @@ module.exports = function(appointmentUID) {
                     model: Department,
                     attributes: Services.AttributesTeleAppt.Department(),
                     required: false
-                }]
+                }],
+                where: filter.InternalPractitioner
             }, {
                 model: Patient,
                 attributes: Services.AttributesTeleAppt.Patient(),
@@ -63,9 +99,7 @@ module.exports = function(appointmentUID) {
                     required: false
                 }]
             }],
-            where: {
-                UID: appointmentUID
-            }
+            where: filter.Appointment
         })
         .then(function(detailApptTelehealth) {
             defer.resolve({

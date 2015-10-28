@@ -28,7 +28,7 @@ module.exports = function(data) {
                     if (HelperService.CheckExistData(appointment)) {
                         IDAppointment = appointment.ID;
                         IDTelehealthAppointment = appointment.TelehealthAppointment.ID;
-                        //delete Appointment
+                        //disable Appointment
                         return Appointment.update({
                             Enable: 'N'
                         }, {
@@ -46,7 +46,7 @@ module.exports = function(data) {
                     });
                 })
                 .then(function(appointmentDeleted) {
-                    //delete Telehealth Appointment
+                    //disable Telehealth Appointment
                     return TelehealthAppointment.update({
                         Enable: 'N'
                     }, {

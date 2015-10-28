@@ -56,7 +56,7 @@ module.exports = {
     */
     GetDetailTelehealthAppointment: function(req, res) {
         var UID = req.params.UID;
-        Services.GetDetailTelehealthAppointment(UID)
+        Services.GetDetailTelehealthAppointment(UID, req.user)
             .then(function(success) {
                 res.ok(success);
             })
@@ -80,8 +80,7 @@ module.exports = {
             res.serverError('data failed');
         } else {
             var role = HelperService.GetRole(req.user.roles);
-            if (role.isInternalPractitioner ||
-                role.isAdmin ||
+            if (role.isAdmin ||
                 role.isAssistant) {
                 Services.UpdateRequestTelehealthAppointment(data, req.user)
                     .then(function(success) {

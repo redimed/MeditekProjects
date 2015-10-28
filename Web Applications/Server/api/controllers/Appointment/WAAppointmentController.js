@@ -5,33 +5,125 @@ module.exports = {
     output: -success: transaction created new WA Appointment
             -error: [transaction] created new WA Appointment, error message
     */
-    RequestWAAppointment: function(req, res) {},
+    RequestWAAppointment: function(req, res) {
+        var data = HelperService.CheckPostRequest(req);
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            Services.RequestWAAppointment(data, req.user)
+                .then(function(success) {
+                    success.transaction.commit();
+                    res.ok('success');
+                })
+                .catch(function(err) {
+                    if (HelperService.CheckExistData(err) &&
+                        HelperService.CheckExistData(err.transaction)) {
+                        err.transaction.rollback();
+                    }
+                    res.serverError(ErrorWrap(err.error));
+                });
+        }
+    },
     /*
     GetListWAAppointment - Controller: get list WA Appointment with condition received
     input: information filter list WA Appointment, information user filter
     output: -success: list WA Appointment
             -error: [transaction] load list WA Appointment, error message.
     */
-    GetListWAAppointment: function(req, res) {},
+    GetListWAAppointment: function(req, res) {
+        var data = HelperService.CheckPostRequest(req);
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            Services.GetListWAAppointment(data, req.user)
+                .then(function(success) {
+                    res.ok(success.data);
+                })
+                .catch(function(err) {
+                    if (HelperService.CheckPostRequest(err) &&
+                        HelperService.CheckPostRequest(err.transaction)) {
+                        err.transaction.rollback();
+                    }
+                    res.serverError(ErrorWrap(err));
+                });
+        }
+    },
     /*
        GetDetailWAAppointment - Controller: get information detail WA Appointment
        input: UID WA Appointment
        output: -success: information details WA Appointment
                -error: [transaction] information details WA Appointment, error message
        */
-    GetDetailWAAppointment: function(req, res) {},
+    GetDetailWAAppointment: function(req, res) {
+        var UID = req.params.UID;
+        Services.GetDetailWAAppointment(UID)
+            .then(function(success) {
+                res.ok(success);
+            })
+            .catch(function(err) {
+                if (HelperService.CheckPostRequest(err) &&
+                    HelperService.CheckPostRequest(err.transaction)) {
+                    err.transaction.rollback();
+                }
+                res.serverError(ErrorWrap(err));
+            });
+    },
     /*
-    UpdateWAAppointment - Controller: Update information WA Appointment
+    UpdateRequestWAAppointment - Controller: Update information WA Appointment
     input: new information WA Appointment
     output: - success: transaction updated WA Appointment
             - failed: [transaction] updated WA Appointment, error message
     */
-    UpdateWAAppointment: function(req, res) {},
+    UpdateRequestWAAppointment: function(req, res) {
+        var data = HelperService.CheckPostRequest(req);
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            var role = HelperService.GetRole(req.user.roles);
+            if (role.isInternalPractitioner ||
+                role.isAdmin ||
+                role.isAssistant) {
+                Services.UpdateRequestWAAppointment(data, req.user)
+                    .then(function(success) {
+                        success.transaction.commit();
+                        res.ok('success');
+                    })
+                    .catch(function(err) {
+                        if (HelperService.CheckPostRequest(err) &&
+                            HelperService.CheckPostRequest(err.transaction)) {
+                            err.transaction.rollback();
+                        }
+                        res.serverError(ErrorWrap(err.error));
+                    });
+            } else {
+                res.serverError('failed');
+            }
+
+        }
+    },
     /*
     DisableWAAppointment - Controller: Delete  a WA Appointment
     input: UID Appointment
     output: - success: transaction updated Enable is 'N' WA Appointment
             - error: [transaction] updated Enable is 'N' WA Appointment, error message
     */
-    DisableWAAppointment: function(req, res) {}
+    DisableWAAppointment: function(req, res) {
+        var data = HelperService.CheckPostRequest(req);
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            Services.DisableWAAppointment(data)
+                .then(function(success) {
+                    success.transaction.commit();
+                    res.ok('success');
+                })
+                .catch(function(err) {
+                    if (HelperService.CheckPostRequest(err) &&
+                        HelperService.CheckPostRequest(err.transaction)) {
+                        err.transaction.rollback();
+                    }
+                    res.serverError(ErrorWrap(err));
+                });
+        }
+    }
 };

@@ -37,10 +37,10 @@ module.exports = {
     },
     'post /api/appointment-wa-update': {
         controller: 'Appointment/WAAppointmentController',
-        action: 'UpdateWAAppointment'
+        action: 'UpdateRequestWAAppointment'
     },
     'post /api/appointment-wa-disable': {
         controller: 'Appointment/WAAppointmentController',
         action: 'DisableWAAppointment'
-    },
+    }
 };

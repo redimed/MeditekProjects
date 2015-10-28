@@ -37,5 +37,9 @@ module.exports = {
     UpdateExaminationRequired: require('./Appointment/UpdateExaminationRequired'),
     UpdatePreferredPractitioner: require('./Appointment/UpdatePreferredPractitioner'),
     UpdateTelehealthPatientAppointment: require('./Appointment/UpdateTelehealthPatientAppointment'),
+    RequestWAAppointment: require('./Appointment/RequestWAAppointment'),
+    GetListWAAppointment: require('./Appointment/GetListWAAppointment'),
+    GetDetailWAAppointment: require('./Appointment/GetDetailWAAppointment'),
+    DisableWAAppointment: require('./Appointment/DisableWAAppointment'),
     AttributesTeleAppt: require('./Appointment/AttributesTeleAppt')
 };

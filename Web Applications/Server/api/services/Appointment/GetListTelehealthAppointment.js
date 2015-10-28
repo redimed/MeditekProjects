@@ -10,31 +10,31 @@ module.exports = function(data, userInfo) {
     //get pagination  with condition received
     var pagination = Services.GetPaginationAppointment(data, userInfo);
     Appointment.findAndCountAll({
-            attributes: Services.AttributesTeleAppt.Appointment,
+            attributes: Services.AttributesTeleAppt.Appointment(),
             include: [{
                 model: TelehealthAppointment,
-                attributes: Services.AttributesTeleAppt.TelehealthAppointment,
+                attributes: Services.AttributesTeleAppt.TelehealthAppointment(),
                 required: (HelperService.CheckExistData(pagination.filterPatientAppointment) && !_.isEmpty(pagination.filterPatientAppointment)),
                 include: [{
                     model: PatientAppointment,
-                    attributes: Services.AttributesTeleAppt.PatientAppointment,
+                    attributes: Services.AttributesTeleAppt.PatientAppointment(),
                     required: (HelperService.CheckExistData(pagination.filterPatientAppointment) && !_.isEmpty(pagination.filterPatientAppointment)),
                     where: pagination.filterPatientAppointment
                 }],
                 where: pagination.filterTelehealthAppointment
             }, {
                 model: Doctor,
-                attributes: Services.AttributesTeleAppt.Doctor,
+                attributes: Services.AttributesTeleAppt.Doctor(),
                 required: (HelperService.CheckExistData(pagination.filterDoctor) && !_.isEmpty(pagination.filterDoctor)),
                 where: pagination.filterDoctor
             }, {
                 model: Patient,
-                attributes: Services.AttributesTeleAppt.Patient,
+                attributes: Services.AttributesTeleAppt.Patient(),
                 required: (HelperService.CheckExistData(pagination.filterPatient) && !_.isEmpty(pagination.filterPatient)),
                 where: pagination.filterPatient,
                 include: [{
                     model: UserAccount,
-                    attributes: Services.AttributesTeleAppt.UserAccount,
+                    attributes: Services.AttributesTeleAppt.UserAccount(),
                     required: false
                 }]
             }],

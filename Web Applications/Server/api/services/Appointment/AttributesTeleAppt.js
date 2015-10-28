@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = {
     Appointment: function() {
         return ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status'];
     },

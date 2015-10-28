@@ -9,7 +9,6 @@ module.exports = function(data, userInfo) {
             var defer = $q.defer();
             if (HelperService.CheckExistData(userInfo) &&
                 HelperService.CheckExistData(userInfo.UID)) {
-                //get PreferringPractitioner object
                 var objectFindPreferringPractitioner = {
                     data: userInfo.UID,
                     transaction: t
@@ -23,6 +22,7 @@ module.exports = function(data, userInfo) {
                                     where: data.UID,
                                     transaction: t
                                 };
+                                //get PreferringPractitioner object
                                 return Services.GetTelehealthAppointmentObject(objectFindTelehealthAppointment);
                             }
                         },
@@ -61,6 +61,7 @@ module.exports = function(data, userInfo) {
                                 transaction: t,
                                 appointmentObject: appointmentObject
                             };
+                            //update relDoctorAppointment
                             return Services.RelDoctorAppointment(objectRelDoctorAppointment);
                         }
                     }, function(err) {
@@ -78,6 +79,7 @@ module.exports = function(data, userInfo) {
                                 transaction: t,
                                 appointmentObject: appointmentObject
                             };
+                            //update RelPatientAppointment
                             return Services.RelPatientAppointment(objectRelPatientAppointment);
                         }
                     }, function(err) {
@@ -97,6 +99,7 @@ module.exports = function(data, userInfo) {
                                 where: data.TelehealthAppointment.PatientAppointment.UID,
                                 transaction: t
                             };
+                            //update TelehealthPatientAppointment
                             return Services.UpdateTelehealthPatientAppointment(objectUpdatePatientAppointment);
                         }
                     }, function(err) {
@@ -119,6 +122,7 @@ module.exports = function(data, userInfo) {
                                 transaction: t,
                                 appointmentObject: appointmentObject
                             };
+                            //update RelAppointmentFileUpload
                             return Services.RelAppointmentFileUpload(objectRelAppointmentFileUpload);
                         }
                     }, function(err) {
@@ -128,6 +132,27 @@ module.exports = function(data, userInfo) {
                         });
                     })
                     .then(function(relAppointmentFileUploadUpdated) {
+                        var telehealthAppointment = data.TelehealthAppointment;
+                        if (HelperService.CheckExistData(telehealthAppointment) &&
+                            HelperService.CheckExistData(preferringPractitionerObject)) {
+                            var dataTelehealthAppointment =
+                                Services.GetDataAppointment.TelehealthAppointmentUpdate(telehealthAppointment);
+                            dataTelehealthAppointment.ModifiedBy = preferringPractitionerObject.ID;
+                            var objectUpdateTelehealthAppointment = {
+                                data: dataTelehealthAppointment,
+                                where: telehealthAppointment.UID,
+                                transaction: t
+                            };
+                            //update TelehealthAppointment
+                            return Services.UpdateTelehealthAppointment(objectUpdateTelehealthAppointment);
+                        }
+                    }, function(err) {
+                        defer.reject({
+                            transaction: t,
+                            error: err
+                        });
+                    })
+                    .then(function(telehealthAppointmentUpdated) {
                         var examinationRequired = data.TelehealthAppointment.ExaminationRequired;
                         if (HelperService.CheckExistData(examinationRequired) &&
                             HelperService.CheckExistData(preferringPractitionerObject)) {
@@ -161,6 +186,7 @@ module.exports = function(data, userInfo) {
                                 transaction: t,
                                 appointmentObject: appointmentObject
                             };
+                            //update PreferredPractitioner
                             return Services.UpdatePreferredPractitioner(objectUpdatePreferredPractitioners);
                         }
                     }, function(err) {
@@ -183,6 +209,7 @@ module.exports = function(data, userInfo) {
                                 transaction: t,
                                 appointmentObject: appointmentObject
                             };
+                            //update ClinicalDetail
                             return Services.UpdateClinicalDetail(objectUpdateClinicalDetails);
                         }
                     }, function(err) {

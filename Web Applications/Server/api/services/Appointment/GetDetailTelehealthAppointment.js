@@ -15,41 +15,41 @@ module.exports = function(appointmentUID) {
                 required: false,
                 include: [{
                     model: PatientAppointment,
-                    attributes: Services.AttributesTeleAppt.PatientAppt,
+                    attributes: Services.AttributesTeleAppt.PatientAppointment(),
                     required: false,
                 }, {
                     model: ExaminationRequired,
-                    attributes: Services.AttributesTeleAppt.ExaminationRequired,
+                    attributes: Services.AttributesTeleAppt.ExaminationRequired(),
                     required: false
                 }, {
                     model: PreferredPractitioner,
-                    attributes: Services.AttributesTeleAppt.PreferredPractitioner,
+                    attributes: Services.AttributesTeleAppt.PreferredPractitioner(),
                     required: false
                 }, {
                     model: ClinicalDetail,
-                    attributes: Services.AttributesTeleAppt.ClinicalDetail,
+                    attributes: Services.AttributesTeleAppt.ClinicalDetail(),
                     required: false
                 }, {
                     model: Doctor,
-                    attributes: Services.AttributesTeleAppt.Doctor,
+                    attributes: Services.AttributesTeleAppt.Doctor(),
                     required: false
                 }]
             }, {
                 model: Doctor,
-                attributes: Services.AttributesTeleAppt.Doctor,
+                attributes: Services.AttributesTeleAppt.Doctor(),
                 required: false,
                 include: [{
                     model: Department,
-                    attributes: Services.AttributesTeleAppt.Department,
+                    attributes: Services.AttributesTeleAppt.Department(),
                     required: false
                 }]
             }, {
                 model: Patient,
-                attributes: Services.AttributesTeleAppt.Patient,
+                attributes: Services.AttributesTeleAppt.Patient(),
                 required: false,
                 include: [{
                     model: UserAccount,
-                    attributes: Services.AttributesTeleAppt.UserAccount,
+                    attributes: Services.AttributesTeleAppt.UserAccount(),
                     required: false
                 }]
             }, {

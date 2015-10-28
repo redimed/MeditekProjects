@@ -98,35 +98,36 @@ class GetAndPostDataController {
             switch result {
             case .Success(let JSONData):
                 var data = JSON(JSONData)
+                print(data)
                 let jsonInformation = data["data"][0] != nil ? data["data"][0] : ""
                 if jsonInformation == "" {
                     completionHandler(JSON(["message":"error"]))
                 }else {
                 
-                    let MiddleName = jsonInformation["MiddleName"].string != nil ? jsonInformation["MiddleName"].string : ""
-                    let Address2 = jsonInformation["Address2"].string != nil ? jsonInformation["Address2"].string : ""
-                    let Title = jsonInformation["Title"].string != nil ? jsonInformation["Title"].string : ""
-                    let WorkPhoneNumber = jsonInformation["WorkPhoneNumber"].string != nil ? jsonInformation["WorkPhoneNumber"].string : ""
-                    let Enable =  jsonInformation["Enable"].string != nil ? jsonInformation["Enable"].string : ""
-                    let PhoneNumber = jsonInformation["UserAccount"]["PhoneNumber"].string != nil ? jsonInformation["UserAccount"]["PhoneNumber"].string : ""
-                    let Occupation = jsonInformation["Occupation"].string != nil ? jsonInformation["Occupation"].string : ""
-                    let LastName = jsonInformation["LastName"].string != nil ? jsonInformation["LastName"].string : ""
-                    let Postcode = jsonInformation["Postcode"].string != nil ? jsonInformation["Postcode"].string : ""
-                    let UID = jsonInformation["UID"].string != nil ? jsonInformation["UID"].string : ""
-                    let UserAccountID = jsonInformation["UserAccountID"].string != nil ? jsonInformation["UserAccountID"].string : ""
-                    let Gender = jsonInformation["Gender"].string != nil ? jsonInformation["Gender"].string : ""
-                    let FirstName = jsonInformation["FirstName"].string != nil ? jsonInformation["FirstName"].string : ""
-                    let State = jsonInformation["State"].string != nil ? jsonInformation["State"].string : ""
-                    let ModifiedDate = jsonInformation["ModifiedDate"].string != nil ? jsonInformation["ModifiedDate"].string : ""
-                    let Email = jsonInformation["Email"].string != nil ? jsonInformation["Email"].string : ""
-                    let Country = jsonInformation["Country"]["ShortName"].string != nil ? jsonInformation["Country"]["ShortName"].string : ""
-                    let ID = jsonInformation["ID"].string != nil ? jsonInformation["ID"].string : ""
-                    let Address1 = jsonInformation["Address1"].string != nil ? jsonInformation["Address1"].string : ""
-                    let CountryID = jsonInformation["CountryID"].string != nil ? jsonInformation["CountryID"].string : ""
-                    let DOB = jsonInformation["DOB"].string != nil ? jsonInformation["DOB"].string : ""
-                    let Suburb = jsonInformation["Suburb"].string != nil ? jsonInformation["Suburb"].string : ""
-                    let HomePhoneNumber = jsonInformation["HomePhoneNumber"].string != nil ? jsonInformation["HomePhoneNumber"].string : ""
-                    PatientInfo = Patient(MiddleName: MiddleName!, Address2: Address2!, Title: Title!, WorkPhoneNumber: WorkPhoneNumber!, Enable: Enable!, PhoneNumber: PhoneNumber!, Occupation: Occupation!, LastName: LastName!, Postcode: Postcode!, UID: UID!, UserAccountID: UserAccountID!, Gender: Gender!  , FirstName: FirstName!, State: State!, ModifiedDate: ModifiedDate!, Email: Email!, Country: Country!, ID: ID!, Address1: Address1!, CountryID: CountryID!, DOB: DOB!, Suburb: Suburb!, HomePhoneNumber: HomePhoneNumber!)
+                    let MiddleName = jsonInformation["MiddleName"].string ?? ""
+                    let Address2 = jsonInformation["Address2"].string ?? ""
+                    let Title = jsonInformation["Title"].string ?? ""
+                    let WorkPhoneNumber = jsonInformation["WorkPhoneNumber"].string ?? ""
+                    let Enable =  jsonInformation["Enable"].string ?? ""
+                    let PhoneNumber = jsonInformation["UserAccount"]["PhoneNumber"].string ?? ""
+                    let Occupation = jsonInformation["Occupation"].string ?? ""
+                    let LastName = jsonInformation["LastName"].string ?? ""
+                    let Postcode = jsonInformation["Postcode"].string ?? ""
+                    let UID = jsonInformation["UID"].string ?? ""
+                    let UserAccountID = jsonInformation["UserAccountID"].string ?? ""
+                    let Gender = jsonInformation["Gender"].string ?? ""
+                    let FirstName = jsonInformation["FirstName"].string ?? ""
+                    let State = jsonInformation["State"].string ?? ""
+                    let ModifiedDate = jsonInformation["ModifiedDate"].string ?? ""
+                    let Email = jsonInformation["Email"].string ?? ""
+                    let Country = jsonInformation["Country"]["ShortName"].string ?? ""
+                    let ID = jsonInformation["ID"].string ?? ""
+                    let Address1 = jsonInformation["Address1"].string ?? ""
+                    let CountryID = jsonInformation["CountryID"].string ?? ""
+                    let DOB = jsonInformation["DOB"].string ?? ""
+                    let Suburb = jsonInformation["Suburb"].string ?? ""
+                    let HomePhoneNumber = jsonInformation["HomePhoneNumber"].string ?? ""
+                    PatientInfo = Patient(MiddleName: MiddleName, Address2: Address2, Title: Title, WorkPhoneNumber: WorkPhoneNumber, Enable: Enable, PhoneNumber: PhoneNumber, Occupation: Occupation, LastName: LastName, Postcode: Postcode, UID: UID, UserAccountID: UserAccountID, Gender: Gender  , FirstName: FirstName, State: State, ModifiedDate: ModifiedDate, Email: Email, Country: Country, ID: ID, Address1: Address1, CountryID: CountryID, DOB: DOB, Suburb: Suburb, HomePhoneNumber: HomePhoneNumber)
                     completionHandler(JSON(["message":"success"]))
                 }
                 

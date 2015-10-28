@@ -1,4 +1,4 @@
-var env='local';
+var env='localServer'; //local,localServer,testApp,app
 
 var configRestBaseUrl={
 	'local':'http://localhost:3005',

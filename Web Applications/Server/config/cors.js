@@ -75,6 +75,8 @@ module.exports.cors = {
 
     headers: 'content-type, authorization',
 
+    exposeHeaders:'filename',
+
     /**
      * Security level 1 (high) will respond with a 403 status code to any request 
      * from a disallowed origin prefixed with the http or https protocol. 

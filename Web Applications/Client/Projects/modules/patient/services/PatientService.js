@@ -33,9 +33,6 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"MiddleName",message:"invalid value"});
 				}
 			}
-			else {
-				error.push({field:"MiddleName",message:"required"});
-			}
 
 			//validate LastName
 			if(info.LastName){
@@ -187,9 +184,6 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"MiddleName",message:"invalid value"});
 				}
 			}
-			else {
-				error.push({field:"MiddleName",message:"required"});
-			}
 
 			//validate LastName
 			if(info.LastName){
@@ -240,7 +234,10 @@ angular.module('app.authentication.patient.services',[])
 			FirstName:postData.FirstName,
 			LastName:postData.LastName,
 			PhoneNumber:postData.WorkPhoneNumber,
-			DOB:postData.DOB
+			DOB:postData.DOB,
+			Address1:postData.Address1,
+			Suburb:postData.Suburb,
+			Postcode:postData.Postcode
 		};
 		return info;
 	}
@@ -274,6 +271,11 @@ angular.module('app.authentication.patient.services',[])
 		var searchPatient = api.all("patient/search-patient");
 		return searchPatient.post({data:data});
 	};
+
+	PatientService.getfileUID = function(data){
+		var getfileUID = api.all("patient/get-fileUID");
+		return getfileUID.post({data:data});
+	}
 
 	return PatientService;
 })

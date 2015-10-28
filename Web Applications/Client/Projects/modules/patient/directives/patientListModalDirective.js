@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.patient.list.modal.directive',[]);
-app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $timeout, $cookies, CommonService){
+app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $timeout, $cookies, CommonService, $http){
 	return{
 		restrict: 'EA',
         scope: {
@@ -23,53 +23,40 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    });
 
 		    // CALLBACKS
-		    uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-		        console.info('onWhenAddingFileFailed', item, filter, options);
-		    };
 		    uploader.onAfterAddingFile = function (fileItem) {
-		        console.info('onAfterAddingFile', fileItem);
+		    	if($scope.info.img){
+		    		PatientService.getfileUID($scope.info).then(function(response){
+		    			$scope.info.img_change = true;
+		    			$scope.imgDelete = response.data[0].UID;		    		
+		    		});
+		    	}
+		    	else{
+		    		$scope.info.img_change = false;
+		    	}
 		    };
+		    // uploader.onSuccessItem = function (fileItem, response, status, headers) {
+		    //     console.info('onSuccessItem', fileItem, response, status, headers);
+		    // };
 
-		    uploader.onAfterAddingAll = function (addedFileItems) {
-		        console.info('onAfterAddingAll', addedFileItems);
-		    };
-		    uploader.onBeforeUploadItem = function (item) {
-		        console.info('onBeforeUploadItem', item);
-		    };
-		    uploader.onProgressItem = function (fileItem, progress) {
-		        console.info('onProgressItem', fileItem, progress);
-		    };
-		    uploader.onProgressAll = function (progress) {
-		        console.info('onProgressAll', progress);
-		    };
-		    uploader.onSuccessItem = function (fileItem, response, status, headers) {
-		        console.info('onSuccessItem', fileItem, response, status, headers);
-		    };
-		    uploader.onErrorItem = function (fileItem, response, status, headers) {
-		        console.info('onErrorItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCancelItem = function (fileItem, response, status, headers) {
-		        console.info('onCancelItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
-		        console.info('onCompleteItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCompleteAll = function () {
-		        console.info('onCompleteAll');
-		    };
 		},
 		link: function(scope, elem, attrs){
+			scope.imgDelete;
 			var oriInfo,clearInfo;
 			var data = {};
 			data.UID = scope.uid;
 			scope.info = {};
 			scope.infoChanged = function() {
 		        return angular.equals(oriInfo, scope.info);
-		    },
+		    };
 
 			scope.infoClear = function() {
 			    return !angular.equals(clearInfo, scope.info);
-		    },
+		    };
+
+		    scope.removeImg = function(){
+		    	scope.info.img_change =null;
+		    	scope.uploader.queue.length = 0;
+		    }
 
 		    $timeout(function(){
 		    	App.initComponents(); // init core components
@@ -78,17 +65,12 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 	            ComponentsDateTimePickers.init(); // init todo page
 		    },0);
 
-		    scope.changeImg = function(){
-		    	console.log(scope.uploader);
-		    };
-
 		    scope.checkDataNull = function(name){
 		    	if(scope.info[name].length==0)
 		    		scope.info[name] = null;
 		    };
 
 		    scope.savechange = function(){
-		    	console.log(scope.info);
 				PatientService.validate(scope.info)
 					.then(function(result){
 						scope.er ='';
@@ -96,10 +78,25 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						PatientService.updatePatient(scope.info).then(function(response){
 							if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
 							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
-								scope.uploader.queue[0].formData[0]={};
-								scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
-								scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
-								scope.uploader.uploadAll();
+							   	if(scope.info.img){
+								   	$http({
+									  method: 'GET',
+									  url: 'http://192.168.1.2:3005/api/enableFile/false/'+scope.imgDelete
+									}).then(function (response) {
+										scope.uploader.queue[0].formData[0]={};
+										scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
+										scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+										scope.uploader.uploadAll();
+									},function (err) {
+										console.log(err);
+									});
+								}
+								else{
+									scope.uploader.queue[0].formData[0]={};
+									scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
+									scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+									scope.uploader.uploadAll();
+								}
 							}
 							toastr.success("update success!!!","SUCCESS");
 							scope.onCancel();
@@ -121,8 +118,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			PatientService.detailPatient(data).then(function(response){
 				if(response.message=="success"){
 					scope.info = response.data[0];
-					scope.info.img = scope.info.FileUID?CommonService.ApiUploadFile+scope.info.FileUID:null;
-					scope.info.img_change=false;
+					scope.info.img = scope.info.FileUID?" http://192.168.1.2:3005/api/downloadFile/300/"+scope.info.FileUID:null;
+					scope.info.img_change = null;
 					oriInfo = angular.copy(scope.info);
 				}
 				else{

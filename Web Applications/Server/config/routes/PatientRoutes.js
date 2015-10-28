@@ -49,5 +49,9 @@ module.exports={
 	'get /api/patient/get-listcountry' :{
 		controller: 'Patient/PatientController',
 		action: 'GetListCountry'
+	},
+	'post /api/patient/get-fileUID' :{
+		controller: 'Patient/PatientController',
+		action: 'getfileUID'
 	}
 }

@@ -35,11 +35,11 @@
 													
 													<div class="form-group">
 														<div class="fileinput fileinput-new" data-provides="fileinput">
-															<div class="fileinput-new thumbnail" style="width: 300px; height: 300px;" ng-if="info.img===null">
+															<div class="fileinput-new thumbnail" style="width: 300px; height: 300px;" ng-show="uploader.queue.length==0 && !info.img">
 															</div>
-															<div class="fileinput-preview fileinput-exists thumbnail" style="max-width:350px;" ng-hide="uploader.queue.length==0" >
+															<div class="fileinput-preview fileinput-exists thumbnail" style="max-width:350px;" ng-show="uploader.queue.length!=0" >
 															</div>
-															<img ng-src="{{info.img}}" style="max-width:350px;" ng-show="uploader.queue.length==0">
+															<img ng-src="{{info.img}}" style="max-width:350px;" ng-show="uploader.queue.length==0 && info.img">
 															<div>
 																<span class="btn green btn-file">
 																	<span class="fileinput-new">
@@ -48,7 +48,7 @@
 																	Change </span>
 																	 <input type="file" nv-file-select="" uploader="uploader" />
 																</span>
-																<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">Remove </a>
+																<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput" ng-click="removeImg()">Remove </a>
 															</div>
 														</div>
 													</div>

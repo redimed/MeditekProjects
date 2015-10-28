@@ -37,6 +37,8 @@ struct MessageString  {
     static let Decline = "decline"
     static let Call = "call"
     static let Cancel = "cancel"
+    static let VersionAndBuild = "© REDIMED 2015 \(UIApplication.sharedApplication().versionBuild()) – App Design by Meditek"
+    static let QuestionCallPhone = "You want to contact us?"
 }
 
 struct ErrorMessage {

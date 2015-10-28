@@ -9,8 +9,6 @@ module.exports = {
 		Services.Patient.CreatePatient(data)
 		.then(function(patient){
 			if(patient!==undefined && patient!==null && patient!=='' && patient.length!==0){
-				console.log(patient.result);
-				console.log(patient.UserAccountUID);
 				var info = {
 					UID            : patient.result.UID,
 					FirstName      : patient.result.FirstName,
@@ -116,7 +114,8 @@ module.exports = {
 			if(info!=null && info!=undefined && info!='' && info.length!=0){
 				FileUpload.findAll({
 					where:{
-						UserAccountID : info[0].UserAccountID
+						UserAccountID : info[0].UserAccountID,
+						Enable : 'Y'
 					}
 				})
 				.then(function(success){
@@ -225,6 +224,23 @@ module.exports = {
 				var err = new Error("SERVER ERROR");
 				err.pushErrors("Server Error");
 				res.notFound({status:404,message:ErrorWrap(err)});
+			}
+		})
+		.catch(function(err){
+			res.serverError({status:500,message:ErrorWrap(err)});
+		})
+	},
+
+	getfileUID: function(req, res) {
+		var data = req.body.data;
+		Services.Patient.getfileUID(data)
+		.then(function(result){
+			if(result!=undefined){
+				if(result==null || result.length==0 || result==''){
+					res.ok({status:200,message:"success",data:result});
+				}
+				else
+					res.ok({status:200,message:"success",data:result});
 			}
 		})
 		.catch(function(err){

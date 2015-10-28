@@ -13,8 +13,9 @@ angular.module('app.authentication.doctor.directive.create', [])
 			// Signature
 			var uploader = $scope.uploader = new FileUploader({
 				// url: 'http://192.168.1.2:3005/api/uploadFile',
-				// url : 'http://testapp.redimed.com.au:3005/api/uploadFile',
-				url: 'http://localhost:3005/api/uploadFile',
+				url : 'http://testapp.redimed.com.au:3005/api/uploadFile',
+				// url: CommonService.ApiUploadFile,
+				// url: 'http://localhost:3005/api/uploadFile',
 				headers:{Authorization:'Bearer '+$cookies.get("token")},
 				alias : 'uploadFile'
 			});
@@ -57,7 +58,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 		        // console.info('onCancelItem', fileItem, response, status, headers);
 		    };
 		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
-		        console.info('onCompleteItem', fileItem, response, status, headers);
+		        // console.info('onCompleteItem', fileItem, response, status, headers);
 		    };
 		    uploader.onCompleteAll = function () {
 		        // console.info('onCompleteAll');
@@ -66,8 +67,9 @@ angular.module('app.authentication.doctor.directive.create', [])
 		    // Profile Image
 		    var uploaders = $scope.uploaders = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
-		    	// url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
-		    	url: 'http://localhost:3005/api/uploadFile',
+		    	url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
+		    	// url: CommonService.ApiUploadFile,
+		    	// url: 'http://localhost:3005/api/uploadFile',
 		    	headers:{Authorization:'Bearer '+$cookies.get("token")},
 		    	alias : 'uploadFile'
 		    });
@@ -115,7 +117,8 @@ angular.module('app.authentication.doctor.directive.create', [])
 		    uploaders.onCompleteAll = function () {
 		        // console.info('onCompleteAll');
 		    };
-
+		    
+		    // Check validate and create doctor and upload profileImage and Signature
 		    $scope.create = function(data) {
 
 				doctorService.checkSpecial(data)
@@ -147,7 +150,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 					}, function(err) {});
 
 				}, function(err) {
-					toastr.error('Information not empty');
+					console.log(err);
 				});
 				
 			};
@@ -155,6 +158,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 		},
 		link: function(scope, ele, attr) {
 
+			// Variable
 			scope.er={};
 			scope.isShowNext=true;
 			scope.isShowNext2=false;
@@ -167,6 +171,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 			scope.isBlockStep2 =false;
 			scope.isShowNext5=false;
 
+			// Back
 			scope.back_1 = function() {
 				scope.isBlockStep1 =false;
 				scope.isShowNext=true;
@@ -186,18 +191,32 @@ angular.module('app.authentication.doctor.directive.create', [])
 				scope.isShowCreate=false;
 			}
 
+			// State
+			scope.state = [
+				{'code':'Victoria', 'name':'Victoria'},
+				{'code':'Tasmania', 'name':'Tasmania'},
+				{'code':'Queensland', 'name':'Queensland'},
+				{'code':'New_South_Wales', 'name':'New South Wales'},
+				{'code':'Western_Australia', 'name':'Western Australia'},
+				{'code':'Northern_Territory', 'name':'Northern Territory'},
+				{'code':'Austria_Capital_Territory', 'name':'Austria Capital Territory'}
+			];
+			scope.data.State = scope.state[4].code;
+
 			// Title
 			scope.titles = [
-				{id:"0", name:"Mr"},
-				{id:"1", name:"Mrs"},
-				{id:"2", name:"Ms"},
-				{id:"3", name:"Dr"}
+				{'id':'1', 'name':'Mr'},
+				{'id':'2', 'name':'Mrs'},
+				{'id':'3', 'name':'Ms'},
+				{'id':'4', 'name':'Dr'}
 			];
+			scope.data.Titles = scope.titles[0].id;
 
 			// Country List
 			doctorService.listCountry()
 			.then(function(result) {
 				scope.country = result;
+				scope.data.CountryID = scope.country[13].ID;
 			}, function(err) {});
 
 			// Department List
@@ -206,6 +225,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 				scope.department = result;
 			}, function(err) {});
 
+			// Check validate and Phone and Email
 			scope.show = function(data){
 				
 				doctorService.validateCheckPhone(data)
@@ -236,12 +256,13 @@ angular.module('app.authentication.doctor.directive.create', [])
 				}, function(err) {});
 			
 			};
+			// Variable temp
 			scope.show2 = function(){
 				scope.isShowNext2=false;
 				scope.isShowNext3=true;
 				scope.isShowBack3=true;
 			};
-
+			// Check validate
 			scope.show3 = function(data){
 				doctorService.validateCheckInfo(data)
 				.then(function(success) {
@@ -250,7 +271,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 				}, function(err) {});
 				
 			};
-
+			// Variable temp
 			scope.show4 = function(){
 				scope.isShowBack3=false;
 				scope.isShowNext4=false;
@@ -258,7 +279,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 				scope.isShowNext5=true;
 				scope.isShowBack4=true;
 			};
-
+			// Check validate
 			scope.show5 = function(data) {
 				doctorService.checkSpec(data)
 				.then(function(success) {

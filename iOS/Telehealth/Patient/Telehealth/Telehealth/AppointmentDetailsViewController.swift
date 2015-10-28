@@ -53,23 +53,23 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
                     print(data)
                     if data != nil{
                         self.scrollView.hidden = false
-                        let  UIDApointment = (data["UID"].string != nil) ? data["UID"].string : ""
-                        let FromTime = data["FromTime"].string  != nil ? data["FromTime"].string : ""
-                        let  ToTime = data["ToTime"].string != nil ? data["ToTime"].string : ""
-                        let Status = data["Status"].string != nil ? data["Status"].string : ""
-                        let NameDoctor = data["Doctors"][0]["FirstName"].string != nil ? data["Doctors"][0]["FirstName"].string : ""
+                        let  UIDApointment = data["UID"].string ?? ""
+                        let FromTime = data["FromTime"].string  ?? ""
+                        let  ToTime = data["ToTime"].string ?? ""
+                        let Status = data["Status"].string ?? ""
+                        let NameDoctor = data["Doctors"][0]["FirstName"].string ?? ""
                        
-                        self.dateLabel.text = FromTime!.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDate)
+                        self.dateLabel.text = FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDate)
                         //Check To time
                         if ToTime == ""{
-                            self.timeLabel.text = "\(FromTime!.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime))"
+                            self.timeLabel.text = "\(FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime))"
                         }else{
-                            self.timeLabel.text = "\(FromTime!.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime)) - \(ToTime!.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime))"
+                            self.timeLabel.text = "\(FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime)) - \(ToTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime))"
                         }
                         
                         self.doctorName.text = NameDoctor
                         self.status.text = Status
-                        self.UIDApointment = UIDApointment!                     
+                        self.UIDApointment = UIDApointment
                         self.getListImage(self.UIDApointment )
                         
                     }else{
@@ -95,7 +95,7 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
                 let countImage = response.count
                 
                 for var i = 0 ; i < countImage ; i++ {
-                    let imageUID : String = response[i]["UID"].string != nil ? response[i]["UID"].string! : ""
+                    let imageUID : String = response[i]["UID"].string ?? ""
                     
                     self.downloadImage(imageUID)
                     
@@ -153,7 +153,11 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     }
     //select 1 item in collection view
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
         performSegueWithIdentifier("ImageDetailSegue", sender: indexPath)
+//        var cell = collectionView.cellForItemAtIndexPath(indexPath)
+ 
+        
         
     }
     //send data view to view

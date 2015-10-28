@@ -60,7 +60,7 @@
                                     <rect key="frame" x="139" y="1" width="291" height="57"/>
                                 </variation>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© REDIMED 2015 – App Design by Meditek" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xtg-sK-tfb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="xtg-sK-tfb">
                                 <rect key="frame" x="24" y="544" width="272" height="16"/>
                                 <animations/>
                                 <constraints>
@@ -274,6 +274,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="phoneTextField" destination="XIX-hF-pti" id="79M-e1-TIH"/>
+                        <outlet property="versionBuildLabel" destination="xtg-sK-tfb" id="NWf-HS-3t3"/>
                         <outlet property="viewPhoneNumber" destination="Mdq-Sf-PH1" id="gIE-jk-TzD"/>
                         <segue destination="JzN-Ol-caw" kind="show" identifier="phoneRegisterSegue" id="3UN-Bl-ZEj"/>
                     </connections>
@@ -1170,7 +1171,7 @@
                         <viewControllerLayoutGuide type="top" id="8Mh-mb-iIU"/>
                         <viewControllerLayoutGuide type="bottom" id="klb-d9-rYs"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="SMs-39-pOB">
+                    <view key="view" contentMode="scaleToFill" id="SMs-39-pOB" customClass="SpringView" customModule="Telehealth" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -1189,6 +1190,10 @@
                             <constraint firstItem="klb-d9-rYs" firstAttribute="top" secondItem="23o-iN-7j1" secondAttribute="bottom" id="esD-wx-Nui"/>
                             <constraint firstItem="23o-iN-7j1" firstAttribute="top" secondItem="8Mh-mb-iIU" secondAttribute="bottom" id="xFx-Wd-qKg"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="animation" value="zoomIn"/>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="xFx-Wd-qKg"/>
@@ -1524,8 +1529,8 @@
                                     <constraint firstAttribute="height" constant="300" id="Mdl-BB-Bn4"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5gf-th-Alm">
-                                <rect key="frame" x="94" y="404" width="133" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5gf-th-Alm">
+                                <rect key="frame" x="90" y="404" width="133" height="30"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.074509803920000006" green="0.62352941179999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>

@@ -28,7 +28,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			if(info.Password){
 				if(info.Password.length < 6) {
 					error.push({field:"Password",message:"length"});
-					toastr.error('Your password must be at least 6 characters long');
+					toastr.error('Your password must be at least 6 characters');
 				}
 				if(info.Password.length < 0 || info.Password.length > 256){
 					error.push({field:"Password",message:"length"});
@@ -44,7 +44,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			if(info.RePassword && info.Password){
 				if(info.RePassword != info.Password) {
 					error.push({field:"RePassword",message:"length"});
-					toastr.error('Please enter the same value again.');
+					toastr.error('Your password and confirmation password do not match');
 				}
 			}
 			else {
@@ -58,7 +58,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 				var PhoneNumber=info.PhoneNumber.replace('/[\(\)\s\-]/g','');
 				if(!auPhoneNumberPattern.test(PhoneNumber)){
 					error.push({field:"PhoneNumber",message:"PhoneNumber.invalid-value"});
-					toastr.error('MobilePhone not invalid');
+					toastr.error('MobilePhone invalid');
 				}
 			}
 			else{
@@ -130,17 +130,6 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 				toastr.error('LastName is required');
 			}
 
-			//validate Department
-			if(info.DepartmentID){
-				if(info.DepartmentID.length < 0){
-					error.push({field:"DepartmentID",message:"length"});
-				}
-			}
-			else {
-				error.push({field:"DepartmentID",message:"required"});
-				toastr.error('Department is required');
-			}
-
 			//validate HealthLinkID
 			if(info.HealthLinkID){
 				if(info.HealthLinkID.length < 0 || info.HealthLinkID.length > 255){
@@ -172,7 +161,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 					var PhoneNumber=info.WorkPhoneNumber.replace('/[\(\)\s\-]/g','');
 					if(!auPhoneNumberPattern.test(PhoneNumber)){
 						error.push({field:"WorkPhoneNumber",message:"WorkPhoneNumber.invalid-value"});
-						toastr.error('WorkPhone not invalid');
+						toastr.error('WorkPhone invalid');
 					}
 				}
 			}
@@ -184,7 +173,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 					var PhoneNumber=info.HomePhoneNumber.replace('/[\(\)\s\-]/g','');
 					if(!auPhoneNumberPattern.test(PhoneNumber)){
 						error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.invalid-value"});
-						toastr.error('HomePhone not invalid');
+						toastr.error('HomePhone invalid');
 					}
 				}
 			}

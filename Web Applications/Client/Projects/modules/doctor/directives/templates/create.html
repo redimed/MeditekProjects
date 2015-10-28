@@ -67,10 +67,10 @@
 								<div class="tab-pane active" id="tab1">
 									<!-- country -->
 									<div class="form-group">
-										<label class="control-label col-md-4">Title</label>
+										<label class="control-label col-md-4">Title <span class="required">* </span></label>
 										<div class="col-md-4">
-											<select class="select2 form-control" ng-model="data.Titles" ng-disabled="isBlockStep2" ng-options="options.id as options.name for options in titles">
-												<option value="">Select Title</option>
+											<select class="form-control" ng-init="data.Titles = options[0]" ng-model="data.Titles" ng-disabled="isBlockStep2" ng-options="options.id as options.name for options in titles">
+												<option value=''>Select Title</option>
 											</select>
 										</div>
 									</div>
@@ -105,7 +105,7 @@
 										<div class="col-md-4">
 											<div class="input-icon">
 												<i class="icon-call-end"></i>
-												<input type="text" class="form-control" placeholder="+614 8888 8888" ng-model="data.PhoneNumber" maxlength="17" ng-disabled="isBlockStep1">
+												<input type="text" class="form-control" placeholder="MobilePhone" ng-model="data.PhoneNumber" maxlength="17" ng-disabled="isBlockStep1">
 											</div>
 										</div>
 									</div>
@@ -130,7 +130,7 @@
 												<div class="form-group">
 													<div class="fileinput fileinput-new" data-provides="fileinput">
 														<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
-															<img src="theme/assets/global/images/no_person.jpg">
+															<img src="theme/assets/global/images/no_person.jpg"  width="100%" height="100%">
 														</div>
 														<div>
 															<span class="btn green btn-file">
@@ -163,7 +163,7 @@
 													<div class="col-md-9">
 														<div class="input-icon">
 															<i class="fa fa-calendar"></i>
-	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="data.DOB">
+	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="data.DOB" ng-pattern="/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/">
 														</div>
 													</div>
 												</div>
@@ -237,7 +237,10 @@
 												<div class="form-group">
 													<label class="control-label col-md-3">State</label>
 													<div class="col-md-9">
-														<input type="text" class="form-control" placeholder="State" ng-model="data.State" ng-disabled="isBlockStep2">
+														<select ng-init="data.State == st[4]" ng-model="data.State" class="form-control" ng-options="st.code as st.name for st in state" ng-disabled="isBlockStep2">
+									                        <option value="">Select State</option>
+									                    </select>
+														<!--<input type="text" class="form-control" placeholder="State" ng-model="data.State" ng-disabled="isBlockStep2">-->
 													</div>
 												</div>
 												<!-- end State -->
@@ -245,7 +248,7 @@
 												<div class="form-group">
 													<label class="control-label col-md-3">Country</label>
 													<div class="col-md-9">
-														<select class="select2 form-control" ng-model="data.CountryID" ng-disabled="isBlockStep2" ng-options="c.ID as c.ShortName for c in country">
+														<select class="select2 form-control" ng-init="data.CountryID === c[13]" ng-model="data.CountryID" ng-disabled="isBlockStep2" ng-options="c.ID as c.ShortName for c in country">
 															<option value="">Select Country</option>
 														</select>
 													</div>
@@ -305,7 +308,7 @@
 												<label class="control-label col-md-3">Signature</label>
 												<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 													<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
-															<img src="theme/assets/global/images/no_image.png">
+															<img src="theme/assets/global/images/no_image.png" width="100%" height="100%">
 														</div>
 													<div>
 														<span class="btn green btn-file">

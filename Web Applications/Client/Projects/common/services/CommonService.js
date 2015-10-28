@@ -236,6 +236,7 @@ angular.module("app.common.CommonService", [])
         // commonService.ApiUploadFile = 'http://telehealthvietnam.com.vn:3005/api/uploadFile';
         commonService.API = "http://testapp.redimed.com.au:3005";
         // commonService.API = "http://telehealthvietnam.com.vn:3005";
+        commonService.contentVerify = "Your REDiMED account verification code is";
 
         return commonService;
     })

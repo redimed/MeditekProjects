@@ -27,7 +27,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input class="form-control" ng-model="data.UserName" />
                     <label for="Username">Username</label>
                     <!-- <span class="help-block">Error Username</span> -->
@@ -36,14 +36,14 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input class="form-control" type="password" id="register_password" ng-model="data.Password" />
                     <label for="Password">Password</label>
                     <!-- <span class="help-block">Error Password</span> -->
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input class="form-control" type="password" ng-model="data.RePassword" />
                     <label for="RePassword">Re-type Your Password</label>
                     <!-- <span class="help-block">Error Re-type Your Password</span> -->
@@ -52,14 +52,14 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input type="input" class="form-control" id="txtMobile" maxlength="17" ng-model="data.PhoneNumber">
                     <label for="Mobile">Mobile</label>
                     <!-- <span class="help-block">Error Mobile</span> -->
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input id="txtEmail" class="form-control" type="text" ng-model="data.Email" />
                     <label for="Email">Email</label>
                     <!-- <span class="help-block">Error Mobile</span> -->
@@ -68,7 +68,7 @@
         </div>
         <hr>
         <div class="form-actions">
-            <a href="" id="register-back-btn" class="btn btn-default pull" ui-sref="unAuthentication.login"><i class="m-icon-swapleft"></i> Cancel </a>
+            <a href="" id="register-back-btn" class="btn btn-default pull" ng-click="stepback_one()"><i class="m-icon-swapleft"></i> Cancel </a>
             <button type="submit" id="register-submit-btn" class="btn blue pull-right" ng-click="checkUser(data)">Continue <i class="m-icon-swapright m-icon-white"></i></button>
         </div>
     </div>
@@ -87,14 +87,14 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input type="input" class="form-control" id="txtFirstName" ng-model="data.FirstName">
                     <label for="Firstname">Firstname</label>
                     <!-- <span class="help-block">Error Firstname</span> -->
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input type="input" class="form-control" id="txtMiddlename" ng-model="data.MiddleName">
                     <label for="Middlename">Middlename</label>
                     <!-- <span class="help-block">Error Middlename</span> -->
@@ -103,36 +103,26 @@
         </div>
         <div class="row">
             <!-- LastName -->
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group form-md-line-input ">
                     <input type="input" class="form-control" id="txtLastName" ng-model="data.LastName">
                     <label for="Lastname">Lastname</label>
                     <!-- <span class="help-block">Error Lastname</span> -->
                 </div>
             </div>
             <!-- LastName -->
-            <!--  Clinical Department-->
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
-                    <select ng-model="data.DepartmentID" ng-options="d.ID as d.DepartmentName for d in department" id="department" class="form-control">
-                        <option value=""></option>
-                    </select>
-                    <label for="department">Clinical Department</label>
-                </div>
-            </div>
-            <!-- end Clinical Department -->
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input id="txtHealthlinkID" class="form-control" type="text" ng-model="data.HealthLinkID">
                     <label for="HealthlinkID">Healthlink ID</label>
                     <!-- <span class="help-block">Error HealthlinkID</span> -->
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
-                    <input type="input" only-number class="form-control" id="txtProviderNumber" ng-model="data.ProviderNumber">
+                <div class="form-group form-md-line-input ">
+                    <input type="input" class="form-control" id="txtProviderNumber" ng-model="data.ProviderNumber">
                     <label for="Providernumber">Providernumber</label>
                     <!-- <span class="help-block">Error Providernumber</span> -->
                 </div>
@@ -140,14 +130,14 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input type="input" maxlength="9" class="form-control" id="txtWorkphone" ng-model="data.WorkPhoneNumber">
                     <label for="Workphone">Workphone</label>
                     <!-- <span class="help-block">Error Workphone</span> -->
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input type="input" maxlength="9" class="form-control" id="txtWorkphone" ng-model="data.HomePhoneNumber">
                     <label for="Homephone">Homephone</label>
                     <!-- <span class="help-block">Error Homephone</span> -->
@@ -156,14 +146,14 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input class="form-control" type="text" ng-model="data.Address1">
                     <label for="Address1">Address1</label>
                     <!-- <span class="help-block">Error Address1</span> -->
                 </div>
             </div>
             <div class="col-md-12 col-sm-12">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input class="form-control" type="text" ng-model="data.Address2">
                     <label for="Address2">Address2</label>
                     <!-- <span class="help-block">Error Address2</span> -->
@@ -173,14 +163,14 @@
         
         <div class="row">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input id="txtPostcode" maxlength="4" class="form-control" type="text" ng-model="data.Postcode">
                     <label for="Postcode">Postcode</label>
                     <!-- <span class="help-block">Error Postcode</span> -->
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <input id="txtSuburb" class="form-control" type="text" ng-model="data.Suburb">
                     <label for="Suburb">Suburb</label>
                     <!-- <span class="help-block">Error Suburb</span> -->
@@ -189,7 +179,7 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <select ng-model="data.State" id="States" class="form-control">
                         <option value=""></option>
                         <option value="Victoria">Victoria</option>
@@ -205,7 +195,7 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input form-md-floating-label">
+                <div class="form-group form-md-line-input ">
                     <select ng-model="data.CountryID" ng-options="c.ID as c.ShortName for c in country" id="Country" class="form-control edited" disabled>
                         <option value=""></option>
                     </select>

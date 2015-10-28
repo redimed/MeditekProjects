@@ -306,15 +306,15 @@
 									<i class="m-icon-swapleft"></i> Back </a>
 									<a href="javascript:;" class="btn default" ng-hide="isShowCreate" ng-click="Cancel()">
 									<i class="m-icon-swapleft"></i>Cancel</a>
-									<a href="javascript:;" class="btn blue" ng-click="checkPhone(data)" ng-hide="isShowNext">
+									<button class="btn blue" ng-click="checkPhone(data)" ng-hide="isShowNext" ng-disabled="loadingCheck">
 									Verify <i class="m-icon-swapright m-icon-white"></i>
-									</a>
+									</button>
 									<a href="javascript:;" class="btn blue button-next" ng-show="isShowNext" ng-click="isShowCreate=true">
 									Continue <i class="m-icon-swapright m-icon-white"></i>
 									</a>
-									<a href="javascript:;" class="btn green"ng-show="isShowCreate" ng-click="createPatient(data)">
+									<button class="btn green"ng-show="isShowCreate" ng-click="createPatient(data)" ng-disabled="loadingCreate">
 									Create <i class="m-icon-swapright m-icon-white"></i>
-									</a>
+									</button>
 								</div>
 							</div>
 						</div>

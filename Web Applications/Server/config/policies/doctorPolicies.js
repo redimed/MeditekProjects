@@ -1,6 +1,7 @@
 module.exports={
 	'Doctor/DoctorController':{
 		'*':true,
+		'ListCountry': true,
 		'GetDoctor': ['hasToken'],
 		'DoctorAppointment': ['hasToken'],
 		'DoctorIDAppointment': ['hasToken'],

@@ -9,8 +9,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
         controller:function($scope, FileUploader) {
 			// Profile Image
 		    var uploader = $scope.uploader = new FileUploader({
-		    	// url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
-		    	url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	url: o.const.uploadFileUrl,
 		    	headers:{Authorization:'Bearer '+$cookies.get("token")},
 		    	alias : 'uploadFile'
 		    });
@@ -69,7 +69,6 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    	if(scope.info[name].length==0)
 		    		scope.info[name] = null;
 		    };
-
 		    scope.savechange = function(){
 				PatientService.validate(scope.info)
 					.then(function(result){
@@ -81,7 +80,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 							   	if(scope.info.img){
 								   	$http({
 									  method: 'GET',
-									  url: 'http://192.168.1.2:3005/api/enableFile/false/'+scope.imgDelete
+									  url: o.const.enableFileUrl+'/false/'+scope.imgDelete
 									}).then(function (response) {
 										scope.uploader.queue[0].formData[0]={};
 										scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
@@ -118,7 +117,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			PatientService.detailPatient(data).then(function(response){
 				if(response.message=="success"){
 					scope.info = response.data[0];
-					scope.info.img = scope.info.FileUID?" http://192.168.1.2:3005/api/downloadFile/300/"+scope.info.FileUID:null;
+					scope.info.DOB = /^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/.test(scope.info.DOB)?scope.info.DOB:null;
+					scope.info.img = scope.info.FileUID?o.const.downloadFileUrl+"/300/"+scope.info.FileUID:null;
 					scope.info.img_change = null;
 					oriInfo = angular.copy(scope.info);
 				}

@@ -179,7 +179,7 @@ module.exports = function(data, userInfo) {
                             _.isArray(preferredPractitioners) &&
                             HelperService.CheckExistData(appointmentObject)) {
                             dataPreferredPractitioners =
-                                Services.GetDataAppointment.PreferredPractitioners(appointmentObject.TelehealthAppointment.ID, preferredPractitioners);
+                                Services.GetDataAppointment.TelePreferredPractitioners(appointmentObject.TelehealthAppointment.ID, preferredPractitioners);
                             var objectUpdatePreferredPractitioners = {
                                 data: dataPreferredPractitioners,
                                 where: appointmentObject.TelehealthAppointment.ID,

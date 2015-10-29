@@ -29,7 +29,7 @@ module.exports = function(objRel) {
             });
         })
         .then(function(relPatientAppointmentCreated) {
-            defer.resolve(relDoctorAppointmentCreated);
+            defer.resolve(relPatientAppointmentCreated);
         }, function(err) {
             defer.reject({
                 transaction: objRel.transaction,

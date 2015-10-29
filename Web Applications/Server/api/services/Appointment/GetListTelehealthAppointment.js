@@ -20,7 +20,7 @@ module.exports = function(data, userInfo) {
             include: [{
                 model: TelehealthAppointment,
                 attributes: Services.AttributesTeleAppt.TelehealthAppointment(),
-                required: (HelperService.CheckExistData(pagination.filterPatientAppointment) && !_.isEmpty(pagination.filterPatientAppointment)),
+                required: (HelperService.CheckExistData(pagination.filterTelehealthAppointment) && !_.isEmpty(pagination.filterTelehealthAppointment)),
                 include: [{
                     model: PatientAppointment,
                     attributes: Services.AttributesTeleAppt.PatientAppointment(),

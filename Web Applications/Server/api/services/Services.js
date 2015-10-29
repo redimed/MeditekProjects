@@ -24,7 +24,7 @@ module.exports = {
     CreateExaminationRequired: require('./Appointment/CreateExaminationRequired'),
     BulkCreatePreferredPractitioner: require('./Appointment/BulkCreatePreferredPractitioner'),
     CreateTelehealthAppointment: require('./Appointment/CreateTelehealthAppointment'),
-    CreateTelehealthPatientAppointment: require('./Appointment/CreateTelehealthPatientAppointment'),
+    CreatePatientAppointment: require('./Appointment/CreatePatientAppointment'),
     GetPreferringPractictioner: require('./Appointment/GetPreferringPractictioner'),
     RelAppointmentFileUpload: require('./Appointment/RelAppointmentFileUpload'),
     RelDoctorAppointment: require('./Appointment/RelDoctorAppointment'),
@@ -41,5 +41,8 @@ module.exports = {
     GetListWAAppointment: require('./Appointment/GetListWAAppointment'),
     GetDetailWAAppointment: require('./Appointment/GetDetailWAAppointment'),
     DisableWAAppointment: require('./Appointment/DisableWAAppointment'),
+    CreateClinicalDetailWAAppointment: require('./Appointment/CreateClinicalDetailWAAppointment'),
+    CreateWAAppointment: require('./Appointment/CreateWAAppointment'),
+    RelClinicalDetailFileUpload: require('./Appointment/RelClinicalDetailFileUpload'),
     AttributesTeleAppt: require('./Appointment/AttributesTeleAppt')
 };

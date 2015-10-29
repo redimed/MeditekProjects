@@ -4,7 +4,7 @@ module.exports = function(objRel) {
     Patient.findOne({
             attributes: ['ID'],
             where: {
-                UID: objRel.data.UID
+                UID: objRel.where
             },
             transaction: objRel.transaction
         })

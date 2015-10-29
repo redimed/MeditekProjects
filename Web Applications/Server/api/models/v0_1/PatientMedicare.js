@@ -11,17 +11,7 @@ module.exports = {
             },
             primaryKey: true
         },
-        UID: {
-            type: Sequelize.STRING(255),
-            allowNull: false,
-            validate: {
-                isUUID: {
-                    args: 4,
-                    msg: 'Must be an UUID V4!'
-                }
-            }
-        },
-        TelehealthAppointmentID: {
+        PatientID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
             validate: {
@@ -30,39 +20,66 @@ module.exports = {
                 }
             },
             references: {
-                model: 'TelehealthAppointment',
+                model: 'Patient',
                 key: 'ID'
             }
         },
-        Speciality: {
-            type: Sequelize.STRING(100),
+        UID: {
+            type: Sequelize.STRING(255),
             allowNull: true,
-            comment: 'Plastic Sergery\nOrthopaedic Surgery',
+            validate: {
+                isUUID: {
+                    args: 4,
+                    msg: 'Must be an UUID V4!'
+                }
+            }
+        },
+        MedicareNumber: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
             validate: {
                 len: {
-                    args: [0, 100],
+                    args: [0, 45],
                     msg: 'Too long!'
                 }
             }
         },
-        Name: {
-            type: Sequelize.STRING(255),
+        MedicareReferenceNumber: {
+            type: Sequelize.STRING(45),
             allowNull: true,
-            comment: 'Name of Specialist',
             validate: {
                 len: {
-                    args: [0, 255],
+                    args: [0, 45],
                     msg: 'Too long!'
                 }
             }
         },
-        SiteName: {
-            type: Sequelize.STRING(255),
+        ExpiryDate: {
+            type: Sequelize.DATE,
             allowNull: true,
-            comment: 'List of values',
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
+        },
+        DVANumber: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
             validate: {
                 len: {
-                    args: [0, 255],
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        InjuryType: {
+            type: Sequelize.STRING(3),
+            allowNull: true,
+            comment: 'MVA: Motor vehicle accident\nWIY: Work injury',
+            validate: {
+                len: {
+                    args: [0, 3],
                     msg: 'Too long!'
                 }
             }
@@ -70,7 +87,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'PreferredPractitioner',
+        tableName: 'PatientMedicare',
         timestamps: false,
         hooks: {}
     }

@@ -16,6 +16,11 @@ module.exports = function(data, userInfo) {
                 attributes: Services.AttributesTeleAppt.TelehealthAppointment(),
                 required: (HelperService.CheckExistData(pagination.filterPatientAppointment) && !_.isEmpty(pagination.filterPatientAppointment)),
                 include: [{
+                    model: WAAppointment,
+                    attributes: Services.AttributesTeleAppt.WAAppointment(),
+                    required: (HelperService.CheckExistData(pagination.filterWAAppointment) && !_.isEmpty(pagination.filterWAAppointment)),
+                    where: pagination.filterWAAppointment
+                }, {
                     model: PatientAppointment,
                     attributes: Services.AttributesTeleAppt.PatientAppointment(),
                     required: (HelperService.CheckExistData(pagination.filterPatientAppointment) && !_.isEmpty(pagination.filterPatientAppointment)),

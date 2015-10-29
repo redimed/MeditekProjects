@@ -1,44 +1,60 @@
 module.exports = {
     Appointment: function() {
-        return ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status'];
+        return ['UID', 'SiteID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status'];
     },
     TelehealthAppointment: function() {
-        return ['UID', 'Fund', 'Correspondence', 'RefName',
+        return ['UID', 'Fund', 'Correspondence', 'Description', 'RefName',
             'RefHealthLink', 'RefAddress', 'RefTelePhone',
             'RefPostCode', 'RefSignature', 'RefDate', 'RefProviderNumber',
-            'RefDurationOfReferal', 'PresentComplain', 'Allergy'
+            'RefDurationOfReferral', 'PresentComplain', 'Allergy'
         ];
     },
     PatientAppointment: function() {
-        return ['UID', 'FirstName', 'MiddleName', 'LastName',
-            'DOB', 'Email', 'Address1', 'Address2', 'Suburb', 'Postcode',
-            'Email', 'WorkPhoneNumber', 'HomePhoneNumber'
+        return ['UID', 'FirstName', 'MiddleName', 'LastName', 'PreferredName',
+            'PreviousName', 'Suburb', 'Postcode', 'State', 'CountryOfBirth',
+            'DOB', 'Gender', 'Indigenous', 'Address1', 'Address2', 'Email1',
+            'Email2', 'PhoneNumber', 'HomePhoneNumber', 'WorkPhoneNumber',
+            'FaxNumber', 'InterpreterRequired', 'InterpreterLanguage',
+            'OtherSpecialNeed', 'MedicareNumber', 'MedicareReferenceNumber',
+            'ExpiryDate', 'DVANumber', 'InjuryType', 'PatientKinName',
+            'PatientKinRelationship', 'PatientKinContactNumber'
         ];
     },
     ExaminationRequired: function() {
         return ['Private', 'Public', 'DVA', 'WorkersComp', 'MVIT'];
     },
     PreferredPractitioner: function() {
-        return ['Name'];
+        return ['Speciality', 'Name', 'SiteName'];
     },
     ClinicalDetail: function() {
         return ['UID', 'Section', 'Category', 'Type', 'Name', 'Value', 'ClinicalNote', 'Description'];
     },
     Doctor: function() {
-        return ['UID', 'FirstName', 'MiddleName', 'LastName',
-            'HealthLink', 'Address1', 'Address2', 'WorkPhoneNumber',
-            'Postcode', 'ProviderNumber', 'Signature'
+        return ['UID', 'Title', 'FirstName', 'MiddleName', 'LastName',
+            'Type', 'DOB', 'Address1', 'Address2', 'Postcode',
+            'Suburb', 'State', 'Email', 'HomePhoneNumber',
+            'WorkPhoneNumber', 'FaxNumber', 'Signature',
+            'HealthLink', 'ProviderNumber'
         ];
     },
     Department: function() {
         return ['UID', 'DepartmentCode', 'DepartmentName', 'Description'];
     },
     Patient: function() {
-        return ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB',
-            'Gender', 'Address1', 'Address2', 'Suburb', 'Postcode', 'Email', 'HomePhoneNumber', 'WorkPhoneNumber'
+        return ['UID', 'Title', 'FirstName', 'MiddleName', 'LastName',
+            'PreferredName', 'PreviousName', 'DOB', 'Gender', 'Indigenous',
+            'Occupation', 'Address1', 'Address2', 'Postcode', 'Suburb',
+            'State', 'Email1', 'Email2', 'HomePhoneNumber', 'WorkPhoneNumber',
+            'FaxNumber', 'InterpreterRequired', 'InterperterLanguage', 'OtherSpecialNeed'
         ];
     },
     UserAccount: function() {
         return ['UID', 'UserName', 'Email', 'PhoneNumber', 'Activated', 'Enable'];
+    },
+    WAAppointment: function() {
+        return ['RefFax', 'IsUsualGP', 'UsualGPName', 'UsualGPContactNumber',
+            'UsualGPFaxNumber', 'IsSamePlacePreference', 'IsTelehealthSuitable',
+            'IsRenewReferral', 'PathologyProvider', 'RadiologyProvider'
+        ];
     }
 };

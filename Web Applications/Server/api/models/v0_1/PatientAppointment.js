@@ -64,17 +64,7 @@ module.exports = {
                 }
             }
         },
-        DOB: {
-            type: Sequelize.STRING(45),
-            allowNull: true,
-            validate: {
-                len: {
-                    args: [0, 45],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        Address1: {
+        PreferredName: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
@@ -84,7 +74,7 @@ module.exports = {
                 }
             }
         },
-        Address2: {
+        PreviousName: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
@@ -114,15 +104,104 @@ module.exports = {
                 }
             }
         },
-        Email: {
+        State: {
+            type: Sequelize.STRING(100),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 100],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        CountryOfBirth: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
-                isEmail: {
-                    msg: 'Invalid!'
-                },
                 len: {
                     args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        DOB: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Gender: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            comment: 'Male: M\nFemale: F',
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Indigenous: {
+            type: Sequelize.STRING(3),
+            allowNull: true,
+            comment: 'Indigenouns Status:\n   + ABO: Aboriginal\n   + TSI: Torres Strait ',
+            validate: {
+                len: {
+                    args: [0, 3],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Address1: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Address2: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Email1: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Email2: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        PhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
                     msg: 'Too long!'
                 }
             }
@@ -138,6 +217,126 @@ module.exports = {
             }
         },
         WorkPhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        FaxNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        InterpreterRequired: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        InterpreterLanguage: {
+            type: Sequelize.STRING(100),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 100],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        OtherSpecialNeed: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        MedicareNumber: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        MedicareReferenceNumber: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        ExpiryDate: {
+            type: Sequelize.DATE,
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
+        },
+        DVANumber: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        InjuryType: {
+            type: Sequelize.STRING(3),
+            allowNull: true,
+            comment: 'MVA: Motor vehicle accident\nWIY: Work inj',
+            validate: {
+                len: {
+                    args: [0, 3],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        PatientKinName: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        PatientKinRelationship: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        PatientKinContactNumber: {
             type: Sequelize.STRING(20),
             allowNull: true,
             validate: {

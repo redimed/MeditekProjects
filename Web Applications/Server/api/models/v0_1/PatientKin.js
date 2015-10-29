@@ -11,17 +11,7 @@ module.exports = {
             },
             primaryKey: true
         },
-        UID: {
-            type: Sequelize.STRING(255),
-            allowNull: false,
-            validate: {
-                isUUID: {
-                    args: 4,
-                    msg: 'Must be an UUID V4!'
-                }
-            }
-        },
-        TelehealthAppointmentID: {
+        PatientID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
             validate: {
@@ -30,25 +20,23 @@ module.exports = {
                 }
             },
             references: {
-                model: 'TelehealthAppointment',
+                model: 'Patient',
                 key: 'ID'
             }
         },
-        Speciality: {
-            type: Sequelize.STRING(100),
+        UID: {
+            type: Sequelize.STRING(255),
             allowNull: true,
-            comment: 'Plastic Sergery\nOrthopaedic Surgery',
             validate: {
-                len: {
-                    args: [0, 100],
-                    msg: 'Too long!'
+                isUUID: {
+                    args: 4,
+                    msg: 'Must be an UUID V4!'
                 }
             }
         },
         Name: {
             type: Sequelize.STRING(255),
             allowNull: true,
-            comment: 'Name of Specialist',
             validate: {
                 len: {
                     args: [0, 255],
@@ -56,13 +44,42 @@ module.exports = {
                 }
             }
         },
-        SiteName: {
+        Relationship: {
             type: Sequelize.STRING(255),
             allowNull: true,
-            comment: 'List of values',
             validate: {
                 len: {
                     args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        MobilePhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        HomePhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        WorkPhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
                     msg: 'Too long!'
                 }
             }
@@ -70,7 +87,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'PreferredPractitioner',
+        tableName: 'PatientKin',
         timestamps: false,
         hooks: {}
     }

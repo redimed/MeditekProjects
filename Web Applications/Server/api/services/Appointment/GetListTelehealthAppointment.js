@@ -9,6 +9,12 @@ module.exports = function(data, userInfo) {
     var defer = $q.defer();
     //get pagination  with condition received
     var pagination = Services.GetPaginationAppointment(data, userInfo);
+    //filter Telehealth Appointment
+    pagination.filterTelehealthAppointment.push({
+        '$and': {
+            Type: 'TEL'
+        }
+    });
     Appointment.findAndCountAll({
             attributes: Services.AttributesTeleAppt.Appointment(),
             include: [{

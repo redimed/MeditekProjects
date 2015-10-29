@@ -1,7 +1,7 @@
 var app = angular.module('app.authentication.WAAppointment.GP.controller',[
 ]);
 
-app.controller('WAAppointmentGPCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval){
+app.controller('WAAppointmentGPCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval,WAAppointmentService){
 
     $scope.Skin_cancer_Others = false;
     $scope.info = {};
@@ -11,7 +11,7 @@ app.controller('WAAppointmentGPCtrl', function($scope, $cookies, AppointmentServ
         // $scope.Skin_cancer_Others = !$scope.Skin_cancer_Others;
         // $scope.txtSkin_cancer_Others = '';
     }
-
+    WAAppointmentService.loadListAppointment()
     
 	$scope.SendRequestUploadFile = function() {
         for (var i = 0; i < uploader.queue.length; i++) {

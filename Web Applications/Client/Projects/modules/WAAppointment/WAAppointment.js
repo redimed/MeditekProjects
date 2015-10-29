@@ -1,5 +1,6 @@
 var app = angular.module('app.authentication.WAAppointment', [
 	'app.authentication.WAAppointment.controller',
+	'app.authentication.WAAppointment.services'
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider){

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 var env='testApp'; //local,meditekServer,testApp,app
+=======
+var env='local'; //local,meditekServer,testApp,app
+>>>>>>> push fileDownload, update config
 
 var configRestBaseUrl={
 	'local':'http://localhost:3005',
@@ -7,36 +11,45 @@ var configRestBaseUrl={
 	'app':'http://apps.redimed.com.au:3005',
 };
 
+<<<<<<< HEAD
 if(env == "local")
+=======
+if(env=="local")
+>>>>>>> push fileDownload, update config
 {
 	var _restBaseURL=configRestBaseUrl.local;
+	var _fileBaseURL=configRestBaseUrl.local;
 }
+<<<<<<< HEAD
 else if(env == 'meditekServer')
+=======
+else if(env=='meditekServer')
+>>>>>>> push fileDownload, update config
 {
 	var _restBaseURL=configRestBaseUrl.meditekServer;
-	// var _uploadBase= configRestBaseUrl.meditekServer;
-	// var _enableFileBase=configRestBaseUrl.meditekServer;
-	// var _downloadFileBase=configRestBaseUrl.meditekServer;
+	var _fileBaseURL=configRestBaseUrl.meditekServer;
 }
+<<<<<<< HEAD
 else if(env == 'testApp')
+=======
+else if(env=='testApp')
+>>>>>>> push fileDownload, update config
 {
 	var _restBaseURL=configRestBaseUrl.testApp;
-	// var _uploadBase= configRestBaseUrl.testApp;
-	// var _enableFileBase=configRestBaseUrl.testApp;
-	// var _downloadFileBase=configRestBaseUrl.testApp;
+	var _fileBaseURL=configRestBaseUrl.testApp;
 }
 else if (env == 'testAppLocal')
 {
 	var _restBaseURL=configRestBaseUrl.local;
-	// var _uploadBase= configRestBaseUrl.local;
-	// var _enableFileBase=configRestBaseUrl.local;
-	// var _downloadFileBase=configRestBaseUrl.local;
+	var _fileBaseURL=configRestBaseUrl.local;
 }
+<<<<<<< HEAD
 else if(env =='app')
+=======
+else if(env=='app')
+>>>>>>> push fileDownload, update config
 {
 	var _restBaseURL=configRestBaseUrl.app;
-	// var _uploadBase= configRestBaseUrl.testApp;
-	// var _enableFileBase=configRestBaseUrl.testApp;
-	// var _downloadFileBase=configRestBaseUrl.testApp;
+	var _fileBaseURL=configRestBaseUrl.app;
 }
 

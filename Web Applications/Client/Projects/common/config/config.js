@@ -1,28 +1,69 @@
+//OVERIDE ERROR
+Error.prototype.pushErrors=function(errors){
+	this.errors=errors;
+}
+Error.prototype.pushError=function(err)
+{
+	if(this.errors)
+	{
+		this.errors.push(err);
+	}
+	else
+	{
+		this.errors=[];
+		this.errors.push(err);
+	}
+}
+Error.prototype.getErrors=function()
+{
+	if(this.errors)
+		return this.errors;
+	else
+		return [];
+}
+
 
 //BEGIN CONFIG ULOAD URL
 var _apiUpload="/api/uploadFile";
-var _uploadURL=_restBaseURL+_apiUpload;
+var _uploadURL=_fileBaseURL+_apiUpload;
 //END CONFIG UPLOAD URL
 
-//BEGIN CONFIG DISABLE FILE
-var _apiEnableFile="/api/enableFile";
-var _enableFileURL=_restBaseURL+_apiEnableFile;
-//END CONFIG UPLOAD URL
-
-//BEGIN CONFIG DISABLE FILE
-var _apiDownloadFile="/api/downloadFile";
-var _downloadFileURL=_restBaseURL+_apiDownloadFile;
-//END CONFIG UPLOAD URL
 
 
 var o={
+
 	const:{
 		restBaseUrl:_restBaseURL,
 
-		uploadFileUrl:_uploadURL,
+		fileBaseUrl:_fileBaseURL,
 
-		enableFileUrl:_enableFileURL,
+		uploadFileUrl:_uploadURL
+	},
 
-		downloadFileUrl:_downloadFileURL,
-	}
+	checkData:function(value)
+	{
+		var result = true;
+	    if (value === undefined || value === null || value === '') {
+	        result = false;
+	    } else if (_.isObject(value) && _.isEmpty(value)) {
+	        result = false;
+	    }
+	    return result;
+	},
+	checkListData:function()
+	{
+		var result = true;
+	    for (var i = 0; i < arguments.length; i++) {
+	        if (arguments[i] === undefined || arguments[i] === null || arguments[i] === '') {
+	            result = false;
+	        } else if (_.isObject(arguments[i]) && _.isEmpty(arguments[i])) {
+	            result = false;
+	        }
+	        if (result === false) {
+	            console.log(">>>>>>>> Vi tri data truyen den bi loi:", i);
+	            break;
+	        }
+	    }
+	    return result;
+	},
 }

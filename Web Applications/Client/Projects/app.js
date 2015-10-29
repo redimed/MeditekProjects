@@ -11,6 +11,7 @@ var app = angular.module('app', [
     "app.common.ngEnter",
     'app.common.msgDialog',
     'app.common.menuBar',
+    'app.common.dimage',
     'app.common.CommonService',
     "app.unAuthentication",
     "app.authentication",
@@ -97,6 +98,13 @@ app
 
         return settings;
     }])
+    //SETTING RESTANGULAR WITH FULL RESPONSE FOR FILES SYSTEM (data, status, headers, config)
+    .factory('FileRestangular',function(Restangular){
+        return Restangular.withConfig(function(RestangularConfigurer) {
+            RestangularConfigurer.setFullResponse(true);
+            RestangularConfigurer.setBaseUrl(o.const.fileBaseUrl);
+        });
+    })
     .run(function($rootScope, $cookies, $window, $state, Restangular, toastr, settings) {
         // RESTANGULAR ERROR HANDLING
         // Restangular.setErrorInterceptor(function (response) {

@@ -124,6 +124,8 @@ module.exports = {
             fileUID: params.fileUID,
             size: params.size
         }, function(err, output, fileName) {
+            res.set('filename',fileName);
+            res.header('Access-Control-Expose-Headers', 'filename');
             if (err) return res.serverError(ErrorWrap(err));
             res.attachment(fileName);
             var file = fs.createReadStream(output);

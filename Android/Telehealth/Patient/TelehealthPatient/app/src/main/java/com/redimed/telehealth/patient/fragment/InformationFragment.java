@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -25,35 +24,40 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.models.Patient;
+import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.network.RESTClient;
+import com.redimed.telehealth.patient.utils.CustomAlertDialog;
+import com.redimed.telehealth.patient.utils.DialogConnection;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class InformationFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener, View.OnTouchListener {
 
-    private String TAG = "INFORMATION";
+    private String TAG = "INFORMATION", uid;
     private View v;
     private DatePickerDialog birthdayPickerDialog;
     private SimpleDateFormat dateFormat;
     private RegisterApi restClient;
     private Gson gson;
     private Patient[] patients;
-    private boolean refreshToggle = true;
+    private SharedPreferences sharedPreferences;
 
     @Bind(R.id.layoutProfile)
     LinearLayout layoutProfile;
@@ -93,7 +97,6 @@ public class InformationFragment extends Fragment implements View.OnClickListene
     ScrollView scrollViewInfo;
 
     public InformationFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -101,6 +104,8 @@ public class InformationFragment extends Fragment implements View.OnClickListene
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         restClient = RESTClient.getRegisterApi();
+        uid = getArguments().getString("telehealthUID");
+        gson = new Gson();
 
         v = inflater.inflate(R.layout.fragment_information, container, false);
         ButterKnife.bind(this, v);
@@ -121,12 +126,21 @@ public class InformationFragment extends Fragment implements View.OnClickListene
         errAddress1.setOnFocusChangeListener(this);
         errAddress2.setOnFocusChangeListener(this);
 
-        DisplayPatientInfo();
+        sharedPreferences = v.getContext().getSharedPreferences("PatientInfo", v.getContext().MODE_PRIVATE);
+        patients = gson.fromJson(sharedPreferences.getString("info", null), Patient[].class);
+        DisplayInfo(patients);
 
+        SwipeRefresh();
+
+        return v;
+    }
+
+    //Refresh information patient
+    private void SwipeRefresh() {
         swipeInfo.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                DisplayPatientInfo();
+                GetInfoPatient();
             }
         });
 
@@ -147,30 +161,52 @@ public class InformationFragment extends Fragment implements View.OnClickListene
             @Override
             public void onScrollChanged() {
                 int scrollY = scrollViewInfo.getScrollY();
-                if (scrollY == 0){
+                if (scrollY == 0) {
                     swipeInfo.setEnabled(true);
-                }else swipeInfo.setEnabled(false);
+                } else swipeInfo.setEnabled(false);
             }
         });
-
-        return v;
     }
 
-    private void DisplayPatientInfo() {
-        SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("PatientInfo", v.getContext().MODE_PRIVATE);
-        gson = new Gson();
-        patients = gson.fromJson(sharedPreferences.getString("info", null), Patient[].class);
-        String DOB = "N/A";
-        for (int i = 0; i < patients.length; i++) {
-            txtFirstName.setText(patients[i].getFirstName() == null ? "NONE" : patients[i].getFirstName());
-            txtLastName.setText(patients[i].getLastName() == null ? "NONE" : patients[i].getLastName());
-            txtPhone.setText(patients[i].getUserAccount().getPhoneNumber() == null ? "NONE" : patients[i].getUserAccount().getPhoneNumber());
-            txtEmail.setText(patients[i].getEmail() == null ? "NONE" : patients[i].getEmail());
-            txtDOB.setText(patients[i].getDOB() == null ? "NONE" : patients[i].getDOB());
-            txtAddress1.setText(patients[i].getAddress1() == null ? "NONE" : patients[i].getAddress1());
-            txtAddress2.setText(patients[i].getAddress2() == null ? "NONE" : patients[i].getAddress2());
+    private void GetInfoPatient() {
+        TelehealthUser telehealthUser = new TelehealthUser();
+        telehealthUser.setUID(uid);
+
+        JsonObject patientJSON = new JsonObject();
+        patientJSON.addProperty("data", gson.toJson(telehealthUser));
+
+        restClient.getDetailsPatient(patientJSON, new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                String message = jsonObject.get("message").getAsString();
+                if (message.equalsIgnoreCase("success")) {
+                    DisplayInfo(gson.fromJson(jsonObject.get("data").toString(), Patient[].class));
+                    swipeInfo.setRefreshing(false);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
+                    new DialogConnection(v.getContext()).show();
+                } else {
+                    new CustomAlertDialog(v.getContext(), CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                }
+                swipeInfo.setRefreshing(false);
+            }
+        });
+    }
+
+    private void DisplayInfo(Patient[] patients) {
+        for (Patient patient : patients) {
+            txtFirstName.setText(patient.getFirstName() == null ? "NONE" : patient.getFirstName());
+            txtLastName.setText(patient.getLastName() == null ? "NONE" : patient.getLastName());
+            txtPhone.setText(patient.getUserAccount().getPhoneNumber() == null ? "NONE" : patient.getUserAccount().getPhoneNumber());
+            txtEmail.setText(patient.getEmail() == null ? "NONE" : patient.getEmail());
+            txtDOB.setText(patient.getDOB() == null ? "NONE" : patient.getDOB());
+            txtAddress1.setText(patient.getAddress1() == null ? "NONE" : patient.getAddress1());
+            txtAddress2.setText(patient.getAddress2() == null ? "NONE" : patient.getAddress2());
         }
-        swipeInfo.setRefreshing(false);
     }
 
     @Override
@@ -257,7 +293,6 @@ public class InformationFragment extends Fragment implements View.OnClickListene
         in.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-    // TODO: 10/23/2015 click edit text can't back home
     @Override
     public void onResume() {
         super.onResume();
@@ -266,7 +301,7 @@ public class InformationFragment extends Fragment implements View.OnClickListene
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
                     ((MainActivity) v.getContext()).Display(0);
                     return true;
                 }

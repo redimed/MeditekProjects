@@ -29,36 +29,21 @@ public interface RegisterApi {
     void verify(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
 
     @POST("/api/telehealth/user/details")
-    void getDetailsPatient(@Header("Authorization") String token,
-                           @Header("CoreAuth") String core,
-                           @Body JsonObject telehealthPatient,
-                           Callback<JsonObject> callback);
+    void getDetailsPatient(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
 
     @POST("/api/telehealth/user/appointments")
-    void getAppointmentPatients(@Header("Authorization") String token,
-                                @Header("CoreAuth") String core,
-                                @Body JsonObject telehealthPatient,
-                                Callback<JsonObject> callback);
+    void getAppointmentPatients(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
 
     @POST("/api/telehealth/user/appointmentDetails")
-    void getAppointmentDetails(@Header("Authorization") String token,
-                               @Header("CoreAuth") String core,
-                               @Body JsonObject telehealthPatient,
-                               Callback<JsonObject> callback);
+    void getAppointmentDetails(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
 
     @Multipart
     @POST("/api/uploadFile")
     void uploadFile(@Header("Authorization") String core,
-                    @Part("userUID") String accountUID,
-                    @Part("fileType") String fileType,
-                    @Part("bodyPart") String bodyPart,
-                    @Part("description") String description,
-                    @Part("uploadFile") TypedFile uploadFile,
-                    Callback<JsonObject> callback);
+                    @Part("userUID") String accountUID, @Part("fileType") String fileType,
+                    @Part("bodyPart") String bodyPart, @Part("description") String description,
+                    @Part("uploadFile") TypedFile uploadFile, Callback<JsonObject> callback);
 
     @POST("/api/telehealth/appointment/updateFile")
-    void addAppointmentFile(@Header("Authorization") String token,
-                            @Header("CoreAuth") String code,
-                            @Body JsonObject telehealthPatient,
-                            Callback<JsonObject> callback);
+    void addAppointmentFile(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
 }

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.redimed.telehealth.patient.R;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -42,10 +44,14 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
         Picasso picasso = new Picasso.Builder(view.getContext()).listener(new Picasso.Listener() {
             @Override
             public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-//                holder.imgContains.setVisibility(View.GONE);
+                holder.imgContains.setVisibility(ImageView.GONE);
             }
         }).build();
-        picasso.load(fileUploads.get(position)).error(R.drawable.error_image_icon).fit().centerCrop().into(holder.imgContains);
+        picasso.load(fileUploads.get(position))
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .error(R.drawable.error_image_icon)
+                .fit().centerCrop().into(holder.imgContains);
     }
 
     @Override

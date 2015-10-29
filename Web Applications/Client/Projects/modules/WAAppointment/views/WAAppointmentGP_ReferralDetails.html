@@ -68,9 +68,10 @@
     <!-- referral details #2 -->
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h3 class="panel-title uppercase bold">&nbsp;</h3>
+            <h3 class="panel-title uppercase bold">Referral Details</h3>
         </div>
         <div class="panel-body" style="padding: 2em">
+            <!-- 1 -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-inline">
@@ -208,14 +209,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- referral details #3 -->
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title uppercase bold"></h3>
-        </div>
-        <div class="panel-body" style="padding: 2em">
+            <hr>
+            <!-- 2 -->
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group">
@@ -230,10 +225,43 @@
                             <a href="javascript:;" class="btn green-jungle btn-block" ng-click="tab1 = 'skin_cancer';"> Skin cancer </a>
                             <div class="checkbox-list" ng-show="tab1 == 'skin_cancer'">
                                 <br>
-                                <label class="control-label"><input type="checkbox" checked> BCC</label>
-                                <label class="control-label"><input type="checkbox"> SCC</label>
-                                <label class="control-label"><input type="checkbox"> Melanoma</label>
-                                <label class="control-label"><input type="checkbox"> Merkel's</label>
+                                <label class="control-label"><input type="checkbox" ng-model="BCC"> 
+                                    BCC
+                                    <ul class="my-ul" ng-show="BCC == true">
+                                        <li>Size :</li>
+                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 0 - 1 cm</label></li>
+                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 1 - 2 cm</label></li>
+                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > > 2 cm</label></li>
+                                    </ul>
+                                    
+                                </label>
+                                <label class="control-label"><input type="checkbox" ng-model="SCC"> 
+                                    SCC
+                                    <ul class="my-ul" ng-show="SCC == true">
+                                        <li>Size :</li>
+                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 0 - 1 cm</label></li>
+                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 1 - 2 cm</label></li>
+                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > > 2 cm</label></li>
+                                    </ul>
+                                </label>
+                                <label class="control-label"><input type="checkbox" ng-model="Melanoma"> 
+                                    Melanoma
+                                    <ul class="my-ul" ng-show="Melanoma == true">
+                                        <li>Size :</li>
+                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 0 - 1 cm</label></li>
+                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 1 - 2 cm</label></li>
+                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > > 2 cm</label></li>
+                                    </ul>
+                                </label>
+                                <label class="control-label"><input type="checkbox" ng-model="Merkel"> 
+                                    Merkel's
+                                    <ul class="my-ul" ng-show="Merkel == true">
+                                        <li>Size :</li>
+                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 0 - 1 cm</label></li>
+                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 1 - 2 cm</label></li>
+                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > > 2 cm</label></li>
+                                    </ul>
+                                </label>
                                 <label class="control-label"><input type="checkbox" ng-model="Skin_cancer_Others" ng-click="click_other()"> 
                                     Others &nbsp;
                                     <input type="text" placeholder="" size="15" ng-model="info.txtSkin_cancer_Others" ng-disabled="Skin_cancer_Others == false">
@@ -307,7 +335,6 @@
                 </div>
             </div>
             <hr>
-
             <div class="row">
                 <h5 class="col-md-12 col-sm-12">
                     <div class="form-inline">
@@ -317,21 +344,21 @@
                                     History of Previous skin cancers and treatmens
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="skin_cancers_radio"  value="option1" checked> Yes 
+                                    <input type="radio" name="skin_cancers_radio"  value="Yes" ng-model="skin_cancers_radio"> Yes 
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="skin_cancers_radio"  value="option2"> No 
+                                    <input type="radio" name="skin_cancers_radio"  value="No"  ng-model="skin_cancers_radio"> No 
                                 </label>
                             </div>
                         </div>
                     </div>
                 </h5>
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-6 col-sm-6" ng-show="skin_cancers_radio == 'Yes'">
                     <div class="form-group">
                         <textarea class="form-control" rows="10"></textarea>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-6 col-sm-6" ng-show="skin_cancers_radio == 'Yes'">
                     <div class="table-scrollable table-scrollable-borderless">
                         <table class="table table-hover table-light">
                             <thead>
@@ -374,7 +401,6 @@
                 </div>
             </div>
             <hr>
-
             <div class="row">
                 <h5 class="col-md-12 col-sm-12">
                     <div class="form-inline">
@@ -384,21 +410,21 @@
                                     History of Previous hand surgery
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="hand_surgery_radio"  value="option1" checked> Yes 
+                                    <input type="radio" name="hand_surgery_radio"  value="Yes" ng-model="hand_surgery_radio"> Yes 
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="hand_surgery_radio"  value="option2"> No 
+                                    <input type="radio" name="hand_surgery_radio"  value="No" ng-model="hand_surgery_radio"> No 
                                 </label>
                             </div>
                         </div>
                     </div>
                 </h5>
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-6 col-sm-6" ng-show="hand_surgery_radio == 'Yes'">
                     <div class="form-group">
                         <textarea class="form-control" rows="10"></textarea>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-6 col-sm-6" ng-show="hand_surgery_radio == 'Yes'">
                     <div class="table-scrollable table-scrollable-borderless">
                         <table class="table table-hover table-light">
                             <thead>
@@ -440,7 +466,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

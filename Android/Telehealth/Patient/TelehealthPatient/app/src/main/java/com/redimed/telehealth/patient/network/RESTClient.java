@@ -63,6 +63,7 @@ public class RESTClient {
             paramRequestFacade.addHeader("DeviceID", spDevice.getString("deviceID", null));
             paramRequestFacade.addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", null));
             paramRequestFacade.addHeader("CoreAuth", "Bearer " + uidTelehealth.getString("coreToken", null));
+            paramRequestFacade.addHeader("UserUID", uidTelehealth.getString("accountUID", null));
         }
     }
 

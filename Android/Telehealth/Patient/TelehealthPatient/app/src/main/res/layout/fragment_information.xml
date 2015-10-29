@@ -5,257 +5,262 @@
     android:layout_height="wrap_content"
     tools:context="com.redimed.telehealth.patient.fragment.InformationFragment">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+    <ScrollView
+        android:id="@+id/scrollViewInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:isScrollContainer="false"
+        android:orientation="vertical"
+        android:scrollbars="none">
 
-        <ScrollView
-            android:id="@+id/scrollViewInfo"
+        <LinearLayout
+            android:id="@+id/layoutProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:isScrollContainer="false"
-            android:scrollbars="none">
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/layoutProfile"
+                android:id="@+id/layoutUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:padding="12dp">
 
-                <LinearLayout
-                    android:id="@+id/layoutUserName"
+                <ImageView
+                    android:layout_width="@dimen/info_icon_width"
+                    android:layout_height="@dimen/info_icon_height"
+                    android:layout_gravity="center"
+                    android:background="@drawable/person_icon"
+                    android:fontFamily="sans-serif-light" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/errFirstName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:orientation="horizontal"
-                    android:padding="12dp">
+                    android:layout_marginLeft="10dp">
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/person_icon"
-                        android:fontFamily="sans-serif-light"
-                        android:gravity="bottom" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/errFirstName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp">
-
-                        <EditText
-                            android:id="@+id/txtFirstName"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:hint="First Name"
-                            android:inputType="text" />
-                    </android.support.design.widget.TextInputLayout>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/errLastName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/txtLastName"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:hint="Last Name"
-                            android:inputType="text"
-                            android:singleLine="true" />
-                    </android.support.design.widget.TextInputLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutPhone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/layoutUserName"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/phone_icon"
-                        android:fontFamily="sans-serif-light"
-                        android:gravity="bottom" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/errPhone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp">
-
-                        <EditText
-                            android:id="@+id/txtPhone"
-                            android:layout_width="300dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:editable="false"
-                            android:enabled="false"
-                            android:hint="Phone Number"
-                            android:inputType="number"
-                            android:maxLength="15"
-                            android:singleLine="true" />
-                    </android.support.design.widget.TextInputLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/layoutPhone"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/email_icon"
-                        android:fontFamily="sans-serif-light"
-                        android:gravity="bottom" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/errEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp">
-
-                        <EditText
-                            android:id="@+id/txtEmail"
-                            android:layout_width="300dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:hint="Email"
-                            android:inputType="number"
-                            android:singleLine="true" />
-                    </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutDOB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/layoutEmail"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/calendar_icon"
-                        android:fontFamily="sans-serif-light"
-                        android:gravity="bottom" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/errDOB"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp">
-
-                        <EditText
-                            android:id="@+id/txtDOB"
-                            android:layout_width="300dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:hint="Date of Birth"
-                            android:inputType="number"
-                            android:singleLine="true" />
-                    </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:id="@+id/layoutAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/layoutDOB"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:id="@+id/imgAddress"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/post_box_icon"
-                        android:fontFamily="sans-serif-light"
-                        android:gravity="bottom" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/errAddress1"
-                        android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/txtFirstName"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/imgAddress">
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:hint="First Name"
+                        android:inputType="text"
+                        android:textColor="@color/darkFont" />
+                </android.support.design.widget.TextInputLayout>
 
-                        <EditText
-                            android:id="@+id/txtAddress1"
-                            android:layout_width="300dp"
-                            android:layout_height="wrap_content"
-                            android:hint="Address1"
-                            android:inputType="text"
-                            android:singleLine="true" />
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/errLastName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                    </android.support.design.widget.TextInputLayout>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/errAddress2"
-                        android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/txtLastName"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/errAddress1"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@+id/imgAddress">
-
-                        <EditText
-                            android:id="@+id/txtAddress2"
-                            android:layout_width="300dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:hint="Address2"
-                            android:inputType="text"
-                            android:singleLine="true" />
-                    </android.support.design.widget.TextInputLayout>
-
-                </RelativeLayout>
-
-                <Button
-                    android:id="@+id/btnSubmit"
-                    android:layout_width="300dp"
-                    android:layout_height="?android:actionBarSize"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="15dp"
-                    android:background="#67000000"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Close"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
+                        android:layout_gravity="bottom"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:hint="Last Name"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:textColor="@color/darkFont" />
+                </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
-        </ScrollView>
+            <LinearLayout
+                android:id="@+id/layoutPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal"
+                android:padding="12dp">
 
-    </RelativeLayout>
+                <ImageView
+                    android:layout_width="@dimen/info_icon_width"
+                    android:layout_height="@dimen/info_icon_height"
+                    android:layout_gravity="center"
+                    android:background="@drawable/phone_icon"
+                    android:fontFamily="sans-serif-light" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/errPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp">
+
+                    <EditText
+                        android:id="@+id/txtPhone"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:hint="Phone Number"
+                        android:inputType="number"
+                        android:maxLength="15"
+                        android:singleLine="true"
+                        android:textColor="@color/darkFont" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="@dimen/info_icon_width"
+                    android:layout_height="@dimen/info_icon_height"
+                    android:layout_gravity="center"
+                    android:background="@drawable/email_icon"
+                    android:fontFamily="sans-serif-light" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/errEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp">
+
+                    <EditText
+                        android:id="@+id/txtEmail"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:hint="Email"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textColor="@color/darkFont" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutDOB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="@dimen/info_icon_width"
+                    android:layout_height="@dimen/info_icon_height"
+                    android:layout_gravity="center"
+                    android:background="@drawable/calendar_icon"
+                    android:fontFamily="sans-serif-light" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/errDOB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp">
+
+                    <EditText
+                        android:id="@+id/txtDOB"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:hint="Date of Birth"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textColor="@color/darkFont" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/imgAddress"
+                    android:layout_width="@dimen/info_icon_width"
+                    android:layout_height="@dimen/info_icon_height"
+                    android:background="@drawable/post_box_icon"
+                    android:fontFamily="sans-serif-light" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/errAddress1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/imgAddress">
+
+                    <EditText
+                        android:id="@+id/txtAddress1"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:hint="Address1"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:textColor="@color/darkFont" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/errAddress2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/errAddress1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/imgAddress">
+
+                    <EditText
+                        android:id="@+id/txtAddress2"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:hint="Address2"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:textColor="@color/darkFont" />
+                </android.support.design.widget.TextInputLayout>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="300dp"
+                android:layout_height="?android:actionBarSize"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:background="#67000000"
+                android:fontFamily="sans-serif-light"
+                android:text="Close"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </android.support.v4.widget.SwipeRefreshLayout>

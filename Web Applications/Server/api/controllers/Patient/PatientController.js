@@ -115,6 +115,7 @@ module.exports = {
 				FileUpload.findAll({
 					where:{
 						UserAccountID : info[0].UserAccountID,
+						FileType : data.FileType,
 						Enable : 'Y'
 					}
 				})

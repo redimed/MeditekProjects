@@ -619,7 +619,24 @@ module.exports = {
 		output: get list patient from table Patient
 	*/
 	LoadListPatient : function(data, transaction){
+		var FirstName = '',LastName = '';
+		var isConcat = false;
+		var attributes=[];
+		for(var i = 0; i < data.attributes.length; i++){
+			if(data.attributes[i].field!='UserAccount'){
+				attributes[i] = data.attributes[i].field;
+			}
+		};
+		console.log(attributes);
 		var whereClause = Services.Patient.whereClause(data);
+		if(data.Search){
+			if(data.Search.FirstName!='' && data.Search.LastName!=''
+				&& data.Search.FirstName!=undefined && data.Search.LastName!=undefined){
+				FirstName = data.Search.FirstName;
+				LastName  = data.Search.LastName;
+				isConcat = true;
+			}
+		}
 		return Patient.findAndCountAll({
 			include:[
 				{
@@ -631,11 +648,17 @@ module.exports = {
 				   	}
 			    }
 			],
-			limit  : data.limit,
-			offset : data.offset,
-			order  : data.order,
+			//attributes : attributes,
+			limit      : data.limit,
+			offset     : data.offset,
+			order      : data.order,
 			where: {
-				$or: whereClause.Patient
+				$or: [
+					whereClause.Patient,
+					isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("FirstName"),' ', Sequelize.col("LastName")), {
+				       	like: '%'+FirstName+' '+LastName+'%'
+					}):null,
+				]
 				
 			},
 			transaction:transaction
@@ -707,6 +730,7 @@ module.exports = {
 				attributes:['UserAccountID','UID'],
 				where :{
 					UserAccountID : data.UserAccountID,
+					FileType: data.FileType,
 					Enable : 'Y'
 				}
 			});

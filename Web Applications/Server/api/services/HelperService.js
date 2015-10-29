@@ -117,7 +117,7 @@ module.exports = {
         character: /^[a-zA-Z]{0,255}$/,
 
         //address
-        address: /^[a-zA-Z0-9\s,'-]{0,255}$/,
+        address: /^[a-zA-Z0-9\s,'-\/]{0,255}$/,
 
         //postcode
         postcode: /^[0-9]{4}$/

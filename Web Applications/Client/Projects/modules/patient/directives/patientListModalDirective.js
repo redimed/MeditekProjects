@@ -25,6 +25,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    // CALLBACKS
 		    uploader.onAfterAddingFile = function (fileItem) {
 		    	if($scope.info.img){
+		    		$scope.info.FileType = 'ProfileImage';
 		    		PatientService.getfileUID($scope.info).then(function(response){
 		    			$scope.info.img_change = true;
 		    			$scope.imgDelete = response.data[0].UID;		    		
@@ -44,6 +45,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			var oriInfo,clearInfo;
 			var data = {};
 			data.UID = scope.uid;
+			data.FileType = 'ProfileImage';
+			console.log(data);
 			scope.info = {};
 			scope.infoChanged = function() {
 		        return angular.equals(oriInfo, scope.info);

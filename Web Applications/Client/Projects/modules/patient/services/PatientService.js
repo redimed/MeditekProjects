@@ -3,7 +3,7 @@ angular.module('app.authentication.patient.services',[])
 	var PatientService = {};
 	var api = Restangular.all("api");
 	var characterRegex = /^[a-zA-Z]{0,255}$/;
-	var addressRegex = /^[a-zA-Z0-9\s,'-]{0,255}$/;
+	var addressRegex = /^[a-zA-Z0-9\s,'-\/]{0,255}$/;
 	var postcodeRegex = /^[0-9]{4}$/;
 	var postData ={};
 

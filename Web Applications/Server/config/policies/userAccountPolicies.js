@@ -3,7 +3,7 @@ module.exports={
       // 'Test':['checkCookieToken'],
 	    'Test':['hasToken'],
 	    'TestURL':'checkVersion',
-	    'CreateUserAccount':['hasToken','isAuthenticated'],
+	    'CreateUserAccount':['hasToken','isAdmin'],
 	    'DisableUserAccount':['hasToken','isAdmin'],
 	    'EnableUserAccount':['hasToken','isAdmin'],
 	    'GetListUsers':['hasToken','isAdmin'],

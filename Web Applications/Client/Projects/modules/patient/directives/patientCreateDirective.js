@@ -9,8 +9,8 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		controller:function($scope, FileUploader) {
 			// Profile Image
 		    var uploader = $scope.uploader = new FileUploader({
-		    	// url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
-		    	url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	url: o.const.uploadFileUrl,
 		    	headers:{Authorization:'Bearer '+$cookies.get("token")},
 		    	alias : 'uploadFile'
 		    });

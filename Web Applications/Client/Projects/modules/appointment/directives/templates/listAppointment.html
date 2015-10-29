@@ -1,20 +1,26 @@
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">Telehealth Appointments</h3>
+<h3 class="page-title">Telehealth Appointment</h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
             <i class="fa fa-home"></i>
-            <b>Telehealth Appointments</b>
+            <b>Telehealth Appointment</b>
             <i class="fa fa-angle-right"></i>
         </li>
+        <!-- <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Telehealth Appointment</b>
+        </li> -->
     </ul>
 </div>
 <!-- END PAGE HEADER-->
+
+<!-- BEGIN BODY -->
 <div class="portlet light bordered">
     <div class="portlet-title">
         <div class="caption font-green">
             <i class="icon-list font-green"></i>
-            <span class="caption-subject bold uppercase"> Telehealth Appointments</span>
+            <span class="caption-subject bold uppercase"> Telehealth Appointment</span>
         </div>
         <div class="actions">
             <a href="javascript:;" class="btn btn-circle red-thunderbird btn-sm" ng-click="toggleFilter()">
@@ -27,49 +33,49 @@
         <!-- begin filter -->
         <span ng-hide="toggle">
             <div class="row">
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">Patient</label>
-						<input type="text" class="form-control input-sm" placeholder="Filter patient" ng-enter="filter()" ng-model="infoAppointment.patient">
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">Submit From Date</label>
-						<!-- <input type="date" class="form-control" placeholder="Request From Date"> -->
-						 <input ng-model="infoAppointment.submit_from_date" type="text" class="form-control input-sm" name="submit_from_date" datepicker-popup="dd/MM/yyyy" max-date="infoAppointment.submit_to_date" is-open="submit_from_date" ng-click="submit_from_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">Submit To Date</label>
-						<!-- <input type="date" class="form-control" placeholder="Request To Date"> -->
-						<input ng-model="infoAppointment.submit_to_date" type="text" class="form-control input-sm" name="submit_to_date" datepicker-popup="dd/MM/yyyy" min-date="infoAppointment.submit_from_date" is-open="submit_to_date" ng-click="submit_to_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">Treating Practitioner</label>
-						<input type="text" class="form-control input-sm" placeholder="Filter Treating Practitioner" ng-model="infoAppointment.doctor" ng-enter="filter()">
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">Appointment From Date</label>
-						<!-- <input type="date" class="form-control" placeholder="Approval From Date"> -->
-						<input ng-model="infoAppointment.appointment_from_date" type="text" class="form-control input-sm" name="appointment_from_date" datepicker-popup="dd/MM/yyyy" max-date="infoAppointment.appointment_to_date" is-open="appointment_from_date" ng-click="appointment_from_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="label-control">Appointment To Date</label>
-						<!-- <input type="date" class="form-control" placeholder="Approval To Date"> -->
-						<input ng-model="infoAppointment.appointment_to_date" type="text" class="form-control input-sm" name="appointment_to_date" datepicker-popup="dd/MM/yyyy" min-date="infoAppointment.appointment_from_date" is-open="appointment_to_date" ng-click="appointment_to_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
-					</div>
-				</div>
-			</div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="label-control">Patient</label>
+                        <input type="text" class="form-control input-sm" placeholder="Filter patient" ng-enter="filter()" ng-model="infoAppointment.patient">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="label-control">Submit From Date</label>
+                        <!-- <input type="date" class="form-control" placeholder="Request From Date"> -->
+                         <input ng-model="infoAppointment.submit_from_date" type="text" class="form-control input-sm" name="submit_from_date" datepicker-popup="dd/MM/yyyy" max-date="infoAppointment.submit_to_date" is-open="submit_from_date" ng-click="submit_from_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="label-control">Submit To Date</label>
+                        <!-- <input type="date" class="form-control" placeholder="Request To Date"> -->
+                        <input ng-model="infoAppointment.submit_to_date" type="text" class="form-control input-sm" name="submit_to_date" datepicker-popup="dd/MM/yyyy" min-date="infoAppointment.submit_from_date" is-open="submit_to_date" ng-click="submit_to_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="label-control">Treating Practitioner</label>
+                        <input type="text" class="form-control input-sm" placeholder="Filter Treating Practitioner" ng-model="infoAppointment.doctor" ng-enter="filter()">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="label-control">Appointment From Date</label>
+                        <!-- <input type="date" class="form-control" placeholder="Approval From Date"> -->
+                        <input ng-model="infoAppointment.appointment_from_date" type="text" class="form-control input-sm" name="appointment_from_date" datepicker-popup="dd/MM/yyyy" max-date="infoAppointment.appointment_to_date" is-open="appointment_from_date" ng-click="appointment_from_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="label-control">Appointment To Date</label>
+                        <!-- <input type="date" class="form-control" placeholder="Approval To Date"> -->
+                        <input ng-model="infoAppointment.appointment_to_date" type="text" class="form-control input-sm" name="appointment_to_date" datepicker-popup="dd/MM/yyyy" min-date="infoAppointment.appointment_from_date" is-open="appointment_to_date" ng-click="appointment_to_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
+                    </div>
+                </div>
+            </div>
         </span>
         <span ng-show="toggle"></span>
         <!-- end filter -->
@@ -138,7 +144,4 @@
         <!-- end pagination -->
     </div>
 </div>
-<!-- BEGIN MAIN JS -->
-<script>
-App.initComponents();
-</script>
+<!-- END BODY -->

@@ -1,1 +1,67 @@
-sdfghjkl
+<div class="modal-content">
+    <div class="modal-header my-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()"></button>
+        <h4 class="modal-title uppercase bold">
+            <i class="glyphicon glyphicon-list-alt"></i>
+            Western Australia Appointment
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="tabbable-line">
+            <ul class="nav nav-tabs ">
+                <li class="active">
+                    <a href="index.html#tab_appointment" data-toggle="tab"> Appointment </a>
+                </li>
+                <li>
+                    <a href="index.html#tab_referral" data-toggle="tab"> Referral </a>
+                </li>
+                <li>
+                    <a href="index.html#tab_clinical" data-toggle="tab"> Clinical </a>
+                </li>
+                <li>
+                    <a href="index.html#tab_patient" data-toggle="tab"> Patient </a>
+                </li>
+                <li>
+                    <a href="index.html#tab_treating" data-toggle="tab"> Treating Practitioner </a>
+                </li>
+                <li>
+                    <a href="index.html#tab_referring" data-toggle="tab"> Referring Practitioner </a>
+                </li>
+                <li>
+                    <a href="index.html#tab_complain" data-toggle="tab"> Present Complain & Allergy </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_appointment">
+                    <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Appointment.html'"></div>
+                </div>
+                <div class="tab-pane" id="tab_referral">
+                    <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Referral.html'"></div>
+                </div>
+                <div class="tab-pane" id="tab_clinical">
+                    <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Clinical.html'"></div>
+                </div>
+                <div class="tab-pane" id="tab_patient">
+                    <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Patient.html'"></div>
+                </div>
+                <div class="tab-pane" id="tab_treating">
+                    <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Treating.html'"></div>
+                </div>
+                <div class="tab-pane" id="tab_referring">
+                    <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Referring.html'"></div>
+                </div>
+                <div class="tab-pane" id="tab_complain">
+                    <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_ComplainAndAllergy.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn default" data-dismiss="modal" ng-click="close()">
+            <i class="glyphicon glyphicon-remove-circle"></i> Close
+        </button>
+        <button type="button" class="btn green" ng-click="submitUpdate()" ng-show="!checkRoleUpdate">
+            <i class="glyphicon glyphicon-save"></i> Save changes
+        </button>
+    </div>
+</div>

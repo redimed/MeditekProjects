@@ -17,6 +17,9 @@
 	background-size: 100% 46px ;
 }
 
+.my-modal-body { 
+    padding: 0em 2em 2em 2em;
+}
 /*fix label input_md*/
 .form-group.form-md-line-input .form-control~label {
     font-size: 16px;
@@ -43,7 +46,9 @@
     }
 }
 
-
+ul.my-ul {
+    list-style-type: none;
+}
 .my-modal-header{
 	background-color: #36c6d3;
     color: #fff;
@@ -75,6 +80,7 @@
 }
 
 .tableSort { float: right; }
+.sortDataTable { float: right; }
 
 #recaptcha_widget_div{
     display: none;

@@ -75,7 +75,7 @@ module.exports.cors = {
 
     headers: 'content-type, authorization',
 
-    exposeHeaders:'filename',
+    // exposeHeaders:'filename,filetype', //TODO
 
     /**
      * Security level 1 (high) will respond with a 403 status code to any request 

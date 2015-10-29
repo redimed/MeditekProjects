@@ -14,11 +14,12 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
 
     $modalInstance.rendered.then(function() {
         App.initComponents(); // init core components
+        App.initajax();
         ComponentsDateTimePickers.init(); // init todo page
         ComponentsSelect2.init(); // init todo page
         ComponentsBootstrapSelect.init(); // init todo page
         Portfolio.init();
-        //ComponentsDropdowns.init(); // init todo page
+        ComponentsDropdowns.init(); // init todo page
     });
     $scope.ViewDoc = function(Url, UID) {
         var LinkUID = Url + UID

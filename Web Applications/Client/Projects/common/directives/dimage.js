@@ -15,20 +15,26 @@ angular.module('app.common.dimage',[])
 		},
 		link:function(scope,element,attrs)
 		{
-			if(scope.dimageUid)
-			{
-				CommonService.getFileURL(scope.dimageUid,scope.dimageSize)
-				.then(function(url){
-					element.attr('src',url);
-				},function(err){
-					throw err;
-				})
-			}
-			else
-			{
-				var error=new Error ('dimageDirective.paramsNotProvided');
-				throw error;
-			}
+			scope.$watch('dimageUid',function(newValue,oldValue){
+				if(o.checkData(scope.dimageUid))
+				{
+					if(scope.dimageUid)
+					{
+						CommonService.getFileURL(scope.dimageUid,scope.dimageSize)
+						.then(function(url){
+							element.attr('src',url);
+						},function(err){
+							throw err;
+						})
+					}
+					else
+					{
+						var error=new Error ('dimageDirective.paramsNotProvided');
+						throw error;
+					}
+				}
+			});
+			
 			
 		}
 	}

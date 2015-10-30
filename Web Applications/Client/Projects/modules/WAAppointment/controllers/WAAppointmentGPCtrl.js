@@ -1,19 +1,43 @@
-var app = angular.module('app.authentication.WAAppointment.GP.controller',[
-]);
+var app = angular.module('app.authentication.WAAppointment.GP.controller', []);
 
-app.controller('WAAppointmentGPCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval,WAAppointmentService){
+app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval) {
+    $scope.requestInfo = {
+        RequestDate: moment().format('YYYY-MM-DD HH:mm:ss Z'),
+        SiteID: 1,
+        TelehealthAppointment: {
+            PreferredPractitioner: [{
+                Speciality: ''
+            }],
+        }
 
+    }
+    $scope.showData = {
+        GenderOther : null
+    }
+    $scope.listDoctor = []
+    $scope.loadAllDoctor = function() {
+        AppointmentService.ListDoctor().then(function(data) {
+            $scope.listDoctor = data;
+        });
+
+    }
+
+    $scope.loadAllDoctor();
+    $scope.Continue = function() {
+        if ($scope.requestInfo.TelehealthAppointment.PatientAppointment.Gender === 'Other') {
+            $scope.requestInfo.TelehealthAppointment.PatientAppointment.Gender = $scope.showData.GenderOther
+        }
+        console.log($scope.requestInfo)
+    }
     $scope.Skin_cancer_Others = false;
     $scope.info = {};
-
-    $scope.click_other = function(){
+    $scope.click_other = function() {
         console.log($scope.info.txtSkin_cancer_Others)
-        // $scope.Skin_cancer_Others = !$scope.Skin_cancer_Others;
-        // $scope.txtSkin_cancer_Others = '';
+            // $scope.Skin_cancer_Others = !$scope.Skin_cancer_Others;
+            // $scope.txtSkin_cancer_Others = '';
     }
-    WAAppointmentService.loadListAppointment()
-    
-	$scope.SendRequestUploadFile = function() {
+
+    $scope.SendRequestUploadFile = function() {
         for (var i = 0; i < uploader.queue.length; i++) {
             console.log(' uploader.queue', uploader.queue);
             var item = uploader.queue[i];
@@ -27,7 +51,9 @@ app.controller('WAAppointmentGPCtrl', function($scope, $cookies, AppointmentServ
 
     var uploader = $scope.uploader = new FileUploader({
         // url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
-        headers:{Authorization:('Bearer '+$cookies.get("token"))},
+        headers: {
+            Authorization: ('Bearer ' + $cookies.get("token"))
+        },
         url: 'http://telehealthvietnam.com.vn:3005/api/uploadFile',
         alias: 'uploadFile'
     });

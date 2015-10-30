@@ -16,12 +16,16 @@ public class HomeActivity$$ViewBinder<T extends com.redimed.urgentcare.HomeActiv
     target.rippleViewSportInjury = finder.castView(view, 2131558494, "field 'rippleViewSportInjury'");
     view = finder.findRequiredView(source, 2131558495, "field 'rippleViewWorkInjury'");
     target.rippleViewWorkInjury = finder.castView(view, 2131558495, "field 'rippleViewWorkInjury'");
-    view = finder.findRequiredView(source, 2131558496, "field 'rippleViewFAQ'");
-    target.rippleViewFAQ = finder.castView(view, 2131558496, "field 'rippleViewFAQ'");
-    view = finder.findRequiredView(source, 2131558497, "field 'rippleViewMakeAppointment'");
-    target.rippleViewMakeAppointment = finder.castView(view, 2131558497, "field 'rippleViewMakeAppointment'");
-    view = finder.findRequiredView(source, 2131558493, "field 'rippleViewCallUs'");
-    target.rippleViewCallUs = finder.castView(view, 2131558493, "field 'rippleViewCallUs'");
+    view = finder.findRequiredView(source, 2131558496, "field 'rippleViewOrthopaedic'");
+    target.rippleViewOrthopaedic = finder.castView(view, 2131558496, "field 'rippleViewOrthopaedic'");
+    view = finder.findRequiredView(source, 2131558493, "field 'rippleViewPlasticInjury'");
+    target.rippleViewPlasticInjury = finder.castView(view, 2131558493, "field 'rippleViewPlasticInjury'");
+    view = finder.findRequiredView(source, 2131558497, "field 'rippleViewCallUs'");
+    target.rippleViewCallUs = finder.castView(view, 2131558497, "field 'rippleViewCallUs'");
+    view = finder.findRequiredView(source, 2131558499, "field 'btnFaq'");
+    target.btnFaq = finder.castView(view, 2131558499, "field 'btnFaq'");
+    view = finder.findRequiredView(source, 2131558498, "field 'btnUrgentCare'");
+    target.btnUrgentCare = finder.castView(view, 2131558498, "field 'btnUrgentCare'");
   }
 
   @Override public void unbind(T target) {
@@ -29,8 +33,10 @@ public class HomeActivity$$ViewBinder<T extends com.redimed.urgentcare.HomeActiv
     target.imgBackgroundHome = null;
     target.rippleViewSportInjury = null;
     target.rippleViewWorkInjury = null;
-    target.rippleViewFAQ = null;
-    target.rippleViewMakeAppointment = null;
+    target.rippleViewOrthopaedic = null;
+    target.rippleViewPlasticInjury = null;
     target.rippleViewCallUs = null;
+    target.btnFaq = null;
+    target.btnUrgentCare = null;
   }
 }

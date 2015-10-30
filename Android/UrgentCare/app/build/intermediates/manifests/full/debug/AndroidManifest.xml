@@ -24,10 +24,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.redimed.urgentcare.MakeAppointmentActivity"
-            android:label="@string/title_activity_make_appointment" >
-        </activity>
-        <activity
             android:name="com.redimed.urgentcare.FAQActivity"
             android:label="@string/title_activity_faq" >
         </activity>
@@ -38,6 +34,18 @@
         <activity
             android:name="com.redimed.urgentcare.WorkInjuryActivity"
             android:label="@string/title_activity_work_injury" >
+        </activity>
+        <activity
+            android:name="com.redimed.urgentcare.PlasticInjuryActivity"
+            android:label="@string/title_activity_plastic_injury" >
+        </activity>
+        <activity
+            android:name="com.redimed.urgentcare.OrthopaedicActivity"
+            android:label="@string/title_activity_orthopaedic" >
+        </activity>
+        <activity
+            android:name="com.redimed.urgentcare.UrgentCareActivity"
+            android:label="@string/title_activity_urgent_care" >
         </activity>
     </application>
 

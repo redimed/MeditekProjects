@@ -8,6 +8,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		restrict: "EA",
 		controller:function($scope, FileUploader) {
 			// Profile Image
+			//create reqeust uploader
 		    var uploader = $scope.uploader = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	url: o.const.uploadFileUrl,
@@ -23,41 +24,6 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		        }
 		    });
 
-		    // CALLBACKS
-		    // uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-		    //     // console.info('onWhenAddingFileFailed', item, filter, options);
-		    // };
-		    // uploader.onAfterAddingFile = function (fileItem) {
-		    //     // console.info('onAfterAddingFile', fileItem);
-		    // };
-
-		    // uploader.onAfterAddingAll = function (addedFileItems) {
-		    //     // console.info('onAfterAddingAll', addedFileItems);
-		    // };
-		    // uploader.onBeforeUploadItem = function (item) {
-		    //     // console.info('onBeforeUploadItem', item);
-		    // };
-		    // uploader.onProgressItem = function (fileItem, progress) {
-		    //     // console.info('onProgressItem', fileItem, progress);
-		    // };
-		    // uploader.onProgressAll = function (progress) {
-		    //     // console.info('onProgressAll', progress);
-		    // };
-		    // uploader.onSuccessItem = function (fileItem, response, status, headers) {
-		    //     console.info('onSuccessItem', fileItem, response, status, headers);
-		    // };
-		    // uploader.onErrorItem = function (fileItem, response, status, headers) {
-		    //     // console.info('onErrorItem', fileItem, response, status, headers);
-		    // };
-		    // uploader.onCancelItem = function (fileItem, response, status, headers) {
-		    //     // console.info('onCancelItem', fileItem, response, status, headers);
-		    // };
-		    // uploader.onCompleteItem = function (fileItem, response, status, headers) {
-		    //     // console.info('onCompleteItem', fileItem, response, status, headers);
-		    // };
-		    // uploader.onCompleteAll = function () {
-		    //     console.info('onCompleteAll');
-		    // };
 		},
 		link: function(scope, elem, attrs){
 			scope.titles = [
@@ -66,23 +32,32 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 				{id:"2", name:'Ms'},
 				{id:"3", name:'Dr'}
 			];
+			//services getListCountry
+			//call Api getListCountry from server
 			AuthenticationService.getListCountry().then(function(response){
 				scope.countries = response.data;
 			},function(err){
 				console.log("Server Error");
 			});
+			//define variable
 			scope.data ={};
 			scope.er={};
 			scope.ermsg={};
 			scope.isShowNext=false;
 			scope.isBlockStep1 =false;
+			//if appointment add this directive to their template 
+			//this directive will receive data from appointment
+			//when this code run
 			if(scope.appointment){
 				var input = PatientService.getDatatoDirective();
 				if(input){
 					scope.data = angular.copy(input);
 				}
 			}
-
+			// Back
+			//input: none
+			//output: back to the previous step
+			//and show buttons that were disabled when continue to the next step
 			scope.Back = function() {
 				scope.isShowNext=false;
 				scope.isShowCreate=false;
@@ -94,14 +69,21 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 				FormWizard.init(); // form step
 				ComponentsDateTimePickers.init();
 			},0);
-
+			//checkPhone : validate data to correct and check PhoneNumber can be used to create patient
+			//input : data(FirstName,MiddleName,LastName,PhoneNumber)
+			//output: 
+			//****show Continue button and show notification check success if check success
+			//****show notification check error if data doesn't match validate or 
+			//PhoneNumber used to create patient
 			scope.checkPhone = function(data) {
 				scope.loadingCheck = true;
+				//service validate data
 				PatientService.validateCheckPhone(data)
 				.then(function(success){
 					scope.er ='';
 					scope.ermsg='';
 					scope.isBlockStep1=true;
+					//service call API check PhoneNumber can be used to create Patient
 					PatientService.checkPatient(data)
 					.then(function(result){
 						if(result!=undefined && result!=null && result!='' && result.length!=0){
@@ -121,6 +103,9 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 							}
 						}
 					}, function(err){
+						//if receive error push error message into array ermsg, 
+						//push error css into array er
+						//and show in template
 						scope.er={};
 						scope.ermsg={};
 						toastr.error("Please input correct information","ERROR");
@@ -141,7 +126,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 				});
 				
 			};
-
+			//Cancel : cancel create patient
             scope.Cancel = function() {
                 if (scope.appointment) {
                 	scope.appointment.runIfClose();
@@ -153,14 +138,22 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
             };
 
 
-
+            //CreatePatient : create patient
+            //input : data information
+            //output: 
+            //****create UserAccount to create Patient if validate data success 
+            //and show notification success
+            //****show notification error if validate data error 
 			scope.createPatient = function(data) {
 				scope.loadingCreate = true;
+				//service check data
 				return PatientService.validate(data)
 				.then(function(result){
+					//service call API create patient
 					return PatientService.createPatient(data)
 					.then(function(success){
 						scope.loadingCreate = false;
+						//check if patient has avatar, upload avatar
 						if(scope.uploader.queue[0]!==undefined && scope.uploader.queue[0]!==null && 
 							scope.uploader.queue[0]!=='' && scope.uploader.queue[0].length!==0){
 				            scope.uploader.queue[0].formData[0]={};
@@ -168,6 +161,9 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 							scope.uploader.queue[0].formData[0].userUID = success.data.UserAccountUID;
 							scope.uploader.uploadAll();
 						}
+						//*****check if appointment uses this directive
+						//run function success transmission from appointment
+						//****else show notification success and back state list patient
 						if (scope.appointment) {
 							scope.appointment.runIfSuccess(success.data);
 						}else{

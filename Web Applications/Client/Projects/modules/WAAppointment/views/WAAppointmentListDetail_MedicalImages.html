@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-md-2">
+        <ul class="ver-inline-menu tabbable margin-bottom-10">
+            <li class="filter active" data-filter="Arm Foot Head Body" ng-click="tab_body_part='all';">
+                <a><i class="fa fa-picture-o"></i> All </a>
+            </li>
+            <li class="filter" data-filter="Arm" ng-click="tab_body_part='arm';">
+                <a><i class="fa fa-picture-o"></i> Arm </a>
+            </li>
+            <li class="filter" data-filter="Foot" ng-click="tab_body_part='foot';">
+                <a><i class="fa fa-picture-o"></i> Foot</a>
+            </li>
+            <li class="filter" data-filter="Head" ng-click="tab_body_part='head';">
+                <a><i class="fa fa-picture-o"></i> Head</a>
+            </li>
+            <li class="filter" data-filter="Body" ng-click="tab_body_part='body';">
+                <a><i class="fa fa-picture-o"></i> Body</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div class="row mix-grid" style="">
+            <div class="col-md-3 col-sm-3 mix Arm Foot Head Body mix_all" style=" display: block; opacity: 1;" ng-repeat="p in appointment.FileUploads" ng-if="p.FileType == 'MedicalImage' ">
+                <div class="mix-inner">
+                    <img class="img-responsive" src="{{Url}}{{p.UID}}" alt="" style="height:200px;">
+                    <div class="mix-details">
+                        <h4>Cascusamus et iusto odio</h4>
+                        <a class="mix-link">
+                            <i class="fa fa-link"></i>
+                        </a>
+                        <a class="mix-preview" ng-click="showImage(Url,p.UID)" title="Project Name" data-rel="fancybox-button">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

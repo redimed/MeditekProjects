@@ -1,9 +1,9 @@
 module.exports = {
     'Appointment/AppointmentController': {
-        'RequestAppointment': ['hasToken'],
-        'GetListTelehealthAppointment': ['hasToken'],
-        'GetDetailTelehealthAppointment': ['hasToken'],
-        'UpdateTelehealthAppointment': ['hasToken'],
-        'DeleteTelehealthAppointment': ['hasToken']
+        'RequestAppointment': ['isAuthenticated'],
+        'GetListTelehealthAppointment': ['isAuthenticated'],
+        'GetDetailTelehealthAppointment': ['isAuthenticated'],
+        'UpdateTelehealthAppointment': ['isAuthenticated'],
+        'DeleteTelehealthAppointment': ['isAuthenticated']
     }
 };

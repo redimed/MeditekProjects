@@ -58,8 +58,13 @@ app
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
         // END CORS PROXY
         //RESTANGULAR DEFAULT
-
+	
+	//CONFIG Access-Control-Allow-Credentials=TRUE
+	//Mục đích: request có thể send cookies để authentication với passport
         RestangularProvider.setBaseUrl(o.const.restBaseUrl);
+        RestangularProvider.setDefaultHttpFields({
+            'withCredentials': true
+        });
         // RestangularProvider.setBaseUrl("http://telehealthvietnam.com.vn:3005");
         $urlRouterProvider.otherwise('');
         $stateProvider.state('sys', {

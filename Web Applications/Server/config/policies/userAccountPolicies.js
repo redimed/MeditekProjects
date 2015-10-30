@@ -1,13 +1,13 @@
 module.exports={
 	'UserAccount/v0_1/UserAccountController':{
       // 'Test':['checkCookieToken'],
-	    'Test':['hasToken'],
+	    'Test':['isAuthenticated'],
 	    'TestURL':'checkVersion',
-	    'CreateUserAccount':['hasToken','isAdmin'],
-	    'DisableUserAccount':['hasToken','isAdmin'],
-	    'EnableUserAccount':['hasToken','isAdmin'],
-	    'GetListUsers':['hasToken','isAdmin'],
-	    'RemoveIdentifierImage':['hasToken','isAdmin'],
+	    'CreateUserAccount':['isAuthenticated','isAdmin'],
+	    'DisableUserAccount':['isAuthenticated','isAdmin'],
+	    'EnableUserAccount':['isAuthenticated','isAdmin'],
+	    'GetListUsers':['isAuthenticated','isAdmin'],
+	    'RemoveIdentifierImage':['isAuthenticated','isAdmin'],
       'CheckExistUser':true,
   	},
 
@@ -17,13 +17,13 @@ module.exports={
 
   	'UserAccount/v0_1/AuthController':{
   		'login':true,
-  		'logout':'hasToken'
+  		'logout':'isAuthenticated'
   	},
 
   	'UserAccount/v0_1/UserActivationController':{
   		'CreateUserActivation':true,
   		'Activation':true,
-  		'DeactivationUserAccount':['hasToken','isAdmin'],
-  		'ActivationUserAccount':['hasToken','isAdmin']
+  		'DeactivationUserAccount':['isAuthenticated','isAdmin'],
+  		'ActivationUserAccount':['isAuthenticated','isAdmin']
   	},
 }

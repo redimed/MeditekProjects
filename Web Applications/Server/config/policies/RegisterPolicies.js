@@ -1,6 +1,6 @@
 module.exports={
 	'Register/RegisterController':{
 		'*':true,
-		'ConfirmActivated':['hasToken']
+		'ConfirmActivated':['isAuthenticated']
 	}
 }

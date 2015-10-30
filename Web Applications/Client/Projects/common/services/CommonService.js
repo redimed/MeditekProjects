@@ -323,6 +323,12 @@ angular.module("app.common.CommonService", [])
             })
         };
 
+        commonService.test=function()
+        {
+            var result = api.one("user-account/test");
+            return result.get();
+        };
+
 
         return commonService;
     })

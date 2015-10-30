@@ -43,6 +43,9 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
                             status: 'success',
                             data: data
                         });
+                    },
+                    runIfClose: function(){
+                        $modalInstance.close();
                     }
                 };
             },
@@ -55,7 +58,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
 
         });
         modalInstance.result.then(function(data) {
-            if (data.status == 'success') {
+            if (data && data.status == 'success') {
                 $scope.ShowData.isLinkPatient = true;
                 var patientUid = data.data.UID;
                 AppointmentService.GetDetailPatientByUid({

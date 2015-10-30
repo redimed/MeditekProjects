@@ -1,462 +1,424 @@
-<form role="form" class="form-bordered">
-	<div class="form-body">
-		<div class="row">
-			<div class="col-md-6 col-sm-6">
-				<p>Fill this box for <b>Immediate Referrals</b> only (if the patient must be seen by a specialist within 7 days)</p>
-			    <p>Has the referral been discussed with a registrar or consultant? (Essential in immediate cases):</p>
-			    <div class="row">
-			        <div class="col-md-12 col-sm-12">
-			            <div class="form-group form-md-line-input">
-			                <div class="radio-list">
-			                    <label class="radio-inline">
-			                        <input type="radio" name="referral_details_radio" value="option1" checked> Yes 
-			                    </label>
-			                    <label class="radio-inline">
-			                        <input type="radio" name="referral_details_radio" value="option2"> No 
-			                    </label>
+<div class="row profile-account">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <ul class="ver-inline-menu tabbable margin-bottom-10">
+            <li class="active">
+                <a data-toggle="tab" href="index.html#tab_referral1">
+                    <i class="fa fa-cog"></i> Referral details </a>
+                    <span class="after"> </span>
+            </li>
+            <li>
+                <a data-toggle="tab" href="index.html#tab_referral2">
+                    <i class="fa fa-cog"></i> Reason for referral/Presenting Problem </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="index.html#tab_referral3">
+                    <i class="fa fa-cog"></i> History of Previous Skin cancers and treatmens </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="index.html#tab_referral4">
+                    <i class="fa fa-cog"></i> History of Previous Hand surgery </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-8 col-sm-6 col-xs-12">
+        <div class="tab-content">
+        	<div id="tab_referral1" class="tab-pane active">
+        		<div class="row">
+					<div class="col-md-6 col-sm-6">
+						<p>Fill this box for <b>Immediate Referrals</b> only (if the patient must be seen by a specialist within 7 days)</p>
+					    <p>Has the referral been discussed with a registrar or consultant? (Essential in immediate cases):</p>
+					    <div class="row">
+					        <div class="col-md-12 col-sm-12">
+					            <div class="form-group form-md-line-input">
+					                <div class="radio-list">
+					                    <label class="radio-inline">
+					                        <input type="radio" name="referral_details_radio" value="option1" checked> Yes 
+					                    </label>
+					                    <label class="radio-inline">
+					                        <input type="radio" name="referral_details_radio" value="option2"> No 
+					                    </label>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
+					    <div class="row">
+					        <div class="col-md-12 col-sm-12">
+					            <div class="form-group form-md-line-input">
+					                <div class="input-icon">
+					                    <input type="text" class="form-control" placeholder="">
+					                    <label class="control-label">If yes, the clinical name</label>
+					                    <div class="form-control-focus"> </div>
+					                    <i class="glyphicon glyphicon-edit"></i>
+					                </div>
+					            </div>
+					        </div>
+					        <div class="col-md-6 col-sm-6">
+					            <div class="form-group form-md-line-input">
+					                <div class="input-icon">
+					                    <input type="text" class="form-control" placeholder="">
+					                    <label class="control-label">Site</label>
+					                    <div class="form-control-focus"> </div>
+					                    <i class="glyphicon glyphicon-edit"></i>
+					                </div>
+					            </div>
+					        </div>
+					        <div class="col-md-6 col-sm-6">
+					            <div class="form-group form-md-line-input">
+					                <div class="input-icon">
+					                    <input type="text" class="form-control" placeholder="+61 8888 8888">
+					                    <label class="control-label">Contact number</label>
+					                    <div class="form-control-focus"> </div>
+					                    <i class="glyphicon glyphicon-phone"></i>
+					                </div>
+					            </div>
+					        </div>
+					        <div class="col-md-12 col-sm-12">
+					            <div class="form-group form-md-line-input">
+					                <div class="input-icon">
+					                    <input type="text" class="form-control" placeholder="">
+					                    <label class="control-label">Referral advice given</label>
+					                    <div class="form-control-focus"> </div>
+					                    <i class="glyphicon glyphicon-edit"></i>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+					<div class="col-md-6 col-sm-6">
+						<div class="row">
+			                <div class="col-md-12">
+			                    <div class="form-inline">
+			                        <div class="form-group form-md-line-input">
+			                            <div class="radio-list">
+			                                 <label class="radio-inline control-label">
+			                                    Is the referrer the patients usual GP ?
+			                                </label>
+			                                <label class="radio-inline">
+			                                    <input type="radio" name="referrer_radio" value="Yes" ng-model="referrer_radio"> Yes 
+			                                </label>
+			                                <label class="radio-inline">
+			                                    <input type="radio" name="referrer_radio" value="No" ng-model="referrer_radio"> No 
+			                                </label>
+			                            </div>
+			                        </div>
+			                    </div>
 			                </div>
 			            </div>
-			        </div>
-			    </div>
-			    <div class="row">
-			        <div class="col-md-12 col-sm-12">
-			            <div class="form-group form-md-line-input">
-			                <div class="input-icon">
-			                    <input type="text" class="form-control" placeholder="">
-			                    <label class="control-label">If yes, the clinical name</label>
-			                    <div class="form-control-focus"> </div>
-			                    <i class="glyphicon glyphicon-pencil"></i>
+			            <br>
+			            <div class="row">
+			                <div class="col-md-12">
+			                    <div class="form-group form-md-line-input" >
+			                        <div class="input-icon">
+			                            <input type="text" class="form-control" placeholder=""  ng-disabled="referrer_radio == 'Yes'" />
+			                            <label class="control-label">If no, name of patients usual GP</label>
+			                            <div class="form-control-focus"> </div>
+			                            <i class="glyphicon glyphicon-edit"></i>
+			                        </div>
+			                    </div>
 			                </div>
+			            </div>
+			            <br>
+			            <div class="row" ng-disabled="referrer_radio == 'No'">
+			                <div class="col-md-6 col-sm-6">
+			                    <div class="form-group form-md-line-input">
+			                        <div class="input-icon">
+			                            <input type="text" class="form-control" placeholder="+61 4888 8888" ng-disabled="referrer_radio == 'Yes'">
+			                            <label class="control-label">Contact Number</label>
+			                            <div class="form-control-focus"> </div>
+			                            <i class="glyphicon glyphicon-phone"></i>
+			                        </div>
+			                    </div>
+			                </div>
+			                <div class="col-md-6 col-sm-6">
+			                    <div class="form-group form-md-line-input">
+			                        <div class="input-icon">
+			                            <input type="text" class="form-control" placeholder="" ng-disabled="referrer_radio == 'Yes'">
+			                            <label class="control-label">Fax Number</label>
+			                            <div class="form-control-focus"> </div>
+			                            <i class="glyphicon glyphicon-print"></i>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			            <div class="row">
+			            	<label class="control-label col-md-12 col-sm-12">
+                                If the patient has been reffered to this speciality for the same condition before, do they need to be referred to the same place again ?
+                            </label>
+			                <div class="col-md-11 col-sm-11 col-md-offset-1 col-sm-offset-1">
+			                    <div class="form-inline">
+			                        <div class="form-group form-md-line-input">
+			                            <div class="radio-list">
+			                                
+			                                <label class="radio-inline">
+			                                    <input type="radio" name="radio4"  value="option1"> Yes 
+			                                </label>
+			                                <label class="radio-inline">
+			                                    <input type="radio" name="radio4"  value="option2" checked> No 
+			                                </label>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			            <br>
+			            <div class="row">
+			            	<label class="control-label col-md-12 col-sm-12">
+                                Is the patient suitable for a telehealth consult
+                            </label>
+			                <div class="col-md-11 col-sm-11 col-md-offset-1 col-sm-offset-1">
+			                    <div class="form-inline">
+			                        <div class="form-group form-md-line-input">
+			                            <div class="radio-list">
+			                                <label class="radio-inline"><input type="radio" name="radio5"  value="option1"> Yes </label>
+			                                <label class="radio-inline"><input type="radio" name="radio5"  value="option2" checked> No </label>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			            <br>
+			            <div class="row">
+			            	<label class="control-label col-md-12 col-sm-12">Length of referral </label>
+			                <div class="col-md-11 col-sm-11 col-md-offset-1 col-sm-offset-1">
+			                    <div class="form-inline">
+			                        <div class="form-group form-md-line-input">
+			                            <div class="radio-list">
+			                                <label class="radio-inline">
+			                                    <input type="radio" name="radio6"  value="" checked> 3 months 
+			                                </label>
+			                                <label class="radio-inline">
+			                                    <input type="radio" name="radio6"  value="" > 12 months 
+			                                </label>
+			                                <label class="radio-inline">
+			                                    <input type="radio" name="radio6"  value="" > Indefinite
+			                                </label>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			            <br>
+			            <div class="row">
+			                <div class="col-md-12">
+			                    <div class="form-inline">
+			                        <div class="form-group form-md-line-input">
+			                            <div class="radio-list">
+			                                 <label class="radio-inline control-label">
+			                                    Is this a renewed  referral ?
+			                                </label>
+			                                <label class="radio-inline">
+			                                    <input type="radio" name="radio7"  value="" checked> Yes 
+			                                </label>
+			                                <label class="radio-inline">
+			                                    <input type="radio" name="radio7"  value="" > No 
+			                                </label>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+					</div>
+				</div>
+        	</div>
+        	<div id="tab_referral2" class="tab-pane">
+        		<div class="row">
+			        <div class="col-md-6 col-sm-6">
+			            <div class="form-group">
+			                <h5 class="control-label">
+			                    <b>Reason for referral/Presenting Problem</b>
+			                </h5>
+			                <textarea class="form-control" rows="7">(can upload the referral letter) Fax the referral letter - 1300 xxx xxx
+			                </textarea>
 			            </div>
 			        </div>
 			        <div class="col-md-6 col-sm-6">
-			            <div class="form-group form-md-line-input">
-			                <div class="input-icon">
-			                    <input type="text" class="form-control" placeholder="">
-			                    <label class="control-label">Site</label>
-			                    <div class="form-control-focus"> </div>
-			                    <i class="glyphicon glyphicon-pencil"></i>
-			                </div>
+			            <div class="table-scrollable table-scrollable-borderless">
+			                <table class="table table-hover table-light">
+			                    <thead>
+			                        <tr class="uppercase">
+			                            <th width="30%">Name</th>
+			                            <th ng-show="uploader.isHTML5">Size</th>
+			                            <th>Date</th>
+			                        </tr>
+			                    </thead>
+			                    <tbody>
+			                        <tr ng-repeat="item in uploader.queue">
+			                            <td><strong>{{ item.file.name }}</strong></td>
+			                            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+			                            <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+			                        </tr>
+			                    </tbody>
+			                </table>
 			            </div>
-			        </div>
-			        <div class="col-md-6 col-sm-6">
-			            <div class="form-group form-md-line-input">
-			                <div class="input-icon">
-			                    <input type="text" class="form-control" placeholder="+61 8888 8888">
-			                    <label class="control-label">Contact number</label>
-			                    <div class="form-control-focus"> </div>
-			                    <i class="glyphicon glyphicon-phone"></i>
-			                </div>
-			            </div>
-			        </div>
-			        <div class="col-md-12 col-sm-12">
-			            <div class="form-group form-md-line-input">
-			                <div class="input-icon">
-			                    <input type="text" class="form-control" placeholder="Referral advice given">
-			                    <label class="control-label">Referral advice given</label>
-			                    <div class="form-control-focus"> </div>
-			                    <i class="glyphicon glyphicon-pencil"></i>
-			                </div>
+			            <div>
+			                <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
 			            </div>
 			        </div>
 			    </div>
-			</div>
-			<div class="col-md-6 col-sm-6">
-				<div class="row">
-	                <div class="col-md-12">
-	                    <div class="form-inline">
-	                        <div class="form-group form-md-line-input">
-	                            <div class="radio-list">
-	                                 <label class="radio-inline control-label">
-	                                    Is the referrer the patients usual GP ?
-	                                </label>
-	                                <label class="radio-inline">
-	                                    <input type="radio" name="referrer_radio" value="Yes" ng-model="referrer_radio"> Yes 
-	                                </label>
-	                                <label class="radio-inline">
-	                                    <input type="radio" name="referrer_radio" value="No" ng-model="referrer_radio"> No 
-	                                </label>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	            <br>
-	            <div class="row">
-	                <div class="col-md-12">
-	                    <div class="form-group form-md-line-input" >
-	                        <div class="input-icon">
-	                            <input type="text" class="form-control" placeholder=""  ng-disabled="referrer_radio == 'Yes'" />
-	                            <label class="control-label">If no, name of patients usual GP</label>
-	                            <div class="form-control-focus"> </div>
-	                            <i class="glyphicon glyphicon-pencil"></i>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	            <br>
-	            <div class="row" ng-disabled="referrer_radio == 'No'">
-	                <div class="col-md-6 col-sm-6">
-	                    <div class="form-group form-md-line-input">
-	                        <div class="input-icon">
-	                            <input type="text" class="form-control" placeholder="+61 4888 8888" ng-disabled="referrer_radio == 'Yes'">
-	                            <label class="control-label">Contact Number</label>
-	                            <div class="form-control-focus"> </div>
-	                            <i class="glyphicon glyphicon-phone"></i>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="col-md-6 col-sm-6">
-	                    <div class="form-group form-md-line-input">
-	                        <div class="input-icon">
-	                            <input type="text" class="form-control" placeholder="" ng-disabled="referrer_radio == 'Yes'">
-	                            <label class="control-label">Fax Number</label>
-	                            <div class="form-control-focus"> </div>
-	                            <i class="glyphicon glyphicon-print"></i>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="row">
-	                <div class="col-md-12">
-	                    <div class="form-inline">
-	                        <div class="form-group form-md-line-input">
-	                            <div class="radio-list">
-	                                 <label class="radio-inline control-label">
-	                                    If the patient has been reffered to this speciality for the same condition before, do they need to be referred to the same place again ?
-	                                </label>
-	                                <label class="radio-inline">
-	                                    <input type="radio" name="radio4"  value="option1"> Yes 
-	                                </label>
-	                                <label class="radio-inline">
-	                                    <input type="radio" name="radio4"  value="option2" checked> No 
-	                                </label>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	            <br>
-	            <div class="row">
-	                <div class="col-md-12">
-	                    <div class="form-inline">
-	                        <div class="form-group form-md-line-input">
-	                            <div class="radio-list">
-	                                 <label class="radio-inline control-label">
-	                                    Is the patient suitable for a telehealth consult
-	                                </label>
-	                                <label class="radio-inline">
-	                                    <input type="radio" name="radio5"  value="option1"> Yes 
-	                                </label>
-	                                <label class="radio-inline">
-	                                    <input type="radio" name="radio5"  value="option2" checked> No 
-	                                </label>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	            <br>
-	            <div class="row">
-	                <div class="col-md-12">
-	                    <div class="form-inline">
-	                        <div class="form-group form-md-line-input">
-	                            <div class="radio-list">
-	                                 <label class="radio-inline control-label">
-	                                    Length of referral 
-	                                </label>
-	                                <label class="radio-inline">
-	                                    <input type="radio" name="radio6"  value="" checked> 3 months 
-	                                </label>
-	                                <label class="radio-inline">
-	                                    <input type="radio" name="radio6"  value="" > 12 months 
-	                                </label>
-	                                <label class="radio-inline">
-	                                    <input type="radio" name="radio6"  value="" > Indefinite
-	                                </label>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	            <br>
-	            <div class="row">
-	                <div class="col-md-12">
-	                    <div class="form-inline">
-	                        <div class="form-group form-md-line-input">
-	                            <div class="radio-list">
-	                                 <label class="radio-inline control-label">
-	                                    Is this a renewed  referral ?
-	                                </label>
-	                                <label class="radio-inline">
-	                                    <input type="radio" name="radio7"  value="" checked> Yes 
-	                                </label>
-	                                <label class="radio-inline">
-	                                    <input type="radio" name="radio7"  value="" > No 
-	                                </label>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-			</div>
-		</div>
-		<hr>
-		<!-- 2 -->
-	    <div class="row">
-	        <div class="col-md-6 col-sm-6">
-	            <div class="form-group">
-	                <h5 class="control-label">
-	                    <b>Reason for referral/Presenting Problem</b>
-	                </h5>
-	                <textarea class="form-control" rows="10">(can upload the referral letter) Fax the referral letter - 1300 xxx xxx
-	                </textarea>
-	            </div>
-	            <div class="row" style="margin-top: 2em;">
-	                <div class="col-md-4 col-sm-4">
-	                    <a href="javascript:;" class="btn green-jungle btn-block" ng-click="tab1 = 'skin_cancer';"> Skin cancer </a>
-	                    <div class="checkbox-list" ng-show="tab1 == 'skin_cancer'">
-	                        <br>
-	                        <label class="control-label"><input type="checkbox" ng-model="BCC"> 
-	                            BCC
-	                            <ul class="my-ul" ng-show="BCC == true">
-	                                <li>Size :</li>
-	                                <li><label class="control-label"><input type="radio" name="bcc_radio" > 0 - 1 cm</label></li>
-	                                <li><label class="control-label"><input type="radio" name="bcc_radio" > 1 - 2 cm</label></li>
-	                                <li><label class="control-label"><input type="radio" name="bcc_radio" > > 2 cm</label></li>
-	                            </ul>
-	                            
-	                        </label>
-	                        <label class="control-label"><input type="checkbox" ng-model="SCC"> 
-	                            SCC
-	                            <ul class="my-ul" ng-show="SCC == true">
-	                                <li>Size :</li>
-	                                <li><label class="control-label"><input type="radio" name="bcc_radio" > 0 - 1 cm</label></li>
-	                                <li><label class="control-label"><input type="radio" name="bcc_radio" > 1 - 2 cm</label></li>
-	                                <li><label class="control-label"><input type="radio" name="bcc_radio" > > 2 cm</label></li>
-	                            </ul>
-	                        </label>
-	                        <label class="control-label"><input type="checkbox" ng-model="Melanoma"> 
-	                            Melanoma
-	                            <ul class="my-ul" ng-show="Melanoma == true">
-	                                <li>Size :</li>
-	                                <li><label class="control-label"><input type="radio" name="bcc_radio" > 0 - 1 cm</label></li>
-	                                <li><label class="control-label"><input type="radio" name="bcc_radio" > 1 - 2 cm</label></li>
-	                                <li><label class="control-label"><input type="radio" name="bcc_radio" > > 2 cm</label></li>
-	                            </ul>
-	                        </label>
-	                        <label class="control-label"><input type="checkbox" ng-model="Merkel"> 
-	                            Merkel's
-	                            <ul class="my-ul" ng-show="Merkel == true">
-	                                <li>Size :</li>
-	                                <li><label class="control-label"><input type="radio" name="bcc_radio" > 0 - 1 cm</label></li>
-	                                <li><label class="control-label"><input type="radio" name="bcc_radio" > 1 - 2 cm</label></li>
-	                                <li><label class="control-label"><input type="radio" name="bcc_radio" > > 2 cm</label></li>
-	                            </ul>
-	                        </label>
-	                        <label class="control-label"><input type="checkbox" ng-model="Skin_cancer_Others" ng-click="click_other()"> 
-	                            Others &nbsp;
-	                            <input type="text" placeholder="" size="15" ng-model="info.txtSkin_cancer_Others" ng-disabled="Skin_cancer_Others == false">
-	                        </label>
-	                    </div>
-	                </div>
-	                <div class="col-md-4 col-sm-4">
-	                    <a href="javascript:;" class="btn green-jungle btn-block" ng-click="tab1 = 'hand_condition';"> Hand condition </a>
-	                    <div class="checkbox-list" ng-show="tab1 == 'hand_condition'">
-	                        <br>
+			    <hr>
+			    <div class="row">
+			    	<div class="col-md-12 col-sm-12">
+			    		<h5 class="form-section bold">Skin cancer</h5>
+			    		<div class="row">
+			    			<div class="col-md-3 col-sm-3">
+			    				<div class="checkbox-list">
+				    				<label><input type="checkbox"> BCC</label>
+				    				<label><input type="checkbox"> SCC</label>
+				    				<label><input type="checkbox"> Melanoma</label>
+				    				<label><input type="checkbox"> Merkel's</label>
+				    				<label><input type="checkbox"> Others <input type="text" size="10"></label>
+				    			</div>
+			    			</div>
+			    			<div class="col-md-9 col-sm-9">
+			    				<div class="radio-list">
+			    					<label class="radio-inline">Size : </label>
+			    					<label class="radio-inline"><input type="radio" name="BCC_radio" > 0 - 1 cm</label>
+		                            <label class="radio-inline"><input type="radio" name="BCC_radio" > 1 - 2 cm</label>
+		                            <label class="radio-inline"><input type="radio" name="BCC_radio" > > 2 cm</label>
+			    				</div>
+			    				<div class="radio-list">
+			    					<label class="radio-inline">Size : </label>
+			    					<label class="radio-inline"><input type="radio" name="SCC_radio" > 0 - 1 cm</label>
+		                            <label class="radio-inline"><input type="radio" name="SCC_radio" > 1 - 2 cm</label>
+		                            <label class="radio-inline"><input type="radio" name="SCC_radio" > > 2 cm</label>
+			    				</div>
+			    				<div class="radio-list">
+			    					<label class="radio-inline">Size : </label>
+			    					<label class="radio-inline"><input type="radio" name="Melanoma_radio" > 0 - 1 cm</label>
+		                            <label class="radio-inline"><input type="radio" name="Melanoma_radio" > 1 - 2 cm</label>
+		                            <label class="radio-inline"><input type="radio" name="Melanoma_radio" > > 2 cm</label>
+			    				</div>
+			    				<div class="radio-list">
+			    					<label class="radio-inline">Size : </label>
+			    					<label class="radio-inline"><input type="radio" name="Merkel_radio" > 0 - 1 cm</label>
+		                            <label class="radio-inline"><input type="radio" name="Merkel_radio" > 1 - 2 cm</label>
+		                            <label class="radio-inline"><input type="radio" name="Merkel_radio" > > 2 cm</label>
+			    				</div>
+			    			</div>
+			    		</div>
+			    		
+			    	</div>
+			    </div>
+			    <div class="row">
+			    	<div class="col-md-4 col-sm-4">
+			    		<h5 class="form-section bold">Hand condition</h5>
+			    		<div class="checkbox-list">
 	                        <label class="control-label"><input type="checkbox" checked> Ganglion</label>
 	                        <label class="control-label"><input type="checkbox"> Arthritis</label>
 	                        <label class="control-label"><input type="checkbox"> DeQuervains/Trigger</label>
 	                        <label class="control-label"><input type="checkbox"> Contracture </label>
 	                    </div>
-	                </div>
-	                <div class="col-md-4 col-sm-4">
-	                    <a href="javascript:;" class="btn green-jungle btn-block" ng-click="tab1 = 'pns';"> PNS </a>
-	                    <div class="checkbox-list" ng-show="tab1 == 'pns'">
-	                        <br>
+			    	</div>
+			    	<div class="col-md-4 col-sm-4">
+			    		<h5 class="form-section bold">PNS</h5>
+			    		<div class="checkbox-list">
 	                        <label class="control-label"><input type="checkbox" checked> Carpal Tunnel</label>
 	                        <label class="control-label"><input type="checkbox"> Cubital Tunnel</label>
 	                        <label class="control-label"><input type="checkbox"> Tarsal Tunnel</label>
 	                        <label class="control-label"><input type="checkbox"> Complex Reconstructive Case</label>
 	                        <label class="control-label"><input type="checkbox"> Other &nbsp;<input type="text" placeholder="Other" size="15"></label>
 	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="col-md-6 col-sm-6">
-	            <div class="table-scrollable table-scrollable-borderless">
-	                <table class="table table-hover table-light">
-	                    <thead>
-	                        <tr class="uppercase">
-	                            <th width="30%">Name</th>
-	                            <th ng-show="uploader.isHTML5">Size</th>
-	                            <th>Date</th>
-	                            <th>Actions</th>
-	                        </tr>
-	                    </thead>
-	                    <tbody>
-	                        <tr ng-repeat="item in uploader.queue">
-	                            <td><strong>{{ item.file.name }}</strong></td>
-	                            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-	                            <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-	                           
-	                            <td nowrap>
-	                                <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-	                                    <span class="glyphicon glyphicon-trash"></span> Remove
-	                                </button>
-	                            </td>
-	                        </tr>
-	                    </tbody>
-	                </table>
-	            </div>
-	            <div>
-	                <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-	            </div>
-	            <div class="input-inline">
-	                <div class="input-icon">
-	                    <span class="btn blue-soft btn-file">
-	                        <i class="glyphicon glyphicon-folder-open"></i>
-	                        <span class="fileinput-new">&nbsp;Select Document</span>
-	                    <input type="file" nv-file-select="" uploader="uploader" multiple/>
-	                    </span>
-	                    <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-	                        <span class="glyphicon glyphicon-trash"></span> Remove all
-	                    </button>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	    <hr>
-	    <div class="row">
-	        <h5 class="col-md-12 col-sm-12">
-	            <div class="form-inline">
-	                <div class="form-group">
-	                    <div class="radio-list">
-	                         <label class="radio-inline control-label bold">
-	                            History of Previous skin cancers and treatmens
-	                        </label>
-	                        <label class="radio-inline">
-	                            <input type="radio" name="skin_cancers_radio"  value="Yes" ng-model="skin_cancers_radio"> Yes 
-	                        </label>
-	                        <label class="radio-inline">
-	                            <input type="radio" name="skin_cancers_radio"  value="No"  ng-model="skin_cancers_radio"> No 
-	                        </label>
-	                    </div>
-	                </div>
-	            </div>
-	        </h5>
-	        <div class="col-md-6 col-sm-6" ng-show="skin_cancers_radio == 'Yes'">
-	            <div class="form-group">
-	                <textarea class="form-control" rows="10"></textarea>
-	            </div>
-	        </div>
-	        <div class="col-md-6 col-sm-6" ng-show="skin_cancers_radio == 'Yes'">
-	            <div class="table-scrollable table-scrollable-borderless">
-	                <table class="table table-hover table-light">
-	                    <thead>
-	                        <tr class="uppercase">
-	                            <th width="30%">Name</th>
-	                            <th ng-show="uploader.isHTML5">Size</th>
-	                            <th>Date</th>
-	                            <th>Actions</th>
-	                        </tr>
-	                    </thead>
-	                    <tbody>
-	                        <tr ng-repeat="item in uploader.queue">
-	                            <td><strong>{{ item.file.name }}</strong></td>
-	                            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-	                            <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-	                            <td nowrap>
-	                                <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-	                                    <span class="glyphicon glyphicon-trash"></span> Remove
-	                                </button>
-	                            </td>
-	                        </tr>
-	                    </tbody>
-	                </table>
-	            </div>
-	            <div>
-	                <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-	            </div>
-	            <div class="input-inline">
-	                <div class="input-icon">
-	                    <span class="btn blue-soft btn-file">
-	                        <i class="glyphicon glyphicon-folder-open"></i>
-	                        <span class="fileinput-new">&nbsp;Select Document</span>
-	                    <input type="file" nv-file-select="" uploader="uploader" multiple/>
-	                    </span>
-	                    <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-	                        <span class="glyphicon glyphicon-trash"></span> Remove all
-	                    </button>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	    <hr>
-	    <div class="row">
-	        <h5 class="col-md-12 col-sm-12">
-	            <div class="form-inline">
-	                <div class="form-group">
-	                    <div class="radio-list">
-	                         <label class="radio-inline control-label bold">
-	                            History of Previous hand surgery
-	                        </label>
-	                        <label class="radio-inline">
-	                            <input type="radio" name="hand_surgery_radio"  value="Yes" ng-model="hand_surgery_radio"> Yes 
-	                        </label>
-	                        <label class="radio-inline">
-	                            <input type="radio" name="hand_surgery_radio"  value="No" ng-model="hand_surgery_radio"> No 
-	                        </label>
-	                    </div>
-	                </div>
-	            </div>
-	        </h5>
-	        <div class="col-md-6 col-sm-6" ng-show="hand_surgery_radio == 'Yes'">
-	            <div class="form-group">
-	                <textarea class="form-control" rows="10"></textarea>
-	            </div>
-	        </div>
-	        <div class="col-md-6 col-sm-6" ng-show="hand_surgery_radio == 'Yes'">
-	            <div class="table-scrollable table-scrollable-borderless">
-	                <table class="table table-hover table-light">
-	                    <thead>
-	                        <tr class="uppercase">
-	                            <th width="30%">Name</th>
-	                            <th ng-show="uploader.isHTML5">Size</th>
-	                            <th>Date</th>
-	                            <th>Actions</th>
-	                        </tr>
-	                    </thead>
-	                    <tbody>
-	                        <tr ng-repeat="item in uploader.queue">
-	                            <td><strong>{{ item.file.name }}</strong></td>
-	                            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-	                            <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-	                            <td nowrap>
-	                                <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-	                                    <span class="glyphicon glyphicon-trash"></span> Remove
-	                                </button>
-	                            </td>
-	                        </tr>
-	                    </tbody>
-	                </table>
-	            </div>
-	            <div>
-	                <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-	            </div>
-	            <div class="input-inline">
-	                <div class="input-icon">
-	                    <span class="btn blue-soft btn-file">
-	                        <i class="glyphicon glyphicon-folder-open"></i>
-	                        <span class="fileinput-new">&nbsp;Select Document</span>
-	                    <input type="file" nv-file-select="" uploader="uploader" multiple/>
-	                    </span>
-	                    <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-	                        <span class="glyphicon glyphicon-trash"></span> Remove all
-	                    </button>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
+			    	</div>
+			    </div>
+        	</div>
+        	<div id="tab_referral3" class="tab-pane">
+        		<div class="row">
+			        <h5 class="col-md-12 col-sm-12">
+			            <div class="form-inline">
+			                <div class="form-group">
+			                    <div class="radio-list">
+			                         <label class="radio-inline control-label bold">
+			                            History of Previous skin cancers and treatmens
+			                        </label>
+			                        <label class="radio-inline">
+			                            <input type="radio" name="skin_cancers_radio"  value="Yes" ng-model="skin_cancers_radio"> Yes 
+			                        </label>
+			                        <label class="radio-inline">
+			                            <input type="radio" name="skin_cancers_radio"  value="No"  ng-model="skin_cancers_radio"> No 
+			                        </label>
+			                    </div>
+			                </div>
+			            </div>
+			        </h5>
+			        <div class="col-md-6 col-sm-6" ng-show="skin_cancers_radio == 'Yes'">
+			            <div class="form-group">
+			                <textarea class="form-control" rows="10"></textarea>
+			            </div>
+			        </div>
+			        <div class="col-md-6 col-sm-6" ng-show="skin_cancers_radio == 'Yes'">
+			            <div class="table-scrollable table-scrollable-borderless">
+			                <table class="table table-hover table-light">
+			                    <thead>
+			                        <tr class="uppercase">
+			                            <th width="30%">Name</th>
+			                            <th ng-show="uploader.isHTML5">Size</th>
+			                            <th>Date</th>
+			                        </tr>
+			                    </thead>
+			                    <tbody>
+			                        <tr ng-repeat="item in uploader.queue">
+			                            <td><strong>{{ item.file.name }}</strong></td>
+			                            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+			                            <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+			                        </tr>
+			                    </tbody>
+			                </table>
+			            </div>
+			            <div>
+			                <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+			            </div>
+			        </div>
+			    </div>
+        	</div>
+        	<div id="tab_referral4" class="tab-pane">
+        		<div class="row">
+			        <h5 class="col-md-12 col-sm-12">
+			            <div class="form-inline">
+			                <div class="form-group">
+			                    <div class="radio-list">
+			                         <label class="radio-inline control-label bold">
+			                            History of Previous hand surgery
+			                        </label>
+			                        <label class="radio-inline">
+			                            <input type="radio" name="hand_surgery_radio"  value="Yes" ng-model="hand_surgery_radio"> Yes 
+			                        </label>
+			                        <label class="radio-inline">
+			                            <input type="radio" name="hand_surgery_radio"  value="No" ng-model="hand_surgery_radio"> No 
+			                        </label>
+			                    </div>
+			                </div>
+			            </div>
+			        </h5>
+			        <div class="col-md-6 col-sm-6" ng-show="hand_surgery_radio == 'Yes'">
+			            <div class="form-group">
+			                <textarea class="form-control" rows="10"></textarea>
+			            </div>
+			        </div>
+			        <div class="col-md-6 col-sm-6" ng-show="hand_surgery_radio == 'Yes'">
+			            <div class="table-scrollable table-scrollable-borderless">
+			                <table class="table table-hover table-light">
+			                    <thead>
+			                        <tr class="uppercase">
+			                            <th width="30%">Name</th>
+			                            <th ng-show="uploader.isHTML5">Size</th>
+			                            <th>Date</th>
+			                        </tr>
+			                    </thead>
+			                    <tbody>
+			                        <tr ng-repeat="item in uploader.queue">
+			                            <td><strong>{{ item.file.name }}</strong></td>
+			                            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+			                            <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+			                        </tr>
+			                    </tbody>
+			                </table>
+			            </div>
+			            <div>
+			                <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+			            </div>
+			        </div>
+			    </div>
+        	</div>
+       	</div>
     </div>
-</form>
+</div>

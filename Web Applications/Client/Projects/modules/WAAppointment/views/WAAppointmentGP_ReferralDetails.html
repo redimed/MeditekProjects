@@ -220,73 +220,69 @@
                         <textarea class="form-control" rows="10">(can upload the referral letter) Fax the referral letter - 1300 xxx xxx
                         </textarea>
                     </div>
-                    <div class="row" style="margin-top: 2em;">
-                        <div class="col-md-4 col-sm-4">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3">
                             <a href="javascript:;" class="btn green-jungle btn-block" ng-click="tab1 = 'skin_cancer';"> Skin cancer </a>
-                            <div class="checkbox-list" ng-show="tab1 == 'skin_cancer'">
-                                <br>
-                                <label class="control-label"><input type="checkbox" ng-model="BCC"> 
-                                    BCC
-                                    <ul class="my-ul" ng-show="BCC == true">
-                                        <li>Size :</li>
-                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 0 - 1 cm</label></li>
-                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 1 - 2 cm</label></li>
-                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > > 2 cm</label></li>
-                                    </ul>
-                                    
-                                </label>
-                                <label class="control-label"><input type="checkbox" ng-model="SCC"> 
-                                    SCC
-                                    <ul class="my-ul" ng-show="SCC == true">
-                                        <li>Size :</li>
-                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 0 - 1 cm</label></li>
-                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 1 - 2 cm</label></li>
-                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > > 2 cm</label></li>
-                                    </ul>
-                                </label>
-                                <label class="control-label"><input type="checkbox" ng-model="Melanoma"> 
-                                    Melanoma
-                                    <ul class="my-ul" ng-show="Melanoma == true">
-                                        <li>Size :</li>
-                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 0 - 1 cm</label></li>
-                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 1 - 2 cm</label></li>
-                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > > 2 cm</label></li>
-                                    </ul>
-                                </label>
-                                <label class="control-label"><input type="checkbox" ng-model="Merkel"> 
-                                    Merkel's
-                                    <ul class="my-ul" ng-show="Merkel == true">
-                                        <li>Size :</li>
-                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 0 - 1 cm</label></li>
-                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > 1 - 2 cm</label></li>
-                                        <li><label class="control-label"><input type="radio" name="bcc_radio" > > 2 cm</label></li>
-                                    </ul>
-                                </label>
-                                <label class="control-label"><input type="checkbox" ng-model="Skin_cancer_Others" ng-click="click_other()"> 
-                                    Others &nbsp;
-                                    <input type="text" placeholder="" size="15" ng-model="info.txtSkin_cancer_Others" ng-disabled="Skin_cancer_Others == false">
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
                             <a href="javascript:;" class="btn green-jungle btn-block" ng-click="tab1 = 'hand_condition';"> Hand condition </a>
-                            <div class="checkbox-list" ng-show="tab1 == 'hand_condition'">
-                                <br>
-                                <label class="control-label"><input type="checkbox" checked> Ganglion</label>
-                                <label class="control-label"><input type="checkbox"> Arthritis</label>
-                                <label class="control-label"><input type="checkbox"> DeQuervains/Trigger</label>
-                                <label class="control-label"><input type="checkbox"> Contracture </label>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
                             <a href="javascript:;" class="btn green-jungle btn-block" ng-click="tab1 = 'pns';"> PNS </a>
-                            <div class="checkbox-list" ng-show="tab1 == 'pns'">
-                                <br>
-                                <label class="control-label"><input type="checkbox" checked> Carpal Tunnel</label>
-                                <label class="control-label"><input type="checkbox"> Cubital Tunnel</label>
-                                <label class="control-label"><input type="checkbox"> Tarsal Tunnel</label>
-                                <label class="control-label"><input type="checkbox"> Complex Reconstructive Case</label>
-                                <label class="control-label"><input type="checkbox"> Other &nbsp;<input type="text" placeholder="Other" size="15"></label>
+                        </div>
+                        <div class="col-md-9 col-sm-9">
+                            <div class="form-group">
+                                <div class="checkbox-list" ng-show="tab1 == 'skin_cancer'">
+                                    <label class=""><input type="checkbox" ng-model="BCC"> 
+                                        BCC
+                                        <span class="my-ul" ng-show="BCC == true">
+                                            &nbsp;&nbsp;&nbsp;Size :
+                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 0 - 1 cm</label>
+                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 1 - 2 cm</label>
+                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > > 2 cm</label>
+                                        </span>
+                                    </label>
+                                    <label class=""><input type="checkbox" ng-model="SCC"> 
+                                        SCC
+                                        <span ng-show="SCC == true">
+                                            &nbsp;&nbsp;&nbsp;Size :
+                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 0 - 1 cm</label>
+                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 1 - 2 cm</label>
+                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > > 2 cm</label>
+                                        </span>
+                                    </label>
+                                    <label class=""><input type="checkbox" ng-model="Melanoma"> 
+                                        Melanoma
+                                        <span ng-show="Melanoma == true">
+                                            &nbsp;&nbsp;&nbsp;Size :
+                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 0 - 1 cm</label>
+                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 1 - 2 cm</label>
+                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > > 2 cm</label>
+                                        </span>
+                                    </label>
+                                    <label class=""><input type="checkbox" ng-model="Merkel"> 
+                                        Merkel's
+                                        <span ng-show="Merkel == true">
+                                            &nbsp;&nbsp;&nbsp;Size :
+                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 0 - 1 cm</label>
+                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 1 - 2 cm</label>
+                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > > 2 cm</label>
+                                        </span>
+                                    </label>
+                                    <label class=""><input type="checkbox" ng-model="Skin_cancer_Others" ng-click="click_other()"> 
+                                        Others
+                                        <input type="text" size="15" ng-model="info.txtSkin_cancer_Others" ng-disabled="Skin_cancer_Others == false" />
+                                    </label>
+                                </div>
+                                <div class="checkbox-list" ng-show="tab1 == 'hand_condition'">
+                                    <label class="control-label"><input type="checkbox" checked> Ganglion</label>
+                                    <label class="control-label"><input type="checkbox"> Arthritis</label>
+                                    <label class="control-label"><input type="checkbox"> DeQuervains/Trigger</label>
+                                    <label class="control-label"><input type="checkbox"> Contracture </label>
+                                </div>
+                                <div class="checkbox-list" ng-show="tab1 == 'pns'">
+                                    <label class="control-label"><input type="checkbox" checked> Carpal Tunnel</label>
+                                    <label class="control-label"><input type="checkbox"> Cubital Tunnel</label>
+                                    <label class="control-label"><input type="checkbox"> Tarsal Tunnel</label>
+                                    <label class="control-label"><input type="checkbox"> Complex Reconstructive Case</label>
+                                    <label class="control-label"><input type="checkbox"> Other &nbsp;<input type="text" placeholder="Other" size="15"></label>
+                                </div>
                             </div>
                         </div>
                     </div>

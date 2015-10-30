@@ -165,6 +165,7 @@ app
         });
         $rootScope.$on('$includeContentLoaded', function() {
             App.initAjax();
+            ComponentsDateTimePickers.init(); // init todo page
         });
     })
     

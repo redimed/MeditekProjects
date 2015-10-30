@@ -90,11 +90,9 @@ module.exports = {
 		Services.Patient.GetPatient(data)
 		.then(function(info){
 			if(info!=null && info!=undefined && info!=''){
-				res.ok({status:200, message:"success", data:info});
+				res.ok({status:200, message:"Success", data:info});
 			} else {
-				var err = new Error("SERVER ERROR");
-				err.pushErrors("Server Error");
-				res.notFound({status:404,message:ErrorWrap(err)});
+				res.ok({status:200,message:"NoData"});
 			}
 		})
 		.catch(function(err){

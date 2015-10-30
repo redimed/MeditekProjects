@@ -4,6 +4,29 @@ var $q = require('q');
 var moment = require('moment');
 var check  = require('../HelperService');
 
+//default attributes
+var defaultAtrributes = ['ID',
+	'UID',
+	'UserAccountID',
+	'Title',
+	'FirstName',
+	'MiddleName',
+	'LastName',
+	'DOB',
+	'Gender',
+	'Occupation',
+	'Address1',
+	'Address2',
+	'Suburb',
+	'Postcode',
+	'State',
+	'CountryID',
+	'Email',
+	'HomePhoneNumber',
+	'WorkPhoneNumber',
+	'Enable'
+];
+
 //generator Password
 var generatePassword = require('password-generator');
 
@@ -561,6 +584,20 @@ module.exports = {
 		output: get patient's information.
 	*/
 	GetPatient : function(data, transaction) {
+		var attributes=[];
+		if(data.attributes){
+			if(data.attributes.length > 0){
+				for(var i = 0; i < data.attributes.length; i++){
+					attributes[i] = data.attributes[i].field;
+				};
+			}
+			else {
+				attributes = defaultAtrributes;
+			}
+		}
+		else{
+			attributes = defaultAtrributes;
+		}
 		return Services.UserAccount.GetUserAccountDetails(data)
 		.then(function(user){
 			//check if UserAccount is found in table UserAccount, get UserAccountID to find patient
@@ -570,6 +607,7 @@ module.exports = {
 						UserAccountID : user.ID
 					},
 					transaction:transaction,
+					attributes:attributes,
 					include: [
 						 {
 			            	model: UserAccount,
@@ -648,7 +686,7 @@ module.exports = {
 				   	}
 			    }
 			],
-			//attributes : attributes,
+			// attributes : attributes,
 			limit      : data.limit,
 			offset     : data.offset,
 			order      : data.order,

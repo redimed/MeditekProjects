@@ -275,6 +275,11 @@ angular.module('app.authentication.patient.services',[])
 	PatientService.getfileUID = function(data){
 		var getfileUID = api.all("patient/get-fileUID");
 		return getfileUID.post({data:data});
+	};
+
+	PatientService.getPatient = function(data){
+		var getPatient = api.all("patient/get-patient");
+		return getPatient.post({data:data});
 	}
 
 	return PatientService;

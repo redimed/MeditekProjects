@@ -99,8 +99,8 @@ module.exports = function(data, userInfo) {
                                 where: data.TelehealthAppointment.PatientAppointment.UID,
                                 transaction: t
                             };
-                            //update TelehealthPatientAppointment
-                            return Services.UpdateTelehealthPatientAppointment(objectUpdatePatientAppointment);
+                            //update PatientAppointment
+                            return Services.UpdatePatientAppointment(objectUpdatePatientAppointment);
                         }
                     }, function(err) {
                         defer.reject({

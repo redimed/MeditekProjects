@@ -42,50 +42,50 @@ module.exports = function(appointmentUID, userInfo) {
         filter.Appointment.push(filterRoleTemp);
     }
     Appointment.findOne({
-            attributes: Services.AttributesTeleAppt.Appointment(),
+            attributes: Services.AttributesAppt.Appointment(),
             include: [{
                 model: TelehealthAppointment,
-                attributes: Services.AttributesTeleAppt.TelehealthAppointment(),
+                attributes: Services.AttributesAppt.TelehealthAppointment(),
                 required: false,
                 include: [{
                     model: PatientAppointment,
-                    attributes: Services.AttributesTeleAppt.PatientAppointment(),
+                    attributes: Services.AttributesAppt.PatientAppointment(),
                     required: false,
                 }, {
                     model: ExaminationRequired,
-                    attributes: Services.AttributesTeleAppt.ExaminationRequired(),
+                    attributes: Services.AttributesAppt.ExaminationRequired(),
                     required: false
                 }, {
                     model: PreferredPractitioner,
-                    attributes: Services.AttributesTeleAppt.PreferredPractitioner(),
+                    attributes: Services.AttributesAppt.PreferredPractitioner(),
                     required: false
                 }, {
                     model: ClinicalDetail,
-                    attributes: Services.AttributesTeleAppt.ClinicalDetail(),
+                    attributes: Services.AttributesAppt.ClinicalDetail(),
                     required: false
                 }, {
                     model: Doctor,
-                    attributes: Services.AttributesTeleAppt.Doctor(),
+                    attributes: Services.AttributesAppt.Doctor(),
                     required: false,
                     where: filter.ExternalPractitioner
                 }]
             }, {
                 model: Doctor,
-                attributes: Services.AttributesTeleAppt.Doctor(),
+                attributes: Services.AttributesAppt.Doctor(),
                 required: false,
                 include: [{
                     model: Department,
-                    attributes: Services.AttributesTeleAppt.Department(),
+                    attributes: Services.AttributesAppt.Department(),
                     required: false
                 }],
                 where: filter.InternalPractitioner
             }, {
                 model: Patient,
-                attributes: Services.AttributesTeleAppt.Patient(),
+                attributes: Services.AttributesAppt.Patient(),
                 required: false,
                 include: [{
                     model: UserAccount,
-                    attributes: Services.AttributesTeleAppt.UserAccount(),
+                    attributes: Services.AttributesAppt.UserAccount(),
                     required: false
                 }]
             }, {

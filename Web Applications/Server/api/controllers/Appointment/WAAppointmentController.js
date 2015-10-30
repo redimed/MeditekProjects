@@ -35,7 +35,16 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.GetListWAAppointment(data, req.user)
+            //filter WAAppointment
+            if (!HelperService.CheckExistData(data.Filter)) {
+                data.Filter = [];
+            }
+            data.Filter.push({
+                "TelehealthAppointment": {
+                    "Type": "WAA"
+                }
+            });
+            Services.GetListAppointment(data, req.user)
                 .then(function(success) {
                     res.ok(success.data);
                 })
@@ -56,7 +65,7 @@ module.exports = {
        */
     GetDetailWAAppointment: function(req, res) {
         var UID = req.params.UID;
-        Services.GetDetailWAAppointment(UID)
+        Services.GetDetailWAAppointment(UID, req.user)
             .then(function(success) {
                 res.ok(success);
             })
@@ -112,7 +121,7 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.DisableWAAppointment(data)
+            Services.DisableAppointment(data)
                 .then(function(success) {
                     success.transaction.commit();
                     res.ok('success');

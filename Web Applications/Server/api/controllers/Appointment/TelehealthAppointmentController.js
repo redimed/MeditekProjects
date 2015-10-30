@@ -35,7 +35,16 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.GetListTelehealthAppointment(data, req.user)
+            //filter Telehealth Appointment
+            if (!HelperService.CheckExistData(data.Filter)) {
+                data.Filter = [];
+            }
+            data.Filter.push({
+                "TelehealthAppointment": {
+                    "Type": "TEL"
+                }
+            });
+            Services.GetListAppointment(data, req.user)
                 .then(function(success) {
                     res.ok(success.data);
                 })
@@ -111,7 +120,7 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.DisableTelehealthAppointment(data)
+            Services.DisableAppointment(data)
                 .then(function(success) {
                     success.transaction.commit();
                     res.ok('success');

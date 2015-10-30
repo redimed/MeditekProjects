@@ -9,38 +9,32 @@ module.exports = function(data, userInfo) {
     var defer = $q.defer();
     //get pagination  with condition received
     var pagination = Services.GetPaginationAppointment(data, userInfo);
-    //filter Telehealth Appointment
-    pagination.filterTelehealthAppointment.push({
-        '$and': {
-            Type: 'TEL'
-        }
-    });
     Appointment.findAndCountAll({
-            attributes: Services.AttributesTeleAppt.Appointment(),
+            attributes: Services.AttributesAppt.Appointment(),
             include: [{
                 model: TelehealthAppointment,
-                attributes: Services.AttributesTeleAppt.TelehealthAppointment(),
+                attributes: Services.AttributesAppt.TelehealthAppointment(),
                 required: (HelperService.CheckExistData(pagination.filterTelehealthAppointment) && !_.isEmpty(pagination.filterTelehealthAppointment)),
                 include: [{
                     model: PatientAppointment,
-                    attributes: Services.AttributesTeleAppt.PatientAppointment(),
+                    attributes: Services.AttributesAppt.PatientAppointment(),
                     required: (HelperService.CheckExistData(pagination.filterPatientAppointment) && !_.isEmpty(pagination.filterPatientAppointment)),
                     where: pagination.filterPatientAppointment
                 }],
                 where: pagination.filterTelehealthAppointment
             }, {
                 model: Doctor,
-                attributes: Services.AttributesTeleAppt.Doctor(),
+                attributes: Services.AttributesAppt.Doctor(),
                 required: (HelperService.CheckExistData(pagination.filterDoctor) && !_.isEmpty(pagination.filterDoctor)),
                 where: pagination.filterDoctor
             }, {
                 model: Patient,
-                attributes: Services.AttributesTeleAppt.Patient(),
+                attributes: Services.AttributesAppt.Patient(),
                 required: (HelperService.CheckExistData(pagination.filterPatient) && !_.isEmpty(pagination.filterPatient)),
                 where: pagination.filterPatient,
                 include: [{
                     model: UserAccount,
-                    attributes: Services.AttributesTeleAppt.UserAccount(),
+                    attributes: Services.AttributesAppt.UserAccount(),
                     required: false
                 }]
             }],

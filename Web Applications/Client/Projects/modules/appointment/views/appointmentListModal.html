@@ -678,7 +678,8 @@
                                     <div class="row mix-grid" style="">
                                         <div class="col-md-3 col-sm-3 mix Arm Foot Head Body mix_all" style=" display: block; opacity: 1;" ng-repeat="p in appointment.FileUploads" ng-if="p.FileType == 'MedicalImage' ">
                                             <div class="mix-inner">
-                                                <img class="img-responsive" src="{{Url}}{{p.UID}}" alt="" style="height:200px;">
+                                                <!-- <img class="img-responsive" src="{{Url}}{{p.UID}}" alt="" style="height:200px;"> -->
+                                                <img class="img-responsive" dimage dimage-uid="p.UID" dimage-size="'30'" style="height:200px;">
                                                 <div class="mix-details">
                                                     <h4>Cascusamus et iusto odio</h4>
                                                     <a class="mix-link">

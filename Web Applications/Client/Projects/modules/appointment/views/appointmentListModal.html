@@ -270,8 +270,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="file in appointment.FileUploads" ng-if="file.FileType !== 'MedicalImage' " ng-click="ViewDoc(Url,file.UID)">
-                                        <td>{{$index}}</td>
+                                    <tr ng-repeat="file in appointment.FileUploads" ng-if="file.FileType === 'MedicalDocument'" ng-click="ViewDoc(Url,file.UID)">
                                         <td>{{file.FileName}}</td>
                                         <td>{{file.CreatedDate | date: 'dd/MM/yyyy' : 'UTC' }}</td>
                                         <td>
@@ -1040,15 +1039,12 @@
                                                 </div>
                                                 <br>
                                                 <div>
-                                                    <span class="btn green btn-file">
-					                            <span class="fileinput-new">
-					                            Signature </span>
-                                                    <span class="fileinput-exists">
-					                            Change </span>
+                                               <!--  <span class="btn green btn-file">
+    					                            <span class="fileinput-new">Signature </span>
+                                                    <span class="fileinput-exists">Change </span>
                                                     <input type="file" name="...">
-                                                    </span>
-                                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-					                            Remove </a>
+                                                </span> -->
+                                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">Remove </a>
                                                 </div>
                                             </div>
                                             <div class="clearfix"></div>

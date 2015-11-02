@@ -92,23 +92,14 @@
                         <div class="form-group form-md-line-input">
                             <div class="radio-list">
                                 <label class="radio-inline">
-<<<<<<< HEAD
-                                    <input type="radio" name="sex" value="Male" checked> Male 
+                                    <input type="radio" name="gender"  value="Male" ng-checked="true" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Gender">
+                                     Male 
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="sex" id="female" value="Female"> Female 
+                                    <input type="radio" name="gender"  value="Female" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Gender"> Female 
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="sex" id="sex_other" value="Other"> Other 
-=======
-                                    <input type="radio" name="sex" id="male" value="Male" checked ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Gender"> Male 
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="sex" id="female" value="Female" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Gender"> Female 
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="sex" id="sex_other" value="Other" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Gender"> Other 
->>>>>>> practioner
+                                    <input type="radio" name="gender"  value="Other" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Gender"> Other 
                                 </label>
                             </div>
                         </div>
@@ -128,14 +119,10 @@
                         <div class="form-group form-md-line-input">
                             <div class="radio-list">
                                 <label class="radio-inline">
-<<<<<<< HEAD
-                                    <input type="radio" name="sex" id="Aboriginal" value="option1" checked="true"> Aboriginal 
-=======
-                                    <input type="radio" name="sex" id="Aboriginal" value="Aboriginal" checked ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Indigenous"> Aboriginal 
->>>>>>> practioner
+                                    <input type="radio" name="IndigenousStatus"  value="Aboriginal" ng-checked="true" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Indigenous"> Aboriginal 
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="sex" id="Torres Strait Islander" value="Torres Strait Islander" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Indigenous"> Torres Strait Islander 
+                                    <input type="radio" name="IndigenousStatus"  value="Torres Strait Islander" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Indigenous"> Torres Strait Islander 
                                 </label>
                             </div>
                         </div>
@@ -151,10 +138,10 @@
                             <div class="radio-list">
                                 <label class="control-label radio-inline">Interpreter required ?</label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="sex" id="Yes" value="Y" checked ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Indigenous"> Yes 
+                                    <input type="radio" name="InterpreterRequired" id="Yes" value="Y" ng-checked="true" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterRequired"> Yes 
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="sex" id="No" value="N" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Indigenous"> No 
+                                    <input type="radio" name="InterpreterRequired" id="No" value="N" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterRequired"> No 
                                 </label>
                                 <label class="radio-inline">
                                     If yes, language/dialect 
@@ -163,7 +150,7 @@
                         </div>
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="Language/dialect" ng-disabled="requestInfo.TelehealthAppointment.PatientAppointment.Indigenous === 'Y'">
+                                <input type="text" class="form-control" placeholder="Language/dialect" ng-disabled="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterRequired === 'N'" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.InterperterLanguage">
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </div>
@@ -174,7 +161,7 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="form-group form-md-line-input">
                         <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Other special needs">
+                            <input type="text" class="form-control" placeholder="Other special needs" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.OtherSpecialNeed" >
                             <label class="control-label col-md-3 col-sm-3"> Other special needs ?</label>
                             <div class="form-control-focus"> </div>
                             <i class="glyphicon glyphicon-pencil"></i>
@@ -182,46 +169,7 @@
                     </div>
                 </div>
             </div>
-            <hr>
             <!-- 3 -->
-            <div class="row">
-                <div class="col-md-12 col-sm-12 ">
-                    <div class="form-inline">
-                        <div class="form-group form-md-line-input">
-                            <div class="radio-list">
-                                <label class="control-label radio-inline">Interpreter required ?</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="sex" id="Yes" value="option1" checked> Yes 
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="sex" id="No" value="option2"> No 
-                                </label>
-                                <label class="radio-inline">
-                                    If yes, language/dialect 
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="Language/dialect">
-                                <div class="form-control-focus"> </div>
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12 col-sm-12">&nbsp;</div>
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Other special needs">
-                            <label class="control-label col-md-3 col-sm-3"> Other special needs ?</label>
-                            <div class="form-control-focus"> </div>
-                            <i class="glyphicon glyphicon-pencil"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 

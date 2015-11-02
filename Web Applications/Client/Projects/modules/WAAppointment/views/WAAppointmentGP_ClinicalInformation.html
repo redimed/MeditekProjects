@@ -29,7 +29,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="item in uploader.queue">
+                                <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'pastMedical'">
                                     <td><strong>{{ item.file.name }}</strong></td>
                                     <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
                                     <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
@@ -42,17 +42,17 @@
                             </tbody>
                         </table>
                     </div>
-                    <div>
-                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-                    </div>
+                    <button class="btn blue-soft btn-file" ng-click="ClickUploader('pastMedical')">
+                        <i class="glyphicon glyphicon-folder-open"></i>&nbsp; Select Document
+                    </button>
                     <div class="input-inline">
                         <div class="input-icon">
-                            <span class="btn blue-soft btn-file">
+                            <span class="btn blue-soft btn-file" ng-hide="true">
                                 <i class="glyphicon glyphicon-folder-open"></i>
                                 <span class="fileinput-new">&nbsp;Select Document</span>
-                            <input type="file" nv-file-select="" uploader="uploader" multiple/>
+                            <input type="file" nv-file-select="" uploader="uploader" multiple id="pastMedical" />
                             </span>
-                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue('pastMedical')" ng-disabled="!uploader.queue.length">
                                 <span class="glyphicon glyphicon-trash"></span> Remove all
                             </button>
                         </div>
@@ -84,7 +84,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="item in uploader.queue">
+                                <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'socialFactors'">
                                     <td><strong>{{ item.file.name }}</strong></td>
                                     <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
                                     <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
@@ -97,17 +97,17 @@
                             </tbody>
                         </table>
                     </div>
-                    <div>
-                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-                    </div>
+                    <button class="btn blue-soft btn-file" ng-click="ClickUploader('socialFactors')">
+                        <i class="glyphicon glyphicon-folder-open"></i>&nbsp; Select Document
+                    </button>
                     <div class="input-inline">
                         <div class="input-icon">
-                            <span class="btn blue-soft btn-file">
+                            <span class="btn blue-soft btn-file" ng-hide="true">
                                 <i class="glyphicon glyphicon-folder-open"></i>
                                 <span class="fileinput-new">&nbsp;Select Document</span>
-                            <input type="file" nv-file-select="" uploader="uploader" multiple/>
+                            <input type="file" nv-file-select="" uploader="uploader" multiple id="socialFactors" />
                             </span>
-                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue('socialFactors')" ng-disabled="!uploader.queue.length">
                                 <span class="glyphicon glyphicon-trash"></span> Remove all
                             </button>
                         </div>
@@ -139,7 +139,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="item in uploader.queue">
+                                <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'allergies'">
                                     <td><strong>{{ item.file.name }}</strong></td>
                                     <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
                                     <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
@@ -152,17 +152,17 @@
                             </tbody>
                         </table>
                     </div>
-                    <div>
-                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-                    </div>
+                    <button class="btn blue-soft btn-file" ng-click="ClickUploader('allergies')">
+                        <i class="glyphicon glyphicon-folder-open"></i>&nbsp; Select Document
+                    </button>
                     <div class="input-inline">
                         <div class="input-icon">
-                            <span class="btn blue-soft btn-file">
+                            <span class="btn blue-soft btn-file" ng-hide="true">
                                 <i class="glyphicon glyphicon-folder-open"></i>
                                 <span class="fileinput-new">&nbsp;Select Document</span>
-                            <input type="file" nv-file-select="" uploader="uploader" multiple/>
+                            <input type="file" nv-file-select="" uploader="uploader" multiple id="allergies" />
                             </span>
-                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue('allergies')" ng-disabled="!uploader.queue.length">
                                 <span class="glyphicon glyphicon-trash"></span> Remove all
                             </button>
                         </div>
@@ -194,7 +194,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="item in uploader.queue">
+                                <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'currentMedication'">
                                     <td><strong>{{ item.file.name }}</strong></td>
                                     <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
                                     <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
@@ -207,17 +207,17 @@
                             </tbody>
                         </table>
                     </div>
-                    <div>
-                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-                    </div>
+                     <button class="btn blue-soft btn-file" ng-click="ClickUploader('currentMedication')">
+                        <i class="glyphicon glyphicon-folder-open"></i>&nbsp; Select Document
+                    </button>
                     <div class="input-inline">
                         <div class="input-icon">
-                            <span class="btn blue-soft btn-file">
+                            <span class="btn blue-soft btn-file" ng-hide="true">
                                 <i class="glyphicon glyphicon-folder-open"></i>
                                 <span class="fileinput-new">&nbsp;Select Document</span>
-                            <input type="file" nv-file-select="" uploader="uploader" multiple/>
+                            <input type="file" nv-file-select="" uploader="uploader" multiple id="currentMedication" />
                             </span>
-                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue('currentMedication')" ng-disabled="!uploader.queue.length">
                                 <span class="glyphicon glyphicon-trash"></span> Remove all
                             </button>
                         </div>
@@ -249,7 +249,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="item in uploader.queue">
+                                <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'investigationTests'">
                                     <td><strong>{{ item.file.name }}</strong></td>
                                     <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
                                     <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
@@ -262,17 +262,17 @@
                             </tbody>
                         </table>
                     </div>
-                    <div>
-                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-                    </div>
+                    <button class="btn blue-soft btn-file" ng-click="ClickUploader('investigationTests')">
+                        <i class="glyphicon glyphicon-folder-open"></i>&nbsp; Select Document
+                    </button>
                     <div class="input-inline">
                         <div class="input-icon">
-                            <span class="btn blue-soft btn-file">
+                            <span class="btn blue-soft btn-file" ng-hide="true">
                                 <i class="glyphicon glyphicon-folder-open"></i>
                                 <span class="fileinput-new">&nbsp;Select Document</span>
-                            <input type="file" nv-file-select="" uploader="uploader" multiple/>
+                            <input type="file" nv-file-select="" uploader="uploader" multiple id="investigationTests" />
                             </span>
-                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                            <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue('investigationTests')" ng-disabled="!uploader.queue.length">
                                 <span class="glyphicon glyphicon-trash"></span> Remove all
                             </button>
                         </div>
@@ -287,7 +287,7 @@
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
                         <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Pathology provider">
+                            <input type="text" class="form-control" placeholder="Pathology provider" ng-model="requestInfo.TelehealthAppointment.WAAppointment.PathologyProvider">
                             <label class="control-label">Pathology provider</label>
                             <div class="form-control-focus"> </div>
                             <i class="glyphicon glyphicon-pencil"></i>
@@ -297,7 +297,7 @@
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
                         <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Radiology provider">
+                            <input type="text" class="form-control" placeholder="Radiology provider" ng-model="requestInfo.TelehealthAppointment.WAAppointment.RadiologyProvider">
                             <label class="control-label">Radiology provider</label>
                             <div class="form-control-focus"> </div>
                             <i class="glyphicon glyphicon-pencil"></i>

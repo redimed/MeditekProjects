@@ -18,6 +18,16 @@ angular.module('app.common.menuBar',[])
 				
 			});
 
+			/*scope.test=function()
+			{
+				CommonService.test()
+				.then(function(data){
+					alert(JSON.stringify(data));
+				},function(err){
+					alert(JSON.stringify(err));
+				})
+			}*/
+
 			/*CommonService.downloadFile('bb965155-2b92-41f8-aa78-aa072e70b452')
 			.then(function(data){
 				// alert(data.status);

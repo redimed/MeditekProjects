@@ -1,3 +1,5 @@
+//DISABLE DISABLE DISABLE DISABLE DISABLE DISABLE
+
 var expressJwt = require('express-jwt');
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
 

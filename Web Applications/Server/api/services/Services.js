@@ -2,6 +2,7 @@ module.exports = {
     UserAccount: require('./UserAccount/UserAccount'),
     Patient: require('./Patient/Patient'),
     UserActivation: require('./UserAccount/UserActivation'),
+    UserToken: require('./UserAccount/UserToken'),
     //Telehealth Appointment
     CreateTelehealthAppointment: require('./Appointment/CreateTelehealthAppointment'),
     GetDataAppointment: require('./Appointment/GetDataAppointment'),

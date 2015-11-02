@@ -47,8 +47,11 @@ module.exports.cors = {
      *                                                                          *
      ***************************************************************************/
 
-    origin: 'http://localhost:8000,http://localhost:8001,http://localhost:3004, http://192.168.1.2:3004, http://telehealvietnam.com.vn:3004, http://testapp.redimed.com.au:3004, http://testapp.redimed.com.au:3007',
-
+    //For local testing
+    origin: 'http://localhost:3001, http://localhost:3004, http://localhost:3007, http://localhost:3009, http://192.168.1.2:3001, http://192.168.1.2:3004, http://192.168.1.2:3007, http://192.168.1.2:3009',
+    //For TestApp deployment
+    //origin: 'http://testapp.redimed.com.au:3001, http://testapp.redimed.com.au:3004, http://testapp.redimed.com.au:3007, http://testapp.redimed.com.au:3009'
+    
     /***************************************************************************
      *                                                                          *
      * Allow cookies to be shared for CORS requests?                            *
@@ -73,7 +76,7 @@ module.exports.cors = {
      *                                                                          *
      ***************************************************************************/
 
-    headers: 'content-type, authorization',
+    headers: 'content-type, authorization, systemtype, deviceid',
 
     // exposeHeaders:'filename,filetype', //TODO
 

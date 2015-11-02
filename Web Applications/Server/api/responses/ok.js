@@ -18,10 +18,19 @@ module.exports = function sendOK (data, options) {
   var res = this.res;
   var sails = req._sails;
 
-  sails.log.silly('res.ok() :: Sending 200 ("OK") response');
+  sails.log.silly('res.ok() :: Sending 200 ("OK") response or 202 if refresh token');
 
   // Set status code
-  res.status(200);
+  if(res.get('newtoken'))
+  {
+    //trả về 202 nếu có reset token
+    res.status(202);
+  }
+  else
+  {
+    res.status(200);
+  }
+  
 
   // If appropriate, serve data as JSON(P)
   if (req.wantsJSON) {

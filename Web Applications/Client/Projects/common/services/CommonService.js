@@ -323,6 +323,18 @@ angular.module("app.common.CommonService", [])
             })
         };
 
+        commonService.test=function()
+        {
+            var result = api.one("user-account/test");
+            return result.get();
+        };
+
+        commonService.refreshToken=function()
+        {
+            var result=api.one('refreshToken');
+            return result.get();
+        };
+
 
         return commonService;
     })

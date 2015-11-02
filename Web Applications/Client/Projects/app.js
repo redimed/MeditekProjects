@@ -39,6 +39,7 @@ app
             return {
                 'request': function(config) {
                     config.headers = config.headers || {};
+                    config.headers.systemtype="WEB";
                     if ($cookies.get('token')) {
                         config.headers.Authorization = 'Bearer ' + $cookies.get('token');
                     }
@@ -49,7 +50,16 @@ app
                         $location.path('/login');
                     }
                     return $q.reject(response);
-                }
+                },
+
+                'response':function(response){
+                    if(response.status===202)
+                    {
+                        $cookies.put('token',response.headers().newtoken);
+                        // alert(response.headers());
+                    }
+                    return response;
+                },
             };
         });
         // END JWT SIGN
@@ -58,8 +68,13 @@ app
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
         // END CORS PROXY
         //RESTANGULAR DEFAULT
-
+	
+    	//CONFIG Access-Control-Allow-Credentials=TRUE
+    	//Mục đích: request có thể send cookies để authentication với passport
         RestangularProvider.setBaseUrl(o.const.restBaseUrl);
+        RestangularProvider.setDefaultHttpFields({
+            'withCredentials': true
+        });
         // RestangularProvider.setBaseUrl("http://telehealthvietnam.com.vn:3005");
         $urlRouterProvider.otherwise('');
         $stateProvider.state('sys', {

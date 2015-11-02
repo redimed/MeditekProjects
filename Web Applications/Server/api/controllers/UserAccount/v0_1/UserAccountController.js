@@ -5,11 +5,7 @@ var o=require("../../../services/HelperService");
 module.exports = {
 	Test:function(req,res)
 	{
-		console.log("TTTTTTTTTTTTTTTTTt");
-		console.log(req.user);
-		res.set('fileName','tanee2.PNG');
-		res.header('Access-Control-Expose-Headers', 'filename');
-		res.download('api/controllers/UserAccount/v0_1/test.png');
+		res.ok({status:'success',user:req.user,newtoken:res.get('newtoken')});
 
 	},
 

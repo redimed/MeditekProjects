@@ -1,24 +1,25 @@
 <div class="row">
-    <div class="col-md-2">
-        <ul class="ver-inline-menu tabbable margin-bottom-10">
+    <div class="col-md-1 col-sm-3">
+        <!-- <ul class="ver-inline-menu tabbable margin-bottom-10"> -->
+        <ul class="nav nav-tabs tabs-left">
             <li class="filter active" data-filter="Arm Foot Head Body" ng-click="tab_body_part='all';">
-                <a><i class="fa fa-picture-o"></i> All </a>
+                <a>All </a>
             </li>
             <li class="filter" data-filter="Arm" ng-click="tab_body_part='arm';">
-                <a><i class="fa fa-picture-o"></i> Arm </a>
+                <a>Arm </a>
             </li>
             <li class="filter" data-filter="Foot" ng-click="tab_body_part='foot';">
-                <a><i class="fa fa-picture-o"></i> Foot</a>
+                <a>Foot</a>
             </li>
             <li class="filter" data-filter="Head" ng-click="tab_body_part='head';">
-                <a><i class="fa fa-picture-o"></i> Head</a>
+                <a>Head</a>
             </li>
             <li class="filter" data-filter="Body" ng-click="tab_body_part='body';">
-                <a><i class="fa fa-picture-o"></i> Body</a>
+                <a>Body</a>
             </li>
         </ul>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-10 col-sm-9">
         <div class="row mix-grid" style="">
             <div class="col-md-3 col-sm-3 mix Arm Foot Head Body mix_all" style=" display: block; opacity: 1;" ng-repeat="p in appointment.FileUploads" ng-if="p.FileType == 'MedicalImage' ">
                 <div class="mix-inner">

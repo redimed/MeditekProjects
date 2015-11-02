@@ -19,8 +19,6 @@ import retrofit.mime.TypedFile;
  * Created by Fox on 9/25/2015.
  */
 public interface RegisterApi {
-//    3009: Authorization, CoreAuth
-//    3005: CoreAuth
 
     @POST("/api/telehealth/user/requestActivationCode")
     void activation(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
@@ -37,6 +35,7 @@ public interface RegisterApi {
     @POST("/api/telehealth/user/appointmentDetails")
     void getAppointmentDetails(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
 
+    //3005
     @Multipart
     @POST("/api/uploadFile")
     void uploadFile(@Header("Authorization") String core,

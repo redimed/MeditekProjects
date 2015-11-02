@@ -27,6 +27,8 @@ import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.CustomAlertDialog;
 import com.redimed.telehealth.patient.utils.DialogConnection;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit.Callback;
@@ -121,7 +123,11 @@ public class InformationFragment extends Fragment{
                 if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
                     new DialogConnection(v.getContext()).show();
                 } else {
-                    new CustomAlertDialog(v.getContext(), CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                    if (error.getLocalizedMessage().equalsIgnoreCase("TokenExpiredError")){
+                        new CustomAlertDialog(v.getContext(), CustomAlertDialog.State.Warning,  "Sorry for inconvenience, please refresh application").show();
+                    }else {
+                        new CustomAlertDialog(v.getContext(), CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                    }
                 }
                 swipeInfo.setRefreshing(false);
             }

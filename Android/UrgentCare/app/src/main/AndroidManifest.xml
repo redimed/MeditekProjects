@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.redimed.urgentcare">
+    package="com.redimed.urgentcare" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -9,19 +9,15 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        tools:replace="android:icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon" >
         <activity android:name=".HomeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".MakeAppointmentActivity"
-            android:label="@string/title_activity_make_appointment" >
         </activity>
         <activity
             android:name=".FAQActivity"
@@ -34,6 +30,18 @@
         <activity
             android:name=".WorkInjuryActivity"
             android:label="@string/title_activity_work_injury" >
+        </activity>
+        <activity
+            android:name=".PlasticInjuryActivity"
+            android:label="@string/title_activity_plastic_injury" >
+        </activity>
+        <activity
+            android:name=".OrthopaedicActivity"
+            android:label="@string/title_activity_orthopaedic" >
+        </activity>
+        <activity
+            android:name=".UrgentCareActivity"
+            android:label="@string/title_activity_urgent_care" >
         </activity>
     </application>
 

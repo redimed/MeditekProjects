@@ -61,7 +61,8 @@
     <color name="bgDialogError">#F44336</color>
     <color name="bgDialogSuccess">#00BCD4</color>
     <color name="bgPrimaryDark">#0F574D</color>
-    <color name="bgToolBar">#1AAA93</color>
+    <color name="bgToolBar">#1abc9c</color>
+    <color name="bgToolBar2">#16a085</color>
     <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="blue_btn_bg_color">#AEDEF4</color>
@@ -88,6 +89,39 @@
     <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <color name="error_stroke_color">#F27474</color>
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="fbutton_color_alizarin">#e74c3c</color>
+    <color name="fbutton_color_amethyst">#9b59b6</color>
+    <color name="fbutton_color_asbestos">#7f8c8d</color>
+    <color name="fbutton_color_belize_hole">#2980b9</color>
+    <color name="fbutton_color_carrot">#e67e22</color>
+    <color name="fbutton_color_clouds">#ecf0f1</color>
+    <color name="fbutton_color_concrete">#95a5a6</color>
+    <color name="fbutton_color_emerald">#2ecc71</color>
+    <color name="fbutton_color_green_sea">#16a085</color>
+    <color name="fbutton_color_midnight_blue">#2c3e50</color>
+    <color name="fbutton_color_nephritis">#27ae60</color>
+    <color name="fbutton_color_orange">#f39c12</color>
+    <color name="fbutton_color_peter_river">#3498db</color>
+    <color name="fbutton_color_pomegranate">#c0392b</color>
+    <color name="fbutton_color_pumpkin">#d35400</color>
+    <color name="fbutton_color_silver">#bdc3c7</color>
+    <color name="fbutton_color_sun_flower">#f1c40f</color>
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/info.hoang8f/fbutton/1.0.5/res/values/values.xml -->
+    <eat-comment/>
+    <color name="fbutton_color_transparent">@android:color/transparent</color>
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="fbutton_color_turquoise">#1abc9c</color>
+    <color name="fbutton_color_wet_asphalt">#34495e</color>
+    <color name="fbutton_color_wisteria">#8e44ad</color>
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/info.hoang8f/fbutton/1.0.5/res/values/values.xml -->
+    <eat-comment/>
+    <color name="fbutton_default_color">#3eadeb</color>
+    <color name="fbutton_default_shadow_color">#ff3493c8</color>
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
     <color name="float_transparent">#00000000</color>
     <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
@@ -188,6 +222,7 @@
     <declare-styleable name="AppCompatTextView"><attr format="reference|boolean" name="textAllCaps"/><attr name="android:textAppearance"/></declare-styleable>
     <declare-styleable name="CompoundButton"><attr name="android:button"/><attr format="color" name="buttonTint"/><attr name="buttonTintMode"><enum name="src_over" value="3"/><enum name="src_in" value="5"/><enum name="src_atop" value="9"/><enum name="multiply" value="14"/><enum name="screen" value="15"/></attr></declare-styleable>
     <declare-styleable name="DrawerArrowToggle"><attr format="color" name="color"/><attr format="boolean" name="spinBars"/><attr format="dimension" name="drawableSize"/><attr format="dimension" name="gapBetweenBars"/><attr format="dimension" name="arrowHeadLength"/><attr format="dimension" name="arrowShaftLength"/><attr format="dimension" name="barLength"/><attr format="dimension" name="thickness"/></declare-styleable>
+    <declare-styleable name="FButton"><attr format="boolean" name="shadowEnabled"/><attr format="color" name="buttonColor"/><attr format="color" name="shadowColor"/><attr format="dimension" name="shadowHeight"/><attr format="dimension" name="cornerRadius"/></declare-styleable>
     <declare-styleable name="LinearLayoutCompat"><attr name="android:orientation"/><attr name="android:gravity"/><attr name="android:baselineAligned"/><attr name="android:baselineAlignedChildIndex"/><attr name="android:weightSum"/><attr format="boolean" name="measureWithLargestChild"/><attr name="divider"/><attr name="showDividers"><flag name="none" value="0"/><flag name="beginning" value="1"/><flag name="middle" value="2"/><flag name="end" value="4"/></attr><attr format="dimension" name="dividerPadding"/></declare-styleable>
     <declare-styleable name="LinearLayoutCompat_Layout"><attr name="android:layout_width"/><attr name="android:layout_height"/><attr name="android:layout_weight"/><attr name="android:layout_gravity"/></declare-styleable>
     <declare-styleable name="ListPopupWindow"><attr name="android:dropDownVerticalOffset"/><attr name="android:dropDownHorizontalOffset"/></declare-styleable>
@@ -287,6 +322,16 @@
     <item name="dialog_fixed_width_minor" type="dimen">320dp</item>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/info.hoang8f/fbutton/1.0.5/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="fbutton_default_conner_radius">8dp</dimen>
+    <dimen name="fbutton_default_padding_bottom">5dp</dimen>
+    <dimen name="fbutton_default_padding_left">10dp</dimen>
+    <dimen name="fbutton_default_padding_right">10dp</dimen>
+    <dimen name="fbutton_default_padding_top">5dp</dimen>
+    <dimen name="fbutton_default_shadow_height">4dp</dimen>
+    <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <eat-comment/>
     <item format="float" name="highlight_alpha_material_colored" type="dimen">0.26</item>
     <item format="float" name="highlight_alpha_material_dark" type="dimen">0.20</item>
     <item format="float" name="highlight_alpha_material_light" type="dimen">0.12</item>
@@ -396,7 +441,10 @@
     <string name="title_activity_faq">FAQ</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_make_appointment">MakeAppointmentActivity</string>
+    <string name="title_activity_orthopaedic">OrthopaedicActivity</string>
+    <string name="title_activity_plastic_injury">PlasticInjuryActivity</string>
     <string name="title_activity_sport_injury">SportInjuryActivity</string>
+    <string name="title_activity_urgent_care">UrgentCareActivity</string>
     <string name="title_activity_work_injury">WorkInjuryActivity</string>
     <string name="urlFile">/data/data/</string>
     <!-- From: file:/D:/MeditekProjects/Android/UrgentCare/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
@@ -409,7 +457,7 @@
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/bgToolBar</item>
-        <item name="colorPrimaryDark">@color/bgToolBar</item>
+        <item name="colorPrimaryDark">@color/bgToolBar2</item>
         <!-- Customize your theme here. -->
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="buttonStyle">@style/RobotoButtonStyle</item>

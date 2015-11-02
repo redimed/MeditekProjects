@@ -31,7 +31,20 @@ passport.deserializeUser(function(ID, done) {
             }
         }
     }).then(function(user) {
-        done(null, user);
+
+        var listRoles = [];
+        _.each(user.RelUserRoles, function(item) {
+            listRoles.push(item.Role);
+        });
+        var returnUser = {
+            ID: user.ID,
+            UID: user.UID,
+            UserName: user.UserName,
+            Activated: user.Activated,
+            roles: listRoles
+        };
+
+        done(null, returnUser);
     }, function(err) {
         done(err);
     })
@@ -91,7 +104,8 @@ passport.use(new LocalStrategy({
             var err = new Error("User.disabled");
             return done(null, false, err);
         }
-        if (user && user.Activated != 'Y') {
+        //Code của Luân
+        /*if (user && user.Activated != 'Y') {
             // Activation
             Services.UserActivation.CreateUserActivation({
                 UserUID: user.UID,
@@ -117,7 +131,7 @@ passport.use(new LocalStrategy({
             }).catch(function(err) {
                 res.serverError(ErrorWrap(err));
             });
-        }
+        }*/
         //Chuẩn bị thông tin trả về
         var listRoles = [];
         _.each(user.RelUserRoles, function(item) {

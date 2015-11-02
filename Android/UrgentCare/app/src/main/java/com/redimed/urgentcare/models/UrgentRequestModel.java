@@ -12,10 +12,11 @@ public class UrgentRequestModel {
     @SerializedName("phoneNumber")
     public String contactPhone;
     public String suburb;
+    public String requestDate;
     public String DOB;
     public String email;
     public String description;
-    @SerializedName("GPReferal")
+    @SerializedName("GPReferral")
     public String gpReferral;
     public String physiotherapy;
     public String specialist;
@@ -92,4 +93,7 @@ public class UrgentRequestModel {
         this.gpReferral = gpReferral;
     }
 
+    public void setRequestDate(String requestDate) {
+        this.requestDate = requestDate;
+    }
 }

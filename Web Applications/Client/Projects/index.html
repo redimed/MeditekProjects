@@ -40,6 +40,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <!-- BEGIN PAGE LEVEL STYLE -->
 
+    <!-- profile 2 -->
+    <link href="theme/assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css" />
+    <!-- end profile 2 -->
+
     <!-- BEGIN component bootstrap fileinput -->
     <link href="theme/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
     <!-- END component bootstrap fileinput -->
@@ -195,6 +199,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="common/services/CommonService.js"></script>
         <script src="common/directives/dialog.js"></script>
         <script src="common/directives/menuBar.js"></script>
+        <script src="common/directives/dimage.js"></script>
         <script src="common/directives/common.js"></script>
         <!--END COMMON SERVICE-->
 
@@ -235,6 +240,15 @@ License: You must have a valid license purchased only from themeforest(the above
 
         <!-- END MODULE appointment -->
 
+        <!-- BEGIN MODULE urgentCare -->
+        <script src="modules/urgentCare/urgentCare.js" ></script>
+        <script src="modules/urgentCare/controllers/urgentCareCtrl.js"></script>
+        <script src="modules/urgentCare/controllers/urgentCareListCtrl.js"></script>
+        <script src="modules/urgentCare/controllers/urgentCareListDetailCtrl.js"></script>
+        <script src="modules/urgentCare/directives/urgentCareListDirective.js"></script>
+        <!-- END MODULE urgentCare -->
+
+
         <!-- BEGIN MODULE doctor -->
         <script src="modules/doctor/doctor.js" ></script>
         <script src="modules/doctor/services/doctorService.js"></script>
@@ -258,7 +272,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="modules/patient/directives/patientListModalDirective.js"></script>
         <script src="modules/patient/directives/patientCreateDirective.js"></script>
         <!-- END MODULE patient -->
-		
+		<!-- asdfghjk -->
 		<!-- BEGIN MODULE user -->
 		<script src="modules/user/user.js" ></script>
 		<script src="modules/user/controllers/userCtrl.js"></script>
@@ -274,6 +288,9 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="modules/WAAppointment/controllers/WAAppointmentListCtrl.js"></script>
         <script src="modules/WAAppointment/controllers/WAAppointmentListDetailCtrl.js"></script>
         <script src="modules/WAAppointment/controllers/WAAppointmentGPCtrl.js"></script>
+        <script src="modules/WAAppointment/services/WAAppointmentService.js"></script>
+        <script src="modules/WAAppointment/directives/WAAppointmentList.js"></script>
+        <script src="modules/WAAppointment/directives/WAAppointmentDetail.js"></script>
         <!-- END MODULE WAAppointment -->
 
 

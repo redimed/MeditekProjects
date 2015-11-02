@@ -42,8 +42,9 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         
         request(.GET, GENERATESESSION, headers: SingleTon.headers).responseJSON() { response in
             if let data = response.2.value {
-                let readableJSON = data["data"] as! NSDictionary
-                SingleTon.infoOpentok = JSON(readableJSON)
+                if let readableJSON: NSDictionary = data["data"] as? NSDictionary {
+                    SingleTon.infoOpentok = JSON(readableJSON)
+                }
             }
         }
     }
@@ -53,10 +54,10 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     }
     
     /**
-    Reload data func for notification
-    
-    - parameter notification: notification name "reloadDataTable"
-    */
+     Reload data func for notification
+     
+     - parameter notification: notification name "reloadDataTable"
+     */
     func reloadTable(notification: NSNotification){
         self.tableView.reloadData()
         tableView.tableFooterView = UIView(frame: CGRectZero)

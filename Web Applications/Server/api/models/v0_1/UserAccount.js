@@ -98,7 +98,7 @@ module.exports = {
         Enable: {
             type: Sequelize.STRING(1),
             allowNull: true,
-	    defaultValue:'Y',
+	       defaultValue:'Y',
             validate: {
                 len: {
                     args: [0, 1],

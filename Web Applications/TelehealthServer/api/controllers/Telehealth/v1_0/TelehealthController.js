@@ -142,7 +142,7 @@ module.exports = {
             req.logIn(u, function(err) {
                 if (err) res.unauthorize(err);
                 else {
-                    if(!deviceType || !deviceId){
+                    if (!deviceType || !deviceId) {
                         var err = new Error("TelehealthLogin");
                         err.pushError("Invalid Params");
                         return res.serverError(ErrorWrap(err));
@@ -150,11 +150,10 @@ module.exports = {
                     TelehealthService.GenerateJWT({
                         deviceID: deviceId,
                         payload: u.user,
-                        expired: 3600 * 24 * 100,
+                        tokenExpired: config.TokenExpired,
                         type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS',
                         userID: u.user.ID
-                    })
-                    .then(function(token) {
+                    }).then(function(token) {
                         res.ok({
                             status: 'success',
                             message: info.message,
@@ -314,14 +313,14 @@ module.exports = {
                                             'UserName': 1,
                                             'Password': 2,
                                             'UserUID': user.UID,
-                                            'DeviceID': deviceId, 
+                                            'DeviceID': deviceId,
                                             'VerificationToken': data.VerificationToken
                                         }
                                     }).then(function(response) {
                                         TelehealthService.GenerateJWT({
                                             deviceID: deviceId,
-                                            payload: teleUser,
-                                            expired: 3600 * 24 * 100,
+                                            payload: teleUser.dataValues,
+                                            tokenExpired: config.TokenExpired,
                                             type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS',
                                             userID: user.ID
                                         }).then(function(token) {

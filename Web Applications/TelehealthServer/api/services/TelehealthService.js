@@ -125,48 +125,102 @@ module.exports = {
     },
     GenerateJWT: function(info) {
         var defer = $q.defer();
-        if (!info.payload || !info.expired || !info.userID || !info.type) {
+        if (!info.payload || !info.tokenExpired || !info.userID || !info.type) {
             var err = new Error('GenerateJWT');
             err.pushError('Invalid Params');
             defer.reject(err);
         } else {
-            var token = jwt.sign(info.payload, config.TokenSecret, {
-                expiresIn: info.expired
+            var secretKey = UUIDService.GenerateUUID();
+            var token = jwt.sign(info.payload, secretKey, {
+                expiresIn: info.tokenExpired
             })
-            UserToken.find({
+            UserToken.findOrCreate({
                 where: {
                     UserAccountID: info.userID,
                     SystemType: info.type,
-                    DeviceID: !info.deviceID ? null : info.deviceID,
+                    DeviceID: !info.deviceID ? null : info.deviceID
+                },
+                defaults: {
+                    SecretKey: secretKey,
+                    TokenExpired: 3600 * 24 * 999,
                     Enable: 'Y'
                 }
-            }).then(function(userToken) {
-                if (userToken) {
+            }).spread(function(userToken, created) {
+                if (!created) {
                     userToken.update({
-                        CurrentToken: token,
-                        TokenCreatedDate: new Date(),
-                        TokenExpired: info.expired
+                        SecretKey: secretKey,
+                        TokenExpired: 3600 * 24 * 999,
+                        SecretCreatedDate: new Date(),
+                        Enable: 'Y'
                     }).then(function() {
                         defer.resolve(token);
                     }).catch(function(err) {
                         defer.reject(new Error(err));
                     })
-                } else {
-                    UserToken.create({
-                        UserAccountID: info.userID,
-                        SystemType: info.type,
-                        DeviceID: !info.deviceID ? null : info.deviceID,
-                        Enable: 'Y',
-                        CurrentToken: token,
-                        TokenExpired: info.expired
-                    }).then(function() {
-                        defer.resolve(token);
-                    }).catch(function(err) {
-                        defer.reject(new Error(err));
-                    })
-                }
+                } else defer.resolve(token);
+            }).catch(function(err) {
+                defer.reject(new Error(err));
             })
         }
+        return defer.promise;
+    },
+    CheckToken: function(info) {
+        var defer = $q.defer();
+        if (!info.authorization || !info.useruid || !info.deviceid || !info.devicetype || (info.devicetype && HelperService.const.systemType[info.devicetype.toLowerCase()] == undefined)) {
+            var err = new Error("CheckToken.Error");
+            err.pushError("Invalid Params");
+            defer.reject(err);
+        }
+        UserAccount.find({
+            where: {
+                UID: info.useruid
+            }
+        }).then(function(user) {
+            if (!user) {
+                var err = new Error("CheckToken.Error");
+                err.pushError("User Not Exist");
+                defer.reject(err);
+            } else {
+                UserToken.find({
+                    where: {
+                        UserAccountID: user.ID,
+                        SystemType: HelperService.const.systemType[info.devicetype.toLowerCase()],
+                        DeviceID: info.deviceid,
+                        Enable: 'Y'
+                    }
+                }).then(function(userToken) {
+                    if (!userToken) {
+                        var err = new Error("CheckToken.Error");
+                        err.pushError("Invalid Token");
+                        defer.reject(err);
+                    }
+                    var parts = info.authorization.split(' ');
+                    if (parts.length == 2) {
+                        var scheme = parts[0];
+                        var credentials = parts[1];
+                        if (/^Bearer$/i.test(scheme)) {
+                            var token = credentials;
+                            var decoded = jwt.decode(token, {
+                                complete: true
+                            });
+                            defer.resolve({
+                                token: token,
+                                payload: decoded.payload,
+                                secretKey: userToken.SecretKey
+                            })
+                        } else {
+                            var err = new Error("CheckToken.Error");
+                            err.pushError("Invalid Token Format");
+                            defer.reject(err);
+                        }
+                    } else {
+                        var err = new Error("CheckToken.Error");
+                        err.pushError("Invalid Token Format");
+                        defer.reject(err);
+                    }
+                })
+            }
+        })
         return defer.promise;
     }
 }

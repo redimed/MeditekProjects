@@ -17,16 +17,23 @@ class DetailAppointmentVC: UIViewController {
     @IBOutlet weak var gradientBackground: UIImageView!
     
     @IBOutlet var btnCollectMenu: [UIButton]!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var viewButton: UIView!
     
     var xibVC : UIViewController!
     var uidUser : Int?
     let loading: DTIActivityIndicatorView = DTIActivityIndicatorView()
     var customUI: CustomViewController = CustomViewController()
     
+    // declare menu detail appointment
+    var arrayForMainDetail : NSMutableArray = NSMutableArray()
+    var mainDetail : NSMutableArray = NSMutableArray()
+    var contentDict : NSMutableDictionary = NSMutableDictionary()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        customUI.BlurLayer(gradientBackground)
+        //        customUI.BlurLayer(gradientBackground)
         let param = ["data": ["uid": SingleTon.onlineUser_Singleton[uidUser!].appointmentUID]]
         
         request(.POST, APPOINTMENT_DETAIL, headers: SingleTon.headers, parameters: param)
@@ -36,10 +43,30 @@ class DetailAppointmentVC: UIViewController {
                 if let responseJSON = response.2.value {
                     let data: JSON = JSON(responseJSON)["data"]
                     SingleTon.detailAppointMentObj = data
+                    if let fileUp: JSON = data["FileUploads"] {
+                        let header = ["Authorization":"Bearer \(COREAUTH)"]
+                        SingleTon.imgDataMedical = []
+                        for var i = 0; i < fileUp.count; ++i {
+                            let uid = fileUp[i]["UID"].stringValue
+                            let url = NSURL(string: "\(DOWNLOAD_IMAGE_APPOINTMENT)\(uid)")
+                            request(.GET, url!, headers: header)
+                                .validate(statusCode: 200..<300)
+                                .response() { response in
+                                    if let res = response.1 {
+                                        if res.statusCode == 200 {
+                                            if let data: NSData? = response.2 {
+                                                if data != nil {
+                                                    SingleTon.imgDataMedical.append(data!)
+                                                }
+                                            }
+                                        }
+                                    }
+                            }
+                        }
+                    }
                 }
         }
-        
-        loading.frame = CGRectMake(containerView.frame.size.width/2 - 20, containerView.frame.size.height/2 - 40, 80, 80)
+        loading.frame = CGRectMake((self.view.frame.width/4) - 40 , (self.view.frame.height/2) - 40, 80, 80)
         containerView.addSubview(loading)
         loading.indicatorColor = UIColor.cyanColor()
         loading.indicatorStyle = DTIIndicatorStyle.convInv(.doubleBounce)
@@ -57,31 +84,10 @@ class DetailAppointmentVC: UIViewController {
             }
         }
         
-        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            var fileUploads = SingleTon.detailAppointMentObj["FileUploads"]
-            let header = ["Authorization":"Bearer \(COREAUTH)"]
-            SingleTon.imgDataMedical = []
-            for var i = 0; i < fileUploads.count; ++i {
-                let uid = fileUploads[i]["UID"].stringValue
-                let url = NSURL(string: "\(DOWNLOAD_IMAGE_APPOINTMENT)\(uid)")
-                request(.GET, url!, headers: header)
-                    .validate(statusCode: 200..<300)
-                    .response() { response in
-                        if let res = response.1 {
-                            if res.statusCode == 200 {
-                                if let data: NSData? = response.2 {
-                                    if data != nil {
-                                        SingleTon.imgDataMedical.append(data!)
-                                    }
-                                }
-                            }
-                        }
-                }
-            }
-        }
-        
         self.xibVC = Appointment(nibName: "Appointment", bundle: nil)
         self.containerView.addSubview(self.xibVC.view)
+        viewButton.hidden = false
+        gradientBackground.hidden = false
         loading.stopActivity(true)
     }
     

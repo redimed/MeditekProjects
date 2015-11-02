@@ -60,7 +60,7 @@ class HomeViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             SingleTon.socket.onAny {
                 if let event: String! = $0.event {
-                    if event != "online_users" {
+                    if event != "online_users" && event != "refreshToken" {
                         print("on any events: \($0.event) with items \($0.items)")
                     }
                 }
@@ -103,6 +103,12 @@ class HomeViewController: UIViewController {
             
             SingleTon.socket.on("errorMsg") { data, ack in
                 debugPrint("error event: ", data)
+            }
+            
+            SingleTon.socket.on("refreshToken") { data, ack in
+                if let readJson: JSON = JSON(data) {
+                    AUTHTOKEN = readJson["token"].stringValue
+                }
             }
         })
         SingleTon.socket.connect()

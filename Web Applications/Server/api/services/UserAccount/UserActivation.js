@@ -131,7 +131,7 @@ module.exports = {
 					{
 						if(mobileSystems.indexOf(activationInfo.Type)>=0 && !activationInfo.DeviceID)
 						{
-							err.pushError('DeviceID.notProvided')
+							err.pushError('DeviceID.notProvided');
 						}
 					}
 					else
@@ -195,8 +195,8 @@ module.exports = {
 								VerificationCode:activationInfo.VerificationCode,
 								VerificationToken:activationInfo.VerificationToken,
 								TokenCreatedDate:new Date(),
-								TokenExpired:o.const.tokenExpired,
-								CodeExpired: o.const.codeExpired,
+								TokenExpired:o.const.activationTokenExpired,
+								CodeExpired: o.const.activationCodeExpired,
 								ModifiedBy:activationInfo.CreatedBy||null
 							},{transaction:transaction})
 							.then(function(result){
@@ -217,8 +217,8 @@ module.exports = {
 								VerificationToken:activationInfo.VerificationToken,
 								CreatedBy:activationInfo.CreatedBy||null,
 								TokenCreatedDate:new Date(),
-								TokenExpired:o.const.tokenExpired,
-								CodeExpired: o.const.codeExpired
+								TokenExpired:o.const.activationTokenExpired,
+								CodeExpired: o.const.activationCodeExpired
 							};
 							if(activationInfo.Type!=HelperService.const.systemType.website)
 							{

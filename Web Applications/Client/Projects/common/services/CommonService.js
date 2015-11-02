@@ -329,6 +329,12 @@ angular.module("app.common.CommonService", [])
             return result.get();
         };
 
+        commonService.refreshToken=function()
+        {
+            var result=api.one('refreshToken');
+            return result.get();
+        };
+
 
         return commonService;
     })

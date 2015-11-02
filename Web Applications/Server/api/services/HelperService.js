@@ -2,6 +2,7 @@ var crypto = require('crypto'),
     algorithm = 'aes-256-ctr';
 var zlib = require('zlib');
 var fs = require('fs');
+var moment=require("moment");
 /*
 check data request
 input: request from client
@@ -130,6 +131,16 @@ module.exports = {
             website: 'WEB',
             android: 'ARD'
         },
+        authTokenExpired: {
+            'IOS':3*60,
+            'ARD':3*60,
+            'WEB':24*60*60,
+        },// second
+        authSecretExprired:{
+            'IOS':null,
+            'ARD':null,
+            'WEB':20,
+        },
 
         verificationMethod: {
             token: 'TOKEN',
@@ -156,9 +167,11 @@ module.exports = {
 
         verificationTokenLength: 150,
 
-        tokenExpired: 15, //seconds
+        activationTokenExpired: 15, //seconds
 
-        codeExpired: 3, //Số lần có thể nhập sai
+        activationCodeExpired: 3, //Số lần có thể nhập sai
+
+
 
     },
     exlog: exlog,
@@ -399,5 +412,27 @@ module.exports = {
             });
             return result;
         }
-    }
+    },
+
+    isExpired:function(createdDate,seconds)
+    {
+        if(checkData(seconds))
+        {
+            var date=moment(createdDate);
+            var expiredDate=date.clone().add(seconds,'seconds');
+            var current=moment();
+            if(current.isBefore(expiredDate))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    },
 }

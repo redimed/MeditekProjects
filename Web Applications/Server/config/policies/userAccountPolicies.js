@@ -17,7 +17,8 @@ module.exports={
 
   	'UserAccount/v0_1/AuthController':{
   		'login':true,
-  		'logout':'isAuthenticated'
+  		'logout':'isAuthenticated',
+      'refreshToken':'isAuthenticated'
   	},
 
   	'UserAccount/v0_1/UserActivationController':{
@@ -26,4 +27,8 @@ module.exports={
   		'DeactivationUserAccount':['isAuthenticated','isAdmin'],
   		'ActivationUserAccount':['isAuthenticated','isAdmin']
   	},
+
+    'UserAccount/v0_1/UserTokenController':{
+      '*':true,
+    },
 }

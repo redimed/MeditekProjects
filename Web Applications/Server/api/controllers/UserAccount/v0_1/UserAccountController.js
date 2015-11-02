@@ -5,8 +5,7 @@ var o=require("../../../services/HelperService");
 module.exports = {
 	Test:function(req,res)
 	{
-		console.log(req.user)
-		res.ok({status:'success',user:req.user});
+		res.ok({status:'success',user:req.user,newtoken:res.get('newtoken')});
 
 	},
 

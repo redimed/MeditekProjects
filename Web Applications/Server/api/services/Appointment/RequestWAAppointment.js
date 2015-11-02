@@ -51,8 +51,7 @@ module.exports = function(data, userInfo) {
                                     transaction: t,
                                     appointmentObject: appointmentObject
                                 };
-                                /*create new TelehealthAppointment link with 
-                                appointment created via AppointmentID*/
+                                //create new TelehealthAppointment
                                 return Services.CreateTelehealthAppointment(objectCreatTelehealthAppointment);
                             } else {
                                 defer.reject({
@@ -73,7 +72,7 @@ module.exports = function(data, userInfo) {
                             teleApptID =
                                 (!_.isUndefined(telehealthAppointmentObject.dataValues) ?
                                     telehealthAppointmentObject.dataValues.ID : null);
-                            //add WAAppointment
+                            //create new WAAppointment
                             if (HelperService.CheckExistData(data.TelehealthAppointment.WAAppointment)) {
                                 var dataWAAppointment =
                                     Services.GetDataAppointment.WAAppointment(data.TelehealthAppointment.WAAppointment);
@@ -100,8 +99,7 @@ module.exports = function(data, userInfo) {
                                 transaction: t,
                                 telehealthAppointmentObject: telehealthAppointmentObject
                             };
-                            /*created associated PreferringPractitioner 
-                            via Model RelTelehealthAppointmentDoctor*/
+                            //created PreferringPractitioner
                             return Services.RelDoctorTelehealthAppointment(objectRelDoctorTelehealthAppointment);
                         }
                     }, function(err) {
@@ -122,8 +120,7 @@ module.exports = function(data, userInfo) {
                                 transaction: t,
                                 telehealthAppointmentObject: telehealthAppointmentObject
                             };
-                            /*create new PatientAppointment link with TelehealthAppointment 
-                            created via TelehealthAppointmentID*/
+                            //create new PatientAppointment
                             return Services.CreatePatientAppointment(objectCreatedPatientAppointment);
                         } else {
                             defer.reject({
@@ -147,8 +144,7 @@ module.exports = function(data, userInfo) {
                                 data: dataPreferredPractitioner,
                                 transaction: t
                             };
-                            /*create new PreferedPlasticSurgeon link with 
-                            TelehealthAppointment via TelehealthAppointmentID*/
+                            //create new PreferedPlastitioner
                             return Services.BulkCreatePreferredPractitioner(objectCreatePreferredPractitioner);
                         } else {
                             defer.reject({
@@ -167,8 +163,7 @@ module.exports = function(data, userInfo) {
                                 telehealthAppointmentObject: telehealthAppointmentObject,
                                 transaction: t
                             };
-                            /*create new ClinicalDetail link with 
-                            TelehealthAppointment via TelehealthAppointmentID*/
+                            //create new ClinicalDetails
                             return Services.CreateClinicalDetailWAAppointment(objectCreateClinicalDetail);
                         }
                     }, function(err) {

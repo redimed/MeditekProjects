@@ -53,8 +53,7 @@ module.exports = function(data, userInfo) {
                                     transaction: t,
                                     appointmentObject: appointmentObject
                                 };
-                                /*create association Appointment with FileUpload 
-                                via RelAppointmentFileUpload*/
+                                //create RelAppointmentFileUpload 
                                 return Services.RelAppointmentFileUpload(objectRelAppointmentFileUpload);
                             }
                         }
@@ -77,8 +76,7 @@ module.exports = function(data, userInfo) {
                                 transaction: t,
                                 appointmentObject: appointmentObject
                             };
-                            /*create new TelehealthAppointment link with 
-                            appointment created via AppointmentID*/
+                            //create new TelehealthAppointment
                             return Services.CreateTelehealthAppointment(objectCreatedTelehealthAppointment);
                         } else {
                             defer.reject({
@@ -101,8 +99,7 @@ module.exports = function(data, userInfo) {
                                 transaction: t,
                                 telehealthAppointmentObject: telehealthAppointmentObject
                             };
-                            /*created associated PreferringPractitioner 
-                            via Model RelTelehealthAppointmentDoctor*/
+                            //created PreferringPractitioner 
                             return Services.RelDoctorTelehealthAppointment(objectRelDoctorTelehealthAppointment);
                         }
                     }, function(err) {
@@ -123,8 +120,7 @@ module.exports = function(data, userInfo) {
                                 transaction: t,
                                 telehealthAppointmentObject: telehealthAppointmentObject
                             };
-                            /*create new PatientAppointment link with TelehealthAppointment 
-                            created via TelehealthAppointmentID*/
+                            //create new PatientAppointment
                             return Services.CreatePatientAppointment(objectCreatedPatientAppointment);
                         } else {
                             defer.reject({
@@ -150,8 +146,7 @@ module.exports = function(data, userInfo) {
                                 transaction: t,
                                 telehealthAppointmentObject: telehealthAppointmentObject
                             };
-                            /*create new ExaminationRequired link with TelehealthAppointment
-                            created via TelehealthAppointmentID*/
+                            //create new ExaminationRequired
                             return Services.CreateExaminationRequired(objectCreateExaminationRequired);
                         } else {
                             defer.reject({
@@ -175,8 +170,7 @@ module.exports = function(data, userInfo) {
                                 data: dataPreferredPractitioner,
                                 transaction: t
                             };
-                            /*create new PreferedPlasticSurgeon link with 
-                            TelehealthAppointment via TelehealthAppointmentID*/
+                            //create new PreferredPractitioner
                             return Services.BulkCreatePreferredPractitioner(objectCreatePreferredPractitioner);
                         } else {
                             defer.reject({
@@ -199,8 +193,7 @@ module.exports = function(data, userInfo) {
                                 data: dataTeleClinicDetail,
                                 transaction: t
                             };
-                            /*create new ClinicalDetail link with 
-                            TelehealthAppointment via TelehealthAppointmentID*/
+                            //create new ClinicalDetail
                             return Services.BulkCreateClinicalDetail(objectCreateClinicalDetail);
                         }
                     }, function(err) {

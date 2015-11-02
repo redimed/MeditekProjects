@@ -34,6 +34,17 @@ module.exports = {
                 }
             }
         },
+        MedicareEligible: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            comment: 'Y/N',
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
+        },
         MedicareNumber: {
             type: Sequelize.STRING(45),
             allowNull: true,

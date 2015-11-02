@@ -69,6 +69,8 @@ module.exports = {
     */
     PatientAppointmentCreate: function(data) {
         return {
+            Title: data.Title,
+            MaritalStatus: data.MaritalStatus,
             FirstName: data.FirstName,
             MiddleName: data.MiddleName,
             LastName: data.LastName,

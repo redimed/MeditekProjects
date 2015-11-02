@@ -34,6 +34,26 @@ module.exports = {
                 key: 'ID'
             }
         },
+        Title: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        MaritalStatus: {
+            type: Sequelize.STRING(100),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 100],
+                    msg: 'Too long!'
+                }
+            }
+        },
         FirstName: {
             type: Sequelize.STRING(50),
             allowNull: true,
@@ -135,23 +155,23 @@ module.exports = {
             }
         },
         Gender: {
-            type: Sequelize.STRING(1),
+            type: Sequelize.STRING(255),
             allowNull: true,
-            comment: 'Male: M\nFemale: F',
+            comment: 'Male\nFemale\nOther: ...',
             validate: {
                 len: {
-                    args: [0, 1],
+                    args: [0, 255],
                     msg: 'Too long!'
                 }
             }
         },
         Indigenous: {
-            type: Sequelize.STRING(3),
+            type: Sequelize.STRING(100),
             allowNull: true,
-            comment: 'Indigenouns Status:\n   + ABO: Aboriginal\n   + TSI: Torres Strait ',
+            comment: 'Indigenouns Status:\n   + Aboriginal\n   + Torres Strait Islander ',
             validate: {
                 len: {
-                    args: [0, 3],
+                    args: [0, 100],
                     msg: 'Too long!'
                 }
             }

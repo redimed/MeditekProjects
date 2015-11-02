@@ -27,7 +27,9 @@ module.exports = {
         return ['Speciality', 'Name', 'SiteName'];
     },
     ClinicalDetail: function() {
-        return ['UID', 'Section', 'Category', 'Type', 'Name', 'Value', 'ClinicalNote', 'Description'];
+        return ['UID', 'Section', 'Category', 'Type',
+            'Name', 'Value', 'ClinicalNote', 'Description'
+        ];
     },
     Doctor: function() {
         return ['UID', 'Title', 'FirstName', 'MiddleName', 'LastName',

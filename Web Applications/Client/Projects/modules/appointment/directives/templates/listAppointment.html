@@ -41,14 +41,14 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label class="label-control">Submit From Date</label>
+                        <label class="label-control">Created From Date</label>
                         <!-- <input type="date" class="form-control" placeholder="Request From Date"> -->
                          <input ng-model="infoAppointment.submit_from_date" type="text" class="form-control input-sm" name="submit_from_date" datepicker-popup="dd/MM/yyyy" max-date="infoAppointment.submit_to_date" is-open="submit_from_date" ng-click="submit_from_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label class="label-control">Submit To Date</label>
+                        <label class="label-control">Created To Date</label>
                         <!-- <input type="date" class="form-control" placeholder="Request To Date"> -->
                         <input ng-model="infoAppointment.submit_to_date" type="text" class="form-control input-sm" name="submit_to_date" datepicker-popup="dd/MM/yyyy" min-date="infoAppointment.submit_from_date" is-open="submit_to_date" ng-click="submit_to_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
                     </div>
@@ -90,7 +90,7 @@
                         </th>
                         <th>Treating Practictioner</th>
                         <th>
-                            Submit Date
+                            Created Date
                             <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('SubmitDate','ASC')" ng-show="typeSubmitDate == 'ASC'"></i>
                             <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('SubmitDate','DESC')" ng-show="typeSubmitDate == 'DESC'"></i>
                         </th>
@@ -106,15 +106,16 @@
                 <tbody>
                     <tbody>
                         <tr ng-repeat="p in appointments" ng-click="openAppointmentModal(p.UID)">
+                            <!-- <td>{{p}}</td> -->
                             <td>{{($index+1)+ 20*(currentPage-1)}}</td>
                             <td ng-show="p.Patients.length === 0">{{p.TelehealthAppointment.PatientAppointment.FirstName}} {{p.TelehealthAppointment.PatientAppointment.LastName}}</td>
                             <td ng-show="p.Patients.length !== 0">{{p.Patients[0].FirstName}} {{p.Patients[0].LastName}}</td>
                             <td>{{((p.Doctors[0].Title !=null)?p.Doctors[0].Title:"")+" "+((p.Doctors[0].FirstName != null)?p.Doctors[0].FirstName:"") +" "+((p.Doctors[0].LastName != null)?p.Doctors[0].LastName:"")}}</td>
-                            <td>{{p.RequestDate | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{p.CreatedDate | date: 'dd/MM/yyyy'}}</td>
                             <td>
                                 <span ng-if="p.Status == 'Approved'" class="label label-success">Booked</span>
                                 <span ng-if="p.Status == 'Calling'" class="label label-default">Calling</span>
-                                <span ng-if="p.Status == 'Watting for approve'" class="label label-warning">Pending</span>
+                                <span ng-if="p.Status == 'Watting for approval'" class="label label-warning">Pending</span>
                                 <span ng-if="p.Status == 'Cancelled'" class="label label-danger">Cancelled</span>
                                 <span ng-if="p.Status == 'Finish'" class="label label-primary">Finish</span>
                             </td>

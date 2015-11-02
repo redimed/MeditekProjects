@@ -162,8 +162,8 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         };
         $scope.referringPractitionerDateTemp = formatDate($scope.appointment.Doctors.RefDate);
 
-        if ($scope.appointment.RequestDate) {
-            $scope.appointment.RequestDate = formatDate($scope.appointment.RequestDate)
+        if ($scope.appointment.CreatedDate) {
+            $scope.appointment.CreatedDate = formatDate($scope.appointment.CreatedDate)
         }
 
         if (checkDateUndefined($scope.appointment.FromTime)) {
@@ -306,7 +306,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             if (countCliniDetail == 0) {
                 ClinicalDetailsTemp = []
             }
-            $scope.appointment.RequestDate = moment($scope.appointment.RequestDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z')
+        
             $scope.appointment.TelehealthAppointment.ClinicalDetails = angular.copy(ClinicalDetailsTemp)
             var postData = {
                     data: $scope.appointment

@@ -32,7 +32,7 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
             var data = {
                 Order: [{
                     Appointment: {
-                        RequestDate: 'DESC'
+                        CreatedDate: 'DESC'
                     }
                 }]
             };
@@ -79,7 +79,7 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
                         limit: 100,
                         Order: [{
                             Appointment: {
-                                RequestDate: scope.typeSubmitDateOther,
+                                CreatedDate: scope.typeSubmitDateOther,
                                 FromTime: scope.typeAppointmentDateOther
                             }
                         }],
@@ -94,7 +94,7 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
                         }],
                         Range: [{
                             Appointment: {
-                                RequestDate: [submit_from_date, submit_to_date],
+                                CreatedDate: [submit_from_date, submit_to_date],
                                 FromTime: [appointment_from_date, appointment_to_date]
                             }
                         }]

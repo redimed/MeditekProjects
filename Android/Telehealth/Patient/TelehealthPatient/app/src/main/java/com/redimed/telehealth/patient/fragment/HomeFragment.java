@@ -1,12 +1,12 @@
 package com.redimed.telehealth.patient.fragment;
 
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -19,6 +19,12 @@ import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.network.RESTClient;
+import com.redimed.telehealth.patient.utils.CirclePageIndicator;
+import com.redimed.telehealth.patient.utils.PageIndicator;
+import com.redimed.telehealth.patient.utils.SliderImageAdapter;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,8 +36,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private String TAG = "HOME";
     private View v;
-    private RegisterApi restClient;
+    private SliderImageAdapter sliderImageAdapter;
     private boolean shouldFinish = false;
+    private int currentItem = 0;
 
     @Bind(R.id.btnInformation)
     Button btnInformation;
@@ -41,9 +48,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     Button btnFAQ;
     @Bind(R.id.btnContact)
     Button btnContact;
+    @Bind(R.id.slider)
+    ViewPager slider;
+    @Bind(R.id.circleIndicator)
+    PageIndicator circleIndicator;
 
     public HomeFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -51,7 +61,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         v = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, v);
-        restClient = RESTClient.getRegisterApi();
+
+        sliderImageAdapter = new SliderImageAdapter(v.getContext());
+        slider.setAdapter(sliderImageAdapter);
+        circleIndicator.setViewPager(slider);
+
+        final int totalPage = slider.getAdapter().getCount();
+        final Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                circleIndicator.setCurrentItem(currentItem++);
+                if (currentItem == totalPage){
+                    currentItem = 0;
+                }
+                handler.postDelayed(this, 4000);
+            }
+        };
+        handler.postDelayed(runnable, 4000);
 
         btnInformation.setOnClickListener(this);
         btnTelehealth.setOnClickListener(this);
@@ -63,15 +90,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnInformation:
-                ((MainActivity)v.getContext()).Display(1);
+                ((MainActivity) v.getContext()).Display(1);
                 break;
             case R.id.btnTelehealth:
-                ((MainActivity)v.getContext()).Display(2);
+                ((MainActivity) v.getContext()).Display(2);
                 break;
             case R.id.btnFAQ:
-                ((MainActivity)v.getContext()).Display(3);
+                ((MainActivity) v.getContext()).Display(3);
                 break;
             case R.id.btnContact:
                 Contact();
@@ -79,7 +106,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void Contact(){
+    private void Contact() {
         Log.d(TAG, "CALL");
         String number = "+841267146714";
         Uri call = Uri.parse("tel:" + number);
@@ -95,8 +122,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-                    if (!shouldFinish){
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (!shouldFinish) {
                         Toast.makeText(v.getContext(), R.string.confirm_exit, Toast.LENGTH_SHORT).show();
                         shouldFinish = true;
                         return true;

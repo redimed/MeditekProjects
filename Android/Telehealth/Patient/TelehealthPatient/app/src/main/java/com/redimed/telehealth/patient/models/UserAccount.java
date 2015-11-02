@@ -9,9 +9,6 @@ import java.util.Date;
  */
 public class UserAccount {
 
-    @SerializedName("ID")
-    private int ID;
-
     @SerializedName("UID")
     private String UID;
 
@@ -59,14 +56,6 @@ public class UserAccount {
 
     @SerializedName("ModifiedBy")
     private int ModifiedBy;
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
 
     public String getUID() {
         return UID;

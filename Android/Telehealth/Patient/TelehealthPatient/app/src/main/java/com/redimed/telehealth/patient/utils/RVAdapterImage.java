@@ -44,7 +44,7 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
         Picasso picasso = new Picasso.Builder(view.getContext()).listener(new Picasso.Listener() {
             @Override
             public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                holder.imgContains.setVisibility(ImageView.GONE);
+//                holder.imgContains.setVisibility(ImageView.GONE);
             }
         }).build();
         picasso.load(fileUploads.get(position))

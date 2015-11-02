@@ -7,9 +7,6 @@ import com.google.gson.annotations.SerializedName;
  */
 public class TelehealthUser {
 
-    @SerializedName("ID")
-    private int ID;
-
     @SerializedName("UID")
     private String UID;
 
@@ -34,22 +31,14 @@ public class TelehealthUser {
     @SerializedName("DeviceID")
     private String DeviceID;
 
-    @SerializedName("DeviceType")
-    private String DeviceType;
+    @SerializedName("SystemType")
+    private String SystemType;
 
     private String Phone;
 
     private String Token;
 
     private String Code;
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
 
     public String getUID() {
         return UID;
@@ -115,12 +104,12 @@ public class TelehealthUser {
         DeviceID = deviceID;
     }
 
-    public String getDeviceType() {
-        return DeviceType;
+    public String getSystemType() {
+        return SystemType;
     }
 
-    public void setDeviceType(String deviceType) {
-        DeviceType = deviceType;
+    public void setSystemType(String systemType) {
+        SystemType = systemType;
     }
 
     public String getPhone() {

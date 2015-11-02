@@ -267,7 +267,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                             uidTelehealth.putString("accountUID", jsonObject.get("userUID").getAsString());
                             uidTelehealth.putString("patientUID", jsonObject.get("patientUID").getAsString());
                             uidTelehealth.putString("token", jsonObject.get("token").getAsString());
-                            uidTelehealth.putString("coreToken", jsonObject.get("coreToken").getAsString());
+                            uidTelehealth.putString("deviceId", spDevice.getString("deviceID", null));
                             uidTelehealth.apply();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();

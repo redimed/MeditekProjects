@@ -28,9 +28,6 @@ public class Appointment {
     @SerializedName("Enable")
     private String Enable;
 
-    @SerializedName("TelehealthAppointment")
-    private TelehealthAppointment TelehealthAppointment;
-
     @SerializedName("Doctors")
     private Doctor[] Doctors;
 
@@ -91,14 +88,6 @@ public class Appointment {
 
     public void setEnable(String enable) {
         Enable = enable;
-    }
-
-    public TelehealthAppointment getTelehealthAppointment() {
-        return TelehealthAppointment;
-    }
-
-    public void setTelehealthAppointment(TelehealthAppointment telehealthAppointment) {
-        TelehealthAppointment = telehealthAppointment;
     }
 
     public Doctor[] getDoctor() {

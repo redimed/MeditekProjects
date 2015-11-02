@@ -12,4 +12,7 @@
     <dimen name="button_width">100dp</dimen>
     <dimen name="button_height">40dp</dimen>
 
+    <dimen name="info_icon_width">20dp</dimen>
+    <dimen name="info_icon_height">20dp</dimen>
+
 </resources>

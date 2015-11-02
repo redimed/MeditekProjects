@@ -23,6 +23,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var viewModal: DesignableView!
     @IBOutlet weak var logoImage: UIImageView!
     @IBOutlet weak var errorLoginLabel: UILabel!
+    @IBOutlet weak var versionLabel: UILabel!
     
     let customUIViewController : CustomViewController = CustomViewController()
     let reachability = Reachability.reachabilityForInternetConnection()
@@ -58,6 +59,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "AlertWarningNetwork", userInfo: nil, repeats: false)
             }
         }
+        
+        versionLabel.text = UIApplication.versionBuild()
     }
     
     func reachabilityChanged(note: NSNotification) {
@@ -144,8 +147,12 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         let username : String = usernameTextField.text!
         let password : String = passwordTextField.text!
         let paramester = ["username": username, "password": password]
+        let headerLogin = [
+            "DeviceType": "iOS",
+            "DeviceID": (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String
+        ]
         
-        request(.POST, AUTHORIZATION, parameters: paramester)
+        request(.POST, AUTHORIZATION, parameters: paramester, headers: headerLogin)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseJSON { response -> Void in
@@ -180,7 +187,10 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     SingleTon.headers = [
                         "Authorization": "Bearer \(token)",
                         "Content-Type": "application/x-www-form-urlencoded",
-                        "CoreAuth": "Bearer \(coreToken)"
+                        "CoreAuth": "Bearer \(coreToken)",
+                        "DeviceType": "iOS",
+                        "DeviceID": (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String,
+                        "UserUID": userJSON["UserUID"].stringValue
                     ]
                     
                     let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
@@ -230,5 +240,22 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+extension UIApplication {
+    
+    class func appVersion() -> String {
+        return NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
+    }
+    
+    class func appBuild() -> String {
+        return NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as! String
+    }
+    
+    class func versionBuild() -> String {
+        let version = appVersion(), build = appBuild()
+        
+        return version == build ? "v\(version)" : "v\(version)(\(build))"
     }
 }

@@ -5,9 +5,7 @@ var o=require("../../../services/HelperService");
 module.exports = {
 	Test:function(req,res)
 	{
-		res.set('filename','tanee.pdf');
-		res.header('Access-Control-Expose-Headers', sails.config.cors.exposeHeaders);
-		res.download('api/controllers/UserAccount/v0_1/test.pdf','filenamene.jpg');
+		res.ok({status:'success',user:req.user,newtoken:res.get('newtoken')});
 
 	},
 

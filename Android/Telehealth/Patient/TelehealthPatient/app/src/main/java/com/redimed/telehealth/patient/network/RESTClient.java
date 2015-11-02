@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient.network;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.annotations.Until;
@@ -21,9 +22,13 @@ import retrofit.client.OkClient;
 public class RESTClient {
     private static RestAdapter restAdapter, restAdapterUpload;
     private static OkHttpClient okHttpClient;
-    private SharedPreferences uidTelehealth;
+    private static SharedPreferences spDevice, uidTelehealth;
+    private static Context context;
 
-    static {
+    public static void InitRESTClient(Context ctx) {
+        context = ctx;
+        spDevice = context.getSharedPreferences("DeviceInfo", context.MODE_PRIVATE);
+        uidTelehealth = context.getSharedPreferences("TelehealthUser", context.MODE_PRIVATE);
         setupRestClient();
     }
 
@@ -52,8 +57,12 @@ public class RESTClient {
         private static final String TAG = SessionRequestInterceptor.class.getSimpleName();
 
         public void intercept(RequestInterceptor.RequestFacade paramRequestFacade) {
-            paramRequestFacade.addHeader("Content-Type", "application/json");
             paramRequestFacade.addHeader("Accept", "application/json");
+            paramRequestFacade.addHeader("Content-Type", "application/json");
+            paramRequestFacade.addHeader("DeviceType", "Android");
+            paramRequestFacade.addHeader("DeviceID", spDevice.getString("deviceID", null));
+            paramRequestFacade.addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", null));
+            paramRequestFacade.addHeader("CoreAuth", "Bearer " + uidTelehealth.getString("coreToken", null));
         }
     }
 

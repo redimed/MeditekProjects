@@ -1,5 +1,5 @@
 angular.module('app.common.menuBar',[])
-.directive('menuBar',function(Restangular,$cookies){
+.directive('menuBar',function(Restangular,$cookies,CommonService){
 	return {
 		restrict:'E',
 		scope:{
@@ -15,84 +15,38 @@ angular.module('app.common.menuBar',[])
 				console.log(data.data);
 				scope.menus=data.data.nodes;
 			},function(err){
-
+				
 			});
 
-			// var test=api.one('user-account/test');
-			// test.withHttpConfig({
-			// 	responseType:'arraybuffer',
-		 //        // headers: {'Content-Type': 'image/jpg'}
-		 //        headers: {'Authorization': 'Bearer '+$cookies.get('token')}
-			// })
-			// test.get()
-			// .then(function(res,status,headers,config){
-			// 	console.log(headers);
-	  //       	var blob = new Blob([res],{type:'arraybuffer'});
-	  //       	// var blob = new Blob([res], {type: 'image/jpg'});
-	  //       	scope.objectUrl = URL.createObjectURL(blob);
+			/*scope.test=function()
+			{
+				CommonService.test()
+				.then(function(data){
+					alert(JSON.stringify(data));
+				},function(err){
+					alert(JSON.stringify(err));
+				})
+			}*/
 
-	  //       	//download blob
-	  //       	// window.open($scope.objectUrl);
-
-	  //       	var anchor = document.createElement("a");
-			// 	// anchor.download='';//se lay ten mat dinh
-			// 	anchor.download='hehehe.pdf';
-			// 	anchor.href = scope.objectUrl;
-			// 	anchor.click();
+			/*CommonService.downloadFile('bb965155-2b92-41f8-aa78-aa072e70b452')
+			.then(function(data){
+				// alert(data.status);
+			},function(err){
+				// alert("Loi roi");
+			})
+			CommonService.getFileURL('bb965155-2b92-41f8-aa78-aa072e70b452')
+			.then(function(url){
+				scope.objectUrl=url;
+			},function(err){
 				
-				
-			// },function(err){
-			// 	console.log(err);
-			// })
-		},
+			})
+			CommonService.openImageInNewTab('bb965155-2b92-41f8-aa78-aa072e70b452')
+			.then(function(success){
+				alert("success roi ne")
+			},function(err){
 
-		controller:function($scope,$http,$cookies)
-		{
-			// var config = {
-		 //        method: 'GET',
-		 //        url: "http://localhost:3005/api/user-account/test",
-		 //        responseType:'arraybuffer',
-		 //        // headers: {'Content-Type': 'image/jpg'}
-		 //        headers: {'Authorization': 'Bearer '+$cookies.get('token')}
-		 //    };
-		 //    $http(config)
-		 //    .then(function(res){
-		 //    	console.log(">>>>>>>>>>>>>>>>>.");
-		 //    	console.log(res.headers());
-	  //       	var blob = new Blob([res.data]);
-	  //       	// var blob = new Blob([res], {type: 'image/jpg'});
-	  //       	$scope.objectUrl = URL.createObjectURL(blob);
-
-	  //       	//download blob
-	  //       	// window.open($scope.objectUrl);
-
-	  //       	var anchor = document.createElement("a");
-			// 	// anchor.download='';//se lay ten mat dinh
-			// 	anchor.download='hehehe.pdf';
-			// 	anchor.href = $scope.objectUrl;
-			// 	anchor.click();
-		 //    },function(err){
-
-		 //    })
-
-	   //      .success(function(res, status, headers, config){
-	   //      	console.log(">>>>>>>>>>>>>>>>>.");
-	   //      	console.log(headers());
-	   //      	var blob = new Blob([res]);
-	   //      	console.log(res);
-	   //      	// var blob = new Blob([res], {type: 'image/jpg'});
-	   //      	$scope.objectUrl = URL.createObjectURL(blob);
-
-	   //      	//download blob
-	   //      	// window.open($scope.objectUrl);
-
-	   //      	var anchor = document.createElement("a");
-				// // anchor.download='';//se lay ten mat dinh
-				// anchor.download='hehehe.pdf';
-				// anchor.href = $scope.objectUrl;
-				// anchor.click();
-	   //      })
-	   //      .error(function(res){});
+			})
+			console.log($cookies.get('token'));*/
 		}
 	}
 })

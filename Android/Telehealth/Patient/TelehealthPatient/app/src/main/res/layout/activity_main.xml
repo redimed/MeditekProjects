@@ -34,14 +34,13 @@
         android:background="@drawable/all_background"
         android:orientation="horizontal">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/avatarPatient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/img_avatar_caller" />
+            android:layout_marginTop="40dp"/>
 
         <TextView
             android:id="@+id/lblNamePatient"

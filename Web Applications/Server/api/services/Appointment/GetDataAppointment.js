@@ -20,7 +20,6 @@ module.exports = {
     */
     AppointmentUpdate: function(data) {
         return {
-            RequestDate: HelperService.CheckExistData(data.RequestDate) ? moment(data.RequestDate, 'YYYY-MM-DD HH:mm:ss Z').toDate() : null,
             FromTime: HelperService.CheckExistData(data.FromTime) ? moment(data.FromTime, 'YYYY-MM-DD HH:mm:ss Z').toDate() : null,
             ToTime: HelperService.CheckExistData(data.ToTime) ? moment(data.ToTime, 'YYYY-MM-DD HH:mm:ss Z').toDate() : null,
             ApprovalDate: HelperService.CheckExistData(data.ApprovalDate) ? moment(data.ApprovalDate, 'YYYY-MM-DD HH:mm:ss Z').toDate() : null,

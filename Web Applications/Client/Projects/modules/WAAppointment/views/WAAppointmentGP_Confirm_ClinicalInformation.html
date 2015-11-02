@@ -1,0 +1,245 @@
+<div class="panel group">
+    <!-- relevant past medical history -->
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title uppercase bold">relevant past medical history</h3>
+        </div>
+        <div class="panel-body" style="padding: 2em;">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">
+                            <b></b>
+                        </label>
+                        <textarea class="form-control" rows="10" disabled>Up load referral letter
+                        </textarea>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th width="30%">Name</th>
+                                    <th ng-show="uploader.isHTML5">Size</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- relevant social factors -->
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title uppercase bold">relevant social factors</h3>
+        </div>
+        <div class="panel-body" style="padding: 2em;">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">
+                            <b></b>
+                        </label>
+                        <textarea class="form-control" rows="10" disabled>Up load referral letter
+                        </textarea>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th width="30%">Name</th>
+                                    <th ng-show="uploader.isHTML5">Size</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- allergies -->
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title uppercase bold">allergies</h3>
+        </div>
+        <div class="panel-body" style="padding: 2em;">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">
+                            <b></b>
+                        </label>
+                        <textarea class="form-control" rows="10" disabled>
+                        </textarea>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th width="30%">Name</th>
+                                    <th ng-show="uploader.isHTML5">Size</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- current medication -->
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title uppercase bold">current medication</h3>
+        </div>
+        <div class="panel-body" style="padding: 2em;"> 
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">
+                            <b></b>
+                        </label>
+                        <textarea class="form-control" rows="10" disabled>
+                        </textarea>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th width="30%">Name</th>
+                                    <th ng-show="uploader.isHTML5">Size</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- relevant investigation and tests (please attach results) -->
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title uppercase bold">relevant investigation and tests (please attach results)</h3>
+        </div>
+        <div class="panel-body" style="padding: 2em;">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">
+                            <b></b>
+                        </label>
+                        <textarea class="form-control" rows="10" disabled>
+                        </textarea>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr class="uppercase">
+                                    <th width="30%">Name</th>
+                                    <th ng-show="uploader.isHTML5">Size</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- pathology provider and radiology provider -->
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title uppercase bold">pathology provider and radiology provider</h3>
+        </div>
+        <div class="panel-body" style="padding: 2em;">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group form-md-line-input">
+                        <div class="input-icon">
+                            <div class="form-control" data-display="">...</div>
+                            <label class="control-label">Pathology provider</label>
+                            <i class="glyphicon glyphicon-pencil"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group form-md-line-input">
+                        <div class="input-icon">
+                            <div class="form-control" data-display="">...</div>
+                            <label class="control-label">Radiology provider</label>
+                            <i class="glyphicon glyphicon-pencil"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <label class="control-label">Other Notes</label>
+                    <textarea class="form-control" rows="5" disabled></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

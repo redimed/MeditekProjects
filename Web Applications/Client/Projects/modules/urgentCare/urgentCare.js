@@ -1,12 +1,20 @@
-var app = angular.module('app.loggedIn.urgentCare',[
-	'app.loggedIn.urgentCare.controller'
+var app = angular.module('app.authentication.urgentCare',[
+	'app.authentication.urgentCare.controller'
 ]);
 
 app.config(function($stateProvider){
 	$stateProvider
-		.state('loggedIn.urgentCare', {
+		.state('authentication.urgentCare', {
+			abstract: true,
 			url: '/urgentCare',
-			templateUrl: 'modules/urgentCare/views/urgentCareView.html',
-			controller: 'urgentCareCtrl'
-		});
+			templateUrl: 'modules/urgentCare/views/urgentCare.html',
+			controller: 'urgentCareCtrl',
+		})
+		.state('authentication.urgentCare.list', {
+			url: '/list',
+			data: {pageTitle: 'Urgent Care List'},
+			templateUrl: 'modules/urgentCare/views/urgentCareList.html',
+			controller: 'urgentCareListCtrl',
+		})
+		;
 });

@@ -1,7 +1,8 @@
 angular.module("app.common.CommonService", [])
-    .factory("CommonService", function(Restangular) {
+    .factory("CommonService", function(Restangular,FileRestangular,$cookies,$http) {
         var commonService = {};
         var api = Restangular.all("api");
+        var apiFile=FileRestangular.all('api');
         //FUNCTION MẪU
         commonService.getTitles = function() {
             var list = [{
@@ -237,6 +238,103 @@ angular.module("app.common.CommonService", [])
         commonService.API = "http://testapp.redimed.com.au:3005";
         // commonService.API = "http://telehealthvietnam.com.vn:3005";
         commonService.contentVerify = "Your REDiMED account verification code is";
+
+
+        /**
+         * getFile
+         * Input:
+         * - fileUID
+         * - size
+         * - type: MIME type (image/jpg,video/x-mpeg...)
+         * Output:
+         *     file: {blob,filename}
+         */
+        function getFile(fileUID, size, type)
+        {
+            var error=new Error('GetFile.Error');
+            if(o.checkData(fileUID))
+            {
+                var result=apiFile.all('downloadFile');
+                if(size) result=result.one(size.toString());
+                result=result.one(fileUID);
+                result.withHttpConfig({
+                    responseType:'arraybuffer',
+                    // headers: {'Authorization': 'Bearer '+$cookies.get('token')}
+                })
+                return result.get()
+                .then(function(res){
+                    // var blob = new Blob([res], {type: 'image/jpg'});
+                    var options={};
+                    if(o.checkData(type)) options.type=type;
+                    var blob = new Blob([res.data],options);
+                    return {blob:blob,filename:res.headers().filename||''};
+                },function(err){
+                    error.pushError("GetFile.getFileError");
+                    throw error;
+                })
+            }
+            else
+            {
+                error.pushError("GetFile.fileuidNotProvided");
+                throw error;
+            }
+            
+        }
+
+        commonService.downloadFile=function(fileUID,size)
+        {
+            return getFile(fileUID,size)
+            .then(function(file){
+                var objectUrl = URL.createObjectURL(file.blob);
+                //open image in new tab
+                // window.open($scope.objectUrl);
+                //download file:
+                var anchor = document.createElement("a");
+                // anchor.download='';//se lay ten mat dinh
+                anchor.download=file.filename||'';
+                anchor.href = objectUrl;
+                anchor.click();
+                return {status:'success'};
+            },function(err){
+                throw err;
+            })
+        };
+
+        commonService.getFileURL=function(fileUID,size)
+        {
+            return getFile(fileUID,size)
+            .then(function(file){
+                var objectUrl = URL.createObjectURL(file.blob);
+                return objectUrl;
+            },function(err){
+                throw err;
+            })
+        };
+
+        commonService.openImageInNewTab=function(fileUID,size)
+        {
+            return getFile(fileUID,size,'image/jpg')
+            .then(function(file){
+                var objectUrl = URL.createObjectURL(file.blob);
+                window.open(objectUrl);
+                return {status:'success'};
+            },function(err){
+                throw err;
+            })
+        };
+
+        commonService.test=function()
+        {
+            var result = api.one("user-account/test");
+            return result.get();
+        };
+
+        commonService.refreshToken=function()
+        {
+            var result=api.one('refreshToken');
+            return result.get();
+        };
+
 
         return commonService;
     })

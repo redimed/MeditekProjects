@@ -98,12 +98,13 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activation);
         registerApi = RESTClient.getRegisterApi();
+
         gson = new Gson();
         ButterKnife.bind(this);
         layoutContainer.setAnimateFirstView(true);
 
-        phoneCode = "+84";
-        lblPhoneCode.setText("(+84)");
+        phoneCode = "+61";
+        lblPhoneCode.setText("(+61)");
 
         countryPicker = CountryPicker.newInstance("Select Country");
         countryPicker.setListener(new CountryPickerListener() {
@@ -214,13 +215,9 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     private void GetDeviceInfo(String phoneNumber) {
         spDevice = getApplicationContext().getSharedPreferences("DeviceInfo", MODE_PRIVATE);
         boolean sendToken = spDevice.getBoolean("sendToken", false);
-        String deviceID = spDevice.getString("deviceID", null);
-        String deviceType = spDevice.getString("deviceType", null);
 
         telehealthUser = new TelehealthUser();
         telehealthUser.setPhone(phoneNumber);
-        telehealthUser.setDeviceID(deviceID);
-        telehealthUser.setDeviceType(deviceType);
 
         patientJSON = new JsonObject();
         patientJSON.addProperty("data", gson.toJson(telehealthUser));

@@ -26,7 +26,16 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				{id:"Y",name:"Enable"},
 				{id:"N",name:"Disable"}
 			];
-			scope.items = angular.isArray(scope.items)?scope.items:scope.itemDefault;
+			//check user add data items into directive
+			if(scope.items){
+				if(!scope.items.hasOwnProperty('field') || !scope.items.hasOwnProperty('name')){
+					scope.items = scope.itemDefault;
+				}
+			}
+			else{
+				scope.items = scope.itemDefault;
+			}
+
 			for(var i = 0; i < scope.items.length; i++){
 				if(scope.items[i].field=="Enable")
 					scope.items.splice(i,1);
@@ -58,6 +67,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 	                offset: 0,
 	                currentPage: 1,
 	                maxSize: 5,
+	                attributes:scope.items,
 	                Search:null,
 	                order: null
 	            };
@@ -100,7 +110,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 
 			scope.Search = function(data,e){
 				if(e==13){
-					if(data.UserAccount){
+					if(data.UserAccount || data.UserAccount==''){
 						data.PhoneNumber = data.UserAccount;
 					}
 					scope.searchObjectMap.Search = data;
@@ -188,8 +198,6 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						};
 				    });
 				}else{
-					scope.aaaa ="asdasd";
-
 					$state.go('authentication.patient.create');
 				}
 			}

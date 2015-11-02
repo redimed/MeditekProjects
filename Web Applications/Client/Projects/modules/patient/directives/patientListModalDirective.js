@@ -1,16 +1,29 @@
+//DIRECTIVE PATIENT LIST MODAL : show patient info
+// <patient-listmodal 
+// 		on-uid="patientUID"       : patient UID was added in this to get data patient from this UID
+// 		on-showfull="false"       : this attribute allow you to show full template of this directive
+//									(true or false), if this attribute not require default is true
+// 		on-listshow="list"        : array list to show some columms in this directive 
+//                            		list={columm1 : true,columm2 : false,columm3 : true};
+//									if list not require, this directive will show 3 columm default 
+// 		ng-if="patientUID!=null"> : this attribute allow you to show this directive when patientUID exists
+// </patient-listmodal>
+
 var app = angular.module('app.authentication.patient.list.modal.directive',[]);
 app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $timeout, $cookies, CommonService, $http){
 	return{
 		restrict: 'EA',
         scope: {
             uid: '=onUid',
+            isShowFull:'=onShowfull',
+            listShow:'=onListshow',
             onCancel: '='
         },
         controller:function($scope, FileUploader) {
 			// Profile Image
 		    var uploader = $scope.uploader = new FileUploader({
-		    	// url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
-		    	url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	url: o.const.uploadFileUrl,
 		    	headers:{Authorization:'Bearer '+$cookies.get("token")},
 		    	alias : 'uploadFile'
 		    });
@@ -25,6 +38,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    // CALLBACKS
 		    uploader.onAfterAddingFile = function (fileItem) {
 		    	if($scope.info.img){
+		    		$scope.info.FileType = 'ProfileImage';
 		    		PatientService.getfileUID($scope.info).then(function(response){
 		    			$scope.info.img_change = true;
 		    			$scope.imgDelete = response.data[0].UID;		    		
@@ -40,11 +54,25 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 
 		},
 		link: function(scope, elem, attrs){
+			var data = {};
+        	scope.info = {};
+			data.UID = scope.uid;
+			data.FileType = 'ProfileImage';
+			PatientService.detailPatient(data).then(function(response){
+				if(response.message=="success"){
+					scope.info = response.data[0];
+					scope.info.DOB = /^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/.test(scope.info.DOB)?scope.info.DOB:null;
+					scope.info.img = scope.info.FileUID?scope.info.FileUID:null;
+					scope.info.img_change = null;
+					oriInfo = angular.copy(scope.info);
+				}
+				else{
+					console.log(response.message);
+				}
+			});
 			scope.imgDelete;
 			var oriInfo,clearInfo;
-			var data = {};
-			data.UID = scope.uid;
-			scope.info = {};
+			
 			scope.infoChanged = function() {
 		        return angular.equals(oriInfo, scope.info);
 		    };
@@ -63,13 +91,57 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    	ComponentsSelect2.init(); // init todo page
 	            ComponentsBootstrapSelect.init(); // init todo page
 	            ComponentsDateTimePickers.init(); // init todo page
+	            scope.checkcolumm =[];
+				scope.isShowFull = scope.isShowFull!=undefined&&scope.isShowFull!=null?scope.isShowFull:true;
+				if(scope.isShowFull==false){
+					document.getElementById("modalContent").className = "";
+					document.getElementById("modalBody").className = "";
+					document.getElementById("tabContent1").className = "";
+					document.getElementById("tabBable").className = "";
+					document.getElementById("tabContent2").className = "";
+					document.getElementById("Personal_info").className = "";
+
+				};
+				if(scope.listShow!= undefined && scope.listShow!=null && scope.listShow!='' && scope.listShow.length!=0){
+					if(scope.listShow.columm1==true){
+						scope.checkcolumm.push({have:"columm1"});
+					}
+					if(scope.listShow.columm2==true){
+						scope.checkcolumm.push({have:"columm2"});
+					}
+					if(scope.listShow.columm3==true){
+						scope.checkcolumm.push({have:"columm3"});
+					}
+				}
+				else{
+					scope.listShow={
+						columm1 : true,
+						columm2 : true,
+						columm3 : true
+					};
+				}
+				switch(scope.checkcolumm.length) {
+				    case 1:
+				        if(scope.checkcolumm[0].have!=null && scope.checkcolumm[0].have!=undefined
+				        	&& scope.checkcolumm[0].have!=''){
+				        	$('#'+scope.checkcolumm[0].have).before("<div class='col-md-4'></div>");
+				        }
+				        break;
+				    case 2:
+				        for(var i = 0; i < scope.checkcolumm.length; i++){
+				        	if(scope.checkcolumm[i].have!=null && scope.checkcolumm[i].have!=undefined
+				        	&& scope.checkcolumm[i].have!=''){
+				        		document.getElementById(scope.checkcolumm[i].have).className = "col-md-6";
+				        	}
+				        }
+				        break;
+				}
 		    },0);
 
 		    scope.checkDataNull = function(name){
 		    	if(scope.info[name].length==0)
 		    		scope.info[name] = null;
 		    };
-
 		    scope.savechange = function(){
 				PatientService.validate(scope.info)
 					.then(function(result){
@@ -81,7 +153,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 							   	if(scope.info.img){
 								   	$http({
 									  method: 'GET',
-									  url: 'http://192.168.1.2:3005/api/enableFile/false/'+scope.imgDelete
+									  url: o.const.fileBaseUrl+'/api/enableFile/false/'+scope.imgDelete
 									}).then(function (response) {
 										scope.uploader.queue[0].formData[0]={};
 										scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
@@ -115,17 +187,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				})
 			},
 
-			PatientService.detailPatient(data).then(function(response){
-				if(response.message=="success"){
-					scope.info = response.data[0];
-					scope.info.img = scope.info.FileUID?" http://192.168.1.2:3005/api/downloadFile/300/"+scope.info.FileUID:null;
-					scope.info.img_change = null;
-					oriInfo = angular.copy(scope.info);
-				}
-				else{
-					console.log(response.message);
-				}
-			});
+			
 
 			AuthenticationService.getListCountry().then(function(result){
 				scope.countries = result.data;

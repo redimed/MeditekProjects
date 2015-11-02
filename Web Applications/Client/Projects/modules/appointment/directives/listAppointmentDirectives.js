@@ -12,27 +12,27 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
             scope.typeAppointmentDate = 'DESC';
             scope.typeSubmitDateOther = null;
             scope.typeAppointmentOther = null;
-            scope.sortDataTable = function(Name,Type){
+            scope.sortDataTable = function(Name, Type) {
                 if (Name === 'SubmitDate') {
-                  Type == 'DESC' ? scope.typeSubmitDate = 'ASC' : scope.typeSubmitDate = 'DESC'; 
-                   scope.typeAppointmentDateOther = null; 
-                   scope.typeSubmitDateOther = scope.typeSubmitDate;
-                   scope.filter()
+                    Type == 'DESC' ? scope.typeSubmitDate = 'ASC' : scope.typeSubmitDate = 'DESC';
+                    scope.typeAppointmentDateOther = null;
+                    scope.typeSubmitDateOther = scope.typeSubmitDate;
+                    scope.filter()
                 };
-                if(Name === 'AppointmentDate') {
-                  Type == 'DESC' ? scope.typeAppointmentDate = 'ASC' : scope.typeAppointmentDate = 'DESC'; 
-                  scope.typeSubmitDateOther = null;
-                  scope.typeAppointmentDateOther = scope.typeAppointmentDate;
-                  scope.filter()
+                if (Name === 'AppointmentDate') {
+                    Type == 'DESC' ? scope.typeAppointmentDate = 'ASC' : scope.typeAppointmentDate = 'DESC';
+                    scope.typeSubmitDateOther = null;
+                    scope.typeAppointmentDateOther = scope.typeAppointmentDate;
+                    scope.filter()
                 };
-                
+
             };
 
             scope.filteredTodos = [];
             var data = {
                 Order: [{
                     Appointment: {
-                        RequestDate: 'DESC'
+                        CreatedDate: 'DESC'
                     }
                 }]
             };
@@ -46,7 +46,7 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
             }
             scope.load = function() {
                 AppointmentService.loadListAppointment(data).then(function(response) {
-                    
+
                     scope.filteredTodos = response.rows;
                     scope.appointments = response.rows;
                     scope.$watch("currentPage + numPerPage", function() {
@@ -79,8 +79,8 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
                         limit: 100,
                         Order: [{
                             Appointment: {
-                               RequestDate: scope.typeSubmitDateOther,
-                               FromTime:scope.typeAppointmentDateOther
+                                CreatedDate: scope.typeSubmitDateOther,
+                                FromTime: scope.typeAppointmentDateOther
                             }
                         }],
                         Search: [{
@@ -94,7 +94,7 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
                         }],
                         Range: [{
                             Appointment: {
-                                RequestDate: [submit_from_date, submit_to_date],
+                                CreatedDate: [submit_from_date, submit_to_date],
                                 FromTime: [appointment_from_date, appointment_to_date]
                             }
                         }]
@@ -119,32 +119,38 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
 
 
             scope.openAppointmentModal = function(UID) {
-                var modalInstance = $modal.open({
-                    animation: true,
-                    templateUrl: 'modules/appointment/views/appointmentListModal.html',
-                    controller: 'appointmentListModalCtrl',
-                    windowClass: 'app-modal-window',
-                    //size: 'lg',
-                    resolve: {
-                        getid: function() {
-                            return UID;
+                var data = []
+                var modalInstance
+                AppointmentService.getDetailApppointment(UID).then(function(response) {
+                    data = response.data
+                    modalInstance = $modal.open({
+                        animation: true,
+                        templateUrl: 'modules/appointment/views/appointmentListModal.html',
+                        controller: 'appointmentListModalCtrl',
+                        windowClass: 'app-modal-window',
+                        //size: 'lg',
+                        resolve: {
+                            getid: function() {
+                                return data;
+                            }
                         }
-                    }
-                });
+                    });
 
-                modalInstance.result.then(function(responseData) {
-                    if (responseData == 'success') {
-                         scope.infoAppointment = {
-                            patient: null,
-                            doctor: null,
-                            submit_from_date: null,
-                            submit_to_date: null,
-                            appointment_from_date: null,
-                            appointment_to_date: null
-                        }
-                        scope.load()
-                    };
-                }, function(data) {})
+                    modalInstance.result.then(function(responseData) {
+                        if (responseData == 'success') {
+                            scope.infoAppointment = {
+                                patient: null,
+                                doctor: null,
+                                submit_from_date: null,
+                                submit_to_date: null,
+                                appointment_from_date: null,
+                                appointment_to_date: null
+                            }
+                            scope.load()
+                        };
+                    }, function(data) {})
+
+                })
             };
 
         }

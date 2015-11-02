@@ -2,16 +2,16 @@ module.exports={
 	'Doctor/DoctorController':{
 		'*':true,
 		'ListCountry': true,
-		'GetDoctor': ['hasToken'],
-		'DoctorAppointment': ['hasToken'],
-		'DoctorIDAppointment': ['hasToken'],
-		'GetDepartment': ['hasToken'],
-		'CreateDoctor': ['hasToken'],
-		'GetBy': ['hasToken'],
-		'UpdateDoctor': ['hasToken'],
-		'GetFile': ['hasToken'],
-		'RemoveImage': ['hasToken'],
-		'GetRoleDoctor': ['hasToken'],
-		'GetOneDepartment': ['hasToken']
+		'GetDoctor': ['isAuthenticated'],
+		'DoctorAppointment': ['isAuthenticated'],
+		'DoctorIDAppointment': ['isAuthenticated'],
+		'GetDepartment': ['isAuthenticated'],
+		'CreateDoctor': ['isAuthenticated'],
+		'GetBy': ['isAuthenticated'],
+		'UpdateDoctor': ['isAuthenticated'],
+		'GetFile': ['isAuthenticated'],
+		'RemoveImage': ['isAuthenticated'],
+		'GetRoleDoctor': ['isAuthenticated'],
+		'GetOneDepartment': ['isAuthenticated']
 	}
 }

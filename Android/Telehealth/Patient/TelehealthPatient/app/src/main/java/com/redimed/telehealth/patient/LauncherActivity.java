@@ -52,7 +52,6 @@ public class LauncherActivity extends AppCompatActivity {
                 CheckExistsData();
             }
         }, 3500);
-
     }
 
     private void CheckExistsData(){

@@ -97,6 +97,9 @@
         <item >Orange</item>
         <item >Purple</item>
     </string-array>
+    <string name="title_activity_plastic_injury">PlasticInjuryActivity</string>
+    <string name="title_activity_orthopaedic">OrthopaedicActivity</string>
+    <string name="title_activity_urgent_care">UrgentCareActivity</string>
 
 
 </resources>

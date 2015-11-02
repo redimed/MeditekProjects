@@ -4,6 +4,29 @@ var $q = require('q');
 var moment = require('moment');
 var check  = require('../HelperService');
 
+//default attributes
+var defaultAtrributes = ['ID',
+	'UID',
+	'UserAccountID',
+	'Title',
+	'FirstName',
+	'MiddleName',
+	'LastName',
+	'DOB',
+	'Gender',
+	'Occupation',
+	'Address1',
+	'Address2',
+	'Suburb',
+	'Postcode',
+	'State',
+	'CountryID',
+	'Email',
+	'HomePhoneNumber',
+	'WorkPhoneNumber',
+	'Enable'
+];
+
 //generator Password
 var generatePassword = require('password-generator');
 
@@ -561,6 +584,20 @@ module.exports = {
 		output: get patient's information.
 	*/
 	GetPatient : function(data, transaction) {
+		var attributes=[];
+		if(data.attributes){
+			if(data.attributes.length > 0){
+				for(var i = 0; i < data.attributes.length; i++){
+					attributes[i] = data.attributes[i].field;
+				};
+			}
+			else {
+				attributes = defaultAtrributes;
+			}
+		}
+		else{
+			attributes = defaultAtrributes;
+		}
 		return Services.UserAccount.GetUserAccountDetails(data)
 		.then(function(user){
 			//check if UserAccount is found in table UserAccount, get UserAccountID to find patient
@@ -570,6 +607,7 @@ module.exports = {
 						UserAccountID : user.ID
 					},
 					transaction:transaction,
+					attributes:attributes,
 					include: [
 						 {
 			            	model: UserAccount,
@@ -619,7 +657,24 @@ module.exports = {
 		output: get list patient from table Patient
 	*/
 	LoadListPatient : function(data, transaction){
+		var FirstName = '',LastName = '';
+		var isConcat = false;
+		var attributes=[];
+		for(var i = 0; i < data.attributes.length; i++){
+			if(data.attributes[i].field!='UserAccount'){
+				attributes[i] = data.attributes[i].field;
+			}
+		};
+		console.log(attributes);
 		var whereClause = Services.Patient.whereClause(data);
+		if(data.Search){
+			if(data.Search.FirstName!='' && data.Search.LastName!=''
+				&& data.Search.FirstName!=undefined && data.Search.LastName!=undefined){
+				FirstName = data.Search.FirstName;
+				LastName  = data.Search.LastName;
+				isConcat = true;
+			}
+		}
 		return Patient.findAndCountAll({
 			include:[
 				{
@@ -631,11 +686,17 @@ module.exports = {
 				   	}
 			    }
 			],
-			limit  : data.limit,
-			offset : data.offset,
-			order  : data.order,
+			// attributes : attributes,
+			limit      : data.limit,
+			offset     : data.offset,
+			order      : data.order,
 			where: {
-				$or: whereClause.Patient
+				$or: [
+					whereClause.Patient,
+					isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("FirstName"),' ', Sequelize.col("LastName")), {
+				       	like: '%'+FirstName+' '+LastName+'%'
+					}):null,
+				]
 				
 			},
 			transaction:transaction
@@ -707,6 +768,7 @@ module.exports = {
 				attributes:['UserAccountID','UID'],
 				where :{
 					UserAccountID : data.UserAccountID,
+					FileType: data.FileType,
 					Enable : 'Y'
 				}
 			});

@@ -8,7 +8,7 @@ module.exports = function(appointmentUID) {
     var $q = require('q');
     var defer = $q.defer();
     Appointment.findOne({
-            attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status'],
+            attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status', 'CreatedDate'],
             include: [{
                 model: TelehealthAppointment,
                 attributes: ['UID', 'Fund', 'Correspondence', 'RefName',

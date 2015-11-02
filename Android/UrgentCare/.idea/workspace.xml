@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidConfiguredLogFilters">
+    <filters>
+      <filter>
+        <option name="logLevel" value="error" />
+        <option name="logMessagePattern" value="" />
+        <option name="logTagPattern" value="" />
+        <option name="name" value="app" />
+        <option name="packageNamePattern" value="com.redimed.urgentcare" />
+        <option name="pid" value="" />
+      </filter>
+    </filters>
+  </component>
   <component name="AndroidLayouts">
     <shared>
       <config />
@@ -36,36 +48,154 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="HomeActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/HomeActivity.java">
+      <file leaf-file-name="OrthopaedicActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/OrthopaedicActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="62" column="10" selection-start-line="62" selection-start-column="10" selection-end-line="80" selection-end-column="13" />
-              <folding />
+            <state vertical-scroll-proportion="0.32281554">
+              <caret line="339" column="34" selection-start-line="339" selection-start-column="34" selection-end-line="339" selection-end-column="34" />
+              <folding>
+                <element signature="e#4052#4068#0" expanded="true" />
+                <element signature="e#4106#4123#0" expanded="true" />
+                <element signature="method#EdittextValidateFocus#0;class#OrthopaedicActivity#0" expanded="false" />
+                <element signature="e#5935#5954#0" expanded="true" />
+                <element signature="e#6636#6665#0" expanded="true" />
+                <element signature="e#6831#6858#0" expanded="true" />
+                <element signature="e#8285#8304#0" expanded="true" />
+                <element signature="method#CheckValidateFrom#0;class#OrthopaedicActivity#0" expanded="false" />
+                <element signature="e#9139#9158#0" expanded="true" />
+                <element signature="e#9521#9550#0" expanded="true" />
+                <element signature="e#9720#9747#0" expanded="true" />
+                <element signature="e#10021#10040#0" expanded="true" />
+                <element signature="method#IsEmailValid#0;class#OrthopaedicActivity#0" expanded="false" />
+                <element signature="method#CheckRequiredData#0;class#OrthopaedicActivity#0" expanded="false" />
+                <element signature="method#CheckContactNo#0;class#OrthopaedicActivity#0" expanded="false" />
+                <element signature="e#12314#12360#0" expanded="true" />
+                <element signature="e#12407#12464#0" expanded="true" />
+                <element signature="e#12979#13034#0" expanded="true" />
+                <element signature="e#14321#14373#0" expanded="true" />
+                <element signature="e#14899#14964#0" expanded="true" />
+                <element signature="e#15276#15335#0" expanded="true" />
+                <element signature="e#16181#16229#0" expanded="true" />
+                <element signature="e#16279#16345#0" expanded="true" />
+                <element signature="e#16403#16660#0" expanded="true" />
+                <element signature="e#16659#16660#0" expanded="true" />
+                <element signature="e#17297#17343#0" expanded="true" />
+                <element signature="e#17397#17461#0" expanded="true" />
+                <element signature="e#17790#17976#0" expanded="true" />
+                <element signature="e#17975#17976#0" expanded="true" />
+                <element signature="e#18059#18808#0" expanded="true" />
+                <element signature="e#18807#18808#0" expanded="true" />
+                <element signature="method#CheckInfomation#0;class#OrthopaedicActivity#0" expanded="false" />
+                <element signature="method#OnTouchListenerRelativeLayout#0;class#OrthopaedicActivity#0" expanded="false" />
+                <element signature="method#CreatePopupDatePicker#0;class#OrthopaedicActivity#0" expanded="false" />
+                <element signature="method#capFirstLetter#0;class#OrthopaedicActivity#0" expanded="false" />
+                <element signature="method#HideKeyBoard#0;class#OrthopaedicActivity#0" expanded="false" />
+                <element signature="method#TxtDOBCreateDatePicker#0;class#OrthopaedicActivity#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="anim_logo_redimed.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/anim_logo_redimed.xml">
+      <file leaf-file-name="PlasticInjuryActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/PlasticInjuryActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.22849463">
-              <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="338" column="24" selection-start-line="338" selection-start-column="24" selection-end-line="343" selection-end-column="27" />
+              <folding>
+                <element signature="method#loadDataInformation#0;class#PlasticInjuryActivity#0" expanded="false" />
+                <element signature="method#mReadJsonData#0;class#PlasticInjuryActivity#0" expanded="false" />
+                <element signature="method#EdittextValidateFocus#0;class#PlasticInjuryActivity#0" expanded="false" />
+                <element signature="method#CheckValidateFrom#0;class#PlasticInjuryActivity#0" expanded="false" />
+                <element signature="method#IsEmailValid#0;class#PlasticInjuryActivity#0" expanded="false" />
+                <element signature="method#CheckRequiredData#0;class#PlasticInjuryActivity#0" expanded="false" />
+                <element signature="method#CheckContactNo#0;class#PlasticInjuryActivity#0" expanded="false" />
+                <element signature="e#14928#14993#0" expanded="true" />
+                <element signature="e#16434#16691#0" expanded="true" />
+                <element signature="e#16690#16691#0" expanded="true" />
+                <element signature="e#17823#18009#0" expanded="true" />
+                <element signature="e#18008#18009#0" expanded="true" />
+                <element signature="method#CheckInfomation#0;class#PlasticInjuryActivity#0" expanded="false" />
+                <element signature="method#OnTouchListenerRelativeLayout#0;class#PlasticInjuryActivity#0" expanded="false" />
+                <element signature="method#capFirstLetter#0;class#PlasticInjuryActivity#0" expanded="false" />
+                <element signature="method#HideKeyBoard#0;class#PlasticInjuryActivity#0" expanded="false" />
+                <element signature="method#TxtDOBCreateDatePicker#0;class#PlasticInjuryActivity#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_home.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml">
+      <file leaf-file-name="SportInjuryActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/SportInjuryActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="46" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
-              <folding />
+              <caret line="112" column="25" selection-start-line="112" selection-start-column="25" selection-end-line="112" selection-end-column="25" />
+              <folding>
+                <element signature="method#loadDataInformation#0;class#SportInjuryActivity#0" expanded="false" />
+                <element signature="e#4111#4297#0" expanded="true" />
+                <element signature="e#4296#4297#0" expanded="true" />
+                <element signature="method#CheckInfomation#0;class#SportInjuryActivity#0" expanded="false" />
+                <element signature="method#mReadJsonData#0;class#SportInjuryActivity#0" expanded="false" />
+                <element signature="e#6037#6053#0" expanded="true" />
+                <element signature="e#6091#6108#0" expanded="true" />
+                <element signature="method#EdittextValidateFocus#0;class#SportInjuryActivity#0" expanded="false" />
+                <element signature="e#7826#7845#0" expanded="true" />
+                <element signature="e#8527#8556#0" expanded="true" />
+                <element signature="e#8722#8749#0" expanded="true" />
+                <element signature="e#10176#10195#0" expanded="true" />
+                <element signature="method#CheckValidateFrom#0;class#SportInjuryActivity#0" expanded="false" />
+                <element signature="e#11124#11143#0" expanded="true" />
+                <element signature="e#11506#11535#0" expanded="true" />
+                <element signature="e#11705#11732#0" expanded="true" />
+                <element signature="e#12006#12025#0" expanded="true" />
+                <element signature="method#IsEmailValid#0;class#SportInjuryActivity#0" expanded="false" />
+                <element signature="method#CheckContactNo#0;class#SportInjuryActivity#0" expanded="false" />
+                <element signature="e#14300#14346#0" expanded="true" />
+                <element signature="e#14393#14450#0" expanded="true" />
+                <element signature="e#14965#15020#0" expanded="true" />
+                <element signature="e#16307#16360#0" expanded="true" />
+                <element signature="e#16886#16951#0" expanded="true" />
+                <element signature="e#17263#17322#0" expanded="true" />
+                <element signature="e#18168#18216#0" expanded="true" />
+                <element signature="e#18266#18332#0" expanded="true" />
+                <element signature="e#19277#19323#0" expanded="true" />
+                <element signature="e#19373#19437#0" expanded="true" />
+              </folding>
             </state>
           </provider>
-          <provider editor-type-id="android-designer">
-            <state />
+        </entry>
+      </file>
+      <file leaf-file-name="WorkInjuryActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/WorkInjuryActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="114" column="25" selection-start-line="114" selection-start-column="25" selection-end-line="114" selection-end-column="25" />
+              <folding>
+                <element signature="method#CheckInfomation#0;class#WorkInjuryActivity#0" expanded="false" />
+                <element signature="method#ReadJsonDataSuburb#0;class#WorkInjuryActivity#0" expanded="false" />
+                <element signature="e#6373#6389#0" expanded="true" />
+                <element signature="e#6427#6444#0" expanded="true" />
+                <element signature="e#8161#8180#0" expanded="true" />
+                <element signature="e#8863#8892#0" expanded="true" />
+                <element signature="e#9058#9085#0" expanded="true" />
+                <element signature="e#9624#9643#0" expanded="true" />
+                <element signature="e#11145#11172#0" expanded="true" />
+                <element signature="e#12108#12127#0" expanded="true" />
+                <element signature="e#12517#12546#0" expanded="true" />
+                <element signature="e#12716#12743#0" expanded="true" />
+                <element signature="e#13017#13036#0" expanded="true" />
+                <element signature="e#13296#13323#0" expanded="true" />
+                <element signature="e#15830#15876#0" expanded="true" />
+                <element signature="e#15923#15980#0" expanded="true" />
+                <element signature="e#16501#16556#0" expanded="true" />
+                <element signature="e#17708#17760#0" expanded="true" />
+                <element signature="e#18419#18478#0" expanded="true" />
+                <element signature="e#18879#18944#0" expanded="true" />
+                <element signature="e#19806#19854#0" expanded="true" />
+                <element signature="e#19904#19970#0" expanded="true" />
+                <element signature="e#20922#20968#0" expanded="true" />
+                <element signature="e#21022#21086#0" expanded="true" />
+              </folding>
+            </state>
           </provider>
         </entry>
       </file>
@@ -561,6 +691,11 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="prepareDebugUnitTestDependencies" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare info.hoang8f:fbutton:1.0.5" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="prepareInfoHoang8fFbutton105Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
@@ -1103,6 +1238,11 @@
                 <option name="name" value="prepareDebugUnitTestDependencies" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare info.hoang8f:fbutton:1.0.5" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="prepareInfoHoang8fFbutton105Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="prepareReleaseDependencies" />
               </ExternalTaskPojo>
@@ -1229,7 +1369,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="D:\MeditekProjects\Android\UrgentCare" value="4332027715092" />
+        <entry key="D:\MeditekProjects\Android\UrgentCare" value="4333538208375" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1415,6 +1555,7 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/cn.pedant.sweetalert/library/1.3/4d87f52c453faf689c87371ffa33316b8c0748f2/library-1.3.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.traex.rippleeffect/library/1.3/9db642e7f6331b2de23c40b95f9dd83e5f70c0ed/library-1.3.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.romainpiel.shimmer/library/1.4.0/63bfa6e9d23965c1d62f9b81f3f05c5d3b320cab/library-1.4.0.aar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/info.hoang8f/fbutton/1.0.5/724d09f0e000d472138583404998cd35db45eb84/fbutton-1.0.5.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.0.1/support-v4-23.0.1.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.4.0/5b72bf48563ea8410e650de14aa33ff69a3e8c35/okio-1.4.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.pnikosis/materialish-progress/1.0/b1898820717b3bb087e268893b5f5c34681c77c5/materialish-progress-1.0.aar" />
@@ -1559,25 +1700,31 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/boder_edittext.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/boder_edittext_error.xml" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/models/UrgentRequestModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_sport_injury.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_make_appointment.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_work_injury.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/FAQActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/utils/Config.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_faq.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/anim/anim_logo_redimed.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/models/UrgentRequestModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/MakeAppointmentActivity.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_plastic_injury.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_orthopaedic.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/UrgentCareActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/HomeActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_urgent_care.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_faq.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/WorkInjuryActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/SportInjuryActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/MakeAppointmentActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/HomeActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/anim/anim_logo_redimed.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/PlasticInjuryActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/OrthopaedicActivity.java" />
       </list>
     </option>
   </component>
@@ -1613,10 +1760,26 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UrgentCare" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UrgentCare" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UrgentCare" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1624,22 +1787,104 @@
               <option name="myItemId" value="UrgentCare" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Gradle Scripts" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UrgentCare" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UrgentCare" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="urgentcare" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UrgentCare" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UrgentCare" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.1.46:5555" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="4d0032f7402d900d" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_23_x86" />
     <property name="FullScreen" value="false" />
-    <property name="last_opened_file_path" value="D:/lblslogan.png" />
+    <property name="last_opened_file_path" value="D:/img_work_injury1.png" />
     <property name="android.project.structure.last.selected" value="SDK Location" />
     <property name="android.project.structure.proportion" value="0.15" />
-    <property name="lastFolderRoot" value="D:/lblslogan.png" />
+    <property name="lastFolderRoot" value="D:/img_work_injury1.png" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="OverrideImplement.overriding.sorted" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="android.template.packageName">
+      <recent name="com.redimed.urgentcare" />
+    </key>
+    <key name="android.template.parentActivityClass">
+      <recent name="" />
+    </key>
   </component>
   <component name="RunManager" selected="Android Application.app">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -1836,24 +2081,34 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32998326" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998326" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27805695" sideWeight="0.49092284" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2479062" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.97822446" sideWeight="0.5408472" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34170854" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998326" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.60636514" sideWeight="0.4667171" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998326" sideWeight="0.48487142" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13065326" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26298156" sideWeight="0.4591528" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5025126" sideWeight="0.50610685" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28971255" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30937973" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1864,7 +2119,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1909,85 +2163,20 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="7" />
+      <option name="time" value="14" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/anim_logo_redimed.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="46" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
+      <provider selected="true" editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/MakeAppointmentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_sport_injury.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="257" column="12" selection-start-line="257" selection-start-column="12" selection-end-line="290" selection-end-column="29" />
-          <folding>
-            <element signature="e#12304#14038#0" expanded="false" />
-            <element signature="e#14077#15266#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_make_appointment.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="219" column="44" selection-start-line="219" selection-start-column="44" selection-end-line="219" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/MakeAppointmentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/SportInjuryActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="3" selection-start-line="53" selection-start-column="3" selection-end-line="54" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml">
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/HomeActivity.java">
@@ -2007,14 +2196,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_faq.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/WorkInjuryActivity.java">
@@ -2048,6 +2237,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_work_injury.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="146" column="52" selection-start-line="146" selection-start-column="52" selection-end-line="146" selection-end-column="52" />
@@ -2056,9 +2248,6 @@
             <element signature="e#18077#19246#0" expanded="false" />
           </folding>
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/WorkInjuryActivity.java">
@@ -2069,6 +2258,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_work_injury.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="341" column="56" selection-start-line="341" selection-start-column="41" selection-end-line="341" selection-end-column="56" />
@@ -2077,9 +2269,6 @@
             <element signature="e#18077#19246#0" expanded="false" />
           </folding>
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/WorkInjuryActivity.java">
@@ -2105,6 +2294,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_work_injury.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
@@ -2113,9 +2305,6 @@
             <element signature="e#18077#19246#0" expanded="false" />
           </folding>
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/FAQActivity.java">
@@ -2126,14 +2315,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/WorkInjuryActivity.java">
@@ -2185,33 +2374,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="53" selection-start-line="24" selection-start-column="53" selection-end-line="24" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="30" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="42" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/models/UrgentRequestModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.5244565">
-          <caret line="12" column="31" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -2222,32 +2389,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_work_injury.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7680723">
-          <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="28" selection-end-column="52" />
-          <folding>
-            <element signature="e#5479#6911#0" expanded="false" />
-            <element signature="e#18077#19246#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_make_appointment.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="219" column="44" selection-start-line="219" selection-start-column="44" selection-end-line="219" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_sport_injury.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33433735">
           <caret line="257" column="12" selection-start-line="257" selection-start-column="12" selection-end-line="290" selection-end-column="29" />
@@ -2255,16 +2400,6 @@
             <element signature="e#12304#14038#0" expanded="false" />
             <element signature="e#14077#15266#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/FAQActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7534626">
-          <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -2275,85 +2410,341 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/utils/Config.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/anim_logo_redimed.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="94" selection-start-line="7" selection-start-column="94" selection-end-line="7" selection-end-column="94" />
+        <state vertical-scroll-proportion="0.14938489">
+          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_faq.xml">
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40563992">
-          <caret line="53" column="46" selection-start-line="53" selection-start-column="46" selection-end-line="53" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="50" selection-start-line="26" selection-start-column="50" selection-end-line="26" selection-end-column="50" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/com/redimed/urgentcare/ApplicationTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#310#311#0" expanded="false" />
+            <element signature="e#350#351#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_work_injury.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20204082">
-          <caret line="6" column="43" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
+        <state vertical-scroll-proportion="1.5517242">
+          <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
+          <folding>
+            <element signature="e#1876#19290#0" expanded="false" />
+            <element signature="e#5479#6911#0" expanded="false" />
+            <element signature="e#18077#19246#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/models/UrgentRequestModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.85250735">
+          <caret line="21" column="29" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/WorkInjuryActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/utils/Config.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.6979592">
-          <caret line="214" column="95" selection-start-line="214" selection-start-column="95" selection-end-line="214" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.79913604">
-          <caret line="47" column="32" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.35103244">
+          <caret line="7" column="94" selection-start-line="7" selection-start-column="94" selection-end-line="7" selection-end-column="94" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/SportInjuryActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/api/UrgentRequestApi.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.7979592">
-          <caret line="118" column="79" selection-start-line="118" selection-start-column="79" selection-end-line="118" selection-end-column="79" />
+        <state vertical-scroll-proportion="0.3480826">
+          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/MakeAppointmentActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_plastic_injury.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+        <state vertical-scroll-proportion="-3.5172415">
+          <caret line="105" column="20" selection-start-line="105" selection-start-column="20" selection-end-line="105" selection-end-column="47" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="46" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
+        <state vertical-scroll-proportion="-8.965517">
+          <caret line="146" column="40" selection-start-line="146" selection-start-column="33" selection-end-line="146" selection-end-column="40" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_orthopaedic.xml">
       <provider editor-type-id="android-designer">
         <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.2413793">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="40" selection-end-column="40" />
+          <folding>
+            <element signature="e#375#1872#0" expanded="false" />
+            <element signature="e#688#1371#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/FAQActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="11" selection-start-line="16" selection-start-column="8" selection-end-line="22" selection-end-column="11" />
+          <folding>
+            <element signature="e#588#763#0" expanded="true" />
+            <element signature="e#762#763#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/HomeActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="10" selection-start-line="62" selection-start-column="10" selection-end-line="80" selection-end-column="13" />
+          <caret line="145" column="95" selection-start-line="145" selection-start-column="95" selection-end-line="145" selection-end-column="95" />
+          <folding>
+            <element signature="e#3457#3773#0" expanded="true" />
+            <element signature="e#3772#3773#0" expanded="true" />
+            <element signature="e#3835#4145#0" expanded="true" />
+            <element signature="e#4144#4145#0" expanded="true" />
+            <element signature="e#5293#5548#0" expanded="true" />
+            <element signature="e#5547#5548#0" expanded="true" />
+            <element signature="e#5592#5866#0" expanded="true" />
+            <element signature="e#5865#5866#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_urgent_care.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.24138">
+          <caret line="88" column="24" selection-start-line="88" selection-start-column="24" selection-end-line="88" selection-end-column="64" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/anim_logo_redimed.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_faq.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22849463">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+        <state vertical-scroll-proportion="-11.896552">
+          <caret line="178" column="157" selection-start-line="178" selection-start-column="157" selection-end-line="178" selection-end-column="157" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-29.592592">
+          <caret line="47" column="32" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35">
+          <caret line="1420" column="17" selection-start-line="1420" selection-start-column="17" selection-end-line="1420" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2580645">
+          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16129032">
+          <caret line="5" column="55" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/UrgentCareActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.516129">
+          <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
+          <folding>
+            <element signature="e#624#799#0" expanded="true" />
+            <element signature="e#798#799#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/WorkInjuryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="114" column="25" selection-start-line="114" selection-start-column="25" selection-end-line="114" selection-end-column="25" />
+          <folding>
+            <element signature="method#CheckInfomation#0;class#WorkInjuryActivity#0" expanded="false" />
+            <element signature="method#ReadJsonDataSuburb#0;class#WorkInjuryActivity#0" expanded="false" />
+            <element signature="e#6373#6389#0" expanded="true" />
+            <element signature="e#6427#6444#0" expanded="true" />
+            <element signature="e#8161#8180#0" expanded="true" />
+            <element signature="e#8863#8892#0" expanded="true" />
+            <element signature="e#9058#9085#0" expanded="true" />
+            <element signature="e#9624#9643#0" expanded="true" />
+            <element signature="e#11145#11172#0" expanded="true" />
+            <element signature="e#12108#12127#0" expanded="true" />
+            <element signature="e#12517#12546#0" expanded="true" />
+            <element signature="e#12716#12743#0" expanded="true" />
+            <element signature="e#13017#13036#0" expanded="true" />
+            <element signature="e#13296#13323#0" expanded="true" />
+            <element signature="e#15830#15876#0" expanded="true" />
+            <element signature="e#15923#15980#0" expanded="true" />
+            <element signature="e#16501#16556#0" expanded="true" />
+            <element signature="e#17708#17760#0" expanded="true" />
+            <element signature="e#18419#18478#0" expanded="true" />
+            <element signature="e#18879#18944#0" expanded="true" />
+            <element signature="e#19806#19854#0" expanded="true" />
+            <element signature="e#19904#19970#0" expanded="true" />
+            <element signature="e#20922#20968#0" expanded="true" />
+            <element signature="e#21022#21086#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/SportInjuryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="112" column="25" selection-start-line="112" selection-start-column="25" selection-end-line="112" selection-end-column="25" />
+          <folding>
+            <element signature="method#loadDataInformation#0;class#SportInjuryActivity#0" expanded="false" />
+            <element signature="e#4111#4297#0" expanded="true" />
+            <element signature="e#4296#4297#0" expanded="true" />
+            <element signature="method#CheckInfomation#0;class#SportInjuryActivity#0" expanded="false" />
+            <element signature="method#mReadJsonData#0;class#SportInjuryActivity#0" expanded="false" />
+            <element signature="e#6037#6053#0" expanded="true" />
+            <element signature="e#6091#6108#0" expanded="true" />
+            <element signature="method#EdittextValidateFocus#0;class#SportInjuryActivity#0" expanded="false" />
+            <element signature="e#7826#7845#0" expanded="true" />
+            <element signature="e#8527#8556#0" expanded="true" />
+            <element signature="e#8722#8749#0" expanded="true" />
+            <element signature="e#10176#10195#0" expanded="true" />
+            <element signature="method#CheckValidateFrom#0;class#SportInjuryActivity#0" expanded="false" />
+            <element signature="e#11124#11143#0" expanded="true" />
+            <element signature="e#11506#11535#0" expanded="true" />
+            <element signature="e#11705#11732#0" expanded="true" />
+            <element signature="e#12006#12025#0" expanded="true" />
+            <element signature="method#IsEmailValid#0;class#SportInjuryActivity#0" expanded="false" />
+            <element signature="method#CheckContactNo#0;class#SportInjuryActivity#0" expanded="false" />
+            <element signature="e#14300#14346#0" expanded="true" />
+            <element signature="e#14393#14450#0" expanded="true" />
+            <element signature="e#14965#15020#0" expanded="true" />
+            <element signature="e#16307#16360#0" expanded="true" />
+            <element signature="e#16886#16951#0" expanded="true" />
+            <element signature="e#17263#17322#0" expanded="true" />
+            <element signature="e#18168#18216#0" expanded="true" />
+            <element signature="e#18266#18332#0" expanded="true" />
+            <element signature="e#19277#19323#0" expanded="true" />
+            <element signature="e#19373#19437#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/PlasticInjuryActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="338" column="24" selection-start-line="338" selection-start-column="24" selection-end-line="343" selection-end-column="27" />
+          <folding>
+            <element signature="method#loadDataInformation#0;class#PlasticInjuryActivity#0" expanded="false" />
+            <element signature="method#mReadJsonData#0;class#PlasticInjuryActivity#0" expanded="false" />
+            <element signature="method#EdittextValidateFocus#0;class#PlasticInjuryActivity#0" expanded="false" />
+            <element signature="method#CheckValidateFrom#0;class#PlasticInjuryActivity#0" expanded="false" />
+            <element signature="method#IsEmailValid#0;class#PlasticInjuryActivity#0" expanded="false" />
+            <element signature="method#CheckRequiredData#0;class#PlasticInjuryActivity#0" expanded="false" />
+            <element signature="method#CheckContactNo#0;class#PlasticInjuryActivity#0" expanded="false" />
+            <element signature="e#14928#14993#0" expanded="true" />
+            <element signature="e#16434#16691#0" expanded="true" />
+            <element signature="e#16690#16691#0" expanded="true" />
+            <element signature="e#17823#18009#0" expanded="true" />
+            <element signature="e#18008#18009#0" expanded="true" />
+            <element signature="method#CheckInfomation#0;class#PlasticInjuryActivity#0" expanded="false" />
+            <element signature="method#OnTouchListenerRelativeLayout#0;class#PlasticInjuryActivity#0" expanded="false" />
+            <element signature="method#capFirstLetter#0;class#PlasticInjuryActivity#0" expanded="false" />
+            <element signature="method#HideKeyBoard#0;class#PlasticInjuryActivity#0" expanded="false" />
+            <element signature="method#TxtDOBCreateDatePicker#0;class#PlasticInjuryActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/redimed/urgentcare/OrthopaedicActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32281554">
+          <caret line="339" column="34" selection-start-line="339" selection-start-column="34" selection-end-line="339" selection-end-column="34" />
+          <folding>
+            <element signature="e#4052#4068#0" expanded="true" />
+            <element signature="e#4106#4123#0" expanded="true" />
+            <element signature="method#EdittextValidateFocus#0;class#OrthopaedicActivity#0" expanded="false" />
+            <element signature="e#5935#5954#0" expanded="true" />
+            <element signature="e#6636#6665#0" expanded="true" />
+            <element signature="e#6831#6858#0" expanded="true" />
+            <element signature="e#8285#8304#0" expanded="true" />
+            <element signature="method#CheckValidateFrom#0;class#OrthopaedicActivity#0" expanded="false" />
+            <element signature="e#9139#9158#0" expanded="true" />
+            <element signature="e#9521#9550#0" expanded="true" />
+            <element signature="e#9720#9747#0" expanded="true" />
+            <element signature="e#10021#10040#0" expanded="true" />
+            <element signature="method#IsEmailValid#0;class#OrthopaedicActivity#0" expanded="false" />
+            <element signature="method#CheckRequiredData#0;class#OrthopaedicActivity#0" expanded="false" />
+            <element signature="method#CheckContactNo#0;class#OrthopaedicActivity#0" expanded="false" />
+            <element signature="e#12314#12360#0" expanded="true" />
+            <element signature="e#12407#12464#0" expanded="true" />
+            <element signature="e#12979#13034#0" expanded="true" />
+            <element signature="e#14321#14373#0" expanded="true" />
+            <element signature="e#14899#14964#0" expanded="true" />
+            <element signature="e#15276#15335#0" expanded="true" />
+            <element signature="e#16181#16229#0" expanded="true" />
+            <element signature="e#16279#16345#0" expanded="true" />
+            <element signature="e#16403#16660#0" expanded="true" />
+            <element signature="e#16659#16660#0" expanded="true" />
+            <element signature="e#17297#17343#0" expanded="true" />
+            <element signature="e#17397#17461#0" expanded="true" />
+            <element signature="e#17790#17976#0" expanded="true" />
+            <element signature="e#17975#17976#0" expanded="true" />
+            <element signature="e#18059#18808#0" expanded="true" />
+            <element signature="e#18807#18808#0" expanded="true" />
+            <element signature="method#CheckInfomation#0;class#OrthopaedicActivity#0" expanded="false" />
+            <element signature="method#OnTouchListenerRelativeLayout#0;class#OrthopaedicActivity#0" expanded="false" />
+            <element signature="method#CreatePopupDatePicker#0;class#OrthopaedicActivity#0" expanded="false" />
+            <element signature="method#capFirstLetter#0;class#OrthopaedicActivity#0" expanded="false" />
+            <element signature="method#HideKeyBoard#0;class#OrthopaedicActivity#0" expanded="false" />
+            <element signature="method#TxtDOBCreateDatePicker#0;class#OrthopaedicActivity#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

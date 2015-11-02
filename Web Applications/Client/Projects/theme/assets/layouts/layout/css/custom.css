@@ -98,7 +98,13 @@ ul.my-ul {
     background: #ccc;
 }
 
+
+.nav-tabs>li>a {
+    background: #ddd;
+}
+
 /*begin custom left sitebar*/
+
 
 .tabs-left.nav-tabs>li>i {
     width: 37px;
@@ -120,7 +126,7 @@ ul.my-ul {
 }
 .tabs-left.nav-tabs>li>a{
     font: 1.5em !important;
-    padding: 25px 15px;
+    padding: 1em 15px;
 }
 .tabs-left.nav-tabs>li>a:focus, 
 .tabs-left.nav-tabs>li>a:hover {

@@ -11,6 +11,7 @@ var app = angular.module('app', [
     "app.common.ngEnter",
     'app.common.msgDialog',
     'app.common.menuBar',
+    'app.common.dimage',
     'app.common.CommonService',
     "app.unAuthentication",
     "app.authentication",
@@ -57,7 +58,8 @@ app
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
         // END CORS PROXY
         //RESTANGULAR DEFAULT
-        RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3005");
+
+        RestangularProvider.setBaseUrl(o.const.restBaseUrl);
         // RestangularProvider.setBaseUrl("http://telehealthvietnam.com.vn:3005");
         $urlRouterProvider.otherwise('');
         $stateProvider.state('sys', {
@@ -96,6 +98,13 @@ app
 
         return settings;
     }])
+    //SETTING RESTANGULAR WITH FULL RESPONSE FOR FILES SYSTEM (data, status, headers, config)
+    .factory('FileRestangular',function(Restangular){
+        return Restangular.withConfig(function(RestangularConfigurer) {
+            RestangularConfigurer.setFullResponse(true);
+            RestangularConfigurer.setBaseUrl(o.const.fileBaseUrl);
+        });
+    })
     .run(function($rootScope, $cookies, $window, $state, Restangular, toastr, settings) {
         // RESTANGULAR ERROR HANDLING
         // Restangular.setErrorInterceptor(function (response) {
@@ -134,7 +143,7 @@ app
                         reload: true
                     });
                 }
-            } else {
+            } else if($cookies.get("userInfo") && $cookies.get("userInfo").Activated == 'Y'){
                 if (toState.name == "unAuthentication.login" || toState.name == "unAuthentication.register") {
                     e.preventDefault();
                     $state.go("authentication.home.list", null, {
@@ -153,6 +162,10 @@ app
             ComponentsBootstrapSelect.init(); // init todo page
             ComponentsDateTimePickers.init(); // init todo page
             FormWizard.init(); // form step
+        });
+        $rootScope.$on('$includeContentLoaded', function() {
+            App.initAjax();
+            ComponentsDateTimePickers.init(); // init todo page
         });
     })
     

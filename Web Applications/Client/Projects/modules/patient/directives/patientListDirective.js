@@ -12,6 +12,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 		link: function(scope, elem, attrs){
 			scope.search  = {};
 			scope.checked = {};
+			scope.flag = 13;
 			scope.fieldSort;
 			scope.itemDefault = [
 				{field:"FirstName",name:"First Name"},
@@ -25,7 +26,16 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				{id:"Y",name:"Enable"},
 				{id:"N",name:"Disable"}
 			];
-			scope.items = angular.isArray(scope.items)?scope.items:scope.itemDefault;
+			//check user add data items into directive
+			if(scope.items){
+				if(!scope.items.hasOwnProperty('field') || !scope.items.hasOwnProperty('name')){
+					scope.items = scope.itemDefault;
+				}
+			}
+			else{
+				scope.items = scope.itemDefault;
+			}
+
 			for(var i = 0; i < scope.items.length; i++){
 				if(scope.items[i].field=="Enable")
 					scope.items.splice(i,1);
@@ -57,6 +67,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 	                offset: 0,
 	                currentPage: 1,
 	                maxSize: 5,
+	                attributes:scope.items,
 	                Search:null,
 	                order: null
 	            };
@@ -73,7 +84,8 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			// 	FirstName:"Giang",
 			// 	LastName:"Vo",
 			// 	MiddleName:"Truong",
-			// 	PhoneNumber:"+61432657849"
+			// 	PhoneNumber:"+61432657849",
+			// 	DOB:"24/12/2015"
 			// };
 			// PatientService.postDatatoDirective(aaa);
 			scope.setPage = function() {
@@ -96,13 +108,14 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				});
 			};
 
-			scope.Search = function(data){
-				if(data.UserAccount){
-					data.PhoneNumber = data.UserAccount;
+			scope.Search = function(data,e){
+				if(e==13){
+					if(data.UserAccount || data.UserAccount==''){
+						data.PhoneNumber = data.UserAccount;
+					}
+					scope.searchObjectMap.Search = data;
+					scope.loadList(scope.searchObjectMap);
 				}
-				scope.searchObjectMap.Search = data;
-				scope.loadList(scope.searchObjectMap);
-
 			};
 
 			scope.sort = function(field,sort) {
@@ -148,13 +161,12 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 					function(isConfirm){   
 						if (isConfirm) {  
 							scope.uidReturn=patientUID;   
-							scope.appointment.runIfSuccess({data:{UID:patientUID}});
+							scope.appointment.runIfSuccess({UID:patientUID});
 						}else{
 
 							scope.uidReturn='';
 							scope.init();
 						}
-						console.log(scope.uidReturn);
 					});
 				}
 				
@@ -166,11 +178,14 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						templateUrl: 'patientCreatemodal',
 						controller: function($scope,$modalInstance){
 							$scope.close = function() {
-								modalInstance.close();
+								$modalInstance.close();
 							};
 							$scope.appointment = {
 								runIfSuccess : function (data) {
 									$modalInstance.close({status:'success',data:data});
+								},
+								runIfClose : function () {
+									$modalInstance.close();
 								}
 							};
 						},
@@ -178,11 +193,11 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						//size: 'lg',
 					});
 					modalInstance.result.then(function (data) {
-				      	scope.appointment.runIfSuccess(data);
+						if (data && data.status == 'success') {
+				      		scope.appointment.runIfSuccess(data.data);
+						};
 				    });
 				}else{
-					scope.aaaa ="asdasd";
-
 					$state.go('authentication.patient.create');
 				}
 			}

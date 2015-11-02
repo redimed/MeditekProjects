@@ -3,7 +3,7 @@ angular.module('app.authentication.patient.services',[])
 	var PatientService = {};
 	var api = Restangular.all("api");
 	var characterRegex = /^[a-zA-Z]{0,255}$/;
-	var addressRegex = /^[a-zA-Z0-9\s,'-]{0,255}$/;
+	var addressRegex = /^[a-zA-Z0-9\s,'-\/]{0,255}$/;
 	var postcodeRegex = /^[0-9]{4}$/;
 	var postData ={};
 
@@ -32,9 +32,6 @@ angular.module('app.authentication.patient.services',[])
 				if(!characterRegex.test(info.MiddleName)){
 					error.push({field:"MiddleName",message:"invalid value"});
 				}
-			}
-			else {
-				error.push({field:"MiddleName",message:"required"});
 			}
 
 			//validate LastName
@@ -187,9 +184,6 @@ angular.module('app.authentication.patient.services',[])
 					error.push({field:"MiddleName",message:"invalid value"});
 				}
 			}
-			else {
-				error.push({field:"MiddleName",message:"required"});
-			}
 
 			//validate LastName
 			if(info.LastName){
@@ -236,7 +230,16 @@ angular.module('app.authentication.patient.services',[])
 	};
 
 	PatientService.getDatatoDirective = function(){
-		return postData;
+		var info = {
+			FirstName:postData.FirstName,
+			LastName:postData.LastName,
+			PhoneNumber:postData.WorkPhoneNumber,
+			DOB:postData.DOB,
+			Address1:postData.Address1,
+			Suburb:postData.Suburb,
+			Postcode:postData.Postcode
+		};
+		return info;
 	}
 
 	PatientService.detailPatient = function(data){
@@ -268,6 +271,16 @@ angular.module('app.authentication.patient.services',[])
 		var searchPatient = api.all("patient/search-patient");
 		return searchPatient.post({data:data});
 	};
+
+	PatientService.getfileUID = function(data){
+		var getfileUID = api.all("patient/get-fileUID");
+		return getfileUID.post({data:data});
+	};
+
+	PatientService.getPatient = function(data){
+		var getPatient = api.all("patient/get-patient");
+		return getPatient.post({data:data});
+	}
 
 	return PatientService;
 })

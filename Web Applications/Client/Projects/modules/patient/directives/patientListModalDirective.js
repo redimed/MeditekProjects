@@ -1,16 +1,29 @@
+//DIRECTIVE PATIENT LIST MODAL : show patient info
+// <patient-listmodal 
+// 		on-uid="patientUID"       : patient UID was added in this to get data patient from this UID
+// 		on-showfull="false"       : this attribute allow you to show full template of this directive
+//									(true or false), if this attribute not require default is true
+// 		on-listshow="list"        : array list to show some columms in this directive 
+//                            		list={columm1 : true,columm2 : false,columm3 : true};
+//									if list not require, this directive will show 3 columm default 
+// 		ng-if="patientUID!=null"> : this attribute allow you to show this directive when patientUID exists
+// </patient-listmodal>
+
 var app = angular.module('app.authentication.patient.list.modal.directive',[]);
-app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $timeout, $cookies, CommonService){
+app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $timeout, $cookies, CommonService, $http){
 	return{
 		restrict: 'EA',
         scope: {
             uid: '=onUid',
+            isShowFull:'=onShowfull',
+            listShow:'=onListshow',
             onCancel: '='
         },
         controller:function($scope, FileUploader) {
 			// Profile Image
 		    var uploader = $scope.uploader = new FileUploader({
-		    	// url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
-		    	url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	url: o.const.uploadFileUrl,
 		    	headers:{Authorization:'Bearer '+$cookies.get("token")},
 		    	alias : 'uploadFile'
 		    });
@@ -23,75 +36,140 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    });
 
 		    // CALLBACKS
-		    uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-		        console.info('onWhenAddingFileFailed', item, filter, options);
-		    };
 		    uploader.onAfterAddingFile = function (fileItem) {
-		        console.info('onAfterAddingFile', fileItem);
+		    	if($scope.info.img){
+		    		$scope.info.FileType = 'ProfileImage';
+		    		PatientService.getfileUID($scope.info).then(function(response){
+		    			$scope.info.img_change = true;
+		    			$scope.imgDelete = response.data[0].UID;		    		
+		    		});
+		    	}
+		    	else{
+		    		$scope.info.img_change = false;
+		    	}
 		    };
+		    // uploader.onSuccessItem = function (fileItem, response, status, headers) {
+		    //     console.info('onSuccessItem', fileItem, response, status, headers);
+		    // };
 
-		    uploader.onAfterAddingAll = function (addedFileItems) {
-		        console.info('onAfterAddingAll', addedFileItems);
-		    };
-		    uploader.onBeforeUploadItem = function (item) {
-		        console.info('onBeforeUploadItem', item);
-		    };
-		    uploader.onProgressItem = function (fileItem, progress) {
-		        console.info('onProgressItem', fileItem, progress);
-		    };
-		    uploader.onProgressAll = function (progress) {
-		        console.info('onProgressAll', progress);
-		    };
-		    uploader.onSuccessItem = function (fileItem, response, status, headers) {
-		        console.info('onSuccessItem', fileItem, response, status, headers);
-		    };
-		    uploader.onErrorItem = function (fileItem, response, status, headers) {
-		        console.info('onErrorItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCancelItem = function (fileItem, response, status, headers) {
-		        console.info('onCancelItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
-		        console.info('onCompleteItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCompleteAll = function () {
-		        console.info('onCompleteAll');
-		    };
 		},
 		link: function(scope, elem, attrs){
-			var oriInfo,clearInfo;
 			var data = {};
+        	scope.info = {};
 			data.UID = scope.uid;
-			scope.info = {};
+			data.FileType = 'ProfileImage';
+			PatientService.detailPatient(data).then(function(response){
+				if(response.message=="success"){
+					scope.info = response.data[0];
+					scope.info.DOB = /^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/.test(scope.info.DOB)?scope.info.DOB:null;
+					scope.info.img = scope.info.FileUID?scope.info.FileUID:null;
+					scope.info.img_change = null;
+					oriInfo = angular.copy(scope.info);
+				}
+				else{
+					console.log(response.message);
+				}
+			});
+			scope.imgDelete;
+			var oriInfo,clearInfo;
+			
 			scope.infoChanged = function() {
 		        return angular.equals(oriInfo, scope.info);
-		    },
+		    };
 
 			scope.infoClear = function() {
 			    return !angular.equals(clearInfo, scope.info);
-		    },
+		    };
+
+		    scope.removeImg = function(){
+		    	scope.info.img_change =null;
+		    	scope.uploader.queue.length = 0;
+		    }
 
 		    $timeout(function(){
 		    	App.initComponents(); // init core components
 		    	ComponentsSelect2.init(); // init todo page
 	            ComponentsBootstrapSelect.init(); // init todo page
 	            ComponentsDateTimePickers.init(); // init todo page
+	            scope.checkcolumm =[];
+				scope.isShowFull = scope.isShowFull!=undefined&&scope.isShowFull!=null?scope.isShowFull:true;
+				if(scope.isShowFull==false){
+					document.getElementById("modalContent").className = "";
+					document.getElementById("modalBody").className = "";
+					document.getElementById("tabContent1").className = "";
+					document.getElementById("tabBable").className = "";
+					document.getElementById("tabContent2").className = "";
+					document.getElementById("Personal_info").className = "";
+
+				};
+				if(scope.listShow!= undefined && scope.listShow!=null && scope.listShow!='' && scope.listShow.length!=0){
+					if(scope.listShow.columm1==true){
+						scope.checkcolumm.push({have:"columm1"});
+					}
+					if(scope.listShow.columm2==true){
+						scope.checkcolumm.push({have:"columm2"});
+					}
+					if(scope.listShow.columm3==true){
+						scope.checkcolumm.push({have:"columm3"});
+					}
+				}
+				else{
+					scope.listShow={
+						columm1 : true,
+						columm2 : true,
+						columm3 : true
+					};
+				}
+				switch(scope.checkcolumm.length) {
+				    case 1:
+				        if(scope.checkcolumm[0].have!=null && scope.checkcolumm[0].have!=undefined
+				        	&& scope.checkcolumm[0].have!=''){
+				        	$('#'+scope.checkcolumm[0].have).before("<div class='col-md-4'></div>");
+				        }
+				        break;
+				    case 2:
+				        for(var i = 0; i < scope.checkcolumm.length; i++){
+				        	if(scope.checkcolumm[i].have!=null && scope.checkcolumm[i].have!=undefined
+				        	&& scope.checkcolumm[i].have!=''){
+				        		document.getElementById(scope.checkcolumm[i].have).className = "col-md-6";
+				        	}
+				        }
+				        break;
+				}
 		    },0);
 
-		    scope.changeImg = function(){
-		    	console.log(scope.uploader);
-		    }
-
+		    scope.checkDataNull = function(name){
+		    	if(scope.info[name].length==0)
+		    		scope.info[name] = null;
+		    };
 		    scope.savechange = function(){
 				PatientService.validate(scope.info)
 					.then(function(result){
 						scope.er ='';
 						scope.ermsg ='';
 						PatientService.updatePatient(scope.info).then(function(response){
-							scope.uploader.queue[0].formData[0]={};
-							scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
-							scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccountUID;
-							scope.uploader.uploadAll();
+							if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
+							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
+							   	if(scope.info.img){
+								   	$http({
+									  method: 'GET',
+									  url: o.const.fileBaseUrl+'/api/enableFile/false/'+scope.imgDelete
+									}).then(function (response) {
+										scope.uploader.queue[0].formData[0]={};
+										scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
+										scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+										scope.uploader.uploadAll();
+									},function (err) {
+										console.log(err);
+									});
+								}
+								else{
+									scope.uploader.queue[0].formData[0]={};
+									scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
+									scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+									scope.uploader.uploadAll();
+								}
+							}
 							toastr.success("update success!!!","SUCCESS");
 							scope.onCancel();
 						},function(err){
@@ -109,20 +187,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				})
 			},
 
-			PatientService.detailPatient(data).then(function(response){
-				console.log(scope.uploader.queue.length);
-				if(response.message=="success"){
-					scope.info = response.data[0];
-					scope.info.img = scope.info.FileUID?CommonService.ApiUploadFile+scope.info.FileUID:null;
-					scope.info.img_change=false;
-					scope.info.DOB = new Date(scope.info.DOB);
-					
-					oriInfo = angular.copy(scope.info);
-				}
-				else{
-					console.log(response.message);
-				}
-			});
+			
 
 			AuthenticationService.getListCountry().then(function(result){
 				scope.countries = result.data;

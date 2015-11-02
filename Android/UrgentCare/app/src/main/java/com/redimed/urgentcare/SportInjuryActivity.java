@@ -1,6 +1,7 @@
 package com.redimed.urgentcare;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -29,7 +30,9 @@ import com.redimed.urgentcare.utils.RetrofitClient;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -66,6 +69,7 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
         setContentView(R.layout.activity_sport_injury);
         // Initialize default values
         ButterKnife.bind(this);
+        loadDataInformation();
         mReadJsonData();
         // Initialize controls
         EditText[] allEditTextEventOnTouchListener = {txtFirstName,txtLastName,txtDOB,txtContactPhone,txtEmail,txtDescription, autoCompleteSuburb};
@@ -77,7 +81,51 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
         EdittextValidateFocus(allEditTextCheckRequire);
 
     }
+    public void loadDataInformation(){
+        SharedPreferences preferences = getSharedPreferences("information", MODE_PRIVATE);
+        txtFirstName.setText(preferences.getString("FirstName",""));
+        txtLastName.setText(preferences.getString("LastName", ""));
+        txtContactPhone.setText(preferences.getString("ContactPhone", ""));
+        autoCompleteSuburb.setText(preferences.getString("Suburb", ""));
+        txtDOB.setText(preferences.getString("DOB", ""));
+        txtEmail.setText(preferences.getString("Email", ""));
+    }
+    public void SaveInfomation(final SweetAlertDialog d, final SharedPreferences p){
+        d.setCancelText("Ok");
+        d.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                finish();
+            }
+        });
+        d.setConfirmText("Save information");
+        d.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sDialog) {
+                SharedPreferences.Editor editor = p.edit();
+                editor.putString("FirstName", txtFirstName.getText().toString());
+                editor.putString("LastName", txtLastName.getText().toString());
+                editor.putString("ContactPhone", txtContactPhone.getText().toString());
+                editor.putString("Suburb", autoCompleteSuburb.getText().toString());
+                editor.putString("DOB", txtDOB.getText().toString());
+                editor.putString("Email", txtEmail.getText().toString());
+                editor.commit();
+                finish();
+            }
+        });
+    }
 
+    public void CheckInfomation(final SweetAlertDialog d, SharedPreferences p){
+        if (!txtFirstName.getText().toString().trim().equalsIgnoreCase(p.getString("FirstName","").trim())
+                || !txtLastName.getText().toString().trim().equalsIgnoreCase(p.getString("LastName","").trim())
+                || !txtContactPhone.getText().toString().trim().equalsIgnoreCase(p.getString("ContactPhone","").trim())
+                || !autoCompleteSuburb.getText().toString().trim().equalsIgnoreCase(p.getString("Suburb","").trim())
+                || !txtDOB.getText().toString().trim().equalsIgnoreCase(p.getString("DOB","").trim())
+                || !txtEmail.getText().toString().trim().equalsIgnoreCase(p.getString("Email","").trim()))
+        {
+            SaveInfomation(d, p);
+        }
+    }
     public void mReadJsonData() {
         try {
             File f = new File(getStringValue(R.string.urlFile) + getPackageName() + getStringValue(R.string.fileName));
@@ -294,11 +342,12 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
                 }
                 objectUrgentRequest.setEmail(txtEmail.getText().toString());
                 objectUrgentRequest.setDescription(txtDescription.getText().toString());
-                objectUrgentRequest.setGpReferral(((RadioButton) findViewById(radioGroupGPReferral.getCheckedRadioButtonId())).getHint().toString());
+                objectUrgentRequest.setGpReferral((radioGroupGPReferral.getCheckedRadioButtonId() == -1) ? null : ((RadioButton) findViewById(radioGroupGPReferral.getCheckedRadioButtonId())).getHint().toString());
                 objectUrgentRequest.setHandTherapy((checkboxHandTherapy.isChecked() != true) ? "N" : "Y");
                 objectUrgentRequest.setPhysiotherapy((checkboxPhysiotherapy.isChecked() != true) ? "N" : "Y");
                 objectUrgentRequest.setSpecialist((checkboxSpecialist.isChecked() != true) ? "N" : "Y");
                 objectUrgentRequest.setServiceType(getResources().getString(R.string.serviceSportInjury));
+                objectUrgentRequest.setRequestDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss Z").format(new Date()));
                 objectUrgentRequest.setSuburb(autoCompleteSuburb.getText().toString());
                 // Make Appointment Process
                 final SweetAlertDialog progressDialog = new SweetAlertDialog(SportInjuryActivity.this, SweetAlertDialog.PROGRESS_TYPE);
@@ -320,18 +369,23 @@ public class SportInjuryActivity extends AppCompatActivity implements CreateDate
                     @Override
                     public void success(JsonObject jsonObject, Response response) {
                         progressDialog.dismissWithAnimation();
+                        File f = new File("/data/data/" + getPackageName() + "/shared_prefs/information.xml");
+                        SharedPreferences preferences = getSharedPreferences("information", MODE_PRIVATE);
                         final SweetAlertDialog pDialog = new SweetAlertDialog(SportInjuryActivity.this, SweetAlertDialog.SUCCESS_TYPE);
                         pDialog.setTitleText(getResources().getString(R.string.dailogSuccess));
                         pDialog.setContentText(getResources().getString(R.string.contentDialogSuccessAppointment));
-                        pDialog.setCancelable(false);
-                        pDialog.show();
                         pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-                                pDialog.dismissWithAnimation();
                                 finish();
                             }
                         });
+                        if (f.exists()) {
+                            CheckInfomation(pDialog, preferences);
+                        } else {
+                            SaveInfomation(pDialog, preferences);
+                        }
+                        pDialog.show();
                     }
 
                     @Override

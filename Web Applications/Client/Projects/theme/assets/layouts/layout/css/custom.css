@@ -17,6 +17,17 @@
 	background-size: 100% 46px ;
 }
 
+.my-modal-body { 
+    padding: 0em 2em 2em 2em;
+}
+/*fix label input_md*/
+.form-group.form-md-line-input .form-control~label {
+    font-size: 16px;
+}
+/* fix font panel*/
+.panel-body {
+    font-size: 14px !important;
+}
 
 .page-header.navbar .page-logo .logo-default {
     margin: 0px 0 0 0;
@@ -35,7 +46,9 @@
     }
 }
 
-
+ul.my-ul {
+    list-style-type: none;
+}
 .my-modal-header{
 	background-color: #36c6d3;
     color: #fff;
@@ -67,6 +80,7 @@
 }
 
 .tableSort { float: right; }
+.sortDataTable { float: right; }
 
 #recaptcha_widget_div{
     display: none;
@@ -83,9 +97,50 @@
 .mix-grid .mix a.mix-link, .mix-grid .mix a.mix-preview {
     background: #ccc;
 }
-.nav-tabs>li>a {
-    background-color: #eee;
+
+/*begin custom left sitebar*/
+
+.tabs-left.nav-tabs>li>i {
+    width: 37px;
+    height: 37px;
+    display: inline-block;
+    color: #b9cbd5;
+    font-size: 15px;
+    padding: 12px 10px 10px 8px;
+    margin: 0 8px 0 0;
+    text-align: center;
+    background: #e0eaf0!important;
 }
+
+.tabs-left.nav-tabs>li>a {
+    color: #557386;
+    font-size: 1.25em;
+    background-color: #f0f6fa;
+    border-left: solid 5px #c4d5df;
+}
+.tabs-left.nav-tabs>li>a{
+    font: 1.5em !important;
+    padding: 25px 15px;
+}
+.tabs-left.nav-tabs>li>a:focus, 
+.tabs-left.nav-tabs>li>a:hover {
+   border: none;
+   border-left: 5px solid #99a8b1!important;
+   background-color: #c4d5df;
+}
+
+.tabs-left.nav-tabs>li.active>a, 
+.tabs-left.nav-tabs>li.active>a:hover>li.active>a:focus {
+    border: none;
+    color: white;
+    background-color: #169ef4;
+    border-left: solid 5px #0c91e5 !important;
+}
+/*end custom left sitebar*/
+
+/*.nav-tabs>li>a {
+    background-color: #eee;
+}*/
 /*custom time picker*/
 .bootstrap-timepicker-widget.dropdown-menu.open {
     z-index: 1050 !important;

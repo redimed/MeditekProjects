@@ -1,7 +1,7 @@
 module.exports={
 	'FileUpload/FileUploadController':{
 		'UploadFile':'hasToken',
-		'DownloadFile':true,
+		'DownloadFile':'hasToken',
 		'EnableFile':true,
 	}
 }//test

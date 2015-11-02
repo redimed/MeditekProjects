@@ -1,6 +1,7 @@
 module.exports={
 	'UserAccount/v0_1/UserAccountController':{
-	    'Test':['checkCookieToken'],
+      // 'Test':['checkCookieToken'],
+	    'Test':['hasToken'],
 	    'TestURL':'checkVersion',
 	    'CreateUserAccount':['hasToken','isAdmin'],
 	    'DisableUserAccount':['hasToken','isAdmin'],
@@ -16,7 +17,7 @@ module.exports={
 
   	'UserAccount/v0_1/AuthController':{
   		'login':true,
-  		'logout':true
+  		'logout':'hasToken'
   	},
 
   	'UserAccount/v0_1/UserActivationController':{

@@ -108,14 +108,68 @@
 									<div style="margin:2em;">
 										<div class="row">
 											<div class="col-md-4">
+												<h4 class="bold">Profile Image</h4>
+												<hr>
+												<!-- ProfileImage -->
+												<div class="form-group">
+													<div class="fileinput fileinput-new" data-provides="fileinput">
+														<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
+															<!-- <img ng-src="{{profileImage}}"> -->
+															<img src="theme/assets/global/images/no_person.jpg">
+														</div>
+														<div>
+															<span class="btn green btn-file">
+															<span class="fileinput-new">
+															Select Image </span>
+															<span class="fileinput-exists">
+															Change </span>
+															<input type="file" nv-file-select uploader="uploaders">
+															</span>
+															<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+															Remove </a>
+														</div>
+														<br>												
+
+													</div>
+													<div class="clearfix margin-top-10"></div>
+												</div>
+												<!-- end ProfileImage -->
+												<h4><b>Signature</b></h4>
+												<hr>
+												<!-- signature -->
+												<div class="form-group">
+													<div class="fileinput fileinput-new" data-provides="fileinput">
+														<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
+															<!-- <img ng-src="{{signature}}"> -->
+															<img src="theme/assets/global/images/no_signature.png">
+														</div>
+														<div>
+															<span class="btn green btn-file">
+															<span class="fileinput-new">
+															Signature </span>
+															<span class="fileinput-exists">
+															Change </span>
+															<input type="file" nv-file-select uploader="uploader">
+															</span>
+															<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+															Remove </a>
+														</div>
+														<br>												
+
+													</div>
+													<div class="clearfix margin-top-10"></div>
+												</div>
+												<!-- end signature -->
+											</div>
+											<div class="col-md-4">
 												<h4><b>Personal Information</b></h4>
 												<hr>
 												<!-- begin title -->
 												<div class="form-group">
 													<label class="control-label col-md-5">Title</label>
 													<div class="col-md-7">
-														<select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title">
-															<option value="">Select Title</option>
+														<select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Titles">
+															<option value=''>Select Title</option>
 														</select>
 													</div>
 												</div>
@@ -150,7 +204,7 @@
 													<div class="col-md-7">
 														<div class="input-icon">
 															<i class="fa fa-calendar"></i>
-	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="info.DOB">
+	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="info.DOB" ng-pattern="/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/">
 														</div>
 													</div>
 												</div>
@@ -175,7 +229,7 @@
 												<div class="form-group">
 													<label class="control-label col-md-5">Provider Number</label>
 													<div class="col-md-7">
-														<input type="text" placeholder="Provider Number" class="form-control" only-number ng-model="info.ProviderNumber">
+														<input type="text" placeholder="Provider Number" class="form-control" ng-model="info.ProviderNumber">
 													</div>
 												</div>
 												<!-- Provider Number -->
@@ -281,33 +335,6 @@
 													</div>
 												</div>
 												<!-- end Country -->
-											</div>
-											<div class="col-md-4">
-												<h4><b>Signature</b></h4>
-												<hr>
-												<!-- signature -->
-												<div class="form-group">
-													<div class="fileinput fileinput-new" data-provides="fileinput">
-														<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
-															<img ng-src="{{signature}}">
-														</div>
-														<div>
-															<span class="btn green btn-file">
-															<span class="fileinput-new">
-															Signature </span>
-															<span class="fileinput-exists">
-															Change </span>
-															<input type="file" nv-file-select uploader="uploader">
-															</span>
-															<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-															Remove </a>
-														</div>
-														<br>												
-
-													</div>
-													<div class="clearfix margin-top-10"></div>
-												</div>
-												<!-- end signature -->
 											</div>
 										</div>
 									</div>

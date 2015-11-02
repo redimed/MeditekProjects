@@ -60,7 +60,7 @@ module.exports = {
             type: Sequelize.STRING(45),
             allowNull: true,
             validate: {
-                is:/^(\d{4})-(\d{1,2})-(\d{1,2}) 00:00:00$/
+                is:/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/
             }
         },
         Gender: {
@@ -81,14 +81,14 @@ module.exports = {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
-                is:/^[a-zA-Z0-9\s]{0,255}$/
+                is:/^[a-zA-Z0-9\s\/]{0,255}$/
             }
         },
         Address2: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
-                is:/^[a-zA-Z0-9\s]{0,255}$/
+                is:/^[a-zA-Z0-9\s\/]{0,255}$/
             }
         },
         Suburb: {
@@ -102,7 +102,7 @@ module.exports = {
             type: Sequelize.STRING(100),
             allowNull: true,
             validate: {
-                is:/^[0-9]{4,10}$/
+                is:/^[0-9]{0,10}$/
             }
         },
         State: {

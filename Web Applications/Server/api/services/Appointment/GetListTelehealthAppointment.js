@@ -10,7 +10,7 @@ module.exports = function(data, userInfo) {
     var pagination = Services.GetPaginationAppointment(data, userInfo);
     //get limit, offset
     Appointment.findAndCountAll({
-            attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status', 'Enable'],
+            attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status', 'Enable', 'CreatedDate'],
             include: [{
                 model: TelehealthAppointment,
                 attributes: ['UID', 'RefName', 'RefDate', 'Correspondence'],

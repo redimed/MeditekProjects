@@ -1,0 +1,240 @@
+<div class="row profile-account">
+    <div class="col-md-3 col-sm-4 col-xs-12">
+        <!-- <ul class="ver-inline-menu tabbable margin-bottom-10"> -->
+        <ul class="nav nav-tabs tabs-left">
+            <li class="active">
+                <a data-toggle="tab" href="index.html#tab_medicalHistory">
+                    Relevant Past Medical History </a>
+                    <span class="after"> </span>
+            </li>
+            <li>
+                <a data-toggle="tab" href="index.html#tab_socialFactor">
+                    Relevant Social Factors </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="index.html#tab_allergy">
+                    Allergies </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="index.html#tab_medication">
+                    Current Medication </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="index.html#tab_relevant">
+                    Relevant Investigation and Tests</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="index.html#tab_pathology">
+                    Pathology Provider and Radiology Provider </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+        <div class="tab-content">
+            <div id="tab_medicalHistory" class="tab-pane active">
+                <h4>Relevant Past Medical History</h4>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <textarea class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="table-scrollable table-scrollable-borderless">
+                            <table class="table table-hover table-light">
+                                <thead>
+                                    <tr class="uppercase">
+                                        <th width="30%">Name</th>
+                                        <th ng-show="uploader.isHTML5">Size</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in uploader.queue">
+                                        <td><strong>{{ item.file.name }}</strong></td>
+                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab_socialFactor" class="tab-pane">
+                <h4>Relevant Social Factors</h4>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <textarea class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="table-scrollable table-scrollable-borderless">
+                            <table class="table table-hover table-light">
+                                <thead>
+                                    <tr class="uppercase">
+                                        <th width="30%">Name</th>
+                                        <th ng-show="uploader.isHTML5">Size</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in uploader.queue">
+                                        <td><strong>{{ item.file.name }}</strong></td>
+                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab_allergy" class="tab-pane">
+                <h4>Allergy</h4>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <textarea class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="table-scrollable table-scrollable-borderless">
+                            <table class="table table-hover table-light">
+                                <thead>
+                                    <tr class="uppercase">
+                                        <th width="30%">Name</th>
+                                        <th ng-show="uploader.isHTML5">Size</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in uploader.queue">
+                                        <td><strong>{{ item.file.name }}</strong></td>
+                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab_medication" class="tab-pane">
+                <h4>Current Medication</h4>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <textarea class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="table-scrollable table-scrollable-borderless">
+                            <table class="table table-hover table-light">
+                                <thead>
+                                    <tr class="uppercase">
+                                        <th width="30%">Name</th>
+                                        <th ng-show="uploader.isHTML5">Size</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in uploader.queue">
+                                        <td><strong>{{ item.file.name }}</strong></td>
+                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab_relevant" class="tab-pane">
+                <h4>Relevant Investigation and Tests (Please Attach Results)</h4>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <textarea class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="table-scrollable table-scrollable-borderless">
+                            <table class="table table-hover table-light">
+                                <thead>
+                                    <tr class="uppercase">
+                                        <th width="30%">Name</th>
+                                        <th ng-show="uploader.isHTML5">Size</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in uploader.queue">
+                                        <td><strong>{{ item.file.name }}</strong></td>
+                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab_pathology" class="tab-pane">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group form-md-line-input">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="">
+                                <label class="control-label">Pathology provider</label>
+                                <div class="form-control-focus"> </div>
+                                <i class="glyphicon glyphicon-edit"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group form-md-line-input">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="">
+                                <label class="control-label">Radiology provider</label>
+                                <div class="form-control-focus"> </div>
+                                <i class="glyphicon glyphicon-edit"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                        <label class="control-label">Other Notes</label>
+                        <textarea class="form-control" rows="5"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end col-md-9-->
+</div>

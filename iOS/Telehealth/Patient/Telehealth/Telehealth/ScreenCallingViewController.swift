@@ -33,13 +33,14 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     @IBOutlet weak var buttonHoldCall: DesignableButton!
     @IBOutlet weak var buttonEndCall: DesignableButton!
     @IBOutlet weak var buttonMuteCall: DesignableButton!
+    let panRec = UIPanGestureRecognizer()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//         UIDevice.currentDevice().setValue(UIInterfaceOrientation.Portrait.rawValue, forKey: "orientation")
-        let apiKey = savedData.data[0]["apiKey"]
-        let sessionId = savedData.data[0]["sessionId"]
-        let token = savedData.data[0]["token"]
+        let apiKey = savedData.data[0]["apiKey"] != nil ? savedData.data[0]["apiKey"] : ""
+        let sessionId = savedData.data[0]["sessionId"] != nil ? savedData.data[0]["sessionId"] : ""
+        let token = savedData.data[0]["token"] != nil ? savedData.data[0]["token"] : ""
         print("token calling : \(token)")
         ApiKey = String(apiKey)
         // Replace with your generated session ID
@@ -52,6 +53,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         if let uuid = defaults.valueForKey("uid") as? String {
             uuidFrom = uuid
         }
+        NSNotificationCenter.defaultCenter().removeObserver(self,name:"endCallAnswer",object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "endCallAnswer", name: "endCallAnswer", object: nil)
         
     }
@@ -61,12 +63,13 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         
         if publisher?.publishVideo.boolValue == true {
             publisher?.publishVideo = false
+            publisher?.view.hidden = true
             sender.setTitle(FAIcon.play, forState: .Normal)
 
         } else {
             publisher?.publishVideo = true
             sender.setTitle(FAIcon.pause, forState: .Normal)
-            
+            publisher?.view.hidden = false
         }
     }
     //Giap: On or Off mic
@@ -80,6 +83,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         }
     }
     @IBAction func buttonEndCallAction(sender: DesignableButton) {
+        emitDataToServer(MessageString.CallEndCall)
        endCallAnswer()
     }
     
@@ -95,10 +99,12 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         if UIDevice.currentDevice().orientation.isLandscape.boolValue {
             print("landscape")
             print("Width:\(UIScreen.mainScreen().bounds.width) , height:\(UIScreen.mainScreen().bounds.height)")
+            
         } else {
             print("portraight")
             print("Width:\(UIScreen.mainScreen().bounds.width) , height:\(UIScreen.mainScreen().bounds.height)")
             
+
         }
     }
     override func didReceiveMemoryWarning() {
@@ -148,13 +154,22 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
             showAlert(error.localizedDescription)
         }
         view.addSubview((publisher?.view)!)
-        view.addSubview(buttonEndCall)
-        view.addSubview(buttonHoldCall)
-        view.addSubview(buttonMuteCall)
+//        view.addSubview(buttonEndCall)
+//        view.addSubview(buttonHoldCall)
+//        view.addSubview(buttonMuteCall)
+        panRec.addTarget(self, action: "draggedView:")
         publisher!.view.frame = CGRect(x: 0.0, y: 0, width: videoWidthSub, height: videoHeightSub)
+        publisher?.view.userInteractionEnabled = true
+        publisher?.view.addGestureRecognizer(panRec)
         
     }
-    
+    func draggedView(sender:UIPanGestureRecognizer){
+        self.view.bringSubviewToFront(sender.view!)
+        let translation = sender.translationInView(self.view)
+        sender.view!.center = CGPointMake(sender.view!.center.x + translation.x, sender.view!.center.y + translation.y)
+        sender.setTranslation(CGPointZero, inView: self.view)
+    }
+
     /**
     * Instantiates a subscriber for the given stream and asynchronously begins the
     * process to begin receiving A/V content for this stream. Unlike doPublish,
@@ -228,7 +243,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     
     func session(session: OTSession, connectionDestroyed connection : OTConnection) {
         NSLog("session connectionDestroyed (\(connection.connectionId))")
-
+        endCallAnswer()
     }
     
     func session(session: OTSession, didFailWithError error: OTError) {
@@ -240,8 +255,8 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     func subscriberDidConnectToStream(subscriberKit: OTSubscriberKit) {
         NSLog("subscriberDidConnectToStream (\(subscriberKit))")
         
-        if let view = subscriber?.view {
-            view.frame =  CGRect(x: 0.0, y: 0, width: videoWidth, height: videoHeight)
+        if let views = subscriber?.view {
+            views.frame =  CGRect(x: 0.0, y: 0, width: view.bounds.width, height: view.bounds.height)
             
         }
         //add button in subcriber
@@ -302,10 +317,22 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     func endCallAnswer() {
         sessionDidDisconnect(session!)
         doUnsubscribe()
-        session?.disconnect()
-         emitDataToServer(MessageString.CallEndCall)
-        let homeMain = self.storyboard?.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
-        self.presentViewController(homeMain, animated: true, completion: nil)
+       self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    override func shouldAutorotate() -> Bool {
+        if (UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft ||
+            UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight ||
+            UIDevice.currentDevice().orientation == UIDeviceOrientation.Unknown) {
+                return false
+        }
+        else {
+            return true
+        }
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.Portrait ,UIInterfaceOrientationMask.PortraitUpsideDown]
     }
 
     

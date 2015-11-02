@@ -58,63 +58,53 @@
                     android:layout_height="fill_parent"
                     android:text="@string/lblfaq1"
                     android:id="@+id/lbl1"
+                    android:textColor="@android:color/black"
                     android:textSize="17sp"/>
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:text="REDIMED has 3 clinics in WA."
                     android:textSize="15sp"
+                    android:textColor="@android:color/black"
                     android:layout_marginTop="5dp"/>
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:orientation="vertical"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Joondalup"
+                        android:textColor="@android:color/black"
+                        android:text="Joondalup - 81 Mclarty Ave 6027"
                         android:textSize="15sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="81 Mclarty Ave 6027"
-                        android:textSize="15sp"
-                        android:layout_marginTop="5px"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:orientation="vertical"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Belmont"
+                        android:textColor="@android:color/black"
+                        android:text="Belmont - 1 Frederick St 6104"
                         android:textSize="15sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1 Frederick St 6104"
-                        android:textSize="15sp"
-                        android:layout_marginTop="5dp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:orientation="vertical"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rockingham"
+                        android:textColor="@android:color/black"
+                        android:text="Rockingham - 1/23 Chalgrove Ave 6168"
                         android:textSize="15sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1/23 Chalgrove Ave 6168"
-                        android:textSize="15sp"
-                        android:layout_marginTop="5dp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -124,6 +114,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:textColor="@android:color/black"
                         android:text="@string/lblfaq2"
                         android:textSize="17sp"/>
                 </LinearLayout>
@@ -135,6 +126,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:textColor="@android:color/black"
                         android:text="REDIMED clinics are open for appointments from 8.00am until 5.00pm Monday to Friday."
                         android:textSize="15sp"/>
                 </LinearLayout>
@@ -147,6 +139,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:textColor="@android:color/black"
                         android:text="@string/lblfaq3"
                         android:textSize="17sp"/>
                 </LinearLayout>
@@ -158,7 +151,8 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:text="Yes, you need a GP referral to see our specialists, orthopaedic and plastic surgeon for sports injury."
+                        android:textColor="@android:color/black"
+                        android:text="No, you don’t need a referral to be seen in our sport injury clinic with GP, physiotherapist and hand therapist."
                         android:textSize="15sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -169,8 +163,9 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:text="No, you do not need a GP referral for physiotherapist and hand therapist."
-                        android:textSize="17sp"/>
+                        android:textColor="@android:color/black"
+                        android:text="For work related injury you don’t need a GP referral but you should notify your employer prior to booking appointment"
+                        android:textSize="15sp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -180,7 +175,8 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:text="You will need to notify your employer for work related injury prior to booking appointment. "
+                        android:textColor="@android:color/black"
+                        android:text="Yes, you need a GP referral to see our specialists, orthopaedic  and plastic surgeon for surgery or complex management."
                         android:textSize="15sp"/>
                 </LinearLayout>
 
@@ -193,6 +189,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:textColor="@android:color/black"
                         android:text="@string/lblfaq4"
                         android:textSize="17sp"/>
                 </LinearLayout>
@@ -204,6 +201,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:textColor="@android:color/black"
                         android:text="REDIMED is a private clinic and as such there will be a fee payable for consultations, treatments and surgeries. This fee will vary depending on a number of factors. Please contact our reception team on 9230 0900 for specific information regarding your fees."
                         android:textSize="15sp"/>
                 </LinearLayout>
@@ -217,6 +215,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:textColor="@android:color/black"
                         android:text="@string/lblfaq5"
                         android:textSize="17sp"/>
                 </LinearLayout>
@@ -228,6 +227,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:textColor="@android:color/black"
                         android:text="You are able to claim a portion of your consultation with a Specialist or GP back from Medicare if you have provided a valid referral (if required) and your Medicare card. Medicare will not rebate for Physiotherapy or Hand therapy however this may be claimable through your private health insurance depending on your level of cover."
                         android:textSize="15sp"/>
                 </LinearLayout>
@@ -241,6 +241,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:textColor="@android:color/black"
                         android:text="@string/lblfaq6"
                         android:textSize="17sp"/>
                 </LinearLayout>
@@ -252,7 +253,8 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:text="Yes. REDIMED will see private, public, workers compensation, and DVA. There will still be costs associated with appointments. For more information please contact reception on 0230 0900"
+                        android:textColor="@android:color/black"
+                        android:text="Yes. REDIMED will see private, public, workers compensation, and DVA. There will still be costs associated with appointments. For more information please contact reception on 9230 0900"
                         android:textSize="15sp"/>
                 </LinearLayout>
 
@@ -265,6 +267,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:textColor="@android:color/black"
                         android:text="@string/lblfaq7"
                         android:textSize="17sp"/>
                 </LinearLayout>
@@ -276,6 +279,7 @@
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:textColor="@android:color/black"
                         android:text="In most cases we will have an available appointment within 1 week. Please contact reception on 9230 0900 for the next available appointment. "
                         android:textSize="15sp"/>
                 </LinearLayout>

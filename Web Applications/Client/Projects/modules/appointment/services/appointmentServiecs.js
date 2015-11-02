@@ -32,8 +32,10 @@ angular.module("app.authentication.appointment.services",[])
 			return api.all('doctorIdappointment').post({data:data});
 		};
 		services.SendRequest = function(requestInfo){
-			console.log('requestInfo',requestInfo);
 			return api.all('appointment-telehealth-request').post({data:requestInfo});
+		};
+		services.GetDetailPatientByUid = function(data){
+			return api.all('patient/detail-patient').post({data:data});
 		};
 		return services;
 	});

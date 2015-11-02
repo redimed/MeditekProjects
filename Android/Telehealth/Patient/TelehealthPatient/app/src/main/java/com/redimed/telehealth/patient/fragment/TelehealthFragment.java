@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -8,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -55,7 +57,7 @@ public class TelehealthFragment extends Fragment {
     private SharedPreferences telehealthPatient;
     private RegisterApi registerApi;
     private Gson gson;
-    private String authToken, coreToken, fromTime, toTime, status, firstDoctor, middleDoctor, lastDoctor, emailDoctor, workPhoneDoctor, appointmentUID;
+    private String fromTime, toTime, status, firstDoctor, middleDoctor, lastDoctor, emailDoctor, workPhoneDoctor, appointmentUID;
     private JsonObject patientJson, appointmentJson;
     private Patient patient;
     private Appointment appointment;
@@ -96,7 +98,6 @@ public class TelehealthFragment extends Fragment {
         btnViewImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Fragment fragment = new ImageAppointmentFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("accountUID", telehealthPatient.getString("accountUID", null));
@@ -108,22 +109,18 @@ public class TelehealthFragment extends Fragment {
                 fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
             }
         });
-
         return v;
     }
 
     //    Get single or list Appointment to Patient
     private void GetAppointmentPatient() {
-
         telehealthPatient = v.getContext().getSharedPreferences("TelehealthUser", v.getContext().MODE_PRIVATE);
-        authToken = "Bearer " + telehealthPatient.getString("token", null);
-        coreToken = "Bearer " +telehealthPatient.getString("coreToken", null);
         patient.setUID(telehealthPatient.getString("patientUID", null));
         patient.setLimit("1");
 
         patientJson = new JsonObject();
         patientJson.addProperty("data", gson.toJson(patient));
-        registerApi.getAppointmentPatients(authToken, coreToken, patientJson, new Callback<JsonObject>() {
+        registerApi.getAppointmentPatients(patientJson, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
 
@@ -157,18 +154,18 @@ public class TelehealthFragment extends Fragment {
         appointment.setUID(appointmentUID);
         appointmentJson = new JsonObject();
         appointmentJson.addProperty("data", gson.toJson(appointment));
-        registerApi.getAppointmentDetails(authToken, coreToken, appointmentJson, new Callback<JsonObject>() {
+        registerApi.getAppointmentDetails(appointmentJson, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 if (jsonObject.get("data").getAsJsonObject() != null){
                     String doctor = jsonObject.get("data").getAsJsonObject().get("Doctors").toString();
                     Doctor[] doctors = gson.fromJson(doctor, Doctor[].class);
 
-                    fromTime = jsonObject.get("data").getAsJsonObject().get("FromTime").getAsString() == null ?
+                    fromTime = jsonObject.get("data").getAsJsonObject().get("FromTime").isJsonNull() ?
                             "NONE" : jsonObject.get("data").getAsJsonObject().get("FromTime").getAsString();
-                    toTime = jsonObject.get("data").getAsJsonObject().get("ToTime").getAsString() == null ?
+                    toTime = jsonObject.get("data").getAsJsonObject().get("ToTime").isJsonNull() ?
                             "NONE" : jsonObject.get("data").getAsJsonObject().get("ToTime").getAsString();
-                    status = jsonObject.get("data").getAsJsonObject().get("Status").getAsString() == null ?
+                    status = jsonObject.get("data").getAsJsonObject().get("Status").isJsonNull() ?
                             "NONE" : jsonObject.get("data").getAsJsonObject().get("Status").getAsString();
 
                     if (doctors.length > 0) {
@@ -176,7 +173,7 @@ public class TelehealthFragment extends Fragment {
                             firstDoctor = doctors[i].getFirstName() == null ? " " : doctors[i].getFirstName();
                             middleDoctor = doctors[i].getMiddleName() == null ? " " : doctors[i].getMiddleName();
                             lastDoctor = doctors[i].getLastName() == null ? " " : doctors[i].getLastName();
-                            emailDoctor = doctors[i].getEmail();
+                            emailDoctor = doctors[i].getEmail() == null ? " " : doctors[i].getEmail();
                             workPhoneDoctor = doctors[i].getWorkPhoneNumber() == null ? "NONE" : doctors[i].getWorkPhoneNumber();
                         }
                     } else {
@@ -187,17 +184,31 @@ public class TelehealthFragment extends Fragment {
                         workPhoneDoctor = " ";
                     }
 
-                    lblFromTime.setText(ConvertDateTime(fromTime));
-                    lblToTime.setText(ConvertDateTime(toTime));
-                    if (status.equalsIgnoreCase("Approved")) {
-                        lblStatus.setTextColor(ContextCompat.getColor(v.getContext(), R.color.approved));
-                    } else {
-                        lblStatus.setTextColor(ContextCompat.getColor(v.getContext(), R.color.unapproved));
+                    if (fromTime.equalsIgnoreCase("NONE") || toTime.equalsIgnoreCase("NONE")){
+//                        AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
+//                        alertDialog.setTitle(R.string.title_dialog_appt);
+//                        alertDialog.setMessage(v.getContext().getResources().getString(R.string.message_dialog_appt));
+//
+//                        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Close", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                ((MainActivity) v.getContext()).Display(0);
+//                            }
+//                        });
+//                        alertDialog.show();
+                    }else {
+                        lblFromTime.setText(ConvertDateTime(fromTime));
+                        lblToTime.setText(ConvertDateTime(toTime));
+                        if (status.equalsIgnoreCase("Approved")) {
+                            lblStatus.setTextColor(ContextCompat.getColor(v.getContext(), R.color.approved));
+                        } else {
+                            lblStatus.setTextColor(ContextCompat.getColor(v.getContext(), R.color.unapproved));
+                        }
+                        lblStatus.setText(status);
+                        lblDoctorName.setText(firstDoctor + middleDoctor + lastDoctor);
+                        lblDoctorEmail.setText(emailDoctor);
+                        lblDoctorWorkPhone.setText(workPhoneDoctor);
                     }
-                    lblStatus.setText(status);
-                    lblDoctorName.setText(firstDoctor + middleDoctor + lastDoctor);
-                    lblDoctorEmail.setText(emailDoctor);
-                    lblDoctorWorkPhone.setText(workPhoneDoctor);
 
                     String fileUpload = jsonObject.get("data").getAsJsonObject().get("FileUploads").toString();
                     FileUpload[] fileUploads = gson.fromJson(fileUpload, FileUpload[].class);
@@ -215,7 +226,6 @@ public class TelehealthFragment extends Fragment {
     }
 
     private void GetFileUpload(FileUpload[] fileUploads) {
-
         for (int i = 0; i < fileUploads.length; i++){
             urlPicasso.add(Config.apiURLDownload + fileUploads[i].getUID());
             Log.d(TAG, urlPicasso.get(i));
@@ -252,7 +262,6 @@ public class TelehealthFragment extends Fragment {
         }
         SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String finalDate = timeFormat.format(myDate);
-
         return finalDate;
     }
 }

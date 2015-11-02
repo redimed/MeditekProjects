@@ -9,12 +9,18 @@ app.controller('loginCtrl', function($scope, $state, $cookies, UnauthenticatedSe
             toastr.error("Please Input Your Username And Password!", "Error");
         } else {
             UnauthenticatedService.login($scope.user).then(function(data) {
-                $cookies.putObject("userInfo", data.user);
-                $cookies.put("token", data.token);
-                $state.go("authentication.home.list")
+                if(data.user.Activated == 'Y'){
+                    $cookies.putObject("userInfo", data.user);
+                    $cookies.put("token", data.token);
+                    $state.go("authentication.home.list")
+                } else {
+                    $cookies.putObject("userInfo", {UID: data.user.UID});
+                    $state.go('unAuthentication.activation',null,{reload:true});
+                }
+               
             }, function(err) {
                 $scope.laddaLoading = false;
-                toastr.error(err.data.message, "Error");
+                toastr.error(!err.data.message ? err.data.ErrorType : err.data.message, "Error");
             })
         }
     };

@@ -1,1 +1,50 @@
-sdfghjkl
+<!-- <div class="modal-content">
+    <div class="modal-header my-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()"></button>
+        <h4 class="modal-title bold">
+            <i class="glyphicon glyphicon-th-list"></i>
+            WA Appointments
+        </h4>
+    </div>
+    <div class="modal-body">
+        <detail-waappoint></detail-waappoint>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn default" data-dismiss="modal" ng-click="close()">
+            <i class="icon-action-undo"></i> Close
+        </button>
+        <button type="button" class="btn green">
+            <i class="glyphicon glyphicon-save"></i> Save changes
+        </button>
+    </div>
+</div> -->
+
+<div class="portlet box green" style="margin-bottom:0px;">
+    <div class="portlet-title bold uppercase" style="padding:10px;">
+        <div class="caption">
+            <i class="glyphicon glyphicon-th-list"></i>
+            <span class="caption-subject">Western Australia Appointment</span>
+        </div>
+        <div class="tools">
+            <a class="remove" ng-click="close()"></a>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <form>
+            <div class="form-body margin-bottom-10">
+                <detail-waappoint></detail-waappoint>
+            </div>
+            <div class="form-actions">
+                <div class="row pull-right">
+                    <div class="col-md-12">
+                        <button class="btn default" ng-click="close()">
+                            <i class="icon-action-undo"></i> Close</button>
+                        <button class="btn green" ng-click="save()">
+                            <i class="glyphicon glyphicon-save"></i> Save change
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

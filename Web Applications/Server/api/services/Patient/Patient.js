@@ -4,6 +4,29 @@ var $q = require('q');
 var moment = require('moment');
 var check  = require('../HelperService');
 
+//default attributes
+var defaultAtrributes = ['ID',
+	'UID',
+	'UserAccountID',
+	'Title',
+	'FirstName',
+	'MiddleName',
+	'LastName',
+	'DOB',
+	'Gender',
+	'Occupation',
+	'Address1',
+	'Address2',
+	'Suburb',
+	'Postcode',
+	'State',
+	'CountryID',
+	'Email',
+	'HomePhoneNumber',
+	'WorkPhoneNumber',
+	'Enable'
+];
+
 //generator Password
 var generatePassword = require('password-generator');
 
@@ -90,10 +113,12 @@ module.exports = {
 				}
 			}
 
-			if(data.DOB!=null && data.DOB!=undefined){
-				if(!/^(\d{4})-(\d{1,2})-(\d{1,2}) 00:00:00$/.test(data.DOB)){
-					errors.push({field:"DOB",message:"invalid value"});
-					err.pushErrors(errors);
+			if(data.DOB){
+				if(data.DOB!=null && data.DOB!=""){
+					if(!/^(\d{1,2})[/](\d{1,2})[/](\d{4})/.test(data.DOB)){
+						errors.push({field:"DOB",message:"invalid value"});
+						err.pushErrors(errors);
+					}
 				}
 			}
 
@@ -247,7 +272,7 @@ module.exports = {
 			FirstName       : data.FirstName,
 			MiddleName      : data.MiddleName,
 			LastName        : data.LastName,
-			DOB             : data.DOB?moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss'):null,
+			DOB             : data.DOB?data.DOB:null,
 			Gender          : data.Gender,
 			Occupation      : data.Occupation,
 			HomePhoneNumber : data.HomePhoneNumber,
@@ -266,13 +291,7 @@ module.exports = {
 		return Services.Patient.validation(data)
 		.then(function(success){
 			if(data.PhoneNumber){
-				if(data.PhoneNumber.substr(0,3)=='+61'){
-					return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
-				}
-				else{
-					data.PhoneNumber = '+61'+data.PhoneNumber;
-					return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
-				}
+				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
 			}
 			else{
 				if(data.Email){
@@ -513,9 +532,9 @@ module.exports = {
 	UpdatePatient : function(data, transaction) {
 		if(check.checkData(data)){
 			data.ModifiedDate = new Date();
-			// var DOB = moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').toDate();
+			// data.DOB =moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').format('DD/MM/YYYY');
+			data.DOB = data.DOB?data.DOB:null;
 			//get data not required
-			data.DOB = moment(new Date(data.DOB)).format('YYYY-MM-DD HH:mm:ss');
 			var patientInfo={
 				ID              : data.ID,
 				Title           : data.Title,
@@ -565,6 +584,20 @@ module.exports = {
 		output: get patient's information.
 	*/
 	GetPatient : function(data, transaction) {
+		var attributes=[];
+		if(data.attributes){
+			if(data.attributes.length > 0){
+				for(var i = 0; i < data.attributes.length; i++){
+					attributes[i] = data.attributes[i].field;
+				};
+			}
+			else {
+				attributes = defaultAtrributes;
+			}
+		}
+		else{
+			attributes = defaultAtrributes;
+		}
 		return Services.UserAccount.GetUserAccountDetails(data)
 		.then(function(user){
 			//check if UserAccount is found in table UserAccount, get UserAccountID to find patient
@@ -574,12 +607,9 @@ module.exports = {
 						UserAccountID : user.ID
 					},
 					transaction:transaction,
+					attributes:attributes,
 					include: [
-						{
-			            	model: Country,
-			                attributes: [ 'ShortName'],
-			                required: true
-			            },{
+						 {
 			            	model: UserAccount,
 			            	attributes: ['PhoneNumber'],
 			            	required: true
@@ -627,7 +657,24 @@ module.exports = {
 		output: get list patient from table Patient
 	*/
 	LoadListPatient : function(data, transaction){
+		var FirstName = '',LastName = '';
+		var isConcat = false;
+		var attributes=[];
+		for(var i = 0; i < data.attributes.length; i++){
+			if(data.attributes[i].field!='UserAccount'){
+				attributes[i] = data.attributes[i].field;
+			}
+		};
+		console.log(attributes);
 		var whereClause = Services.Patient.whereClause(data);
+		if(data.Search){
+			if(data.Search.FirstName!='' && data.Search.LastName!=''
+				&& data.Search.FirstName!=undefined && data.Search.LastName!=undefined){
+				FirstName = data.Search.FirstName;
+				LastName  = data.Search.LastName;
+				isConcat = true;
+			}
+		}
 		return Patient.findAndCountAll({
 			include:[
 				{
@@ -639,11 +686,17 @@ module.exports = {
 				   	}
 			    }
 			],
-			limit  : data.limit,
-			offset : data.offset,
-			order  : data.order,
+			// attributes : attributes,
+			limit      : data.limit,
+			offset     : data.offset,
+			order      : data.order,
 			where: {
-				$or: whereClause.Patient
+				$or: [
+					whereClause.Patient,
+					isConcat?Sequelize.where(Sequelize.fn("concat", Sequelize.col("FirstName"),' ', Sequelize.col("LastName")), {
+				       	like: '%'+FirstName+' '+LastName+'%'
+					}):null,
+				]
 				
 			},
 			transaction:transaction
@@ -660,7 +713,7 @@ module.exports = {
 		return Services.Patient.validation(data)
 		.then(function(success){
 			if(check.checkData(data.PhoneNumber)){
-				data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
+				// data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
 				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction)
 				.then(function(user){
 					if(check.checkData(user)){
@@ -707,6 +760,19 @@ module.exports = {
 		},function(err){
 			throw err;
 		})
+	},
+
+	getfileUID: function(data){
+		if(check.checkData(data.UserAccountID)){
+			return FileUpload.findAll({
+				attributes:['UserAccountID','UID'],
+				where :{
+					UserAccountID : data.UserAccountID,
+					FileType: data.FileType,
+					Enable : 'Y'
+				}
+			});
+		}
 	}
 
 

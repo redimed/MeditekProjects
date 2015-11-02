@@ -16,19 +16,20 @@ class ViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var phoneTextField: DesignableTextField!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var viewPhoneNumber: DesignableView!
+    var phoneNumber = String()
     
-    
+    @IBOutlet weak var versionBuildLabel: UILabel!
     
     let api = GetAndPostDataController()
     //Color is red
     let colorCustom = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
     
-    //-------------------------------------------------//
     
     override func viewDidLoad() {
         super.viewDidLoad()
         phoneTextField.delegate = self
         
+        versionBuildLabel.text = MessageString.VersionAndBuild
         
     }
     
@@ -52,11 +53,12 @@ class ViewController: UIViewController,UITextFieldDelegate {
                 //Check status API responsed
                 if(response["status"] == "success"){
                     self.view.hideLoading()
+                    
                     self.performSegueWithIdentifier("phoneRegisterSegue", sender: self)
                 }else {
                     self.view.hideLoading()
-                    if response["TimeOut"] ==  "Request Time Out" {
-                        self.alertMessage("Error", message: "Request Time Out")
+                    if response["TimeOut"].string ==  ErrorMessage.TimeOut {
+                        self.alertMessage("Error", message: ErrorMessage.TimeOut)
                     }else {
                         print(response)
                         let message : String = String(response["ErrorsList"][0])
@@ -68,6 +70,16 @@ class ViewController: UIViewController,UITextFieldDelegate {
         }
         
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "phoneRegisterSegue" {
+            let destVC = segue.destinationViewController as! VerifyViewController
+            destVC.phoneNumber = phoneTextField.text!
+            
+        }
+    }
+    
+    
     
     //Giap:  Close keyboard if touch out textfield
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

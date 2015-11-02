@@ -1,17 +1,17 @@
-<div class="modal-content">
-	<div class="modal-header my-modal-header">
+<div class="modal-content" id="modalContent">
+	<div class="modal-header my-modal-header" ng-if="isShowFull==true">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="onCancel()"></button>
 		<h4 class="modal-title"><b><i class="icon-note"></i> Patient Details</b></h4>
 	</div>
-	<div class="modal-body">
+	<div class="modal-body" id="modalBody">
 		<div class="form">
 			<!-- form -->
 			<form class="form-horizontal" role="form">
 				<div class="form-body">
-					<div class="tab-content">
-						<div class="tabbable">
+					<div class="tab-content" id="tabContent1">
+						<div class="tabbable" id="tabBable">
 							<!-- header tab -->
-							<ul class="nav nav-tabs nav-tabs-lg">
+							<ul class="nav nav-tabs nav-tabs-lg" ng-if="isShowFull==true" >
 								<li class="active">
 									<a href="index.html#Personal_info" data-toggle="tab" aria-expanded="true">Personal Information </a>
 								</li>
@@ -24,38 +24,38 @@
 							</ul>
 							<!-- end header tab -->
 							<!-- content tab -->
-							<div class="tab-content">
+							<div class="tab-content" id="tabContent2">
 								<!-- Begin Tab Personal -->
 								<div class="tab-pane active" id="Personal_info">
 									<div style="margin:3em;">
 										<div class="row">
-											<div class="col-md-4">
+											<div class="col-md-4" id="columm1" ng-if="listShow.columm1">
 												<!-- avatar -->
 												<div ng-form name="checkInForm" novalidate>
 													
 													<div class="form-group">
 														<div class="fileinput fileinput-new" data-provides="fileinput">
-															<div class="fileinput-new thumbnail" style="width: 300px; height: 300px;" ng-if="info.img===null">
+															<div class="fileinput-new thumbnail" style="width: 300px; height: 300px;" ng-show="uploader.queue.length==0 && !info.img">
 															</div>
-															<div class="fileinput-preview fileinput-exists thumbnail" style="max-width:350px;" ng-hide="uploader.queue.length==0" >
+															<div class="fileinput-preview fileinput-exists thumbnail" style="max-width:350px;" ng-show="uploader.queue.length!=0" >
 															</div>
-															<img ng-src="{{info.img}}" style="max-width:350px;" ng-show="uploader.queue.length==0">
+															<img dimage dimage-uid="info.img" dimage-size="'300'" ng-show="uploader.queue.length==0 && info.img">
 															<div>
-																<span class="btn green btn-file">
+																<span class="btn green btn-file" ng-if="isShowFull==true">
 																	<span class="fileinput-new">
 																	Select Image </span>
 																	<span class="fileinput-exists">
 																	Change </span>
 																	 <input type="file" nv-file-select="" uploader="uploader" />
 																</span>
-																<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">Remove </a>
+																<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput" ng-click="removeImg()">Remove </a>
 															</div>
 														</div>
 													</div>
 												</div>
 												<!-- end avatar -->
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-4" id="columm2" ng-if="listShow.columm2">
 												<h4><b>Person Information</b></h4>
 												<hr>
 												<!-- begin title -->
@@ -69,26 +69,27 @@
 												<!-- First Name -->
 												<div class="form-group">
 													<label class="control-label col-md-4">First Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="First Name" ng-model="info.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName=''" ><span style="color:red;">{{ermsg.FirstName}}</span></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="First Name" ng-model="info.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName='';checkDataNull('FirstName')" ><span style="color:red;">{{ermsg.FirstName}}</span></div>
 												</div>
 												<!-- end First Name -->
 												<!-- Sur Name -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Sur Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Sur Name" ng-model="info.LastName" ng-style="er.LastName" ng-change="ermsg.LastName=''" ><span style="color:red;">{{ermsg.LastName}}</span></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Sur Name" ng-model="info.LastName" ng-style="er.LastName" ng-change="ermsg.LastName='';checkDataNull('LastName')" ><span style="color:red;">{{ermsg.LastName}}</span></div>
 												</div>
 												<!-- end Sur Name -->
 												<!-- Middle Name -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Middle Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Middle Name" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName=''" ><span style="color:red;">{{ermsg.MiddleName}}</span></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Middle Name" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName='';;checkDataNull('MiddleName')" ><span style="color:red;">{{ermsg.MiddleName}}</span></div>
 												</div>
 												<!-- end Middle Name -->
 												<!-- Date of Birth -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Date of Birth</label>
 													<div class="col-md-8">
-														<input ng-model="info.DOB" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" ng-style="er.DOB" ng-change="ermsg.DOB=''"><span style="color:red;">{{ermsg.DOB}}</span>
+														<input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB=''" / readonly>
+														<span style="color:red;">{{ermsg.DOB}}</span>
 													</div>
 												</div>
 												<!-- end Date of Birth -->
@@ -106,11 +107,11 @@
 												<!-- Occupation -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Occupation</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Occupation" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation=''"><span style="color:red;">{{ermsg.Occupation}}</span></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Occupation" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation='';checkDataNull('Occupation')"><span style="color:red;">{{ermsg.Occupation}}</span></div>
 												</div>
 												<!-- end Occupation -->
 											</div>
-											<div class="col-md-4">
+											<div class="col-md-4" id="columm3" ng-if="listShow.columm3">
 												<h4><b>Contact Information</b></h4>
 												<hr>
 												<!-- Email -->
@@ -122,7 +123,7 @@
 												<!-- Home Phone -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Home Phone</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber=''"><span style="color:red;">{{ermsg.HomePhoneNumber}}</span></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')"><span style="color:red;">{{ermsg.HomePhoneNumber}}</span></div>
 												</div>
 												<!-- end Home Phone -->
 												<!-- Mobile Phone -->
@@ -134,31 +135,31 @@
 												<!-- Address1 -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Address1</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address1" ng-model="info.Address1" ng-style="er.Address1"ng-change="ermsg.Address1=''" ><span style="color:red;">{{ermsg.Address1}}</span></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address1" ng-model="info.Address1" ng-style="er.Address1"ng-change="ermsg.Address1='';checkDataNull('Address1')" ><span style="color:red;">{{ermsg.Address1}}</span></div>
 												</div>
 												<!-- end Address1 -->
 												<!-- Address2 -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Address2</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address2" ng-model="info.Address2" ng-style="er.Address2"ng-change="ermsg.Address2=''" ><span style="color:red;">{{ermsg.Address2}}</span></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address2" ng-model="info.Address2" ng-style="er.Address2"ng-change="ermsg.Address2='';checkDataNull('Address2')" ><span style="color:red;">{{ermsg.Address2}}</span></div>
 												</div>
 												<!-- end Address2 -->
 												<!-- Suburb -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Suburb</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Suburb" ng-model="info.Suburb" ng-style="er.Suburb"ng-change="ermsg.Suburb=''" ><span style="color:red;">{{ermsg.Suburb}}</span></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Suburb" ng-model="info.Suburb" ng-style="er.Suburb"ng-change="ermsg.Suburb='';checkDataNull('Suburb')" ><span style="color:red;">{{ermsg.Suburb}}</span></div>
 												</div>
 												<!-- end Surburb -->
 												<!-- Postcode -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Postcode</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Postcode" ng-model="info.Postcode" ng-style="er.Postcode"ng-change="ermsg.Postcode=''" ><span style="color:red;">{{ermsg.Postcode}}</span></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="Postcode" ng-model="info.Postcode" ng-style="er.Postcode"ng-change="ermsg.Postcode='';checkDataNull('Postcode')" ><span style="color:red;">{{ermsg.Postcode}}</span></div>
 												</div>
 												<!-- end Postcode -->
 												<!-- State -->
 												<div class="form-group">
 													<label class="control-label col-md-4">State</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="State" ng-model="info.State" ng-style="er.State"ng-change="ermsg.State=''" ><span style="color:red;">{{ermsg.State}}</span></div>
+													<div class="col-md-8"><input type="text" class="form-control" placeholder="State" ng-model="info.State" ng-style="er.State"ng-change="ermsg.State='';checkDataNull('State')" ><span style="color:red;">{{ermsg.State}}</span></div>
 												</div>
 												<!-- end Postcode -->
 												<!-- Country -->
@@ -186,23 +187,15 @@
 			<!-- end form -->
 		</div>
 	</div>
-	<div class="modal-footer">
+	<div class="modal-footer" ng-if="isShowFull==true">
 		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onCancel()"><i class="icon-action-undo"></i> Close</button>
 		<button type="button" class="btn btn-success" ng-disabled="infoChanged()||!infoClear()" ng-click="savechange()" ><i class="glyphicon glyphicon-save"></i> Save changes</button>
 	</div>
 </div>
 
 <script>
-	// Metronic.setAssetsPath('./theme/assets/'); // Set the assets folder path			
-	// ComponentsFormTools.init();
-	//ComponentsDropdowns.init(); // init todo page
-	// //FormiCheck.init(); // init page demo
-	//ComponentsPickers.init(); // init todo page
-	// //Portfolio.init(); // coi hinh
 	App.initAjax();
-	//ComponentsFormTools.init();
 	ComponentsSelect2.init();
-	ComponentsBootstrapSelect.init(); // init todo page
+	ComponentsBootstrapSelect.init();
 	ComponentsDateTimePickers.init();
-	//FormiCheck.init(); // init page demo
 </script>

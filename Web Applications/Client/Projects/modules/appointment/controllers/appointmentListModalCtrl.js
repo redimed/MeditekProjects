@@ -10,10 +10,11 @@ app.controller('showImageController', function($scope, $modalInstance, toastr, L
         newWindow.document.write("<img class='img-responsive' src='" + LinkUID + "'>");
     }
 })
-app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstance, getid, AppointmentService, CommonService, $cookies, toastr) {
+app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstance, getid, AppointmentService, CommonService, $cookies, toastr, PatientService) {
 
     $modalInstance.rendered.then(function() {
-        //App.initComponents(); // init core components
+        App.initComponents(); // init core components
+        App.initAjax();
         ComponentsDateTimePickers.init(); // init todo page
         ComponentsSelect2.init(); // init todo page
         ComponentsBootstrapSelect.init(); // init todo page
@@ -31,8 +32,6 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         $modalInstance.close();
     };
 
-    // console.log("=======",FormWizard.init());
-    //createNewPatient : open popup create patient
     $scope.selectPatient = function() {
         var modalInstance = $modal.open({
             animation: true,
@@ -44,18 +43,37 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
                             status: 'success',
                             data: data
                         });
+                    },
+                    runIfClose: function(){
+                        $modalInstance.close();
                     }
                 };
             },
-            windowClass: 'app-modal-window'
+            windowClass: 'app-modal-window',
+            resolve: {
+                patientInfo: function() {
+                    PatientService.postDatatoDirective($scope.ShowData.patient);
+                }
+            }
 
         });
         modalInstance.result.then(function(data) {
-            if (data.status == 'success') {
-                $scope.appointment.Patients.push({
-                    UID: data.data.data.UID
-                });
-                toastr.success("Select patient successfully!", "success");
+            if (data && data.status == 'success') {
+                $scope.ShowData.isLinkPatient = true;
+                var patientUid = data.data.UID;
+                AppointmentService.GetDetailPatientByUid({
+                    UID: patientUid
+                }).then(function(data) {
+                    if (data.message == 'success') {
+                        $scope.appointment.Patients = [];
+                        $scope.ShowData.patient = data.data[0];
+                        $scope.ShowData.patient.WorkPhoneNumber = data.data[0].UserAccount.PhoneNumber;
+                        $scope.appointment.Patients.push({
+                            UID: patientUid
+                        });
+                        toastr.success("Select patient successfully!", "success");
+                    };
+                })
             };
         });
     };
@@ -63,7 +81,6 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
     $scope.loadAllDoctor = function() {
         AppointmentService.ListDoctor().then(function(data) {
             $scope.listDoctorTreatingPractitioner = data;
-            console.log('$scope.listDoctor', $scope.listDoctorTreatingPractitioner);
         });
     }
 
@@ -81,7 +98,9 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
     $scope.Url = AppointmentService.getImage()
     $scope.checkRoleUpdate = true
     $scope.tab_body_part = 'all';
-    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
+    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' 
+        || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' 
+        || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
         $scope.checkRoleUpdate = false
     }
 
@@ -89,7 +108,8 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         DateTimeAppointmentDate: null,
         PatientsFullName: null,
         isLinkPatient: false,
-        PreferredPractitionersTemp: []
+        PreferredPractitionersTemp: [],
+        patient: []
     }
     $scope.appointment = null
     $scope.Other = {
@@ -100,57 +120,64 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
 
     var ClinicalDetails = CommonService.GetClinicalDetails();
     var listDoctor = CommonService.GetNamDoctor();
-    console.log('listDoctor', listDoctor);
-    var load = function() {
-        AppointmentService.getDetailApppointment(getid).then(function(response) {
-            $scope.Temp = angular.copy(response.data)
-            $scope.appointment = angular.copy(response.data);
-            console.log('$scope.appointment', $scope.appointment);
 
-            if ($scope.appointment.Patients.length != 0) {
-                $scope.ShowData.isLinkPatient = true
-                $scope.appointment.TelehealthAppointment.PatientAppointment = angular.copy($scope.appointment.Patients[0])
+    var load = function() {
+        console.log(getid)
+        $scope.Temp = angular.copy(getid)
+        $scope.appointment = angular.copy(getid);
+        if ($scope.appointment.Patients.length != 0) {
+            $scope.ShowData.isLinkPatient = true
+            if (checkDateUndefined($scope.appointment.Patients[0])) {
+                $scope.ShowData.patient = angular.copy($scope.appointment.Patients[0])
+            };
+        } else {
+            $scope.ShowData.patient = angular.copy($scope.appointment.TelehealthAppointment.PatientAppointment)
+        }
+        if (checkDateUndefined($scope.appointment.TelehealthAppointment)) {
+            $scope.appointment.TelehealthAppointment.ClinicalDetails = {}
+            $scope.Temp.TelehealthAppointment.ClinicalDetails.forEach(function(valueRes, indexRes) {
+                if (valueRes != null && valueRes != undefined) {
+                    var keyClinicalDetail = valueRes.Section + '.' + valueRes.Category + '.' + valueRes.Type + '.' + valueRes.Name
+                    keyClinicalDetail = keyClinicalDetail.split(" ").join("__")
+                    $scope.appointment.TelehealthAppointment.ClinicalDetails[keyClinicalDetail] = {}
+                    $scope.appointment.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].Value = valueRes.Value
+                    $scope.appointment.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].ClinicalNote = valueRes.ClinicalNote
+                }
+            })
+
+            if (checkDateUndefined($scope.appointment.TelehealthAppointment.PatientAppointment.FirstName)) {
+                $scope.ShowData.PatientsFullName = $scope.appointment.TelehealthAppointment.PatientAppointment.FirstName + ' ' + $scope.appointment.TelehealthAppointment.PatientAppointment.LastName
             }
-            if (checkDateUndefined($scope.appointment.TelehealthAppointment)) {
-                $scope.appointment.TelehealthAppointment.ClinicalDetails = {}
-                $scope.Temp.TelehealthAppointment.ClinicalDetails.forEach(function(valueRes, indexRes) {
-                    if (valueRes != null && valueRes != undefined) {
-                        var keyClinicalDetail = valueRes.Section + '.' + valueRes.Category + '.' + valueRes.Type + '.' + valueRes.Name
-                        keyClinicalDetail = keyClinicalDetail.split(" ").join("__")
-                        $scope.appointment.TelehealthAppointment.ClinicalDetails[keyClinicalDetail] = {}
-                        $scope.appointment.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].Value = valueRes.Value
-                        $scope.appointment.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].ClinicalNote = valueRes.ClinicalNote
+            listDoctor.forEach(function(valueInit, indexInit) {
+                $scope.appointment.TelehealthAppointment.PreferredPractitioners.forEach(function(valueRes, indexRes) {
+                    if (valueInit.Name == valueRes.Name) {
+                        valueInit.Value = 'Y'
                     }
                 })
+            })
+            checkOtherInput()
+        }
+        if (!$scope.ShowData.isLinkPatient) {
+            $scope.appointment.TelehealthAppointment.PatientAppointment = $scope.ShowData.patient
+        };
+        $scope.referringPractitionerDateTemp = formatDate($scope.appointment.Doctors.RefDate);
 
-                if (checkDateUndefined($scope.appointment.TelehealthAppointment.PatientAppointment.FirstName)) {
-                    $scope.ShowData.PatientsFullName = $scope.appointment.TelehealthAppointment.PatientAppointment.FirstName + ' ' + $scope.appointment.TelehealthAppointment.PatientAppointment.LastName
-                }
-                listDoctor.forEach(function(valueInit, indexInit) {
-                    $scope.appointment.TelehealthAppointment.PreferredPractitioners.forEach(function(valueRes, indexRes) {
-                        if (valueInit.Name == valueRes.Name) {
-                            valueInit.Value = 'Y'
-                        }
-                    })
-                })
-                checkOtherInput()
-            }
+        if ($scope.appointment.CreatedDate) {
+            $scope.appointment.CreatedDate = formatDate($scope.appointment.CreatedDate)
+        }
 
-            $scope.referringPractitionerDateTemp = formatDate($scope.appointment.Doctors.RefDate);
-
-            if ($scope.appointment.RequestDate) {
-                $scope.appointment.RequestDate = formatDate($scope.appointment.RequestDate)
-            }
-            if (response.data.FromTime) {
-                var DateTime = angular.copy(response.data.FromTime);
-                $scope.ShowData.DateTimeAppointmentDate = moment(DateTime, "YYYY-MM-DD HH:mm:ss Z").utc().format("DD/MM/YYYY");
-                $scope.ShowData.DateTimeAppointmentDateTime = moment(DateTime).utc().format('h:mm:ss A');
-            }
+        if (checkDateUndefined($scope.appointment.FromTime)) {
+            var DateTime = angular.copy(getid.FromTime);
+            $scope.ShowData.DateTimeAppointmentDate = moment(DateTime, "YYYY-MM-DD HH:mm:ss Z").utc().format("DD/MM/YYYY");
+            $scope.ShowData.DateTimeAppointmentDateTime = moment(DateTime).utc().format('h:mm:ss A');
+            console.log($scope.ShowData.DateTimeAppointmentDate)
+        } else {
+            $scope.ShowData.DateTimeAppointmentDateTime = null
+        }
 
 
-            $scope.ShowData.PreferredPractitionersTemp = angular.copy(listDoctor);
-
-        });
+        $scope.ShowData.PreferredPractitionersTemp = angular.copy(listDoctor);
+        // });
     }
     var checkDateUndefined = function(data) {
         if (data == ' ' || data == '' || data == undefined) {
@@ -159,10 +186,12 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         return true
     }
     var checkOtherInput = function() {
-        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Others']) && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Others'].Value) {
+        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Others']) 
+            && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Others'].Value) {
             $scope.Other.LacerationsOther = 'Y'
         };
-        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other']) && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'].Value) {
+        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other']) 
+            && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'].Value) {
             $scope.Other.SkincancerOther = 'Y'
         };
         if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.PNS.Other']) &&
@@ -196,11 +225,29 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             }
         })
     }
-    $scope.updateAppointment = function() {
 
-        var Time = moment($scope.ShowData.DateTimeAppointmentDateTime, ["HH:mm:ss A"]).format("HH:mm:ss");
-        var StringAppointmentDateTime = $scope.ShowData.DateTimeAppointmentDate + ' ' + Time + ' Z';
-        $scope.appointment.FromTime = moment(StringAppointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").utc().format('YYYY-MM-DD HH:mm:ss Z');
+    $scope.submitUpdate = function() {
+        swal({
+                title: "Are you sure ?",
+                text: "Update Appointment",
+                type: "info",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            },
+            function() {
+                $scope.updateAppointment();
+            });
+    }
+
+    $scope.updateAppointment = function() {
+        if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate != '') {
+            var Time = moment($scope.ShowData.DateTimeAppointmentDateTime, ["HH:mm:ss A"]).format("HH:mm:ss");
+            var StringAppointmentDateTime = $scope.ShowData.DateTimeAppointmentDate + ' ' + Time + ' Z';
+            $scope.appointment.FromTime = moment(StringAppointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").utc().format('YYYY-MM-DD HH:mm:ss Z');
+        } else {
+            $scope.appointment.FromTime = null
+        };
         if ($scope.appointment.Status == "Approved") {
             $scope.appointment.ApprovalDate = moment().format('YYYY-MM-DD HH:mm:ss Z')
         } else {
@@ -259,33 +306,18 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             if (countCliniDetail == 0) {
                 ClinicalDetailsTemp = []
             }
-            if ($scope.ShowData.isLinkPatient) {
-                $scope.appointment.TelehealthAppointment.PatientAppointment = []
-            };
-            $scope.appointment.RequestDate = moment($scope.appointment.RequestDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z')
-                //$scope.appointment.RequestDate = moment($scope.appointment.RequestDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z')
+        
             $scope.appointment.TelehealthAppointment.ClinicalDetails = angular.copy(ClinicalDetailsTemp)
             var postData = {
-                data: $scope.appointment
-            }
-            console.log("$scope.appointment", $scope.appointment);
-            swal({
-                    title: "Are you sure ?",
-                    text: "Update Appointment",
-                    type: "info",
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    showLoaderOnConfirm: true,
-                },
-                function() {
-                    AppointmentService.upDateApppointment(postData).then(function(response) {
-                        if (response == 'success') {
-                            $modalInstance.close('success');
-                            swal("Success.");
-                        };
+                    data: $scope.appointment
+                }
+            AppointmentService.upDateApppointment(postData).then(function(response) {
+                if (response == 'success') {
+                    $modalInstance.close('success');
+                    swal("Success.");
+                };
 
-                    })
-                });
+            })
         };
     }
 });

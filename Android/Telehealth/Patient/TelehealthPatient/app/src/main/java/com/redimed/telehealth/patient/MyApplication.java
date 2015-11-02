@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.redimed.telehealth.patient.models.TelehealthUser;
+import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
 
 import org.json.JSONArray;
@@ -35,6 +36,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         myApplication = this;
+        RESTClient.InitRESTClient(this);
         startService(new Intent(getApplicationContext(), RegistrationIntentService.class));
     }
 

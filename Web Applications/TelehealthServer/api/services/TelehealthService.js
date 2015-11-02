@@ -1,5 +1,7 @@
 var requestify = require('requestify');
 var config = sails.config.myconf;
+var jwt = require('jsonwebtoken');
+var $q = require('q');
 
 function checkOnlineUser(appts) {
     var list = sails.sockets.rooms();
@@ -46,14 +48,18 @@ module.exports = {
                     Limit: limit
                 }
             },
-            headers: !coreAuth ? {}:{'Authorization': coreAuth}
+            headers: !coreAuth ? {} : {
+                'Authorization': coreAuth
+            }
         })
     },
     GetAppointmentDetails: function(apptUID, coreAuth) {
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-detail/' + apptUID,
             method: 'GET',
-            headers: !coreAuth ? {}:{'Authorization': coreAuth}
+            headers: !coreAuth ? {} : {
+                'Authorization': coreAuth
+            }
         })
     },
     GetAppointmentList: function(coreAuth) {
@@ -76,7 +82,9 @@ module.exports = {
                     }]
                 }
             },
-            headers: !coreAuth ? {}:{'Authorization': coreAuth}
+            headers: !coreAuth ? {} : {
+                'Authorization': coreAuth
+            }
         });
     },
     GetOnlineUsers: function(coreAuth) {
@@ -114,5 +122,51 @@ module.exports = {
             timeout: 1000,
             dataType: 'json'
         })
+    },
+    GenerateJWT: function(info) {
+        var defer = $q.defer();
+        if (!info.payload || !info.expired || !info.userID || !info.type) {
+            var err = new Error('GenerateJWT');
+            err.pushError('Invalid Params');
+            defer.reject(err);
+        } else {
+            var token = jwt.sign(info.payload, config.TokenSecret, {
+                expiresIn: info.expired
+            })
+            UserToken.find({
+                where: {
+                    UserAccountID: info.userID,
+                    SystemType: info.type,
+                    DeviceID: !info.deviceID ? null : info.deviceID,
+                    Enable: 'Y'
+                }
+            }).then(function(userToken) {
+                if (userToken) {
+                    userToken.update({
+                        CurrentToken: token,
+                        TokenCreatedDate: new Date(),
+                        TokenExpired: info.expired
+                    }).then(function() {
+                        defer.resolve(token);
+                    }).catch(function(err) {
+                        defer.reject(new Error(err));
+                    })
+                } else {
+                    UserToken.create({
+                        UserAccountID: info.userID,
+                        SystemType: info.type,
+                        DeviceID: !info.deviceID ? null : info.deviceID,
+                        Enable: 'Y',
+                        CurrentToken: token,
+                        TokenExpired: info.expired
+                    }).then(function() {
+                        defer.resolve(token);
+                    }).catch(function(err) {
+                        defer.reject(new Error(err));
+                    })
+                }
+            })
+        }
+        return defer.promise;
     }
 }

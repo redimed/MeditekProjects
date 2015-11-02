@@ -53,6 +53,14 @@ angular.module('app.authentication.doctor.service', [])
 		var instanceApi = api.all('getRoleDoctor');
 		return instanceApi.post({data: data});
 	}
+	services.getEnableFile = function(data) {
+		var instanceApi = api.one('enableFile/'+data.isEnable+'/'+data.fileUID);
+		return instanceApi.get();
+	}
+	services.getoneDepartment = function(data) {
+		var instanceApi = api.all('getOneDepartment');
+		return instanceApi.post({data: data});
+	}
 
 	// Check Create Step 1
 	services.validateCheckPhone = function(info) {
@@ -62,13 +70,6 @@ angular.module('app.authentication.doctor.service', [])
 		var q = $q.defer();
 
 		try {
-
-			//validate Title
-			if(info.Titles){
-			} else {
-				error.push({field:"Titles",message:"required"});
-				toastr.error('Titles is required');
-			}
 			
 			//validate FirstName
 			if(info.FirstName){
@@ -105,7 +106,7 @@ angular.module('app.authentication.doctor.service', [])
 				var PhoneNumber=info.PhoneNumber.replace('/[\(\)\s\-]/g','');
 				if(!auPhoneNumberPattern.test(PhoneNumber)){
 					error.push({field:"PhoneNumber",message:"PhoneNumber.invalid-value"});
-					toastr.error('PhoneNumber not invalid');
+					toastr.error('PhoneNumber invalid');
 				}
 			}
 			else{
@@ -119,7 +120,7 @@ angular.module('app.authentication.doctor.service', [])
 				var Email=info.Email.replace('/[\(\)\s\-]/g','');
 				if(!EmailPattern.test(Email)){
 					error.push({field:"Email",message:"Email.invalid-value"});
-					toastr.error('Email not invalid');
+					toastr.error('Email invalid');
 				}
 			}
 			else {
@@ -179,6 +180,12 @@ angular.module('app.authentication.doctor.service', [])
 			if(info.DOB){
 				if(info.DOB.length < 0){
 					error.push({field:"DOB",message:"DOB.length"});
+				} else {
+					var datePattern = new RegExp(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+					if(!datePattern.test(info.DOB)) {
+						error.push({field:"DOB", message:"DOB.invalid-value"});
+						toastr.error('Date of Birth invalid');
+					}
 				}
 			}
 			else {
@@ -193,7 +200,7 @@ angular.module('app.authentication.doctor.service', [])
 					var HomePhone=info.HomePhoneNumber.replace('/[\(\)\s\-]/g','');
 					if(!auHomePhoneNumberPattern.test(HomePhone)){
 						error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.invalid-value"});
-						toastr.error('HomePhoneNumber not invalid');
+						toastr.error('HomePhoneNumber invalid');
 					}
 				}
 			}
@@ -205,7 +212,7 @@ angular.module('app.authentication.doctor.service', [])
 					var WorkPhone=info.WorkPhoneNumber.replace('/[\(\)\s\-]/g','');
 					if(!auWorkPhoneNumberPattern.test(WorkPhone)){
 						error.push({field:"WorkPhoneNumber",message:"WorkPhoneNumber.invalid-value"});
-						toastr.error('WorkPhoneNumber not invalid');
+						toastr.error('WorkPhoneNumber invalid');
 					}
 				}
 			}
@@ -344,17 +351,6 @@ angular.module('app.authentication.doctor.service', [])
 
 		try {
 
-			// Title
-			if(info.Title) {
-				if(info.Title.length < 0) {
-					error.push({field:'Title', message:'Title.length'});
-				}
-			}
-			else {
-				error.push({field:'Title', message:'required'});
-				toastr.error('Title is required');
-			}
-
 			// FirstName
 			if(info.FirstName) {
 				if(info.FirstName.length < 0 || info.FirstName.length > 50) {
@@ -383,6 +379,23 @@ angular.module('app.authentication.doctor.service', [])
 			else {
 				error.push({field:'LastName', message:'required'});
 				toastr.error('LastName is required');
+			}
+
+			//validate DOB
+			if(info.DOB){
+				if(info.DOB.length < 0){
+					error.push({field:"DOB",message:"DOB.length"});
+				} else {
+					var datePattern = new RegExp(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+					if(!datePattern.test(info.DOB)) {
+						error.push({field:"DOB", message:"DOB.invalid-value"});
+						toastr.error('Date of Birth invalid');
+					}
+				}
+			}
+			else {
+				error.push({field:"DOB",message:"DOB.required"});
+				toastr.error('Date of Birth is required');
 			}
 
 			// ProviderNumber
@@ -419,7 +432,7 @@ angular.module('app.authentication.doctor.service', [])
 					var HomePhone=info.HomePhoneNumber.replace('/[\(\)\s\-]/g','');
 					if(!auHomePhoneNumberPattern.test(HomePhone)){
 						error.push({field:"HomePhoneNumber",message:"HomePhoneNumber.invalid-value"});
-						toastr.error('HomePhoneNumber not invalid');
+						toastr.error('HomePhoneNumber invalid');
 					}
 				}
 			}
@@ -431,7 +444,7 @@ angular.module('app.authentication.doctor.service', [])
 					var WorkPhone=info.WorkPhoneNumber.replace('/[\(\)\s\-]/g','');
 					if(!auHomePhoneNumberPattern.test(WorkPhone)){
 						error.push({field:"WorkPhoneNumber",message:"WorkPhoneNumber.invalid-value"});
-						toastr.error('WorkPhoneNumber not invalid');
+						toastr.error('WorkPhoneNumber invalid');
 					}
 				}
 			}

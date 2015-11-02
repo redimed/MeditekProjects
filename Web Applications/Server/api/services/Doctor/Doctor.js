@@ -13,19 +13,6 @@ module.exports = {
 
 		return Doctor
 				.findAndCountAll({
-					include: [{
-						model: UserAccount,
-						attributes: ['PhoneNumber'],
-						where: {
-							$or: [
-								{
-									PhoneNumber: {
-										like: '%' + data.PhoneNumber + '%'
-									}
-								}
-							]
-						}
-					}],
 					where: {
 						$or: [
 							{
@@ -45,12 +32,25 @@ module.exports = {
 							}
 						]
 					},
+					include: [{
+						model: UserAccount,
+						attributes: ['PhoneNumber'],
+						where: {
+							$or: [
+								{
+									PhoneNumber: {
+										like: '%' + data.PhoneNumber + '%'
+									}
+								}
+							]
+						}
+					}],
 					offset: data.offset,
 					limit: data.limit,
 					order: [
-						['Email', data.sortEmail],
+						['FirstName', data.sortFirstName],
 						['LastName', data.sortLastName],
-						['FirstName', data.sortFisrtName]
+						['Email', data.sortEmail]
 					]
 				});
 
@@ -81,21 +81,21 @@ module.exports = {
 	
 	},
 	/*
-		GetDepartment: Get all data of Department
+		GetAllDepartment: Get all data of Department
 	*/
-	GetDepartment: function() {
+	GetAllDepartment: function() {
 		return Department.findAll();
 	},
 	/*
 		CreateDoctor: Create new doctor
 	*/
-	CreateDoctor: function(data) {
+	CreateDoctor: function(data, transaction) {
 
 		var info = {
 			UID: UUIDService.Create(),
 			UserAccountID: data.UserAccountID,
 			DepartmentID: data.DepartmentID,
-			Title: data.Title,
+			Title: data.Titles,
 			FirstName: data.FirstName,
 			MiddleName: data.MiddleName,
 			LastName: data.LastName,
@@ -110,38 +110,36 @@ module.exports = {
 			Email: data.Email,
 			HomePhoneNumber: data.HomePhoneNumber,
 			WorkPhoneNumber: data.WorkPhoneNumber,
-			HealthLink: data.HealthLinkID.toString(),
+			HealthLink: data.HealthLinkID,
 			ProviderNumber: data.ProviderNumber.toString(),
 			Enable: 'Y',
 			CreatedDate: data.CreatedDate,
 			CreatedBy: data.CreatedBy
 		};
 
-		return Doctor.create(info);
+		return Doctor.create(info, {
+			transaction: transaction
+		});
+
 	},
 	/*
 		GetDetail: Get information's doctor according to uid's doctor
 	*/
 	GetDetail: function(data) {
-		return Doctor.findAll({
-					where: {
-						UID: data.UID
-					},
-					include: [{
-						model: UserAccount,
-						attributes: ['UserName', 'PhoneNumber', 'ID', 'Enable'],
-						where: {
-							ID: data.UserAccountID
-						}
-					},{
-						model: Department,
-						attributes: ['DepartmentName'],
-						where: {
-							ID: data.DepartmentID
-						}
 
-					}]
-				});
+		return Doctor.findAll({
+				include: [{
+					model: UserAccount,
+					attributes: ['UserName', 'PhoneNumber', 'ID', 'Enable'],
+					where: {
+						ID: data.UserAccountID
+					}
+				}],
+				where: {
+					UID: data.UID
+				}
+			});
+
 	},
 	/*
 		UpdateDoctor: update information's doctor
@@ -149,7 +147,7 @@ module.exports = {
 	UpdateDoctor: function(data) {
 
 		var info = {
-			Title: data.Title.toString(),
+			Title: data.Title,
 			FirstName: data.FirstName,
 			MiddleName: data.MiddleName,
 			LastName: data.LastName,
@@ -162,7 +160,7 @@ module.exports = {
 			CountryID: data.CountryID.toString(),
 			HomePhoneNumber: data.HomePhoneNumber,
 			WorkPhoneNumber: data.WorkPhoneNumber,
-			HealthLink: data.HealthLinkID.toString(),
+			HealthLink: data.HealthLinkID,
 			ProviderNumber: data.ProviderNumber.toString(),
 			Enable: data.Enable,
 			ModifiedDate: data.ModifiedDate,
@@ -170,10 +168,10 @@ module.exports = {
 		};
 
 		return Doctor.update(info, {
-							where: {
-								UID: data.UID
-							}
-					});
+					where: {
+						UID: data.UID
+					}
+				});
 
 	},
 	/*
@@ -226,6 +224,18 @@ module.exports = {
 						attributes: ['RoleName']
 					}]
 				});
+	},
+	/*
+		GetDepartment: Get department according to ID's department
+	*/
+	GetDepartment: function(data) {
+		return Department.findOne({
+						attributes: ['UID', 'DepartmentName'],
+						where: {
+							ID: data
+						},
+						Enable: 'Y'
+					});
 	}
 
 }

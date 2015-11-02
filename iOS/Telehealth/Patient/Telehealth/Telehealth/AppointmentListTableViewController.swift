@@ -8,11 +8,12 @@
 
 import UIKit
 
-class AppointmentListTableViewController: UITableViewController,AppointmentListTableViewCellDelegate {
+class AppointmentListTableViewController: UITableViewController,AppointmentListTableViewCellDelegate{
     let appointmentApi = GetAndPostDataController()
     var patientUid = String()
     var Appointment : [AppointmentList] = []
 
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,7 +23,7 @@ class AppointmentListTableViewController: UITableViewController,AppointmentListT
         if Appointment.count <= 0 {
             self.view.showLoading()
         }
-        
+        //clear bottom line in table view
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         getAppointmentList()
         
@@ -98,6 +99,22 @@ class AppointmentListTableViewController: UITableViewController,AppointmentListT
         })
         
     }
+    
+    //Collection view
+//    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+//        return 1
+//    }
+//    
+//    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return 1
+//    }
+//    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+//        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageAppointmentDetailCell", forIndexPath: indexPath) as! AppointmentImageCollectionViewCell
+//        let imageName = "3837-11.jpg"
+//        let image = UIImage(named: imageName)
+//        cell.imageView.image = image
+//        return cell
+//    }
     
     
     

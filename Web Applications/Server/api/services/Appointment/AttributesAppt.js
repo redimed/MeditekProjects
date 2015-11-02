@@ -1,6 +1,8 @@
 module.exports = {
     Appointment: function() {
-        return ['UID', 'SiteID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status'];
+        return ['UID', 'SiteID', 'FromTime', 'ToTime', 'RequestDate',
+            'ApprovalDate', 'Status', 'CreatedDate'
+        ];
     },
     TelehealthAppointment: function() {
         return ['UID', 'Fund', 'Correspondence', 'Description', 'RefName',

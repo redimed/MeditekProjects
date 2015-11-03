@@ -139,7 +139,7 @@ module.exports = {
         authSecretExprired:{
             'IOS':null,
             'ARD':null,
-            'WEB':20,
+            'WEB':24*60*60,
         },
 
         verificationMethod: {

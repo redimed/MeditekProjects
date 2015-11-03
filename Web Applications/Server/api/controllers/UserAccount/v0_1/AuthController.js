@@ -20,7 +20,21 @@ module.exports = {
      * login: function xử lý login
      */
     login: function(req, res) {
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LOGIN");
+        console.log("============LOGIN===============");
+        var error=new ErrorWrap("login.Error");
+        if(!o.checkData(req.headers.systemtype))
+        {
+            error.pushError("header.systemType.notProvided");
+            return res.badRequest(ErrorWrap(error));
+        }
+        else
+        {
+            if(!o.checkData(req.headers.deviceid))
+            {
+                error.pushError("header.deviceID.notProvided");
+            }
+        }
+
         passport.authenticate('local', function(err, user, info) 
         {
             if ((err) || (!user)) 
@@ -85,13 +99,11 @@ module.exports = {
      * logout: xử lý logout
      */
     logout: function(req, res) {
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LOGOUT");
         var userToken={
             UserUID:req.user.UID,
             SystemType:req.headers.systemtype,
             DeviceID:req.headers.deviceid
         }
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Make New Secret Key");
         Services.UserToken.MakeNewSecretKey(userToken)
         .then(function(data){
             req.logout();

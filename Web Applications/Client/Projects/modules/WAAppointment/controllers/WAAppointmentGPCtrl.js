@@ -1,6 +1,7 @@
 var app = angular.module('app.authentication.WAAppointment.GP.controller', []);
 
 app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval) {
+    var ClinicalDetailsTemp = [];
     $scope.requestInfo = {
         RequestDate: moment().format('YYYY-MM-DD HH:mm:ss Z'),
         SiteID: 1,
@@ -26,17 +27,15 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
     }
 
     $scope.loadAllDoctor();
-    $scope.Continue = function() {
+    $scope.sendRequestAppointment = function() {
+        console.log($scope.requestInfo.TelehealthAppointment.ClinicalDetails)
         if ($scope.requestInfo.TelehealthAppointment.PatientAppointment.Gender === 'Other') {
             $scope.requestInfo.TelehealthAppointment.PatientAppointment.Gender = $scope.showData.GenderOther
         }
-        //console.log($scope.requestInfo)
-        var ClinicalDetailsTemp = [];
-        //console.log($scope.requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__Cancer.BCC'].Value)
+        
         for (var key in $scope.requestInfo.TelehealthAppointment.ClinicalDetails) {
             var newkey = key.split("__").join(" ")
             var res = newkey.split(".");
-            console.log(res)
             var object = {
                 Section: res[0],
                 Category: res[1],
@@ -84,22 +83,17 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
 
     $scope.SendRequestUploadFile = function() {
         for (var i = 0; i < uploader.queue.length; i++) {
-            console.log(' uploader.queue', uploader.queue);
             var item = uploader.queue[i];
-            item.formData[i] = {};
-            item.formData[i].userUID = $cookies.getObject('userInfo').UID;
-            item.formData[i].fileType = 'MedicalImage';
+            item.formData[0]["userUID"] = $cookies.getObject('userInfo').UID;
+            item.formData[0]["fileType"] = 'MedicalImage';
         };
         uploader.uploadAll();
     }
 
 
-    var uploader = $scope.uploader = new FileUploader({
-        // url: 'http://testapp.redimed.com.au:3005/api/uploadFile',
-        headers: {
-            Authorization: ('Bearer ' + $cookies.get("token"))
-        },
-        url: 'http://telehealthvietnam.com.vn:3005/api/uploadFile',
+     var uploader = $scope.uploader = new FileUploader({
+        url: o.const.uploadFileUrl,
+        headers:{Authorization:('Bearer '+$cookies.get("token"))},
         alias: 'uploadFile'
     });
 
@@ -158,8 +152,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
         console.info('onCancelItem', fileItem, response, status, headers);
     };
     uploader.clearQueue = function(type){
-        var queueTemp = angular.copy(uploader.queue);
-        
+       var queueTemp = angular.copy(uploader.queue);
        for(var i = uploader.queue.length -1; i >= 0 ; i--){
             if(uploader.queue[i].formData[0].fileTypeClinical == type){
                 uploader.queue.splice(i, 1);
@@ -169,17 +162,28 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
         console.info('onCompleteItem', fileItem, response, status, headers);
         if (response.status == 'success') {
-            $scope.requestInfo.FileUploads.push({
-                UID: response.fileUID
-            });
+            var key = 'Clinical__Details.Telehealth__WAAppointment.Notes.'+fileItem.formData[0].fileTypeClinical;
+            if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails) {
+                $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];
+                if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key]) {
+                    $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key] = {};
+                };
+            };
+            $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].FileUploads = []
+            $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].FileUploads.push({UID:response.fileUID})
+            console.log($scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].FileUploads)
         };
     };
     uploader.onCompleteAll = function() {
         $scope.sendRequestAppointment();
     };
-
     console.info('uploader', uploader);
-
+    $scope.CreateWAApointment = function(){
+        alert('success')
+    }
+    $scope.Submit = function(){
+        ((uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.CreateWAApointment());
+    }
     $scope.ModalBodyPart = function() {
         var modalInstance = $modal.open({
             animation: true,

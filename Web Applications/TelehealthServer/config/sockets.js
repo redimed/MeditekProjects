@@ -40,9 +40,11 @@ module.exports.sockets = {
     // -OR-
     //
     // adapter: 'redis',
-    // host: '127.0.0.1',
+    // host: 'localhost',
     // port: 6379,
-    // db: 'sails',
+    // ttl: 20,
+    // db: 0,
+    // prefix: 'socket:',
     // pass: '<redis auth password>',
     /***************************************************************************
      *                                                                          *
@@ -110,7 +112,9 @@ module.exports.sockets = {
      ***************************************************************************/
     afterDisconnect: function(session, socket, cb) {
         var socketQuery = socket.handshake.query;
-        TelehealthService.GetOnlineUsers(socketQuery.CoreAuth);
+        var headers = HelperService.toJson(socketQuery);
+        delete headers['__sails_io_sdk_version'];
+        TelehealthService.GetOnlineUsers(headers);
         return cb();
     },
     /***************************************************************************

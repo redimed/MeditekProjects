@@ -4,31 +4,33 @@ var config = sails.config.myconf;
 module.exports = function(req, res, next) {
     TelehealthService.CheckToken(req.headers).then(function(result) {
         var decoded = result.payload;
-        var tokenLeftTime = decoded.exp - decoded.iat;
-        var currentTime = (Math.round(new Date().getTime() / 1000)) - decoded.iat;
-        var socketRooms = sails.sockets.rooms();
-        jwt.verify(result.token, result.secretKey, function(err, decode) {
+        var userToken = result.userToken;
+        var user = result.user;
+        req.user = decoded;
+        jwt.verify(result.token, userToken.SecretKey, function(err, decode) {
             if (err) {
-                if (err.name == 'TokenExpiredError' && _.includes(socketRooms, decoded.UID)) {
-                    var token = jwt.sign(decoded, result.secretKey, {
-                        expiresIn: config.TokenExpired
-                    })
-                    sails.sockets.broadcast(decoded.UID, 'refreshToken', {
-                        token: token
-                    });
-                }
-                return res.serverError(ErrorWrap(err));
-            }
-            req.user = decoded;
-            if (tokenLeftTime - currentTime <= 120 && _.includes(socketRooms, decoded.UID)) {
-                var token = jwt.sign(decoded, result.secretKey, {
-                    expiresIn: config.TokenExpired
-                })
-                sails.sockets.broadcast(decoded.UID, 'refreshToken', {
-                    token: token
-                });
-            }
-            next();
+                if (err.name == 'TokenExpiredError') {
+                    if (!HelperService.isExpired(userToken.SecretCreatedDate, userToken.TokenExpired)) {
+                        TelehealthService.GenerateJWT({
+                            deviceID: req.headers.deviceid,
+                            payload: user,
+                            tokenExpired: config.TokenExpired,
+                            type: HelperService.const.systemType[req.headers.systemtype.toLowerCase()],
+                            userID: user.ID
+                        }).then(function(token) {
+                            res.set('newtoken', token);
+                            res.header('Access-Control-Expose-Headers', 'newtoken');
+                            return next();
+                        }).catch(function(err) {
+                            return res.serverError(ErrorWrap(err));
+                        })
+                    } else {
+                        var error = new Error("CheckToken");
+                        error.pushError("secretKeyExpired");
+                        return res.serverError(ErrorWrap(error));
+                    }
+                } else return res.serverError(ErrorWrap(err));
+            } else return next();
         })
     }).catch(function(err) {
         return res.serverError(ErrorWrap(err));

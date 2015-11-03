@@ -24,7 +24,8 @@ module.exports = {
             }
         });
     },
-    GetAppointmentsByPatient: function(patientUID, limit, coreAuth) {
+    GetAppointmentsByPatient: function(patientUID, limit, headers) {
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-list',
             method: 'POST',
@@ -48,23 +49,21 @@ module.exports = {
                     Limit: limit
                 }
             },
-            headers: !coreAuth ? {} : {
-                'Authorization': coreAuth
-            }
+            headers: headers
         })
     },
-    GetAppointmentDetails: function(apptUID, coreAuth) {
+    GetAppointmentDetails: function(apptUID, headers) {
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
-            path: '/api/appointment-telehealth-detail/' + apptUID,
+            path: '/api/appointment-wa-detail/' + apptUID,
             method: 'GET',
-            headers: !coreAuth ? {} : {
-                'Authorization': coreAuth
-            }
+            headers: headers
         })
     },
-    GetAppointmentList: function(coreAuth) {
+    GetAppointmentList: function(headers) {
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
-            path: '/api/appointment-telehealth-list',
+            path: '/api/appointment-wa-list',
             method: 'POST',
             body: {
                 data: {
@@ -82,14 +81,13 @@ module.exports = {
                     }]
                 }
             },
-            headers: !coreAuth ? {} : {
-                'Authorization': coreAuth
-            }
+            headers: headers
         });
     },
-    GetOnlineUsers: function(coreAuth) {
+    GetOnlineUsers: function(headers) {
         var appts = [];
-        TelehealthService.GetAppointmentList(coreAuth).then(function(response) {
+        TelehealthService.GetAppointmentList(headers).then(function(response) {
+            console.log("====",response);
             var data = response.getBody();
             if (data.count > 0) {
                 appts = data.rows;
@@ -142,14 +140,14 @@ module.exports = {
                 },
                 defaults: {
                     SecretKey: secretKey,
-                    TokenExpired: 3600 * 24 * 999,
+                    TokenExpired: null,
                     Enable: 'Y'
                 }
             }).spread(function(userToken, created) {
                 if (!created) {
                     userToken.update({
                         SecretKey: secretKey,
-                        TokenExpired: 3600 * 24 * 999,
+                        TokenExpired: null,
                         SecretCreatedDate: new Date(),
                         Enable: 'Y'
                     }).then(function() {
@@ -166,7 +164,7 @@ module.exports = {
     },
     CheckToken: function(info) {
         var defer = $q.defer();
-        if (!info.authorization || !info.useruid || !info.deviceid || !info.devicetype || (info.devicetype && HelperService.const.systemType[info.devicetype.toLowerCase()] == undefined)) {
+        if (!info.authorization || !info.useruid || !info.deviceid || !info.systemtype || (info.systemtype && HelperService.const.systemType[info.systemtype.toLowerCase()] == undefined)) {
             var err = new Error("CheckToken.Error");
             err.pushError("Invalid Params");
             defer.reject(err);
@@ -184,7 +182,7 @@ module.exports = {
                 UserToken.find({
                     where: {
                         UserAccountID: user.ID,
-                        SystemType: HelperService.const.systemType[info.devicetype.toLowerCase()],
+                        SystemType: HelperService.const.systemType[info.systemtype.toLowerCase()],
                         DeviceID: info.deviceid,
                         Enable: 'Y'
                     }
@@ -206,7 +204,8 @@ module.exports = {
                             defer.resolve({
                                 token: token,
                                 payload: decoded.payload,
-                                secretKey: userToken.SecretKey
+                                userToken: userToken,
+                                user: user
                             })
                         } else {
                             var err = new Error("CheckToken.Error");

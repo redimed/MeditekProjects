@@ -46,7 +46,8 @@ module.exports = {
         }
         var info = HelperService.toJson(req.body.data);
         var uid = info.uid;
-        if (!uid) {
+        var deviceType = req.headers.systemtype;
+        if (!uid || !deviceType || !HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
             var err = new Error("Telehealth.GetUserDetails.Error");
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
@@ -63,8 +64,10 @@ module.exports = {
                                     'UID': user.UID
                                 }
                             },
-                            headers: !req.headers.coreauth ? {} : {
-                                'Authorization': req.headers.coreauth
+                            headers: {
+                                'Authorization': req.headers.authorization,
+                                'DeviceID': req.headers.deviceid,
+                                'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
                             }
                         }).then(function(response) {
                             res.json(response.getCode(), response.getBody());
@@ -99,7 +102,7 @@ module.exports = {
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
-        TelehealthService.GetAppointmentsByPatient(patientUID, limit, req.headers.coreauth).then(function(response) {
+        TelehealthService.GetAppointmentsByPatient(patientUID, limit, req.headers).then(function(response) {
             res.json(response.getCode(), response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
@@ -119,7 +122,7 @@ module.exports = {
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
-        TelehealthService.GetAppointmentDetails(apptUID, req.headers.coreauth).then(function(response) {
+        TelehealthService.GetAppointmentDetails(apptUID, req.headers).then(function(response) {
             res.json(response.getCode(), response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
@@ -133,7 +136,7 @@ module.exports = {
     },
     TelehealthLogin: function(req, res) {
         var deviceId = req.headers.deviceid;
-        var deviceType = req.headers.devicetype;
+        var deviceType = req.headers.systemtype;
         passport.authenticate('local', function(err, u, info) {
             if ((err) || (!u)) {
                 if (!err) var err = info;
@@ -142,28 +145,17 @@ module.exports = {
             req.logIn(u, function(err) {
                 if (err) res.unauthorize(err);
                 else {
-                    if (!deviceType || !deviceId) {
+                    if (!deviceType || !deviceId || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
                         var err = new Error("TelehealthLogin");
                         err.pushError("Invalid Params");
                         return res.serverError(ErrorWrap(err));
                     }
-                    TelehealthService.GenerateJWT({
-                        deviceID: deviceId,
-                        payload: u.user,
-                        tokenExpired: config.TokenExpired,
-                        type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS',
-                        userID: u.user.ID
-                    }).then(function(token) {
-                        res.ok({
-                            status: 'success',
-                            message: info.message,
-                            user: u.user,
-                            coreToken: u.token,
-                            token: token
-                        });
-                    }).catch(function(err) {
-                        res.serverError(ErrorWrap(err));
-                    })
+                    res.ok({
+                        status: 'success',
+                        message: info.message,
+                        user: u.user,
+                        token: u.token
+                    });
                 }
             });
         })(req, res);
@@ -221,7 +213,7 @@ module.exports = {
         var info = HelperService.toJson(req.body.data);
         var phoneNumber = info.phone;
         var deviceId = req.headers.deviceid;
-        var deviceType = req.headers.devicetype;
+        var deviceType = req.headers.systemtype;
         var phoneRegex = /^\+[0-9]{9,15}$/;
         if (phoneNumber && phoneNumber.match(phoneRegex) && deviceId && deviceType && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
             UserAccount.find({
@@ -237,6 +229,10 @@ module.exports = {
                             UserUID: user.UID,
                             Type: HelperService.const.systemType[deviceType.toLowerCase()],
                             DeviceID: deviceId
+                        },
+                        headers: {
+                            'DeviceID': req.headers.deviceid,
+                            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
                         }
                     }).then(function(response) {
                         var data = response.getBody();
@@ -276,7 +272,7 @@ module.exports = {
         var phoneNumber = info.phone;
         var verifyCode = info.code;
         var deviceId = req.headers.deviceid;
-        var deviceType = req.headers.devicetype;
+        var deviceType = req.headers.systemtype;
         var phoneRegex = /^\+[0-9]{9,15}$/;
         if (phoneNumber && phoneNumber.match(phoneRegex) && verifyCode && deviceId && deviceType && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
             UserAccount.find({
@@ -295,6 +291,10 @@ module.exports = {
                                     SystemType: HelperService.const.systemType[deviceType.toLowerCase()],
                                     DeviceID: deviceId,
                                     VerificationCode: verifyCode
+                                },
+                                headers: {
+                                    'DeviceID': req.headers.deviceid,
+                                    'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
                                 }
                             }).then(function(response) {
                                 var data = response.getBody();
@@ -315,28 +315,21 @@ module.exports = {
                                             'UserUID': user.UID,
                                             'DeviceID': deviceId,
                                             'VerificationToken': data.VerificationToken
+                                        },
+                                        headers: {
+                                            'DeviceID': req.headers.deviceid,
+                                            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
                                         }
                                     }).then(function(response) {
-                                        TelehealthService.GenerateJWT({
-                                            deviceID: deviceId,
-                                            payload: teleUser.dataValues,
-                                            tokenExpired: config.TokenExpired,
-                                            type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS',
-                                            userID: user.ID
-                                        }).then(function(token) {
-                                            var returnJson = {
-                                                status: 'success',
-                                                message: 'User Activated',
-                                                uid: teleUser.UID,
-                                                userUID: response.getBody().user.UID,
-                                                patientUID: patient.UID,
-                                                token: token,
-                                                coreToken: response.getBody().token
-                                            }
-                                            res.ok(returnJson);
-                                        }).catch(function(err) {
-                                            res.serverError(err);
-                                        })
+                                        var returnJson = {
+                                            status: 'success',
+                                            message: 'User Activated',
+                                            uid: teleUser.UID,
+                                            userUID: response.getBody().user.UID,
+                                            patientUID: patient.UID,
+                                            token: response.getBody().token
+                                        }
+                                        res.ok(returnJson);
                                     })
                                 }).catch(function(err) {
                                     return res.serverError(ErrorWrap(err));

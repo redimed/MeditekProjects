@@ -1,3 +1,12 @@
+function checkData(value) {
+    var result = true;
+    if (value === undefined || value === null || value === '') {
+        result = false;
+    } else if (_.isObject(value) && _.isEmpty(value)) {
+        result = false;
+    }
+    return result;
+}
 module.exports = {
     const: {
         systemType: {
@@ -39,5 +48,19 @@ module.exports = {
             newobj[key.toLowerCase()] = obj[key];
         }
         return newobj;
+    },
+    isExpired: function(createdDate, seconds) {
+        if (checkData(seconds)) {
+            var date = moment(createdDate);
+            var expiredDate = date.clone().add(seconds, 'seconds');
+            var current = moment();
+            if (current.isBefore(expiredDate)) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 }

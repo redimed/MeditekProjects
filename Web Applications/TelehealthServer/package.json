@@ -7,6 +7,7 @@
   "dependencies": {
     "async": "^1.4.2",
     "bcryptjs": "^2.3.0",
+    "connect-redis": "^1.4.5",
     "ejs": "~0.8.4",
     "express-jwt": "^3.1.0",
     "grunt": "0.4.2",
@@ -41,6 +42,7 @@
     "sails-hook-sequelize": "^1.0.1",
     "sails-mysql": "^0.11.0",
     "sequelize": "^3.9.0",
+    "socket.io-redis": "^0.1.4",
     "twilio": "^2.5.1",
     "validator": "^4.0.6"
   },

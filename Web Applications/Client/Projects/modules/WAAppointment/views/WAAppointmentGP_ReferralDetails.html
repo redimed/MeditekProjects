@@ -229,46 +229,6 @@
                         <div class="col-md-9 col-sm-9">
                             <div class="form-group">
                                 <div class="checkbox-list" ng-show="tab1 == 'skin_cancer'">
-<<<<<<< HEAD
-                                    <label class=""><input type="checkbox" ng-model="BCC"> 
-                                        BCC
-                                        <span class="my-ul" ng-show="BCC == true">
-                                            &nbsp;&nbsp;&nbsp;Size :
-                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 0 - 1 cm</label>
-                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 1 - 2 cm</label>
-                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > > 2 cm</label>
-                                        </span>
-                                    </label>
-                                    <label class=""><input type="checkbox" ng-model="SCC"> 
-                                        SCC
-                                        <span ng-show="SCC == true">
-                                            &nbsp;&nbsp;&nbsp;Size :
-                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 0 - 1 cm</label>
-                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 1 - 2 cm</label>
-                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > > 2 cm</label>
-                                        </span>
-                                    </label>
-                                    <label class=""><input type="checkbox" ng-model="Melanoma"> 
-                                        Melanoma
-                                        <span ng-show="Melanoma == true">
-                                            &nbsp;&nbsp;&nbsp;Size :
-                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 0 - 1 cm</label>
-                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 1 - 2 cm</label>
-                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > > 2 cm</label>
-                                        </span>
-                                    </label>
-                                    <label class=""><input type="checkbox" ng-model="Merkel"> 
-                                        Merkel's
-                                        <span ng-show="Merkel == true">
-                                            &nbsp;&nbsp;&nbsp;Size :
-                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 0 - 1 cm</label>
-                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > 1 - 2 cm</label>
-                                            <label class="radio-inline"><input type="radio" name="bcc_radio" > > 2 cm</label>
-                                        </span>
-                                    </label>
-                                    <label class=""><input type="checkbox" ng-model="Skin_cancer_Others" ng-click="click_other()"> 
-                                        Others
-=======
                                     <label class="">
                                         <input type="checkbox" ng-model="BCC"> BCC
                                         <span class="my-ul" ng-show="BCC == true">
@@ -331,24 +291,10 @@
                                     </label>
                                     <label class="">
                                         <input type="checkbox" ng-model="Skin_cancer_Others" ng-click="click_other()"> Others
->>>>>>> update wwappointment
                                         <input type="text" size="15" ng-model="info.txtSkin_cancer_Others" ng-disabled="Skin_cancer_Others == false" />
                                     </label>
                                 </div>
                                 <div class="checkbox-list" ng-show="tab1 == 'hand_condition'">
-<<<<<<< HEAD
-                                    <label class="control-label"><input type="checkbox" checked> Ganglion</label>
-                                    <label class="control-label"><input type="checkbox"> Arthritis</label>
-                                    <label class="control-label"><input type="checkbox"> DeQuervains/Trigger</label>
-                                    <label class="control-label"><input type="checkbox"> Contracture </label>
-                                </div>
-                                <div class="checkbox-list" ng-show="tab1 == 'pns'">
-                                    <label class="control-label"><input type="checkbox" checked> Carpal Tunnel</label>
-                                    <label class="control-label"><input type="checkbox"> Cubital Tunnel</label>
-                                    <label class="control-label"><input type="checkbox"> Tarsal Tunnel</label>
-                                    <label class="control-label"><input type="checkbox"> Complex Reconstructive Case</label>
-                                    <label class="control-label"><input type="checkbox"> Other &nbsp;<input type="text" placeholder="Other" size="15"></label>
-=======
                                     <label class="control-label">
                                         <input type="checkbox" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Hand__Condition.Ganglion'].Value" ng-true-value="'Y'" ng-false-value="null"> Ganglion
                                     </label>
@@ -374,7 +320,6 @@
                                         <input type="checkbox"> Other &nbsp;
                                         <input type="text" placeholder="Other" size="15" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Other'].Value" ng-true-value="'Y'" ng-false-value="null">
                                     </label>
->>>>>>> update wwappointment
                                 </div>
                             </div>
                         </div>

@@ -67,11 +67,11 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
             ClinicalDetailsTemp = []
         }
         console.log($scope.requestInfo)
-        //$scope.requestInfo.TelehealthAppointment.ClinicalDetails = ClinicalDetailsTemp
-        // WAAppointmentService.RequestWAApointment($scope.requestInfo).then(function(response){
-        //     console.log(response)
-        //     alert('1')
-        // })
+        $scope.requestInfo.TelehealthAppointment.ClinicalDetails = ClinicalDetailsTemp
+        WAAppointmentService.RequestWAApointment($scope.requestInfo).then(function(response){
+            console.log(response)
+            alert('1')
+        })
     }
     $scope.Skin_cancer_Others = false;
     $scope.info = {};

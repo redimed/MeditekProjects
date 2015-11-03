@@ -49,6 +49,7 @@ function Validation(userToken)
 module.exports={
 	MakeUserToken:function(userToken,transaction)
 	{
+		console.log("=======================MakeUserToken==============================");
 		var error=new Error("MakeUserToken.Error");
 		return Validation(userToken)
 		.then(function(data){

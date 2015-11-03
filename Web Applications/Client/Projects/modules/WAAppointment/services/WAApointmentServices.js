@@ -5,5 +5,9 @@ angular.module("app.authentication.WAAppointment.services",[])
 		services.RequestWAApointment = function(requestInfo){
 			return api.all('appointment-wa-request').post({data:requestInfo});
 		}
+		//load list WAappointment
+		services.loadListWAAppointment = function(data){
+			return api.all("appointment-wa-list").post({data:data});
+		};
 		return services;
 	});

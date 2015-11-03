@@ -21,7 +21,7 @@ module.exports = {
                 }
             }
         },
-        AppointmentID: {
+        TelehealthAppointmentID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
             validate: {
@@ -30,71 +30,11 @@ module.exports = {
                 }
             },
             references: {
-                model: 'Appointment',
+                model: 'TelehealthAppointment',
                 key: 'ID'
             }
         },
-        Fund: {
-            type: Sequelize.STRING(255),
-            allowNull: true,
-            validate: {
-                len: {
-                    args: [0, 255],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        Correspondence: {
-            type: Sequelize.STRING(1),
-            comment: 'Y/N',
-            validate: {
-                len: {
-                    args: [0, 1],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        Description: {
-            type: Sequelize.TEXT,
-            validate: {
-
-                len: {
-                    args: [0, 2048],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        RefName: {
-            type: Sequelize.STRING(255),
-            allowNull: true,
-            validate: {
-                len: {
-                    args: [0, 255],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        RefHealthLink: {
-            type: Sequelize.STRING(255),
-            allowNull: true,
-            validate: {
-                len: {
-                    args: [0, 255],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        RefAddress: {
-            type: Sequelize.STRING(255),
-            allowNull: true,
-            validate: {
-                len: {
-                    args: [0, 255],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        RefTelePhone: {
+        RefFax: {
             type: Sequelize.STRING(20),
             allowNull: true,
             validate: {
@@ -104,17 +44,82 @@ module.exports = {
                 }
             }
         },
-        RefPostcode: {
-            type: Sequelize.STRING(10),
+        IsUsualGP: {
+            type: Sequelize.STRING(1),
             allowNull: true,
+            comment: 'Is the referrer the patients usual GP?\nY/N',
             validate: {
                 len: {
-                    args: [0, 10],
+                    args: [0, 1],
                     msg: 'Too long!'
                 }
             }
         },
-        RefSignature: {
+        UsualGPName: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            comment: 'If no, name of patients usual GP',
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        UsualGPContactNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        UsualGPFaxNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        IsSamePlacePreference: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            comment: 'If the patient has been referred to this speciality for the same condition before, do they need to be referred to the same place again?',
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        IsTelehealthSuitable: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            comment: 'Is the patient suitable for a telehealth consult',
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        IsRenewReferral: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            comment: 'Is this a renewed referral?\nY/N',
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        PathologyProvider: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
@@ -124,63 +129,12 @@ module.exports = {
                 }
             }
         },
-        RefDate: {
-            type: Sequelize.DATE,
-            allowNull: true,
-            validate: {
-                isDate: {
-                    msg: 'Invalid!'
-                }
-            }
-        },
-        RefProviderNumber: {
-            type: Sequelize.STRING(45),
+        RadiologyProvider: {
+            type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
                 len: {
-                    args: [0, 45],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        RefDurationOfReferral: {
-            type: Sequelize.STRING(2),
-            allowNull: true,
-            comment: '- 3 months: 03\n- 12 months: 12\n- indefinite: 00',
-            validate: {
-                len: {
-                    args: [0, 2],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        PresentComplain: {
-            type: Sequelize.TEXT,
-            validate: {
-
-                len: {
-                    args: [0, 2048],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        Allergy: {
-            type: Sequelize.TEXT,
-            validate: {
-
-                len: {
-                    args: [0, 2048],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        Type: {
-            type: Sequelize.STRING(3),
-            allowNull: true,
-            comment: 'TEL: TelehealthAppointment\nWAA: WAAppointment',
-            validate: {
-                len: {
-                    args: [0, 3],
+                    args: [0, 255],
                     msg: 'Too long!'
                 }
             }
@@ -234,21 +188,21 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'TelehealthAppointment',
+        tableName: 'WAAppointment',
         timestamps: false,
         hooks: {
-            beforeCreate: function(telehealthappointment, options, callback) {
-                telehealthappointment.CreatedDate = new Date();
+            beforeCreate: function(waappointment, options, callback) {
+                waappointment.CreatedDate = new Date();
                 callback();
             },
-            beforeBulkCreate: function(telehealthappointments, options, callback) {
-                telehealthappointments.forEach(function(telehealthappointment, index) {
-                    telehealthappointments[index].CreatedDate = new Date();
+            beforeBulkCreate: function(waappointments, options, callback) {
+                waappointments.forEach(function(waappointment, index) {
+                    waappointments[index].CreatedDate = new Date();
                 });
                 callback();
             },
-            beforeUpdate: function(telehealthappointment, options, callback) {
-                telehealthappointment.ModifiedDate = new Date();
+            beforeUpdate: function(waappointment, options, callback) {
+                waappointment.ModifiedDate = new Date();
                 callback();
             }
         }

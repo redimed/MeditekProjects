@@ -48,13 +48,13 @@ module.exports = function(appointmentUID, userInfo) {
                 attributes: Services.AttributesAppt.TelehealthAppointment(),
                 required: false,
                 include: [{
+                    model: WAAppointment,
+                    attributes: Services.AttributesAppt.WAAppointment(),
+                    required: false
+                }, {
                     model: PatientAppointment,
                     attributes: Services.AttributesAppt.PatientAppointment(),
                     required: false,
-                }, {
-                    model: ExaminationRequired,
-                    attributes: Services.AttributesAppt.ExaminationRequired(),
-                    required: false
                 }, {
                     model: PreferredPractitioner,
                     attributes: Services.AttributesAppt.PreferredPractitioner(),
@@ -62,7 +62,18 @@ module.exports = function(appointmentUID, userInfo) {
                 }, {
                     model: ClinicalDetail,
                     attributes: Services.AttributesAppt.ClinicalDetail(),
-                    required: false
+                    required: false,
+                    include: [{
+                        model: FileUpload,
+                        required: false,
+                        include: [{
+                            model: MedicalImage,
+                            required: false
+                        }, {
+                            model: DocumentFile,
+                            required: false
+                        }]
+                    }]
                 }, {
                     model: Doctor,
                     attributes: Services.AttributesAppt.Doctor(),
@@ -86,16 +97,6 @@ module.exports = function(appointmentUID, userInfo) {
                 include: [{
                     model: UserAccount,
                     attributes: Services.AttributesAppt.UserAccount(),
-                    required: false
-                }]
-            }, {
-                model: FileUpload,
-                required: false,
-                include: [{
-                    model: MedicalImage,
-                    required: false
-                }, {
-                    model: DocumentFile,
                     required: false
                 }]
             }],

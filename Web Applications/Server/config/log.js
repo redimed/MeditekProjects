@@ -1,4 +1,8 @@
 var winston = require('winston');
+var fs = require('fs');
+if (!fs.existsSync('./logs')) {
+    fs.mkdirSync('./logs');
+}
 require('events').EventEmitter;
 var Mail = require('winston-mail').Mail;
 var fs = require('fs');

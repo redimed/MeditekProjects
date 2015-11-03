@@ -1,6 +1,6 @@
 module.exports = {
     associations: function() {
-        //Appointment - TelehealthAppointment
+        //association Appointment - TelehealthAppointment
         Appointment.hasOne(TelehealthAppointment, {
             foreignKey: 'AppointmentID'
         });
@@ -8,21 +8,36 @@ module.exports = {
             foreignKey: 'AppointmentID'
         });
 
-        // TelehealthAppointment - PatientAppointment
+        //association TelehealthAppointment - PatientAppointment
         TelehealthAppointment.hasOne(PatientAppointment, {
             foreignKey: 'TelehealthAppointmentID'
         });
+        PatientAppointment.belongsTo(TelehealthAppointment, {
+            foreignKey: 'TelehealthAppointmentID'
+        });
 
-        // TelehealthAppointment - ExaminationRequired
+        //association TelehealthAppointment - ExaminationRequired
         TelehealthAppointment.hasOne(ExaminationRequired, {
             foreignKey: 'TelehealthAppointmentID'
         });
 
-        // TelehealthAppointment - PreferredPractitioner
+        //association TelehealthAppointment - PreferredPractitioner
         TelehealthAppointment.hasMany(PreferredPractitioner, {
             foreignKey: 'TelehealthAppointmentID'
         });
-        // TelehealthAppointment - Doctor
+        PreferredPractitioner.belongsTo(TelehealthAppointment, {
+            foreignKey: 'TelehealthAppointmentID'
+        });
+
+        //association WAAppointment - PreferredPractitioner
+        WAAppointment.hasMany(PreferredPractitioner, {
+            foreignKey: 'WAAppointmentID'
+        });
+        PreferredPractitioner.belongsTo(WAAppointment, {
+            foreignKey: 'WAAppointmentID'
+        });
+
+        //association TelehealthAppointment - Doctor
         TelehealthAppointment.belongsToMany(Doctor, {
             through: 'RelTelehealthAppointmentDoctor',
             foreignKey: 'TelehealthAppointmentID'
@@ -31,7 +46,7 @@ module.exports = {
             through: 'RelTelehealthAppointmentDoctor',
             foreignKey: 'DoctorID'
         });
-        // TelehealthAppointment - ClinicalDetail
+        //association TelehealthAppointment - ClinicalDetail
         TelehealthAppointment.hasMany(ClinicalDetail, {
             foreignKey: 'TelehealthAppointmentID'
         });
@@ -87,6 +102,37 @@ module.exports = {
         UserAccount.hasMany(FileUpload, {
             foreignKey: 'UserAccountID'
         });
+        //association Patient - PatientKin
+        Patient.hasOne(PatientKin, {
+            foreignKey: 'PatientID'
+        });
+        PatientKin.belongsTo(Patient, {
+            foreignKey: 'PatientID'
+        });
+
+        //association Patient - PatientMedicare
+        Patient.hasOne(PatientMedicare, {
+            foreignKey: 'PatientID'
+        });
+        PatientMedicare.belongsTo(Patient, {
+            foreignKey: 'PatientID'
+        });
+        //association ClinicalDetail - FileUpload
+        ClinicalDetail.belongsToMany(FileUpload, {
+            through: 'RelClinicalDetailFileUpload',
+            foreignKey: 'ClinicalDetailID'
+        });
+        FileUpload.belongsToMany(ClinicalDetail, {
+            through: 'RelClinicalDetailFileUpload',
+            foreignKey: 'FileUploadID'
+        });
+        //association TelehealthAppointment - WAAppointment
+        TelehealthAppointment.hasOne(WAAppointment, {
+            foreignKey: 'TelehealthAppointmentID'
+        });
+        WAAppointment.belongsTo(TelehealthAppointment, {
+            foreignKey: 'TelehealthAppointmentID'
+        });
         //association Patient - UserAccount
         Patient.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
@@ -114,6 +160,13 @@ module.exports = {
         Patient.belongsTo(UserAccount, {
             foreignKey: 'UserAccountID'
         });
+        //Patient - Country
+        Country.hasOne(Patient, {
+            foreignKey: 'CountryID1'
+        });
+        Patient.belongsTo(Country, {
+            foreignKey: 'CountryID1'
+        })
 
         /* Doctor */
         FileUpload.hasOne(Doctor, {

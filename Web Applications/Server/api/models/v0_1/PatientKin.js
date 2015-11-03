@@ -11,7 +11,7 @@ module.exports = {
             },
             primaryKey: true
         },
-        UserAccountID: {
+        PatientID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
             validate: {
@@ -20,22 +20,21 @@ module.exports = {
                 }
             },
             references: {
-                model: 'UserAccount',
+                model: 'Patient',
                 key: 'ID'
             }
         },
-        SystemType: {
-            type: Sequelize.STRING(45),
+        UID: {
+            type: Sequelize.STRING(255),
             allowNull: true,
-            comment: 'IOS: IOS\nWebsite: WEB\nAndroid: ARD',
             validate: {
-                len: {
-                    args: [0, 45],
-                    msg: 'Too long!'
+                isUUID: {
+                    args: 4,
+                    msg: 'Must be an UUID V4!'
                 }
             }
         },
-        DeviceID: {
+        Name: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
@@ -45,7 +44,7 @@ module.exports = {
                 }
             }
         },
-        SecretKey: {
+        Relationship: {
             type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
@@ -55,32 +54,32 @@ module.exports = {
                 }
             }
         },
-        SecretCreatedDate: {
-            type: Sequelize.DATE,
+        MobilePhoneNumber: {
+            type: Sequelize.STRING(20),
             allowNull: true,
-            validate: {
-                isDate: {
-                    msg: 'Invalid!'
-                }
-            }
-        },
-        TokenExpired: {
-            type: Sequelize.INTEGER(11),
-            allowNull: true,
-            validate: {
-
-                isInt: {
-                    msg: 'Must be an integer!'
-                }
-            }
-        },
-        Enable: {
-            type: Sequelize.STRING(1),
-            allowNull: true,
-            comment: 'Y/N',
             validate: {
                 len: {
-                    args: [0, 1],
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        HomePhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        WorkPhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
                     msg: 'Too long!'
                 }
             }
@@ -88,7 +87,7 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'UserToken',
+        tableName: 'PatientKin',
         timestamps: false,
         hooks: {}
     }

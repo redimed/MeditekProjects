@@ -1,7 +1,7 @@
 module.exports = function(objUpdate) {
-    return TelehealthAppointment.update(objUpdate.data, {
+    return ExaminationRequired.update(objUpdate.data, {
         where: {
-            UID: objUpdate.where
+            TelehealthAppointmentID: objUpdate.where
         },
         transaction: objUpdate.transaction
     });

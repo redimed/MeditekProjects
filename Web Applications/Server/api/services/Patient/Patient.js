@@ -660,11 +660,18 @@ module.exports = {
 		var FirstName = '',LastName = '';
 		var isConcat = false;
 		var attributes=[];
-		for(var i = 0; i < data.attributes.length; i++){
-			if(data.attributes[i].field!='UserAccount'){
-				attributes[i] = data.attributes[i].field;
-			}
-		};
+		if(data.attributes!=undefined && data.attributes!=null
+			 && data.attributes!='' && data.attributes.length!=0){
+			for(var i = 0; i < data.attributes.length; i++){
+				if(data.attributes[i].field!='UserAccount'){
+					attributes.push(data.attributes[i].field);
+				}
+			};
+			attributes.push("UID");
+		}
+		else{
+			attributes = defaultAtrributes;
+		}
 		console.log(attributes);
 		var whereClause = Services.Patient.whereClause(data);
 		if(data.Search){
@@ -686,7 +693,7 @@ module.exports = {
 				   	}
 			    }
 			],
-			// attributes : attributes,
+			attributes : attributes,
 			limit      : data.limit,
 			offset     : data.offset,
 			order      : data.order,

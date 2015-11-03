@@ -11,47 +11,22 @@
 </div>
 <!-- END PAGE HEADER-->
 <!-- BEGIN PAGE CONTENT-->
-<div class="row profile-account">
-    <div class="col-md-3">
-        <ul class="ver-inline-menu tabbable margin-bottom-10">
-            <li class="active">
-                <a data-toggle="tab" href="index.html#tab_1-1">
-                    <i class="fa fa-cog"></i> Practitioners Detail </a>
-                <span class="after"> </span>
-            </li>
-            <li>
-                <a data-toggle="tab" href="index.html#tab_2-2">
-                    <i class="fa fa-picture-o"></i> Patient Details </a>
-            </li>
-            <li>
-                <a data-toggle="tab" href="index.html#tab_3-3">
-                    <i class="fa fa-lock"></i> Referral Details </a>
-            </li>
-            <li>
-                <a data-toggle="tab" href="index.html#tab_4-4">
-                    <i class="fa fa-eye"></i> Clinical Information </a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-md-9">
-        <div class="tab-content">
-            <div id="tab_1-1" class="tab-pane active">
-                <div ng-include="'modules/WAAppointment/views/WAAppointmentGP_Confirm_PractitionersDetail.html'"></div>
-            </div>
-            <div id="tab_2-2" class="tab-pane">
-                <div ng-include="'modules/WAAppointment/views/WAAppointmentGP_Confirm_PatientDetails.html'"></div>
-            </div>
-            <div id="tab_3-3" class="tab-pane">
-                <div ng-include="'modules/WAAppointment/views/WAAppointmentGP_Confirm_ReferralDetails.html'"></div>
-            </div>
-            <div id="tab_4-4" class="tab-pane">
-                <div ng-include="'modules/WAAppointment/views/WAAppointmentGP_Confirm_ClinicalInformation.html'"></div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label col-md-4">Without Seconds {{gio}}</label>
+            <div class="col-md-5">
+                <div class="input-group">
+                    <input type="text" class="form-control timepicker timepicker-no-seconds" value="" ng-model="gio" data-default-time="" data-format="hh:mm A">
+
+                    <span class="input-group-btn">
+                    <button class="btn default" type="button"><i class="fa fa-clock-o"></i></button>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
-    <!--end col-md-9-->
 </div>
-
 
 <!-- END PAGE CONTENT-->
 

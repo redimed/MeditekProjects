@@ -4,4 +4,7 @@ var app = angular.module('app.authentication.home.list.controller',[
 
 app.controller('homeListCtrl', function($scope){
 	console.log('homeListCtrl');
+	   //  $('.timepicker').timepicker({
+    //     defaultTime: false
+    // });
 });

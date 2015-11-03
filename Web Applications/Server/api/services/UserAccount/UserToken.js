@@ -1,6 +1,11 @@
 var $q = require('q');
 var o=require("../HelperService");
-function Validation(userToken)
+
+/**
+ * Validation: 
+ * @param {[type]} userToken [description]
+ */
+function Validation(userAccess)
 {
 	var error=new Error("UserToken.Validation.Error");
 	var q=$q.defer();
@@ -13,19 +18,27 @@ function Validation(userToken)
 		systems.push(HelperService.const.systemType.android);
 		mobileSystems.push(HelperService.const.systemType.ios);
 		mobileSystems.push(HelperService.const.systemType.android);
-		if(!o.checkData(userToken.UserUID))
+
+		if(!_.isObject(userAccess) || _.isEmpty(userAccess))
+		{
+			error.pushError("params.notProvided");
+			throw error;
+		}
+
+		if(!o.checkData(userAccess.UserUID))
 		{
 			error.pushError("userUID.notProvided");
 			throw error;
 		}
-		if(!o.checkData(userToken.SystemType))
+
+		if(!o.checkData(userAccess.SystemType))
 		{
 			error.pushError("systemType.notProvided");
 			throw error;
 		}
-		else if(systems.indexOf(userToken.SystemType)>=0)
+		else if(systems.indexOf(userAccess.SystemType)>=0)
 		{
-			if(mobileSystems.indexOf(userToken.SystemType)>=0 && !userToken.DeviceID)
+			if(mobileSystems.indexOf(userAccess.SystemType)>=0 && !userAccess.DeviceID)
 			{
 				error.pushError('deviceId.notProvided');
 				throw error;
@@ -47,19 +60,20 @@ function Validation(userToken)
 
 
 module.exports={
-	MakeUserToken:function(userToken,transaction)
+	
+	MakeUserToken:function(userAccess,transaction)
 	{
 		console.log("=======================MakeUserToken==============================");
 		var error=new Error("MakeUserToken.Error");
-		return Validation(userToken)
+		return Validation(userAccess)
 		.then(function(data){
-			return Services.UserAccount.GetUserAccountDetails({UID:userToken.UserUID},null,transaction)
+			return Services.UserAccount.GetUserAccountDetails({UID:userAccess.UserUID},null,transaction)
 			.then(function(user){
 				if(o.checkData(user))
 				{
 					function CheckExist()
 					{
-						if(userToken.SystemType==HelperService.const.systemType.website)
+						if(userAccess.SystemType==HelperService.const.systemType.website)
 						{
 							return UserToken.findOne({
 								where:{
@@ -73,7 +87,7 @@ module.exports={
 							return UserToken.findOne({
 								where:{
 									UserAccountID:user.ID,
-									DeviceID:userToken.DeviceID
+									DeviceID:userAccess.DeviceID
 								}
 							})
 						}
@@ -86,7 +100,7 @@ module.exports={
 							return ut.updateAttributes({
 								SecretKey:UUIDService.Create(),
 								SecretCreatedDate:new Date(),
-								TokenExpired:o.const.authSecretExprired[userToken.SystemType],
+								TokenExpired:o.const.authSecretExprired[userAccess.SystemType],
 								Enable:'Y',
 							},{transaction:transaction})
 							.then(function(result){
@@ -101,15 +115,15 @@ module.exports={
 						{
 							var insertInfo={
 								UserAccountID:user.ID,
-								SystemType:userToken.SystemType,
+								SystemType:userAccess.SystemType,
 								SecretKey:UUIDService.Create(),
 								SecretCreatedDate:new Date(),
-								TokenExpired:o.const.authSecretExprired[userToken.SystemType],
+								TokenExpired:o.const.authSecretExprired[userAccess.SystemType],
 								Enable:'Y',
 							};
-							if(userToken.SystemType!=HelperService.const.systemType.website)
+							if(userAccess.SystemType!=HelperService.const.systemType.website)
 							{
-								insertInfo.DeviceID=userToken.DeviceID;
+								insertInfo.DeviceID=userAccess.DeviceID;
 								console.log(insertInfo);
 							}
 
@@ -143,16 +157,16 @@ module.exports={
 		});
 	},
 
-	GetUserToken:function(userToken,transaction)
+	GetUserToken:function(userAccess,transaction)
 	{
 		var error=new Error("GetUserToken.Error");
-		return Validation(userToken)
+		return Validation(userAccess)
 		.then(function(data){
-			return Services.UserAccount.GetUserAccountDetails({UID:userToken.UserUID},null,transaction)
+			return Services.UserAccount.GetUserAccountDetails({UID:userAccess.UserUID},null,transaction)
 			.then(function(user){
 				function CheckExist()
 				{
-					if(userToken.SystemType==HelperService.const.systemType.website)
+					if(userAccess.SystemType==HelperService.const.systemType.website)
 					{
 						return UserToken.findOne({
 							where:{
@@ -166,7 +180,7 @@ module.exports={
 						return UserToken.findOne({
 							where:{
 								UserAccountID:user.ID,
-								DeviceID:userToken.DeviceID
+								DeviceID:userAccess.DeviceID
 							}
 						},{transaction:transaction})
 					}

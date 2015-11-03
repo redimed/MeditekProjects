@@ -1,8 +1,8 @@
 module.exports={
-	CreateUserToken:function(req,res)
+	MakeUserToken:function(req,res)
 	{
 		var userToken=req.body;
-		Services.UserToken.CreateUserToken(userToken)
+		Services.UserToken.MakeUserToken(userToken)
 		.then(function(data){
 			return res.ok(data);
 		},function(err){

@@ -134,12 +134,12 @@ module.exports = {
         authTokenExpired: {
             'IOS':3*60,
             'ARD':3*60,
-            'WEB':24*60*60,
+            'WEB':10,
         },// second
         authSecretExprired:{
             'IOS':null,
             'ARD':null,
-            'WEB':24*60*60,
+            'WEB':15*60,
         },
 
         verificationMethod: {

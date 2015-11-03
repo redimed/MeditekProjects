@@ -131,7 +131,7 @@ module.exports = {
         },
         Postcode: {
             type: Sequelize.STRING(10),
-            allowNull: false,
+            allowNull: true,
             validate: {
                 len: {
                     args: [0, 10],
@@ -196,6 +196,16 @@ module.exports = {
             }
         },
         WorkPhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        FaxNumber: {
             type: Sequelize.STRING(20),
             allowNull: true,
             validate: {

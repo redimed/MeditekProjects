@@ -24,7 +24,7 @@ import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.fragment.FAQsFragment;
 import com.redimed.telehealth.patient.fragment.HomeFragment;
 import com.redimed.telehealth.patient.fragment.InformationFragment;
-import com.redimed.telehealth.patient.fragment.TelehealthFragment;
+import com.redimed.telehealth.patient.fragment.ListAppointmentFragment;
 import com.redimed.telehealth.patient.models.Category;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.models.TelehealthUser;
@@ -52,13 +52,12 @@ public class MainActivity extends AppCompatActivity{
     private ActionBarDrawerToggle actionDrawerToggle;
     private RegisterApi restClient;
     private LinearLayoutManager layoutManagerCategories;
-    private RVAdapter rvAdapter;
     private List<Category> categories;
     private TelehealthUser telehealthUser;
     private SharedPreferences uidTelehealth;
     private Gson gson;
     private Fragment fragment;
-    private boolean resumeHasRun = false;
+    private RVAdapter rvAdapter;
 
     @Bind(R.id.frame_container)
     FrameLayout main_contain;
@@ -85,7 +84,8 @@ public class MainActivity extends AppCompatActivity{
         rvCategories.setHasFixedSize(true);
         layoutManagerCategories = new LinearLayoutManager(getApplicationContext());
         rvCategories.setLayoutManager(layoutManagerCategories);
-        rvAdapter = new RVAdapter(categories);
+        rvAdapter = new RVAdapter(getApplicationContext(), 0);
+        rvAdapter.swapDataCategory(categories);
         rvCategories.setAdapter(rvAdapter);
 
         DisplayDrawer();
@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity{
         categories.add(new Category(R.drawable.person_icon, "Information", R.drawable.circled_chevron_right_icon));
         categories.add(new Category(R.drawable.person_icon, "Telehealth", R.drawable.circled_chevron_right_icon));
         categories.add(new Category(R.drawable.person_icon, "FAQs", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.person_icon, "LogOut", R.drawable.circled_chevron_right_icon));
     }
 
     private void GetDetailsPatient() {
@@ -128,7 +129,11 @@ public class MainActivity extends AppCompatActivity{
                 if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
                     new DialogConnection(MainActivity.this).show();
                 } else {
-                    new CustomAlertDialog(MainActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                    if (error.getLocalizedMessage().equalsIgnoreCase("TokenExpiredError")){
+                        Log.d(TAG, error.getLocalizedMessage());
+                    }else {
+                        new CustomAlertDialog(MainActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                    }
                 }
             }
         });
@@ -192,11 +197,15 @@ public class MainActivity extends AppCompatActivity{
                 fragment.setArguments(bundle);
                 break;
             case 2:
-                fragment = new TelehealthFragment();
+                fragment = new ListAppointmentFragment();
                 break;
             case 3:
                 fragment = new FAQsFragment();
                 break;
+            case 4:
+                MyApplication.getInstance().clearApplication();
+                finish();
+                startActivity(new Intent(getApplicationContext(), LauncherActivity.class));
             default:
                 break;
         }

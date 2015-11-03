@@ -1,4 +1,5 @@
 <resources>
+    <!-- Launcher-->
     <string name="welcome">Welcome to REDiMED</string>
     <string name="title_activity_launcher">Telehealth Patient</string>
     <string name="app_name">TelehealthPatient</string>
@@ -7,6 +8,14 @@
     <string name="title_activity_call">CallActivity</string>
     <string name="title_activity_contact">ContactActivity</string>
     <string name="btn_submit">Submit</string>
+
+    <!-- Activation-->
+    <string name="text_contains">Enter your phone number and click continue</string>
+    <string name="hint_phone">Phone Number</string>
+    <string name="hint_code">Verify Code</string>
+    <string name="btn_requestCode">Continue</string>
+    <string name="btn_VerifyCode">Verify</string>
+    <string name="title_bottom_activation">© REDIMED 2015 - App Design by Meditek</string>
 
     <!-- Error-->
     <string name="error_network">Network Error</string>
@@ -76,24 +85,34 @@
     <string name="drawer_close">Close</string>
 
     <!-- Home Layout-->
-    <string name="green_btn">Information</string>
-    <string name="blue_btn">Telehealth</string>
+    <string name="green_btn">Profile</string>
+    <string name="blue_btn">Tracking Referrals</string>
+    <string name="red_btn">Call Us 8AM-5PM</string>
     <string name="orange_btn">FAQs</string>
-    <string name="red_btn">Contact</string>
+    <string name="urgent_btn">URGENT CARE</string>
+    <string name="contain_bottom1">Personalised + Customised,</string>
+    <string name="contain_HEALTH">HEALTH</string>
+    <string name="contain_CARE">CARE</string>
+    <string name="contain_bottom2">anywhere</string>
 
     <!-- Appointment Layout-->
-    <string name="lbl_from_time">From Time:</string>
-    <string name="lbl_to_time">To Time:</string>
-    <string name="lbl_status">Status:</string>
-    <string name="lbl_doctor">Doctor:</string>
-    <string name="lbl_email">Email:</string>
-    <string name="lbl_work">Work Phone:</string>
-    <string name="btn_view">View Image</string>
+    <string name="lbl_from_time">From Time</string>
+    <string name="lbl_to_time">To Time</string>
+    <string name="lbl_status">Status</string>
+    <string name="lbl_doctor">Doctor</string>
+    <string name="lbl_email">Email</string>
+    <string name="lbl_work">Work Phone</string>
+    <string name="lbl_image">Image</string>
+    <string name="btn_upload">Upload</string>
+
     <!--Dialog Appointment-->
     <string name="title_dialog_appt">Alert!</string>
     <string name="message_dialog_appt">Sorry there is no appointment in this time.</string>
 
     <!-- Model Layout-->
     <string name="title_activity_model">ModelActivity</string>
+
+    <!-- List Appointment-->
+    <string name="no_data_result">No Data Result</string>
 
 </resources>

@@ -3,6 +3,7 @@ package com.redimed.telehealth.patient.service;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.*;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -32,18 +33,17 @@ public class SocketService extends Service {
     private static Socket socket;
     private Intent i;
     private static SharedPreferences uidTelehealth;
-    private String auth, core;
+    private String auth, deviceId, systemType;
 
     private void initializeSocket() {
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
         auth = uidTelehealth.getString("token", null);
-        core = uidTelehealth.getString("coreToken", null);
-
+        deviceId = uidTelehealth.getString("deviceId", null);
         try {
             IO.Options opts = new IO.Options();
             opts.forceNew = true;
             opts.reconnection = true;
-            opts.query = "__sails_io_sdk_version=0.11.0&Authorization=Bearer " + auth + "&CoreAuth=Bearer " + core;
+            opts.query = "__sails_io_sdk_version=0.11.0&Authorization=Bearer " + auth + "&DeviceID=" + deviceId + "&SystemType=Android";
             socket = IO.socket(Config.socketURL, opts);
             socket.connect();
         } catch (URISyntaxException e) {
@@ -65,13 +65,14 @@ public class SocketService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        socket.on("receiveMessage", onReceiveMessage);
-        socket.on("errorMsg", onReceiveError);
         socket.on(Socket.EVENT_CONNECT, onConnect);
         socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
         socket.on(Socket.EVENT_RECONNECT, onReconnect);
         socket.on(Socket.EVENT_ERROR, onError);
         socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
+        socket.on("refreshToken", onRefreshToken);
+        socket.on("receiveMessage", onReceiveMessage);
+        socket.on("errorMsg", onReceiveError);
         return START_STICKY;
     }
 
@@ -148,7 +149,6 @@ public class SocketService extends Service {
         }
     };
 
-
     private Emitter.Listener onReceiveMessage = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
@@ -188,7 +188,21 @@ public class SocketService extends Service {
         }
     };
 
-    @Override
+    private Emitter.Listener onRefreshToken = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.d(TAG, "====Refresh Token====");
+            JSONObject data = (JSONObject) args[0];
+            try {
+                Editor editor = uidTelehealth.edit();
+                editor.putString("token", data.get("token").toString());
+                editor.commit();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
     public void onDestroy() {
         super.onDestroy();
         sendBroadcast(new Intent("Restart_Socket_Service"));

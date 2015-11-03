@@ -44,7 +44,10 @@ public class RetrofitErrorHandler implements ErrorHandler {
                     try {
                         String json = new String(((TypedByteArray) cause.getResponse().getBody()).getBytes());
                         JSONObject dataObject = new JSONObject(json);
-                        errorDescription = dataObject.optString("ErrorsList");
+                        if (dataObject.optString("ErrorType").equalsIgnoreCase("jwt expired")){
+                            errorDescription = "TokenExpiredError";
+                        }else
+                            errorDescription = dataObject.optString("ErrorsList");
                     } catch (Exception ex2) {
                         Log.e(TAG, "HandleError: " + ex2.getLocalizedMessage());
                         errorDescription = "Error Unknown";

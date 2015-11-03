@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.webkit.WebView;
 
 import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.R;
-import com.redimed.telehealth.patient.models.TelehealthAppointment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

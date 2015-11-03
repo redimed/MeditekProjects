@@ -24,7 +24,11 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    var uploader = $scope.uploader = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	url: o.const.uploadFileUrl,
-		    	headers:{Authorization:'Bearer '+$cookies.get("token")},
+		    	headers:{
+		    		Authorization:'Bearer '+$cookies.get("token"),
+		    		systemtype:'WEB',
+		    	},
+		    	withCredentials:true,
 		    	alias : 'uploadFile'
 		    });
 		    // FILTERS

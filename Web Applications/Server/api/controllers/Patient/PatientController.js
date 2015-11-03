@@ -22,8 +22,8 @@ module.exports = {
 			}
 			else{
 				var err = new Error("SERVER ERROR");
-				err.pushErrors("Server Error");
-				res.notFound({status:404,message:ErrorWrap(err)});
+				err.pushError("No data result");
+				res.notFound({status:200,message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){
@@ -48,8 +48,8 @@ module.exports = {
 			}
 			else{
 				var err = new Error("SERVER ERROR");
-				err.pushErrors("Server Error");
-				res.notFound({status:404,message:ErrorWrap(err)});
+				err.pushError("No data result");
+				res.notFound({status:200,message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){
@@ -71,8 +71,8 @@ module.exports = {
 				res.ok({status:200,message:"success"});
 			else{
 				var err = new Error("SERVER ERROR");
-				err.pushErrors("Server Error");
-				res.notFound({status:404,message:ErrorWrap(err)});
+				err.pushError("No data result");
+				res.notFound({status:200,message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){
@@ -92,7 +92,9 @@ module.exports = {
 			if(info!=null && info!=undefined && info!=''){
 				res.ok({status:200, message:"Success", data:info});
 			} else {
-				res.ok({status:200,message:"NoData"});
+				var err = new Error("SERVER ERROR");
+				err.pushError("No data result");
+				res.notFound({status:200,message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){
@@ -128,14 +130,14 @@ module.exports = {
 					}
 				},function(err){
 					var err = new Error("SERVER ERROR");
-					err.pushErrors("Server Error");
-					res.notFound({status:404,message:ErrorWrap(err)});
+					err.pushError("Server Error");
+					res.notFound({status:200,message:ErrorWrap(err)});
 				});
 				
 			} else {
 				var err = new Error("SERVER ERROR");
-				err.pushErrors("Server Error");
-				res.notFound({status:404,message:ErrorWrap(err)});
+				err.pushError("No data result");
+				res.notFound({status:200,message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){
@@ -158,8 +160,8 @@ module.exports = {
 		.then(function(result){
 			if(result===0){
 				var err = new Error("SERVER ERROR");
-				err.pushErrors("Server Error");
-				res.notFound({status:404,message:ErrorWrap(err)});
+				err.pushError("No data result");
+				res.notFound({status:200,message:ErrorWrap(err)});
 			}
 			else
 				res.ok({status:200,message:"success"});
@@ -182,8 +184,8 @@ module.exports = {
 				res.ok({status:200,message:"success",data:result.rows,count:result.count});
 			else{
 				var err = new Error("SERVER ERROR");
-				err.pushErrors("Server Error");
-				res.notFound({status:404,message:ErrorWrap(err)});
+				err.pushError("No data result");
+				res.notFound({status:200,message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){
@@ -205,8 +207,8 @@ module.exports = {
 			}
 			else{
 				var err = new Error("SERVER ERROR");
-				err.pushErrors("Server Error");
-				res.notFound({status:404,message:ErrorWrap(err)});;
+				err.pushError("No data result");
+				res.notFound({status:200,message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){
@@ -221,8 +223,8 @@ module.exports = {
 				res.ok({status:200,message:"success",data:result});
 			else{
 				var err = new Error("SERVER ERROR");
-				err.pushErrors("Server Error");
-				res.notFound({status:404,message:ErrorWrap(err)});
+				err.pushError("No data result");
+				res.notFound({status:200,message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){
@@ -235,12 +237,14 @@ module.exports = {
 		Services.Patient.getfileUID(data)
 		.then(function(result){
 			if(result!=undefined){
-				if(result==null || result.length==0 || result==''){
-					res.ok({status:200,message:"success",data:result});
-				}
-				else
-					res.ok({status:200,message:"success",data:result});
+				res.ok({status:200,message:"success",data:result});
 			}
+			else{
+				var err = new Error("SERVER ERROR");
+				err.pushError("No data result");
+				res.notFound({status:200,message:ErrorWrap(err)});
+			}
+
 		})
 		.catch(function(err){
 			res.serverError({status:500,message:ErrorWrap(err)});

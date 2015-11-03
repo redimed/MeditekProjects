@@ -7,9 +7,6 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Patient {
 
-    @SerializedName("ID")
-    private int ID;
-
     @SerializedName("UID")
     private String UID;
 
@@ -52,14 +49,8 @@ public class Patient {
     @SerializedName("HomePhoneNumber")
     private String HomePhoneNumber;
 
-    @SerializedName("CountryID")
-    private int CountryID;
-
     @SerializedName("Enable")
     private String Enable;
-
-    @SerializedName("ShortName")
-    private String CountryName;
 
     @SerializedName("PhoneNumber")
     private String PhoneNumber;
@@ -67,18 +58,7 @@ public class Patient {
     @SerializedName("UserAccount")
     private UserAccount userAccount;
 
-    @SerializedName("RelPatientAppointment")
-    private RelPatientAppointment RelPatientAppointment;
-
     private String Limit;
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
 
     public String getUID() {
         return UID;
@@ -192,28 +172,12 @@ public class Patient {
         HomePhoneNumber = homePhoneNumber;
     }
 
-    public int getCountryID() {
-        return CountryID;
-    }
-
-    public void setCountryID(int countryID) {
-        CountryID = countryID;
-    }
-
     public String getEnable() {
         return Enable;
     }
 
     public void setEnable(String enable) {
         Enable = enable;
-    }
-
-    public String getCountryName() {
-        return CountryName;
-    }
-
-    public void setCountryName(String countryName) {
-        CountryName = countryName;
     }
 
     public String getPhoneNumber() {
@@ -230,14 +194,6 @@ public class Patient {
 
     public void setUserAccount(UserAccount userAccount) {
         this.userAccount = userAccount;
-    }
-
-    public RelPatientAppointment getRelPatientAppointment() {
-        return RelPatientAppointment;
-    }
-
-    public void setRelPatientAppointment(RelPatientAppointment relPatientAppointment) {
-        RelPatientAppointment = relPatientAppointment;
     }
 
     public String getLimit() {

@@ -110,9 +110,9 @@ module.exports={
     	action:'Activation'
 	},
 
-	'post /api/user-token/CreateUserToken':{
+	'post /api/user-token/MakeUserToken':{
 		controller:'UserAccount/v0_1/UserTokenController',
-    	action:'CreateUserToken'
+    	action:'MakeUserToken'
 	},
 
 	'post /api/user-token/GetSecretKey':{

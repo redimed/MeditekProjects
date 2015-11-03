@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/all_background">
+        android:background="@android:color/transparent">
 
         <ImageView
             android:id="@+id/logo"
@@ -40,7 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="40dp"/>
+            android:layout_marginTop="40dp"
+            android:background="@drawable/blank_avatar"/>
 
         <TextView
             android:id="@+id/lblNamePatient"

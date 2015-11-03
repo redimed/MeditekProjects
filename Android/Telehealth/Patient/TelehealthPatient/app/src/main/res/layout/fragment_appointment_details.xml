@@ -1,0 +1,245 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.redimed.telehealth.patient.fragment.AppointmentDetails">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:scrollbarStyle="outsideOverlay">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layoutFromTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_from_time"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/size_txt" />
+
+                    <TextView
+                        android:id="@+id/lblFromTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/size_txt" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="320dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/colorLine" />
+
+                <LinearLayout
+                    android:id="@+id/layoutToTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/lbl_to_time"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/size_txt" />
+
+                    <TextView
+                        android:id="@+id/lblToTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/size_txt" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="320dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/colorLine" />
+
+                <LinearLayout
+                    android:id="@+id/layoutStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_status"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/size_txt" />
+
+                    <TextView
+                        android:id="@+id/lblStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/size_txt" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="320dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/colorLine" />
+
+                <LinearLayout
+                    android:id="@+id/layoutDoctorName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_doctor"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/size_txt" />
+
+                    <TextView
+                        android:id="@+id/lblDoctorName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/size_txt" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="320dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/colorLine" />
+
+                <LinearLayout
+                    android:id="@+id/layoutDoctorEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_email"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/size_txt" />
+
+                    <TextView
+                        android:id="@+id/lblDoctorEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/size_txt" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="320dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/colorLine" />
+
+                <LinearLayout
+                    android:id="@+id/layoutDoctorWorkPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_work"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/size_txt" />
+
+                    <TextView
+                        android:id="@+id/lblDoctorWorkPhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/size_txt" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="320dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/colorLine" />
+
+                <RelativeLayout
+                    android:id="@+id/layoutUpload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lbl_image"
+                        android:layout_centerVertical="true"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/size_txt" />
+
+                    <Button
+                        android:id="@+id/btnUpload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/btn_upload"
+                        android:textSize="@dimen/size_txt" />
+
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvImageAppointment"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:scrollbarStyle="insideOverlay"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

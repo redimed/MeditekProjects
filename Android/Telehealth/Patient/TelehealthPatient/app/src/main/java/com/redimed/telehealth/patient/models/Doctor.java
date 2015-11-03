@@ -31,9 +31,6 @@ public class Doctor {
     @SerializedName("WorkPhoneNumber")
     private String WorkPhoneNumber;
 
-    @SerializedName("RelDoctorAppointment")
-    private RelDoctorAppointment RelDoctorAppointment;
-
     public String getUID() {
         return UID;
     }
@@ -96,13 +93,5 @@ public class Doctor {
 
     public void setWorkPhoneNumber(String workPhoneNumber) {
         WorkPhoneNumber = workPhoneNumber;
-    }
-
-    public com.redimed.telehealth.patient.models.RelDoctorAppointment getRelDoctorAppointment() {
-        return RelDoctorAppointment;
-    }
-
-    public void setRelDoctorAppointment(com.redimed.telehealth.patient.models.RelDoctorAppointment relDoctorAppointment) {
-        RelDoctorAppointment = relDoctorAppointment;
     }
 }

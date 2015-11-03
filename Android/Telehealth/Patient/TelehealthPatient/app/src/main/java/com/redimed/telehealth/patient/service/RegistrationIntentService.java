@@ -50,7 +50,7 @@ public class RegistrationIntentService extends IntentService {
             String deviceId = ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
 
             editor.putBoolean("sendToken", true);
-            editor.putString("deviceType", "Android");
+            editor.putString("systemType", "Android");
             editor.putString("deviceID", deviceId);
             editor.apply();
 

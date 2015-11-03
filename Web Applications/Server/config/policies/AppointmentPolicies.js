@@ -1,16 +1,16 @@
 module.exports = {
     'Appointment/TelehealthAppointmentController': {
-        'RequestTelehealthAppointment': ['hasToken'],
-        'GetListTelehealthAppointment': ['hasToken'],
-        'GetDetailTelehealthAppointment': ['hasToken'],
-        'UpdateRequestTelehealthAppointment': ['hasToken'],
-        'DisableTelehealthAppointment': ['hasToken']
+        'RequestTelehealthAppointment': ['isAuthenticated'],
+        'GetListTelehealthAppointment': ['isAuthenticated'],
+        'GetDetailTelehealthAppointment': ['isAuthenticated'],
+        'UpdateRequestTelehealthAppointment': ['isAuthenticated'],
+        'DisableTelehealthAppointment': ['isAuthenticated']
     },
     'Appointment/WAAppointmentController': {
-        'RequestWAAppointment': ['hasToken'],
-        'GetListWAAppointment': ['hasToken'],
-        'GetDetailWAAppointment': ['hasToken'],
-        'UpdateRequestWAAppointment': ['hasToken'],
-        'DisableWAAppointment': ['hasToken']
+        'RequestWAAppointment': ['isAuthenticated'],
+        'GetListWAAppointment': ['isAuthenticated'],
+        'GetDetailWAAppointment': ['isAuthenticated'],
+        'UpdateRequestWAAppointment': ['isAuthenticated'],
+        'DisableWAAppointment': ['isAuthenticated']
     }
 };

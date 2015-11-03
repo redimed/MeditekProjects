@@ -47,9 +47,9 @@ function Validation(userToken)
 
 
 module.exports={
-	CreateUserToken:function(userToken,transaction)
+	MakeUserToken:function(userToken,transaction)
 	{
-		var error=new Error("CreateUserToken.Error");
+		var error=new Error("MakeUserToken.Error");
 		return Validation(userToken)
 		.then(function(data){
 			return Services.UserAccount.GetUserAccountDetails({UID:userToken.UserUID},null,transaction)
@@ -197,7 +197,7 @@ module.exports={
 		})
 	},
 
-	MakeNewSecretKey:function(userToken,transaction)
+	/*MakeNewSecretKey:function(userToken,transaction)
 	{
 		var error=new Error("MakeNewSecretKey.Error");
 		return Validation(userToken)
@@ -262,5 +262,5 @@ module.exports={
 		},function(err){
 			throw err;
 		})
-	},
+	},*/
 }

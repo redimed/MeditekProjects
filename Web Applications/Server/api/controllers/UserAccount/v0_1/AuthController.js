@@ -22,18 +22,7 @@ module.exports = {
     login: function(req, res) {
         console.log("============LOGIN===============");
         var error=new ErrorWrap("login.Error");
-        if(!o.checkData(req.headers.systemtype))
-        {
-            error.pushError("header.systemType.notProvided");
-            return res.badRequest(ErrorWrap(error));
-        }
-        else
-        {
-            if(!o.checkData(req.headers.deviceid))
-            {
-                error.pushError("header.deviceID.notProvided");
-            }
-        }
+
 
         passport.authenticate('local', function(err, user, info) 
         {
@@ -61,7 +50,7 @@ module.exports = {
                         SystemType:req.headers.systemtype,
                         DeviceID:req.headers.deviceid
                     }
-                    Services.UserToken.CreateUserToken(userToken)
+                    Services.UserToken.MakeUserToken(userToken)
                     .then(function(data){
                         // var token = jwt.sign(user, secret, { expiresInMinutes: 60*24 });
                         var token = jwt.sign(user, data.SecretKey, { expiresIn: o.const.authTokenExpired[req.headers.systemtype] });//second
@@ -104,7 +93,7 @@ module.exports = {
             SystemType:req.headers.systemtype,
             DeviceID:req.headers.deviceid
         }
-        Services.UserToken.MakeNewSecretKey(userToken)
+        Services.UserToken.MakeUserToken(userToken)
         .then(function(data){
             req.logout();
             res.ok({status:'success'});

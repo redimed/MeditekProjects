@@ -435,4 +435,18 @@ module.exports = {
             return false;
         }
     },
+
+    getSystems:function()
+    {
+        return _.values(this.const.systemType);
+    },
+
+    getMobileSystems:function()
+    {
+        var systems=_.values(this.const.systemType);
+        var website=this.const.systemType.website;
+        return _.filter(systems,function(item){
+            return item!=website;
+        })
+    },
 }

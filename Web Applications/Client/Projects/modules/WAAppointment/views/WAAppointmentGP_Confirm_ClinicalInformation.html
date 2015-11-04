@@ -4,23 +4,36 @@
         <div class="panel-heading">
             <h3 class="panel-title uppercase bold">Clinical Information</h3>
         </div>
-        <div class="panel-body form">
-            <form class="form-horizontal margin-bottom-20">
+        <div class="panel-body">
+            <div class="form-horizontal margin-bottom-20">
                 <div class="form-body">
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Relevant Past Medical History</label>
+                                <label class="col-md-5 col-sm-5 control-label">Relevant Past Medical History</label>
                                 <div class="col-md-7 col-sm-7">
-                                    <p class="form-control-static" data-display=""> ...</p>
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.MedicalHistory'].Value}}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Attach Filename</label>
+                                <label class="col-md-5 col-sm-5 control-label">Attach Filename</label>
                                 <div class="col-md-7 col-sm-7">
-                                    <p class="form-control-static" data-display=""> ...</p>
+                                    <p class="form-control-static" data-display="">
+                                        <table class="table table-hover table-light">
+                                            <thead>
+                                                <tr class="uppercase">
+                                                    <th width="30%">Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'MedicalHistory'">
+                                                    <td><strong>{{ item.file.name }}</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -29,17 +42,30 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Relevant Social Factors</label>
+                                <label class="col-md-5 col-sm-5 control-label">Relevant Social Factors</label>
                                 <div class="col-md-7 col-sm-7">
-                                    <p class="form-control-static" data-display=""> ...</p>
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.SocialFactors'].Value}}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Attach Filename</label>
+                                <label class="col-md-5 col-sm-5 control-label">Attach Filename</label>
                                 <div class="col-md-7 col-sm-7">
-                                    <p class="form-control-static" data-display=""> ...</p>
+                                    <p class="form-control-static" data-display="">
+                                        <table class="table table-hover table-light">
+                                            <thead>
+                                                <tr class="uppercase">
+                                                    <th width="30%">Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'SocialFactors'">
+                                                    <td><strong>{{ item.file.name }}</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -48,17 +74,30 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Allergies</label>
+                                <label class="col-md-5 col-sm-5 control-label">Allergies</label>
                                 <div class="col-md-7 col-sm-7">
-                                    <p class="form-control-static" data-display=""> ...</p>
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Allergies'].Value}}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Attach Filename</label>
+                                <label class="col-md-5 col-sm-5 control-label">Attach Filename</label>
                                 <div class="col-md-7 col-sm-7">
-                                    <p class="form-control-static" data-display=""> ...</p>
+                                    <p class="form-control-static" data-display="">
+                                        <table class="table table-hover table-light">
+                                            <thead>
+                                                <tr class="uppercase">
+                                                    <th>Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'Allergies'">
+                                                    <td><strong>{{ item.file.name }}</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -67,17 +106,30 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Current Medication</label>
+                                <label class="col-md-5 col-sm-5 control-label">Current Medication</label>
                                 <div class="col-md-7 col-sm-7">
-                                    <p class="form-control-static" data-display=""> ...</p>
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Medication'].Value}}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Attach Filename</label>
+                                <label class="col-md-5 col-sm-5 control-label">Attach Filename</label>
                                 <div class="col-md-7 col-sm-7">
-                                    <p class="form-control-static" data-display=""> ...</p>
+                                    <p class="form-control-static" data-display="">
+                                        <table class="table table-hover table-light">
+                                            <thead>
+                                                <tr class="uppercase">
+                                                    <th width="30%">Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'Medication'">
+                                                    <td><strong>{{ item.file.name }}</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -86,17 +138,30 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Relevant Investigation and Tests (Please Attach Results)</label>
+                                <label class="col-md-5 col-sm-5 control-label">Relevant Investigation and Tests (Please Attach Results)</label>
                                 <div class="col-md-7 col-sm-7">
-                                    <p class="form-control-static" data-display=""> ...</p>
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.InvestigationTests'].Value}}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Attach Filename</label>
+                                <label class="col-md-5 col-sm-5 control-label">Attach Filename</label>
                                 <div class="col-md-7 col-sm-7">
-                                    <p class="form-control-static" data-display=""> ...</p>
+                                    <p class="form-control-static" data-display="">
+                                        <table class="table table-hover table-light">
+                                            <thead>
+                                                <tr class="uppercase">
+                                                    <th width="30%">Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'InvestigationTests'">
+                                                    <td><strong>{{ item.file.name }}</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -105,9 +170,9 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Pathology provider</label>
+                                <label class="col-md-5 col-sm-5 control-label">Pathology provider</label>
                                 <div class="col-md-7 col-sm-7">
-                                    <p class="form-control-static" data-display=""> ...</p>
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.WAAppointment.PathologyProvider}}</p>
                                 </div>
                             </div>
                         </div>
@@ -115,9 +180,9 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Radiology provider</label>
+                                <label class="col-md-5 col-sm-5 control-label">Radiology provider</label>
                                 <div class="col-md-7 col-sm-7">
-                                    <p class="form-control-static" data-display=""> ...</p>
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.WAAppointment.RadiologyProvider}}</p>
                                 </div>
                             </div>
                         </div>
@@ -125,17 +190,50 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Other Notes</label>
+                                <label class="col-md-5 col-sm-5 control-label">Other Notes</label>
                                 <div class="col-md-7 col-sm-7">
-                                    <p class="form-control-static" data-display=""> ...</p>
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.OtherNotes'].Value}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <hr>
+                    <!-- <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-5">Signature</label>
+                                <div class="fileinput fileinput-new col-md-7 col-sm-7" data-provides="fileinput">
+                                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
+                                        <img src="theme/assets/global/images/no_image.png" width="100%" height="100%">
+                                    </div>
+                                    <div>
+                                        <span class="btn green btn-file">
+                                        <span class="fileinput-new">
+                                        Signature </span>
+                                        <span class="fileinput-exists">
+                                        Change </span>
+                                        <input type="file" nv-file-select uploader="uploader">
+                                        </span>
+                                        <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+                                        Remove </a>
+                                    </div>
+                                    <br>                                                
+                                </div>
+                                <div class="clearfix margin-top-10"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group form-md-line-input">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="First name" name="Firstname" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.FirstName">
+                                    <label class="control-label">Date</label>
+                                    <div class="form-control-focus"> </div>
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </div>
+                            </div>
+                    </div> -->
                 </div>
-            </form>
+            </div>
         </div>
     </div>
-
 </div>
-

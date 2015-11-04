@@ -139,7 +139,7 @@
                                     <input type="radio" name="IsSamePlacePreference" value="Y" ng-model="requestInfo.TelehealthAppointment.WAAppointment.IsSamePlacePreference"> Yes
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="IsSamePlacePreference" value="N" ng-checked="true" ng-model="requestInfo.TelehealthAppointment.WAAppointment.IsSamePlacePreference"> No
+                                    <input type="radio" name="IsSamePlacePreference" value="N" ng-model="requestInfo.TelehealthAppointment.WAAppointment.IsSamePlacePreference"> No
                                 </label>
                             </div>
                         </div>
@@ -176,13 +176,13 @@
                                     Length of referral
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="LengthOfReferral" value="3"> 3 months
+                                    <input type="radio" ng-model="requestInfo.TelehealthAppointment.WAAppointment.LengthOfReferral" value="3"> 3 months
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="LengthOfReferral" value="12"> 12 months
+                                    <input type="radio" ng-model="requestInfo.TelehealthAppointment.WAAppointment.LengthOfReferral" value="12"> 12 months
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="LengthOfReferral" value="0"> Indefinite
+                                    <input type="radio" ng-model="requestInfo.TelehealthAppointment.WAAppointment.LengthOfReferral" value="0"> Indefinite
                                 </label>
                             </div>
                         </div>
@@ -199,7 +199,7 @@
                                     Is this a renewed referral ?
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="IsRenewReferral" value="Y" ng-checked="true" ng-model="requestInfo.TelehealthAppointment.WAAppointment.IsRenewReferral"> Yes
+                                    <input type="radio" name="IsRenewReferral" value="Y"  ng-model="requestInfo.TelehealthAppointment.WAAppointment.IsRenewReferral"> Yes
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" name="IsRenewReferral" value="N" ng-model="requestInfo.TelehealthAppointment.WAAppointment.IsRenewReferral"> No
@@ -234,13 +234,13 @@
                                         <span class="my-ul" ng-show="BCC == true">
                                             &nbsp;&nbsp;&nbsp;Size :
                                             <label class="radio-inline">
-                                            <input type="radio" name="BCC_radio" value="0 - 1 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.BCC'].Value" > 
+                                            <input type="radio" name="BCC_radio" value="0 - 1 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value" > 
                                             0 - 1 cm</label>
                                             <label class="radio-inline">
-                                            <input type="radio" name="BCC_radio" value="1 - 2 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.BCC'].Value">
+                                            <input type="radio" name="BCC_radio" value="1 - 2 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value">
                                              1 - 2 cm</label>
                                             <label class="radio-inline">
-                                            <input type="radio" name="BCC_radio" value="2 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.BCC'].Value">
+                                            <input type="radio" name="BCC_radio" value="2 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value">
                                              2 cm</label>
                                         </span>
                                     </label>
@@ -249,13 +249,13 @@
                                         <span ng-show="SCC == true">
                                             &nbsp;&nbsp;&nbsp;Size :
                                             <label class="radio-inline">
-                                                <input type="radio" name="SCC_radio" value="0 - 1 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.SCC'].Value" >0 - 1 cm
+                                                <input type="radio" name="SCC_radio" value="0 - 1 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value" >0 - 1 cm
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="SCC_radio" value="1 - 2 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.SCC'].Value">1 - 2 cm
+                                                <input type="radio" name="SCC_radio" value="1 - 2 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value">1 - 2 cm
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="SCC_radio" value="2 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.SCC'].Value">2 cm
+                                                <input type="radio" name="SCC_radio" value="2 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value">2 cm
                                             </label>
                                         </span>
                                     </label>
@@ -264,13 +264,13 @@
                                         <span ng-show="Melanoma == true">
                                             &nbsp;&nbsp;&nbsp;Size :
                                             <label class="radio-inline">
-                                                <input type="radio" name="Melanoma_radio" value="0 - 1 cm"  ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Melanoma'].Value">0 - 1 cm
+                                                <input type="radio" name="Melanoma_radio" value="0 - 1 cm"  ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value">0 - 1 cm
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="Melanoma_radio" value="1 - 2 cm"  ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Melanoma'].Value"> 1 - 2 cm
+                                                <input type="radio" name="Melanoma_radio" value="1 - 2 cm"  ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value"> 1 - 2 cm
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="Melanoma_radio" value="2 cm"  ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Melanoma'].Value"> 2 cm
+                                                <input type="radio" name="Melanoma_radio" value="2 cm"  ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value"> 2 cm
                                             </label>
                                         </span>
                                     </label>
@@ -279,19 +279,19 @@
                                         <span ng-show="Merkel == true">
                                             &nbsp;&nbsp;&nbsp;Size :
                                             <label class="radio-inline">
-                                                <input type="radio" name="Merkel_radio" value="0 - 1 cm"  ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Merkel'].Value" >0 - 1 cm
+                                                <input type="radio" name="Merkel_radio" value="0 - 1 cm"  ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value" >0 - 1 cm
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="Merkel_radio" value="1 - 2 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Merkel'].Value">1 - 2 cm
+                                                <input type="radio" name="Merkel_radio" value="1 - 2 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value">1 - 2 cm
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="Merkel_radio" value="2 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Merkel'].Value">2 cm
+                                                <input type="radio" name="Merkel_radio" value="2 cm" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value">2 cm
                                             </label>
                                         </span>
                                     </label>
                                     <label class="">
                                         <input type="checkbox" ng-model="Skin_cancer_Others" ng-click="click_other()"> Others
-                                        <input type="text" size="15" ng-model="info.txtSkin_cancer_Others" ng-disabled="Skin_cancer_Others == false" />
+                                        <input type="text" size="15" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value" ng-disabled="Skin_cancer_Others == false" />
                                     </label>
                                 </div>
                                 <div class="checkbox-list" ng-show="tab1 == 'hand_condition'">

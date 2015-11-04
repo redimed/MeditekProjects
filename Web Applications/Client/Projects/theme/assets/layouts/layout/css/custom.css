@@ -2,6 +2,8 @@
 
 /*body { background-color: white;}*/
 
+
+
 .login{
 	background-color: white !important;
 }
@@ -20,6 +22,19 @@
 .my-modal-body { 
     padding: 0em 2em 2em 2em;
 }
+
+
+/*fix sitebar*/
+@media (min-width: 992px){}
+.page-sidebar {
+    width: 300px;
+}
+
+@media (min-width: 992px){}
+.page-content-wrapper .page-content {
+    margin-left: 300px;
+}
+
 /*fix label input_md*/
 .form-group.form-md-line-input .form-control~label {
     font-size: 16px;
@@ -35,6 +50,9 @@
 	height: 46px;
 }
 
+table:hover{
+    cursor: pointer;
+}
 @media (min-width: 1368px) {
     .app-modal-window .modal-dialog{
         width: 75%;

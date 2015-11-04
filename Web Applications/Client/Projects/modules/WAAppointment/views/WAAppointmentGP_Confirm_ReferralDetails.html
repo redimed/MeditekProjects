@@ -64,296 +64,177 @@
     <!-- referral details #2 -->
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h3 class="panel-title uppercase bold">&nbsp;</h3>
+            <h3 class="panel-title uppercase bold">Referral Details</h3>
         </div>
-        <div class="panel-body" style="padding: 2em">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-inline">
-                        <div class="form-group form-md-line-input">
-                            <div class="radio-list">
-                                 <label class="radio-inline control-label">
-                                    Is the referrer the patients usual GP ?
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="referrer_radio"  value="option1"> Yes 
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="referrer_radio"  value="option2" checked> No 
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-12">
+        <div class="panel-body">
+            <div class="form-horizontal margin-bottom-20">
+                <div class="form-body">
                     <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            <div class="form-control" data-display="">...</div>
-                            <label class="control-label">If no, name of patients usual GP</label>
-                            <i class="glyphicon glyphicon-edit"></i>
+                        <label class="col-md-5 col-sm-5 control-label" >Is the referrer the patients usual GP ?</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.WAAppointment.IsUsualGP == 'Y'">YES</p>
+                            <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.WAAppointment.IsUsualGP !== 'N'">NO</p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            <div class="form-control" data-display="">...</div>
-                            <label class="control-label">Contact Number</label>
-                            <i class="glyphicon glyphicon-edit"></i>
+                        <label class="col-md-5 col-sm-5 control-label" >If no, name of patients usual GP</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.WAAppointment.UsualGPName == 'Y'">YES</p>
+                            <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.WAAppointment.UsualGPName !== 'N'">NO</p>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            <div class="form-control" data-display="">...</div>
-                            <label class="control-label">Fax Number</label>
-                            <i class="glyphicon glyphicon-print"></i>
+                        <label class="col-md-5 col-sm-5 control-label" >Contact Number</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.WAAppointment.ContactNumber}}</p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-inline">
-                        <div class="form-group form-md-line-input">
-                            <div class="radio-list">
-                                 <label class="radio-inline control-label">
-                                    If the patient has been reffered to this speciality for the same condition before, do they need to be referred to the same place again ?
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="radio4"  value="option1"> Yes 
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="radio4"  value="option2" checked> No 
-                                </label>
-                            </div>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >Fax Number</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.WAAppointment.FaxNumber}}</p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-inline">
-                        <div class="form-group form-md-line-input">
-                            <div class="radio-list">
-                                 <label class="radio-inline control-label">
-                                    Is the patient suitable for a telehealth consult
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="radio5"  value="option1"> Yes 
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="radio5"  value="option2" checked> No 
-                                </label>
-                            </div>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >If the patient has been reffered to this speciality for the same condition before, do they need to be referred to the same place again ?</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.WAAppointment.IsSamePlacePreference == 'Y'">YES</p>
+                            <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.WAAppointment.IsSamePlacePreference !== 'N'">NO</p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-inline">
-                        <div class="form-group form-md-line-input">
-                            <div class="radio-list">
-                                 <label class="radio-inline control-label">
-                                    Length of referral 
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="radio6"  value="" checked> 3 months 
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="radio6"  value="" > 12 months 
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="radio6"  value="" > Indefinite
-                                </label>
-                            </div>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >Is the patient suitable for a telehealth consult</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.WAAppointment.IsTelehealthSuitable == 'Y'">YES</p>
+                            <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.WAAppointment.IsTelehealthSuitable !== 'N'">NO</p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-inline">
-                        <div class="form-group form-md-line-input">
-                            <div class="radio-list">
-                                 <label class="radio-inline control-label">
-                                    Is this a renewed  referral ?
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="radio7"  value="" checked> Yes 
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="radio7"  value="" > No 
-                                </label>
-                            </div>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >Length of referral  </label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.WAAppointment.LengthOfReferral}}</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- referral details #3 -->
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title uppercase bold">&nbsp;</h3>
-        </div>
-        <div class="panel-body" style="padding: 2em">
-            <div class="row">
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group">
-                        <label class="control-label">
-                            <b>Reason for referral/Presenting Problem</b>
-                        </label>
-                        <textarea class="form-control" rows="10" disabled>(can upload the referral letter) Fax the referral letter - 1300 xxx xxx
-                        </textarea>
-                    </div>
-                    <div class="form-horizontal">
-                        <div class="form-group form-md-line-input">
-                            <label class="control-label col-md-4 col-sm-4">Skin cancer</label>
-                            <div class="col-md-8 col-sm-8"><div class="form-control">Melanoma</div></div>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >Is this a renewed referral ?</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="" ng-if ="requestInfo.TelehealthAppointment.WAAppointment.IsRenewReferral == 'Y'">YES</p>
+                            <p class="form-control-static" data-display="" ng-if ="requestInfo.TelehealthAppointment.WAAppointment.IsRenewReferral !== 'N'">YES</p>
                         </div>
-                        <div class="form-group form-md-line-input">
-                            <label class="control-label col-md-4 col-sm-4">Hand condition</label>
-                            <div class="col-md-8 col-sm-8"><div class="form-control">DeQuervains/Trigger</div></div>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <label class="control-label col-md-4 col-sm-4">PNS</label>
-                            <div class="col-md-8 col-sm-8"><div class="form-control">Complex Reconstructive Case</div></div>
-                        </div>
-                    </div>    
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <div class="table-scrollable table-scrollable-borderless">
-                        <table class="table table-hover table-light">
-                            <thead>
-                                <tr class="uppercase">
-                                    <th width="30%">Name</th>
-                                    <th ng-show="uploader.isHTML5">Size</th>
-                                    <th>Date</th>
-                                    <th>Body Part</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="item in uploader.queue">
-                                    <td><strong>{{ item.file.name }}</strong></td>
-                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                                    <td>{{}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
-                    <div>
-                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
-                    </div>
-                </div>
-            </div>
-            <hr>
 
-            <div class="row">
-                <h5 class="col-md-12 col-sm-12">
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <div class="radio-list">
-                                 <label class="radio-inline control-label bold">
-                                    History of Previous skin cancers and treatmens
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="skin_cancers_radio"  value="option1" checked> Yes 
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="skin_cancers_radio"  value="option2"> No 
-                                </label>
-                            </div>
+                    <hr>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >Reason for referral/Presenting Problem</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.referralPresenting'].Value}}</p>
                         </div>
                     </div>
-                </h5>
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group">
-                        <textarea class="form-control" rows="10"></textarea>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >Document Filename</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="">
+                                 <table class="table table-hover table-light">
+                                    <thead>
+                                        <tr class="uppercase">
+                                            <th width="30%">Name</th>
+                                            <th ng-show="uploader.isHTML5">Size</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'referralPresenting'">
+                                            <td><strong>{{ item.file.name }}</strong></td>
+                                            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                            <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <div class="table-scrollable table-scrollable-borderless">
-                        <table class="table table-hover table-light">
-                            <thead>
-                                <tr class="uppercase">
-                                    <th width="30%">Name</th>
-                                    <th ng-show="uploader.isHTML5">Size</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="item in uploader.queue">
-                                    <td><strong>{{ item.file.name }}</strong></td>
-                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >Skin cancer</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value">BCC{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value}}</p>
+                            <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value">SCC{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value}}</p>
+                            <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value">Melanoma{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value}}</p>
+                            <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value">Merkel{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value}}</p>
+                        </div>
                     </div>
-                    <div>
-                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >Hand condition</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display=""> ...</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <hr>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >PNS</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display=""> ...</p>
+                        </div>
+                    </div>
 
-            <div class="row">
-                <h5 class="col-md-12 col-sm-12">
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <div class="radio-list">
-                                 <label class="radio-inline control-label bold">
-                                    History of Previous hand surgery
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="hand_surgery_radio"  value="option1" checked> Yes 
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="hand_surgery_radio"  value="option2"> No 
-                                </label>
-                            </div>
+                    <hr>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >History of Previous skin cancers and treatmens</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].Value}}</p>
                         </div>
                     </div>
-                </h5>
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group">
-                        <textarea class="form-control" rows="10"></textarea>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >Attach Filename</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="">
+                                 <table class="table table-hover table-light">
+                                    <thead>
+                                        <tr class="uppercase">
+                                            <th width="30%">Name</th>
+                                            <th ng-show="uploader.isHTML5">Size</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'cancersTreatmens'">
+                                            <td><strong>{{ item.file.name }}</strong></td>
+                                            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                            <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <div class="table-scrollable table-scrollable-borderless">
-                        <table class="table table-hover table-light">
-                            <thead>
-                                <tr class="uppercase">
-                                    <th width="30%">Name</th>
-                                    <th ng-show="uploader.isHTML5">Size</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="item in uploader.queue">
-                                    <td><strong>{{ item.file.name }}</strong></td>
-                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+                    <hr>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >History of Previous hand surgery</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.previousHandSurgery'].Value}}</p>
+                        </div>
                     </div>
-                    <div>
-                        <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
+                    <div class="form-group form-md-line-input">
+                        <label class="col-md-5 col-sm-5 control-label" >Attach Filename</label>
+                        <div class="col-md-7 col-sm-7">
+                            <p class="form-control-static" data-display="">
+                             <table class="table table-hover table-light">
+                                <thead>
+                                    <tr class="uppercase">
+                                        <th width="30%">Name</th>
+                                        <th ng-show="uploader.isHTML5">Size</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'previousHandSurgery'">
+                                        <td><strong>{{ item.file.name }}</strong></td>
+                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

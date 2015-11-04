@@ -87,7 +87,6 @@ module.exports = {
     GetOnlineUsers: function(headers) {
         var appts = [];
         TelehealthService.GetAppointmentList(headers).then(function(response) {
-            console.log("====",response);
             var data = response.getBody();
             if (data.count > 0) {
                 appts = data.rows;

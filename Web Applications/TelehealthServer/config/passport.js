@@ -12,12 +12,18 @@ passport.use(new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, function(req, u, p, done) {
+    var deviceId = req.headers.deviceid;
+    var deviceType = req.headers.systemtype;
     TelehealthService.MakeRequest({
         path: '/api/login',
         method: 'POST',
         body: {
             'UserName': u,
             'Password': p
+        },
+        headers: {
+            'DeviceID': deviceId,
+            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
         }
     }).then(function(response) {
         var data = response.getBody();

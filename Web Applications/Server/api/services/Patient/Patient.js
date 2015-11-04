@@ -5,7 +5,8 @@ var moment = require('moment');
 var check  = require('../HelperService');
 
 //default attributes
-var defaultAtrributes = ['ID',
+var defaultAtrributes = [
+	'ID',
 	'UID',
 	'UserAccountID',
 	'Title',
@@ -20,11 +21,21 @@ var defaultAtrributes = ['ID',
 	'Suburb',
 	'Postcode',
 	'State',
-	'CountryID',
-	'Email',
+	'CountryID1',
+	'CountryID1',
+	'Email1',
+	'Email2',
 	'HomePhoneNumber',
 	'WorkPhoneNumber',
-	'Enable'
+	'Enable',
+	'MaritalStatus',
+	'PreferredName',
+	'PreviousName',
+	'Indigenous',
+	'FaxNumber',
+	'InterpreterRequired',
+	'InterperterLanguage',
+	'OtherSpecialNeed'
 ];
 
 //generator Password
@@ -113,6 +124,7 @@ module.exports = {
 				}
 			}
 
+			//validate DOB
 			if(data.DOB){
 				if(data.DOB!=null && data.DOB!=""){
 					if(!/^(\d{1,2})[/](\d{1,2})[/](\d{4})/.test(data.DOB)){
@@ -154,12 +166,21 @@ module.exports = {
 				}
 			}
 
-			//validate Email? hoi a Tan su dung exception
-			if(data.Email){
-				var EmailPattern=new RegExp(check.regexPattern.email);
-				var Email=data.Email.replace(check.regexPattern.phoneExceptChars,'');
-				if(!EmailPattern.test(Email)){
-					errors.push({field:"Email",message:"invalid value"});
+			//validate Email1
+			if(data.Email1){
+				var EmailPattern1=new RegExp(check.regexPattern.email);
+				if(!EmailPattern1.test(data.Email1)){
+					errors.push({field:"Email1",message:"invalid value"});
+					err.pushErrors(errors);
+					throw err;
+				}
+			}
+
+			//validate Email2
+			if(data.Email2){
+				var EmailPattern2=new RegExp(check.regexPattern.email);
+				if(!EmailPattern2.test(data.Email2)){
+					errors.push({field:"Email2",message:"invalid value"});
 					err.pushErrors(errors);
 					throw err;
 				}
@@ -240,7 +261,12 @@ module.exports = {
 					like:'%'+data.Search.Gender+'%'
 				}
 			}
-			if(data.Search.Email){
+			if(data.Search.Email1){
+				whereClause.Patient.Email = {
+					like:'%'+data.Search.Email+'%'
+				}
+			}
+			if(data.Search.Email2){
 				whereClause.Patient.Email = {
 					like:'%'+data.Search.Email+'%'
 				}
@@ -277,16 +303,15 @@ module.exports = {
 			Occupation      : data.Occupation,
 			HomePhoneNumber : data.HomePhoneNumber,
 			WorkPhoneNumber : data.WorkPhoneNumber,
-			CountryID       : data.CountryID,
+			CountryID1      : data.CountryID1,
 			Suburb          : data.Suburb,
 			Postcode        : data.Postcode,
-			Email           : data.Email,
+			Email1          : data.Email1,
 			UID             : UUIDService.Create(),
 			Address1        : data.Address1,
 			Address2        : data.Address2,
 			State           : data.State,
-			Enable          : "Y",
-			CreatedDate     : new Date()
+			Enable          : "Y"
 		};
 		return Services.Patient.validation(data)
 		.then(function(success){
@@ -360,170 +385,6 @@ module.exports = {
 		})
 	},
 
-
-	/*
-		SearchPatient : services find patient with condition
-		input:patient's information
-		output:find patient which was provided information.
-	*/
-	SearchPatient : function(data, transaction) {
-		if(check.checkData(data.values)){
-			var PhoneNumberPattern1=new RegExp(/^4[0-9]{8}$/);
-			var PhoneNumberPattern2=new RegExp(/^(\+61|0061|0)?4[0-9]{8}$/);
-			var PhoneNumber=data.values.replace(check.regexPattern.phoneExceptChars,'');
-			if(PhoneNumberPattern1.test(PhoneNumber)||PhoneNumberPattern2.test(PhoneNumber)){
-				if(data.values.substr(0,3)=='+61'){
-					return Services.UserAccount.FindByPhoneNumber(data.values)
-					.then(function(user){
-						//check if Phone Number is found in table UserAccount, 
-						// get UserAccountID to find patient
-						if(check.checkData(user)){
-							return Patient.findAndCountAll({
-								include:[
-									{
-						            	model: UserAccount,
-						            	attributes: ['PhoneNumber'],
-								    	required: true
-								    }
-								],
-								where: {
-									UserAccountID : user[0].ID
-								},
-								transaction:transaction,
-								limit: data.limit,
-								offset: data.offset,
-							})
-							.then(function(result){
-								return result;
-							},function(err){
-								throw err;
-							});
-						}
-						else{
-							return null;
-						}
-					},function(err){
-						throw err;
-					});
-				}
-				else{
-					data.PhoneNumber = '+61'+data.values;
-					return Services.UserAccount.FindByPhoneNumber(data.values,transaction)
-					.then(function(user){
-						//check if Phone Number is found in table UserAccount, 
-						// get UserAccountID to find patient
-						if(check.checkData(user)){
-							return Patient.findAndCountAll({
-								include:[
-											{
-								            	model: UserAccount,
-								            	attributes: ['PhoneNumber'],
-										    	required: true
-										    }
-										],
-								where: {
-									UserAccountID : user[0].ID
-								},
-								transaction:transaction,
-								limit: data.limit,
-								offset: data.offset,
-							})
-							.then(function(result){
-								return result;
-							},function(err){
-								throw err;
-							});
-						}
-						else{
-							return null;
-						}
-					},function(err){
-						throw err;
-					});
-				}
-			}
-			else{
-				return Patient.findAndCountAll({
-					where: {
-						$or :[
-								// gom 3 cot FirstName MiddleName LastName lai de search FullName
-								//dung concat sequelize
-								Sequelize.where(Sequelize.fn("concat", Sequelize.col("FirstName"), ' ', Sequelize.col("MiddleName"), ' ', Sequelize.col("LastName")), {
-						        	like: '%'+data.values+'%'
-								}),
-
-								{
-									FirstName:{
-										$like: '%'+data.values+'%'
-									}
-								},
-
-								{	
-									MiddleName:{
-										$like: '%'+data.values+'%'
-									}
-								},
-
-								{
-									LastName:{
-										$like: '%'+data.values+'%'
-									}
-								},
-
-								{
-									UID : data.values
-								},
-
-								{
-									Gender: {
-										$like: '%'+data.values+'%'
-									}
-								},
-
-								{
-									Email: {
-										$like: '%'+data.values+'%'
-									}
-								},
-
-								{
-									Enable: data.values
-								}
-					  		]
-					},
-					transaction:transaction,
-					limit: data.limit,
-					offset: data.offset,
-				})
-				.then(function(result){
-					return result;
-				},function(err){
-					throw err;
-			})
-			}
-		}
-		else {
-			return Patient.findAndCountAll({
-				include:[
-					{
-		            	model: UserAccount,
-		            	attributes: ['PhoneNumber'],
-				    	required: true
-				    }
-				],
-				transaction:transaction,
-				limit: data.limit,
-				offset: data.offset,
-			})
-			.then(function(result){
-				return result;
-			},function(err){
-				throw err;
-			});
-		}
-	},
-
-
 	/*
 		UpdatePatient : service update a patient
 		input:patient's information
@@ -549,19 +410,15 @@ module.exports = {
 				Suburb          : data.Suburb,
 				Postcode        : data.Postcode,
 				State           : data.State,
-				Email           : data.Email,
+				Email1          : data.Email1,
 				Occupation      : data.Occupation,
 				HomePhoneNumber : data.HomePhoneNumber,
-				WorkPhoneNumber : data.WorkPhoneNumber,
-				CreatedDate     : data.CreatedDate,
-				CreatedBy       : data.CreatedBy,
-				ModifiedDate    : data.ModifiedDate,
-				ModifiedBy      : data.ModifiedBy
+				WorkPhoneNumber : data.WorkPhoneNumber
 			};
 
 			//get data required ( if data has values, get it)
 			if(data.UserAccountID)  patientInfo.UserAccountID = data.UserAccountID;
-			if(data.CountryID)  patientInfo.CountryID = data.CountryID;
+			if(data.CountryID1)  patientInfo.CountryID1 = data.CountryID1;
 			if(data.UID)  patientInfo.UID = data.UID;
 			return Services.Patient.validation(data)
 			.then(function(success){
@@ -660,11 +517,18 @@ module.exports = {
 		var FirstName = '',LastName = '';
 		var isConcat = false;
 		var attributes=[];
-		for(var i = 0; i < data.attributes.length; i++){
-			if(data.attributes[i].field!='UserAccount'){
-				attributes[i] = data.attributes[i].field;
-			}
-		};
+		if(data.attributes!=undefined && data.attributes!=null
+			 && data.attributes!='' && data.attributes.length!=0){
+			for(var i = 0; i < data.attributes.length; i++){
+				if(data.attributes[i].field!='UserAccount'){
+					attributes.push(data.attributes[i].field);
+				}
+			};
+			attributes.push("UID");
+		}
+		else{
+			attributes = defaultAtrributes;
+		}
 		console.log(attributes);
 		var whereClause = Services.Patient.whereClause(data);
 		if(data.Search){
@@ -686,7 +550,7 @@ module.exports = {
 				   	}
 			    }
 			],
-			// attributes : attributes,
+			attributes : attributes,
 			limit      : data.limit,
 			offset     : data.offset,
 			order      : data.order,

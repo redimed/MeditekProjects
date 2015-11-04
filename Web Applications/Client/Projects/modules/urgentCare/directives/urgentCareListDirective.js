@@ -1,4 +1,4 @@
-var app = angular.module('app.authentication.urgentCare.directive.list',[]);
+var app = angular.module('app.authentication.urgentCare.list.directive',[]);
 
 app.directive('urgentcareList', function($modal){
 	return {

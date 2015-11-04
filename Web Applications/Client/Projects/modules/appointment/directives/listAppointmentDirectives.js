@@ -4,114 +4,81 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
         restrict: 'E',
         templateUrl: "modules/appointment/directives/templates/listAppointment.html",
         link: function(scope, $state) {
-            scope.currentPage = 1;
-            scope.numPerPage = 20;
-            scope.maxSize = 10;
+            var Init = function() {
+                scope.searchObject = {
+                    Limit: 20,
+                    Offset: 0,
+                    currentPage: 1,
+                    maxSize: 5,
+                    Order: [{
+                        Appointment: {
+                            CreatedDate: 'DESC',
+                            FromTime: null
+                        }
+                    }],
+                    Search: [{
+                        PatientAppointment: {
+                            FullName: null
+                        }
+                    }, {
+                        Doctor: {
+                            FullName: null
+                        }
+                    }],
+                    Range: [{
+                        Appointment: {
+                            CreatedDate: [null, null],
+                            FromTime: [null, null]
+                        }
+                    }]
+                };
+                scope.searchObjectMap = angular.copy(scope.searchObject);
+                scope.load();
+            };
 
             scope.typeSubmitDate = 'DESC';
             scope.typeAppointmentDate = 'DESC';
             scope.typeSubmitDateOther = null;
             scope.typeAppointmentOther = null;
-            scope.sortDataTable = function(Name, Type) {
-                if (Name === 'SubmitDate') {
-                    Type == 'DESC' ? scope.typeSubmitDate = 'ASC' : scope.typeSubmitDate = 'DESC';
-                    scope.typeAppointmentDateOther = null;
-                    scope.typeSubmitDateOther = scope.typeSubmitDate;
-                    scope.filter()
-                };
-                if (Name === 'AppointmentDate') {
-                    Type == 'DESC' ? scope.typeAppointmentDate = 'ASC' : scope.typeAppointmentDate = 'DESC';
-                    scope.typeSubmitDateOther = null;
-                    scope.typeAppointmentDateOther = scope.typeAppointmentDate;
-                    scope.filter()
-                };
 
+            scope.sortData = function(Name, Type) {
+                scope.searchObjectMap.Order = [];
+                var orderTemp = {};
+                orderTemp[Name] = Type;
+                scope.searchObjectMap.Order.push({
+                    Appointment: orderTemp
+                });
+                scope.load()
             };
-
-            scope.filteredTodos = [];
-            var data = {
-                Order: [{
-                    Appointment: {
-                        CreatedDate: 'DESC'
-                    }
-                }]
+            //set page
+            scope.SetPage = function() {
+                scope.searchObjectMap.Offset = (scope.searchObjectMap.currentPage - 1) * scope.searchObjectMap.Limit;
+                scope.load();
             };
-            scope.infoAppointment = {
-                patient: null,
-                doctor: null,
-                submit_from_date: null,
-                submit_to_date: null,
-                appointment_from_date: null,
-                appointment_to_date: null
+            scope.parseTime = function(data) {
+                if (data.Range[0].Appointment.CreatedDate[0] !== null && data.Range[0].Appointment.CreatedDate[0] !== undefined) {
+                    data.Range[0].Appointment.CreatedDate[0] = moment(data.Range[0].Appointment.CreatedDate[0]).format('YYYY-MM-DD Z');
+                }
+                if (data.Range[0].Appointment.CreatedDate[1] !== null && data.Range[0].Appointment.CreatedDate[1] !== undefined) {
+                    data.Range[0].Appointment.CreatedDate[1] = moment(data.Range[0].Appointment.CreatedDate[1]).format('YYYY-MM-DD Z');
+                }
+                if (data.Range[0].Appointment.FromTime[0] !== null && data.Range[0].Appointment.FromTime[0] !== undefined) {
+                    data.Range[0].Appointment.FromTime[0] = moment(data.Range[0].Appointment.FromTime[0]).format('YYYY-MM-DD Z');
+                }
+                if (data.Range[0].Appointment.FromTime[1] !== null && data.Range[0].Appointment.FromTime[1] !== undefined) {
+                    data.Range[0].Appointment.FromTime[1] = moment(data.Range[0].Appointment.FromTime[1]).format('YYYY-MM-DD Z');
+                }
             }
+
             scope.load = function() {
-                AppointmentService.loadListAppointment(data).then(function(response) {
-
-                    scope.filteredTodos = response.rows;
+                scope.searchObjectMapTemp = angular.copy(scope.searchObjectMap)
+                scope.parseTime(scope.searchObjectMapTemp)
+                AppointmentService.loadListAppointment(scope.searchObjectMapTemp).then(function(response) {
                     scope.appointments = response.rows;
-                    scope.$watch("currentPage + numPerPage", function() {
-                        var begin = ((scope.currentPage - 1) * scope.numPerPage),
-                            end = begin + scope.numPerPage;
-                        scope.appointments = scope.filteredTodos.slice(begin, end);
-                    });
+                    scope.CountRow = response.count
                 });
             }
-            scope.load()
-            scope.filter = function() {
-
-                var submit_from_date = null
-                var submit_to_date = null
-                var appointment_from_date = null
-                var appointment_to_date = null
-                if (scope.infoAppointment.submit_from_date !== null) {
-                    submit_from_date = moment(scope.infoAppointment.submit_from_date).format("YYYY-MM-DD Z");
-                }
-                if (scope.infoAppointment.submit_to_date !== null) {
-                    submit_to_date = moment(scope.infoAppointment.submit_to_date).format("YYYY-MM-DD Z");
-                }
-                if (scope.infoAppointment.appointment_from_date) {
-                    appointment_from_date = moment(scope.infoAppointment.appointment_from_date).format("YYYY-MM-DD Z");
-                }
-                if (scope.infoAppointment.appointment_to_date !== null) {
-                    appointment_to_date = moment(scope.infoAppointment.appointment_to_date).format("YYYY-MM-DD Z");
-                };
-                var postData = {
-                        limit: 100,
-                        Order: [{
-                            Appointment: {
-                                CreatedDate: scope.typeSubmitDateOther,
-                                FromTime: scope.typeAppointmentDateOther
-                            }
-                        }],
-                        Search: [{
-                            PatientAppointment: {
-                                FullName: scope.infoAppointment.patient
-                            }
-                        }, {
-                            Doctor: {
-                                FullName: scope.infoAppointment.doctor
-                            }
-                        }],
-                        Range: [{
-                            Appointment: {
-                                CreatedDate: [submit_from_date, submit_to_date],
-                                FromTime: [appointment_from_date, appointment_to_date]
-                            }
-                        }]
-                    }
-                    //console.log(postData)
-                AppointmentService.loadListAppointment(postData).then(function(response) {
-                    scope.filteredTodos = response.rows;
-                    scope.appointments = response.rows;
-                    scope.$watch("currentPage + numPerPage", function() {
-                        var begin = ((scope.currentPage - 1) * scope.numPerPage),
-                            end = begin + scope.numPerPage;
-                        scope.appointments = scope.filteredTodos.slice(begin, end);
-                    });
-
-                    scope.Correspondence = 1
-                });
-            }
+            Init();
             scope.toggle = true;
             scope.toggleFilter = function() {
                 scope.toggle = scope.toggle === false ? true : false;

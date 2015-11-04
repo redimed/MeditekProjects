@@ -9,6 +9,7 @@ module.exports = function(req, res, next) {
 	var error=new Error("Policies.isAuthenticated.Error");
 	if (req.isAuthenticated()) 
 	{
+		// return next();
 		//Passport Authenticated
 		//Verify token:
 		var authorization=req.headers.authorization;
@@ -23,61 +24,60 @@ module.exports = function(req, res, next) {
 					SystemType:req.headers.systemtype,
 					DeviceID:req.headers.deviceid
 				};
-				sequelize.transaction().then(function(transaction){
-					UserTokenService.GetUserToken(userToken,transaction)
-					.then(function(ut){
-						jwt.verify(token, ut.SecretKey, function(err, decoded) {
-							if(o.checkData(err))
-							{
-								o.exlog(err);
-								if(err.name=='TokenExpiredError')
+				UserTokenService.GetUserToken(userToken)
+				.then(function(ut){
+					jwt.verify(token, ut.SecretKey, function(err, decoded) {
+						if(o.checkData(err))
+						{
+							o.exlog(err);
+							if(err.name=='TokenExpiredError')
+							{ 
+								if(!o.isExpired(ut.SecretCreatedDate,ut.TokenExpired))
 								{
-									if(!o.isExpired(ut.SecretCreatedDate,ut.TokenExpired))
+									//error.pushError("isAuthenticated.tokenExpiredError");
+									if(req.headers.systemtype==o.const.systemType.website)
 									{
-										//error.pushError("isAuthenticated.tokenExpiredError");
-										UserTokenService.MakeNewSecretKey(userToken,transaction)
+										var newtoken=jwt.sign(req.user, ut.SecretKey, { expiresIn: o.const.authTokenExpired[req.headers.systemtype] });
+										res.set('newtoken',newtoken);
+	            						res.header('Access-Control-Expose-Headers', 'newtoken');
+	            						next();
+									}
+									else
+									{
+										UserTokenService.MakeUserToken(userToken)
 										.then(function(data){
 											var newtoken=jwt.sign(req.user, data.SecretKey, { expiresIn: o.const.authTokenExpired[req.headers.systemtype] });
 											res.set('newtoken',newtoken);
 		            						res.header('Access-Control-Expose-Headers', 'newtoken');
-		            						transaction.commit();
 		            						next();
 										},function(err){
 											o.exlog(err);
-											transaction.rollback();
 											error.pushError("isAuthenticated.userTokenMakeSecretKeyError");
 											return res.unauthor(ErrorWrap(error));
 										})
 									}
-									else
-									{
-										error.pushError("isAuthenticated.secretKeyExpired");
-										transaction.rollback();
-										return res.unauthor(ErrorWrap(error));
-									}
 								}
-								else 
+								else
 								{
-									error.pushError("isAuthenticated.tokenInvalid");
-									transaction.rollback();
+									error.pushError("isAuthenticated.secretKeyExpired");
 									return res.unauthor(ErrorWrap(error));
 								}
-								// console.log(err.name);
-								// res.unauthor(ErrorWrap(err));
 							}
-							else
+							else 
 							{
-								transaction.commit();
-						  		next(); 
+								error.pushError("isAuthenticated.tokenInvalid");
+								return res.unauthor(ErrorWrap(error));
 							}
-						});
-					},function(err){
-						return res.unauthor(ErrorWrap(err));
-					})
+							// console.log(err.name);
+							// res.unauthor(ErrorWrap(err));
+						}
+						else
+						{
+					  		next(); 
+						}
+					});
 				},function(err){
-					o.exlog(err);
-					error.pushError("transaction.beginError");
-					throw error;
+					return res.unauthor(ErrorWrap(err));
 				})
 				
 				

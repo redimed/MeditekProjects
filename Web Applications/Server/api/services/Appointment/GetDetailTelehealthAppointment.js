@@ -4,66 +4,88 @@ input: UID Appointment
 output: - success: information details Telehealth Appointment
         -failed: [transaction] get details Telehealth Appointment, error message
  */
-module.exports = function(appointmentUID) {
+module.exports = function(appointmentUID, userInfo) {
     var $q = require('q');
     var defer = $q.defer();
+    //add roles
+    var filter = {
+        InternalPractitioner: [],
+        ExternalPractitioner: [],
+        Appointment: [{
+            '$and': {
+                UID: appointmentUID
+            }
+        }]
+    };
+    var role = HelperService.GetRole(userInfo.roles);
+    if (role.isInternalPractitioner) {
+        var filterRoleTemp = {
+            '$and': {
+                ID: userInfo.ID
+            }
+        };
+        filter.InternalPractitioner.push(filterRoleTemp);
+    } else if (role.isExternalPractitioner) {
+        var filterRoleTemp = {
+            '$and': {
+                CreatedBy: userInfo.ID
+            }
+        };
+        filter.ExternalPractitioner.push(filterRoleTemp);
+    } else if (!role.isAdmin &&
+        !role.isAssistant) {
+        var filterRoleTemp = {
+            '$and': {
+                UID: null
+            }
+        };
+        filter.Appointment.push(filterRoleTemp);
+    }
     Appointment.findOne({
-            attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status', 'CreatedDate'],
+            attributes: Services.AttributesAppt.Appointment(),
             include: [{
                 model: TelehealthAppointment,
-                attributes: ['UID', 'Fund', 'Correspondence', 'RefName',
-                    'RefHealthLink', 'RefAddress', 'RefTelePhone',
-                    'RefPostCode', 'RefSignature', 'RefDate', 'RefProviderNumber',
-                    'RefDurationOfReferal', 'PresentComplain', 'Allergy'
-                ],
+                attributes: Services.AttributesAppt.TelehealthAppointment(),
                 required: false,
                 include: [{
                     model: PatientAppointment,
-                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName',
-                        'DOB', 'Email', 'Address1', 'Address2', 'Suburb', 'Postcode',
-                        'Email', 'WorkPhoneNumber', 'HomePhoneNumber'
-                    ],
+                    attributes: Services.AttributesAppt.PatientAppointment(),
                     required: false,
                 }, {
                     model: ExaminationRequired,
-                    attributes: ['Private', 'Public', 'DVA', 'WorkersComp', 'MVIT'],
+                    attributes: Services.AttributesAppt.ExaminationRequired(),
                     required: false
                 }, {
                     model: PreferredPractitioner,
-                    attributes: ['Name'],
+                    attributes: Services.AttributesAppt.PreferredPractitioner(),
                     required: false
                 }, {
                     model: ClinicalDetail,
-                    attributes: ['UID', 'Section', 'Category', 'Type', 'Name', 'Value', 'ClinicalNote', 'Description'],
+                    attributes: Services.AttributesAppt.ClinicalDetail(),
                     required: false
                 }, {
                     model: Doctor,
-                    attributes: ['UID', 'FirstName', 'MiddleName', 'LastName',
-                        'HealthLink', 'Address1', 'Address2', 'WorkPhoneNumber',
-                        'Postcode', 'ProviderNumber', 'Signature'
-                    ],
-                    required: false
+                    attributes: Services.AttributesAppt.Doctor(),
+                    required: false,
+                    where: filter.ExternalPractitioner
                 }]
             }, {
                 model: Doctor,
-                attributes: ['ID', 'UID', 'FirstName', 'MiddleName', 'LastName',
-                    'DOB', 'Type', 'Email', 'HomePhoneNumber', 'WorkPhoneNumber'
-                ],
+                attributes: Services.AttributesAppt.Doctor(),
                 required: false,
                 include: [{
                     model: Department,
-                    attributes: ['ID', 'UID', 'DepartmentCode', 'DepartmentName', 'Description'],
+                    attributes: Services.AttributesAppt.Department(),
                     required: false
-                }]
+                }],
+                where: filter.InternalPractitioner
             }, {
                 model: Patient,
-                attributes: ['UID', 'FirstName', 'MiddleName', 'LastName', 'DOB',
-                    'Gender', 'Address1', 'Address2', 'Suburb', 'Postcode', 'Email', 'HomePhoneNumber', 'WorkPhoneNumber'
-                ],
+                attributes: Services.AttributesAppt.Patient(),
                 required: false,
                 include: [{
                     model: UserAccount,
-                    attributes: ['UserName', 'Email', 'PhoneNumber', 'Activated'],
+                    attributes: Services.AttributesAppt.UserAccount(),
                     required: false
                 }]
             }, {
@@ -77,9 +99,7 @@ module.exports = function(appointmentUID) {
                     required: false
                 }]
             }],
-            where: {
-                UID: appointmentUID
-            }
+            where: filter.Appointment
         })
         .then(function(detailApptTelehealth) {
             defer.resolve({

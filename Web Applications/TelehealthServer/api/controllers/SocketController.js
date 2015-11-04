@@ -19,7 +19,9 @@ module.exports = {
                 if (teleUser) {
                     sails.sockets.join(req.socket, uid);
                     sails.sockets.leave(req.socket, req.socket.id);
-                    TelehealthService.GetOnlineUsers(socketQuery.CoreAuth);
+                    var headers = HelperService.toJson(socketQuery);
+                    delete headers['__sails_io_sdk_version'];
+                    TelehealthService.GetOnlineUsers(headers);
                 } else {
                     sails.sockets.emit(req.socket, 'errorMsg', {
                         msg: 'User Not Exist!'
@@ -82,7 +84,9 @@ module.exports = {
             return;
         }
         var socketQuery = req.socket.handshake.query;
-        TelehealthService.GetOnlineUsers(socketQuery.CoreAuth);
+        var headers = HelperService.toJson(socketQuery);
+        delete headers['__sails_io_sdk_version'];
+        TelehealthService.GetOnlineUsers(headers);
     },
     GenerateConferenceSession: function(req, res) {
         opentok.createSession({

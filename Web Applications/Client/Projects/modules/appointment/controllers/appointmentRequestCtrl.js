@@ -13,7 +13,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
         RequestDate: null,
         TelehealthAppointment: {
             RefDate: null,
-            RefDurationOfReferal: null,
+            RefDurationOfReferral: null,
             PatientAppointment: {
                 FirstName: null,
                 LastName: null,
@@ -129,7 +129,11 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
 
     var uploader = $scope.uploader = new FileUploader({
         url: o.const.uploadFileUrl,
-        headers:{Authorization:('Bearer '+$cookies.get("token"))},
+        headers:{
+            Authorization:('Bearer '+$cookies.get("token")),
+            systemtype:'WEB'
+        },
+        withCredentials :true,
         alias: 'uploadFile'
     });
 

@@ -1,0 +1,298 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activitySport"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="patient.telehealth.redimed.packagecom.sportinjury.SportActivity">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:id="@+id/tool_bar">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/back_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Sport Injury Clinic Booking"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-light"
+            android:textSize="21sp"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:id="@+id/scrollViewSportInjury"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:isScrollContainer="false"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        android:layout_below="@+id/tool_bar">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="15dp">
+
+            <!--FirstName-->
+            <RelativeLayout
+                android:id="@+id/relativeLayoutFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_edit_text">
+
+                <EditText
+                    android:id="@+id/txtFirstName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="First Name"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapSentences"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+
+                <TextView
+                    android:id="@+id/lblFNRequire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:text="*"
+                    android:textColor="#F44336" />
+            </RelativeLayout>
+
+            <!--LastName-->
+            <RelativeLayout
+                android:id="@+id/relativeLayoutLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayoutFirstName"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border_edit_text">
+
+                <EditText
+                    android:id="@+id/txtLastName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Last Name"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapSentences"
+                    android:maxLength="255"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+
+                <TextView
+                    android:id="@+id/lblLNRequire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:text="*"
+                    android:textColor="#F44336" />
+            </RelativeLayout>
+
+            <!--ContactPhone-->
+            <RelativeLayout
+                android:id="@+id/relativeLayoutContactPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayoutLastName"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border_edit_text">
+
+                <EditText
+                    android:id="@+id/txtContactPhone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Contact Phone"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:id="@+id/lblPhoneRequire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:text="*"
+                    android:textColor="#F44336" />
+            </RelativeLayout>
+
+            <!--Suburb-->
+            <RelativeLayout
+                android:id="@+id/relativeLayoutSuburb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayoutContactPhone"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border_edit_text">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteSuburb"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Suburb" />
+
+            </RelativeLayout>
+
+            <!--DOB-->
+            <RelativeLayout
+                android:id="@+id/relativeLayoutDOB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayoutSuburb"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border_edit_text">
+
+                <EditText
+                    android:id="@+id/txtDOB"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Date Of Birth"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </RelativeLayout>
+
+            <!--Email-->
+            <RelativeLayout
+                android:id="@+id/relativeLayoutEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayoutDOB"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border_edit_text">
+
+                <EditText
+                    android:id="@+id/txtEmail"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Email"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:maxLength="250"
+                    android:maxLines="1"
+                    android:capitalize="none"/>
+            </RelativeLayout>
+
+            <!--Description-->
+            <RelativeLayout
+                android:id="@+id/relativeLayoutDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayoutEmail"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border_edit_text">
+
+                <EditText
+                    android:id="@+id/txtDescription"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Description"
+                    android:imeOptions="actionDone"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:lines="2"
+                    android:scrollHorizontally="false"/>
+            </RelativeLayout>
+
+            <!--GPReferral-->
+            <RelativeLayout
+                android:id="@+id/relativeLayoutGPReferral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayoutDescription"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/lblGPReferral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="GP Referral"
+                    android:textColor="@android:color/black"
+                    android:textSize="17dp" />
+
+                <!--Radio GP Referral-->
+                <RadioGroup
+                    android:id="@+id/radioGroupGPReferral"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/lblGPReferral"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="Y"
+                        android:text="Yes"
+                        android:textSize="17dp" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50dp"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="N"
+                        android:text="No"
+                        android:textSize="17dp" />
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnSportInjury"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/relativeLayoutGPReferral"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="Make Appointment"
+                android:textAllCaps="false"
+                android:textColor="@color/lightFont"
+                android:textSize="22sp" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
+<!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/src/main/res/layout/activity_sport.xml -->

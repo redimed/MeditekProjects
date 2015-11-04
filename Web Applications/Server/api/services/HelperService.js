@@ -115,7 +115,7 @@ module.exports = {
         auHomePhoneNumber: /^[1-9]{9}$/,
 
         //character
-        character: /^[a-zA-Z]{0,255}$/,
+        character: /^[a-zA-Z\s0-9]{0,255}$/,
 
         //address
         address: /^[a-zA-Z0-9\s,'-\/]{0,255}$/,
@@ -134,12 +134,12 @@ module.exports = {
         authTokenExpired: {
             'IOS':3*60,
             'ARD':3*60,
-            'WEB':24*60*60,
+            'WEB':10,
         },// second
         authSecretExprired:{
             'IOS':null,
             'ARD':null,
-            'WEB':20,
+            'WEB':15*60,
         },
 
         verificationMethod: {

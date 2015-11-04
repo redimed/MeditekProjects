@@ -20,7 +20,11 @@ module.exports = {
      * login: function xử lý login
      */
     login: function(req, res) {
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LOGIN");
+        console.log("============LOGIN===============");
+
+        var error=new ErrorWrap("login.Error");
+
+
         passport.authenticate('local', function(err, user, info) 
         {
             if ((err) || (!user)) 
@@ -47,7 +51,7 @@ module.exports = {
                         SystemType:req.headers.systemtype,
                         DeviceID:req.headers.deviceid
                     }
-                    Services.UserToken.CreateUserToken(userToken)
+                    Services.UserToken.MakeUserToken(userToken)
                     .then(function(data){
                         // var token = jwt.sign(user, secret, { expiresInMinutes: 60*24 });
                         var token = jwt.sign(user, data.SecretKey, { expiresIn: o.const.authTokenExpired[req.headers.systemtype] });//second
@@ -85,14 +89,12 @@ module.exports = {
      * logout: xử lý logout
      */
     logout: function(req, res) {
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LOGOUT");
         var userToken={
             UserUID:req.user.UID,
             SystemType:req.headers.systemtype,
             DeviceID:req.headers.deviceid
         }
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Make New Secret Key");
-        Services.UserToken.MakeNewSecretKey(userToken)
+        Services.UserToken.MakeUserToken(userToken)
         .then(function(data){
             req.logout();
             res.ok({status:'success'});

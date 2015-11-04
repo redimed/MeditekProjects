@@ -3,7 +3,7 @@ var app = angular.module('app.authentication.WAAppointment.GP.controller', []);
 app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval) {
     var ClinicalDetailsTemp = [];
     $scope.requestInfo = {
-        RequestDate: moment().format('YYYY-MM-DD HH:mm:ss Z'),
+        RequestDate: null,
         SiteID: 1,
         TelehealthAppointment: {
             PreferredPractitioner: [{
@@ -67,6 +67,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
             ClinicalDetailsTemp = []
         }
         $scope.requestInfo.TelehealthAppointment.ClinicalDetails = ClinicalDetailsTemp
+        $scope.requestInfo.RequestDate = moment().format('YYYY-MM-DD HH:mm:ss Z'),
         WAAppointmentService.RequestWAApointment($scope.requestInfo).then(function(response) {
              if (response == 'success') {
                     swal({

@@ -1,9 +1,9 @@
 var WAConstant = {
-	apptStatus:{
-		Approved:'Approved',
-		Calling:'Calling',
-		Watting:'Watting for approve',
-		Cancelled:'Cancelled',
-		Finish:'Finish'
-	}
+	apptStatus:[
+		{value:'Approved',name:'Booked'},
+		{value:'Calling',name:'Calling'},
+		{value:'Waiting for approval',name:'Pending'},
+		{value:'Cancelled',name:'Cancelled'},
+		{value:'Finish',name:'Finish'}
+	]
 }

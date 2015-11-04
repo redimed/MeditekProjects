@@ -9,6 +9,11 @@ app.directive('urgentcareList', function($modal){
 			scope.toggleFilter = function(){
 				scope.toggle = scope.toggle === false ? true : false;
 			};
+			scope.typeFullName = 'DESC';
+			scope.sortDataTable = function(field, type){
+				scope.typeFullName = type == 'ASC'  ? 'DESC' : 'ASC';
+				scope.typeFullName = type == 'DESC' ? 'ASC'  : 'DESC';
+			};
 			scope.openModal = function(){
 				$modal.open({
 					templateUrl: 'modules/urgentCare/views/urgentCareListDetail.html',

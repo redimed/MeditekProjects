@@ -13,31 +13,6 @@ function sendSMS(toNumber, content) {
     });
 };
 module.exports = {
-    SendSMS: function(req, res) {
-        if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
-            var err = new Error("Telehealth.SendSMS.Error");
-            err.pushError("Invalid Params");
-            return res.serverError(ErrorWrap(err));
-        }
-        var info = HelperService.toJson(req.body.data);
-        var phoneNumber = info.phone;
-        var content = info.content;
-        var phoneRegex = /^\+[0-9]{9,15}$/;
-        if (phoneNumber && phoneNumber.match(phoneRegex) && content) {
-            sendSMS(phoneNumber, content).then(function(mess) {
-                return res.ok({
-                    status: 'success',
-                    message: 'Send SMS Successfully!'
-                });
-            }, function(error) {
-                return res.serverError(ErrorWrap(err));
-            });
-        } else {
-            var err = new Error("Telehealth.SendSMS.Error");
-            err.pushError("Invalid Params");
-            res.serverError(ErrorWrap(err));
-        }
-    },
     GetUserDetails: function(req, res) {
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
             var err = new Error("Telehealth.GetUserDetails.Error");
@@ -47,7 +22,7 @@ module.exports = {
         var info = HelperService.toJson(req.body.data);
         var uid = info.uid;
         var deviceType = req.headers.systemtype;
-        if (!uid || !deviceType || !HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
+        if (!uid || !deviceType || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
             var err = new Error("Telehealth.GetUserDetails.Error");
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
@@ -65,7 +40,7 @@ module.exports = {
                                 }
                             },
                             headers: {
-                                'Authorization': req.headers.authorization,
+                                'Authorization': res.get('newtoken') ? 'Bearer '+res.get('newtoken') : req.headers.authorization,
                                 'DeviceID': req.headers.deviceid,
                                 'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
                             }
@@ -97,12 +72,14 @@ module.exports = {
         var info = HelperService.toJson(req.body.data);
         var patientUID = info.uid;
         var limit = info.limit;
+        var headers = req.headers;
         if (!patientUID) {
             var err = new Error("Telehealth.GetUserAppointments.Error");
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
-        TelehealthService.GetAppointmentsByPatient(patientUID, limit, req.headers).then(function(response) {
+        if (res.get('newtoken')) headers.authorization = 'Bearer ' + res.get('newtoken');
+        TelehealthService.GetAppointmentsByPatient(patientUID, limit, headers).then(function(response) {
             res.json(response.getCode(), response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
@@ -117,12 +94,14 @@ module.exports = {
         }
         var info = HelperService.toJson(req.body.data);
         var apptUID = info.uid;
+        var headers = req.headers;
         if (!apptUID) {
             var err = new Error("Telehealth.GetAppointmentDetails.Error");
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
-        TelehealthService.GetAppointmentDetails(apptUID, req.headers).then(function(response) {
+        if (res.get('newtoken')) headers.authorization = 'Bearer ' + res.get('newtoken');
+        TelehealthService.GetAppointmentDetails(apptUID, headers).then(function(response) {
             res.json(response.getCode(), response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());

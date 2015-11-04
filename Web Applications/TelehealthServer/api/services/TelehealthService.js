@@ -3,19 +3,6 @@ var config = sails.config.myconf;
 var jwt = require('jsonwebtoken');
 var $q = require('q');
 
-function checkOnlineUser(appts) {
-    var list = sails.sockets.rooms();
-    if (appts.length > 0 && list.length > 0) {
-        for (var j = 0; j < appts.length; j++) {
-            var appt = appts[j];
-            appt.IsOnline = 0;
-            for (var i = 0; i < list.length; i++) {
-                if (appt.TeleUID == list[i]) appt.IsOnline = 1;
-            }
-        }
-    }
-    sails.sockets.blast('online_users', appts);
-}
 module.exports = {
     FindByUID: function(uid) {
         return TelehealthUser.find({
@@ -24,10 +11,23 @@ module.exports = {
             }
         });
     },
+    CheckOnlineUser: function(appts){
+        var list = sails.sockets.rooms();
+        if (appts.length > 0 && list.length > 0) {
+            for (var j = 0; j < appts.length; j++) {
+                var appt = appts[j];
+                appt.IsOnline = 0;
+                for (var i = 0; i < list.length; i++) {
+                    if (appt.TeleUID == list[i]) appt.IsOnline = 1;
+                }
+            }
+        }
+        return appts;
+    },
     GetAppointmentsByPatient: function(patientUID, limit, headers) {
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
-            path: '/api/appointment-telehealth-list',
+            path: '/api/appointment-wa-list',
             method: 'POST',
             body: {
                 data: {
@@ -60,7 +60,7 @@ module.exports = {
             headers: headers
         })
     },
-    GetAppointmentList: function(headers) {
+    GetAppointmentListWA: function(headers) {
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-wa-list',
@@ -84,31 +84,29 @@ module.exports = {
             headers: headers
         });
     },
-    GetOnlineUsers: function(headers) {
-        var appts = [];
-        TelehealthService.GetAppointmentList(headers).then(function(response) {
-            var data = response.getBody();
-            if (data.count > 0) {
-                appts = data.rows;
-                TelehealthUser.findAll().then(function(teleUsers) {
-                    for (var i = 0; i < teleUsers.length; i++) {
-                        for (var j = 0; j < appts.length; j++) {
-                            if (appts[j].Patients.length > 0 && appts[j].Patients[0].UserAccount) {
-                                if (teleUsers[i].userAccountID == appts[j].Patients[0].UserAccount.ID) {
-                                    appts[j].IsOnline = 0;
-                                    appts[j].TeleUID = teleUsers[i].UID;
-                                }
-                            }
+    GetAppointmentListTelehealth: function(headers) {
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
+        return TelehealthService.MakeRequest({
+            path: '/api/appointment-telehealth-list',
+            method: 'POST',
+            body: {
+                data: {
+                    Order: [{
+                        Appointment: {
+                            FromTime: 'DESC'
                         }
-                    }
-                    checkOnlineUser(appts);
-                }).catch(function(err) {
-                    console.log(err);
-                })
-            } else checkOnlineUser(appts);
-        }).catch(function(err) {
-            checkOnlineUser(appts);
-        })
+                    }],
+                    Filter: [{
+                        Appointment: {
+                            FromTime: sails.moment().format('YYYY-MM-DD ZZ'),
+                            Status: "Approved",
+                            Enable: "Y"
+                        }
+                    }]
+                }
+            },
+            headers: headers
+        });
     },
     MakeRequest: function(info) {
         return requestify.request(config.CoreAPI + info.path, {
@@ -116,8 +114,8 @@ module.exports = {
             body: !info.body ? null : info.body,
             params: !info.params ? null : info.params,
             headers: !info.headers ? null : info.headers,
-            timeout: 1000,
-            dataType: 'json'
+            dataType: 'json',
+            withCredentials: true
         })
     },
     GenerateJWT: function(info) {

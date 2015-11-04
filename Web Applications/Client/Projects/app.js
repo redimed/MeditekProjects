@@ -68,7 +68,6 @@ app
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
         // END CORS PROXY
         //RESTANGULAR DEFAULT
-	
     	//CONFIG Access-Control-Allow-Credentials=TRUE
     	//Mục đích: request có thể send cookies để authentication với passport
         RestangularProvider.setBaseUrl(o.const.restBaseUrl);
@@ -171,11 +170,11 @@ app
         })
 
         $rootScope.$on('$viewContentLoaded', function() {
-            // App.initAjax();
+             App.initAjax();
             App.initComponents(); // init core components
             ComponentsSelect2.init(); // init todo page
             ComponentsBootstrapSelect.init(); // init todo page
-            ComponentsDateTimePickers.init(); // init todo page
+            //ComponentsDateTimePickers.init(); // init todo page
             FormWizard.init(); // form step
         });
         $rootScope.$on('$includeContentLoaded', function() {

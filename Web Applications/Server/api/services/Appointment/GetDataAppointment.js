@@ -207,7 +207,8 @@ module.exports = {
             IsTelehealthSuitable: data.IsTelehealthSuitable,
             IsRenewReferral: data.IsRenewReferral,
             PathologyProvider: data.PathologyProvider,
-            RadiologyProvider: data.RadiologyProvider
+            RadiologyProvider: data.RadiologyProvider,
+            Enable: 'Y'
         };
     }
 };

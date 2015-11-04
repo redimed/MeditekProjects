@@ -2,7 +2,7 @@ angular.module('app.authentication.patient.services',[])
 .factory("PatientService", function(Restangular, $state,$q){
 	var PatientService = {};
 	var api = Restangular.all("api");
-	var characterRegex = /^[a-zA-Z]{0,255}$/;
+	var characterRegex = /^[a-zA-Z0-9\s]{0,255}$/;
 	var addressRegex = /^[a-zA-Z0-9\s,'-\/]{0,255}$/;
 	var postcodeRegex = /^[0-9]{4}$/;
 	var postData ={};
@@ -96,11 +96,10 @@ angular.module('app.authentication.patient.services',[])
 			}
 
 			// validate Email? hoi a Tan su dung exception
-			if(info.Email){
-				var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
-				var Email=info.Email.replace(/[\(\)\s\-]/g,'');
-				if(!EmailPattern.test(Email)){
-					error.push({field:"Email",message:"invalid value"});
+			if(info.Email1){
+				var EmailPattern1=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+				if(!EmailPattern1.test(info.Email1)){
+					error.push({field:"Email1",message:"invalid value"});
 				}
 			}
 			

@@ -115,7 +115,7 @@ module.exports = {
         auHomePhoneNumber: /^[1-9]{9}$/,
 
         //character
-        character: /^[a-zA-Z]{0,255}$/,
+        character: /^[a-zA-Z\s0-9]{0,255}$/,
 
         //address
         address: /^[a-zA-Z0-9\s,'-\/]{0,255}$/,

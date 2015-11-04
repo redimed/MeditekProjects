@@ -96,8 +96,8 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 								scope.ermsg='';
 								scope.loadingCheck = false;
 								toastr.success("Phone Number can be choose to create patient","SUCCESS");
-								scope.isShowEmail = result.data.data.Email;
-								scope.data.Email = result.data.data.Email;
+								scope.isShowEmail1 = result.data.data.Email1;
+								scope.data.Email1 = result.data.data.Email1;
 								scope.isShowNext = true;
 								// scope.data.DOB = new Date('1/1/1990');
 							}
@@ -149,6 +149,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
             //and show notification success
             //****show notification error if validate data error 
 			scope.createPatient = function(data) {
+				console.log(data);
 				scope.loadingCreate = true;
 				//service check data
 				return PatientService.validate(data)
@@ -188,6 +189,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						}
 					});
 				},function(err){
+					console.log(err);
 					scope.loadingCreate = false;
 					scope.er={};
 					scope.ermsg={};

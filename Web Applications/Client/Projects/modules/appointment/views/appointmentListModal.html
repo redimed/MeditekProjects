@@ -52,7 +52,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group form-md-line-input">
-                                            <input type="text" class="form-control" id="Username" value="{{appointment.TelehealthAppointment.RefDurationOfReferal}} months" disabled>
+                                            <input type="text" class="form-control" id="Username" value="{{appointment.TelehealthAppointment.RefDurationOfReferral}} months" disabled>
                                             <label for="Username">Duration Of Referral</label>
                                             <!-- <span class="help-block">Error Username</span> -->
                                         </div>
@@ -338,7 +338,11 @@
                                 <div class="col-md-6">
                                     <div class="checkbox">
                                         <label class="control-label">
+<<<<<<< HEAD
                                             <input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Tendon__/__musde'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Tendon / muscle</label>
+=======
+                                            <input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Tendon/muscle'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Tendon / muscle</label>
+>>>>>>> update teleheaht
                                     </div>
                                 </div>
                             </div>
@@ -352,7 +356,11 @@
                                 <div class="col-md-6">
                                     <div class="checkbox">
                                         <label class="control-label">
+<<<<<<< HEAD
                                             <input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Skin__Loss'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Skin loss</label>
+=======
+                                            <input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Skin__Loss'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Skin Loss</label>
+>>>>>>> update teleheaht
                                     </div>
                                 </div>
                             </div>
@@ -365,10 +373,10 @@
                                         </div>
                                         &nbsp;&nbsp;&nbsp;
                                         <div class="form-group form-md-line-input " ng-show="Other.LacerationsOther == 'N'">
-                                            <input type="text" class="form-control input-sm" placeholder="Other" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Others'].Value" disabled="false">
+                                            <input type="text" class="form-control input-sm" placeholder="Other" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other'].Value" disabled="false">
                                         </div>
                                         <div class="form-group form-md-line-input " ng-show="Other.LacerationsOther !== 'N'">
-                                            <input type="text" class="form-control input-sm" placeholder="Other" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Others'].Value">
+                                            <input type="text" class="form-control input-sm" placeholder="Other" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other'].Value">
                                         </div>
                                     </div>
                                 </div>
@@ -546,7 +554,7 @@
                                 <div class="form-group form-md-line-input  ">
                                     <div class="input-icon">
                                         <i class="fa fa-envelope"></i>
-                                        <input type="text" class="form-control" ng-model="ShowData.patient.Email" ng-disabled="ShowData.isLinkPatient">
+                                        <input type="text" class="form-control" ng-model="ShowData.patient.Email1" ng-disabled="ShowData.isLinkPatient">
                                         <label class="control-label">Email Address</label>
                                     </div>
                                 </div>

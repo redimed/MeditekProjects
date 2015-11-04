@@ -13,7 +13,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
         RequestDate: null,
         TelehealthAppointment: {
             RefDate: null,
-            RefDurationOfReferal: null,
+            RefDurationOfReferral: null,
             PatientAppointment: {
                 FirstName: null,
                 LastName: null,

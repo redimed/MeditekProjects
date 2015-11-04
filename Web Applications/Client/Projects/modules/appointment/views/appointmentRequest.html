@@ -48,11 +48,11 @@
                                                     <div class="input-group">
                                                         <label>Duration Of Referral :</label>&nbsp;&nbsp;
                                                         <label class="c_radio_custom">
-                                                            <input type="radio" name="duration[]" ng-model="requestInfo.TelehealthAppointment.RefDurationOfReferal" value="03"> 3 months </label>
+                                                            <input type="radio" name="duration[]" ng-model="requestInfo.TelehealthAppointment.RefDurationOfReferral" value="03"> 3 months </label>
                                                         <label class="c_radio_custom">
-                                                            <input type="radio" name="duration[]" ng-model="requestInfo.TelehealthAppointment.RefDurationOfReferal" value="12"> 12 months </label>
+                                                            <input type="radio" name="duration[]" ng-model="requestInfo.TelehealthAppointment.RefDurationOfReferral" value="12"> 12 months </label>
                                                         <label class="c_radio_custom">
-                                                            <input type="radio" name="duration[]" ng-model="requestInfo.TelehealthAppointment.RefDurationOfReferal" value="00"> Indefinite </label>
+                                                            <input type="radio" name="duration[]" ng-model="requestInfo.TelehealthAppointment.RefDurationOfReferral" value="00"> Indefinite </label>
                                                     </div>
                                                     <div class="input-group">
                                                         <div id="form_duration_error"></div>
@@ -183,7 +183,7 @@
                                                                         <label class="control-label">Email</label>
                                                                         <div class="input-icon">
                                                                             <i class="fa fa-envelope"></i>
-                                                                            <input type="text" class="form-control" placeholder="Email" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Email" name="Email">
+                                                                            <input type="text" class="form-control" placeholder="Email" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Email1" name="Email1">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -605,12 +605,12 @@
                                 </div>
                                 <div class="tab-pane" id="tab2">
                                     <h3 class="block">Confirm Appointments Request</h3>
-                                    <h4 style="border: none;" class="form-section" ng-if="requestInfo.TelehealthAppointment.RefDurationOfReferal">Duration Of Referral : 
-                                        <span ng-if="requestInfo.TelehealthAppointment.RefDurationOfReferal == '03'">3 months</span>
-                                        <span ng-if="requestInfo.TelehealthAppointment.RefDurationOfReferal == '12'">12 months</span>
-                                        <span ng-if="requestInfo.TelehealthAppointment.RefDurationOfReferal == '00'">Indefinite</span>
+                                    <h4 style="border: none;" class="form-section" ng-if="requestInfo.TelehealthAppointment.RefDurationOfReferral">Duration Of Referral : 
+                                        <span ng-if="requestInfo.TelehealthAppointment.RefDurationOfReferral == '03'">3 months</span>
+                                        <span ng-if="requestInfo.TelehealthAppointment.RefDurationOfReferral == '12'">12 months</span>
+                                        <span ng-if="requestInfo.TelehealthAppointment.RefDurationOfReferral == '00'">Indefinite</span>
                                     </h4>
-                                    <h4 class="form-section" ng-if="requestInfo.TelehealthAppointment.PatientAppointment.FirstName || requestInfo.TelehealthAppointment.PatientAppointment.LastName || patientAppointmentDOBTemp || requestInfo.TelehealthAppointment.PatientAppointment.Address || requestInfo.TelehealthAppointment.PatientAppointment.Suburb || requestInfo.TelehealthAppointment.PatientAppointment.Postcode || requestInfo.TelehealthAppointment.PatientAppointment.PhoneNumber || requestInfo.TelehealthAppointment.PatientAppointment.HomePhoneNumber || requestInfo.TelehealthAppointment.PatientAppointment.Email">Patient Details</h4>
+                                    <h4 class="form-section" ng-if="requestInfo.TelehealthAppointment.PatientAppointment.FirstName || requestInfo.TelehealthAppointment.PatientAppointment.LastName || patientAppointmentDOBTemp || requestInfo.TelehealthAppointment.PatientAppointment.Address || requestInfo.TelehealthAppointment.PatientAppointment.Suburb || requestInfo.TelehealthAppointment.PatientAppointment.Postcode || requestInfo.TelehealthAppointment.PatientAppointment.PhoneNumber || requestInfo.TelehealthAppointment.PatientAppointment.HomePhoneNumber || requestInfo.TelehealthAppointment.PatientAppointment.Email1">Patient Details</h4>
                                     <div class="form-group" ng-if="requestInfo.TelehealthAppointment.PatientAppointment.FirstName">
                                         <label class="control-label col-md-3">First Name:</label>
                                         <div class="col-md-4">
@@ -659,7 +659,7 @@
                                             <p class="form-control-static" data-display="email">{{requestInfo.TelehealthAppointment.PatientAppointment.HomePhoneNumber}}</p>
                                         </div>
                                     </div>
-                                    <div class="form-group" ng-if="requestInfo.TelehealthAppointment.PatientAppointment.Email">
+                                    <div class="form-group" ng-if="requestInfo.TelehealthAppointment.PatientAppointment.Email1">
                                         <label class="control-label col-md-3">Email:</label>
                                         <div class="col-md-4">
                                             <p class="form-control-static" data-display="email">{{requestInfo.TelehealthAppointment.PatientAppointment.Email}}</p>

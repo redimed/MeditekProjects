@@ -172,7 +172,13 @@ module.exports = {
         FileUpload.hasOne(Doctor, {
             foreignKey: 'Signature'
         });
+        Doctor.belongsTo(FileUpload, {
+            foreignKey: 'Signature'
+        });
         Country.hasOne(Doctor, {
+            foreignKey: 'CountryID'
+        });
+        Doctor.belongsTo(Country, {
             foreignKey: 'CountryID'
         });
         UserAccount.hasOne(Doctor, {

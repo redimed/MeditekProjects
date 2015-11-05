@@ -60,5 +60,15 @@ module.exports = {
             'UsualGPFaxNumber', 'IsSamePlacePreference', 'IsTelehealthSuitable',
             'IsRenewReferral', 'PathologyProvider', 'RadiologyProvider'
         ];
+    },
+    Country: function() {
+        return ['UID', 'ISO2', 'ShortName', 'LongName', 'ISO3', 'NumCode',
+            'UnMember', 'CallingCode', 'CCTLD', 'Description'
+        ];
+    },
+    FileUpload: function() {
+        return ['UID', 'UserAccountID', 'FileName', 'FileLocation', 'FileType',
+            'FileExtension', 'Description'
+        ];
     }
 };

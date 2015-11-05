@@ -12,7 +12,7 @@ module.exports = {
         ];
     },
     PatientAppointment: function() {
-        return ['UID', 'FirstName', 'MiddleName', 'LastName', 'PreferredName',
+        return ['UID', 'Title', 'FirstName', 'MiddleName', 'LastName', 'PreferredName',
             'PreviousName', 'Suburb', 'Postcode', 'State', 'CountryOfBirth',
             'DOB', 'Gender', 'Indigenous', 'Address1', 'Address2', 'Email1',
             'Email2', 'PhoneNumber', 'HomePhoneNumber', 'WorkPhoneNumber',

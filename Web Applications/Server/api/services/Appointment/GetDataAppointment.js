@@ -9,7 +9,7 @@ module.exports = {
         return {
             SiteID: data.SiteID,
             RequestDate: data.RequestDate,
-            Status: 'Waiting for approval',
+            Status: 'Received',
             Enable: 'Y'
         };
     },
@@ -208,6 +208,11 @@ module.exports = {
             IsRenewReferral: data.IsRenewReferral,
             PathologyProvider: data.PathologyProvider,
             RadiologyProvider: data.RadiologyProvider,
+            HasConsultant: data.HasConsultant,
+            ConsultantName: data.ConsultantName,
+            ConsultantSite: data.ConsultantSite,
+            ConsultantContactNumber: data.ConsultantContactNumber,
+            ConsultantNote: data.ConsultantNote,
             Enable: 'Y'
         };
     }

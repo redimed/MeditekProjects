@@ -89,11 +89,6 @@ module.exports={
 		action:'logout'
 	},
 
-	'get /api/refreshToken':{
-		controller:'UserAccount/v0_1/AuthController',
-		action:'refreshToken'
-	},
-
 	'get /api/user-account/find-by-phone':{
 		controller:'UserAccount/v0_1/UserAccountController',
     	action:'FindByPhoneNumber'

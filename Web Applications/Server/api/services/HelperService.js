@@ -3,6 +3,7 @@ var crypto = require('crypto'),
 var zlib = require('zlib');
 var fs = require('fs');
 var moment=require("moment");
+var jwt = require('jsonwebtoken');
 /*
 check data request
 input: request from client
@@ -132,15 +133,15 @@ module.exports = {
             android: 'ARD'
         },
         authTokenExpired: {
-            'IOS':30 * 60,
-            'ARD':30 * 60,
+            'IOS':30*60,
+            'ARD':30*60,
             'WEB':10,
         },// second
         authSecretExprired:{
             'IOS':null,
             'ARD':null,
-            'WEB':15*60,
-        },
+            'WEB':2*60*60,
+        },// second
 
         verificationMethod: {
             token: 'TOKEN',

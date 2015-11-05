@@ -1,13 +1,18 @@
 var app = angular.module('app.authentication.appointment.list.modal.controller', []);
-app.controller('showImageController', function($scope, $modalInstance, toastr, LinkUID) {
+app.controller('showImageController', function($scope, $modalInstance, toastr, LinkUID,CommonService) {
     $scope.LinkUID = LinkUID
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
     }
 
-    $scope.Vieww = function(LinkUID) {
-        var newWindow = window.open("");
-        newWindow.document.write("<img class='img-responsive' src='" + LinkUID + "'>");
+   $scope.Vieww = function(LinkUID) {
+        console.log(LinkUID)
+        CommonService.openImageInNewTab(LinkUID)
+        .then(function(data){
+            console.log(data)
+        },function(er){
+            console.log(er);
+        })
     }
 })
 app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstance, getid, AppointmentService, CommonService, $cookies, toastr, PatientService) {
@@ -21,9 +26,15 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         Portfolio.init();
         //ComponentsDropdowns.init(); // init todo page
     });
-    $scope.ViewDoc = function(Url, UID) {
+   $scope.ViewDoc = function(Url, UID) {
         var LinkUID = Url + UID
-        window.open(LinkUID);
+        console.log(UID)
+       CommonService.downloadFile(UID)
+        .then(function(data){
+            console.log(data)
+        },function(er){
+            console.log(er);
+        })
     }
     $scope.modal_close = function() {
         $modalInstance.close();
@@ -213,7 +224,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
     }
     $scope.appointmentload.load();
     $scope.showImage = function(Link, UID) {
-        var LinkUID = Link + UID
+        var LinkUID = UID
         $modal.open({
             templateUrl: 'showImageTemplate',
             controller: 'showImageController',

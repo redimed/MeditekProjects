@@ -110,6 +110,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						//if receive error push error message into array ermsg, 
 						//push error css into array er
 						//and show in template
+						scope.loadingCheck = false;
 						scope.er={};
 						scope.ermsg={};
 						toastr.error("Please input correct information","ERROR");

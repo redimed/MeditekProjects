@@ -338,7 +338,7 @@
                                 <div class="col-md-6">
                                     <div class="checkbox">
                                         <label class="control-label">
-                                            <input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Tendon__/__musde'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Tendon / muscle</label>
+                                            <input type="checkbox" ng-model="appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Tendon/muscle'].Value" ng-true-value="'Y'" ng-false-value="'N'">&nbsp;&nbsp;Tendon / muscle</label>
                                     </div>
                                 </div>
                             </div>
@@ -679,7 +679,7 @@
                                         <div class="col-md-3 col-sm-3 mix Arm Foot Head Body mix_all" style=" display: block; opacity: 1;" ng-repeat="p in appointment.FileUploads" ng-if="p.FileType == 'MedicalImage' ">
                                             <div class="mix-inner">
                                                 <!-- <img class="img-responsive" src="{{Url}}{{p.UID}}" alt="" style="height:200px;"> -->
-                                                <img class="img-responsive" dimage dimage-uid="p.UID" dimage-size="'30'" style="height:200px;">
+                                                <img class="img-responsive" dimage dimage-uid="p.UID" dimage-size="'200'" style="height:200px;">
                                                 <div class="mix-details">
                                                     <h4>Cascusamus et iusto odio</h4>
                                                     <a class="mix-link">
@@ -1090,7 +1090,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"></button>
     </div>
     <div class="modal-body" style="align:center">
-        <img class="img-responsive" src="{{LinkUID}}" alt="">
+        <img class="img-responsive" dimage dimage-uid="LinkUID">
     </div>
     <div class="modal-footer">
         <button class="btn green" ng-click="Vieww(LinkUID)">View Full</button>

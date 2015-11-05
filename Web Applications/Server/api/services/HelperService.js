@@ -3,6 +3,7 @@ var crypto = require('crypto'),
 var zlib = require('zlib');
 var fs = require('fs');
 var moment=require("moment");
+var jwt = require('jsonwebtoken');
 /*
 check data request
 input: request from client
@@ -139,8 +140,8 @@ module.exports = {
         authSecretExprired:{
             'IOS':null,
             'ARD':null,
-            'WEB':15*60,
-        },
+            'WEB':2*60*60,
+        },// second
 
         verificationMethod: {
             token: 'TOKEN',
@@ -434,5 +435,19 @@ module.exports = {
         {
             return false;
         }
+    },
+
+    getSystems:function()
+    {
+        return _.values(this.const.systemType);
+    },
+
+    getMobileSystems:function()
+    {
+        var systems=_.values(this.const.systemType);
+        var website=this.const.systemType.website;
+        return _.filter(systems,function(item){
+            return item!=website;
+        })
     },
 }

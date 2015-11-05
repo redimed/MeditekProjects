@@ -5,6 +5,8 @@ var o=require("../../../services/HelperService");
 module.exports = {
 	Test:function(req,res)
 	{
+		// console.log(req.session.passport.user);
+		// req.session.passport.user.SecretKey='123456';
 		res.ok({status:'success',user:req.user,newtoken:res.get('newtoken')});
 
 	},

@@ -62,8 +62,6 @@ public class RESTClient {
     }
 
     private static class SessionRequestInterceptor implements RequestInterceptor {
-        private static final String TAG = SessionRequestInterceptor.class.getSimpleName();
-
         public void intercept(RequestInterceptor.RequestFacade paramRequestFacade) {
             paramRequestFacade.addHeader("Accept", "application/json");
             paramRequestFacade.addHeader("Content-Type", "application/json");

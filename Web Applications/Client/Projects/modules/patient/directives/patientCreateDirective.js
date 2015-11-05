@@ -104,6 +104,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 							else{
 								toastr.error("Phone Number was used to create patient","ERROR");
 								scope.isBlockStep1 =false;
+								scope.loadingCheck = false;
 							}
 						}
 					}, function(err){

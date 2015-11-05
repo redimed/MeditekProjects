@@ -39,7 +39,7 @@
                                     <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('SubmitDate','ASC')" ng-show="typeSubmitDate == 'ASC'"></i>
                                     <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('SubmitDate','DESC')" ng-show="typeSubmitDate == 'DESC'"></i>
                                 </th>
-                                <th>Status</th>
+                                <th>Referral Tracking</th>
                                 <th>
                                     Appointment Date
                                     <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('AppointmentDate','ASC')" ng-show="typeAppointmentDate == 'ASC'"></i>
@@ -95,11 +95,13 @@
                                     <td>{{((appt.Doctors[0].Title !=null)?appt.Doctors[0].Title:"")+" "+((appt.Doctors[0].FirstName != null)?appt.Doctors[0].FirstName:"") +" "+((appt.Doctors[0].LastName != null)?appt.Doctors[0].LastName:"")}}</td>
                                     <td>{{appt.CreatedDate | date: 'dd/MM/yyyy':'UTC'}}</td>
                                     <td>
-                                        <span ng-if="appt.Status === info.apptStatus[0].value" class="label label-success">Booked</span>
-                                        <span ng-if="appt.Status === info.apptStatus[1].value" class="label label-default">Calling</span>
-                                        <span ng-if="appt.Status === info.apptStatus[2].value" class="label label-warning">Pending</span>
-                                        <span ng-if="appt.Status === info.apptStatus[3].value" class="label label-danger">Cancelled</span>
-                                        <span ng-if="appt.Status === info.apptStatus[4].value" class="label label-primary">Finish</span>
+                                        <span ng-if="appt.Status === info.apptStatus[0].value" ><img src="{{info.apptStatus[0].image}}" ></span>
+                                        <span ng-if="appt.Status === info.apptStatus[1].value" ><img src="{{info.apptStatus[1].image}}" ></span>
+                                        <span ng-if="appt.Status === info.apptStatus[2].value" ><img src="{{info.apptStatus[2].image}}" ></span>
+                                        <span ng-if="appt.Status === info.apptStatus[3].value" ><img src="{{info.apptStatus[3].image}}" ></span>
+                                        <span ng-if="appt.Status === info.apptStatus[4].value" class="label label-danger">Cancelled</span> 
+                                        <span ng-if="appt.Status === info.apptStatus[5].value" ><img src="{{info.apptStatus[5].image}}" ></span>
+                                        <span ng-if="appt.Status === info.apptStatus[6].value" ><img src="{{info.apptStatus[6].image}}" ></span>
                                     </td>
                                     <td>{{appt.FromTime | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td>
                                     <td style="text-align:center">

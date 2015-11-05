@@ -1,6 +1,13 @@
 var app = angular.module('app.authentication.WAAppointment.GP.controller', []);
 
-app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval) {
+app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval, AuthenticationService) {
+    $scope.ListContry = []
+    $scope.loadListContry = function() {
+        AuthenticationService.getListCountry().then(function(response) {
+            $scope.ListContry = response.data
+        })
+    }
+    $scope.loadListContry()
     var ClinicalDetailsTemp = [];
     $scope.requestInfo = {
         RequestDate: null,
@@ -66,19 +73,20 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
         if (countCliniDetail == 0) {
             ClinicalDetailsTemp = []
         }
-        $scope.requestInfo.TelehealthAppointment.ClinicalDetails = ClinicalDetailsTemp
-        $scope.requestInfo.RequestDate = moment().format('YYYY-MM-DD HH:mm:ss Z'),
+        $scope.requestInfo.TelehealthAppointment.ClinicalDetails = ClinicalDetailsTemp;
+        $scope.requestInfo.RequestDate = moment().format('YYYY-MM-DD HH:mm:ss Z');
+        console.log($scope.requestInfo)
         WAAppointmentService.RequestWAApointment($scope.requestInfo).then(function(response) {
-             if (response == 'success') {
-                    swal({
-                        title: "Success",
-                        text: "Send Request Successfully!",
-                        type: "success",
-                        showLoaderOnConfirm: true,
-                    }, function() {
-                        $state.go("authentication.WAAppointment.list");
-                    });
-                };
+            if (response == 'success') {
+                swal({
+                    title: "Success",
+                    text: "Send Request Successfully!",
+                    type: "success",
+                    showLoaderOnConfirm: true,
+                }, function() {
+                    $state.go("authentication.WAAppointment.list");
+                });
+            };
         })
     }
     $scope.Skin_cancer_Others = false;
@@ -157,6 +165,23 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
             }
         }
     }
+    $scope.ChangeCheckSkinCancer = function(type, value) {
+        if (!value) {
+            var key = 'Clinical__Details.Telehealth__WAAppointment.Skin__cancer.' + type;
+            if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails) {
+                $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];
+                if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key]) {
+                    $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key] = {};
+                };
+            };
+            if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].Value) {
+                $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].Value = ''
+            };
+            console.log($scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].Value)
+            $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].Value = ''
+            console.log(key)
+        };
+    }
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
         console.info('onCompleteItem', fileItem, response, status, headers);
         if (response.status == 'success') {
@@ -178,7 +203,13 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
     uploader.onCompleteAll = function() {
         $scope.sendRequestAppointment();
     };
-    console.info('uploader', uploader);
+    $scope.ChangeReferrer = function() {
+        if ($scope.requestInfo.TelehealthAppointment.WAAppointment.IsUsualGP == 'Y') {
+            $scope.requestInfo.TelehealthAppointment.WAAppointment.UsualGPName = null;
+            $scope.requestInfo.TelehealthAppointment.WAAppointment.UsualGPContactNumber = null;
+            $scope.requestInfo.TelehealthAppointment.WAAppointment.UsualGPFaxNumber = null;
+        };
+    }
 
     $scope.Submit = function() {
         $scope.laddaLoadingBar = true;
@@ -193,7 +224,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
             function() {
                 ((uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.sendRequestAppointment());
             });
-        
+
     }
     $scope.ModalBodyPart = function() {
         var modalInstance = $modal.open({

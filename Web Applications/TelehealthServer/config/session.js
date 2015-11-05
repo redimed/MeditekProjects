@@ -33,6 +33,7 @@ module.exports.session = {
 
   // cookie: {
   //   maxAge: 24 * 60 * 60 * 1000
+  //   // maxAge: 10 * 1000
   // },
 
   /***************************************************************************
@@ -54,8 +55,12 @@ module.exports.session = {
 
   host: 'localhost',
   port: 6379,
-  // ttl: <redis session TTL in seconds>,
-  // ttl: 4,
+  // ttl (seconds) : thời hạn (expiration) của 1 session (1 key ) trong redis
+  // nếu khoảng cách thời gian giữa 2 request lớn hơn ttl thì session (key) sẽ được remove khỏi redis
+  //  
+  // ttl:  12*60*60,
+  //disableTTL: nếu disable ttl thì session sẽ sống mãi cho đến khi nó bị remove hoặc redis restart lại
+  //disables setting TTL, keys will stay in redis until evicted by other means (overides ttl)
   disableTTL :true,
   db: 0,
   // pass: <redis auth password>,

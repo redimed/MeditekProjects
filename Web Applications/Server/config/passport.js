@@ -10,45 +10,30 @@ var o = require("../api/services/HelperService");
  */
 passport.serializeUser(function(user, done) {
     console.log(">>>>>>>>>>>>>>>>>>>>>> passport serializeUser");
-    done(null, user.ID);
+    // done(null, user.ID);//set req.session.passport.user=user.ID
+    done(null, user); //set req.session.passport.user=user
 });
 /**
  * Lấy lại thông tin user login cho mỗi request
  * Thông tin user sẽ được lưu tron req.user
  */
-passport.deserializeUser(function(ID, done) {
+// passport.deserializeUser(function(ID, done) {
+passport.deserializeUser(function(sessionUser, done) {
     console.log(">>>>>>>>>>>>>>>>>>>>>> passport deserializeUser");
-    UserAccount.findOne({
-        where: {
-            ID: ID
-        },
-        include: {
-            model: RelUserRole,
-            attributes: ['ID', 'UserAccountId', 'RoleId'],
-            include: {
-                model: Role,
-                attributes: ['ID', 'UID', 'RoleCode', 'RoleName']
-            }
-        }
-    }).then(function(user) {
-
-        var listRoles = [];
-        _.each(user.RelUserRoles, function(item) {
-            listRoles.push(item.Role);
-        });
-        var returnUser = {
-            ID: user.ID,
-            UID: user.UID,
-            UserName: user.UserName,
-            Activated: user.Activated,
-            roles: listRoles
-        };
-
-        done(null, returnUser);
-    }, function(err) {
-        done(err);
-    })
+    //từ sessionUser(req.session.passport.user) ==> tạo ra req.user
+    //do đó về cơ bản sessionUser và req.user là 2 object khác nhau
+    //Tuy nhiên dưới đây đã quy định sessionUser và req.user là cùng 1 object
+    if(o.checkData(sessionUser))
+    {
+        done(null,sessionUser);//set req.user=sessionUser
+    }
+    else
+    {
+        var error=new Error("authentication.deserializeUser.sessionUserNotFound");
+        done(error);
+    }
 });
+
 passport.use(new LocalStrategy({
     usernameField: 'UserName',
     passwordField: 'Password',
@@ -104,34 +89,7 @@ passport.use(new LocalStrategy({
             var err = new Error("User.disabled");
             return done(null, false, err);
         }
-        //Code của Luân
-        /*if (user && user.Activated != 'Y') {
-            // Activation
-            Services.UserActivation.CreateUserActivation({
-                UserUID: user.UID,
-                Type: HelperService.const.systemType.website,
-                ModifiedBy: user.ID
-            }).then(function(result_actv) {
-                SendSMSService.Send({
-                    phone: user.PhoneNumber,
-                    content: 'Your REDiMED account activation code is ' + result_actv.VerificationCode
-                }, function(err) {
-                    if (err) throw err;
-                    var returnUser = {
-                        ID: user.ID,
-                        UID: user.UID,
-                        UserName: user.UserName,
-                        Activated: user.Activated,
-                        roles: listRoles
-                    };
-                    return done(null, returnUser, {
-                        message: 'User Not Activated!'
-                    });
-                })
-            }).catch(function(err) {
-                res.serverError(ErrorWrap(err));
-            });
-        }*/
+        
         //Chuẩn bị thông tin trả về
         var listRoles = [];
         _.each(user.RelUserRoles, function(item) {

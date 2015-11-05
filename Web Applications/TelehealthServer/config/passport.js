@@ -22,13 +22,19 @@ passport.use(new LocalStrategy({
 }, function(req, u, p, done) {
     var deviceId = req.headers.deviceid;
     var deviceType = req.headers.systemtype;
+    var activationInfo = null;
+    if (req.body.activationInfo) activationInfo = req.body.activationInfo;
+    var requestBody = {
+        'UserName': u,
+        'Password': p,
+        'UserUID': !activationInfo ? null : activationInfo.userUID,
+        'DeviceID': !activationInfo ? null : deviceId,
+        'VerificationToken': !activationInfo ? null : activationInfo.verifyCode
+    }
     TelehealthService.MakeRequest({
         path: '/api/login',
         method: 'POST',
-        body: {
-            'UserName': u,
-            'Password': p
-        },
+        body: requestBody,
         headers: {
             'DeviceID': deviceId,
             'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
@@ -45,6 +51,7 @@ passport.use(new LocalStrategy({
             if (teleUser) {
                 user.UserUID = user.UID;
                 user.UID = teleUser.UID;
+                if (activationInfo) user.patientUID = activationInfo.patientUID;
                 data.user = user;
                 return done(null, data, response.getBody().message);
             } else return done(null, false, {

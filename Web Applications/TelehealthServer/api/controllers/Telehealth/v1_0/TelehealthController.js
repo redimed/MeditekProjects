@@ -21,7 +21,8 @@ module.exports = {
         }
         var info = HelperService.toJson(req.body.data);
         var uid = info.uid;
-        var deviceType = req.headers.systemtype;
+        var headers = req.headers;
+        var deviceType = headers.systemtype;
         if (!uid || !deviceType || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
             var err = new Error("Telehealth.GetUserDetails.Error");
             err.pushError("Invalid Params");
@@ -31,20 +32,7 @@ module.exports = {
             if (teleUser) {
                 teleUser.getUserAccount().then(function(user) {
                     if (user) {
-                        TelehealthService.MakeRequest({
-                            path: '/api/patient/get-patient',
-                            method: 'POST',
-                            body: {
-                                data: {
-                                    'UID': user.UID
-                                }
-                            },
-                            headers: {
-                                'Authorization': res.get('newtoken') ? 'Bearer '+res.get('newtoken') : req.headers.authorization,
-                                'DeviceID': req.headers.deviceid,
-                                'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
-                            }
-                        }).then(function(response) {
+                        TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
                             res.json(response.getCode(), response.getBody());
                         }).catch(function(err) {
                             res.json(err.getCode(), err.getBody());
@@ -52,13 +40,13 @@ module.exports = {
                     } else {
                         var err = new Error("Telehealth.GetUserDetails.Error");
                         err.pushError("User Is Not Exist");
-                        res.serverError(ErrorWrap(err));
+                        return res.serverError(ErrorWrap(err));
                     }
                 })
             } else {
                 var err = new Error("Telehealth.GetUserDetails.Error");
                 err.pushError("User Is Not Exist");
-                res.serverError(ErrorWrap(err));
+                return res.serverError(ErrorWrap(err));
             }
         })
     },
@@ -78,7 +66,6 @@ module.exports = {
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
-        if (res.get('newtoken')) headers.authorization = 'Bearer ' + res.get('newtoken');
         TelehealthService.GetAppointmentsByPatient(patientUID, limit, headers).then(function(response) {
             res.json(response.getCode(), response.getBody());
         }).catch(function(err) {
@@ -100,7 +87,6 @@ module.exports = {
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
-        if (res.get('newtoken')) headers.authorization = 'Bearer ' + res.get('newtoken');
         TelehealthService.GetAppointmentDetails(apptUID, headers).then(function(response) {
             res.json(response.getCode(), response.getBody());
         }).catch(function(err) {
@@ -285,31 +271,36 @@ module.exports = {
                                         UID: UUIDService.GenerateUUID()
                                     }
                                 }).spread(function(teleUser, created) {
-                                    TelehealthService.MakeRequest({
-                                        path: '/api/login',
-                                        method: 'POST',
-                                        body: {
-                                            'UserName': 1,
-                                            'Password': 2,
-                                            'UserUID': user.UID,
-                                            'DeviceID': deviceId,
-                                            'VerificationToken': data.VerificationToken
-                                        },
-                                        headers: {
-                                            'DeviceID': req.headers.deviceid,
-                                            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
+                                    var activationInfo = {
+                                        userUID: user.UID,
+                                        verifyCode: data.VerificationToken,
+                                        patientUID: patient.UID
+                                    }
+                                    req.body.activationInfo = activationInfo;
+                                    req.body.username = 1;
+                                    req.body.password = 2;
+                                    passport.authenticate('local', function(err, u, info) {
+                                        if ((err) || (!u)) {
+                                            if (!err) var err = info;
+                                            return res.unauthorize(err);
                                         }
-                                    }).then(function(response) {
-                                        var returnJson = {
-                                            status: 'success',
-                                            message: 'User Activated',
-                                            uid: teleUser.UID,
-                                            userUID: response.getBody().user.UID,
-                                            patientUID: patient.UID,
-                                            token: response.getBody().token
-                                        }
-                                        res.ok(returnJson);
-                                    })
+                                        req.logIn(u, function(err) {
+                                            if (err) res.unauthorize(err);
+                                            else {
+                                                if (!deviceType || !deviceId || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
+                                                    var err = new Error("TelehealthLogin");
+                                                    err.pushError("Invalid Params");
+                                                    return res.serverError(ErrorWrap(err));
+                                                }
+                                                res.ok({
+                                                    status: 'success',
+                                                    message: info.message,
+                                                    user: u.user,
+                                                    token: u.token
+                                                });
+                                            }
+                                        });
+                                    })(req, res);
                                 }).catch(function(err) {
                                     return res.serverError(ErrorWrap(err));
                                 })

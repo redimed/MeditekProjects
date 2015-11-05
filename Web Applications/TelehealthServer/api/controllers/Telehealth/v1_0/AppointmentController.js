@@ -50,7 +50,6 @@ module.exports = {
     ListWA: function(req, res) {
         var appts = [];
         var headers = req.headers;
-        if (res.get('newtoken')) headers.authorization = 'Bearer ' + res.get('newtoken');
         TelehealthService.GetAppointmentListWA(headers).then(function(response) {
             var data = response.getBody();
             if (data.count > 0) {

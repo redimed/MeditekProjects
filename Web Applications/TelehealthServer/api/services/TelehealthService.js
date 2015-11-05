@@ -2,7 +2,6 @@ var requestify = require('requestify');
 var config = sails.config.myconf;
 var jwt = require('jsonwebtoken');
 var $q = require('q');
-
 module.exports = {
     FindByUID: function(uid) {
         return TelehealthUser.find({
@@ -11,7 +10,7 @@ module.exports = {
             }
         });
     },
-    CheckOnlineUser: function(appts){
+    CheckOnlineUser: function(appts) {
         var list = sails.sockets.rooms();
         if (appts.length > 0 && list.length > 0) {
             for (var j = 0; j < appts.length; j++) {
@@ -51,6 +50,19 @@ module.exports = {
             },
             headers: headers
         })
+    },
+    GetPatientDetails: function(patientUID, headers) {
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
+        return TelehealthService.MakeRequest({
+            path: '/api/patient/get-patient',
+            method: 'POST',
+            body: {
+                data: {
+                    'UID': patientUID
+                }
+            },
+            headers: headers
+        });
     },
     GetAppointmentDetails: function(apptUID, headers) {
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];

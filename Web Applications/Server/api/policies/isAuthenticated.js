@@ -41,20 +41,36 @@ module.exports = function(req, res, next) {
 			{
 				var token=authorization.slice('Bearer '.length);
 				//lấy secret key từ db
+				//
 				var userToken={
 					UserUID:req.user.UID,
 					SystemType:req.headers.systemtype,
 					DeviceID:req.headers.deviceid
 				};
+
 				//Lấy thông tin userToken
 				var sessionUser=req.session.passport.user;
-				var ut={
-					SecretKey:sessionUser.SecretKey,
-                    SecretCreatedDate:sessionUser.SecretCreatedDate,
-                    TokenExpired:sessionUser.TokenExpired
+
+				function systemValidation()
+				{
+					if(sessionUser.SystemType==HelperService.const.systemType.website)
+					{
+						return true;
+					}
+					else
+					{
+						return (sessionUser.DeviceID==userToken.DeviceID
+							&& sessionUser.SystemType==userToken.SystemType);
+					}
 				}
 
-				jwt.verify(token, ut.SecretKey, function(err, decoded) {
+				if(!systemValidation())
+				{
+					error.pushError("isAuthenticated.sessionNotFound");
+					return res.unauthor(ErrorWrap(error));
+				}
+				
+				jwt.verify(token, sessionUser.SecretKey, function(err, decoded) {
 					//Nếu verify token có lỗi
 					if(o.checkData(err))
 					{
@@ -63,7 +79,7 @@ module.exports = function(req, res, next) {
 						if(err.name=='TokenExpiredError')
 						{ 
 							//Kiểm tra secret key có quá hạn hay chưa
-							if(!o.isExpired(ut.SecretCreatedDate,ut.TokenExpired))
+							if(!o.isExpired(sessionUser.SecretCreatedDate,sessionUser.TokenExpired))
 							{
 								//Nếu secret key chưa quá hạn
 								//Kiểm tra nếu system là web thì tạo token mới dựa trên secret key
@@ -71,7 +87,7 @@ module.exports = function(req, res, next) {
 								{
 									var newtoken=jwt.sign(
 										{UID:req.user.UID}, 
-										ut.SecretKey, 
+										sessionUser.SecretKey, 
 										{ expiresIn: o.const.authTokenExpired[req.headers.systemtype]}
 									);
 									res.set('newtoken',newtoken);

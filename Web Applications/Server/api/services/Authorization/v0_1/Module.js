@@ -72,7 +72,8 @@ var modules=[
 		order:'3',
 		roles:[
 			'ADMIN',
-			'ASSISTANT'
+			'ASSISTANT',
+			'EXTERTAL_PRACTITIONER'
 		]
 	},
 	{

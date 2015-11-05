@@ -11,7 +11,7 @@
  * For more information on configuring the session, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.session.html
  */
-
+// var MySQLSessionStore = require ("express-mysql-session");
 module.exports.session = {
 
   /***************************************************************************
@@ -66,6 +66,14 @@ module.exports.session = {
   // pass: <redis auth password>,
   prefix: 'sess:',
 
+  //ADAPTER MYSQL
+  // store: new MySQLSessionStore({
+  //   host: 'localhost',
+  //   port: 3306,
+  //   user: 'root',
+  //   password: 'root',
+  //   database: 'referal_1'
+  // })
 
   /***************************************************************************
   *                                                                          *

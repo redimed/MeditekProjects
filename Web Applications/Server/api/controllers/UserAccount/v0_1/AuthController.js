@@ -48,6 +48,8 @@ module.exports = {
                     UID:user.UID,
                     Activated:user.Activated,
                     roles:user.roles,
+                    SystemType:req.headers.systemtype,
+                    DeviceID:req.headers.deviceid,
                     SecretKey:ut.SecretKey,
                     SecretCreatedDate:ut.SecretCreatedDate,
                     TokenExpired:ut.TokenExpired

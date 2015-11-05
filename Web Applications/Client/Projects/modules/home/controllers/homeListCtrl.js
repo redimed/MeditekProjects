@@ -1,71 +1,44 @@
 var app = angular.module('app.authentication.home.list.controller',[
-	'app.authentication.home.list.detail.controller'
+	'app.authentication.home.list.detail.controller',
 ]);
 
-app.controller('homeListCtrl', function($scope){
-	console.log('homeListCtrl');
+app.controller('homeListCtrl', function($scope, MovieRetriever){
+	$scope.movies = MovieRetriever.getmovies("...");
+	$scope.movies.then(function(data){
+		$scope.movies = data;
+	});
 
+	$scope.getmovies = function(){
+		return $scope.movies;
+	}
 
-        var data = [
-	        "Albania",
-	        "Andorra",
-	        "Armenia",
-	        "Austria",
-	        "Azerbaijan",
-	        "Belarus",
-	        "Belgium",
-	        "Bosnia & Herzegovina",
-	        "Bulgaria",
-	        "Croatia",
-	        "Cyprus",
-	        "Czech Republic",
-	        "Denmark",
-	        "Estonia",
-	        "Finland",
-	        "France",
-	        "Georgia",
-	        "Germany",
-	        "Greece",
-	        "Hungary",
-	        "Iceland",
-	        "Ireland",
-	        "Italy",
-	        "Kosovo",
-	        "Latvia",
-	        "Liechtenstein",
-	        "Lithuania",
-	        "Luxembourg",
-	        "Macedonia",
-	        "Malta",
-	        "Moldova",
-	        "Monaco",
-	        "Montenegro",
-	        "Netherlands",
-	        "Norway",
-	        "Poland",
-	        "Portugal",
-	        "Romania",
-	        "Russia",
-	        "San Marino",
-	        "Serbia",
-	        "Slovakia",
-	        "Slovenia",
-	        "Spain",
-	        "Sweden",
-	        "Switzerland",
-	        "Turkey",
-	        "Ukraine",
-	        "United Kingdom",
-	        "Vatican City"
-    ];
+	$scope.doSomething = function(typedthings){
+		console.log("Do something like reload data with this: " + typedthings );
+		$scope.newmovies = MovieRetriever.getmovies(typedthings);
+		$scope.newmovies.then(function(data){
+			$scope.movies = data;
+		});
+	}
 
-    // create AutoComplete UI component
-    angular.element("#countries").kendoAutoComplete({
-	    dataSource: data,
-	    filter: "startswith",
-	    placeholder: "Select country...",
-	    separator: ", "
-    });
+	$scope.doSomethingElse = function(suggestion){
+		console.log("Suggestion selected: " + suggestion );
+	}
 
+	$scope.movies=[];
+
+    // gives another movie array on change
+    // $scope.updateMovies = function(typed){
+    //     // MovieRetriever could be some service returning a promise
+    //     $scope.newmovies = MovieRetriever.getmovies(typed);
+    //     $scope.newmovies.then(function(data){
+    //       $scope.movies = data;
+    //     });
+    // };
 
 });
+
+
+
+
+
+

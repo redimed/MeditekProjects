@@ -69,7 +69,9 @@
         <hr>
         <div class="form-actions">
             <a href="" id="register-back-btn" class="btn btn-default pull" ng-click="stepback_one()"><i class="m-icon-swapleft"></i> Cancel </a>
-            <button type="submit" id="register-submit-btn" class="btn blue pull-right" ng-click="checkUser(data)">Continue <i class="m-icon-swapright m-icon-white"></i></button>
+            <button ng-click="checkUser(data)" ladda-button="loadingpage" data-style="expand-right" class="btn blue pull-right button-submit ladda-button">
+                <span class="ladda-label"> Continue <i class="m-icon-swapright m-icon-white"></i></span>
+            </button>
         </div>
     </div>
     <div ng-show="step==2">
@@ -196,13 +198,16 @@
             </div>
             <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input ">
-                    <select ng-model="data.CountryID" ng-options="c.ID as c.ShortName for c in country" id="Country" class="form-control edited" disabled>
+                    <select ng-model="data.CountryID" ng-options="c.ID as c.ShortName for c in country" id="Country" class="form-control edited" >
                         <option value=""></option>
                     </select>
                     <label for="Country">Country</label>
                     <!-- <span class="help-block">Error Country</span> -->
                 </div>
             </div>
+        </div>
+         <div class="row">
+            <div vc-recaptcha theme="light" key="'6LciQxATAAAAAFj1cOZcXL_7Lr5Q2yED7hAFoE_M'" ng-model="data.captcha"></div>
         </div>
         <hr>
         <div class="form-actions">

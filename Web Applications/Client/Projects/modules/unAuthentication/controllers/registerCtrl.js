@@ -19,7 +19,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 
 	// Check MobilePhone
 	$scope.checkUser = function(data) {
-
+		$scope.loadingpage = true;
 		$scope.validateCheck(data)
 		.then(function(success) {
 
@@ -45,20 +45,27 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 								} else {
 
 									$scope.step++;
+									$scope.loadingpage = false;
 									
 								} // end else
 							
-							}, function(err) {}) // end check email
+							}, function(err) {
+								$scope.loadingpage = false;
+							}) // end check email
 							
 						} // end else
 
-					}, function(err) {}) // end check Mobile
+					}, function(err) {
+						$scope.loadingpage = false;
+					}) // end check Mobile
 
 				} // end else
 
 			}) // end check Username
 		
-		}, function(err) {});
+		}, function(err) {
+			$scope.loadingpage = false;
+		});
 			
 	}
 
@@ -78,7 +85,6 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
                     // PhoneNumber: '+840936767117',
                     content: CommonService.contentVerify+ ' ' +result.data.VerificationCode
                 };
-
                 UnauthenticatedService.sendSms(info)
                 .then(function(success) {
                     toastr.success('Register Successfull');

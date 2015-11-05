@@ -14,7 +14,7 @@ app.controller('loginCtrl', function($scope, $state, $cookies, UnauthenticatedSe
                     $cookies.put("token", data.token);
                     $state.go("authentication.home.list")
                 } else {
-                    $cookies.putObject("userInfo", {UID: data.user.UID});
+                    $cookies.putObject("userInfo", {UID: data.user.UID,token:data.token});
                     $state.go('unAuthentication.activation',null,{reload:true});
                 }
                

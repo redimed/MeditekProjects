@@ -10,18 +10,15 @@ app.controller('activationCtrl', function($scope, $state, toastr, $cookies, Unau
 			reload: true
 		});
 	};
-
+	$cookies.put("token", $cookies.getObject('userInfo').token);
 	$scope.check = function(data) {
-
 		$scope.checkCode(data)
 		.then(function(success) {
-
 			var info = {
 				UserUID: $cookies.getObject('userInfo').UID,
 				VerificationCode: data.verifyCode
 			};
-
-			UnauthenticatedService.confirmActivate(info)
+			UnauthenticatedService.ConfirmActivated(info)
 			.then(function(success) {
 				toastr.success('Activated Successfully');
 				$state.go('authentication.home.list', null, {

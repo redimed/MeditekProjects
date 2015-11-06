@@ -12,6 +12,7 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
     });
     $scope.wainformation = data;
     $scope.Temp = angular.copy(data)
+     var ClinicalDetailsTemp = [];
     $scope.loadFuntion = function(){
          $scope.wainformation.TelehealthAppointment.ClinicalDetails = {}
             $scope.Temp.TelehealthAppointment.ClinicalDetails.forEach(function(valueRes, indexRes) {
@@ -26,8 +27,6 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
             })
     }
     $scope.loadFuntion()
-    console.log( $scope.wainformation.TelehealthAppointment.ClinicalDetails )
-    console.log('$scope.wainformation',$scope.wainformation);
     $scope.info = {
         apptStatus: WAConstant.apptStatus,
         listDoctorTreatingPractitioner: null,
@@ -62,9 +61,46 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
         } else {
             $scope.wainformation.FromTime = null
         };
+        for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
+            var newkey = key.split("__").join(" ")
+            var res = newkey.split(".");
+            var object = {
+                Section: res[0],
+                Category: res[1],
+                Type: res[2],
+                Name: res[3],
+                Value: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].Value,
+                FileUploads: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads
+            }
+            var isExist = false
+
+            ClinicalDetailsTemp.forEach(function(valueTemp, keyTemp) {
+                if (valueTemp.Section == object.Section &&
+                    valueTemp.Category == object.Category &&
+                    valueTemp.Type == object.Type &&
+                    valueTemp.Name == object.Name) {
+                    isExist = true
+                }
+            })
+            if (!isExist) {
+                ClinicalDetailsTemp.push(object)
+            };
+        };
+        var countCliniDetail = 0
+        ClinicalDetailsTemp.forEach(function(value, key) {
+            if (value.Value != 'N' && value.Value != null) {
+                countCliniDetail++
+            };
+        })
+        if (countCliniDetail == 0) {
+            ClinicalDetailsTemp = []
+        }
+        $scope.wainformation.TelehealthAppointment.ClinicalDetails = ClinicalDetailsTemp;
         console.log('nênnenenenenenene',$scope.wainformation);
         WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
             console.log('saveWaAppointment', data);
+            $modalInstance.close('success');
+            swal("Success.");
         })
     }
 
@@ -84,7 +120,7 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
                             data: data
                         });
                     },
-                    runIfClose: function(){
+                    runIfClose: function() {
                         $modalInstance.close();
                     }
                 };
@@ -92,7 +128,7 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
             windowClass: 'app-modal-window',
             resolve: {
                 patientInfo: function() {
-                    PatientService.postDatatoDirective($scope.info.patientInfomation);
+                    PatientService.postDatatoDirective($scope.wainformation.TelehealthAppointment.PatientAppointment);
                 }
             }
 
@@ -105,7 +141,7 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
                     UID: patientUid
                 }).then(function(data) {
                     if (data.message == 'success') {
-                        console.log('patientInfomation',data.data[0]);
+                        console.log('patientInfomation', data.data[0]);
                         $scope.wainformation.Patients.push({
                             UID: patientUid
                         });
@@ -114,5 +150,19 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
                 })
             };
         });
+    };
+
+    $scope.submitUpdate = function() {
+        swal({
+                title: "Are you sure ?",
+                text: "Update Appointment",
+                type: "info",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            },
+            function() {
+                $scope.saveWaAppointment();
+            });
     };
 });

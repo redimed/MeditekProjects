@@ -91,7 +91,7 @@
                                                 <div class="col-md-6 col-sm-6">
                                                     <div class="form-group form-md-line-input">
                                                         <div class="input-icon">
-                                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.requestDate">
+                                                            <div type="text" class="form-control">{{wainformation.CreatedDate | date:'dd/MM/yyyy'}}</div>
                                                             <label class="control-label">Request Date</label>
                                                             <div class="form-control-focus"> </div>
                                                             <i class="glyphicon glyphicon-calendar"></i>
@@ -243,7 +243,7 @@
                     <div class="col-md-12">
                         <button class="btn default" ng-click="close()">
                             <i class="icon-action-undo"></i> Close</button>
-                        <button class="btn green">
+                        <button class="btn green" ng-click="saveWaAppointment()">
                             <i class="glyphicon glyphicon-save"></i> Save change
                         </button>
                     </div>

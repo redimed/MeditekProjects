@@ -187,43 +187,53 @@ module.exports={
 		.then(function(data){
 			return Services.UserAccount.GetUserAccountDetails({UID:userAccess.UserUID},null,transaction)
 			.then(function(user){
-				function CheckExist()
+
+				if(o.checkData(user))
 				{
-					if(userAccess.SystemType==HelperService.const.systemType.website)
+					function CheckExist()
 					{
-						return UserToken.findOne({
-							where:{
-								UserAccountID:user.ID,
-								SystemType:HelperService.const.systemType.website
-							}
-						},{transaction:transaction});
+						if(userAccess.SystemType==HelperService.const.systemType.website)
+						{
+							return UserToken.findOne({
+								where:{
+									UserAccountID:user.ID,
+									SystemType:HelperService.const.systemType.website
+								}
+							},{transaction:transaction});
+						}
+						else
+						{
+							return UserToken.findOne({
+								where:{
+									UserAccountID:user.ID,
+									DeviceID:userAccess.DeviceID
+								}
+							},{transaction:transaction})
+						}
 					}
-					else
-					{
-						return UserToken.findOne({
-							where:{
-								UserAccountID:user.ID,
-								DeviceID:userAccess.DeviceID
-							}
-						},{transaction:transaction})
-					}
-				}
-				return CheckExist()
-				.then(function(ut){
-					if(o.checkData(ut))
-					{
-						return ut;
-					}
-					else
-					{
-						error.pushError("userToken.notFound");
+					return CheckExist()
+					.then(function(ut){
+						if(o.checkData(ut))
+						{
+							return ut;
+						}
+						else
+						{
+							error.pushError("userToken.notFound");
+							throw error;
+						}
+					},function(err){
+						o.exlog(err);
+						error.pushError("userToken.queryError");
 						throw error;
-					}
-				},function(err){
-					o.exlog(err);
-					error.pushError("userToken.queryError");
+					})
+				}
+				else
+				{
+					error.pushError("userAccount.notFound");
 					throw error;
-				})
+				}
+				
 			},function(err){
 				o.exlog(err);
 				error.pushError("userAccount.queryError");

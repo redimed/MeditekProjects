@@ -11,6 +11,22 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
         //ComponentsDropdowns.init(); // init todo page
     });
     $scope.wainformation = data;
+    $scope.Temp = angular.copy(data)
+    $scope.loadFuntion = function(){
+         $scope.wainformation.TelehealthAppointment.ClinicalDetails = {}
+            $scope.Temp.TelehealthAppointment.ClinicalDetails.forEach(function(valueRes, indexRes) {
+                if (valueRes != null && valueRes != undefined) {
+                    var keyClinicalDetail = valueRes.Section + '.' + valueRes.Category + '.' + valueRes.Type + '.' + valueRes.Name
+                    keyClinicalDetail = keyClinicalDetail.split(" ").join("__")
+                    $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail] = {}
+                    $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].Value = valueRes.Value
+                    $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].FileUploads = valueRes.FileUploads
+                    $scope[valueRes.Name] = 'Yes'
+                }
+            })
+    }
+    $scope.loadFuntion()
+    console.log( $scope.wainformation.TelehealthAppointment.ClinicalDetails )
     console.log('$scope.wainformation',$scope.wainformation);
     $scope.info = {
         apptStatus: WAConstant.apptStatus,

@@ -98,7 +98,7 @@
                                     <td>{{((appt.Doctors[0].Title !=null)?appt.Doctors[0].Title:"")+" "+((appt.Doctors[0].FirstName != null)?appt.Doctors[0].FirstName:"") +" "+((appt.Doctors[0].LastName != null)?appt.Doctors[0].LastName:"")}}</td>
                                     <td>{{appt.CreatedDate | date: 'dd/MM/yyyy':'UTC'}}</td>
                                     <td>
-                                        <span ng-if="appt.Status === info.apptStatus[0].value" ><img src="./theme/assets/layouts/layout/imgStatus/attended.png" ></span>
+                                        <span ng-if="appt.Status === info.apptStatus[0].value" ><img src="" ></span>
                                         <span ng-if="appt.Status === info.apptStatus[1].value" ><img src="./theme/assets/layouts/layout/imgStatus/waitlist.png" ></span>
                                         <span ng-if="appt.Status === info.apptStatus[2].value" ><img src="./theme/assets/layouts/layout/imgStatus/pending.png" ></span>
                                         <span ng-if="appt.Status === info.apptStatus[3].value" ><img src="./theme/assets/layouts/layout/imgStatus/received.png" ></span>

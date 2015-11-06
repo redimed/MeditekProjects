@@ -37,7 +37,6 @@ module.exports = {
                     }],
                     Filter: [{
                         Appointment: {
-                            Status: "Approved",
                             Enable: "Y"
                         }
                     }, {
@@ -87,7 +86,6 @@ module.exports = {
                     Filter: [{
                         Appointment: {
                             FromTime: sails.moment().format('YYYY-MM-DD ZZ'),
-                            Status: "Approved",
                             Enable: "Y"
                         }
                     }]
@@ -111,7 +109,6 @@ module.exports = {
                     Filter: [{
                         Appointment: {
                             FromTime: sails.moment().format('YYYY-MM-DD ZZ'),
-                            Status: "Approved",
                             Enable: "Y"
                         }
                     }]

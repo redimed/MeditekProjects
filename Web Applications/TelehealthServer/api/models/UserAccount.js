@@ -2,93 +2,201 @@ module.exports = {
     attributes: {
         ID: {
             type: Sequelize.BIGINT(20),
-            field: 'ID',
-            primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
+            allowNull: false,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            },
+            primaryKey: true
         },
         UID: {
-            type: Sequelize.STRING,
-            field: 'UID'
+            type: Sequelize.STRING(255),
+            allowNull: false,
+            validate: {
+                isUUID: {
+                    args: 4,
+                    msg: 'Must be an UUID V4!'
+                }
+            }
         },
-        userName: {
-            type: Sequelize.STRING,
-            field: 'UserName'
+        UserName: {
+            type: Sequelize.STRING(50),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 50],
+                    msg: 'Too long!'
+                }
+            }
         },
-        email: {
-            type: Sequelize.STRING,
-            field: 'Email'
+        Email: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                isEmail: {
+                    msg: 'Invalid!'
+                },
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
-        phoneNumber: {
-            type: Sequelize.STRING,
-            field: 'PhoneNumber'
+        PhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
         },
-        password: {
-            type: Sequelize.STRING,
-            field: 'Password'
+        Password: {
+            type: Sequelize.STRING(255),
+            allowNull: false,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
-        passwordSalt: {
-            type: Sequelize.STRING,
-            field: 'PasswordSalt'
+        PasswordSalt: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
-        passwordHashAlgorithm: {
-            type: Sequelize.STRING,
-            field: 'PasswordHashAlgorithm'
+        PasswordHashAlgorithm: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
-        activated: {
-            type: Sequelize.STRING,
-            field: 'Activated'
+        Activated: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
         },
-        enable: {
-            type: Sequelize.STRING,
-            field: 'Enable'
+        Enable: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            defaultValue: 'Y',
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
         },
-        userType: {
-            type: Sequelize.STRING,
-            field: 'UserType'
+        UserType: {
+            type: Sequelize.STRING(3),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 3],
+                    msg: 'Too long!'
+                }
+            }
         },
-        token: {
-            type: Sequelize.STRING,
-            field: 'Token'
+        Token: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
-        tokenExpired: {
-            type: Sequelize.STRING,
-            field: 'TokenExpired'
-        },
-        createdDate: {
+        TokenExpired: {
             type: Sequelize.DATE,
-            field: 'CreatedDate'
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
         },
-        createdBy: {
-            type: Sequelize.BIGINT(20),
-            field: 'CreatedBy'
-        },
-        modifiedDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
-            field: 'ModifiedDate'
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
         },
-        modifiedBy: {
+        CreatedBy: {
             type: Sequelize.BIGINT(20),
-            field: 'ModifiedBy'
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
+        },
+        ModifiedDate: {
+            type: Sequelize.DATE,
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
+        },
+        ModifiedBy: {
+            type: Sequelize.BIGINT(20),
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
         }
     },
     associations: function() {
         UserAccount.hasOne(TelehealthUser, {
-            foreignKey: 'userAccountID'
-        });
-        UserAccount.hasOne(Doctor, {
-            foreignKey: 'userAccountID'
-        });
-        UserAccount.hasOne(Patient, {
             foreignKey: 'UserAccountID'
         });
+        UserAccount.hasOne(Patient,{
+            foreignKey: 'UserAccountID'
+        })
     },
     options: {
         tableName: 'UserAccount',
-        timestamps: true,
-        createdAt: 'createdDate',
-        updatedAt: 'modifiedDate',
-        classMethods: {},
-        instanceMethods: {},
-        hooks: {}
-    },
+        timestamps: false,
+        hooks: {
+            beforeCreate: function(useraccount, options, callback) {
+                useraccount.CreatedDate = new Date();
+                callback();
+            },
+            beforeBulkCreate: function(useraccounts, options, callback) {
+                useraccounts.forEach(function(useraccount, index) {
+                    useraccounts[index].CreatedDate = new Date();
+                });
+                callback();
+            },
+            beforeUpdate: function(useraccount, options, callback) {
+                useraccount.ModifiedDate = new Date();
+                callback();
+            }
+        }
+    }
 };

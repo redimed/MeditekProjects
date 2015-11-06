@@ -141,17 +141,17 @@ module.exports = {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 TelehealthDevice.findOrCreate({
                     where: {
-                        telehealthUserID: teleUser.ID,
-                        deviceId: deviceId,
-                        type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS'
+                        TelehealthUserID: teleUser.ID,
+                        DeviceID: deviceId,
+                        Type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS'
                     },
                     defaults: {
                         UID: UUIDService.GenerateUUID(),
-                        deviceToken: deviceToken
+                        DeviceToken: deviceToken
                     }
                 }).spread(function(device, created) {
                     device.update({
-                        deviceToken: !created ? deviceToken : device.deviceToken
+                        DeviceToken: !created ? deviceToken : device.DeviceToken
                     }).then(function() {
                         res.ok({
                             status: 'success',
@@ -183,7 +183,7 @@ module.exports = {
         if (phoneNumber && phoneNumber.match(phoneRegex) && deviceId && deviceType && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
             UserAccount.find({
                 where: {
-                    phoneNumber: phoneNumber
+                    PhoneNumber: phoneNumber
                 }
             }).then(function(user) {
                 if (user) {
@@ -242,7 +242,7 @@ module.exports = {
         if (phoneNumber && phoneNumber.match(phoneRegex) && verifyCode && deviceId && deviceType && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
             UserAccount.find({
                 where: {
-                    phoneNumber: phoneNumber
+                    PhoneNumber: phoneNumber
                 }
             }).then(function(user) {
                 if (user) {
@@ -265,7 +265,7 @@ module.exports = {
                                 var data = response.getBody();
                                 TelehealthUser.findOrCreate({
                                     where: {
-                                        userAccountID: user.ID
+                                        UserAccountID: user.ID
                                     },
                                     defaults: {
                                         UID: UUIDService.GenerateUUID()

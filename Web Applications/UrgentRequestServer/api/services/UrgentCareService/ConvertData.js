@@ -13,6 +13,9 @@ module.exports = {
         if (data.GP === 'Y') {
             serviceType += 'GP, ';
         }
+        if (data.rehab === 'Y') {
+            serviceType += 'Rehabitation, ';
+        }
         serviceType = serviceType.substring(0, serviceType.length - 2);
         return serviceType;
     },

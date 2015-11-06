@@ -1,8 +1,8 @@
 <form role="form">
-	<div class="form-body">
-		<div class="row">
-			<div class="col-md-3 col-sm-3">
-				<div class="form-group form-md-line-input ">
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                <div class="form-group form-md-line-input ">
                     <select size="1" class="form-control" ng-model="doctorType">
                         <option value="">All</option>
                         <option value="PlasticSurgeon">Plastic Surgeon</option>
@@ -12,55 +12,43 @@
                 </div>
                 <div class="form-group form-md-line-input ">
                     <select size="5" class="form-control">
-                        <option ng-repeat="item in listDoctorTreatingPractitioner | filter:doctorType" ng-click="selectTreatingPractitioner(item.UID)">{{((item.Title !=null)?item.Title:"")+" "+((item.FirstName != null)?item.FirstName:"") +" "+((item.LastName != null)?item.LastName:"")}}</option>
+                        <option ng-repeat="item in info.listDoctorTreatingPractitioner | filter:doctorType" ng-click="selectTreatingPractitioner(item.UID)">{{((item.Title !=null)?item.Title:"")+" "+((item.FirstName != null)?item.FirstName:"") +" "+((item.LastName != null)?item.LastName:"")}}</option>
                     </select>
                     <label class="control-label">Doctor List</label>
                 </div>
-			</div>
-			<div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
+            </div>
+            <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
                 <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <div class="form-control"></div>
-                        <label class="control-label">First name</label>
-                        <div class="form-control-focus"> </div>
-                        <i class="glyphicon glyphicon-pencil"></i>
-                    </div>
+                    <div class="form-control">{{wainformation.Doctors[0].FirstName}}</div>
+                    <label class="control-label">First name</label>
+                    <div class="form-control-focus"> </div>
                 </div>
                 <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <div class="form-control"></div>
-                        <label class="control-label">Middle name</label>
-                        <div class="form-control-focus"> </div>
-                        <i class="glyphicon glyphicon-pencil"></i>
-                    </div>
+                    <div class="form-control">{{wainformation.Doctors[0].MiddleName}}</div>
+                    <label class="control-label">Middle name</label>
+                    <div class="form-control-focus"> </div>
                 </div>
                 <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <div class="form-control"></div>
-                        <label class="control-label">Last name</label>
-                        <div class="form-control-focus"> </div>
-                        <i class="glyphicon glyphicon-pencil"></i>
-                    </div>
+                    <div class="form-control">{{wainformation.Doctors[0].LastName}}</div>
+                    <label class="control-label">Last name</label>
+                    <div class="form-control-focus"> </div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
                 <div class="form-group form-md-line-input">
                     <div class="input-icon">
-                        <div class="form-control"></div>
+                        <div class="form-control">{{wainformation.Doctors[0].LastName}}</div>
                         <label class="control-label">Contact number</label>
                         <div class="form-control-focus"> </div>
                         <i class="glyphicon glyphicon-phone"></i>
                     </div>
                 </div>
                 <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <div class="form-control"></div>
-                        <label class="control-label">Department</label>
-                        <div class="form-control-focus"> </div>
-                        <i class="glyphicon glyphicon-pencil"></i>
-                    </div>
+                    <div class="form-control">{{WorkPhoneNumber}}</div>
+                    <label class="control-label">Department</label>
+                    <div class="form-control-focus"> </div>
                 </div>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
 </form>

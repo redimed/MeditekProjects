@@ -120,13 +120,13 @@
                                     {{info.patientInfomation.Gender}}
                                     <div class="radio-list">
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioTest" ng-value="Male" ng-model="info.patientInfomation.Gender"> Male
+                                            <input type="radio" name="radioTest12" value="Male" ng-model="info.patientInfomation.Gender"> Male
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioTest" ng-value="Female" ng-model="info.patientInfomation.Gender"> Female
+                                            <input type="radio" name="radioTest12" value="Female" ng-model="info.patientInfomation.Gender"> Female
                                         </label>
                                          <label class="radio-inline">
-                                            <input type="radio" name="radioTest" size="15"> Other &nbsp;
+                                            <input type="radio" size="15" name="radioTest12" ng-checked="(info.patientInfomation.Gender != 'Male' && info.patientInfomation.Gender != 'Female' && info.patientInfomation.Gender != null)?true:false"> Other &nbsp;
                                             <input type="text" size="10" ng-model="info.patientInfomation.Gender">
                                         </label>
                                     </div>

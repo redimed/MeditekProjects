@@ -90,7 +90,8 @@ module.exports = function(data, userInfo) {
                     })
                     .then(function(relPatientAppointmentUpdated) {
                         if (HelperService.CheckExistData(data.TelehealthAppointment.PatientAppointment) &&
-                            !_.isEmpty(data.TelehealthAppointment.PatientAppointment)) {
+                            !_.isEmpty(data.TelehealthAppointment.PatientAppointment) &&
+                            HelperService.CheckExistData(preferringPractitionerObject)) {
                             var dataPatientAppointment =
                                 Services.GetDataAppointment.PatientAppointmentUpdate(data.TelehealthAppointment.PatientAppointment);
                             dataPatientAppointment.ModifiedBy = preferringPractitionerObject.ID;

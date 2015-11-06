@@ -58,7 +58,7 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
                         let  ToTime = data["ToTime"].string ?? ""
                         let Status = data["Status"].string ?? ""
                         let NameDoctor = data["Doctors"][0]["FirstName"].string ?? ""
-                       
+                        
                         self.dateLabel.text = FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDate)
                         //Check To time
                         if ToTime == ""{
@@ -155,8 +155,8 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         performSegueWithIdentifier("ImageDetailSegue", sender: indexPath)
-//        var cell = collectionView.cellForItemAtIndexPath(indexPath)
- 
+        //        var cell = collectionView.cellForItemAtIndexPath(indexPath)
+        
         
         
     }
@@ -277,9 +277,14 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     }
     
     func reloadCollectionView(controller: BodyUploadViewController, sender: UIImage) {
-       ArrayImageUID.append(sender)
-       savedImageAlert("Upload", message: "Upload Success")
-       self.collectionView.reloadData()
+        
+        ArrayImageUID.append(sender)
+        let newRowIndex = ArrayImageUID.count
+        let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
+        let indexPaths = [indexPath]
+        collectionView.insertItemsAtIndexPaths(indexPaths)
+        savedImageAlert("Upload", message: "Upload Success")
+        
     }
     
     

@@ -16,7 +16,7 @@ class FAQsViewController: UIViewController {
         let localfilePath = NSBundle.mainBundle().URLForResource("FAQs", withExtension: "html");
         let myRequest = NSURLRequest(URL: localfilePath!);
         webView.loadRequest(myRequest);
-        
+         
     }
     
  
@@ -26,6 +26,5 @@ class FAQsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
 
 }

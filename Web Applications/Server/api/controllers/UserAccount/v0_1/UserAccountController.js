@@ -370,6 +370,7 @@ module.exports = {
 		Services.UserAccount.getDetailUser(data)
 		.then(function(user){
 			if(o.checkData(user)){
+				console.log("==========================qweqweqwewqewqeqweeqe");
 				res.ok({
 					data:{
 						patient:user.Patient,
@@ -379,6 +380,7 @@ module.exports = {
 				});
 			}
 		},function(err){
+			console.log("==========================123123");
 			res.serverError(ErrorWrap(err));
 		});
 	}

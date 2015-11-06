@@ -29,9 +29,6 @@ app.controller('authenticationCtrl', function($rootScope,$scope,$state,$cookies,
 	AuthenticationService.getDetailUser(data).then(function(response){
 		$scope.info = response.data;
 		console.log($scope.info);
-		// var UID = $scope.info.fileupload.UID?$scope.info.fileupload.UID:null;
-		$scope.info.src = CommonService.getFileURL($scope.info.fileupload[0].UID,'300');
-		console.log($scope.info.src);
 		
 	},function(err){
 		console.log(err);

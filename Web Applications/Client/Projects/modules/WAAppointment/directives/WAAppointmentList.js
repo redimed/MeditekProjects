@@ -61,6 +61,11 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                             }
                         }
                     })
+                    .result.then(function(responseData) {
+                        if (responseData == 'success') {
+                            scope.LoadData();
+                        };
+                    }, function(data) {})
                 },function (error) {
                     o.loadingPage(false);
                     toastr.error("Select error!", "error");

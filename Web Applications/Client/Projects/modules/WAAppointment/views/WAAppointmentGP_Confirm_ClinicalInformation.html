@@ -18,18 +18,22 @@
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label">Attach Filename</label>
-                                <div class="col-md-7 col-sm-7">
+                                <label class="control-label">Attach Filename</label>
+                                <div class="row">
                                     <p class="form-control-static" data-display="">
                                         <table class="table table-hover table-light">
                                             <thead>
                                                 <tr class="uppercase">
                                                     <th width="30%">Name</th>
+                                                    <th ng-show="uploader.isHTML5">Size</th>
+                                                    <th>Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'MedicalHistory'">
                                                     <td><strong>{{ item.file.name }}</strong></td>
+                                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -50,18 +54,22 @@
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label">Attach Filename</label>
-                                <div class="col-md-7 col-sm-7">
+                                <label class="control-label">Attach Filename</label>
+                                <div class="row">
                                     <p class="form-control-static" data-display="">
                                         <table class="table table-hover table-light">
                                             <thead>
                                                 <tr class="uppercase">
                                                     <th width="30%">Name</th>
+                                                    <th ng-show="uploader.isHTML5">Size</th>
+                                                    <th>Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'SocialFactors'">
                                                     <td><strong>{{ item.file.name }}</strong></td>
+                                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -82,18 +90,22 @@
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label">Attach Filename</label>
-                                <div class="col-md-7 col-sm-7">
+                                <label class="control-label">Attach Filename</label>
+                                <div class="row">
                                     <p class="form-control-static" data-display="">
                                         <table class="table table-hover table-light">
                                             <thead>
                                                 <tr class="uppercase">
-                                                    <th>Name</th>
+                                                    <th width="30%">Name</th>
+                                                    <th ng-show="uploader.isHTML5">Size</th>
+                                                    <th>Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'Allergies'">
                                                     <td><strong>{{ item.file.name }}</strong></td>
+                                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -114,18 +126,22 @@
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label">Attach Filename</label>
-                                <div class="col-md-7 col-sm-7">
+                                <label class="control-label">Attach Filename</label>
+                                <div class="row">
                                     <p class="form-control-static" data-display="">
                                         <table class="table table-hover table-light">
                                             <thead>
                                                 <tr class="uppercase">
                                                     <th width="30%">Name</th>
+                                                    <th ng-show="uploader.isHTML5">Size</th>
+                                                    <th>Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'Medication'">
                                                     <td><strong>{{ item.file.name }}</strong></td>
+                                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -146,18 +162,22 @@
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label">Attach Filename</label>
-                                <div class="col-md-7 col-sm-7">
+                                <label class="control-label">Attach Filename</label>
+                                <div class="row">
                                     <p class="form-control-static" data-display="">
                                         <table class="table table-hover table-light">
                                             <thead>
-                                                <tr class="uppercase">
+                                               <tr class="uppercase">
                                                     <th width="30%">Name</th>
+                                                    <th ng-show="uploader.isHTML5">Size</th>
+                                                    <th>Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="item in uploader.queue" ng-if="item.formData[0].fileTypeClinical == 'InvestigationTests'">
                                                     <td><strong>{{ item.file.name }}</strong></td>
+                                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                                    <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -197,7 +217,6 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
                     <!-- <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">

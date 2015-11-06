@@ -78,17 +78,31 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="row">
                             <div class="col-md-12">
+                                {{info.radioTest}}
                                 <div class="form-inline">
                                     <div class="form-group form-md-line-input">
+                                        <div class="radio-list">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="referrer_radio1" value="Y" ng-model="info.radioTest"> Yes
+                                            </label>
+                                            <label class="radio-inline">
+                                               <input type="radio" name="referrer_radio1" value="N" ng-model="info.radioTest"> No
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-inline">
+                                    <div class="form-group form-md-line-input">
+                                        {{wainformation.TelehealthAppointment.WAAppointment.IsUsualGP}}
                                         <div class="radio-list">
                                             <label class="radio-inline control-label">
                                                 Patients usual GP ?
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="referrer_radio" value="Yes" ng-model="referrer_radio"> Yes
+                                                <input type="radio" name="referrer_radio" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP"> Yes
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="referrer_radio" value="No" ng-model="referrer_radio"> No
+                                                <input type="radio" name="referrer_radio" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP"> No
                                             </label>
                                         </div>
                                     </div>
@@ -96,21 +110,21 @@
                             </div>
                         </div>
                         <br>
-                        <div class="row">
+                        <div class="row" ng-if="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP == 'N'">
                             <div class="col-md-12">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="" ng-disabled="referrer_radio == 'Yes'" />
+                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.UsualGPName" />
                                     <label class="control-label">Name of patients usual GP</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                         </div>
                         <br>
-                        <div class="row" ng-disabled="referrer_radio == 'No'">
+                        <div class="row" ng-if="wainformation.TelehealthAppointment.WAAppointment.IsUsualGP == 'N'">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
                                     <div class="input-icon">
-                                        <input type="text" class="form-control" placeholder="+61 4888 8888" ng-disabled="referrer_radio == 'Yes'">
+                                        <input type="text" class="form-control" placeholder="+61 4888 8888" ng-model="wainformation.TelehealthAppointment.WAAppointment.UsualGPContactNumber" />
                                         <label class="control-label">Contact Number</label>
                                         <div class="form-control-focus"> </div>
                                         <i class="glyphicon glyphicon-phone"></i>
@@ -120,7 +134,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
                                     <div class="input-icon">
-                                        <input type="text" class="form-control" placeholder="" ng-disabled="referrer_radio == 'Yes'">
+                                        <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.UsualGPFaxNumber" />
                                         <label class="control-label">Fax Number</label>
                                         <div class="form-control-focus"> </div>
                                         <i class="glyphicon glyphicon-print"></i>
@@ -132,15 +146,16 @@
                             <label class="control-label col-md-12 col-sm-12">
                                 Need to be referred to the same place again ?
                             </label>
+                            {{wainformation.TelehealthAppointment.WAAppointment.IsSamePlacePreference}}
                             <div class="col-md-11 col-sm-11 col-md-offset-1 col-sm-offset-1">
                                 <div class="form-inline">
                                     <div class="form-group form-md-line-input">
                                         <div class="radio-list">
                                             <label class="radio-inline">
-                                                <input type="radio" name="radio4" value="option1"> Yes
+                                                <input type="radio" name="radio4" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsSamePlacePreference"> Yes
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="radio4" value="option2" checked> No
+                                                <input type="radio" name="radio4" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsSamePlacePreference"> No
                                             </label>
                                         </div>
                                     </div>
@@ -152,14 +167,15 @@
                             <label class="control-label col-md-12 col-sm-12">
                                 Suitable for a telehealth consult
                             </label>
+                            {{wainformation.TelehealthAppointment.WAAppointment.IsTelehealthSuitable}}
                             <div class="col-md-11 col-sm-11 col-md-offset-1 col-sm-offset-1">
                                 <div class="form-inline">
                                     <div class="form-group form-md-line-input">
                                         <div class="radio-list">
                                             <label class="radio-inline">
-                                                <input type="radio" name="radio5" value="option1"> Yes </label>
+                                                <input type="radio" name="radio5" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsTelehealthSuitable"> Yes </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="radio5" value="option2" checked> No </label>
+                                                <input type="radio" name="radio5" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsTelehealthSuitable"> No </label>
                                         </div>
                                     </div>
                                 </div>
@@ -168,18 +184,19 @@
                         <br>
                         <div class="row">
                             <label class="control-label col-md-12 col-sm-12">Length of referral </label>
+                            {{wainformation.TelehealthAppointment.WAAppointment.LengthOfReferral}}
                             <div class="col-md-11 col-sm-11 col-md-offset-1 col-sm-offset-1">
                                 <div class="form-inline">
                                     <div class="form-group form-md-line-input">
                                         <div class="radio-list">
                                             <label class="radio-inline">
-                                                <input type="radio" name="radio6" value="" checked> 3 months
+                                                <input type="radio" name="radio6" value="03" ng-model="wainformation.TelehealthAppointment.WAAppointment.LengthOfReferral"> 3 months
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="radio6" value=""> 12 months
+                                                <input type="radio" name="radio6" value="12" ng-model="wainformation.TelehealthAppointment.WAAppointment.LengthOfReferral"> 12 months
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="radio6" value=""> Indefinite
+                                                <input type="radio" name="radio6" value="00" ng-model="wainformation.TelehealthAppointment.WAAppointment.LengthOfReferral"> Indefinite
                                             </label>
                                         </div>
                                     </div>
@@ -196,10 +213,10 @@
                                                 Is this a renewed referral ?
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="radio7" value="" checked> Yes
+                                                <input type="radio" name="radio7" value="Y" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsRenewReferral"> Yes
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="radio7" value=""> No
+                                                <input type="radio" name="radio7" value="N" ng-model="wainformation.TelehealthAppointment.WAAppointment.IsRenewReferral"> No
                                             </label>
                                         </div>
                                     </div>

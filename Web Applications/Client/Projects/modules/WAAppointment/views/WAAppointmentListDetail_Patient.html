@@ -28,12 +28,12 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <select class="form-control">
+                                    <select class="form-control" ng-model="info.patientInfomation.Title">
                                         <option value="">Select Title</option>
-                                        <option value="">Mr</option>
-                                        <option value="">Mrs</option>
-                                        <option value="">Ms</option>
-                                        <option value="">Dr</option>
+                                        <option value="Mr">Mr</option>
+                                        <option value="Mrs">Mrs</option>
+                                        <option value="Ms">Ms</option>
+                                        <option value="Dr">Dr</option>
                                     </select>
                                     <label class="control-label">Title</label>
                                     <div class="form-control-focus"> </div>
@@ -41,50 +41,50 @@
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.FirstName">
                                     <label class="control-label">First name</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.MiddleName">
                                     <label class="control-label">Middle name</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.LastName">
                                     <label class="control-label">Last name</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.FirstName">
                                     <label class="control-label">Family name</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.PreferredName">
                                     <label class="control-label">Preferred name</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.PreviousName">
                                     <label class="control-label">Previous name</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="">
-                                    <label class="control-label">Marital Status</label>
+                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.FirstName">
+                                    <label class="control-label">Marital status</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
                                     <div class="input-icon">
-                                        <input type="text" class="form-control" placeholder="">
+                                        <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.CountryOfBirth">
                                         <label class="control-label">Country of Birth</label>
                                         <div class="form-control-focus"> </div>
                                         <i class="fa fa-flag"></i>
@@ -105,7 +105,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
                                     <div class="input-icon">
-                                        <input type="text" class="form-control date-picker" data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy">
+                                        <input type="text" class="form-control date-picker" data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" ng-model="info.patientInfomation.DOB">
                                         <label class="control-label">Date of Birth</label>
                                         <div class="form-control-focus"> </div>
                                         <i class="glyphicon glyphicon-calendar"></i>
@@ -117,17 +117,18 @@
                             <label class="control-label col-md-12 col-sm-12">Sex</label>
                             <div class="col-md-11 col-sm-11 col-md-offset-1 col-sm-offset-1">
                                 <div class="form-group">
+                                    {{info.radioTest}}aaaaaa
                                     <div class="radio-list">
                                         <label class="radio-inline">
-                                            <input type="radio" name="sex" id="male" value="option1" checked> Male
+                                            <input type="radio" name="radioTest" ng-value="Male" ng-model="info.radioTest"> Male
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="sex" id="female" value="option2"> Female
+                                            <input type="radio" name="radio" ng-value="Female" ng-model="info.radioTest"> Female
                                         </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="sex" id="sex_other" value="option3" size="15"> Other &nbsp;
-                                            <input type="text" size="10">
-                                        </label>
+                                        <!--  <label class="radio-inline">
+                                            <input type="radio" name="sexo" size="15"> Other &nbsp;
+                                            <input type="text" size="10" ng-model="info.patientInfomation.Gender">
+                                        </label> -->
                                     </div>
                                 </div>
                             </div>
@@ -136,10 +137,10 @@
                                 <div class="form-group">
                                     <div class="radio-list">
                                         <label class="radio-inline">
-                                            <input type="radio" name="sex" id="Aboriginal" value="option1" checked> Aboriginal
+                                            <input type="radio" name="sex" value="Aboriginal" ng-model="info.patientInfomation.Aboriginal"> Aboriginal
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="sex" id="Torres Strait Islander" value="option2"> Torres Strait Islander
+                                            <input type="radio" name="sex" id="Torres Strait Islander" value="TorresStraitIslander" ng-model="info.patientInfomation.Indigenous"> Torres Strait Islander
                                         </label>
                                     </div>
                                 </div>
@@ -151,10 +152,10 @@
                                 <div class="form-group">
                                     <div class="radio-list">
                                         <label class="radio-inline">
-                                            <input type="radio" name="sex" id="Yes" value="option1" checked> Yes
+                                            <input type="radio" name="sex" id="Yes" value="Y" ng-model="info.patientInfomation.InterpreterRequired"> Yes
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="sex" id="No" value="option2"> No
+                                            <input type="radio" name="sex" id="No" value="N" ng-model="info.patientInfomation.InterpreterRequired"> No
                                         </label>
                                     </div>
                                 </div>
@@ -164,7 +165,7 @@
                                     <div class="form-group form-md-line-input">
                                         <label class="control-label col-md-4 col-sm-4">If yes, language/dialect </label>
                                         <div class="col-md-6 col-sm-6">
-                                            <input type="text" class="form-control" placeholder="">
+                                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.InterpreterLanguage">
                                             <div class="form-control-focus"> </div>
                                         </div>
                                     </div>
@@ -175,7 +176,7 @@
                                     <div class="form-group form-md-line-input">
                                         <label class="control-label col-md-4 col-sm-4">Other special needs ?</label>
                                         <div class="col-md-6 col-sm-6">
-                                            <input type="text" class="form-control" placeholder="">
+                                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.OtherSpecialNeed">
                                             <div class="form-control-focus"> </div>
                                         </div>
                                     </div>
@@ -190,7 +191,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.WorkPhoneNumber">
                                 <label class="control-label">Contact number (M)</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-phone"></i>
@@ -200,7 +201,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.HomePhoneNumber">
                                 <label class="control-label">Contact number (H)</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-phone-alt"></i>
@@ -210,7 +211,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.Email2">
                                 <label class="control-label">Email</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-envelope"></i>
@@ -220,7 +221,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.FaxNumber">
                                 <label class="control-label">Fax number</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-print"></i>
@@ -230,7 +231,7 @@
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.Address1">
                                 <label class="control-label">Address1</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-road"></i>
@@ -240,7 +241,7 @@
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.Address2">
                                 <label class="control-label">Address2</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-road"></i>
@@ -250,7 +251,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.Suburb">
                                 <label class="control-label">Suburb</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-tree-conifer"></i>
@@ -260,7 +261,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.Postcode">
                                 <label class="control-label">Postcode</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-map-marker"></i>
@@ -274,14 +275,14 @@
                     <h4 class="control-label col-md-12 col-sm-12">Next of Kin/Guardian</h4>
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.PatientKinName">
                             <label class="control-label">Name</label>
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.PatientKinRelationship">
                             <label class="control-label">Relationship</label>
                             <div class="form-control-focus"> </div>
                         </div>
@@ -289,7 +290,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="+61 8888 8888">
+                                <input type="text" class="form-control" placeholder="+61 8888 8888" ng-model="info.patientInfomation.PatientKinContactNumber">
                                 <label class="control-label">Contact Number</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-phone"></i>
@@ -320,14 +321,14 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-4">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.MedicareNumber">
                             <label class="control-label">Medicare Number</label>
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-4">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.MedicareReferenceNumber">
                             <label class="control-label">Medicare reference number</label>
                             <div class="form-control-focus"> </div>
                         </div>
@@ -335,7 +336,7 @@
                     <div class="col-md-4 col-sm-4">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control date-picker" data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy">
+                                <input type="text" class="form-control date-picker" data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" ng-model="info.patientInfomation.ExpiryDate">
                                 <label class="control-label">Expiry date</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-calendar"></i>
@@ -346,7 +347,7 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-4">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.DVANumber">
                             <label class="control-label">DVA number</label>
                             <div class="form-control-focus"> </div>
                         </div>

@@ -6,25 +6,21 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
-                        
-                            <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '12'">12 months</div>
-                            <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '03'">3 months</div>
-                            <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '00'">Indefinite</div>
-                            <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == null"></div>
-                            <label class="control-label">Duration of Referral</label>
-                            <div class="form-control-focus"> </div>
-                           
+                        <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '12'">12 months</div>
+                        <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '03'">3 months</div>
+                        <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '00'">Indefinite</div>
+                        <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == null"></div>
+                        <label class="control-label">Duration of Referral</label>
+                        <div class="form-control-focus"> </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
-                       
-                            <select class="form-control" name="Speciality" ng-model="wainformation.Status" ng-options="item.value as item.name for item in info.apptStatus">
-                                <option value=""></option>
-                            </select>
-                            <label class="control-label">Status</label>
-                            <div class="form-control-focus"> </div>
-                            
+                        <select class="form-control" name="Speciality" ng-model="wainformation.Status" ng-options="item.value as item.name for item in info.apptStatus">
+                            <option value=""></option>
+                        </select>
+                        <label class="control-label">Status</label>
+                        <div class="form-control-focus"> </div>
                     </div>
                 </div>
             </div>
@@ -40,9 +36,10 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
+                    {{info.radioTest}}
                     <div class="checkbox-list">
                         <label class="control-label">
-                            <input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="aaaa" ng-checked="'asdasd'"> Correspondence
+                            <input type="checkbox" name="Correspondence12" ng-true-value="'Y'" ng-false-value="'N'" ng-model="info.radioTest"> Correspondence
                         </label>
                     </div>
                 </div>
@@ -68,73 +65,66 @@
                         </div>
                     </div>
                 </div>
-                
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
-                        
-                            <div class="form-control">{{info.patientInfomation.FirstName}} {{info.patientInfomation.LastName}}</div>
-                            <label class="control-label">Patient</label>
-                            <div class="form-control-focus"> </div>
-                           
+                        <div class="form-control">{{info.patientInfomation.FirstName}} {{info.patientInfomation.LastName}}</div>
+                        <label class="control-label">Patient</label>
+                        <div class="form-control-focus"> </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
-                        
-                            <div class="form-control">{{wainformation.TelehealthAppointment.RefName}}</div>
-                            <label class="control-label">Referring Practitioner</label>
-                            <div class="form-control-focus"> </div>
-                            
+                        <div class="form-control">{{wainformation.TelehealthAppointment.RefName}}</div>
+                        <label class="control-label">Referring Practitioner</label>
+                        <div class="form-control-focus"> </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="form-group form-md-line-input">
-                        
-                            <select class="form-control" ng-model="wainformation.TelehealthAppointment.Fund">
-                                <option value="">------Select Fund-----</option>
-                                <option value='ACA'>ACA Health Benefits Fund</option>
-                                <option value='AHM'>ahm Health Insurance</option>
-                                <option value='AUF'>Australian Unity Health Limited</option>
-                                <option value='BUP'>Bupa Australia Pty Ltd</option>
-                                <option value='CBH'>CBHS Health Fund Limited</option>
-                                <option value='CDH'>CDH Benefits Fund</option>
-                                <option value='CPS'>CUA Health Limited</option>
-                                <option value='AHB'>Defence Health Limited</option>
-                                <option value='AMA'>Doctors' Health Fund</option>
-                                <option value='GMF'>GMF Health</option>
-                                <option value='GMH'>GMHBA Limited</option>
-                                <option value='FAI'>Grand United Corporate Health</option>
-                                <option value='HBF'>HBF Health Limited</option>
-                                <option value='HCF'>HCF</option>
-                                <option value='HCI'>Health Care Insurance Limited</option>
-                                <option value='HIF'>Health Insurance Fund of Australia Limited</option>
-                                <option value='SPS'>Health Partners</option>
-                                <option value='HEA'>health.com.au</option>
-                                <option value='LHS'>Latrobe Health Services</option>
-                                <option value='MBP'>Medibank Private Limited</option>
-                                <option value='MDH'>Mildura Health Fund</option>
-                                <option value='OMF'>National Health Benefits Australia Pty Ltd (onemedifund)</option>
-                                <option value='NHB'>Navy Health Ltd</option>
-                                <option value='NIB'>NIB Health Funds Ltd.</option>
-                                <option value='LHM'>Peoplecare Health Insurance</option>
-                                <option value='PWA'>Phoenix Health Fund Limited</option>
-                                <option value='SPE'>Police Health</option>
-                                <option value='QCH'>Queensland Country Health Fund Ltd</option>
-                                <option value='RTE'>Railway and Transport Health Fund Limited</option>
-                                <option value='RBH'>Reserve Bank Health Society Ltd</option>
-                                <option value='SLM'>St.Lukes Health</option>
-                                <option value='NTF'>Teachers Health Fund</option>
-                                <option value='TFS'>Transport Health Pty Ltd</option>
-                                <option value='QTU'>TUH</option>
-                                <option value='WFD'>Westfund Limited</option>
-                            </select>
-                            <label class="control-label">Fund</label>
-                            <div class="form-control-focus"> </div>
-                            
+                        <select class="form-control" ng-model="wainformation.TelehealthAppointment.Fund">
+                            <option value="">------Select Fund-----</option>
+                            <option value='ACA'>ACA Health Benefits Fund</option>
+                            <option value='AHM'>ahm Health Insurance</option>
+                            <option value='AUF'>Australian Unity Health Limited</option>
+                            <option value='BUP'>Bupa Australia Pty Ltd</option>
+                            <option value='CBH'>CBHS Health Fund Limited</option>
+                            <option value='CDH'>CDH Benefits Fund</option>
+                            <option value='CPS'>CUA Health Limited</option>
+                            <option value='AHB'>Defence Health Limited</option>
+                            <option value='AMA'>Doctors' Health Fund</option>
+                            <option value='GMF'>GMF Health</option>
+                            <option value='GMH'>GMHBA Limited</option>
+                            <option value='FAI'>Grand United Corporate Health</option>
+                            <option value='HBF'>HBF Health Limited</option>
+                            <option value='HCF'>HCF</option>
+                            <option value='HCI'>Health Care Insurance Limited</option>
+                            <option value='HIF'>Health Insurance Fund of Australia Limited</option>
+                            <option value='SPS'>Health Partners</option>
+                            <option value='HEA'>health.com.au</option>
+                            <option value='LHS'>Latrobe Health Services</option>
+                            <option value='MBP'>Medibank Private Limited</option>
+                            <option value='MDH'>Mildura Health Fund</option>
+                            <option value='OMF'>National Health Benefits Australia Pty Ltd (onemedifund)</option>
+                            <option value='NHB'>Navy Health Ltd</option>
+                            <option value='NIB'>NIB Health Funds Ltd.</option>
+                            <option value='LHM'>Peoplecare Health Insurance</option>
+                            <option value='PWA'>Phoenix Health Fund Limited</option>
+                            <option value='SPE'>Police Health</option>
+                            <option value='QCH'>Queensland Country Health Fund Ltd</option>
+                            <option value='RTE'>Railway and Transport Health Fund Limited</option>
+                            <option value='RBH'>Reserve Bank Health Society Ltd</option>
+                            <option value='SLM'>St.Lukes Health</option>
+                            <option value='NTF'>Teachers Health Fund</option>
+                            <option value='TFS'>Transport Health Pty Ltd</option>
+                            <option value='QTU'>TUH</option>
+                            <option value='WFD'>Westfund Limited</option>
+                        </select>
+                        <label class="control-label">Fund</label>
+                        <div class="form-control-focus"> </div>
                     </div>
                 </div>
             </div>
@@ -143,28 +133,19 @@
         <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
             <h4 class="form-section bold">Referral To</h4>
             <div class="form-group form-md-line-input">
-                
-                    <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Speciality}}</div>
-                    <label class="control-label">Speciality</label>
-                    <div class="form-control-focus"> </div>
-                    
-                  
+                <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Speciality}}</div>
+                <label class="control-label">Speciality</label>
+                <div class="form-control-focus"> </div>
             </div>
             <div class="form-group form-md-line-input">
-                
-                    <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Name}}</div>
-                    <label class="control-label">Name of Specialist (if required)</label>
-                    <div class="form-control-focus"></div>
-                   
-                   
+                <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Name}}</div>
+                <label class="control-label">Name of Specialist (if required)</label>
+                <div class="form-control-focus"></div>
             </div>
             <div class="form-group form-md-line-input">
-                
-                    <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].SiteName}}</div>
-                    <label class="control-label">Site</label>
-                    <div class="form-control-focus"> </div>
-                    
-                    
+                <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].SiteName}}</div>
+                <label class="control-label">Site</label>
+                <div class="form-control-focus"> </div>
             </div>
         </div>
     </div>

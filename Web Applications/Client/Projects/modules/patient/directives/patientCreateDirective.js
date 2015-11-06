@@ -121,6 +121,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						}
 					});
 				},function (err){
+					console.log(err);
 					scope.loadingCheck = false;
 					scope.er={};
 					scope.ermsg={};

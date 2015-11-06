@@ -6,21 +6,39 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
+<<<<<<< HEAD
                         <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '12'">12 months</div>
                         <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '03'">3 months</div>
                         <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '00'">Indefinite</div>
                         <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == null"></div>
+=======
+                        <div class="form-control">12 months</div>
+>>>>>>> 89466d14633b0e4959cfc6c13f1ce3cbf69e6b40
                         <label class="control-label">Duration of Referral</label>
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
+<<<<<<< HEAD
                         <select class="form-control" name="Speciality" ng-model="wainformation.Status" ng-options="item.value as item.name for item in info.apptStatus">
                             <option value=""></option>
                         </select>
                         <label class="control-label">Status</label>
                         <div class="form-control-focus"> </div>
+=======
+                        <select class="form-control" name="Speciality">
+                            <option value=""></option>
+                            <option value="1">Pending</option>
+                            <option value="2">Calling</option>
+                            <option value="3">Booked</option>
+                            <option value="4">Cancel</option>
+                            <option value="5">Finish</option>
+                        </select>
+                        <label class="control-label">Status</label>
+                        <div class="form-control-focus"> </div>
+                        <!-- <span class="help-block">Some help goes here...</span> -->
+>>>>>>> 89466d14633b0e4959cfc6c13f1ce3cbf69e6b40
                     </div>
                 </div>
             </div>
@@ -28,7 +46,11 @@
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
                         <div class="input-icon">
+<<<<<<< HEAD
                             <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.requestDate">
+=======
+                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy">
+>>>>>>> 89466d14633b0e4959cfc6c13f1ce3cbf69e6b40
                             <label class="control-label">Request Date</label>
                             <div class="form-control-focus"> </div>
                             <i class="glyphicon glyphicon-calendar"></i>
@@ -36,11 +58,17 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
+<<<<<<< HEAD
                     {{info.radioTest}}
                     <div class="checkbox-list">
                         <label class="control-label">
                             <input type="checkbox" name="Correspondence12" ng-true-value="'Y'" ng-false-value="'N'" ng-model="info.radioTest"> Correspondence
                         </label>
+=======
+                    <div class="checkbox">
+                        <label class="control-label">
+                            <input type="checkbox"> Correspondence</label>
+>>>>>>> 89466d14633b0e4959cfc6c13f1ce3cbf69e6b40
                     </div>
                 </div>
             </div>
@@ -69,14 +97,22 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
+<<<<<<< HEAD
                         <div class="form-control">{{info.patientInfomation.FirstName}} {{info.patientInfomation.LastName}}</div>
+=======
+                        <div class="form-control">Steven Kain</div>
+>>>>>>> 89466d14633b0e4959cfc6c13f1ce3cbf69e6b40
                         <label class="control-label">Patient</label>
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
+<<<<<<< HEAD
                         <div class="form-control">{{wainformation.TelehealthAppointment.RefName}}</div>
+=======
+                        <div class="form-control">John Nathan</div>
+>>>>>>> 89466d14633b0e4959cfc6c13f1ce3cbf69e6b40
                         <label class="control-label">Referring Practitioner</label>
                         <div class="form-control-focus"> </div>
                     </div>
@@ -85,7 +121,11 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="form-group form-md-line-input">
+<<<<<<< HEAD
                         <select class="form-control" ng-model="wainformation.TelehealthAppointment.Fund">
+=======
+                        <select class="form-control">
+>>>>>>> 89466d14633b0e4959cfc6c13f1ce3cbf69e6b40
                             <option value="">------Select Fund-----</option>
                             <option value='ACA'>ACA Health Benefits Fund</option>
                             <option value='AHM'>ahm Health Insurance</option>
@@ -133,6 +173,7 @@
         <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
             <h4 class="form-section bold">Referral To</h4>
             <div class="form-group form-md-line-input">
+<<<<<<< HEAD
                 <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Speciality}}</div>
                 <label class="control-label">Speciality</label>
                 <div class="form-control-focus"> </div>
@@ -146,6 +187,35 @@
                 <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].SiteName}}</div>
                 <label class="control-label">Site</label>
                 <div class="form-control-focus"> </div>
+=======
+                <select class="form-control" name="Speciality">
+                    <option value=""></option>
+                    <option value="1">Plastic Surgeons</option>
+                    <option value="2">Orthopaedic Surgeons</option>
+                </select>
+                <label class="control-label">Speciality</label>
+                <div class="form-control-focus"> </div>
+                <!-- <span class="help-block">Some help goes here...</span> -->
+            </div>
+            <div class="form-group form-md-line-input">
+                <select class="form-control">
+                    <option value=""></option>
+                </select>
+                <label class="control-label">Name of Specialist (if required)</label>
+                <div class="form-control-focus"> </div>
+                <span class="help-block">Some help goes here...</span>
+            </div>
+            <div class="form-group form-md-line-input">
+                <select class="form-control">
+                    <option value=""></option>
+                    <option value="Joondalup">Joondalup</option>
+                    <option value="Belmont">Belmont</option>
+                    <option value="Rockingham">Rockingham</option>
+                </select>
+                <label class="control-label">Site</label>
+                <div class="form-control-focus"> </div>
+                <span class="help-block">Some help goes here...</span>
+>>>>>>> 89466d14633b0e4959cfc6c13f1ce3cbf69e6b40
             </div>
         </div>
     </div>

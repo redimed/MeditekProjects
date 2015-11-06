@@ -2,6 +2,11 @@ var requestify = require('requestify');
 var config = sails.config.myconf;
 var jwt = require('jsonwebtoken');
 var $q = require('q');
+var http = require('http');
+var Response = require('./Response.js');
+function isSuccessful(code) {
+    return code >= 200 && code < 300;
+}
 module.exports = {
     FindByUID: function(uid) {
         return TelehealthUser.find({
@@ -44,7 +49,7 @@ module.exports = {
                             UID: patientUID
                         }
                     }],
-                    Limit: limit
+                    Limit: !limit ? null : limit
                 }
             },
             headers: headers
@@ -116,16 +121,6 @@ module.exports = {
             },
             headers: headers
         });
-    },
-    MakeRequest: function(info) {
-        return requestify.request(config.CoreAPI + info.path, {
-            method: info.method,
-            body: !info.body ? null : info.body,
-            params: !info.params ? null : info.params,
-            headers: !info.headers ? null : info.headers,
-            dataType: 'json',
-            withCredentials: true
-        })
     },
     GenerateJWT: function(info) {
         var defer = $q.defer();
@@ -227,5 +222,15 @@ module.exports = {
             }
         })
         return defer.promise;
+    },
+    MakeRequest: function(info) {
+        return requestify.request(config.CoreAPI + info.path, {
+            method: info.method,
+            body: !info.body ? null : info.body,
+            params: !info.params ? null : info.params,
+            headers: !info.headers ? null : info.headers,
+            dataType: 'json',
+            withCredentials: true
+        })
     }
 }

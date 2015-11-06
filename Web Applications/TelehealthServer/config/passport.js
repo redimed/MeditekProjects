@@ -41,9 +41,8 @@ passport.use(new LocalStrategy({
             attributes: ['UID']
         }).then(function(teleUser) {
             if (teleUser) {
-                user.UserUID = user.UID;
-                user.UID = teleUser.UID;
-                if (activationInfo) user.patientUID = activationInfo.patientUID;
+                user.TeleUID = teleUser.UID;
+                if (activationInfo) user.PatientUID = activationInfo.patientUID;
                 data.user = user;
                 return done(null, data, response.getBody().message);
             } else return done(null, false, {

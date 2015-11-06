@@ -14,13 +14,13 @@ function sendSMS(toNumber, content) {
 };
 module.exports = {
     GetUserDetails: function(req, res) {
-        if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
+        var params = req.params.all();
+        if (!params.uid) {
             var err = new Error("Telehealth.GetUserDetails.Error");
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
-        var info = HelperService.toJson(req.body.data);
-        var uid = info.uid;
+        var uid = params.uid;
         var headers = req.headers;
         var deviceType = headers.systemtype;
         if (!uid || !deviceType || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
@@ -34,9 +34,9 @@ module.exports = {
                     if (user) {
                         TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
                             res.json(response.getCode(), response.getBody());
-                        }).catch(function(err) {
+                        }, function(err) {
                             res.json(err.getCode(), err.getBody());
-                        })
+                        });
                     } else {
                         var err = new Error("Telehealth.GetUserDetails.Error");
                         err.pushError("User Is Not Exist");
@@ -51,36 +51,29 @@ module.exports = {
         })
     },
     GetUserAppointments: function(req, res) {
-        if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
-            var err = new Error("Telehealth.GetUserAppointments.Error");
-            err.pushError("Invalid Params");
-            res.serverError(ErrorWrap(err));
-            return;
-        }
-        var info = HelperService.toJson(req.body.data);
-        var patientUID = info.uid;
-        var limit = info.limit;
-        var headers = req.headers;
-        if (!patientUID) {
-            var err = new Error("Telehealth.GetUserAppointments.Error");
+        var params = req.params.all();
+        if (!params.uid) {
+            var err = new Error("Telehealth.GetUserDetails.Error");
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
+        var patientUID = params.uid;
+        var limit = params.limit;
+        var headers = req.headers;
         TelehealthService.GetAppointmentsByPatient(patientUID, limit, headers).then(function(response) {
             res.json(response.getCode(), response.getBody());
-        }).catch(function(err) {
+        }, function(err) {
             res.json(err.getCode(), err.getBody());
         })
     },
     GetAppointmentDetails: function(req, res) {
-        if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
-            var err = new Error("Telehealth.GetAppointmentDetails.Error");
+        var params = req.params.all();
+        if (!params.uid) {
+            var err = new Error("Telehealth.GetUserDetails.Error");
             err.pushError("Invalid Params");
-            res.serverError(ErrorWrap(err));
-            return;
+            return res.serverError(ErrorWrap(err));
         }
-        var info = HelperService.toJson(req.body.data);
-        var apptUID = info.uid;
+        var apptUID = params.uid;
         var headers = req.headers;
         if (!apptUID) {
             var err = new Error("Telehealth.GetAppointmentDetails.Error");

@@ -62,5 +62,17 @@ module.exports = {
         } else {
             return false;
         }
+    },
+    cleanObject: function(obj) {
+        if (_.isObject(obj)) {
+            for (var key in obj) {
+                if (!checkData(obj[key])) {
+                    delete obj[key];
+                }
+            }
+        } else {
+            obj = {};
+        }
+        return obj;
     }
 }

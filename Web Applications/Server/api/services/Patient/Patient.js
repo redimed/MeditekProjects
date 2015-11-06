@@ -126,7 +126,7 @@ module.exports = {
 
 			//validate DOB
 			if(data.DOB){
-				if(data.DOB!=null && data.DOB!=""){
+				if(data.DOB!=null || data.DOB!=""){
 					if(!/^(\d{1,2})[/](\d{1,2})[/](\d{4})/.test(data.DOB)){
 						errors.push({field:"DOB",message:"invalid value"});
 						err.pushErrors(errors);

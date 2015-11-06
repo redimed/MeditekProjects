@@ -17,12 +17,12 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet light bordered" id="form_wizard_1">
-			<div class="portlet-title">
-				<div class="caption font-green">
-					<i class="fa fa-plus-circle font-green"></i> Create New Doctor - <span class="step-title">Step 1 of 2 </span>
+			<div class="portlet-title bold uppercase">
+				<div class="caption font-blue">
+					<i class="glyphicon glyphicon-plus font-blue"></i> Create New Doctor - <span class="step-title">Step 1 of 2 </span>
 				</div>
 				<div class="tools hidden-xs">
-					<a href="javascript:;" class="collapse"></a>
+					<!-- <a href="javascript:;" class="collapse"></a> -->
 				</div>
 			</div>
 			<div class="portlet-body form">
@@ -52,8 +52,8 @@
 									</a>
 								</li>
 							</ul>
-							<div id="bar" class="progress progress-striped active" role="progressbar">
-								<div class="progress-bar progress-bar-success"></div>
+							<div id="bar" class="progress progress-sm progress-striped active" role="progressbar">
+								<div class="progress-bar progress-bar-info"></div>
 							</div>
 							<div class="tab-content">
 								<div class="alert alert-danger display-none">
@@ -67,7 +67,7 @@
 								<div class="tab-pane active" id="tab1">
 									<!-- country -->
 									<div class="form-group">
-										<label class="control-label col-md-4">Title <span class="required">* </span></label>
+										<label class="control-label col-md-4">Title</label>
 										<div class="col-md-4">
 											<select class="form-control" ng-init="data.Titles = options[0]" ng-model="data.Titles" ng-disabled="isBlockStep2" ng-options="options.id as options.name for options in titles">
 												<option value=''>Select Title</option>
@@ -77,9 +77,9 @@
 									<!-- end country -->
 									<!-- Begin Firstname -->
 									<div class="form-group">
-										<label class="control-label col-md-4">Firstname <span class="required">* </span></label>
+										<label class="control-label col-md-4">Firstname</label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" placeholder="Firstname" ng-model="data.FirstName" ng-keyup="upper(data.FirstName)" ng-disabled="isBlockStep1">
+											<input type="text" class="form-control" placeholder="" ng-model="data.FirstName" ng-keyup="upper(data.FirstName)" ng-disabled="isBlockStep1">
 										</div>
 									</div>
 									<!-- End Firstname -->
@@ -87,25 +87,25 @@
 									<div class="form-group">
 										<label class="control-label col-md-4">Middlename</label>
 										<div class="col-md-4">
-											<input type="text" class="form-control" placeholder="Middlename" ng-model="data.MiddleName" ng-disabled="isBlockStep1">
+											<input type="text" class="form-control" placeholder="" ng-model="data.MiddleName" ng-disabled="isBlockStep1">
 										</div>
 									</div>
 									<!-- End Middlename -->
 									<!-- Begin Surname -->
 										<div class="form-group ">
-											<label class="control-label col-md-4">Lastname <span class="required">* </span></label>
+											<label class="control-label col-md-4">Lastname</label>
 											<div class="col-md-4">
-												<input type="text" class="form-control" placeholder="Lastname" ng-model="data.LastName" ng-disabled="isBlockStep1">
+												<input type="text" class="form-control" placeholder="" ng-model="data.LastName" ng-disabled="isBlockStep1">
 											</div>
 										</div>
 									<!-- End Surname -->
 									<!-- begin MobilePhone -->
 									<div class="form-group">
-										<label class="control-label col-md-4">MobilePhone <span class="required">* </span></label>
+										<label class="control-label col-md-4">MobilePhone</label>
 										<div class="col-md-4">
 											<div class="input-icon">
-												<i class="icon-call-end"></i>
-												<input type="text" class="form-control" placeholder="MobilePhone" ng-model="data.PhoneNumber" maxlength="17" ng-disabled="isBlockStep1">
+												<i class="glyphicon glyphicon-phone"></i>
+												<input type="text" class="form-control" placeholder="+61 8888 8888" ng-model="data.PhoneNumber" maxlength="17" ng-disabled="isBlockStep1">
 											</div>
 										</div>
 									</div>
@@ -115,17 +115,17 @@
 										<label class="control-label col-md-4">Email</label>
 										<div class="col-md-4">
 											<div class="input-icon">
-												<i class="fa fa-envelope"></i>
-												<input type="text" class="form-control" placeholder="Email" ng-model="data.Email" ng-disabled="isBlockStep2">
+												<i class="glyphicon glyphicon-envelope"></i>
+												<input type="text" class="form-control" placeholder="John@gmail.com" ng-model="data.Email" ng-disabled="isBlockStep2">
 											</div>
 										</div>
 									</div>
 									<!-- end Email -->
 								</div>
 								<div class="tab-pane" id="tab2">
-									<div style="margin:3em;">
+									<div style="margin:2em;">
 										<div class="row">
-											<div class="col-md-4">
+											<div class="col-md-3 col-sm-3">
 												<!-- profileImage -->
 												<div class="form-group">
 													<div class="fileinput fileinput-new" data-provides="fileinput">
@@ -148,114 +148,151 @@
 												</div>
 												<!-- end profileImage -->
 											</div>
-											<div class="col-md-4">
-												<!-- Healthlink ID -->
-												<div class="form-group">
-													<label class="control-label col-md-3">Healthlink ID</label>
-													<div class="col-md-9">
-														<input type="text" placeholder="Healthlink ID" class="form-control" ng-model="data.HealthLinkID" ng-disabled="isBlockStep2">
-													</div>
-												</div>
-												<!-- End Healthlink ID -->
-												<!-- begin DOB -->
-												<div class="form-group">
-													<label class="control-label col-md-3">Date of Birth</label>
-													<div class="col-md-9">
-														<div class="input-icon">
-															<i class="fa fa-calendar"></i>
-	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="data.DOB" ng-pattern="/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/">
+											<div class="col-md-9 col-sm-9">
+												<div class="row">
+													<div class="col-md-6 col-sm-6">
+														<!-- Healthlink ID -->
+														<div class="form-group">
+															<label class="control-label col-md-4">Healthlink ID</label>
+															<div class="col-md-8">
+																<input type="text" placeholder="" class="form-control" ng-model="data.HealthLinkID" ng-disabled="isBlockStep2">
+															</div>
 														</div>
+														<!-- End Healthlink ID -->
 													</div>
-												</div>
-												<!-- end DOB -->
-												<!-- Begin Address1 -->
-												<div class="form-group ">
-													<label class="control-label col-md-3">Address1</label>
-													<div class="col-md-9">
-														<div class="input-icon">
-															<i class="fa  fa-paper-plane"></i>
-															<input type="text" class="form-control" placeholder="Address1" ng-model="data.Address1" ng-disabled="isBlockStep2">
+													<div class="col-md-6 col-sm-6">
+														<!-- begin DOB -->
+														<div class="form-group">
+															<label class="control-label col-md-4">Date of Birth</label>
+															<div class="col-md-8">
+																<div class="input-icon">
+																	<i class="glyphicon glyphicon-calendar"></i>
+			           												<input type="text" class="form-control form-control-inline date-picker" ng-model="data.DOB" ng-pattern="/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/">
+																</div>
+															</div>
 														</div>
+														<!-- end DOB -->
 													</div>
 												</div>
-												<!-- End Address1 -->
-												<!-- Begin Address2 -->
-												<div class="form-group ">
-													<label class="control-label col-md-3">Address2</label>
-													<div class="col-md-9">
-														<div class="input-icon">
-															<i class="fa  fa-paper-plane"></i>
-															<input type="text" class="form-control" placeholder="Address2" ng-model="data.Address2" ng-disabled="isBlockStep2">
+												<div class="row">
+													<div class="col-md-6 col-sm-6">
+														<!-- begin Homephone -->
+														<div class="form-group">
+															<label class="control-label col-md-4">Homephone</label>
+															<div class="col-md-8">
+																<div class="input-icon">
+																	<i class="glyphicon glyphicon-phone-alt"></i>
+																	<input type="text" class="form-control" placeholder="" maxlength="9" ng-model="data.HomePhoneNumber" ng-disabled="isBlockStep2">
+																</div>
+															</div>
 														</div>
+														<!-- end Homephone -->
 													</div>
-												</div>
-												<!-- End Address2 -->
-											</div>
-											<div class="col-md-4">
-												
-												
-												
-												<!-- begin Homephone -->
-												<div class="form-group">
-													<label class="control-label col-md-3">Homephone</label>
-													<div class="col-md-9">
-														<div class="input-icon">
-															<i class="icon-call-end"></i>
-															<input type="text" class="form-control" placeholder="Homephone" maxlength="9" ng-model="data.HomePhoneNumber" ng-disabled="isBlockStep2">
+													<div class="col-md-6 col-sm-6">
+														<!-- begin Workphone -->
+														<div class="form-group">
+															<label class="control-label col-md-4">Workphone</label>
+															<div class="col-md-8">
+																<div class="input-icon">
+																	<i class="glyphicon glyphicon-phone"></i>
+																	<input type="text" class="form-control" placeholder="" maxlength="9" ng-model="data.WorkPhoneNumber" ng-disabled="isBlockStep2">
+																</div>
+															</div>
 														</div>
+														<!-- end Workphone -->
 													</div>
 												</div>
-												<!-- end Homephone -->
-												<!-- begin Workphone -->
-												<div class="form-group">
-													<label class="control-label col-md-3">Workphone</label>
-													<div class="col-md-9">
-														<div class="input-icon">
-															<i class="icon-call-end"></i>
-															<input type="text" class="form-control" placeholder="Workphone" maxlength="9" ng-model="data.WorkPhoneNumber" ng-disabled="isBlockStep2">
+												<div class="row">
+													<div class="col-md-6 col-sm-6">
+														<!-- Begin Address1 -->
+														<div class="form-group ">
+															<label class="control-label col-md-4">Address1</label>
+															<div class="col-md-8">
+																<div class="input-icon">
+																	<i class="glyphicon glyphicon-road"></i>
+																	<input type="text" class="form-control" placeholder="" ng-model="data.Address1" ng-disabled="isBlockStep2">
+																</div>
+															</div>
 														</div>
+														<!-- End Address1 -->
+													</div>
+													<div class="col-md-6 col-sm-6">
+														<!-- Begin Address2 -->
+														<div class="form-group ">
+															<label class="control-label col-md-4">Address2</label>
+															<div class="col-md-8">
+																<div class="input-icon">
+																	<i class="glyphicon glyphicon-road"></i>
+																	<input type="text" class="form-control" placeholder="" ng-model="data.Address2" ng-disabled="isBlockStep2">
+																</div>
+															</div>
+														</div>
+														<!-- End Address2 -->
 													</div>
 												</div>
-												<!-- end Workphone -->
-												<!-- begin Postcode -->
-												<div class="form-group">
-													<label class="control-label col-md-3">Postcode</label>
-													<div class="col-md-9">
-														<input type="text" class="form-control" placeholder="Postcode" ng-model="data.Postcode" maxlength="4" ng-disabled="isBlockStep2">
+												<div class="row">
+													<div class="col-md-6 col-sm-6">
+														<!-- begin Postcode -->
+														<div class="form-group">
+															<label class="control-label col-md-4">Postcode</label>
+															<div class="col-md-8">
+																<div class="input-icon">
+																	<i class="glyphicon glyphicon-map-marker"></i>
+																	<input type="text" class="form-control" placeholder="" ng-model="data.Postcode" maxlength="4" ng-disabled="isBlockStep2">
+																</div>
+															</div>
+														</div>
+														<!-- end Postcode -->
+													</div>
+													<div class="col-md-6 col-sm-6">
+														<!-- begin Suburb -->
+														<div class="form-group">
+															<label class="control-label col-md-4">Suburb</label>
+															<div class="col-md-8">
+																<div class="input-icon">
+																	<i class="glyphicon glyphicon-tree-conifer"></i>
+																	<input type="text" class="form-control" placeholder="" ng-model="data.Suburb" ng-disabled="isBlockStep2">
+																</div>
+															</div>
+														</div>
+														<!-- end Suburb -->
 													</div>
 												</div>
-												<!-- end Postcode -->
-												<!-- begin Suburb -->
-												<div class="form-group">
-													<label class="control-label col-md-3">Suburb</label>
-													<div class="col-md-9">
-														<input type="text" class="form-control" placeholder="Suburb" ng-model="data.Suburb" ng-disabled="isBlockStep2">
+												<div class="row">
+													<div class="col-md-6 col-sm-6">
+														<!-- begin State -->
+														<div class="form-group">
+															<label class="control-label col-md-4">State</label>
+															<div class="col-md-8">
+																<div class="input-icon">
+																	<i class="glyphicon glyphicon-globe"></i>
+																	<select ng-init="data.State == st[4]" ng-model="data.State" class="form-control" ng-options="st.code as st.name for st in state" ng-disabled="isBlockStep2">
+												                        <option value="">Select State</option>
+												                    </select>
+												                </div>
+															</div>
+														</div>
+														<!-- end State -->
+													</div>
+													<div class="col-md-6 col-sm-6">
+														<!-- country -->
+														<div class="form-group">
+															<label class="control-label col-md-4">Country</label>
+															<div class="col-md-8">
+																<div class="input-icon">
+																	<i class="fa fa-flag"></i>
+																	<select class="select2 form-control" ng-init="data.CountryID === c[13]" ng-model="data.CountryID" ng-disabled="isBlockStep2" ng-options="c.ID as c.ShortName for c in country">
+																		<option value="">Select Country</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+														<!-- end country -->
 													</div>
 												</div>
-												<!-- end Suburb -->
-												<!-- begin State -->
-												<div class="form-group">
-													<label class="control-label col-md-3">State</label>
-													<div class="col-md-9">
-														<select ng-init="data.State == st[4]" ng-model="data.State" class="form-control" ng-options="st.code as st.name for st in state" ng-disabled="isBlockStep2">
-									                        <option value="">Select State</option>
-									                    </select>
-														<!--<input type="text" class="form-control" placeholder="State" ng-model="data.State" ng-disabled="isBlockStep2">-->
-													</div>
-												</div>
-												<!-- end State -->
-												<!-- country -->
-												<div class="form-group">
-													<label class="control-label col-md-3">Country</label>
-													<div class="col-md-9">
-														<select class="select2 form-control" ng-init="data.CountryID === c[13]" ng-model="data.CountryID" ng-disabled="isBlockStep2" ng-options="c.ID as c.ShortName for c in country">
-															<option value="">Select Country</option>
-														</select>
-													</div>
-												</div>
-												<!-- end country -->
 											</div>
 										</div>
+										
 									</div>
 								</div>
 								<div class="tab-pane" id="tab3">
@@ -275,7 +312,7 @@
 											<div class="form-group">
 												<label class="control-label col-md-3">Provider Number</label>
 												<div class="col-md-4">
-													<input type="text" placeholder="Provider Number" class="form-control" only-number ng-model="data.ProviderNumber">
+													<input type="text" placeholder="" class="form-control" only-number ng-model="data.ProviderNumber">
 												</div>
 											</div>
 											<!-- Provider Number -->
@@ -308,7 +345,7 @@
 												<label class="control-label col-md-3">Signature</label>
 												<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 													<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
-															<img src="theme/assets/global/images/no_image.png" width="100%" height="100%">
+															<img src="theme/assets/global/images/no_signature.png" width="100%" height="100%">
 														</div>
 													<div>
 														<span class="btn green btn-file">

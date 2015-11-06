@@ -1,3 +1,8 @@
+<div class="row" ng-if="wainformation.Patients.length != 0">
+    <div class="col-md-12 co-xs-12 pull-left">
+        <h4><b>PATIENT NO :</b><span class="text-danger"> Linked</span></h4>
+    </div>
+</div>
 <div class="row profile-account">
     <div class="col-md-3 col-sm-3">
         <ul class="nav nav-tabs tabs-left">
@@ -125,7 +130,7 @@
                                         <label class="radio-inline">
                                             <input type="radio" name="radioTest12" value="Female" ng-model="info.patientInfomation.Gender"> Female
                                         </label>
-                                         <label class="radio-inline">
+                                        <label class="radio-inline">
                                             <input type="radio" size="15" name="radioTest12" ng-checked="(info.patientInfomation.Gender != 'Male' && info.patientInfomation.Gender != 'Female' && info.patientInfomation.Gender != null)?true:false"> Other &nbsp;
                                             <input type="text" size="10" ng-model="info.patientInfomation.Gender">
                                         </label>
@@ -353,13 +358,14 @@
                         </div>
                     </div>
                     <div class="col-md-8 col-sm-8">
+                        {{wainformation.WAAppointment.InjuryType}}
                         <div class="form-group form-md-line-input">
                             <div class="radio-list">
                                 <label class="radio-inline">
-                                    <input type="radio" name="InjuryType" value="MotorVehicleAccident" ng-model="wainformation.TelehealthAppointment."> Motor vehicle accident ?
+                                    <input type="radio" name="InjuryType" value="MotorVehicleAccident" ng-model="wainformation.WAAppointment.InjuryType"> Motor vehicle accident ?
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="InjuryType" value="WorkInjury" ng-model=""> Work injury ?
+                                    <input type="radio" name="InjuryType" value="WorkInjury" ng-model="wainformation.WAAppointment.InjuryType"> Work injury ?
                                 </label>
                             </div>
                         </div>
@@ -369,4 +375,11 @@
         </div>
     </div>
     <!--end col-md-9-->
+</div>
+<div class="row pull-right">
+    <div class="col-md-12 co-xs-12">
+        <button class="btn red" ng-click="selectPatient()">
+            <i class="glyphicon glyphicon-plus"></i> Link Patient
+        </button>
+    </div>
 </div>

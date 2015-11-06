@@ -1,6 +1,6 @@
 var app = angular.module('app.authentication.WAAppointment.list.detail.controller', []);
 
-app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, data, AppointmentService, toastr) {
+app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService) {
     $modalInstance.rendered.then(function() {
         App.initComponents(); // init core components
         App.initAjax();
@@ -30,17 +30,15 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
     console.log('$scope.wainformation',$scope.wainformation);
     $scope.info = {
         apptStatus: WAConstant.apptStatus,
-        requestDate: moment($scope.wainformation.CreatedDate).format('DD/MM/YYYY'),
         listDoctorTreatingPractitioner: null,
         patientInfomation: ($scope.wainformation.Patients.length != 0) ? $scope.wainformation.Patients : $scope.wainformation.TelehealthAppointment.PatientAppointment,
         appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('DD/MM/YYYY') : null,
         appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('h:mm A') : null,
-        listDoctorTreatingPractitioner: null,
-        radioTest: 'Y'
+        listDoctorTreatingPractitioner: null
     }
 
     $scope.loadAllDoctor = function() {
-        AppointmentService.ListDoctor().then(function(data) {
+        WAAppointmentService.ListDoctor().then(function(data) {
             $scope.info.listDoctorTreatingPractitioner = data;
         });
     }
@@ -48,7 +46,7 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
     $scope.loadAllDoctor();
 
     $scope.selectTreatingPractitioner = function(data) {
-        AppointmentService.getDoctorById({
+        WAAppointmentService.getDoctorById({
             UID: data
         }).then(function(data) {
             $scope.wainformation.Doctors[0] = data[0];
@@ -56,7 +54,65 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
         })
     }
 
+    $scope.saveWaAppointment = function() {
+        if ($scope.info.appointmentDate != null && $scope.info.appointmentDate != '') {
+            var Time = moment($scope.info.appointmentTime, ["HH:mm:ss A"]).format("HH:mm:ss");
+            var appointmentDateTime = $scope.info.appointmentDate + ' ' + Time + ' Z';
+            $scope.wainformation.FromTime = moment(appointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").utc().format('YYYY-MM-DD HH:mm:ss Z');
+        } else {
+            $scope.wainformation.FromTime = null
+        };
+        console.log('nênnenenenenenene',$scope.wainformation);
+        WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
+            console.log('saveWaAppointment', data);
+        })
+    }
+
     $scope.close = function() {
         $modalInstance.close();
+    };
+
+    $scope.selectPatient = function() {
+        var modalInstance = $modal.open({
+            animation: true,
+            templateUrl: '../modules/appointment/views/appointmentSelectPatientModal.html',
+            controller: function($scope, $modalInstance) {
+                $scope.patient = {
+                    runIfSuccess: function(data) {
+                        $modalInstance.close({
+                            status: 'success',
+                            data: data
+                        });
+                    },
+                    runIfClose: function(){
+                        $modalInstance.close();
+                    }
+                };
+            },
+            windowClass: 'app-modal-window',
+            resolve: {
+                patientInfo: function() {
+                    PatientService.postDatatoDirective($scope.info.patientInfomation);
+                }
+            }
+
+        });
+        modalInstance.result.then(function(data) {
+            if (data && data.status == 'success') {
+                $scope.info.isLinkPatient = true;
+                var patientUid = data.data.UID;
+                WAAppointmentService.GetDetailPatientByUid({
+                    UID: patientUid
+                }).then(function(data) {
+                    if (data.message == 'success') {
+                        console.log('patientInfomation',data.data[0]);
+                        $scope.wainformation.Patients.push({
+                            UID: patientUid
+                        });
+                        toastr.success("Select patient successfully!", "success");
+                    };
+                })
+            };
+        });
     };
 });

@@ -17,9 +17,9 @@ module.exports = {
             'DOB', 'Gender', 'Indigenous', 'Address1', 'Address2', 'Email1',
             'Email2', 'PhoneNumber', 'HomePhoneNumber', 'WorkPhoneNumber',
             'FaxNumber', 'InterpreterRequired', 'InterpreterLanguage',
-            'OtherSpecialNeed', 'MedicareNumber', 'MedicareReferenceNumber',
-            'ExpiryDate', 'DVANumber', 'InjuryType', 'PatientKinName',
-            'PatientKinRelationship', 'PatientKinContactNumber'
+            'OtherSpecialNeed', 'MedicareEligible', 'MedicareNumber',
+            'MedicareReferenceNumber', 'ExpiryDate', 'DVANumber',
+            'PatientKinName', 'PatientKinRelationship', 'PatientKinContactNumber'
         ];
     },
     ExaminationRequired: function() {
@@ -58,7 +58,7 @@ module.exports = {
     WAAppointment: function() {
         return ['RefFax', 'IsUsualGP', 'UsualGPName', 'UsualGPContactNumber',
             'UsualGPFaxNumber', 'IsSamePlacePreference', 'IsTelehealthSuitable',
-            'IsRenewReferral', 'PathologyProvider', 'RadiologyProvider'
+            'IsRenewReferral', 'PathologyProvider', 'RadiologyProvider', 'InjuryType'
         ];
     },
     Country: function() {

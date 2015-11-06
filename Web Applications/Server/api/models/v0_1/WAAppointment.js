@@ -34,6 +34,16 @@ module.exports = {
                 key: 'ID'
             }
         },
+        InjuryType: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
         HasConsultant: {
             type: Sequelize.STRING(1),
             allowNull: true,

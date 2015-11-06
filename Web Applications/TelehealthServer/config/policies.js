@@ -18,18 +18,18 @@
 
 var _ = require('lodash');
 var policies = {
-    // '*': 'hasToken',//bật lên khi ở chế độ develop không cần login phân quyền
+    '*': 'hasToken',//bật lên khi ở chế độ develop không cần login phân quyền
     // '*': true, //bật lên khi ở chế độ develop không cần login phân quyền
     // '*': "hasToken", //bật lên khi relase, hầu hết tất cả api đều phải có token
 };
 
-//Begin module Telehealth
-// var telehealthPolicies = require('./policies/TelehealthPolicies');
-// _.extend(policies, telehealthPolicies);
-// //End module Telehealth
-// //Begin module Socket
-// var socketPolicies = require('./policies/SocketPolicies');
-// _.extend(policies, socketPolicies);
-//End module Socket
+// Begin module Telehealth
+var telehealthPolicies = require('./policies/TelehealthPolicies');
+_.extend(policies, telehealthPolicies);
+//End module Telehealth
+//Begin module Socket
+var socketPolicies = require('./policies/SocketPolicies');
+_.extend(policies, socketPolicies);
+// End module Socket
 module.exports.policies = policies;
 //

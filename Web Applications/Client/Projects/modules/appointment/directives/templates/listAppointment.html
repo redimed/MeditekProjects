@@ -111,11 +111,12 @@
                             <td>{{((p.Doctors[0].Title !=null)?p.Doctors[0].Title:"")+" "+((p.Doctors[0].FirstName != null)?p.Doctors[0].FirstName:"") +" "+((p.Doctors[0].LastName != null)?p.Doctors[0].LastName:"")}}</td>
                             <td>{{p.CreatedDate | date: 'dd/MM/yyyy'}}</td>
                             <td>
-                                <span ng-if="p.Status == 'Approved'" class="label label-success">Booked</span>
-                                <span ng-if="p.Status == 'Calling'" class="label label-default">Calling</span>
-                                <span ng-if="p.Status == 'Waiting for approval'" class="label label-warning">Pending</span>
+                                <span ng-if="p.Status == 'Approved'" class="label label-success">Appointment Time</span>
                                 <span ng-if="p.Status == 'Cancelled'" class="label label-danger">Cancelled</span>
-                                <span ng-if="p.Status == 'Finish'" class="label label-primary">Finish</span>
+                                <span ng-if="p.Status == 'Received'" class="label label-default">Received</span>
+                                <span ng-if="p.Status == 'Waiting for approval'" class="label label-warning">Pending</span>
+                                <span ng-if="p.Status == 'Pending'" class="label label-primary">Pending</span>
+                                <span ng-if="p.Status == 'Waitlist'" class="label label-primary">Wait List Surgery</span>
                             </td>
                             <td>{{p.FromTime | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td>
                             <td ng-show="p.TelehealthAppointment.Correspondence == 'Y'" style="text-align:center">
@@ -136,8 +137,8 @@
             </div>
             <div class="col-md-7 col-sm-12" style="text-align:right">
                 <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-                     <pagination boundary-links="true " total-items="CountRow " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.Limit " max-size="searchObjectMap.maxSize " ng-change="SetPage() ">
-                </pagination>
+                    <pagination boundary-links="true " total-items="CountRow " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.Limit " max-size="searchObjectMap.maxSize " ng-change="SetPage() ">
+                    </pagination>
                 </div>
             </div>
         </div>

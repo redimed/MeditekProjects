@@ -976,6 +976,53 @@ module.exports = {
 
 		
 		
+	},
+
+	getDetailUser:function(data)
+	{
+		// console.log(data);
+		// return Services.UserAccount.GetUserAccountDetails(data)
+		// .then(function(result){
+		// 	if(o.checkData(result)){
+		// 		var ID = result.dataValues.ID;
+		// 		Doctor.findOne({
+		// 			attributes['Title','FirstName','LastName',]
+		// 			where:{
+		// 				UserAccountID : ID
+		// 			}
+		// 		})
+		// 	}
+		// },function(err){
+		// 	throw err;
+		// })
+		console.log(data);
+		return UserAccount.findOne({
+			include: [
+				{
+			       	model: Doctor,
+			        attributes: ['Title','FirstName','LastName'],
+			        required: false
+			    },
+			    {
+			       	model: Patient,
+			        attributes: ['Title','FirstName','LastName'],
+			        required: false
+			    },
+			    {
+			       	model: FileUpload,
+			        attributes: ['UID'],
+			        required: false,
+			        where:{
+			        	Enable:'Y'
+			        }
+			    }
+			],
+			subQuery   : false,
+			attributes:['UserName','Email'],
+			where:{
+				UID: data.UID
+			}
+		});
 	}
 
 }

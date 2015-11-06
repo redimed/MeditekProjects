@@ -82,13 +82,18 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 			scope.checkPhone = function(data) {
 				scope.loadingCheck = true;
 				//service validate data
+				var verifyData = {
+					FirstName:data.FirstName,
+					LastName:data.LastName,
+					PhoneNumber:data.PhoneNumber
+				};
 				PatientService.validateCheckPhone(data)
 				.then(function(success){
 					scope.er ='';
 					scope.ermsg='';
 					scope.isBlockStep1=true;
 					//service call API check PhoneNumber can be used to create Patient
-					PatientService.checkPatient(data)
+					PatientService.checkPatient(verifyData)
 					.then(function(result){
 						if(result!=undefined && result!=null && result!='' && result.length!=0){
 							if(result.data.isCreated==false){

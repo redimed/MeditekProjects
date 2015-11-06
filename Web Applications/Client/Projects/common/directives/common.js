@@ -312,7 +312,7 @@ angular.module('app.common.ngEnter', [])
 	            type="text"\
 	            ng-model="searchParam"\
 	            placeholder="{{ attrs.placeholder }}"\
-	            class="{{ attrs.inputclass }}"\
+	            class="{{ attrs.inputclass }} form-control"\
 	            id="{{ attrs.inputid }}"\
 	            ng-required="{{ autocompleteRequired }}" />\
 	          <ul ng-show="completing && (suggestions | filter:searchFilter).length > 0">\

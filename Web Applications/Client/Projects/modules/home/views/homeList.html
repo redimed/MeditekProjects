@@ -4,34 +4,14 @@
     <ul class="page-breadcrumb">
         <li>
             <i class="fa fa-home"></i>
-            <a href="index.html">Home</a>
-            <i class="fa fa-angle-right"></i>
+            <b>Home</b>
+            <!-- <i class="fa fa-angle-right"></i> -->
         </li>
     </ul>
 </div>
 <!-- END PAGE HEADER-->
 <!-- BEGIN PAGE CONTENT-->
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            <label class="control-label col-md-4">Without Seconds {{gio}}</label>
-            <div class="col-md-5">
-                <div class="input-group">
-                    <input type="text" class="form-control timepicker timepicker-no-seconds" value="" ng-model="gio" data-default-time="" data-format="hh:mm A">
-
-                    <span class="input-group-btn">
-                    <button class="btn default" type="button"><i class="fa fa-clock-o"></i></button>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <autocomplete ng-model="yourchoice" data="movies" on-type="updateMovies"></autocomplete>
-    </div>
-</div>
+<div class="col-md-4"><autocomplete ng-model="yourchoice" data="movies" on-type="updateMovies"></autocomplete></div>
 <!-- END PAGE CONTENT-->
 
             

@@ -58,6 +58,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 
 		},
 		link: function(scope, elem, attrs){
+
+			
 			var data = {};
         	scope.info = {};
 			data.UID = scope.uid;
@@ -88,24 +90,9 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    scope.removeImg = function(){
 		    	scope.info.img_change =null;
 		    	scope.uploader.queue.length = 0;
-		    }
-
+		    };
 		    $timeout(function(){
-		    	App.initComponents(); // init core components
-		    	ComponentsSelect2.init(); // init todo page
-	            ComponentsBootstrapSelect.init(); // init todo page
-	            ComponentsDateTimePickers.init(); // init todo page
-	            scope.checkcolumm =[];
-				scope.isShowFull = scope.isShowFull!=undefined&&scope.isShowFull!=null?scope.isShowFull:true;
-				if(scope.isShowFull==false){
-					document.getElementById("modalContent").className = "";
-					document.getElementById("modalBody").className = "";
-					document.getElementById("tabContent1").className = "";
-					document.getElementById("tabBable").className = "";
-					document.getElementById("tabContent2").className = "";
-					document.getElementById("Personal_info").className = "";
-
-				};
+		    	scope.checkcolumm =[];
 				if(scope.listShow!= undefined && scope.listShow!=null && scope.listShow!='' && scope.listShow.length!=0){
 					if(scope.listShow.columm1==true){
 						scope.checkcolumm.push({have:"columm1"});
@@ -141,6 +128,20 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				        break;
 				}
 		    },0);
+
+		    $timeout(function(){
+				scope.isShowFull = scope.isShowFull!=undefined&&scope.isShowFull!=null?scope.isShowFull:true;
+				if(scope.isShowFull==false){
+					document.getElementById("modalContent").className = "";
+					document.getElementById("modalBody").className = "";
+					document.getElementById("tabContent1").className = "";
+					document.getElementById("tabBable").className = "";
+					document.getElementById("tabContent2").className = "";
+					document.getElementById("Personal_info").className = "";
+				};
+				App.initAjax();
+    			ComponentsDateTimePickers.init(); // init todo page
+		    },50);
 
 		    scope.checkDataNull = function(name){
 		    	if(scope.info[name].length==0)

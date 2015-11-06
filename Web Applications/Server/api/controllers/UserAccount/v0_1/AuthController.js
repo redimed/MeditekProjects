@@ -24,6 +24,7 @@ module.exports = {
 
         var error=new ErrorWrap("login.Error");
 
+
         passport.authenticate('local', function(err, user, info) 
         {
             if ((err) || (!user)) 
@@ -33,41 +34,27 @@ module.exports = {
                     var err=info;
                 }
                 return res.unauthor(ErrorWrap(err));
-            }            
-            //TẠO TOKEN
-            //Tạo secret key
-            var userAccess={
-                UserUID:user.UID,
-                SystemType:req.headers.systemtype,
-                DeviceID:req.headers.deviceid
             }
-            Services.UserToken.MakeUserToken(userAccess)
-            .then(function(ut){
-                var sessionUser={
-                    ID:user.ID,
-                    UID:user.UID,
-                    Activated:user.Activated,
-                    roles:user.roles,
-                    SystemType:req.headers.systemtype,
-                    DeviceID:req.headers.deviceid,
-                    SecretKey:ut.SecretKey,
-                    SecretCreatedDate:ut.SecretCreatedDate,
-                    TokenExpired:ut.TokenExpired
-                }
-                var token=jwt.sign(
-                    {UID:user.UID},
-                    ut.SecretKey,
-                    {expiresIn:o.const.authTokenExpired[req.headers.systemtype]}
-                );
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>REQ.LOGIN");
-                req.logIn(sessionUser, function(err) 
+
+            req.logIn(user, function(err) 
+            {
+                if (err) 
                 {
-                    if (err) 
-                    {
-                        res.unauthor(ErrorWrap(err));
+                    res.unauthor(ErrorWrap(err));
+                }
+                else
+                {
+                    //TẠO TOKEN
+                    //Tạo secret key
+                    var userAccess={
+                        UserUID:user.UID,
+                        SystemType:req.headers.systemtype,
+                        DeviceID:req.headers.deviceid
                     }
-                    else
-                    {
+                    Services.UserToken.MakeUserToken(userAccess)
+                    .then(function(ut){
+                        // var token = jwt.sign(user, secret, { expiresInMinutes: 60*24 });
+                        var token = jwt.sign({UID:user.UID}, ut.SecretKey, { expiresIn: o.const.authTokenExpired[req.headers.systemtype] });//second
                         if(user.Activated=='Y')
                         {
                             res.ok({
@@ -86,13 +73,15 @@ module.exports = {
                                 token:token
                             });
                         }
-                    }
+                    },function(err){
+                        res.serverError(ErrorWrap(err));
+                    })
                     
-                });
+                    
+                }
                 
-            },function(err){
-                res.serverError(ErrorWrap(err));
-            })
+            });
+
         })(req, res);
     },
 
@@ -114,6 +103,5 @@ module.exports = {
         })
         
     },
-    
 };
 

@@ -262,13 +262,13 @@ module.exports = {
 				}
 			}
 			if(data.Search.Email1){
-				whereClause.Patient.Email = {
-					like:'%'+data.Search.Email+'%'
+				whereClause.Patient.Email1 = {
+					like:'%'+data.Search.Email1+'%'
 				}
 			}
 			if(data.Search.Email2){
-				whereClause.Patient.Email = {
-					like:'%'+data.Search.Email+'%'
+				whereClause.Patient.Email2 = {
+					like:'%'+data.Search.Email2+'%'
 				}
 			}
 			if(data.Search.Enable){

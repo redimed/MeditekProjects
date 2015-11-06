@@ -10,7 +10,6 @@
                     <div class="form-group form-md-line-input" >
                         <label class="col-md-3 col-sm-3 control-label" >Speciality</label>
                         <div class="col-md-6 col-sm-6">
-                            <div class="input-icon">
                                 <select class="form-control" name="Speciality" ng-model="requestInfo.TelehealthAppointment.PreferredPractitioner[0].Speciality">
                                     <option value=""></option>
                                     <option value="PlasticSurgeon">Plastic Surgeons</option>
@@ -18,38 +17,29 @@
                                 </select>
                                 <div class="form-control-focus"> </div>
                                 <!-- <span class="help-block">Some help goes here...</span> -->
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </div>
                         </div>
                     </div>
                     <div class="form-group form-md-line-input">
                         <label class="col-md-3 col-sm-3 control-label">Name of Specialist (if required)</label>
                         <div class="col-md-6 col-sm-6">
-                            <div class="input-icon">
                                <select size="1" class="form-control" ng-model="requestInfo.TelehealthAppointment.PreferredPractitioner[0].Name">
                                     <option ng-repeat="item in listDoctor | filter:requestInfo.TelehealthAppointment.PreferredPractitioner[0].Speciality =='' ?'###':requestInfo.TelehealthAppointment.PreferredPractitioner[0].Speciality" ng-click="selectTreatingPractitioner(item.UID)">{{((item.Title !=null)?item.Title:"")+" "+((item.FirstName != null)?item.FirstName:"") +" "+((item.LastName != null)?item.LastName:"")}}</option>
                                 </select>
                                 <div class="form-control-focus"> </div>
                                 <!-- <span class="help-block">Some help goes here...</span> -->
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </div>
                         </div>
                     </div>
                     <div class="form-group form-md-line-input">
                         <label class="col-md-3 col-sm-3 control-label">Site</label>
                         <div class="col-md-6 col-sm-6">
-                            <div class="input-icon">
                                 <select class="form-control" ng-model="requestInfo.TelehealthAppointment.PreferredPractitioner[0].SiteName">
                                     <option value=""></option>
                                     <option value="Joondalup">Joondalup</option>
                                     <option value="Belmont">Belmont</option>
-                                    <option value="Rockingham">Rockingham</option>
-                                    
+                                    <option value="Rockingham">Rockingham</option>        
                                 </select>
                                 <div class="form-control-focus"> </div>
                                 <!-- <span class="help-block">Some help goes here...</span> -->
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </div>
                         </div>
                     </div>
                 </div>

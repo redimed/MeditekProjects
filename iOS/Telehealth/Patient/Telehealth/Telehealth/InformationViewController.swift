@@ -10,14 +10,9 @@ import UIKit
 
 class InformationViewController: UIViewController {
     let InformationPatient = GetAndPostDataController()
-    var messageFrom = String()
     
-    @IBOutlet weak var imageView: UIImageView!
-    
-    
-    @IBOutlet weak var btnHomeView: DesignableButton!
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var naviProfile: UINavigationBar!
+
+   
     @IBOutlet weak var fullName: UILabel!
     @IBOutlet weak var dobLabel: UILabel!
     @IBOutlet weak var suburbLabel: UILabel!
@@ -31,6 +26,15 @@ class InformationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+      
+    }
+    override func viewWillAppear(animated: Bool) {
+        getInformationPatient()
+    }
+    
+    //get information patient
+    func getInformationPatient(){
         if let uuid = defaults.valueForKey("uid") as? String {
             InformationPatient.getInformationPatientByUUID(uuid){
                 response in
@@ -50,6 +54,8 @@ class InformationViewController: UIViewController {
                     self.view.hideLoading()
                     if response["TimeOut"].string ==  ErrorMessage.TimeOut {
                         self.alertMessage("Error", message: ErrorMessage.TimeOut)
+                    }else if response["message"].string == ErrorMessage.TimeOutToken {
+                         
                     }else {
                         let message : String = String(response["ErrorsList"][0])
                         self.alertMessage("Error", message: message)
@@ -57,31 +63,9 @@ class InformationViewController: UIViewController {
                 }
             }
         }
-        //Check message show button if change from Verify to PatientInfo
-        if messageFrom == "VerifyToProfile" {
-            btnHomeView.hidden = false
-            naviProfile.hidden = false
-        }
-    }
-    override func viewWillAppear(animated: Bool) {
-        //Set image
-        let imageName = "A1a Copy 2.png"
-        let image = UIImage(named: imageName)
-        avatarImageView.image = image
-        imageView.image = image
-        
-        
-        //cicle image view
-        avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
-        avatarImageView.clipsToBounds = true;
-        avatarImageView.layer.borderWidth = 2.0
-        avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
+
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         view.endEditing(true)
     }

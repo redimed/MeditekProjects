@@ -16,17 +16,17 @@ class GetAndPostDataController {
     
     let headers = [
         "Authorization": "Bearer \(tokens)",
-        "Content-Type": "application/x-www-form-urlencoded",
         "Version" : "1.0",
-        "CoreAuth": "Bearer \(coreTokens)"
+        "systemtype": "ios",
+        "deviceId" : config.deviceID! as String,
+        "useruid":"\(userUID ?? "")"
     ]
     let header_3005 = [
         "Authorization": "Bearer \(coreTokens)",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Version" : "1.0"
+        "Version" : "1.0",
     ]
 
-    
+
     //Giap: Check phone number and send verify code
     func SendVerifyPhoneNumber (deviceID:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
         //Split number 0
@@ -88,20 +88,31 @@ class GetAndPostDataController {
     }
     //Giap: Get information Patient by UID
     func getInformationPatientByUUID(UUID:String,completionHandler:(JSON) -> Void){
+         print("Get information patient")
         let parameters = [
             "data": [
                 "uid" : UUID
             ]
         ]
+
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.getInformationPatientByUID ,headers:headers,parameters: parameters).responseJSON{
             request, response, result in
+                print("response:",response?.allHeaderFields["Content-Type"])
+                print("response:",response)
             switch result {
             case .Success(let JSONData):
                 var data = JSON(JSONData)
-                print(data)
+                print("data:",data)
                 let jsonInformation = data["data"][0] != nil ? data["data"][0] : ""
                 if jsonInformation == "" {
-                    completionHandler(JSON(["message":"error"]))
+//                    if data["ErrorType"].string == ErrorMessage.TimeOutToken {
+//                        print(data["ErrorType"])
+//                        completionHandler(JSON(["message":ErrorMessage.TimeOutToken]))
+//                    }else {
+//                        completionHandler(JSON(["message":"error"]))
+//                    }
+                        completionHandler(JSON(["message":"error"]))
+                    
                 }else {
                 
                     let MiddleName = jsonInformation["MiddleName"].string ?? ""
@@ -133,6 +144,7 @@ class GetAndPostDataController {
                 
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
+                
                 completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
                 
                 if let data = data {
@@ -146,6 +158,7 @@ class GetAndPostDataController {
     
     //Giap: Get List Appointment
     func getListAppointmentByUID(UID:String,Limit:String,completionHandler:(JSON) -> Void) {
+        print("Get list appointment")
         let parameters = [
             "data": [
                 "uid" : UID,

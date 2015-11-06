@@ -34,7 +34,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     @IBOutlet weak var buttonEndCall: DesignableButton!
     @IBOutlet weak var buttonMuteCall: DesignableButton!
     let panRec = UIPanGestureRecognizer()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,14 +58,14 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         
     }
     
-       //Giap: Open or close publisher video
+    //Giap: Open or close publisher video
     @IBAction func buttonHoldCallAction(sender: DesignableButton) {
         
         if publisher?.publishVideo.boolValue == true {
             publisher?.publishVideo = false
             publisher?.view.hidden = true
             sender.setTitle(FAIcon.play, forState: .Normal)
-
+            
         } else {
             publisher?.publishVideo = true
             sender.setTitle(FAIcon.pause, forState: .Normal)
@@ -84,7 +84,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     }
     @IBAction func buttonEndCallAction(sender: DesignableButton) {
         emitDataToServer(MessageString.CallEndCall)
-       endCallAnswer()
+        endCallAnswer()
     }
     
     //Giap: Func handle emit socket to server 2 message : Answer or EndCall
@@ -104,7 +104,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
             print("portraight")
             print("Width:\(UIScreen.mainScreen().bounds.width) , height:\(UIScreen.mainScreen().bounds.height)")
             
-
+            
         }
     }
     override func didReceiveMemoryWarning() {
@@ -126,9 +126,9 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     
     
     /**
-    * Asynchronously begins the session connect process. Some time later, we will
-    * expect a delegate method to call us back with the results of this action.
-    */
+     * Asynchronously begins the session connect process. Some time later, we will
+     * expect a delegate method to call us back with the results of this action.
+     */
     func doConnect() {
         if let session = self.session {
             var maybeError : OTError?
@@ -140,10 +140,10 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     }
     
     /**
-    * Sets up an instance of OTPublisher to use with this session. OTPubilsher
-    * binds to the device camera and microphone, and will provide A/V streams
-    * to the OpenTok session.
-    */
+     * Sets up an instance of OTPublisher to use with this session. OTPubilsher
+     * binds to the device camera and microphone, and will provide A/V streams
+     * to the OpenTok session.
+     */
     func doPublish() {
         publisher = OTPublisher(delegate: self)
         
@@ -154,9 +154,9 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
             showAlert(error.localizedDescription)
         }
         view.addSubview((publisher?.view)!)
-//        view.addSubview(buttonEndCall)
-//        view.addSubview(buttonHoldCall)
-//        view.addSubview(buttonMuteCall)
+        //        view.addSubview(buttonEndCall)
+        //        view.addSubview(buttonHoldCall)
+        //        view.addSubview(buttonMuteCall)
         panRec.addTarget(self, action: "draggedView:")
         publisher!.view.frame = CGRect(x: 0.0, y: 0, width: videoWidthSub, height: videoHeightSub)
         publisher?.view.userInteractionEnabled = true
@@ -169,13 +169,13 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         sender.view!.center = CGPointMake(sender.view!.center.x + translation.x, sender.view!.center.y + translation.y)
         sender.setTranslation(CGPointZero, inView: self.view)
     }
-
+    
     /**
-    * Instantiates a subscriber for the given stream and asynchronously begins the
-    * process to begin receiving A/V content for this stream. Unlike doPublish,
-    * this method does not add the subscriber to the view hierarchy. Instead, we
-    * add the subscriber only after it has connected and begins receiving data.
-    */
+     * Instantiates a subscriber for the given stream and asynchronously begins the
+     * process to begin receiving A/V content for this stream. Unlike doPublish,
+     * this method does not add the subscriber to the view hierarchy. Instead, we
+     * add the subscriber only after it has connected and begins receiving data.
+     */
     func doSubscribe(stream : OTStream) {
         if let session = self.session {
             subscriber = OTSubscriber(stream: stream, delegate: self)
@@ -190,8 +190,8 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     }
     
     /**
-    * Cleans the subscriber from the view hierarchy, if any.
-    */
+     * Cleans the subscriber from the view hierarchy, if any.
+     */
     func doUnsubscribe() {
         if let subscriber = self.subscriber {
             var maybeError : OTError?
@@ -313,11 +313,11 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         button.setImage(UIImage(named: nameImg), forState: UIControlState.Normal)
     }
     
-
+    
     func endCallAnswer() {
         sessionDidDisconnect(session!)
         doUnsubscribe()
-       self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func shouldAutorotate() -> Bool {
@@ -334,7 +334,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return [UIInterfaceOrientationMask.Portrait ,UIInterfaceOrientationMask.PortraitUpsideDown]
     }
-
+    
     
     
 }

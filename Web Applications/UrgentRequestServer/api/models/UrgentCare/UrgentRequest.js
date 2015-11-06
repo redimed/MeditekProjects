@@ -171,6 +171,12 @@ module.exports = {
             maxLength: 1
         },
 
+        rehab: {
+            type: 'string',
+            columnName: 'Rehab',
+            maxLength: 1
+        },
+
         createdDate: {
             type: 'datetime',
             columnName: 'CreatedDate'

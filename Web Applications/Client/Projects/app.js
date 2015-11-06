@@ -15,7 +15,8 @@ var app = angular.module('app', [
     'app.common.CommonService',
     "app.unAuthentication",
     "app.authentication",
-    "angularFileUpload"
+    "angularFileUpload",
+    "vcRecaptcha"
 
 ]);
 

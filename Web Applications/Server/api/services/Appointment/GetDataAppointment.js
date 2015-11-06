@@ -98,7 +98,6 @@ module.exports = {
             MedicareReferenceNumber: data.MedicareReferenceNumber,
             ExpiryDate: data.ExpiryDate,
             DVANumber: data.DVANumber,
-            InjuryType: data.InjuryType,
             PatientKinName: data.PatientKinName,
             PatientKinRelationship: data.PatientKinRelationship,
             PatientKinContactNumber: data.PatientKinContactNumber
@@ -134,6 +133,7 @@ module.exports = {
             InterpreterRequired: data.InterpreterRequired,
             InterperterLanguage: data.InterperterLanguage,
             OtherSpecialNeed: data.OtherSpecialNeed,
+            MedicareEligible: data.MedicareEligible,
             MedicareNumber: data.MedicareNumber,
             MedicareReferenceNumber: data.MedicareReferenceNumber,
             ExpiryDate: data.ExpiryDate,
@@ -213,6 +213,7 @@ module.exports = {
             ConsultantSite: data.ConsultantSite,
             ConsultantContactNumber: data.ConsultantContactNumber,
             ConsultantNote: data.ConsultantNote,
+            InjuryType: data.InjuryType,
             Enable: 'Y'
         };
     }

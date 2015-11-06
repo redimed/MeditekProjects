@@ -64,7 +64,7 @@ class AppointmentListTableViewController: UITableViewController,AppointmentListT
     }
     //Giap: Get Appointment List
     func getAppointmentList() {
-        appointmentApi.getListAppointmentByUID(patientUid, Limit: "1", completionHandler: {
+        appointmentApi.getListAppointmentByUID(patientUid, Limit: "100", completionHandler: {
             response in
             print(response)
             
@@ -100,21 +100,7 @@ class AppointmentListTableViewController: UITableViewController,AppointmentListT
         
     }
     
-    //Collection view
-//    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-//        return 1
-//    }
-//    
-//    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 1
-//    }
-//    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageAppointmentDetailCell", forIndexPath: indexPath) as! AppointmentImageCollectionViewCell
-//        let imageName = "3837-11.jpg"
-//        let image = UIImage(named: imageName)
-//        cell.imageView.image = image
-//        return cell
-//    }
+
     
     
     

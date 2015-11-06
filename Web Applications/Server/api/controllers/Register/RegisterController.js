@@ -135,7 +135,7 @@ module.exports = {
 		};
 		if(data.captcha){
 			request.get({
-		        url:"https://www.google.com/recaptcha/api/siteverify?secret=%276LciQxATAAAAALts9R3pYzLswiiPikU7A4wKosm3%27&response="+data.captcha
+		        url:"https://www.google.com/recaptcha/api/siteverify?secret=%276LcDaxATAAAAAGAlZHx7jZFllXynb6TBDeelzP3X%27&response="+data.captcha
 		    }, function(error, response, body) {
 		    	var captcha = JSON.parse(body);
 		        		if(captcha.success==true){

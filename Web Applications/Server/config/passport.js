@@ -4,7 +4,9 @@ var passport = require('passport'),
 var o = require("../api/services/HelperService");
 /**
  * passport.serializeUser:
- * luu user vào session, hàm này được chạy sau khi gọi req.login
+ * only the user ID is serialized to the session, keeping the amount of data 
+ * stored within the session small. When subsequent requests are received, 
+ * this ID is used to find the user, which will be restored to req.user
  */
 passport.serializeUser(function(user, done) {
     console.log(">>>>>>>>>>>>>>>>>>>>>> passport serializeUser");

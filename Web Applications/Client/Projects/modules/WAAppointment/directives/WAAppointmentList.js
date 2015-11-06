@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.WAAppointment.directives.listWAAppoint', []);
-app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookies) {
+app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookies,toastr) {
     return {
         restrict: 'E',
         templateUrl: "modules/WAAppointment/directives/templates/listWAApointment.html",
@@ -34,6 +34,11 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                             CreatedDate: [null, null],
                             FromTime: [null, null]
                         }
+                    }],
+                    Order:[{
+                        Appointment:{
+                            CreatedDate:'DESC'
+                        }
                     }]
                 },
                 listWaapointment: null,
@@ -42,17 +47,29 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
             scope.toggleFilter = function() {
                 scope.info.toggle = scope.info.toggle === false ? true : false;
             };
-            scope.WAAppointmentDetail = function() {
-                $modal.open({
-                    templateUrl: 'modules/WAAppointment/views/WAAppointmentListDetail.html',
-                    controller: 'WAAppointmentListDetailCtrl',
-                    windowClass: 'app-modal-window',
+            scope.WAAppointmentDetail = function(UID) {
+                o.loadingPage(true);
+                WAAppointmentService.getDetailWAAppointmentByUid(UID).then(function(data) {
+                    o.loadingPage(false);
+                    $modal.open({
+                        templateUrl: 'modules/WAAppointment/views/WAAppointmentListDetail.html',
+                        controller: 'WAAppointmentListDetailCtrl',
+                        windowClass: 'app-modal-window',
+                        resolve: {
+                            data: function() {
+                                return data.data;
+                            }
+                        }
+                    })
+                },function (error) {
+                    o.loadingPage(false);
+                    toastr.error("Select error!", "error");
                 })
+
             };
             scope.LoadData = function() {
                 WAAppointmentService.loadListWAAppointment(scope.info.data).then(function(data) {
                     scope.info.listWaapointment = data;
-                    console.log("listWaapointment", scope.info.listWaapointment);
                 });
             };
             scope.LoadData();

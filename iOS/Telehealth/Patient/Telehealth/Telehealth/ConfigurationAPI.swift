@@ -44,6 +44,7 @@ struct MessageString  {
 struct ErrorMessage {
     static let NoData = "Can't get data"
     static let TimeOut = "Request Time Out"
+    static let TimeOutToken = "jwt expired"
 }
 
 //Giap: Group Hash Value Number 0 - 9 and delete

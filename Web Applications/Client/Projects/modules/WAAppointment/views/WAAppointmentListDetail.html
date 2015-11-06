@@ -18,7 +18,6 @@
         </button>
     </div>
 </div> -->
-
 <div class="portlet box green" style="margin-bottom:0px;">
     <div class="portlet-title bold uppercase" style="padding:10px;">
         <div class="caption">
@@ -32,14 +31,219 @@
     <div class="portlet-body form">
         <form>
             <div class="form-body margin-bottom-10">
-                <detail-waappoint></detail-waappoint>
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="index.html#tab_appointment" data-toggle="tab"> Appointment </a>
+                        </li>
+                        <li>
+                            <a href="index.html#tab_patient" data-toggle="tab"> Patient </a>
+                        </li>
+                        <li>
+                            <a href="index.html#tab_referral" data-toggle="tab"> Referral </a>
+                        </li>
+                        <li>
+                            <a href="index.html#tab_clinical" data-toggle="tab"> Clinical </a>
+                        </li>
+                        <li>
+                            <a href="index.html#tab_treating" data-toggle="tab"> Treating Practitioner </a>
+                        </li>
+                        <li>
+                            <a href="index.html#tab_medical_images" data-toggle="tab"> Medical Images </a>
+                        </li>
+                        <li>
+                            <a href="index.html#tab_referring" data-toggle="tab"> Referring Practitioner </a>
+                        </li>
+                        <li>
+                            <a href="index.html#tab_complain" data-toggle="tab"> Present Complain & Allergy </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_appointment">
+                            <div class="my-modal-body">
+                                <form role="form">
+                                    <div class="row">
+                                        <!-- col 1 -->
+                                        <div class="col-md-6 col-sm-6 col-md-offset-1 col-sm-offset-1">
+                                            <h4 class="form-section bold">Basic Information</h4>
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="form-group form-md-line-input">
+                                                        <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '12'">12 months</div>
+                                                        <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '03'">3 months</div>
+                                                        <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == '00'">Indefinite</div>
+                                                        <div class="form-control" ng-if="wainformation.TelehealthAppointment.RefDurationOfReferral == null"></div>
+                                                        <label class="control-label">Duration of Referral</label>
+                                                        <div class="form-control-focus"> </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="form-group form-md-line-input">
+                                                        <select class="form-control" name="Speciality" ng-model="wainformation.Status" ng-options="item.value as item.name for item in info.apptStatus">
+                                                            <option value=""></option>
+                                                        </select>
+                                                        <label class="control-label">Status</label>
+                                                        <div class="form-control-focus"> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="form-group form-md-line-input">
+                                                        <div class="input-icon">
+                                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.requestDate">
+                                                            <label class="control-label">Request Date</label>
+                                                            <div class="form-control-focus"> </div>
+                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="checkbox-list">
+                                                        <label class="control-label">
+                                                            <input type="checkbox" name="Correspondence12" ng-true-value="'Y'" ng-false-value="'N'" ng-model="wainformation.TelehealthAppointment.Correspondence"> Correspondence
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="form-group form-md-line-input">
+                                                        <div class="input-icon">
+                                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate">
+                                                            <label class="control-label">Appointment Date</label>
+                                                            <div class="form-control-focus"> </div>
+                                                            <i class="glyphicon glyphicon-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="form-group form-md-line-input">
+                                                        <div class="input-icon">
+                                                            <input type="text" class="form-control timepicker timepicker-no-seconds" ng-model="info.appointmentTime" data-default-time="" data-format="hh:mm A">
+                                                            <label class="control-label">Appointment Time</label>
+                                                            <div class="form-control-focus"> </div>
+                                                            <i class="icon-clock"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="form-group form-md-line-input">
+                                                        <div class="form-control">{{info.patientInfomation.FirstName}} {{info.patientInfomation.LastName}}</div>
+                                                        <label class="control-label">Patient</label>
+                                                        <div class="form-control-focus"> </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="form-group form-md-line-input">
+                                                        <div class="form-control">{{wainformation.TelehealthAppointment.RefName}}</div>
+                                                        <label class="control-label">Referring Practitioner</label>
+                                                        <div class="form-control-focus"> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12">
+                                                    <div class="form-group form-md-line-input">
+                                                        <select class="form-control" ng-model="wainformation.TelehealthAppointment.Fund">
+                                                            <option value="">------Select Fund-----</option>
+                                                            <option value='ACA'>ACA Health Benefits Fund</option>
+                                                            <option value='AHM'>ahm Health Insurance</option>
+                                                            <option value='AUF'>Australian Unity Health Limited</option>
+                                                            <option value='BUP'>Bupa Australia Pty Ltd</option>
+                                                            <option value='CBH'>CBHS Health Fund Limited</option>
+                                                            <option value='CDH'>CDH Benefits Fund</option>
+                                                            <option value='CPS'>CUA Health Limited</option>
+                                                            <option value='AHB'>Defence Health Limited</option>
+                                                            <option value='AMA'>Doctors' Health Fund</option>
+                                                            <option value='GMF'>GMF Health</option>
+                                                            <option value='GMH'>GMHBA Limited</option>
+                                                            <option value='FAI'>Grand United Corporate Health</option>
+                                                            <option value='HBF'>HBF Health Limited</option>
+                                                            <option value='HCF'>HCF</option>
+                                                            <option value='HCI'>Health Care Insurance Limited</option>
+                                                            <option value='HIF'>Health Insurance Fund of Australia Limited</option>
+                                                            <option value='SPS'>Health Partners</option>
+                                                            <option value='HEA'>health.com.au</option>
+                                                            <option value='LHS'>Latrobe Health Services</option>
+                                                            <option value='MBP'>Medibank Private Limited</option>
+                                                            <option value='MDH'>Mildura Health Fund</option>
+                                                            <option value='OMF'>National Health Benefits Australia Pty Ltd (onemedifund)</option>
+                                                            <option value='NHB'>Navy Health Ltd</option>
+                                                            <option value='NIB'>NIB Health Funds Ltd.</option>
+                                                            <option value='LHM'>Peoplecare Health Insurance</option>
+                                                            <option value='PWA'>Phoenix Health Fund Limited</option>
+                                                            <option value='SPE'>Police Health</option>
+                                                            <option value='QCH'>Queensland Country Health Fund Ltd</option>
+                                                            <option value='RTE'>Railway and Transport Health Fund Limited</option>
+                                                            <option value='RBH'>Reserve Bank Health Society Ltd</option>
+                                                            <option value='SLM'>St.Lukes Health</option>
+                                                            <option value='NTF'>Teachers Health Fund</option>
+                                                            <option value='TFS'>Transport Health Pty Ltd</option>
+                                                            <option value='QTU'>TUH</option>
+                                                            <option value='WFD'>Westfund Limited</option>
+                                                        </select>
+                                                        <label class="control-label">Fund</label>
+                                                        <div class="form-control-focus"> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- col 2 -->
+                                        <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
+                                            <h4 class="form-section bold">Referral To</h4>
+                                            <div class="form-group form-md-line-input">
+                                                <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Speciality}}</div>
+                                                <label class="control-label">Speciality</label>
+                                                <div class="form-control-focus"> </div>
+                                            </div>
+                                            <div class="form-group form-md-line-input">
+                                                <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].Name}}</div>
+                                                <label class="control-label">Name of Specialist (if required)</label>
+                                                <div class="form-control-focus"></div>
+                                            </div>
+                                            <div class="form-group form-md-line-input">
+                                                <div class="form-control">{{wainformation.TelehealthAppointment.PreferredPractitioners[0].SiteName}}</div>
+                                                <label class="control-label">Site</label>
+                                                <div class="form-control-focus"> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_patient">
+                            <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Patient.html'"></div>
+                        </div>
+                        <div class="tab-pane" id="tab_referral">
+                            <div class="my-modal-body scroller" style="height:600px" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Referral.html'"></div>
+                        </div>
+                        <div class="tab-pane" id="tab_clinical">
+                            <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Clinical.html'"></div>
+                        </div>
+                        <div class="tab-pane" id="tab_treating">
+                            <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Treating.html'"></div>
+                        </div>
+                        <div class="tab-pane" id="tab_medical_images">
+                            <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_MedicalImages.html'"></div>
+                        </div>
+                        <div class="tab-pane" id="tab_referring">
+                            <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_Referring.html'"></div>
+                        </div>
+                        <div class="tab-pane" id="tab_complain">
+                            <div class="my-modal-body" ng-include="'modules/WAAppointment/views/WAAppointmentListDetail_ComplainAndAllergy.html'"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="form-actions">
                 <div class="row pull-right">
                     <div class="col-md-12">
                         <button class="btn default" ng-click="close()">
                             <i class="icon-action-undo"></i> Close</button>
-                        <button class="btn green" ng-click="save()">
+                        <button class="btn green">
                             <i class="glyphicon glyphicon-save"></i> Save change
                         </button>
                     </div>

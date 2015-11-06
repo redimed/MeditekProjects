@@ -54,6 +54,7 @@ module.exports = {
                 specialist: data.specialist,
                 handTherapy: data.handTherapy,
                 GP: data.GP,
+                rehab: data.rehab,
                 tried: 1,
                 status: 'pending',
                 interval: 5,

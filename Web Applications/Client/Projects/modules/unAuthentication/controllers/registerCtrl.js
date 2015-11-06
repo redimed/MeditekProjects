@@ -27,6 +27,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 			.then(function(result) {
 
 				if(result.length > 0) {
+					$scope.loadingpage = false;
 					toastr.error('Username already exists');
 				} else {
 
@@ -34,6 +35,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 					.then(function(result2) {
 
 						if(result2.length > 0) {
+							$scope.loadingpage = false;
 							toastr.error('MobilePhone already exists');
 						} else {
 							
@@ -41,6 +43,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 							.then(function(result3) {
 
 								if(result3.length > 0) {
+									$scope.loadingpage = false;
 									toastr.error('Email already exists');
 								} else {
 

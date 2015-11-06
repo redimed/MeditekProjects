@@ -22,7 +22,6 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
         }
 
     }
-<<<<<<< a3352feb770bfcc2b86371d16d7a8bfcd208784f
     $scope.showData = {
         GenderOther: null
     }
@@ -92,11 +91,6 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
     }
     $scope.Skin_cancer_Others = false;
     $scope.SendRequestUploadFile = function() {
-=======
-    // WAAppointmentService.loadListAppointment()
-    
-	$scope.SendRequestUploadFile = function() {
->>>>>>> update wa appointment create confirm
         for (var i = 0; i < uploader.queue.length; i++) {
             var item = uploader.queue[i];
             item.formData[0]["userUID"] = $cookies.getObject('userInfo').UID;

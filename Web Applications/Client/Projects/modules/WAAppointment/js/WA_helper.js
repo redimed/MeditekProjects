@@ -27,5 +27,9 @@ var WAConstant = {
         value: 'Finished',
         name: 'Finished',
         image:'./theme/assets/layouts/layout/imgStatus/finish.png'
-    }, ]
+    },{
+        value: 'Finished',
+        name: 'Finished',
+        image:'./theme/assets/layouts/layout/imgStatus/ReferralTracking.png'
+    }]
 }

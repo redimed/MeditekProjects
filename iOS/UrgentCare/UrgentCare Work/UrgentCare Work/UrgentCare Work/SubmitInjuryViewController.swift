@@ -30,6 +30,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     @IBOutlet weak var contactPersonTextField: UITextField!
     @IBOutlet weak var companyPhoneNumberTextField: UITextField!
     
+    @IBOutlet weak var GPReferralLabel: UILabel!
     var autocompleteUrls = [String]()
     var datePicker = UIDatePicker()
     var checkDOB = true
@@ -50,6 +51,13 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if GP == "Y" {
+            GPReferralLabel.hidden = true
+            btnYes.hidden = true
+            btnNo.hidden = true
+            GPReferral = ""
+        }
         
         customTextField(colorCustomBrow)
         
@@ -78,6 +86,8 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         
         
         DatepickerMode()
+        
+        
     }
     
     //select radio button
@@ -395,8 +405,6 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     func successAlert(info:Information){
         
         let alertController = UIAlertController(title: "Success", message: messageString.SubmitInjurySuccess, preferredStyle: .Alert)
-        
-        
         let SaveAction = UIAlertAction(title: "Save Information", style: .Destructive) { (action) in
             self.setPersonalData(info)
             self.performSegueWithIdentifier("unwindToContainerVC", sender: self)
@@ -526,8 +534,12 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
             }else {
                  borderTextFieldValid(companyPhoneNumberTextField, color: colorCustomBrow)
             }
-            
-
+        case birthDayTextField:
+            if compareDate(datePicker.date) == false {
+                borderTextFieldValid(birthDayTextField, color: colorCustomRed)
+            }else {
+                borderTextFieldValid(birthDayTextField, color: colorCustomBrow)
+            }
             
         case suburbTextField :
             autoTableView.hidden = true
@@ -540,7 +552,6 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
             if descriptionTextView.text != "" {
                 descriptionTextView.text = descriptionTextView.text.capitalizeFirst
             }
-            
         }
     }
     
@@ -551,17 +562,12 @@ extension SubmitInjuryViewController: UITableViewDelegate,UITableViewDataSource 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return autocompleteUrls.count
     }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("AutoCompleteRowIdentifier", forIndexPath: indexPath) as! AutocompleteTableViewCell
-    
         cell.name.text = autocompleteUrls[indexPath.row]
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         suburbTextField.text = autocompleteUrls[indexPath.row]
         autoTableView.hidden = true
     }

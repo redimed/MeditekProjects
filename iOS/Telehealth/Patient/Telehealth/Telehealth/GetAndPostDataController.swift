@@ -95,10 +95,18 @@ class GetAndPostDataController {
             ]
         ]
 
-        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.getInformationPatientByUID ,headers:headers,parameters: parameters).responseJSON{
+        Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getInformationPatientByUID + UUID,headers:headers,parameters: parameters).responseJSON{
             request, response, result in
-                print("response:",response?.allHeaderFields["Content-Type"])
-                print("response:",response)
+                print("response:",response?.allHeaderFields["newtoken"])
+            
+            if let newToken : String = response?.allHeaderFields["newtoken"]?.string  {
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    defaults.setValue(newToken, forKey: "token")
+                    defaults.synchronize()
+                    tokens = newToken
+                    print("response:",tokens)
+                }
+
             switch result {
             case .Success(let JSONData):
                 var data = JSON(JSONData)
@@ -130,7 +138,7 @@ class GetAndPostDataController {
                     let FirstName = jsonInformation["FirstName"].string ?? ""
                     let State = jsonInformation["State"].string ?? ""
                     let ModifiedDate = jsonInformation["ModifiedDate"].string ?? ""
-                    let Email = jsonInformation["Email"].string ?? ""
+                    let Email1 = jsonInformation["Email1"].string ?? ""
                     let Country = jsonInformation["Country"]["ShortName"].string ?? ""
                     let ID = jsonInformation["ID"].string ?? ""
                     let Address1 = jsonInformation["Address1"].string ?? ""
@@ -138,7 +146,7 @@ class GetAndPostDataController {
                     let DOB = jsonInformation["DOB"].string ?? ""
                     let Suburb = jsonInformation["Suburb"].string ?? ""
                     let HomePhoneNumber = jsonInformation["HomePhoneNumber"].string ?? ""
-                    PatientInfo = Patient(MiddleName: MiddleName, Address2: Address2, Title: Title, WorkPhoneNumber: WorkPhoneNumber, Enable: Enable, PhoneNumber: PhoneNumber, Occupation: Occupation, LastName: LastName, Postcode: Postcode, UID: UID, UserAccountID: UserAccountID, Gender: Gender  , FirstName: FirstName, State: State, ModifiedDate: ModifiedDate, Email: Email, Country: Country, ID: ID, Address1: Address1, CountryID: CountryID, DOB: DOB, Suburb: Suburb, HomePhoneNumber: HomePhoneNumber)
+                    PatientInfo = Patient(MiddleName: MiddleName, Address2: Address2, Title: Title, WorkPhoneNumber: WorkPhoneNumber, Enable: Enable, PhoneNumber: PhoneNumber, Occupation: Occupation, LastName: LastName, Postcode: Postcode, UID: UID, UserAccountID: UserAccountID, Gender: Gender  , FirstName: FirstName, State: State, ModifiedDate: ModifiedDate, Email1: Email1, Country: Country, ID: ID, Address1: Address1, CountryID: CountryID, DOB: DOB, Suburb: Suburb, HomePhoneNumber: HomePhoneNumber)
                     completionHandler(JSON(["message":"success"]))
                 }
                 

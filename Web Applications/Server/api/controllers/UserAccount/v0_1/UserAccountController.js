@@ -7,7 +7,8 @@ module.exports = {
 	{
 		// console.log(req.session.passport.user);
 		// req.session.passport.user.SecretKey='123456';
-		res.ok({status:'success',user:req.user,newtoken:res.get('newtoken')});
+		var maxRole=o.getMaxRole(req.user.roles);
+		res.ok({status:'success',user:req.user,maxRole:maxRole,newtoken:res.get('newtoken')});
 
 	},
 
@@ -26,17 +27,17 @@ module.exports = {
 		// console.log(modifiedDate.format('YYYY-MM-DD HH:mm:ss'))
 		// console.log(addDate.format('YYYY-MM-DD HH:mm:ss'))
 		UserAccount.findAll({
-			where:{
-				ModifiedDate:{
-					// $gte:modifiedDate.zone('0000').format("YYYY-MM-DD HH:mm:ss"),
-					// $lt:addDate.zone('0000').format("YYYY-MM-DD HH:mm:ss")
-					$gte:modifiedDate.toDate(),
-					$lt:addDate.toDate()
-				}
-			}
+			limit:1,
+			// where:{
+			// 	ModifiedDate:{
+			// 		// $gte:modifiedDate.zone('0000').format("YYYY-MM-DD HH:mm:ss"),
+			// 		// $lt:addDate.zone('0000').format("YYYY-MM-DD HH:mm:ss")
+			// 		$gte:modifiedDate.toDate(),
+			// 		$lt:addDate.toDate()
+			// 	}
+			// }
 		})
 		.then(function(data){
-			console.log(data);
 			res.ok(data);
 		},function(err){
 			res.serverError(err);

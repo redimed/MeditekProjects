@@ -110,6 +110,8 @@ module.exports = {
     */
     PatientAppointmentUpdate: function(data) {
         return {
+            Title: data.Title,
+            MaritalStatus: data.MaritalStatus,
             FirstName: data.FirstName,
             MiddleName: data.MiddleName,
             LastName: data.LastName,
@@ -131,14 +133,13 @@ module.exports = {
             WorkPhoneNumber: data.WorkPhoneNumber,
             FaxNumber: data.FaxNumber,
             InterpreterRequired: data.InterpreterRequired,
-            InterperterLanguage: data.InterperterLanguage,
+            InterpreterLanguage: data.InterpreterLanguage,
             OtherSpecialNeed: data.OtherSpecialNeed,
             MedicareEligible: data.MedicareEligible,
             MedicareNumber: data.MedicareNumber,
             MedicareReferenceNumber: data.MedicareReferenceNumber,
             ExpiryDate: data.ExpiryDate,
             DVANumber: data.DVANumber,
-            InjuryType: data.InjuryType,
             PatientKinName: data.PatientKinName,
             PatientKinRelationship: data.PatientKinRelationship,
             PatientKinContactNumber: data.PatientKinContactNumber

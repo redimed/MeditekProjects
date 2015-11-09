@@ -132,22 +132,12 @@ module.exports = {
             website: 'WEB',
             android: 'ARD'
         },
-        authTokenExpired: {
-            'IOS': 30,
-            'ARD': 30,
-            'WEB':10,
-        },// second
-        authSecretExprired:{
-            'IOS':null,
-            'ARD':null,
-            'WEB':2*60*60,
-        },// second
 
-        verificationMethod: {
-            token: 'TOKEN',
-            code: 'CODE'
-        },
-
+        //---------------------------------------------------------
+        //---------------------------------------------------------
+        //---------------------------------------------------------
+        //---------------------------------------------------------
+        //---------------------------------------------------------
         roles: {
             admin: 'ADMIN',
             assistant: 'ASSISTANT',
@@ -156,12 +146,157 @@ module.exports = {
             patient: 'PATIENT',
             clinicTelehealth: 'CLINIC_TELEHEALTH'
         },
+        rolesValue:{
+            'ADMIN':100,
+            'ASSISTANT':90,
+            'INTERNAL_PRACTITIONER':80,
+            'EXTERTAL_PRACTITIONER':70,
+            'PATIENT':60,
+            'CLINIC_TELEHEALTH':50,
+        },
+        //---------------------------------------------------------
+        //---------------------------------------------------------
+        //---------------------------------------------------------
+        //---------------------------------------------------------
+        //---------------------------------------------------------
+
+        authTokenExpired: {
+            'IOS': 30,
+            'ARD': 30,
+            'WEB':10,
+        },// second
+
+        authSecretExprired:{
+            'IOS':null,
+            'ARD':null,
+            'WEB':2*60*60,
+        },// second
+
+        userSecretExpired:{
+            'IOS':{
+                'ADMIN':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+
+                'ASSISTANT':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+
+                'INTERNAL_PRACTITIONER':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+
+                'EXTERTAL_PRACTITIONER':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+
+                'PATIENT':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+
+                'CLINIC_TELEHEALTH':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+
+                'NULL':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                }
+            },
+
+            'ARD':{
+                'ADMIN':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+
+                'ASSISTANT':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+
+                'INTERNAL_PRACTITIONER':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+
+                'EXTERTAL_PRACTITIONER':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+
+                'PATIENT':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+
+                'CLINIC_TELEHEALTH':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+                'NULL':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                }
+            },
+
+
+            'WEB':{
+                'ADMIN':{
+                    secretKeyExpired:2*60*60,
+                    maxTimePlus:8*60*60
+                },
+
+                'ASSISTANT':{
+                    secretKeyExpired:2*60*60,
+                    maxTimePlus:8*60*60
+                },
+
+                'INTERNAL_PRACTITIONER':{
+                    secretKeyExpired:2*60*60,
+                    maxTimePlus:8*60*60
+                },
+
+                'EXTERTAL_PRACTITIONER':{
+                    secretKeyExpired:20*60,
+                    maxTimePlus:2*60*60
+                },
+
+                'PATIENT':{
+                    secretKeyExpired:20*60,
+                    maxTimePlus:2*60*60
+                },
+
+                'CLINIC_TELEHEALTH':{
+                    secretKeyExpired:20*60,
+                    maxTimePlus:2*60*60
+                },
+                'null':{
+                    secretKeyExpired:20*60,
+                    maxTimePlus:2*60*60
+                }
+            }
+        },
+
+
+        verificationMethod: {
+            token: 'TOKEN',
+            code: 'CODE'
+        },
+
         fileType: {
             image: 'MedicalImage',
             document: 'MedicalDocument',
             avatar: 'ProfileImage',
             signature: 'Signature'
         },
+
         imageExt: ['jpg', 'png', 'gif', 'webp', 'tif', 'bmp', 'psd', 'jxr'],
 
         verificationCodeLength: 6,
@@ -172,9 +307,28 @@ module.exports = {
 
         activationCodeExpired: 3, //Số lần có thể nhập sai
 
-
-
     },
+
+    getRoleList:function()
+    {
+        return _.values(this.const.roles);
+    },
+
+    getMaxRole:function(roles)
+    {
+        if(!_.isArray(roles) && !_.isEmpty(roles))
+        {
+            return null;
+        }
+        var rolesValue=this.const.rolesValue;
+        var maxRole=roles[0];
+        _.forEach(roles,function(item){
+            if(rolesValue[item.RoleCode]>rolesValue[maxRole.RoleCode])
+                maxRole=item;
+        })
+        return maxRole.RoleCode;
+    },
+
     exlog: exlog,
     exFileJSON: exFileJSON,
     /**
@@ -450,4 +604,9 @@ module.exports = {
             return item!=website;
         })
     },
+
+
+
+
+    
 }

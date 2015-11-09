@@ -20,10 +20,10 @@ module.exports = {
             type: Sequelize.STRING,
             allowNull: true
         },
-        CurrentToken: {
-            type: Sequelize.TEXT
+        SecretKey: {
+            type: Sequelize.STRING
         },
-        TokenCreatedDate: {
+        SecretCreatedDate: {
             type: Sequelize.DATE
         },
         TokenExpired: {
@@ -39,7 +39,7 @@ module.exports = {
         timestamps: false,
         hooks: {
             beforeCreate: function(usetoken, options, callback) {
-                usetoken.TokenCreatedDate = new Date();
+                usetoken.SecretCreatedDate = new Date();
                 callback();
             }
         }

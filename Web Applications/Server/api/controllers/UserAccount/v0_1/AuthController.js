@@ -20,7 +20,10 @@ module.exports = {
      * login: function xử lý login
      */
     login: function(req, res) {
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LOGIN");
+        console.log("============LOGIN===============");
+
+        var error=new ErrorWrap("login.Error");
+
         passport.authenticate('local', function(err, user, info) 
         {
             if ((err) || (!user)) 
@@ -30,27 +33,41 @@ module.exports = {
                     var err=info;
                 }
                 return res.unauthor(ErrorWrap(err));
+            }            
+            //TẠO TOKEN
+            //Tạo secret key
+            var userAccess={
+                UserUID:user.UID,
+                SystemType:req.headers.systemtype,
+                DeviceID:req.headers.deviceid
             }
-
-            req.logIn(user, function(err) 
-            {
-                if (err) 
-                {
-                    res.unauthor(ErrorWrap(err));
+            Services.UserToken.MakeUserToken(userAccess)
+            .then(function(ut){
+                var sessionUser={
+                    ID:user.ID,
+                    UID:user.UID,
+                    Activated:user.Activated,
+                    roles:user.roles,
+                    SystemType:req.headers.systemtype,
+                    DeviceID:req.headers.deviceid,
+                    SecretKey:ut.SecretKey,
+                    SecretCreatedDate:ut.SecretCreatedDate,
+                    TokenExpired:ut.TokenExpired
                 }
-                else
+                var token=jwt.sign(
+                    {UID:user.UID},
+                    ut.SecretKey,
+                    {expiresIn:o.const.authTokenExpired[req.headers.systemtype]}
+                );
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>REQ.LOGIN");
+                req.logIn(sessionUser, function(err) 
                 {
-                    //TẠO TOKEN
-                    //Tạo secret key
-                    var userToken={
-                        UserUID:user.UID,
-                        SystemType:req.headers.systemtype,
-                        DeviceID:req.headers.deviceid
+                    if (err) 
+                    {
+                        res.unauthor(ErrorWrap(err));
                     }
-                    Services.UserToken.CreateUserToken(userToken)
-                    .then(function(data){
-                        // var token = jwt.sign(user, secret, { expiresInMinutes: 60*24 });
-                        var token = jwt.sign(user, data.SecretKey, { expiresIn: o.const.authTokenExpired[req.headers.systemtype] });//second
+                    else
+                    {
                         if(user.Activated=='Y')
                         {
                             res.ok({
@@ -69,15 +86,13 @@ module.exports = {
                                 token:token
                             });
                         }
-                    },function(err){
-                        res.serverError(ErrorWrap(err));
-                    })
+                    }
                     
-                    
-                }
+                });
                 
-            });
-
+            },function(err){
+                res.serverError(ErrorWrap(err));
+            })
         })(req, res);
     },
 
@@ -85,14 +100,12 @@ module.exports = {
      * logout: xử lý logout
      */
     logout: function(req, res) {
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>LOGOUT");
-        var userToken={
+        var userAccess={
             UserUID:req.user.UID,
             SystemType:req.headers.systemtype,
             DeviceID:req.headers.deviceid
         }
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Make New Secret Key");
-        Services.UserToken.MakeNewSecretKey(userToken)
+        Services.UserToken.MakeUserToken(userAccess)
         .then(function(data){
             req.logout();
             res.ok({status:'success'});
@@ -101,12 +114,6 @@ module.exports = {
         })
         
     },
-    
-    refreshToken:function(req,res)
-    {
-        res.ok({status:'success'});
-    },
-
     
 };
 

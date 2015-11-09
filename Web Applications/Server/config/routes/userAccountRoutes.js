@@ -89,11 +89,6 @@ module.exports={
 		action:'logout'
 	},
 
-	'get /api/refreshToken':{
-		controller:'UserAccount/v0_1/AuthController',
-		action:'refreshToken'
-	},
-
 	'get /api/user-account/find-by-phone':{
 		controller:'UserAccount/v0_1/UserAccountController',
     	action:'FindByPhoneNumber'
@@ -110,14 +105,19 @@ module.exports={
     	action:'Activation'
 	},
 
-	'post /api/user-token/CreateUserToken':{
+	'post /api/user-token/MakeUserToken':{
 		controller:'UserAccount/v0_1/UserTokenController',
-    	action:'CreateUserToken'
+    	action:'MakeUserToken'
 	},
 
 	'post /api/user-token/GetSecretKey':{
 		controller:'UserAccount/v0_1/UserTokenController',
     	action:'GetSecretKey'
+	},
+
+	'post /api/user-account/get-DetailUser':{
+		controller:'UserAccount/v0_1/UserAccountController',
+    	action:'getDetailUser'
 	},
 
 

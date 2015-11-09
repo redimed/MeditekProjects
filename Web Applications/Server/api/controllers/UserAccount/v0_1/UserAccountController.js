@@ -5,6 +5,8 @@ var o=require("../../../services/HelperService");
 module.exports = {
 	Test:function(req,res)
 	{
+		// console.log(req.session.passport.user);
+		// req.session.passport.user.SecretKey='123456';
 		res.ok({status:'success',user:req.user,newtoken:res.get('newtoken')});
 
 	},
@@ -361,5 +363,27 @@ module.exports = {
 		},function(err){
 			res.serverError(ErrorWrap(err));
 		})
+	},
+
+	getDetailUser: function(req, res) {
+		var data = req.body.data;
+		Services.UserAccount.getDetailUser(data)
+		.then(function(user){
+			if(o.checkData(user)){
+				console.log("==========================qweqweqwewqewqeqweeqe");
+				res.ok({
+					data:{
+						patient:user.Patient,
+						doctor:user.Doctor,
+						fileupload:user.FileUploads
+					}
+				});
+			}
+		},function(err){
+			console.log("==========================123123");
+			res.serverError(ErrorWrap(err));
+		});
 	}
+
+
 }

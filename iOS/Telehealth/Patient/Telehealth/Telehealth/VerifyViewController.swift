@@ -67,11 +67,13 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                 if response["status"] == "success"{
                     self.view.hideLoading()
                     let defaults = NSUserDefaults.standardUserDefaults()
-                    let uid = response["uid"].string
-                    let token = response["token"].string
-                    let patientUID = response["patientUID"].string
-                    let userUID = response["userUID"].string
-                    let coreToken = response["coreToken"].string
+                    let uid = response["user"]["TeleUID"].string! as String
+                    let token = response["token"].string! as String
+                    let patientUID = response["user"]["PatientUID"].string! as String
+                    let userUID = response["user"]["UID"].string! as String
+                    
+                 
+                
                     
                     //Save activated in localstorage
                     defaults.setValue("Verified", forKey: "verifyUser")
@@ -79,7 +81,7 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                     defaults.setValue(token, forKey: "token")
                     defaults.setValue(patientUID, forKey: "patientUID")
                     defaults.setValue(userUID, forKey: "userUID")
-                    defaults.setValue(coreToken, forKey: "coreToken")
+                  
                     defaults.synchronize()
                     
                     //Change to home view by segue
@@ -126,10 +128,7 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "VerifyToProfileSegue" {
-            let profile = segue.destinationViewController as! InformationViewController
-            profile.messageFrom = "VerifyToProfile"
-        }
+       
     }
     
     

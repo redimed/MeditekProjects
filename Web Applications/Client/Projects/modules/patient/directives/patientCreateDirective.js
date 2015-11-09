@@ -12,7 +12,11 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		    var uploader = $scope.uploader = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	url: o.const.uploadFileUrl,
-		    	headers:{Authorization:'Bearer '+$cookies.get("token")},
+		    	headers:{
+		    		Authorization:'Bearer '+$cookies.get("token"),
+		    		systemtype:'WEB',
+		    	},
+		    	withCredentials:true,
 		    	alias : 'uploadFile'
 		    });
 
@@ -78,13 +82,18 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 			scope.checkPhone = function(data) {
 				scope.loadingCheck = true;
 				//service validate data
+				var verifyData = {
+					FirstName:data.FirstName,
+					LastName:data.LastName,
+					PhoneNumber:data.PhoneNumber
+				};
 				PatientService.validateCheckPhone(data)
 				.then(function(success){
 					scope.er ='';
 					scope.ermsg='';
 					scope.isBlockStep1=true;
 					//service call API check PhoneNumber can be used to create Patient
-					PatientService.checkPatient(data)
+					PatientService.checkPatient(verifyData)
 					.then(function(result){
 						if(result!=undefined && result!=null && result!='' && result.length!=0){
 							if(result.data.isCreated==false){
@@ -92,20 +101,22 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 								scope.ermsg='';
 								scope.loadingCheck = false;
 								toastr.success("Phone Number can be choose to create patient","SUCCESS");
-								scope.isShowEmail = result.data.data.Email;
-								scope.data.Email = result.data.data.Email;
+								scope.isShowEmail1 = result.data.data.Email1;
+								scope.data.Email1 = result.data.data.Email1;
 								scope.isShowNext = true;
 								// scope.data.DOB = new Date('1/1/1990');
 							}
 							else{
 								toastr.error("Phone Number was used to create patient","ERROR");
 								scope.isBlockStep1 =false;
+								scope.loadingCheck = false;
 							}
 						}
 					}, function(err){
 						//if receive error push error message into array ermsg, 
 						//push error css into array er
 						//and show in template
+						scope.loadingCheck = false;
 						scope.er={};
 						scope.ermsg={};
 						toastr.error("Please input correct information","ERROR");
@@ -115,6 +126,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						}
 					});
 				},function (err){
+					console.log(err);
 					scope.loadingCheck = false;
 					scope.er={};
 					scope.ermsg={};
@@ -145,6 +157,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
             //and show notification success
             //****show notification error if validate data error 
 			scope.createPatient = function(data) {
+				console.log(data);
 				scope.loadingCreate = true;
 				//service check data
 				return PatientService.validate(data)
@@ -184,6 +197,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						}
 					});
 				},function(err){
+					console.log(err);
 					scope.loadingCreate = false;
 					scope.er={};
 					scope.ermsg={};

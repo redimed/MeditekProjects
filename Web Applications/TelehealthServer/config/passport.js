@@ -1,23 +1,37 @@
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     bcrypt = require('bcryptjs');
-passport.serializeUser(function(user, done) {
-    done(null, user);
+passport.serializeUser(function(data, done) {
+    done(null, data.user.ID);
 });
-passport.deserializeUser(function(user, done) {
-    done(null, user);
+passport.deserializeUser(function(ID, done) {
+    UserAccount.findOne({
+        where: {
+            ID: ID
+        }
+    }).then(function(user) {
+        done(null, user.dataValues);
+    }, function(err) {
+        done(err);
+    })
 });
 passport.use(new LocalStrategy({
     usernameField: 'username',
     passwordField: 'password',
     passReqToCallback: true
 }, function(req, u, p, done) {
+    var deviceId = req.headers.deviceid;
+    var deviceType = req.headers.systemtype;
     TelehealthService.MakeRequest({
         path: '/api/login',
         method: 'POST',
         body: {
             'UserName': u,
             'Password': p
+        },
+        headers: {
+            'DeviceID': deviceId,
+            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
         }
     }).then(function(response) {
         var data = response.getBody();

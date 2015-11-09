@@ -115,13 +115,16 @@ module.exports = {
             }
         },
         RefSignature: {
-            type: Sequelize.STRING(255),
+            type: Sequelize.BIGINT(20),
             allowNull: true,
             validate: {
-                len: {
-                    args: [0, 255],
-                    msg: 'Too long!'
+                isInt: {
+                    msg: 'Must be an integer!'
                 }
+            },
+            references: {
+                model: 'FileUpload',
+                key: 'ID'
             }
         },
         RefDate: {
@@ -143,7 +146,7 @@ module.exports = {
                 }
             }
         },
-        RefDurationOfReferal: {
+        RefDurationOfReferral: {
             type: Sequelize.STRING(2),
             allowNull: true,
             comment: '- 3 months: 03\n- 12 months: 12\n- indefinite: 00',
@@ -170,6 +173,17 @@ module.exports = {
 
                 len: {
                     args: [0, 2048],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        Type: {
+            type: Sequelize.STRING(3),
+            allowNull: true,
+            comment: 'TEL: TelehealthAppointment\nWAA: WAAppointment',
+            validate: {
+                len: {
+                    args: [0, 3],
                     msg: 'Too long!'
                 }
             }

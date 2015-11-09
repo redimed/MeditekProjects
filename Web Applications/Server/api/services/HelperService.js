@@ -3,6 +3,7 @@ var crypto = require('crypto'),
 var zlib = require('zlib');
 var fs = require('fs');
 var moment=require("moment");
+var jwt = require('jsonwebtoken');
 /*
 check data request
 input: request from client
@@ -89,7 +90,7 @@ module.exports = {
         //  my.ownsite@ourearth.org
         //  mysite@you.me.net
         //reference from: http://www.w3resource.com/javascript/form/email-validation.php
-        email: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        email:  /^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,3})+$/,
         date: /^(\d{4})\/(\d{1,2})\/(\d{1,2})$/,
         //fullPhonePattern example:
         //  (+351) 282 43 50 50
@@ -115,7 +116,7 @@ module.exports = {
         auHomePhoneNumber: /^[1-9]{9}$/,
 
         //character
-        character: /^[a-zA-Z]{0,255}$/,
+        character: /^[a-zA-Z\s0-9]{0,255}$/,
 
         //address
         address: /^[a-zA-Z0-9\s,'-\/]{0,255}$/,
@@ -132,15 +133,15 @@ module.exports = {
             android: 'ARD'
         },
         authTokenExpired: {
-            'IOS':3*60,
-            'ARD':3*60,
-            'WEB':24*60*60,
+            'IOS':30*60,
+            'ARD':30*60,
+            'WEB':10,
         },// second
         authSecretExprired:{
             'IOS':null,
             'ARD':null,
-            'WEB':20,
-        },
+            'WEB':2*60*60,
+        },// second
 
         verificationMethod: {
             token: 'TOKEN',
@@ -434,5 +435,19 @@ module.exports = {
         {
             return false;
         }
+    },
+
+    getSystems:function()
+    {
+        return _.values(this.const.systemType);
+    },
+
+    getMobileSystems:function()
+    {
+        var systems=_.values(this.const.systemType);
+        var website=this.const.systemType.website;
+        return _.filter(systems,function(item){
+            return item!=website;
+        })
     },
 }

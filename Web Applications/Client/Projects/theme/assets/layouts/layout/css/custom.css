@@ -1,30 +1,57 @@
 /* here you can put your own css to customize and override the theme */
 
+
 /*body { background-color: white;}*/
 
-.login{
-	background-color: white !important;
+.login {
+    background-color: white !important;
+
+
 }
-.content{ 
-	border: 1px solid #ccc;
+
+.content {
+    border: 1px solid #ccc;
     width: 380px !important;
 }
 
-.register-form {display: block !important;}
-.page-header {background-color: white;}
-.page-header.navbar {
-	background: white url('../img/bk-header.png') ;
-	background-size: 100% 46px ;
+.register-form {
+    display: block !important;
 }
 
-.my-modal-body { 
+.page-header {
+    background-color: white;
+}
+
+.page-header.navbar {
+    background: white url('../img/bk-header.png');
+    background-size: 100% 46px;
+}
+
+.my-modal-body {
     padding: 0em 2em 2em 2em;
 }
+
+
+/*fix sitebar*/
+@media (min-width: 992px){}
+.page-sidebar {
+    width: 300px;
+}
+
+@media (min-width: 992px){}
+.page-content-wrapper .page-content {
+    margin-left: 300px;
+}
+
 /*fix label input_md*/
+
 .form-group.form-md-line-input .form-control~label {
     font-size: 16px;
 }
+
+
 /* fix font panel*/
+
 .panel-body {
     font-size: 14px !important;
 }
@@ -32,16 +59,20 @@
 .page-header.navbar .page-logo .logo-default {
     margin: 0px 0 0 0;
     width: 200px;
-	height: 46px;
+    height: 46px;
 }
 
+table:hover{
+    cursor: pointer;
+}
 @media (min-width: 1368px) {
-    .app-modal-window .modal-dialog{
+    .app-modal-window .modal-dialog {
         width: 75%;
     }
 }
+
 @media (max-width: 1367px) {
-    .app-modal-window .modal-dialog{
+    .app-modal-window .modal-dialog {
         width: 90%;
     }
 }
@@ -49,22 +80,21 @@
 ul.my-ul {
     list-style-type: none;
 }
-.my-modal-header{
-	background-color: #36c6d3;
+
+.my-modal-header {
+    background-color: #36c6d3;
     color: #fff;
 }
 
 .portlet-body .my-portlet-body {
-	margin: 1em 1em;
+    margin: 1em 1em;
 }
 
 .bootstrap-select.btn-group .dropdown-menu {
     z-index: 99999999 !important;
 }
 
-
-
-.my-step-number{
+.my-step-number {
     background-color: #eee;
     display: inline-block;
     text-align: center !important;
@@ -79,32 +109,44 @@ ul.my-ul {
     border-radius: 50% !important;
 }
 
-.tableSort { float: right; }
-.sortDataTable { float: right; }
+.tableSort {
+    float: right;
+}
 
-#recaptcha_widget_div{
+.sortDataTable {
+    float: right;
+}
+
+#recaptcha_widget_div {
     display: none;
 }
 
+
 /*modal*/
-.page-header.navbar.navbar-fixed-top, .page-header.navbar.navbar-static-top {
+
+.page-header.navbar.navbar-fixed-top,
+.page-header.navbar.navbar-static-top {
     z-index: 995 !important;
 }
+
+
 /*portfilo*/
+
 .mix-grid .mix .mix-details {
-    background-color: rgba(126,126,126,0.5) !important;
-}
-.mix-grid .mix a.mix-link, .mix-grid .mix a.mix-preview {
-    background: #ccc;
+    background-color: rgba(126, 126, 126, 0.5) !important;
 }
 
+.mix-grid .mix a.mix-link,
+.mix-grid .mix a.mix-preview {
+    background: #ccc;
+}
 
 .nav-tabs>li>a {
     background: #ddd;
 }
 
-/*begin custom left sitebar*/
 
+/*begin custom left sitebar*/
 
 .tabs-left.nav-tabs>li>i {
     width: 37px;
@@ -124,38 +166,50 @@ ul.my-ul {
     background-color: #f0f6fa;
     border-left: solid 5px #c4d5df;
 }
-.tabs-left.nav-tabs>li>a{
+
+.tabs-left.nav-tabs>li>a {
     font: 1.5em !important;
     padding: 1em 15px;
 }
-.tabs-left.nav-tabs>li>a:focus, 
+
+.tabs-left.nav-tabs>li>a:focus,
 .tabs-left.nav-tabs>li>a:hover {
-   border: none;
-   border-left: 5px solid #99a8b1!important;
-   background-color: #c4d5df;
+    border: none;
+    border-left: 5px solid #99a8b1!important;
+    background-color: #c4d5df;
 }
 
-.tabs-left.nav-tabs>li.active>a, 
+.tabs-left.nav-tabs>li.active>a,
 .tabs-left.nav-tabs>li.active>a:hover>li.active>a:focus {
     border: none;
     color: white;
     background-color: #169ef4;
     border-left: solid 5px #0c91e5 !important;
 }
+
+
 /*end custom left sitebar*/
+
 
 /*.nav-tabs>li>a {
     background-color: #eee;
 }*/
+
+
 /*custom time picker*/
+
 .bootstrap-timepicker-widget.dropdown-menu.open {
     z-index: 1050 !important;
 }
+
+
 /*phan quoc chien*/
-.sweet-alert .sa-icon{
+
+.sweet-alert .sa-icon {
     border-radius: 50% !important;
 }
-.sweet-alert .sa-icon.sa-success .sa-placeholder{
+
+.sweet-alert .sa-icon.sa-success .sa-placeholder {
     border-radius: 50% !important;
 }
 
@@ -167,18 +221,33 @@ ul.my-ul {
     padding-left: 10px;
 }
 
-.c_radio_custom .radio{
+.c_radio_custom .radio {
     padding-top: 2px;
 }
 
+.loading-page {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    background: url(../img/big-f0f0f0.gif) center no-repeat;
+    display: none;
+}
+
+
 /*giang*/
+
 .is-Choose {
     background-color: #CCFFFF !important;
 }
-.is-Selected{
+
+.is-Selected {
     color: #31b0d5;
 }
-.is-notSelected{
+
+.is-notSelected {
     color: red;
 }
 

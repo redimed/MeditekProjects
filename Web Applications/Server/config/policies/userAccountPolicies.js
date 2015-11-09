@@ -1,7 +1,8 @@
 module.exports={
 	'UserAccount/v0_1/UserAccountController':{
       // 'Test':['checkCookieToken'],
-	    'Test':['isAuthenticated'],
+      'Test':['isAuthenticated'],
+	    'TestPost':['isAuthenticated'],
 	    'TestURL':'checkVersion',
 	    'CreateUserAccount':['isAuthenticated','isAdmin'],
 	    'DisableUserAccount':['isAuthenticated','isAdmin'],
@@ -18,7 +19,6 @@ module.exports={
   	'UserAccount/v0_1/AuthController':{
   		'login':true,
   		'logout':'isAuthenticated',
-      'refreshToken':'isAuthenticated'
   	},
 
   	'UserAccount/v0_1/UserActivationController':{

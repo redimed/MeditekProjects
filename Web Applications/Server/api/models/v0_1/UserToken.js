@@ -1,6 +1,6 @@
-module.exports={
-	attributes:{
-		ID: {
+module.exports = {
+    attributes: {
+        ID: {
             type: Sequelize.BIGINT(20),
             autoIncrement: true,
             allowNull: false,
@@ -24,11 +24,10 @@ module.exports={
                 key: 'ID'
             }
         },
-
-		SystemType: {
+        SystemType: {
             type: Sequelize.STRING(45),
             allowNull: true,
-            comment: 'IOS: IOS; Website: WEB; Android: ARD',
+            comment: 'IOS: IOS\nWebsite: WEB\nAndroid: ARD',
             validate: {
                 len: {
                     args: [0, 45],
@@ -36,24 +35,28 @@ module.exports={
                 }
             }
         },
-
         DeviceID: {
-            type: Sequelize.TEXT,
+            type: Sequelize.STRING(255),
+            allowNull: true,
             validate: {
-
                 len: {
-                    args: [0, 2048],
+                    args: [0, 255],
                     msg: 'Too long!'
                 }
             }
         },
-
-        SecretKey:{
-        	type:Sequelize.STRING(255),
+        SecretKey: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
         },
-
-        SecretCreatedDate:{
-        	type: Sequelize.DATE,
+        SecretCreatedDate: {
+            type: Sequelize.DATE,
             allowNull: true,
             validate: {
                 isDate: {
@@ -61,20 +64,32 @@ module.exports={
                 }
             }
         },
+        TokenExpired: {
+            type: Sequelize.INTEGER(11),
+            allowNull: true,
+            validate: {
 
-        TokenExpired:{
-        	type:Sequelize.INTEGER(11),
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
         },
-
-        Enable:{
-        	type:Sequelize.STRING(1),
-        	defaultValue:'Y',
+        Enable: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            comment: 'Y/N',
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
         }
-	},
-
+    },
     associations: function() {},
     options: {
         tableName: 'UserToken',
         timestamps: false,
+        hooks: {}
     }
-}
+};

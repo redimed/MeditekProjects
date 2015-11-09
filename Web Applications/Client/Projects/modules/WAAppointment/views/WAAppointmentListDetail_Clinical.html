@@ -5,7 +5,7 @@
             <li class="active">
                 <a data-toggle="tab" href="index.html#tab_medicalHistory">
                     Relevant Past Medical History </a>
-                    <span class="after"> </span>
+                <span class="after"> </span>
             </li>
             <li>
                 <a data-toggle="tab" href="index.html#tab_socialFactor">
@@ -36,7 +36,7 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group">
-                            <textarea class="form-control"></textarea>
+                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.MedicalHistory'].Value"></textarea>
                         </div>
                     </div>
                 </div>
@@ -46,22 +46,15 @@
                             <table class="table table-hover table-light">
                                 <thead>
                                     <tr class="uppercase">
-                                        <th width="30%">Name</th>
-                                        <th ng-show="uploader.isHTML5">Size</th>
-                                        <th>Date</th>
+                                        <th width="30%">File Name</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in uploader.queue">
-                                        <td><strong>{{ item.file.name }}</strong></td>
-                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.MedicalHistory'].FileUploads">
+                                        <td><strong>{{ item.FileName }}</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div>
-                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
                         </div>
                     </div>
                 </div>
@@ -71,7 +64,8 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group">
-                            <textarea class="form-control"></textarea>
+                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.SocialFactors'].Value
+                        "></textarea>
                         </div>
                     </div>
                 </div>
@@ -81,22 +75,15 @@
                             <table class="table table-hover table-light">
                                 <thead>
                                     <tr class="uppercase">
-                                        <th width="30%">Name</th>
-                                        <th ng-show="uploader.isHTML5">Size</th>
-                                        <th>Date</th>
+                                        <th width="30%">File Name</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in uploader.queue">
-                                        <td><strong>{{ item.file.name }}</strong></td>
-                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.SocialFactors'].FileUploads">
+                                        <td><strong>{{ item.FileName }}</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div>
-                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
                         </div>
                     </div>
                 </div>
@@ -106,7 +93,8 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group">
-                            <textarea class="form-control"></textarea>
+                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Allergies'].Value
+                        "></textarea>
                         </div>
                     </div>
                 </div>
@@ -116,22 +104,15 @@
                             <table class="table table-hover table-light">
                                 <thead>
                                     <tr class="uppercase">
-                                        <th width="30%">Name</th>
-                                        <th ng-show="uploader.isHTML5">Size</th>
-                                        <th>Date</th>
+                                        <th width="30%">File Name</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in uploader.queue">
-                                        <td><strong>{{ item.file.name }}</strong></td>
-                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Allergies'].FileUploads">
+                                        <td><strong>{{ item.FileName }}</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div>
-                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
                         </div>
                     </div>
                 </div>
@@ -141,7 +122,8 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group">
-                            <textarea class="form-control"></textarea>
+                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Medication'].Value
+                        "></textarea>
                         </div>
                     </div>
                 </div>
@@ -151,22 +133,15 @@
                             <table class="table table-hover table-light">
                                 <thead>
                                     <tr class="uppercase">
-                                        <th width="30%">Name</th>
-                                        <th ng-show="uploader.isHTML5">Size</th>
-                                        <th>Date</th>
+                                        <th width="30%">File Name</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in uploader.queue">
-                                        <td><strong>{{ item.file.name }}</strong></td>
-                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Medication'].FileUploads">
+                                        <td><strong>{{ item.FileName }}</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div>
-                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
                         </div>
                     </div>
                 </div>
@@ -176,7 +151,8 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group">
-                            <textarea class="form-control"></textarea>
+                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.InvestigationTests'].Value
+                        "></textarea>
                         </div>
                     </div>
                 </div>
@@ -186,22 +162,15 @@
                             <table class="table table-hover table-light">
                                 <thead>
                                     <tr class="uppercase">
-                                        <th width="30%">Name</th>
-                                        <th ng-show="uploader.isHTML5">Size</th>
-                                        <th>Date</th>
+                                        <th width="30%">File Name</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in uploader.queue">
-                                        <td><strong>{{ item.file.name }}</strong></td>
-                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                                        <td>{{item.file.lastModifiedDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.InvestigationTests'].FileUploads">
+                                        <td><strong>{{ item.FileName }}</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div>
-                            <p><span class="caption-helper">Queue length: {{ uploader.queue.length }}</span></p>
                         </div>
                     </div>
                 </div>
@@ -210,27 +179,21 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
-                            <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="">
-                                <label class="control-label">Pathology provider</label>
-                                <div class="form-control-focus"> </div>
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </div>
+                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.PathologyProvider">
+                            <label class="control-label">Pathology provider</label>
+                            <div class="form-control-focus"> </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
-                            <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="">
-                                <label class="control-label">Radiology provider</label>
-                                <div class="form-control-focus"> </div>
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </div>
+                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.RadiologyProvider">
+                            <label class="control-label">Radiology provider</label>
+                            <div class="form-control-focus"> </div>
                         </div>
                     </div>
                     <div class="col-md-12 col-sm-12">
                         <label class="control-label">Other Notes</label>
-                        <textarea class="form-control" rows="5"></textarea>
+                        <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.OtherNotes'].Value"></textarea>
                     </div>
                 </div>
             </div>

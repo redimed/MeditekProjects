@@ -1,9 +1,16 @@
 module.exports = {
-    'Appointment/AppointmentController': {
-        'RequestAppointment': ['isAuthenticated'],
+    'Appointment/TelehealthAppointmentController': {
+        'RequestTelehealthAppointment': ['isAuthenticated'],
         'GetListTelehealthAppointment': ['isAuthenticated'],
         'GetDetailTelehealthAppointment': ['isAuthenticated'],
-        'UpdateTelehealthAppointment': ['isAuthenticated'],
-        'DeleteTelehealthAppointment': ['isAuthenticated']
+        'UpdateRequestTelehealthAppointment': ['isAuthenticated'],
+        'DisableTelehealthAppointment': ['isAuthenticated']
+    },
+    'Appointment/WAAppointmentController': {
+        'RequestWAAppointment': ['isAuthenticated'],
+        'GetListWAAppointment': ['isAuthenticated'],
+        'GetDetailWAAppointment': ['isAuthenticated'],
+        'UpdateRequestWAAppointment': ['isAuthenticated'],
+        'DisableWAAppointment': ['isAuthenticated']
     }
 };

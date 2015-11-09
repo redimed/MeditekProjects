@@ -39,7 +39,7 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
     private Intent i;
     private String picturePath, appointmentUID;
     private RegisterApi registerApiUpload, registerApi;
-    private String accountUID, bodyPart, coreToken;
+    private String accountUID, bodyPart, auth, deviceID;
     private long totalSize = 0;
     private boolean shouldFinish = false;
     private static SharedPreferences uidTelehealth;
@@ -99,7 +99,9 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
 
             final String fileType = "MedicalImage";
             String description = " ";
-            coreToken = "Bearer " + uidTelehealth.getString("coreToken", null);
+            auth = "Bearer " + uidTelehealth.getString("token", null);
+            deviceID = uidTelehealth.getString("deviceID", null);
+
             final File file = new File(picturePath);
             totalSize = file.length();
 
@@ -110,7 +112,7 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
                 }
             };
 
-            registerApiUpload.uploadFile(coreToken, accountUID, fileType, bodyPart, description, new CountingTypedFile("image/*", file, listener), new Callback<JsonObject>() {
+            registerApiUpload.uploadFile(auth, deviceID, "Android", accountUID, fileType, bodyPart, description, new CountingTypedFile("image/*", file, listener), new Callback<JsonObject>() {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
                     String status = jsonObject.get("status").getAsString();

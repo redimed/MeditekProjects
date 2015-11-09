@@ -1,5 +1,5 @@
 angular.module('app.authentication.doctor.directive.detail', [])
-.directive('doctorDetail', function(doctorService, CommonService, $filter, $cookies, toastr, $modal) {
+.directive('doctorDetail', function(doctorService, CommonService, $filter, $cookies, toastr, $modal, $timeout) {
 
 	return {
 
@@ -232,6 +232,11 @@ angular.module('app.authentication.doctor.directive.detail', [])
 
 		},
 		link: function(scope, ele, attrs) {
+
+			$timeout(function(){
+				App.initAjax();
+				ComponentsDateTimePickers.init(); // init todo page
+			});
 
 			// Variable
 			var info_list = {

@@ -12,14 +12,13 @@ module.exports = {
             });
             return;
         }
-        var socketQuery = req.socket.handshake.query;
         var uid = req.param('uid');
         if (uid) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 if (teleUser) {
                     sails.sockets.join(req.socket, uid);
                     sails.sockets.leave(req.socket, req.socket.id);
-                    TelehealthService.GetOnlineUsers(socketQuery.CoreAuth);
+                    sails.sockets.blast('onlineUser');
                 } else {
                     sails.sockets.emit(req.socket, 'errorMsg', {
                         msg: 'User Not Exist!'
@@ -72,17 +71,6 @@ module.exports = {
                 }
             }
         }
-    },
-    OnlineUserList: function(req, res) {
-        if (!req.isSocket) {
-            res.json(500, {
-                status: 'error',
-                message: 'Socket Request Only!'
-            });
-            return;
-        }
-        var socketQuery = req.socket.handshake.query;
-        TelehealthService.GetOnlineUsers(socketQuery.CoreAuth);
     },
     GenerateConferenceSession: function(req, res) {
         opentok.createSession({

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- view background color -->
+    <solid
+        android:color="#FFFFFF" >
+    </solid>
+
+    <!-- view border color and width -->
+    <stroke
+        android:width="0.2dp"
+        android:color="#424242" >
+    </stroke>
+
+    <!-- If you want to add some padding -->
+    <!--<padding-->
+        <!--android:left="10dp"-->
+        <!--android:top="10dp"-->
+        <!--android:right="10dp"-->
+        <!--android:bottom="10dp"    >-->
+    <!--</padding>-->
+
+    <!--&lt;!&ndash; Here is the corner radius &ndash;&gt;-->
+    <!--<corners-->
+        <!--android:radius="5dp"   >-->
+    <!--</corners>-->
+
+</shape><!-- From: file:/D:/Redimed/Android/UrgentCare/UrgentCare/app/src/main/res/drawable/boder_from.xml -->

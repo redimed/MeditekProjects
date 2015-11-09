@@ -24,7 +24,7 @@ class Patient{
     var FirstName : String!
     var State : String!
     var ModifiedDate : String!
-    var Email : String!
+    var Email1 : String!
     var Country : String!
     var ID : String!
     var Address1 : String!
@@ -32,7 +32,7 @@ class Patient{
     var DOB : String!
     var Suburb : String!
     var HomePhoneNumber : String!
-    init(MiddleName:String,Address2:String,Title:String,WorkPhoneNumber:String,Enable:String,PhoneNumber:String,Occupation:String,LastName:String,Postcode:String,UID:String,UserAccountID:String,Gender:String,FirstName:String,State:String,ModifiedDate:String,Email:String,Country:String,ID:String,Address1:String,CountryID:String,DOB:String,Suburb:String,HomePhoneNumber:String){
+    init(MiddleName:String,Address2:String,Title:String,WorkPhoneNumber:String,Enable:String,PhoneNumber:String,Occupation:String,LastName:String,Postcode:String,UID:String,UserAccountID:String,Gender:String,FirstName:String,State:String,ModifiedDate:String,Email1:String,Country:String,ID:String,Address1:String,CountryID:String,DOB:String,Suburb:String,HomePhoneNumber:String){
         
         self.MiddleName = MiddleName
         self.Address2 = Address2
@@ -49,7 +49,7 @@ class Patient{
         self.FirstName = FirstName
         self.State = State
         self.ModifiedDate = ModifiedDate
-        self.Email = Email
+        self.Email1 = Email1
         self.Country = Country
         self.DOB = DOB
         self.Suburb = Suburb

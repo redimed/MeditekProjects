@@ -976,6 +976,37 @@ module.exports = {
 
 		
 		
+	},
+
+	getDetailUser:function(data)
+	{
+		return UserAccount.findOne({
+			include: [
+				{
+			       	model: Doctor,
+			        attributes: ['Title','FirstName','LastName'],
+			        required: false
+			    },
+			    {
+			       	model: Patient,
+			        attributes: ['Title','FirstName','LastName'],
+			        required: false
+			    },
+			    {
+			       	model: FileUpload,
+			        attributes: ['UID'],
+			        required: false,
+			        where:{
+			        	Enable:'Y'
+			        }
+			    }
+			],
+			subQuery   : false,
+			attributes:['UserName','Email'],
+			where:{
+				UID: data.UID
+			}
+		});
 	}
 
 }

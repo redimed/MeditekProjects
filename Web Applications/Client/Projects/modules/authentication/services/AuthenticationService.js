@@ -8,6 +8,12 @@ angular.module('app.authentication.service', [])
 
     services.getListCountry = function() {
     	return api.one('/patient/get-listcountry').get();
+    };
+
+    services.getDetailUser = function(data) {
+    	var getDetailUser = api.all("user-account/get-DetailUser");
+		return getDetailUser.post({data:data});
     }
+
     return services;
 })

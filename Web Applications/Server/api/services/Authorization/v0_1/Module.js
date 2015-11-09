@@ -24,7 +24,7 @@ var modules=[
 	{
 		uid:'4',
 		state:'authentication.appointment.list',
-		name:'Appointment List',
+		name:'Telehealth Appointment List',
 		parent:'3',
 		order:'1',
 		roles:[
@@ -36,7 +36,7 @@ var modules=[
 	{
 		uid:'5',
 		state:'authentication.appointment.request',
-		name:'Send Request',
+		name:'Telehealth Send Request',
 		parent:'3',
 		order:'2',
 		roles:[
@@ -62,6 +62,28 @@ var modules=[
 		roles:[
 			'ADMIN',
 			'ASSISTANT'
+		]
+	},
+	{
+		uid:'8',
+		state:'authentication.WAAppointment.list',
+		name:'WA Appointment List',
+		parent:'3',
+		order:'3',
+		roles:[
+			'ADMIN',
+			'ASSISTANT',
+			'EXTERTAL_PRACTITIONER'
+		]
+	},
+	{
+		uid:'9',
+		state:'authentication.WAAppointment.GP',
+		name:'WA Appointment Send Request',
+		parent:'3',
+		order:'4',
+		roles:[
+			'EXTERTAL_PRACTITIONER'
 		]
 	},
 

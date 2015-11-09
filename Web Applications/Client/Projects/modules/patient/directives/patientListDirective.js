@@ -19,7 +19,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				{field:"LastName",name:"Last Name"},
 				{field:"Gender",name:"Gender"},
 				{field:"UserAccount",name:"Mobile"},
-				{field:"Email",name:"Email"}
+				{field:"Email1",name:"Email"}
 			];
 			scope.EnableChoose = [
 				{id:null,name:"All"},
@@ -165,7 +165,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						}else{
 
 							scope.uidReturn='';
-							scope.init();
+							// scope.init();
 						}
 					});
 				}

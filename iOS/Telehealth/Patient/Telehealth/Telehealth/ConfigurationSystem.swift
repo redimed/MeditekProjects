@@ -16,11 +16,15 @@ var savedData  = saveData()
 let defaults = NSUserDefaults.standardUserDefaults()
 var tokens = String()
 var coreTokens = String()
+var userUID = String()
 var PatientInfo : Patient!
 
 struct ConfigurationSystem {
-    static let Http_3009 = "http://testapp.redimed.com.au:3009"
-    static let Http_3005 =  "http://testapp.redimed.com.au:3005"
+    static let http = "http://192.168.1.130"
+    
+    
+    static let Http_3009 = "\(http):3009"
+    static let Http_3005 =  "\(http):3005"
     let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
     
 

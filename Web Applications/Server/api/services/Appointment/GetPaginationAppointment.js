@@ -11,6 +11,7 @@ module.exports = function(data, userInfo) {
         filterTelehealthAppointment: [],
         filterPatientAppointment: [],
         filterPatient: [],
+        filterWAAppointment: [],
         order: [],
         limit: data.Limit,
         offset: data.Offset
@@ -52,6 +53,9 @@ module.exports = function(data, userInfo) {
                                     break;
                                 case 'TelehealthAppointment':
                                     pagination.filterTelehealthAppointment.push(tempFilter);
+                                    break;
+                                case 'WAAppointment':
+                                    pagination.filterWAAppointment.push(tempFilter);
                                     break;
                                 case 'PatientAppointment':
                                     pagination.filterPatientAppointment.push(tempFilter);
@@ -118,8 +122,10 @@ module.exports = function(data, userInfo) {
                                     pagination.filterDoctor.push(tempSearch);
                                     break;
                                 case 'TelehealthAppointment':
-                                    var tempSearch = {};
                                     pagination.filterTelehealthAppointment.push(tempSearch);
+                                    break;
+                                case 'WAAppointment':
+                                    pagination.filterWAAppointment.push(tempSearch);
                                     break;
                                 case 'PatientAppointment':
                                     pagination.filterPatientAppointment.push(tempSearch);
@@ -161,6 +167,10 @@ module.exports = function(data, userInfo) {
                                     break;
                                 case 'TelehealthAppointment':
                                     tempOrder = [TelehealthAppointment, keyOrder, order[keyModel][keyOrder]];
+                                    pagination.order.push(tempOrder);
+                                    break;
+                                case 'WAAppointment':
+                                    tempOrder = [WAAppointment, keyOrder, order[keyModel][keyOrder]];
                                     pagination.order.push(tempOrder);
                                     break;
                                 case 'Patient':
@@ -227,6 +237,9 @@ module.exports = function(data, userInfo) {
                                         break;
                                     case 'TelehealthAppointment':
                                         pagination.filterTelehealthAppointment.push(tempRange);
+                                        break;
+                                    case 'WAAppointment':
+                                        pagination.filterWAAppointment.push(tempRange);
                                         break;
                                     case 'PatientAppointment':
                                         pagination.filterPatientAppointment.push(tempRange);

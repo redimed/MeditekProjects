@@ -14,7 +14,6 @@
     </ul>
 </div>
 <!-- END PAGE HEADER-->
-
 <!-- BEGIN BODY -->
 <div class="portlet light bordered">
     <div class="portlet-title">
@@ -36,21 +35,21 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="label-control">Patient</label>
-                        <input type="text" class="form-control input-sm" placeholder="Filter patient" ng-enter="filter()" ng-model="infoAppointment.patient">
+                        <input type="text" class="form-control input-sm" placeholder="Filter patient" ng-enter="load()" ng-model="searchObjectMap.Search[0].PatientAppointment.FullName">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="label-control">Created From Date</label>
                         <!-- <input type="date" class="form-control" placeholder="Request From Date"> -->
-                         <input ng-model="infoAppointment.submit_from_date" type="text" class="form-control input-sm" name="submit_from_date" datepicker-popup="dd/MM/yyyy" max-date="infoAppointment.submit_to_date" is-open="submit_from_date" ng-click="submit_from_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
+                         <input ng-model="searchObjectMap.Range[0].Appointment.CreatedDate[0]" type="text" class="form-control input-sm" name="submit_from_date" datepicker-popup="dd/MM/yyyy" max-date="searchObjectMap.Range[0].Appointment.CreatedDate[1]" is-open="submit_from_date" ng-click="submit_from_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="load()">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="label-control">Created To Date</label>
                         <!-- <input type="date" class="form-control" placeholder="Request To Date"> -->
-                        <input ng-model="infoAppointment.submit_to_date" type="text" class="form-control input-sm" name="submit_to_date" datepicker-popup="dd/MM/yyyy" min-date="infoAppointment.submit_from_date" is-open="submit_to_date" ng-click="submit_to_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
+                        <input ng-model="searchObjectMap.Range[0].Appointment.CreatedDate[1]" type="text" class="form-control input-sm" name="submit_to_date" datepicker-popup="dd/MM/yyyy" min-date="searchObjectMap.Range[0].Appointment.CreatedDate[0]" is-open="submit_to_date" ng-click="submit_to_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="load()">
                     </div>
                 </div>
             </div>
@@ -58,21 +57,21 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="label-control">Treating Practitioner</label>
-                        <input type="text" class="form-control input-sm" placeholder="Filter Treating Practitioner" ng-model="infoAppointment.doctor" ng-enter="filter()">
+                        <input type="text" class="form-control input-sm" placeholder="Filter Treating Practitioner" ng-model="searchObjectMap.Search[1].Doctor.FullName" ng-enter="load()">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="label-control">Appointment From Date</label>
                         <!-- <input type="date" class="form-control" placeholder="Approval From Date"> -->
-                        <input ng-model="infoAppointment.appointment_from_date" type="text" class="form-control input-sm" name="appointment_from_date" datepicker-popup="dd/MM/yyyy" max-date="infoAppointment.appointment_to_date" is-open="appointment_from_date" ng-click="appointment_from_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
+                        <input ng-model="searchObjectMap.Range[0].Appointment.FromTime[0]" type="text" class="form-control input-sm" name="appointment_from_date" datepicker-popup="dd/MM/yyyy" max-date="searchObjectMap.Range[0].Appointment.FromTime[1]" is-open="appointment_from_date" ng-click="appointment_from_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="load()">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="label-control">Appointment To Date</label>
                         <!-- <input type="date" class="form-control" placeholder="Approval To Date"> -->
-                        <input ng-model="infoAppointment.appointment_to_date" type="text" class="form-control input-sm" name="appointment_to_date" datepicker-popup="dd/MM/yyyy" min-date="infoAppointment.appointment_from_date" is-open="appointment_to_date" ng-click="appointment_to_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="filter()">
+                        <input ng-model="searchObjectMap.Range[0].Appointment.FromTime[1]" type="text" class="form-control input-sm" name="appointment_to_date" datepicker-popup="dd/MM/yyyy" min-date="searchObjectMap.Range[0].Appointment.FromTime[0]" is-open="appointment_to_date" ng-click="appointment_to_date = true" datepicker-options="dateOptions" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" ng-change="load()">
                     </div>
                 </div>
             </div>
@@ -91,14 +90,14 @@
                         <th>Treating Practictioner</th>
                         <th>
                             Created Date
-                            <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('SubmitDate','ASC')" ng-show="typeSubmitDate == 'ASC'"></i>
-                            <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('SubmitDate','DESC')" ng-show="typeSubmitDate == 'DESC'"></i>
+                            <i class="fa fa-sort-asc fa-lg sortDataTable" ng-click="sortData('CreatedDate','ASC')" ng-show="searchObjectMap.Order[0].Appointment.CreatedDate == 'DESC'" style="front-size:40"></i>
+                            <i class="fa fa-sort-desc fa-lg sortDataTable" ng-click="sortData('CreatedDate','DESC')" ng-show="searchObjectMap.Order[0].Appointment.CreatedDate !== 'DESC'"></i>
                         </th>
                         <th>Status</th>
                         <th>
                             Appointment Date
-                            <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('AppointmentDate','ASC')" ng-show="typeAppointmentDate == 'ASC'"></i>
-                            <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('AppointmentDate','DESC')" ng-show="typeAppointmentDate == 'DESC'"></i>
+                            <i class="fa fa-sort-asc fa-lg sortDataTable" ng-click="sortData('FromTime','ASC')" ng-show="searchObjectMap.Order[0].Appointment.FromTime == 'DESC'"></i>
+                            <i class="fa fa-sort-desc fa-lg sortDataTable" ng-click="sortData('FromTime','DESC')" ng-show="searchObjectMap.Order[0].Appointment.FromTime !== 'DESC'"></i>
                         </th>
                         <th>Correspondence</th>
                     </tr>
@@ -106,18 +105,18 @@
                 <tbody>
                     <tbody>
                         <tr ng-repeat="p in appointments" ng-click="openAppointmentModal(p.UID)">
-                            <!-- <td>{{p}}</td> -->
-                            <td>{{($index+1)+ 20*(currentPage-1)}}</td>
+                            <td>{{(searchObjectMap.currentPage-1)*searchObjectMap.Limit +$index +1}}</td>
                             <td ng-show="p.Patients.length === 0">{{p.TelehealthAppointment.PatientAppointment.FirstName}} {{p.TelehealthAppointment.PatientAppointment.LastName}}</td>
                             <td ng-show="p.Patients.length !== 0">{{p.Patients[0].FirstName}} {{p.Patients[0].LastName}}</td>
                             <td>{{((p.Doctors[0].Title !=null)?p.Doctors[0].Title:"")+" "+((p.Doctors[0].FirstName != null)?p.Doctors[0].FirstName:"") +" "+((p.Doctors[0].LastName != null)?p.Doctors[0].LastName:"")}}</td>
                             <td>{{p.CreatedDate | date: 'dd/MM/yyyy'}}</td>
                             <td>
-                                <span ng-if="p.Status == 'Approved'" class="label label-success">Booked</span>
-                                <span ng-if="p.Status == 'Calling'" class="label label-default">Calling</span>
-                                <span ng-if="p.Status == 'Watting for approval'" class="label label-warning">Pending</span>
+                                <span ng-if="p.Status == 'Approved'" class="label label-success">Appointment Time</span>
                                 <span ng-if="p.Status == 'Cancelled'" class="label label-danger">Cancelled</span>
-                                <span ng-if="p.Status == 'Finish'" class="label label-primary">Finish</span>
+                                <span ng-if="p.Status == 'Received'" class="label label-default">Received</span>
+                                <span ng-if="p.Status == 'Waiting for approval'" class="label label-warning">Pending</span>
+                                <span ng-if="p.Status == 'Pending'" class="label label-primary">Pending</span>
+                                <span ng-if="p.Status == 'Waitlist'" class="label label-primary">Wait List Surgery</span>
                             </td>
                             <td>{{p.FromTime | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td>
                             <td ng-show="p.TelehealthAppointment.Correspondence == 'Y'" style="text-align:center">
@@ -134,11 +133,12 @@
         <!-- begin pagination -->
         <div class="row">
             <div class="col-md-5 col-sm-12">
-                {{filteredTodos.length }}
+                {{CountRow }}
             </div>
             <div class="col-md-7 col-sm-12" style="text-align:right">
                 <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-                    <pagination boundary-links="true " total-items="filteredTodos.length " ng-model="currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="numPerPage " max-size="maxSize "></pagination>
+                    <pagination boundary-links="true " total-items="CountRow " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.Limit " max-size="searchObjectMap.maxSize " ng-change="SetPage() ">
+                    </pagination>
                 </div>
             </div>
         </div>

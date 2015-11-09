@@ -38,7 +38,8 @@ public interface RegisterApi {
     //3005
     @Multipart
     @POST("/api/uploadFile")
-    void uploadFile(@Header("Authorization") String core,
+    void uploadFile(@Header("Authorization") String auth,
+                    @Header("DeviceID") String deviceId, @Header("SystemType") String systemType,
                     @Part("userUID") String accountUID, @Part("fileType") String fileType,
                     @Part("bodyPart") String bodyPart, @Part("description") String description,
                     @Part("uploadFile") TypedFile uploadFile, Callback<JsonObject> callback);

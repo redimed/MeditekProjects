@@ -44,8 +44,8 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     
     //page Controller
     func pagingImage(){
-        self.pageTitles = NSArray(objects: "Explore", "Today Widget","Lest","contruction")
-        self.pageImages = NSArray(objects: "chef2", "truck","sore back","construction")
+        self.pageTitles = NSArray(objects: "Explore","Lest","contruction")
+        self.pageImages = NSArray(objects: "chef2","sore back","construction")
         pageControl.numberOfPages = pageImages.count
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         self.pageViewController.dataSource = self
@@ -171,6 +171,10 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
             data.fileName = "UrgentCare"
             data.navigationBarString = "UrgentCare"
             
+        }else if segue.identifier == "OtherServiceSegue"{
+            let data = segue.destinationViewController as! FAQsViewController
+            data.fileName = "OtherServices"
+            data.navigationBarString = "Other Services"
         }
         
     }

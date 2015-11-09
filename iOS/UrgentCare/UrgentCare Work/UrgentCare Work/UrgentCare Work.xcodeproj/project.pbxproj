@@ -63,6 +63,7 @@
 		AF26B2C21BEC8787006F37A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF26B28F1BEC8787006F37A4 /* Main.storyboard */; };
 		AF26B2C31BEC8787006F37A4 /* AutocompleteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF26B2911BEC8787006F37A4 /* AutocompleteTableViewCell.swift */; };
 		AF26B2C41BEC8787006F37A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF26B2921BEC8787006F37A4 /* Assets.xcassets */; };
+		AF57CAA41BEC9C79007BEF06 /* OtherServices.html in Resources */ = {isa = PBXBuildFile; fileRef = AF57CAA31BEC9C79007BEF06 /* OtherServices.html */; };
 		F096A210F695AF2FC6276011 /* Pods_UrgentCare_Work.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83F9C44110EB532283DE1E8 /* Pods_UrgentCare_Work.framework */; };
 /* End PBXBuildFile section */
 
@@ -152,6 +153,7 @@
 		AF26B2901BEC8787006F37A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		AF26B2911BEC8787006F37A4 /* AutocompleteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteTableViewCell.swift; sourceTree = "<group>"; };
 		AF26B2921BEC8787006F37A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AF57CAA31BEC9C79007BEF06 /* OtherServices.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = OtherServices.html; sourceTree = "<group>"; };
 		ED2CCDFBEEFCD741B39F41A7 /* Pods-UrgentCare Work.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UrgentCare Work.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UrgentCare Work/Pods-UrgentCare Work.debug.xcconfig"; sourceTree = "<group>"; };
 		EE7D5C1120C2947597C55F4D /* Pods-UrgentCare Work.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UrgentCare Work.release.xcconfig"; path = "Pods/Target Support Files/Pods-UrgentCare Work/Pods-UrgentCare Work.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -199,6 +201,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AF0366641BED8D7200E2A960 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AF26B2851BEC8787006F37A4 /* InformationUrgentCare.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		AF26B2181BEC869C006F37A4 = {
 			isa = PBXGroup;
 			children = (
@@ -224,6 +234,7 @@
 		AF26B2231BEC869C006F37A4 /* UrgentCare Work */ = {
 			isa = PBXGroup;
 			children = (
+				AF0366641BED8D7200E2A960 /* Models */,
 				AF26B2C71BEC8849006F37A4 /* Configuration */,
 				AF26B2CA1BEC8898006F37A4 /* Layouts */,
 				AF26B2C91BEC8879006F37A4 /* Others */,
@@ -336,6 +347,7 @@
 				AF26B2581BEC8787006F37A4 /* TPKeyboardAvoiding */,
 				AF26B2551BEC8787006F37A4 /* UrgentCare.html */,
 				AF26B2881BEC8787006F37A4 /* FAQs.html */,
+				AF57CAA31BEC9C79007BEF06 /* OtherServices.html */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -346,7 +358,6 @@
 				AF26B2261BEC869C006F37A4 /* ViewController.swift */,
 				AF26B28A1BEC8787006F37A4 /* ContentViewController.swift */,
 				AF26B2871BEC8787006F37A4 /* FAQsViewController.swift */,
-				AF26B2851BEC8787006F37A4 /* InformationUrgentCare.swift */,
 				AF26B2621BEC8787006F37A4 /* SubmitInjuryViewController.swift */,
 			);
 			name = Controllers;
@@ -496,6 +507,7 @@
 				AF26B2321BEC869C006F37A4 /* LaunchScreen.storyboard in Resources */,
 				AF26B2A91BEC8787006F37A4 /* Info.plist in Resources */,
 				AF26B2C11BEC8787006F37A4 /* LaunchScreen.storyboard in Resources */,
+				AF57CAA41BEC9C79007BEF06 /* OtherServices.html in Resources */,
 				AF26B2931BEC8787006F37A4 /* UrgentCare.html in Resources */,
 				AF26B2C21BEC8787006F37A4 /* Main.storyboard in Resources */,
 				AF26B2AC1BEC8787006F37A4 /* LoadingView.xib in Resources */,
@@ -778,6 +790,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "UrgentCare Work/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = au.redimed.com.UCWorkInjury;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -790,6 +803,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "UrgentCare Work/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = au.redimed.com.UCWorkInjury;
 				PRODUCT_NAME = "$(TARGET_NAME)";

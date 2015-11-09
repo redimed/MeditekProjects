@@ -5,7 +5,7 @@ passport.serializeUser(function(sessionUser, done) {
     done(null, _.cloneDeep(sessionUser));
 });
 passport.deserializeUser(function(sessionUser, done) {
-    console.log("======",sessionUser);
+    console.log("======Session=====",sessionUser);
     done(null, sessionUser);
 });
 passport.use(new LocalStrategy({
@@ -59,7 +59,6 @@ passport.use(new LocalStrategy({
                          var sessionUser={
                             ID:user.ID,
                             UID:user.UID,
-                            TeleUID: teleUser.UID,
                             Activated:user.Activated,
                             roles:user.roles,
                             SystemType: HelperService.const.systemType[deviceType.toLowerCase()],

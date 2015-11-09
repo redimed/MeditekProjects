@@ -1,3 +1,4 @@
+var http = require('http');
 module.exports = {
     UpdateFile: function(req, res) {
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
@@ -52,6 +53,7 @@ module.exports = {
         var headers = req.headers;
         TelehealthService.GetAppointmentListWA(headers).then(function(response) {
             var data = response.getBody();
+            if (response.getHeaders().newtoken) res.set("newtoken", response.getHeaders().newtoken);
             if (data.count > 0) {
                 appts = data.rows;
                 TelehealthUser.findAll().then(function(teleUsers) {
@@ -65,22 +67,26 @@ module.exports = {
                             }
                         }
                     }
-                    if(response.getHeaders().newtoken) res.set("newtoken",response.getHeaders().newtoken);
                     return res.ok(TelehealthService.CheckOnlineUser(appts));
                 }).catch(function(err) {
                     res.serverError(ErrorWrap(err));
                 })
-            } else res.ok(TelehealthService.CheckOnlineUser(appts));
-        },function(err) {
+            } else return res.ok(TelehealthService.CheckOnlineUser(appts));
+        }, function(err) {
             res.serverError(err.getBody());
         });
     },
-    ListTelehealth: function(req,res){
-        console.log("AAAAAAAAAAAa",req.user);
+    ListTelehealth: function(req, res) {
         var appts = [];
         var headers = req.headers;
-        TelehealthService.GetAppointmentListTelehealth(headers).then(function(response) {
+        TelehealthService.GetAppointmentListTelehealth(headers,req).then(function(response) {
             var data = response.getBody();
+            if(response.getCode() == 202){
+                res.set("newtoken", response.getHeaders().newtoken);
+                req.session.passport.user.SecretKey = response.getHeaders().newsecret;
+                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate;
+                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired;
+            }
             if (data.count > 0) {
                 appts = data.rows;
                 TelehealthUser.findAll().then(function(teleUsers) {
@@ -94,14 +100,54 @@ module.exports = {
                             }
                         }
                     }
-                    if(response.getHeaders().newtoken) res.set("newtoken",response.getHeaders().newtoken);
-                    return res.ok({uses:req.user,data:TelehealthService.CheckOnlineUser(appts)});
+                    return res.ok(TelehealthService.CheckOnlineUser(appts));
                 }).catch(function(err) {
                     res.serverError(ErrorWrap(err));
                 })
-            } else res.ok(TelehealthService.CheckOnlineUser(appts));
-        },function(err) {
+            } else return res.ok(TelehealthService.CheckOnlineUser(appts));
+        }, function(err) {
             res.serverError(err.getBody());
         });
+        // var bodyData = '';
+        // if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
+        // var options = {
+        //     hostname:'192.168.1.130',
+        //     port:'3005',
+        //     path:'/api/appointment-telehealth-list',
+        //     method:'POST',
+        //     headers: headers
+        // };
+        // var body = {
+        //     data: {
+        //         Order: [{
+        //             Appointment: {
+        //                 FromTime: 'DESC'
+        //             }
+        //         }],
+        //         Filter: [{
+        //             Appointment: {
+        //                 Status:'Approved',
+        //                 FromTime: sails.moment().format('YYYY-MM-DD ZZ'),
+        //                 Enable: "Y"
+        //             }
+        //         }]
+        //     }
+        // };
+        // var httpRequest = http.request(options,function(response){
+        //     response.setEncoding('utf8');
+        //     console.log("====Headers====: ",response.headers);
+        //     if (response.headers.newtoken) res.set("newtoken", response.headers.newtoken);
+        //     response.on('data',function(chunk){
+        //         bodyData += chunk;
+        //     })
+        //     response.on('end',function(){
+        //         res.ok(JSON.parse(bodyData));
+        //     })
+        // })
+        // httpRequest.on('error',function(err){
+        //     res.serverError(ErrorWrap(err));
+        // })
+        // httpRequest.write(JSON.stringify(body));
+        // httpRequest.end();
     }
 }

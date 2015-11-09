@@ -26,8 +26,8 @@ public interface RegisterApi {
     @POST("/api/telehealth/user/verifyActivationCode")
     void verify(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
 
-    @POST("/api/telehealth/user/details")
-    void getDetailsPatient(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
+    @GET("/api/telehealth/user/details/{teleUID}")
+    void getDetailsPatient(@Path("teleUID") String teleUID, Callback<JsonObject> callback);
 
     @POST("/api/telehealth/user/appointments")
     void getAppointmentPatients(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);

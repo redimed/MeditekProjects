@@ -1,0 +1,159 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sub_tracking_bg"
+    tools:context="com.redimed.telehealth.patient.fragment.TrackingFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/btnBack"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:gravity="top"
+            android:text="@string/home_title"
+            android:textAllCaps="false"
+            android:textColor="@color/lightFont"
+            android:textSize="@dimen/size_txt" />
+
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="30dp"
+            android:text="TRACKING REFERRAL"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/lightFont"
+            android:textSize="@dimen/size_txt"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:showDividers="middle"
+        android:divider="@drawable/empty_tall_divider"
+        android:gravity="center"
+        android:layout_marginRight="40dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:text="@string/sub_tracking_received"
+            android:textSize="12dp"
+            android:paddingTop="27dp"
+            android:paddingLeft="11dp"
+            android:background="@drawable/sub_tracking_received"/>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/sub_tracking_arrow_icon"/>
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:text="@string/sub_tracking_appt_pending"
+            android:textSize="12dp"
+            android:paddingTop="20dp"
+            android:paddingLeft="13dp"
+            android:background="@drawable/sub_tracking_appt_pending"/>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/sub_tracking_arrow_icon"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="@string/sub_tracking_appt_time"
+                android:textSize="12dp"
+                android:paddingTop="22dp"
+                android:paddingLeft="23dp"
+                android:layout_marginRight="150dp"
+                android:background="@drawable/sub_tracking_appt_time"/>
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/sub_tracking_arrow_icon"/>
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:text="@string/sub_tracking_attend"
+            android:textSize="12dp"
+            android:paddingTop="28dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/sub_tracking_attended"/>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/sub_tracking_arrow_icon"/>
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:text="@string/sub_tracking_wait"
+            android:textSize="12dp"
+            android:paddingTop="12dp"
+            android:paddingLeft="15dp"
+            android:background="@drawable/sub_tracking_wait"/>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/sub_tracking_arrow_icon"/>
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:text="@string/sub_tracking_finish"
+            android:textSize="12dp"
+            android:paddingTop="27dp"
+            android:paddingLeft="20dp"
+            android:background="@drawable/sub_tracking_finish"/>
+
+    </LinearLayout>
+
+    <Button
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/sub_tracking_appt_icon"
+        android:text="Appointment"
+        android:textColor="@android:color/holo_blue_dark" />
+
+</RelativeLayout>

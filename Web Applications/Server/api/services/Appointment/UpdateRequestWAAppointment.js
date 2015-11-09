@@ -141,6 +141,7 @@ module.exports = function(data, userInfo) {
                             var dataWAAppointment =
                                 Services.GetDataAppointment.WAAppointment(WAAppointment);
                             dataWAAppointment.CreatedBy = preferringPractitionerObject.ID;
+                            dataWAAppointment.UID = dataWAAppointment.UID || UUIDService.Create();
                             var objectWAAppointment = {
                                 data: dataWAAppointment,
                                 where: appointmentObject.TelehealthAppointment.ID,

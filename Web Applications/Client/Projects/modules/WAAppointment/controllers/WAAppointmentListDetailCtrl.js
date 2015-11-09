@@ -11,6 +11,7 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
         //ComponentsDropdowns.init(); // init todo page
     });
     $scope.wainformation = data;
+    console.log('$scope.wainformation',$scope.wainformation);
     $scope.Temp = angular.copy(data)
      var ClinicalDetailsTemp = [];
     $scope.loadFuntion = function(){
@@ -33,7 +34,10 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
         patientInfomation: ($scope.wainformation.Patients.length != 0) ? $scope.wainformation.Patients : $scope.wainformation.TelehealthAppointment.PatientAppointment,
         appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('DD/MM/YYYY') : null,
         appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('h:mm A') : null,
-        listDoctorTreatingPractitioner: null
+        listDoctorTreatingPractitioner: null,
+        selectRadioGender: function () {
+            $scope.wainformation.TelehealthAppointment.PatientAppointment.Gender = "";
+        }
     }
 
     $scope.loadAllDoctor = function() {

@@ -68,13 +68,6 @@
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.FirstName">
-                                    <label class="control-label">Family name</label>
-                                    <div class="form-control-focus"> </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="form-group form-md-line-input">
                                     <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PreferredName">
                                     <label class="control-label">Preferred name</label>
                                     <div class="form-control-focus"> </div>
@@ -89,7 +82,14 @@
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.FirstName">
+                                    <select class="form-control" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MaritalStatus">
+                                        <option value=""></option>
+                                        <option value="Married">Married</option>
+                                        <option value="Never married">Never married</option>
+                                        <option value="Widowed">Widowed</option>
+                                        <option value="Divorced">Divorced</option>
+                                        <option value="Separated">Separated</option>
+                                    </select>
                                     <label class="control-label">Marital status</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
@@ -131,8 +131,9 @@
                                             <input type="radio" name="radioTest12" value="Female" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Gender"> Female
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" size="15" name="radioTest12" ng-checked="(wainformation.TelehealthAppointment.PatientAppointment.Gender != 'Male' && wainformation.TelehealthAppointment.PatientAppointment.Gender != 'Female' && wainformation.TelehealthAppointment.PatientAppointment.Gender != null)?true:false"> Other &nbsp;
-                                            <input type="text" size="10" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Gender">
+                                            <input type="radio" size="15" ng-click="info.selectRadioGender()" name="radioTest12" ng-checked="(wainformation.TelehealthAppointment.PatientAppointment.Gender != 'Male' && wainformation.TelehealthAppointment.PatientAppointment.Gender != 'Female' && wainformation.TelehealthAppointment.PatientAppointment.Gender != null)?true:false"> Other &nbsp;
+                                            <input type="text" size="10" ng-if="wainformation.TelehealthAppointment.PatientAppointment.Gender == 'Male' || wainformation.TelehealthAppointment.PatientAppointment.Gender == 'Female' || wainformation.TelehealthAppointment.PatientAppointment.Gender == null" disabled>
+                                            <input type="text" size="10" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Gender" ng-if="wainformation.TelehealthAppointment.PatientAppointment.Gender != 'Male' && wainformation.TelehealthAppointment.PatientAppointment.Gender != 'Female' && wainformation.TelehealthAppointment.PatientAppointment.Gender != null">
                                         </label>
                                     </div>
                                 </div>

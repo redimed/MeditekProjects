@@ -110,7 +110,14 @@ module.exports = function(req, res, next) {
 											{ expiresIn: o.const.authTokenExpired[req.headers.systemtype]}
 										);
 										res.set('newtoken',newtoken);
-	            						res.header('Access-Control-Expose-Headers', 'newtoken');
+										res.header('Access-Control-Expose-Headers', 'newtoken');
+										//xử lý cho việc gọi api từ telehealth server
+										//chỉ được sử dụng cho telehealth server
+										//-------------------------------------------
+	            						res.set('newsecret',sessionUser.SecretKey);
+	            						res.set('newsecretcreateddate',sessionUser.SecretCreatedDate);
+	            						res.set('tokenexpired',sessionUser.tokenexpired);
+	            						//-------------------------------------------
 	            						next();
 									},function(err){
 										o.exlog(err);
@@ -127,6 +134,7 @@ module.exports = function(req, res, next) {
 						}
 						else 
 						{
+							console.log(err);
 							error.pushError("isAuthenticated.tokenInvalid");
 							return res.unauthor(ErrorWrap(error));
 						}

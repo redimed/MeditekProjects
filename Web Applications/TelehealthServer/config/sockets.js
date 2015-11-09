@@ -42,10 +42,12 @@ module.exports.sockets = {
     // adapter: 'redis',
     // host: 'localhost',
     // port: 6379,
-    // ttl: 20,
+    // // ttl: <redis session TTL in seconds>,
+    // // ttl: 4,
+    // disableTTL :true,
     // db: 0,
-    // prefix: 'socket:',
-    // pass: '<redis auth password>',
+    // // pass: <redis auth password>,
+    // prefix: 'sess:',
     /***************************************************************************
      *                                                                          *
      * Whether to expose a 'get /__getcookie' route with CORS support that sets *
@@ -111,10 +113,7 @@ module.exports.sockets = {
      *                                                                          *
      ***************************************************************************/
     afterDisconnect: function(session, socket, cb) {
-        var socketQuery = socket.handshake.query;
-        var headers = HelperService.toJson(socketQuery);
-        delete headers['__sails_io_sdk_version'];
-        TelehealthService.GetOnlineUsers(headers);
+        sails.sockets.blast('onlineUser');
         return cb();
     },
     /***************************************************************************

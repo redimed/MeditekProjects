@@ -3,7 +3,17 @@ var o=require("../HelperService");
 
 /**
  * Validation: 
- * @param {[type]} userToken [description]
+ * Kiểm tra thông tin user request
+ * - User nếu login bằng web thì không cần deviceid
+ * - User nếu login bằng device thì cần deviceid
+ * Input:
+ * 	- userAccess: thông tin user truy cập
+ * 		+UserUID
+ * 		+SystemType
+ * 		+DeviceID (bắt buộc nếu systemtype thuộc mobile system)
+ * Output:
+ *  - Nếu hợp lệ trả về {status:'success'};
+ *  - Nếu không hợp lệ quăng về error;
  */
 function Validation(userAccess)
 {
@@ -11,14 +21,10 @@ function Validation(userAccess)
 	var q=$q.defer();
 	try
 	{
-		var systems=[];
-		var mobileSystems=[];
-		systems.push(HelperService.const.systemType.website);
-		systems.push(HelperService.const.systemType.ios);
-		systems.push(HelperService.const.systemType.android);
-		mobileSystems.push(HelperService.const.systemType.ios);
-		mobileSystems.push(HelperService.const.systemType.android);
+		var systems=o.getSystems();
+		var mobileSystems=o.getMobileSystems();
 
+		//kiểm tra thông tin user request có được cung cấp hay không
 		if(!_.isObject(userAccess) || _.isEmpty(userAccess))
 		{
 			error.pushError("params.notProvided");
@@ -31,6 +37,8 @@ function Validation(userAccess)
 			throw error;
 		}
 
+		//Kiểm tra systemType có được cung cấp hay không,
+		//Nếu được cung cấp thì kiểm tra có hợp lệ hay không
 		if(!o.checkData(userAccess.SystemType))
 		{
 			error.pushError("systemType.notProvided");
@@ -38,6 +46,7 @@ function Validation(userAccess)
 		}
 		else if(systems.indexOf(userAccess.SystemType)>=0)
 		{
+			//Kiểm tra nếu là mobile system thì cần có deviceId
 			if(mobileSystems.indexOf(userAccess.SystemType)>=0 && !userAccess.DeviceID)
 			{
 				error.pushError('deviceId.notProvided');
@@ -61,6 +70,12 @@ function Validation(userAccess)
 
 module.exports={
 	
+	/**
+	 * [MakeUserToken description]
+	 * Nếu userAccess chưa có userToken thì tạo userToken
+	 * Nếu userAccess đã có userToken thì update userToken
+	 * 		Các thông tin sẽ được update: SecretKey,SecretCreatedDate,TokenExpired
+	 */
 	MakeUserToken:function(userAccess,transaction)
 	{
 		console.log("=======================MakeUserToken==============================");
@@ -71,6 +86,7 @@ module.exports={
 			.then(function(user){
 				if(o.checkData(user))
 				{
+					//Truy vấn userToken (để xem có tồn tại hay chưa)
 					function CheckExist()
 					{
 						if(userAccess.SystemType==HelperService.const.systemType.website)
@@ -89,14 +105,16 @@ module.exports={
 									UserAccountID:user.ID,
 									DeviceID:userAccess.DeviceID
 								}
-							})
+							},{transaction:transaction})
 						}
 					}
 
-					return CheckExist()
+					return CheckExist()	
 					.then(function(ut){
 						if(o.checkData(ut))
 						{
+							//Nếu userToken đã tồn tại thì update userToken với secret key mới
+							//đồng thời cập nhật tokenExpired
 							return ut.updateAttributes({
 								SecretKey:UUIDService.Create(),
 								SecretCreatedDate:new Date(),
@@ -113,6 +131,7 @@ module.exports={
 						}
 						else
 						{
+							//Nếu userToken chưa tồn tại thì tạo mới userToken:
 							var insertInfo={
 								UserAccountID:user.ID,
 								SystemType:userAccess.SystemType,
@@ -121,10 +140,10 @@ module.exports={
 								TokenExpired:o.const.authSecretExprired[userAccess.SystemType],
 								Enable:'Y',
 							};
+							//Nếu system type là mobile thì yêu cầu cần có DeviceID
 							if(userAccess.SystemType!=HelperService.const.systemType.website)
 							{
 								insertInfo.DeviceID=userAccess.DeviceID;
-								console.log(insertInfo);
 							}
 
 							return UserToken.create(insertInfo,{transaction:transaction})
@@ -157,6 +176,10 @@ module.exports={
 		});
 	},
 
+	/**
+	 * [GetUserToken description]
+	 * Lấy thông tin UserToken
+	 */
 	GetUserToken:function(userAccess,transaction)
 	{
 		var error=new Error("GetUserToken.Error");
@@ -164,43 +187,53 @@ module.exports={
 		.then(function(data){
 			return Services.UserAccount.GetUserAccountDetails({UID:userAccess.UserUID},null,transaction)
 			.then(function(user){
-				function CheckExist()
+
+				if(o.checkData(user))
 				{
-					if(userAccess.SystemType==HelperService.const.systemType.website)
+					function CheckExist()
 					{
-						return UserToken.findOne({
-							where:{
-								UserAccountID:user.ID,
-								SystemType:HelperService.const.systemType.website
-							}
-						},{transaction:transaction});
+						if(userAccess.SystemType==HelperService.const.systemType.website)
+						{
+							return UserToken.findOne({
+								where:{
+									UserAccountID:user.ID,
+									SystemType:HelperService.const.systemType.website
+								}
+							},{transaction:transaction});
+						}
+						else
+						{
+							return UserToken.findOne({
+								where:{
+									UserAccountID:user.ID,
+									DeviceID:userAccess.DeviceID
+								}
+							},{transaction:transaction})
+						}
 					}
-					else
-					{
-						return UserToken.findOne({
-							where:{
-								UserAccountID:user.ID,
-								DeviceID:userAccess.DeviceID
-							}
-						},{transaction:transaction})
-					}
-				}
-				return CheckExist()
-				.then(function(ut){
-					if(o.checkData(ut))
-					{
-						return ut;
-					}
-					else
-					{
-						error.pushError("userToken.notFound");
+					return CheckExist()
+					.then(function(ut){
+						if(o.checkData(ut))
+						{
+							return ut;
+						}
+						else
+						{
+							error.pushError("userToken.notFound");
+							throw error;
+						}
+					},function(err){
+						o.exlog(err);
+						error.pushError("userToken.queryError");
 						throw error;
-					}
-				},function(err){
-					o.exlog(err);
-					error.pushError("userToken.queryError");
+					})
+				}
+				else
+				{
+					error.pushError("userAccount.notFound");
 					throw error;
-				})
+				}
+				
 			},function(err){
 				o.exlog(err);
 				error.pushError("userAccount.queryError");
@@ -211,71 +244,4 @@ module.exports={
 			throw err;
 		})
 	},
-
-	/*MakeNewSecretKey:function(userToken,transaction)
-	{
-		var error=new Error("MakeNewSecretKey.Error");
-		return Validation(userToken)
-		.then(function(data){
-			return Services.UserAccount.GetUserAccountDetails({UID:userToken.UserUID},null,transaction)
-			.then(function(user){
-				function CheckExist()
-				{
-					if(userToken.SystemType==HelperService.const.systemType.website)
-					{
-						return UserToken.findOne({
-							where:{
-								UserAccountID:user.ID,
-								SystemType:HelperService.const.systemType.website
-							}
-						},{transaction:transaction});
-					}
-					else
-					{
-						return UserToken.findOne({
-							where:{
-								UserAccountID:user.ID,
-								DeviceID:userToken.DeviceID
-							}
-						},{transaction:transaction})
-					}
-				}
-				return CheckExist()
-				.then(function(ut){
-					if(o.checkData(ut))
-					{
-						return ut.updateAttributes({
-							SecretKey:UUIDService.Create(),
-							// SecretCreatedDate:new Date(),
-							// TokenExpired:null,
-							// Enable:'Y',
-						},{transaction:transaction})
-						.then(function(result){
-							return result;
-						},function(err){
-							o.exlog(err);
-							error.pushError("userToken.updateError");
-							throw error;
-						})
-					}
-					else
-					{
-						error.pushError("userToken.notFound");
-						throw error;
-					}
-				},function(err){
-					o.exlog(err);
-					error.pushError("userToken.queryError");
-					throw error;
-				})
-			},function(err){
-				o.exlog(err);
-				error.pushError("userAccount.queryError");
-				throw error;
-			})
-			
-		},function(err){
-			throw err;
-		})
-	},*/
 }

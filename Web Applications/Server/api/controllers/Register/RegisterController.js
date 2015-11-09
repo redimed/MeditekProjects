@@ -1,4 +1,5 @@
 var moment = require('moment');
+var request = require('request');
 var config = sails.config.myconf;
 //****Twilio Client for sending SMS
 var twilioClient = require('twilio')(config.twilioSID, config.twilioToken);
@@ -123,10 +124,8 @@ module.exports = {
 		Ouput: success or error
 	*/
 	CreateAccount: function(req, res) {
-		
 		var data = req.body.data;
 		var dated = moment(data.CreatedDate, 'YYYY-MM-DD HH:mm:ss Z');
-
 		// Variable
 		var userInfo={
 			UserName: data.UserName,
@@ -134,73 +133,83 @@ module.exports = {
 			PhoneNumber: data.PhoneNumber,
 			Password: data.Password
 		};
-		// Create Account
-		sequelize.transaction().then(function(t){
-			return Services.UserAccount.CreateUserAccount(userInfo, t)
-			.then(function(result) {
+		if(data.captcha){
+			request.get({
+		        url:"https://www.google.com/recaptcha/api/siteverify?secret=%276LcDaxATAAAAAGAlZHx7jZFllXynb6TBDeelzP3X%27&response="+data.captcha
+		    }, function(error, response, body) {
+		    	var captcha = JSON.parse(body);
+		        		if(captcha.success==true){
+				            sequelize.transaction().then(function(t){
+								return Services.UserAccount.CreateUserAccount(userInfo, t)
+								.then(function(result) {
 
-				// Create Role
-				var info_id = {
-					ID: result.ID
-				};
-				var info_role = {
-					RoleCode: data.Type
-				};
-				// Create Role
-				Services.UserRole.CreateUserRoleWhenCreateUser(result, info_role, t)
-				.then(function(success) {
+									// Create Role
+									var info_id = {
+										ID: result.ID
+									};
+									var info_role = {
+										RoleCode: data.Type
+									};
+									// Create Role
+									Services.UserRole.CreateUserRoleWhenCreateUser(result, info_role, t)
+									.then(function(success) {
 
-					data.CreatedDate = dated;
-					data.CreatedBy = req.user?req.user.ID:null;
-					data.UserAccountID = result.ID;
-					if(data.Title) {
-						data.Title = data.Title.toString();
-					} else {
-						data.Title = '';
-					}
-					// Create Doctor
-					Services.Doctor.CreateDoctor(data, t)
-					.then(function(success) {
-						t.commit();
-						var info_actv = {
-							UserUID: result.UID,
-							Type: HelperService.const.systemType.website,
-							CreatedBy: result.ID
-						};
+										data.CreatedDate = dated;
+										data.CreatedBy = req.user?req.user.ID:null;
+										data.UserAccountID = result.ID;
+										if(data.Title) {
+											data.Title = data.Title.toString();
+										} else {
+											data.Title = '';
+										}
+										// Create Doctor
+										Services.Doctor.CreateDoctor(data, t)
+										.then(function(success) {
+											t.commit();
+											var info_actv = {
+												UserUID: result.UID,
+												Type: HelperService.const.systemType.website,
+												CreatedBy: result.ID
+											};
 
-						// Activation
-						Services.UserActivation.CreateUserActivation(info_actv)
-						.then(function(result_actv) {
-							
-							var info_show = {
-								UID: result.UID,
-								VerificationCode: result_actv.VerificationCode
-							};
+											// Activation
+											Services.UserActivation.CreateUserActivation(info_actv)
+											.then(function(result_actv) {
+												
+												var info_show = {
+													UID: result.UID,
+													VerificationCode: result_actv.VerificationCode
+												};
 
-							res.ok({
-								data: info_show
+												res.ok({
+													data: info_show
+												});
+											})
+											.catch(function(err) {
+												res.serverError(ErrorWrap(err));
+											});
+
+										})
+										.catch(function(err) {
+											t.rollback();
+											res.serverError(ErrorWrap(err));
+										});
+									})
+									.catch(function(err) {
+										t.rollback();
+										res.serverError(ErrorWrap(err));
+									});
+								})
+								.catch(function(err) {
+									t.rollback();
+									res.serverError(ErrorWrap(err));
+								});
 							});
-						})
-						.catch(function(err) {
-							res.serverError(ErrorWrap(err));
-						});
-
-					})
-					.catch(function(err) {
-						t.rollback();
-						res.serverError(ErrorWrap(err));
-					});
-				})
-				.catch(function(err) {
-					t.rollback();
-					res.serverError(ErrorWrap(err));
-				});
-			})
-			.catch(function(err) {
-				t.rollback();
-				res.serverError(ErrorWrap(err));
-			});
-		});
+						}
+		    });
+		}
+		// Create Account
+		
 
 	},
 	/*

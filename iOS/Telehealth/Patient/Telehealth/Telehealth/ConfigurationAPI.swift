@@ -16,8 +16,8 @@ struct UrlAPICheckPhoneNumber  {
     
 }
 struct UrlInformationPatient  {
-    static let getInformationPatientByUID = "/api/telehealth/user/details"
-    static let getAppointmentList = "/api/telehealth/user/appointments"
+    static let getInformationPatientByUID = "/api/telehealth/user/details/"
+    static let getAppointmentList = "/api/telehealth/user/appointments/"
     static let getAppointmentDetails = "/api/telehealth/user/appointmentDetails"
     static let uploadImage =  "/api/uploadFile"
     static let updateImageToAppointment = "/api/telehealth/appointment/updateFile"
@@ -44,6 +44,7 @@ struct MessageString  {
 struct ErrorMessage {
     static let NoData = "Can't get data"
     static let TimeOut = "Request Time Out"
+    static let TimeOutToken = "jwt expired"
 }
 
 //Giap: Group Hash Value Number 0 - 9 and delete

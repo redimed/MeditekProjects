@@ -78,6 +78,15 @@ module.exports = function(appointmentUID, userInfo) {
                     model: Doctor,
                     attributes: Services.AttributesAppt.Doctor(),
                     required: false,
+                    include: [{
+                        model: FileUpload,
+                        required: false,
+                        attributes: Services.AttributesAppt.FileUpload(),
+                    }, {
+                        model: Country,
+                        required: false,
+                        attributes: Services.AttributesAppt.Country()
+                    }],
                     where: filter.ExternalPractitioner
                 }]
             }, {

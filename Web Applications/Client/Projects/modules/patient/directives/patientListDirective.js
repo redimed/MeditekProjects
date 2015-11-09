@@ -165,7 +165,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						}else{
 
 							scope.uidReturn='';
-							scope.init();
+							// scope.init();
 						}
 					});
 				}

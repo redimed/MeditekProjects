@@ -5,7 +5,10 @@ var o=require("../../../services/HelperService");
 module.exports = {
 	Test:function(req,res)
 	{
-		res.ok({status:'success',user:req.user,newtoken:res.get('newtoken')});
+		// console.log(req.session.passport.user);
+		// req.session.passport.user.SecretKey='123456';
+		var maxRole=o.getMaxRole(req.user.roles);
+		res.ok({status:'success',user:req.user,maxRole:maxRole,newtoken:res.get('newtoken')});
 
 	},
 
@@ -24,17 +27,17 @@ module.exports = {
 		// console.log(modifiedDate.format('YYYY-MM-DD HH:mm:ss'))
 		// console.log(addDate.format('YYYY-MM-DD HH:mm:ss'))
 		UserAccount.findAll({
-			where:{
-				ModifiedDate:{
-					// $gte:modifiedDate.zone('0000').format("YYYY-MM-DD HH:mm:ss"),
-					// $lt:addDate.zone('0000').format("YYYY-MM-DD HH:mm:ss")
-					$gte:modifiedDate.toDate(),
-					$lt:addDate.toDate()
-				}
-			}
+			limit:1,
+			// where:{
+			// 	ModifiedDate:{
+			// 		// $gte:modifiedDate.zone('0000').format("YYYY-MM-DD HH:mm:ss"),
+			// 		// $lt:addDate.zone('0000').format("YYYY-MM-DD HH:mm:ss")
+			// 		$gte:modifiedDate.toDate(),
+			// 		$lt:addDate.toDate()
+			// 	}
+			// }
 		})
 		.then(function(data){
-			console.log(data);
 			res.ok(data);
 		},function(err){
 			res.serverError(err);
@@ -361,5 +364,27 @@ module.exports = {
 		},function(err){
 			res.serverError(ErrorWrap(err));
 		})
+	},
+
+	getDetailUser: function(req, res) {
+		var data = req.body.data;
+		Services.UserAccount.getDetailUser(data)
+		.then(function(user){
+			if(o.checkData(user)){
+				console.log("==========================qweqweqwewqewqeqweeqe");
+				res.ok({
+					data:{
+						patient:user.Patient,
+						doctor:user.Doctor,
+						fileupload:user.FileUploads
+					}
+				});
+			}
+		},function(err){
+			console.log("==========================123123");
+			res.serverError(ErrorWrap(err));
+		});
 	}
+
+
 }

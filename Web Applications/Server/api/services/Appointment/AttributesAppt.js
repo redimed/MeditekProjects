@@ -12,14 +12,14 @@ module.exports = {
         ];
     },
     PatientAppointment: function() {
-        return ['UID', 'FirstName', 'MiddleName', 'LastName', 'PreferredName',
+        return ['UID', 'Title', 'MaritalStatus', 'FirstName', 'MiddleName', 'LastName', 'PreferredName',
             'PreviousName', 'Suburb', 'Postcode', 'State', 'CountryOfBirth',
             'DOB', 'Gender', 'Indigenous', 'Address1', 'Address2', 'Email1',
             'Email2', 'PhoneNumber', 'HomePhoneNumber', 'WorkPhoneNumber',
             'FaxNumber', 'InterpreterRequired', 'InterpreterLanguage',
-            'OtherSpecialNeed', 'MedicareNumber', 'MedicareReferenceNumber',
-            'ExpiryDate', 'DVANumber', 'InjuryType', 'PatientKinName',
-            'PatientKinRelationship', 'PatientKinContactNumber'
+            'OtherSpecialNeed', 'MedicareEligible', 'MedicareNumber',
+            'MedicareReferenceNumber', 'ExpiryDate', 'DVANumber',
+            'PatientKinName', 'PatientKinRelationship', 'PatientKinContactNumber'
         ];
     },
     ExaminationRequired: function() {
@@ -58,7 +58,19 @@ module.exports = {
     WAAppointment: function() {
         return ['RefFax', 'IsUsualGP', 'UsualGPName', 'UsualGPContactNumber',
             'UsualGPFaxNumber', 'IsSamePlacePreference', 'IsTelehealthSuitable',
-            'IsRenewReferral', 'PathologyProvider', 'RadiologyProvider'
+            'IsRenewReferral', 'PathologyProvider', 'RadiologyProvider', 'InjuryType',
+            'HasConsultant', 'ConsultantName', 'ConsultantSite', 'ConsultantContactNumber',
+            'ConsultantNote'
+        ];
+    },
+    Country: function() {
+        return ['UID', 'ISO2', 'ShortName', 'LongName', 'ISO3', 'NumCode',
+            'UnMember', 'CallingCode', 'CCTLD', 'Description'
+        ];
+    },
+    FileUpload: function() {
+        return ['UID', 'UserAccountID', 'FileName', 'FileLocation', 'FileType',
+            'FileExtension', 'Description'
         ];
     }
 };

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="D:\Program Files\Android\sdk\build-tools\23.0.1\renderscript\lib\renderscript-v8.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="762016371811e15a66e97cf27f3e852bf287aaf3">
+        <dex dex="D:\Redimed\Android\UrgentCare\WorkInjury\app\build\intermediates\pre-dexed\debug\renderscript-v8-a360f9169a1bbebcb58a7987884b1d84918e72c5.jar" />
+    </item>
+
+</items>

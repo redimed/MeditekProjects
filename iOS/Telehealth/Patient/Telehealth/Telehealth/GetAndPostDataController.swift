@@ -16,17 +16,17 @@ class GetAndPostDataController {
     
     let headers = [
         "Authorization": "Bearer \(tokens)",
-        "Content-Type": "application/x-www-form-urlencoded",
         "Version" : "1.0",
-        "CoreAuth": "Bearer \(coreTokens)"
+        "systemtype": "ios",
+        "deviceId" : config.deviceID! as String,
+        "useruid":"\(userUID ?? "")"
     ]
     let header_3005 = [
         "Authorization": "Bearer \(coreTokens)",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Version" : "1.0"
+        "Version" : "1.0",
     ]
 
-    
+
     //Giap: Check phone number and send verify code
     func SendVerifyPhoneNumber (deviceID:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
         //Split number 0
@@ -88,20 +88,39 @@ class GetAndPostDataController {
     }
     //Giap: Get information Patient by UID
     func getInformationPatientByUUID(UUID:String,completionHandler:(JSON) -> Void){
+         print("Get information patient")
         let parameters = [
             "data": [
                 "uid" : UUID
             ]
         ]
-        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.getInformationPatientByUID ,headers:headers,parameters: parameters).responseJSON{
+
+        Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getInformationPatientByUID + UUID,headers:headers,parameters: parameters).responseJSON{
             request, response, result in
+                print("response:",response?.allHeaderFields["newtoken"])
+            
+            if let newToken : String = response?.allHeaderFields["newtoken"]?.string  {
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    defaults.setValue(newToken, forKey: "token")
+                    defaults.synchronize()
+                    tokens = newToken
+                    print("response:",tokens)
+                }
+
             switch result {
             case .Success(let JSONData):
                 var data = JSON(JSONData)
-                print(data)
+                print("data:",data)
                 let jsonInformation = data["data"][0] != nil ? data["data"][0] : ""
                 if jsonInformation == "" {
-                    completionHandler(JSON(["message":"error"]))
+//                    if data["ErrorType"].string == ErrorMessage.TimeOutToken {
+//                        print(data["ErrorType"])
+//                        completionHandler(JSON(["message":ErrorMessage.TimeOutToken]))
+//                    }else {
+//                        completionHandler(JSON(["message":"error"]))
+//                    }
+                        completionHandler(JSON(["message":"error"]))
+                    
                 }else {
                 
                     let MiddleName = jsonInformation["MiddleName"].string ?? ""
@@ -119,7 +138,7 @@ class GetAndPostDataController {
                     let FirstName = jsonInformation["FirstName"].string ?? ""
                     let State = jsonInformation["State"].string ?? ""
                     let ModifiedDate = jsonInformation["ModifiedDate"].string ?? ""
-                    let Email = jsonInformation["Email"].string ?? ""
+                    let Email1 = jsonInformation["Email1"].string ?? ""
                     let Country = jsonInformation["Country"]["ShortName"].string ?? ""
                     let ID = jsonInformation["ID"].string ?? ""
                     let Address1 = jsonInformation["Address1"].string ?? ""
@@ -127,12 +146,13 @@ class GetAndPostDataController {
                     let DOB = jsonInformation["DOB"].string ?? ""
                     let Suburb = jsonInformation["Suburb"].string ?? ""
                     let HomePhoneNumber = jsonInformation["HomePhoneNumber"].string ?? ""
-                    PatientInfo = Patient(MiddleName: MiddleName, Address2: Address2, Title: Title, WorkPhoneNumber: WorkPhoneNumber, Enable: Enable, PhoneNumber: PhoneNumber, Occupation: Occupation, LastName: LastName, Postcode: Postcode, UID: UID, UserAccountID: UserAccountID, Gender: Gender  , FirstName: FirstName, State: State, ModifiedDate: ModifiedDate, Email: Email, Country: Country, ID: ID, Address1: Address1, CountryID: CountryID, DOB: DOB, Suburb: Suburb, HomePhoneNumber: HomePhoneNumber)
+                    PatientInfo = Patient(MiddleName: MiddleName, Address2: Address2, Title: Title, WorkPhoneNumber: WorkPhoneNumber, Enable: Enable, PhoneNumber: PhoneNumber, Occupation: Occupation, LastName: LastName, Postcode: Postcode, UID: UID, UserAccountID: UserAccountID, Gender: Gender  , FirstName: FirstName, State: State, ModifiedDate: ModifiedDate, Email1: Email1, Country: Country, ID: ID, Address1: Address1, CountryID: CountryID, DOB: DOB, Suburb: Suburb, HomePhoneNumber: HomePhoneNumber)
                     completionHandler(JSON(["message":"success"]))
                 }
                 
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
+                
                 completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
                 
                 if let data = data {
@@ -146,13 +166,14 @@ class GetAndPostDataController {
     
     //Giap: Get List Appointment
     func getListAppointmentByUID(UID:String,Limit:String,completionHandler:(JSON) -> Void) {
+        print("Get list appointment")
         let parameters = [
             "data": [
                 "uid" : UID,
                 "limit":Limit
             ]
         ]
-        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentList ,headers:headers, parameters: parameters).responseJSON{
+        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentList + UID ,headers:headers).responseJSON{
             request, response, result in
             switch result {
             case .Success(let JSONData):

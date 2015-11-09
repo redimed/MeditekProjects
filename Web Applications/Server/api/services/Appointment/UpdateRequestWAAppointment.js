@@ -15,8 +15,7 @@ module.exports = function(data, userInfo) {
                 };
                 Services.GetPreferringPractictioner(objectFindPreferringPractitioner)
                     .then(function(infoPreferringPractitioner) {
-                            if (HelperService.CheckExistData(infoPreferringPractitioner) &&
-                                HelperService.CheckExistData(infoPreferringPractitioner.Doctor)) {
+                            if (HelperService.CheckExistData(infoPreferringPractitioner)) {
                                 preferringPractitionerObject = infoPreferringPractitioner;
                                 var objectFindTelehealthAppointment = {
                                     where: data.UID,
@@ -24,6 +23,11 @@ module.exports = function(data, userInfo) {
                                 };
                                 //get PreferringPractitioner object
                                 return Services.GetTelehealthAppointmentObject(objectFindTelehealthAppointment);
+                            } else {
+                                defer.reject({
+                                    transaction: t,
+                                    error: new Error('permission denied')
+                                });
                             }
                         },
                         function(err) {
@@ -90,7 +94,8 @@ module.exports = function(data, userInfo) {
                     })
                     .then(function(relPatientAppointmentUpdated) {
                         if (HelperService.CheckExistData(data.TelehealthAppointment.PatientAppointment) &&
-                            !_.isEmpty(data.TelehealthAppointment.PatientAppointment)) {
+                            !_.isEmpty(data.TelehealthAppointment.PatientAppointment) &&
+                            HelperService.CheckExistData(preferringPractitionerObject)) {
                             var dataPatientAppointment =
                                 Services.GetDataAppointment.PatientAppointmentUpdate(data.TelehealthAppointment.PatientAppointment);
                             dataPatientAppointment.ModifiedBy = preferringPractitionerObject.ID;
@@ -132,10 +137,13 @@ module.exports = function(data, userInfo) {
                     .then(function(telehealthAppointmentUpdated) {
                         var WAAppointment = data.TelehealthAppointment.WAAppointment;
                         if (HelperService.CheckExistData(WAAppointment) &&
-                            HelperService.CheckExistData(preferringPractitionerObject)) {
+                            HelperService.CheckExistData(preferringPractitionerObject) &&
+                            HelperService.CheckExistData(appointmentObject)) {
                             var dataWAAppointment =
                                 Services.GetDataAppointment.WAAppointment(WAAppointment);
                             dataWAAppointment.CreatedBy = preferringPractitionerObject.ID;
+                            dataWAAppointment.UID = dataWAAppointment.UID || UUIDService.Create();
+                            dataWAAppointment.TelehealthAppointmentID = appointmentObject.TelehealthAppointment.ID;
                             var objectWAAppointment = {
                                 data: dataWAAppointment,
                                 where: appointmentObject.TelehealthAppointment.ID,

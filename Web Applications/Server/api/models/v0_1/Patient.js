@@ -251,7 +251,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                isEmail : true
+                // isEmail : true
             }
         },
         Email2: {
@@ -262,7 +262,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                isEmail : true
+                //isEmail : true
             }
         },
         HomePhoneNumber: {

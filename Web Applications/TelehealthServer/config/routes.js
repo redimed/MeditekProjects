@@ -28,10 +28,6 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetAppointmentDetails'
     },
-    'POST /api/telehealth/sendSMS': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'SendSMS'
-    },
     //================Telehealth Socket Routes==========================
     '/api/telehealth/socket/joinRoom': {
         controller: 'SocketController',
@@ -41,10 +37,6 @@ module.exports.routes = {
         controller: 'SocketController',
         action: 'MessageTransfer'
     },
-    '/api/telehealth/socket/onlineList': {
-        controller: 'SocketController',
-        action: 'OnlineUserList'
-    },
     'GET /api/telehealth/socket/generateSession': {
         controller: 'SocketController',
         action: 'GenerateConferenceSession'
@@ -53,5 +45,9 @@ module.exports.routes = {
     'POST /api/telehealth/appointment/updateFile':{
         controller: 'Telehealth/v1_0/AppointmentController',
         action: 'UpdateFile'
+    },
+    'GET /api/telehealth/appointment/listWA':{
+        controller: 'Telehealth/v1_0/AppointmentController',
+        action: 'ListWA'
     }
 };

@@ -9,7 +9,7 @@ module.exports = {
         return {
             SiteID: data.SiteID,
             RequestDate: data.RequestDate,
-            Status: 'Waiting for approval',
+            Status: 'Received',
             Enable: 'Y'
         };
     },
@@ -98,7 +98,6 @@ module.exports = {
             MedicareReferenceNumber: data.MedicareReferenceNumber,
             ExpiryDate: data.ExpiryDate,
             DVANumber: data.DVANumber,
-            InjuryType: data.InjuryType,
             PatientKinName: data.PatientKinName,
             PatientKinRelationship: data.PatientKinRelationship,
             PatientKinContactNumber: data.PatientKinContactNumber
@@ -111,6 +110,8 @@ module.exports = {
     */
     PatientAppointmentUpdate: function(data) {
         return {
+            Title: data.Title,
+            MaritalStatus: data.MaritalStatus,
             FirstName: data.FirstName,
             MiddleName: data.MiddleName,
             LastName: data.LastName,
@@ -132,13 +133,13 @@ module.exports = {
             WorkPhoneNumber: data.WorkPhoneNumber,
             FaxNumber: data.FaxNumber,
             InterpreterRequired: data.InterpreterRequired,
-            InterperterLanguage: data.InterperterLanguage,
+            InterpreterLanguage: data.InterpreterLanguage,
             OtherSpecialNeed: data.OtherSpecialNeed,
+            MedicareEligible: data.MedicareEligible,
             MedicareNumber: data.MedicareNumber,
             MedicareReferenceNumber: data.MedicareReferenceNumber,
             ExpiryDate: data.ExpiryDate,
             DVANumber: data.DVANumber,
-            InjuryType: data.InjuryType,
             PatientKinName: data.PatientKinName,
             PatientKinRelationship: data.PatientKinRelationship,
             PatientKinContactNumber: data.PatientKinContactNumber
@@ -194,6 +195,8 @@ module.exports = {
         preferredPractitioner.Doctor.IsRenewReferral = data.IsRenewReferral;
         preferredPractitioner.Doctor.PathologyProvider = data.PathologyProvider;
         preferredPractitioner.Doctor.RadiologyProvider = data.RadiologyProvider;
+        preferredPractitioner.Doctor.RefDate = data.RefDate;
+        preferredPractitioner.Doctor.RefDurationOfReferral = data.RefDurationOfReferral;
         return preferredPractitioner;
     },
     WAAppointment: function(data) {
@@ -208,6 +211,12 @@ module.exports = {
             IsRenewReferral: data.IsRenewReferral,
             PathologyProvider: data.PathologyProvider,
             RadiologyProvider: data.RadiologyProvider,
+            HasConsultant: data.HasConsultant,
+            ConsultantName: data.ConsultantName,
+            ConsultantSite: data.ConsultantSite,
+            ConsultantContactNumber: data.ConsultantContactNumber,
+            ConsultantNote: data.ConsultantNote,
+            InjuryType: data.InjuryType,
             Enable: 'Y'
         };
     }

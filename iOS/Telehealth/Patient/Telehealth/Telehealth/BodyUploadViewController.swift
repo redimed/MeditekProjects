@@ -18,13 +18,12 @@ class BodyUploadViewController: UIViewController {
     var appointmentID = String()
     @IBOutlet var myGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var image: UIImageView!
-     var delegate : reloadCollectionDelegate?
+    var delegate : reloadCollectionDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         image.image = imageSelect
         image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "didTapImage:"))
         image.userInteractionEnabled = true
-        
     }
     
     func didTapImage(gesture: UIGestureRecognizer) {
@@ -38,7 +37,7 @@ class BodyUploadViewController: UIViewController {
     
     
     @IBAction func UploadImageButton(sender: AnyObject) {
-         view.showLoading()
+        view.showLoading()
         if let userUID = defaults.valueForKey("userUID") as? String {
             appointmentApi.uploadImage(image.image!,userUID: userUID){
                 response in
@@ -46,7 +45,7 @@ class BodyUploadViewController: UIViewController {
                     self.appointmentApi.updateImageToAppointment(response["fileUID"].string!, apptID: self.appointmentID){
                         response in
                         if response["status"] == "success"{
-                             self.view.hideLoading()
+                            self.view.hideLoading()
                             if self.delegate != nil {
                                 self.delegate?.reloadCollectionView(self, sender: self.image.image!)
                             }
@@ -78,9 +77,9 @@ class BodyUploadViewController: UIViewController {
         return [UIInterfaceOrientationMask.Portrait ,UIInterfaceOrientationMask.PortraitUpsideDown]
     }
     
- 
     
     
-
-
+    
+    
+    
 }

@@ -97,6 +97,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="./theme/assets/global/libs/sweetalert/dist/sweetalert.css" rel="stylesheet" type="text/css" />
     <!-- end sweetalert -->
 
+    <!-- autoComplete -->
+    <link rel="stylesheet" type="text/css" href="theme/assets/global/libs/allmighty-autocomplete-master/style/autocomplete.css">
+    <!-- END autoComplete -->
 
     <!-- BEGIN BODY -->
     <!-- DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices -->
@@ -111,6 +114,9 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <body class="page-header-fixed page-quick-sidebar-over-content">
     <div ui-view="root"></div>
+    <!-- loading page -->
+    <div class="loading-page"></div>
+
     <!--[endif]-->
         <!-- BEGIN CORE JQUERY PLUGINS -->
         
@@ -229,6 +235,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END MODULE home -->
 
         <!-- BEGIN MODULE appointment -->
+        <script src="modules/appointment/js/Appointment_helper.js" ></script>
         <script src="modules/appointment/appointment.js" ></script>
         <script src="modules/appointment/controllers/appointmentCtrl.js"></script>
         <script src="modules/appointment/controllers/appointmentListCtrl.js"></script>
@@ -292,8 +299,6 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="modules/WAAppointment/controllers/WAAppointmentGPCtrl.js"></script>
         <script src="modules/WAAppointment/services/WAAppointmentService.js"></script>
         <script src="modules/WAAppointment/directives/WAAppointmentList.js"></script>
-        <script src="modules/WAAppointment/directives/WAAppointmentDetail.js"></script>
-        <script src="modules/WAAppointment/services/WAApointmentServices.js"></script>
         <!-- END MODULE WAAppointment -->
 
 
@@ -345,8 +350,8 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit"async defer></script>
         <script src="./theme/assets/global/libs/angular-recaptcha/release/angular-recaptcha.min.js" type="text/javascript"></script>
         <!-- END RECAPTCHA -->
-
         <!--<script src="theme/assets/pages/scripts/login.min.js" type="text/javascript"></script>-->
+
 
         <!-- END PAGE LEVEL SCRIPTS -->
 

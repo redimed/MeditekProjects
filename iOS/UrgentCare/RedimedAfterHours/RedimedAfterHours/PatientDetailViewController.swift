@@ -625,7 +625,7 @@ class PatientDetailViewController: UIViewController,UITextFieldDelegate ,UITextV
         
        
         let SaveAction = UIAlertAction(title: "Save Information", style: .Destructive) { (action) in
-            RestApiManager.sharedInstance.setPersonalData(self.patientInformation,date: self.dobTextField.text)
+            RestApiManager.sharedInstance.setPersonalData(self.patientInformation,date: self.dobTextField.text!)
             self.dismissViewControllerAnimated(true, completion: nil)
         }
         if(!comparePersonal){

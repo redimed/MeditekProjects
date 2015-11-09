@@ -13,24 +13,19 @@ protocol AppointmentListTableViewCellDelegate : class{
 
 class AppointmentListTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var appointmentDate: UILabel!
     @IBOutlet weak var doctorName: UILabel!
     @IBOutlet weak var status: UILabel!
     var UIDAppointment = String()
-    var fromTime = String()
-    var toTime = String()
+ 
     weak var delegate : AppointmentListTableViewCellDelegate?
     
     func configAppointment(Appointment:AppointmentList){
         
-        dateLabel.text = Appointment.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDate)
-        timeLabel.text = "\(Appointment.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime)) - \(Appointment.ToTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime))"
+        appointmentDate.text = Appointment.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDateTime)
         doctorName.text = Appointment.NameDoctor
         status.text = Appointment.Status
         UIDAppointment = Appointment.UIDApointment
     }
-    @IBAction func changeViewUploadButton(sender: AnyObject) {
-        delegate?.AppointmentUpload(self, sender: UIDAppointment)
-    }
+   
 }

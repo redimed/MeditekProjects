@@ -39,7 +39,10 @@
                                     <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('SubmitDate','ASC')" ng-show="typeSubmitDate == 'ASC'"></i>
                                     <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('SubmitDate','DESC')" ng-show="typeSubmitDate == 'DESC'"></i>
                                 </th>
-                                <th>Status</th>
+                                <th width="500px" align="center">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Referral Tracking<br>
+                                <img src="./theme/assets/layouts/layout/imgStatus/ReferralTracking.png">
+                                </th>
                                 <th>
                                     Appointment Date
                                     <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('AppointmentDate','ASC')" ng-show="typeAppointmentDate == 'ASC'"></i>
@@ -57,7 +60,7 @@
                                     <input type="text" class="form-control" ng-model="info.data.Search[1].Doctor.FullName" ng-enter="reloadData()">
                                 </td>
                                 <td>
-                                    <div class="input-group date-picker input-daterange" data-date="10/11/2012" data-date-format="dd-mm-yyyy">
+                                    <div class="input-group date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
                                         <input type="text" class="form-control" name="from" ng-model="fromCreateDate" ng-change="reloadData()">
                                         <span class="input-group-addon"> to </span>
                                         <input type="text" class="form-control" name="to" ng-model="toCreateDate" ng-change="reloadData()">
@@ -70,7 +73,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <div class="input-group date-picker input-daterange" data-date="10/11/2012" data-date-format="dd-mm-yyyy">
+                                    <div class="input-group date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
                                         <input type="text" class="form-control" name="from" ng-model="starFromTime" ng-change="reloadData()">
                                         <span class="input-group-addon"> to </span>
                                         <input type="text" class="form-control" name="to" ng-model="endFromTime" ng-change="reloadData()">
@@ -82,7 +85,7 @@
                         </thead>
                         <tbody>
                             <tbody>
-                                <tr ng-click="WAAppointmentDetail()" ng-repeat="appt in info.listWaapointment.rows">
+                                <tr ng-click="WAAppointmentDetail(appt.UID)" ng-repeat="appt in info.listWaapointment.rows">
                                     <td>{{($index+1)+ 2*(info.paging.currentPage-1)}}</td>
                                     <td>
                                         <span ng-if="appt.Patients.length === 0">{{(appt.TelehealthAppointment.PatientAppointment.FirstName !== null)?appt.TelehealthAppointment.PatientAppointment.FirstName:""}} 
@@ -95,11 +98,13 @@
                                     <td>{{((appt.Doctors[0].Title !=null)?appt.Doctors[0].Title:"")+" "+((appt.Doctors[0].FirstName != null)?appt.Doctors[0].FirstName:"") +" "+((appt.Doctors[0].LastName != null)?appt.Doctors[0].LastName:"")}}</td>
                                     <td>{{appt.CreatedDate | date: 'dd/MM/yyyy':'UTC'}}</td>
                                     <td>
-                                        <span ng-if="appt.Status === info.apptStatus[0].value" class="label label-success">Booked</span>
-                                        <span ng-if="appt.Status === info.apptStatus[1].value" class="label label-default">Calling</span>
-                                        <span ng-if="appt.Status === info.apptStatus[2].value" class="label label-warning">Pending</span>
-                                        <span ng-if="appt.Status === info.apptStatus[3].value" class="label label-danger">Cancelled</span>
-                                        <span ng-if="appt.Status === info.apptStatus[4].value" class="label label-primary">Finish</span>
+                                        <span ng-if="appt.Status === info.apptStatus[3].value" ><img src="./theme/assets/layouts/layout/imgStatus/attended.png" ></span>
+                                        <span ng-if="appt.Status === info.apptStatus[4].value" ><img src="./theme/assets/layouts/layout/imgStatus/waitlist.png" ></span>
+                                        <span ng-if="appt.Status === info.apptStatus[1].value" ><img src="./theme/assets/layouts/layout/imgStatus/pending.png" ></span>
+                                        <span ng-if="appt.Status === info.apptStatus[0].value" ><img src="./theme/assets/layouts/layout/imgStatus/received.png" ></span>
+                                        <span ng-if="appt.Status === info.apptStatus[6].value" class="label label-danger">Cancelled</span> 
+                                        <span ng-if="appt.Status === info.apptStatus[2].value" ><img src="./theme/assets/layouts/layout/imgStatus/time.png" ></span>
+                                        <span ng-if="appt.Status === info.apptStatus[5].value" ><img src="./theme/assets/layouts/layout/imgStatus/finish.png" ></span>
                                     </td>
                                     <td>{{appt.FromTime | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td>
                                     <td style="text-align:center">

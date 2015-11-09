@@ -1,13 +1,18 @@
 var app = angular.module('app.authentication.appointment.list.modal.controller', []);
-app.controller('showImageController', function($scope, $modalInstance, toastr, LinkUID) {
+app.controller('showImageController', function($scope, $modalInstance, toastr, LinkUID, CommonService) {
     $scope.LinkUID = LinkUID
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
     }
 
     $scope.Vieww = function(LinkUID) {
-        var newWindow = window.open("");
-        newWindow.document.write("<img class='img-responsive' src='" + LinkUID + "'>");
+        console.log(LinkUID)
+        CommonService.openImageInNewTab(LinkUID)
+            .then(function(data) {
+                console.log(data)
+            }, function(er) {
+                console.log(er);
+            })
     }
 })
 app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstance, getid, AppointmentService, CommonService, $cookies, toastr, PatientService) {
@@ -21,9 +26,18 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         Portfolio.init();
         //ComponentsDropdowns.init(); // init todo page
     });
+    $scope.Status = {
+        apptStatus: AppointConstant.apptStatus
+    }
     $scope.ViewDoc = function(Url, UID) {
         var LinkUID = Url + UID
-        window.open(LinkUID);
+        console.log(UID)
+        CommonService.downloadFile(UID)
+            .then(function(data) {
+                console.log(data)
+            }, function(er) {
+                console.log(er);
+            })
     }
     $scope.modal_close = function() {
         $modalInstance.close();
@@ -44,7 +58,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
                             data: data
                         });
                     },
-                    runIfClose: function(){
+                    runIfClose: function() {
                         $modalInstance.close();
                     }
                 };
@@ -98,9 +112,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
     $scope.Url = AppointmentService.getImage()
     $scope.checkRoleUpdate = true
     $scope.tab_body_part = 'all';
-    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' 
-        || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' 
-        || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
+    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
         $scope.checkRoleUpdate = false
     }
 
@@ -186,12 +198,10 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         return true
     }
     var checkOtherInput = function() {
-        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other']) 
-            && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other'].Value) {
+        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other']) && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other'].Value) {
             $scope.Other.LacerationsOther = 'Y'
         };
-        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other']) 
-            && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'].Value) {
+        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other']) && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'].Value) {
             $scope.Other.SkincancerOther = 'Y'
         };
         if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.PNS.Other']) &&
@@ -213,7 +223,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
     }
     $scope.appointmentload.load();
     $scope.showImage = function(Link, UID) {
-        var LinkUID = Link + UID
+        var LinkUID = UID
         $modal.open({
             templateUrl: 'showImageTemplate',
             controller: 'showImageController',
@@ -306,11 +316,11 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             if (countCliniDetail == 0) {
                 ClinicalDetailsTemp = []
             }
-        
+
             $scope.appointment.TelehealthAppointment.ClinicalDetails = angular.copy(ClinicalDetailsTemp)
             var postData = {
-                    data: $scope.appointment
-                }
+                data: $scope.appointment
+            }
             AppointmentService.upDateApppointment(postData).then(function(response) {
                 if (response == 'success') {
                     $modalInstance.close('success');

@@ -90,6 +90,7 @@ module.exports = function(appointmentUID, userInfo) {
                 }]
             }, {
                 model: FileUpload,
+                attributes: Services.AttributesAppt.FileUpload(),
                 required: false,
                 include: [{
                     model: MedicalImage,

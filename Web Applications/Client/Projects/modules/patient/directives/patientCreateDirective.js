@@ -82,13 +82,18 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 			scope.checkPhone = function(data) {
 				scope.loadingCheck = true;
 				//service validate data
+				var verifyData = {
+					FirstName:data.FirstName,
+					LastName:data.LastName,
+					PhoneNumber:data.PhoneNumber
+				};
 				PatientService.validateCheckPhone(data)
 				.then(function(success){
 					scope.er ='';
 					scope.ermsg='';
 					scope.isBlockStep1=true;
 					//service call API check PhoneNumber can be used to create Patient
-					PatientService.checkPatient(data)
+					PatientService.checkPatient(verifyData)
 					.then(function(result){
 						if(result!=undefined && result!=null && result!='' && result.length!=0){
 							if(result.data.isCreated==false){
@@ -104,12 +109,14 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 							else{
 								toastr.error("Phone Number was used to create patient","ERROR");
 								scope.isBlockStep1 =false;
+								scope.loadingCheck = false;
 							}
 						}
 					}, function(err){
 						//if receive error push error message into array ermsg, 
 						//push error css into array er
 						//and show in template
+						scope.loadingCheck = false;
 						scope.er={};
 						scope.ermsg={};
 						toastr.error("Please input correct information","ERROR");
@@ -119,6 +126,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						}
 					});
 				},function (err){
+					console.log(err);
 					scope.loadingCheck = false;
 					scope.er={};
 					scope.ermsg={};

@@ -8,81 +8,78 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="First name" name="Firstname" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.FirstName">
-                            <label class="control-label">First name</label>
-                            <div class="form-control-focus"> </div>
-                            <i class="glyphicon glyphicon-pencil"></i>
-                        </div>
+                        <input type="text" class="form-control edited"  name="FirstName" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.FirstName">
+                        <label class="control-label">First name
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="form-control-focus"> </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Family name" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.LastName">
-                            <label class="control-label">Family name</label>
-                            <div class="form-control-focus"> </div>
-                            <i class="glyphicon glyphicon-pencil"></i>
-                        </div>
+                        <input type="text" class="form-control edited"  name="LastName" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.LastName">
+                        <label class="control-label">Family name
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="form-control-focus"> </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Preferred name" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PreferredName">
-                            <label class="control-label">Preferred name</label>
-                            <div class="form-control-focus"> </div>
-                            <i class="glyphicon glyphicon-pencil"></i>
-                        </div>
+                        <input type="text" class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PreferredName">
+                        <label class="control-label">Preferred name</label>
+                        <div class="form-control-focus"> </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Previous name" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PreviousName">
-                            <label class="control-label">Previous name</label>
-                            <div class="form-control-focus"> </div>
-                            <i class="glyphicon glyphicon-pencil"></i>
-                        </div>
+                        <input type="text" class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PreviousName">
+                        <label class="control-label">Previous name</label>
+                        <div class="form-control-focus"> </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Title" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Title">
-                            <label class="control-label">Title</label>
-                            <div class="form-control-focus"> </div>
-                            <i class="glyphicon glyphicon-pencil"></i>
-                        </div>
+                        <select class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Title">
+                            <option value=""></option>
+                            <option value="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                            <option value="Miss">Miss</option>
+                            <option value="Ms">Ms</option>
+                        </select>
+                        <label class="control-label">Title</label>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Marital Status" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.MaritalStatus">
-                            <label class="control-label">Marital Status</label>
-                            <div class="form-control-focus"> </div>
-                            <i class="glyphicon glyphicon-pencil"></i>
-                        </div>
+                        <!--   <input type="text" class="form-control" placeholder="Country of Birth" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.CountryOfBirth"> -->
+                        <select class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.MaritalStatus">
+                            <option value=""></option>
+                            <option value="Married">Married</option>
+                            <option value="Never married">Never married</option>
+                            <option value="Widowed">Widowed</option>
+                            <option value="Divorced">Divorced</option>
+                            <option value="Separated">Separated</option>
+                        </select>
+                        <label class="control-label">Marital Status</label>
+                        <div class="form-control-focus"> </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Country of Birth" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.CountryOfBirth">
-                            <label class="control-label">Country of Birth</label>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group form-md-line-input">
+                            <select size="1" class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.CountryOfBirth">
+                                <option ng-repeat="item in ListContry">{{item.ShortName}}</option>
+                            </select>
+                            <label class="control-label"> Country of Birth</label>
                             <div class="form-control-focus"> </div>
-                            <i class="glyphicon glyphicon-pencil"></i>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            <input type="text" class="form-control date-picker" data-date-format="dd-mm-yyyy" placeholder="Date of Birth" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.DOB">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.DOB">
                             <label class="control-label">Date of Birth</label>
                             <div class="form-control-focus"> </div>
-                            <i class="glyphicon glyphicon-calendar"></i>
                         </div>
                     </div>
                 </div>
@@ -92,23 +89,19 @@
                         <div class="form-group form-md-line-input">
                             <div class="radio-list">
                                 <label class="radio-inline">
-                                    <input type="radio" name="gender"  value="Male" ng-checked="true" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Gender">
-                                     Male 
+                                    <input type="radio" name="genderNo" value="Male" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Gender"> Male
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="gender"  value="Female" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Gender"> Female 
+                                    <input type="radio" name="genderNo" value="Female" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Gender"> Female
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="gender"  value="Other" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Gender"> Other 
+                                    <input type="radio" name="genderNo" value="Other" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Gender"> Other
                                 </label>
                             </div>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="Other" ng-model="showData.GenderOther" ng-disabled="requestInfo.TelehealthAppointment.PatientAppointment.Gender !== 'Other'">
-                                <div class="form-control-focus"> </div>
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </div>
+                            <input type="text" class="form-control" placeholder="Other" ng-model="showData.GenderOther" ng-disabled="requestInfo.TelehealthAppointment.PatientAppointment.Gender !== 'Other'">
+                            <div class="form-control-focus"> </div>
                         </div>
                     </div>
                 </div>
@@ -119,10 +112,13 @@
                         <div class="form-group form-md-line-input">
                             <div class="radio-list">
                                 <label class="radio-inline">
-                                    <input type="radio" name="IndigenousStatus"  value="Aboriginal" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Indigenous"> Aboriginal 
+                                    <input type="radio" name="IndigenousStatus" value="Aboriginal" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Indigenous"> Aboriginal
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="IndigenousStatus"  value="Torres Strait Islander" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Indigenous"> Torres Strait Islander 
+                                    <input type="radio" name="IndigenousStatus" value="Torres Strait Islander" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Indigenous"> Torres Strait Islander
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="IndigenousStatus" value="" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Indigenous"> None
                                 </label>
                             </div>
                         </div>
@@ -138,42 +134,34 @@
                             <div class="radio-list">
                                 <label class="control-label radio-inline">Interpreter required ?</label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="InterpreterRequired" id="InterpreterRequired" value="Y" ng-checked="true" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterRequired"> Yes 
+                                    <input type="radio" name="InterpreterRequired" id="InterpreterRequired" value="Y" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterRequired"> Yes
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="InterpreterRequired" id="InterpreterRequired" value="N" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterRequired"> No 
+                                    <input type="radio" name="InterpreterRequired" id="InterpreterRequired" value="N" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterRequired"> No
                                 </label>
                                 <label class="radio-inline">
-                                    If yes, language/dialect 
+                                    If yes, language/dialect
                                 </label>
                             </div>
                         </div>
                         <div class="form-group form-md-line-input">
-                            <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="Language/dialect" ng-disabled="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterRequired === 'N'" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterLanguage">
-                                <div class="form-control-focus"> </div>
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </div>
+                            <input type="text" class="form-control" placeholder="Language/dialect" ng-disabled="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterRequired === 'N'" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterLanguage">
+                            <div class="form-control-focus"> </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12">&nbsp;</div>
                 <div class="col-md-12 col-sm-12">
                     <div class="form-group form-md-line-input">
-                        <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Other special needs" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.OtherSpecialNeed" >
-                            <label class="control-label col-md-3 col-sm-3"> Other special needs ?</label>
-                            <div class="form-control-focus"> </div>
-                            <i class="glyphicon glyphicon-pencil"></i>
-                        </div>
+                        <input type="text" class="form-control" placeholder="Other special needs" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.OtherSpecialNeed">
+                        <label class="control-label col-md-3 col-sm-3"> Other special needs ?</label>
+                        <div class="form-control-focus"> </div>
                     </div>
                 </div>
             </div>
             <!-- 3 -->
         </div>
     </div>
-
-
     <!-- patient details #4 -->
     <!-- <div class="panel panel-info">
         <div class="panel-heading">
@@ -220,7 +208,7 @@
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group form-md-line-input">
                         <div class="input-icon">
-                            <input type="text" class="form-control date-picker" data-date-format="dd-mm-yyyy" placeholder="Expiry date">
+                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="Expiry date">
                             <label class="control-label">Expiry date</label>
                             <div class="form-control-focus"> </div>
                             <i class="glyphicon glyphicon-calendar"></i>
@@ -253,7 +241,6 @@
             </div>
         </div>
     </div> -->
-
     <!-- patient details #5 -->
     <!-- <div class="panel panel-info">
         <div class="panel-heading">
@@ -296,5 +283,3 @@
         </div>
     </div> -->
 </div>
-
-

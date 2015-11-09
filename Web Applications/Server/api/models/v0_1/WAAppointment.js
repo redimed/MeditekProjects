@@ -34,6 +34,66 @@ module.exports = {
                 key: 'ID'
             }
         },
+        InjuryType: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        HasConsultant: {
+            type: Sequelize.STRING(1),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 1],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        ConsultantName: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        ConsultantSite: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        ConsultantContactNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        ConsultantNote: {
+            type: Sequelize.TEXT,
+            validate: {
+
+                len: {
+                    args: [0, 2048],
+                    msg: 'Too long!'
+                }
+            }
+        },
         RefFax: {
             type: Sequelize.STRING(20),
             allowNull: true,

@@ -19,7 +19,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 
 	// Check MobilePhone
 	$scope.checkUser = function(data) {
-
+		$scope.loadingpage = true;
 		$scope.validateCheck(data)
 		.then(function(success) {
 
@@ -27,6 +27,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 			.then(function(result) {
 
 				if(result.length > 0) {
+					$scope.loadingpage = false;
 					toastr.error('Username already exists');
 				} else {
 
@@ -34,6 +35,7 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 					.then(function(result2) {
 
 						if(result2.length > 0) {
+							$scope.loadingpage = false;
 							toastr.error('MobilePhone already exists');
 						} else {
 							
@@ -41,24 +43,32 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
 							.then(function(result3) {
 
 								if(result3.length > 0) {
+									$scope.loadingpage = false;
 									toastr.error('Email already exists');
 								} else {
 
 									$scope.step++;
+									$scope.loadingpage = false;
 									
 								} // end else
 							
-							}, function(err) {}) // end check email
+							}, function(err) {
+								$scope.loadingpage = false;
+							}) // end check email
 							
 						} // end else
 
-					}, function(err) {}) // end check Mobile
+					}, function(err) {
+						$scope.loadingpage = false;
+					}) // end check Mobile
 
 				} // end else
 
 			}) // end check Username
 		
-		}, function(err) {});
+		}, function(err) {
+			$scope.loadingpage = false;
+		});
 			
 	}
 
@@ -78,7 +88,6 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
                     // PhoneNumber: '+840936767117',
                     content: CommonService.contentVerify+ ' ' +result.data.VerificationCode
                 };
-
                 UnauthenticatedService.sendSms(info)
                 .then(function(success) {
                     toastr.success('Register Successfull');

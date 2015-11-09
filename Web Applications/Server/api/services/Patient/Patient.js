@@ -126,7 +126,7 @@ module.exports = {
 
 			//validate DOB
 			if(data.DOB){
-				if(data.DOB!=null && data.DOB!=""){
+				if(data.DOB!=null || data.DOB!=""){
 					if(!/^(\d{1,2})[/](\d{1,2})[/](\d{4})/.test(data.DOB)){
 						errors.push({field:"DOB",message:"invalid value"});
 						err.pushErrors(errors);
@@ -262,13 +262,13 @@ module.exports = {
 				}
 			}
 			if(data.Search.Email1){
-				whereClause.Patient.Email = {
-					like:'%'+data.Search.Email+'%'
+				whereClause.Patient.Email1 = {
+					like:'%'+data.Search.Email1+'%'
 				}
 			}
 			if(data.Search.Email2){
-				whereClause.Patient.Email = {
-					like:'%'+data.Search.Email+'%'
+				whereClause.Patient.Email2 = {
+					like:'%'+data.Search.Email2+'%'
 				}
 			}
 			if(data.Search.Enable){

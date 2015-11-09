@@ -15,7 +15,8 @@ var app = angular.module('app', [
     'app.common.CommonService',
     "app.unAuthentication",
     "app.authentication",
-    "angularFileUpload"
+    "angularFileUpload",
+    "vcRecaptcha"
 
 ]);
 
@@ -56,6 +57,7 @@ app
                     if(response.status===202)
                     {
                         $cookies.put('token',response.headers().newtoken);
+                        // alert("OK")
                         // alert(response.headers());
                     }
                     return response;

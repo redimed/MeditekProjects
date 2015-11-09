@@ -21,9 +21,13 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        
+        loadDataJson()
+    }
+    override func viewDidAppear(animated: Bool) {
         pagingImage()
         resetTimer()
-        loadDataJson()
     }
     func resetTimer() {
         timer?.invalidate()
@@ -44,8 +48,8 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     
     //page Controller
     func pagingImage(){
-        self.pageTitles = NSArray(objects: "Explore","Lest","contruction")
-        self.pageImages = NSArray(objects: "chef2","sore back","construction")
+        self.pageTitles = NSArray(objects: "Explore","Lest","contruction","ss")
+        self.pageImages = NSArray(objects: "a","b","c","d")
         pageControl.numberOfPages = pageImages.count
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         self.pageViewController.dataSource = self

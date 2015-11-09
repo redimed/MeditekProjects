@@ -17,7 +17,7 @@ struct UrlAPICheckPhoneNumber  {
 }
 struct UrlInformationPatient  {
     static let getInformationPatientByUID = "/api/telehealth/user/details/"
-    static let getAppointmentList = "/api/telehealth/user/appointments"
+    static let getAppointmentList = "/api/telehealth/user/appointments/"
     static let getAppointmentDetails = "/api/telehealth/user/appointmentDetails"
     static let uploadImage =  "/api/uploadFile"
     static let updateImageToAppointment = "/api/telehealth/appointment/updateFile"

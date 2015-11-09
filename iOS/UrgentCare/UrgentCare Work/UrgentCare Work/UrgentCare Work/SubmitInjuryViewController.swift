@@ -59,7 +59,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
             GPReferral = ""
         }
         
-        customTextField(colorCustomBrow)
+        
         
         suburbTextField.delegate = self
         firstNameTextField.delegate = self
@@ -90,6 +90,12 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+//        customTextField(colorCustomBrow)
+    }
+    override func viewDidAppear(animated: Bool) {
+        customTextField(colorCustomBrow)
+    }
     //select radio button
     func didSelectButton(aButton: UIButton?) {
         if aButton?.titleLabel?.text == "Yes"{
@@ -274,6 +280,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         border.borderWidth = width
         textField.layer.addSublayer(border)
         textField.layer.masksToBounds = true
+
     }
     //check textfile is reqired
     func checkfield() {

@@ -137,11 +137,13 @@ module.exports = function(data, userInfo) {
                     .then(function(telehealthAppointmentUpdated) {
                         var WAAppointment = data.TelehealthAppointment.WAAppointment;
                         if (HelperService.CheckExistData(WAAppointment) &&
-                            HelperService.CheckExistData(preferringPractitionerObject)) {
+                            HelperService.CheckExistData(preferringPractitionerObject) &&
+                            HelperService.CheckExistData(appointmentObject)) {
                             var dataWAAppointment =
                                 Services.GetDataAppointment.WAAppointment(WAAppointment);
                             dataWAAppointment.CreatedBy = preferringPractitionerObject.ID;
                             dataWAAppointment.UID = dataWAAppointment.UID || UUIDService.Create();
+                            dataWAAppointment.TelehealthAppointmentID = appointmentObject.TelehealthAppointment.ID;
                             var objectWAAppointment = {
                                 data: dataWAAppointment,
                                 where: appointmentObject.TelehealthAppointment.ID,

@@ -67,10 +67,10 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                 if response["status"] == "success"{
                     self.view.hideLoading()
                     let defaults = NSUserDefaults.standardUserDefaults()
-                    let uid = response["user"]["UID"].string! as String
+                    let uid = response["user"]["TeleUID"].string! as String
                     let token = response["token"].string! as String
-                    let patientUID = response["user"]["patientUID"].string! as String
-                    let userUID = response["user"]["UserUID"].string! as String
+                    let patientUID = response["user"]["PatientUID"].string! as String
+                    let userUID = response["user"]["UID"].string! as String
                     
                  
                 

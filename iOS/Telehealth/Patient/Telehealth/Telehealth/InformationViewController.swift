@@ -46,7 +46,7 @@ class InformationViewController: UIViewController {
                     self.postCodeLabel.text = PatientInfo.Postcode
                     self.countryLabel.text = PatientInfo.Country
                     self.addressLabel.text = PatientInfo.Address1
-                    self.emailLabel.text = PatientInfo.Email
+                    self.emailLabel.text = PatientInfo.Email1
                     self.homePhoneLabel.text = PatientInfo.HomePhoneNumber
                 } else if response["message"] == "error"{
                     self.alertMessage("Error", message: ErrorMessage.NoData)

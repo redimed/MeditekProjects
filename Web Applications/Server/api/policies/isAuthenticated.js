@@ -112,7 +112,7 @@ module.exports = function(req, res, next) {
 										res.set('newtoken',newtoken);
 										res.header('Access-Control-Expose-Headers', 'newtoken');
 										//xử lý cho việc gọi api từ telehealth server
-										//chỉ được sử dụng cho telehealth server
+										//chỉ được sử dụng cho telehealth server  
 										//-------------------------------------------
 	            						res.set('newsecret',sessionUser.SecretKey);
 	            						res.set('newsecretcreateddate',sessionUser.SecretCreatedDate);

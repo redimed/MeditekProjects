@@ -27,7 +27,6 @@ import com.redimed.telehealth.patient.fragment.InformationFragment;
 import com.redimed.telehealth.patient.fragment.ListAppointmentFragment;
 import com.redimed.telehealth.patient.models.Category;
 import com.redimed.telehealth.patient.models.Patient;
-import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.CircleTransform;
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity{
     private RegisterApi restClient;
     private LinearLayoutManager layoutManagerCategories;
     private List<Category> categories;
-    private TelehealthUser telehealthUser;
     private SharedPreferences uidTelehealth;
     private Gson gson;
     private Fragment fragment;
@@ -80,6 +78,7 @@ public class MainActivity extends AppCompatActivity{
         ButterKnife.bind(this);
         initializeData();
         restClient = RESTClient.getRegisterApi();
+        gson = new Gson();
 
         rvCategories.setHasFixedSize(true);
         layoutManagerCategories = new LinearLayoutManager(getApplicationContext());
@@ -91,7 +90,7 @@ public class MainActivity extends AppCompatActivity{
         DisplayDrawer();
         GetDetailsPatient();
 
-        Display(1);
+        Display(0);
     }
 
     private void initializeData(){
@@ -105,14 +104,7 @@ public class MainActivity extends AppCompatActivity{
 
     private void GetDetailsPatient() {
         uidTelehealth = this.getSharedPreferences("TelehealthUser", MODE_PRIVATE);
-        gson = new Gson();
-
-        telehealthUser = new TelehealthUser();
-        telehealthUser.setUID(uidTelehealth.getString("uid", null));
-
-        JsonObject patientJSON = new JsonObject();
-        patientJSON.addProperty("data", gson.toJson(telehealthUser));
-        restClient.getDetailsPatient(patientJSON, new Callback<JsonObject>() {
+        restClient.getDetailsPatient(uidTelehealth.getString("uid", null), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 String message = jsonObject.get("message").getAsString();

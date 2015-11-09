@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -93,6 +95,8 @@ public class SportActivity extends AppCompatActivity implements View.OnClickList
     TextView lblLNRequire;
     @Bind(R.id.lblPhoneRequire)
     TextView lblPhoneRequire;
+    @Bind(R.id.relativeLayoutGPReferral)
+    RelativeLayout relativeLayoutGPReferral;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +117,12 @@ public class SportActivity extends AppCompatActivity implements View.OnClickList
         LoadDataInformation();
 
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        btnSportInjury.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            btnSportInjury.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
+        }
+        else {
+            btnSportInjury.setBackgroundResource(R.color.colorAccent);
+        }
         txtDOB.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -151,6 +160,7 @@ public class SportActivity extends AppCompatActivity implements View.OnClickList
                     urgentType = "spec";
                     break;
                 case "gen":
+                    relativeLayoutGPReferral.setVisibility(View.GONE);
                     txtTitle.setText(getResources().getText(R.string.red_btn));
                     urgentType = "gen";
                     break;
@@ -256,13 +266,15 @@ public class SportActivity extends AppCompatActivity implements View.OnClickList
         objectUrgentRequest.setDOB(txtDOB.getText().toString());
         objectUrgentRequest.setEmail(txtEmail.getText().toString());
         objectUrgentRequest.setDescription(txtDescription.getText().toString());
-        objectUrgentRequest.setGPReferral((radioGroupGPReferral.getCheckedRadioButtonId() == -1) ? null : ((RadioButton) findViewById(radioGroupGPReferral.getCheckedRadioButtonId())).getHint().toString());
         objectUrgentRequest.setServiceType("SportInjury");
         objectUrgentRequest.setRequestDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss Z").format(new Date()));
         objectUrgentRequest.setPhysioTherapy(urgentType == "phy" ? "Y" : "N");
         objectUrgentRequest.setSpecialList(urgentType == "spec" ? "Y" : "N");
-        objectUrgentRequest.setGeneralClinic(urgentType == "gen" ? "Y" : "N");
+        objectUrgentRequest.setGeneralClinic(urgentType == "gen" ? "N" : "Y");
         objectUrgentRequest.setHandTherapy(urgentType == "hand" ? "Y" : "N");
+        if (!urgentType.equalsIgnoreCase("gen")){
+            objectUrgentRequest.setGPReferral((radioGroupGPReferral.getCheckedRadioButtonId() == -1) ? null : ((RadioButton) findViewById(radioGroupGPReferral.getCheckedRadioButtonId())).getHint().toString());
+        }
 
         JsonObject urgentJson = new JsonObject();
         urgentJson.addProperty("data", gson.toJson(objectUrgentRequest));
@@ -368,7 +380,7 @@ public class SportActivity extends AppCompatActivity implements View.OnClickList
         // Validation Edit Text
         for (int i = 0; i < arr.size(); i++) {
             if (CheckRequiredData(arr.get(i))) {
-                arr.get(i).setError(arr.get(i).getHint() + " " + getResources().getString(R.string.isRequired), customErrorDrawable);
+                arr.get(i).setError(getResources().getString(R.string.isRequired), customErrorDrawable);
                 arrTextView.get(i).setVisibility(View.GONE);
                 validate = false;
             } else {

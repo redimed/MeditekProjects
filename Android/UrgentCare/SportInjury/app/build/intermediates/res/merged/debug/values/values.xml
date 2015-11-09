@@ -362,6 +362,9 @@
     <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>
     <dimen name="progress_circle_radius">34dp</dimen>
+    <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="text_size_home">12dp</dimen>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <drawable name="notification_template_icon_bg">#3333B5E5</drawable>
@@ -494,18 +497,34 @@
     <string name="faq_btn">FAQs</string>
     <string name="fileName">suburb.json</string>
     <string name="green_btn">Physio Therapist</string>
-    <string name="isRequired">  is required!</string>
+    <string name="hint_contact">Contact Phone</string>
+    <string name="hint_des">Description</string>
+    <string name="hint_dob">Date of Birth</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_no">N</string>
+    <string name="hint_suburb">Suburb</string>
+    <string name="hint_yes">Y</string>
+    <string name="isRequired">Field is required!</string>
+    <string name="lbl_GP">GP Referral</string>
+    <string name="make_appointment">Make Appointment</string>
     <string name="orange_btn">Hand Therapist</string>
+    <string name="phone_call">0892300900</string>
     <string name="progressMakeAppointmentContent">Please wait..</string>
     <string name="red_btn">General Clinic</string>
+    <string name="required_field">*</string>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="time_available">08:00AM - 05:00PM</string>
+    <string name="title_action_bar">Sport Injury Clinic Booking</string>
     <string name="title_activity_faqs">FAQsActivity</string>
     <string name="title_activity_sport">SportActivity</string>
+    <string name="txt_no">No</string>
+    <string name="txt_yes">Yes</string>
     <string name="urgent_btn">URGENT CARE</string>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
@@ -513,14 +532,6 @@
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>
     <style name="Animation.AppCompat.DropDownUp" parent="Base.Animation.AppCompat.DropDownUp"/>
-    <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/src/main/res/values/styles.xml -->
-    <eat-comment/>
-    <style name="AppTheme" parent="MyMaterialTheme.Base">
-        <!-- Customize your theme here. -->
-        <item name="vpiCirclePageIndicatorStyle">@style/TabStyle</item>
-    </style>
-    <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
-    <eat-comment/>
     <style name="Base.AlertDialog.AppCompat" parent="android:Widget">
         <item name="android:layout">@layout/abc_alert_dialog_material</item>
         <item name="listLayout">@layout/abc_select_dialog_material</item>
@@ -1446,6 +1457,28 @@
         <item name="tabTextAppearance">@style/TextAppearance.Design.Tab</item>
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
     </style>
+    <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="MyTheme" parent="MyTheme.Base">
+        <!-- Customize your theme here. -->
+        <item name="vpiCirclePageIndicatorStyle">@style/TabStyle</item>
+    </style>
+    <style name="MyTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
+        <item name="windowNoTitle">true</item>
+        <!--We will be using the toolbar so no need to show ActionBar-->
+        <item name="windowActionBar">false</item>
+        <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!-- colorAccent is used as the default value for colorControlActivated
+             which is used to tint widgets -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- You can also set colorControlNormal, colorControlActivated
+            colorControlHighlight and colorSwitchThumbNormal. -->
+    </style>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme">
@@ -1590,7 +1623,16 @@
     </style>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/src/main/res/values/styles.xml -->
     <eat-comment/>
-    <style name="TabStyle" parent="Widget.TabPageIndicator">
+    <style name="TabPageIndicator">
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">22dip</item>
+        <item name="android:paddingRight">22dip</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="TabStyle" parent="TabPageIndicator">
         <item name="android:textColor">#FF33AA33</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">italic</item>
@@ -1717,12 +1759,6 @@
     <style name="ThemeOverlay.AppCompat.Dark" parent="Base.ThemeOverlay.AppCompat.Dark"/>
     <style name="ThemeOverlay.AppCompat.Dark.ActionBar" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="ThemeOverlay.AppCompat.Light" parent="Base.ThemeOverlay.AppCompat.Light"/>
-    <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/src/main/res/values/styles.xml -->
-    <eat-comment/>
-    <style name="Widget">
-    </style>
-    <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
-    <eat-comment/>
     <style name="Widget.AppCompat.ActionBar" parent="Base.Widget.AppCompat.ActionBar">
     </style>
     <style name="Widget.AppCompat.ActionBar.Solid" parent="Base.Widget.AppCompat.ActionBar.Solid">
@@ -1862,17 +1898,6 @@
     <style name="Widget.Design.TextInputLayout" parent="android:Widget">
         <item name="hintTextAppearance">@style/TextAppearance.Design.Hint</item>
         <item name="errorTextAppearance">@style/TextAppearance.Design.Error</item>
-    </style>
-    <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/src/main/res/values/styles.xml -->
-    <eat-comment/>
-    <style name="Widget.TabPageIndicator" parent="Widget">
-        <item name="android:gravity">center</item>
-        <item name="android:paddingLeft">22dip</item>
-        <item name="android:paddingRight">22dip</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">12dp</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:maxLines">1</item>
     </style>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
     <eat-comment/>

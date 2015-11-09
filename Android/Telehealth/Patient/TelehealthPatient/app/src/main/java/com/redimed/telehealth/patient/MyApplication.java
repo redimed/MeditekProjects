@@ -5,13 +5,8 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.text.ParseException;
@@ -24,19 +19,10 @@ import java.util.Date;
 public class MyApplication extends Application {
 
     private String TAG = "MyApplication";
-    private TelehealthUser telehealthUser;
     private static MyApplication myApplication;
 
     public static MyApplication getInstance() {
         return myApplication;
-    }
-
-    public TelehealthUser getTelehealthUser() {
-        return telehealthUser;
-    }
-
-    public void setTelehealthUser(TelehealthUser telehealthUser) {
-        this.telehealthUser = telehealthUser;
     }
 
     @Override

@@ -33,7 +33,7 @@ public class SocketService extends Service {
     private static Socket socket;
     private Intent i;
     private static SharedPreferences uidTelehealth;
-    private String auth, deviceId, systemType;
+    private String auth, deviceId;
 
     private void initializeSocket() {
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
@@ -70,7 +70,6 @@ public class SocketService extends Service {
         socket.on(Socket.EVENT_RECONNECT, onReconnect);
         socket.on(Socket.EVENT_ERROR, onError);
         socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
-        socket.on("refreshToken", onRefreshToken);
         socket.on("receiveMessage", onReceiveMessage);
         socket.on("errorMsg", onReceiveError);
         return START_STICKY;
@@ -182,21 +181,6 @@ public class SocketService extends Service {
                     JoinRoom();
                     startActivity(i);
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    };
-
-    private Emitter.Listener onRefreshToken = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            Log.d(TAG, "====Refresh Token====");
-            JSONObject data = (JSONObject) args[0];
-            try {
-                Editor editor = uidTelehealth.edit();
-                editor.putString("token", data.get("token").toString());
-                editor.commit();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

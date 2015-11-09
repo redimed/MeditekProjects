@@ -598,21 +598,17 @@
                                         <!-- <ul class="ver-inline-menu tabbable margin-bottom-10"> -->
                                         <ul class="nav nav-tabs tabs-left">
                                             <li class="active">
-                                                <a data-toggle="tab" href="index.html#tab_referral1">
-                    Referral Information </a>
+                                                <a data-toggle="tab" href="index.html#tab_referral1">Referral Information </a>
                                                 <span class="after"> </span>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="index.html#tab_referral2">
-                    Reason for referral/Presenting Problem </a>
+                                                <a data-toggle="tab" href="index.html#tab_referral2">Reason for referral/Presenting Problem </a>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="index.html#tab_referral3">
-                    History of Previous Skin cancers and treatmens </a>
+                                                <a data-toggle="tab" href="index.html#tab_referral3"> History of Previous Skin cancers and treatmens </a>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="index.html#tab_referral4">
-                    History of Previous Hand surgery </a>
+                                                <a data-toggle="tab" href="index.html#tab_referral4"> History of Previous Hand surgery </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -835,11 +831,13 @@
                                                                 <thead>
                                                                     <tr class="uppercase">
                                                                         <th width="30%">File Name</th>
+                                                                        <th width="30%">View</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.referralPresenting'].FileUploads">
                                                                         <td><strong>{{ item.FileName }}</strong></td>
+                                                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -971,11 +969,13 @@
                                                                 <thead>
                                                                     <tr class="uppercase">
                                                                         <th width="30%">File Name</th>
+                                                                         <th width="30%">View</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].FileUploads">
                                                                         <td><strong>{{ item.FileName }}</strong></td>
+                                                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -1013,11 +1013,13 @@
                                                                 <thead>
                                                                     <tr class="uppercase">
                                                                         <th width="30%">File Name</th>
+                                                                        <th width="30%">View</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.previousHandSurgery'].FileUploads">
                                                                         <td><strong>{{ item.FileName }}</strong></td>
+                                                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>

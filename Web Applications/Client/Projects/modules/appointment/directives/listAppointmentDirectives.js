@@ -10,6 +10,12 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
                     Offset: 0,
                     currentPage: 1,
                     maxSize: 5,
+                    Filter: [{
+                        Appointment: {
+                            Enable:'Y'
+                        },
+
+                    }],
                     Order: [{
                         Appointment: {
                             CreatedDate: 'DESC',

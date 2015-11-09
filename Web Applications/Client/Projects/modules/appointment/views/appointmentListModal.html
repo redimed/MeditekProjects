@@ -59,15 +59,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group form-md-line-input  ">
-                                            <select class="form-control" ng-model="appointment.Status" name="Status">
-                                                <option value="Waiting for approval">Pending</option>
-                                                <option value="Attended">Attended</option>
-                                                <option value="Waitlist">Wait List Surgery</option>
-                                                <option value="Pending">Pending</option>
-                                                <option value="Finish">Finish</option>
-                                                <option value="Received">Received</option>
-                                                <option value="Cancelled">Cancelled</option>
-                                                <option value="Approved">Appointment Time</option>
+                                             <select class="form-control" name="Status" ng-model="appointment.Status" ng-options="item.value as item.name for item in Status.apptStatus">
                                             </select>
                                             <label for="time" class="control-label">Status</label>
                                         </div>

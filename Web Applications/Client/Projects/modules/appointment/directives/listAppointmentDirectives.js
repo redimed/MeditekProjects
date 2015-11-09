@@ -4,6 +4,7 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
         restrict: 'E',
         templateUrl: "modules/appointment/directives/templates/listAppointment.html",
         link: function(scope, $state) {
+
             var Init = function() {
                 scope.searchObject = {
                     Limit: 20,
@@ -41,7 +42,10 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
                 scope.searchObjectMap = angular.copy(scope.searchObject);
                 scope.load();
             };
-
+            scope.Status = {
+                apptStatus: AppointConstant.apptStatus
+            }
+            console.log(scope.Status.apptStatus)
             scope.typeSubmitDate = 'DESC';
             scope.typeAppointmentDate = 'DESC';
             scope.typeSubmitDateOther = null;
@@ -77,9 +81,11 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
             }
 
             scope.load = function() {
+                 o.loadingPage(true);
                 scope.searchObjectMapTemp = angular.copy(scope.searchObjectMap)
                 scope.parseTime(scope.searchObjectMapTemp)
                 AppointmentService.loadListAppointment(scope.searchObjectMapTemp).then(function(response) {
+                     o.loadingPage(false);
                     scope.appointments = response.rows;
                     scope.CountRow = response.count
                 });
@@ -92,10 +98,12 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
 
 
             scope.openAppointmentModal = function(UID) {
+                o.loadingPage(true);
                 var data = []
                 var modalInstance
                 AppointmentService.getDetailApppointment(UID).then(function(response) {
                     data = response.data
+                     o.loadingPage(false);
                     modalInstance = $modal.open({
                         animation: true,
                         templateUrl: 'modules/appointment/views/appointmentListModal.html',

@@ -1,6 +1,8 @@
 module.exports = function(objUpdate) {
     return WAAppointment.update(objUpdate.data, {
-        where: objUpdate.where,
+        where: {
+            TelehealthAppointmentID: objUpdate.where
+        },
         transaction: objUpdate.transaction
     });
 };

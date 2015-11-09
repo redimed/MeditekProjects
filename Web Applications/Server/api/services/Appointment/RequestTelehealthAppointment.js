@@ -30,6 +30,11 @@ module.exports = function(data, userInfo) {
                             };
                             //create new Appointment
                             return Services.CreateAppointment(objectCreatedAppointment);
+                        } else {
+                            defer.reject({
+                                transaction: t,
+                                error: new Error('permission denied')
+                            });
                         }
                     }, function(err) {
                         defer.reject({

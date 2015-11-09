@@ -8,7 +8,7 @@ module.exports = function(objectFind) {
                 'ProviderNumber', 'Signature', 'WorkPhoneNumber'
             ],
             model: Doctor,
-            required: true
+            required: false
         }],
         where: {
             UID: objectFind.data

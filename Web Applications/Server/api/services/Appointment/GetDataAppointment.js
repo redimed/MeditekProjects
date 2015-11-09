@@ -135,6 +135,7 @@ module.exports = {
             InterpreterRequired: data.InterpreterRequired,
             InterpreterLanguage: data.InterpreterLanguage,
             OtherSpecialNeed: data.OtherSpecialNeed,
+            MedicareEligible: data.MedicareEligible,
             MedicareNumber: data.MedicareNumber,
             MedicareReferenceNumber: data.MedicareReferenceNumber,
             ExpiryDate: data.ExpiryDate,

@@ -16,7 +16,8 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                     Offset: 0,
                     Filter: [{
                         Appointment: {
-                            Status: null
+                            Status: null,
+                            Enable:'Y'
                         },
 
                     }],

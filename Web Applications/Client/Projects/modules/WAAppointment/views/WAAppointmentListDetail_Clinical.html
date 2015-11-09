@@ -47,11 +47,13 @@
                                 <thead>
                                     <tr class="uppercase">
                                         <th width="30%">File Name</th>
+                                        <th width="30%">View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.MedicalHistory'].FileUploads">
                                         <td><strong>{{ item.FileName }}</strong></td>
+                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -76,11 +78,13 @@
                                 <thead>
                                     <tr class="uppercase">
                                         <th width="30%">File Name</th>
+                                        <th width="30%">View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.SocialFactors'].FileUploads">
                                         <td><strong>{{ item.FileName }}</strong></td>
+                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -105,11 +109,13 @@
                                 <thead>
                                     <tr class="uppercase">
                                         <th width="30%">File Name</th>
+                                        <th width="30%">View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Allergies'].FileUploads">
                                         <td><strong>{{ item.FileName }}</strong></td>
+                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -134,11 +140,13 @@
                                 <thead>
                                     <tr class="uppercase">
                                         <th width="30%">File Name</th>
+                                        <th width="30%">View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.Medication'].FileUploads">
                                         <td><strong>{{ item.FileName }}</strong></td>
+                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -163,11 +171,13 @@
                                 <thead>
                                     <tr class="uppercase">
                                         <th width="30%">File Name</th>
+                                        <th width="30%">View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.InvestigationTests'].FileUploads">
                                         <td><strong>{{ item.FileName }}</strong></td>
+                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
                                     </tr>
                                 </tbody>
                             </table>

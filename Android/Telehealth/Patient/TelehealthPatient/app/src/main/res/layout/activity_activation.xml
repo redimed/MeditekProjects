@@ -21,6 +21,76 @@
         android:layout_marginRight="20dp">
 
         <LinearLayout
+            android:id="@+id/layoutVerifyCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?android:actionBarSize"
+                android:background="#41000000"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true">
+
+                <EditText
+                    android:id="@+id/txtVerifyCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:hint="@string/hint_code"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?android:actionBarSize"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/btnBack"
+                    android:layout_width="?android:actionBarSize"
+                    android:layout_height="50dp"
+                    android:background="#6fff0003"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true">
+
+                    <com.redimed.telehealth.patient.font.MaterialDesignIconsTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/material_icon_back"
+                        android:textColor="@android:color/white"
+                        android:textSize="30sp" />
+
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btnSubmitCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Verify Code"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/layoutRegisterFone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +124,7 @@
 
                     <View
                         android:layout_width="1dp"
-                        android:layout_height="50dp"
+                        android:layout_height="45dp"
                         android:layout_gravity="center"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
@@ -120,80 +190,11 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/layoutVerifyCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="?android:actionBarSize"
-                android:background="#41000000"
-                android:descendantFocusability="beforeDescendants"
-                android:focusableInTouchMode="true">
-
-                <EditText
-                    android:id="@+id/txtVerifyCode"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white"
-                    android:fontFamily="sans-serif-light"
-                    android:gravity="center"
-                    android:hint="@string/hint_code"
-                    android:inputType="number"
-                    android:maxLength="6"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="@android:color/black"
-                    android:textSize="17sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="?android:actionBarSize"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:id="@+id/btnBack"
-                    android:layout_width="?android:actionBarSize"
-                    android:layout_height="fill_parent"
-                    android:background="#6fff0003"
-                    android:clickable="true">
-
-                    <com.redimed.telehealth.patient.font.MaterialDesignIconsTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/material_icon_back"
-                        android:textColor="@android:color/white"
-                        android:textSize="30sp" />
-
-                </RelativeLayout>
-
-                <Button
-                    android:id="@+id/btnSubmitCode"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Verify Code"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
     </ViewFlipper>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:text="@string/title_bottom_activation"
         android:textColor="@color/lightFont"
         android:background="@color/colorPrimary"

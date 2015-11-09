@@ -98,7 +98,7 @@ public class AppointmentDetails extends Fragment {
         ButterKnife.bind(this, v);
 
         telehealthPatient = v.getContext().getSharedPreferences("TelehealthUser", v.getContext().MODE_PRIVATE);
-        accountUID = telehealthPatient.getString("accountUID", null);
+        accountUID = telehealthPatient.getString("userUID", null);
         urlPicasso = new ArrayList<String>();
         gson = new Gson();
         patient = new Patient();
@@ -270,7 +270,7 @@ public class AppointmentDetails extends Fragment {
                 }
                 i = new Intent(v.getContext(), ModelActivity.class);
                 i.putExtra("picturePath", picturePath);
-                i.putExtra("accountUID", accountUID);
+                i.putExtra("userUID", accountUID);
                 i.putExtra("appointmentUID", appointmentUID);
                 startActivity(i);
             } else {

@@ -27,11 +27,6 @@
     <attr name="strokeWidth" format="dimension" />
     <attr name="unselectedColor" format="color" />
 
-    <declare-styleable name="ViewPagerIndicator">
-        <!-- Style of the circle indicator. -->
-        <attr name="vpiCirclePageIndicatorStyle" format="reference" />
-    </declare-styleable>
-
     <declare-styleable name="CirclePageIndicator">
         <!-- Whether or not the indicators should be centered. -->
         <attr name="centered" />
@@ -51,6 +46,8 @@
         <attr name="strokeWidth" />
         <!-- View background -->
         <attr name="android:background" />
+        <!-- Style of the circle indicator. -->
+        <attr name="vpiCirclePageIndicatorStyle" format="reference" />
     </declare-styleable>
 
 </resources>

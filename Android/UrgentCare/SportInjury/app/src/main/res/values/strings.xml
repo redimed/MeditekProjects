@@ -10,6 +10,7 @@
     <string name="urgent_btn">URGENT CARE</string>
     <string name="faq_btn">FAQs</string>
     <string name="call_btn">Call Us</string>
+    <string name="phone_call">0892300900</string>
     <string name="time_available">08:00AM - 05:00PM</string>
     <string name="contain_bottom1">Personalised + Customised,</string>
     <string name="contain_HEALTH">HEALTH</string>
@@ -21,7 +22,7 @@
     <!-- Sport Activity-->
     <string name="title_activity_sport">SportActivity</string>
     <string name="australiaFormatPhone">+61</string>
-    <string name="isRequired">  is required!</string>
+    <string name="isRequired">Field is required!</string>
     <string name="contactPhoneRequired">Contact Phone is required!</string>
     <string name="contactPhoneFormat">Contact Phone wrong formatted</string>
     <string name="emailValid">Email address not valid</string>
@@ -32,8 +33,25 @@
     <string name="dialogError">Error</string>
     <string name="contentDialogErrorFrom">Please input required information</string>
     <string name="confirmSaveInfo">Do you want to save information</string>
+    <string name="title_action_bar">Sport Injury Clinic Booking</string>
+    <string name="required_field">*</string>
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_contact">Contact Phone</string>
+    <string name="hint_suburb">Suburb</string>
+    <string name="hint_dob">Date of Birth</string>
+    <string name="hint_email">Email</string>
+    <string name="lbl_GP">GP Referral</string>
+    <string name="hint_yes">Y</string>
+    <string name="hint_no">N</string>
+    <string name="txt_yes">Yes</string>
+    <string name="txt_no">No</string>
+    <string name="hint_des">Description</string>
+    <string name="make_appointment">Make Appointment</string>
+
 
     <!-- FAQs-->
     <string name="title_activity_faqs">FAQsActivity</string>
+
 
 </resources>

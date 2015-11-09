@@ -18,16 +18,16 @@ public class SportActivity$$ViewBinder<T extends patient.telehealth.redimed.spor
     target.txtDOB = finder.castView(view, 2131493015, "field 'txtDOB'");
     view = finder.findRequiredView(source, 2131493017, "field 'txtEmail'");
     target.txtEmail = finder.castView(view, 2131493017, "field 'txtEmail'");
-    view = finder.findRequiredView(source, 2131493019, "field 'txtDescription'");
-    target.txtDescription = finder.castView(view, 2131493019, "field 'txtDescription'");
+    view = finder.findRequiredView(source, 2131493022, "field 'txtDescription'");
+    target.txtDescription = finder.castView(view, 2131493022, "field 'txtDescription'");
     view = finder.findRequiredView(source, 2131493013, "field 'autoCompleteSuburb'");
     target.autoCompleteSuburb = finder.castView(view, 2131493013, "field 'autoCompleteSuburb'");
     view = finder.findRequiredView(source, 2131493023, "field 'btnSportInjury'");
     target.btnSportInjury = finder.castView(view, 2131493023, "field 'btnSportInjury'");
-    view = finder.findRequiredView(source, 2131493022, "field 'radioGroupGPReferral'");
-    target.radioGroupGPReferral = finder.castView(view, 2131493022, "field 'radioGroupGPReferral'");
-    view = finder.findRequiredView(source, 2131493000, "field 'btnBack'");
-    target.btnBack = finder.castView(view, 2131493000, "field 'btnBack'");
+    view = finder.findRequiredView(source, 2131493020, "field 'radioGroupGPReferral'");
+    target.radioGroupGPReferral = finder.castView(view, 2131493020, "field 'radioGroupGPReferral'");
+    view = finder.findRequiredView(source, 2131492986, "field 'btnBack'");
+    target.btnBack = finder.castView(view, 2131492986, "field 'btnBack'");
     view = finder.findRequiredView(source, 2131493001, "field 'txtTitle'");
     target.txtTitle = finder.castView(view, 2131493001, "field 'txtTitle'");
     view = finder.findRequiredView(source, 2131493005, "field 'lblFNRequire'");
@@ -36,6 +36,8 @@ public class SportActivity$$ViewBinder<T extends patient.telehealth.redimed.spor
     target.lblLNRequire = finder.castView(view, 2131493008, "field 'lblLNRequire'");
     view = finder.findRequiredView(source, 2131493011, "field 'lblPhoneRequire'");
     target.lblPhoneRequire = finder.castView(view, 2131493011, "field 'lblPhoneRequire'");
+    view = finder.findRequiredView(source, 2131493018, "field 'relativeLayoutGPReferral'");
+    target.relativeLayoutGPReferral = finder.castView(view, 2131493018, "field 'relativeLayoutGPReferral'");
   }
 
   @Override public void unbind(T target) {
@@ -53,5 +55,6 @@ public class SportActivity$$ViewBinder<T extends patient.telehealth.redimed.spor
     target.lblFNRequire = null;
     target.lblLNRequire = null;
     target.lblPhoneRequire = null;
+    target.relativeLayoutGPReferral = null;
   }
 }

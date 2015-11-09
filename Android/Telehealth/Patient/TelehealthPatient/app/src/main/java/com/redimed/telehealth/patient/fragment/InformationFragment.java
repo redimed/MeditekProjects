@@ -11,10 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -22,12 +21,9 @@ import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.models.Patient;
-import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.CustomAlertDialog;
 import com.redimed.telehealth.patient.utils.DialogConnection;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -47,20 +43,22 @@ public class InformationFragment extends Fragment{
     private Patient[] patients;
     private SharedPreferences sharedPreferences;
 
-    @Bind(R.id.txtFirstName)
-    EditText txtFirstName;
-    @Bind(R.id.txtLastName)
-    EditText txtLastName;
-    @Bind(R.id.txtPhone)
-    EditText txtPhone;
-    @Bind(R.id.txtEmail)
-    EditText txtEmail;
-    @Bind(R.id.txtDOB)
-    EditText txtDOB;
-    @Bind(R.id.txtAddress1)
-    EditText txtAddress1;
-    @Bind(R.id.txtAddress2)
-    EditText txtAddress2;
+    @Bind(R.id.lblNamePatient)
+    TextView lblNamePatient;
+    @Bind(R.id.lblDOB)
+    TextView lblDOB;
+    @Bind(R.id.lblEmail)
+    TextView lblEmail;
+    @Bind(R.id.lblHomePhone)
+    TextView lblHomePhone;
+    @Bind(R.id.lblAddress)
+    TextView lblAddress;
+    @Bind(R.id.lblSuburb)
+    TextView lblSuburb;
+    @Bind(R.id.lblPostCode)
+    TextView lblPostCode;
+    @Bind(R.id.lblCountry)
+    TextView lblCountry;
     @Bind(R.id.btnSubmit)
     Button btnSubmit;
     @Bind(R.id.swipeInfo)
@@ -73,14 +71,11 @@ public class InformationFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        v = inflater.inflate(R.layout.fragment_information, container, false);
         restClient = RESTClient.getRegisterApi();
         uid = getArguments().getString("telehealthUID");
-        gson = new Gson();
-
-        v = inflater.inflate(R.layout.fragment_information, container, false);
         ButterKnife.bind(this, v);
-
+        gson = new Gson();
         sharedPreferences = v.getContext().getSharedPreferences("PatientInfo", v.getContext().MODE_PRIVATE);
         patients = gson.fromJson(sharedPreferences.getString("info", null), Patient[].class);
         if (patients != null){
@@ -102,17 +97,12 @@ public class InformationFragment extends Fragment{
 
     //Call api to get data information patient from server
     private void GetInfoPatient() {
-        TelehealthUser telehealthUser = new TelehealthUser();
-        telehealthUser.setUID(uid);
-
-        JsonObject patientJSON = new JsonObject();
-        patientJSON.addProperty("data", gson.toJson(telehealthUser));
-
-        restClient.getDetailsPatient(patientJSON, new Callback<JsonObject>() {
+        restClient.getDetailsPatient(uid, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 String message = jsonObject.get("message").getAsString();
                 if (message.equalsIgnoreCase("success")) {
+                    Log.d(TAG, jsonObject.get("data").toString());
                     DisplayInfo(gson.fromJson(jsonObject.get("data").toString(), Patient[].class));
                     swipeInfo.setRefreshing(false);
                 }
@@ -123,9 +113,9 @@ public class InformationFragment extends Fragment{
                 if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
                     new DialogConnection(v.getContext()).show();
                 } else {
-                    if (error.getLocalizedMessage().equalsIgnoreCase("TokenExpiredError")){
-                        new CustomAlertDialog(v.getContext(), CustomAlertDialog.State.Warning,  "Sorry for inconvenience, please refresh application").show();
-                    }else {
+                    if (error.getLocalizedMessage().equalsIgnoreCase("TokenExpiredError")) {
+                        new CustomAlertDialog(v.getContext(), CustomAlertDialog.State.Warning, "Sorry for inconvenience, please refresh application").show();
+                    } else {
                         new CustomAlertDialog(v.getContext(), CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
                     }
                 }
@@ -138,13 +128,14 @@ public class InformationFragment extends Fragment{
     private void DisplayInfo(Patient[] patients) {
         if (patients != null){
             for (Patient patient : patients) {
-                txtFirstName.setText(patient.getFirstName() == null ? "NONE" : patient.getFirstName());
-                txtLastName.setText(patient.getLastName() == null ? "NONE" : patient.getLastName());
-                txtPhone.setText(patient.getUserAccount().getPhoneNumber() == null ? "NONE" : patient.getUserAccount().getPhoneNumber());
-                txtEmail.setText(patient.getEmail() == null ? "NONE" : patient.getEmail());
-                txtDOB.setText(patient.getDOB() == null ? "NONE" : patient.getDOB());
-                txtAddress1.setText(patient.getAddress1() == null ? "NONE" : patient.getAddress1());
-                txtAddress2.setText(patient.getAddress2() == null ? "NONE" : patient.getAddress2());
+                lblNamePatient.setText(patient.getFirstName() == null ? "NONE" : patient.getFirstName());
+                lblHomePhone.setText(patient.getHomePhoneNumber() == null ? "NONE" : patient.getHomePhoneNumber());
+                lblEmail.setText(patient.getEmail() == null ? "NONE" : patient.getEmail());
+                lblDOB.setText(patient.getDOB() == null ? "NONE" : patient.getDOB());
+                lblAddress.setText(patient.getAddress1() == null ? "NONE" : patient.getAddress1());
+                lblSuburb.setText(patient.getSuburb() == null ? "NONE" : patient.getSuburb());
+                lblPostCode.setText(patient.getPostCode() == null ? "NONE" : patient.getPostCode());
+//                lblCountry.setText();
             }
         }
     }

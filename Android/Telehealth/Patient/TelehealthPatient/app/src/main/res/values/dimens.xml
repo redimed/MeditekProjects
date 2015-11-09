@@ -15,4 +15,6 @@
     <dimen name="info_icon_width">20dp</dimen>
     <dimen name="info_icon_height">20dp</dimen>
 
+    <dimen name="home_text_size">12dp</dimen>
+
 </resources>

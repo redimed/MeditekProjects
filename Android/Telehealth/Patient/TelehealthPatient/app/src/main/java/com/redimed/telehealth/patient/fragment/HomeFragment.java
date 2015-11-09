@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -17,14 +18,8 @@ import android.widget.Toast;
 
 import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.R;
-import com.redimed.telehealth.patient.api.RegisterApi;
-import com.redimed.telehealth.patient.network.RESTClient;
-import com.redimed.telehealth.patient.utils.CirclePageIndicator;
 import com.redimed.telehealth.patient.utils.PageIndicator;
 import com.redimed.telehealth.patient.utils.SliderImageAdapter;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,6 +34,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private SliderImageAdapter sliderImageAdapter;
     private boolean shouldFinish = false;
     private int currentItem = 0;
+    private Fragment f;
 
     @Bind(R.id.btnInformation)
     Button btnInformation;
@@ -48,13 +44,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     Button btnFAQ;
     @Bind(R.id.btnContact)
     Button btnContact;
+    @Bind(R.id.btnUrgentCare)
+    Button btnUrgentCare;
     @Bind(R.id.slider)
     ViewPager slider;
     @Bind(R.id.circleIndicator)
     PageIndicator circleIndicator;
 
-    public HomeFragment() {
-    }
+    public HomeFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,6 +81,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         btnTelehealth.setOnClickListener(this);
         btnFAQ.setOnClickListener(this);
         btnContact.setOnClickListener(this);
+        btnUrgentCare.setOnClickListener(this);
 
         return v;
     }
@@ -100,16 +98,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.btnFAQ:
                 ((MainActivity) v.getContext()).Display(3);
                 break;
+            case R.id.btnUrgentCare:
+                UrgentCareFAQ();
+                break;
             case R.id.btnContact:
                 Contact();
                 break;
         }
     }
 
+    private void UrgentCareFAQ(){
+        f = new FAQsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("urgentCare", "UR");
+        f.setArguments(bundle);
+        if (f != null) {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
+        }
+    }
+
     private void Contact() {
         Log.d(TAG, "CALL");
-        String number = "+841267146714";
-        Uri call = Uri.parse("tel:" + number);
+        Uri call = Uri.parse("tel:" + getResources().getString(R.string.phone_call));
         Intent phoneCallIntent = new Intent(Intent.ACTION_CALL, call);
         startActivity(phoneCallIntent);
     }

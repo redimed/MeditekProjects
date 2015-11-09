@@ -177,8 +177,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void Contact() {
-        String number = "+841267146714";
-        Uri call = Uri.parse("tel:" + number);
+        Uri call = Uri.parse("tel:" + getResources().getString(R.string.phone_call));
         Intent phoneCallIntent = new Intent(Intent.ACTION_CALL, call);
         startActivity(phoneCallIntent);
     }

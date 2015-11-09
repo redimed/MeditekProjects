@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.redimed.telehealth.patient.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class SliderImageAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View viewLayout = inflater.inflate(R.layout.slider_image, container, false);
         ButterKnife.bind(this, viewLayout);
-        imgSlider.setImageResource(resourcesIMG[position]);
+        Picasso.with(viewLayout.getContext()).load(resourcesIMG[position]).fit().centerCrop().into(imgSlider);
         container.addView(viewLayout);
 
         return viewLayout;

@@ -25,6 +25,8 @@
         <attr name="strokeWidth"/>
         <!-- View background -->
         <attr name="android:background"/>
+        <!-- Style of the circle indicator. -->
+        <attr format="reference" name="vpiCirclePageIndicatorStyle"/>
     </declare-styleable>
     <declare-styleable name="RobotoTextView">
         <attr format="enum" name="typeface">
@@ -46,16 +48,12 @@
             <enum name="robotoThinItalic" value="15"/>
         </attr>
     </declare-styleable>
-    <declare-styleable name="ViewPagerIndicator">
-        <!-- Style of the circle indicator. -->
-        <attr format="reference" name="vpiCirclePageIndicatorStyle"/>
-    </declare-styleable>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/res/values-v21/values-v21.xml -->
     <eat-comment/>
     <dimen name="design_navigation_padding_top_default">24dp</dimen>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/src/main/res/values-v21/styles.xml -->
     <eat-comment/>
-    <style name="ActivationTheme" parent="MyMaterialTheme.Base">
+    <style name="ActivationTheme" parent="MyTheme">
         <item name="android:statusBarColor" ns1:targetApi="lollipop">@android:color/transparent</item>
         <item name="android:windowTranslucentStatus" ns1:targetApi="kitkat">false</item>
         <item name="android:windowTranslucentNavigation" ns1:targetApi="kitkat">false</item>
@@ -277,17 +275,20 @@
     </style>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/src/main/res/values-v21/styles.xml -->
     <eat-comment/>
-    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="MyTheme" parent="MyTheme.Base">
 
         <item name="android:colorButtonNormal">#B42047</item>
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-
         <item name="android:typeface">serif</item>
+
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
+        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values-v21/values-v21.xml -->
     <eat-comment/>
@@ -339,7 +340,7 @@
     </style>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/SportInjury/app/src/main/res/values-v21/styles.xml -->
     <eat-comment/>
-    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="MyMaterialTheme.Base">
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="MyTheme">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>

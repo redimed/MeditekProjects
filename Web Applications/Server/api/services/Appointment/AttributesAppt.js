@@ -12,7 +12,7 @@ module.exports = {
         ];
     },
     PatientAppointment: function() {
-        return ['UID', 'Title', 'FirstName', 'MiddleName', 'LastName', 'PreferredName',
+        return ['UID', 'Title', 'MaritalStatus', 'FirstName', 'MiddleName', 'LastName', 'PreferredName',
             'PreviousName', 'Suburb', 'Postcode', 'State', 'CountryOfBirth',
             'DOB', 'Gender', 'Indigenous', 'Address1', 'Address2', 'Email1',
             'Email2', 'PhoneNumber', 'HomePhoneNumber', 'WorkPhoneNumber',
@@ -58,7 +58,9 @@ module.exports = {
     WAAppointment: function() {
         return ['RefFax', 'IsUsualGP', 'UsualGPName', 'UsualGPContactNumber',
             'UsualGPFaxNumber', 'IsSamePlacePreference', 'IsTelehealthSuitable',
-            'IsRenewReferral', 'PathologyProvider', 'RadiologyProvider', 'InjuryType'
+            'IsRenewReferral', 'PathologyProvider', 'RadiologyProvider', 'InjuryType',
+            'HasConsultant', 'ConsultantName', 'ConsultantSite', 'ConsultantContactNumber',
+            'ConsultantNote'
         ];
     },
     Country: function() {

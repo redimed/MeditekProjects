@@ -202,7 +202,9 @@ ul.my-ul {
     z-index: 1050 !important;
 }
 
-
+.my-fileinput{
+    border: 1px solid #ccc;
+}
 /*phan quoc chien*/
 
 .sweet-alert .sa-icon {

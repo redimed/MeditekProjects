@@ -17,7 +17,6 @@ class DetailAppointmentVC: UIViewController {
     @IBOutlet weak var gradientBackground: UIImageView!
     
     @IBOutlet var btnCollectMenu: [UIButton]!
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var viewButton: UIView!
     
     var xibVC : UIViewController!
@@ -25,26 +24,22 @@ class DetailAppointmentVC: UIViewController {
     let loading: DTIActivityIndicatorView = DTIActivityIndicatorView()
     var customUI: CustomViewController = CustomViewController()
     
-    // declare menu detail appointment
-    var arrayForMainDetail : NSMutableArray = NSMutableArray()
-    var mainDetail : NSMutableArray = NSMutableArray()
-    var contentDict : NSMutableDictionary = NSMutableDictionary()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(SingleTon.onlineUser_Singleton[uidUser!].fullNamePatient)
+        navigationItem.title = SingleTon.onlineUser_Singleton[uidUser!].fullNamePatient == nil ? "Detail Appointment" : SingleTon.onlineUser_Singleton[uidUser!].fullNamePatient
         
-        //        customUI.BlurLayer(gradientBackground)
-        let param = ["data": ["uid": SingleTon.onlineUser_Singleton[uidUser!].appointmentUID]]
-        
-        request(.POST, APPOINTMENT_DETAIL, headers: SingleTon.headers, parameters: param)
+        let URL = APPOINTMENT_DETAIL + SingleTon.onlineUser_Singleton[uidUser!].UID
+        request(.GET, URL, headers: SingleTon.headers)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseJSON { response -> Void in
+                print(response)
                 if let responseJSON = response.2.value {
                     let data: JSON = JSON(responseJSON)["data"]
                     SingleTon.detailAppointMentObj = data
                     if let fileUp: JSON = data["FileUploads"] {
-                        let header = ["Authorization":"Bearer \(COREAUTH)"]
+                        let header = ["Authorization":"Bearer \(AUTHTOKEN)"]
                         SingleTon.imgDataMedical = []
                         for var i = 0; i < fileUp.count; ++i {
                             let uid = fileUp[i]["UID"].stringValue
@@ -64,15 +59,23 @@ class DetailAppointmentVC: UIViewController {
                             }
                         }
                     }
+                    
+                    self.self.loading.frame = CGRectMake((self.view.frame.width/4) - 40 , (self.view.frame.height/2) - 40, 80, 80)
+                    self.containerView.addSubview(self.loading)
+                    self.loading.indicatorColor = UIColor.cyanColor()
+                    self.loading.indicatorStyle = DTIIndicatorStyle.convInv(.doubleBounce)
+                    self.loading.startActivity()
+                    
+                    NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "loadXibView", userInfo: nil, repeats: false)
+                } else {
+                    let alert = UIAlertController(title: "Error", message: "No data, please try again!", preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: "Ok", style: .Default, handler: { (UIAlertAction) -> Void in
+                        self.navigationController?.popViewControllerAnimated(true)
+                    })
+                    alert.addAction(okAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
                 }
         }
-        loading.frame = CGRectMake((self.view.frame.width/4) - 40 , (self.view.frame.height/2) - 40, 80, 80)
-        containerView.addSubview(loading)
-        loading.indicatorColor = UIColor.cyanColor()
-        loading.indicatorStyle = DTIIndicatorStyle.convInv(.doubleBounce)
-        loading.startActivity()
-        
-        NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "loadXibView", userInfo: nil, repeats: false)
     }
     
     func loadXibView() {
@@ -167,9 +170,5 @@ class DetailAppointmentVC: UIViewController {
             button.layer.addSublayer(border)
             button.layer.masksToBounds = true
         }
-    }
-    
-    func loadXib(controllerChange: UIViewController) {
-        
     }
 }

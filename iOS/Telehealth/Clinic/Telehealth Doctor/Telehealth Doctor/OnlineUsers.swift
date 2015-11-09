@@ -27,15 +27,13 @@ class OnlineUsers {
     
     var fullNameDoctor: String!
     var fullNamePatient: String!
-    var appointmentUID: String!
     
-    init(userId: String, requestDateAppoinment: String, appoinmentDate: String, UID:String, status: Int, firstNameDoctor: String, midleNameDoctor: String, lastNameDoctor: String, firstNamePatient: String, midleNamePatient: String, lastNamePatient: String, appointmentUID: String) {
+    init(userId: String, requestDateAppoinment: String, appoinmentDate: String, UID:String, status: Int, firstNameDoctor: String, midleNameDoctor: String, lastNameDoctor: String, firstNamePatient: String, midleNamePatient: String, lastNamePatient: String) {
         self.userId = userId
         
         self.requestDateAppoinment = requestDateAppoinment
         self.appoinmentDate = appoinmentDate
         self.status = status
-        self.appointmentUID = appointmentUID
         
         self.UID = UID
         fullNameDoctor = firstNameDoctor + " " + midleNameDoctor + " " + lastNameDoctor

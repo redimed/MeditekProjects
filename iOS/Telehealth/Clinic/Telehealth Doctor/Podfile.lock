@@ -2,6 +2,7 @@ PODS:
   - Alamofire (2.0.2)
   - OpenTok (2.6.1)
   - ReachabilitySwift (2.0)
+  - ResponseDetective (0.3)
   - Socket.IO-Client-Swift (3.1.4)
   - Spring (1.0.3)
   - SwiftyJSON (2.3.0)
@@ -11,6 +12,7 @@ DEPENDENCIES:
   - Alamofire (~> 2.0)
   - OpenTok (~> 2.6)
   - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
+  - ResponseDetective (~> 0.3)
   - Socket.IO-Client-Swift (~> 3.1.4)
   - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift2`)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
@@ -40,6 +42,7 @@ SPEC CHECKSUMS:
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
   OpenTok: 6c094ee06dc954a4327c0a736f494f0eaf35c48c
   ReachabilitySwift: 227b98ae7ec99e1c01148b17fb22357aa91a5675
+  ResponseDetective: 0a13bb20f117fcc88b94e405becc65d998bfd407
   Socket.IO-Client-Swift: a0c8a6ba85ea685891d2c5f0e73b7287b89d0121
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
   SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4

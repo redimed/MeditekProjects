@@ -19,6 +19,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var buttonAppointment: UIButton!
     @IBOutlet weak var imageListIcon: UIImageView!
     @IBOutlet var labelDashboard: [UILabel]!
+    @IBOutlet weak var WAButtonAppointment: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,10 +29,15 @@ class HomeViewController: UIViewController {
         buttonAppointment.layer.borderWidth = 2
         buttonAppointment.layer.borderColor = UIColor(red: 255/0, green: 255/0, blue: 255/0, alpha: 0.5).CGColor
         
+        WAButtonAppointment.layer.cornerRadius = 15
+        WAButtonAppointment.layer.borderWidth = 2
+        WAButtonAppointment.layer.borderColor = UIColor(red: 255/0, green: 255/0, blue: 255/0, alpha: 0.5).CGColor
+        
         self.navigationController!.navigationBar.tintColor = UIColor.whiteColor()
         let fontDictionary = [ NSForegroundColorAttributeName:UIColor.whiteColor() ]
         self.navigationController!.navigationBar.titleTextAttributes = fontDictionary
         self.navigationController!.navigationBar.setBackgroundImage(imageLayerForGradientBackground(), forBarMetrics: UIBarMetrics.Default)
+        SingleTon.flagSegue = Bool()
     }
     
     func playVideo() {
@@ -46,6 +52,7 @@ class HomeViewController: UIViewController {
             customUIViewController.BlurLayer(player.view)
             self.view.addSubview(player.view)
             player.view.addSubview(buttonAppointment)
+            player.view.addSubview(WAButtonAppointment)
             player.view.addSubview(imageListIcon)
             for label : UILabel in labelDashboard {
                 player.view.addSubview(label)
@@ -60,7 +67,7 @@ class HomeViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             SingleTon.socket.onAny {
                 if let event: String! = $0.event {
-                    if event != "online_users" && event != "refreshToken" {
+                    if event != "online_users" {
                         print("on any events: \($0.event) with items \($0.items)")
                     }
                 }
@@ -68,31 +75,31 @@ class HomeViewController: UIViewController {
             
             SingleTon.socket.on("connect") {data, ack in
                 print("SOCKET CONNECTED")
-                SingleTon.socket.emit("get", ["url": NSString(format: JOIN_ROOM, userDefaults["UID"] as! String)])
+                SingleTon.socket.emit("get", ["url": NSString(format: JOIN_ROOM, userDefaults["TeleUID"] as! String)])
             }
             
             SingleTon.socket.on("online_users") {data, ack in
-                let response = JSON(data[0])
-                SingleTon.onlineUser_Singleton = []
-                for var i = 0; i < response.count ; ++i {
-                    
-                    let onlineObj : OnlineUsers = OnlineUsers(userId: "\(i+1)",
-                        requestDateAppoinment: response[i]["RequestDate"].stringValue,
-                        appoinmentDate: response[i]["FromTime"].stringValue,
-                        UID: response[i]["TeleUID"].stringValue,
-                        status: response[i]["IsOnline"].intValue,
-                        firstNameDoctor: response[i]["Doctors"][0]["FirstName"].stringValue,
-                        midleNameDoctor: response[i]["Doctors"][0]["MiddleName"].stringValue,
-                        lastNameDoctor: response[i]["Doctors"][0]["LastName"].stringValue,
-                        firstNamePatient: response[i]["Patients"][0]["FirstName"].stringValue,
-                        midleNamePatient: response[i]["Patients"][0]["MiddleName"].stringValue,
-                        lastNamePatient: response[i]["Patients"][0]["LastName"].stringValue,
-                        appointmentUID: response[i]["UID"].stringValue
-                    )
-                    
-                    SingleTon.onlineUser_Singleton.append(onlineObj)
-                }
-                NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTable", object: self)
+//                let response = JSON(data[0])
+//                SingleTon.onlineUser_Singleton = []
+//                for var i = 0; i < response.count ; ++i {
+//                    
+//                    let onlineObj : OnlineUsers = OnlineUsers(userId: "\(i+1)",
+//                        requestDateAppoinment: response[i]["RequestDate"].stringValue,
+//                        appoinmentDate: response[i]["FromTime"].stringValue,
+//                        UID: response[i]["TeleUID"].stringValue,
+//                        status: response[i]["IsOnline"].intValue,
+//                        firstNameDoctor: response[i]["Doctors"][0]["FirstName"].stringValue,
+//                        midleNameDoctor: response[i]["Doctors"][0]["MiddleName"].stringValue,
+//                        lastNameDoctor: response[i]["Doctors"][0]["LastName"].stringValue,
+//                        firstNamePatient: response[i]["Patients"][0]["FirstName"].stringValue,
+//                        midleNamePatient: response[i]["Patients"][0]["MiddleName"].stringValue,
+//                        lastNamePatient: response[i]["Patients"][0]["LastName"].stringValue,
+//                        appointmentUID: response[i]["UID"].stringValue
+//                    )
+//                    
+//                    SingleTon.onlineUser_Singleton.append(onlineObj)
+//                }
+//                NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTable", object: self)
             }
             
             
@@ -103,12 +110,6 @@ class HomeViewController: UIViewController {
             
             SingleTon.socket.on("errorMsg") { data, ack in
                 debugPrint("error event: ", data)
-            }
-            
-            SingleTon.socket.on("refreshToken") { data, ack in
-                if let readJson: JSON = JSON(data) {
-                    AUTHTOKEN = readJson["token"].stringValue
-                }
             }
         })
         SingleTon.socket.connect()
@@ -129,6 +130,17 @@ class HomeViewController: UIViewController {
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let trimSegueName = segue.identifier!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        if trimSegueName == "TeleListAppointment" {
+            _ = segue.destinationViewController as! AppointmentListViewController
+            SingleTon.flagSegue = true
+        } else if trimSegueName == "WAListAppointment" {
+            _ = segue.destinationViewController as! AppointmentListViewController
+            SingleTon.flagSegue = false
+        }
     }
     
 }

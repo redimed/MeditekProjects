@@ -1,14 +1,14 @@
 //
-//  ProfileViewController.swift
+//  Relevant_Allergy_CurrentVC.swift
 //  Telehealth Doctor
 //
-//  Created by Huy Nguyễn on 9/25/15.
+//  Created by Huy Nguyễn on 11/9/15.
 //  Copyright © 2015 Giap Vo Duc. All rights reserved.
 //
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class Relevant_Allergy_CurrentVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

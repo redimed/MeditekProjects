@@ -11,13 +11,13 @@ import Alamofire
 import Spring
 import SwiftyJSON
 import ReachabilitySwift
+import ResponseDetective
 
 class LoginViewController: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var buttonLogin: DesignableButton!
-    @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var lockImage: UIImageView!
     @IBOutlet weak var doctorImage: UIImageView!
     @IBOutlet weak var viewModal: DesignableView!
@@ -31,11 +31,11 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     let loading: DTIActivityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:210.0, y:65.0, width:80.0, height:80.0))
     let userDefault = NSUserDefaults.standardUserDefaults()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         customUIViewController.TextFieldLogin(usernameTextField, active: false, imageTextField: doctorImage)
         customUIViewController.TextFieldLogin(passwordTextField, active: false, imageTextField: lockImage)
-        customUIViewController.BlurLayer(backgroundImage)
         usernameTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         passwordTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         viewModal.layer.cornerRadius = 15
@@ -59,7 +59,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "AlertWarningNetwork", userInfo: nil, repeats: false)
             }
         }
-        
         versionLabel.text = UIApplication.versionBuild()
     }
     
@@ -147,9 +146,10 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         let username : String = usernameTextField.text!
         let password : String = passwordTextField.text!
         let paramester = ["username": username, "password": password]
+        
         let headerLogin = [
-            "DeviceType": "iOS",
-            "DeviceID": (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String
+            "systemtype": "iOS",
+            "deviceId": (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String
         ]
         
         request(.POST, AUTHORIZATION, parameters: paramester, headers: headerLogin)
@@ -157,8 +157,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             .validate(contentType: ["application/json"])
             .responseJSON { response -> Void in
                 self.loading.stopActivity(true)
-                self.logoImage.hidden = false
-                
                 //                print(response.2.debugDescription)
                 //                let splitFirst = response.2.debugDescription.componentsSeparatedByString("{")
                 //                let splitSecond = splitFirst[2].componentsSeparatedByString(",")
@@ -169,7 +167,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 //                } else if splitThird[1] == " \"Password.Invalid\"" {
                 //                    print("Wrong pass")
                 //                }
-                
                 switch response.2 {
                 case .Success:
                     let userJSON = JSON(response.2.value!["user"] as! NSDictionary)
@@ -178,25 +175,22 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                         user[key] = object.stringValue
                     }
                     let token = response.2.value!["token"] as! String
-                    let coreToken = response.2.value!["coreToken"] as! String
                     AUTHTOKEN = token
-                    COREAUTH = coreToken
                     self.userDefault.setObject(user, forKey: "infoDoctor")
                     self.userDefault.setValue(token, forKey: "token")
                     
                     SingleTon.headers = [
                         "Authorization": "Bearer \(token)",
-                        "Content-Type": "application/x-www-form-urlencoded",
-                        "CoreAuth": "Bearer \(coreToken)",
-                        "DeviceType": "iOS",
-                        "DeviceID": (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String,
-                        "UserUID": userJSON["UserUID"].stringValue
+                        "systemtype": "iOS",
+                        "deviceId": (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String,
+                        "useruid": userJSON["UID"].stringValue
                     ]
                     
                     let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
                     self.presentViewController(initViewController, animated: true, completion: nil)
                     break
                 case .Failure(_, let error):
+                    self.logoImage.hidden = false
                     if let codeErr: Int = response.1?.statusCode {
                         switch codeErr{
                         case 401:
@@ -231,6 +225,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         self.passwordTextField.text = ""
         self.buttonLogin.enabled = false
         self.buttonLogin.backgroundColor = UIColor(hex: "003366").colorWithAlphaComponent(0.6)
+        print(message)
+        
     }
     
     func AlertWarningNetwork() {
@@ -242,6 +238,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
 }
+
 
 extension UIApplication {
     
@@ -256,6 +253,6 @@ extension UIApplication {
     class func versionBuild() -> String {
         let version = appVersion(), build = appBuild()
         
-        return version == build ? "v\(version)" : "v\(version)(\(build))"
+        return version == build ? "© REDIMED 2015 Clinic App v\(version)" : "© REDIMED 2015 Clinic App v\(version)(\(build))"
     }
 }

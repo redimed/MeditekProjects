@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '39D89DEBBA642FA2D549AC7A'
+               BlueprintIdentifier = '0A32C75D83201518B2B3FD2E'
                BlueprintName = 'UIView+draggable'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'UIView_draggable.framework'>

@@ -24,7 +24,7 @@ class Appointment: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(SingleTon.detailAppointMentObj)
         patient = SingleTon.detailAppointMentObj["Patients"][0]
         teleAppoint = SingleTon.detailAppointMentObj["TelehealthAppointment"]
         appointment = SingleTon.detailAppointMentObj

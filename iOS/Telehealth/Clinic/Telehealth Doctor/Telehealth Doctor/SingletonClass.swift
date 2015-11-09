@@ -13,11 +13,12 @@ import Alamofire
 
 class Singleton {
     static let SingleTon = Singleton()
-    let socket = SocketIOClient(socketURL: STRING_URL_SERVER, opts: ["connectParams": ["__sails_io_sdk_version": "0.11.0", "Authorization": "Bearer \(AUTHTOKEN)", "CoreAuth": "Bearer \(COREAUTH)"]])
+    let socket = SocketIOClient(socketURL: STRING_URL_SERVER, opts: ["connectParams": ["__sails_io_sdk_version": "0.11.0"]])
     var onlineUser_Singleton : [OnlineUsers] = []
     var imgDataMedical : [NSData] = []
     var infoOpentok : JSON!
     var headers : [String: String]!
     var detailAppointMentObj: JSON!
+    var flagSegue = Bool() // true ? TeleAppointment : WAAppointment
 }
 let SingleTon = Singleton()

@@ -13,6 +13,7 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
     $scope.wainformation = data;
     console.log('$scope.wainformation',$scope.wainformation);
     $scope.Temp = angular.copy(data)
+    console.log(data)
      var ClinicalDetailsTemp = [];
     $scope.loadFuntion = function(){
          $scope.wainformation.TelehealthAppointment.ClinicalDetails = {}
@@ -34,6 +35,7 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
         patientInfomation: ($scope.wainformation.Patients.length != 0) ? $scope.wainformation.Patients : $scope.wainformation.TelehealthAppointment.PatientAppointment,
         appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('DD/MM/YYYY') : null,
         appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('h:mm A') : null,
+        ExpiryDate: ($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate != null) ? moment($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate).format('DD/MM/YYYY') : null,
         listDoctorTreatingPractitioner: null,
         selectRadioGender: function () {
             $scope.wainformation.TelehealthAppointment.PatientAppointment.Gender = "";
@@ -64,6 +66,9 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
             $scope.wainformation.FromTime = moment(appointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").utc().format('YYYY-MM-DD HH:mm:ss Z');
         } else {
             $scope.wainformation.FromTime = null
+        };
+        if ($scope.info.ExpiryDate != null && $scope.info.ExpiryDate != '') {
+            $scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate = moment($scope.info.ExpiryDate,"DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z');
         };
         for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
             var newkey = key.split("__").join(" ")

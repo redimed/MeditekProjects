@@ -20,7 +20,7 @@ module.exports = function(data, userInfo) {
                             HelperService.CheckExistData(infoPreferringPractitioner.Doctor)) {
                             preferringPractitioner = infoPreferringPractitioner;
                             preferringPractitioner.Doctor.RefDate = data.TelehealthAppointment.RefDate;
-                            preferringPractitioner.Doctor.RefDurationOfReferal = data.TelehealthAppointment.RefDurationOfReferal;
+                            preferringPractitioner.Doctor.RefDurationOfReferral = data.TelehealthAppointment.RefDurationOfReferral;
                             var dataAppointment = Services.GetDataAppointment.AppointmentCreate(data);
                             dataAppointment.UID = UUIDService.Create();
                             dataAppointment.CreatedBy = preferringPractitioner.ID;

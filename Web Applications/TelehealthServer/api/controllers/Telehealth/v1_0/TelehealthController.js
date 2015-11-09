@@ -33,7 +33,8 @@ module.exports = {
                 teleUser.getUserAccount().then(function(user) {
                     if (user) {
                         TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
-                            res.json(response.getCode(), response.getBody());
+                            if(response.getHeaders().newtoken) res.set("newtoken",response.getHeaders().newtoken);
+                            return res.ok(response.getBody());
                         }, function(err) {
                             res.json(err.getCode(), err.getBody());
                         });
@@ -61,12 +62,13 @@ module.exports = {
         var limit = params.limit;
         var headers = req.headers;
         TelehealthService.GetAppointmentsByPatient(patientUID, limit, headers).then(function(response) {
-            res.json(response.getCode(), response.getBody());
+            if(response.getHeaders().newtoken) res.set("newtoken",response.getHeaders().newtoken);
+            return res.ok(response.getBody());
         }, function(err) {
             res.json(err.getCode(), err.getBody());
         })
     },
-    GetAppointmentDetails: function(req, res) {
+    GetTelehealthAppointmentDetails: function(req, res) {
         var params = req.params.all();
         if (!params.uid) {
             var err = new Error("Telehealth.GetUserDetails.Error");
@@ -80,8 +82,30 @@ module.exports = {
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
-        TelehealthService.GetAppointmentDetails(apptUID, headers).then(function(response) {
-            res.json(response.getCode(), response.getBody());
+        TelehealthService.GetTelehealthAppointmentDetails(apptUID, headers).then(function(response) {
+            if(response.getHeaders().newtoken) res.set("newtoken",response.getHeaders().newtoken);
+            return res.ok(response.getBody());
+        }).catch(function(err) {
+            res.json(err.getCode(), err.getBody());
+        })
+    },
+    GetWAAppointmentDetails: function(req, res) {
+        var params = req.params.all();
+        if (!params.uid) {
+            var err = new Error("Telehealth.GetUserDetails.Error");
+            err.pushError("Invalid Params");
+            return res.serverError(ErrorWrap(err));
+        }
+        var apptUID = params.uid;
+        var headers = req.headers;
+        if (!apptUID) {
+            var err = new Error("Telehealth.GetAppointmentDetails.Error");
+            err.pushError("Invalid Params");
+            return res.serverError(ErrorWrap(err));
+        }
+        TelehealthService.GetWAAppointmentDetails(apptUID, headers).then(function(response) {
+            if(response.getHeaders().newtoken) res.set("newtoken",response.getHeaders().newtoken);
+            return res.ok(response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
         })
@@ -100,7 +124,7 @@ module.exports = {
                 if (!err) var err = info;
                 return res.unauthorize(err);
             }
-            req.logIn(u, function(err) {
+            req.logIn(u.sessionUser, function(err) {
                 if (err) res.unauthorize(err);
                 else {
                     if (!deviceType || !deviceId || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
@@ -277,7 +301,7 @@ module.exports = {
                                             if (!err) var err = info;
                                             return res.unauthorize(err);
                                         }
-                                        req.logIn(u, function(err) {
+                                        req.logIn(u.sessionUser, function(err) {
                                             if (err) res.unauthorize(err);
                                             else {
                                                 if (!deviceType || !deviceId || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {

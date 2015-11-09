@@ -65,16 +65,18 @@ module.exports = {
                             }
                         }
                     }
-                    res.ok(TelehealthService.CheckOnlineUser(appts));
+                    if(response.getHeaders().newtoken) res.set("newtoken",response.getHeaders().newtoken);
+                    return res.ok(TelehealthService.CheckOnlineUser(appts));
                 }).catch(function(err) {
                     res.serverError(ErrorWrap(err));
                 })
             } else res.ok(TelehealthService.CheckOnlineUser(appts));
-        }).catch(function(err) {
+        },function(err) {
             res.serverError(err.getBody());
-        })
+        });
     },
     ListTelehealth: function(req,res){
+        console.log("AAAAAAAAAAAa",req.user);
         var appts = [];
         var headers = req.headers;
         TelehealthService.GetAppointmentListTelehealth(headers).then(function(response) {
@@ -92,13 +94,14 @@ module.exports = {
                             }
                         }
                     }
-                    res.ok(TelehealthService.CheckOnlineUser(appts));
+                    if(response.getHeaders().newtoken) res.set("newtoken",response.getHeaders().newtoken);
+                    return res.ok({uses:req.user,data:TelehealthService.CheckOnlineUser(appts)});
                 }).catch(function(err) {
                     res.serverError(ErrorWrap(err));
                 })
             } else res.ok(TelehealthService.CheckOnlineUser(appts));
-        }).catch(function(err) {
+        },function(err) {
             res.serverError(err.getBody());
-        })
+        });
     }
 }

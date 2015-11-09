@@ -68,10 +68,18 @@ module.exports = {
             headers: headers
         });
     },
-    GetAppointmentDetails: function(apptUID, headers) {
+    GetWAAppointmentDetails: function(apptUID, headers) {
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-wa-detail/' + apptUID,
+            method: 'GET',
+            headers: headers
+        })
+    },
+    GetTelehealthAppointmentDetails: function(apptUID, headers){
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
+        return TelehealthService.MakeRequest({
+            path: '/api/appointment-telehealth-detail/' + apptUID,
             method: 'GET',
             headers: headers
         })
@@ -113,6 +121,7 @@ module.exports = {
                     }],
                     Filter: [{
                         Appointment: {
+                            Status:'Approved',
                             FromTime: sails.moment().format('YYYY-MM-DD ZZ'),
                             Enable: "Y"
                         }

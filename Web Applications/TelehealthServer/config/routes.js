@@ -24,9 +24,13 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetUserAppointments'
     },
-    'GET /api/telehealth/user/appointmentDetails/:uid':{
+    'GET /api/telehealth/user/telehealthAppointmentDetails/:uid':{
         controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'GetAppointmentDetails'
+        action: 'GetTelehealthAppointmentDetails'
+    },
+    'GET /api/telehealth/user/WAAppointmentDetails/:uid':{
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'GetWAAppointmentDetails'
     },
     //================Telehealth Socket Routes==========================
     '/api/telehealth/socket/joinRoom': {

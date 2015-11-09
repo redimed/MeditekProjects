@@ -1,11 +1,12 @@
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     bcrypt = require('bcryptjs');
-passport.serializeUser(function(data, done) {
-    done(null, data.user);
+passport.serializeUser(function(sessionUser, done) {
+    done(null, _.cloneDeep(sessionUser));
 });
-passport.deserializeUser(function(user, done) {
-    done(null, user);
+passport.deserializeUser(function(sessionUser, done) {
+    console.log("======",sessionUser);
+    done(null, sessionUser);
 });
 passport.use(new LocalStrategy({
     usernameField: 'username',
@@ -43,8 +44,39 @@ passport.use(new LocalStrategy({
             if (teleUser) {
                 user.TeleUID = teleUser.UID;
                 if (activationInfo) user.PatientUID = activationInfo.patientUID;
+                user.SystemType = HelperService.const.systemType[deviceType.toLowerCase()];
+                user.DeviceID = deviceId;
                 data.user = user;
-                return done(null, data, response.getBody().message);
+                UserToken.find({
+                    where: {
+                        UserAccountID: user.ID,
+                        SystemType: HelperService.const.systemType[deviceType.toLowerCase()],
+                        DeviceID: deviceId,
+                        Enable: 'Y'
+                    }
+                }).then(function(userToken) {
+                    if (userToken) {
+                         var sessionUser={
+                            ID:user.ID,
+                            UID:user.UID,
+                            TeleUID: teleUser.UID,
+                            Activated:user.Activated,
+                            roles:user.roles,
+                            SystemType: HelperService.const.systemType[deviceType.toLowerCase()],
+                            DeviceID: deviceId,
+                            SecretKey:userToken.SecretKey,
+                            SecretCreatedDate:userToken.SecretCreatedDate,
+                            TokenExpired:userToken.TokenExpired
+                        }
+                        if (activationInfo) sessionUser.PatientUID = activationInfo.patientUID;
+                        data.sessionUser = sessionUser;
+                        return done(null, data, response.getBody().message);
+                    } else return done(null, false, {
+                        message: 'Error'
+                    })
+                }).catch(function(err) {
+                    return done(err);
+                })
             } else return done(null, false, {
                 message: 'Wrong Username Or Password!'
             })

@@ -115,6 +115,11 @@ module.exports={
     	action:'GetSecretKey'
 	},
 
+	'post /api/user-account/get-DetailUser':{
+		controller:'UserAccount/v0_1/UserAccountController',
+    	action:'getDetailUser'
+	},
+
 
 	'get /test':'TestController.test',
     'get /testAdmin':'TestController.testAdmin',

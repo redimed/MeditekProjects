@@ -77,7 +77,7 @@ $('#datetimepicker').datetimepicker({
 Attached to a field with the format specified via markup:
 
 ```html
-<input type="text" value="2012-05-15 21:05" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii">
+<input type="text" value="2012-05-15 21:05" id="datetimepicker" data-date-format="yyyy/mm/dd hh:ii">
 ```
 ```javascript
 $('#datetimepicker').datetimepicker();
@@ -86,7 +86,7 @@ $('#datetimepicker').datetimepicker();
 As component:
 
 ```html
-<div class="input-append date" id="datetimepicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+<div class="input-append date" id="datetimepicker" data-date="12-02-2012" data-date-format="dd/mm/yyyy">
     <input size="16" type="text" value="12-02-2012" readonly>
     <span class="add-on"><i class="icon-th"></i></span>
 </div>
@@ -283,7 +283,7 @@ You can initialize the viewer with a date. By default it's now, so you can speci
 Format as component.
 
 ```html
-<div class="input-append date" id="datetimepicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+<div class="input-append date" id="datetimepicker" data-date="12-02-2012" data-date-format="dd/mm/yyyy">
     <input class="span2" size="16" type="text" value="12-02-2012">
     <span class="add-on"><i class="icon-th"></i></span>
 </div>
@@ -292,7 +292,7 @@ Format as component.
 Format as component with reset button to clear the input field.
 
 ```html
-<div class="input-append date" id="datetimepicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+<div class="input-append date" id="datetimepicker" data-date="12-02-2012" data-date-format="dd/mm/yyyy">
     <input class="span2" size="16" type="text" value="12-02-2012">
     <span class="add-on"><i class="icon-remove"></i></span>
     <span class="add-on"><i class="icon-th"></i></span>

@@ -1,3 +1,8 @@
+<div class="row" ng-if="wainformation.Patients.length != 0">
+    <div class="col-md-12 co-xs-12 pull-left">
+        <h4><b>PATIENT NO :</b><span class="text-danger"> Linked</span></h4>
+    </div>
+</div>
 <div class="row profile-account">
     <div class="col-md-3 col-sm-3">
         <ul class="nav nav-tabs tabs-left">
@@ -16,7 +21,8 @@
             </li>
             <li>
                 <a data-toggle="tab" href="index.html#tab_3-3">
-                    ??? </a>
+                    Medicare Information
+                 </a>
             </li>
         </ul>
     </div>
@@ -28,7 +34,7 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <select class="form-control" ng-model="info.patientInfomation.Title">
+                                    <select class="form-control" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Title">
                                         <option value="">Select Title</option>
                                         <option value="Mr">Mr</option>
                                         <option value="Mrs">Mrs</option>
@@ -41,49 +47,49 @@
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.FirstName">
+                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.FirstName">
                                     <label class="control-label">First name</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.MiddleName">
+                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MiddleName">
                                     <label class="control-label">Middle name</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.LastName">
+                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.LastName">
                                     <label class="control-label">Last name</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.FirstName">
+                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.FirstName">
                                     <label class="control-label">Family name</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.PreferredName">
+                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PreferredName">
                                     <label class="control-label">Preferred name</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.PreviousName">
+                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PreviousName">
                                     <label class="control-label">Previous name</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
-                                    <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.FirstName">
+                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.FirstName">
                                     <label class="control-label">Marital status</label>
                                     <div class="form-control-focus"> </div>
                                 </div>
@@ -95,7 +101,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
                                     <div class="input-icon">
-                                        <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.CountryOfBirth">
+                                        <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.CountryOfBirth">
                                         <label class="control-label">Country of Birth</label>
                                         <div class="form-control-focus"> </div>
                                         <i class="fa fa-flag"></i>
@@ -105,7 +111,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group form-md-line-input">
                                     <div class="input-icon">
-                                        <input type="text" class="form-control date-picker" data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" ng-model="info.patientInfomation.DOB">
+                                        <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="wainformation.TelehealthAppointment.PatientAppointment.DOB">
                                         <label class="control-label">Date of Birth</label>
                                         <div class="form-control-focus"> </div>
                                         <i class="glyphicon glyphicon-calendar"></i>
@@ -117,17 +123,16 @@
                             <label class="control-label col-md-12 col-sm-12">Sex</label>
                             <div class="col-md-11 col-sm-11 col-md-offset-1 col-sm-offset-1">
                                 <div class="form-group">
-                                    {{info.patientInfomation.Gender}}
                                     <div class="radio-list">
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioTest12" value="Male" ng-model="info.patientInfomation.Gender"> Male
+                                            <input type="radio" name="radioTest12" value="Male" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Gender"> Male
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="radioTest12" value="Female" ng-model="info.patientInfomation.Gender"> Female
+                                            <input type="radio" name="radioTest12" value="Female" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Gender"> Female
                                         </label>
-                                         <label class="radio-inline">
-                                            <input type="radio" size="15" name="radioTest12" ng-checked="(info.patientInfomation.Gender != 'Male' && info.patientInfomation.Gender != 'Female' && info.patientInfomation.Gender != null)?true:false"> Other &nbsp;
-                                            <input type="text" size="10" ng-model="info.patientInfomation.Gender">
+                                        <label class="radio-inline">
+                                            <input type="radio" size="15" name="radioTest12" ng-checked="(wainformation.TelehealthAppointment.PatientAppointment.Gender != 'Male' && wainformation.TelehealthAppointment.PatientAppointment.Gender != 'Female' && wainformation.TelehealthAppointment.PatientAppointment.Gender != null)?true:false"> Other &nbsp;
+                                            <input type="text" size="10" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Gender">
                                         </label>
                                     </div>
                                 </div>
@@ -137,10 +142,10 @@
                                 <div class="form-group">
                                     <div class="radio-list">
                                         <label class="radio-inline">
-                                            <input type="radio" name="sex" value="Aboriginal" ng-model="info.patientInfomation.Aboriginal"> Aboriginal
+                                            <input type="radio" name="Indigenous" value="Aboriginal" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous"> Aboriginal
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="sex" id="Torres Strait Islander" value="TorresStraitIslander" ng-model="info.patientInfomation.Indigenous"> Torres Strait Islander
+                                            <input type="radio" name="Indigenous" value="TorresStraitIslander" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous"> Torres Strait Islander
                                         </label>
                                     </div>
                                 </div>
@@ -152,10 +157,10 @@
                                 <div class="form-group">
                                     <div class="radio-list">
                                         <label class="radio-inline">
-                                            <input type="radio" name="sex" id="Yes" value="Y" ng-model="info.patientInfomation.InterpreterRequired"> Yes
+                                            <input type="radio" name="InterpreterRequired" id="Yes" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired"> Yes
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="sex" id="No" value="N" ng-model="info.patientInfomation.InterpreterRequired"> No
+                                            <input type="radio" name="InterpreterRequired" id="No" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired"> No
                                         </label>
                                     </div>
                                 </div>
@@ -165,7 +170,7 @@
                                     <div class="form-group form-md-line-input">
                                         <label class="control-label col-md-4 col-sm-4">If yes, language/dialect </label>
                                         <div class="col-md-6 col-sm-6">
-                                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.InterpreterLanguage">
+                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage">
                                             <div class="form-control-focus"> </div>
                                         </div>
                                     </div>
@@ -176,7 +181,7 @@
                                     <div class="form-group form-md-line-input">
                                         <label class="control-label col-md-4 col-sm-4">Other special needs ?</label>
                                         <div class="col-md-6 col-sm-6">
-                                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.OtherSpecialNeed">
+                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.OtherSpecialNeed">
                                             <div class="form-control-focus"> </div>
                                         </div>
                                     </div>
@@ -191,7 +196,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.WorkPhoneNumber">
+                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.WorkPhoneNumber">
                                 <label class="control-label">Contact number (M)</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-phone"></i>
@@ -201,7 +206,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.HomePhoneNumber">
+                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.HomePhoneNumber">
                                 <label class="control-label">Contact number (H)</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-phone-alt"></i>
@@ -211,7 +216,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.Email2">
+                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Email2">
                                 <label class="control-label">Email</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-envelope"></i>
@@ -221,7 +226,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.FaxNumber">
+                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.FaxNumber">
                                 <label class="control-label">Fax number</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-print"></i>
@@ -231,7 +236,7 @@
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.Address1">
+                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Address1">
                                 <label class="control-label">Address1</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-road"></i>
@@ -241,7 +246,7 @@
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.Address2">
+                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Address2">
                                 <label class="control-label">Address2</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-road"></i>
@@ -251,7 +256,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.Suburb">
+                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Suburb">
                                 <label class="control-label">Suburb</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-tree-conifer"></i>
@@ -261,7 +266,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.Postcode">
+                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Postcode">
                                 <label class="control-label">Postcode</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-map-marker"></i>
@@ -275,14 +280,14 @@
                     <h4 class="control-label col-md-12 col-sm-12">Next of Kin/Guardian</h4>
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.PatientKinName">
+                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinName">
                             <label class="control-label">Name</label>
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.PatientKinRelationship">
+                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinRelationship">
                             <label class="control-label">Relationship</label>
                             <div class="form-control-focus"> </div>
                         </div>
@@ -290,7 +295,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="+61 8888 8888" ng-model="info.patientInfomation.PatientKinContactNumber">
+                                <input type="text" class="form-control" placeholder="+61 8888 8888" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinContactNumber">
                                 <label class="control-label">Contact Number</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-phone"></i>
@@ -307,10 +312,10 @@
                                 <div class="radio-list">
                                     <label class="radio-inline">Medicare Eligible</label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="sex" id="Yes" value="option1" ng-checked="true"> Yes
+                                        <input type="radio" name="MedicareEligible" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible"> Yes
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="sex" id="No" value="option2"> No
+                                        <input type="radio" name="MedicareEligible" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible"> No
                                     </label>
                                 </div>
                             </div>
@@ -318,17 +323,17 @@
                     </div>
                     <div class="col-md-12 col-sm-12">&nbsp;</div>
                 </div>
-                <div class="row">
+                <div class="row" ng-if="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible == 'Y'">
                     <div class="col-md-4 col-sm-4">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.MedicareNumber">
+                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber">
                             <label class="control-label">Medicare Number</label>
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-4">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.MedicareReferenceNumber">
+                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber">
                             <label class="control-label">Medicare reference number</label>
                             <div class="form-control-focus"> </div>
                         </div>
@@ -336,7 +341,7 @@
                     <div class="col-md-4 col-sm-4">
                         <div class="form-group form-md-line-input">
                             <div class="input-icon">
-                                <input type="text" class="form-control date-picker" data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" ng-model="info.patientInfomation.ExpiryDate">
+                                <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate">
                                 <label class="control-label">Expiry date</label>
                                 <div class="form-control-focus"> </div>
                                 <i class="glyphicon glyphicon-calendar"></i>
@@ -344,24 +349,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" ng-if="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible == 'Y'">
                     <div class="col-md-4 col-sm-4">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" placeholder="" ng-model="info.patientInfomation.DVANumber">
+                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.DVANumber">
                             <label class="control-label">DVA number</label>
                             <div class="form-control-focus"> </div>
-                        </div>
-                    </div>
-                    <div class="col-md-8 col-sm-8">
-                        <div class="form-group form-md-line-input">
-                            <div class="radio-list">
-                                <label class="radio-inline">
-                                    <input type="radio" name="radio_group1" value="option1" checked> Motor vehicle accident ?
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="radio_group1" value="option2"> Work injury ?
-                                </label>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -369,4 +362,11 @@
         </div>
     </div>
     <!--end col-md-9-->
+</div>
+<div class="row pull-right">
+    <div class="col-md-12 co-xs-12">
+        <button class="btn red" ng-click="selectPatient()">
+            <i class="glyphicon glyphicon-plus"></i> Link Patient
+        </button>
+    </div>
 </div>

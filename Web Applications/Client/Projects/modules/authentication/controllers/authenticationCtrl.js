@@ -2,8 +2,8 @@ var app = angular.module('app.authentication.controller', [
 	
 ]);
 
-app.controller('authenticationCtrl', function($rootScope,$scope,$state,$cookies,AuthenticationService,toastr){
-	console.log('authenticationCtrl');
+app.controller('authenticationCtrl', function($rootScope,$scope,$state,$cookies,AuthenticationService,toastr, CommonService){
+	$scope.info = {};
 	$scope.logout = function(){
 		AuthenticationService.logout().then(function(){
 			var cookies = $cookies.getAll();
@@ -17,11 +17,21 @@ app.controller('authenticationCtrl', function($rootScope,$scope,$state,$cookies,
 		}, function(err) {
             toastr.error(err.data.message, "Error");
         })
-	}
+	};
 	AuthenticationService.getListCountry().then(function(result){
 		$rootScope.countries = result.data;
 	},function(err){
 		toastr.error("error data country","ERROR");
+	});
+	var data ={
+		UID:$cookies.getObject('userInfo').UID
+	};
+	AuthenticationService.getDetailUser(data).then(function(response){
+		$scope.info = response.data;
+		console.log($scope.info);
+		
+	},function(err){
+		console.log(err);
 	});
 
 	$rootScope.titles = [

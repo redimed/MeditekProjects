@@ -184,24 +184,7 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     }
     
     @IBAction func CallUsButton(sender: AnyObject) {
-        callAlertMessage("", message: "You want to contact us?")
-    }
-    
-    //Giap: Show alert message
-    func callAlertMessage(title : String,message : String){
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            // ...
-        }
-        alertController.addAction(cancelAction)
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-            UIApplication.sharedApplication().openURL(NSURL(string: "tel://0892300900")!)
-        }
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
-        }
+         UIApplication.sharedApplication().openURL(NSURL(string: "tel://0892300900")!)
     }
     
     // load data from JSON file

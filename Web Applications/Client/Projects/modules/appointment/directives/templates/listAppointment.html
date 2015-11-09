@@ -93,7 +93,11 @@
                             <i class="fa fa-sort-asc fa-lg sortDataTable" ng-click="sortData('CreatedDate','ASC')" ng-show="searchObjectMap.Order[0].Appointment.CreatedDate == 'DESC'" style="front-size:40"></i>
                             <i class="fa fa-sort-desc fa-lg sortDataTable" ng-click="sortData('CreatedDate','DESC')" ng-show="searchObjectMap.Order[0].Appointment.CreatedDate !== 'DESC'"></i>
                         </th>
-                        <th>Status</th>
+                        <th width="500px" align="center">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Referral Tracking
+                            <br>
+                            <img src="./theme/assets/layouts/layout/imgStatus/ReferralTracking.png">
+                        </th>
                         <th>
                             Appointment Date
                             <i class="fa fa-sort-asc fa-lg sortDataTable" ng-click="sortData('FromTime','ASC')" ng-show="searchObjectMap.Order[0].Appointment.FromTime == 'DESC'"></i>
@@ -111,12 +115,13 @@
                             <td>{{((p.Doctors[0].Title !=null)?p.Doctors[0].Title:"")+" "+((p.Doctors[0].FirstName != null)?p.Doctors[0].FirstName:"") +" "+((p.Doctors[0].LastName != null)?p.Doctors[0].LastName:"")}}</td>
                             <td>{{p.CreatedDate | date: 'dd/MM/yyyy'}}</td>
                             <td>
-                                <span ng-if="p.Status == 'Approved'" class="label label-success">Appointment Time</span>
-                                <span ng-if="p.Status == 'Cancelled'" class="label label-danger">Cancelled</span>
-                                <span ng-if="p.Status == 'Received'" class="label label-default">Received</span>
-                                <span ng-if="p.Status == 'Waiting for approval'" class="label label-warning">Pending</span>
-                                <span ng-if="p.Status == 'Pending'" class="label label-primary">Pending</span>
-                                <span ng-if="p.Status == 'Waitlist'" class="label label-primary">Wait List Surgery</span>
+                                <span ng-if="p.Status === Status.apptStatus[3].value"><img src="./theme/assets/layouts/layout/imgStatus/attended.png" ></span>
+                                <span ng-if="p.Status === Status.apptStatus[4].value"><img src="./theme/assets/layouts/layout/imgStatus/waitlist.png" ></span>
+                                <span ng-if="p.Status === Status.apptStatus[1].value"><img src="./theme/assets/layouts/layout/imgStatus/pending.png" ></span>
+                                <span ng-if="p.Status === Status.apptStatus[0].value"><img src="./theme/assets/layouts/layout/imgStatus/received.png" ></span>
+                                <span ng-if="p.Status === Status.apptStatus[6].value" class="label label-danger">Cancelled</span>
+                                <span ng-if="p.Status === Status.apptStatus[2].value"><img src="./theme/assets/layouts/layout/imgStatus/time.png" ></span>
+                                <span ng-if="p.Status === Status.apptStatus[5].value"><img src="./theme/assets/layouts/layout/imgStatus/finish.png" ></span>
                             </td>
                             <td>{{p.FromTime | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td>
                             <td ng-show="p.TelehealthAppointment.Correspondence == 'Y'" style="text-align:center">

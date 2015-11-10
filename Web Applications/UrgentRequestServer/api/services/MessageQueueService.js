@@ -30,7 +30,7 @@ module.exports = {
                 .spread(function(UR) {
                     //check tried and confirmed urgent request
                     if (UR.tried < 3 && UR.status === 'pending') {
-                        var subjectEmail = '[Testing] -[' + UR.urgentRequestType + '] - [' + (UR.tried == 1 ? '2nd' : '3rd') + '] - [' +
+                        var subjectEmail = '[' + UR.urgentRequestType + '] - [' + (UR.tried == 1 ? '2nd' : '3rd') + '] - [' +
                             Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                             '] - [' + UR.firstName + ' ' +
                             UR.lastName + '] - [' + UR.phoneNumber + ']';

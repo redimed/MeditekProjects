@@ -65,7 +65,7 @@ module.exports = {
                 //convert service type and gp referral
                 var GPReferral = Services.ConvertData.GPReferral(data.GPReferral);
                 var serviceType = Services.ConvertData.ServiceType(data);
-                var subjectEmail = '[Testing] - [' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
+                var subjectEmail = '[' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                     '] - [' + data.firstName + ' ' +
                     data.lastName + '] - [' + data.phoneNumber + ']';
                 var emailInfo = {

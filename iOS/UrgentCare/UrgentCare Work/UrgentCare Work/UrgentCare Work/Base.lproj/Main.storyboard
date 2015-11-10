@@ -25,7 +25,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8MS-UE-HFA">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="85"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo-work-injury_03" translatesAutoresizingMaskIntoConstraints="NO" id="nJr-va-TUP">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Untitled-1_24" translatesAutoresizingMaskIntoConstraints="NO" id="nJr-va-TUP">
                                         <rect key="frame" x="209" y="10" width="182" height="65"/>
                                         <animations/>
                                         <constraints>
@@ -306,13 +306,21 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MeN-Jb-oyU">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="85"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo-work-injury_03" translatesAutoresizingMaskIntoConstraints="NO" id="Kgu-zv-y9J">
-                                        <rect key="frame" x="69" y="10" width="182" height="65"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Untitled-1_24" translatesAutoresizingMaskIntoConstraints="NO" id="Kgu-zv-y9J">
+                                        <rect key="frame" x="209" y="10" width="182" height="65"/>
                                         <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="65" id="3xj-Bc-D48"/>
+                                            <constraint firstAttribute="width" constant="182" id="fjr-g4-5hr"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.90980392160000001" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Kgu-zv-y9J" firstAttribute="centerX" secondItem="MeN-Jb-oyU" secondAttribute="centerX" id="6p8-ym-nog"/>
+                                    <constraint firstItem="Kgu-zv-y9J" firstAttribute="centerY" secondItem="MeN-Jb-oyU" secondAttribute="centerY" id="ahJ-zn-Oqw"/>
+                                </constraints>
                             </view>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kDc-IO-VA7">
                                 <rect key="frame" x="0.0" y="85" width="600" height="44"/>
@@ -869,12 +877,12 @@
                         <viewControllerLayoutGuide type="top" id="PdG-cb-7W3"/>
                         <viewControllerLayoutGuide type="bottom" id="cMK-H7-TnK"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleAspectFill" id="sve-d8-hR0">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <view key="view" contentMode="scaleToFill" id="sve-d8-hR0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="b" translatesAutoresizingMaskIntoConstraints="NO" id="IWz-Rj-5M1">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="truck" translatesAutoresizingMaskIntoConstraints="NO" id="IWz-Rj-5M1">
+                                <rect key="frame" x="0.0" y="-108" width="320" height="568"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
@@ -882,11 +890,11 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="IWz-Rj-5M1" firstAttribute="top" secondItem="sve-d8-hR0" secondAttribute="top" id="77j-72-S80"/>
+                            <constraint firstItem="IWz-Rj-5M1" firstAttribute="top" secondItem="sve-d8-hR0" secondAttribute="top" constant="-108" id="77j-72-S80"/>
                             <constraint firstItem="IWz-Rj-5M1" firstAttribute="leading" secondItem="sve-d8-hR0" secondAttribute="leading" id="HDu-8f-UdE"/>
                             <constraint firstAttribute="trailing" secondItem="IWz-Rj-5M1" secondAttribute="trailing" id="nps-TX-xJ2"/>
                             <constraint firstItem="cMK-H7-TnK" firstAttribute="top" secondItem="IWz-Rj-5M1" secondAttribute="bottom" id="sBS-l3-fRm"/>
-                            <constraint firstAttribute="bottom" secondItem="IWz-Rj-5M1" secondAttribute="bottom" id="x65-8q-v8z"/>
+                            <constraint firstAttribute="bottom" secondItem="IWz-Rj-5M1" secondAttribute="bottom" constant="108" id="x65-8q-v8z"/>
                             <constraint firstItem="IWz-Rj-5M1" firstAttribute="top" secondItem="PdG-cb-7W3" secondAttribute="bottom" id="yqe-Ti-YjW"/>
                         </constraints>
                         <variation key="default">
@@ -896,6 +904,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="imageView" destination="IWz-Rj-5M1" id="bJh-v9-hbI"/>
                     </connections>
@@ -928,13 +937,13 @@
         <image name="Blue-btn" width="100" height="100"/>
         <image name="Clinic-100" width="100" height="100"/>
         <image name="Green-btn" width="100" height="100"/>
-        <image name="Logo-work-injury_03" width="551" height="209"/>
         <image name="Orage-btn" width="100" height="100"/>
         <image name="Physical Therapy-100" width="100" height="100"/>
         <image name="Red-btn" width="100" height="100"/>
         <image name="Stethoscope-100" width="100" height="100"/>
+        <image name="Untitled-1_24" width="570" height="208"/>
         <image name="X-ray Filled-100" width="100" height="100"/>
-        <image name="b" width="1024" height="1024"/>
+        <image name="truck" width="1024" height="1272"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="kxZ-nX-SOq"/>

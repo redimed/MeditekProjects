@@ -49,7 +49,7 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     //page Controller
     func pagingImage(){
         self.pageTitles = NSArray(objects: "Explore","Lest","contruction","ss")
-        self.pageImages = NSArray(objects: "a","b","c","d")
+        self.pageImages = NSArray(objects: "truck","chef","construction","sore back")
         pageControl.numberOfPages = pageImages.count
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         self.pageViewController.dataSource = self

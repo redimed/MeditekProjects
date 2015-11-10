@@ -18,6 +18,7 @@
 		AF00C4061BDA16150001A7F4 /* leftBody.png in Resources */ = {isa = PBXBuildFile; fileRef = AF00C4021BDA16150001A7F4 /* leftBody.png */; };
 		AF00C4071BDA16150001A7F4 /* rightBody.png in Resources */ = {isa = PBXBuildFile; fileRef = AF00C4031BDA16150001A7F4 /* rightBody.png */; };
 		AF0A3E9B1BE70799007F0C67 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */; };
+		AF1FF8F41BF09AAA000BB306 /* TrackingRefferalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */; };
 		AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */ = {isa = PBXBuildFile; fileRef = AF3902F51BCDE8DD00173A58 /* FAQs.html */; };
 		AF3DA2FF1BD8C738006C1071 /* MAActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3DA2FE1BD8C738006C1071 /* MAActivityIndicatorView.swift */; };
 		AF4498AA1BDF11CE005A905E /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4498A91BDF11CE005A905E /* Patient.swift */; };
@@ -131,6 +132,7 @@
 		AF00C4021BDA16150001A7F4 /* leftBody.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftBody.png; sourceTree = "<group>"; };
 		AF00C4031BDA16150001A7F4 /* rightBody.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightBody.png; sourceTree = "<group>"; };
 		AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingRefferalViewController.swift; sourceTree = "<group>"; };
 		AF3902F51BCDE8DD00173A58 /* FAQs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = FAQs.html; sourceTree = "<group>"; };
 		AF3DA2FE1BD8C738006C1071 /* MAActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAActivityIndicatorView.swift; sourceTree = "<group>"; };
 		AF4498A91BDF11CE005A905E /* Patient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 				AF00C3FE1BDA13A20001A7F4 /* BodyUploadViewController.swift */,
 				AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */,
 				AF7B5F431BE74D6D0043B14D /* AppointmentListsViewController.swift */,
+				AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -763,6 +766,7 @@
 				AF4498AA1BDF11CE005A905E /* Patient.swift in Sources */,
 				AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */,
 				AFEDCB1C1BBA2E89007D584D /* NavigationHomeViewController.swift in Sources */,
+				AF1FF8F41BF09AAA000BB306 /* TrackingRefferalViewController.swift in Sources */,
 				AFF10DF31BB24414005E9838 /* TPKeyboardAvoidingTableView.m in Sources */,
 				AFEE35301BB0415D00471592 /* DesignableView.swift in Sources */,
 				AFEE352D1BB0415D00471592 /* DesignableTabBarController.swift in Sources */,

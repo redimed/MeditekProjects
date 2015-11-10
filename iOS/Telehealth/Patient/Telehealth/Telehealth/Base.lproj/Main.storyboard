@@ -513,10 +513,10 @@
             </objects>
             <point key="canvasLocation" x="161" y="353"/>
         </scene>
-        <!--View Controller-->
+        <!--Tracking Refferal View Controller-->
         <scene sceneID="oHc-LU-HE1">
             <objects>
-                <viewController id="5am-c7-gkX" sceneMemberID="viewController">
+                <viewController id="5am-c7-gkX" customClass="TrackingRefferalViewController" customModule="Telehealth" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X7J-NE-KUE"/>
                         <viewControllerLayoutGuide type="bottom" id="wvN-0e-cjT"/>
@@ -564,6 +564,36 @@
                                 <state key="normal" title="Tracking Refferal">
                                     <color key="titleColor" red="0.13725490200000001" green="0.46666666670000001" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zYw-f7-ima">
+                                <rect key="frame" x="240" y="113" width="60" height="60"/>
+                                <animations/>
+                                <state key="normal" backgroundImage="Recelved"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fyM-ea-Ss5">
+                                <rect key="frame" x="240" y="181" width="60" height="60"/>
+                                <animations/>
+                                <state key="normal" backgroundImage="Appentding"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e4k-ac-et7">
+                                <rect key="frame" x="240" y="249" width="60" height="60"/>
+                                <animations/>
+                                <state key="normal" backgroundImage="Apptime"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GvR-Ob-h4O">
+                                <rect key="frame" x="240" y="317" width="60" height="60"/>
+                                <animations/>
+                                <state key="normal" backgroundImage="Attended"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iHK-pU-P9L">
+                                <rect key="frame" x="240" y="385" width="60" height="60"/>
+                                <animations/>
+                                <state key="normal" backgroundImage="Waitlist"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ocz-To-azZ">
+                                <rect key="frame" x="240" y="453" width="60" height="60"/>
+                                <animations/>
+                                <state key="normal" backgroundImage="Finish"/>
                             </button>
                         </subviews>
                         <animations/>
@@ -2594,16 +2624,22 @@
     </scenes>
     <resources>
         <image name="A1a Copy 2" width="512" height="516"/>
+        <image name="Appentding" width="100" height="100"/>
+        <image name="Apptime" width="100" height="100"/>
+        <image name="Attended" width="100" height="100"/>
         <image name="Blue-btn" width="100" height="100"/>
         <image name="End Call-50" width="26" height="21"/>
+        <image name="Finish" width="100" height="100"/>
         <image name="Green-btn" width="100" height="100"/>
         <image name="Line-1" width="2" height="60"/>
         <image name="Logo" width="2542" height="494"/>
         <image name="Orage-btn" width="100" height="100"/>
+        <image name="Recelved" width="100" height="100"/>
         <image name="Rectangle 178" width="300" height="139"/>
         <image name="Red-btn" width="100" height="100"/>
         <image name="Sub-screen_11" width="341" height="156"/>
         <image name="Sub-screen_22-1" width="341" height="499"/>
+        <image name="Waitlist" width="100" height="100"/>
         <image name="line" width="632" height="2"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

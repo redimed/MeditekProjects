@@ -17,14 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo-work-injury_03" translatesAutoresizingMaskIntoConstraints="NO" id="UFg-jG-YA9">
-                                <rect key="frame" x="14" y="227" width="293" height="113"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="113" id="awa-ki-OFI"/>
-                                    <constraint firstAttribute="width" constant="293" id="frl-DN-jKs"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© REDIMED 2015 – App Design by Meditek" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Di-h0-jru">
                                 <rect key="frame" x="0.0" y="545" width="320" height="16"/>
                                 <animations/>
@@ -51,13 +43,21 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Untitled-1_24" translatesAutoresizingMaskIntoConstraints="NO" id="rWW-ZZ-pld">
+                                <rect key="frame" x="40" y="240.5" width="240" height="87"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="87" id="NaI-N6-8HB"/>
+                                    <constraint firstAttribute="width" constant="240" id="p28-dr-xgK"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="rWW-ZZ-pld" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1HI-12-jkx"/>
+                            <constraint firstItem="rWW-ZZ-pld" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="azl-2U-yWp"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="0Di-h0-jru" secondAttribute="bottom" constant="7" id="fNL-C7-QdB"/>
-                            <constraint firstItem="UFg-jG-YA9" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="hIF-cc-d5s"/>
-                            <constraint firstItem="UFg-jG-YA9" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="nGE-9O-Uyd"/>
                             <constraint firstItem="0Di-h0-jru" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="sIL-gi-vTx"/>
                             <constraint firstAttribute="trailing" secondItem="0Di-h0-jru" secondAttribute="trailing" id="zKp-ci-I8V"/>
                         </constraints>
@@ -70,6 +70,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Logo-work-injury_03" width="551" height="209"/>
+        <image name="Untitled-1_24" width="570" height="208"/>
     </resources>
 </document>

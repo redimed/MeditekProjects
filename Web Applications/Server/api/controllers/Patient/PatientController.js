@@ -109,6 +109,9 @@ module.exports = {
 	*/
 	DetailPatient : function(req, res) {
 		var data = req.body.data;
+		if(typeof(data)=='string'){
+			data = JSON.parse(data);
+		}
 		Services.Patient.DetailPatient(data)
 		.then(function(info){
 			if(info!=null && info!=undefined && info!='' && info.length!=0){

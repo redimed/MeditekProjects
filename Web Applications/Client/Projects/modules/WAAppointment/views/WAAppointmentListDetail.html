@@ -224,22 +224,17 @@
                                     <div class="col-md-3 col-sm-3">
                                         <ul class="nav nav-tabs tabs-left">
                                             <li class="active">
-                                                <a data-toggle="tab" href="index.html#tab_1-1">
-                    Basic Information </a>
+                                                <a data-toggle="tab" href="index.html#tab_1-1">Basic Information </a>
                                                 <span class="after"> </span>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="index.html#tab_2-2">
-                    Contact Information </a>
+                                                <a data-toggle="tab" href="index.html#tab_2-2">Contact Information </a>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="index.html#tab_kinGuardian">
-                    Kin/Guardian </a>
+                                                <a data-toggle="tab" href="index.html#tab_kinGuardian"> Kin/Guardian </a>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="index.html#tab_3-3">
-                    Medicare Information
-                 </a>
+                                                <a data-toggle="tab" href="index.html#tab_3-3">Medicare Information</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -940,26 +935,25 @@
                                             <div id="tab_referral3" class="tab-pane">
                                                 <div class="row">
                                                     <h5 class="col-md-12 col-sm-12">
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <div class="radio-list">
-                                     <label class="radio-inline control-label bold">
-                                        History of Previous skin cancers and treatmens
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="cancersTreatmens"  value="Yes" ng-model="cancersTreatmens"> Yes 
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="cancersTreatmens"  value="No"  ng-model="cancersTreatmens"> No 
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </h5>
+                                                        <div class="form-inline">
+                                                            <div class="form-group">
+                                                                <div class="radio-list">
+                                                                     <label class="radio-inline control-label bold">
+                                                                        History of Previous skin cancers and treatmens
+                                                                    </label>
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio" name="cancersTreatmens"  value="Yes" ng-model="cancersTreatmens"> Yes 
+                                                                    </label>
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio" name="cancersTreatmens"  value="No"  ng-model="cancersTreatmens"> No 
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </h5>
                                                     <div class="col-md-6 col-sm-6" ng-show="cancersTreatmens == 'Yes'">
                                                         <div class="form-group">
-                                                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].Value
-                        "></textarea>
+                                                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].Value"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-sm-6" ng-show="cancersTreatmens == 'Yes'">
@@ -985,22 +979,22 @@
                                             <div id="tab_referral4" class="tab-pane">
                                                 <div class="row">
                                                     <h5 class="col-md-12 col-sm-12">
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <div class="radio-list">
-                                     <label class="radio-inline control-label bold">
-                                        History of Previous hand surgery
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="previousHandSurgery"  value="Yes" ng-model="previousHandSurgery"> Yes 
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="previousHandSurgery"  value="No" ng-model="previousHandSurgery"> No 
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </h5>
+                                                        <div class="form-inline">
+                                                            <div class="form-group">
+                                                                <div class="radio-list">
+                                                                     <label class="radio-inline control-label bold">
+                                                                        History of Previous hand surgery
+                                                                    </label>
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio" name="previousHandSurgery"  value="Yes" ng-model="previousHandSurgery"> Yes 
+                                                                    </label>
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio" name="previousHandSurgery"  value="No" ng-model="previousHandSurgery"> No 
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </h5>
                                                     <div class="col-md-6 col-sm-6" ng-show="previousHandSurgery == 'Yes'">
                                                         <div class="form-group">
                                                             <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.previousHandSurgery'].Value"></textarea>

@@ -70,7 +70,7 @@ module.exports = {
                     data.lastName + '] - [' + data.phoneNumber + ']';
                 var emailInfo = {
                     from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
-                    email: 'HealthScreenings@redimed.com.au',
+                    // email: 'HealthScreenings@redimed.com.au',
                     patientEmail: (!_.isUndefined(data.email) && !_.isNull(data.email)) ? data.email : '',
                     subject: subjectEmail,
                     confirmed: APIService.UrgentCareConfirmURL + '/' + data.UID,

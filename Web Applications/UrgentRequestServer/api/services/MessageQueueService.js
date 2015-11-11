@@ -38,7 +38,7 @@ module.exports = {
                         var serviceType = Services.ConvertData.ServiceType(UR);
                         var emailInfo = {
                             from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
-                            email: 'HealthScreenings@redimed.com.au',
+                            // email: 'HealthScreenings@redimed.com.au',
                             patientEmail: (!_.isUndefined(UR.email) && !_.isNull(UR.email)) ? UR.email : '',
                             subject: subjectEmail,
                             confirmed: APIService.UrgentCareConfirmURL + '/' + UR.UID,

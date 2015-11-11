@@ -70,7 +70,7 @@ module.exports = {
                     data.lastName + '] - [' + data.phoneNumber + ']';
                 var emailInfo = {
                     from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
-                    // email: 'HealthScreenings@redimed.com.au',
+                    email: 'pnguyen@redimed.com.au',
                     patientEmail: (!_.isUndefined(data.email) && !_.isNull(data.email)) ? data.email : '',
                     subject: subjectEmail,
                     confirmed: APIService.UrgentCareConfirmURL + '/' + data.UID,
@@ -86,7 +86,7 @@ module.exports = {
                     companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName)) ? data.companyName : '',
                     contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson)) ? data.contactPerson : '',
                     companyPhoneNumber: (!_.isUndefined(data.companyPhoneNumber) && !_.isNull(data.companyPhoneNumber)) ? data.companyPhoneNumber : '',
-                    bcc: 'pnguyen@redimed.com.au, meditekcompany@gmail.com'
+                    bcc: 'meditekcompany@gmail.com'
                 };
 
                 /*

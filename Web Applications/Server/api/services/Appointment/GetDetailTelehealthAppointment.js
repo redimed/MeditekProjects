@@ -33,7 +33,8 @@ module.exports = function(appointmentUID, userInfo) {
         };
         filter.ExternalPractitioner.push(filterRoleTemp);
     } else if (!role.isAdmin &&
-        !role.isAssistant) {
+        !role.isAssistant &&
+        !role.isPatient) {
         var filterRoleTemp = {
             '$and': {
                 UID: null

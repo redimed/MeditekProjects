@@ -1,6 +1,6 @@
 var app = angular.module('app.authentication.WAAppointment.list.detail.controller', []);
 
-app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService) {
+app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService,CommonService) {
     $modalInstance.rendered.then(function() {
         App.initComponents(); // init core components
         App.initAjax();
@@ -10,32 +10,42 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
         Portfolio.init();
         //ComponentsDropdowns.init(); // init todo page
     });
-    $scope.wainformation = data;
-    console.log('$scope.wainformation',$scope.wainformation);
-    $scope.Temp = angular.copy(data)
-     var ClinicalDetailsTemp = [];
-    $scope.loadFuntion = function(){
-         $scope.wainformation.TelehealthAppointment.ClinicalDetails = {}
-            $scope.Temp.TelehealthAppointment.ClinicalDetails.forEach(function(valueRes, indexRes) {
-                if (valueRes != null && valueRes != undefined) {
-                    var keyClinicalDetail = valueRes.Section + '.' + valueRes.Category + '.' + valueRes.Type + '.' + valueRes.Name
-                    keyClinicalDetail = keyClinicalDetail.split(" ").join("__")
-                    $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail] = {}
-                    $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].Value = valueRes.Value
-                    $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].FileUploads = valueRes.FileUploads
-                    $scope[valueRes.Name] = 'Yes'
-                }
+    $scope.ViewDoc = function(Url, UID) {
+        var LinkUID = Url + UID;
+        CommonService.downloadFile(UID)
+            .then(function(data) {
+                console.log(data);
+            }, function(er) {
+                console.log(er);
             })
     }
-    $scope.loadFuntion()
+    $scope.wainformation = data;
+    console.log('$scope.wainformation', $scope.wainformation);
+    $scope.Temp = angular.copy(data)
+    var ClinicalDetailsTemp = [];
+    $scope.loadFuntion = function() {
+        $scope.wainformation.TelehealthAppointment.ClinicalDetails = {}
+        $scope.Temp.TelehealthAppointment.ClinicalDetails.forEach(function(valueRes, indexRes) {
+            if (valueRes != null && valueRes != undefined) {
+                var keyClinicalDetail = valueRes.Section + '.' + valueRes.Category + '.' + valueRes.Type + '.' + valueRes.Name;
+                keyClinicalDetail = keyClinicalDetail.split(" ").join("__");
+                $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail] = {};
+                $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].Value = valueRes.Value;
+                $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].FileUploads = valueRes.FileUploads;
+                $scope[valueRes.Name] = 'Yes';
+            }
+        })
+    }
+    $scope.loadFuntion();
     $scope.info = {
         apptStatus: WAConstant.apptStatus,
         listDoctorTreatingPractitioner: null,
         patientInfomation: ($scope.wainformation.Patients.length != 0) ? $scope.wainformation.Patients : $scope.wainformation.TelehealthAppointment.PatientAppointment,
         appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('DD/MM/YYYY') : null,
         appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('h:mm A') : null,
+        ExpiryDate: ($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate != null) ? moment($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate).format('DD/MM/YYYY') : null,
         listDoctorTreatingPractitioner: null,
-        selectRadioGender: function () {
+        selectRadioGender: function() {
             $scope.wainformation.TelehealthAppointment.PatientAppointment.Gender = "";
         }
     }
@@ -63,10 +73,13 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
             var appointmentDateTime = $scope.info.appointmentDate + ' ' + Time + ' Z';
             $scope.wainformation.FromTime = moment(appointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").utc().format('YYYY-MM-DD HH:mm:ss Z');
         } else {
-            $scope.wainformation.FromTime = null
+            $scope.wainformation.FromTime = null;
+        };
+        if ($scope.info.ExpiryDate != null && $scope.info.ExpiryDate != '') {
+            $scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate = moment($scope.info.ExpiryDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z');
         };
         for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
-            var newkey = key.split("__").join(" ")
+            var newkey = key.split("__").join(" ");
             var res = newkey.split(".");
             var object = {
                 Section: res[0],
@@ -76,31 +89,30 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
                 Value: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].Value,
                 FileUploads: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads
             }
-            var isExist = false
+            var isExist = false;
 
             ClinicalDetailsTemp.forEach(function(valueTemp, keyTemp) {
                 if (valueTemp.Section == object.Section &&
                     valueTemp.Category == object.Category &&
                     valueTemp.Type == object.Type &&
                     valueTemp.Name == object.Name) {
-                    isExist = true
+                    isExist = true;
                 }
             })
             if (!isExist) {
-                ClinicalDetailsTemp.push(object)
+                ClinicalDetailsTemp.push(object);
             };
         };
-        var countCliniDetail = 0
+        var countCliniDetail = 0;
         ClinicalDetailsTemp.forEach(function(value, key) {
             if (value.Value != 'N' && value.Value != null) {
-                countCliniDetail++
+                countCliniDetail++;
             };
         })
         if (countCliniDetail == 0) {
-            ClinicalDetailsTemp = []
+            ClinicalDetailsTemp = [];
         }
         $scope.wainformation.TelehealthAppointment.ClinicalDetails = ClinicalDetailsTemp;
-        console.log('nênnenenenenenene',$scope.wainformation);
         WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
             console.log('saveWaAppointment', data);
             $modalInstance.close('success');

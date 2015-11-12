@@ -109,19 +109,24 @@ module.exports = {
 	*/
 	DetailPatient : function(req, res) {
 		var data = req.body.data;
+		if(typeof(data)=='string'){
+			data = JSON.parse(data);
+		}
 		Services.Patient.DetailPatient(data)
 		.then(function(info){
 			if(info!=null && info!=undefined && info!='' && info.length!=0){
 				FileUpload.findAll({
 					where:{
 						UserAccountID : info[0].UserAccountID,
-						FileType : data.FileType,
+						FileType : 'ProfileImage',
 						Enable : 'Y'
 					}
 				})
 				.then(function(success){
 					if(success!==undefined && success!==null && success!=='' && success.length!==0){
 						info[0].dataValues.FileUID = success[0].UID?success[0].UID:null;
+						info[0].dataValues.CountryName = info[0].dataValues.Country.ShortName;
+						delete info[0].dataValues['Country'];
 						res.ok({status:200, message:"success", data:info});
 					}
 					else{

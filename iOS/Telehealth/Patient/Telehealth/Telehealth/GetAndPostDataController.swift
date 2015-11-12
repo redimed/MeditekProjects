@@ -173,7 +173,7 @@ class GetAndPostDataController {
                 "limit":Limit
             ]
         ]
-        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentList ,headers:headers, parameters: parameters).responseJSON{
+        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentList + UID ,headers:headers).responseJSON{
             request, response, result in
             switch result {
             case .Success(let JSONData):

@@ -498,6 +498,11 @@ module.exports = {
 	            	model: UserAccount,
 	            	attributes: ['PhoneNumber','Email','ID','UID'],
 			    	required: true
+			    },
+			    {
+			    	model: Country,
+	            	attributes: ['ShortName'],
+			    	required: false
 			    }
 			]
 		})

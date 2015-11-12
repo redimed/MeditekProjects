@@ -195,6 +195,8 @@ module.exports = {
         preferredPractitioner.Doctor.IsRenewReferral = data.IsRenewReferral;
         preferredPractitioner.Doctor.PathologyProvider = data.PathologyProvider;
         preferredPractitioner.Doctor.RadiologyProvider = data.RadiologyProvider;
+        preferredPractitioner.Doctor.RefDate = data.RefDate;
+        preferredPractitioner.Doctor.RefDurationOfReferral = data.RefDurationOfReferral;
         return preferredPractitioner;
     },
     WAAppointment: function(data) {

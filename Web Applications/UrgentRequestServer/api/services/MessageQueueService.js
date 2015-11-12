@@ -30,7 +30,7 @@ module.exports = {
                 .spread(function(UR) {
                     //check tried and confirmed urgent request
                     if (UR.tried < 3 && UR.status === 'pending') {
-                        var subjectEmail = '[Testing] -[' + UR.urgentRequestType + '] - [' + (UR.tried == 1 ? '2nd' : '3rd') + '] - [' +
+                        var subjectEmail = '[' + UR.urgentRequestType + '] - [' + (UR.tried == 1 ? '2nd' : '3rd') + '] - [' +
                             Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                             '] - [' + UR.firstName + ' ' +
                             UR.lastName + '] - [' + UR.phoneNumber + ']';
@@ -38,7 +38,7 @@ module.exports = {
                         var serviceType = Services.ConvertData.ServiceType(UR);
                         var emailInfo = {
                             from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
-                            email: 'HealthScreenings@redimed.com.au',
+                            email: 'pnguyen@redimed.com.au',
                             patientEmail: (!_.isUndefined(UR.email) && !_.isNull(UR.email)) ? UR.email : '',
                             subject: subjectEmail,
                             confirmed: APIService.UrgentCareConfirmURL + '/' + UR.UID,
@@ -54,7 +54,7 @@ module.exports = {
                             companyName: (!_.isUndefined(UR.companyName) && !_.isNull(UR.companyName)) ? UR.companyName : '',
                             contactPerson: (!_.isUndefined(UR.contactPerson) && !_.isNull(UR.contactPerson)) ? UR.contactPerson : '',
                             companyPhoneNumber: (!_.isUndefined(UR.companyPhoneNumber) && !_.isNull(UR.companyPhoneNumber)) ? UR.companyPhoneNumber : '',
-                            bcc: 'pnguyen@redimed.com.au, meditekcompany@gmail.com'
+                            bcc: 'meditekcompany@gmail.com'
                         };
                         var CallBackSendMail = function(err, responseStatus, html, text) {
                                 if (err) {

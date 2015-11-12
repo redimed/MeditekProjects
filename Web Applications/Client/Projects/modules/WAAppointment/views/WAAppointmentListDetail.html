@@ -80,7 +80,6 @@
                                                 <div class="col-md-6 col-sm-6">
                                                     <div class="form-group form-md-line-input">
                                                         <select class="form-control" name="Speciality" ng-model="wainformation.Status" ng-options="item.value as item.name for item in info.apptStatus">
-                                                            <option value=""></option>
                                                         </select>
                                                         <label class="control-label">Status</label>
                                                         <div class="form-control-focus"> </div>
@@ -225,22 +224,17 @@
                                     <div class="col-md-3 col-sm-3">
                                         <ul class="nav nav-tabs tabs-left">
                                             <li class="active">
-                                                <a data-toggle="tab" href="index.html#tab_1-1">
-                    Basic Information </a>
+                                                <a data-toggle="tab" href="index.html#tab_1-1">Basic Information </a>
                                                 <span class="after"> </span>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="index.html#tab_2-2">
-                    Contact Information </a>
+                                                <a data-toggle="tab" href="index.html#tab_2-2">Contact Information </a>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="index.html#tab_kinGuardian">
-                    Kin/Guardian </a>
+                                                <a data-toggle="tab" href="index.html#tab_kinGuardian"> Kin/Guardian </a>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="index.html#tab_3-3">
-                    Medicare Information
-                 </a>
+                                                <a data-toggle="tab" href="index.html#tab_3-3">Medicare Information</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -364,7 +358,7 @@
                                                                             <input type="radio" name="Indigenous" value="Aboriginal" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous"> Aboriginal
                                                                         </label>
                                                                         <label class="radio-inline">
-                                                                            <input type="radio" name="Indigenous" value="TorresStraitIslander" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous"> Torres Strait Islander
+                                                                            <input type="radio" name="Indigenous" value="Torres Strait Islander" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous"> Torres Strait Islander
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -528,7 +522,6 @@
                                                     <div class="col-md-12 col-sm-12 ">
                                                         <div class="form-inline">
                                                             <div class="form-group form-md-line-input">
-                                                            {{wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible}}
                                                                 <div class="radio-list">
                                                                     <label class="radio-inline">Medicare Eligible</label>
                                                                     <label class="radio-inline">
@@ -561,7 +554,7 @@
                                                     <div class="col-md-4 col-sm-4">
                                                         <div class="form-group form-md-line-input">
                                                             <div class="input-icon">
-                                                                <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate">
+                                                                <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="info.ExpiryDate">
                                                                 <label class="control-label">Expiry date</label>
                                                                 <div class="form-control-focus"> </div>
                                                                 <i class="glyphicon glyphicon-calendar"></i>
@@ -599,21 +592,17 @@
                                         <!-- <ul class="ver-inline-menu tabbable margin-bottom-10"> -->
                                         <ul class="nav nav-tabs tabs-left">
                                             <li class="active">
-                                                <a data-toggle="tab" href="index.html#tab_referral1">
-                    Referral Information </a>
+                                                <a data-toggle="tab" href="index.html#tab_referral1">Referral Information </a>
                                                 <span class="after"> </span>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="index.html#tab_referral2">
-                    Reason for referral/Presenting Problem </a>
+                                                <a data-toggle="tab" href="index.html#tab_referral2">Reason for referral/Presenting Problem </a>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="index.html#tab_referral3">
-                    History of Previous Skin cancers and treatmens </a>
+                                                <a data-toggle="tab" href="index.html#tab_referral3"> History of Previous Skin cancers and treatmens </a>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="index.html#tab_referral4">
-                    History of Previous Hand surgery </a>
+                                                <a data-toggle="tab" href="index.html#tab_referral4"> History of Previous Hand surgery </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -677,10 +666,10 @@
                                                                 <div class="form-group form-md-line-input">
                                                                     <div class="radio-list">
                                                                         <label class="radio-inline">
-                                                                            <input type="radio" name="InjuryType" value="MotorVehicleAccident" ng-model="wainformation.WAAppointment.InjuryType"> Motor vehicle accident ?
+                                                                            <input type="radio" name="InjuryType" value="Motor vehicle accident" ng-model="wainformation.TelehealthAppointment.WAAppointment.InjuryType"> Motor vehicle accident ?
                                                                         </label>
                                                                         <label class="radio-inline">
-                                                                            <input type="radio" name="InjuryType" value="WorkInjury" ng-model="wainformation.WAAppointment.InjuryType"> Work injury ?
+                                                                            <input type="radio" name="InjuryType" value="Work injury" ng-model="wainformation.TelehealthAppointment.WAAppointment.InjuryType"> Work injury ?
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -783,13 +772,13 @@
                                                                     <div class="form-group form-md-line-input">
                                                                         <div class="radio-list">
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="RefDurationOfReferal" value="03" ng-model="wainformation.TelehealthAppointment.RefDurationOfReferal"> 3 months
+                                                                                <input type="radio" name="RefDurationOfReferral" value="03" ng-model="wainformation.TelehealthAppointment.RefDurationOfReferral"> 3 months
                                                                             </label>
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="RefDurationOfReferal" value="12" ng-model="wainformation.TelehealthAppointment.RefDurationOfReferal"> 12 months
+                                                                                <input type="radio" name="RefDurationOfReferral" value="12" ng-model="wainformation.TelehealthAppointment.RefDurationOfReferral"> 12 months
                                                                             </label>
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="RefDurationOfReferal" value="00" ng-model="wainformation.TelehealthAppointment.RefDurationOfReferal"> Indefinite
+                                                                                <input type="radio" name="RefDurationOfReferral" value="00" ng-model="wainformation.TelehealthAppointment.RefDurationOfReferral"> Indefinite
                                                                             </label>
                                                                         </div>
                                                                     </div>
@@ -826,7 +815,7 @@
                                                     </div>
                                                     <div class="col-md-6 col-sm-6">
                                                         <div class="form-group">
-                                                            <textarea class="form-control" rows="7" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.referralPresenting'].Value">
+                                                            <textarea class="form-control" rows="3" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.referralPresenting'].Value">
                                                             </textarea>
                                                         </div>
                                                     </div>
@@ -836,11 +825,13 @@
                                                                 <thead>
                                                                     <tr class="uppercase">
                                                                         <th width="30%">File Name</th>
+                                                                        <th width="30%">View</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.referralPresenting'].FileUploads">
                                                                         <td><strong>{{ item.FileName }}</strong></td>
+                                                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -875,7 +866,7 @@
                                                                     <label class="radio-inline">
                                                                         <input type="radio" name="BCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value" value="1 - 2 cm"> 1 - 2 cm</label>
                                                                     <label class="radio-inline">
-                                                                        <input type="radio" name="BCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value" value="2 cm"> 2 cm</label>
+                                                                        <input type="radio" name="BCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.BCC'].Value" value="> 2 cm"> > 2 cm</label>
                                                                 </div>
                                                                 <div class="radio-list">
                                                                     <label class="radio-inline">Size : </label>
@@ -884,7 +875,7 @@
                                                                     <label class="radio-inline">
                                                                         <input type="radio" name="SCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value" value="1 - 2 cm"> 1 - 2 cm</label>
                                                                     <label class="radio-inline">
-                                                                        <input type="radio" name="SCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value" value="2 cm"> 2 cm</label>
+                                                                        <input type="radio" name="SCC_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.SCC'].Value" value="> 2 cm"> > 2 cm</label>
                                                                 </div>
                                                                 <div class="radio-list">
                                                                     <label class="radio-inline">Size : </label>
@@ -893,7 +884,7 @@
                                                                     <label class="radio-inline">
                                                                         <input type="radio" name="Melanoma_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value" value="1 - 2 cm"> 1 - 2 cm</label>
                                                                     <label class="radio-inline">
-                                                                        <input type="radio" name="Melanoma_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value" value="2 cm"> 2 cm</label>
+                                                                        <input type="radio" name="Melanoma_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value" value="> 2 cm"> > 2 cm</label>
                                                                 </div>
                                                                 <div class="radio-list">
                                                                     <label class="radio-inline">Size : </label>
@@ -902,7 +893,7 @@
                                                                     <label class="radio-inline">
                                                                         <input type="radio" name="Merkel_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value" value="1 - 2 cm"> 1 - 2 cm</label>
                                                                     <label class="radio-inline">
-                                                                        <input type="radio" name="Merkel_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value" value="2 cm"> 2 cm</label>
+                                                                        <input type="radio" name="Merkel_radio" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value" value="> 2 cm"> > 2 cm</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -934,7 +925,7 @@
                                                             <label class="control-label">
                                                                 <input type="checkbox" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Complex__Reconstructive__Case'].Value" ng-true-value="'Y'" ng-false-value="'N'"> Complex Reconstructive Case</label>
                                                             <label class="control-label">
-                                                                <input type="checkbox"> Other &nbsp;
+                                                                <input type="checkbox" ng-model="Other" ng-true-value="'Yes'" ng-false-value=null> Other &nbsp;
                                                                 <input type="text" placeholder="Other" size="15" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Other'].Value">
                                                             </label>
                                                         </div>
@@ -944,26 +935,25 @@
                                             <div id="tab_referral3" class="tab-pane">
                                                 <div class="row">
                                                     <h5 class="col-md-12 col-sm-12">
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <div class="radio-list">
-                                     <label class="radio-inline control-label bold">
-                                        History of Previous skin cancers and treatmens
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="cancersTreatmens"  value="Yes" ng-model="cancersTreatmens"> Yes 
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="cancersTreatmens"  value="No"  ng-model="cancersTreatmens"> No 
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </h5>
+                                                        <div class="form-inline">
+                                                            <div class="form-group">
+                                                                <div class="radio-list">
+                                                                     <label class="radio-inline control-label bold">
+                                                                        History of Previous skin cancers and treatmens
+                                                                    </label>
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio" name="cancersTreatmens"  value="Yes" ng-model="cancersTreatmens"> Yes 
+                                                                    </label>
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio" name="cancersTreatmens"  value="No"  ng-model="cancersTreatmens"> No 
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </h5>
                                                     <div class="col-md-6 col-sm-6" ng-show="cancersTreatmens == 'Yes'">
                                                         <div class="form-group">
-                                                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].Value
-                        "></textarea>
+                                                            <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].Value"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-sm-6" ng-show="cancersTreatmens == 'Yes'">
@@ -972,11 +962,13 @@
                                                                 <thead>
                                                                     <tr class="uppercase">
                                                                         <th width="30%">File Name</th>
+                                                                         <th width="30%">View</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].FileUploads">
                                                                         <td><strong>{{ item.FileName }}</strong></td>
+                                                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -987,22 +979,22 @@
                                             <div id="tab_referral4" class="tab-pane">
                                                 <div class="row">
                                                     <h5 class="col-md-12 col-sm-12">
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <div class="radio-list">
-                                     <label class="radio-inline control-label bold">
-                                        History of Previous hand surgery
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="previousHandSurgery"  value="Yes" ng-model="previousHandSurgery"> Yes 
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="previousHandSurgery"  value="No" ng-model="previousHandSurgery"> No 
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </h5>
+                                                        <div class="form-inline">
+                                                            <div class="form-group">
+                                                                <div class="radio-list">
+                                                                     <label class="radio-inline control-label bold">
+                                                                        History of Previous hand surgery
+                                                                    </label>
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio" name="previousHandSurgery"  value="Yes" ng-model="previousHandSurgery"> Yes 
+                                                                    </label>
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio" name="previousHandSurgery"  value="No" ng-model="previousHandSurgery"> No 
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </h5>
                                                     <div class="col-md-6 col-sm-6" ng-show="previousHandSurgery == 'Yes'">
                                                         <div class="form-group">
                                                             <textarea class="form-control" rows="10" ng-model="wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.previousHandSurgery'].Value"></textarea>
@@ -1014,11 +1006,13 @@
                                                                 <thead>
                                                                     <tr class="uppercase">
                                                                         <th width="30%">File Name</th>
+                                                                        <th width="30%">View</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.previousHandSurgery'].FileUploads">
                                                                         <td><strong>{{ item.FileName }}</strong></td>
+                                                                        <td ng-click="ViewDoc('1',item.UID)"><button>View</button></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>

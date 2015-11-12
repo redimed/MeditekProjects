@@ -4,12 +4,19 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
         restrict: 'E',
         templateUrl: "modules/appointment/directives/templates/listAppointment.html",
         link: function(scope, $state) {
+
             var Init = function() {
                 scope.searchObject = {
                     Limit: 20,
                     Offset: 0,
                     currentPage: 1,
                     maxSize: 5,
+                    Filter: [{
+                        Appointment: {
+                            Enable: 'Y'
+                        },
+
+                    }],
                     Order: [{
                         Appointment: {
                             CreatedDate: 'DESC',
@@ -35,7 +42,10 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
                 scope.searchObjectMap = angular.copy(scope.searchObject);
                 scope.load();
             };
-
+            scope.Status = {
+                apptStatus: AppointConstant.apptStatus
+            }
+            
             scope.typeSubmitDate = 'DESC';
             scope.typeAppointmentDate = 'DESC';
             scope.typeSubmitDateOther = null;
@@ -48,7 +58,7 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
                 scope.searchObjectMap.Order.push({
                     Appointment: orderTemp
                 });
-                scope.load()
+                scope.load();
             };
             //set page
             scope.SetPage = function() {
@@ -71,11 +81,13 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
             }
 
             scope.load = function() {
-                scope.searchObjectMapTemp = angular.copy(scope.searchObjectMap)
-                scope.parseTime(scope.searchObjectMapTemp)
+                o.loadingPage(true);
+                scope.searchObjectMapTemp = angular.copy(scope.searchObjectMap);
+                scope.parseTime(scope.searchObjectMapTemp);
                 AppointmentService.loadListAppointment(scope.searchObjectMapTemp).then(function(response) {
+                    o.loadingPage(false);
                     scope.appointments = response.rows;
-                    scope.CountRow = response.count
+                    scope.CountRow = response.count;
                 });
             }
             Init();
@@ -86,10 +98,12 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
 
 
             scope.openAppointmentModal = function(UID) {
-                var data = []
-                var modalInstance
+                o.loadingPage(true);
+                var data = [];
+                var modalInstance;
                 AppointmentService.getDetailApppointment(UID).then(function(response) {
-                    data = response.data
+                    data = response.data;
+                    o.loadingPage(false);
                     modalInstance = $modal.open({
                         animation: true,
                         templateUrl: 'modules/appointment/views/appointmentListModal.html',
@@ -113,9 +127,9 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
                                 appointment_from_date: null,
                                 appointment_to_date: null
                             }
-                            scope.load()
+                            scope.load();
                         };
-                    }, function(data) {})
+                    }, function(data) {});
 
                 })
             };

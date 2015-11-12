@@ -166,13 +166,13 @@ module.exports = {
             'WEB':10,
         },// second
 
-        authSecretExprired:{
-            'IOS':null,
-            'ARD':null,
-            'WEB':2*60*60,
-        },// second
+        // authSecretExprired:{
+        //     'IOS':null,
+        //     'ARD':null,
+        //     'WEB':2*60*60,
+        // },// second
 
-        userSecretExpired:{
+        userSecretExpiration:{
             'IOS':{
                 'ADMIN':{
                     secretKeyExpired:null,
@@ -204,7 +204,7 @@ module.exports = {
                     maxTimePlus:null
                 },
 
-                'NULL':{
+                'null':{
                     secretKeyExpired:null,
                     maxTimePlus:null
                 }
@@ -240,7 +240,7 @@ module.exports = {
                     secretKeyExpired:null,
                     maxTimePlus:null
                 },
-                'NULL':{
+                'null':{
                     secretKeyExpired:null,
                     maxTimePlus:null
                 }
@@ -327,6 +327,23 @@ module.exports = {
                 maxRole=item;
         })
         return maxRole.RoleCode;
+    },
+
+    getUserSecretExpiration:function(systemType,role)
+    {
+        if(role===null)
+        {
+            role='null';
+        }
+        if(!this.const.userSecretExpiration[systemType])
+        {
+            return null;
+        }
+        if(!this.const.userSecretExpiration[systemType][role])
+        {
+            return null;
+        }
+        return this.const.userSecretExpiration[systemType][role];
     },
 
     exlog: exlog,

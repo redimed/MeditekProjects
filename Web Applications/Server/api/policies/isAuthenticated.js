@@ -27,7 +27,7 @@ var jwt = require('jsonwebtoken');
 module.exports = function(req, res, next) {
 	var error=new Error("Policies.isAuthenticated.Error");
 	//Kiểm tra xem đã login thông qua passport hay chưa
-	console.log(req.session);
+	console.log("==============isAuthenticated============: ",req.session.passport.user);
 	if (req.isAuthenticated()) 
 	{
 		//Đã login bằng passport
@@ -79,6 +79,8 @@ module.exports = function(req, res, next) {
 						if(err.name=='TokenExpiredError')
 						{ 
 							//Kiểm tra secret key có quá hạn hay chưa
+							console.log("=====Token Expired====: ",typeof sessionUser.TokenExpired);
+							console.log("=====Is Expired====: ",o.isExpired(sessionUser.SecretCreatedDate,sessionUser.TokenExpired));
 							if(!o.isExpired(sessionUser.SecretCreatedDate,sessionUser.TokenExpired))
 							{
 								//Nếu secret key chưa quá hạn
@@ -116,7 +118,8 @@ module.exports = function(req, res, next) {
 										//-------------------------------------------
 	            						res.set('newsecret',sessionUser.SecretKey);
 	            						res.set('newsecretcreateddate',sessionUser.SecretCreatedDate);
-	            						res.set('tokenexpired',sessionUser.tokenexpired);
+	            						if(o.checkData(sessionUser.TokenExpired))
+                    						res.set('tokenexpired',sessionUser.TokenExpired);
 	            						//-------------------------------------------
 	            						next();
 									},function(err){

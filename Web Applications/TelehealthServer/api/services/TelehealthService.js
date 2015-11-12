@@ -31,7 +31,7 @@ module.exports = {
     GetAppointmentsByPatient: function(patientUID, limit, headers) {
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
-            path: '/api/appointment-wa-list',
+            path: '/api/appointment-telehealth-list',
             method: 'POST',
             body: {
                 data: {
@@ -213,7 +213,7 @@ module.exports = {
                             });
                             defer.resolve({
                                 token: token,
-                                payload: decoded.payload,
+                                payload: decoded ? decoded.payload : null,
                                 userToken: userToken,
                                 user: user
                             })

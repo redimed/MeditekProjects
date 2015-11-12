@@ -2,10 +2,10 @@ var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     bcrypt = require('bcryptjs');
 passport.serializeUser(function(sessionUser, done) {
-    done(null, _.cloneDeep(sessionUser));
+    console.log(">>>>>>>>>>>> serializeUser");
+    done(null, sessionUser);
 });
 passport.deserializeUser(function(sessionUser, done) {
-    console.log("======Session=====",sessionUser);
     done(null, sessionUser);
 });
 passport.use(new LocalStrategy({
@@ -64,7 +64,7 @@ passport.use(new LocalStrategy({
                             SystemType: HelperService.const.systemType[deviceType.toLowerCase()],
                             DeviceID: deviceId,
                             SecretKey:userToken.SecretKey,
-                            SecretCreatedDate:userToken.SecretCreatedDate,
+                            SecretCreatedDate:new Date(userToken.SecretCreatedDate),
                             TokenExpired:userToken.TokenExpired
                         }
                         if (activationInfo) sessionUser.PatientUID = activationInfo.patientUID;

@@ -31,7 +31,6 @@ module.exports = {
             -error: [transaction] load list Telehealth Appointment, error message.
     */
     GetListTelehealthAppointment: function(req, res) {
-        console.log("=====Session====: ",req.session.passport);
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');

@@ -33,7 +33,12 @@ module.exports = {
                 teleUser.getUserAccount().then(function(user) {
                     if (user) {
                         TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
-                            if(response.getHeaders().newtoken) res.set("newtoken",response.getHeaders().newtoken);
+                            if(response.getCode() == 202){
+                                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
+                                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
+                                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
+                                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+                            }
                             return res.ok(response.getBody());
                         }, function(err) {
                             res.json(err.getCode(), err.getBody());
@@ -62,13 +67,19 @@ module.exports = {
         var limit = params.limit;
         var headers = req.headers;
         TelehealthService.GetAppointmentsByPatient(patientUID, limit, headers).then(function(response) {
-            if(response.getHeaders().newtoken) res.set("newtoken",response.getHeaders().newtoken);
+            if(response.getCode() == 202){
+                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
+                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
+                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
+                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+            }
             return res.ok(response.getBody());
         }, function(err) {
             res.json(err.getCode(), err.getBody());
         })
     },
     GetTelehealthAppointmentDetails: function(req, res) {
+        console.log("======Appointment Details=======");
         var params = req.params.all();
         if (!params.uid) {
             var err = new Error("Telehealth.GetUserDetails.Error");
@@ -83,7 +94,12 @@ module.exports = {
             return res.serverError(ErrorWrap(err));
         }
         TelehealthService.GetTelehealthAppointmentDetails(apptUID, headers).then(function(response) {
-            if(response.getHeaders().newtoken) res.set("newtoken",response.getHeaders().newtoken);
+            if(response.getCode() == 202){
+                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
+                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
+                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
+                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+            }
             return res.ok(response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
@@ -104,7 +120,12 @@ module.exports = {
             return res.serverError(ErrorWrap(err));
         }
         TelehealthService.GetWAAppointmentDetails(apptUID, headers).then(function(response) {
-            if(response.getHeaders().newtoken) res.set("newtoken",response.getHeaders().newtoken);
+            if(response.getCode() == 202){
+                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
+                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
+                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
+                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+            }
             return res.ok(response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
@@ -296,6 +317,7 @@ module.exports = {
                                     req.body.activationInfo = activationInfo;
                                     req.body.username = 1;
                                     req.body.password = 2;
+
                                     passport.authenticate('local', function(err, u, info) {
                                         if ((err) || (!u)) {
                                             if (!err) var err = info;

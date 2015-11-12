@@ -1,3 +1,4 @@
+var fs = require('fs');
 function checkData(value) {
     var result = true;
     if (value === undefined || value === null || value === '') {

@@ -8,6 +8,7 @@ var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
 var o=require("../../../services/HelperService");
+
 module.exports = {
 
 	_config: { // cấu hình blueprint
@@ -52,7 +53,8 @@ module.exports = {
                     DeviceID:req.headers.deviceid,
                     SecretKey:ut.SecretKey,
                     SecretCreatedDate:ut.SecretCreatedDate,
-                    TokenExpired:ut.TokenExpired
+                    TokenExpired:ut.TokenExpired,
+                    MaxExpiredDate:ut.MaxExpiredDate,
                 }
                 var token=jwt.sign(
                     {UID:user.UID},

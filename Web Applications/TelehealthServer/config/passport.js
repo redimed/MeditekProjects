@@ -56,7 +56,7 @@ passport.use(new LocalStrategy({
                     }
                 }).then(function(userToken) {
                     if (userToken) {
-                         var sessionUser={
+                        var sessionUser={
                             ID:user.ID,
                             UID:user.UID,
                             Activated:user.Activated,
@@ -65,9 +65,9 @@ passport.use(new LocalStrategy({
                             DeviceID: deviceId,
                             SecretKey:userToken.SecretKey,
                             SecretCreatedDate:new Date(userToken.SecretCreatedDate),
-                            TokenExpired:userToken.TokenExpired
+                            TokenExpired:userToken.TokenExpired,
+                            MaxExpiredDate: userToken.MaxExpiredDate
                         }
-                        if (activationInfo) sessionUser.PatientUID = activationInfo.patientUID;
                         data.sessionUser = sessionUser;
                         return done(null, data, response.getBody().message);
                     } else return done(null, false, {

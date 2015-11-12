@@ -38,6 +38,7 @@ module.exports = {
                                 req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
                                 req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
                                 req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+                                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
                             }
                             return res.ok(response.getBody());
                         }, function(err) {
@@ -72,6 +73,7 @@ module.exports = {
                 req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
                 req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
                 req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
             }
             return res.ok(response.getBody());
         }, function(err) {
@@ -79,7 +81,6 @@ module.exports = {
         })
     },
     GetTelehealthAppointmentDetails: function(req, res) {
-        console.log("======Appointment Details=======");
         var params = req.params.all();
         if (!params.uid) {
             var err = new Error("Telehealth.GetUserDetails.Error");
@@ -99,6 +100,7 @@ module.exports = {
                 req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
                 req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
                 req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
             }
             return res.ok(response.getBody());
         }).catch(function(err) {
@@ -125,6 +127,7 @@ module.exports = {
                 req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
                 req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
                 req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
             }
             return res.ok(response.getBody());
         }).catch(function(err) {

@@ -174,7 +174,7 @@ module.exports = {
     },
     CheckToken: function(info) {
         var defer = $q.defer();
-        if (!info.authorization || !info.useruid || !info.deviceid || !info.systemtype || (info.systemtype && HelperService.const.systemType[info.systemtype.toLowerCase()] == undefined)) {
+        if (!info.authorization || !info.deviceid || !info.systemtype || (info.systemtype && HelperService.const.systemType[info.systemtype.toLowerCase()] == undefined)) {
             var err = new Error("CheckToken.Error");
             err.pushError("Invalid Params");
             defer.reject(err);

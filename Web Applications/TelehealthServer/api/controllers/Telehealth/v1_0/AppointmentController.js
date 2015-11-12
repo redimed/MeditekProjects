@@ -58,6 +58,7 @@ module.exports = {
                 req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
                 req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
                 req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
             }
             if (data.count > 0) {
                 appts = data.rows;
@@ -91,9 +92,10 @@ module.exports = {
                 req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
                 req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
                 req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
             }
-            if (data.count > 0) {
-                appts = data.rows;
+            appts = data.rows;
+            if (appts.length > 0) {
                 TelehealthUser.findAll().then(function(teleUsers) {
                     for (var i = 0; i < teleUsers.length; i++) {
                         for (var j = 0; j < appts.length; j++) {

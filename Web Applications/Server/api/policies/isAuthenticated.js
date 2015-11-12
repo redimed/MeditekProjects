@@ -110,6 +110,8 @@ module.exports = function(req, res, next) {
 						if(err.name=='TokenExpiredError')
 						{ 
 							//Kiểm tra secret key có quá hạn hay chưa
+							console.log("=====Token Expired====: ",typeof sessionUser.TokenExpired);
+							console.log("=====Is Expired====: ",o.isExpired(sessionUser.SecretCreatedDate,sessionUser.TokenExpired));
 							if(!o.isExpired(sessionUser.SecretCreatedDate,sessionUser.TokenExpired))
 							{
 								//Nếu secret key chưa quá hạn

@@ -73,7 +73,7 @@ module.exports.cors = {
   *                                                                          *
   ***************************************************************************/
 
-  headers: 'content-type, authorization',
+  headers: 'content-type, authorization, systemtype, deviceid, useruid',
 
   /**
    * Security level 1 (high) will respond with a 403 status code to any request 

@@ -2,7 +2,11 @@ var requestify = require('requestify');
 var config = sails.config.myconf;
 var jwt = require('jsonwebtoken');
 var $q = require('q');
-
+var http = require('http');
+var Response = require('./Response.js');
+function isSuccessful(code) {
+    return code >= 200 && code < 300;
+}
 module.exports = {
     FindByUID: function(uid) {
         return TelehealthUser.find({
@@ -11,7 +15,7 @@ module.exports = {
             }
         });
     },
-    CheckOnlineUser: function(appts){
+    CheckOnlineUser: function(appts) {
         var list = sails.sockets.rooms();
         if (appts.length > 0 && list.length > 0) {
             for (var j = 0; j < appts.length; j++) {
@@ -27,7 +31,7 @@ module.exports = {
     GetAppointmentsByPatient: function(patientUID, limit, headers) {
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
-            path: '/api/appointment-wa-list',
+            path: '/api/appointment-telehealth-list',
             method: 'POST',
             body: {
                 data: {
@@ -38,7 +42,6 @@ module.exports = {
                     }],
                     Filter: [{
                         Appointment: {
-                            Status: "Approved",
                             Enable: "Y"
                         }
                     }, {
@@ -46,16 +49,37 @@ module.exports = {
                             UID: patientUID
                         }
                     }],
-                    Limit: limit
+                    Limit: !limit ? null : limit
                 }
             },
             headers: headers
         })
     },
-    GetAppointmentDetails: function(apptUID, headers) {
+    GetPatientDetails: function(patientUID, headers) {
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
+        return TelehealthService.MakeRequest({
+            path: '/api/patient/get-patient',
+            method: 'POST',
+            body: {
+                data: {
+                    'UID': patientUID
+                }
+            },
+            headers: headers
+        });
+    },
+    GetWAAppointmentDetails: function(apptUID, headers) {
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-wa-detail/' + apptUID,
+            method: 'GET',
+            headers: headers
+        })
+    },
+    GetTelehealthAppointmentDetails: function(apptUID, headers){
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
+        return TelehealthService.MakeRequest({
+            path: '/api/appointment-telehealth-detail/' + apptUID,
             method: 'GET',
             headers: headers
         })
@@ -75,7 +99,6 @@ module.exports = {
                     Filter: [{
                         Appointment: {
                             FromTime: sails.moment().format('YYYY-MM-DD ZZ'),
-                            Status: "Approved",
                             Enable: "Y"
                         }
                     }]
@@ -98,8 +121,8 @@ module.exports = {
                     }],
                     Filter: [{
                         Appointment: {
+                            Status:'Approved',
                             FromTime: sails.moment().format('YYYY-MM-DD ZZ'),
-                            Status: "Approved",
                             Enable: "Y"
                         }
                     }]
@@ -107,16 +130,6 @@ module.exports = {
             },
             headers: headers
         });
-    },
-    MakeRequest: function(info) {
-        return requestify.request(config.CoreAPI + info.path, {
-            method: info.method,
-            body: !info.body ? null : info.body,
-            params: !info.params ? null : info.params,
-            headers: !info.headers ? null : info.headers,
-            dataType: 'json',
-            withCredentials: true
-        })
     },
     GenerateJWT: function(info) {
         var defer = $q.defer();
@@ -161,7 +174,7 @@ module.exports = {
     },
     CheckToken: function(info) {
         var defer = $q.defer();
-        if (!info.authorization || !info.useruid || !info.deviceid || !info.systemtype || (info.systemtype && HelperService.const.systemType[info.systemtype.toLowerCase()] == undefined)) {
+        if (!info.authorization || !info.deviceid || !info.systemtype || (info.systemtype && HelperService.const.systemType[info.systemtype.toLowerCase()] == undefined)) {
             var err = new Error("CheckToken.Error");
             err.pushError("Invalid Params");
             defer.reject(err);
@@ -200,7 +213,7 @@ module.exports = {
                             });
                             defer.resolve({
                                 token: token,
-                                payload: decoded.payload,
+                                payload: decoded ? decoded.payload : null,
                                 userToken: userToken,
                                 user: user
                             })
@@ -218,5 +231,15 @@ module.exports = {
             }
         })
         return defer.promise;
+    },
+    MakeRequest: function(info) {
+        return requestify.request(config.CoreAPI + info.path, {
+            method: info.method,
+            body: !info.body ? null : info.body,
+            params: !info.params ? null : info.params,
+            headers: !info.headers ? null : info.headers,
+            dataType: 'json',
+            withCredentials: true
+        })
     }
 }

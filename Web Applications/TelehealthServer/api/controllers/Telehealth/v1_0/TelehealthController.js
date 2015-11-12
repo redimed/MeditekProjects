@@ -14,14 +14,15 @@ function sendSMS(toNumber, content) {
 };
 module.exports = {
     GetUserDetails: function(req, res) {
-        if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
+        var params = req.params.all();
+        if (!params.uid) {
             var err = new Error("Telehealth.GetUserDetails.Error");
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
-        var info = HelperService.toJson(req.body.data);
-        var uid = info.uid;
-        var deviceType = req.headers.systemtype;
+        var uid = params.uid;
+        var headers = req.headers;
+        var deviceType = headers.systemtype;
         if (!uid || !deviceType || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
             var err = new Error("Telehealth.GetUserDetails.Error");
             err.pushError("Invalid Params");
@@ -31,78 +32,104 @@ module.exports = {
             if (teleUser) {
                 teleUser.getUserAccount().then(function(user) {
                     if (user) {
-                        TelehealthService.MakeRequest({
-                            path: '/api/patient/get-patient',
-                            method: 'POST',
-                            body: {
-                                data: {
-                                    'UID': user.UID
-                                }
-                            },
-                            headers: {
-                                'Authorization': res.get('newtoken') ? 'Bearer '+res.get('newtoken') : req.headers.authorization,
-                                'DeviceID': req.headers.deviceid,
-                                'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
+                        TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
+                            if(response.getCode() == 202){
+                                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
+                                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
+                                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
+                                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+                                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
                             }
-                        }).then(function(response) {
-                            res.json(response.getCode(), response.getBody());
-                        }).catch(function(err) {
+                            return res.ok(response.getBody());
+                        }, function(err) {
                             res.json(err.getCode(), err.getBody());
-                        })
+                        });
                     } else {
                         var err = new Error("Telehealth.GetUserDetails.Error");
                         err.pushError("User Is Not Exist");
-                        res.serverError(ErrorWrap(err));
+                        return res.serverError(ErrorWrap(err));
                     }
                 })
             } else {
                 var err = new Error("Telehealth.GetUserDetails.Error");
                 err.pushError("User Is Not Exist");
-                res.serverError(ErrorWrap(err));
+                return res.serverError(ErrorWrap(err));
             }
         })
     },
     GetUserAppointments: function(req, res) {
-        if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
-            var err = new Error("Telehealth.GetUserAppointments.Error");
-            err.pushError("Invalid Params");
-            res.serverError(ErrorWrap(err));
-            return;
-        }
-        var info = HelperService.toJson(req.body.data);
-        var patientUID = info.uid;
-        var limit = info.limit;
-        var headers = req.headers;
-        if (!patientUID) {
-            var err = new Error("Telehealth.GetUserAppointments.Error");
+        var params = req.params.all();
+        if (!params.uid) {
+            var err = new Error("Telehealth.GetUserDetails.Error");
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
-        if (res.get('newtoken')) headers.authorization = 'Bearer ' + res.get('newtoken');
+        var patientUID = params.uid;
+        var limit = params.limit;
+        var headers = req.headers;
         TelehealthService.GetAppointmentsByPatient(patientUID, limit, headers).then(function(response) {
-            res.json(response.getCode(), response.getBody());
-        }).catch(function(err) {
+            if(response.getCode() == 202){
+                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
+                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
+                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
+                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
+            }
+            return res.ok(response.getBody());
+        }, function(err) {
             res.json(err.getCode(), err.getBody());
         })
     },
-    GetAppointmentDetails: function(req, res) {
-        if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
-            var err = new Error("Telehealth.GetAppointmentDetails.Error");
+    GetTelehealthAppointmentDetails: function(req, res) {
+        var params = req.params.all();
+        if (!params.uid) {
+            var err = new Error("Telehealth.GetUserDetails.Error");
             err.pushError("Invalid Params");
-            res.serverError(ErrorWrap(err));
-            return;
+            return res.serverError(ErrorWrap(err));
         }
-        var info = HelperService.toJson(req.body.data);
-        var apptUID = info.uid;
+        var apptUID = params.uid;
         var headers = req.headers;
         if (!apptUID) {
             var err = new Error("Telehealth.GetAppointmentDetails.Error");
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
-        if (res.get('newtoken')) headers.authorization = 'Bearer ' + res.get('newtoken');
-        TelehealthService.GetAppointmentDetails(apptUID, headers).then(function(response) {
-            res.json(response.getCode(), response.getBody());
+        TelehealthService.GetTelehealthAppointmentDetails(apptUID, headers).then(function(response) {
+            if(response.getCode() == 202){
+                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
+                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
+                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
+                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
+            }
+            return res.ok(response.getBody());
+        }).catch(function(err) {
+            res.json(err.getCode(), err.getBody());
+        })
+    },
+    GetWAAppointmentDetails: function(req, res) {
+        var params = req.params.all();
+        if (!params.uid) {
+            var err = new Error("Telehealth.GetUserDetails.Error");
+            err.pushError("Invalid Params");
+            return res.serverError(ErrorWrap(err));
+        }
+        var apptUID = params.uid;
+        var headers = req.headers;
+        if (!apptUID) {
+            var err = new Error("Telehealth.GetAppointmentDetails.Error");
+            err.pushError("Invalid Params");
+            return res.serverError(ErrorWrap(err));
+        }
+        TelehealthService.GetWAAppointmentDetails(apptUID, headers).then(function(response) {
+            if(response.getCode() == 202){
+                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
+                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
+                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
+                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
+                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
+            }
+            return res.ok(response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
         })
@@ -121,7 +148,7 @@ module.exports = {
                 if (!err) var err = info;
                 return res.unauthorize(err);
             }
-            req.logIn(u, function(err) {
+            req.logIn(u.sessionUser, function(err) {
                 if (err) res.unauthorize(err);
                 else {
                     if (!deviceType || !deviceId || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
@@ -155,17 +182,17 @@ module.exports = {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 TelehealthDevice.findOrCreate({
                     where: {
-                        telehealthUserID: teleUser.ID,
-                        deviceId: deviceId,
-                        type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS'
+                        TelehealthUserID: teleUser.ID,
+                        DeviceID: deviceId,
+                        Type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS'
                     },
                     defaults: {
                         UID: UUIDService.GenerateUUID(),
-                        deviceToken: deviceToken
+                        DeviceToken: deviceToken
                     }
                 }).spread(function(device, created) {
                     device.update({
-                        deviceToken: !created ? deviceToken : device.deviceToken
+                        DeviceToken: !created ? deviceToken : device.DeviceToken
                     }).then(function() {
                         res.ok({
                             status: 'success',
@@ -197,7 +224,7 @@ module.exports = {
         if (phoneNumber && phoneNumber.match(phoneRegex) && deviceId && deviceType && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
             UserAccount.find({
                 where: {
-                    phoneNumber: phoneNumber
+                    PhoneNumber: phoneNumber
                 }
             }).then(function(user) {
                 if (user) {
@@ -256,7 +283,7 @@ module.exports = {
         if (phoneNumber && phoneNumber.match(phoneRegex) && verifyCode && deviceId && deviceType && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
             UserAccount.find({
                 where: {
-                    phoneNumber: phoneNumber
+                    PhoneNumber: phoneNumber
                 }
             }).then(function(user) {
                 if (user) {
@@ -279,37 +306,43 @@ module.exports = {
                                 var data = response.getBody();
                                 TelehealthUser.findOrCreate({
                                     where: {
-                                        userAccountID: user.ID
+                                        UserAccountID: user.ID
                                     },
                                     defaults: {
                                         UID: UUIDService.GenerateUUID()
                                     }
                                 }).spread(function(teleUser, created) {
-                                    TelehealthService.MakeRequest({
-                                        path: '/api/login',
-                                        method: 'POST',
-                                        body: {
-                                            'UserName': 1,
-                                            'Password': 2,
-                                            'UserUID': user.UID,
-                                            'DeviceID': deviceId,
-                                            'VerificationToken': data.VerificationToken
-                                        },
-                                        headers: {
-                                            'DeviceID': req.headers.deviceid,
-                                            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
+                                    var activationInfo = {
+                                        userUID: user.UID,
+                                        verifyCode: data.VerificationToken,
+                                        patientUID: patient.UID
+                                    }
+                                    req.body.activationInfo = activationInfo;
+                                    req.body.username = 1;
+                                    req.body.password = 2;
+
+                                    passport.authenticate('local', function(err, u, info) {
+                                        if ((err) || (!u)) {
+                                            if (!err) var err = info;
+                                            return res.unauthorize(err);
                                         }
-                                    }).then(function(response) {
-                                        var returnJson = {
-                                            status: 'success',
-                                            message: 'User Activated',
-                                            uid: teleUser.UID,
-                                            userUID: response.getBody().user.UID,
-                                            patientUID: patient.UID,
-                                            token: response.getBody().token
-                                        }
-                                        res.ok(returnJson);
-                                    })
+                                        req.logIn(u.sessionUser, function(err) {
+                                            if (err) res.unauthorize(err);
+                                            else {
+                                                if (!deviceType || !deviceId || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
+                                                    var err = new Error("TelehealthLogin");
+                                                    err.pushError("Invalid Params");
+                                                    return res.serverError(ErrorWrap(err));
+                                                }
+                                                res.ok({
+                                                    status: 'success',
+                                                    message: info.message,
+                                                    user: u.user,
+                                                    token: u.token
+                                                });
+                                            }
+                                        });
+                                    })(req, res);
                                 }).catch(function(err) {
                                     return res.serverError(ErrorWrap(err));
                                 })

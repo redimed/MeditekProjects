@@ -562,7 +562,8 @@ module.exports = {
                 isAdmin: false,
                 isAssistant: false,
                 isInternalPractitioner: false,
-                isExternalPractitioner: false
+                isExternalPractitioner: false,
+                isPatient: false
             };
             roles.forEach(function(role, index) {
                 switch (role.RoleCode) {
@@ -578,6 +579,9 @@ module.exports = {
                     case 'EXTERTAL_PRACTITIONER':
                         result.isExternalPractitioner = true;
                         break;
+                    case 'PATIENT': 
+                        result.isPatient = true;
+                    break;
                     default:
                         break;
                 }

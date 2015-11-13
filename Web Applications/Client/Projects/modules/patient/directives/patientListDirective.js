@@ -134,7 +134,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				scope.loadList(scope.searchObjectMap);
 			};
 
-			scope.selectPatient = function(patientUID){
+			scope.selectPatient = function(patientUID,stt){
 				if(!scope.appointment){
 					if(scope.uidReturn==patientUID){
 						scope.uidReturn='';
@@ -163,9 +163,9 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 							scope.uidReturn=patientUID;   
 							scope.appointment.runIfSuccess({UID:patientUID});
 						}else{
-
 							scope.uidReturn='';
-							// scope.init();
+							scope.checked = false;
+							scope.loadList(scope.searchObjectMap);
 						}
 					});
 				}

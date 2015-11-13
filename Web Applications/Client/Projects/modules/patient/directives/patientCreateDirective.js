@@ -191,9 +191,17 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						scope.loadingCreate = false;
 						toastr.error("Please check data again.","ERROR");
 						scope.er = scope.er?scope.er:{};
-						for(var i = 0; i < err.data.message.ErrorsList.length; i++){
-							scope.er[err.data.message.ErrorsList[i].field] ={'border': '2px solid #DCA7B0'};
-							scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList[i].message;
+						if(err.data.message.ErrorsList[0].field!=undefined){
+							for(var i = 0; i < err.data.message.ErrorsList.length; i++){
+								scope.er[err.data.message.ErrorsList[i].field] ={'border': '2px solid #DCA7B0'};
+								scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList[i].message;
+							}
+						}
+						else{
+							for(var i = 0; i < err.data.message.ErrorsList.length; i++){
+								scope.er[err.data.message.ErrorsList[i].path] ={'border': '2px solid #DCA7B0'};
+								scope.ermsg[err.data.message.ErrorsList[i].path] = "invalid value";
+							}
 						}
 					});
 				},function(err){

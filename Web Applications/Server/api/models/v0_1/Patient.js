@@ -201,7 +201,7 @@ module.exports = {
                     args: [0, 100],
                     msg: 'Too long!'
                 },
-                is:/^[a-zA-Z\s]{0,100}$/
+                is:/^[a-zA-Z0-9\s]{0,100}$/
             }
         },
         State: {

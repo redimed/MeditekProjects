@@ -2,8 +2,8 @@ var requestify = require('requestify');
 var config = sails.config.myconf;
 var jwt = require('jsonwebtoken');
 var $q = require('q');
-var http = require('http');
-var Response = require('./Response.js');
+var _ = require('lodash');
+
 function isSuccessful(code) {
     return code >= 200 && code < 300;
 }
@@ -28,7 +28,9 @@ module.exports = {
         }
         return appts;
     },
-    GetAppointmentsByPatient: function(patientUID, limit, headers) {
+    GetAppointmentsByPatient: function(patientUID, limit, type, headers) {
+        delete headers['if-none-match'];
+        var typeArr = ['WAA', 'TEL'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-list',
@@ -48,6 +50,10 @@ module.exports = {
                         Patient: {
                             UID: patientUID
                         }
+                    }, {
+                        TelehealthAppointment: {
+                            Type: type && _.contains(typeArr, type) ? type : null
+                        }
                     }],
                     Limit: !limit ? null : limit
                 }
@@ -56,6 +62,7 @@ module.exports = {
         })
     },
     GetPatientDetails: function(patientUID, headers) {
+        delete headers['if-none-match'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/patient/get-patient',
@@ -69,6 +76,7 @@ module.exports = {
         });
     },
     GetWAAppointmentDetails: function(apptUID, headers) {
+        delete headers['if-none-match'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-wa-detail/' + apptUID,
@@ -76,7 +84,8 @@ module.exports = {
             headers: headers
         })
     },
-    GetTelehealthAppointmentDetails: function(apptUID, headers){
+    GetTelehealthAppointmentDetails: function(apptUID, headers) {
+        delete headers['if-none-match'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-detail/' + apptUID,
@@ -84,30 +93,9 @@ module.exports = {
             headers: headers
         })
     },
-    GetAppointmentListWA: function(headers) {
-        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
-        return TelehealthService.MakeRequest({
-            path: '/api/appointment-wa-list',
-            method: 'POST',
-            body: {
-                data: {
-                    Order: [{
-                        Appointment: {
-                            FromTime: 'DESC'
-                        }
-                    }],
-                    Filter: [{
-                        Appointment: {
-                            FromTime: sails.moment().format('YYYY-MM-DD ZZ'),
-                            Enable: "Y"
-                        }
-                    }]
-                }
-            },
-            headers: headers
-        });
-    },
-    GetAppointmentListTelehealth: function(headers) {
+    GetAppointmentList: function(headers, type) {
+        delete headers['if-none-match'];
+        var typeArr = ['WAA', 'TEL'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-list',
@@ -121,9 +109,12 @@ module.exports = {
                     }],
                     Filter: [{
                         Appointment: {
-                            Status:'Approved',
                             FromTime: sails.moment().format('YYYY-MM-DD ZZ'),
                             Enable: "Y"
+                        }
+                    }, {
+                        TelehealthAppointment: {
+                            Type: type && _.contains(typeArr, type) ? type : null
                         }
                     }]
                 }

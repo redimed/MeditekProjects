@@ -20,7 +20,7 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetUserDetails'
     },
-    'GET /api/telehealth/user/appointments/:uid/:limit?': {
+    'GET /api/telehealth/user/appointments/:uid/:type?/:limit?': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetUserAppointments'
     },
@@ -50,12 +50,8 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/AppointmentController',
         action: 'UpdateFile'
     },
-    'GET /api/telehealth/appointment/listWA':{
+    'GET /api/telehealth/appointment/list/:type?':{
         controller: 'Telehealth/v1_0/AppointmentController',
-        action: 'ListWA'
-    },
-    'GET /api/telehealth/appointment/listTelehealth':{
-        controller: 'Telehealth/v1_0/AppointmentController',
-        action: 'ListTelehealth'
+        action: 'ListAppointment'
     }
 };

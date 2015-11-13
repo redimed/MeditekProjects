@@ -4,7 +4,6 @@ var config = sails.config.myconf;
 var fs = require('fs');
 
 module.exports = function(req, res, next) {
-    console.log("=====Header=====: ",req.headers);
     if (req.isAuthenticated()) {
         TelehealthService.CheckToken(req.headers).then(function(result) {
             return next();

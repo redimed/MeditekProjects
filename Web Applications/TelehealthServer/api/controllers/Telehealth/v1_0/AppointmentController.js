@@ -48,12 +48,14 @@ module.exports = {
             })
         })
     },
-    ListWA: function(req, res) {
+    ListAppointment: function(req, res) {
         var appts = [];
         var headers = req.headers;
-        TelehealthService.GetAppointmentListWA(headers).then(function(response) {
+        var params = req.params.all();
+        var type = params.type;
+        TelehealthService.GetAppointmentList(headers, type).then(function(response) {
             var data = response.getBody();
-            if(response.getCode() == 202){
+            if (response.getCode() == 202) {
                 res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
                 req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
                 req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
@@ -82,39 +84,4 @@ module.exports = {
             res.serverError(err.getBody());
         });
     },
-    ListTelehealth: function(req, res) {
-        var appts = [];
-        var headers = req.headers;
-        TelehealthService.GetAppointmentListTelehealth(headers).then(function(response) {
-            var data = response.getBody();
-            if(response.getCode() == 202){
-                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
-                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
-                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
-                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
-                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
-            }
-            appts = data.rows;
-            if (appts.length > 0) {
-                TelehealthUser.findAll().then(function(teleUsers) {
-                    for (var i = 0; i < teleUsers.length; i++) {
-                        for (var j = 0; j < appts.length; j++) {
-                            if (appts[j].Patients.length > 0 && appts[j].Patients[0].UserAccount) {
-                                if (teleUsers[i].userAccountID == appts[j].Patients[0].UserAccount.ID) {
-                                    appts[j].IsOnline = 0;
-                                    appts[j].TeleUID = teleUsers[i].UID;
-                                }
-                            }
-                        }
-                    }
-                    return res.ok(TelehealthService.CheckOnlineUser(appts));
-                }).catch(function(err) {
-                    res.serverError(ErrorWrap(err));
-                })
-            } 
-            else return res.ok(TelehealthService.CheckOnlineUser(appts));
-        }, function(err) {
-            res.serverError(err.getBody());
-        });
-    }
 }

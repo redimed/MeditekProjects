@@ -8,7 +8,7 @@ module.exports = {
         return ['UID', 'Fund', 'Correspondence', 'Description', 'RefName',
             'RefHealthLink', 'RefAddress', 'RefTelePhone',
             'RefPostCode', 'RefSignature', 'RefDate', 'RefProviderNumber',
-            'RefDurationOfReferral', 'PresentComplain', 'Allergy'
+            'RefDurationOfReferral', 'PresentComplain', 'Allergy','Type'
         ];
     },
     PatientAppointment: function() {

@@ -30,7 +30,7 @@ module.exports = {
     },
     GetAppointmentsByPatient: function(patientUID, limit, type, headers) {
         delete headers['if-none-match'];
-        var typeArr = ['WAA','TL'];
+        var typeArr = ['WAA', 'TEL'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-list',
@@ -45,10 +45,12 @@ module.exports = {
                     Filter: [{
                         Appointment: {
                             Enable: "Y"
-                        }, 
+                        }
+                    }, {
                         Patient: {
                             UID: patientUID
-                        },
+                        }
+                    }, {
                         TelehealthAppointment: {
                             Type: type && _.contains(typeArr, type) ? type : null
                         }
@@ -73,7 +75,7 @@ module.exports = {
             headers: headers
         });
     },
-    GetWAAppointmentDetails: function(apptUID, type, headers) {
+    GetWAAppointmentDetails: function(apptUID, headers) {
         delete headers['if-none-match'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
@@ -82,7 +84,7 @@ module.exports = {
             headers: headers
         })
     },
-    GetTelehealthAppointmentDetails: function(apptUID, headers){
+    GetTelehealthAppointmentDetails: function(apptUID, headers) {
         delete headers['if-none-match'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
@@ -91,9 +93,9 @@ module.exports = {
             headers: headers
         })
     },
-    GetAppointmentList: function(headers,type) {
+    GetAppointmentList: function(headers, type) {
         delete headers['if-none-match'];
-        var typeArr = ['WAA','TL'];
+        var typeArr = ['WAA', 'TEL'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-list',
@@ -109,7 +111,8 @@ module.exports = {
                         Appointment: {
                             FromTime: sails.moment().format('YYYY-MM-DD ZZ'),
                             Enable: "Y"
-                        },
+                        }
+                    }, {
                         TelehealthAppointment: {
                             Type: type && _.contains(typeArr, type) ? type : null
                         }

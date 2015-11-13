@@ -10,5 +10,5 @@ module.exports.myconf = {
     GCMApiKey: 'AIzaSyChaE4-AETpWum-4-TOoxM7HZg3NvaFL6I',
     TokenExpired: '2m',
     // CoreAPI: 'http://testapp.redimed.com.au:3005',
-    CoreAPI: 'http://192.168.1.130:3005'
+    CoreAPI: 'http://telehealthvietnam.com.vn:3005'
 };

@@ -161,21 +161,12 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                 }else if validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.PhoneNumber) == false {
                     borderTextFieldValid(contactPhoneTextField, color: colorCustomRed)
                     alertMessage("Required", message: "Please Check your phonenumber!")
-                }else if emailTextField.text != "" {
-                    if validatePhoneNumber(emailTextField.text!,regex:RegexString.Email) == false {
+                }else if emailTextField.text != "" && validatePhoneNumber(emailTextField.text!,regex:RegexString.Email) == false {
                         alertMessage("Required", message: "Please Check your email!")
                         borderTextFieldValid(emailTextField, color: colorCustomRed)
-                    }else {
-                        
-                        sendingData()
-                    }
-                }else if birthDayTextField.text != "" {
-                    if checkDOB == false {
+                }else if birthDayTextField.text != "" && checkDOB == false {
                         alertMessage("Required", message: "Please Check your BirthDay!")
-                    }else {
-                        
-                        sendingData()
-                    }
+                        borderTextFieldValid(birthDayTextField, color: colorCustomRed)
                 }
                 else {
                     
@@ -225,7 +216,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                 "requestDate":infor.requestDate
             ]
         ]
-        Alamofire.request(.POST,api.submitInjury,parameters: parameters).responseJSON{
+        Alamofire.request(.POST,api.submitInjury,headers: headers,parameters: parameters).responseJSON{
             request, response, result  in
             self.view.hideLoading()
             self.btnMakeAppointment.enabled = true
@@ -238,7 +229,6 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                 }else {
                     self.alertMessage("Error", message: "Can't make appointment!")
                 }
-                
                 print(JSON(JSONData))
                 
             case .Failure(let data, let error):
@@ -257,7 +247,6 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         let width = CGFloat(1.0)
         border.borderColor = color.CGColor
         border.frame = CGRect(x: 0, y: textField.frame.size.height - width, width:  textField.frame.size.width, height: textField.frame.size.height)
-        
         border.borderWidth = width
         textField.layer.addSublayer(border)
         textField.layer.masksToBounds = true
@@ -294,17 +283,14 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         }
     }
     
-    
-    
     //search suburb
     @IBAction func suburbChange(sender: AnyObject) {
         searchAutocompleteEntriesWithSubstring(suburbTextField.text!)
     }
-    
+
     func searchAutocompleteEntriesWithSubstring(substring: String)
     {
         let dataSource = pastUrls
-        
         let searchString = substring.uppercaseString
         let predicate = NSPredicate(format: "SELF beginswith[c] %@", searchString)
         let searchDataSource = dataSource.filter { predicate.evaluateWithObject($0) }
@@ -428,7 +414,6 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         self.presentViewController(alertController, animated: true) {
             // ...
         }
-        
     }
     //check connection
     class func isConnectedToNetwork() -> Bool {
@@ -521,18 +506,18 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         }
     }
     
-    
 }
 
 extension SubmitInjuryViewController: UITableViewDelegate,UITableViewDataSource {
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return autocompleteUrls.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("AutoCompleteRowIdentifier", forIndexPath: indexPath) as! AutocompleteTableViewCell
+    
     
         cell.name.text = autocompleteUrls[indexPath.row]
         return cell
@@ -542,7 +527,5 @@ extension SubmitInjuryViewController: UITableViewDelegate,UITableViewDataSource 
         suburbTextField.text = autocompleteUrls[indexPath.row]
         autoTableView.hidden = true
     }
-    
-    
     
 }

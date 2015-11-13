@@ -7,6 +7,11 @@
 //
 
 import Foundation
+
+let headers = [
+    "Version" : "1.0",
+    "systemtype": "ios"
+]
 struct RegexString  {
     //EX: 04 245 544 45 || 4 564 242 45
     static let PhoneNumber = "^0?4[0-9]{8}$"

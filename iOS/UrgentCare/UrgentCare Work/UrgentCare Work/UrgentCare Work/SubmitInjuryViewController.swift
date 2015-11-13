@@ -171,26 +171,18 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                 }else if validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.PhoneNumber) == false {
                     borderTextFieldValid(contactPhoneTextField, color: colorCustomRed)
                     alertMessage("Required", message: "Please Check your phonenumber!")
-                }else if emailTextField.text != "" {
-                    if validatePhoneNumber(emailTextField.text!,regex:RegexString.Email) == false {
-                        alertMessage("Required", message: "Please Check your email!")
-                        borderTextFieldValid(emailTextField, color: colorCustomRed)
-                    }else {
-                        
-                        sendingData()
-                    }
-                }else if birthDayTextField.text != "" {
-                    if checkDOB == false {
-                        alertMessage("Required", message: "Please Check your BirthDay!")
-                    }else {
-                        
-                        sendingData()
-                    }
-                }else if companyPhoneNumberTextField.text != "" {
-                    if validatePhoneNumber(companyPhoneNumberTextField.text!,regex:RegexString.PhoneNumber) == false {
+                }
+                else if birthDayTextField.text != "" && checkDOB == false {
+                    alertMessage("Required", message: "Please Check your BirthDay!")
+                    borderTextFieldValid(birthDayTextField, color: colorCustomRed)
+                }
+                else if emailTextField.text != "" && validatePhoneNumber(emailTextField.text!,regex:RegexString.Email) == false {
+                    alertMessage("Required", message: "Please Check your email!")
+                    borderTextFieldValid(emailTextField, color: colorCustomRed)
+                }
+                else if companyPhoneNumberTextField.text != "" && validatePhoneNumber(companyPhoneNumberTextField.text!,regex:RegexString.PhoneNumber) == false {
                         borderTextFieldValid(companyPhoneNumberTextField, color: colorCustomRed)
                         alertMessage("Required", message: "Please Check your company phone number!")
-                    }
                 }
                 else {
                     
@@ -244,7 +236,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                 "contactPerson":infor.contactPerson
             ]
         ]
-        Alamofire.request(.POST,api.submitInjury,parameters: parameters).responseJSON{
+        Alamofire.request(.POST,api.submitInjury,headers:headers,parameters: parameters).responseJSON{
             request, response, result  in
             self.view.hideLoading()
             self.btnMakeAppointment.enabled = true

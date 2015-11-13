@@ -21,11 +21,18 @@ class AppointmentListTableViewCell: UITableViewCell {
     weak var delegate : AppointmentListTableViewCellDelegate?
     
     func configAppointment(Appointment:AppointmentList){
-        
-        appointmentDate.text = Appointment.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDateTime)
-        doctorName.text = Appointment.NameDoctor
-        status.text = Appointment.Status
-        UIDAppointment = Appointment.UIDApointment
+        print(Appointment.FromTime)
+        if Appointment.FromTime == "" {
+        }else {
+            appointmentDate.text = Appointment.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDateTime)
+            doctorName.text = Appointment.NameDoctor
+            status.text = Appointment.Status
+            UIDAppointment = Appointment.UIDApointment
+        }
+
+       
+      
+
     }
    
 }

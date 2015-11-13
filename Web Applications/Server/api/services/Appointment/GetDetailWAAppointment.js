@@ -110,7 +110,8 @@ module.exports = function(appointmentUID, userInfo) {
                     required: false
                 }]
             }],
-            where: filter.Appointment
+            where: filter.Appointment,
+            subQuery: false
         })
         .then(function(detailApptTelehealth) {
             defer.resolve({

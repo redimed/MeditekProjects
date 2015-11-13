@@ -18,8 +18,10 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                         Appointment: {
                             Status: null,
                             Enable:'Y'
-                        },
-
+                        }},{
+                        TelehealthAppointment: {
+                            Type: 'WAA'
+                        }
                     }],
                     Search: [{
                         PatientAppointment: {

@@ -1,6 +1,6 @@
 var app = angular.module('app.authentication.WAAppointment.list.detail.controller', []);
 
-app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService,CommonService) {
+app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService, CommonService) {
     $modalInstance.rendered.then(function() {
         App.initComponents(); // init core components
         App.initAjax();
@@ -25,14 +25,20 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
     var ClinicalDetailsTemp = [];
     $scope.loadFuntion = function() {
         $scope.wainformation.TelehealthAppointment.ClinicalDetails = {}
+        console.log($scope.Temp.TelehealthAppointment.ClinicalDetails)
         $scope.Temp.TelehealthAppointment.ClinicalDetails.forEach(function(valueRes, indexRes) {
             if (valueRes != null && valueRes != undefined) {
                 var keyClinicalDetail = valueRes.Section + '.' + valueRes.Category + '.' + valueRes.Type + '.' + valueRes.Name;
                 keyClinicalDetail = keyClinicalDetail.split(" ").join("__");
+                var keyOther = valueRes.Type + valueRes.Name;
+                keyOther = keyOther.split(" ").join("");
                 $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail] = {};
                 $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].Value = valueRes.Value;
                 $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].FileUploads = valueRes.FileUploads;
                 $scope[valueRes.Name] = 'Yes';
+                if (valueRes.Name == 'OThers' || valueRes.Name == 'Other') {
+                    $scope[keyOther] = 'Yes';
+                }
             }
         })
     }
@@ -81,13 +87,28 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
         for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
             var newkey = key.split("__").join(" ");
             var res = newkey.split(".");
-            var object = {
-                Section: res[0],
-                Category: res[1],
-                Type: res[2],
-                Name: res[3],
-                Value: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].Value,
-                FileUploads: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads
+            var keyOtherRequest = res[2] + res[3];
+            keyOtherRequest = keyOtherRequest.split(" ").join("");
+            if ($scope[keyOtherRequest] != undefined) {
+                if ($scope[keyOtherRequest] == 'Yes') {
+                    var object = {
+                        Section: res[0],
+                        Category: res[1],
+                        Type: res[2],
+                        Name: res[3],
+                        Value: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].Value,
+                        FileUploads: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads
+                    }
+                }
+            } else {
+                var object = {
+                    Section: res[0],
+                    Category: res[1],
+                    Type: res[2],
+                    Name: res[3],
+                    Value: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].Value,
+                    FileUploads: $scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads
+                }
             }
             var isExist = false;
 

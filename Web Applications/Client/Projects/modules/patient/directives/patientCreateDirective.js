@@ -30,11 +30,23 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 
 		},
 		link: function(scope, elem, attrs){
+			// State
+			scope.state = [
+				{'code':'Victoria', 'name':'Victoria'},
+				{'code':'Tasmania', 'name':'Tasmania'},
+				{'code':'Queensland', 'name':'Queensland'},
+				{'code':'New_South_Wales', 'name':'New South Wales'},
+				{'code':'Western_Australia', 'name':'Western Australia'},
+				{'code':'Northern_Territory', 'name':'Northern Territory'},
+				{'code':'Austria_Capital_Territory', 'name':'Austria Capital Territory'}
+			];
+
+			// Title
 			scope.titles = [
-				{id:"0", name:'Mr'},
-				{id:"1", name:'Mrs'},
-				{id:"2", name:'Ms'},
-				{id:"3", name:'Dr'}
+				{'id':'Mr', 'name':'Mr'},
+				{'id':'Mrs', 'name':'Mrs'},
+				{'id':'Ms', 'name':'Ms'},
+				{'id':'Dr', 'name':'Dr'}
 			];
 			//services getListCountry
 			//call Api getListCountry from server
@@ -205,7 +217,6 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						}
 					});
 				},function(err){
-					console.log(err);
 					scope.loadingCreate = false;
 					scope.er={};
 					scope.ermsg={};

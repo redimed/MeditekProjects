@@ -279,7 +279,8 @@
 													<div class="form-group">
 														<label class="control-label col-md-3">State<span style="color:red;" ng-if="ermsg.State!=undefined&&ermsg.State!=''&&ermsg.State!=null">*</span></label>
 														<div class="col-md-8">
-															<input type="text" class="form-control" placeholder="State" ng-model="data.State" ng-style="er.State" ng-change="ermsg.State=''" />
+															<select class="form-control" ng-model="data.State"ng-options="s.code as s.name for s in state" ng-style="er.State" ng-change="ermsg.State=''" >
+															</select>
 														<span style="color:red;">{{ermsg.State}}</span>
 														</div>
 													</div>

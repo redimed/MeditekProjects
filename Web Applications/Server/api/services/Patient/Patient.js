@@ -376,10 +376,20 @@ module.exports = {
 			throw err;
 		})
 		.then(function(result){
-			return {
-				result:result,
-				UserAccountUID:info.UserAccountUID
-			};
+			return RelUserRole.create({
+				UserAccountId : info.UserAccountID,
+				RoleId        : 3,
+				SiteId        : 1,
+				CreatedDate   : new Date()
+			})
+			.then(function(s){
+				return {
+					result:result,
+					UserAccountUID:info.UserAccountUID
+				};
+			},function(err){
+				throw err;
+			});
 		}, function(err){
 			throw err;
 		})

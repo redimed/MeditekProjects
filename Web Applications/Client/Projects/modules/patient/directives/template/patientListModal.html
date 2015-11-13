@@ -153,7 +153,8 @@
 												<!-- State -->
 												<div class="form-group">
 													<label class="control-label col-md-4">State</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="State" ng-model="info.State" ng-style="er.State"ng-change="ermsg.State='';checkDataNull('State')" ><span style="color:red;">{{ermsg.State}}</span></div>
+													<div class="col-md-8"><select class="form-control" ng-model="info.State"ng-options="s.code as s.name for s in state" ng-style="er.State" ng-change="ermsg.State=''" >
+															</select><span style="color:red;">{{ermsg.State}}</span></div>
 												</div>
 												<!-- end Postcode -->
 												<!-- Country -->

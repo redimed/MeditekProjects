@@ -8,6 +8,7 @@ module.exports = {
 		var data = req.body.data;
 		Services.Patient.CreatePatient(data)
 		.then(function(patient){
+			console.log(patient);
 			if(patient!==undefined && patient!==null && patient!=='' && patient.length!==0){
 				var info = {
 					UID            : patient.result.UID,
@@ -183,6 +184,9 @@ module.exports = {
 	*/
 	LoadListPatient : function(req, res) {
 		var data = req.body.data;
+		if(typeof(data)=='string'){
+			data = JSON.parse(data);
+		}
 		Services.Patient.LoadListPatient(data)
 		.then(function(result){
 			if(result!==undefined && result!==null && result!=='')

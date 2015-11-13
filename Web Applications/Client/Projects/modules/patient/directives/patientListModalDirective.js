@@ -59,7 +59,23 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		},
 		link: function(scope, elem, attrs){
 
-			
+			// Title
+			scope.titles = [
+				{'id':'Mr', 'name':'Mr'},
+				{'id':'Mrs', 'name':'Mrs'},
+				{'id':'Ms', 'name':'Ms'},
+				{'id':'Dr', 'name':'Dr'}
+			];
+
+			scope.state = [
+				{'code':'Victoria', 'name':'Victoria'},
+				{'code':'Tasmania', 'name':'Tasmania'},
+				{'code':'Queensland', 'name':'Queensland'},
+				{'code':'New_South_Wales', 'name':'New South Wales'},
+				{'code':'Western_Australia', 'name':'Western Australia'},
+				{'code':'Northern_Territory', 'name':'Northern Territory'},
+				{'code':'Austria_Capital_Territory', 'name':'Austria Capital Territory'}
+			];
 			var data = {};
         	scope.info = {};
 			data.UID = scope.uid;

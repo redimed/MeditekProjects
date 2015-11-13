@@ -7,6 +7,7 @@ var constFileType = HelperService.const.fileType;
 var constImgExt = HelperService.const.imageExt;
 module.exports = {
     UploadFile: function(req, res) {
+        console.log("=====File Upload====");
         var uploadDir = rootPath + '/upload_files/';
         mkdirp(uploadDir, function(err) {
             if (err) return res.serverError(ErrorWrap(err));

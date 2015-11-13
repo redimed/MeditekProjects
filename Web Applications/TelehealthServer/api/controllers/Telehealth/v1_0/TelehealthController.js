@@ -66,8 +66,9 @@ module.exports = {
         }
         var patientUID = params.uid;
         var limit = params.limit;
+        var type = params.type;
         var headers = req.headers;
-        TelehealthService.GetAppointmentsByPatient(patientUID, limit, headers).then(function(response) {
+        TelehealthService.GetAppointmentsByPatient(patientUID, limit, type, headers).then(function(response) {
             if(response.getCode() == 202){
                 res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
                 req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;

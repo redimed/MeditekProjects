@@ -16,17 +16,21 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'TelehealthLogin'
     },
-    'POST /api/telehealth/user/details': {
+    'GET /api/telehealth/user/details/:uid': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetUserDetails'
     },
-    'POST /api/telehealth/user/appointments': {
+    'GET /api/telehealth/user/appointments/:uid/:type?/:limit?': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetUserAppointments'
     },
-    'POST /api/telehealth/user/appointmentDetails':{
+    'GET /api/telehealth/user/telehealthAppointmentDetails/:uid':{
         controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'GetAppointmentDetails'
+        action: 'GetTelehealthAppointmentDetails'
+    },
+    'GET /api/telehealth/user/WAAppointmentDetails/:uid':{
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'GetWAAppointmentDetails'
     },
     //================Telehealth Socket Routes==========================
     '/api/telehealth/socket/joinRoom': {
@@ -46,8 +50,8 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/AppointmentController',
         action: 'UpdateFile'
     },
-    'GET /api/telehealth/appointment/listWA':{
+    'GET /api/telehealth/appointment/list/:type?':{
         controller: 'Telehealth/v1_0/AppointmentController',
-        action: 'ListWA'
+        action: 'ListAppointment'
     }
 };

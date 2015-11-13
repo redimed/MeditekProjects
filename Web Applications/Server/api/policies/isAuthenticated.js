@@ -5,6 +5,7 @@ var o=require("../services/HelperService");
 var ErrorWrap=require("../services/ErrorWrap");
 var UserTokenService=require("../services/UserAccount/UserToken");
 var jwt = require('jsonwebtoken');
+var moment = require('moment');
 
 /**
  * isAuthenticated: Kiểm tra user đã login hay chưa, và token của user có hợp lệ hay không
@@ -27,7 +28,6 @@ var jwt = require('jsonwebtoken');
 module.exports = function(req, res, next) {
 	var error=new Error("Policies.isAuthenticated.Error");
 	//Kiểm tra xem đã login thông qua passport hay chưa
-	console.log(req.session);
 	if (req.isAuthenticated()) 
 	{
 		//Đã login bằng passport
@@ -70,8 +70,39 @@ module.exports = function(req, res, next) {
 					return res.unauthor(ErrorWrap(error));
 				}
 				
+				if(o.checkData(sessionUser.MaxExpiredDate))
+				{
+					if(moment().isAfter(moment(sessionUser.MaxExpiredDate)))
+					{
+						error.pushError("isAuthenticated.maxExpiredDate");
+						return res.unauthor(ErrorWrap(error));
+					}
+				}
+
 				jwt.verify(token, sessionUser.SecretKey, function(err, decoded) {
 					//Nếu verify token có lỗi
+					function extendSecretExpired()
+					{
+						//Gia hạn SECRET KEY
+						if(o.checkData(sessionUser.MaxExpiredDate))
+						{
+							// var temp=moment(sessionUser.SecretCreatedDate)
+							// 		.add(o.const.authTokenExpired[req.headers.systemtype],'seconds');
+							// if(temp.isBefore(moment(sessionUser.MaxExpiredDate)))
+							// {
+							// 	sessionUser.SecretCreatedDate=new Date();
+							// }
+							var current=moment();
+							if(current.isBefore(moment(sessionUser.MaxExpiredDate)))
+							{
+								sessionUser.SecretCreatedDate=new Date();
+							}							
+							console.log("====================Extend Secret Expire");
+							console.log(sessionUser);
+							console.log("====================Extend Secret Expire");
+						}
+					}
+
 					if(o.checkData(err))
 					{
 						o.exlog(err);
@@ -79,12 +110,15 @@ module.exports = function(req, res, next) {
 						if(err.name=='TokenExpiredError')
 						{ 
 							//Kiểm tra secret key có quá hạn hay chưa
+							console.log("=====Token Expired====: ",typeof sessionUser.TokenExpired);
+							console.log("=====Is Expired====: ",o.isExpired(sessionUser.SecretCreatedDate,sessionUser.TokenExpired));
 							if(!o.isExpired(sessionUser.SecretCreatedDate,sessionUser.TokenExpired))
 							{
 								//Nếu secret key chưa quá hạn
 								//Kiểm tra nếu system là web thì tạo token mới dựa trên secret key
 								if(req.headers.systemtype==o.const.systemType.website)
 								{
+									extendSecretExpired();
 									var newtoken=jwt.sign(
 										{UID:req.user.UID}, 
 										sessionUser.SecretKey, 
@@ -104,6 +138,7 @@ module.exports = function(req, res, next) {
 										sessionUser.SecretKey=data.SecretKey;
 										sessionUser.SecretCreatedDate=data.SecretCreatedDate;
 										sessionUser.TokenExpired=data.TokenExpired;
+										sessionUser.MaxExpiredDate=data.MaxExpiredDate;
 										var newtoken=jwt.sign(
 											{UID:req.user.UID}, 
 											data.SecretKey, 
@@ -116,7 +151,10 @@ module.exports = function(req, res, next) {
 										//-------------------------------------------
 	            						res.set('newsecret',sessionUser.SecretKey);
 	            						res.set('newsecretcreateddate',sessionUser.SecretCreatedDate);
-	            						res.set('tokenexpired',sessionUser.tokenexpired);
+	            						if(o.checkData(sessionUser.TokenExpired))
+	            							res.set('tokenexpired',sessionUser.TokenExpired);
+	            						if(o.checkData(sessionUser.MaxExpiredDate))
+	            							res.set('maxexpireddate',sessionUser.MaxExpiredDate);
 	            						//-------------------------------------------
 	            						next();
 									},function(err){
@@ -141,6 +179,8 @@ module.exports = function(req, res, next) {
 					}
 					else
 					{
+						if(req.headers.systemtype==o.const.systemType.website)
+							extendSecretExpired();
 				  		next(); 
 					}
 				});

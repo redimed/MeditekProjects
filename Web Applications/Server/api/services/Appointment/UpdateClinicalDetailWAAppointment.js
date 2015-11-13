@@ -29,6 +29,18 @@ module.exports = function(objUpdate) {
             });
         })
         .then(function(relClinicalDetailFileUploadDeleted) {
+            return ClinicalDetail.destroy({
+                where: {
+                    TelehealthAppointmentID: objUpdate.where
+                }
+            });
+        }, function(err) {
+            defer.reject({
+                transaction: objUpdate.transaction,
+                error: err
+            });
+        })
+        .then(function(clinicalDetailDeleted) {
             return TelehealthAppointment.findOne({
                 attributes: ['ID'],
                 where: {

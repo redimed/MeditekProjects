@@ -74,6 +74,15 @@ module.exports = {
                 }
             }
         },
+        MaxExpiredDate:{
+            type: Sequelize.DATE,
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
+        },
         Enable: {
             type: Sequelize.STRING(1),
             allowNull: true,

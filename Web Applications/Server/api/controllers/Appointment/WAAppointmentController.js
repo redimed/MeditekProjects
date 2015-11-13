@@ -36,14 +36,14 @@ module.exports = {
             res.serverError('data failed');
         } else {
             //filter WAAppointment
-            if (!HelperService.CheckExistData(data.Filter)) {
-                data.Filter = [];
-            }
-            data.Filter.push({
-                "TelehealthAppointment": {
-                    "Type": "WAA"
-                }
-            });
+            // if (!HelperService.CheckExistData(data.Filter)) {
+            //     data.Filter = [];
+            // }
+            // data.Filter.push({
+            //     "TelehealthAppointment": {
+            //         "Type": "WAA"
+            //     }
+            // });
             Services.GetListAppointment(data, req.user)
                 .then(function(success) {
                     res.ok(success.data);

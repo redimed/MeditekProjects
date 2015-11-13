@@ -161,18 +161,18 @@ module.exports = {
         //---------------------------------------------------------
 
         authTokenExpired: {
-            'IOS':30*60,
-            'ARD':30*60,
-            'WEB':2*60*60,
+            'IOS': 30 * 60,
+            'ARD': 30 * 60,
+            'WEB':10 * 60,
         },// second
 
-        authSecretExprired:{
-            'IOS':null,
-            'ARD':null,
-            'WEB':2*60*60,
-        },// second
+        // authSecretExprired:{
+        //     'IOS':null,
+        //     'ARD':null,
+        //     'WEB':2*60*60,
+        // },// second
 
-        userSecretExpired:{
+        userSecretExpiration:{
             'IOS':{
                 'ADMIN':{
                     secretKeyExpired:null,
@@ -204,7 +204,7 @@ module.exports = {
                     maxTimePlus:null
                 },
 
-                'NULL':{
+                'null':{
                     secretKeyExpired:null,
                     maxTimePlus:null
                 }
@@ -240,7 +240,7 @@ module.exports = {
                     secretKeyExpired:null,
                     maxTimePlus:null
                 },
-                'NULL':{
+                'null':{
                     secretKeyExpired:null,
                     maxTimePlus:null
                 }
@@ -316,7 +316,7 @@ module.exports = {
 
     getMaxRole:function(roles)
     {
-        if(!_.isArray(roles) && !_.isEmpty(roles))
+        if(!_.isArray(roles) || _.isEmpty(roles))
         {
             return null;
         }
@@ -327,6 +327,23 @@ module.exports = {
                 maxRole=item;
         })
         return maxRole.RoleCode;
+    },
+
+    getUserSecretExpiration:function(systemType,role)
+    {
+        if(role===null)
+        {
+            role='null';
+        }
+        if(!this.const.userSecretExpiration[systemType])
+        {
+            return null;
+        }
+        if(!this.const.userSecretExpiration[systemType][role])
+        {
+            return null;
+        }
+        return this.const.userSecretExpiration[systemType][role];
     },
 
     exlog: exlog,
@@ -545,7 +562,8 @@ module.exports = {
                 isAdmin: false,
                 isAssistant: false,
                 isInternalPractitioner: false,
-                isExternalPractitioner: false
+                isExternalPractitioner: false,
+                isPatient: false
             };
             roles.forEach(function(role, index) {
                 switch (role.RoleCode) {
@@ -561,6 +579,9 @@ module.exports = {
                     case 'EXTERTAL_PRACTITIONER':
                         result.isExternalPractitioner = true;
                         break;
+                    case 'PATIENT': 
+                        result.isPatient = true;
+                    break;
                     default:
                         break;
                 }

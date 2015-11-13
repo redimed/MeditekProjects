@@ -65,12 +65,12 @@ module.exports = {
                 //convert service type and gp referral
                 var GPReferral = Services.ConvertData.GPReferral(data.GPReferral);
                 var serviceType = Services.ConvertData.ServiceType(data);
-                var subjectEmail = '[Testing] - [' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
+                var subjectEmail = '[' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                     '] - [' + data.firstName + ' ' +
                     data.lastName + '] - [' + data.phoneNumber + ']';
                 var emailInfo = {
                     from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
-                    email: 'HealthScreenings@redimed.com.au',
+                    email: 'pnguyen@redimed.com.au',
                     patientEmail: (!_.isUndefined(data.email) && !_.isNull(data.email)) ? data.email : '',
                     subject: subjectEmail,
                     confirmed: APIService.UrgentCareConfirmURL + '/' + data.UID,
@@ -86,7 +86,7 @@ module.exports = {
                     companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName)) ? data.companyName : '',
                     contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson)) ? data.contactPerson : '',
                     companyPhoneNumber: (!_.isUndefined(data.companyPhoneNumber) && !_.isNull(data.companyPhoneNumber)) ? data.companyPhoneNumber : '',
-                    bcc: 'pnguyen@redimed.com.au, meditekcompany@gmail.com'
+                    bcc: 'meditekcompany@gmail.com'
                 };
 
                 /*

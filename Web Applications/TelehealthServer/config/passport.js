@@ -1,19 +1,11 @@
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     bcrypt = require('bcryptjs');
-passport.serializeUser(function(data, done) {
-    done(null, data.user.ID);
+passport.serializeUser(function(sessionUser, done) {
+    done(null, sessionUser);
 });
-passport.deserializeUser(function(ID, done) {
-    UserAccount.findOne({
-        where: {
-            ID: ID
-        }
-    }).then(function(user) {
-        done(null, user.dataValues);
-    }, function(err) {
-        done(err);
-    })
+passport.deserializeUser(function(sessionUser, done) {
+    done(null, sessionUser);
 });
 passport.use(new LocalStrategy({
     usernameField: 'username',
@@ -22,13 +14,19 @@ passport.use(new LocalStrategy({
 }, function(req, u, p, done) {
     var deviceId = req.headers.deviceid;
     var deviceType = req.headers.systemtype;
+    var activationInfo = null;
+    if (req.body.activationInfo) activationInfo = req.body.activationInfo;
+    var requestBody = {
+        'UserName': u,
+        'Password': p,
+        'UserUID': !activationInfo ? null : activationInfo.userUID,
+        'DeviceID': !activationInfo ? null : deviceId,
+        'VerificationToken': !activationInfo ? null : activationInfo.verifyCode
+    }
     TelehealthService.MakeRequest({
         path: '/api/login',
         method: 'POST',
-        body: {
-            'UserName': u,
-            'Password': p
-        },
+        body: requestBody,
         headers: {
             'DeviceID': deviceId,
             'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
@@ -36,19 +34,47 @@ passport.use(new LocalStrategy({
     }).then(function(response) {
         var data = response.getBody();
         var user = data.user;
-        TelehealthUser.find({
+        TelehealthUser.findOrCreate({
             where: {
-                userAccountID: user.ID
+                UserAccountID: user.ID
             },
-            attributes: ['UID']
-        }).then(function(teleUser) {
-            if (teleUser) {
-                user.UserUID = user.UID;
-                user.UID = teleUser.UID;
-                data.user = user;
-                return done(null, data, response.getBody().message);
-            } else return done(null, false, {
-                message: 'Wrong Username Or Password!'
+            defaults: {
+                UID: UUIDService.GenerateUUID()
+            }
+        }).spread(function(teleUser, created) {
+            user.TeleUID = teleUser.UID;
+            if (activationInfo) user.PatientUID = activationInfo.patientUID;
+            user.SystemType = HelperService.const.systemType[deviceType.toLowerCase()];
+            user.DeviceID = deviceId;
+            data.user = user;
+            UserToken.find({
+                where: {
+                    UserAccountID: user.ID,
+                    SystemType: HelperService.const.systemType[deviceType.toLowerCase()],
+                    DeviceID: deviceId,
+                    Enable: 'Y'
+                }
+            }).then(function(userToken) {
+                if (userToken) {
+                    var sessionUser = {
+                        ID: user.ID,
+                        UID: user.UID,
+                        Activated: user.Activated,
+                        roles: user.roles,
+                        SystemType: HelperService.const.systemType[deviceType.toLowerCase()],
+                        DeviceID: deviceId,
+                        SecretKey: userToken.SecretKey,
+                        SecretCreatedDate: new Date(userToken.SecretCreatedDate),
+                        TokenExpired: userToken.TokenExpired,
+                        MaxExpiredDate: userToken.MaxExpiredDate
+                    }
+                    data.sessionUser = sessionUser;
+                    return done(null, data, response.getBody().message);
+                } else return done(null, false, {
+                    message: 'Error'
+                })
+            }).catch(function(err) {
+                return done(err);
             })
         }).catch(function(err) {
             return done(err);

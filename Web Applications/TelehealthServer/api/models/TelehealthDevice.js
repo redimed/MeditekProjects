@@ -2,54 +2,124 @@ module.exports = {
     attributes: {
         ID: {
             type: Sequelize.BIGINT(20),
-            field: 'ID',
-            primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
+            allowNull: false,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            },
+            primaryKey: true
         },
         UID: {
-            type: Sequelize.STRING,
-            field: 'UID'
+            type: Sequelize.STRING(255),
+            allowNull: false,
+            validate: {
+                isUUID: {
+                    args: 4,
+                    msg: 'Must be an UUID V4!'
+                }
+            }
         },
-        telehealthUserID: {
+        TelehealthUserID: {
             type: Sequelize.BIGINT(20),
-            field: 'TelehealthUserID'
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            },
+            references: {
+                model: 'TelehealthUser',
+                key: 'ID'
+            }
         },
-        deviceToken: {
+        DeviceToken: {
             type: Sequelize.TEXT,
-            field: 'DeviceToken'
+            validate: {
+
+                len: {
+                    args: [0, 2048],
+                    msg: 'Too long!'
+                }
+            }
         },
-        deviceId: {
+        DeviceID: {
             type: Sequelize.TEXT,
-            field: 'DeviceID'
+            validate: {
+
+                len: {
+                    args: [0, 2048],
+                    msg: 'Too long!'
+                }
+            }
         },
-        type: {
-            type: Sequelize.STRING,
-            field: 'Type'
+        Type: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
         },
-        createdDate: {
+        CreatedDate: {
             type: Sequelize.DATE,
-            field: 'CreatedDate'
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
         },
-        createdBy: {
+        CreatedBy: {
             type: Sequelize.BIGINT(20),
-            field: 'CreatedBy'
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
         },
-        modifiedDate: {
+        ModifiedDate: {
             type: Sequelize.DATE,
-            field: 'ModifiedDate'
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
+                }
+            }
         },
-        modifiedBy: {
+        ModifiedBy: {
             type: Sequelize.BIGINT(20),
-            field: 'ModifiedBy'
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
         }
     },
+    associations: function() {},
     options: {
         tableName: 'TelehealthDevice',
-        timestamps: true,
-        createdAt: 'createdDate',
-        updatedAt: 'modifiedDate',
-        classMethods: {},
-        instanceMethods: {},
-        hooks: {}
-    },
+        timestamps: false,
+        hooks: {
+            beforeCreate: function(telehealthdevice, options, callback) {
+                telehealthdevice.CreatedDate = new Date();
+                callback();
+            },
+            beforeBulkCreate: function(telehealthdevices, options, callback) {
+                telehealthdevices.forEach(function(telehealthdevice, index) {
+                    telehealthdevices[index].CreatedDate = new Date();
+                });
+                callback();
+            },
+            beforeUpdate: function(telehealthdevice, options, callback) {
+                telehealthdevice.ModifiedDate = new Date();
+                callback();
+            }
+        }
+    }
 };

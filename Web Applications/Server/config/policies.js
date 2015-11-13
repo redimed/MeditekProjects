@@ -59,6 +59,6 @@ _.extend(policies, registerPolicies);
 //Begin module Doctor
 var registerPolicies = require('./policies/doctorPolicies');
 _.extend(policies, registerPolicies);
-//End module Doctor
+// End module Doctor
 module.exports.policies = policies;
 

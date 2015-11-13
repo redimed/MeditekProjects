@@ -142,7 +142,7 @@ module.exports = {
 			} else {
 				var err = new Error("SERVER ERROR");
 				err.pushError("No data result");
-				res.notFound({status:200,message:ErrorWrap(err)});
+				res.ok({status:200,message:ErrorWrap(err)});
 			}
 		})
 		.catch(function(err){

@@ -53,6 +53,7 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
             scope.WAAppointmentDetail = function(UID) {
                 o.loadingPage(true);
                 WAAppointmentService.getDetailWAAppointmentByUid(UID).then(function(data) {
+                    console.log(data)
                     o.loadingPage(false);
                     $modal.open({
                         templateUrl: 'modules/WAAppointment/views/WAAppointmentListDetail.html',

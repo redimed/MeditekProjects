@@ -120,7 +120,7 @@
 												<hr>
 												<!-- begin title -->
 									            <div class="form-group">
-									            	<label class="control-label col-md-4">Title<span style="color:red;" ng-if="ermsg.Title!=undefined&&ermsg.Title!=''&&ermsg.Title!=null">*</span></label>
+									            	<label class="control-label col-md-4">Title<span class="required">* </span><span style="color:red;" ng-if="ermsg.Title!=undefined&&ermsg.Title!=''&&ermsg.Title!=null">*</span></label>
 									            	<div class="col-md-8">
 									            		<select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="data.Title" ng-style="er.Title" ng-change="ermsg.Title=''" ></select>
 									            		<span style="color:red;">{{ermsg.Title}}</span>
@@ -129,7 +129,7 @@
 									            <!-- end title -->
 												<!-- Begin First name -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Firstname<span style="color:red;" ng-if="ermsg.FirstName!=undefined&&ermsg.FirstName!=''&&ermsg.FirstName!=null">*</span></label>
+													<label class="control-label col-md-4">Firstname<span class="required">* </span><span style="color:red;" ng-if="ermsg.FirstName!=undefined&&ermsg.FirstName!=''&&ermsg.FirstName!=null">*</span></label>
 													<div class="col-md-8">
 														<input type="text" class="form-control" placeholder="Firstname"ng-model="data.FirstName" ng-style="er.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName=''" />
 														<span style="color:red;">{{ermsg.FirstName}}</span>
@@ -147,7 +147,7 @@
 												<!-- End Middle name -->
 												<!-- Begin Sur name -->
 												<div class="form-group ">
-													<label class="control-label col-md-4">Lastname<span style="color:red;" ng-if="ermsg.LastName!=undefined&&ermsg.LastName!=''&&ermsg.LastName!=null">*</span></label>
+													<label class="control-label col-md-4">Lastname<span class="required">* </span><span style="color:red;" ng-if="ermsg.LastName!=undefined&&ermsg.LastName!=''&&ermsg.LastName!=null">*</span></label>
 													<div class="col-md-8">
 														<input type="text" class="form-control" placeholder="Lastname" ng-model="data.LastName" ng-style="er.LastName" ng-change="ermsg.LastName=''" />
 														<span style="color:red;">{{ermsg.LastName}}</span>
@@ -156,7 +156,7 @@
 												<!-- End Sur name -->
 												<!-- Date of Birth -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Date of Birth<span style="color:red;" ng-if="ermsg.DOB!=undefined&&ermsg.DOB!=''&&ermsg.DOB!=null">*</span></label>
+													<label class="control-label col-md-4">Date of Birth<span class="required">* </span><span style="color:red;" ng-if="ermsg.DOB!=undefined&&ermsg.DOB!=''&&ermsg.DOB!=null">*</span></label>
 													<div class="col-md-8">
 													 <input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy" ng-model="data.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB=''" / readonly>
 														<span style="color:red;">{{ermsg.DOB}}</span></div>
@@ -164,7 +164,7 @@
 												<!-- end Date of Birth -->
 												<!-- Gender -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Gender<span style="color:red;" ng-if="ermsg.Gender!=undefined&&ermsg.Gender!=''&&ermsg.Gender!=null">*</span></label>
+													<label class="control-label col-md-4">Gender<span class="required">* </span><span style="color:red;" ng-if="ermsg.Gender!=undefined&&ermsg.Gender!=''&&ermsg.Gender!=null">*</span></label>
 													<div class="col-md-8">
 														<select class="form-control" ng-model="data.Gender" ng-style="er.Gender" ng-change="ermsg.Gender=''">
 															<option value="M">Male</option>
@@ -235,7 +235,7 @@
 												<!-- end WorkPhone -->
 												<!-- Begin Address1 -->
 												<div class="form-group ">
-													<label class="control-label col-md-3">Address1<span style="color:red;" ng-if="ermsg.Address1!=undefined&&ermsg.Address1!=''&&ermsg.Address1!=null">*</span></label>
+													<label class="control-label col-md-3">Address1<span class="required">* </span><span style="color:red;" ng-if="ermsg.Address1!=undefined&&ermsg.Address1!=''&&ermsg.Address1!=null">*</span></label>
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="fa  fa-paper-plane"></i>
@@ -259,7 +259,7 @@
 												<!-- End Address2 -->
 												<!-- begin Suburb -->
 												<div class="form-group">
-													<label class="control-label col-md-3">Suburb<span style="color:red;" ng-if="ermsg.Suburb!=undefined&&ermsg.Suburb!=''&&ermsg.Suburb!=null">*</span></label>
+													<label class="control-label col-md-3">Suburb<span class="required">* </span><span style="color:red;" ng-if="ermsg.Suburb!=undefined&&ermsg.Suburb!=''&&ermsg.Suburb!=null">*</span></label>
 													<div class="col-md-8">
 														<input type="text" class="form-control" placeholder="Suburb" ng-model="data.Suburb" ng-style="er.Suburb" ng-change="ermsg.Suburb=''" />
 														<span style="color:red;">{{ermsg.Suburb}}</span>
@@ -268,7 +268,7 @@
 												<!-- end Suburb -->
 												<!-- begin Postcode -->
 												<div class="form-group">
-													<label class="control-label col-md-3">Postcode<span style="color:red;" ng-if="ermsg.Postcode!=undefined&&ermsg.Postcode!=''&&ermsg.Postcode!=null">*</span></label>
+													<label class="control-label col-md-3">Postcode<span class="required">* </span><span style="color:red;" ng-if="ermsg.Postcode!=undefined&&ermsg.Postcode!=''&&ermsg.Postcode!=null">*</span></label>
 													<div class="col-md-8">
 														<input type="text" class="form-control" placeholder="Postcode" ng-model="data.Postcode" ng-style="er.Postcode" ng-change="ermsg.Postcode=''" />
 														<span style="color:red;">{{ermsg.Postcode}}</span>
@@ -277,7 +277,7 @@
 												<!-- end Postcode -->
 												<!-- State -->
 													<div class="form-group">
-														<label class="control-label col-md-3">State<span style="color:red;" ng-if="ermsg.State!=undefined&&ermsg.State!=''&&ermsg.State!=null">*</span></label>
+														<label class="control-label col-md-3">State<span class="required">* </span><span style="color:red;" ng-if="ermsg.State!=undefined&&ermsg.State!=''&&ermsg.State!=null">*</span></label>
 														<div class="col-md-8">
 															<select class="form-control" ng-model="data.State"ng-options="s.code as s.name for s in state" ng-style="er.State" ng-change="ermsg.State=''" >
 															</select>
@@ -287,7 +287,7 @@
 													<!-- end State -->
 													<!-- Country -->
 													<div class="form-group">
-														<label class="control-label col-md-3">Country<span style="color:red;" ng-if="ermsg.CountryID1!=undefined&&ermsg.CountryID1!=''&&ermsg.CountryID1!=null">*</span></label>
+														<label class="control-label col-md-3">Country<span class="required">* </span><span style="color:red;" ng-if="ermsg.CountryID1!=undefined&&ermsg.CountryID1!=''&&ermsg.CountryID1!=null">*</span></label>
 														<div class="col-md-8">
 															<select class="form-control" ng-model="data.CountryID1"ng-options="country.ID as country.ShortName for country in countries" ng-style="er.CountryID1" ng-change="ermsg.CountryID1=''" >
 															</select>

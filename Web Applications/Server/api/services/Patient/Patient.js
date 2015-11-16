@@ -544,7 +544,6 @@ module.exports = {
 		else{
 			attributes = defaultAtrributes;
 		}
-		console.log(attributes);
 		var whereClause = Services.Patient.whereClause(data);
 		if(data.Search){
 			if(data.Search.FirstName!='' && data.Search.LastName!=''

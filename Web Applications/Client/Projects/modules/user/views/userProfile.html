@@ -14,10 +14,18 @@
 </div>
 <!-- END PAGE HEADER-->
 
+<!-- DOCTOR PROFILE -->
+<div class="row">
+	<div class="col-md-12">
+		<doctor-detail on-uid="uid" on-data="data" on-showfull="false" on-listshow="listDoctor" action="action" on-cancel="close"></doctor-detail>
+	</div>
+</div>
+<!-- END DOCTOR PROFILE -->
+
 <!-- PATIENT PROFILE -->
 <div class="row">
 	<div class="col-md-12">
-		<patient-listmodal on-uid="patientUID" on-showfull="false" on-listshow="list" ng-if="patientUID!=null"></patient-listmodal>
+		<patient-listmodal on-uid="patientUID" on-showfull="false" on-listshow="listPatient" ng-if="patientUID!=null"></patient-listmodal>
 	</div>
 </div>
 <!-- END PATIENT PROFILE -->

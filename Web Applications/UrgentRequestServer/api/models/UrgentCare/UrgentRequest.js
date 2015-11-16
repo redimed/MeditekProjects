@@ -177,6 +177,12 @@ module.exports = {
             maxLength: 1
         },
 
+        rehab: {
+            type: 'string',
+            columnName: 'Rehab',
+            maxLength: 1
+        },
+
         treatment: {
             type: 'string',
             columnName: 'Treatment',

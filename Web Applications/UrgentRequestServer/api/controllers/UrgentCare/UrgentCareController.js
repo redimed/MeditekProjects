@@ -55,6 +55,7 @@ module.exports = {
                 handTherapy: data.handTherapy,
                 exerciseRehab: data.exerciseRehab,
                 GP: data.GP,
+                rehab: data.rehab,
                 treatment: data.treatment,
                 tried: 1,
                 status: 'pending',

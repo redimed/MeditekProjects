@@ -13,8 +13,8 @@ module.exports = {
         if (data.GP === 'Y') {
             serviceType += 'GP, ';
         }
-        if (data.rehab === 'Y') {
-            serviceType += 'Rehabitation, ';
+        if (data.treatment === 'Y') {
+            serviceType += 'Treatment, ';
         }
         serviceType = serviceType.substring(0, serviceType.length - 2);
         return serviceType;

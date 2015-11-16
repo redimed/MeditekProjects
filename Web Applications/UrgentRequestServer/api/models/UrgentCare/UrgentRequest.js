@@ -165,15 +165,21 @@ module.exports = {
             maxLength: 1
         },
 
+        exerciseRehab: {
+            type: 'string',
+            columnName: 'ExerciseRehab',
+            maxLength: 1
+        },
+
         GP: {
             type: 'string',
             columnName: 'GP',
             maxLength: 1
         },
 
-        rehab: {
+        treatment: {
             type: 'string',
-            columnName: 'Rehab',
+            columnName: 'Treatment',
             maxLength: 1
         },
 

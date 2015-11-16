@@ -41,8 +41,14 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
             page = 0
             autoSlide(page)
         }else {
-            autoSlide(page + 1)
-            page++
+            if page == numberofPage {
+                page = 0
+                autoSlide(page + 1)
+                page++
+            }else{
+                autoSlide(page + 1)
+                page++
+            }
         }
     }
     
@@ -81,10 +87,14 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
         }
         
         let vc: ContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ContentViewController") as! ContentViewController
-        vc.imageFile = self.pageImages[index] as! String
-        vc.titleText = self.pageTitles[index] as! String
-        vc.pageIndex = index
-        vc.delegate = self
+        print("indx",index)
+        if index < pageImages.count {
+            vc.imageFile = self.pageImages[index] as! String
+            vc.titleText = self.pageTitles[index] as! String
+            vc.pageIndex = index
+            vc.delegate = self
+            
+        }
         return vc
         
         
@@ -143,7 +153,8 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     //change currentPage in PageControl
     func changePageImage(controller: ContentViewController, index: Int) {
         pageControl.currentPage = index
-//        page = index
+        page = index
+        print(index)
         
     }
     

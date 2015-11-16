@@ -9,16 +9,50 @@
 import UIKit
 
 class TrackingRefferalViewController: UIViewController {
-
+    @IBOutlet weak var ReceiveButton: UIButton!
+    @IBOutlet weak var ApptPendingButton: UIButton!
+    @IBOutlet weak var AppTimeButton: UIButton!
+    @IBOutlet weak var AttendedButton: UIButton!
+    @IBOutlet weak var WaitListButton: UIButton!
+    @IBOutlet weak var FinishButton: UIButton!
+    
+    var appointmentDetails: AppointmentList!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        checkStatus()
+       
+    }
+    func checkStatus(){
+        switch appointmentDetails.Status {
+        case statusAppointment.Approved:
+            boxShadowButton(AppTimeButton,colorStatusAppointment.colorReceived)
+        case statusAppointment.Attended:
+            boxShadowButton(AttendedButton,colorStatusAppointment.colorReceived)
+        case statusAppointment.Finished:
+            boxShadowButton(FinishButton,colorStatusAppointment.colorReceived)
+        case statusAppointment.Pending:
+            boxShadowButton(ApptPendingButton,colorStatusAppointment.colorReceived)
+        case statusAppointment.Received:
+            boxShadowButton(ReceiveButton,colorStatusAppointment.colorReceived)
+        case statusAppointment.Waitlist:
+            boxShadowButton(WaitListButton,colorStatusAppointment.colorReceived)
+        default:
+            break
+        }
+    }
+    
+    func boxShadowButton(button:UIButton,_ color:UIColor){
+        button.layer.shadowOpacity = 8
+        button.layer.shadowColor  = UIColor.whiteColor().CGColor
+        button.layer.shadowOffset = CGSizeMake(0, 0)
+        button.layer.shadowRadius = 6
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "appointmentDetailsSegue"{
+            let appointmentDetail = segue.destinationViewController as! AppointmentDetailsViewController
+            appointmentDetail.appointmentDetails = appointmentDetails
+        }
     }
 
 

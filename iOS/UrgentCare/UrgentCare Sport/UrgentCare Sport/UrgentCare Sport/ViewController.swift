@@ -40,15 +40,21 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
             page = 0
             autoSlide(page)
         }else {
-            autoSlide(page + 1)
-            page++
+            if page == numberofPage {
+                page = 0
+                autoSlide(page + 1)
+                page++
+            }else{
+                autoSlide(page + 1)
+                page++
+            }
         }
     }
     
     //page Controller
     func pagingImage(){
         self.pageTitles = NSArray(objects: "Explore", "Today Widget","Lest")
-        self.pageImages = NSArray(objects: "Untitled-1_03", "Untitled-1_05","Untitled-1_07")
+        self.pageImages = NSArray(objects: "Untitled-1_03", "Untitled-1_05","IMG_0458")
         pageControl.numberOfPages = pageImages.count
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         self.pageViewController.dataSource = self
@@ -142,7 +148,7 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     //change currentPage in PageControl
     func changePageImage(controller: ContentViewController, index: Int) {
         pageControl.currentPage = index
-//        page = index
+        page = index
         
     }
     

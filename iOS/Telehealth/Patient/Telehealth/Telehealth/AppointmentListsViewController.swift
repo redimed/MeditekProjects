@@ -31,7 +31,6 @@ class AppointmentListsViewController: UIViewController {
         if let patientUID = defaults.valueForKey("patientUID") as? String {
             appointmentApi.getListAppointmentByUID(patientUID, Limit: "100", completionHandler: {
                 response in
-                print(response)
                 
                 if response["ErrorsList"] != nil {
                     print("Error")
@@ -45,17 +44,19 @@ class AppointmentListsViewController: UIViewController {
                     var ToTime : String!
                     var Status : String!
                     var NameDoctor : String!
+                    var Type:String!
                     var data = response["rows"]
                     let countAppointment = data.count
-                    
+          
                     for var i = 0 ; i < countAppointment ;i++ {
+                        
                         UIDApointment = data[i]["UID"].string ?? ""
                         FromTime = data[i]["FromTime"].string ?? ""
                         ToTime = data[i]["ToTime"].string ?? ""
                         Status = data[i]["Status"].string ?? ""
                         NameDoctor = data[i]["Doctors"][0]["FirstName"].string ?? ""
-                        self.Appointment.append(AppointmentList(UIDApointment: UIDApointment, ToTime: ToTime, Status: Status, FromTime: FromTime, NameDoctor: NameDoctor))
-                        
+                        Type = data[0]["TelehealthAppointment"]["Type"].string ?? ""
+                        self.Appointment.append(AppointmentList(UIDApointment: UIDApointment, ToTime: ToTime, Status: Status, FromTime: FromTime, NameDoctor: NameDoctor,Type:Type))
                     }
                     self.view.hideLoading()
                     self.tableView.reloadData()
@@ -66,12 +67,12 @@ class AppointmentListsViewController: UIViewController {
         
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "GoToWallpaper" {
-//            let paperViewController = segue.destinationViewController as! PaperViewController
-//            if let indexPath = tableView.indexPathForSelectedRow {
-//                paperViewController.monthToShow = indexPath.row + 1
-//            }
-//        }
+        if segue.identifier == "TrackingRefferalSegue" {
+            let Tracking = segue.destinationViewController as! TrackingRefferalViewController
+            if let indexPath = tableView.indexPathForSelectedRow {
+                Tracking.appointmentDetails = Appointment[indexPath.row]
+            }
+        }
     }
 
     
@@ -93,8 +94,10 @@ class AppointmentListsViewController: UIViewController {
 }
 
 extension AppointmentListsViewController:UITableViewDataSource,UITableViewDelegate{
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Appointment.count
+        
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("AppointmentCell", forIndexPath: indexPath) as! AppointmentListTableViewCell
@@ -103,9 +106,10 @@ extension AppointmentListsViewController:UITableViewDataSource,UITableViewDelega
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-            print(indexPath.row)
-            print(Appointment[indexPath.row].UIDApointment)
-         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+         
+        print(Appointment[indexPath.row].UIDApointment)
+        performSegueWithIdentifier("TrackingRefferalSegue", sender: self)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
    
 }

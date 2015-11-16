@@ -15,20 +15,33 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var doctorName: UILabel!
     @IBOutlet weak var status: UILabel!
-    var UIDApointment = String()
-    var imageDetails : UIImage!
     @IBOutlet weak var collectionView: UICollectionView!
-    var picker:UIImagePickerController?=UIImagePickerController()
-    var popover:UIPopoverController?=nil
     @IBOutlet weak var selectOptionImage: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
+    
+    var UIDApointment = String()
+    var imageDetails : UIImage!
+    var picker:UIImagePickerController?=UIImagePickerController()
+    var popover:UIPopoverController?=nil
+    var appointmentDetails: AppointmentList!
     
     var ArrayImageUID : [UIImage] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         picker?.delegate = self
-        getAppointmentList()
+        dateLabel.text = appointmentDetails.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDate)
+                                //Check To time
+        if appointmentDetails.ToTime == "" {
+            timeLabel.text = "\(appointmentDetails.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime))"
+
+        }else{
+            timeLabel.text = "\(appointmentDetails.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime)) - \(appointmentDetails.ToTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime))"
+        }
+        doctorName.text = appointmentDetails.NameDoctor
+        status.text = appointmentDetails.Status
         
+        print("-------",appointmentDetails.Type)
+        self.getListImage(appointmentDetails.UIDApointment,appointmentDetails.Type)
     }
     
     override func didReceiveMemoryWarning() {
@@ -37,58 +50,12 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     }
     
     
-    func getAppointmentList() {
-        ArrayImageUID.removeAll()
-        if let patientUID = defaults.valueForKey("patientUID") as? String {
-            appointmentApi.getListAppointmentByUID(patientUID, Limit: "1", completionHandler: {
-                response in
-                
-                if response["ErrorsList"] != nil {
-                    self.alertMessage("Error", message: response["ErrorsList"][0].string!)
-                }else if response["TimeOut"].string ==  ErrorMessage.TimeOut {
-                    self.alertMessage("Error", message: ErrorMessage.TimeOut)
-                }
-                else {
-                    var data = response["rows"][0]
-                    print(data)
-                    if data != nil{
-                        self.scrollView.hidden = false
-                        let  UIDApointment = data["UID"].string ?? ""
-                        let FromTime = data["FromTime"].string  ?? ""
-                        let  ToTime = data["ToTime"].string ?? ""
-                        let Status = data["Status"].string ?? ""
-                        let NameDoctor = data["Doctors"][0]["FirstName"].string ?? ""
-                        
-                        self.dateLabel.text = FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDate)
-                        //Check To time
-                        if ToTime == ""{
-                            self.timeLabel.text = "\(FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime))"
-                        }else{
-                            self.timeLabel.text = "\(FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime)) - \(ToTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime))"
-                        }
-                        
-                        self.doctorName.text = NameDoctor
-                        self.status.text = Status
-                        self.UIDApointment = UIDApointment
-                        self.getListImage(self.UIDApointment )
-                        
-                    }else{
-                        self.alertMessage("",message: "No Appointment")
-                        self.scrollView.hidden = true
-                    }
-                    
-                    self.view.hideLoading()
-                }
-            })
-            
-        }
-        
-    }
     
     //Giap:Get list Image with Appointment
-    func getListImage(UIDAppointment:String){
-        self.appointmentApi.getAppointmentDetails(UIDAppointment, completionHandler: {
+    func getListImage(UIDAppointment:String,_ Type:String){
+        self.appointmentApi.getAppointmentDetails(UIDAppointment,type:Type, completionHandler: {
             response in
+
             if response["message"] == "error"{
                 self.alertMessage("Error", message: ErrorMessage.NoData)
             }else {
@@ -96,9 +63,10 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
                 
                 for var i = 0 ; i < countImage ; i++ {
                     let imageUID : String = response[i]["UID"].string ?? ""
-                    
-                    self.downloadImage(imageUID)
-                    
+                    let FileType  = response[i]["FileType"].string ?? ""
+                    if FileType == "MedicalImage"{
+                        self.downloadImage(imageUID)
+                    }
                 }
                 //reload collection view
                 self.collectionView.reloadData()
@@ -171,7 +139,7 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
         } else if segue.identifier == "BodyUploadSegue" {
             let body = segue.destinationViewController as! BodyUploadViewController
             body.imageSelect = imageDetails
-            body.appointmentID = UIDApointment
+            body.appointmentID = appointmentDetails.UIDApointment
             body.delegate = self
         }
     }
@@ -280,9 +248,9 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
         
         ArrayImageUID.append(sender)
         let newRowIndex = ArrayImageUID.count
-        let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
-        let indexPaths = [indexPath]
-        collectionView.insertItemsAtIndexPaths(indexPaths)
+        let indexPath = NSIndexPath(forRow: newRowIndex - 1 , inSection: 0)
+        
+        collectionView.insertItemsAtIndexPaths([indexPath])
         savedImageAlert("Upload", message: "Upload Success")
         
     }

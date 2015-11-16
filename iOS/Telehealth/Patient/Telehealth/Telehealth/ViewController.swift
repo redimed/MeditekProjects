@@ -53,7 +53,11 @@ class ViewController: UIViewController,UITextFieldDelegate {
                 //Check status API responsed
                 if(response["status"] == "success"){
                     self.view.hideLoading()
-                    
+                    if let cookie = defaults.valueForKey("Set-Cookie") as? String{
+                        cookies = cookie
+                        print("bbb----",cookies)
+                    }
+
                     self.performSegueWithIdentifier("phoneRegisterSegue", sender: self)
                 }else {
                     self.view.hideLoading()

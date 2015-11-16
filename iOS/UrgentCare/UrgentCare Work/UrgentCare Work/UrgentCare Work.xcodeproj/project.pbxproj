@@ -476,6 +476,7 @@
 				TargetAttributes = {
 					AF26B2201BEC869C006F37A4 = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = UA7AB584U5;
 					};
 					AF26B2371BEC869C006F37A4 = {
 						CreatedOnToolsVersion = 7.1;
@@ -797,10 +798,11 @@
 			baseConfigurationReference = ED2CCDFBEEFCD741B39F41A7 /* Pods-UrgentCare Work.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "UrgentCare Work/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = au.redimed.com.UCWorkInjury;
+				PRODUCT_BUNDLE_IDENTIFIER = au.redimed.com.UCWork;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -810,10 +812,11 @@
 			baseConfigurationReference = EE7D5C1120C2947597C55F4D /* Pods-UrgentCare Work.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "UrgentCare Work/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = au.redimed.com.UCWorkInjury;
+				PRODUCT_BUNDLE_IDENTIFIER = au.redimed.com.UCWork;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

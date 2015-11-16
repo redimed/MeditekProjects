@@ -31,7 +31,7 @@ module.exports = function(appointmentUID, userInfo) {
                 CreatedBy: userInfo.ID
             }
         };
-        filter.ExternalPractitioner.push(filterRoleTemp);
+        filter.Appointment.push(filterRoleTemp);
     } else if (role.isPatient) {
         filter.UserAccount.push({
             '$and': {

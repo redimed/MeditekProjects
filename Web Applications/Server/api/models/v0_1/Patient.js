@@ -45,8 +45,7 @@ module.exports = {
                 len: {
                     args: [0, 45],
                     msg: 'Too long!'
-                },
-                isIn : [['0', '1', '2', '3']]
+                }
             }
         },
         MaritalStatus: {

@@ -116,6 +116,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 								scope.isShowEmail1 = result.data.data.Email1;
 								scope.data.Email1 = result.data.data.Email1;
 								scope.isShowNext = true;
+								scope.data.CountryID1 = 14;
 								// scope.data.DOB = new Date('1/1/1990');
 							}
 							else{

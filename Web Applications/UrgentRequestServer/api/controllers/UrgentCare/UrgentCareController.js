@@ -53,8 +53,9 @@ module.exports = {
                 physiotherapy: data.physiotherapy,
                 specialist: data.specialist,
                 handTherapy: data.handTherapy,
+                exerciseRehab: data.exerciseRehab,
                 GP: data.GP,
-                rehab: data.rehab,
+                treatment: data.treatment,
                 tried: 1,
                 status: 'pending',
                 interval: 5,
@@ -69,8 +70,8 @@ module.exports = {
                     '] - [' + data.firstName + ' ' +
                     data.lastName + '] - [' + data.phoneNumber + ']';
                 var emailInfo = {
-                    from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
-                    email: 'pnguyen@redimed.com.au',
+                    from: 'Redimed UrgentCare <onlinebooking@redimed.com.au>',
+                    email: 'onlinebooking@redimed.com.au',
                     patientEmail: (!_.isUndefined(data.email) && !_.isNull(data.email)) ? data.email : '',
                     subject: subjectEmail,
                     confirmed: APIService.UrgentCareConfirmURL + '/' + data.UID,
@@ -86,7 +87,7 @@ module.exports = {
                     companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName)) ? data.companyName : '',
                     contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson)) ? data.contactPerson : '',
                     companyPhoneNumber: (!_.isUndefined(data.companyPhoneNumber) && !_.isNull(data.companyPhoneNumber)) ? data.companyPhoneNumber : '',
-                    bcc: 'meditekcompany@gmail.com'
+                    bcc: 'meditekcompany@gmail.com, pnguyen@redimed.com.au'
                 };
 
                 /*
@@ -108,7 +109,7 @@ module.exports = {
                             };
                             //send email and sms to customer
                             var emailInfoPatient = {
-                                from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
+                                from: 'Redimed UrgentCare <onlinebooking@redimed.com.au>',
                                 email: data.email.toLowerCase(),
                                 subject: 'Request Received',
                                 urgentRequestType: data.urgentRequestType || '',

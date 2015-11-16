@@ -10,7 +10,6 @@ module.exports = function(appointmentUID, userInfo) {
     //add roles
     var filter = {
         InternalPractitioner: [],
-        ExternalPractitioner: [],
         Appointment: [{
             '$and': {
                 UID: appointmentUID
@@ -74,8 +73,7 @@ module.exports = function(appointmentUID, userInfo) {
                 }, {
                     model: Doctor,
                     attributes: Services.AttributesAppt.Doctor(),
-                    required: (HelperService.CheckExistData(filter.ExternalPractitioner) && !_.isEmpty(filter.ExternalPractitioner)),
-                    where: filter.ExternalPractitioner
+                    required: false,
                 }]
             }, {
                 model: Doctor,

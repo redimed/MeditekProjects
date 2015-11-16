@@ -4,6 +4,7 @@ var zlib = require('zlib');
 var fs = require('fs');
 var moment=require("moment");
 var jwt = require('jsonwebtoken');
+var md5 = require('md5');
 /*
 check data request
 input: request from client
@@ -626,8 +627,16 @@ module.exports = {
         })
     },
 
-
-
-
+    md5:function(value)
+    {
+        if(checkData(value))
+        {
+            return md5(value);
+        }
+        else
+        {
+            return md5(moment().valueOf());
+        }
+    },
     
 }

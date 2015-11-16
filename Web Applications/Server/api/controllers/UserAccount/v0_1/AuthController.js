@@ -8,6 +8,7 @@ var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
 var o=require("../../../services/HelperService");
+var md5 = require('md5');
 
 module.exports = {
 
@@ -42,8 +43,9 @@ module.exports = {
                 SystemType:req.headers.systemtype,
                 DeviceID:req.headers.deviceid
             }
-            Services.UserToken.MakeUserToken(userAccess)
-            .then(function(ut){
+            Services.RefreshToken.MakeRefreshToken(userAccess)
+            .then(function(rt){
+
                 var sessionUser={
                     ID:user.ID,
                     UID:user.UID,
@@ -51,15 +53,20 @@ module.exports = {
                     roles:user.roles,
                     SystemType:req.headers.systemtype,
                     DeviceID:req.headers.deviceid,
-                    SecretKey:ut.SecretKey,
-                    SecretCreatedDate:ut.SecretCreatedDate,
-                    TokenExpired:ut.TokenExpired,
-                    MaxExpiredDate:ut.MaxExpiredDate,
+                    RefreshCode:rt.RefreshCode,
+                    SecretKey:rt.SecretKey,
+                    SecretCreatedAt:rt.SecretCreatedAt,
+                    SecretExpired:rt.SecretExpired
                 }
+
+                var payload={
+                    UID:user.UID,
+                    RefreshCode:md5(rt.RefreshCode),
+                };
                 var token=jwt.sign(
-                    {UID:user.UID},
-                    ut.SecretKey,
-                    {expiresIn:o.const.authTokenExpired[req.headers.systemtype]}
+                    payload,
+                    rt.SecretKey,
+                    {expiresIn:15}
                 );
                 console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>REQ.LOGIN");
                 req.logIn(sessionUser, function(err) 

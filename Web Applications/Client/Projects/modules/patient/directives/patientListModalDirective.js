@@ -218,13 +218,13 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			];
 
 			scope.state = [
-				{'code':'Victoria', 'name':'Victoria'},
-				{'code':'Tasmania', 'name':'Tasmania'},
-				{'code':'Queensland', 'name':'Queensland'},
-				{'code':'New_South_Wales', 'name':'New South Wales'},
-				{'code':'Western_Australia', 'name':'Western Australia'},
-				{'code':'Northern_Territory', 'name':'Northern Territory'},
-				{'code':'Austria_Capital_Territory', 'name':'Austria Capital Territory'}
+				{'code':'VIC', 'name':'Victoria'},
+				{'code':'TAS', 'name':'Tasmania'},
+				{'code':'QLD', 'name':'Queensland'},
+				{'code':'NSW', 'name':'New South Wales'},
+				{'code':'WA', 'name':'Western Australia'},
+				{'code':'NT', 'name':'Northern Territory'},
+				{'code':'ACT', 'name':'Australia Capital Territory'}
 			];
 		},
 		templateUrl:'modules/patient/directives/template/patientListModal.html'

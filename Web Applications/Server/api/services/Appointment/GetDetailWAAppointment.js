@@ -10,7 +10,6 @@ module.exports = function(appointmentUID, userInfo) {
     //add roles
     var filter = {
         InternalPractitioner: [],
-        ExternalPractitioner: [],
         Appointment: [{
             '$and': {
                 UID: appointmentUID
@@ -32,7 +31,7 @@ module.exports = function(appointmentUID, userInfo) {
                 CreatedBy: userInfo.ID
             }
         };
-        filter.ExternalPractitioner.push(filterRoleTemp);
+        filter.Appointment.push(filterRoleTemp);
     } else if (role.isPatient) {
         filter.UserAccount.push({
             '$and': {
@@ -85,7 +84,7 @@ module.exports = function(appointmentUID, userInfo) {
                 }, {
                     model: Doctor,
                     attributes: Services.AttributesAppt.Doctor(),
-                    required: (HelperService.CheckExistData(filter.ExternalPractitioner) && !_.isEmpty(filter.ExternalPractitioner)),
+                    required: false,
                     include: [{
                         model: FileUpload,
                         required: false,
@@ -94,8 +93,7 @@ module.exports = function(appointmentUID, userInfo) {
                         model: Country,
                         required: false,
                         attributes: Services.AttributesAppt.Country()
-                    }],
-                    where: filter.ExternalPractitioner
+                    }]
                 }]
             }, {
                 model: Doctor,

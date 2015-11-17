@@ -103,7 +103,7 @@ module.exports={
         		user.roles=listRoles;
 				if(o.checkData(user))
 				{
-					//Truy vấn userToken (để xem có tồn tại hay chưa)
+					//Truy vấn refreshToken (để xem có tồn tại hay chưa)
 					function CheckExist()
 					{
 						if(userAccess.SystemType==HelperService.const.systemType.website)
@@ -117,7 +117,7 @@ module.exports={
 						}
 						else
 						{
-							return UserToken.findOne({
+							return RefreshToken.findOne({
 								where:{
 									UserAccountID:user.ID,
 									DeviceID:userAccess.DeviceID
@@ -154,7 +154,7 @@ module.exports={
 						else
 						{
 							console.log("=========================create user token");
-							//Nếu userToken chưa tồn tại thì tạo mới userToken:
+							//Nếu refreshToken chưa tồn tại thì tạo mới refreshToken:
 							var insertInfo={
 								UserAccountID:user.ID,
 								SystemType:userAccess.SystemType,
@@ -178,13 +178,13 @@ module.exports={
 								return result;
 							},function(err){
 								o.exlog(err);
-								error.pushError("userToken.insertError");
+								error.pushError("refreshToken.insertError");
 								throw error;
 							})
 						}
 					},function(err){
 						o.exlog(err);
-						error.pushError("userToken.queryError");
+						error.pushError("refreshToken.queryError");
 						throw error;
 					})
 				}

@@ -66,6 +66,7 @@ module.exports = {
                 //convert service type and gp referral
                 var GPReferral = Services.ConvertData.GPReferral(data.GPReferral);
                 var serviceType = Services.ConvertData.ServiceType(data);
+                var treatmentType = Services.ConvertData.TreatmentType(data);
                 var subjectEmail = '[' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                     '] - [' + data.firstName + ' ' +
                     data.lastName + '] - [' + data.phoneNumber + ']';
@@ -83,6 +84,8 @@ module.exports = {
                     DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB)) ? data.DOB : '',
                     GPReferral: GPReferral,
                     serviceType: serviceType,
+                    treatment: data.treatment,
+                    treatmentType: treatmentType,
                     description: (!_.isUndefined(data.description) && !_.isNull(data.description)) ? data.description : '',
                     companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName)) ? data.companyName : '',
                     contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson)) ? data.contactPerson : '',
@@ -120,6 +123,8 @@ module.exports = {
                                 DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB)) ? data.DOB : '',
                                 GPReferral: GPReferral,
                                 serviceType: serviceType,
+                                treatment: data.treatment,
+                                treatmentType: treatmentType,
                                 description: (!_.isUndefined(data.description) && !_.isNull(data.description)) ? data.description : '',
                                 companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName)) ? data.companyName : '',
                                 contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson)) ? data.contactPerson : '',

@@ -8,7 +8,7 @@ module.exports = {
             serviceType += 'Specialist, ';
         }
         if (data.handTherapy === 'Y') {
-            serviceType += 'HandTherapy, ';
+            serviceType += 'Hand Therapy, ';
         }
         if (data.GP === 'Y') {
             serviceType += 'GP, ';
@@ -39,5 +39,19 @@ module.exports = {
                 break;
         };
         return GPReferral;
+    },
+    TreatmentType: function(data) {
+        var treatmentType = '';
+        if (data.physiotherapy === 'Y') {
+            treatmentType += 'Physiotherapy, ';
+        }
+        if (data.handTherapy === 'Y') {
+            treatmentType += 'Hand Therapy, ';
+        }
+        if (data.exerciseRehab === 'Y') {
+            treatmentType += 'Exercise Rehab, ';
+        }
+        treatmentType = treatmentType.substring(0, treatmentType.length - 2);
+        return treatmentType;
     }
 };

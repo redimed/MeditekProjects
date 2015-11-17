@@ -17,8 +17,9 @@ let defaults = NSUserDefaults.standardUserDefaults()
 var tokens = String()
 var coreTokens = String()
 var userUID = String()
+var cookies = String()
 var PatientInfo : Patient!
-
+let phoneNumberCallUs = "0892300900"
 struct ConfigurationSystem {
     static let http = "http://192.168.1.130"
     

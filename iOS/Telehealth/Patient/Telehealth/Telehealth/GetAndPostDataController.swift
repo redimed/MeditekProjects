@@ -17,14 +17,19 @@ class GetAndPostDataController {
     let headers = [
         "Authorization": "Bearer \(tokens)",
         "Version" : "1.0",
-        "systemtype": "ios",
+        "systemtype": "IOS",
         "deviceId" : config.deviceID! as String,
-        "useruid":"\(userUID ?? "")"
+        "useruid":"\(userUID ?? "")",
+        "Cookie": cookies as String
     ]
-    let header_3005 = [
-        "Authorization": "Bearer \(coreTokens)",
-        "Version" : "1.0",
-    ]
+
+    func setNewToken(token:String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey("token")
+        defaults.setValue(token, forKey: "token")
+        defaults.synchronize()
+        tokens = token
+    }
 
 
     //Giap: Check phone number and send verify code
@@ -41,6 +46,11 @@ class GetAndPostDataController {
         ]
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.SendVerifyCodePhoneNumber ,headers:headers, parameters: parameters).responseJSON{
             request, response, result  in
+            if let cookie : String = response?.allHeaderFields["Set-Cookie"] as? String  {
+                let defaults = NSUserDefaults.standardUserDefaults()
+                defaults.setValue(cookie, forKey: "Set-Cookie")
+                defaults.synchronize()
+            }
             switch result {
             case .Success(let JSONData):
                 
@@ -71,8 +81,10 @@ class GetAndPostDataController {
         ]
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.CheckVerifyCode ,headers:headers, parameters: parameters).responseJSON{
             request, response, result in
+            print("Reponse--",response)
             switch result {
             case .Success(let JSONData):
+                print(JSON(JSONData))
                 completionHandler(JSON(JSONData) )
                 
             case .Failure(let data, let error):
@@ -88,41 +100,26 @@ class GetAndPostDataController {
     }
     //Giap: Get information Patient by UID
     func getInformationPatientByUUID(UUID:String,completionHandler:(JSON) -> Void){
-         print("Get information patient")
-        let parameters = [
-            "data": [
-                "uid" : UUID
-            ]
-        ]
-
-        Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getInformationPatientByUID + UUID,headers:headers,parameters: parameters).responseJSON{
+       
+    
+        Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getInformationPatientByUID + UUID,headers:headers).responseJSON{
             request, response, result in
-                print("response:",response?.allHeaderFields["newtoken"])
-            
-            if let newToken : String = response?.allHeaderFields["newtoken"]?.string  {
-                    let defaults = NSUserDefaults.standardUserDefaults()
-                    defaults.setValue(newToken, forKey: "token")
-                    defaults.synchronize()
-                    tokens = newToken
-                    print("response:",tokens)
-                }
-
+      
+            print("Reponse",response!.allHeaderFields)
+            if let newToken : String = response?.allHeaderFields["newtoken"] as? String  {
+                    self.setNewToken(newToken)
+            }
             switch result {
             case .Success(let JSONData):
+                
                 var data = JSON(JSONData)
-                print("data:",data)
+               
                 let jsonInformation = data["data"][0] != nil ? data["data"][0] : ""
                 if jsonInformation == "" {
-//                    if data["ErrorType"].string == ErrorMessage.TimeOutToken {
-//                        print(data["ErrorType"])
-//                        completionHandler(JSON(["message":ErrorMessage.TimeOutToken]))
-//                    }else {
-//                        completionHandler(JSON(["message":"error"]))
-//                    }
                         completionHandler(JSON(["message":"error"]))
                     
                 }else {
-                
+        
                     let MiddleName = jsonInformation["MiddleName"].string ?? ""
                     let Address2 = jsonInformation["Address2"].string ?? ""
                     let Title = jsonInformation["Title"].string ?? ""
@@ -167,17 +164,16 @@ class GetAndPostDataController {
     //Giap: Get List Appointment
     func getListAppointmentByUID(UID:String,Limit:String,completionHandler:(JSON) -> Void) {
         print("Get list appointment")
-        let parameters = [
-            "data": [
-                "uid" : UID,
-                "limit":Limit
-            ]
-        ]
-        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentList + UID ,headers:headers).responseJSON{
+      
+        Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentList + UID ,headers:headers).responseJSON{
             request, response, result in
+             print("Reponse----GetAppointmentList",response!.allHeaderFields)
+            if let newToken : String = response?.allHeaderFields["newtoken"] as? String  {
+                self.setNewToken(newToken)
+            }
             switch result {
             case .Success(let JSONData):
-                    
+                
                 completionHandler(JSON(JSONData))
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
@@ -195,11 +191,10 @@ class GetAndPostDataController {
     func uploadImage(image:UIImage,userUID:String,completionHandler:(JSON) -> Void)
     {
         let imageData = UIImagePNGRepresentation(image)
-       
         let fileType = "MedicalImage"
         Alamofire.upload(
             .POST,
-           ConfigurationSystem.Http_3005 + UrlInformationPatient.uploadImage,headers:header_3005,
+           ConfigurationSystem.Http_3005 + UrlInformationPatient.uploadImage,headers:headers,
             multipartFormData: { multipartFormData in
                 
                 multipartFormData.appendBodyPart(
@@ -218,14 +213,14 @@ class GetAndPostDataController {
                 )
             },
             encodingCompletion: { encodingResult in
-                
+    
                 switch encodingResult {
                 case .Success(let upload, _, _):
                     upload.responseJSON { response in
-                        completionHandler(JSON(response.2.value!) )
+                        completionHandler(JSON(response.2.value!))
                     }
                 case .Failure(let encodingError):
-                    print(encodingError)
+                    print("error",encodingError)
                 }
             }
         )
@@ -234,16 +229,24 @@ class GetAndPostDataController {
     
     //update Image to Appointment
     func updateImageToAppointment(fileUID:String,apptID:String,completionHandler:(JSON) -> Void){
+        print("Update Image")
         let parameters = [
             "data": [
                 "fileUID" : fileUID,
                 "apptUID":apptID
             ]
         ]
+        print("Update Image",parameters)
+        
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.updateImageToAppointment,headers:headers, parameters: parameters).responseJSON{
             request, response, result in
+            print("reuturn response",response)
+            if let newToken : String = response?.allHeaderFields["newtoken"] as? String  {
+                self.setNewToken(newToken)
+            }
             switch result {
             case .Success(let JSONData):
+                     print("Update Image data",JSON(JSONData))
                     completionHandler(JSON(JSONData))
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
@@ -257,45 +260,82 @@ class GetAndPostDataController {
 
     }
     //Get appointment Details
-    func getAppointmentDetails(appointmentUID:String,completionHandler:(JSON) -> Void){
-        let parameters = [
-            "data": [
-                "uid" : appointmentUID
-            ]
-        ]
-        Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentDetails,headers:headers, parameters: parameters).responseJSON{
-            request, response, result in
-            switch result {
-            case .Success(let JSONData):
-                 var data = JSON(JSONData)
-                 let jsonImage = data["data"]["FileUploads"] != nil ? data["data"]["FileUploads"] : ""
-                 if jsonImage == "" {
-                    completionHandler(JSON(["message":"error"]))
-                 }else {
-                    completionHandler(jsonImage)
+    func getAppointmentDetails(appointmentUID:String,type:String,completionHandler:(JSON) -> Void){
+        print("get details")
+        
+        if type == "TEL"{
+            Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentDetails + appointmentUID,headers:headers).responseJSON{
+                request, response, result in
+                print("Reponse getAppointmentDetails",response!.allHeaderFields)
+                if let newToken : String = response?.allHeaderFields["newtoken"] as? String  {
+                    self.setNewToken(newToken)
+                }
+                switch result {
+                case .Success(let JSONData):
+                    var data = JSON(JSONData)
+                    print("--------details:----",data)
+                    let jsonImage = data["data"]["FileUploads"] != nil ? data["data"]["FileUploads"] : ""
+                    if jsonImage == "" {
+                        completionHandler(JSON(["message":"error"]))
+                    }else {
+                        completionHandler(jsonImage)
+                    }
+                case .Failure(let data, let error):
+                    print("Request failed with error: \(error)")
+                    completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
+                    
+                    if let data = data {
+                        print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                    }
                 }
                 
-
-            case .Failure(let data, let error):
-                print("Request failed with error: \(error)")
-                completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
-                
-                if let data = data {
-                    print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
-                }
             }
+        }else{
             
+            print("getWAADetails")
+            Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getWAADetails + appointmentUID,headers:headers).responseJSON{
+                request, response, result in
+                print("Reponse getAppointmentDetails WAA",response!.allHeaderFields)
+                if let newToken : String = response?.allHeaderFields["newtoken"] as? String  {
+                    self.setNewToken(newToken)
+                }
+                switch result {
+                case .Success(let JSONData):
+                    var data = JSON(JSONData)
+                    print("--------details:----",data)
+                    let jsonImage = data["data"]["FileUploads"] != nil ? data["data"]["FileUploads"] : ""
+                    if jsonImage == "" {
+                        completionHandler(JSON(["message":"error"]))
+                    }else {
+                        completionHandler(jsonImage)
+                    }
+                case .Failure(let data, let error):
+                    print("Request failed with error: \(error)")
+                    completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
+                    
+                    if let data = data {
+                        print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                    }
+                }
+                
+            }
         }
+       
+        
         
     }
     
     //get image by image UID
     func getImageAppointment(imageUID:String,completionHandler:(NSData) -> Void){
-        Alamofire.request(.GET,  ConfigurationSystem.Http_3005 + UrlInformationPatient.downloadImage+"/\(imageUID)", headers:header_3005)
+        Alamofire.request(.GET,  ConfigurationSystem.Http_3005 + UrlInformationPatient.downloadImage+"/\(imageUID)", headers:headers)
             .responseData { response in
+                
+                if let newToken : String = response.1?.allHeaderFields["newtoken"] as? String  {
+                    self.setNewToken(newToken)
+                }
                 switch response.2 {
                 case.Success(let imageData):
-                    
+//                        print(imageData)
                     completionHandler(imageData)
                 case.Failure(let data, let error) :
                     print("Request failed with error: \(error)")

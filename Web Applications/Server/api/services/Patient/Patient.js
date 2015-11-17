@@ -198,6 +198,14 @@ module.exports = {
 				}
 			}
 
+			if(data.Title){
+				if(data.Title!= 'Dr' && data.Title!= 'Ms' && 
+					data.Title!= 'Mr' && data.Title!= 'Mrs'){
+					errors.push({field:"Title",message:"invalid value"});
+					err.pushErrors(errors);
+				}
+			}
+
 			//validate HomePhoneNumber? hoi a Tan su dung exception
 			if(data.HomePhoneNumber){
 				var auHomePhoneNumberPattern=new RegExp(check.regexPattern.auHomePhoneNumber);
@@ -544,7 +552,6 @@ module.exports = {
 		else{
 			attributes = defaultAtrributes;
 		}
-		console.log(attributes);
 		var whereClause = Services.Patient.whereClause(data);
 		if(data.Search){
 			if(data.Search.FirstName!='' && data.Search.LastName!=''

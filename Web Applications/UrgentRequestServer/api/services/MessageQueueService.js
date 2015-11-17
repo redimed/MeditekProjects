@@ -36,9 +36,10 @@ module.exports = {
                             UR.lastName + '] - [' + UR.phoneNumber + ']';
                         var GPReferral = Services.ConvertData.GPReferral(UR.GPReferral);
                         var serviceType = Services.ConvertData.ServiceType(UR);
+                        var treatmentType = Services.ConvertData.TreatmentType(UR);
                         var emailInfo = {
-                            from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
-                            email: 'pnguyen@redimed.com.au',
+                            from: 'Redimed UrgentCare <onlinebooking@redimed.com.au>',
+                            email: 'onlinebooking@redimed.com.au',
                             patientEmail: (!_.isUndefined(UR.email) && !_.isNull(UR.email)) ? UR.email : '',
                             subject: subjectEmail,
                             confirmed: APIService.UrgentCareConfirmURL + '/' + UR.UID,
@@ -50,11 +51,13 @@ module.exports = {
                             DOB: (!_.isUndefined(UR.DOB) && !_.isNull(UR.DOB)) ? UR.DOB : '',
                             GPReferral: GPReferral,
                             serviceType: serviceType,
+                            treatment: UR.treatment,
+                            treatmentType: treatmentType,
                             description: (!_.isUndefined(UR.description) && !_.isNull(UR.description)) ? UR.description : '',
                             companyName: (!_.isUndefined(UR.companyName) && !_.isNull(UR.companyName)) ? UR.companyName : '',
                             contactPerson: (!_.isUndefined(UR.contactPerson) && !_.isNull(UR.contactPerson)) ? UR.contactPerson : '',
                             companyPhoneNumber: (!_.isUndefined(UR.companyPhoneNumber) && !_.isNull(UR.companyPhoneNumber)) ? UR.companyPhoneNumber : '',
-                            bcc: 'meditekcompany@gmail.com'
+                            bcc: 'meditekcompany@gmail.com, pnguyen@redimed.com.au'
                         };
                         var CallBackSendMail = function(err, responseStatus, html, text) {
                                 if (err) {

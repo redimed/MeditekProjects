@@ -41,6 +41,7 @@ class BodyUploadViewController: UIViewController {
         if let userUID = defaults.valueForKey("userUID") as? String {
             appointmentApi.uploadImage(image.image!,userUID: userUID){
                 response in
+                
                 if response["status"] == "success"{
                     self.appointmentApi.updateImageToAppointment(response["fileUID"].string!, apptID: self.appointmentID){
                         response in
@@ -50,6 +51,9 @@ class BodyUploadViewController: UIViewController {
                                 self.delegate?.reloadCollectionView(self, sender: self.image.image!)
                             }
                             self.dismissViewControllerAnimated(true, completion: nil)
+                        }else {
+                            print("upload faild")
+                             self.view.hideLoading()
                         }
                     }
                 }else {

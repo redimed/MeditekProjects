@@ -18,7 +18,8 @@ struct UrlAPICheckPhoneNumber  {
 struct UrlInformationPatient  {
     static let getInformationPatientByUID = "/api/telehealth/user/details/"
     static let getAppointmentList = "/api/telehealth/user/appointments/"
-    static let getAppointmentDetails = "/api/telehealth/user/appointmentDetails"
+    static let getAppointmentDetails = "/api/telehealth/user/telehealthAppointmentDetails/"
+    static let getWAADetails = "/api/telehealth/user/WAAppointmentDetails/"
     static let uploadImage =  "/api/uploadFile"
     static let updateImageToAppointment = "/api/telehealth/appointment/updateFile"
     static let downloadImage = "/api/downloadFile/400"
@@ -76,4 +77,23 @@ struct formatTime {
     static let formatDateTime = "dd/MM/yyyy HH:mm"
     static let formatTime = "HH:mm"
 }
+
+struct statusAppointment {
+    static let Attended = "Attended"
+    static let Waitlist = "Waitlist"
+    static let Pending = "Pending"
+    static let Received = "Received"
+    static let Cancelled = "Cancelled"
+    static let Approved = "Approved"
+    static let Finished = "Finished"
+}
+struct colorStatusAppointment{
+    static let colorAttended = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
+    static let colorWaitlist = "Waitlist"
+    static let colorPending = "Pending"
+    static let colorReceived = UIColor(red: 72/255, green: 191/255, blue: 226/255, alpha: 1.0)
+    static let colorApproved = "Approved"
+    static let colorFinished = "Finished"
+}
+
 

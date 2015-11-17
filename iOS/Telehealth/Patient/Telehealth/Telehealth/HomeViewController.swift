@@ -27,6 +27,8 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         }
         if let token = defaults.valueForKey("token") as? String {
             tokens = token
+            print("home token----",tokens)
+            
         }
         if let coreToken = defaults.valueForKey("coreToken") as? String {
             coreTokens = coreToken
@@ -34,15 +36,14 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         if let userUIDs = defaults.valueForKey("userUID") as? String{
             userUID = userUIDs
         }
+        if let cookie = defaults.valueForKey("Set-Cookie") as? String{
+            cookies = cookie
+        }
+        
         //Connect Socket
         openSocket()
         pagingImage()
-        
         resetTimer()
-
-        
-        
-        
     }
     
     func resetTimer() {
@@ -57,8 +58,14 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             page = 0
             autoSlide(page)
         }else {
-            autoSlide(page + 1)
-            page++
+            if page == numberofPage {
+                page = 0
+                autoSlide(page + 1)
+                page++
+            }else{
+                autoSlide(page + 1)
+                page++
+            }
         }
     }
     
@@ -159,6 +166,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     //change currentPage in PageControl
     func changePageImage(controller: ContentViewController, index: Int) {
         pageControl.currentPage = index
+        page = index
        
     }
     
@@ -275,7 +283,19 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         sharedSocket.socket.connect()
         
     }
+    //undwid home
+    @IBAction func unwindToHome(segue:UIStoryboardSegue) {
+        //check back controller to unwind
+        if(segue.sourceViewController .isKindOfClass(AppointmentDetailsViewController))
+        {
+            
+        }
+        
+    }
 
+    @IBAction func callUsButton(sender: AnyObject) {
+        UIApplication.sharedApplication().openURL(NSURL(string: "tel://\(phoneNumberCallUs)")!)
+    }
     
 
 }

@@ -1,20 +1,17 @@
 module.exports = {
     ServiceType: function(data) {
         var serviceType = '';
-        if (data.physiotherapy === 'Y') {
-            serviceType += 'Physiotherapy, ';
-        }
         if (data.specialist === 'Y') {
             serviceType += 'Specialist, ';
-        }
-        if (data.handTherapy === 'Y') {
-            serviceType += 'HandTherapy, ';
         }
         if (data.GP === 'Y') {
             serviceType += 'GP, ';
         }
         if (data.rehab === 'Y') {
-            serviceType += 'Rehabitation, ';
+            serviceType += 'Rehabitation';
+        }
+        if (data.treatment === 'Y') {
+            serviceType += 'Treatment, ';
         }
         serviceType = serviceType.substring(0, serviceType.length - 2);
         return serviceType;
@@ -33,5 +30,19 @@ module.exports = {
                 break;
         };
         return GPReferral;
+    },
+    TreatmentType: function(data) {
+        var treatmentType = '';
+        if (data.physiotherapy === 'Y') {
+            treatmentType += 'Physiotherapy, ';
+        }
+        if (data.handTherapy === 'Y') {
+            treatmentType += 'Hand Therapy, ';
+        }
+        if (data.exerciseRehab === 'Y') {
+            treatmentType += 'Exercise Rehab, ';
+        }
+        treatmentType = treatmentType.substring(0, treatmentType.length - 2);
+        return treatmentType;
     }
 };

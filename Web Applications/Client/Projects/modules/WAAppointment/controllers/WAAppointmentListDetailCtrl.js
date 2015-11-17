@@ -1,6 +1,6 @@
 var app = angular.module('app.authentication.WAAppointment.list.detail.controller', []);
 
-app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService, CommonService) {
+app.controller('WAAppointmentListDetailCtrl', function($cookies,$scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService, CommonService) {
     $modalInstance.rendered.then(function() {
         App.initComponents(); // init core components
         App.initAjax();
@@ -20,27 +20,38 @@ app.controller('WAAppointmentListDetailCtrl', function($scope, $modalInstance, d
             })
     }
     $scope.wainformation = data;
+    $scope.tab_body_part = 'all';
+    $scope.checkRoleUpdate = true;
+    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
+        $scope.checkRoleUpdate = false;
+    };
     console.log('$scope.wainformation', $scope.wainformation);
     $scope.Temp = angular.copy(data)
     var ClinicalDetailsTemp = [];
     $scope.loadFuntion = function() {
-        $scope.wainformation.TelehealthAppointment.ClinicalDetails = {}
-        console.log($scope.Temp.TelehealthAppointment.ClinicalDetails)
-        $scope.Temp.TelehealthAppointment.ClinicalDetails.forEach(function(valueRes, indexRes) {
-            if (valueRes != null && valueRes != undefined) {
-                var keyClinicalDetail = valueRes.Section + '.' + valueRes.Category + '.' + valueRes.Type + '.' + valueRes.Name;
-                keyClinicalDetail = keyClinicalDetail.split(" ").join("__");
-                var keyOther = valueRes.Type + valueRes.Name;
-                keyOther = keyOther.split(" ").join("");
-                $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail] = {};
-                $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].Value = valueRes.Value;
-                $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].FileUploads = valueRes.FileUploads;
-                $scope[valueRes.Name] = 'Yes';
-                if (valueRes.Name == 'OThers' || valueRes.Name == 'Other') {
-                    $scope[keyOther] = 'Yes';
+        if ($scope.wainformation.TelehealthAppointment != null || $scope.wainformation.TelehealthAppointment != undefined) {
+            $scope.wainformation.TelehealthAppointment.ClinicalDetails = {}
+            $scope.Temp.TelehealthAppointment.ClinicalDetails.forEach(function(valueRes, indexRes) {
+                if (valueRes != null && valueRes != undefined) {
+                    var keyClinicalDetail = valueRes.Section + '.' + valueRes.Category + '.' + valueRes.Type + '.' + valueRes.Name;
+                    keyClinicalDetail = keyClinicalDetail.split(" ").join("__");
+                    var keyOther = valueRes.Type + valueRes.Name;
+                    console.log(keyOther)
+                    if(keyOther!=0){
+                        keyOther = keyOther.split(" ").join("");
+                    }
+                    
+                    $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail] = {};
+                    $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].Value = valueRes.Value;
+                    $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].FileUploads = valueRes.FileUploads;
+                    $scope[valueRes.Name] = 'Yes';
+                    if (valueRes.Name == 'OThers' || valueRes.Name == 'Other') {
+                        $scope[keyOther] = 'Yes';
+                    }
                 }
-            }
-        })
+            })
+        };
+
     }
     $scope.loadFuntion();
     $scope.info = {

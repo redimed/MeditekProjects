@@ -228,7 +228,7 @@ angular.module('app.authentication.patient.services',[])
 				var auPhoneNumberPattern=new RegExp(/^(\+61|0061|0)?4[0-9]{8}$/);
 				var PhoneNumber=info.PhoneNumber.replace(/[\(\)\s\-]/g,'');
 				if(!auPhoneNumberPattern.test(PhoneNumber)){
-					error.push({field:"PhoneNumber",message:"invalid value"});
+					error.push({field:"PhoneNumber",message:"This is not a mobile phone"});
 				}
 			}
 			else{

@@ -489,7 +489,6 @@
 		AFF27DF71BB39C3A00B325E8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */,
 				AFEE34D81BB0413600471592 /* ViewController.swift */,
 				AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */,
 				AFF10DB11BB241DA005E9838 /* InformationViewController.swift */,
@@ -503,6 +502,7 @@
 				AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */,
 				AF7B5F431BE74D6D0043B14D /* AppointmentListsViewController.swift */,
 				AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */,
+				AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -959,7 +959,7 @@
 					"$(PROJECT_DIR)/Telehealth",
 				);
 				INFOPLIST_FILE = Telehealth/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = au.com.redimed.telehealthPatient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -984,7 +984,7 @@
 					"$(PROJECT_DIR)/Telehealth",
 				);
 				INFOPLIST_FILE = Telehealth/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = au.com.redimed.telehealthPatient;
 				PRODUCT_NAME = "$(TARGET_NAME)";

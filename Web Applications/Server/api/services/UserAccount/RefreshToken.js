@@ -71,14 +71,13 @@ function Validation(userAccess)
 module.exports={
 	
 	/**
-	 * [MakeUserToken description]
-	 * Nếu userAccess chưa có userToken thì tạo userToken
-	 * Nếu userAccess đã có userToken thì update userToken
-	 * 		Các thông tin sẽ được update: SecretKey,SecretCreatedDate,TokenExpired
+	 * MakeRefreshToken
+	 * Tạo RefreshToken khi login/logout
+	 * 
 	 */
 	MakeRefreshToken:function(userAccess,transaction)
 	{
-		console.log("=======================MakeUserToken==============================");
+		console.log("=======================MakeRefreshToken==============================");
 		var error=new Error("MakeRefreshToken.Error");
 		return Validation(userAccess)
 		.then(function(data){
@@ -129,17 +128,20 @@ module.exports={
 
 					return CheckExist()	
 					.then(function(rt){
-
+						var userSecretExpiration=o.getUserSecretExpiration(userAccess.SystemType,o.getMaxRole(user.roles));
+						var secretExpired=userSecretExpiration.secretKeyExpired;
+						var maxTimePlus=userSecretExpiration.maxTimePlus;
 						if(o.checkData(rt))
 						{
 							return rt.updateAttributes({
 									OldCode:null,
 									OldCodeExpiredAt:null,
 									RefreshCode:UUIDService.Create(),
-									Status:'GOT',
+									Status:o.const.refreshTokenStatus.got,
 									SecretKey:UUIDService.Create(),
 									SecretCreatedAt:new Date(),
-									SecretExpired:100,
+									SecretExpired:secretExpired,
+									SecretExpiredPlus:maxTimePlus,
 								},{transaction:transaction})
 								.then(function(result){
 									return result;
@@ -159,10 +161,11 @@ module.exports={
 								OldCode:null,
 								OldCodeExpiredAt:null,
 								RefreshCode:UUIDService.Create(),
-								Status:'GOT',
+								Status:o.const.refreshTokenStatus.got,
 								SecretKey:UUIDService.Create(),
 								SecretCreatedAt:new Date(),
-								SecretExpired:100,
+								SecretExpired:secretExpired,
+								SecretExpiredPlus:maxTimePlus,
 							};
 							//Nếu system type là mobile thì yêu cầu cần có DeviceID
 							if(userAccess.SystemType!=HelperService.const.systemType.website)
@@ -201,8 +204,8 @@ module.exports={
 	},
 
 	/**
-	 * [GetUserToken description]
-	 * Lấy thông tin UserToken
+	 * GetRefreshToken
+	 * Lấy thông tin GetRefreshToken
 	 */
 	GetRefreshToken:function(userAccess,transaction)
 	{
@@ -243,12 +246,12 @@ module.exports={
 						}
 						else
 						{
-							error.pushError("userToken.notFound");
+							error.pushError("refreshToken.notFound");
 							throw error;
 						}
 					},function(err){
 						o.exlog(err);
-						error.pushError("userToken.queryError");
+						error.pushError("refreshToken.queryError");
 						throw error;
 					})
 				}
@@ -269,6 +272,10 @@ module.exports={
 		})
 	},
 
+	/**
+	 * CreateNewRefreshCode
+	 * 
+	 */
 	CreateNewRefreshCode:function(userAccess,payloadRefreshCode,transaction)
 	{
 		var error=new Error("CreateNewRefreshCode.Error");
@@ -305,10 +312,12 @@ module.exports={
 						var currentRefreshToken=rt.dataValues;
 						if(o.checkData(rt))
 						{
+							//Nếu là request chứa refresh Code cũ thì kiểm tra gia hạn còn hiệu lực hay không
 							if(currentRefreshToken.OldCode==payloadRefreshCode)
 							{
 								if(moment().isBefore(moment(currentRefreshToken.OldCodeExpiredAt)))
 								{
+									//không cần tạo mới refreshCode
 									return {status:'unnecessary'};
 								}
 								else
@@ -320,17 +329,20 @@ module.exports={
 							}
 							else
 							{
-								RefreshToken.update({
+
+								return RefreshToken.update({
 									OldCode:currentRefreshToken.RefreshCode,
-									OldCodeExpiredAt:moment().add(120,'seconds').toDate(),
+									OldCodeExpiredAt:moment()
+													.add(o.const.oldRefreshCodeExpired,'seconds')
+													.toDate(),
 									RefreshCode:UUIDService.Create(),
-									Status:'WAITGET',
+									Status:o.const.refreshTokenStatus.waitget,
 								},{
 									where:{
 										UserAccountID:user.ID,
 										SystemType:userAccess.SystemType,
 										DeviceID:userAccess.DeviceID||null,
-										Status:'GOT'
+										Status:o.const.refreshTokenStatus.got,
 									}
 								},{transaction:transaction})
 								.then(function(result){
@@ -351,12 +363,12 @@ module.exports={
 						}
 						else
 						{
-							error.pushError("userToken.notFound");
+							error.pushError("refreshToken.notFound");
 							throw error;
 						}
 					},function(err){
 						o.exlog(err);
-						error.pushError("userToken.queryError");
+						error.pushError("refreshToken.queryError");
 						throw error;
 					})
 				}

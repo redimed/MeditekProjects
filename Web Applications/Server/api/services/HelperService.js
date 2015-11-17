@@ -164,7 +164,7 @@ module.exports = {
         authTokenExpired: {
             'IOS': 30 * 60,
             'ARD': 30 * 60,
-            'WEB':10 * 60,
+            'WEB':1 * 60,
         },// second
 
         // authSecretExprired:{
@@ -308,6 +308,12 @@ module.exports = {
 
         activationCodeExpired: 3, //Số lần có thể nhập sai
 
+        refreshTokenStatus:{
+            waitget:'WAITGET',
+            got:'GOT',
+        },
+
+        oldRefreshCodeExpired:60,
     },
 
     getRoleList:function()

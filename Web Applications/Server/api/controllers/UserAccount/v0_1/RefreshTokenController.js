@@ -3,6 +3,16 @@ var jwt = require('jsonwebtoken');
 var o=require("../../../services/HelperService");
 var md5 = require('md5');
 module.exports={
+	/**
+	 * Trả về token mới + refreshCode mới cho client
+	 * Input:
+	 *  -headers: authorization, systemtype, deviceid (nếu mobile)
+	 * 	-req.body: refreshCode
+	 * Output:
+	 * 	Nếu success 
+	 * 		{status:'hasToken',token,refreshCode}: nếu có token mới
+	 * 		{status:'unnecessary'}: nếu không có token mới
+	 */
 	GetNewToken:function(req,res)
 	{
 		var refreshCode=req.body.refreshCode;
@@ -37,7 +47,7 @@ module.exports={
 						var token=jwt.sign(
 		                    payload,
 		                    rt.SecretKey,
-		                    {expiresIn:15}
+		                    {expiresIn:o.const.authTokenExpired[req.headers.systemtype]}
 		                );
 						var returnToken={
 							status:'hasToken',

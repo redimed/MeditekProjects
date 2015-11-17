@@ -39,17 +39,14 @@ module.exports = function(req, res, next) {
 			if(authorization.startsWith('Bearer '))
 			{
 				var token=authorization.slice('Bearer '.length);
-				//lấy secret key từ db
-				//
-				var userToken={
+				//Lấy thông tin session
+				var sessionUser=req.session.passport.user;
+				//Thông tin access
+				var userAccess={
 					UserUID:req.user.UID,
 					SystemType:req.headers.systemtype,
 					DeviceID:req.headers.deviceid
 				};
-
-				//Lấy thông tin userToken
-				var sessionUser=req.session.passport.user;
-
 				function systemValidation()
 				{
 					if(sessionUser.SystemType==HelperService.const.systemType.website)
@@ -58,20 +55,51 @@ module.exports = function(req, res, next) {
 					}
 					else
 					{
-						return (sessionUser.DeviceID==userToken.DeviceID
-							&& sessionUser.SystemType==userToken.SystemType);
+						return (sessionUser.DeviceID==userAccess.DeviceID
+							&& sessionUser.SystemType==userAccess.SystemType);
 					}
 				}
 
 				if(!systemValidation())
 				{
-					error.pushError("isAuthenticated.sessionNotFound");
+					error.pushError("isAuthenticated.sessionUserMismatchedUserAccess");
 					return res.unauthor(ErrorWrap(error));
 				}
-				
+
+				if(o.checkData(sessionUser.SecretExpiredPlusAt))
+				{
+					if(moment().isAfter(moment(sessionUser.SecretExpiredPlusAt)))
+					{
+						error.pushError("isAuthenticated.secretExpiredPlusAt");
+						return res.unauthor(ErrorWrap(error));
+					}
+				}
 
 				jwt.verify(token, sessionUser.SecretKey, function(err, decoded) {
-					
+
+					function extendSecretExpired()
+					{
+						//Gia hạn SECRET KEY
+						if(o.checkData(sessionUser.SecretExpiredPlusAt))
+						{
+							// var temp=moment(sessionUser.SecretCreatedDate)
+							// 		.add(o.const.authTokenExpired[req.headers.systemtype],'seconds');
+							// if(temp.isBefore(moment(sessionUser.MaxExpiredDate)))
+							// {
+							// 	sessionUser.SecretCreatedDate=new Date();
+							// }
+							var current=moment();
+							if(current.isBefore(moment(sessionUser.SecretExpiredPlusAt)))
+							{
+								sessionUser.SecretCreatedAt=new Date();
+							}							
+							console.log("====================Extend Secret Expire");
+							console.log(sessionUser);
+							console.log("====================Extend Secret Expire");
+						}
+					}
+
+
 					if(o.checkData(err))
 					{
 						o.exlog(err);
@@ -82,7 +110,7 @@ module.exports = function(req, res, next) {
 							var payload=jwt.decode(token);
 							if(!o.isExpired(sessionUser.SecretCreatedAt,sessionUser.SecretExpired))
 							{
-								Services.RefreshToken.GetRefreshToken(userToken)
+								Services.RefreshToken.GetRefreshToken(userAccess)
 								.then(function(rt){
 									if(payload.RefreshCode==o.md5(rt.OldCode))
 									{
@@ -91,6 +119,7 @@ module.exports = function(req, res, next) {
 										console.log(moment(rt.OldCodeExpiredAt).format("DD/MM/YYYY HH:mm:ss"));
 										if(moment().isBefore(moment(rt.OldCodeExpiredAt)))
 										{
+											extendSecretExpired();
 											next();
 										}
 										else
@@ -102,7 +131,7 @@ module.exports = function(req, res, next) {
 									else if(payload.RefreshCode==o.md5(rt.RefreshCode))
 									{
 										console.log("PAYLOAD WITH CURRENT REFRESH_CODE");
-										Services.RefreshToken.CreateNewRefreshCode(userToken,payload.RefreshCode)
+										Services.RefreshToken.CreateNewRefreshCode(userAccess,payload.RefreshCode)
 										.then(function(result){
 											if(result.status=='created')
 											{
@@ -110,10 +139,12 @@ module.exports = function(req, res, next) {
 												res.header('Access-Control-Expose-Headers', 'requireupdatetoken');
 												// res.set('newtoken',newtoken);
 												// res.header('Access-Control-Expose-Headers', 'newtoken');
+												extendSecretExpired();
 												next();
 											}
 											else
 											{
+												extendSecretExpired();
 												next();
 											}
 										},function(err){
@@ -148,6 +179,7 @@ module.exports = function(req, res, next) {
 					}
 					else
 					{
+						extendSecretExpired();
 				  		next(); 
 					}
 				});

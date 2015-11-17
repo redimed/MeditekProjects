@@ -175,17 +175,17 @@ module.exports = {
             return;
         }
         var info = HelperService.toJson(req.body.data);
+        var deviceId = req.headers.deviceid;
+        var deviceType = req.headers.systemtype;
         var deviceToken = info.devicetoken;
-        var deviceId = info.deviceid;
-        var deviceType = info.devicetype;
         var uid = info.uid;
-        if (deviceToken && uid && deviceType && deviceId) {
+        if (deviceToken && uid && deviceType && deviceId && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 TelehealthDevice.findOrCreate({
                     where: {
                         TelehealthUserID: teleUser.ID,
                         DeviceID: deviceId,
-                        Type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS'
+                        Type: HelperService.const.systemType[deviceType.toLowerCase()]
                     },
                     defaults: {
                         UID: UUIDService.GenerateUUID(),

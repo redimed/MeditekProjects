@@ -68,7 +68,7 @@ module.exports = {
                     for (var i = 0; i < teleUsers.length; i++) {
                         for (var j = 0; j < appts.length; j++) {
                             if (appts[j].Patients.length > 0 && appts[j].Patients[0].UserAccount) {
-                                if (teleUsers[i].userAccountID == appts[j].Patients[0].UserAccount.ID) {
+                                if (teleUsers[i].UserAccountID == appts[j].Patients[0].UserAccount.ID) {
                                     appts[j].IsOnline = 0;
                                     appts[j].TeleUID = teleUsers[i].UID;
                                 }

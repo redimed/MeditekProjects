@@ -368,7 +368,12 @@ License: You must have a valid license purchased only from themeforest(the above
         <script type="text/javascript">
             $(document).ready(function()
             {
-                App.init(); // Run metronic theme  
+                // App.init(); // Run metronic theme 
+                App.initAjax();
+                App.setAssetsPath('theme/assets/'); // Set the assets folder path  
+                // App.initComponents(); // init core components
+                // ComponentsDateTimePickers.init(); // init todo page
+                // FormWizard.init(); // form step
             });
         </script>
         <!-- END JAVASCRIPTS -->

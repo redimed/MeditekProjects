@@ -87,6 +87,8 @@ module.exports = function(req, res, next) {
 									if(payload.RefreshCode==o.md5(rt.OldCode))
 									{
 										console.log("PAYLOAD WITH OLD REFRESH_CODE");
+										console.log(moment().format("DD/MM/YYYY HH:mm:ss"));
+										console.log(moment(rt.OldCodeExpiredAt).format("DD/MM/YYYY HH:mm:ss"));
 										if(moment().isBefore(moment(rt.OldCodeExpiredAt)))
 										{
 											next();
@@ -101,14 +103,13 @@ module.exports = function(req, res, next) {
 									{
 										console.log("PAYLOAD WITH CURRENT REFRESH_CODE");
 										Services.RefreshToken.CreateNewRefreshCode(userToken,payload.RefreshCode)
-										.then(function(refreshToken){
-											if(refreshToken!==null)
+										.then(function(result){
+											if(result.status=='created')
 											{
 												res.set('requireupdatetoken',true);
 												res.header('Access-Control-Expose-Headers', 'requireupdatetoken');
 												// res.set('newtoken',newtoken);
 												// res.header('Access-Control-Expose-Headers', 'newtoken');
-												console.log(">>>>>>>>>>>>>>>AAAAAAAAAWWWWWWWWW")
 												next();
 											}
 											else
@@ -121,6 +122,8 @@ module.exports = function(req, res, next) {
 									}
 									else
 									{
+										console.log("PAYLOAD WITH INVALID REFRESH_CODE");
+										console.log(payload);
 										error.pushError("isAuthenticated.invalidRefreshCode");
 										return res.unauthor(ErrorWrap(error));
 									}

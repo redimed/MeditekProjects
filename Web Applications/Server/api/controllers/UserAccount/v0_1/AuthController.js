@@ -51,9 +51,10 @@ module.exports = {
                     UID:user.UID,
                     Activated:user.Activated,
                     roles:user.roles,
+                    //--------------------------------
                     SystemType:req.headers.systemtype,
                     DeviceID:req.headers.deviceid,
-                    RefreshCode:rt.RefreshCode,
+                    //--------------------------------
                     SecretKey:rt.SecretKey,
                     SecretCreatedAt:rt.SecretCreatedAt,
                     SecretExpired:rt.SecretExpired
@@ -83,7 +84,8 @@ module.exports = {
                                 status:'success',
                                 message: info.message,
                                 user: user,
-                                token:token
+                                token:token,
+                                refreshCode:rt.RefreshCode,
                             });
                         }
                         else
@@ -92,7 +94,8 @@ module.exports = {
                                 status:'success',
                                 message: info.message,
                                 user: user,
-                                token:token
+                                token:token,
+                                refreshCode:rt.RefreshCode,
                             });
                         }
                     }
@@ -114,7 +117,7 @@ module.exports = {
             SystemType:req.headers.systemtype,
             DeviceID:req.headers.deviceid
         }
-        Services.UserToken.MakeUserToken(userAccess)
+        Services.RefreshToken.MakeRefreshToken(userAccess)
         .then(function(data){
             req.logout();
             res.ok({status:'success'});

@@ -40,6 +40,7 @@ module.exports={
 		                    {expiresIn:15}
 		                );
 						var returnToken={
+							status:'hasToken',
 							token:token,
 							refreshCode:rt.RefreshCode
 						}
@@ -56,7 +57,7 @@ module.exports={
 			}
 			else
 			{
-				return res.ok('GOT');
+				return res.ok({status:'unnecessary'});
 			}
 		},function(err){
 			console.log(err);

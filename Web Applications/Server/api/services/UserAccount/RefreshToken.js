@@ -271,7 +271,7 @@ module.exports={
 
 	CreateNewRefreshCode:function(userAccess,payloadRefreshCode,transaction)
 	{
-		var error=new Error("GetRefreshToken.Error");
+		var error=new Error("CreateNewRefreshCode.Error");
 		return Validation(userAccess)
 		.then(function(data){
 			return Services.UserAccount.GetUserAccountDetails({UID:userAccess.UserUID},null,transaction)
@@ -309,7 +309,7 @@ module.exports={
 							{
 								if(moment().isBefore(moment(currentRefreshToken.OldCodeExpiredAt)))
 								{
-									return null;
+									return {status:'unnecessary'};
 								}
 								else
 								{											
@@ -320,14 +320,28 @@ module.exports={
 							}
 							else
 							{
-								return rt.updateAttributes({
+								RefreshToken.update({
 									OldCode:currentRefreshToken.RefreshCode,
-									OldCodeExpiredAt:moment().add(20,'seconds').toDate(),
+									OldCodeExpiredAt:moment().add(120,'seconds').toDate(),
 									RefreshCode:UUIDService.Create(),
 									Status:'WAITGET',
+								},{
+									where:{
+										UserAccountID:user.ID,
+										SystemType:userAccess.SystemType,
+										DeviceID:userAccess.DeviceID||null,
+										Status:'GOT'
+									}
 								},{transaction:transaction})
 								.then(function(result){
-									return result;
+									if(result[0]>0)
+									{
+										return {status:'created'};
+									}
+									else
+									{
+										return {status:'unnecessary'};
+									}
 								},function(err){
 									o.exlog(err);
 									error.pushError("refreshToken.updateError");

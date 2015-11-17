@@ -123,9 +123,21 @@ module.exports = function(req, res, next) {
 											next();
 										}
 										else
-										{											
-											error.pushError("isAuthenticated.oldRefreshCodeExpired");
-											return res.unauthor(ErrorWrap(error));
+										{		
+											//Nếu trường hợp đang gửi request new token mà bị cúp điện
+											//hoặc bị ngắt internet thì sau đó vẫn cho phép request
+											//yêu cầu new token được chạy
+											if(req.path==o.const.refreshCodePath 
+												&& rt.status==o.const.refreshTokenStatus.waitget)
+											{
+												extendSecretExpired();
+												next();
+											}
+											else
+											{
+												error.pushError("isAuthenticated.oldRefreshCodeExpired");
+												return res.unauthor(ErrorWrap(error));
+											}								
 										}
 									}
 									else if(payload.RefreshCode==o.md5(rt.RefreshCode))

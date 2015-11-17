@@ -3,6 +3,7 @@ module.exports = {
     Patient: require('./Patient/Patient'),
     UserActivation: require('./UserAccount/UserActivation'),
     UserToken: require('./UserAccount/UserToken'),
+    RefreshToken: require('./UserAccount/RefreshToken'),
     //begin Appointment
     CreateTelehealthAppointment: require('./Appointment/CreateTelehealthAppointment'),
     GetDataAppointment: require('./Appointment/GetDataAppointment'),

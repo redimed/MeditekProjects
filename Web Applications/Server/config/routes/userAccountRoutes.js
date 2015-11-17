@@ -115,10 +115,16 @@ module.exports={
     	action:'GetSecretKey'
 	},
 
+	'post /api/refresh-token/GetNewToken':{
+		controller:'UserAccount/v0_1/RefreshTokenController',
+		action:'GetNewToken'
+	},
+
 	'post /api/user-account/get-DetailUser':{
 		controller:'UserAccount/v0_1/UserAccountController',
     	action:'getDetailUser'
 	},
+
 
 
 	'get /test':'TestController.test',

@@ -19,6 +19,9 @@ module.exports = {
         if (data.treatment === 'Y') {
             serviceType += 'Treatment, ';
         }
+        if (data.exerciseRehab === 'Y') {
+            serviceType += 'Exercise Rehab, ';
+        }
         serviceType = serviceType.substring(0, serviceType.length - 2);
         return serviceType;
     },

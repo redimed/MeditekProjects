@@ -33,6 +33,7 @@ passport.use(new LocalStrategy({
         }
     }).then(function(response) {
         var data = response.getBody();
+        console.log("=====",data);
         var user = data.user;
         TelehealthUser.findOrCreate({
             where: {
@@ -47,15 +48,15 @@ passport.use(new LocalStrategy({
             user.SystemType = HelperService.const.systemType[deviceType.toLowerCase()];
             user.DeviceID = deviceId;
             data.user = user;
-            UserToken.find({
+            RefreshToken.find({
                 where: {
                     UserAccountID: user.ID,
                     SystemType: HelperService.const.systemType[deviceType.toLowerCase()],
-                    DeviceID: deviceId,
-                    Enable: 'Y'
+                    DeviceID: deviceId
                 }
-            }).then(function(userToken) {
-                if (userToken) {
+            }).then(function(refreshToken) {
+                if (refreshToken) {
+                    var secretExpiredPlusAt = moment(refreshToken.SecretCreatedAt).add(refreshToken.SecretExpired + refreshToken.SecretExpiredPlus, 'seconds').toDate();
                     var sessionUser = {
                         ID: user.ID,
                         UID: user.UID,
@@ -63,12 +64,14 @@ passport.use(new LocalStrategy({
                         roles: user.roles,
                         SystemType: HelperService.const.systemType[deviceType.toLowerCase()],
                         DeviceID: deviceId,
-                        SecretKey: userToken.SecretKey,
-                        SecretCreatedDate: new Date(userToken.SecretCreatedDate),
-                        TokenExpired: userToken.TokenExpired,
-                        MaxExpiredDate: userToken.MaxExpiredDate
+                        SecretKey: refreshToken.SecretKey,
+                        SecretCreatedAt: refreshToken.SecretCreatedAt,
+                        SecretExpired: refreshToken.SecretExpired,
+                        SecretExpiredPlus: refreshToken.SecretExpiredPlus,
+                        SecretExpiredPlusAt: secretExpiredPlusAt
                     }
                     data.sessionUser = sessionUser;
+                    console.log("====",data);
                     return done(null, data, response.getBody().message);
                 } else return done(null, false, {
                     message: 'Error'

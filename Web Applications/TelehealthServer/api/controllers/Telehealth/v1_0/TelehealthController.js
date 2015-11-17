@@ -33,13 +33,7 @@ module.exports = {
                 teleUser.getUserAccount().then(function(user) {
                     if (user) {
                         TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
-                            if (response.getCode() == 202) {
-                                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
-                                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
-                                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
-                                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
-                                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
-                            }
+                            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
                             return res.ok(response.getBody());
                         }, function(err) {
                             res.json(err.getCode(), err.getBody());
@@ -69,13 +63,7 @@ module.exports = {
         var type = params.type;
         var headers = req.headers;
         TelehealthService.GetAppointmentsByPatient(patientUID, limit, type, headers).then(function(response) {
-            if (response.getCode() == 202) {
-                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
-                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
-                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
-                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
-                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
-            }
+            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
             return res.ok(response.getBody());
         }, function(err) {
             res.json(err.getCode(), err.getBody());
@@ -96,13 +84,7 @@ module.exports = {
             return res.serverError(ErrorWrap(err));
         }
         TelehealthService.GetTelehealthAppointmentDetails(apptUID, headers).then(function(response) {
-            if (response.getCode() == 202) {
-                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
-                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
-                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
-                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
-                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
-            }
+            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
             return res.ok(response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
@@ -123,13 +105,7 @@ module.exports = {
             return res.serverError(ErrorWrap(err));
         }
         TelehealthService.GetWAAppointmentDetails(apptUID, headers).then(function(response) {
-            if (response.getCode() == 202) {
-                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
-                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
-                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
-                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
-                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
-            }
+            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
             return res.ok(response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
@@ -161,7 +137,8 @@ module.exports = {
                         status: 'success',
                         message: info.message,
                         user: u.user,
-                        token: u.token
+                        token: u.token,
+                        refreshCode: u.refreshCode
                     });
                 }
             });
@@ -330,7 +307,8 @@ module.exports = {
                                                 status: 'success',
                                                 message: info.message,
                                                 user: u.user,
-                                                token: u.token
+                                                token: u.token,
+                                                refreshCode: u.refreshCode
                                             });
                                         }
                                     });

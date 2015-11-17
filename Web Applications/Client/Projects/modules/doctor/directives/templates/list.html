@@ -1,12 +1,11 @@
 
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">Doctor</h3>
+<h3 class="page-title">Doctor <small>Doctor List</small></h3>
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
 			<i class="fa fa-home"></i>
 			<b>Doctor</b>
-			<i class="fa fa-angle-right"></i>
 		</li>
 	</ul>
 </div>
@@ -36,7 +35,7 @@
 			<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>#</th>
+					<th width="1">#</th>
 					<th>
 						Firstname
 						<span class="glyphicon glyphicon-triangle-bottom" ng-if="doctor.search.sortFirstName === 'ASC'" ng-click="doctor.sortBy({field:'sortFirstName', sort: 'DESC'})" style="float: right; margin-top: 9px;"></span>
@@ -55,7 +54,7 @@
 						</a>
 					</th>
 					<th>Type</th>
-					<th>Enable</th>
+					<th width="1">Enable</th>
 				</tr>
 				<tr ng-hide="toggle">
 					<td></td>
@@ -76,10 +75,12 @@
 					<td>{{ row.UserAccount.PhoneNumber }}</td>
 					<td>{{ row.Email }}</td>
 					<td>{{ doctor.typies }}</td>
-					<td>
-						<span ng-if="row.Enable != 'N'">
-							<i class="fa fa-check"></i>
-						</span>
+					<td style="text-align:center">
+						<!-- <span ng-if="row.Enable != 'N'">
+							<i class="fa fa-check text-success"></i>
+						</span> -->
+						<i class="fa fa-check text-success" ng-if="row.Enable != 'N'"></i>
+						<i class="fa fa-remove text-danger" ng-if="row.Enable == 'N'"></i>
 					</td>
 				</tr>
 			</tbody>
@@ -92,7 +93,7 @@
 					<!-- Showing 1 to 10 of 43 entries -->
 				</div>
 			</div>
-			<div class="col-md-7 col-sm-12">
+			<div class="col-md-7 col-sm-12" style="text-align:right">
 				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
 					<pagination boundary-links="true" total-items="doctor.count" ng-model="doctor.search.page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="doctor.search.limit" max-size="doctor.search.max_size" ng-change="setPage(doctor.search.page)"></pagination>
 				</div>

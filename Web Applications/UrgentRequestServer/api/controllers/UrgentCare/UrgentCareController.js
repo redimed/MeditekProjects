@@ -19,7 +19,6 @@ module.exports = {
                 return;
             }
         }
-
         //get client's IP
         data.ip = req.headers['X-Client-IP'] ||
             req.headers['X-Forwarded-For'] ||

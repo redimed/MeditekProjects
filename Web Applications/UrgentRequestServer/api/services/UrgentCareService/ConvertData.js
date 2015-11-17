@@ -1,14 +1,8 @@
 module.exports = {
     ServiceType: function(data) {
         var serviceType = '';
-        if (data.physiotherapy === 'Y') {
-            serviceType += 'Physiotherapy, ';
-        }
         if (data.specialist === 'Y') {
             serviceType += 'Specialist, ';
-        }
-        if (data.handTherapy === 'Y') {
-            serviceType += 'Hand Therapy, ';
         }
         if (data.GP === 'Y') {
             serviceType += 'GP, ';
@@ -18,9 +12,6 @@ module.exports = {
         }
         if (data.treatment === 'Y') {
             serviceType += 'Treatment, ';
-        }
-        if (data.exerciseRehab === 'Y') {
-            serviceType += 'Exercise Rehab, ';
         }
         serviceType = serviceType.substring(0, serviceType.length - 2);
         return serviceType;

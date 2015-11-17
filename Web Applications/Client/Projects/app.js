@@ -74,7 +74,7 @@ app
                                 Authorization:'Bearer '+$cookies.get('token'),
                                 systemtype:'WEB'
                             },
-                            url: 'http://localhost:3005/api/refresh-token/GetNewToken',
+                            url: o.const.restBaseUrl+'/api/refresh-token/GetNewToken',
                             data: {refreshCode:$rootScope.refreshCode},
                             success: function(data){
                                 if(data && data.status=='hasToken')

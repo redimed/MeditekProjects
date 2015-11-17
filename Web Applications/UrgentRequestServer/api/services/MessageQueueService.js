@@ -36,6 +36,7 @@ module.exports = {
                             UR.lastName + '] - [' + UR.phoneNumber + ']';
                         var GPReferral = Services.ConvertData.GPReferral(UR.GPReferral);
                         var serviceType = Services.ConvertData.ServiceType(UR);
+                        var treatmentType = Services.ConvertData.TreatmentType(UR);
                         var emailInfo = {
                             from: 'Redimed UrgentCare <onlinebooking@redimed.com.au>',
                             email: 'onlinebooking@redimed.com.au',
@@ -50,6 +51,8 @@ module.exports = {
                             DOB: (!_.isUndefined(UR.DOB) && !_.isNull(UR.DOB)) ? UR.DOB : '',
                             GPReferral: GPReferral,
                             serviceType: serviceType,
+                            treatment: UR.treatment,
+                            treatmentType: treatmentType,
                             description: (!_.isUndefined(UR.description) && !_.isNull(UR.description)) ? UR.description : '',
                             companyName: (!_.isUndefined(UR.companyName) && !_.isNull(UR.companyName)) ? UR.companyName : '',
                             contactPerson: (!_.isUndefined(UR.contactPerson) && !_.isNull(UR.contactPerson)) ? UR.contactPerson : '',

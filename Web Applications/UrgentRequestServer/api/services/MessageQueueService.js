@@ -35,7 +35,7 @@ module.exports = {
                             '] - [' + UR.firstName + ' ' +
                             UR.lastName + '] - [' + UR.phoneNumber + ']';
                         var GPReferral = Services.ConvertData.GPReferral(UR.GPReferral);
-                        var serviceType = Services.ConvertData.ServiceType(UR);
+                        var serviceType = Services.ConvertData.ServiceType(UR, UR.urgentRequestType === 'WorkInjury');
                         var treatmentType = Services.ConvertData.TreatmentType(UR);
                         var emailInfo = {
                             from: 'Redimed UrgentCare <onlinebooking@redimed.com.au>',

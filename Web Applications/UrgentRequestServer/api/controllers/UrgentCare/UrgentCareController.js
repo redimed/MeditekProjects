@@ -65,7 +65,7 @@ module.exports = {
             .then(function(URCreated) {
                 //convert service type and gp referral
                 var GPReferral = Services.ConvertData.GPReferral(data.GPReferral);
-                var serviceType = Services.ConvertData.ServiceType(data);
+                var serviceType = Services.ConvertData.ServiceType(data, data.urgentRequestType==='WorkInjury');
                 var treatmentType = Services.ConvertData.TreatmentType(data);
                 var subjectEmail = '[' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                     '] - [' + data.firstName + ' ' +

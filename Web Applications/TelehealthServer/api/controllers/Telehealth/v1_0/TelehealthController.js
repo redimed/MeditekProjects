@@ -216,7 +216,8 @@ module.exports = {
                         },
                         headers: {
                             'DeviceID': req.headers.deviceid,
-                            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
+                            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()],
+                            'AppID': req.headers.appid
                         }
                     }).then(function(response) {
                         var data = response.getBody();
@@ -278,7 +279,8 @@ module.exports = {
                                 },
                                 headers: {
                                     'DeviceID': req.headers.deviceid,
-                                    'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
+                                    'SystemType': HelperService.const.systemType[deviceType.toLowerCase()],
+                                    'AppID': req.headers.appid
                                 }
                             }).then(function(response) {
                                 var data = response.getBody();

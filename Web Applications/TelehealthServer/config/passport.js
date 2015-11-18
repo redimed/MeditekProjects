@@ -15,6 +15,7 @@ passport.use(new LocalStrategy({
 }, function(req, u, p, done) {
     var deviceId = req.headers.deviceid;
     var deviceType = req.headers.systemtype;
+    var appid = req.headers.appid;
     var activationInfo = null;
     if (req.body.activationInfo) activationInfo = req.body.activationInfo;
     var requestBody = {
@@ -30,7 +31,8 @@ passport.use(new LocalStrategy({
         body: requestBody,
         headers: {
             'DeviceID': deviceId,
-            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
+            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()],
+            'AppID': appid
         }
     }).then(function(response) {
         var data = response.getBody();
@@ -69,7 +71,8 @@ passport.use(new LocalStrategy({
                         SecretCreatedAt: refreshToken.SecretCreatedAt,
                         SecretExpired: refreshToken.SecretExpired,
                         SecretExpiredPlus: refreshToken.SecretExpiredPlus,
-                        SecretExpiredPlusAt: secretExpiredPlusAt
+                        SecretExpiredPlusAt: secretExpiredPlusAt,
+                        AppID: refreshToken.AppID
                     }
                     data.sessionUser = sessionUser;
                     return done(null, data, response.getBody().message);

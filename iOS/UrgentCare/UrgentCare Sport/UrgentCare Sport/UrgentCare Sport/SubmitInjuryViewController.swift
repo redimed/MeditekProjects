@@ -158,7 +158,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                     alertMessage("Required", message: "LastName is max 250 character!")
                 }else if checkMaxLength(contactPhoneTextField, length: 100) == false{
                     alertMessage("Required", message: "Contact Phone is max 250 character!")
-                }else if validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.PhoneNumber) == false {
+                }else if validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.MobileNumber) == false {
                     borderTextFieldValid(contactPhoneTextField, color: colorCustomRed)
                     alertMessage("Required", message: "Please Check your phonenumber!")
                 }else if emailTextField.text != "" && validatePhoneNumber(emailTextField.text!,regex:RegexString.Email) == false {
@@ -197,12 +197,23 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     //post to server
     func submitDataToServe(infor:Information) {
         var phoneNumber = infor.phoneNumber
-        phoneNumber.removeAtIndex(phoneNumber.startIndex)
+        let getFourCharacterInPhone =  phoneNumber.substringWithRange(Range<String.Index>(start: phoneNumber.startIndex.advancedBy(0), end: phoneNumber.startIndex.advancedBy(4)))
+        if getFourCharacterInPhone == "0061"{
+            phoneNumber = "+61" + phoneNumber.substringWithRange(Range<String.Index>(start: phoneNumber.startIndex.advancedBy(4), end: phoneNumber.endIndex.advancedBy(-1)))
+            print(phoneNumber)
+
+        }else {
+            
+            infor.phoneNumber.removeAtIndex(phoneNumber.startIndex)
+            phoneNumber = "+61" + infor.phoneNumber
+            print(phoneNumber)
+        }
+
         let parameters = [
             "data": [
                 "firstName":infor.firstName,
                 "lastName":infor.lastName,
-                "phoneNumber":"+61\(phoneNumber)",
+                "phoneNumber":phoneNumber,
                 "email":infor.email,
                 "DOB":infor.DOB,
                 "suburb":infor.suburb,
@@ -227,7 +238,11 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                     
                     self.successAlert(infor)
                 }else {
-                    self.alertMessage("Error", message: "Can't make appointment!")
+                    if data["error"]["error"].string == "E_VALIDATION" {
+                        self.alertMessage("Error", message: messageString.invalidParams)
+                    }else {
+                        self.alertMessage("Error", message: messageString.serverErr)
+                    }
                 }
                 print(JSON(JSONData))
                 
@@ -469,7 +484,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                 borderTextFieldValid(lastNameTextField, color: colorCustomRed)
             }
         case contactPhoneTextField:
-            if validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.PhoneNumber) == false || contactPhoneTextField.text == "" {
+            if validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.MobileNumber) == false || contactPhoneTextField.text == "" {
                 borderTextFieldValid(contactPhoneTextField, color: colorCustomRed)
             }else {
                 borderTextFieldValid(contactPhoneTextField, color: colorCustomBrow)

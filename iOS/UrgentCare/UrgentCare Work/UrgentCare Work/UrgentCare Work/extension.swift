@@ -14,5 +14,7 @@ extension String {
         result.replaceRange(startIndex...startIndex, with: String(self[startIndex]).capitalizedString)
         return result
     }
+    
+
  
 }

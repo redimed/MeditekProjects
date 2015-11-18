@@ -47,9 +47,9 @@ class AppointmentListsViewController: UIViewController {
                     var Type:String!
                     var data = response["rows"]
                     let countAppointment = data.count
-          
+                     print("--------data",data[0])
                     for var i = 0 ; i < countAppointment ;i++ {
-                        
+                       
                         UIDApointment = data[i]["UID"].string ?? ""
                         FromTime = data[i]["FromTime"].string ?? ""
                         ToTime = data[i]["ToTime"].string ?? ""

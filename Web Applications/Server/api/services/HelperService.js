@@ -314,6 +314,8 @@ module.exports = {
         },
 
         oldRefreshCodeExpired:60,
+
+        refreshCodePath:'/api/refresh-token/GetNewToken',
     },
 
     getRoleList:function()

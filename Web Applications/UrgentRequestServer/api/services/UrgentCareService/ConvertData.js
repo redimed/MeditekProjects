@@ -1,14 +1,17 @@
 module.exports = {
-    ServiceType: function(data) {
+    ServiceType: function(data, isWorkInjury) {
         var serviceType = '';
         if (data.specialist === 'Y') {
             serviceType += 'Specialist, ';
+        }
+        if (data.physiotherapy === 'Y' && !isWorkInjury) {
+            serviceType += 'Physiotherapy, ';
         }
         if (data.GP === 'Y') {
             serviceType += 'GP, ';
         }
         if (data.rehab === 'Y') {
-            serviceType += 'Rehabitation';
+            serviceType += 'Rehabitation, ';
         }
         if (data.treatment === 'Y') {
             serviceType += 'Treatment, ';

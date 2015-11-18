@@ -116,8 +116,9 @@
 											<!-- end avatar -->
 											<!-- begin basic -->
 											<div class="col-md-4">
-												<h4><b>Basic Information</b></h4>
-												<hr>
+
+												<h4 class="form-section bold">Basic Information</h4>
+												
 												<!-- begin title -->
 									            <div class="form-group">
 									            	<label class="control-label col-md-4">Title<span class="required">* </span></label>
@@ -158,8 +159,12 @@
 												<div class="form-group">
 													<label class="control-label col-md-4">Date of Birth<span class="required">* </span></label>
 													<div class="col-md-8">
-													 <input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy" ng-model="data.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB=''" / readonly>
-														<span style="color:red;">{{ermsg.DOB}}</span></div>
+														<div class="input-icon">
+															<i class="glyphicon glyphicon-calendar"></i>
+															<input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy" ng-model="data.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB=''" / readonly>
+																<span style="color:red;">{{ermsg.DOB}}</span>
+															</div>
+													</div>
 												</div>
 												<!-- end Date of Birth -->
 												<!-- Gender -->
@@ -184,14 +189,13 @@
 											<!-- end basic -->
 											<!-- begin contact -->
 											<div class="col-md-4">
-												<h4><b>Contact Information</b></h4>
-												<hr>
+												<h4 class="form-section bold">Contact Information</h4>
 												<!-- begin Email -->
 												<div class="form-group">
 													<label class="control-label col-md-3">Email</label>
 													<div class="col-md-8">
 														<div class="input-icon">
-															<i class="fa fa-envelope"></i>
+															<i class="glyphicon glyphicon-envelope"></i>
 															<input type="text" class="form-control" placeholder="Email1" ng-disabled="isShowEmail1?true:false" ng-model="data.Email1" ng-style="er.Email1" ng-change="ermsg.Email1=''" />
 														<span style="color:red;">{{ermsg.Email1}}</span>
 														</div>
@@ -203,7 +207,7 @@
 													<label class="control-label col-md-3">Homephone</label>
 													<div class="col-md-8">
 														<div class="input-icon">
-															<i class="fa fa-phone"></i>
+															<i class="glyphicon glyphicon-phone-alt"></i>
 															<input type="text" class="form-control" placeholder="Homephone" ng-model="data.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber=''" />
 														<span style="color:red;">{{ermsg.HomePhoneNumber}}</span>
 														</div>
@@ -215,7 +219,7 @@
 													<label class="control-label col-md-3">Mobile</label>
 													<div class="col-md-8">
 														<div class="input-icon">
-															<i class="fa fa-mobile"></i>
+															<i class="glyphicon glyphicon-phone"></i>
 															<input type="text" class="form-control" placeholder="Mobile" ng-disabled="true" ng-model="data.PhoneNumber" ng-style="er.PhoneNumber">
 														</div>
 													</div>
@@ -226,7 +230,7 @@
 													<label class="control-label col-md-3">Workphone</label>
 													<div class="col-md-8">
 														<div class="input-icon">
-															<i class="fa fa-phone"></i>
+															<i class="glyphicon glyphicon-phone-alt"></i>
 															<input type="text" class="form-control" placeholder="Workphone" ng-model="data.WorkPhoneNumber" ng-style="er.WorkPhoneNumber" ng-change="ermsg.WorkPhoneNumber=''" />
 														<span style="color:red;">{{ermsg.WorkPhoneNumber}}</span>
 														</div>
@@ -238,7 +242,7 @@
 													<label class="control-label col-md-3">Address1<span class="required">* </span></label>
 													<div class="col-md-8">
 														<div class="input-icon">
-															<i class="fa  fa-paper-plane"></i>
+															<i class="glyphicon glyphicon-road"></i>
 															<input type="text" class="form-control" placeholder="Address1"ng-model="data.Address1" ng-style="er.Address1" ng-change="ermsg.Address1=''" />
 														<span style="color:red;">{{ermsg.Address1}}</span>
 														</div>
@@ -250,7 +254,7 @@
 													<label class="control-label col-md-3">Address2</label>
 													<div class="col-md-8">
 														<div class="input-icon">
-															<i class="fa  fa-paper-plane"></i>
+															<i class="glyphicon glyphicon-road"></i>
 															<input type="text" class="form-control" placeholder="Address2" ng-model="data.Address2" ng-style="er.Address2" ng-change="ermsg.Address2=''" />
 														<span style="color:red;">{{ermsg.Address2}}</span>
 														</div>
@@ -261,8 +265,11 @@
 												<div class="form-group">
 													<label class="control-label col-md-3">Suburb<span class="required">* </span></label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="Suburb" ng-model="data.Suburb" ng-style="er.Suburb" ng-change="ermsg.Suburb=''" />
-														<span style="color:red;">{{ermsg.Suburb}}</span>
+														<div class="input-icon">
+															<i class="glyphicon glyphicon-tree-conifer"></i>
+															<input type="text" class="form-control" placeholder="Suburb" ng-model="data.Suburb" ng-style="er.Suburb" ng-change="ermsg.Suburb=''" />
+															<span style="color:red;">{{ermsg.Suburb}}</span>
+														</div>
 													</div>
 												</div>
 												<!-- end Suburb -->
@@ -270,8 +277,11 @@
 												<div class="form-group">
 													<label class="control-label col-md-3">Postcode<span class="required">* </span></label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" placeholder="Postcode" ng-model="data.Postcode" ng-style="er.Postcode" ng-change="ermsg.Postcode=''" />
-														<span style="color:red;">{{ermsg.Postcode}}</span>
+														<div class="input-icon">
+															<i class="glyphicon glyphicon-map-marker"></i>
+															<input type="text" class="form-control" placeholder="Postcode" ng-model="data.Postcode" ng-style="er.Postcode" ng-change="ermsg.Postcode=''" />
+															<span style="color:red;">{{ermsg.Postcode}}</span>
+														</div>
 													</div>
 												</div>
 												<!-- end Postcode -->
@@ -279,9 +289,12 @@
 													<div class="form-group">
 														<label class="control-label col-md-3">State<span class="required">* </span></label>
 														<div class="col-md-8">
-															<select class="form-control" ng-model="data.State"ng-options="s.code as s.name for s in state" ng-style="er.State" ng-change="ermsg.State=''" >
-															</select>
-														<span style="color:red;">{{ermsg.State}}</span>
+															<div class="input-icon">
+																<i class="glyphicon glyphicon-globe"></i>
+																<select class="form-control" ng-model="data.State"ng-options="s.code as s.name for s in state" ng-style="er.State" ng-change="ermsg.State=''" >
+																</select>
+																<span style="color:red;">{{ermsg.State}}</span>
+															</div>
 														</div>
 													</div>
 													<!-- end State -->
@@ -289,9 +302,12 @@
 													<div class="form-group">
 														<label class="control-label col-md-3">Country<span class="required">* </span></label>
 														<div class="col-md-8">
-															<select class="form-control" ng-model="data.CountryID1"ng-options="country.ID as country.ShortName for country in countries" ng-style="er.CountryID1" ng-change="ermsg.CountryID1=''" >
-															</select>
-															<span style="color:red;">{{ermsg.CountryID1}}</span>
+															<div class="input-icon">
+																<i class="fa fa-flag"></i>
+																<select class="form-control" ng-model="data.CountryID1"ng-options="country.ID as country.ShortName for country in countries" ng-style="er.CountryID1" ng-change="ermsg.CountryID1=''" >
+																</select>
+																<span style="color:red;">{{ermsg.CountryID1}}</span>
+															</div>
 														</div>
 													</div>
 													<!-- end Country -->

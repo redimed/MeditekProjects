@@ -23,6 +23,11 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var btnYes: SSRadioButton!
     @IBOutlet weak var btnNo: SSRadioButton!
+    
+    @IBOutlet weak var btnPhysio: SSRadioButton!
+    @IBOutlet weak var btnExercise: SSRadioButton!
+    @IBOutlet weak var btnHandTherapy: SSRadioButton!
+    
     @IBOutlet weak var Navigationbar: UINavigationBar!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var btnMakeAppointment: DesignableButton!
@@ -31,20 +36,24 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     @IBOutlet weak var companyPhoneNumberTextField: UITextField!
     
     @IBOutlet weak var GPReferralLabel: UILabel!
+    @IBOutlet weak var typeTreatment: UILabel!
     var autocompleteUrls = [String]()
     var datePicker = UIDatePicker()
     var checkDOB = true
     var dateofbirth: String = ""
     var GPReferral : String = "Y"
     var radioButtonController: SSRadioButtonsController?
+    var radioButtonTypeController: SSRadioButtonsController?
     var NavigateBarTitle: String!
     var SportTye: String!
     var pastUrls : [String] = []
     var GP:String = "N"
-    var Rehab:String = "N"
+    var treatment:String = "N"
     var physiotherapy:String = "N"
     var specialist:String = "N"
     var handTherapy:String = "N"
+    var exerciseRehab:String = "N"
+    
     var urgentRequestType : String = "WorkInjury"
     var Info : Information!
     
@@ -57,6 +66,14 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
             btnYes.hidden = true
             btnNo.hidden = true
             GPReferral = ""
+        }
+        if treatment == "N"{
+            typeTreatment.hidden = true
+            btnHandTherapy.hidden = true
+            btnExercise.hidden = true
+            btnPhysio.hidden = true
+            companyName.center.y += 30.0
+            companyName.alpha = 1.0
         }
         
         
@@ -80,12 +97,19 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         radioButtonController!.delegate = self
         radioButtonController!.shouldLetDeSelect = false
         btnYes.selected = true
+        
+        //type of treatment
+        radioButtonTypeController = SSRadioButtonsController(buttons: btnPhysio, btnExercise,btnHandTherapy)
+        radioButtonTypeController!.delegate = self
+        radioButtonTypeController!.shouldLetDeSelect = false
+        
         suburbTextField.delegate = self
         
         getPersonalData()
-        
-        
         DatepickerMode()
+        
+        
+        
         
         
     }
@@ -100,9 +124,18 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     func didSelectButton(aButton: UIButton?) {
         if aButton?.titleLabel?.text == "Yes"{
             GPReferral = "Y"
-        }else {
+        }else if aButton?.titleLabel?.text == "No" {
             GPReferral = "N"
         }
+        
+        if aButton?.titleLabel?.text == "Exercise Rehab"{
+            exerciseRehab = "Y"
+        } else if aButton?.titleLabel?.text == "Physiotherapy" {
+            physiotherapy = "Y"
+        } else if  aButton?.titleLabel?.text == "Hand Therapy" {
+            handTherapy = "Y"
+        }
+        
         
         
     }
@@ -113,9 +146,6 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         for var i = 0; i < arrText.count ; i++ {
             borderTextFieldValid(arrText[i], color: color)
         }
-        
-        
-        
     }
     
     //get localdata and set texfield
@@ -168,7 +198,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                     alertMessage("Required", message: "LastName is max 250 character!")
                 }else if checkMaxLength(contactPhoneTextField, length: 100) == false{
                     alertMessage("Required", message: "Contact Phone is max 250 character!")
-                }else if validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.PhoneNumber) == false {
+                }else if validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.MobileNumber) == false {
                     borderTextFieldValid(contactPhoneTextField, color: colorCustomRed)
                     alertMessage("Required", message: "Please Check your phonenumber!")
                 }
@@ -197,7 +227,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     func sendingData(){
         self.view.showLoading()
         btnMakeAppointment.enabled = false
-        Info =  Information(firstName: (firstNameTextField.text?.capitalizeFirst)!, lastName: (lastNameTextField.text?.capitalizeFirst)!, phoneNumber: contactPhoneTextField.text!, email: emailTextField.text!, DOB: birthDayTextField.text!, suburb: suburbTextField.text!, GPReferral: GPReferral, description: descriptionTextView.text!, physiotherapy: physiotherapy, specialist: specialist, handTherapy: handTherapy, urgentRequestType: urgentRequestType, requestDate: NowDate(),GP:GP,rehab:Rehab,companyName:companyName.text!,companyPhoneNumber:companyPhoneNumberTextField.text!,contactPerson:contactPersonTextField.text!)
+        Info =  Information(firstName: (firstNameTextField.text?.capitalizeFirst)!, lastName: (lastNameTextField.text?.capitalizeFirst)!, phoneNumber: contactPhoneTextField.text!, email: emailTextField.text!, DOB: birthDayTextField.text!, suburb: suburbTextField.text!, GPReferral: GPReferral, description: descriptionTextView.text!, physiotherapy: physiotherapy, specialist: specialist, handTherapy: handTherapy, urgentRequestType: urgentRequestType, requestDate: NowDate(),GP:GP,rehab:treatment,companyName:companyName.text!,companyPhoneNumber:companyPhoneNumberTextField.text!,contactPerson:contactPersonTextField.text!,exerciseRehab:exerciseRehab)
         submitDataToServe(Info)
     }
     
@@ -213,12 +243,21 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     //post to server
     func submitDataToServe(infor:Information) {
         var phoneNumber = infor.phoneNumber
-        phoneNumber.removeAtIndex(phoneNumber.startIndex)
+        let getFourCharacterInPhone =  phoneNumber.substringWithRange(Range<String.Index>(start: phoneNumber.startIndex.advancedBy(0), end: phoneNumber.startIndex.advancedBy(4)))
+        if getFourCharacterInPhone == "0061"{
+          phoneNumber = "+61" + phoneNumber.substringWithRange(Range<String.Index>(start: phoneNumber.startIndex.advancedBy(4), end: phoneNumber.endIndex.advancedBy(-1)))
+        }else {
+            
+            infor.phoneNumber.removeAtIndex(phoneNumber.startIndex)
+            phoneNumber = "+61" + infor.phoneNumber
+        }
+
+        
         let parameters = [
             "data": [
                 "firstName":infor.firstName,
                 "lastName":infor.lastName,
-                "phoneNumber":"+61\(phoneNumber)",
+                "phoneNumber":phoneNumber,
                 "email":infor.email,
                 "DOB":infor.DOB,
                 "suburb":infor.suburb,
@@ -228,14 +267,17 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                 "specialist":infor.specialist,
                 "handTherapy":infor.handTherapy,
                 "GP": infor.GP,
-                "rehab":infor.rehab,
+                "treatment":infor.rehab,
                 "urgentRequestType":infor.urgentRequestType,
                 "requestDate":infor.requestDate,
                 "companyName":infor.companyName,
                 "companyPhoneNumber":infor.companyPhoneNumber,
-                "contactPerson":infor.contactPerson
+                "contactPerson":infor.contactPerson,
+                "exerciseRehab": infor.exerciseRehab
             ]
         ]
+     
+        
         Alamofire.request(.POST,api.submitInjury,headers:headers,parameters: parameters).responseJSON{
             request, response, result  in
             self.view.hideLoading()
@@ -244,10 +286,15 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
             case .Success(let JSONData):
                 let data = JSON(JSONData)
                 if data["data"].string == "success" {
-                    
                     self.successAlert(infor)
                 }else {
-                    self.alertMessage("Error", message: "Can't make appointment!")
+                
+                    if data["error"]["error"].string == "E_VALIDATION" {
+                         self.alertMessage("Error", message: messageString.invalidParams)
+                    }else {
+                        self.alertMessage("Error", message: messageString.serverErr)
+                    }
+                   
                 }
                 
                 print(JSON(JSONData))
@@ -494,7 +541,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                 borderTextFieldValid(lastNameTextField, color: colorCustomRed)
             }
         case contactPhoneTextField:
-            if validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.PhoneNumber) == false || contactPhoneTextField.text == "" {
+            if validatePhoneNumber(contactPhoneTextField.text!,regex:RegexString.MobileNumber) == false || contactPhoneTextField.text == "" {
                 borderTextFieldValid(contactPhoneTextField, color: colorCustomRed)
             }else {
                 borderTextFieldValid(contactPhoneTextField, color: colorCustomBrow)

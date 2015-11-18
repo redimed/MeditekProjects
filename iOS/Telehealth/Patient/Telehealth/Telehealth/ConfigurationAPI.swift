@@ -23,6 +23,7 @@ struct UrlInformationPatient  {
     static let uploadImage =  "/api/uploadFile"
     static let updateImageToAppointment = "/api/telehealth/appointment/updateFile"
     static let downloadImage = "/api/downloadFile/400"
+    static let getNewToken = "/api/refresh-token/GetNewToken"
 }
 
 //Giap: API Socket

@@ -16,12 +16,25 @@ class TrackingRefferalViewController: UIViewController {
     @IBOutlet weak var WaitListButton: UIButton!
     @IBOutlet weak var FinishButton: UIButton!
     
+    @IBOutlet weak var designableView: DesignableView!
+    @IBOutlet weak var doctorLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     var appointmentDetails: AppointmentList!
     override func viewDidLoad() {
         super.viewDidLoad()
         checkStatus()
        
     }
+    override func viewWillAppear(animated: Bool) {
+        if appointmentDetails.Status == statusAppointment.Approved {
+            designableView.hidden = false
+            doctorLabel.text = appointmentDetails.NameDoctor
+            dateLabel.text = appointmentDetails.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDate)
+            timeLabel.text = appointmentDetails.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime)
+        }
+    }
+    
     func checkStatus(){
         switch appointmentDetails.Status {
         case statusAppointment.Approved:

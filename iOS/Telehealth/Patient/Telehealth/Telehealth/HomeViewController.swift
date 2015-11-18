@@ -9,8 +9,9 @@
 import UIKit
 import Socket_IO_Client_Swift
 import SwiftyJSON
+import AVFoundation
 
-class HomeViewController: UIViewController,UIPopoverPresentationControllerDelegate,MyPopupViewControllerDelegate,UIPageViewControllerDataSource,ContentViewDelegate{
+class HomeViewController: UIViewController,UIPopoverPresentationControllerDelegate,MyPopupViewControllerDelegate,UIPageViewControllerDataSource,ContentViewDelegate,AVAudioPlayerDelegate{
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var pageView: UIView!
     var uid = String()
@@ -19,33 +20,47 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     var pageImages: NSArray!
      weak var timer: NSTimer?
     var page = 0
+    var backMusic: AVAudioPlayer!
        override func viewDidLoad() {
         super.viewDidLoad()
         //Get uuid user in locacalstorage
-        if let uuid = defaults.valueForKey("uid") as? String {
-            uid = uuid
-        }
-        if let token = defaults.valueForKey("token") as? String {
-            tokens = token
-            print("home token----",tokens)
-            
-        }
-        if let coreToken = defaults.valueForKey("coreToken") as? String {
-            coreTokens = coreToken
-        }
-        if let userUIDs = defaults.valueForKey("userUID") as? String{
-            userUID = userUIDs
-        }
-        if let cookie = defaults.valueForKey("Set-Cookie") as? String{
-            cookies = cookie
-        }
+        if let uuid = defaults.valueForKey("uid") as? String {uid = uuid}
+        if let token = defaults.valueForKey("token") as? String {tokens = token}
+        if let userUIDs = defaults.valueForKey("userUID") as? String{userUID = userUIDs}
+        if let cookie = defaults.valueForKey("Set-Cookie") as? String{cookies = cookie}
         
         //Connect Socket
         openSocket()
         pagingImage()
         resetTimer()
     }
-    
+    override func viewWillAppear(animated: Bool) {
+        
+    }
+    //Play ringtone while have calling
+    func playRingtone() {
+        backMusic = setupAudioPlayerWithFile("ringtone", type: "mp3")
+        backMusic?.delegate = self
+        backMusic.numberOfLoops = -1
+        backMusic.prepareToPlay()
+        backMusic.play()
+
+    }
+
+    func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer  {
+        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
+        let url = NSURL.fileURLWithPath(path!)
+        var audioPlayer:AVAudioPlayer?
+        
+        do {
+            try audioPlayer = AVAudioPlayer(contentsOfURL: url)
+        } catch {
+            print("NO AUDIO PLAYER")
+        }
+        
+        return audioPlayer!
+    }
+    //setup timer slide
     func resetTimer() {
         timer?.invalidate()
         let nextTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "handleIdleEventAutoSlide:", userInfo: nil, repeats: true)
@@ -173,7 +188,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     
     //Giap: Change view AnswerCall by StoryboardID
     func AnswerCall(){
-        
+        backMusic.stop()
         self.displayViewController(.TopBottom)
     }
     
@@ -214,6 +229,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     
     //MARK: MyPopupViewControllerProtocol
     func pressOK(sender: MyPopupViewController) {
+        backMusic.stop()
         self.dismissPopupViewController(.Fade)
         emitDataToServer(MessageString.CallAnswer, uidFrom: uid, uuidTo: savedData.data[0]["from"].string!)
         let homeMain = self.storyboard?.instantiateViewControllerWithIdentifier("ScreenCallingStoryboard") as! ScreenCallingViewController
@@ -221,6 +237,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         
     }
     func pressCancel(sender: MyPopupViewController) {
+        backMusic.stop()
         emitDataToServer(MessageString.Decline, uidFrom: uid, uuidTo: savedData.data[0]["from"].string!)
         self.dismissPopupViewController(.Fade)
     }
@@ -258,6 +275,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
                     //save data to temp class
                     savedData = saveData(data: dataCalling)
                     self.displayViewController(.TopBottom)
+                    self.playRingtone()
                     NSNotificationCenter.defaultCenter().postNotificationName("AnswerCall", object: self)
                 }else if message == MessageString.CallEndCall {
                     NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)

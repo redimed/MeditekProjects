@@ -1,9 +1,40 @@
 module.exports = {
 
-	'post /api/getDoctor': {
+	'post /api/doctor/loadlist-doctor': {
 		controller:'Doctor/DoctorController',
-    	action:'GetDoctor'
+    	action:'LoadlistDoctor'
 	},
+
+	'post /api/doctor/detail-doctor': {
+		controller:'Doctor/DoctorController',
+    	action:'DetailDoctor'
+	},
+
+	'post /api/doctor/update-doctor': {
+		controller:'Doctor/DoctorController',
+    	action:'UpdateDoctor'
+	},
+
+	'post /api/doctor/get-doctor' :{
+		controller:'Doctor/DoctorController',
+		action:'GetDoctor'
+	},
+
+	'post /api/doctor/check-doctor' :{
+		controller:'Doctor/DoctorController',
+		action:'CheckDoctor'
+	},
+
+	'post /api/doctor/check-info':{
+		controller:'Doctor/DoctorController',
+		action:'CheckInfo'
+	},
+
+	'post /api/doctor/create-doctor-by-newaccount':{
+		controller:'Doctor/DoctorController',
+		action:'CreateDoctorByNewAccount'
+	},
+
 	'get /api/doctorappointment': {
 		controller:'Doctor/DoctorController',
     	action:'DoctorAppointment'

@@ -1,11 +1,11 @@
-
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">Doctor <small>Doctor List</small></h3>
+<h3 class="page-title">Doctor</h3>
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
 			<i class="fa fa-home"></i>
 			<b>Doctor</b>
+			<i class="fa fa-angle-right"></i>
 		</li>
 	</ul>
 </div>
@@ -22,7 +22,7 @@
 			<a href="javascript:;" class="btn btn-circle red btn-sm" ng-click="toggleFilter()">
 				<i class="fa fa-filter"></i> Filter
 			</a>
-			<a href="javascript:;" class="btn btn-circle blue btn-sm" ui-sref="authentication.doctor.create">
+			<a href="javascript:;" class="btn btn-circle blue btn-sm" ng-click="createDoctor()">
 				<i class="glyphicon glyphicon-plus"></i> Create
 			</a>
 			<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
@@ -35,52 +35,40 @@
 			<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th width="1">#</th>
-					<th>
-						Firstname
-						<span class="glyphicon glyphicon-triangle-bottom" ng-if="doctor.search.sortFirstName === 'ASC'" ng-click="doctor.sortBy({field:'sortFirstName', sort: 'DESC'})" style="float: right; margin-top: 9px;"></span>
-	 					<span class="glyphicon glyphicon-triangle-top" ng-if="doctor.search.sortFirstName === 'DESC'" ng-click="doctor.sortBy({field:'sortFirstName', sort: 'ASC'})" style="float: right; margin-top: -4px; margin-right: -4px;"></span>
+					<th>#</th>
+					<th ng-repeat="i in items">
+						{{i.name}}
+						<i class="fa fa-sort-asc"  ng-click="sort(i.field,'ASC')" ng-show="fieldSort[i.field]=='ASC'" ng-if="i.field!='Enable'" ></i>
+                        <i class="fa fa-sort-desc" ng-click="sort(i.field,'DESC')"ng-show="fieldSort[i.field]=='DESC'"ng-if="i.field!='Enable'"></i>
 					</th>
 					<th>
-						Lastname
-						<span class="glyphicon glyphicon-triangle-bottom" ng-if="doctor.search.sortLastName === 'ASC'" ng-click="doctor.sortBy({field:'sortLastName', sort: 'DESC'})" style="float: right; margin-top: 9px;"></span>
-	 					<span class="glyphicon glyphicon-triangle-top" ng-if="doctor.search.sortLastName === 'DESC'" ng-click="doctor.sortBy({field:'sortLastName', sort: 'ASC'})" style="float: right; margin-top: -4px; margin-right: -4px;"></span>
+						Type
+						<i class="fa fa-sort-asc"  ng-click="sort('RoleName','ASC')" ng-show="fieldSort.RoleName=='ASC'"></i>
+                        <i class="fa fa-sort-desc" ng-click="sort('RoleName','DESC')"ng-show="fieldSort.RoleName=='DESC'"></i>
 					</th>
-					<th>Mobile</th>
 					<th>
-						Email
-						<span class="glyphicon glyphicon-triangle-bottom" ng-if="doctor.search.sortEmail === 'ASC'" ng-click="doctor.sortBy({field:'sortEmail', sort: 'DESC'})" style="float: right; margin-top: 9px;"></span>
-	 					<span class="glyphicon glyphicon-triangle-top" ng-if="doctor.search.sortEmail === 'DESC'" ng-click="doctor.sortBy({field:'sortEmail', sort: 'ASC'})" style="float: right; margin-top: -4px; margin-right: -4px;"></span>
-						</a>
+						Enable
 					</th>
-					<th>Type</th>
-					<th width="1">Enable</th>
 				</tr>
 				<tr ng-hide="toggle">
-					<td></td>
-					<td><input ng-model="doctor.search.FirstName" ng-enter="doctor.onSearch()" class="form-control" placeholder="Firstname"></td>
-					<td><input ng-model="doctor.search.LastName" ng-enter="doctor.onSearch()" class="form-control" placeholder="Lastname"></td>
-					<td><input ng-model="doctor.search.PhoneNumber" ng-enter="doctor.onSearch()" class="form-control" placeholder="Mobile"></td>
-					<td><input ng-model="doctor.search.Email" ng-enter="doctor.onSearch()" class="form-control" placeholder="Email"></td>
-					<td></td>
-					<td></td>
+					<td>#</td>
+					<td ng-repeat="i in items">
+						<input ng-model="search[i.field]" ng-keypress="Search(search,$event.which)" class="form-control" placeholder="{{i.field}}" />
+					</td>
+					<td><select class="form-control" ng-change="Search(search,'13')" ng-model="search.RoleName" ng-options="r.id as r.name for r in typeDoctor"></select></td>
+					<td><select class="form-control" ng-change="Search(search,'13')" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select></td>
 				</tr>
 			</thead>
 			<tbody>
 			<tbody>
-				<tr ng-repeat="row in doctor.list" ng-click="doctor.dialog.editModal(row)">
-					<td>&nbsp;</td>
-					<td>{{ row.FirstName }}</td>
-					<td>{{ row.LastName }}</td>
-					<td>{{ row.UserAccount.PhoneNumber }}</td>
-					<td>{{ row.Email }}</td>
-					<td>{{ doctor.typies }}</td>
-					<td style="text-align:center">
-						<!-- <span ng-if="row.Enable != 'N'">
-							<i class="fa fa-check text-success"></i>
-						</span> -->
-						<i class="fa fa-check text-success" ng-if="row.Enable != 'N'"></i>
-						<i class="fa fa-remove text-danger" ng-if="row.Enable == 'N'"></i>
+				<tr ng-repeat="d in doctors" ng-click="clickOpen(d.UID,d.UserAccount.RelUserRoles[0].RoleId)">
+					<td>{{d.stt}}</td>
+					<td ng-repeat="i in items" >{{i.field=='UserAccount'?d[i.field]['PhoneNumber']:d[i.field]}}</td>
+					<td>{{ d.UserAccount.RelUserRoles[0].Role.RoleName}}</td>
+					<td>
+						<span ng-if="d.UserAccount.Enable != 'N'">
+							<i class="fa fa-check"></i>
+						</span>
 					</td>
 				</tr>
 			</tbody>
@@ -89,13 +77,22 @@
 		<!-- begin pagination -->
 		<div class="row">
 			<div class="col-md-5 col-sm-12">
-				<div class="dataTables_info" id="sample_1_info" role="status" aria-live="polite">
-					<!-- Showing 1 to 10 of 43 entries -->
-				</div>
+				&nbsp;
 			</div>
 			<div class="col-md-7 col-sm-12" style="text-align:right">
 				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-					<pagination boundary-links="true" total-items="doctor.count" ng-model="doctor.search.page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="doctor.search.limit" max-size="doctor.search.max_size" ng-change="setPage(doctor.search.page)"></pagination>
+					<uib-pagination 
+					boundary-links="true" 
+					total-items="count" 
+					ng-model="searchObjectMap.currentPage" 
+					class="pagination-sm " 
+					previous-text="&lsaquo; " 
+					next-text="&rsaquo; " 
+					first-text="&laquo; " 
+					last-text="&raquo; " 
+					items-per-page="searchObjectMap.limit" 
+					max-size="searchObjectMap.maxSize"
+					ng-change="setPage()"></uib-pagination>
 				</div>
 			</div>
 		</div>
@@ -108,5 +105,5 @@
 </div>
 <!-- end content page -->
 <script type="text/ng-template" id="doctorModal">
-	<doctor-detail doctor-id="doctor.id" account-id="doctor.accid" department-id="doctor.depid" success="doctor.success" on-cancel="cancel"></doctor-detail>
+	<doctor-detail on-uid="uid" on-data="data" action="action" on-cancel="close"></doctor-detail>
 </script>

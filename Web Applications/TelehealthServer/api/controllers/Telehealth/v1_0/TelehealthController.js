@@ -212,7 +212,8 @@ module.exports = {
                         body: {
                             UserUID: user.UID,
                             Type: HelperService.const.systemType[deviceType.toLowerCase()],
-                            DeviceID: deviceId
+                            DeviceID: deviceId,
+                            AppID: req.headers.appid
                         },
                         headers: {
                             'DeviceID': req.headers.deviceid,
@@ -275,6 +276,7 @@ module.exports = {
                                     UserUID: user.UID,
                                     SystemType: HelperService.const.systemType[deviceType.toLowerCase()],
                                     DeviceID: deviceId,
+                                    AppID: req.headers.appid,
                                     VerificationCode: verifyCode
                                 },
                                 headers: {

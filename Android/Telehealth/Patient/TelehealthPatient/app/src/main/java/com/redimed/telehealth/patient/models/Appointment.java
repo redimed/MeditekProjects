@@ -2,6 +2,7 @@ package com.redimed.telehealth.patient.models;
 
 import com.google.gson.annotations.SerializedName;
 
+
 /**
  * Created by Lam on 10/14/2015.
  */
@@ -33,6 +34,9 @@ public class Appointment {
 
     @SerializedName("Patients")
     private Patient[] Patients;
+
+    @SerializedName("TelehealthAppointment")
+    private TelehealthAppointment TelehealthAppointment;
 
     public String getUID() {
         return UID;
@@ -104,5 +108,13 @@ public class Appointment {
 
     public void setPatient(Patient[] patients) {
         Patients = patients;
+    }
+
+    public TelehealthAppointment getTelehealthAppointment() {
+        return TelehealthAppointment;
+    }
+
+    public void setTelehealthAppointment(TelehealthAppointment telehealthAppointment) {
+        TelehealthAppointment = telehealthAppointment;
     }
 }

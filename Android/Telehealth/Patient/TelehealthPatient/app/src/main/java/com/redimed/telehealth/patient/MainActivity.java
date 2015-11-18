@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import com.redimed.telehealth.patient.api.RegisterApi;
+import com.redimed.telehealth.patient.fragment.AppointmentDetails;
 import com.redimed.telehealth.patient.fragment.FAQsFragment;
 import com.redimed.telehealth.patient.fragment.HomeFragment;
 import com.redimed.telehealth.patient.fragment.InformationFragment;
@@ -37,6 +39,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -121,9 +125,18 @@ public class MainActivity extends AppCompatActivity{
                 if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
                     new DialogConnection(MainActivity.this).show();
                 } else {
-                    if (error.getLocalizedMessage().equalsIgnoreCase("TokenExpiredError")){
-                        Log.d(TAG, error.getLocalizedMessage());
-                    }else {
+                    if (error.getLocalizedMessage().equalsIgnoreCase("[\"notAuthenticated\"]")){
+                        final CustomAlertDialog customAlertDialog = new CustomAlertDialog(MainActivity.this, CustomAlertDialog.State.Warning,  "Sorry for inconvenience, please activation application again!");
+                        customAlertDialog.show();
+                        MyApplication.getInstance().clearApplication();
+                        new Timer().schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                startActivity(new Intent(getApplicationContext(), LauncherActivity.class));
+                                customAlertDialog.dismiss();
+                            }
+                        }, 3000);
+                    } else {
                         new CustomAlertDialog(MainActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
                     }
                 }
@@ -198,15 +211,39 @@ public class MainActivity extends AppCompatActivity{
                 MyApplication.getInstance().clearApplication();
                 finish();
                 startActivity(new Intent(getApplicationContext(), LauncherActivity.class));
+                break;
             default:
                 break;
         }
         if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(null).commit();
+            PerformNoBackStackTransaction(fragment);
             drawerCategories.closeDrawer(Gravity.LEFT);
         } else {
             Log.e("MainActivity", "Error in creating fragment");
         }
+    }
+
+    public void PerformNoBackStackTransaction(Fragment fragment) {
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        final int newBackStackLength = fragmentManager.getBackStackEntryCount() +1;
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_container, fragment)
+                .addToBackStack(null)
+                .commit();
+
+        fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                int nowCount = fragmentManager.getBackStackEntryCount();
+                if (newBackStackLength != nowCount) {
+                    fragmentManager.removeOnBackStackChangedListener(this);
+
+                    if ( newBackStackLength > nowCount ) {
+                        fragmentManager.popBackStackImmediate();
+                    }
+                }
+            }
+        });
     }
 }

@@ -144,7 +144,7 @@
                     android:fontFamily="sans-serif-light"
                     android:imeOptions="actionDone"
                     android:inputType="number"
-                    android:maxLength="10"
+                    android:maxLength="13"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -253,29 +253,83 @@
                 <!--Radio GP Referral-->
                 <RadioGroup
                     android:id="@+id/radioGroupGPReferral"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/lblGPReferral"
-                    android:gravity="center"
+                    android:gravity="center|left"
                     android:orientation="horizontal"
+                    android:layout_marginLeft="37dp"
                     android:paddingLeft="10dp">
 
                     <RadioButton
+                        android:id="@+id/radioY"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:hint="@string/hint_yes"
                         android:text="@string/txt_yes"
-                        android:textSize="17sp" />
+                        android:textSize="17sp"/>
 
                     <RadioButton
+                        android:id="@+id/radioN"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="50dp"
+                        android:layout_marginLeft="20dp"
                         android:fontFamily="sans-serif-light"
                         android:hint="@string/hint_no"
                         android:text="@string/txt_no"
+                        android:textSize="17sp" />
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <!--Specialists Type-->
+            <RelativeLayout
+                android:id="@+id/relativeLayoutSpecType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/lblSpecType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/lbl_ST"
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp" />
+
+                <!--Radio GP Referral-->
+                <RadioGroup
+                    android:id="@+id/radioGroupSpecType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/lblSpecType"
+                    android:gravity="center|right"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp">
+
+                    <RadioButton
+                        android:id="@+id/radioPS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="@string/hint_ps"
+                        android:text="@string/txt_ps"
+                        android:layout_marginRight="42dp"
+                        android:textSize="17sp"/>
+
+                    <RadioButton
+                        android:id="@+id/radioOS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="@string/hint_os"
+                        android:text="@string/txt_os"
                         android:textSize="17sp" />
                 </RadioGroup>
 

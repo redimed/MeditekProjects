@@ -135,7 +135,7 @@ public class InformationFragment extends Fragment{
                 lblAddress.setText(patient.getAddress1() == null ? "NONE" : patient.getAddress1());
                 lblSuburb.setText(patient.getSuburb() == null ? "NONE" : patient.getSuburb());
                 lblPostCode.setText(patient.getPostCode() == null ? "NONE" : patient.getPostCode());
-//                lblCountry.setText();
+                lblCountry.setText(patient.getCountryName() == null ? "NONE" : patient.getCountryName());
             }
         }
     }
@@ -181,7 +181,7 @@ public class InformationFragment extends Fragment{
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     ((MainActivity) v.getContext()).Display(0);
                     return true;
                 }

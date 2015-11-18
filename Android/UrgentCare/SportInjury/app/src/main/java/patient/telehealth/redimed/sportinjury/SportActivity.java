@@ -97,30 +97,27 @@ public class SportActivity extends AppCompatActivity implements View.OnClickList
     TextView lblPhoneRequire;
     @Bind(R.id.relativeLayoutGPReferral)
     RelativeLayout relativeLayoutGPReferral;
+    @Bind(R.id.radioY)
+    RadioButton radioY;
+    @Bind(R.id.radioGroupSpecType)
+    RadioGroup radioGroupSpecType;
+    @Bind(R.id.relativeLayoutSpecType)
+    RelativeLayout relativeLayoutSpecType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sport);
+
         TypefaceUtil.applyFont(this, findViewById(R.id.activitySport), "fonts/Roboto-Regular.ttf");
         ButterKnife.bind(this);
         urgentRequestApi = RESTClient.getRegisterApi();
         f = new File("/data/data/" + getApplicationContext().getPackageName() + "/shared_prefs/InformationUrgent.xml");
-
-        arrEditText = new ArrayList<EditText>();
-        arrEditText.add(txtFirstName);
-        arrEditText.add(txtLastName);
-        arrEditText.add(txtContactPhone);
         gson = new Gson();
-        LoadJsonData();
-        GetDataURType();
-        LoadDataInformation();
-
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             btnSportInjury.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
-        }
-        else {
+        } else {
             btnSportInjury.setBackgroundResource(R.color.colorAccent);
         }
         txtDOB.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -131,8 +128,13 @@ public class SportActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
+        radioY.setChecked(true);
         btnSportInjury.setOnClickListener(this);
         btnBack.setOnClickListener(this);
+
+        LoadJsonData();
+        GetDataURType();
+        LoadDataInformation();
     }
 
     public void LoadDataInformation() {
@@ -156,6 +158,7 @@ public class SportActivity extends AppCompatActivity implements View.OnClickList
                     urgentType = "phy";
                     break;
                 case "spec":
+                    relativeLayoutSpecType.setVisibility(View.VISIBLE);
                     txtTitle.setText(getResources().getText(R.string.blue_btn));
                     urgentType = "spec";
                     break;
@@ -241,6 +244,10 @@ public class SportActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnSportInjury:
+                arrEditText = new ArrayList<EditText>();
+                arrEditText.add(txtFirstName);
+                arrEditText.add(txtLastName);
+                arrEditText.add(txtContactPhone);
                 MakeAppointment(arrEditText);
                 break;
             case R.id.btnBack:
@@ -261,21 +268,33 @@ public class SportActivity extends AppCompatActivity implements View.OnClickList
         objectUrgentRequest = new UrgentRequestModel();
         objectUrgentRequest.setFirstName(txtFirstName.getText().toString());
         objectUrgentRequest.setLastName(txtLastName.getText().toString());
-        objectUrgentRequest.setContactPhone(getResources().getString(R.string.australiaFormatPhone) + txtContactPhone.getText().toString());
+        objectUrgentRequest.setContactPhone(CheckContactNo(txtContactPhone.getText().toString()));
         objectUrgentRequest.setSuburb(autoCompleteSuburb.getText().toString());
         objectUrgentRequest.setDOB(txtDOB.getText().toString());
         objectUrgentRequest.setEmail(txtEmail.getText().toString());
         objectUrgentRequest.setDescription(txtDescription.getText().toString());
-        objectUrgentRequest.setServiceType("SportInjury");
+        objectUrgentRequest.setUrgentRequestType("SportInjury");
         objectUrgentRequest.setRequestDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss Z").format(new Date()));
         objectUrgentRequest.setPhysioTherapy(urgentType == "phy" ? "Y" : "N");
-        objectUrgentRequest.setSpecialList(urgentType == "spec" ? "Y" : "N");
-        objectUrgentRequest.setGeneralClinic(urgentType == "gen" ? "N" : "Y");
+        objectUrgentRequest.setSpecialList(urgentType == "spec" ? "Y1" : "N");
+        objectUrgentRequest.setGeneralClinic(urgentType == "gen" ? "Y" : "N");
         objectUrgentRequest.setHandTherapy(urgentType == "hand" ? "Y" : "N");
-        if (!urgentType.equalsIgnoreCase("gen")){
-            objectUrgentRequest.setGPReferral((radioGroupGPReferral.getCheckedRadioButtonId() == -1) ? null : ((RadioButton) findViewById(radioGroupGPReferral.getCheckedRadioButtonId())).getHint().toString());
+        if (!urgentType.equalsIgnoreCase("gen")) {
+            objectUrgentRequest.setGPReferral((radioGroupGPReferral.getCheckedRadioButtonId() == -1) ? "Y" : ((RadioButton) findViewById(radioGroupGPReferral.getCheckedRadioButtonId())).getHint().toString());
         }
-
+        if (urgentType.equalsIgnoreCase("spec")){
+            String spec = (radioGroupSpecType.getCheckedRadioButtonId() == -1) ? null : ((RadioButton) findViewById(radioGroupSpecType.getCheckedRadioButtonId())).getHint().toString();
+            if (spec != null){
+                switch (spec){
+                    case "0":
+                        objectUrgentRequest.setSpecialType("Plastic surgeon");
+                        break;
+                    case "1":
+                        objectUrgentRequest.setSpecialType("Orthopaedic surgeon");
+                        break;
+                }
+            }
+        }
         JsonObject urgentJson = new JsonObject();
         urgentJson.addProperty("data", gson.toJson(objectUrgentRequest));
         dialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
@@ -389,11 +408,11 @@ public class SportActivity extends AppCompatActivity implements View.OnClickList
         }
 
         // Validate phone number australian phone number: 10digits (0X YYYY YYYY)
-        if (CheckContactNo(txtContactPhone) == "null") {
+        if (CheckContactNo(txtContactPhone.getText().toString()) == "null") {
             txtContactPhone.setError(getResources().getString(R.string.contactPhoneRequired), customErrorDrawable);
             lblPhoneRequire.setVisibility(View.GONE);
             validate = false;
-        } else if (CheckContactNo(txtContactPhone) == "error") {
+        } else if (CheckContactNo(txtContactPhone.getText().toString()) == "error") {
             txtContactPhone.setError(getResources().getString(R.string.contactPhoneFormat), customErrorDrawable);
             lblPhoneRequire.setVisibility(View.GONE);
             validate = false;
@@ -421,25 +440,35 @@ public class SportActivity extends AppCompatActivity implements View.OnClickList
     }
 
     // Validate contact phone
-    public String CheckContactNo(EditText editTextContactNo) {
-        if (CheckRequiredData(editTextContactNo)) {
+    public String CheckContactNo(String editTextContactNo) {
+        if (editTextContactNo.length() == 0) {
             return "null";
         } else {
-            if (editTextContactNo.getText().length() < 9) {
+            String expression = "^(\\+61|0061|0)?4[0-9]{8}$";
+            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(editTextContactNo);
+            if (matcher.matches()) {
+                String mobile = null;
+                String subStringMobile = editTextContactNo.substring(0, 4);
+                if (subStringMobile.equalsIgnoreCase("0061")) {
+                    mobile = getResources().getString(R.string.australiaFormatPhone) +
+                            editTextContactNo.substring(4, editTextContactNo.length());
+                } else {
+                    char subPhone = editTextContactNo.charAt(0);
+                    switch (subPhone) {
+                        case '0':
+                            mobile = getResources().getString(R.string.australiaFormatPhone) + editTextContactNo.substring(1);
+                            break;
+                        case '4':
+                            mobile = getResources().getString(R.string.australiaFormatPhone) + editTextContactNo;
+                            break;
+                    }
+                }
+                return mobile;
+            } else {
                 return "error";
-            } else if (editTextContactNo.getText().length() == 9) {
-                int firstPhone = Integer.parseInt(editTextContactNo.getText().toString().substring(0, 1));
-                if (firstPhone == 0) {
-                    return "error";
-                }
-            } else if (editTextContactNo.getText().length() == 10) {
-                int firstPhone = Integer.parseInt(editTextContactNo.getText().toString().substring(0, 1));
-                if (firstPhone != 0) {
-                    return "error";
-                }
             }
         }
-        return "true";
     }
 
     // Validate email

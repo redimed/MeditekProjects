@@ -5,7 +5,7 @@ package com.redimed.telehealth.patient.utils;
  */
 public class Config {
 
-    public static final String apiURLUpload = "http://192.168.1.130:3005";
+    public static final String apiURLCore = "http://192.168.1.130:3005";
     public static final String apiURLDownload = "http://192.168.1.130:3005/api/downloadFile/";
 
     public static final String apiURL = "http://192.168.1.130:3009";

@@ -1,8 +1,11 @@
 package patient.telehealth.redimed.workinjury;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -104,7 +107,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         getResources().getString(R.string.fileName)
         );
 
-        if(!file.exists()){
+        if (!file.exists()) {
             urgentRequestApi.getListSuburb(new Callback<JsonObject>() {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
@@ -133,6 +136,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private void Contact() {
         Uri call = Uri.parse("tel:" + getResources().getString(R.string.phone_call));
         Intent phoneCallIntent = new Intent(Intent.ACTION_CALL, call);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                startActivity(phoneCallIntent);
+                return;
+            }
+        }
         startActivity(phoneCallIntent);
     }
 
@@ -171,7 +180,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnRehab:
                 i = new Intent(this, WorkActivity.class);
-                i.putExtra("URType", "reh");
+                i.putExtra("URType", "tre");
                 startActivity(i);
                 finish();
                 break;

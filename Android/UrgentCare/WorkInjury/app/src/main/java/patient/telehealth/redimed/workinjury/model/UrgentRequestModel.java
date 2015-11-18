@@ -40,14 +40,17 @@ public class UrgentRequestModel {
     @SerializedName("handTherapy")
     public String HandTherapy;
 
-    @SerializedName("rehab")
+    @SerializedName("treatment")
     public String Rehab;
+
+    @SerializedName("exerciseRehab")
+    public String ExerciseRehab;
 
     @SerializedName("GP")
     public String GeneralClinic;
 
     @SerializedName("urgentRequestType")
-    public String ServiceType;
+    public String UrgentRequestType;
 
     @SerializedName("companyName")
     public String CompanyName;
@@ -162,12 +165,20 @@ public class UrgentRequestModel {
         Rehab = rehab;
     }
 
-    public String getServiceType() {
-        return ServiceType;
+    public String getExerciseRehab() {
+        return ExerciseRehab;
     }
 
-    public void setServiceType(String serviceType) {
-        ServiceType = serviceType;
+    public void setExerciseRehab(String exerciseRehab) {
+        ExerciseRehab = exerciseRehab;
+    }
+
+    public String getUrgentRequestType() {
+        return UrgentRequestType;
+    }
+
+    public void setUrgentRequestType(String urgentRequestType) {
+        UrgentRequestType = urgentRequestType;
     }
 
     public String getCompanyName() {

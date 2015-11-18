@@ -98,12 +98,10 @@
     <string name="contain_bottom2">anywhere</string>
 
     <!-- Appointment Layout-->
-    <string name="lbl_from_time">From Time</string>
-    <string name="lbl_to_time">To Time</string>
-    <string name="lbl_status">Status</string>
+    <string name="lbl_date">Date</string>
+    <string name="lbl_time">Time</string>
     <string name="lbl_doctor">Doctor</string>
-    <string name="lbl_email">Email</string>
-    <string name="lbl_work">Work Phone</string>
+    <string name="lbl_status">Status</string>
     <string name="lbl_image">Image</string>
     <string name="btn_upload">Upload</string>
 
@@ -130,13 +128,15 @@
     <string name="profile_suburb">Suburb</string>
     <string name="profile_post_code">Post Code</string>
     <string name="profile_country">Country</string>
+    <string name="none">NONE</string>
 
     <!-- Sub Tracking Layout-->
     <string name="sub_tracking_received">Received</string>
-    <string name="sub_tracking_appt_pending">&#160;&#160;&#160;Appt pending</string>
+    <string name="sub_tracking_appt_pending">&#160;&#160;&#160;Appt&#x000A;pending</string>
     <string name="sub_tracking_appt_time">Appt&#x000A;time</string>
     <string name="sub_tracking_attend">Attended</string>
-    <string name="sub_tracking_wait">&#160;&#160;Wait&#x000A;&#160;&#160;&#160;&#160;list&#x000A;surgery</string>
+    <string name="sub_tracking_wait">&#160;&#160;&#160;Wait&#x000A;&#160;&#160;&#160;&#160;&#160;list&#x000A;&#160;surgery</string>
     <string name="sub_tracking_finish">Finish</string>
+    <string name="sub_appointment">Appointment</string>
 
 </resources>

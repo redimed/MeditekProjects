@@ -35,6 +35,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private boolean shouldFinish = false;
     private int currentItem = 0;
     private Fragment f;
+    private FragmentManager fragmentManager;
 
     @Bind(R.id.btnInformation)
     Button btnInformation;
@@ -59,6 +60,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         v = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, v);
 
+        fragmentManager = getActivity().getSupportFragmentManager();
         sliderImageAdapter = new SliderImageAdapter(v.getContext());
         slider.setAdapter(sliderImageAdapter);
         circleIndicator.setViewPager(slider);
@@ -113,7 +115,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         bundle.putString("urgentCare", "UR");
         f.setArguments(bundle);
         if (f != null) {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.popBackStackImmediate();
             fragmentManager.beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
         }
     }
@@ -138,6 +140,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         Toast.makeText(v.getContext(), R.string.confirm_exit, Toast.LENGTH_SHORT).show();
                         shouldFinish = true;
                         return true;
+                    }
+                    else {
+                        getActivity().moveTaskToBack(true);
+                        getActivity().finish();
+                        return false;
                     }
                 }
                 return false;

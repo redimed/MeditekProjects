@@ -42,118 +42,185 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/layoutApptStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"
         android:showDividers="middle"
         android:divider="@drawable/empty_tall_divider"
         android:gravity="center"
-        android:layout_marginRight="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="10dp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_marginTop="30dp"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:text="@string/sub_tracking_received"
-            android:textSize="12dp"
-            android:paddingTop="27dp"
-            android:paddingLeft="11dp"
-            android:background="@drawable/sub_tracking_received"/>
-
-        <View
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:background="@drawable/sub_tracking_arrow_icon"/>
-
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:text="@string/sub_tracking_appt_pending"
-            android:textSize="12dp"
-            android:paddingTop="20dp"
-            android:paddingLeft="13dp"
-            android:background="@drawable/sub_tracking_appt_pending"/>
-
-        <View
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:background="@drawable/sub_tracking_arrow_icon"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginBottom="-35dp">
 
-            <TextView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+            <ImageView
+                android:id="@+id/lblReceived"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sub_tracking_received"/>
+
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sub_tracking_received"
+                android:textSize="@dimen/tracking_text_size"
+                android:layout_centerInParent="true"/>
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="8dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignBottom="@+id/lblReceived"
+                android:layout_marginBottom="35dp"
+                android:background="@drawable/sub_tracking_arrow_icon"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/lblPending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sub_tracking_appt_pending"/>
+
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:layout_width="38dp"
+                android:layout_height="wrap_content"
+                android:text="@string/sub_tracking_appt_pending"
+                android:textSize="@dimen/tracking_text_size"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignBottom="@+id/lblPending"
+            android:background="@drawable/sub_tracking_arrow_icon"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/lblTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sub_tracking_appt_time"/>
+
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
                 android:text="@string/sub_tracking_appt_time"
-                android:textSize="12dp"
-                android:paddingTop="22dp"
-                android:paddingLeft="23dp"
-                android:layout_marginRight="150dp"
-                android:background="@drawable/sub_tracking_appt_time"/>
+                android:textSize="@dimen/tracking_text_size"
+                android:layout_centerInParent="true"/>
 
-        </LinearLayout>
-
+        </RelativeLayout>
 
         <View
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="10dp"
+            android:layout_height="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignBottom="@+id/lblTime"
             android:background="@drawable/sub_tracking_arrow_icon"/>
 
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:text="@string/sub_tracking_attend"
-            android:textSize="12dp"
-            android:paddingTop="28dp"
-            android:paddingLeft="10dp"
-            android:background="@drawable/sub_tracking_attended"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/lblAttended"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sub_tracking_attended"/>
+
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sub_tracking_attend"
+                android:textSize="@dimen/tracking_text_size"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
 
         <View
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="10dp"
+            android:layout_height="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignBottom="@+id/lblAttended"
             android:background="@drawable/sub_tracking_arrow_icon"/>
 
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:text="@string/sub_tracking_wait"
-            android:textSize="12dp"
-            android:paddingTop="12dp"
-            android:paddingLeft="15dp"
-            android:background="@drawable/sub_tracking_wait"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/lblWait"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sub_tracking_wait"/>
+
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:layout_width="37dp"
+                android:layout_height="wrap_content"
+                android:text="@string/sub_tracking_wait"
+                android:textSize="@dimen/tracking_text_size"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
 
         <View
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="10dp"
+            android:layout_height="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignBottom="@+id/lblWait"
             android:background="@drawable/sub_tracking_arrow_icon"/>
 
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:text="@string/sub_tracking_finish"
-            android:textSize="12dp"
-            android:paddingTop="27dp"
-            android:paddingLeft="20dp"
-            android:background="@drawable/sub_tracking_finish"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/lblFinish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sub_tracking_finish"/>
+
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sub_tracking_finish"
+                android:textSize="@dimen/tracking_text_size"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnAppt"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_width="130dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/sub_tracking_appt_icon"
-        android:text="Appointment"
+        android:text="@string/sub_appointment"
         android:textColor="@android:color/holo_blue_dark" />
 
 </RelativeLayout>

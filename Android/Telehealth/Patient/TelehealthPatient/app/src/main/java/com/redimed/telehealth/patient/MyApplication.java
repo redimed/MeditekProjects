@@ -43,15 +43,15 @@ public class MyApplication extends Application {
         super.onTerminate();
     }
 
-    public void clearApplication(){
+    public void clearApplication() {
         File cache = getCacheDir();
         File appDir = new File(cache.getParent());
 
-        if (appDir.exists()){
+        if (appDir.exists()) {
             String[] children = appDir.list();
 
-            for (String s : children){
-                if (!s.equals("lib")){
+            for (String s : children) {
+                if (!s.equals("lib")) {
                     deleteDir(new File(appDir, s));
                 }
             }
@@ -59,12 +59,12 @@ public class MyApplication extends Application {
     }
 
     public static boolean deleteDir(File dir) {
-        if(dir != null && dir.isDirectory()){
+        if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
 
-            for (int i = 0; i < children.length; i++){
+            for (int i = 0; i < children.length; i++) {
                 boolean success = deleteDir(new File(dir, children[i]));
-                if (!success){
+                if (!success) {
                     return false;
                 }
             }
@@ -73,16 +73,32 @@ public class MyApplication extends Application {
     }
 
     @NonNull
-    public String ConvertDateTime(String dataTime) {
+    public String ConvertDate(String dataTime) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         Date myDate = null;
+        String finalDate = " ";
         try {
             myDate = dateFormat.parse(dataTime);
+            SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy");
+            finalDate = timeFormat.format(myDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String finalDate = timeFormat.format(myDate);
+        return finalDate;
+    }
+
+    @NonNull
+    public String ConvertTime(String dataTime) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        Date myDate = null;
+        String finalDate = " ";
+        try {
+            myDate = dateFormat.parse(dataTime);
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+            finalDate = timeFormat.format(myDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return finalDate;
     }
 }

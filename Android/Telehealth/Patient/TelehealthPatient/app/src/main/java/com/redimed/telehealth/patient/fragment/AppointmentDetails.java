@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,34 +57,27 @@ import retrofit.client.Response;
  */
 public class AppointmentDetails extends Fragment {
 
-    private String TAG = "TELEHEALTH";
+    private String TAG = "DETAILS";
     private static final int RESULT_PHOTO = 1;
     private static final int RESULT_CAMERA = 2;
     private View v;
     private SharedPreferences telehealthPatient;
     private RegisterApi registerApi;
     private Gson gson;
-    private String fromTime, toTime, status, firstDoctor, middleDoctor, lastDoctor, emailDoctor, workPhoneDoctor, appointmentUID, accountUID;
-    private JsonObject appointmentJson;
-    private Patient patient;
-    private Appointment appointment;
+    private String fromTime, status, firstDoctor, middleDoctor, lastDoctor, appointmentUID;
     private List<String> urlPicasso;
     private LinearLayoutManager layoutManagerCategories;
     private RVAdapterImage rvAdapterImage;
     private Intent i;
 
-    @Bind(R.id.lblFromTime)
-    TextView lblFromTime;
-    @Bind(R.id.lblToTime)
-    TextView lblToTime;
+    @Bind(R.id.lblDate)
+    TextView lblDate;
+    @Bind(R.id.lblTime)
+    TextView lblTime;
     @Bind(R.id.lblStatus)
     TextView lblStatus;
     @Bind(R.id.lblDoctorName)
     TextView lblDoctorName;
-    @Bind(R.id.lblDoctorEmail)
-    TextView lblDoctorEmail;
-    @Bind(R.id.lblDoctorWorkPhone)
-    TextView lblDoctorWorkPhone;
     @Bind(R.id.btnUpload)
     Button btnUpload;
     @Bind(R.id.rvImageAppointment)
@@ -98,22 +92,21 @@ public class AppointmentDetails extends Fragment {
         ButterKnife.bind(this, v);
 
         telehealthPatient = v.getContext().getSharedPreferences("TelehealthUser", v.getContext().MODE_PRIVATE);
-        accountUID = telehealthPatient.getString("userUID", null);
         urlPicasso = new ArrayList<String>();
         gson = new Gson();
-        patient = new Patient();
         registerApi = RESTClient.getRegisterApi();
 
-        appointmentUID = getArguments().getString("apptUID", null);
-        Log.d(TAG + "=============", appointmentUID);
-        GetAppointmentDetails(appointmentUID);
+        appointmentUID = this.getArguments().getString("appointmentUID", null);
+        Log.d(TAG, appointmentUID);
+        if (appointmentUID != null) {
+            GetAppointmentDetails(appointmentUID);
+        }
 
         rvImageAppointment.setHasFixedSize(true);
-        layoutManagerCategories = new LinearLayoutManager(v.getContext());
+        layoutManagerCategories = new LinearLayoutManager(v.getContext(), LinearLayout.HORIZONTAL, false);
         rvImageAppointment.setLayoutManager(layoutManagerCategories);
         rvAdapterImage = new RVAdapterImage();
         rvImageAppointment.setAdapter(rvAdapterImage);
-        rvAdapterImage.swapData(urlPicasso);
 
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,11 +119,7 @@ public class AppointmentDetails extends Fragment {
 
     //    Get Detail Appointment with param UID Appointment
     private void GetAppointmentDetails(String appointmentUID) {
-        appointment = new Appointment();
-        appointment.setUID(appointmentUID);
-        appointmentJson = new JsonObject();
-        appointmentJson.addProperty("data", gson.toJson(appointment));
-        registerApi.getAppointmentDetails(appointmentJson, new Callback<JsonObject>() {
+        registerApi.getAppointmentDetails(appointmentUID, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 if (jsonObject.get("data").getAsJsonObject() != null) {
@@ -139,8 +128,6 @@ public class AppointmentDetails extends Fragment {
 
                     fromTime = jsonObject.get("data").getAsJsonObject().get("FromTime").isJsonNull() ?
                             "NONE" : jsonObject.get("data").getAsJsonObject().get("FromTime").getAsString();
-                    toTime = jsonObject.get("data").getAsJsonObject().get("ToTime").isJsonNull() ?
-                            "NONE" : jsonObject.get("data").getAsJsonObject().get("ToTime").getAsString();
                     status = jsonObject.get("data").getAsJsonObject().get("Status").isJsonNull() ?
                             "NONE" : jsonObject.get("data").getAsJsonObject().get("Status").getAsString();
 
@@ -149,18 +136,14 @@ public class AppointmentDetails extends Fragment {
                             firstDoctor = doctors[i].getFirstName() == null ? " " : doctors[i].getFirstName();
                             middleDoctor = doctors[i].getMiddleName() == null ? " " : doctors[i].getMiddleName();
                             lastDoctor = doctors[i].getLastName() == null ? " " : doctors[i].getLastName();
-                            emailDoctor = doctors[i].getEmail() == null ? " " : doctors[i].getEmail();
-                            workPhoneDoctor = doctors[i].getWorkPhoneNumber() == null ? "NONE" : doctors[i].getWorkPhoneNumber();
                         }
                     } else {
                         firstDoctor = " ";
                         middleDoctor = " ";
                         lastDoctor = " ";
-                        emailDoctor = " ";
-                        workPhoneDoctor = " ";
                     }
 
-                    if (fromTime.equalsIgnoreCase("NONE") || toTime.equalsIgnoreCase("NONE")) {
+                    if (fromTime.equalsIgnoreCase("NONE")) {
                         AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
                         alertDialog.setTitle(R.string.title_dialog_appt);
                         alertDialog.setMessage(v.getContext().getResources().getString(R.string.message_dialog_appt));
@@ -173,8 +156,8 @@ public class AppointmentDetails extends Fragment {
                         });
                         alertDialog.show();
                     } else {
-                        lblFromTime.setText(MyApplication.getInstance().ConvertDateTime(fromTime));
-                        lblToTime.setText(MyApplication.getInstance().ConvertDateTime(fromTime));
+                        lblDate.setText(MyApplication.getInstance().ConvertDate(fromTime));
+                        lblTime.setText(MyApplication.getInstance().ConvertTime(fromTime));
                         if (status.equalsIgnoreCase("Approved")) {
                             lblStatus.setTextColor(ContextCompat.getColor(v.getContext(), R.color.approved));
                         } else {
@@ -182,8 +165,6 @@ public class AppointmentDetails extends Fragment {
                         }
                         lblStatus.setText(status);
                         lblDoctorName.setText(firstDoctor + middleDoctor + lastDoctor);
-                        lblDoctorEmail.setText(emailDoctor);
-                        lblDoctorWorkPhone.setText(workPhoneDoctor);
                     }
 
                     String fileUpload = jsonObject.get("data").getAsJsonObject().get("FileUploads").toString();
@@ -205,6 +186,7 @@ public class AppointmentDetails extends Fragment {
         for (int i = 0; i < fileUploads.length; i++){
             urlPicasso.add(Config.apiURLDownload + fileUploads[i].getUID());
         }
+        rvAdapterImage.swapData(urlPicasso, telehealthPatient);
     }
 
     private void DialogUploadImage() {
@@ -270,7 +252,6 @@ public class AppointmentDetails extends Fragment {
                 }
                 i = new Intent(v.getContext(), ModelActivity.class);
                 i.putExtra("picturePath", picturePath);
-                i.putExtra("userUID", accountUID);
                 i.putExtra("appointmentUID", appointmentUID);
                 startActivity(i);
             } else {

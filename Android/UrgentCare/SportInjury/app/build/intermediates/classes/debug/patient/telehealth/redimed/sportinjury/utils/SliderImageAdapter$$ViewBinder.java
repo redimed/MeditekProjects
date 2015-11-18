@@ -8,8 +8,8 @@ import butterknife.ButterKnife.ViewBinder;
 public class SliderImageAdapter$$ViewBinder<T extends patient.telehealth.redimed.sportinjury.utils.SliderImageAdapter> implements ViewBinder<T> {
   @Override public void bind(final Finder finder, final T target, Object source) {
     View view;
-    view = finder.findRequiredView(source, 2131493054, "field 'imgSlider'");
-    target.imgSlider = finder.castView(view, 2131493054, "field 'imgSlider'");
+    view = finder.findRequiredView(source, 2131493061, "field 'imgSlider'");
+    target.imgSlider = finder.castView(view, 2131493061, "field 'imgSlider'");
   }
 
   @Override public void unbind(T target) {

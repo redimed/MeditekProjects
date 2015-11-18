@@ -42,7 +42,7 @@
             <LinearLayout
                 android:id="@+id/layoutHome"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="195dp"
                 android:layout_alignParentBottom="true"
                 android:paddingTop="40dp"
                 android:background="#aaffffff"
@@ -119,8 +119,8 @@
 
                 <Button
                     android:id="@+id/btnCall"
-                    android:layout_width="140dp"
-                    android:layout_height="30dp"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
                     android:background="@color/lightFont"
                     android:drawableLeft="@drawable/call_icon"
                     android:paddingLeft="30dp"

@@ -47,7 +47,6 @@
             android:fontFamily="sans-serif-light"
             android:textAllCaps="false"
             android:text="Upload"
-            android:background="#67000000"
             android:textSize="17sp"
             android:textStyle="bold" />
 

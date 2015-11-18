@@ -272,7 +272,10 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                                     " " : userJson.get("UID").getAsString());
                             uidTelehealth.putString("patientUID", userJson.get("PatientUID").isJsonNull() ?
                                     " " : userJson.get("PatientUID").getAsString());
-                            uidTelehealth.putString("deviceId", spDevice.getString("deviceID", null));
+                            uidTelehealth.putString("deviceID", spDevice.getString("deviceID", null) == null ?
+                                    " " : spDevice.getString("deviceID", null));
+                            uidTelehealth.putString("refreshCode", jsonObject.get("refreshCode").isJsonNull() ?
+                                    " " : jsonObject.get("refreshCode").getAsString());
                             uidTelehealth.apply();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();

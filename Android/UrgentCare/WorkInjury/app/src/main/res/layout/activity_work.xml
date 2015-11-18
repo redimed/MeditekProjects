@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     tools:context="patient.telehealth.redimed.workinjury.WorkActivity">
 
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -143,7 +142,7 @@
                     android:fontFamily="sans-serif-light"
                     android:imeOptions="actionDone"
                     android:inputType="number"
-                    android:maxLength="10"
+                    android:maxLength="13"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -234,8 +233,9 @@
                 android:id="@+id/relativeLayoutGPReferral"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp">
+                android:layout_marginRight="35dp">
 
                 <TextView
                     android:id="@+id/lblGPReferral"
@@ -249,30 +249,98 @@
                 <!--Radio GP Referral-->
                 <RadioGroup
                     android:id="@+id/radioGroupGPReferral"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/lblGPReferral"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingLeft="10dp">
 
                     <RadioButton
+                        android:id="@+id/radioY"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center|right"
                         android:fontFamily="sans-serif-light"
                         android:hint="@string/hint_yes"
                         android:text="@string/txt_yes"
                         android:textSize="17sp" />
 
                     <RadioButton
+                        android:id="@+id/radioN"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="50dp"
+                        android:layout_gravity="center|right"
+                        android:layout_marginLeft="20dp"
                         android:fontFamily="sans-serif-light"
                         android:hint="@string/hint_no"
                         android:text="@string/txt_no"
                         android:textSize="17sp" />
+
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutTreatment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/lblTypeTreatment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/lbl_Treatment"
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp" />
+
+                <!--Radio GP Referral-->
+                <RadioGroup
+                    android:id="@+id/radioGroupTypeTreatment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/radioPhysiotherapy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|right"
+                        android:layout_marginRight="28dp"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="@string/hint_type_treat_phy"
+                        android:text="@string/txt_type_treat_phy"
+                        android:textSize="17sp" />
+
+                    <RadioButton
+                        android:id="@+id/radioExerciseRehab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|right"
+                        android:layout_marginRight="21dp"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="@string/hint_type_treat_exe"
+                        android:text="@string/txt_type_treat_exe"
+                        android:textSize="17sp" />
+
+                    <RadioButton
+                        android:id="@+id/radioHandTherapy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|right"
+                        android:layout_marginRight="30dp"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="@string/hint_type_treat_hand"
+                        android:text="@string/txt_type_treat_han"
+                        android:textSize="17sp" />
+
                 </RadioGroup>
 
             </RelativeLayout>
@@ -326,7 +394,7 @@
                     android:inputType="textCapSentences"
                     android:maxLength="50"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"/>
 
                 <TextView
                     android:id="@+id/lblCNRequire"
@@ -361,7 +429,7 @@
                     android:inputType="text"
                     android:maxLength="255"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"/>
 
                 <TextView
                     android:id="@+id/lblCTRequire"
@@ -376,7 +444,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hint_com_name" />
+                android:text="@string/hint_com_phone" />
 
             <!--CompanyPhone-->
             <RelativeLayout
@@ -410,7 +478,7 @@
                 android:text="@string/make_appointment"
                 android:textAllCaps="false"
                 android:textColor="@color/lightFont"
-                android:textSize="22sp"/>
+                android:textSize="22sp" />
 
         </LinearLayout>
 

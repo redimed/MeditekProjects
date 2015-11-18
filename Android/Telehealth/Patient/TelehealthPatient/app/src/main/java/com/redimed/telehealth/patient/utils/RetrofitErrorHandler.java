@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 
 import org.json.JSONObject;
@@ -27,7 +28,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
         String errorDescription;
 
         if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
-            if (cause.getCause() instanceof SocketTimeoutException){
+            if (cause.getCause() instanceof SocketTimeoutException) {
                 errorDescription = "Network Timeout";
             } else {
                 errorDescription = "Network Error";
@@ -35,8 +36,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
         } else {
             if (cause.getResponse() == null) {
                 errorDescription = "No Response From Server";
-            }
-            else {
+            } else {
                 try {
                     ErrorResponse errorResponse = (ErrorResponse) cause.getBodyAs(ErrorResponse.class);
                     errorDescription = errorResponse.error.data.message;
@@ -44,10 +44,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
                     try {
                         String json = new String(((TypedByteArray) cause.getResponse().getBody()).getBytes());
                         JSONObject dataObject = new JSONObject(json);
-                        if (dataObject.optString("ErrorType").equalsIgnoreCase("jwt expired")){
-                            errorDescription = "TokenExpiredError";
-                        }else
-                            errorDescription = dataObject.optString("ErrorsList");
+                        errorDescription = dataObject.optString("ErrorsList");
                     } catch (Exception ex2) {
                         Log.e(TAG, "HandleError: " + ex2.getLocalizedMessage());
                         errorDescription = "Error Unknown";

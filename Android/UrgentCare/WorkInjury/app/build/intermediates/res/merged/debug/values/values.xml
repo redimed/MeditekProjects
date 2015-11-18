@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:ns1="http://schemas.android.com/tools">
     <!-- From: file:/D:/Redimed/Android/UrgentCare/WorkInjury/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
@@ -422,7 +422,7 @@
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/WorkInjury/app/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="app_name">WorkInjury</string>
+    <string name="app_name">REDIMED Health Work Injury</string>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/WorkInjury/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
@@ -476,7 +476,7 @@
     <string name="companyPhoneFormat">Company Phone wrong formatted</string>
     <string name="confirmSaveInfo">Do you want to save information</string>
     <string name="confirm_exit">Press Back button again to exit</string>
-    <string name="contactPhoneFormat">Contact Phone wrong formatted</string>
+    <string name="contactPhoneFormat">Mobile Number wrong formatted</string>
     <string name="contactPhoneRequired">Contact Phone is required!</string>
     <string name="contain_CARE">CARE</string>
     <string name="contain_HEALTH">HEALTH</string>
@@ -496,21 +496,25 @@
     <string name="emailValid">Email address not valid</string>
     <string name="faq_btn">FAQs</string>
     <string name="fileName">suburb.json</string>
-    <string name="green_btn">Rehab</string>
+    <string name="green_btn">Treatment</string>
     <string name="hint_com_name">Company Name</string>
     <string name="hint_com_phone">Company Phone</string>
-    <string name="hint_contact">Contact Phone</string>
+    <string name="hint_contact">Mobile Number</string>
     <string name="hint_contact_per">Contact Person</string>
-    <string name="hint_des">Description</string>
+    <string name="hint_des">Description of Injury</string>
     <string name="hint_dob">Date of Birth</string>
     <string name="hint_email">Email</string>
     <string name="hint_first_name">First Name</string>
     <string name="hint_last_name">Last Name</string>
     <string name="hint_no">N</string>
     <string name="hint_suburb">Suburb</string>
+    <string name="hint_type_treat_exe">1</string>
+    <string name="hint_type_treat_hand">2</string>
+    <string name="hint_type_treat_phy">0</string>
     <string name="hint_yes">Y</string>
     <string name="isRequired">Field is required!</string>
     <string name="lbl_GP">GP Referral</string>
+    <string name="lbl_Treatment">Type of Treatment</string>
     <string name="make_appointment">Make Appointment</string>
     <string name="orange_btn">Other Service</string>
     <string name="phone_call">0892300900</string>
@@ -527,8 +531,11 @@
     <string name="title_activity_faqs">FAQsActivity</string>
     <string name="title_activity_work">WorkActivity</string>
     <string name="txt_no">No</string>
+    <string name="txt_type_treat_exe">Exercise Rehab</string>
+    <string name="txt_type_treat_han">Hand Therapy</string>
+    <string name="txt_type_treat_phy">Physiotherapy</string>
     <string name="txt_yes">Yes</string>
-    <string name="urgent_btn">URGENT CARE</string>
+    <string name="urgent_btn">About Us</string>
     <!-- From: file:/D:/Redimed/Android/UrgentCare/WorkInjury/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>

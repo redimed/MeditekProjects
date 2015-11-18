@@ -1,6 +1,8 @@
 package com.redimed.telehealth.patient;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +45,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     private static final String LOGTAG = "OpenTok";
     private String sessionId, token, apiKey, to, from;
     private static final boolean SUBSCRIBE_TO_SELF = false;
+    private MediaPlayer ringtone;
 
     @Bind(R.id.fabHold)
     FloatingActionButton fabHold;
@@ -78,6 +81,19 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         Picasso.with(getApplicationContext()).load(R.drawable.logo_bg_redimed)
                 .transform(new BlurTransformation(getApplicationContext(), 15))
                 .into(imgLogoCall);
+
+        ringtone = MediaPlayer.create(this, R.raw.ringtone);
+        ringtone.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                if (mp.isPlaying()) {
+                    mp.reset();
+                    mp.release();
+                    mp = null;
+                }
+            }
+        });
+        ringtone.start();
 
         btnDecline.setOnClickListener(this);
         btnAnswer.setOnClickListener(this);
@@ -153,9 +169,11 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.btnDecline):
+                ringtone.stop();
                 DeclineCommunication("decline");
                 break;
             case (R.id.btnAnswer):
+                ringtone.stop();
                 AnswerCommunication();
                 break;
             case R.id.fabHold:
@@ -165,6 +183,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 MuteCommunication();
                 break;
             case R.id.fabEndCall:
+                ringtone.stop();
                 EndCommunication();
                 break;
         }

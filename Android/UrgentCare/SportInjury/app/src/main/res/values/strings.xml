@@ -1,13 +1,13 @@
 <resources>
     <!-- Application Name-->
-    <string name="app_name">SportInjury</string>
+    <string name="app_name">REDIMED Health Sports Injury</string>
 
     <!-- Home Activity-->
-    <string name="green_btn">Physio Therapist</string>
-    <string name="blue_btn">Specialist Clinic</string>
-    <string name="red_btn">General Clinic</string>
+    <string name="green_btn">Physio</string>
+    <string name="blue_btn">Specialists</string>
+    <string name="red_btn">GP</string>
     <string name="orange_btn">Hand Therapist</string>
-    <string name="urgent_btn">URGENT CARE</string>
+    <string name="urgent_btn">About Us</string>
     <string name="faq_btn">FAQs</string>
     <string name="call_btn">Call Us</string>
     <string name="phone_call">0892300900</string>
@@ -37,7 +37,7 @@
     <string name="required_field">*</string>
     <string name="hint_first_name">First Name</string>
     <string name="hint_last_name">Last Name</string>
-    <string name="hint_contact">Contact Phone</string>
+    <string name="hint_contact">Mobile Number</string>
     <string name="hint_suburb">Suburb</string>
     <string name="hint_dob">Date of Birth</string>
     <string name="hint_email">Email</string>
@@ -46,9 +46,13 @@
     <string name="hint_no">N</string>
     <string name="txt_yes">Yes</string>
     <string name="txt_no">No</string>
-    <string name="hint_des">Description</string>
+    <string name="lbl_ST">Specialists Type</string>
+    <string name="hint_ps">0</string>
+    <string name="hint_os">1</string>
+    <string name="txt_ps">Plastic Surgeon</string>
+    <string name="txt_os">Orthopaedic Surgeon</string>
+    <string name="hint_des">Description of Injury</string>
     <string name="make_appointment">Make Appointment</string>
-
 
     <!-- FAQs-->
     <string name="title_activity_faqs">FAQsActivity</string>

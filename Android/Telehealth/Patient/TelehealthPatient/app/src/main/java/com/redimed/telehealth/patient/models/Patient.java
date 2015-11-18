@@ -52,6 +52,9 @@ public class Patient {
     @SerializedName("Enable")
     private String Enable;
 
+    @SerializedName("CountryName")
+    private String CountryName;
+
     @SerializedName("UserAccount")
     private UserAccount userAccount;
 
@@ -175,6 +178,14 @@ public class Patient {
 
     public void setEnable(String enable) {
         Enable = enable;
+    }
+
+    public String getCountryName() {
+        return CountryName;
+    }
+
+    public void setCountryName(String countryName) {
+        CountryName = countryName;
     }
 
     public UserAccount getUserAccount() {

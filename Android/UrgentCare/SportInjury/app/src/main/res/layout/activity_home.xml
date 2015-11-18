@@ -41,7 +41,7 @@
             <LinearLayout
                 android:id="@+id/layoutHome"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="195dp"
                 android:layout_alignParentBottom="true"
                 android:paddingTop="40dp"
                 android:background="#aaffffff"
@@ -99,9 +99,9 @@
                     android:layout_height="70dp"
                     android:background="@drawable/home_hand_btn"
                     android:drawableTop="@drawable/home_hand_icon"
-                    android:paddingTop="8dp"
+                    android:paddingTop="10dp"
                     android:text="@string/orange_btn"
-                    android:textSize="@dimen/text_size_home"
+                    android:textSize="9dp"
                     android:textAllCaps="false"
                     android:textColor="@color/lightFont" />
 
@@ -116,8 +116,8 @@
 
                 <Button
                     android:id="@+id/btnCall"
-                    android:layout_width="130dp"
-                    android:layout_height="30dp"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
                     android:background="@color/lightFont"
                     android:drawableLeft="@drawable/call_icon"
                     android:paddingLeft="20dp"

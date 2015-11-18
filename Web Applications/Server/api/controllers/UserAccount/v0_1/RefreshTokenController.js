@@ -29,6 +29,7 @@ module.exports={
 				UserAccountID:req.user.ID,
 				SystemType:req.headers.systemtype,
 				DeviceID:req.headers.deviceid||null,
+				OldCode:refreshCode,
 				Status:'WAITGET'
 			}
 		})

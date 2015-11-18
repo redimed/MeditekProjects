@@ -1,5 +1,5 @@
 var app = angular.module('app.unAuthentication.login.controller', []);
-app.controller('loginCtrl', function($scope, $state, $cookies, UnauthenticatedService, toastr, $timeout) {
+app.controller('loginCtrl', function($scope,$rootScope, $state, $cookies, UnauthenticatedService, toastr, $timeout) {
     $scope.showClickedValidation = false;
     $scope.login = function() {
         $scope.showClickedValidation = true;
@@ -12,6 +12,7 @@ app.controller('loginCtrl', function($scope, $state, $cookies, UnauthenticatedSe
                 if(data.user.Activated == 'Y'){
                     $cookies.putObject("userInfo", data.user);
                     $cookies.put("token", data.token);
+                    $rootScope.refreshCode=data.refreshCode;
                     $state.go("authentication.home.list")
                 } else {
                     $cookies.putObject("userInfo", {UID: data.user.UID,token:data.token});

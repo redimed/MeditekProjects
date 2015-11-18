@@ -21,7 +21,7 @@ module.exports = function sendOK (data, options) {
   sails.log.silly('res.ok() :: Sending 200 ("OK") response or 202 if refresh token');
 
   // Set status code
-  if(res.get('newtoken'))
+  if(res.get('newtoken') || res.get('requireupdatetoken'))
   {
     //trả về 202 nếu có reset token
     res.status(202);

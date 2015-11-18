@@ -10,12 +10,12 @@ module.exports = function(appointmentUID, userInfo) {
     //add roles
     var filter = {
         InternalPractitioner: [],
-        ExternalPractitioner: [],
         Appointment: [{
             '$and': {
                 UID: appointmentUID
             }
-        }]
+        }],
+        UserAccount: []
     };
     var role = HelperService.GetRole(userInfo.roles);
     if (role.isInternalPractitioner) {
@@ -31,7 +31,13 @@ module.exports = function(appointmentUID, userInfo) {
                 CreatedBy: userInfo.ID
             }
         };
-        filter.ExternalPractitioner.push(filterRoleTemp);
+        filter.Appointment.push(filterRoleTemp);
+    } else if (role.isPatient) {
+        filter.UserAccount.push({
+            '$and': {
+                UID: userInfo.UID
+            }
+        });
     } else if (!role.isAdmin &&
         !role.isAssistant &&
         !role.isPatient) {
@@ -87,13 +93,12 @@ module.exports = function(appointmentUID, userInfo) {
                         model: Country,
                         required: false,
                         attributes: Services.AttributesAppt.Country()
-                    }],
-                    where: filter.ExternalPractitioner
+                    }]
                 }]
             }, {
                 model: Doctor,
                 attributes: Services.AttributesAppt.Doctor(),
-                required: false,
+                required: (HelperService.CheckExistData(filter.InternalPractitioner) && !_.isEmpty(filter.InternalPractitioner)),
                 include: [{
                     model: Department,
                     attributes: Services.AttributesAppt.Department(),
@@ -107,7 +112,8 @@ module.exports = function(appointmentUID, userInfo) {
                 include: [{
                     model: UserAccount,
                     attributes: Services.AttributesAppt.UserAccount(),
-                    required: false
+                    required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
+                    where: filter.UserAccount
                 }]
             }],
             where: filter.Appointment

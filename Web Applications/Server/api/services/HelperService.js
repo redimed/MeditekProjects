@@ -4,6 +4,7 @@ var zlib = require('zlib');
 var fs = require('fs');
 var moment=require("moment");
 var jwt = require('jsonwebtoken');
+var md5 = require('md5');
 /*
 check data request
 input: request from client
@@ -163,7 +164,7 @@ module.exports = {
         authTokenExpired: {
             'IOS': 30 * 60,
             'ARD': 30 * 60,
-            'WEB':10 * 60,
+            'WEB':1 * 60,
         },// second
 
         // authSecretExprired:{
@@ -307,6 +308,14 @@ module.exports = {
 
         activationCodeExpired: 3, //Số lần có thể nhập sai
 
+        refreshTokenStatus:{
+            waitget:'WAITGET',
+            got:'GOT',
+        },
+
+        oldRefreshCodeExpired:60,
+
+        refreshCodePath:'/api/refresh-token/GetNewToken',
     },
 
     getRoleList:function()
@@ -626,8 +635,16 @@ module.exports = {
         })
     },
 
-
-
-
+    md5:function(value)
+    {
+        if(checkData(value))
+        {
+            return md5(value);
+        }
+        else
+        {
+            return md5(moment().valueOf());
+        }
+    },
     
 }

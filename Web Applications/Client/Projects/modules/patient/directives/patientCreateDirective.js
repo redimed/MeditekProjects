@@ -30,11 +30,23 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 
 		},
 		link: function(scope, elem, attrs){
+			// State
+			scope.state = [
+				{'code':'VIC', 'name':'Victoria'},
+				{'code':'TAS', 'name':'Tasmania'},
+				{'code':'QLD', 'name':'Queensland'},
+				{'code':'NSW', 'name':'New South Wales'},
+				{'code':'WA', 'name':'Western Australia'},
+				{'code':'NT', 'name':'Northern Territory'},
+				{'code':'ACT', 'name':'Australia Capital Territory'}
+			];
+
+			// Title
 			scope.titles = [
-				{id:"0", name:'Mr'},
-				{id:"1", name:'Mrs'},
-				{id:"2", name:'Ms'},
-				{id:"3", name:'Dr'}
+				{'id':'Mr', 'name':'Mr'},
+				{'id':'Mrs', 'name':'Mrs'},
+				{'id':'Ms', 'name':'Ms'},
+				{'id':'Dr', 'name':'Dr'}
 			];
 			//services getListCountry
 			//call Api getListCountry from server
@@ -104,6 +116,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 								scope.isShowEmail1 = result.data.data.Email1;
 								scope.data.Email1 = result.data.data.Email1;
 								scope.isShowNext = true;
+								scope.data.CountryID1 = 14;
 								// scope.data.DOB = new Date('1/1/1990');
 							}
 							else{
@@ -205,7 +218,6 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						}
 					});
 				},function(err){
-					console.log(err);
 					scope.loadingCreate = false;
 					scope.er={};
 					scope.ermsg={};

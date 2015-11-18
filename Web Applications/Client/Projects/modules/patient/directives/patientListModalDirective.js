@@ -58,8 +58,6 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 
 		},
 		link: function(scope, elem, attrs){
-
-			
 			var data = {};
         	scope.info = {};
 			data.UID = scope.uid;
@@ -200,23 +198,6 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				toastr.error("error data country","ERROR");
 			});
 
-			scope.titles = [
-				{id:"0", name:'Mr'},
-				{id:"1", name:'Mrs'},
-				{id:"2", name:'Ms'},
-				{id:"3", name:'Dr'}
-			];
-
-			scope.states = [
-				{ name: 'Victoria' },
-				{ name: 'New South Wales' },
-				{ name: 'Queensland' },
-				{ name: 'Austria Capital Territory' },
-				{ name: 'Northern Territory' },
-				{ name: 'Western Australia' },
-				{ name: 'Tasmania' }
-			];
-
 			scope.insurers = [
 				{name: 'Insurer Company'},
 				{name: 'Mineral Resources'},
@@ -226,6 +207,24 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				{name: 'Titanium Privilege Account'},
 				{name: '3-in-1 Account'},
 				{name: 'Silver Savings Account'}
+			];
+
+			// Title
+			scope.titles = [
+				{'id':'Mr', 'name':'Mr'},
+				{'id':'Mrs', 'name':'Mrs'},
+				{'id':'Ms', 'name':'Ms'},
+				{'id':'Dr', 'name':'Dr'}
+			];
+
+			scope.state = [
+				{'code':'VIC', 'name':'Victoria'},
+				{'code':'TAS', 'name':'Tasmania'},
+				{'code':'QLD', 'name':'Queensland'},
+				{'code':'NSW', 'name':'New South Wales'},
+				{'code':'WA', 'name':'Western Australia'},
+				{'code':'NT', 'name':'Northern Territory'},
+				{'code':'ACT', 'name':'Australia Capital Territory'}
 			];
 		},
 		templateUrl:'modules/patient/directives/template/patientListModal.html'

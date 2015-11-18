@@ -14,7 +14,11 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
                     Filter: [{
                         Appointment: {
                             Enable: 'Y'
-                        },
+                        }
+                    }, {
+                        TelehealthAppointment: {
+                            Type: 'TEL'
+                        }
 
                     }],
                     Order: [{
@@ -45,7 +49,7 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
             scope.Status = {
                 apptStatus: AppointConstant.apptStatus
             }
-            
+
             scope.typeSubmitDate = 'DESC';
             scope.typeAppointmentDate = 'DESC';
             scope.typeSubmitDateOther = null;

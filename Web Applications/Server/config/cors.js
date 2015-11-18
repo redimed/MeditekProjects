@@ -48,10 +48,10 @@ module.exports.cors = {
      ***************************************************************************/
 
     //For local testing
-    origin: 'http://localhost:3001, http://localhost:3004, http://localhost:3007, http://localhost:3009, http://192.168.1.2:3001, http://192.168.1.2:3004, http://192.168.1.2:3007, http://192.168.1.2:3009, http://telehealthvietnam.com.vn:3001, http://telehealthvietnam.com.vn:3004, http://telehealthvietnam.com.vn:3007, http://telehealthvietnam.com.vn:3009',
+    origin: 'http://localhost:3001, http://localhost:3004, http://localhost:3007, http://localhost:3009, http://192.168.1.2:3001, http://192.168.1.2:3004, http://192.168.1.2:3007, http://192.168.1.2:3009, http://telehealthvietnam.com.vn:3001, http://telehealthvietnam.com.vn:3004, http://telehealthvietnam.com.vn:3007, http://telehealthvietnam.com.vn:3009, http://localhost:3006, http://192.168.1.2:3006, http://telehealthvietnam.com.vn:3006, http://testapp.redimed.com.au:3006',
     //For TestApp deployment
     //origin: 'http://testapp.redimed.com.au:3001, http://testapp.redimed.com.au:3004, http://testapp.redimed.com.au:3007, http://testapp.redimed.com.au:3009',
-    
+
     /***************************************************************************
      *                                                                          *
      * Allow cookies to be shared for CORS requests?                            *

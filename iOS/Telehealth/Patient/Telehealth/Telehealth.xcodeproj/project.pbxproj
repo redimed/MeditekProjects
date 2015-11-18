@@ -48,6 +48,7 @@
 		AF9440171BBA6972003F3B07 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9440161BBA6972003F3B07 /* OpenTok.framework */; };
 		AF9F48FC1BB509220044D72F /* GetAndPostDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FB1BB509220044D72F /* GetAndPostDataController.swift */; };
 		AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */; };
+		AFE52D631BFAEBC90051B52D /* ringtone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AFE52D621BFAEBC90051B52D /* ringtone.mp3 */; };
 		AFEBD1DD1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEBD1DC1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift */; };
 		AFEBD1E11BD5E112005FE581 /* MyPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEBD1DF1BD5E112005FE581 /* MyPopupViewController.swift */; };
 		AFEBD1E21BD5E112005FE581 /* MyPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFEBD1E01BD5E112005FE581 /* MyPopupViewController.xib */; };
@@ -163,6 +164,7 @@
 		AF9440211BBA7DD8003F3B07 /* Telehealth-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Telehealth-Bridging-Header.h"; sourceTree = "<group>"; };
 		AF9F48FB1BB509220044D72F /* GetAndPostDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAndPostDataController.swift; sourceTree = "<group>"; };
 		AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationAPI.swift; sourceTree = "<group>"; };
+		AFE52D621BFAEBC90051B52D /* ringtone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ringtone.mp3; sourceTree = "<group>"; };
 		AFEBD1DC1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIVViewController-SLPopup.swift"; path = "../UIVViewController-SLPopup.swift"; sourceTree = "<group>"; };
 		AFEBD1DF1BD5E112005FE581 /* MyPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPopupViewController.swift; sourceTree = "<group>"; };
 		AFEBD1E01BD5E112005FE581 /* MyPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPopupViewController.xib; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 		AF78A2F61BC36807003E4E98 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AFE52D621BFAEBC90051B52D /* ringtone.mp3 */,
 				AFFDC22B1BD7780800DA3236 /* Image */,
 				AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */,
 				AF3902F51BCDE8DD00173A58 /* FAQs.html */,
@@ -664,6 +667,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFE52D631BFAEBC90051B52D /* ringtone.mp3 in Resources */,
 				AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */,
 				AFEE35321BB0415D00471592 /* Info.plist in Resources */,
 				AF00C4061BDA16150001A7F4 /* leftBody.png in Resources */,

@@ -28,7 +28,8 @@ class Information {
     var companyName:String!
     var companyPhoneNumber:String!
     var contactPerson:String!
-    init(firstName:String,lastName:String,phoneNumber:String,email:String,DOB:String,suburb:String,GPReferral:String,description:String,physiotherapy:String,specialist:String,handTherapy:String,urgentRequestType:String,requestDate:String,GP:String,rehab:String,companyName:String,companyPhoneNumber:String,contactPerson:String){
+    var exerciseRehab : String!
+    init(firstName:String,lastName:String,phoneNumber:String,email:String,DOB:String,suburb:String,GPReferral:String,description:String,physiotherapy:String,specialist:String,handTherapy:String,urgentRequestType:String,requestDate:String,GP:String,rehab:String,companyName:String,companyPhoneNumber:String,contactPerson:String,exerciseRehab:String){
         self.firstName = firstName
         self.lastName = lastName
         self.phoneNumber = phoneNumber
@@ -47,5 +48,6 @@ class Information {
         self.companyName = companyName
         self.companyPhoneNumber = companyPhoneNumber
         self.contactPerson = contactPerson
+        self.exerciseRehab = exerciseRehab
     }
 }

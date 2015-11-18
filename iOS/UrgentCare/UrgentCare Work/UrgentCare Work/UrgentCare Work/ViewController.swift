@@ -87,13 +87,12 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
         }
         
         let vc: ContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ContentViewController") as! ContentViewController
-        print("indx",index)
+        
         if index < pageImages.count {
             vc.imageFile = self.pageImages[index] as! String
             vc.titleText = self.pageTitles[index] as! String
             vc.pageIndex = index
             vc.delegate = self
-            
         }
         return vc
         
@@ -154,7 +153,7 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     func changePageImage(controller: ContentViewController, index: Int) {
         pageControl.currentPage = index
         page = index
-        print(index)
+       
         
     }
     
@@ -162,11 +161,11 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     //send data by segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "RehabSegue" {
+        if segue.identifier == "TreatmentSegue" {
             let submitViewController = segue.destinationViewController as! SubmitInjuryViewController
             submitViewController.pastUrls = pastUrls
-            submitViewController.NavigateBarTitle = "Rehab"
-            submitViewController.Rehab = "Y"
+            submitViewController.NavigateBarTitle = "Treatment"
+            submitViewController.treatment = "Y"
         }else if segue.identifier == "specialistSegue" {
             let submitViewController = segue.destinationViewController as! SubmitInjuryViewController
             submitViewController.pastUrls = pastUrls

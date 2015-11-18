@@ -8,6 +8,8 @@
 
 import Foundation
 import SystemConfiguration
+import SwiftyJSON
+import Alamofire
 //Extension Handle
 extension String
 {
@@ -61,6 +63,11 @@ extension UIApplication {
         
         return "v\(version)(\(build))"
     }
+    func bundleID() -> String{
+        let bundleIdentifier = NSBundle.mainBundle().bundleIdentifier
+        return bundleIdentifier!
+    }
+    
     
     func isConnectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in()

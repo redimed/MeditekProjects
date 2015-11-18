@@ -23,7 +23,8 @@ passport.use(new LocalStrategy({
         'Password': p,
         'UserUID': !activationInfo ? null : activationInfo.userUID,
         'DeviceID': !activationInfo ? null : deviceId,
-        'VerificationToken': !activationInfo ? null : activationInfo.verifyCode
+        'VerificationToken': !activationInfo ? null : activationInfo.verifyCode,
+        'AppID': appid
     }
     TelehealthService.MakeRequest({
         path: '/api/login',

@@ -50,6 +50,10 @@ passport.use(new LocalStrategy({
             var err = new Error("DeviceID.notProvided");
             return done(null, false, err);
         }
+        if (!o.checkData(loginInfo.AppID)) {
+            var err = new Error("AppID.notProvided");
+            return done(null, false, err);
+        }
     } else {
         //Trường hợp login bằng phương pháp userName, password thông thường
         if (o.isValidEmail(u)) {
@@ -109,7 +113,8 @@ passport.use(new LocalStrategy({
             UserActivation.findOne({
                 where: {
                     UserAccountID: user.ID,
-                    DeviceID: loginInfo.DeviceID
+                    DeviceID: loginInfo.DeviceID,
+                    AppID:loginInfo.AppID,
                 }
             }).then(function(activation) {
                 if (activation) {

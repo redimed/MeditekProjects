@@ -47,199 +47,452 @@ module.exports = {
 		input: patient's information
 		output: validate patient's information
 	*/
-	validation : function(data) {
+	validation : function(data,type) {
 		var character = new RegExp(check.regexPattern.character);
 		var address   = new RegExp(check.regexPattern.address);
 		var postcode  = new RegExp(check.regexPattern.postcode);
+		var isCreate = type==true?true:false;
 		var q = $q.defer();
 		var errors = [];
 		//create a error with contain a list errors input
 		var err = new Error("ERRORS");
-		try {
-			// validate FirstName
-			if(data.FirstName){
-				if(data.FirstName.length < 0 || data.FirstName.length > 50){
-					errors.push({field:"FirstName",message:"max length"});
-					err.pushErrors(errors);
-				}
-				if(!character.test(data.FirstName)){
-					errors.push({field:"FirstName",message:"invalid value"});
-					err.pushErrors(errors);
-				}
-			}
-
-			//validate MiddleName
-			if(data.MiddleName){
-				if(data.MiddleName.length < 0 || data.MiddleName.length > 100){
-					errors.push({field:"MiddleName",message:"max length"});
-					err.pushErrors(errors);
-				}
-				if(!character.test(data.MiddleName)){
-					errors.push({field:"MiddleName",message:"invalid value"});
-					err.pushErrors(errors);
-				}
-			}
-
-			//validate LastName
-			if(data.LastName){
-				if(data.LastName.length < 0 || data.LastName.length > 50){
-					errors.push({field:"LastName",message:"max length"});
-					err.pushErrors(errors);
-				}
-				if(!character.test(data.LastName)){
-					errors.push({field:"LastName",message:"invalid value"});
-					err.pushErrors(errors);
-				}
-			}
-
-			//validate Gender
-			if(data.Gender){
-				if(data.Gender != "F" && data.Gender != "M"){
-					errors.push({field:"Gender",message:"invalid value"});
-					err.pushErrors(errors);
-				}
-			}
-
-			//validate Address1
-			if(data.Address1){
-				if(data.Address1.length < 0 || data.Address1.length > 255){
-					errors.push({field:"Address1",message:"max length"});
-					err.pushErrors(errors);
-				}
-				if(!address.test(data.Address1)){
-					errors.push({field:"Address1",message:"invalid value"});
-					err.pushErrors(errors);
-				}
-			}
-
-			//validate Address2
-			if(data.Address2){
-				if(data.Address2.length < 0 || data.Address2.length > 255){
-					errors.push({field:"Address2",message:"max length"});
-					err.pushErrors(errors);
-				}
-				if(!address.test(data.Address2)){
-					errors.push({field:"Address2",message:"invalid value"});
-					err.pushErrors(errors);
-				}
-			}
-
-			//validate DOB
-			if(data.DOB){
-				if(data.DOB!=null || data.DOB!=""){
-					if(!/^(\d{1,2})[/](\d{1,2})[/](\d{4})/.test(data.DOB)){
-						errors.push({field:"DOB",message:"invalid value"});
+		if(type==true){
+			try {
+				// validate FirstName
+				if(data.FirstName!=undefined && data.FirstName){
+					if(data.FirstName.length < 0 || data.FirstName.length > 50){
+						errors.push({field:"FirstName",message:"max length"});
+						err.pushErrors(errors);
+					}
+					if(!character.test(data.FirstName)){
+						errors.push({field:"FirstName",message:"invalid value"});
 						err.pushErrors(errors);
 					}
 				}
-			}
+				else{
+					errors.push({field:"FirstName",message:"required"});
+					err.pushErrors(errors);
+				}
 
-			//validate Occupation
-			if(data.Occupation){
-				if(data.Occupation.length < 0 || data.Occupation.length > 255){
-					errors.push({field:"Occupation",message:"max length"});
-					err.pushErrors(errors);
+				//validate MiddleName
+				if(data.MiddleName!=undefined && data.MiddleName){
+					if(data.MiddleName.length < 0 || data.MiddleName.length > 100){
+						errors.push({field:"MiddleName",message:"max length"});
+						err.pushErrors(errors);
+					}
+					if(!character.test(data.MiddleName)){
+						errors.push({field:"MiddleName",message:"invalid value"});
+						err.pushErrors(errors);
+					}
 				}
-				if(!character.test(data.Occupation)){
-					errors.push({field:"Occupation",message:"invalid value"});
-					err.pushErrors(errors);
-				}
-			}
 
-			//validate Suburb
-			if(data.Suburb){
-				if(data.Suburb.length < 0 || data.Suburb.length > 100){
-					errors.push({field:"Suburb",message:"max length"});
+				//validate LastName
+				if(data.LastName!=undefined && data.LastName){
+					if(data.LastName.length < 0 || data.LastName.length > 50){
+						errors.push({field:"LastName",message:"max length"});
+						err.pushErrors(errors);
+					}
+					if(!character.test(data.LastName)){
+						errors.push({field:"LastName",message:"invalid value"});
+						err.pushErrors(errors);
+					}
+				}
+				else{
+					errors.push({field:"LastName",message:"required"});
 					err.pushErrors(errors);
 				}
-			}
 
-			//validate Postcode
-			if(data.Postcode){
-				if(data.Postcode.length < 0 || data.Postcode.length > 100){
-					errors.push({field:"Postcode",message:"max length"});
+				//validate Gender
+				if(data.Gender!=undefined && data.Gender){
+					if(data.Gender != "F" && data.Gender != "M"){
+						errors.push({field:"Gender",message:"invalid value"});
+						err.pushErrors(errors);
+					}
+				}
+				else{
+					errors.push({field:"Gender",message:"required"});
 					err.pushErrors(errors);
 				}
-				if(!postcode.test(data.Postcode)){
-					errors.push({field:"Postcode",message:"invalid value"});
-					err.pushErrors(errors);
-				}
-			}
 
-			//validate Email1
-			if(data.Email1){
-				var EmailPattern1=new RegExp(check.regexPattern.email);
-				if(!EmailPattern1.test(data.Email1)){
-					errors.push({field:"Email1",message:"invalid value"});
+				//validate Address1
+				if(data.Address1!=undefined && data.Address1){
+					if(data.Address1.length < 0 || data.Address1.length > 255){
+						errors.push({field:"Address1",message:"max length"});
+						err.pushErrors(errors);
+					}
+					if(!address.test(data.Address1)){
+						errors.push({field:"Address1",message:"invalid value"});
+						err.pushErrors(errors);
+					}
+				}
+				else{
+					errors.push({field:"Address1",message:"required"});
 					err.pushErrors(errors);
+				}
+
+				//validate Address2
+				if(data.Address2!=undefined && data.Address2){
+					if(data.Address2.length < 0 || data.Address2.length > 255){
+						errors.push({field:"Address2",message:"max length"});
+						err.pushErrors(errors);
+					}
+					if(!address.test(data.Address2)){
+						errors.push({field:"Address2",message:"invalid value"});
+						err.pushErrors(errors);
+					}
+				}
+
+				//validate DOB
+				if(data.DOB!=undefined && data.DOB){
+					if(data.DOB!=null || data.DOB!=""){
+						if(!/^(\d{1,2})[/](\d{1,2})[/](\d{4})/.test(data.DOB)){
+							errors.push({field:"DOB",message:"invalid value"});
+							err.pushErrors(errors);
+						}
+					}
+				}
+				else{
+					errors.push({field:"DOB",message:"required"});
+					err.pushErrors(errors);
+				}
+
+				//validate Occupation
+				if(data.Occupation!=undefined && data.Occupation){
+					if(data.Occupation.length < 0 || data.Occupation.length > 255){
+						errors.push({field:"Occupation",message:"max length"});
+						err.pushErrors(errors);
+					}
+					if(!character.test(data.Occupation)){
+						errors.push({field:"Occupation",message:"invalid value"});
+						err.pushErrors(errors);
+					}
+				}
+
+				//validate Suburb
+				if(data.Suburb!=undefined && data.Suburb){
+					if(data.Suburb.length < 0 || data.Suburb.length > 100){
+						errors.push({field:"Suburb",message:"max length"});
+						err.pushErrors(errors);
+					}
+				}
+
+				//validate Postcode
+				if(data.Postcode!=undefined && data.Postcode){
+					if(data.Postcode.length < 0 || data.Postcode.length > 100){
+						errors.push({field:"Postcode",message:"max length"});
+						err.pushErrors(errors);
+					}
+					if(!postcode.test(data.Postcode)){
+						errors.push({field:"Postcode",message:"invalid value"});
+						err.pushErrors(errors);
+					}
+				}
+				else{
+					errors.push({field:"Postcode",message:"required"});
+					err.pushErrors(errors);
+				}
+
+				//validate Email1
+				if(data.Email1!=undefined && data.Email1){
+					var EmailPattern1=new RegExp(check.regexPattern.email);
+					if(!EmailPattern1.test(data.Email1)){
+						errors.push({field:"Email1",message:"invalid value"});
+						err.pushErrors(errors);
+						throw err;
+					}
+				}
+
+				//validate Email2
+				// if(data.Email2){
+				// 	var EmailPattern2=new RegExp(check.regexPattern.email);
+				// 	if(!EmailPattern2.test(data.Email2)){
+				// 		errors.push({field:"Email2",message:"invalid value"});
+				// 		err.pushErrors(errors);
+				// 		throw err;
+				// 	}
+				// }
+
+				//validte State
+				if(data.State!=undefined && data.State){
+					if(data.State.length < 0 || data.State.length > 255){
+						errors.push({field:"State",message:"max length"});
+						err.pushErrors(errors);
+					}
+					if(!character.test(data.State)){
+						errors.push({field:"State",message:"invalid value"});
+						err.pushErrors(errors);
+					}
+				}
+				else{
+					errors.push({field:"State",message:"required"});
+					err.pushErrors(errors);
+				}
+
+				if(data.Title!=undefined && data.Title){
+					if(data.Title!= 'Dr' && data.Title!= 'Ms' && 
+						data.Title!= 'Mr' && data.Title!= 'Mrs'){
+						errors.push({field:"Title",message:"invalid value"});
+						err.pushErrors(errors);
+					}
+				}
+				else{
+					errors.push({field:"Title",message:"required"});
+					err.pushErrors(errors);
+				}
+
+				//validate HomePhoneNumber? hoi a Tan su dung exception
+				if(data.HomePhoneNumber!=undefined && data.HomePhoneNumber){
+					var auHomePhoneNumberPattern=new RegExp(check.regexPattern.auHomePhoneNumber);
+					var HomePhone=data.HomePhoneNumber.replace(check.regexPattern.phoneExceptChars,'');
+					if(!auHomePhoneNumberPattern.test(HomePhone)){
+						errors.push({field:"HomePhoneNumber",message:"invalid value"});
+						err.pushErrors(errors);
+						throw err;
+					}
+				}
+
+				//validate HomePhoneNumber? hoi a Tan su dung exception
+				if(data.WorkPhoneNumber!=undefined && data.WorkPhoneNumber){
+					var auWorkPhoneNumberPattern=new RegExp(check.regexPattern.auHomePhoneNumber);
+					var WorkPhoneNumber=data.WorkPhoneNumber.replace(check.regexPattern.phoneExceptChars,'');
+					if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
+						errors.push({field:"WorkPhoneNumber",message:"invalid value"});
+						err.pushErrors(errors);
+						throw err;
+					}
+				}
+
+				if(err.getErrors().length>0){
 					throw err;
 				}
-			}
 
-			//validate Email2
-			if(data.Email2){
-				var EmailPattern2=new RegExp(check.regexPattern.email);
-				if(!EmailPattern2.test(data.Email2)){
-					errors.push({field:"Email2",message:"invalid value"});
-					err.pushErrors(errors);
-					throw err;
+				else{
+					q.resolve({status:'success'});
 				}
-			}
+				//q.resolve({status:'success'});
 
-			//validte State
-			if(data.State){
-				if(data.State.length < 0 || data.State.length > 255){
-					errors.push({field:"State",message:"max length"});
-					err.pushErrors(errors);
-				}
-				if(!character.test(data.State)){
-					errors.push({field:"State",message:"invalid value"});
-					err.pushErrors(errors);
-				}
 			}
-
-			if(data.Title){
-				if(data.Title!= 'Dr' && data.Title!= 'Ms' && 
-					data.Title!= 'Mr' && data.Title!= 'Mrs'){
-					errors.push({field:"Title",message:"invalid value"});
-					err.pushErrors(errors);
-				}
+			catch(err){
+				q.reject(err);
 			}
-
-			//validate HomePhoneNumber? hoi a Tan su dung exception
-			if(data.HomePhoneNumber){
-				var auHomePhoneNumberPattern=new RegExp(check.regexPattern.auHomePhoneNumber);
-				var HomePhone=data.HomePhoneNumber.replace(check.regexPattern.phoneExceptChars,'');
-				if(!auHomePhoneNumberPattern.test(HomePhone)){
-					errors.push({field:"HomePhoneNumber",message:"invalid value"});
-					err.pushErrors(errors);
-					throw err;
-				}
-			}
-
-			//validate HomePhoneNumber? hoi a Tan su dung exception
-			if(data.WorkPhoneNumber){
-				var auWorkPhoneNumberPattern=new RegExp(check.regexPattern.auHomePhoneNumber);
-				var WorkPhoneNumber=data.WorkPhoneNumber.replace(check.regexPattern.phoneExceptChars,'');
-				if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
-					errors.push({field:"WorkPhoneNumber",message:"invalid value"});
-					err.pushErrors(errors);
-					throw err;
-				}
-			}
-
-			if(err.getErrors().length>0){
-				throw err;
-			}
-
-			else{
-				q.resolve({status:'success'});
-			}
-			//q.resolve({status:'success'});
-
 		}
-		catch(err){
-			q.reject(err);
+		else{
+			try {
+				// validate FirstName
+				if('FirstName' in data){
+					if(data.FirstName){
+						if(data.FirstName.length < 0 || data.FirstName.length > 50){
+							errors.push({field:"FirstName",message:"max length"});
+							err.pushErrors(errors);
+						}
+						if(!character.test(data.FirstName)){
+							errors.push({field:"FirstName",message:"invalid value"});
+							err.pushErrors(errors);
+						}
+					}
+				}
+
+				//validate MiddleName
+				if('MiddleName' in data){
+					if(data.MiddleName){
+						if(data.MiddleName.length < 0 || data.MiddleName.length > 100){
+							errors.push({field:"MiddleName",message:"max length"});
+							err.pushErrors(errors);
+						}
+						if(!character.test(data.MiddleName)){
+							errors.push({field:"MiddleName",message:"invalid value"});
+							err.pushErrors(errors);
+						}
+					}
+				}
+
+				//validate LastName
+				if('LastName' in data){
+					if(data.LastName){
+						if(data.LastName.length < 0 || data.LastName.length > 50){
+							errors.push({field:"LastName",message:"max length"});
+							err.pushErrors(errors);
+						}
+						if(!character.test(data.LastName)){
+							errors.push({field:"LastName",message:"invalid value"});
+							err.pushErrors(errors);
+						}
+					}
+				}
+
+				//validate Gender
+				if('Gender' in data){
+					if(data.Gender){
+						if(data.Gender != "F" && data.Gender != "M"){
+							errors.push({field:"Gender",message:"invalid value"});
+							err.pushErrors(errors);
+						}
+					}
+				}
+
+				//validate Address1
+				if('Address1' in data){
+					if(data.Address1){
+						if(data.Address1.length < 0 || data.Address1.length > 255){
+							errors.push({field:"Address1",message:"max length"});
+							err.pushErrors(errors);
+						}
+						if(!address.test(data.Address1)){
+							errors.push({field:"Address1",message:"invalid value"});
+							err.pushErrors(errors);
+						}
+					}
+				}
+
+				//validate Address2
+				if('Address2' in data){
+					if(data.Address2){
+						if(data.Address2.length < 0 || data.Address2.length > 255){
+							errors.push({field:"Address2",message:"max length"});
+							err.pushErrors(errors);
+						}
+						if(!address.test(data.Address2)){
+							errors.push({field:"Address2",message:"invalid value"});
+							err.pushErrors(errors);
+						}
+					}
+				}
+
+				//validate DOB
+				if('DOB' in data){
+					if(data.DOB){
+						if(data.DOB!=null || data.DOB!=""){
+							if(!/^(\d{1,2})[/](\d{1,2})[/](\d{4})/.test(data.DOB)){
+								errors.push({field:"DOB",message:"invalid value"});
+								err.pushErrors(errors);
+							}
+						}
+					}
+				}
+
+				//validate Occupation
+				if('Occupation' in data){
+					if(data.Occupation){
+						if(data.Occupation.length < 0 || data.Occupation.length > 255){
+							errors.push({field:"Occupation",message:"max length"});
+							err.pushErrors(errors);
+						}
+						if(!character.test(data.Occupation)){
+							errors.push({field:"Occupation",message:"invalid value"});
+							err.pushErrors(errors);
+						}
+					}
+				}
+
+				//validate Suburb
+				if('Suburb' in data){
+					if(data.Suburb){
+						if(data.Suburb.length < 0 || data.Suburb.length > 100){
+							errors.push({field:"Suburb",message:"max length"});
+							err.pushErrors(errors);
+						}
+					}
+				}
+
+				//validate Postcode
+				if('Postcode' in data){
+					if(data.Postcode){
+						if(data.Postcode.length < 0 || data.Postcode.length > 100){
+							errors.push({field:"Postcode",message:"max length"});
+							err.pushErrors(errors);
+						}
+						if(!postcode.test(data.Postcode)){
+							errors.push({field:"Postcode",message:"invalid value"});
+							err.pushErrors(errors);
+						}
+					}
+				}
+
+				//validate Email1
+				if('Email1' in data){
+					if(data.Email1){
+						var EmailPattern1=new RegExp(check.regexPattern.email);
+						if(!EmailPattern1.test(data.Email1)){
+							errors.push({field:"Email1",message:"invalid value"});
+							err.pushErrors(errors);
+							throw err;
+						}
+					}
+				}
+
+				//validate Email2
+				// if(data.Email2){
+				// 	var EmailPattern2=new RegExp(check.regexPattern.email);
+				// 	if(!EmailPattern2.test(data.Email2)){
+				// 		errors.push({field:"Email2",message:"invalid value"});
+				// 		err.pushErrors(errors);
+				// 		throw err;
+				// 	}
+				// }
+
+				//validte State
+				if('State' in data){
+					if(data.State){
+						if(data.State.length < 0 || data.State.length > 255){
+							errors.push({field:"State",message:"max length"});
+							err.pushErrors(errors);
+						}
+						if(!character.test(data.State)){
+							errors.push({field:"State",message:"invalid value"});
+							err.pushErrors(errors);
+						}
+					}
+				}
+
+				if('Title' in data){
+					if(data.Title){
+						if(data.Title!= 'Dr' && data.Title!= 'Ms' && 
+							data.Title!= 'Mr' && data.Title!= 'Mrs'){
+							errors.push({field:"Title",message:"invalid value"});
+							err.pushErrors(errors);
+						}
+					}
+				}
+
+				//validate HomePhoneNumber? hoi a Tan su dung exception
+				if('HomePhoneNumber' in data){
+					if(data.HomePhoneNumber){
+						var auHomePhoneNumberPattern=new RegExp(check.regexPattern.auHomePhoneNumber);
+						var HomePhone=data.HomePhoneNumber.replace(check.regexPattern.phoneExceptChars,'');
+						if(!auHomePhoneNumberPattern.test(HomePhone)){
+							errors.push({field:"HomePhoneNumber",message:"invalid value"});
+							err.pushErrors(errors);
+							throw err;
+						}
+					}
+				}
+
+				//validate HomePhoneNumber? hoi a Tan su dung exception
+				if('WorkPhoneNumber' in data){
+					if(data.WorkPhoneNumber){
+						var auWorkPhoneNumberPattern=new RegExp(check.regexPattern.auHomePhoneNumber);
+						var WorkPhoneNumber=data.WorkPhoneNumber.replace(check.regexPattern.phoneExceptChars,'');
+						if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
+							errors.push({field:"WorkPhoneNumber",message:"invalid value"});
+							err.pushErrors(errors);
+							throw err;
+						}
+					}
+				}
+
+				if(err.getErrors().length>0){
+					throw err;
+				}
+
+				else{
+					q.resolve({status:'success'});
+				}
+				//q.resolve({status:'success'});
+
+			}
+			catch(err){
+				q.reject(err);
+			}
 		}
 		return q.promise;
 	},
@@ -280,7 +533,7 @@ module.exports = {
 				}
 			}
 			if(data.Search.Enable){
-				whereClause.Patient.Enable = {
+				whereClause.UserAccount.Enable = {
 					like:'%'+data.Search.Enable+'%'
 				}
 			}
@@ -321,7 +574,7 @@ module.exports = {
 			State           : data.State,
 			Enable          : "Y"
 		};
-		return Services.Patient.validation(data)
+		return Services.Patient.validation(data,true)
 		.then(function(success){
 			if(data.PhoneNumber){
 				return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction);
@@ -565,7 +818,7 @@ module.exports = {
 			include:[
 				{
 		           	model: UserAccount,
-		          	attributes: ['PhoneNumber'],
+		          	attributes: ['PhoneNumber','Enable'],
 				   	required: true,
 				   	where:{
 				   		$or: whereClause.UserAccount

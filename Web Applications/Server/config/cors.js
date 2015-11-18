@@ -76,7 +76,7 @@ module.exports.cors = {
      *                                                                          *
      ***************************************************************************/
 
-    headers: 'content-type, authorization, systemtype, deviceid',
+    headers: 'content-type, authorization, systemtype, deviceid, appid',
 
     // exposeHeaders:'filename,filetype', //TODO
 

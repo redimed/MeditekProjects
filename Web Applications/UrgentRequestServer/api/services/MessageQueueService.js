@@ -51,6 +51,7 @@ module.exports = {
                             DOB: (!_.isUndefined(UR.DOB) && !_.isNull(UR.DOB)) ? UR.DOB : '',
                             GPReferral: GPReferral,
                             serviceType: serviceType,
+                            specialistType: UR.specialistType,
                             treatment: UR.treatment,
                             treatmentType: treatmentType,
                             description: (!_.isUndefined(UR.description) && !_.isNull(UR.description)) ? UR.description : '',

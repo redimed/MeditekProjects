@@ -9,23 +9,149 @@ module.exports = {
 		GetDoctor: Get all data from specific table
 		Ouput: Information of doctor table
 	*/
-	GetDoctor: function(req, res) {
-
+	LoadlistDoctor: function(req, res) {
 		// Information
-		var postData = req.body.data;
-		Services
-			.Doctor
-				.findallDoctor(postData)
-					.then(function(result) {
-						res.ok({
-							data: result
-						});
-					})
-					.catch(function(err) {
-						res.serverError(ErrorWrap(err));
-					});
+		var data = req.body.data;
+		Services.Doctor.LoadlistDoctor(data)
+		.then(function(result){
+			if(result!==undefined && result!==null && result!=='')
+				res.ok({message:"success",data:result.rows,count:result.count});
+			else{
+				var err = new Error("SERVER ERROR");
+				err.pushError("No data result");
+				res.notFound({message:ErrorWrap(err)});
+			}
+		})
+		.catch(function(err){
+			res.serverError({message:ErrorWrap(err)});
+		});
 
 	},
+
+	DetailDoctor: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.DetailDoctor(data)
+		.then(function(info){
+			FileUpload.findAll({
+				where:{
+					UserAccountID : info.UserAccountID,
+					FileType : {$in: ["ProfileImage", "Signature"]},
+					Enable : 'Y'
+				}
+			})
+			.then(function(success){
+				console.log(success);
+				if(success!==undefined && success!==null && success!=='' && success.length!==0){
+					for(var i = 0;i < success.length; i++){
+						if(success[i].FileType =="ProfileImage")
+							info.dataValues.FileUID_img = success[i].UID?success[i].UID:null;
+						if(success[i].FileType =="Signature")
+							info.dataValues.FileUID_sign = success[i].UID?success[i].UID:null;
+					}
+					res.ok({status:200, message:"success", data:info});
+				}
+				else{
+					info.dataValues.FileUID = null;
+					res.ok({status:200, message:"success", data:info});
+				}
+			},function(err){
+				var err = new Error("SERVER ERROR");
+				err.pushError("Server Error");
+				res.notFound({message:ErrorWrap(err)});
+			});
+		})
+		.catch(function(err){
+			res.serverError({message:ErrorWrap(err)});
+		})
+	},
+
+	UpdateDoctor: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.UpdateDoctor(data)
+		.then(function(result){
+			res.ok({message:"success",data:result});
+		})
+		.catch(function(err){
+			res.serverError({message:ErrorWrap(err)});
+		})
+	},
+
+	GetDoctor: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.GetDoctor(data)
+		.then(function(info){
+			if(info!=undefined&&info!=null&&info!=''&&info.length!=0){
+				FileUpload.findAll({
+					where:{
+						UserAccountID : info.UserAccountID,
+						FileType : {$in: ["ProfileImage", "Signature"]},
+						Enable : 'Y'
+					}
+				})
+				.then(function(success){
+					console.log(success);
+					if(success!==undefined && success!==null && success!=='' && success.length!==0){
+						for(var i = 0;i < success.length; i++){
+							if(success[i].FileType =="ProfileImage")
+								info.dataValues.FileUID_img = success[i].UID?success[i].UID:null;
+							if(success[i].FileType =="Signature")
+								info.dataValues.FileUID_sign = success[i].UID?success[i].UID:null;
+						}
+						res.ok({status:200, message:"success", data:info});
+					}
+					else{
+						info.dataValues.FileUID = null;
+						res.ok({status:200, message:"success", data:info});
+					}
+				},function(err){
+					var err = new Error("SERVER ERROR");
+					err.pushError("Server Error");
+					res.notFound({message:ErrorWrap(err)});
+				});
+			}
+			else{
+				res.ok({message:"no data result"});
+			}
+		})
+		.catch(function(err){
+			console.log(err);
+			res.serverError({message:ErrorWrap(err)});
+		});
+	},
+
+	CheckDoctor: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.CheckDoctor(data)
+		.then(function(result){
+			res.ok({message:"success",data:result});
+		})
+		.catch(function(err){
+			res.serverError({message:ErrorWrap(err)});
+		})
+	},
+
+	CheckInfo: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.validation(data)
+		.then(function(success){
+			res.ok(success);
+		},function(err){
+			console.log(err);
+			res.serverError(ErrorWrap(err));
+		});
+	},
+
+	CreateDoctorByNewAccount: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.CreateDoctorByNewAccount(data)
+		.then(function(success){
+			res.ok(success);
+		})
+		.catch(function(err){
+			res.serverError(ErrorWrap(err));
+		})
+	},
+
 	/*
 		doctorAppointment: List doctor for Appointment
 	*/
@@ -177,42 +303,42 @@ module.exports = {
 		Input: info's doctor
 		Ouput: success or error
 	*/
-	UpdateDoctor: function(req, res) {
+	// UpdateDoctor: function(req, res) {
 
-		var data = req.body.data;
+	// 	var data = req.body.data;
 
-		data.ModifiedDate = moment(new Date(), 'YYYY-MM-DD HH:mm:ss Z');;
-		data.ModifiedBy = req.user?req.user.ID:null;
+	// 	data.ModifiedDate = moment(new Date(), 'YYYY-MM-DD HH:mm:ss Z');;
+	// 	data.ModifiedBy = req.user?req.user.ID:null;
 
-		Services.Doctor.UpdateDoctor(data)
-		.then(function(result) {
+	// 	Services.Doctor.UpdateDoctor(data)
+	// 	.then(function(result) {
 		
-			var info = {
-				Enable: data.Enable,
-				UserAccountID: data.UserAccountID
-			};
+	// 		var info = {
+	// 			Enable: data.Enable,
+	// 			UserAccountID: data.UserAccountID
+	// 		};
 
-			Services.Doctor.UpdateAccountDoctor(info)
-			.then(function(success) {
+	// 		Services.Doctor.UpdateAccountDoctor(info)
+	// 		.then(function(success) {
 
-				Services.Doctor.GetOneUser(data)
-				.then(function(result_u) {
-					res.ok(result_u);
-				})
-				.catch(function(err) {
-					res.serverError(ErrorWrap(err));
-				});
+	// 			Services.Doctor.GetOneUser(data)
+	// 			.then(function(result_u) {
+	// 				res.ok(result_u);
+	// 			})
+	// 			.catch(function(err) {
+	// 				res.serverError(ErrorWrap(err));
+	// 			});
 
-			})
-			.catch(function(err) {
-				res.serverError(ErrorWrap(err));
-			});
+	// 		})
+	// 		.catch(function(err) {
+	// 			res.serverError(ErrorWrap(err));
+	// 		});
 
-		})
-		.catch(function(err) {
-			res.serverError(ErrorWrap(err));
-		});
-	},
+	// 	})
+	// 	.catch(function(err) {
+	// 		res.serverError(ErrorWrap(err));
+	// 	});
+	// },
 	/*
 		GetFile: Get UID's fileupload
 		Input: UserAccountID

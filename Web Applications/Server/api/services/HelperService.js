@@ -164,7 +164,7 @@ module.exports = {
         authTokenExpired: {
             'IOS': 30 * 60,
             'ARD': 30 * 60,
-            'WEB':15,
+            'WEB':1 * 60,
         },// second
 
         // authSecretExprired:{
@@ -250,8 +250,8 @@ module.exports = {
 
             'WEB':{
                 'ADMIN':{
-                    secretKeyExpired:30,
-                    maxTimePlus:30
+                    secretKeyExpired:2*60*60,
+                    maxTimePlus:8*60*60
                 },
 
                 'ASSISTANT':{

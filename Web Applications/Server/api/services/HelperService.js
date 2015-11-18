@@ -250,8 +250,8 @@ module.exports = {
 
             'WEB':{
                 'ADMIN':{
-                    secretKeyExpired:30,
-                    maxTimePlus:30
+                    secretKeyExpired:2*60*60,
+                    maxTimePlus:8*60*60
                 },
 
                 'ASSISTANT':{

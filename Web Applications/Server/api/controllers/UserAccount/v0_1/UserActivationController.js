@@ -31,6 +31,7 @@ module.exports = {
 	 */
 	CreateUserActivation:function(req,res)
 	{
+		console.log("====",req.body);
 		var activationInfo=req.body||{};
 		activationInfo.CreatedBy=req.user?req.user.ID:null;
 		sequelize.transaction().then(function(t){

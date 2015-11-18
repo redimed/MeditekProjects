@@ -33,13 +33,7 @@ module.exports = {
                 teleUser.getUserAccount().then(function(user) {
                     if (user) {
                         TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
-                            if (response.getCode() == 202) {
-                                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
-                                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
-                                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
-                                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
-                                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
-                            }
+                            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
                             return res.ok(response.getBody());
                         }, function(err) {
                             res.json(err.getCode(), err.getBody());
@@ -69,13 +63,7 @@ module.exports = {
         var type = params.type;
         var headers = req.headers;
         TelehealthService.GetAppointmentsByPatient(patientUID, limit, type, headers).then(function(response) {
-            if (response.getCode() == 202) {
-                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
-                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
-                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
-                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
-                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
-            }
+            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
             return res.ok(response.getBody());
         }, function(err) {
             res.json(err.getCode(), err.getBody());
@@ -96,13 +84,7 @@ module.exports = {
             return res.serverError(ErrorWrap(err));
         }
         TelehealthService.GetTelehealthAppointmentDetails(apptUID, headers).then(function(response) {
-            if (response.getCode() == 202) {
-                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
-                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
-                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
-                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
-                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
-            }
+            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
             return res.ok(response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
@@ -123,13 +105,7 @@ module.exports = {
             return res.serverError(ErrorWrap(err));
         }
         TelehealthService.GetWAAppointmentDetails(apptUID, headers).then(function(response) {
-            if (response.getCode() == 202) {
-                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
-                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
-                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
-                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
-                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
-            }
+            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
             return res.ok(response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
@@ -161,7 +137,8 @@ module.exports = {
                         status: 'success',
                         message: info.message,
                         user: u.user,
-                        token: u.token
+                        token: u.token,
+                        refreshCode: u.refreshCode
                     });
                 }
             });
@@ -175,17 +152,17 @@ module.exports = {
             return;
         }
         var info = HelperService.toJson(req.body.data);
+        var deviceId = req.headers.deviceid;
+        var deviceType = req.headers.systemtype;
         var deviceToken = info.devicetoken;
-        var deviceId = info.deviceid;
-        var deviceType = info.devicetype;
         var uid = info.uid;
-        if (deviceToken && uid && deviceType && deviceId) {
+        if (deviceToken && uid && deviceType && deviceId && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 TelehealthDevice.findOrCreate({
                     where: {
                         TelehealthUserID: teleUser.ID,
                         DeviceID: deviceId,
-                        Type: deviceType.toLowerCase() == 'android' ? 'ARD' : 'IOS'
+                        Type: HelperService.const.systemType[deviceType.toLowerCase()]
                     },
                     defaults: {
                         UID: UUIDService.GenerateUUID(),
@@ -235,11 +212,13 @@ module.exports = {
                         body: {
                             UserUID: user.UID,
                             Type: HelperService.const.systemType[deviceType.toLowerCase()],
-                            DeviceID: deviceId
+                            DeviceID: deviceId,
+                            AppID: req.headers.appid
                         },
                         headers: {
                             'DeviceID': req.headers.deviceid,
-                            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
+                            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()],
+                            'AppID': req.headers.appid
                         }
                     }).then(function(response) {
                         var data = response.getBody();
@@ -297,11 +276,13 @@ module.exports = {
                                     UserUID: user.UID,
                                     SystemType: HelperService.const.systemType[deviceType.toLowerCase()],
                                     DeviceID: deviceId,
+                                    AppID: req.headers.appid,
                                     VerificationCode: verifyCode
                                 },
                                 headers: {
                                     'DeviceID': req.headers.deviceid,
-                                    'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
+                                    'SystemType': HelperService.const.systemType[deviceType.toLowerCase()],
+                                    'AppID': req.headers.appid
                                 }
                             }).then(function(response) {
                                 var data = response.getBody();
@@ -330,7 +311,8 @@ module.exports = {
                                                 status: 'success',
                                                 message: info.message,
                                                 user: u.user,
-                                                token: u.token
+                                                token: u.token,
+                                                refreshCode: u.refreshCode
                                             });
                                         }
                                     });

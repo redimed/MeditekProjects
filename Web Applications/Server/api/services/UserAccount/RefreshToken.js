@@ -131,6 +131,7 @@ module.exports={
 						var userSecretExpiration=o.getUserSecretExpiration(userAccess.SystemType,o.getMaxRole(user.roles));
 						var secretExpired=userSecretExpiration.secretKeyExpired;
 						var maxTimePlus=userSecretExpiration.maxTimePlus;
+						console.log('>>>>>>>>>>>>>>>>>>>',userSecretExpiration)
 						if(o.checkData(rt))
 						{
 							return rt.updateAttributes({

@@ -1,6 +1,7 @@
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    bcrypt = require('bcryptjs');
+    bcrypt = require('bcryptjs'),
+    moment = require('moment');
 passport.serializeUser(function(sessionUser, done) {
     done(null, sessionUser);
 });
@@ -33,7 +34,6 @@ passport.use(new LocalStrategy({
         }
     }).then(function(response) {
         var data = response.getBody();
-        console.log("=====",data);
         var user = data.user;
         TelehealthUser.findOrCreate({
             where: {
@@ -56,7 +56,8 @@ passport.use(new LocalStrategy({
                 }
             }).then(function(refreshToken) {
                 if (refreshToken) {
-                    var secretExpiredPlusAt = moment(refreshToken.SecretCreatedAt).add(refreshToken.SecretExpired + refreshToken.SecretExpiredPlus, 'seconds').toDate();
+                    var secretExpiredPlusAt = null;
+                    if (HelperService.checkListData(refreshToken.SecretExpired, refreshToken.SecretExpiredPlus)) secretExpiredPlusAt = moment(refreshToken.SecretCreatedAt).add(refreshToken.SecretExpired + refreshToken.SecretExpiredPlus, 'seconds').toDate();
                     var sessionUser = {
                         ID: user.ID,
                         UID: user.UID,
@@ -71,7 +72,6 @@ passport.use(new LocalStrategy({
                         SecretExpiredPlusAt: secretExpiredPlusAt
                     }
                     data.sessionUser = sessionUser;
-                    console.log("====",data);
                     return done(null, data, response.getBody().message);
                 } else return done(null, false, {
                     message: 'Error'

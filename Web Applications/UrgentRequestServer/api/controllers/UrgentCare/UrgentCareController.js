@@ -55,6 +55,7 @@ module.exports = {
                 exerciseRehab: data.exerciseRehab,
                 GP: data.GP,
                 rehab: data.rehab,
+                specialistType: data.specialistType,
                 treatment: data.treatment,
                 tried: 1,
                 status: 'pending',
@@ -65,7 +66,7 @@ module.exports = {
             .then(function(URCreated) {
                 //convert service type and gp referral
                 var GPReferral = Services.ConvertData.GPReferral(data.GPReferral);
-                var serviceType = Services.ConvertData.ServiceType(data, data.urgentRequestType==='WorkInjury');
+                var serviceType = Services.ConvertData.ServiceType(data, data.urgentRequestType === 'WorkInjury');
                 var treatmentType = Services.ConvertData.TreatmentType(data);
                 var subjectEmail = '[' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                     '] - [' + data.firstName + ' ' +
@@ -84,6 +85,7 @@ module.exports = {
                     DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB)) ? data.DOB : '',
                     GPReferral: GPReferral,
                     serviceType: serviceType,
+                    specialistType: data.specialistType,
                     treatment: data.treatment,
                     treatmentType: treatmentType,
                     description: (!_.isUndefined(data.description) && !_.isNull(data.description)) ? data.description : '',
@@ -123,6 +125,7 @@ module.exports = {
                                 DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB)) ? data.DOB : '',
                                 GPReferral: GPReferral,
                                 serviceType: serviceType,
+                                specialistType: data.specialistType,
                                 treatment: data.treatment,
                                 treatmentType: treatmentType,
                                 description: (!_.isUndefined(data.description) && !_.isNull(data.description)) ? data.description : '',

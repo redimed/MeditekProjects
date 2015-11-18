@@ -183,6 +183,12 @@ module.exports = {
             maxLength: 1
         },
 
+        specialistType: {
+            type: 'string',
+            columnName: 'SpecialistType',
+            maxLength: 255
+        },
+
         treatment: {
             type: 'string',
             columnName: 'Treatment',

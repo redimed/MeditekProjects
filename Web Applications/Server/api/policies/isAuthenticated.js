@@ -45,7 +45,8 @@ module.exports = function(req, res, next) {
 				var userAccess={
 					UserUID:req.user.UID,
 					SystemType:req.headers.systemtype,
-					DeviceID:req.headers.deviceid
+					DeviceID:req.headers.deviceid,
+					AppID:req.headers.appid,
 				};
 				function systemValidation()
 				{
@@ -56,7 +57,8 @@ module.exports = function(req, res, next) {
 					else
 					{
 						return (sessionUser.DeviceID==userAccess.DeviceID
-							&& sessionUser.SystemType==userAccess.SystemType);
+							&& sessionUser.SystemType==userAccess.SystemType
+							&& sessionUser.AppID==userAccess.AppID);
 					}
 				}
 

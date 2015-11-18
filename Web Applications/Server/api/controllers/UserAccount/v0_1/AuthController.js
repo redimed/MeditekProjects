@@ -40,7 +40,8 @@ module.exports = {
             var userAccess={
                 UserUID:user.UID,
                 SystemType:req.headers.systemtype,
-                DeviceID:req.headers.deviceid
+                DeviceID:req.headers.deviceid,
+                AppID:req.headers.appid,
             }
             Services.RefreshToken.MakeRefreshToken(userAccess)
             .then(function(rt){
@@ -59,6 +60,7 @@ module.exports = {
                     //--------------------------------
                     SystemType:req.headers.systemtype,//Dùng để validation request
                     DeviceID:req.headers.deviceid,//Dùng để validation request
+                    AppID:req.headers.appid,//Dùng để validation request
                     //--------------------------------
                     SecretKey:rt.SecretKey,
                     SecretCreatedAt:rt.SecretCreatedAt,
@@ -121,7 +123,8 @@ module.exports = {
         var userAccess={
             UserUID:req.user.UID,
             SystemType:req.headers.systemtype,
-            DeviceID:req.headers.deviceid
+            DeviceID:req.headers.deviceid,
+            AppID:req.headers.appid,
         }
         Services.RefreshToken.MakeRefreshToken(userAccess)
         .then(function(data){

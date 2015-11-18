@@ -129,9 +129,16 @@ module.exports = {
 					}
 					else if(systems.indexOf(activationInfo.Type)>=0)
 					{
-						if(mobileSystems.indexOf(activationInfo.Type)>=0 && !activationInfo.DeviceID)
+						if(mobileSystems.indexOf(activationInfo.Type)>=0)
 						{
-							err.pushError('DeviceID.notProvided');
+							if(!activationInfo.DeviceID)
+							{
+								err.pushError('DeviceID.notProvided');
+							}
+							if(!activationInfo.AppID)
+							{
+								err.pushError('AppID.notProvided');
+							}
 						}
 					}
 					else
@@ -181,7 +188,8 @@ module.exports = {
 							return UserActivation.findOne({
 								where:{
 									UserAccountID:user.ID,
-									DeviceID:activationInfo.DeviceID
+									DeviceID:activationInfo.DeviceID,
+									AppID:activationInfo.AppID,
 								}
 							})
 						}
@@ -223,6 +231,7 @@ module.exports = {
 							if(activationInfo.Type!=HelperService.const.systemType.website)
 							{
 								insertInfo.DeviceID=activationInfo.DeviceID;
+								insertInfo.AppID=activationInfo.AppID;
 							}
 							return UserActivation.create(insertInfo,{transaction:transaction})
 							.then(function(result){
@@ -292,6 +301,7 @@ module.exports = {
 		var VerificationToken=null;
 		var Method=null;//Token,Code
 		var DeviceID=null;
+		var AppID=null;
 		var error=new Error("Activation.Error");
 		function Validation()
 		{
@@ -363,6 +373,15 @@ module.exports = {
 						error.pushError("Activation.deviceIdNotProvided");
 						throw error;
 					}
+					if(o.checkData(activationInfo.AppID))
+					{
+						AppID=activationInfo.AppID;
+					}
+					else
+					{
+						error.pushError("Activation.appIdNotProvided");
+						throw error;
+					}
 				}
 				else
 				{
@@ -404,8 +423,9 @@ module.exports = {
 							//hay chưa dựa vào userId và DeviceId
 							VerificationCode=activationInfo.VerificationCode;
 							DeviceID=activationInfo.DeviceID;
+							AppID=activationInfo.AppID;
 							return UserActivation.findOne({
-								where:{UserAccountID:user.ID,DeviceID:DeviceID}
+								where:{UserAccountID:user.ID,DeviceID:DeviceID,AppID:AppID}
 							})
 						}
 					}

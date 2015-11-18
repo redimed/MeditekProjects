@@ -6,7 +6,7 @@ module.exports={
 	/**
 	 * Trả về token mới + refreshCode mới cho client
 	 * Input:
-	 *  -headers: authorization, systemtype, deviceid (nếu mobile)
+	 *  -headers: authorization, systemtype, deviceid (nếu mobile), appid(nếu là mobile)
 	 * 	-req.body: refreshCode
 	 * Output:
 	 * 	Nếu success 
@@ -19,7 +19,8 @@ module.exports={
 		var userToken={
 			UserUID:req.user.UID,
 			SystemType:req.headers.systemtype,
-			DeviceID:req.headers.deviceid
+			DeviceID:req.headers.deviceid,
+			AppID:req.headers.appid,
 		};
 		var error=new Error("GetNewToken.Error");
 		return RefreshToken.update({
@@ -29,6 +30,7 @@ module.exports={
 				UserAccountID:req.user.ID,
 				SystemType:req.headers.systemtype,
 				DeviceID:req.headers.deviceid||null,
+				AppID:req.headers.appid||null,
 				OldCode:refreshCode,
 				Status:'WAITGET'
 			}

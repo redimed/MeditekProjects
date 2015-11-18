@@ -2,7 +2,7 @@ module.exports = {
 	/**
 	 * CreateUserActivation: Tạo UserActivation
 	 *	Đối với web system: mỗi user chỉ có 1 record
-	 *	Đối với mobile system: tương ứng với mỗi cặp {userId, deviceId} có 1 record
+	 *	Đối với mobile system: tương ứng với mỗi cặp {userId, deviceId, appid} có 1 record
 	 *	Nếu record activation của user đã tồn tại thì update, nếu chưa thì insert mới
 	 * 		+trường hợp update: các thông tin được update: 
 	 * 			VerificationCode,VerificationToken,TokenCreatedDate,TokenExpired,CodeExpired,
@@ -12,7 +12,7 @@ module.exports = {
 	 * 			TokenExpired,CodeExpired,CreatedDate
 	 *
 	 * Input: 
-	 * - req.body:{UserUID,Type,DeviceID(chỉ trong trường hợp Mobile System)}
+	 * - req.body:{UserUID,Type,DeviceID, AppID(chỉ trong trường hợp Mobile System)}
 	 * output: 
 	 * 	nếu thành công trả status 200 cùng UserActivationInfo
 	 * 	nếu lỗi thì trả về status 500 cùng error, trong error có mảng errors

@@ -24,7 +24,8 @@ class Information {
     var urgentRequestType : String!
     var requestDate : String!
     var GP:String!
-    init(firstName:String,lastName:String,phoneNumber:String,email:String,DOB:String,suburb:String,GPReferral:String,description:String,physiotherapy:String,specialist:String,handTherapy:String,urgentRequestType:String,requestDate:String,GP:String){
+    var specialistType:String!
+    init(firstName:String,lastName:String,phoneNumber:String,email:String,DOB:String,suburb:String,GPReferral:String,description:String,physiotherapy:String,specialist:String,handTherapy:String,urgentRequestType:String,requestDate:String,GP:String,specialistType:String){
         self.firstName = firstName
         self.lastName = lastName
         self.phoneNumber = phoneNumber
@@ -39,5 +40,6 @@ class Information {
         self.urgentRequestType = urgentRequestType
         self.requestDate = requestDate
         self.GP = GP
+        self.specialistType = specialistType
     }
 }

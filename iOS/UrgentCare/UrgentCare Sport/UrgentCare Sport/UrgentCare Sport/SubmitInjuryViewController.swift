@@ -23,6 +23,11 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var btnYes: SSRadioButton!
     @IBOutlet weak var btnNo: SSRadioButton!
+    @IBOutlet weak var Plastic: SSRadioButton!
+    @IBOutlet weak var Othopaedic: SSRadioButton!
+    
+    @IBOutlet weak var specialistLabel: UILabel!
+    
     @IBOutlet weak var Navigationbar: UINavigationBar!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var btnMakeAppointment: DesignableButton!
@@ -34,6 +39,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     var dateofbirth: String = ""
     var GPReferral : String = "Y"
     var radioButtonController: SSRadioButtonsController?
+    var radioButtonSpecialistController: SSRadioButtonsController?
     var NavigateBarTitle: String!
     var SportTye: String!
     var pastUrls : [String] = []
@@ -41,9 +47,11 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     var physiotherapy:String = "N"
     var specialist:String = "N"
     var handTherapy:String = "N"
+    var specialistType : String = ""
     var urgentRequestType : String = "SportInjury"
     var Info : Information!
     
+    @IBOutlet weak var btnSubmit: DesignableButton!
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,8 +62,13 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
             btnNo.hidden = true
             GPReferral = ""
         }
-
+        if specialist == "Y"{
+            Plastic.hidden = false
+            Othopaedic.hidden = false
+            specialistLabel.hidden = false
+        }
         
+       
         
         
         suburbTextField.delegate = self
@@ -75,25 +88,36 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         radioButtonController!.shouldLetDeSelect = false
         btnYes.selected = true
         suburbTextField.delegate = self
+        //set radio specialist group
+        radioButtonSpecialistController = SSRadioButtonsController(buttons: Plastic, Othopaedic)
+        radioButtonSpecialistController!.delegate = self
+        radioButtonSpecialistController!.shouldLetDeSelect = false
+
         
         getPersonalData()
         
         
         DatepickerMode()
     }
-    
+ 
     override func viewDidAppear(animated: Bool) {
         customTextField(colorCustomBrow)
+        
     }
     
     //select radio button
     func didSelectButton(aButton: UIButton?) {
         if aButton?.titleLabel?.text == "Yes"{
             GPReferral = "Y"
-        }else {
+        }else if aButton?.titleLabel?.text == "No"{
             GPReferral = "N"
         }
         
+        if aButton?.titleLabel?.text == "Plastic surgeon"{
+            specialistType = (aButton?.titleLabel?.text)!
+        }else if aButton?.titleLabel?.text == "Orthopaedic surgeon" {
+            specialistType = (aButton?.titleLabel?.text)!
+        }
         
     }
     
@@ -181,7 +205,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
     func sendingData(){
         self.view.showLoading()
         btnMakeAppointment.enabled = false
-        Info =  Information(firstName: (firstNameTextField.text?.capitalizeFirst)!, lastName: (lastNameTextField.text?.capitalizeFirst)!, phoneNumber: contactPhoneTextField.text!, email: emailTextField.text!, DOB: birthDayTextField.text!, suburb: suburbTextField.text!, GPReferral: GPReferral, description: descriptionTextView.text!, physiotherapy: physiotherapy, specialist: specialist, handTherapy: handTherapy, urgentRequestType: urgentRequestType, requestDate: NowDate(),GP:GP)
+        Info =  Information(firstName: (firstNameTextField.text?.capitalizeFirst)!, lastName: (lastNameTextField.text?.capitalizeFirst)!, phoneNumber: contactPhoneTextField.text!, email: emailTextField.text!, DOB: birthDayTextField.text!, suburb: suburbTextField.text!, GPReferral: GPReferral, description: descriptionTextView.text!, physiotherapy: physiotherapy, specialist: specialist, handTherapy: handTherapy, urgentRequestType: urgentRequestType, requestDate: NowDate(),GP:GP,specialistType:specialistType)
         submitDataToServe(Info)
     }
     
@@ -224,9 +248,11 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
                 "handTherapy":infor.handTherapy,
                 "GP": infor.GP,
                 "urgentRequestType":infor.urgentRequestType,
-                "requestDate":infor.requestDate
+                "requestDate":infor.requestDate,
+                "specialistType":infor.specialistType
             ]
         ]
+        print(parameters)
         Alamofire.request(.POST,api.submitInjury,headers: headers,parameters: parameters).responseJSON{
             request, response, result  in
             self.view.hideLoading()
@@ -235,7 +261,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
             case .Success(let JSONData):
                 let data = JSON(JSONData)
                 if data["data"].string == "success" {
-                    
+                      infor.phoneNumber = self.contactPhoneTextField.text
                     self.successAlert(infor)
                 }else {
                     if data["error"]["error"].string == "E_VALIDATION" {
@@ -499,7 +525,6 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
             }else {
                 borderTextFieldValid(emailTextField, color: colorCustomBrow)
             }
-            
         case suburbTextField :
             autoTableView.hidden = true
         case birthDayTextField:
@@ -517,28 +542,21 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
             if descriptionTextView.text != "" {
                 descriptionTextView.text = descriptionTextView.text.capitalizeFirst
             }
-            
         }
     }
     
 }
 
 extension SubmitInjuryViewController: UITableViewDelegate,UITableViewDataSource {
-
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return autocompleteUrls.count
     }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("AutoCompleteRowIdentifier", forIndexPath: indexPath) as! AutocompleteTableViewCell
-    
-    
         cell.name.text = autocompleteUrls[indexPath.row]
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         suburbTextField.text = autocompleteUrls[indexPath.row]
         autoTableView.hidden = true
     }

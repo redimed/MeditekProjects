@@ -21,7 +21,7 @@ var cookies = String()
 var PatientInfo : Patient!
 let phoneNumberCallUs = "0892300900"
 struct ConfigurationSystem {
-    static let http = "http://192.168.1.130"
+    static let http = "http://testapp.redimed.com.au"
     
     
     static let Http_3009 = "\(http):3009"

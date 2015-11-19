@@ -42,6 +42,9 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
         
         print("-------",appointmentDetails.Type)
         self.getListImage(appointmentDetails.UIDApointment,appointmentDetails.Type)
+    
+       
+        
     }
     
     override func didReceiveMemoryWarning() {

@@ -33,15 +33,13 @@ class GetAndPostDataController {
         defaults.synchronize()
         tokens = token
     }
-    
-    
     //Giap: Check phone number and send verify code
     func SendVerifyPhoneNumber (deviceID:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
         //Split number 0
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         let parameters = [
             "data": [
-                //   "phone":"+61"+phoneNumber,
+                // "phone":"+61"+phoneNumber,
                 "phone":"+841654901590",
                 "deviceId":deviceID,
                 "deviceType": "ios"
@@ -78,7 +76,7 @@ class GetAndPostDataController {
                 "code":verifyCode,
                 "deviceId":deviceID,
                 "deviceType": "ios",
-                //               "Phone":"+61" + phoneNumber
+                // "Phone":"+61" + phoneNumber
                 "phone":"+841654901590"
             ]
         ]
@@ -97,8 +95,6 @@ class GetAndPostDataController {
                     print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
                 }
             }
-            
-            
         }
     }
     //Giap: Get information Patient by UID
@@ -106,9 +102,7 @@ class GetAndPostDataController {
         Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getInformationPatientByUID + UUID,headers:headers).responseJSON{
             request, response, result in
             if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
-                
                 if requireupdatetoken as! String == "true" {
-                    
                     self.getNewToken()
                 }
             }
@@ -116,13 +110,12 @@ class GetAndPostDataController {
             case .Success(let JSONData):
                 
                 var data = JSON(JSONData)
-                
+                print(data)
                 let jsonInformation = data["data"][0] != nil ? data["data"][0] : ""
                 if jsonInformation == "" {
                     completionHandler(JSON(["message":"error"]))
                     
                 }else {
-                    
                     let MiddleName = jsonInformation["MiddleName"].string ?? ""
                     let Address2 = jsonInformation["Address2"].string ?? ""
                     let Title = jsonInformation["Title"].string ?? ""
@@ -149,7 +142,6 @@ class GetAndPostDataController {
                     PatientInfo = Patient(MiddleName: MiddleName, Address2: Address2, Title: Title, WorkPhoneNumber: WorkPhoneNumber, Enable: Enable, PhoneNumber: PhoneNumber, Occupation: Occupation, LastName: LastName, Postcode: Postcode, UID: UID, UserAccountID: UserAccountID, Gender: Gender  , FirstName: FirstName, State: State, ModifiedDate: ModifiedDate, Email1: Email1, Country: Country, ID: ID, Address1: Address1, CountryID: CountryID, DOB: DOB, Suburb: Suburb, HomePhoneNumber: HomePhoneNumber)
                     completionHandler(JSON(["message":"success"]))
                 }
-                
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
                 
@@ -166,8 +158,6 @@ class GetAndPostDataController {
     
     //Giap: Get List Appointment
     func getListAppointmentByUID(UID:String,Limit:String,completionHandler:(JSON) -> Void) {
-        
-        
         Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentList + UID ,headers:headers).responseJSON{
             request, response, result in
             print("Reponse----GetAppointmentList",response!.allHeaderFields)
@@ -176,7 +166,6 @@ class GetAndPostDataController {
                     self.getNewToken()
                 }
             }
-
             switch result {
             case .Success(let JSONData):
                 
@@ -219,7 +208,6 @@ class GetAndPostDataController {
                 )
             },
             encodingCompletion: { encodingResult in
-                
                 switch encodingResult {
                 case .Success(let upload, _, _):
                     upload.responseJSON { response in
@@ -245,13 +233,11 @@ class GetAndPostDataController {
             request, response, result in
             print("reuturn response",response)
             if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
-                
                 if requireupdatetoken as! String == "true" {
                     print("Reponse",requireupdatetoken)
                     self.getNewToken()
                 }
             }
-
             switch result {
             case .Success(let JSONData):
                 print("Update Image data",JSON(JSONData))
@@ -305,13 +291,11 @@ class GetAndPostDataController {
                 request, response, result in
                 print("Reponse getAppointmentDetails WAA",response!.allHeaderFields)
                 if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
-                    
                     if requireupdatetoken as! String == "true" {
                         print("Reponse",requireupdatetoken)
                         self.getNewToken()
                     }
                 }
-
                 switch result {
                 case .Success(let JSONData):
                     var data = JSON(JSONData)
@@ -330,12 +314,8 @@ class GetAndPostDataController {
                         print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
                     }
                 }
-                
             }
         }
-        
-        
-        
     }
     
     //get image by image UID
@@ -372,7 +352,8 @@ class GetAndPostDataController {
                     switch result {
                     case .Success(let JSONData):
                         let data = JSON(JSONData)
-                        if data["status"].string == "hasToken"{
+                        
+                        if  data["refreshCode"].string! != refreshCode{
                             self.setNewToken(data["token"].string!,refreshCode: data["refreshCode"].string!)
                         }
                     case .Failure(let data, let error):
@@ -383,7 +364,6 @@ class GetAndPostDataController {
                     }
             }
         }
-        
     }
     
     

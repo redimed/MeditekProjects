@@ -24,7 +24,7 @@ app.config(function($stateProvider, $urlRouterProvider){
 			controller: 'WAAppointmentListDetailCtrl',
 		})
 		.state('authentication.WAAppointment.GP', {
-			url: '/GP',
+			url: '/Request',
 			data: {pageTitle: 'WAAppointment GP'},
 			templateUrl: 'modules/WAAppointment/views/WAAppointmentGP.html',
 			controller: 'WAAppointmentGPCtrl',

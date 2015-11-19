@@ -47,8 +47,8 @@
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
                         <div class="input-icon">
-                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate">
-                            <label class="control-label">Appointment Date</label>
+                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate" ng-readonly="true" data-date-start-date="0d">
+                            <label class="control-label">Appointment Datesss</label>
                             <div class="form-control-focus"> </div>
                             <i class="glyphicon glyphicon-calendar"></i>
                         </div>
@@ -57,7 +57,7 @@
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
                         <div class="input-icon">
-                            <input type="text" class="form-control timepicker timepicker-no-seconds" ng-model="info.appointmentTime" data-default-time="" data-format="hh:mm A">
+                            <input type="text" class="form-control timepicker timepicker-no-seconds" ng-model="info.appointmentTime" data-default-time="" data-format="hh:mm A" ng-readonly="true">
                             <label class="control-label">Appointment Time</label>
                             <div class="form-control-focus"> </div>
                             <i class="icon-clock"></i>

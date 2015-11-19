@@ -110,7 +110,7 @@
                                                     <div class="col-md-6 col-sm-6">
                                                         <div class="form-group form-md-line-input">
                                                             <div class="input-icon">
-                                                                <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate">
+                                                                <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate" data-date-start-date="0d">
                                                                 <label class="control-label">Appointment Date</label>
                                                                 <div class="form-control-focus"> </div>
                                                                 <i class="glyphicon glyphicon-calendar"></i>
@@ -121,7 +121,7 @@
                                                         <div class="form-group form-md-line-input">
                                                             <div class="input-icon">
                                                                 <input type="text" class="form-control timepicker timepicker-no-seconds" ng-model="info.appointmentTime" data-default-time="" data-format="hh:mm A">
-                                                                <label class="control-label">Appointment Time</label>
+                                                                <label class="control-label" >Appointment Time</label>
                                                                 <div class="form-control-focus"> </div>
                                                                 <i class="icon-clock"></i>
                                                             </div>
@@ -324,7 +324,7 @@
                                                                 <div class="col-md-6 col-sm-6">
                                                                     <div class="form-group form-md-line-input">
                                                                         <div class="input-icon">
-                                                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="wainformation.TelehealthAppointment.PatientAppointment.DOB">
+                                                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="wainformation.TelehealthAppointment.PatientAppointment.DOB" data-date-end-date="0d">
                                                                             <label class="control-label">Date of Birth</label>
                                                                             <div class="form-control-focus"> </div>
                                                                             <i class="glyphicon glyphicon-calendar"></i>
@@ -1062,6 +1062,6 @@
                     </div>
                 </div>
             </form>
-        </fieldset>>
+        </fieldset>
     </div>
 </div>

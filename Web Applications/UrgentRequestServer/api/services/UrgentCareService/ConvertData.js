@@ -13,6 +13,9 @@ module.exports = {
         if (data.rehab === 'Y') {
             serviceType += 'Rehabitation, ';
         }
+        if (data.handTherapy === 'Y' && !isWorkInjury) {
+            serviceType += 'Hand Therapy, ';
+        }
         if (data.treatment === 'Y') {
             serviceType += 'Treatment, ';
         }

@@ -47,10 +47,19 @@ function Validation(userAccess)
 		else if(systems.indexOf(userAccess.SystemType)>=0)
 		{
 			//Kiểm tra nếu là mobile system thì cần có deviceId
-			if(mobileSystems.indexOf(userAccess.SystemType)>=0 && !userAccess.DeviceID)
+			if(mobileSystems.indexOf(userAccess.SystemType)>=0)
 			{
-				error.pushError('deviceId.notProvided');
-				throw error;
+				if(!userAccess.DeviceID)
+				{
+					error.pushError('deviceId.notProvided');
+					throw error;
+				}
+				if(!userAccess.AppID)
+				{
+					error.pushError('appId.notProvided');
+					throw error;
+				}
+				
 			}
 		}
 		else
@@ -120,7 +129,8 @@ module.exports={
 							return RefreshToken.findOne({
 								where:{
 									UserAccountID:user.ID,
-									DeviceID:userAccess.DeviceID
+									DeviceID:userAccess.DeviceID,
+									AppID:userAccess.AppID,
 								}
 							},{transaction:transaction})
 						}
@@ -131,6 +141,7 @@ module.exports={
 						var userSecretExpiration=o.getUserSecretExpiration(userAccess.SystemType,o.getMaxRole(user.roles));
 						var secretExpired=userSecretExpiration.secretKeyExpired;
 						var maxTimePlus=userSecretExpiration.maxTimePlus;
+						console.log('>>>>>>>>>>>>>>>>>>>',userSecretExpiration)
 						if(o.checkData(rt))
 						{
 							return rt.updateAttributes({
@@ -171,6 +182,7 @@ module.exports={
 							if(userAccess.SystemType!=HelperService.const.systemType.website)
 							{
 								insertInfo.DeviceID=userAccess.DeviceID;
+								insertInfo.AppID=userAccess.AppID;
 							}
 
 							return RefreshToken.create(insertInfo,{transaction:transaction})
@@ -233,7 +245,8 @@ module.exports={
 							return RefreshToken.findOne({
 								where:{
 									UserAccountID:user.ID,
-									DeviceID:userAccess.DeviceID
+									DeviceID:userAccess.DeviceID,
+									AppID:userAccess.AppID,
 								}
 							},{transaction:transaction})
 						}
@@ -302,7 +315,8 @@ module.exports={
 							return RefreshToken.findOne({
 								where:{
 									UserAccountID:user.ID,
-									DeviceID:userAccess.DeviceID
+									DeviceID:userAccess.DeviceID,
+									AppID:userAccess.AppID,
 								}
 							},{transaction:transaction})
 						}
@@ -342,6 +356,7 @@ module.exports={
 										UserAccountID:user.ID,
 										SystemType:userAccess.SystemType,
 										DeviceID:userAccess.DeviceID||null,
+										AppID:userAccess.AppID||null,
 										Status:o.const.refreshTokenStatus.got,
 									}
 								},{transaction:transaction})

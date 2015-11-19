@@ -55,20 +55,14 @@ module.exports = {
         var type = params.type;
         TelehealthService.GetAppointmentList(headers, type).then(function(response) {
             var data = response.getBody();
-            if (response.getCode() == 202) {
-                res.set("newtoken", response.getHeaders().newtoken ? response.getHeaders().newtoken : null);
-                req.session.passport.user.SecretKey = response.getHeaders().newsecret ? response.getHeaders().newsecret : null;
-                req.session.passport.user.SecretCreatedDate = response.getHeaders().newsecretcreateddate ? response.getHeaders().newsecretcreateddate : null;
-                req.session.passport.user.TokenExpired = response.getHeaders().tokenexpired ? response.getHeaders().tokenexpired : null;
-                req.session.passport.user.MaxExpiredDate = response.getHeaders().maxexpireddate ? response.getHeaders().maxexpireddate : null;
-            }
+            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
             if (data.count > 0) {
                 appts = data.rows;
                 TelehealthUser.findAll().then(function(teleUsers) {
                     for (var i = 0; i < teleUsers.length; i++) {
                         for (var j = 0; j < appts.length; j++) {
                             if (appts[j].Patients.length > 0 && appts[j].Patients[0].UserAccount) {
-                                if (teleUsers[i].userAccountID == appts[j].Patients[0].UserAccount.ID) {
+                                if (teleUsers[i].UserAccountID == appts[j].Patients[0].UserAccount.ID) {
                                     appts[j].IsOnline = 0;
                                     appts[j].TeleUID = teleUsers[i].UID;
                                 }

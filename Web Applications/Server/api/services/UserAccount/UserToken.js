@@ -47,10 +47,20 @@ function Validation(userAccess)
 		else if(systems.indexOf(userAccess.SystemType)>=0)
 		{
 			//Kiểm tra nếu là mobile system thì cần có deviceId
-			if(mobileSystems.indexOf(userAccess.SystemType)>=0 && !userAccess.DeviceID)
+			if(mobileSystems.indexOf(userAccess.SystemType)>=0)
 			{
-				error.pushError('deviceId.notProvided');
-				throw error;
+				if(!userAccess.DeviceID)
+				{
+					error.pushError('deviceId.notProvided');
+					throw error;
+				}
+
+				if(!userAccess.AppID)
+				{
+					error.pushError('appId.notProvided');
+					throw error;
+				}
+				
 			}
 		}
 		else
@@ -121,7 +131,8 @@ module.exports={
 							return UserToken.findOne({
 								where:{
 									UserAccountID:user.ID,
-									DeviceID:userAccess.DeviceID
+									DeviceID:userAccess.DeviceID,
+									AppID:userAccess.AppID,
 								}
 							},{transaction:transaction})
 						}
@@ -186,6 +197,7 @@ module.exports={
 							if(userAccess.SystemType!=HelperService.const.systemType.website)
 							{
 								insertInfo.DeviceID=userAccess.DeviceID;
+								insertInfo.AppID=userAccess.AppID;
 							}
 
 							return UserToken.create(insertInfo,{transaction:transaction})
@@ -248,7 +260,8 @@ module.exports={
 							return UserToken.findOne({
 								where:{
 									UserAccountID:user.ID,
-									DeviceID:userAccess.DeviceID
+									DeviceID:userAccess.DeviceID,
+									AppID:userAccess.AppID,
 								}
 							},{transaction:transaction})
 						}

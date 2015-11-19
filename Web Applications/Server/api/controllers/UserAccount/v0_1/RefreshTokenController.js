@@ -6,20 +6,22 @@ module.exports={
 	/**
 	 * Trả về token mới + refreshCode mới cho client
 	 * Input:
-	 *  -headers: authorization, systemtype, deviceid (nếu mobile)
+	 *  -headers: authorization, systemtype, deviceid (nếu mobile), appid(nếu là mobile)
 	 * 	-req.body: refreshCode
 	 * Output:
 	 * 	Nếu success 
 	 * 		{status:'hasToken',token,refreshCode}: nếu có token mới
 	 * 		{status:'unnecessary'}: nếu không có token mới
 	 */
-	GetNewToken:function(req,res)
+	//STANDARD
+	/*GetNewToken:function(req,res)
 	{
 		var refreshCode=req.body.refreshCode;
 		var userToken={
 			UserUID:req.user.UID,
 			SystemType:req.headers.systemtype,
-			DeviceID:req.headers.deviceid
+			DeviceID:req.headers.deviceid,
+			AppID:req.headers.appid,
 		};
 		var error=new Error("GetNewToken.Error");
 		return RefreshToken.update({
@@ -29,6 +31,7 @@ module.exports={
 				UserAccountID:req.user.ID,
 				SystemType:req.headers.systemtype,
 				DeviceID:req.headers.deviceid||null,
+				AppID:req.headers.appid||null,
 				OldCode:refreshCode,
 				Status:'WAITGET'
 			}
@@ -75,5 +78,67 @@ module.exports={
 			error.pushError("GetNewToken.updateStatusError");
 			return res.serverError(ErrorWrap(error));
 		});
-	}
+	},*/
+
+
+	GetNewToken:function(req,res)
+	{
+		var refreshCode=req.body.refreshCode;
+		var userToken={
+			UserUID:req.user.UID,
+			SystemType:req.headers.systemtype,
+			DeviceID:req.headers.deviceid,
+			AppID:req.headers.appid,
+		};
+		var error=new Error("GetNewToken.Error");
+		return Services.RefreshToken.GetRefreshToken(userToken)
+		.then(function(rt){
+			if(o.checkData(rt))
+			{
+				var refreshToken=rt.dataValues;
+				var payload={
+					UID:req.user.UID,
+					RefreshCode:md5(refreshToken.RefreshCode)
+				};
+				var token=jwt.sign(
+                    payload,
+                    refreshToken.SecretKey,
+                    {expiresIn:o.const.authTokenExpired[req.headers.systemtype]}
+                );
+				var returnToken={
+					// status:null,
+					token:token,
+					refreshCode:refreshToken.RefreshCode
+				}
+
+				return RefreshToken.update({
+					Status:'GOT'
+				},{
+					where:{
+						UserAccountID:req.user.ID,
+						SystemType:req.headers.systemtype,
+						DeviceID:req.headers.deviceid||null,
+						AppID:req.headers.appid||null,
+						OldCode:refreshCode,
+						Status:'WAITGET'
+					}
+				})
+				.then(function(result)
+				{
+					return res.ok(returnToken);	
+				},function(err){
+					console.log(err);
+					error.pushError("GetNewToken.updateStatusError");
+					return res.serverError(ErrorWrap(error));
+				});
+			}
+			else
+			{
+				error.pushError("GetNewToken.refreshTokenNotFound");
+				return res.serverError(ErrorWrap(error));
+			}
+		},function(err){
+			return res.serverError(ErrorWrap(err));
+		});
+	},
 }

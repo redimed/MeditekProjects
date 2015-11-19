@@ -92,7 +92,7 @@ module.exports = {
         var data = req.body.data;
         Services.Patient.UpdatePatient(data)
             .then(function(result) {
-                if (result[0] > 0)
+                if (result!=undefined && result!=null && result!="")
                     res.ok({
                         status: 200,
                         message: "success"
@@ -100,8 +100,7 @@ module.exports = {
                 else {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");
-                    res.notFound({
-                        status: 200,
+                    res.ok({
                         message: ErrorWrap(err)
                     });
                 }
@@ -132,8 +131,7 @@ module.exports = {
                 } else {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");
-                    res.notFound({
-                        status: 200,
+                    res.ok({
                         message: ErrorWrap(err)
                     });
                 }
@@ -187,8 +185,7 @@ module.exports = {
                         }, function(err) {
                             var err = new Error("SERVER ERROR");
                             err.pushError("Server Error");
-                            res.notFound({
-                                status: 200,
+                            res.ok({
                                 message: ErrorWrap(err)
                             });
                         });
@@ -197,7 +194,6 @@ module.exports = {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");
                     res.ok({
-                        status: 200,
                         message: ErrorWrap(err)
                     });
                 }
@@ -226,8 +222,7 @@ module.exports = {
                 if (result === 0) {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");
-                    res.notFound({
-                        status: 200,
+                    res.ok({
                         message: ErrorWrap(err)
                     });
                 } else
@@ -270,8 +265,7 @@ module.exports = {
                 else {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");
-                    res.notFound({
-                        status: 200,
+                    res.ok({
                         message: ErrorWrap(err)
                     });
                 }
@@ -302,8 +296,7 @@ module.exports = {
                 } else {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");
-                    res.notFound({
-                        status: 200,
+                    res.ok({
                         message: ErrorWrap(err)
                     });
                 }
@@ -328,8 +321,7 @@ module.exports = {
                 else {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");
-                    res.notFound({
-                        status: 200,
+                    res.ok({
                         message: ErrorWrap(err)
                     });
                 }
@@ -355,8 +347,7 @@ module.exports = {
                 } else {
                     var err = new Error("SERVER ERROR");
                     err.pushError("No data result");
-                    res.notFound({
-                        status: 200,
+                    res.ok({
                         message: ErrorWrap(err)
                     });
                 }

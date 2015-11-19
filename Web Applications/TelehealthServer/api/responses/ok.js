@@ -22,7 +22,7 @@ module.exports = function sendOK (data, options) {
 
   // Set status code
     // Set status code
-  if(res.get('newtoken'))
+  if(res.get('newtoken') || res.get('requireupdatetoken'))
   {
     //trả về 202 nếu có reset token
     res.status(202);

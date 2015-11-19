@@ -117,6 +117,12 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 								scope.data.Email1 = result.data.data.Email1;
 								scope.isShowNext = true;
 								scope.data.CountryID1 = 14;
+								scope.data.Title= null;
+								scope.data.Gender= null;
+								scope.data.Address1= null;
+								scope.data.Suburb= null;
+								scope.data.Postcode= null;
+								scope.data.State = null;
 								// scope.data.DOB = new Date('1/1/1990');
 							}
 							else{
@@ -203,7 +209,6 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						scope.ermsg={};
 						scope.loadingCreate = false;
 						toastr.error("Please check data again.","ERROR");
-						scope.er = scope.er?scope.er:{};
 						if(err.data.message.ErrorsList[0].field!=undefined){
 							for(var i = 0; i < err.data.message.ErrorsList.length; i++){
 								scope.er[err.data.message.ErrorsList[i].field] ={'border': '2px solid #DCA7B0'};
@@ -229,6 +234,11 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 					}
 				});
 			};
+
+			scope.checkDataNull = function(name){
+		    	if(scope.data[name].length==0)
+		    		scope.data[name] = null;
+		    };
 
 		},
 		templateUrl:"modules/patient/directives/template/patientCreate.html"

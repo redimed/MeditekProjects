@@ -77,7 +77,8 @@ app
                             url: o.const.restBaseUrl+'/api/refresh-token/GetNewToken',
                             data: {refreshCode:$rootScope.refreshCode},
                             success: function(data){
-                                if(data && data.status=='hasToken')
+                                //STANDARD
+                                /*if(data && data.status=='hasToken')
                                 {
                                     $cookies.put("token", data.token);
                                     $rootScope.refreshCode=data.refreshCode;
@@ -85,6 +86,14 @@ app
                                 else
                                 {
                                     alert(JSON.stringify(data));
+                                }*/
+                                if(data)
+                                {
+                                    if(data.refreshCode!=$rootScope.refreshCode)
+                                    {
+                                        $cookies.put("token", data.token);
+                                        $rootScope.refreshCode=data.refreshCode;
+                                    }
                                 }
                             },
                         });

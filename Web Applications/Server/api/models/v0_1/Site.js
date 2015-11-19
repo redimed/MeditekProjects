@@ -156,7 +156,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(site, options, callback) {
+            beforeBulkUpdate: function(site, options, callback) {
                 site.ModifiedDate = new Date();
                 callback();
             }

@@ -390,7 +390,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(patient, options, callback) {
+            beforeBulkUpdate: function(patient, options, callback) {
                 patient.ModifiedDate = new Date();
                 callback();
             }

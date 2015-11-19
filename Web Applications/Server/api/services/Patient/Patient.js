@@ -662,6 +662,7 @@ module.exports = {
 		output:update patient into table Patient
 	*/
 	UpdatePatient : function(data, transaction) {
+		var isHaveRole = false;
 		if(check.checkData(data)){
 			data.ModifiedDate = new Date();
 			// data.DOB =moment(data.DOB,'YYYY-MM-DD HH:mm:ss ZZ').format('DD/MM/YYYY');
@@ -691,16 +692,75 @@ module.exports = {
 			if(data.UserAccountID)  patientInfo.UserAccountID = data.UserAccountID;
 			if(data.CountryID1)  patientInfo.CountryID1 = data.CountryID1;
 			if(data.UID)  patientInfo.UID = data.UID;
-			return Services.Patient.validation(data)
-			.then(function(success){
-				return Patient.update(patientInfo,{
-					where:{
-						UID : patientInfo.UID
-					},
-					transaction:transaction
+			return sequelize.transaction()
+				.then(function(t){
+				return Services.Patient.validation(data)
+				.then(function(success){
+					return Patient.update(patientInfo,{
+						where:{
+							UID : patientInfo.UID
+						},
+						transaction:t
+					});
+				}, function(err){
+					throw err;
+				})
+				.then(function(result){
+					if(data.RoleId!=undefined && data.RoleId!=null 
+					&& data.RoleId!="" && (data.RoleId==3)){
+						isHaveRole = true;
+						return Services.Doctor.checkUserRole(data.UserAccountID,t);
+					}
+					else{
+						t.commit();
+						return result;
+					}
+				},function(err){
+					t.rollback();
+					throw err;
+				})
+				.then(function(check){
+					if(isHaveRole==true){
+						if(check==null){
+							return RelUserRole.create({
+								RoleId        : data.RoleId,
+								UserAccountId : data.UserAccountID,
+								SiteId        : 1,
+								CreatedDate   : new Date(),
+								Enable        : 'Y'
+							},{transaction:t});
+						}
+						else{
+							return RelUserRole.update({
+								RoleId        : data.RoleId,
+								ModifiedDate   : new Date()
+							},{
+								transaction:t,
+								where:{
+									UserAccountId : data.UserAccountID
+								}
+							});
+						}
+					}
+					else{
+						return check;
+					}
+				},function(err){
+					t.rollback();
+					throw err;
+				})
+				.then(function(success){
+					if(isHaveRole==true){
+						t.commit();
+						return success;
+					}
+					else{
+						return success;
+					}
+				},function(err){
+					t.rollback();
+					throw err;
 				});
-			}, function(err){
-				throw err;
 			});
 		}
 	},
@@ -768,7 +828,14 @@ module.exports = {
 				{
 	            	model: UserAccount,
 	            	attributes: ['PhoneNumber','Email','ID','UID'],
-			    	required: true
+			    	required: true,
+			    	include:[
+				  		{
+				  			model:RelUserRole,
+				  			attributes:['RoleId'],
+				  			required: false
+				  		}
+				  	]
 			    },
 			    {
 			    	model: Country,

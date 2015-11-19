@@ -221,7 +221,10 @@ app.controller('WAAppointmentListDetailCtrl', function($cookies, $scope, $modalI
 
     $scope.submitUpdate = function() {
         var stringAlert = null;
-        if ($scope.wainformation.Status == 'Approved' || $scope.wainformation.Status == 'Attended' || $scope.wainformation.Status == 'Waitlist' || $scope.wainformation.Status == 'Finished') {
+        if ($scope.wainformation.Status == 'Approved' 
+            || $scope.wainformation.Status == 'Attended' 
+            || $scope.wainformation.Status == 'Waitlist' 
+            || $scope.wainformation.Status == 'Finished') {
             stringAlert = $scope.CheckValidation()
         };
         if ($scope.info.appointmentDate != null || $scope.info.appointmentTime != null) {

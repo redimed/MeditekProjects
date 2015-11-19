@@ -104,7 +104,7 @@
                                                                     <div class="col-md-12 col-sm-12">
                                                                         <label class="control-label">Date of Birth<span class="required"> * </span></label>
                                                                         <div class="input-icon">
-                                                                            <i class="fa fa-calendar"></i>
+                                                                            <i class="glyphicon glyphicon-calendar"></i>
                                                                             <input type="text" class="form-control date-picker" placeholder="Date of Birth" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.DOB" name="DOB" data-date-format="dd/mm/yyyy">
                                                                         </div>
                                                                     </div>
@@ -119,7 +119,7 @@
                                                                     <div class="col-md-12 col-sm-12">
                                                                         <label class="control-label">Address<span class="required"> * </span></label>
                                                                         <div class="input-icon">
-                                                                            <i class="fa fa-send"></i>
+                                                                            <i class="glyphicon glyphicon-road"></i>
                                                                             <input type="text" class="form-control" placeholder="Address" name="Address" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Address1">
                                                                         </div>
                                                                     </div>
@@ -133,7 +133,10 @@
                                                                 <div class="form-group">
                                                                     <div class="col-md-12 col-sm-12">
                                                                         <label class="control-label">Suburb<span class="required"> * </span></label>
-                                                                        <input type="text" class="form-control" placeholder="Surburb" name="Suburb" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Suburb">
+                                                                        <div class="input-icon">
+                                                                            <i class="glyphicon glyphicon-tree-conifer"></i>
+                                                                            <input type="text" class="form-control" placeholder="Surburb" name="Suburb" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Suburb">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -143,7 +146,10 @@
                                                                 <div class="form-group">
                                                                     <div class="col-md-12 col-sm-12">
                                                                         <label class="control-label">Postcode<span class="required"> * </span></label>
-                                                                        <input type="text" class="form-control" placeholder="Postcode" name="Postcode" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Postcode">
+                                                                        <div class="input-icon">
+                                                                            <i class="glyphicon glyphicon-map-marker"></i>
+                                                                            <input type="text" class="form-control" placeholder="Postcode" name="Postcode" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Postcode">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -156,7 +162,7 @@
                                                                     <div class="col-sm-12 col-md-12">
                                                                         <label class="control-label">Contact Number (Mobile)<span class="required"> * </span></label>
                                                                         <div class="input-icon">
-                                                                            <i class="icon-call-end"></i>
+                                                                            <i class="glyphicon glyphicon-phone"></i>
                                                                             <input type="text" class="form-control" placeholder="Contact Number (Mobile)" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.WorkPhoneNumber" name="PhoneNumber">
                                                                         </div>
                                                                     </div>
@@ -169,7 +175,7 @@
                                                                     <div class="col-md-12 col-sm-12">
                                                                         <label class="control-label">Contact Number (Homephone)</label>
                                                                         <div class="input-icon">
-                                                                            <i class="icon-call-end"></i>
+                                                                            <i class="glyphicon glyphicon-phone-alt"></i>
                                                                             <input type="text" class="form-control" placeholder="Contact Number (Homephone)" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.HomePhoneNumber" name="HomePhoneNumber">
                                                                         </div>
                                                                     </div>
@@ -182,7 +188,7 @@
                                                                     <div class="col-md-12 col-sm-12">
                                                                         <label class="control-label">Email</label>
                                                                         <div class="input-icon">
-                                                                            <i class="fa fa-envelope"></i>
+                                                                            <i class="glyphicon glyphicon-envelope"></i>
                                                                             <input type="text" class="form-control" placeholder="Email" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Email1" name="Email1">
                                                                         </div>
                                                                     </div>
@@ -320,215 +326,209 @@
                                                 <a href="" class="collapse"></a>
                                             </div>
                                         </div>
-                                        <div class="portlet-body">
-                                            <div class="row my-portlet-body">
-                                                <div class="row">
-                                                    <!-- begin column 1 -->
-                                                    <div class="col-md-4 col-sm-4">
-                                                        <div class="form-group">
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <textarea class="form-control" rows="19" ng-model="ClinicalNote"></textarea>
-                                                            </div>
+                                        <div class="portlet-body" style="padding:2em;">
+                                            <div class="row">
+                                                <!-- begin column 1 -->
+                                                <div class="col-md-4 col-sm-4">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12 col-sm-12">
+                                                            <textarea class="form-control" rows="25" ng-model="ClinicalNote"></textarea>
                                                         </div>
                                                     </div>
-                                                    <!-- end column 1 -->
-                                                    <!-- begin column 2 -->
-                                                    <div class="col-md-4 col-sm-4">
-                                                        <div class="form-group row form-md-checkboxes">
-                                                            <div class="caption" ng-init="details[0].type = 'Trauma'">
-                                                                <h4><b>Trauma</b></h4>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <div class="checkbox-list pull-left" ng-init="details[0].data[0].name = 'Dislocation'">
-                                                                    <label class="control-label">
-                                                                        <input type="checkbox" ng-model="details[0].data[0].value" ng-true-value="'Y'" ng-false-value="null"> Dislocation</label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <div class="form-group">
-                                                                    <div class="col-md-12 col-sm-12" ng-init="details[0].data[1].name = 'Fracture'">
-                                                                        <label for="fracture" ng-model="fracture">Fracture</label>
-                                                                        <input type="text" class="form-control" id="fracture" ng-model="details[0].data[1].value">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-6 col-sm-6">
-                                                                        <div class="checkbox-list pull-left" ng-init="details[0].data[2].name = 'Open'">
-                                                                            <label class="control-label">
-                                                                                <input type="checkbox" ng-model="details[0].data[2].value" ng-true-value="'Y'" ng-false-value="null"> Open</label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6 col-sm-6">
-                                                                        <div class="checkbox-list pull-left" ng-init="details[0].data[3].name = 'Closed'">
-                                                                            <label class="control-label">
-                                                                                <input type="checkbox" ng-model="details[0].data[3].value" ng-true-value="'Y'" ng-false-value="null"> Closed</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <div class="checkbox-list pull-left" ng-init="details[0].data[4].name = 'Displaced'">
-                                                                    <label class="control-label">
-                                                                        <input type="checkbox" ng-model="details[0].data[4].value" ng-true-value="'Y'" ng-false-value="null"> Displaced</label>
-                                                                </div>
-                                                            </div>
-                                                            <br>
-                                                            <div class="col-md-12 col-sm-12 caption" ng-init="details[1].type = 'Lacerations'">
-                                                                <label><b>Lacerations</b></label>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-6" ng-init="details[1].data[0].name = 'Hand'">
-                                                                        <div class="checkbox-list pull-left">
-                                                                            <label class="control-label">
-                                                                                <input type="checkbox" ng-model="details[1].data[0].value" ng-true-value="'Y'" ng-false-value="null"> Hand</label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6" ng-init="details[1].data[1].name = 'Nerve'">
-                                                                        <div class="checkbox-list pull-left">
-                                                                            <label class="control-label">
-                                                                                <input type="checkbox" ng-model="details[1].data[1].value" ng-true-value="'Y'" ng-false-value="null"> Nerve</label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6" ng-init="details[1].data[2].name = 'Tendon/muscle'">
-                                                                        <div class="checkbox-list pull-left">
-                                                                            <label class="control-label">
-                                                                                <input type="checkbox" ng-model="details[1].data[2].value" ng-true-value="'Y'" ng-false-value="null"> Tendon/muscle</label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6" ng-init="details[1].data[3].name = 'Facial'">
-                                                                        <div class="checkbox-list pull-left">
-                                                                            <label class="control-label">
-                                                                                <input type="checkbox" ng-model="details[1].data[3].value" ng-true-value="'Y'" ng-false-value="null"> Facial</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-5" ng-init="details[1].data[4].name = 'Skin Loss'">
-                                                                        <div class="checkbox-list pull-left">
-                                                                            <label class="control-label">
-                                                                                <input type="checkbox" ng-model="details[1].data[4].value" ng-true-value="'Y'" ng-false-value="null"> Skin Loss</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12" ng-init="details[1].data[5].name = 'Other'">
-                                                                <div class="form-inline">
-                                                                    <div class="checkbox">
-                                                                        <label class="control-label">
-                                                                            <input type="checkbox" ng-model="checkLacerationsOther" ng-click="checkboxOther()"> Other</label>
-                                                                    </div>
-                                                                    &nbsp;&nbsp;&nbsp;
-                                                                    <div class="form-group">
-                                                                        <input type="text" class="form-control input-md" placeholder="Other" ng-model="details[1].data[5].value" ng-disabled="checkLacerationsOther == false">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end column 2 -->
-                                                    <!-- begin column 3 -->
-                                                    <div class="col-md-4 col-sm-4">
-                                                        <div class="form-group form-md-checkboxes row">
-                                                            <div class="caption">
-                                                                <h4><b>Elective</b></h4>
-                                                            </div>
-                                                            <div class="caption" ng-init="details[2].type = 'Skin cancer'">
-                                                                <label><b>Skin cancer</b></label>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-6" ng-init="details[2].data[0].name = 'BCC / SCC'">
-                                                                        <label class="control-label pull-left">
-                                                                            <input type="checkbox" ng-model="details[2].data[0].value" ng-true-value="'Y'" ng-false-value="null">BCC / SCC </label>
-                                                                    </div>
-                                                                    <div class="col-md-6" ng-init="details[2].data[1].name = 'Melanoma'">
-                                                                        <label class="control-label pull-left">
-                                                                            <input type="checkbox" ng-model="details[2].data[1].value" ng-true-value="'Y'" ng-false-value="null">Melanoma </label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-12" ng-init="details[2].data[2].name = 'Other'">
-                                                                        <div class="form-inline">
-                                                                            <div class="checkbox">
-                                                                                <label class="control-label">
-                                                                                    <input type="checkbox" ng-model="checkElectiveOther" ng-click="checkboxOther()"> Other</label>
-                                                                            </div>
-                                                                            &nbsp;&nbsp;&nbsp;
-                                                                            <div class="form-group">
-                                                                                <input type="text" class="form-control input-md" placeholder="Other" ng-model="details[2].data[2].value" ng-disabled="checkElectiveOther == false">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="caption" ng-init="details[3].type = 'Hand Condition'">
-                                                                <label><b>Hand condition</b></label>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-6" ng-init="details[3].data[0].name = 'Ganglion'">
-                                                                        <label class="control-label pull-left">
-                                                                            <input type="checkbox" ng-model="details[3].data[0].value" ng-true-value="'Y'" ng-false-value="null">Ganglion </label>
-                                                                    </div>
-                                                                    <div class="col-md-6" ng-init="details[3].data[1].name = 'Arthritis'">
-                                                                        <label class="control-label pull-left">
-                                                                            <input type="checkbox" ng-model="details[3].data[1].value" ng-true-value="'Y'" ng-false-value="null">Arthritis </label>
-                                                                    </div>
-                                                                    <div class="col-md-12" ng-init="details[3].data[2].name = 'DeQuervains / Trigger'">
-                                                                        <label class="control-label pull-left">
-                                                                            <input type="checkbox" ng-model="details[3].data[2].value" ng-true-value="'Y'" ng-false-value="null">DeQuervains / Trigger</label>
-                                                                    </div>
-                                                                    <div class="col-md-6" ng-init="details[3].data[3].name = 'Contracture'">
-                                                                        <label class="control-label pull-left">
-                                                                            <input type="checkbox" ng-model="details[3].data[3].value" ng-true-value="'Y'" ng-false-value="null">Contracture </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <br>
-                                                            <div class="caption" ng-init="details[4].type = 'PNS'">
-                                                                <label><b>PNS</b></label>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-6" ng-init="details[4].data[0].name = 'Carpal Tunnel'">
-                                                                        <label class="control-label pull-left">
-                                                                            <input type="checkbox" ng-model="details[4].data[0].value" ng-true-value="'Y'" ng-false-value="null">Carpal Tunnel</label>
-                                                                    </div>
-                                                                    <div class="col-md-6" ng-init="details[4].data[1].name = 'Cubital Tunnel'">
-                                                                        <label class="control-label pull-left">
-                                                                            <input type="checkbox" ng-model="details[4].data[1].value" ng-true-value="'Y'" ng-false-value="null">Cubital Tunnel</label>
-                                                                    </div>
-                                                                    <div class="col-md-6" ng-init="details[4].data[2].name = 'Tarsal Tunnel'">
-                                                                        <label class="control-label pull-left">
-                                                                            <input type="checkbox" ng-model="details[4].data[2].value" ng-true-value="'Y'" ng-false-value="null">Tarsal Tunnel</label>
-                                                                    </div>
-                                                                    <div class="col-md-12" ng-init="details[4].data[3].name = 'Complex Reconstructive Case'">
-                                                                        <label class="control-label pull-left">
-                                                                            <input type="checkbox" ng-model="details[4].data[3].value" ng-true-value="'Y'" ng-false-value="null">Complex Reconstructive Case</label>
-                                                                    </div>
-                                                                    <div class="col-md-12" ng-init="details[4].data[4].name = 'Other'">
-                                                                        <div class="form-inline">
-                                                                            <div class="checkbox">
-                                                                                <label class="control-label">
-                                                                                    <input type="checkbox" ng-model="checkPNSOther" ng-click="checkboxOther()"> Other</label>
-                                                                            </div>
-                                                                            &nbsp;&nbsp;&nbsp;
-                                                                            <div class="form-group">
-                                                                                <input type="text" class="form-control input-md" placeholder="Other" ng-model="details[4].data[4].value" ng-disabled="checkPNSOther == false">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end column 3 -->
                                                 </div>
+                                                <!-- end column 1 -->
+                                                <!-- begin column 2 -->
+                                                <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
+                                                    <h3 class="bold font-blue-hoki form-group" ng-init="details[0].type = 'Trauma'">Trauma</h3>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <div class="checkbox" ng-init="details[0].data[0].name = 'Dislocation'">
+                                                            <label class="control-label">
+                                                                <input type="checkbox" ng-model="details[0].data[0].value" ng-true-value="'Y'" ng-false-value="null"> Dislocation
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" ng-init="details[0].data[1].name = 'Fracture'">
+                                                        <label class="control-label" for="fracture" ng-model="fracture">Fracture</label>
+                                                        &nbsp;
+                                                        <input type="text" class="" size="25" id="fracture" ng-model="details[0].data[1].value">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="checkbox-list">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-6" ng-init="details[0].data[2].name = 'Open'">
+                                                                    <label class="control-label">
+                                                                        <input type="checkbox" ng-model="details[0].data[2].value" ng-true-value="'Y'" ng-false-value="null"> 
+                                                                        Open
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6" ng-init="details[0].data[3].name = 'Closed'">
+                                                                    <label class="control-label">
+                                                                        <input type="checkbox" ng-model="details[0].data[3].value" ng-true-value="'Y'" ng-false-value="null"> 
+                                                                        Closed
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-6" ng-init="details[0].data[4].name = 'Displaced'">
+                                                                    <label class="control-label">
+                                                                        <input type="checkbox" ng-model="details[0].data[4].value" ng-true-value="'Y'" ng-false-value="null"> 
+                                                                        Displaced
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-group margin-bottom-40">
+                                                        <label class="bold font-blue-hoki" ng-init="details[1].type = 'Lacerations'">Lacerations</label>
+                                                        <div class="checkbox-list">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-12" ng-init="details[1].data[0].name = 'Hand'">
+                                                                    <label class="control-label">
+                                                                        <input type="checkbox" ng-model="details[1].data[0].value" ng-true-value="'Y'" ng-false-value="null"> 
+                                                                        Hand
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-12" ng-init="details[1].data[1].name = 'Nerve'">
+                                                                    <label class="control-label">
+                                                                        <input type="checkbox" ng-model="details[1].data[1].value" ng-true-value="'Y'" ng-false-value="null"> 
+                                                                        Nerve
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-12" ng-init="details[1].data[2].name = 'Tendon/muscle'">
+                                                                    <label class="control-label">
+                                                                        <input type="checkbox" ng-model="details[1].data[2].value" ng-true-value="'Y'" ng-false-value="null"> 
+                                                                        Tendon / muscle
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-12" ng-init="details[1].data[3].name = 'Facial'">
+                                                                    <label class="control-label">
+                                                                        <input type="checkbox" ng-model="details[1].data[3].value" ng-true-value="'Y'" ng-false-value="null"> 
+                                                                        Facial
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12 col-sm-12" ng-init="details[1].data[4].name = 'Skin Loss'">
+                                                                    <label class="control-label">
+                                                                        <input type="checkbox" ng-model="details[1].data[4].value" ng-true-value="'Y'" ng-false-value="null">
+                                                                        Skin Loss
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12 col-sm-12" ng-init="details[1].data[5].name = 'Other'">
+                                                                    <label class="control-label">
+                                                                        <input type="checkbox" ng-model="checkLacerationsOther" ng-click="checkboxOther()"> 
+                                                                        Other
+                                                                    </label>
+                                                                    &nbsp;
+                                                                    <input type="text" placeholder="Other" ng-model="details[1].data[5].value" ng-disabled="checkLacerationsOther == false">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <p class="bold font-blue-hoki">*Please call for advise on fasting status for urgent surgical intervention</p>
+                                                </div>
+                                                <!-- end column 2 -->
+                                                <!-- begin column 3 -->
+                                                <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
+                                                    <h3 class="bold font-blue-hoki form-group">Elective</h3>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <label class="bold font-blue-hoki" ng-init="details[2].type = 'Skin cancer'">Skin cancer</label>
+                                                        <div class="checkbox-list">
+                                                            <div class="checkbox" ng-init="details[2].data[0].name = 'BCC / SCC'">
+                                                                <label class="control-label">
+                                                                    <input type="checkbox" ng-model="details[2].data[0].value" ng-true-value="'Y'" ng-false-value="null">BCC / SCC </label>
+                                                            </div>
+                                                            <div class="checkbox" ng-init="details[2].data[1].name = 'Melanoma'">
+                                                                <label class="control-label">
+                                                                    <input type="checkbox" ng-model="details[2].data[1].value" ng-true-value="'Y'" ng-false-value="null">Melanoma </label>
+                                                            </div>
+                                                            <div class="checkbox" ng-init="details[2].data[2].name = 'Other'">
+                                                                <label class="control-label">
+                                                                    <input type="checkbox" ng-model="checkElectiveOther" ng-click="checkboxOther()"> 
+                                                                    Other
+                                                                </label>
+                                                                &nbsp;
+                                                                <input type="text" class="" placeholder="Other" ng-model="details[2].data[2].value" ng-disabled="checkElectiveOther == false">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <label class="bold font-blue-hoki" ng-init="details[3].type = 'Hand Condition'">Hand condition</label>
+                                                        <div class="checkbox-list">
+                                                            <div class="checkbox" ng-init="details[3].data[0].name = 'Ganglion'">
+                                                                <label class="control-label">
+                                                                    <input type="checkbox" ng-model="details[3].data[0].value" ng-true-value="'Y'" ng-false-value="null">
+                                                                    Ganglion 
+                                                                </label>
+                                                            </div>
+                                                            <div class="checkbox" ng-init="details[3].data[1].name = 'Arthritis'">
+                                                                <label class="control-label">
+                                                                    <input type="checkbox" ng-model="details[3].data[1].value" ng-true-value="'Y'" ng-false-value="null">
+                                                                    Arthritis 
+                                                                </label>
+                                                            </div>
+                                                            <div class="checkbox" ng-init="details[3].data[2].name = 'DeQuervains / Trigger'">
+                                                                <label class="control-label">
+                                                                    <input type="checkbox" ng-model="details[3].data[2].value" ng-true-value="'Y'" ng-false-value="null">
+                                                                    DeQuervains/Trigger
+                                                                </label>
+                                                            </div>
+                                                            <div class="checkbox" ng-init="details[3].data[3].name = 'Contracture'">
+                                                                <label class="control-label">
+                                                                    <input type="checkbox" ng-model="details[3].data[3].value" ng-true-value="'Y'" ng-false-value="null">
+                                                                    Contracture 
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-group">
+                                                        <label class="bold font-blue-hoki" ng-init="details[4].type = 'PNS'">PNS</label>
+                                                        <div class="checkbox-list">
+                                                            <div class="checkbox" ng-init="details[4].data[0].name = 'Carpal Tunnel'">
+                                                                <label class="control-label">
+                                                                    <input type="checkbox" ng-model="details[4].data[0].value" ng-true-value="'Y'" ng-false-value="null">
+                                                                    Carpal Tunnel
+                                                                </label>
+                                                            </div>
+                                                            <div class="checkbox" ng-init="details[4].data[1].name = 'Cubital Tunnel'">
+                                                                <label class="control-label">
+                                                                    <input type="checkbox" ng-model="details[4].data[1].value" ng-true-value="'Y'" ng-false-value="null">
+                                                                    Cubital Tunnel
+                                                                </label>
+                                                            </div>
+                                                            <div class="checkbox" ng-init="details[4].data[2].name = 'Tarsal Tunnel'">
+                                                                <label class="control-label">
+                                                                    <input type="checkbox" ng-model="details[4].data[2].value" ng-true-value="'Y'" ng-false-value="null">
+                                                                    Tarsal Tunnel
+                                                                </label>
+                                                            </div>
+                                                            <div class="checkbox" ng-init="details[4].data[3].name = 'Complex Reconstructive Case'">
+                                                                <label class="control-label">
+                                                                    <input type="checkbox" ng-model="details[4].data[3].value" ng-true-value="'Y'" ng-false-value="null">
+                                                                    Complex Reconstructive Case
+                                                                </label>
+                                                            </div>
+                                                            <div class="checkbox" ng-init="details[4].data[4].name = 'Other'">
+                                                                <label class="control-label">
+                                                                    <input type="checkbox" ng-model="checkPNSOther" ng-click="checkboxOther()">
+                                                                    Other
+                                                                </label>
+                                                                &nbsp;
+                                                                <input type="text" class="" placeholder="Other" ng-model="details[4].data[4].value" ng-disabled="checkPNSOther == false">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end column 3 -->
                                             </div>
                                         </div>
                                     </div>
@@ -662,7 +662,7 @@
                                     <div class="form-group" ng-if="requestInfo.TelehealthAppointment.PatientAppointment.Email1">
                                         <label class="control-label col-md-3">Email:</label>
                                         <div class="col-md-4">
-                                            <p class="form-control-static" data-display="email">{{requestInfo.TelehealthAppointment.PatientAppointment.Email}}</p>
+                                            <p class="form-control-static" data-display="email">{{requestInfo.TelehealthAppointment.PatientAppointment.Email1}}</p>
                                         </div>
                                     </div>
                                     <h4 class="form-section" ng-if="requestInfo.TelehealthAppointment.ExaminationRequired.Private == 'Y' || requestInfo.TelehealthAppointment.ExaminationRequired.Public == 'Y' || requestInfo.TelehealthAppointment.ExaminationRequired.DVA == 'Y' || requestInfo.TelehealthAppointment.ExaminationRequired.WorkersComp == 'Y' || requestInfo.TelehealthAppointment.ExaminationRequired.MVIT == 'Y'">Examination Required</h4>
@@ -866,5 +866,7 @@
         </div>
     </div>
 </div>
+
+
 
 <script type="text/javascript">ComponentsDateTimePickers.init(); // init todo page</script>

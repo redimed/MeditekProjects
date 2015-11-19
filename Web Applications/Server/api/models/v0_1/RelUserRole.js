@@ -114,7 +114,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(reluserrole, options, callback) {
+            beforeBulkUpdate: function(reluserrole, options, callback) {
                 reluserrole.ModifiedDate = new Date();
                 callback();
             }

@@ -142,7 +142,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(appointment, options, callback) {
+            beforeBulkUpdate: function(appointment, options, callback) {
                 appointment.ModifiedDate = new Date();
                 callback();
             }

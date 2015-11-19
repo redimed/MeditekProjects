@@ -104,7 +104,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(module, options, callback) {
+            beforeBulkUpdate: function(module, options, callback) {
                 module.ModifiedDate = new Date();
                 callback();
             }

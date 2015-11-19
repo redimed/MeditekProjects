@@ -103,7 +103,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(role, options, callback) {
+            beforeBulkUpdate: function(role, options, callback) {
                 role.ModifiedDate = new Date();
                 callback();
             }

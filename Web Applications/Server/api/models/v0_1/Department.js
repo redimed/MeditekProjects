@@ -129,7 +129,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(department, options, callback) {
+            beforeBulkUpdate: function(department, options, callback) {
                 department.ModifiedDate = new Date();
                 callback();
             }

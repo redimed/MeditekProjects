@@ -156,7 +156,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(useractivation, options, callback) {
+            beforeBulkUpdate: function(useractivation, options, callback) {
                 useractivation.ModifiedDate = new Date();
                 callback();
             }

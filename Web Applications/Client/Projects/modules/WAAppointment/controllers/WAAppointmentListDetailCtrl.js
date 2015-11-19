@@ -1,6 +1,6 @@
 var app = angular.module('app.authentication.WAAppointment.list.detail.controller', []);
 
-app.controller('WAAppointmentListDetailCtrl', function($cookies,$scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService, CommonService) {
+app.controller('WAAppointmentListDetailCtrl', function($cookies, $scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService, CommonService) {
     $modalInstance.rendered.then(function() {
         App.initComponents(); // init core components
         App.initAjax();
@@ -36,11 +36,10 @@ app.controller('WAAppointmentListDetailCtrl', function($cookies,$scope, $modalIn
                     var keyClinicalDetail = valueRes.Section + '.' + valueRes.Category + '.' + valueRes.Type + '.' + valueRes.Name;
                     keyClinicalDetail = keyClinicalDetail.split(" ").join("__");
                     var keyOther = valueRes.Type + valueRes.Name;
-                    console.log(keyOther)
-                    if(keyOther!=0){
+                    if (keyOther != 0) {
                         keyOther = keyOther.split(" ").join("");
                     }
-                    
+
                     $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail] = {};
                     $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].Value = valueRes.Value;
                     $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].FileUploads = valueRes.FileUploads;
@@ -151,7 +150,27 @@ app.controller('WAAppointmentListDetailCtrl', function($cookies,$scope, $modalIn
             swal("Success.");
         })
     }
-
+    $scope.CheckValidation = function() {
+        var stringAlert = null
+        if ($scope.info.appointmentDate !== null) {
+            if ($scope.info.appointmentTime !== null) {
+                if ($scope.wainformation.Patients.length > 0) {
+                    if ($scope.wainformation.Doctors.length > 0) {
+                        stringAlert = null;
+                    } else {
+                        stringAlert = "Please Choose Treating Practitioner";
+                    };
+                } else {
+                    stringAlert = "Please Link Patients";
+                };
+            } else {
+                stringAlert = "Please Choose Appointment Time";
+            };
+        } else {
+            stringAlert = "Please Choose Appointment Date";
+        }
+        return stringAlert
+    }
     $scope.close = function() {
         $modalInstance.close();
     };
@@ -201,16 +220,28 @@ app.controller('WAAppointmentListDetailCtrl', function($cookies,$scope, $modalIn
     };
 
     $scope.submitUpdate = function() {
-        swal({
-                title: "Are you sure ?",
-                text: "Update Appointment",
-                type: "info",
-                showCancelButton: true,
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true,
-            },
-            function() {
-                $scope.saveWaAppointment();
-            });
+        var stringAlert = null;
+        if ($scope.wainformation.Status == 'Approved' || $scope.wainformation.Status == 'Attended' || $scope.wainformation.Status == 'Waitlist' || $scope.wainformation.Status == 'Finished') {
+            stringAlert = $scope.CheckValidation()
+        };
+        if ($scope.info.appointmentDate != null || $scope.info.appointmentTime != null) {
+            stringAlert = $scope.CheckValidation()
+
+        };
+        if (stringAlert == null) {
+            swal({
+                    title: "Are you sure ?",
+                    text: "Update Appointment",
+                    type: "info",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                },
+                function() {
+                    $scope.saveWaAppointment();
+                });
+        }else{
+            toastr.error(stringAlert);
+        };
     };
 });

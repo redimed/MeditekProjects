@@ -87,9 +87,9 @@ module.exports = {
                     else
                     {
                         //---------------------------------------------
-                        var connectInfo=_.cloneDeep(userAccess);
+                        /*var connectInfo=_.cloneDeep(userAccess);
                         connectInfo.sid=req.sessionID;
-                        RedisService.pushUserConnect(connectInfo);
+                        RedisService.pushUserConnect(connectInfo);*/
                         //---------------------------------------------
                         if(user.Activated=='Y')
                         {
@@ -131,6 +131,7 @@ module.exports = {
             DeviceID:req.headers.deviceid,
             AppID:req.headers.appid,
         }
+        
         Services.RefreshToken.MakeRefreshToken(userAccess)
         .then(function(data){
             req.logout();

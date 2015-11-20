@@ -154,7 +154,7 @@ module.exports = {
         var info = HelperService.toJson(req.body.data);
         var deviceId = req.headers.deviceid;
         var deviceType = req.headers.systemtype;
-        var deviceToken = info.devicetoken;
+        var deviceToken = info.token;
         var uid = info.uid;
         if (deviceToken && uid && deviceType && deviceId && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
@@ -341,5 +341,69 @@ module.exports = {
             err.pushError("Invalid Params");
             res.serverError(ErrorWrap(err));
         }
+    },
+    TestPushAPN: function(req, res) {
+        var tokens = [];
+        TelehealthDevice.findAll({
+            where: {
+                Type: 'IOS'
+            }
+        }).then(function(devices) {
+            if (devices) {
+                for (var i = 0; i < devices.length; i++) {
+                    tokens.push(devices[i].DeviceToken);
+                }
+                var opts = {
+                    badge: 2,
+                    alert: 'Test Push Notification',
+                    payload: {
+                        data: 'user1'
+                    }
+                };
+                TelehealthService.SendAPNPush(opts, tokens);
+                return res.ok({
+                    msg: 'Success'
+                });
+            } else return res.ok({
+                msg: 'No Device Found!'
+            });
+        })
+    },
+    TestPushGCM: function(req, res) {
+        var tokens = [];
+        TelehealthDevice.findAll({
+            where: {
+                Type: 'ARD'
+            }
+        }).then(function(devices) {
+            if (devices) {
+                for (var i = 0; i < devices.length; i++) {
+                    tokens.push(devices[i].DeviceToken);
+                }
+                var opts = {
+                    collapseKey: 'demo',
+                    priority: 'high',
+                    contentAvailable: true,
+                    delayWhileIdle: true,
+                    timeToLive: 3,
+                    data: {
+                        data1: 'user1',
+                        data2: 'user2'
+                    },
+                    notification: {
+                        title: "Redimed",
+                        icon: "ic_launcher",
+                        body: "Test Push Notification"
+                    }
+                };
+                TelehealthService.SendGCMPush(opts, tokens).then(function(result) {
+                    res.ok(result);
+                }).catch(function(err) {
+                    return res.serverError(ErrorWrap(err));
+                })
+            } else return res.ok({
+                msg: 'No Device Found!'
+            });
+        })
     }
 }

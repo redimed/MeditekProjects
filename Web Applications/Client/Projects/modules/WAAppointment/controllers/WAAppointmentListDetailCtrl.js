@@ -1,6 +1,6 @@
 var app = angular.module('app.authentication.WAAppointment.list.detail.controller', []);
 
-app.controller('WAAppointmentListDetailCtrl', function($cookies,$scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService, CommonService) {
+app.controller('WAAppointmentListDetailCtrl', function($cookies, $scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService, CommonService) {
     $modalInstance.rendered.then(function() {
         App.initComponents(); // init core components
         App.initAjax();
@@ -36,11 +36,10 @@ app.controller('WAAppointmentListDetailCtrl', function($cookies,$scope, $modalIn
                     var keyClinicalDetail = valueRes.Section + '.' + valueRes.Category + '.' + valueRes.Type + '.' + valueRes.Name;
                     keyClinicalDetail = keyClinicalDetail.split(" ").join("__");
                     var keyOther = valueRes.Type + valueRes.Name;
-                    console.log(keyOther)
-                    if(keyOther!=0){
+                    if (keyOther != 0) {
                         keyOther = keyOther.split(" ").join("");
                     }
-                    
+
                     $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail] = {};
                     $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].Value = valueRes.Value;
                     $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].FileUploads = valueRes.FileUploads;
@@ -146,61 +145,95 @@ app.controller('WAAppointmentListDetailCtrl', function($cookies,$scope, $modalIn
         }
         $scope.wainformation.TelehealthAppointment.ClinicalDetails = ClinicalDetailsTemp;
         WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
-            console.log('saveWaAppointment', data);
-            $modalInstance.close('success');
-            swal("Success.");
-        })
-    }
-
-    $scope.close = function() {
-        $modalInstance.close();
-    };
-
-    $scope.selectPatient = function() {
-        var modalInstance = $modal.open({
-            animation: true,
-            templateUrl: '../modules/appointment/views/appointmentSelectPatientModal.html',
-            controller: function($scope, $modalInstance) {
-                $scope.patient = {
-                    runIfSuccess: function(data) {
-                        $modalInstance.close({
-                            status: 'success',
-                            data: data
-                        });
-                    },
-                    runIfClose: function() {
-                        $modalInstance.close();
-                    }
+                console.log('saveWaAppointment', data);
+                $modalInstance.close('success');
+                swal("Success");
+            },function(err) {
+               if(err.status == 401){
+                $modalInstance.close('err');
+                swal.close();
+               }
+            });
+}
+$scope.CheckValidation = function() {
+    var stringAlert = null
+    if ($scope.info.appointmentDate !== null) {
+        if ($scope.info.appointmentTime !== null) {
+            if ($scope.wainformation.Patients.length > 0) {
+                if ($scope.wainformation.Doctors.length > 0) {
+                    stringAlert = null;
+                } else {
+                    stringAlert = "Please Choose Treating Practitioner";
                 };
-            },
-            windowClass: 'app-modal-window',
-            resolve: {
-                patientInfo: function() {
-                    PatientService.postDatatoDirective($scope.wainformation.TelehealthAppointment.PatientAppointment);
-                }
-            }
-
-        });
-        modalInstance.result.then(function(data) {
-            if (data && data.status == 'success') {
-                $scope.info.isLinkPatient = true;
-                var patientUid = data.data.UID;
-                WAAppointmentService.GetDetailPatientByUid({
-                    UID: patientUid
-                }).then(function(data) {
-                    if (data.message == 'success') {
-                        console.log('patientInfomation', data.data[0]);
-                        $scope.wainformation.Patients.push({
-                            UID: patientUid
-                        });
-                        toastr.success("Select patient successfully!", "success");
-                    };
-                })
+            } else {
+                stringAlert = "Please Link Patients";
             };
-        });
+        } else {
+            stringAlert = "Please Choose Appointment Time";
+        };
+    } else {
+        stringAlert = "Please Choose Appointment Date";
     };
+    return stringAlert
+}
+$scope.close = function() {
+    $modalInstance.close();
+};
 
-    $scope.submitUpdate = function() {
+$scope.selectPatient = function() {
+    var modalInstance = $modal.open({
+        animation: true,
+        templateUrl: '../modules/appointment/views/appointmentSelectPatientModal.html',
+        controller: function($scope, $modalInstance) {
+            $scope.patient = {
+                runIfSuccess: function(data) {
+                    $modalInstance.close({
+                        status: 'success',
+                        data: data
+                    });
+                },
+                runIfClose: function() {
+                    $modalInstance.close();
+                }
+            };
+        },
+        windowClass: 'app-modal-window',
+        resolve: {
+            patientInfo: function() {
+                PatientService.postDatatoDirective($scope.wainformation.TelehealthAppointment.PatientAppointment);
+            }
+        }
+
+    });
+    modalInstance.result.then(function(data) {
+        if (data && data.status == 'success') {
+            $scope.info.isLinkPatient = true;
+            var patientUid = data.data.UID;
+            WAAppointmentService.GetDetailPatientByUid({
+                UID: patientUid
+            }).then(function(data) {
+                if (data.message == 'success') {
+                    console.log('patientInfomation', data.data[0]);
+                    $scope.wainformation.Patients.push({
+                        UID: patientUid
+                    });
+                    toastr.success("Select patient successfully!", "success");
+                };
+            })
+        };
+    });
+};
+
+$scope.submitUpdate = function() {
+    var stringAlert = null;
+    if ($scope.wainformation.Status == 'Approved' || $scope.wainformation.Status == 'Attended' || $scope.wainformation.Status == 'Waitlist' || $scope.wainformation.Status == 'Finished') {
+        stringAlert = $scope.CheckValidation()
+    };
+    if ($scope.info.appointmentDate != null && $scope.info.appointmentDate != '' || $scope.info.appointmentTime != null && $scope.info.appointmentTime != '') {
+        stringAlert = $scope.CheckValidation()
+
+    };
+    if (stringAlert == null) {
         swal({
                 title: "Are you sure ?",
                 text: "Update Appointment",
@@ -212,5 +245,8 @@ app.controller('WAAppointmentListDetailCtrl', function($cookies,$scope, $modalIn
             function() {
                 $scope.saveWaAppointment();
             });
+    } else {
+        toastr.error(stringAlert);
     };
+};
 });

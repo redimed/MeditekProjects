@@ -149,8 +149,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(fileupload, options, callback) {
-                fileupload.ModifiedDate = new Date();
+            beforeBulkUpdate: function(fileupload, callback) {
+                fileupload.fields.push('ModifiedDate');
+                fileupload.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

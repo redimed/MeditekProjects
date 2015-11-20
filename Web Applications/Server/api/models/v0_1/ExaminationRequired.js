@@ -136,8 +136,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(examinationrequired, options, callback) {
-                examinationrequired.ModifiedDate = new Date();
+            beforeBulkUpdate: function(examinationrequired, callback) {
+                examinationrequired.fields.push('ModifiedDate');
+                examinationrequired.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

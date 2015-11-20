@@ -156,8 +156,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(useractivation, options, callback) {
-                useractivation.ModifiedDate = new Date();
+            beforeBulkUpdate: function(useractivation, callback) {
+                useractivation.fields.push('ModifiedDate');
+                useractivation.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

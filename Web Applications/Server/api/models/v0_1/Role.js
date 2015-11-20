@@ -103,8 +103,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(role, options, callback) {
-                role.ModifiedDate = new Date();
+            beforeBulkUpdate: function(role, callback) {
+                role.fields.push('ModifiedDate');
+                role.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

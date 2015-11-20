@@ -156,8 +156,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(clinicaldetail, options, callback) {
-                clinicaldetail.ModifiedDate = new Date();
+            beforeBulkUpdate: function(clinicaldetail, callback) {
+                clinicaldetail.fields.push('ModifiedDate');
+                clinicaldetail.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

@@ -129,8 +129,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(telehealthcall, options, callback) {
-                telehealthcall.ModifiedDate = new Date();
+            beforeBulkUpdate: function(telehealthcall, callback) {
+                telehealthcall.fields.push('ModifiedDate');
+                telehealthcall.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

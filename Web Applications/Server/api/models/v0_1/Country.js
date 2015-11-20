@@ -184,8 +184,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(country, options, callback) {
-                country.ModifiedDate = new Date();
+            beforeBulkUpdate: function(country, callback) {
+                country.fields.push('ModifiedDate');
+                country.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

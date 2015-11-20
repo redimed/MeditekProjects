@@ -75,7 +75,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
         };
         $scope.requestInfo.TelehealthAppointment.ClinicalDetails = ClinicalDetailsTemp;
         $scope.requestInfo.RequestDate = moment().format('YYYY-MM-DD HH:mm:ss Z');
-        
+
         WAAppointmentService.RequestWAApointment($scope.requestInfo).then(function(response) {
             if (response == 'success') {
                 swal({
@@ -121,15 +121,15 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
     };
 
     $scope.ClickUploader = function(Type) {
-            angular.element('#' + Type).click();
-            uploader.onAfterAddingFile = function(fileItem) {
-                var position = fileItem.formData.length
-                fileItem.formData.push({
-                    fileTypeClinical: Type
-                });
-            };
+        angular.element('#' + Type).click();
+        uploader.onAfterAddingFile = function(fileItem) {
+            var position = fileItem.formData.length
+            fileItem.formData.push({
+                fileTypeClinical: Type
+            });
         };
-        // CALLBACKS
+    };
+    // CALLBACKS
     uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
         console.info('onWhenAddingFileFailed', item, filter, options);
     };
@@ -174,6 +174,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
                     $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key] = {};
                 };
             };
+
             if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].Value) {
                 $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].Value = '';
             };
@@ -186,9 +187,9 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
             var key = 'Clinical__Details.Telehealth__WAAppointment.Notes.' + fileItem.formData[0].fileTypeClinical;
             if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails) {
                 $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];
-                if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key]) {
-                    $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key] = {};
-                };
+            };
+            if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key]) {
+                $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key] = {};
             };
             if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].FileUploads) {
                 $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].FileUploads = [];

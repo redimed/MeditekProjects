@@ -13,10 +13,14 @@ module.exports = {
         if (data.rehab === 'Y') {
             serviceType += 'Rehabitation, ';
         }
+        if (data.handTherapy === 'Y' && !isWorkInjury) {
+            serviceType += 'Hand Therapy, ';
+        }
         if (data.treatment === 'Y') {
             serviceType += 'Treatment, ';
         }
         serviceType = serviceType.substring(0, serviceType.length - 2);
+        serviceType = (HelperService.CheckExistData(serviceType) && serviceType.length !== 0) ? serviceType : '(None)';
         return serviceType;
     },
     GPReferral: function(gPreferral) {
@@ -29,7 +33,7 @@ module.exports = {
                 GPReferral = 'No';
                 break;
             default:
-                GPReferral = '';
+                GPReferral = '(None)';
                 break;
         };
         return GPReferral;
@@ -46,6 +50,7 @@ module.exports = {
             treatmentType += 'Exercise Rehab, ';
         }
         treatmentType = treatmentType.substring(0, treatmentType.length - 2);
+        treatmentType = (HelperService.CheckExistData(treatmentType) && treatmentType.length !== 0) ? treatmentType : '(None)';
         return treatmentType;
     }
 };

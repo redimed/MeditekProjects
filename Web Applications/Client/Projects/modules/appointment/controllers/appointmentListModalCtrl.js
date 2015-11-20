@@ -194,12 +194,10 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         return true;
     };
     var checkOtherInput = function() {
-        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other']) 
-            && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other'].Value) {
+        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other']) && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other'].Value) {
             $scope.Other.LacerationsOther = 'Y';
         };
-        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other']) 
-            && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'].Value) {
+        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other']) && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'].Value) {
             $scope.Other.SkincancerOther = 'Y';
         };
         if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.PNS.Other']) &&
@@ -233,19 +231,52 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             }
         });
     };
-
+    $scope.CheckValidation = function() {
+        var stringAlert = null
+        if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate !== '') {
+            if ($scope.ShowData.DateTimeAppointmentDateTime != null && $scope.ShowData.DateTimeAppointmentDateTime !== '') {
+                if ($scope.appointment.Patients.length > 0) {
+                    if ($scope.appointment.Doctors.length > 0) {
+                        stringAlert = null;
+                    } else {
+                        stringAlert = "Please Choose Treating Practitioner";
+                    };
+                } else {
+                    stringAlert = "Please Link Patients";
+                };
+            } else {
+                stringAlert = "Please Choose Appointment Time";
+            };
+        } else {
+            stringAlert = "Please Choose Appointment Date";
+        }
+        return stringAlert
+    }
     $scope.submitUpdate = function() {
-        swal({
-                title: "Are you sure ?",
-                text: "Update Appointment",
-                type: "info",
-                showCancelButton: true,
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true,
-            },
-            function() {
-                $scope.updateAppointment();
-            });
+        var stringAlert = null;
+        if ($scope.appointment.Status == 'Approved' || $scope.appointment.Status == 'Attended' || $scope.appointment.Status == 'Waitlist' || $scope.appointment.Status == 'Finished') {
+            stringAlert = $scope.CheckValidation()
+        };
+        if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate != ''  || $scope.ShowData.DateTimeAppointmentDateTime != null && $scope.ShowData.DateTimeAppointmentDateTime != '') {
+            stringAlert = $scope.CheckValidation()
+
+        };
+        console.log(stringAlert)
+        if (stringAlert == null) {
+            swal({
+                    title: "Are you sure ?",
+                    text: "Update Appointment",
+                    type: "info",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                },
+                function() {
+                    $scope.updateAppointment();
+                });
+        }else{
+            toastr.error(stringAlert);
+        };
     }
 
     $scope.updateAppointment = function() {
@@ -322,9 +353,13 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             AppointmentService.upDateApppointment(postData).then(function(response) {
                 if (response == 'success') {
                     $modalInstance.close('success');
-                    swal("Success.");
+                    swal("Success");
                 };
-
+            },function(err) {
+               if(err.status == 401){
+                $modalInstance.close('err');
+                swal.close();
+               }
             });
         };
     };

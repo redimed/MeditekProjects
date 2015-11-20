@@ -53,5 +53,14 @@ module.exports.routes = {
     'GET /api/telehealth/appointment/list/:type?':{
         controller: 'Telehealth/v1_0/AppointmentController',
         action: 'ListAppointment'
+    },
+    //=================Test Push Notification=============================
+    'GET /api/testPushAPN':{
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action:'TestPushAPN'
+    },
+    'GET /api/testPushGCM':{
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action:'TestPushGCM'
     }
 };

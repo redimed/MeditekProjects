@@ -261,8 +261,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(waappointment, options, callback) {
-                waappointment.ModifiedDate = new Date();
+            beforeBulkUpdate: function(waappointment, callback) {
+                waappointment.fields.push('ModifiedDate');
+                waappointment.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

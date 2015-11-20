@@ -1,5 +1,7 @@
 var app = angular.module('app.unAuthentication.login.controller', []);
 app.controller('loginCtrl', function($scope,$rootScope, $state, $cookies, UnauthenticatedService, toastr, $timeout) {
+    console.log('login')
+    o.loadingPage(false);
     $scope.showClickedValidation = false;
     $scope.login = function() {
         $scope.showClickedValidation = true;

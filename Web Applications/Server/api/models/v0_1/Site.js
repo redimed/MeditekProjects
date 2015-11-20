@@ -156,8 +156,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(site, options, callback) {
-                site.ModifiedDate = new Date();
+            beforeBulkUpdate: function(site, callback) {
+                site.fields.push('ModifiedDate');
+                site.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

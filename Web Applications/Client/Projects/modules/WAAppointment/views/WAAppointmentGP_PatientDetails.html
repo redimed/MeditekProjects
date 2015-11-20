@@ -6,63 +6,69 @@
         <div class="panel-body" style="padding:2em">
             <!-- 1 -->
             <div class="row">
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group form-md-line-input">
-                        <input type="text" class="form-control edited"  name="FirstName" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.FirstName">
-                        <label class="control-label">First name
-                            <span class="required"> * </span>
-                        </label>
-                        <div class="form-control-focus"> </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control edited" name="FirstName" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.FirstName">
+                            <label class="control-label">First name
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control edited" name="LastName" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.LastName">
+                            <label class="control-label">Family name
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="form-control-focus"> </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group form-md-line-input">
-                        <input type="text" class="form-control edited"  name="LastName" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.LastName">
-                        <label class="control-label">Family name
-                            <span class="required"> * </span>
-                        </label>
-                        <div class="form-control-focus"> </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PreferredName">
+                            <label class="control-label">Preferred name</label>
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PreviousName">
+                            <label class="control-label">Previous name</label>
+                            <div class="form-control-focus"> </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group form-md-line-input">
-                        <input type="text" class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PreferredName">
-                        <label class="control-label">Preferred name</label>
-                        <div class="form-control-focus"> </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group form-md-line-input">
+                            <select class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Title">
+                                <option value=""></option>
+                                <option value="Mr">Mr</option>
+                                <option value="Mrs">Mrs</option>
+                                <option value="Miss">Miss</option>
+                                <option value="Ms">Ms</option>
+                            </select>
+                            <label class="control-label">Title</label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group form-md-line-input">
-                        <input type="text" class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PreviousName">
-                        <label class="control-label">Previous name</label>
-                        <div class="form-control-focus"> </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group form-md-line-input">
-                        <select class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Title">
-                            <option value=""></option>
-                            <option value="Mr">Mr</option>
-                            <option value="Mrs">Mrs</option>
-                            <option value="Miss">Miss</option>
-                            <option value="Ms">Ms</option>
-                        </select>
-                        <label class="control-label">Title</label>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <div class="form-group form-md-line-input">
-                        <!--   <input type="text" class="form-control" placeholder="Country of Birth" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.CountryOfBirth"> -->
-                        <select class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.MaritalStatus">
-                            <option value=""></option>
-                            <option value="Married">Married</option>
-                            <option value="Never married">Never married</option>
-                            <option value="Widowed">Widowed</option>
-                            <option value="Divorced">Divorced</option>
-                            <option value="Separated">Separated</option>
-                        </select>
-                        <label class="control-label">Marital Status</label>
-                        <div class="form-control-focus"> </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group form-md-line-input">
+                            <!--   <input type="text" class="form-control" placeholder="Country of Birth" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.CountryOfBirth"> -->
+                            <select class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.MaritalStatus">
+                                <option value=""></option>
+                                <option value="Married">Married</option>
+                                <option value="Never married">Never married</option>
+                                <option value="Widowed">Widowed</option>
+                                <option value="Divorced">Divorced</option>
+                                <option value="Separated">Separated</option>
+                            </select>
+                            <label class="control-label">Marital Status</label>
+                            <div class="form-control-focus"> </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -77,7 +83,7 @@
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.DOB">
+                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.DOB" data-date-end-date="0d">
                             <label class="control-label">Date of Birth</label>
                             <div class="form-control-focus"> </div>
                         </div>

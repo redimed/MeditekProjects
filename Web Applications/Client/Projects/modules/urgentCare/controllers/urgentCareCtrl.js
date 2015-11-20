@@ -3,5 +3,4 @@ var app = angular.module('app.authentication.urgentCare.controller', [
 ]);
 
 app.controller('urgentCareCtrl', function(){
-	console.log('urgentCare controller');
 });

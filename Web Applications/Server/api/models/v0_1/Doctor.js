@@ -311,8 +311,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(doctor, options, callback) {
-                doctor.ModifiedDate = new Date();
+            beforeBulkUpdate: function(doctor, callback) {
+                doctor.fields.push('ModifiedDate');
+                doctor.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

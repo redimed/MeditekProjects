@@ -150,6 +150,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					.then(function(result){
 						scope.er ='';
 						scope.ermsg ='';
+						scope.info.RoleId = scope.info.UserAccount.RelUserRoles.length!=0?null:3;
 						PatientService.updatePatient(scope.info).then(function(response){
 							if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
 							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
@@ -224,7 +225,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				{'code':'NSW', 'name':'New South Wales'},
 				{'code':'WA', 'name':'Western Australia'},
 				{'code':'NT', 'name':'Northern Territory'},
-				{'code':'ACT', 'name':'Australia Capital Territory'}
+				{'code':'ACT', 'name':'Australian Capital Territory'}
 			];
 		},
 		templateUrl:'modules/patient/directives/template/patientListModal.html'

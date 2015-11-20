@@ -2,8 +2,7 @@ var app = angular.module('app.authentication.appointment.request.controller', [
     'app.authentication.appointment.request.modal.controller'
 ]);
 
-app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval) {
-
+app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval,CommonService) {
     $scope.userInfo = $cookies.getObject('userInfo');
     console.log('$scope.userInfo',$scope.userInfo);
     $scope.doctors = [];

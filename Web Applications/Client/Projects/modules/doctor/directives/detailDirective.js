@@ -85,7 +85,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 				{'code':'NSW', 'name':'New South Wales'},
 				{'code':'WA', 'name':'Western Australia'},
 				{'code':'NT', 'name':'Northern Territory'},
-				{'code':'ACT', 'name':'Australia Capital Territory'}
+				{'code':'ACT', 'name':'Australian Capital Territory'}
 			];
 			scope.titles = [
 				{'id':'Mr', 'name':'Mr'},

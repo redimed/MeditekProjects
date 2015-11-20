@@ -428,8 +428,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(patientappointment, options, callback) {
-                patientappointment.ModifiedDate = new Date();
+            beforeBulkUpdate: function(patientappointment, callback) {
+                patientappointment.fields.push('ModifiedDate');
+                patientappointment.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

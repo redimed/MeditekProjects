@@ -344,8 +344,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(urgentrequest, options, callback) {
-                urgentrequest.ModifiedDate = new Date();
+            beforeBulkUpdate: function(urgentrequest, callback) {
+                urgentrequest.fields.push('ModifiedDate');
+                urgentrequest.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

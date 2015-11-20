@@ -142,8 +142,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(appointment, options, callback) {
-                appointment.ModifiedDate = new Date();
+            beforeBulkUpdate: function(appointment, callback) {
+                appointment.fields.push('ModifiedDate');
+                appointment.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

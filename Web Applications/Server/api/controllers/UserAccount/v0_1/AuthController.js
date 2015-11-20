@@ -87,9 +87,9 @@ module.exports = {
                     else
                     {
                         //---------------------------------------------
-                        /*var connectInfo=_.cloneDeep(userAccess);
+                        var connectInfo=_.cloneDeep(userAccess);
                         connectInfo.sid=req.sessionID;
-                        RedisService.pushUserConnect(connectInfo);*/
+                        RedisService.pushUserConnect(connectInfo);
                         //---------------------------------------------
                         if(user.Activated=='Y')
                         {
@@ -135,6 +135,11 @@ module.exports = {
         Services.RefreshToken.MakeRefreshToken(userAccess)
         .then(function(data){
             req.logout();
+            //------------------------------------------
+            var connectInfo=_.cloneDeep(userAccess);
+            connectInfo.sid=req.sessionID;
+            RedisService.removeUserConnect(connectInfo);
+            //------------------------------------------
             res.ok({status:'success'});
         },function(err){
             res.serverError(ErrorWrap(err));

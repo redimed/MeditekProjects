@@ -198,5 +198,53 @@ module.exports = {
         },function(err){
             res.serverError(ErrorWrap(err));
         });
+    },
+
+    LoadlistUrgentRequests: function(req, res) {
+        var data = req.body.data;
+        if (typeof(data) == 'string') {
+            data = JSON.parse(data);
+        }
+        for (var key in data) {
+            if (typeof(data[key]) == 'string')
+                data[key] = JSON.parse(data[key]);
+        }
+        Services.UrgentCare.LoadlistUrgentRequests(data)
+            .then(function(result) {
+                if (result !== undefined && result !== null && result !== '')
+                    res.ok({
+                        status: 200,
+                        message: "success",
+                        data: result.rows,
+                        count: result.count
+                    });
+                else {
+                    var err = new Error("SERVER ERROR");
+                    err.pushError("No data result");
+                    res.ok({
+                        message: ErrorWrap(err)
+                    });
+                }
+            })
+            .catch(function(err) {
+                res.serverError({
+                    status: 500,
+                    message: ErrorWrap(err)
+                });
+            });
+    },
+
+    DetailUrgentRequests: function(req, res) {
+        var data = req.body.data;
+        Services.UrgentCare.DetailUrgentRequests(data)
+        .then(function(result){
+            if(result!=null && result!="")
+                res.ok({message:"success",data:result});
+            else
+                res.ok({status:"no data result"});
+        })
+        .catch(function(err){
+            res.serverError(ErrorWrap(err));
+        });
     }
 };

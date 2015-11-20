@@ -202,13 +202,6 @@ module.exports = {
 
     LoadlistUrgentRequests: function(req, res) {
         var data = req.body.data;
-        if (typeof(data) == 'string') {
-            data = JSON.parse(data);
-        }
-        for (var key in data) {
-            if (typeof(data[key]) == 'string')
-                data[key] = JSON.parse(data[key]);
-        }
         Services.UrgentCare.LoadlistUrgentRequests(data)
             .then(function(result) {
                 if (result !== undefined && result !== null && result !== '')

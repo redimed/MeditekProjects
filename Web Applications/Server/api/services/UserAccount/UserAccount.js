@@ -997,7 +997,8 @@ module.exports = {
 			        attributes: ['UID'],
 			        required: false,
 			        where:{
-			        	Enable:'Y'
+			        	Enable:'Y',
+			        	FileType:'ProfileImage'
 			        }
 			    }
 			],

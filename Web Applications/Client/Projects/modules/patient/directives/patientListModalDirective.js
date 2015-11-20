@@ -225,7 +225,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				{'code':'NSW', 'name':'New South Wales'},
 				{'code':'WA', 'name':'Western Australia'},
 				{'code':'NT', 'name':'Northern Territory'},
-				{'code':'ACT', 'name':'Australia Capital Territory'}
+				{'code':'ACT', 'name':'Australian Capital Territory'}
 			];
 		},
 		templateUrl:'modules/patient/directives/template/patientListModal.html'

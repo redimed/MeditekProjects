@@ -7,6 +7,15 @@ var FormWizard = function() {
             if (!jQuery().bootstrapWizard) {
                 return;
             }
+            jQuery.validator.addMethod("MobilePhone", function(value, element) {
+                return this.optional(element) || /^(\+61|0061|0)?4[0-9]{8}$/.test(value);
+            }, "This is not a mobile phone number");
+           jQuery.validator.addMethod("Home", function(value, element) {
+                return this.optional(element) || /^[0-9]{6,10}$/.test(value);
+            }, "This is not a home phone number");
+             jQuery.validator.addMethod("Work", function(value, element) {
+                return this.optional(element) || /^[*#-_0-9]{6,20}$/.test(value);
+            }, "This is not a work phone number");
 
             function format(state) {
                 if (!state.id) return state.text; // optgroup
@@ -59,13 +68,13 @@ var FormWizard = function() {
                     PhoneNumber: {
                         required: true,
                         number: true,
-                        minlength: 8,
-                        maxlength: 10
+                        MobilePhone:true
+                    },
+                    Fax:{
+                        number: true
                     },
                     HomePhoneNumber: {
-                        number: true,
-                        minlength: 8,
-                        maxlength: 10
+                        Home:true
                     },
                     Email: {
                         email: true
@@ -180,15 +189,15 @@ var FormWizard = function() {
                         required: "Please select at least one option",
                         minlength: jQuery.validator.format("Please select at least one option")
                     },
-                     'SCC_radio[]': {
+                    'SCC_radio[]': {
                         required: "Please select at least one option",
                         minlength: jQuery.validator.format("Please select at least one option")
                     },
-                     'Melanoma_radio[]': {
+                    'Melanoma_radio[]': {
                         required: "Please select at least one option",
                         minlength: jQuery.validator.format("Please select at least one option")
                     },
-                     'Merkel_radio[]': {
+                    'Merkel_radio[]': {
                         required: "Please select at least one option",
                         minlength: jQuery.validator.format("Please select at least one option")
                     }
@@ -207,11 +216,11 @@ var FormWizard = function() {
                         error.insertAfter("#form_duration_error");
                     } else if (element.attr("name") == "BCC_radio[]") { // for uniform checkboxes, insert the after the given container
                         error.insertAfter("#form_BCC_error");
-                    }else if (element.attr("name") == "SCC_radio[]") { // for uniform checkboxes, insert the after the given container
+                    } else if (element.attr("name") == "SCC_radio[]") { // for uniform checkboxes, insert the after the given container
                         error.insertAfter("#form_SCC_error");
-                    }else if (element.attr("name") == "Melanoma_radio[]") { // for uniform checkboxes, insert the after the given container
+                    } else if (element.attr("name") == "Melanoma_radio[]") { // for uniform checkboxes, insert the after the given container
                         error.insertAfter("#form_Melanoma_error");
-                    }else if (element.attr("name") == "Merkel_radio[]") { // for uniform checkboxes, insert the after the given container
+                    } else if (element.attr("name") == "Merkel_radio[]") { // for uniform checkboxes, insert the after the given container
                         error.insertAfter("#form_Merkel_error");
                     } else {
                         error.insertAfter(element); // for other inputs, just perform default behavior

@@ -105,7 +105,8 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(module, callback) {
-                module.ModifiedDate = new Date();
+                module.fields.push('ModifiedDate');
+                module.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

@@ -155,7 +155,8 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(messagequeue, callback) {
-                messagequeue.ModifiedDate = new Date();
+                messagequeue.fields.push('ModifiedDate');
+                messagequeue.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

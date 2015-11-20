@@ -104,7 +104,8 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(role, callback) {
-                role.ModifiedDate = new Date();
+                role.fields.push('ModifiedDate');
+                role.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

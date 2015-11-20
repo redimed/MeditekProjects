@@ -150,7 +150,8 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(fileupload, callback) {
-                fileupload.ModifiedDate = new Date();
+                fileupload.fields.push('ModifiedDate');
+                fileupload.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

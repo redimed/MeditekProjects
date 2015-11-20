@@ -137,7 +137,8 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(telehealthuser, callback) {
-                telehealthuser.ModifiedDate = new Date();
+                telehealthuser.fields.push('ModifiedDate');
+                telehealthuser.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

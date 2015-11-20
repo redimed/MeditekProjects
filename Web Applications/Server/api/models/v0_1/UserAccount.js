@@ -98,7 +98,7 @@ module.exports = {
         Enable: {
             type: Sequelize.STRING(1),
             allowNull: true,
-	       defaultValue:'Y',
+            defaultValue: 'Y',
             validate: {
                 len: {
                     args: [0, 1],
@@ -198,7 +198,8 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(useraccount, callback) {
-                useraccount.ModifiedDate = new Date();
+                useraccount.fields.push('ModifiedDate');
+                useraccount.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

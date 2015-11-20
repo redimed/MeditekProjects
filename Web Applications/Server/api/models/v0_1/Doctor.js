@@ -312,7 +312,8 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(doctor, callback) {
-                doctor.ModifiedDate = new Date();
+                doctor.fields.push('ModifiedDate');
+                doctor.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

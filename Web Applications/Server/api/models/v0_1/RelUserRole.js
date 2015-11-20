@@ -90,7 +90,7 @@ module.exports = {
             type: Sequelize.STRING(1),
             allowNull: true,
             comment: 'Y/N',
-	    defaultValue:'Y',
+            defaultValue: 'Y',
             validate: {
                 len: {
                     args: [0, 1],
@@ -115,7 +115,8 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(reluserrole, callback) {
-                reluserrole.ModifiedDate = new Date();
+                reluserrole.fields.push('ModifiedDate');
+                reluserrole.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

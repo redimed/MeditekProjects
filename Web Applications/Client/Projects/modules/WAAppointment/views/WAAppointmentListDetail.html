@@ -121,7 +121,7 @@
                                                         <div class="form-group form-md-line-input">
                                                             <div class="input-icon">
                                                                 <input type="text" class="form-control timepicker timepicker-no-seconds" ng-model="info.appointmentTime" data-default-time="" data-format="hh:mm A">
-                                                                <label class="control-label" >Appointment Time</label>
+                                                                <label class="control-label">Appointment Time</label>
                                                                 <div class="form-control-focus"> </div>
                                                                 <i class="icon-clock"></i>
                                                             </div>
@@ -314,7 +314,10 @@
                                                                 <div class="col-md-6 col-sm-6">
                                                                     <div class="form-group form-md-line-input">
                                                                         <div class="input-icon">
-                                                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.CountryOfBirth">
+                                                                            
+                                                                            <select size="1" class="form-control" ng-model="wainformation.TelehealthAppointment.PatientAppointment.CountryOfBirth">
+                                                                                <option ng-repeat="item in ListContry">{{item.ShortName}}</option>
+                                                                            </select>
                                                                             <label class="control-label">Country of Birth</label>
                                                                             <div class="form-control-focus"> </div>
                                                                             <i class="fa fa-flag"></i>

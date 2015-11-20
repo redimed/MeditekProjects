@@ -1,6 +1,6 @@
 var app = angular.module('app.authentication.WAAppointment.list.detail.controller', []);
 
-app.controller('WAAppointmentListDetailCtrl', function($cookies, $scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService, CommonService) {
+app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService,$cookies, $scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService, CommonService) {
     $modalInstance.rendered.then(function() {
         App.initComponents(); // init core components
         App.initAjax();
@@ -10,6 +10,12 @@ app.controller('WAAppointmentListDetailCtrl', function($cookies, $scope, $modalI
         Portfolio.init();
         //ComponentsDropdowns.init(); // init todo page
     });
+    $scope.loadListContry = function() {
+        AuthenticationService.getListCountry().then(function(response) {
+            $scope.ListContry = response.data;
+        })
+    }
+    $scope.loadListContry();
     $scope.ViewDoc = function(Url, UID) {
         var LinkUID = Url + UID;
         CommonService.downloadFile(UID)

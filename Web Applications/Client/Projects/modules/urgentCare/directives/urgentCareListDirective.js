@@ -23,12 +23,16 @@ app.directive('urgentcareList', function(urgentCareService, $uibModal, toastr,$c
 			scope.items = [
 				{field:'FirstName'},
 				{field:'LastName'},
-				{field:'RequestType'},
+				{field:'UrgentRequestType'},
 				{field:'RequestDate'},
 				{field:'PhoneNumber'},
 				{field:'Suburb'},
 				{field:'Status'}
 			];
+			scope.fieldSort={};
+			for(var i = 0; i < scope.items.length; i++){
+				scope.fieldSort[scope.items[i].field]='ASC';
+			};
 			scope.toggle = true;
 			scope.toggleFilter = function(){
 				scope.toggle = scope.toggle === false ? true : false;
@@ -100,7 +104,22 @@ app.directive('urgentcareList', function(urgentCareService, $uibModal, toastr,$c
 				},function(err){
 					console.log(err);
 				});
-			}
+			};
+
+			scope.sort = function(field,sort) {
+				scope.isClickASC = false;
+				if(sort==="ASC"){
+					scope.isClickASC = true;
+					scope.fieldSort[field]= 'DESC';
+				}
+				else{
+					scope.isClickASC = false;
+					scope.fieldSort[field]= 'ASC';
+				}
+				var data = field+" "+sort;
+				scope.searchObjectMap.order = data;
+				scope.loadList(scope.searchObjectMap);
+			};
 
 	        scope.init();
 

@@ -28,21 +28,41 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="table-scrollable table-scrollable-borderless">
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-striped table-condensed flip-content table-hover">
                     <!-- <table class="table table-hover table-bordered flip-content"> -->
-                        <thead class="">
+                        <thead class="flip-content">
                             <tr>
                                 <th>#</th>
                                 <th>
                                     Full Name
+                                    <i class="fa fa-sort-asc"  ng-click="sort('FirstName','ASC')" ng-show="fieldSort.FirstName=='ASC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('FirstName','DESC')"ng-show="fieldSort.FirstName=='DESC'"></i>
                                 </th>
-                                <th>Request Type</th>
+                                <th>
+                                    Request Type
+                                    <i class="fa fa-sort-asc"  ng-click="sort('UrgentRequestType','ASC')" ng-show="fieldSort.UrgentRequestType=='ASC'" ></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('UrgentRequestType','DESC')"ng-show="fieldSort.UrgentRequestType=='DESC'"></i>
+                                </th>
                                 <th>
                                     Request Time
+                                    <i class="fa fa-sort-asc"  ng-click="sort('RequestDate','ASC')" ng-show="fieldSort.RequestDate=='ASC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('RequestDate','DESC')"ng-show="fieldSort.RequestDate=='DESC'"></i>
                                 </th>
-                                <th>Phone Number</th>
-                                <th>Suburb</th>
-                                <th>Status</th>
+                                <th>
+                                    Phone Number
+                                    <i class="fa fa-sort-asc"  ng-click="sort('PhoneNumber','ASC')" ng-show="fieldSort.PhoneNumber=='ASC'" ></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('PhoneNumber','DESC')"ng-show="fieldSort.PhoneNumber=='DESC'"></i>
+                                </th>
+                                <th>
+                                    Suburb
+                                    <i class="fa fa-sort-asc"  ng-click="sort('Suburb','ASC')" ng-show="fieldSort.Suburb=='ASC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('Suburb','DESC')"ng-show="fieldSort.Suburb=='DESC'"></i>
+                                </th>
+                                <th>
+                                    Status
+                                    <i class="fa fa-sort-asc"  ng-click="sort('Status','ASC')" ng-show="fieldSort.Status=='ASC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('Status','DESC')"ng-show="fieldSort.Status=='DESC'"></i>
+                                </th>
                             </tr>
                             <tr ng-hide="toggle">
                                 <td></td>
@@ -50,8 +70,8 @@
                                 <td><input type="text" class="form-control" ng-model="search.RequestType" ng-keypress="Search(search,$event.which)"></td>
                                 <td>
                                     <div class="form-inline">
-                                        <input type="text" class="form-control date-picker input-xsmall"  ng-model="search.RequestDate.from" style="font-size:13px;" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" readonly>  to 
-                                        <input type="text" class="form-control date-picker input-xsmall"  ng-model="search.RequestDate.to" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" readonly>
+                                        <input type="text" class="form-control date-picker input-small"  ng-model="search.RequestDate.from" style="font-size:13px;" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" readonly>  to 
+                                        <input type="text" class="form-control date-picker input-small"  ng-model="search.RequestDate.to" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" readonly>
                                     </div>
                                     <!-- <div class="input-group input-medium date-picker input-daterange" data-date-format="dd/mm/yyyy" >
                                         <input type="text" class="form-control" ng-model="search.RequestDate.from" ng-change="Search(search,flag)">
@@ -76,7 +96,7 @@
                                 <tr ng-repeat=" u in urgent" ng-click="clickDetail(u.UID)">
                                     <td>{{u.stt}}</td>
                                     <td>{{u.FirstName}} {{u.LastName}}</td>
-                                    <td>{{u.RequestType}}</td>
+                                    <td>{{u.UrgentRequestType}}</td>
                                     <td>{{u.RequestDate}}</td>
                                     <td>{{u.PhoneNumber}}</td>
                                     <td>{{u.Suburb}}</td>

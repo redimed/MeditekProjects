@@ -10,272 +10,213 @@
     </div>
     <div class="portlet-body form">
         <form>
-            <div class="form-body margin-bottom-40" style="padding:0em 2em;">
+            <div class="form-body margin-bottom-40" style="padding:2em;">
                 <div class="row">
-    <div class="col-md-6 col-sm-6">
-        <h4 class="form-section bold">Request Information</h4>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <input type="text" class="form-control" placeholder="" ng-model="info.Status" name="Status">
-                    <label class="control-label">Status</label>
-                    <div class="form-control-focus"></div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <input type="text" class="form-control" placeholder="" ng-model="info.Tried" name="Tried">
-                    <label class="control-label">Tried</label>
-                    <div class="form-control-focus"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <input type="text" class="form-control" placeholder="" ng-model="info.UrgentRequestType" name="Request Type">
-                    <label class="control-label">Request Type</label>
-                    <div class="form-control-focus"></div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="info.RequestDate" name="Request Date">
-                        <label class="control-label">Request Date</label>
-                        <div class="form-control-focus"></div>
-                        <i class="glyphicon glyphicon-calendar"></i>
+                    <div class="col-md-6 col-sm-6">
+                        <fieldset>
+                            <legend>Request Information</legend>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <input type="text" class="form-control" placeholder="" ng-model="info.Status" name="Status">
+                                        <label class="control-label">Status</label>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <input type="text" class="form-control" placeholder="" ng-model="info.Tried" name="Tried">
+                                        <label class="control-label">Tried</label>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <input type="text" class="form-control" placeholder="" ng-model="info.UrgentRequestType" name="Request Type">
+                                        <label class="control-label">Request Type</label>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <div class="input-icon">
+                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="info.RequestDate" name="Request Date">
+                                            <label class="control-label">Request Date</label>
+                                            <div class="form-control-focus"></div>
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="control-label col-md-12 col-sm-12">Request Services : </label>
+                                            <div class="col-md-11 col-sm-11 col-md-offset-1 col-sm-offset-1">
+                                                <div class="checkbox-list">
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" ng-model="info.Physiotherapy" ng-true-value="'Y'" ng-false-value="'N'"> Physio Therapy
+                                                    </label>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" ng-model="info.ExerciseRehab" ng-true-value="'Y'" ng-false-value="'N'"> Exercise Rehab
+                                                    </label>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" ng-model="info.HandTherapy" ng-true-value="'Y'" ng-false-value="'N'"> Hand Therapy
+                                                    </label>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" ng-model="info.GP" ng-true-value="'Y'" ng-false-value="'N'"> GP
+                                                    </label>
+                                                    <label class="checkbox">
+                                                        <div class="form-inline">
+                                                            <input type="checkbox" ng-model="info.Specialist" ng-true-value="'Y'" ng-false-value="'N'"> Specialist
+                                                            <div class="form-group form-md-line-input">
+                                                                <input type="text" class="form-control">
+                                                                <div class="form-control-focus"></div>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="form-group form-md-line-input">
+                                        <div class="row">
+                                            <label class="col-md-12 col-sm-12">Has GP Referral</label>
+                                            <div class="col-md-11 col-sm-11 col-offset-1 col-sm-offset-1">
+                                                <div class="radio-list">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="GPReferral" value="Yes" ng-model="info.GPReferral" ng-true-value="'Y'" ng-false-value="'N'"> Yes
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="GPReferral" value="No" ng-model="info.GPReferral" ng-true-value="'Y'" ng-false-value="'N'"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <label class="control-label">Description</label>
+                                    <textarea class="form-control" rows="7" ng-model="info.Description"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <fieldset>
+                            <legend>Patient Information</legend>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <input type="text" class="form-control" placeholder="" ng-model="info.FirstName" name="Firstname">
+                                        <label class="control-label">Firstname</label>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <input type="text" class="form-control" placeholder="" ng-model="info.LastName" name="Lastname">
+                                        <label class="control-label">Lastname</label>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <div class="input-icon">
+                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.DOB" name="DOB">
+                                            <label class="control-label">DOB</label>
+                                            <div class="form-control-focus"></div>
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <div class="radio-list">
+                                            <label class="radio-inline">Gender</label>
+                                            <label class="radio-inline"><input type="radio" name="gender" ng-model="info.Gender" ng-value="M"> Male</label>
+                                            <label class="radio-inline"><input type="radio" name="gender" ng-model="info.Gender" ng-value="F"> Female</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <div class="input-icon">
+                                            <input type="text" class="form-control" placeholder="+614xxxxxxxx" ng-model="info.PhoneNumber" name="Phonenumber">
+                                            <label class="control-label">Phonenumber</label>
+                                            <div class="form-control-focus"></div>
+                                            <i class="glyphicon glyphicon-phone"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <div class="input-icon">
+                                            <input type="text" class="form-control" placeholder="exemple@gmail.com" ng-model="info.Email" name="Email">
+                                            <label class="control-label">Email</label>
+                                            <div class="form-control-focus"></div>
+                                            <i class="glyphicon glyphicon-envelope"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <div class="input-icon">
+                                            <input type="text" class="form-control" placeholder="" ng-model="info.Suburb" name="Suburb">
+                                            <label class="control-label">Suburb</label>
+                                            <div class="form-control-focus"></div>
+                                            <i class="glyphicon glyphicon-tree-conifer"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <input type="text" class="form-control" placeholder="" ng-model="info.CompanyName" name="Company Name">
+                                        <label class="control-label">Company Name</label>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <div class="input-icon">
+                                            <input type="text" class="form-control" placeholder="" ng-model="info.ContactPerson" name="Contact Person">
+                                            <label class="control-label">Contact Person</label>
+                                            <div class="form-control-focus"></div>
+                                            <i class="glyphicon glyphicon-phone"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group form-md-line-input">
+                                        <div class="input-icon">
+                                            <input type="text" class="form-control" placeholder="" ng-model="info.CompanyPhoneNumber" name="Company Phonenumber">
+                                            <label class="control-label">Company Phonenumber</label>
+                                            <div class="form-control-focus"></div>
+                                            <i class="glyphicon glyphicon-phone-alt"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="form-group">
-                    <div class="checkbox-list">
-                        <label class="checkbox-inline">Request Services : </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" ng-model="info.Physiotherapy" ng-true-value="'Y'" ng-false-value="'N'"> Physiotherapist
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" ng-model="info.HandTherapy" ng-true-value="'Y'" ng-false-value="'N'"> Hand Therapist
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" ng-model="info.Specialist" ng-true-value="'Y'" ng-false-value="'N'"> Specialist
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" ng-model="info.GP" ng-true-value="'Y'" ng-false-value="'N'"> GP
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="checkbox-list">
-                        <label class="control-label">
-                            <input type="checkbox" ng-model="info.GPReferral" ng-true-value="'Y'" ng-false-value="'N'"> Has GP Referral
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <label class="control-label">Description</label>
-                <textarea class="form-control" rows="7" ng-model="info.Description"></textarea>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-sm-6">
-        <h4 class="form-section bold">Patient Information</h4>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <input type="text" class="form-control" placeholder="" ng-model="info.FirstName" name="Firstname">
-                    <label class="control-label">Firstname</label>
-                    <div class="form-control-focus"></div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <input type="text" class="form-control" placeholder="" ng-model="info.LastName" name="Lastname">
-                    <label class="control-label">Lastname</label>
-                    <div class="form-control-focus"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.DOB" name="DOB">
-                        <label class="control-label">DOB</label>
-                        <div class="form-control-focus"></div>
-                        <i class="glyphicon glyphicon-calendar"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="radio-list">
-                        <label class="radio-inline">Gender</label>
-                        <label class="radio-inline"><input type="radio" name="gender" ng-model="info.Gender" ng-value="M"> Male</label>
-                        <label class="radio-inline"><input type="radio" name="gender" ng-model="info.Gender" ng-value="F"> Female</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="text" class="form-control" placeholder="+614xxxxxxxx" ng-model="info.PhoneNumber" name="Phonenumber">
-                        <label class="control-label">Phonenumber</label>
-                        <div class="form-control-focus"></div>
-                        <i class="glyphicon glyphicon-phone"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="text" class="form-control" placeholder="exemple@gmail.com" ng-model="info.Email" name="Email">
-                        <label class="control-label">Email</label>
-                        <div class="form-control-focus"></div>
-                        <i class="glyphicon glyphicon-envelope"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="text" class="form-control" placeholder="Suburb" ng-model="info.Suburb" name="Suburb">
-                        <label class="control-label">Suburb</label>
-                        <div class="form-control-focus"></div>
-                        <i class="glyphicon glyphicon-tree-conifer"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <input type="text" class="form-control" placeholder="Company Name" ng-model="info.CompanyName" name="Company Name">
-                    <label class="control-label">Company Name</label>
-                    <div class="form-control-focus"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="text" class="form-control" placeholder="" ng-model="info.ContactPerson" name="Contact Person">
-                        <label class="control-label">Contact Person</label>
-                        <div class="form-control-focus"></div>
-                        <i class="glyphicon glyphicon-phone"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="text" class="form-control" placeholder="" ng-model="info.CompanyPhoneNumber" name="Company Phonenumber">
-                        <label class="control-label">Company Phonenumber</label>
-                        <div class="form-control-focus"></div>
-                        <i class="glyphicon glyphicon-phone-alt"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="text" class="form-control" placeholder="" ng-model="info.Ip" name="Ip">
-                        <label class="control-label">Ip</label>
-                        <div class="form-control-focus"></div>
-                        <i class="glyphicon glyphicon-phone"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="checkbox" class="form-control" ng-model="info.ExerciseRehab" ng-true-value="'Y'" ng-false-value="'N'">
-                        <label class="control-label">ExerciseRehab</label>
-                        <div class="form-control-focus"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="text" class="form-control" placeholder="" ng-model="info.SpecialistType" name="SpecialistType">
-                        <label class="control-label">Specialist Type</label>
-                        <div class="form-control-focus"></div>
-                        <i class="glyphicon glyphicon-phone"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="checkbox" class="form-control" ng-model="info.Rehab" ng-true-value="'Y'" ng-false-value="'N'">
-                        <label class="control-label">Rehab</label>
-                        <div class="form-control-focus"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="text" class="form-control" placeholder="" ng-model="info.Interval" name="Interval">
-                        <label class="control-label">Interval</label>
-                        <div class="form-control-focus"></div>
-                        <i class="glyphicon glyphicon-phone"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="checkbox" class="form-control" ng-model="info.Treatment" ng-true-value="'Y'" ng-false-value="'N'">
-                        <label class="control-label">Treatment</label>
-                        <div class="form-control-focus"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="text" class="form-control" placeholder="" ng-model="info.Further" name="Further">
-                        <label class="control-label">Further</label>
-                        <div class="form-control-focus"></div>
-                        <i class="glyphicon glyphicon-phone"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input">
-                    <div class="input-icon">
-                        <input type="checkbox" class="form-control" ng-model="info.Treatment" ng-true-value="'Y'" ng-false-value="'N'">
-                        <label class="control-label">Treatment</label>
-                        <div class="form-control-focus"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
             </div>
             <div class="form-actions">
                 <div class="row pull-right">

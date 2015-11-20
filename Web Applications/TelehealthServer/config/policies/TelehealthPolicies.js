@@ -3,6 +3,8 @@ module.exports = {
 		'TelehealthLogin':true,
 		'TelehealthLogout':true,
 		'RequestActivationCode':true,
-		'VerifyActivationCode':true
+		'VerifyActivationCode':true,
+		'TestPushAPN':true,
+		'TestPushGCM':true
 	}
 }

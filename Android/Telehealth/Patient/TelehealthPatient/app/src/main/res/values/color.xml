@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Background Color-->
+    <color name="lightBackground">#FFFFFF</color>
+    <color name="darkBackground">#000000</color>
+    <color name="callBackground">#1E3262</color>
+    <color name="mainBackground">#D5D5D5</color>
+    <color name="profileLayout">#f9f9f9</color>
+    <color name="detail_appt">#f9f9f9</color>
+
+    <!-- Font Color-->
+    <color name="lightFont">#FFFFFF</color>
+    <color name="darkFont">#000000</color>
+    <color name="greyFont">#ff9e9e9e</color>
+    <color name="redFont">#B51E46</color>
+    <color name="blueFont">#0B4F66</color>
+
+    <!-- Call Layout-->
+    <color name="colorLine">#4d000000</color>
+    <color name="declineFone">#B51E46</color>
+    <color name="answerFone">#009688</color>
+
+    <!-- Status Bar Color-->
+    <color name="colorPrimaryDark">#1f78f3</color>
+    <color name="colorPrimary">#2196f3</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="colorAccent">#B42047</color>
+
+    <!-- Dialog Alert Color-->
+    <color name="success">#2196f3</color>
+    <color name="error">#F44336</color>
+    <color name="warning">#FFB300</color>
+
+    <!-- Dialog Connection Color-->
+    <color name="bg_primary_alert">#0B4F66</color>
+    <color name="bg_foreign_alert">#0D6480</color>
+    <color name="btn_settings">#E96220</color>
+    <color name="btn_skip">#0B4F66</color>
+
+    <!-- Status Color-->
+    <color name="approved">#00703C</color>
+    <color name="unapproved">#F44336</color>
+
+    <!-- Circle Page Indicator -->
+    <bool name="default_circle_indicator_centered">true</bool>
+    <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
+    <color name="default_circle_indicator_page_color">#00000000</color>
+    <integer name="default_circle_indicator_orientation">0</integer>
+    <dimen name="default_circle_indicator_radius">3dp</dimen>
+    <bool name="default_circle_indicator_snap">false</bool>
+    <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
+    <dimen name="default_circle_indicator_stroke_width">1dp</dimen>
+</resources>

@@ -197,7 +197,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeBulkUpdate: function(useraccount, options, callback) {
+            beforeBulkUpdate: function(useraccount, callback) {
                 useraccount.ModifiedDate = new Date();
                 callback();
             }

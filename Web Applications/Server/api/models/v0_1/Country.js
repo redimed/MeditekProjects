@@ -184,7 +184,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeBulkUpdate: function(country, options, callback) {
+            beforeBulkUpdate: function(country, callback) {
                 country.ModifiedDate = new Date();
                 callback();
             }

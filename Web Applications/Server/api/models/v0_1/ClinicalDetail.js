@@ -156,7 +156,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeBulkUpdate: function(clinicaldetail, options, callback) {
+            beforeBulkUpdate: function(clinicaldetail, callback) {
                 clinicaldetail.ModifiedDate = new Date();
                 callback();
             }

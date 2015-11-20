@@ -428,7 +428,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeBulkUpdate: function(patientappointment, options, callback) {
+            beforeBulkUpdate: function(patientappointment, callback) {
                 patientappointment.ModifiedDate = new Date();
                 callback();
             }

@@ -136,7 +136,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeBulkUpdate: function(telehealthuser, options, callback) {
+            beforeBulkUpdate: function(telehealthuser, callback) {
                 telehealthuser.ModifiedDate = new Date();
                 callback();
             }

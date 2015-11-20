@@ -250,7 +250,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeBulkUpdate: function(telehealthappointment, options, callback) {
+            beforeBulkUpdate: function(telehealthappointment, callback) {
                 telehealthappointment.ModifiedDate = new Date();
                 callback();
             }

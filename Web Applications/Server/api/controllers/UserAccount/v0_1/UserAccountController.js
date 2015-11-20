@@ -5,15 +5,7 @@ var o=require("../../../services/HelperService");
 module.exports = {
 	Test:function(req,res)
 	{
-		// console.log(req.session.passport.user);
-		// req.session.passport.user.SecretKey='123456';
-		// UserAccount.update({Enable:'x'},{where:{UserName:'Adminffgggg'}})
-		// .then(function(data){
-		// 	console.log("YYYYYYYYYYYYYYYYYYYYYYYYY");
-		// 	console.log(data);
-		// },function(err){
-
-		// });
+		// console.log(req.headers.cookie);
 		var maxRole=o.getMaxRole(req.user.roles);
 		res.ok({status:'success',user:req.user,maxRole:maxRole,newtoken:res.get('newtoken')});
 

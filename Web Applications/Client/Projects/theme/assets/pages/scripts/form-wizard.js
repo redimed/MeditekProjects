@@ -71,7 +71,8 @@ var FormWizard = function() {
                         MobilePhone:true
                     },
                     Fax:{
-                        number: true
+                        number: true,
+                        maxlength:20
                     },
                     HomePhoneNumber: {
                         Home:true

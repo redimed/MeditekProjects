@@ -257,7 +257,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         if ($scope.appointment.Status == 'Approved' || $scope.appointment.Status == 'Attended' || $scope.appointment.Status == 'Waitlist' || $scope.appointment.Status == 'Finished') {
             stringAlert = $scope.CheckValidation()
         };
-        if ($scope.ShowData.DateTimeAppointmentDate != '' || $scope.ShowData.DateTimeAppointmentDateTime != '') {
+        if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate != ''  || $scope.ShowData.DateTimeAppointmentDateTime != null && $scope.ShowData.DateTimeAppointmentDateTime != '') {
             stringAlert = $scope.CheckValidation()
 
         };
@@ -353,9 +353,13 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             AppointmentService.upDateApppointment(postData).then(function(response) {
                 if (response == 'success') {
                     $modalInstance.close('success');
-                    swal("Success.");
+                    swal("Success");
                 };
-
+            },function(err) {
+               if(err.status == 401){
+                $modalInstance.close('err');
+                swal.close();
+               }
             });
         };
     };

@@ -1,5 +1,6 @@
 var app = angular.module('app.authentication.urgentCare',[
-	'app.authentication.urgentCare.controller'
+	'app.authentication.urgentCare.controller',
+	'app.authentication.urgentCare.services'
 ]);
 
 app.config(function($stateProvider){

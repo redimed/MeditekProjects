@@ -220,6 +220,7 @@ $scope.selectPatient = function() {
             }).then(function(data) {
                 if (data.message == 'success') {
                     console.log('patientInfomation', data.data[0]);
+                    $scope.wainformation.Patients =[];
                     $scope.wainformation.Patients.push({
                         UID: patientUid
                     });

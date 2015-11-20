@@ -149,7 +149,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeBulkUpdate: function(fileupload, options, callback) {
+            beforeBulkUpdate: function(fileupload, callback) {
                 fileupload.ModifiedDate = new Date();
                 callback();
             }

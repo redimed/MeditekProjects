@@ -136,7 +136,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeBulkUpdate: function(examinationrequired, options, callback) {
+            beforeBulkUpdate: function(examinationrequired, callback) {
                 examinationrequired.ModifiedDate = new Date();
                 callback();
             }

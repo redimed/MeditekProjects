@@ -86,6 +86,11 @@ module.exports = {
                     }
                     else
                     {
+                        //---------------------------------------------
+                        var connectInfo=_.cloneDeep(userAccess);
+                        connectInfo.sid=req.sessionID;
+                        RedisService.pushUserConnect(connectInfo);
+                        //---------------------------------------------
                         if(user.Activated=='Y')
                         {
                             res.ok({

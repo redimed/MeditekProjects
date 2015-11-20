@@ -185,7 +185,8 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(country, callback) {
-                country.ModifiedDate = new Date();
+                country.fields.push('ModifiedDate');
+                country.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

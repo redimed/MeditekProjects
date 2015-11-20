@@ -345,7 +345,8 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(urgentrequest, callback) {
-                urgentrequest.ModifiedDate = new Date();
+                urgentrequest.fields.push('ModifiedDate');
+                urgentrequest.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

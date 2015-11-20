@@ -137,7 +137,8 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(examinationrequired, callback) {
-                examinationrequired.ModifiedDate = new Date();
+                examinationrequired.fields.push('ModifiedDate');
+                examinationrequired.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

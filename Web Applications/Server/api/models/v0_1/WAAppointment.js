@@ -262,7 +262,8 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(waappointment, callback) {
-                waappointment.ModifiedDate = new Date();
+                waappointment.fields.push('ModifiedDate');
+                waappointment.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

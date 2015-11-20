@@ -84,7 +84,7 @@ module.exports = {
                 }
             }
         },
-        MaxExpiredDate:{
+        MaxExpiredDate: {
             type: Sequelize.DATE,
             allowNull: true,
             validate: {

@@ -429,7 +429,8 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(patientappointment, callback) {
-                patientappointment.ModifiedDate = new Date();
+                patientappointment.fields.push('ModifiedDate');
+                patientappointment.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

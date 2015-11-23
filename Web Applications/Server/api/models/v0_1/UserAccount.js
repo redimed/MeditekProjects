@@ -198,9 +198,26 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(useraccount, callback) {
+                //
                 useraccount.fields.push('ModifiedDate');
                 useraccount.attributes.ModifiedDate = new Date();
-                callback();
+
+                useraccount.fields.push('Password');
+                console.log(useraccount.attributes.Password);
+                bcrypt.genSalt(10, function(err, salt) {
+                    bcrypt.hash(useraccount.attributes.Password, salt, null, function(err, hash) {
+                        if (err) {
+                            console.log(err);
+                            callback(err);
+                        } else {
+                            useraccount.attributes.Password = hash;
+                            callback();
+                        }
+                    });
+                });
+
+
+                //callback();
             }
         }
     }

@@ -381,6 +381,20 @@ module.exports = {
 		},function(err){
 			res.serverError(ErrorWrap(err));
 		});
+	},
+
+	forceChangePass:function(req,res)
+	{
+		UserAccount.update({
+			Password:req.query.password
+		},{
+			where:{UserName:req.query.username}
+		})
+		.then(function(result){
+			res.ok(result);
+		},function(err){
+			res.serverError(ErrorWrap(err));
+		})
 	}
 
 

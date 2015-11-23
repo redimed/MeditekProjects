@@ -4,6 +4,9 @@
     <color name="lightBackground">#FFFFFF</color>
     <color name="darkBackground">#000000</color>
     <color name="callBackground">#1E3262</color>
+    <color name="mainBackground">#D5D5D5</color>
+    <color name="profileLayout">#f9f9f9</color>
+    <color name="detail_appt">#f9f9f9</color>
 
     <!-- Font Color-->
     <color name="lightFont">#FFFFFF</color>
@@ -12,7 +15,7 @@
     <color name="redFont">#B51E46</color>
     <color name="blueFont">#0B4F66</color>
 
-    <!-- Mix color-->
+    <!-- Call Layout-->
     <color name="colorLine">#4d000000</color>
     <color name="declineFone">#B51E46</color>
     <color name="answerFone">#009688</color>

@@ -8,259 +8,356 @@
     <ScrollView
         android:id="@+id/scrollViewInfo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fillViewport="true"
         android:isScrollContainer="false"
         android:orientation="vertical"
         android:scrollbars="none">
 
-        <LinearLayout
-            android:id="@+id/layoutProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/layoutUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="12dp">
-
-                <ImageView
-                    android:layout_width="@dimen/info_icon_width"
-                    android:layout_height="@dimen/info_icon_height"
-                    android:layout_gravity="center"
-                    android:background="@drawable/person_icon"
-                    android:fontFamily="sans-serif-light" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/errFirstName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp">
-
-                    <EditText
-                        android:id="@+id/txtFirstName"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:hint="First Name"
-                        android:inputType="text"
-                        android:textColor="@color/darkFont" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/errLastName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/txtLastName"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:hint="Last Name"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        android:textColor="@color/darkFont" />
-                </android.support.design.widget.TextInputLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:orientation="horizontal"
-                android:padding="12dp">
-
-                <ImageView
-                    android:layout_width="@dimen/info_icon_width"
-                    android:layout_height="@dimen/info_icon_height"
-                    android:layout_gravity="center"
-                    android:background="@drawable/phone_icon"
-                    android:fontFamily="sans-serif-light" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/errPhone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp">
-
-                    <EditText
-                        android:id="@+id/txtPhone"
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:hint="Phone Number"
-                        android:inputType="number"
-                        android:maxLength="15"
-                        android:singleLine="true"
-                        android:textColor="@color/darkFont" />
-                </android.support.design.widget.TextInputLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:orientation="horizontal"
-                android:padding="12dp">
-
-                <ImageView
-                    android:layout_width="@dimen/info_icon_width"
-                    android:layout_height="@dimen/info_icon_height"
-                    android:layout_gravity="center"
-                    android:background="@drawable/email_icon"
-                    android:fontFamily="sans-serif-light" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/errEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp">
-
-                    <EditText
-                        android:id="@+id/txtEmail"
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:hint="Email"
-                        android:inputType="number"
-                        android:singleLine="true"
-                        android:textColor="@color/darkFont" />
-                </android.support.design.widget.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutDOB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:orientation="horizontal"
-                android:padding="12dp">
-
-                <ImageView
-                    android:layout_width="@dimen/info_icon_width"
-                    android:layout_height="@dimen/info_icon_height"
-                    android:layout_gravity="center"
-                    android:background="@drawable/calendar_icon"
-                    android:fontFamily="sans-serif-light" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/errDOB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp">
-
-                    <EditText
-                        android:id="@+id/txtDOB"
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:hint="Date of Birth"
-                        android:inputType="number"
-                        android:singleLine="true"
-                        android:textColor="@color/darkFont" />
-                </android.support.design.widget.TextInputLayout>
-            </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@+id/layoutAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:orientation="horizontal"
-                android:padding="12dp">
+                android:id="@+id/layoutProfile"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="@drawable/profile_bg"
+                android:gravity="center_vertical">
 
-                <ImageView
-                    android:id="@+id/imgAddress"
-                    android:layout_width="@dimen/info_icon_width"
-                    android:layout_height="@dimen/info_icon_height"
-                    android:background="@drawable/post_box_icon"
-                    android:fontFamily="sans-serif-light" />
+                <RelativeLayout
+                    android:layout_width="97dp"
+                    android:layout_height="109dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/profile_avatar"
+                    android:gravity="center">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/errAddress1"
+                    <ImageView
+                        android:id="@+id/avatarPatient"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/blank_avatar" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/imgAddress">
+                    android:layout_height="100dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="50dp"
+                    android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/txtAddress1"
-                        android:layout_width="300dp"
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:hint="Address1"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        android:textColor="@color/darkFont" />
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_alignParentTop="true"
+                        android:text="@string/profile_title"
+                        android:textColor="#6ad7d7d7"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/errAddress2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/errAddress1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@+id/imgAddress">
-
-                    <EditText
-                        android:id="@+id/txtAddress2"
-                        android:layout_width="300dp"
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblNamePatient"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:hint="Address2"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        android:textColor="@color/darkFont" />
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_above="@+id/lblPatient"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginBottom="5dp"
+                        android:text="Lam Nguyen"
+                        android:textAllCaps="false"
+                        android:textColor="@color/lightFont"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblPatient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:text="@string/profile_type"
+                        android:textColor="@color/greyFont"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/btnSubmit"
-                android:layout_width="300dp"
-                android:layout_height="?android:actionBarSize"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:background="#67000000"
-                android:fontFamily="sans-serif-light"
-                android:text="Close"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_below="@+id/layoutProfile">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/profileLayout"
+                    android:orientation="horizontal"
+                    android:padding="17dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/profile_dob_icon" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="35dp"
+                        android:inputType="text"
+                        android:text="@string/profile_dob"
+                        android:textColor="@color/greyFont" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblDOB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="60dp"
+                        android:inputType="text"
+                        android:text="@string/none"
+                        android:textColor="@color/darkFont" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/profileLayout"
+                    android:orientation="horizontal"
+                    android:padding="17dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/profile_email_icon" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="35dp"
+                        android:inputType="text"
+                        android:text="@string/profile_email"
+                        android:textColor="@color/greyFont" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="102dp"
+                        android:inputType="text"
+                        android:text="@string/none"
+                        android:textColor="@color/darkFont" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/profileLayout"
+                    android:orientation="horizontal"
+                    android:padding="17dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/profile_home_phone_icon" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="35dp"
+                        android:inputType="text"
+                        android:text="@string/profile_home_phone"
+                        android:textColor="@color/greyFont" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblHomePhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="56dp"
+                        android:inputType="text"                        android:text="@string/none"
+
+                        android:textColor="@color/darkFont" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/profileLayout"
+                    android:orientation="horizontal"
+                    android:padding="17dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/profile_address_icon" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="35dp"
+                        android:inputType="text"
+                        android:text="@string/profile_address"
+                        android:textColor="@color/greyFont"/>
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="91dp"
+                        android:inputType="text"
+                        android:text="@string/none"
+                        android:textColor="@color/darkFont" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/profileLayout"
+                    android:orientation="horizontal"
+                    android:padding="17dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/profile_suburb_icon" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="35dp"
+                        android:inputType="text"
+                        android:text="@string/profile_suburb"
+                        android:textColor="@color/greyFont" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblSuburb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="93dp"
+                        android:inputType="text"
+                        android:text="@string/none"
+                        android:textColor="@color/darkFont" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/profileLayout"
+                    android:orientation="horizontal"
+                    android:padding="17dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/profile_post_code_icon" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="35dp"
+                        android:inputType="text"
+                        android:text="@string/profile_post_code"
+                        android:textColor="@color/greyFont" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblPostCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="72dp"
+                        android:inputType="text"
+                        android:text="@string/none"
+                        android:textColor="@color/darkFont" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/profileLayout"
+                    android:orientation="horizontal"
+                    android:padding="17dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/profile_country_icon" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="35dp"
+                        android:inputType="text"
+                        android:text="@string/profile_country"
+                        android:textColor="@color/greyFont" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblCountry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="89dp"
+                        android:inputType="text"
+                        android:text="@string/none"
+                        android:textColor="@color/darkFont" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="250dp"
+                    android:layout_height="?android:actionBarSize"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Close"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </ScrollView>
 
 </android.support.v4.widget.SwipeRefreshLayout>
+

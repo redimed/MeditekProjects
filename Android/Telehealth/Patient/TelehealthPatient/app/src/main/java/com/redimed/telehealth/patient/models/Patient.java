@@ -37,13 +37,13 @@ public class Patient {
     @SerializedName("Suburb")
     private String Suburb;
 
-    @SerializedName("PostCode")
+    @SerializedName("Postcode")
     private String PostCode;
 
     @SerializedName("State")
     private String State;
 
-    @SerializedName("Email")
+    @SerializedName("Email1")
     private String Email;
 
     @SerializedName("HomePhoneNumber")
@@ -52,8 +52,8 @@ public class Patient {
     @SerializedName("Enable")
     private String Enable;
 
-    @SerializedName("PhoneNumber")
-    private String PhoneNumber;
+    @SerializedName("CountryName")
+    private String CountryName;
 
     @SerializedName("UserAccount")
     private UserAccount userAccount;
@@ -180,12 +180,12 @@ public class Patient {
         Enable = enable;
     }
 
-    public String getPhoneNumber() {
-        return PhoneNumber;
+    public String getCountryName() {
+        return CountryName;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        PhoneNumber = phoneNumber;
+    public void setCountryName(String countryName) {
+        CountryName = countryName;
     }
 
     public UserAccount getUserAccount() {

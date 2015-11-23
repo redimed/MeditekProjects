@@ -1,0 +1,222 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activityHome"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    tools:context=".HomeActivity">
+
+    <ImageView
+        android:id="@+id/logo_work"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/logo_work_injury" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/logo_work">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <patient.telehealth.redimed.workinjury.utils.CirclePageIndicator
+            android:id="@+id/circleIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            style="@style/MyTheme"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="215dp"
+            android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:id="@+id/layoutHome"
+                android:layout_width="match_parent"
+                android:layout_height="195dp"
+                android:layout_alignParentBottom="true"
+                android:paddingTop="40dp"
+                android:background="#aaffffff"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnRehab"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/home_physio_btn"
+                    android:drawableTop="@drawable/home_rehab_icon"
+                    android:paddingTop="12dp"
+                    android:text="@string/green_btn"
+                    android:textSize="@dimen/text_size_home"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/lightFont" />
+
+                <Button
+                    android:id="@+id/btnSpec"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/home_spec_btn"
+                    android:drawableTop="@drawable/home_spec_icon"
+                    android:paddingTop="7dp"
+                    android:text="@string/blue_btn"
+                    android:textSize="@dimen/text_size_home"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/lightFont" />
+
+                <Button
+                    android:id="@+id/btnGP"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/home_general_btn"
+                    android:drawableTop="@drawable/home_gp_icon"
+                    android:paddingTop="10dp"
+                    android:text="@string/red_btn"
+                    android:textSize="@dimen/text_size_home"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/lightFont" />
+
+                <Button
+                    android:id="@+id/btnOther"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/home_hand_btn"
+                    android:drawableTop="@drawable/home_other_icon"
+                    android:paddingTop="15dp"
+                    android:text="@string/orange_btn"
+                    android:textSize="@dimen/text_size_home"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/lightFont" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnCall"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:background="@color/lightFont"
+                    android:drawableLeft="@drawable/call_icon"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="20dp"
+                    android:gravity="center"
+                    android:text="@string/call_btn"
+                    android:textSize="15dp"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="@string/time_available"
+                    android:textSize="15dp"
+                    android:gravity="center"
+                    android:textColor="@color/lightFont"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="40dp"
+                android:background="@android:color/transparent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnUrgentCare"
+                    android:layout_width="150dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@android:color/white"
+                    android:text="@string/urgent_btn"
+                    android:textSize="18dp"
+                    android:gravity="center"
+                    android:textColor="@color/redFont"
+                    android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/btnFAQ"
+                    android:layout_width="150dp"
+                    android:layout_height="30dp"
+                    android:background="@android:color/white"
+                    android:text="@string/faq_btn"
+                    android:textSize="18dp"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/blueFont"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:textSize="14dp"
+                    android:text="@string/contain_bottom1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/contain_HEALTH"
+                    android:textSize="15dp"
+                    android:textColor="@color/redFont" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/contain_CARE"
+                    android:textSize="15dp"
+                    android:textColor="@color/blueFont" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="14dp"
+                    android:text="@string/contain_bottom2" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

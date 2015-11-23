@@ -10,8 +10,14 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         renderscriptTargetApi 21
         renderscriptSupportModeEnabled true
+    }
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+        preDexLibraries = false
     }
     buildTypes {
         release {

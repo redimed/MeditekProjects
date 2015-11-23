@@ -28,7 +28,6 @@ app.controller('authenticationCtrl', function($rootScope,$scope,$state,$cookies,
 	};
 	AuthenticationService.getDetailUser(data).then(function(response){
 		$scope.info = response.data;
-		console.log($scope.info);
 		$cookies.putObject("userprofile", {patient: $scope.info.patient,doctor:$scope.info.doctor});
 		
 	},function(err){

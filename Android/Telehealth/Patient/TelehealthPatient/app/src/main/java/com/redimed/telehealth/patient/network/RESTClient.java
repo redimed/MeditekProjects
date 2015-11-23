@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.utils.Config;
@@ -11,6 +12,8 @@ import com.redimed.telehealth.patient.utils.RetrofitErrorHandler;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.IOException;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.util.concurrent.TimeUnit;
 
 import retrofit.Callback;
@@ -22,16 +25,18 @@ import retrofit.client.OkClient;
 import retrofit.client.Request;
 import retrofit.client.Response;
 
-import static android.content.SharedPreferences.*;
-
 /**
  * Created by luann on 9/23/2015.
  */
 public class RESTClient {
-    private static RestAdapter restAdapter, restAdapterUpload;
+    private static String TAG = "RESTCLIENT";
+    private static RestAdapter restAdapter, restAdapterCore;
     private static OkHttpClient okHttpClient;
     private static SharedPreferences spDevice, uidTelehealth;
     private static Context context;
+    private static SharedPreferences.Editor editor;
+    private static JsonObject dataRefresh;
+    private static Gson gson;
 
     public static void InitRESTClient(Context ctx) {
         context = ctx;
@@ -45,18 +50,23 @@ public class RESTClient {
         okHttpClient.setReadTimeout(30, TimeUnit.SECONDS);
         okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
 
+        CookieManager cookieManager = new CookieManager();
+        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+        okHttpClient.setCookieHandler(cookieManager);
+
         restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(Config.apiURL)
-                .setClient(new OkClient(okHttpClient))
+                .setClient(new InterceptingOkClient(okHttpClient))
                 .setRequestInterceptor(new SessionRequestInterceptor())
                 .setErrorHandler(new RetrofitErrorHandler())
                 .build();
 
-        restAdapterUpload = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
-                .setEndpoint(Config.apiURLUpload)
-                .setClient(new OkClient(okHttpClient))
+        restAdapterCore = new RestAdapter.Builder()
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setEndpoint(Config.apiURLCore)
+                .setClient(new InterceptingOkClient(okHttpClient))
+                .setRequestInterceptor(new SessionRequestInterceptorCore())
                 .setErrorHandler(new RetrofitErrorHandler())
                 .build();
     }
@@ -68,7 +78,20 @@ public class RESTClient {
             paramRequestFacade.addHeader("SystemType", "Android");
             paramRequestFacade.addHeader("DeviceID", spDevice.getString("deviceID", null));
             paramRequestFacade.addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", null));
-            paramRequestFacade.addHeader("UserUID", uidTelehealth.getString("accountUID", null));
+            paramRequestFacade.addHeader("UserUID", uidTelehealth.getString("userUID", null));
+            paramRequestFacade.addHeader("Cookie", uidTelehealth.getString("cookie", null));
+            paramRequestFacade.addHeader("AppID", "com.redimed.telehealth.patient");
+        }
+    }
+
+    private static class SessionRequestInterceptorCore implements RequestInterceptor {
+        public void intercept(RequestInterceptor.RequestFacade paramRequestFacade) {
+            paramRequestFacade.addHeader("SystemType", "ARD");
+            paramRequestFacade.addHeader("DeviceID", spDevice.getString("deviceID", null));
+            paramRequestFacade.addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", null));
+            paramRequestFacade.addHeader("Cookie", uidTelehealth.getString("cookie", null));
+            paramRequestFacade.addHeader("UserUID", uidTelehealth.getString("userUID", null));
+            paramRequestFacade.addHeader("AppID", "com.redimed.telehealth.patient");
         }
     }
 
@@ -76,8 +99,49 @@ public class RESTClient {
         return restAdapter.create(RegisterApi.class);
     }
 
-    public static RegisterApi getRegisterApiUrl() {
-        return restAdapterUpload.create(RegisterApi.class);
+    public static RegisterApi getRegisterApiCore() {
+        return restAdapterCore.create(RegisterApi.class);
+    }
+
+    static class InterceptingOkClient extends OkClient
+    {
+        public InterceptingOkClient(OkHttpClient client) {
+            super(client);
+        }
+
+        @Override
+        public Response execute(Request request) throws IOException
+        {
+            Response response = super.execute(request);
+            for (final Header header : response.getHeaders()) {
+                if (null!= header.getName() && header.getName().equals("set-cookie")) {
+                    editor = uidTelehealth.edit();
+                    editor.putString("cookie", header.getValue());
+                    editor.commit();
+                }
+                if (header.getName().equalsIgnoreCase("requireupdatetoken") && header.getValue().equalsIgnoreCase("true")){
+                    gson = new Gson();
+                    dataRefresh = new JsonObject();
+                    dataRefresh.addProperty("refreshCode", uidTelehealth.getString("refreshCode", null));
+                    RESTClient.getRegisterApiCore().getNewToken(dataRefresh, new Callback<JsonObject>() {
+                        @Override
+                        public void success(JsonObject jsonObject, Response response) {
+                            Log.d(TAG, jsonObject + " ");
+                            editor = uidTelehealth.edit();
+                            editor.putString("token", jsonObject.get("token").isJsonNull() ? " " : jsonObject.get("token").getAsString());
+                            editor.putString("refreshCode", jsonObject.get("refreshCode").isJsonNull() ? " " : jsonObject.get("refreshCode").getAsString());
+                            editor.commit();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Log.d(TAG , "ERROR" + error.getLocalizedMessage());
+                        }
+                    });
+                }
+            }
+            return response;
+        }
     }
 }
 

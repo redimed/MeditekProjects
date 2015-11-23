@@ -15,7 +15,10 @@ public class CircleTransform implements Transformation {
 
     @Override
     public Bitmap transform(Bitmap source) {
-        if (source == null) return null;
+        if (source == null){
+            source.recycle();
+            return null;
+        }
 
         int size = Math.min(source.getWidth(), source.getHeight());
         int x = (source.getWidth() - size) / 2;
@@ -36,6 +39,7 @@ public class CircleTransform implements Transformation {
 
         Canvas canvas = new Canvas(bitmap);
         canvas.drawCircle(r, r, r, paint);
+        squaredBitmap.recycle();
 
         return bitmap;
     }

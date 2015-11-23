@@ -7,14 +7,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@android:color/transparent">
+        android:background="@color/mainBackground">
 
         <ImageView
             android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:src="@drawable/logo_redimed" />
 
         <!-- Framelayout to display Fragments -->
@@ -31,7 +31,6 @@
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="left|start"
-        android:background="@drawable/all_background"
         android:orientation="horizontal">
 
         <ImageView

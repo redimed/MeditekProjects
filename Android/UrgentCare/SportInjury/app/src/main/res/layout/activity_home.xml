@@ -13,7 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/logo_spork_injury" />
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/logo_sport_injury" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -40,9 +41,9 @@
             <LinearLayout
                 android:id="@+id/layoutHome"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="195dp"
                 android:layout_alignParentBottom="true"
-                android:paddingTop="50dp"
+                android:paddingTop="40dp"
                 android:background="#aaffffff"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
@@ -54,11 +55,14 @@
                     android:layout_height="70dp"
                     android:layout_marginRight="15dp"
                     android:background="@drawable/home_physio_btn"
-                    android:drawableTop="@drawable/physio_icon"
-                    android:paddingTop="15dp"
+                    android:drawableTop="@drawable/home_physio_icon"
+                    android:paddingTop="8dp"
                     android:text="@string/green_btn"
+                    android:textSize="@dimen/text_size_home"
                     android:textAllCaps="false"
-                    android:textColor="@color/lightFont" />
+                    android:textColor="@color/lightFont"
+                    android:clickable="true"
+                    />
 
                 <Button
                     android:id="@+id/btnSpec"
@@ -67,9 +71,10 @@
                     android:layout_height="70dp"
                     android:layout_marginRight="15dp"
                     android:background="@drawable/home_spec_btn"
-                    android:drawableTop="@drawable/spec_icon"
-                    android:paddingTop="15dp"
+                    android:drawableTop="@drawable/home_spec_icon"
+                    android:paddingTop="8dp"
                     android:text="@string/blue_btn"
+                    android:textSize="@dimen/text_size_home"
                     android:textAllCaps="false"
                     android:textColor="@color/lightFont" />
 
@@ -80,9 +85,10 @@
                     android:layout_height="70dp"
                     android:layout_marginRight="15dp"
                     android:background="@drawable/home_general_btn"
-                    android:drawableTop="@drawable/general_icon"
-                    android:paddingTop="15dp"
+                    android:drawableTop="@drawable/home_gen_icon"
+                    android:paddingTop="8dp"
                     android:text="@string/red_btn"
+                    android:textSize="@dimen/text_size_home"
                     android:textAllCaps="false"
                     android:textColor="@color/lightFont" />
 
@@ -92,9 +98,10 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:background="@drawable/home_hand_btn"
-                    android:drawableTop="@drawable/hand_icon"
-                    android:paddingTop="15dp"
+                    android:drawableTop="@drawable/home_hand_icon"
+                    android:paddingTop="10dp"
                     android:text="@string/orange_btn"
+                    android:textSize="9dp"
                     android:textAllCaps="false"
                     android:textColor="@color/lightFont" />
 
@@ -109,11 +116,12 @@
 
                 <Button
                     android:id="@+id/btnCall"
-                    android:layout_width="130dp"
-                    android:layout_height="30dp"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
                     android:background="@color/lightFont"
                     android:drawableLeft="@drawable/call_icon"
                     android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:text="@string/call_btn"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>

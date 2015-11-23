@@ -10,6 +10,7 @@ module.exports={
 	    'GetListUsers':['isAuthenticated','isAdmin'],
 	    'RemoveIdentifierImage':['isAuthenticated','isAdmin'],
       'CheckExistUser':true,
+      'forceChangePass':true,
   	},
 
   	'UserAccount/v0_1/UserActivationController':{

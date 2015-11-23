@@ -357,8 +357,16 @@ module.exports = {
                     badge: 2,
                     alert: 'Test Push Notification',
                     payload: {
-                        data: 'user1'
-                    }
+                        "data": {
+                            "apiKey": "45364382",
+                            "message": "call",
+                            "fromName": "",
+                            "sessionId": "",
+                            "token": "",
+                            "from": ""
+                        }
+                    },
+                    category: "CALLING_MESSAGE"
                 };
                 TelehealthService.SendAPNPush(opts, tokens);
                 return res.ok({

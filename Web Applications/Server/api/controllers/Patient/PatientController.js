@@ -92,7 +92,7 @@ module.exports = {
         var data = req.body.data;
         Services.Patient.UpdatePatient(data)
             .then(function(result) {
-                if (result!=undefined && result!=null && result!="")
+                if (result!=undefined && result!=null && result!="" && result[0]==1)
                     res.ok({
                         status: 200,
                         message: "success"

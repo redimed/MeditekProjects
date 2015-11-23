@@ -337,7 +337,7 @@ angular.module('app.authentication.patient.services',[])
 			//validate WorkPhone
 			if('WorkPhoneNumber' in info){
 				if(info.WorkPhoneNumber){
-					var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{6-10}$/);
 					var WorkPhoneNumber=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
 						error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -348,7 +348,7 @@ angular.module('app.authentication.patient.services',[])
 			//validate HomePhoneNumber? hoi a Tan su dung exception
 			if('HomePhoneNumber' in info){
 				if(info.HomePhoneNumber){
-					var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var auHomePhoneNumberPattern=new RegExp(/^[1-9]{6-10}$/);
 					var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auHomePhoneNumberPattern.test(HomePhone)){
 						error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -438,7 +438,7 @@ angular.module('app.authentication.patient.services',[])
 				var auPhoneNumberPattern=new RegExp(/^(\+61|0061|0)?4[0-9]{8}$/);
 				var PhoneNumber=info.PhoneNumber.replace(/[\(\)\s\-]/g,'');
 				if(!auPhoneNumberPattern.test(PhoneNumber)){
-					error.push({field:"PhoneNumber",message:"This is not a mobile phone"});
+					error.push({field:"PhoneNumber",message:"Phone Number is a 10 digits number. Eg: 04 xxxx xxxx"});
 				}
 			}
 			else{

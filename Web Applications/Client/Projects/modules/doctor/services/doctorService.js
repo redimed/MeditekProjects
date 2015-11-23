@@ -178,13 +178,12 @@ angular.module('app.authentication.doctor.service', [])
 
 
 	services.validate = function(info) {
-			console.log(info);
 		var error = [];
 		var q = $q.defer();
 		try {
 			//validate RoleId
 			if('RoleId'in info){
-				if(info.RoleId==null){
+				if(info.RoleId==null || info.RoleId==""){
 					error.push({field:"RoleId",message:"required"});
 				}
 			}

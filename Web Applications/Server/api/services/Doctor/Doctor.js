@@ -1054,7 +1054,7 @@ module.exports = {
 	GetDoctor: function(data, transaction) {
 		return Services.UserAccount.GetUserAccountDetails(data)
 		.then(function(user){
-			//check if UserAccount is found in table UserAccount, get UserAccountID to find patient
+			//check if UserAccount is found in table UserAccount, get UserAccountID to find doctor
 			if(check.checkData(user)){
 				return Doctor.findOne({
 					where: {
@@ -1174,6 +1174,7 @@ module.exports = {
 					return Services.UserAccount.CreateUserAccount(userInfo,t);
 				}
 			},function(err){
+				t.rollback();
 				throw err;
 			})
 			.then(function(user){
@@ -1182,6 +1183,17 @@ module.exports = {
 				data.HealthLink = data.HealthLinkID;
 				return Doctor.create(data,{transaction:t});
 			},function(err){
+				t.rollback();
+				throw err;
+			})
+			.then(function(result){
+				return RelUserRole.create({
+					UserAccountId : data.UserAccountID,
+					RoleId        : data.RoleId,
+					SiteId        : 1
+				},{transaction:t});
+			},function(err){
+				t.rollback();
 				throw err;
 			})
 			.then(function(success){
@@ -1191,7 +1203,7 @@ module.exports = {
 			},function(err){
 				t.rollback();
 				throw err;
-			})
+			});
 		});
 	},
 

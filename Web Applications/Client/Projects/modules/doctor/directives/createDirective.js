@@ -170,6 +170,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 							$("#tab1 :input").prop('disabled', true);
 							scope.isShowNext     = false;
 							scope.isShowNext2    = true;
+							scope.data.RoleId          = null;
 							scope.data.HealthLinkID    = null;
 							scope.data.WorkPhoneNumber = null;
 							scope.data.HomePhoneNumber = null;

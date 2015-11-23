@@ -17,10 +17,13 @@ module.exports = {
                 })
                 .catch(function(err) {
                     if (HelperService.CheckExistData(err) &&
-                        HelperService.CheckExistData(err.transaction)) {
+                        HelperService.CheckExistData(err.transaction) &&
+                        HelperService.CheckExistData(err.error)) {
                         err.transaction.rollback();
+                        res.serverError(ErrorWrap(err.error));
+                    } else {
+                        res.serverError(ErrorWrap(err));
                     }
-                    res.serverError(ErrorWrap(err.error));
                 });
         }
     },
@@ -49,11 +52,14 @@ module.exports = {
                     res.ok(success.data);
                 })
                 .catch(function(err) {
-                    if (HelperService.CheckPostRequest(err) &&
-                        HelperService.CheckPostRequest(err.transaction)) {
+                    if (HelperService.CheckExistData(err) &&
+                        HelperService.CheckExistData(err.transaction) &&
+                        HelperService.CheckExistData(err.error)) {
                         err.transaction.rollback();
+                        res.serverError(ErrorWrap(err.error));
+                    } else {
+                        res.serverError(ErrorWrap(err));
                     }
-                    res.serverError(ErrorWrap(err));
                 });
         }
     },
@@ -70,11 +76,14 @@ module.exports = {
                 res.ok(success);
             })
             .catch(function(err) {
-                if (HelperService.CheckPostRequest(err) &&
-                    HelperService.CheckPostRequest(err.transaction)) {
+                if (HelperService.CheckExistData(err) &&
+                    HelperService.CheckExistData(err.transaction) &&
+                    HelperService.CheckExistData(err.error)) {
                     err.transaction.rollback();
+                    res.serverError(ErrorWrap(err.error));
+                } else {
+                    res.serverError(ErrorWrap(err));
                 }
-                res.serverError(ErrorWrap(err));
             });
     },
     /*
@@ -97,11 +106,14 @@ module.exports = {
                         res.ok('success');
                     })
                     .catch(function(err) {
-                        if (HelperService.CheckPostRequest(err) &&
-                            HelperService.CheckPostRequest(err.transaction)) {
+                        if (HelperService.CheckExistData(err) &&
+                            HelperService.CheckExistData(err.transaction) &&
+                            HelperService.CheckExistData(err.error)) {
                             err.transaction.rollback();
+                            res.serverError(ErrorWrap(err.error));
+                        } else {
+                            res.serverError(ErrorWrap(err));
                         }
-                        res.serverError(ErrorWrap(err.error));
                     });
             } else {
                 res.serverError('failed');
@@ -126,11 +138,14 @@ module.exports = {
                     res.ok('success');
                 })
                 .catch(function(err) {
-                    if (HelperService.CheckPostRequest(err) &&
-                        HelperService.CheckPostRequest(err.transaction)) {
+                    if (HelperService.CheckExistData(err) &&
+                        HelperService.CheckExistData(err.transaction) &&
+                        HelperService.CheckExistData(err.error)) {
                         err.transaction.rollback();
+                        res.serverError(ErrorWrap(err.error));
+                    } else {
+                        res.serverError(ErrorWrap(err));
                     }
-                    res.serverError(ErrorWrap(err));
                 });
         }
     }

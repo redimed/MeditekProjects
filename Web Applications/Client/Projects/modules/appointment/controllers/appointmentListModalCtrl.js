@@ -352,13 +352,18 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             };
             AppointmentService.upDateApppointment(postData).then(function(response) {
                 if (response == 'success') {
+                    toastr.success("Update appointment successfully !");
                     $modalInstance.close('success');
-                    swal("Success");
+                    swal.close();
                 };
             },function(err) {
                if(err.status == 401){
                 $modalInstance.close('err');
                 swal.close();
+               }else{
+                $modalInstance.close('err');
+                swal.close();
+                toastr.error('Update Appointment Failed');
                }
             });
         };

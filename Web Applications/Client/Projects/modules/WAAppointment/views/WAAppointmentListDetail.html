@@ -30,7 +30,7 @@
     </div>
     <div class="portlet-body form">
         <fieldset ng-disabled="checkRoleUpdate">
-            <form>
+            <form name="userForm" novalidate>
                 <div class="form-body margin-bottom-10">
                     <div class="tabbable-line">
                         <ul class="nav nav-tabs ">
@@ -411,31 +411,34 @@
                                                 <div id="tab_2-2" class="tab-pane">
                                                     <div class="row">
                                                         <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group form-md-line-input">
+                                                            <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_WorkPhoneNumber.$invalid}">
                                                                 <div class="input-icon">
-                                                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.WorkPhoneNumber">
+                                                                    <input type="text" class="form-control edited" name="TelehealthAppointment_PatientAppointment_WorkPhoneNumber" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.WorkPhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/">
                                                                     <label class="control-label">Contact number (M)</label>
                                                                     <div class="form-control-focus"> </div>
+                                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_WorkPhoneNumber.$error.pattern" class="help-block">This is not a mobile phone number</p>
                                                                     <i class="glyphicon glyphicon-phone"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group form-md-line-input">
+                                                            <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$invalid}">
                                                                 <div class="input-icon">
-                                                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.HomePhoneNumber">
+                                                                    <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.HomePhoneNumber" name="TelehealthAppointment_PatientAppointment_HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/">
                                                                     <label class="control-label">Contact number (H)</label>
                                                                     <div class="form-control-focus"> </div>
+                                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$error.pattern" class="help-block">This is not a home phone number</p>
                                                                     <i class="glyphicon glyphicon-phone-alt"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group form-md-line-input">
+                                                            <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_Email2.$invalid}">
                                                                 <div class="input-icon">
-                                                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Email2">
+                                                                    <input type="email" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Email2" name="TelehealthAppointment_PatientAppointment_Email2">
                                                                     <label class="control-label">Email</label>
                                                                     <div class="form-control-focus"> </div>
+                                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_Email2.$invalid" class="help-block">Please enter a valid email address.</p>
                                                                     <i class="glyphicon glyphicon-envelope"></i>
                                                                 </div>
                                                             </div>
@@ -510,11 +513,12 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group form-md-line-input">
+                                                            <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_PatientKinContactNumber.$invalid}">
                                                                 <div class="input-icon">
-                                                                    <input type="text" class="form-control" placeholder="+61 8888 8888" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinContactNumber">
+                                                                    <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinContactNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" name="TelehealthAppointment_PatientAppointment_PatientKinContactNumber">
                                                                     <label class="control-label">Contact Number</label>
                                                                     <div class="form-control-focus"> </div>
+                                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PatientKinContactNumber.$error.pattern" class="help-block">This is not a home phone number</p>
                                                                     <i class="glyphicon glyphicon-phone"></i>
                                                                 </div>
                                                             </div>
@@ -646,11 +650,12 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6 col-sm-6">
-                                                                    <div class="form-group form-md-line-input">
+                                                                    <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.TelehealthAppointment_WAAppointment_ConsultantContactNumber.$invalid}">
                                                                         <div class="input-icon">
-                                                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.ConsultantContactNumber">
+                                                                            <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment_WAAppointment_ConsultantContactNumber" name="TelehealthAppointment_WAAppointment_ConsultantContactNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/">
                                                                             <label class="control-label">Contact number</label>
                                                                             <div class="form-control-focus"> </div>
+                                                                            <p ng-show="userForm.TelehealthAppointment_WAAppointment_ConsultantContactNumber.$error.pattern" class="help-block">This is not a home phone number</p>
                                                                             <i class="glyphicon glyphicon-phone"></i>
                                                                         </div>
                                                                     </div>

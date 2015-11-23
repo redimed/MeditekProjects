@@ -150,14 +150,20 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService,$co
             ClinicalDetailsTemp = [];
         }
         $scope.wainformation.TelehealthAppointment.ClinicalDetails = ClinicalDetailsTemp;
+        console.log($scope.wainformation)
         WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
                 console.log('saveWaAppointment', data);
+                toastr.success("Update appointment successfully !");
                 $modalInstance.close('success');
-                swal("Success");
+                swal.close();
             },function(err) {
                if(err.status == 401){
                 $modalInstance.close('err');
                 swal.close();
+               }else{
+                $modalInstance.close('err');
+                swal.close();
+                toastr.error('Update Appointment Failed');
                }
             });
 }
@@ -219,8 +225,9 @@ $scope.selectPatient = function() {
                 UID: patientUid
             }).then(function(data) {
                 if (data.message == 'success') {
-                    console.log('patientInfomation', data.data[0]);
-                    $scope.wainformation.Patients =[];
+                    console.log('patientInfomation', data.data);
+                    console.log('$scope.wainformation.Patients',$scope.wainformation.Patients);
+                    $scope.wainformation.Patients = [];
                     $scope.wainformation.Patients.push({
                         UID: patientUid
                     });
@@ -230,30 +237,33 @@ $scope.selectPatient = function() {
         };
     });
 };
-
 $scope.submitUpdate = function() {
-    var stringAlert = null;
-    if ($scope.wainformation.Status == 'Approved' || $scope.wainformation.Status == 'Attended' || $scope.wainformation.Status == 'Waitlist' || $scope.wainformation.Status == 'Finished') {
-        stringAlert = $scope.CheckValidation()
-    };
-    if ($scope.info.appointmentDate != null && $scope.info.appointmentDate != '' || $scope.info.appointmentTime != null && $scope.info.appointmentTime != '') {
-        stringAlert = $scope.CheckValidation()
+     if($scope.userForm.$valid){ 
+        var stringAlert = null;
+        if ($scope.wainformation.Status == 'Approved' || $scope.wainformation.Status == 'Attended' || $scope.wainformation.Status == 'Waitlist' || $scope.wainformation.Status == 'Finished') {
+            stringAlert = $scope.CheckValidation()
+        };
+        if ($scope.info.appointmentDate != null && $scope.info.appointmentDate != '' || $scope.info.appointmentTime != null && $scope.info.appointmentTime != '') {
+            stringAlert = $scope.CheckValidation()
 
-    };
-    if (stringAlert == null) {
-        swal({
-                title: "Are you sure ?",
-                text: "Update Appointment",
-                type: "info",
-                showCancelButton: true,
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true,
-            },
-            function() {
-                $scope.saveWaAppointment();
-            });
-    } else {
-        toastr.error(stringAlert);
-    };
+        };
+        if (stringAlert == null) {
+            swal({
+                    title: "Are you sure ?",
+                    text: "Update Appointment",
+                    type: "info",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                },
+                function() {
+                    $scope.saveWaAppointment();
+                });
+        } else {
+            toastr.error(stringAlert);
+        };
+    }else{
+         toastr.error("Please check input data");
+    }
 };
 });

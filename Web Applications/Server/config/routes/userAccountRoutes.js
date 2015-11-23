@@ -125,7 +125,10 @@ module.exports={
     	action:'getDetailUser'
 	},
 
-
+	'get /api/user-account/force/changepass':{
+		controller:'UserAccount/v0_1/UserAccountController',
+    	action:'forceChangePass'
+	},
 
 	'get /test':'TestController.test',
     'get /testAdmin':'TestController.testAdmin',

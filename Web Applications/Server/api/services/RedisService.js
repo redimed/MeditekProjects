@@ -25,12 +25,31 @@ module.exports={
 		.then(function(obj){
 			if(obj && obj.sid)
 			{
-				redis.del('sess:'+obj.sid);
+				if(connectInfo.sid!=obj.sid)
+					redis.del('sess:'+obj.sid);
+				return "next";
 			}
+		},function(err){
+			throw err;
 		})
-		.then(function(){
+		.then(function(data){
 			redis.hset(key,hashKey,connectInfo);
 			console.log("pushUserConnect:",key,hashKey,connectInfo);
+			return {status:'success'};
+		},function(err){
+			throw err;
+		})
+	},
+
+	removeUserConnect:function(connectInfo)
+	{
+		var key=userConnectKeyPrefix+connectInfo.UserUID;
+		var hashKey=concatp(connectInfo.SystemType,connectInfo.DeviceID,connectInfo.AppID);
+		return redis.hdel(key,hashKey)
+		.then(function(success){
+			return success;
+		},function(err){
+			throw err;
 		})
 	},
 

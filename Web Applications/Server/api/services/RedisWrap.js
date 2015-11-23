@@ -175,6 +175,30 @@ module.exports={
 			q.reject(e);
 		}
 		return q.promise;
+	},
+
+	hdel:function(key,hashKey)
+	{
+		var q=$q.defer();
+		try
+		{
+			client.hdel(key,hashKey,function(err,success){
+				if(err)
+				{
+					throw err;
+				}
+				else
+				{
+					q.resolve(success);
+				}
+			})
+
+		}
+		catch(err)
+		{
+			q.reject(err);
+		}
+		return q.promise;
 	}
 
 	

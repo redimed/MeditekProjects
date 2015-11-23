@@ -87,9 +87,12 @@ module.exports = {
                     else
                     {
                         //---------------------------------------------
-                        /*var connectInfo=_.cloneDeep(userAccess);
-                        connectInfo.sid=req.sessionID;
-                        RedisService.pushUserConnect(connectInfo);*/
+                        if(req.headers.systemtype==o.const.systemType.website)
+                        {
+                            var connectInfo=_.cloneDeep(userAccess);
+                            connectInfo.sid=req.sessionID;
+                            RedisService.pushUserConnect(connectInfo);
+                        }
                         //---------------------------------------------
                         if(user.Activated=='Y')
                         {
@@ -135,6 +138,14 @@ module.exports = {
         Services.RefreshToken.MakeRefreshToken(userAccess)
         .then(function(data){
             req.logout();
+            //------------------------------------------
+            if(req.headers.systemtype==o.const.systemType.website)
+            {
+                var connectInfo=_.cloneDeep(userAccess);
+                connectInfo.sid=req.sessionID;
+                RedisService.removeUserConnect(connectInfo);
+            }            
+            //------------------------------------------
             res.ok({status:'success'});
         },function(err){
             res.serverError(ErrorWrap(err));

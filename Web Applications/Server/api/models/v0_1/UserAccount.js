@@ -198,6 +198,7 @@ module.exports = {
                 callback();
             },
             beforeBulkUpdate: function(useraccount, callback) {
+                //
                 useraccount.fields.push('ModifiedDate');
                 useraccount.attributes.ModifiedDate = new Date();
 

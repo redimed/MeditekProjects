@@ -105,12 +105,11 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         cell.doctorName.text = singletonOnlineUser.fullNameDoctor.characters.count > 2 ? singletonOnlineUser.fullNameDoctor : "Unlink Treating Practitioner"
         cell.submitDate.text = formatforList(singletonOnlineUser.requestDateAppoinment)
         cell.appoinmentDate.text = formatforList(singletonOnlineUser.appoinmentDate)
+        cell.callButton.enabled = true
         if let status = singletonOnlineUser.status {
             if status != 0 {
-                cell.callButton.enabled = true
                 cell.statusImageView.hidden = false
             } else {
-                cell.callButton.enabled = false
                 cell.statusImageView.hidden = true
             }
         }
@@ -175,10 +174,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
                             firstNamePatient: readableJSON[i]["Patients"][0]["FirstName"].stringValue.isEmpty ? readableJSON[i]["TelehealthAppointment"]["PatientAppointment"]["FirstName"].stringValue : readableJSON[i]["Patients"][0]["FirstName"].stringValue,
                             midleNamePatient: readableJSON[i]["Patients"][0]["MiddleName"].stringValue.isEmpty ? readableJSON[i]["TelehealthAppointment"]["PatientAppointment"]["MiddleName"].stringValue : readableJSON[i]["Patients"][0]["MiddleName"].stringValue,
                             lastNamePatient: readableJSON[i]["Patients"][0]["LastName"].stringValue.isEmpty ? readableJSON[i]["TelehealthAppointment"]["PatientAppointment"]["LastName"].stringValue : readableJSON[i]["Patients"][0]["LastName"].stringValue,
-                            
                             TeleUID: readableJSON[i]["TeleUID"].stringValue
-                            //                            readableJSON[i]["Patients"][0]["MiddleName"].stringValue,
-                            //                            readableJSON[i]["Patients"][0]["LastName"].stringValue,
                         )
                         if readableJSON[i]["Status"] == "Received" {
                             SingleTon.onlineUser_Singleton.append(onlineObj)

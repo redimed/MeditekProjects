@@ -9,6 +9,7 @@
 import UIKit
 import UIView_draggable
 import ReachabilitySwift
+import Alamofire
 
 let videoWidth : CGFloat = 200
 let videoHeight : CGFloat = 120
@@ -55,6 +56,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         loading = DTIActivityIndicatorView(frame: CGRect(x:screenSize.size.width/2 - 30, y:screenSize.size.height/2, width:90.0, height:90.0))
         self.view.addSubview(self.loading)
         loading.indicatorColor = UIColor(hex: "34AADC")
@@ -67,7 +69,6 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleCall:", name: "handleCallNotification", object: nil)
         session = OTSession(apiKey: ApiKey, sessionId: SessionID, delegate: self)
         doConnect(Token)
-        playSoundCall()
         
         /**
         custom ui for off "MICRO" when publisher click
@@ -97,8 +98,8 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     }
     
     /**
-    main func handle call from patient
-    */
+     main func handle call from patient
+     */
     func handleCall(notification: NSNotification) {
         if notification.name == "handleCallNotification" {
             let userInfo : Dictionary<String, String!> = notification.userInfo as! Dictionary<String,String!>
@@ -123,8 +124,8 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     }
     
     /**
-    function controller for call
-    */
+     function controller for call
+     */
     func receiveAnswerEvent() {
         avAudioPlayer?.stop()
         titleLabelCall.text = "Connecting..."
@@ -158,7 +159,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             }
         }
         
-        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["TeleUID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
+        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["TeleUID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
     }
     
     func lostConnection() {
@@ -175,8 +176,8 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     }
     
     /**
-    spend for end call and back view controller
-    */
+     spend for end call and back view controller
+     */
     func endCall() {
         sessionDidDisconnect(session!)
         doUnsubscribe()
@@ -184,8 +185,8 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     }
     
     /**
-    function for action controller button call
-    */
+     function for action controller button call
+     */
     @IBAction func actionControllerButton(sender: UIButton) {
         
         switch sender.tag {
@@ -208,9 +209,9 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         case 1: // ---end call---
             isClickEnd = true
             if isAnswer {
-                SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["TeleUID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "end")])
+                SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["TeleUID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "end")])
             } else {
-                SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["TeleUID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "cancel")])
+                SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["TeleUID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "cancel")])
             }
             
             endCall()
@@ -245,8 +246,8 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     }
     
     /**
-    Logical call function
-    */
+     Logical call function
+     */
     func doConnect(tokenParam: String) {
         if let session = self.session {
             var maybeError : OTError?
@@ -257,10 +258,10 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         }
     }
     /**
-    * Sets up an instance of OTPublisher to use with this session. OTPubilsher
-    * binds to the device camera and microphone, and will provide A/V streams
-    * to the OpenTok session.
-    */
+     * Sets up an instance of OTPublisher to use with this session. OTPubilsher
+     * binds to the device camera and microphone, and will provide A/V streams
+     * to the OpenTok session.
+     */
     func doPublish() {
         publisher = OTPublisher(delegate: self)
         
@@ -275,8 +276,8 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         publisher!.view.frame = CGRect(x: 0.0, y: 0, width: screenSize.width, height: screenSize.height)
         
         /// Emit call patient
-        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["TeleUID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].UID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
-        
+        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["TeleUID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
+        playSoundCall()
         /**
         button controller call to publisherview
         */
@@ -313,11 +314,11 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     }
     
     /**
-    * Instantiates a subscriber for the given stream and asynchronously begins the
-    * process to begin receiving A/V content for this stream. Unlike doPublish,
-    * this method does not add the subscriber to the view hierarchy. Instead, we
-    * add the subscriber only after it has connected and begins receiving data.
-    */
+     * Instantiates a subscriber for the given stream and asynchronously begins the
+     * process to begin receiving A/V content for this stream. Unlike doPublish,
+     * this method does not add the subscriber to the view hierarchy. Instead, we
+     * add the subscriber only after it has connected and begins receiving data.
+     */
     func doSubscribe(stream : OTStream) {
         if let session = self.session {
             subscriber = OTSubscriber(stream: stream, delegate: self)
@@ -330,8 +331,8 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     }
     
     /**
-    * Cleans the subscriber from the view hierarchy, if any.
-    */
+     * Cleans the subscriber from the view hierarchy, if any.
+     */
     func doUnsubscribe() {
         if let subscriber = self.subscriber {
             var maybeError : OTError?

@@ -14,6 +14,8 @@ class Appointment: UIViewController {
     
     @IBOutlet var label: [UILabel]!
     @IBOutlet var checkBoxBtn: [UIButton]!
+    @IBOutlet weak var waView: UIView!
+    @IBOutlet weak var teleView: UIView!
     
     var fullName: String!
     var fund: String!
@@ -21,16 +23,23 @@ class Appointment: UIViewController {
     var teleAppoint: JSON!
     var appointment: JSON!
     var appointTime: NSArray!
+    var preferredPractitioners: JSON!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(SingleTon.detailAppointMentObj)
         patient = SingleTon.detailAppointMentObj["Patients"][0]
         teleAppoint = SingleTon.detailAppointMentObj["TelehealthAppointment"]
         appointment = SingleTon.detailAppointMentObj
         
         fullName =  patient["FirstName"].stringValue + " " + patient["MiddleName"].stringValue + " " + patient["LastName"].stringValue
         fund = SingleTon.detailAppointMentObj["TelehealthAppointment"]["Fund"].stringValue
+        
+        if SingleTon.flagSegue == true {
+            teleView.hidden = false
+        } else {
+            preferredPractitioners = teleAppoint["PreferredPractitioners"][0]
+            waView.hidden = false
+        }
         
         loadData()
     }
@@ -43,9 +52,8 @@ class Appointment: UIViewController {
         }
         
         for aLabel: UILabel in self.label {
-
-            let titleLabel: String! = aLabel.text
             
+            let titleLabel: String! = aLabel.text
             for var i = 0; i < appointment.count; ++i {
                 switch aLabel.tag {
                 case 10:
@@ -61,9 +69,23 @@ class Appointment: UIViewController {
                 case 15:
                     aLabel.text = teleAppoint[titleLabel].stringValue
                 case 16:
-                    aLabel.text = teleAppoint[titleLabel].stringValue
+                    let refName = teleAppoint[titleLabel].stringValue.isEmpty ? teleAppoint["RefName"].stringValue : teleAppoint[titleLabel].stringValue
+                    aLabel.text =  refName
                 default:
                     aLabel.text = appointment[titleLabel].stringValue
+                }
+                
+                if SingleTon.flagSegue == false {
+                    switch aLabel.tag {
+                    case 17:
+                        aLabel.text = preferredPractitioners[titleLabel].stringValue
+                    case 18:
+                        aLabel.text = preferredPractitioners[titleLabel].stringValue
+                    case 19:
+                        aLabel.text = preferredPractitioners[titleLabel].stringValue
+                    default:
+                        break;
+                    }
                 }
                 
                 if aLabel.text != nil && !aLabel.text!.isEmpty {
@@ -107,7 +129,7 @@ class Appointment: UIViewController {
             }
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

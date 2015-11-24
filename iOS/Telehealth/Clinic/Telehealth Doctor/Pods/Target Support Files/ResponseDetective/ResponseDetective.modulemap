@@ -1,6 +1,0 @@
-framework module ResponseDetective {
-  umbrella header "ResponseDetective-umbrella.h"
-
-  export *
-  module * { export * }
-}

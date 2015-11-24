@@ -86,7 +86,6 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Telehealth Doctor/Alamofire.framework"
   install_framework "Pods-Telehealth Doctor/ReachabilitySwift.framework"
-  install_framework "Pods-Telehealth Doctor/ResponseDetective.framework"
   install_framework "Pods-Telehealth Doctor/Socket_IO_Client_Swift.framework"
   install_framework "Pods-Telehealth Doctor/Spring.framework"
   install_framework "Pods-Telehealth Doctor/SwiftyJSON.framework"
@@ -95,7 +94,6 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Telehealth Doctor/Alamofire.framework"
   install_framework "Pods-Telehealth Doctor/ReachabilitySwift.framework"
-  install_framework "Pods-Telehealth Doctor/ResponseDetective.framework"
   install_framework "Pods-Telehealth Doctor/Socket_IO_Client_Swift.framework"
   install_framework "Pods-Telehealth Doctor/Spring.framework"
   install_framework "Pods-Telehealth Doctor/SwiftyJSON.framework"

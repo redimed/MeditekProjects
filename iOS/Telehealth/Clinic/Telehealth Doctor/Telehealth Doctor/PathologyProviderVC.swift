@@ -7,29 +7,50 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class PathologyProviderVC: UIViewController {
 
+    var WAApt: JSON!
+    var cliniCalDetails: JSON!
+    @IBOutlet weak var txtView: UITextView!
+    @IBOutlet var lblCollect: [UILabel]!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        WAApt = SingleTon.detailAppointMentObj["TelehealthAppointment"]["WAAppointment"]
+        cliniCalDetails = SingleTon.detailAppointMentObj["TelehealthAppointment"]["ClinicalDetails"]
+        loadData()
+    }
+    
+    func loadData() {
+        for label in lblCollect {
+            let txtLbl = label.text!
+            
+            if let dataLbl: String = WAApt[txtLbl].stringValue {
+                label.text = dataLbl
+            }
+            
+            if label.text != nil && !label.text!.isEmpty {
+                let border = CALayer()
+                let width = CGFloat(1.0)
+                border.borderColor = UIColor.blackColor().CGColor
+                border.frame = CGRect(x: 0, y: label.frame.size.height - width, width:  label.frame.size.width, height: width)
+                border.borderWidth = 0.5
+                label.layer.addSublayer(border)
+                label.layer.masksToBounds = true
+            }
+        }
+        
+        for var i = 0; i < cliniCalDetails.count; ++i {
+            if cliniCalDetails[i]["Name"].stringValue == "OtherNotes" {
+                if let data: String = cliniCalDetails[i]["Value"].stringValue {
+                    txtView.text = data
+                }
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

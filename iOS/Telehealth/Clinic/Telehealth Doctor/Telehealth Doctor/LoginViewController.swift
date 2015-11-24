@@ -11,7 +11,6 @@ import Alamofire
 import Spring
 import SwiftyJSON
 import ReachabilitySwift
-import ResponseDetective
 
 class LoginViewController: UIViewController,UITextFieldDelegate {
     
@@ -143,13 +142,16 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     func LoginMain() {
+        
         let username : String = usernameTextField.text!
         let password : String = passwordTextField.text!
+        
         let paramester = ["username": username, "password": password]
         
         let headerLogin = [
-            "systemtype": "iOS",
-            "deviceId": (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String
+            "systemtype": "IOS",
+            "deviceId": (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String,
+            "appid": NSBundle.mainBundle().bundleIdentifier! as String
         ]
         
         request(.POST, AUTHORIZATION, parameters: paramester, headers: headerLogin)
@@ -157,56 +159,53 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             .validate(contentType: ["application/json"])
             .responseJSON { response -> Void in
                 self.loading.stopActivity(true)
-                //                print(response.2.debugDescription)
-                //                let splitFirst = response.2.debugDescription.componentsSeparatedByString("{")
-                //                let splitSecond = splitFirst[2].componentsSeparatedByString(",")
-                //                let splitThird = splitSecond[0].componentsSeparatedByString(":")
-                //                print(splitThird[1])
-                //                if splitThird[1] == " \"User.notFound\"" {
-                //                    print("User not found")
-                //                } else if splitThird[1] == " \"Password.Invalid\"" {
-                //                    print("Wrong pass")
-                //                }
+                
                 switch response.2 {
                 case .Success:
                     let userJSON = JSON(response.2.value!["user"] as! NSDictionary)
                     var user = [String: String]()
+                    
                     for (key, object) in userJSON {
                         user[key] = object.stringValue
                     }
-                    let token = response.2.value!["token"] as! String
-                    AUTHTOKEN = token
-                    self.userDefault.setObject(user, forKey: "infoDoctor")
-                    self.userDefault.setValue(token, forKey: "token")
                     
-                    SingleTon.headers = [
-                        "Authorization": "Bearer \(token)",
-                        "systemtype": "iOS",
-                        "deviceId": (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String,
-                        "useruid": userJSON["UID"].stringValue
-                    ]
+                    self.userDefault.setObject(user, forKey: "infoDoctor")
+                    self.userDefault.setValue("Bearer \(response.2.value!["token"] as! String)", forKey: "authToken")
+                    self.userDefault.setValue(response.2.value!["refreshCode"] as! String, forKey: "refCode")
+                    
+                    if let headerResponse = response.1?.allHeaderFields {
+                        if let jsonRes: JSON = JSON(headerResponse) {
+                            if let cookies: String = jsonRes["Set-Cookie"].stringValue {
+                                if !cookies.isEmpty {
+                                    self.userDefault.setValue(cookies, forKey: "Cookie")
+                                }
+                            }
+                        }
+                    }
                     
                     let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
                     self.presentViewController(initViewController, animated: true, completion: nil)
                     break
-                case .Failure(_, let error):
+                case .Failure(_, _):
                     self.logoImage.hidden = false
-                    if let codeErr: Int = response.1?.statusCode {
-                        switch codeErr{
-                        case 401:
-                            self.errorLogin("Username or password invalid")
-                            break;
-                        default:
-                            self.errorLogin("\((error as NSError).code) - \((error as NSError).localizedDescription)")
-                            break
-                        }
-                    } else {
-                        if let err : Int = (error as NSError).code {
-                            switch err {
-                            default:
-                                self.errorLogin("\((error as NSError).code) - \((error as NSError).localizedDescription)")
-                                break
+                    
+                    if let data = response.2.data {
+                        do {
+                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as! [String: AnyObject]
+                            if let errorType = json["ErrorType"] as? String {
+                                if let codeErr: Int = response.1?.statusCode {
+                                    switch codeErr{
+                                    case 401:
+                                        self.errorLogin("Username or password invalid")
+                                        break;
+                                    default:
+                                        self.errorLogin("\(errorType)")
+                                        break
+                                    }
+                                }
                             }
+                        } catch let error as NSError {
+                            print("Failed to load: \(error.localizedDescription)")
                         }
                     }
                 }
@@ -230,7 +229,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     func AlertWarningNetwork() {
-        JSSAlertView().warning(self, title: warning_Network.title, text: warning_Network.mess)
+        JSSAlertView().show(self, title: err_Mess_Network)
     }
     
     override func didReceiveMemoryWarning() {

@@ -9,30 +9,26 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-import ReachabilitySwift
 
 class AppointmentListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var refreshControl : UIRefreshControl!
     let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("infoDoctor") as! NSDictionary
-    let reachability = Reachability.reachabilityForInternetConnection()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        SingleTon.onlineUser_Singleton = []
         
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "reloadTable", object: nil)
+        SingleTon.onlineUser_Singleton.removeAll()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "reloadDataTable", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadTable:", name: "reloadDataTable", object: nil)
         
-        // list telehealth-appointment
-        if SingleTon.flagSegue == true {
+        if SingleTon.flagSegue == true { // list telehealth-appointment
             navigationItem.title = "TeleHealth Appointment"
             getAppointmentList(APPOINTMENTLIST_TeleHealth)
         }
-            // list WA-appointment
-        else {
+        else { // list WA-appointment
             navigationItem.title = "WA Appointment"
             getAppointmentList(APPOINTMENTLIST_WA)
         }
@@ -41,18 +37,17 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         self.refreshControl.attributedTitle = NSAttributedString(string: "Refresh Appointment List")
         self.refreshControl.addTarget(self, action: "emitOnlineUser:", forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(refreshControl)
+        
+        tableView.estimatedRowHeight = 60.0
+        tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    override func viewDidAppear(animated: Bool) {
+        tableView.reloadData()
     }
     
     override func viewWillAppear(animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: true)
         
-        request(.GET, GENERATESESSION, headers: SingleTon.headers).responseJSON() { response in
-            if let data = response.2.value {
-                if let readableJSON: NSDictionary = data["data"] as? NSDictionary {
-                    SingleTon.infoOpentok = JSON(readableJSON)
-                }
-            }
-        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,9 +59,15 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
      
      - parameter notification: notification name "reloadDataTable"
      */
-    func reloadTable(notification: NSNotification){
-        getAppointmentList(APPOINTMENTLIST_TeleHealth)
-        getAppointmentList(APPOINTMENTLIST_WA)
+    func reloadTable(notification: NSNotification) {
+        if notification.name.containsString("reloadDataTable") {
+            if SingleTon.flagSegue == true { // list telehealth-appointment
+                getAppointmentList(APPOINTMENTLIST_TeleHealth)
+            }
+            else { // list WA-appointment
+                getAppointmentList(APPOINTMENTLIST_WA)
+            }
+        }
     }
     
     func emitOnlineUser(sender: AnyObject) {
@@ -81,8 +82,14 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! AppointmentTableViewCell
         
+        guard let numberArrOnline: Int = SingleTon.onlineUser_Singleton.count where numberArrOnline > 0 else {
+            print("numberArrOnline not count value for singleton online user list")
+            self.tableView.reloadData()
+            return cell
+        }
+        
         let singletonOnlineUser = SingleTon.onlineUser_Singleton[indexPath.row]
-        cell.noRows.text = singletonOnlineUser.userId
+        cell.noRows.text = String(indexPath.row + 1)
         cell.callButton.tag = Int(indexPath.row)
         
         //        button view detail
@@ -94,12 +101,10 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
             cell.waAppointment.tag = Int(indexPath.row)
         }
         
-        
-        
         cell.patientName.text = singletonOnlineUser.fullNamePatient
-        cell.doctorName.text = singletonOnlineUser.fullNameDoctor
-        cell.submitDate.text = formatString(singletonOnlineUser.requestDateAppoinment)
-        cell.appoinmentDate.text = formatString(singletonOnlineUser.appoinmentDate)
+        cell.doctorName.text = singletonOnlineUser.fullNameDoctor.characters.count > 2 ? singletonOnlineUser.fullNameDoctor : "Unlink Treating Practitioner"
+        cell.submitDate.text = formatforList(singletonOnlineUser.requestDateAppoinment)
+        cell.appoinmentDate.text = formatforList(singletonOnlineUser.appoinmentDate)
         if let status = singletonOnlineUser.status {
             if status != 0 {
                 cell.callButton.enabled = true
@@ -113,21 +118,28 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "callAction" {
+        guard let identiSegue = segue.identifier else {
+            print("segue identify is empty")
+            return
+        }
+        switch identiSegue {
+        case "callAction":
             if let indexPath = sender!.tag {
                 let destinationController = segue.destinationViewController as! MakeCallViewController
                 destinationController.idOnlineUser = indexPath
             }
-        } else if segue.identifier == "TeleAppointment" {
+        case "TeleAppointment":
             if let indexPath = sender!.tag {
                 let destinationController = segue.destinationViewController as! DetailAppointmentVC
                 destinationController.uidUser = indexPath
             }
-        } else if segue.identifier == "WAAppointment" {
+        case "WAAppointment":
             if let indexPath = sender!.tag {
                 let destinationController = segue.destinationViewController as! DetailAppointmentVC
                 destinationController.uidUser = indexPath
             }
+        default:
+            return
         }
     }
     
@@ -136,36 +148,47 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func getAppointmentList(url: String) {
-        SingleTon.onlineUser_Singleton = []
-        print(SingleTon.headers["Authorization"])
         request(.GET, url, headers: SingleTon.headers)
-            .validate(statusCode: 200..<300)
-            .validate(contentType: ["application/json"])
             .responseJSONReToken { response in
                 
-                print(response.1)
-                print(response.2.value)
-//                if let data = response.2.value {
-//                    if let readJSON: JSON = JSON(data) {
-//                        for var i = 0; i < readJSON.count ; ++i {
-//                            let onlineObj : OnlineUsers = OnlineUsers(userId: "\(i+1)",
-//                                requestDateAppoinment: readJSON[i]["RequestDate"].stringValue,
-//                                appoinmentDate: readJSON[i]["FromTime"].stringValue,
-//                                UID: readJSON[i]["UID"].stringValue,
-//                                status: readJSON[i]["IsOnline"].intValue,
-//                                firstNameDoctor: readJSON[i]["Doctors"][0]["FirstName"].stringValue,
-//                                midleNameDoctor: readJSON[i]["Doctors"][0]["MiddleName"].stringValue,
-//                                lastNameDoctor: readJSON[i]["Doctors"][0]["LastName"].stringValue,
-//                                firstNamePatient: readJSON[i]["Patients"][0]["FirstName"].stringValue,
-//                                midleNamePatient: readJSON[i]["Patients"][0]["MiddleName"].stringValue,
-//                                lastNamePatient: readJSON[i]["Patients"][0]["LastName"].stringValue
-//                            )
-//                            
-//                            SingleTon.onlineUser_Singleton.append(onlineObj)
-//                        }
-//                        self.tableView.reloadData()
-//                    }
-//                }
+                guard response.2.error == nil else {
+                    if let data = response.2.data {
+                        JSSAlertView().warning(self, title: "Error", text: resJSONError(data))
+                    }
+                    print("error calling GET", response.2.error!)
+                    return
+                }
+                
+                if let value: AnyObject = response.2.value {
+                    let readableJSON = JSON(value)
+                    SingleTon.onlineUser_Singleton.removeAll()
+                    for var i = 0; i < readableJSON.count ; ++i {
+                        let onlineObj : OnlineUsers = OnlineUsers(userId: "\(i+1)",
+                            requestDateAppoinment: readableJSON[i]["RequestDate"].stringValue,
+                            appoinmentDate: readableJSON[i]["FromTime"].stringValue,
+                            UID: readableJSON[i]["UID"].stringValue,
+                            status: readableJSON[i]["IsOnline"].intValue,
+                            firstNameDoctor: readableJSON[i]["Doctors"][0]["FirstName"].stringValue,
+                            midleNameDoctor: readableJSON[i]["Doctors"][0]["MiddleName"].stringValue,
+                            lastNameDoctor: readableJSON[i]["Doctors"][0]["LastName"].stringValue,
+                            
+                            firstNamePatient: readableJSON[i]["Patients"][0]["FirstName"].stringValue.isEmpty ? readableJSON[i]["TelehealthAppointment"]["PatientAppointment"]["FirstName"].stringValue : readableJSON[i]["Patients"][0]["FirstName"].stringValue,
+                            midleNamePatient: readableJSON[i]["Patients"][0]["MiddleName"].stringValue.isEmpty ? readableJSON[i]["TelehealthAppointment"]["PatientAppointment"]["MiddleName"].stringValue : readableJSON[i]["Patients"][0]["MiddleName"].stringValue,
+                            lastNamePatient: readableJSON[i]["Patients"][0]["LastName"].stringValue.isEmpty ? readableJSON[i]["TelehealthAppointment"]["PatientAppointment"]["LastName"].stringValue : readableJSON[i]["Patients"][0]["LastName"].stringValue,
+                            
+                            TeleUID: readableJSON[i]["TeleUID"].stringValue
+                            //                            readableJSON[i]["Patients"][0]["MiddleName"].stringValue,
+                            //                            readableJSON[i]["Patients"][0]["LastName"].stringValue,
+                        )
+                        if readableJSON[i]["Status"] == "Received" {
+                            SingleTon.onlineUser_Singleton.append(onlineObj)
+                            self.tableView.reloadData()
+                            self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+                        }
+                    }
+                }
         }
     }
+    
 }
+

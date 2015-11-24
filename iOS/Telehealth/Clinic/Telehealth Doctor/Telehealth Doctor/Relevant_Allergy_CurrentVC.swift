@@ -7,29 +7,54 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class Relevant_Allergy_CurrentVC: UIViewController {
-
+    
+    var cliniCalDetails: JSON!
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var textViewMain: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        cliniCalDetails = SingleTon.detailAppointMentObj["TelehealthAppointment"]["ClinicalDetails"]
+        
+        let arrKey = ["MedicalHistory", "SocialFactors", "Allergies", "Medication", "InvestigationTests"]
+        
+        switch self.title! {
+        case "Relevant Past Medical History":
+            lblTitle.text = self.title!
+            loadData(arrKey[0])
+        case  "Relevant Social Factors":
+            lblTitle.text = self.title!
+            loadData(arrKey[1])
+        case  "Allegiers":
+            lblTitle.text = "Allergy"
+            loadData(arrKey[2])
+        case "Current Medication":
+            lblTitle.text = self.title!
+            loadData(arrKey[3])
+        case "Relevant Investigation & Test":
+            lblTitle.text = "Relevant Investigation and Tests (Please Attach Results)"
+            loadData(arrKey[4])
+        default:
+            break
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func loadData(key: String) {
+        for var i = 0; i < cliniCalDetails.count; ++i {
+            if let nameClinic: String = cliniCalDetails[i]["Name"].stringValue {
+                if nameClinic == key {
+                    textViewMain.text = cliniCalDetails[i]["Value"].stringValue
+                }
+            }
+        }
+        
     }
-    */
-
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
 }

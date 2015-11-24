@@ -17,7 +17,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var buttonLogin: DesignableButton!
-    @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var lockImage: UIImageView!
     @IBOutlet weak var doctorImage: UIImageView!
     @IBOutlet weak var viewModal: DesignableView!
@@ -31,11 +30,11 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     let loading: DTIActivityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:210.0, y:65.0, width:80.0, height:80.0))
     let userDefault = NSUserDefaults.standardUserDefaults()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         customUIViewController.TextFieldLogin(usernameTextField, active: false, imageTextField: doctorImage)
         customUIViewController.TextFieldLogin(passwordTextField, active: false, imageTextField: lockImage)
-        customUIViewController.BlurLayer(backgroundImage)
         usernameTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         passwordTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         viewModal.layer.cornerRadius = 15
@@ -59,7 +58,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "AlertWarningNetwork", userInfo: nil, repeats: false)
             }
         }
-        
         versionLabel.text = UIApplication.versionBuild()
     }
     
@@ -144,12 +142,16 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     func LoginMain() {
+        
         let username : String = usernameTextField.text!
         let password : String = passwordTextField.text!
+        
         let paramester = ["username": username, "password": password]
+        
         let headerLogin = [
-            "DeviceType": "iOS",
-            "DeviceID": (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String
+            "systemtype": "IOS",
+            "deviceId": (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String,
+            "appid": NSBundle.mainBundle().bundleIdentifier! as String
         ]
         
         request(.POST, AUTHORIZATION, parameters: paramester, headers: headerLogin)
@@ -157,62 +159,53 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             .validate(contentType: ["application/json"])
             .responseJSON { response -> Void in
                 self.loading.stopActivity(true)
-                self.logoImage.hidden = false
-                
-                //                print(response.2.debugDescription)
-                //                let splitFirst = response.2.debugDescription.componentsSeparatedByString("{")
-                //                let splitSecond = splitFirst[2].componentsSeparatedByString(",")
-                //                let splitThird = splitSecond[0].componentsSeparatedByString(":")
-                //                print(splitThird[1])
-                //                if splitThird[1] == " \"User.notFound\"" {
-                //                    print("User not found")
-                //                } else if splitThird[1] == " \"Password.Invalid\"" {
-                //                    print("Wrong pass")
-                //                }
                 
                 switch response.2 {
                 case .Success:
                     let userJSON = JSON(response.2.value!["user"] as! NSDictionary)
                     var user = [String: String]()
+                    
                     for (key, object) in userJSON {
                         user[key] = object.stringValue
                     }
-                    let token = response.2.value!["token"] as! String
-                    let coreToken = response.2.value!["coreToken"] as! String
-                    AUTHTOKEN = token
-                    COREAUTH = coreToken
-                    self.userDefault.setObject(user, forKey: "infoDoctor")
-                    self.userDefault.setValue(token, forKey: "token")
                     
-                    SingleTon.headers = [
-                        "Authorization": "Bearer \(token)",
-                        "Content-Type": "application/x-www-form-urlencoded",
-                        "CoreAuth": "Bearer \(coreToken)",
-                        "DeviceType": "iOS",
-                        "DeviceID": (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String,
-                        "UserUID": userJSON["UserUID"].stringValue
-                    ]
+                    self.userDefault.setObject(user, forKey: "infoDoctor")
+                    self.userDefault.setValue("Bearer \(response.2.value!["token"] as! String)", forKey: "authToken")
+                    self.userDefault.setValue(response.2.value!["refreshCode"] as! String, forKey: "refCode")
+                    
+                    if let headerResponse = response.1?.allHeaderFields {
+                        if let jsonRes: JSON = JSON(headerResponse) {
+                            if let cookies: String = jsonRes["Set-Cookie"].stringValue {
+                                if !cookies.isEmpty {
+                                    self.userDefault.setValue(cookies, forKey: "Cookie")
+                                }
+                            }
+                        }
+                    }
                     
                     let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
                     self.presentViewController(initViewController, animated: true, completion: nil)
                     break
-                case .Failure(_, let error):
-                    if let codeErr: Int = response.1?.statusCode {
-                        switch codeErr{
-                        case 401:
-                            self.errorLogin("Username or password invalid")
-                            break;
-                        default:
-                            self.errorLogin("\((error as NSError).code) - \((error as NSError).localizedDescription)")
-                            break
-                        }
-                    } else {
-                        if let err : Int = (error as NSError).code {
-                            switch err {
-                            default:
-                                self.errorLogin("\((error as NSError).code) - \((error as NSError).localizedDescription)")
-                                break
+                case .Failure(_, _):
+                    self.logoImage.hidden = false
+                    
+                    if let data = response.2.data {
+                        do {
+                            let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as! [String: AnyObject]
+                            if let errorType = json["ErrorType"] as? String {
+                                if let codeErr: Int = response.1?.statusCode {
+                                    switch codeErr{
+                                    case 401:
+                                        self.errorLogin("Username or password invalid")
+                                        break;
+                                    default:
+                                        self.errorLogin("\(errorType)")
+                                        break
+                                    }
+                                }
                             }
+                        } catch let error as NSError {
+                            print("Failed to load: \(error.localizedDescription)")
                         }
                     }
                 }
@@ -231,10 +224,12 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         self.passwordTextField.text = ""
         self.buttonLogin.enabled = false
         self.buttonLogin.backgroundColor = UIColor(hex: "003366").colorWithAlphaComponent(0.6)
+        print(message)
+        
     }
     
     func AlertWarningNetwork() {
-        JSSAlertView().warning(self, title: warning_Network.title, text: warning_Network.mess)
+        JSSAlertView().show(self, title: err_Mess_Network)
     }
     
     override func didReceiveMemoryWarning() {
@@ -242,6 +237,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
 }
+
 
 extension UIApplication {
     
@@ -256,6 +252,6 @@ extension UIApplication {
     class func versionBuild() -> String {
         let version = appVersion(), build = appBuild()
         
-        return version == build ? "v\(version)" : "v\(version)(\(build))"
+        return version == build ? "© REDIMED 2015 Clinic App v\(version)" : "© REDIMED 2015 Clinic App v\(version)(\(build))"
     }
 }

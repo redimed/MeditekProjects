@@ -14,36 +14,33 @@ import ReachabilitySwift
 
 class LoginViewController: UIViewController,UITextFieldDelegate {
     
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var usernameTextField: DesignableTextField!
+    @IBOutlet weak var passwordTextField: DesignableTextField!
     @IBOutlet weak var buttonLogin: DesignableButton!
-    @IBOutlet weak var lockImage: UIImageView!
-    @IBOutlet weak var doctorImage: UIImageView!
     @IBOutlet weak var viewModal: DesignableView!
-    @IBOutlet weak var logoImage: UIImageView!
     @IBOutlet weak var errorLoginLabel: UILabel!
     @IBOutlet weak var versionLabel: UILabel!
     
     let customUIViewController : CustomViewController = CustomViewController()
     let reachability = Reachability.reachabilityForInternetConnection()
     // declare loading indicator
-    let loading: DTIActivityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:210.0, y:65.0, width:80.0, height:80.0))
+    let loading: DTIActivityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:110.0, y:200, width:90, height:25))
     let userDefault = NSUserDefaults.standardUserDefaults()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        customUIViewController.TextFieldLogin(usernameTextField, active: false, imageTextField: doctorImage)
-        customUIViewController.TextFieldLogin(passwordTextField, active: false, imageTextField: lockImage)
+        
         usernameTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         passwordTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
-        viewModal.layer.cornerRadius = 15
+        buttonLogin.backgroundColor = UIColor(hex: "FF1300").colorWithAlphaComponent(0.6)
+        
         viewModal.animation = "squeezeDown"
         viewModal.animate()
         
         self.usernameTextField.delegate = self
         self.passwordTextField.delegate = self
-        self.usernameTextField.becomeFirstResponder()
+//        self.usernameTextField.becomeFirstResponder()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:", name: ReachabilityChangedNotification, object: reachability)
         reachability?.startNotifier()
@@ -59,6 +56,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             }
         }
         versionLabel.text = UIApplication.versionBuild()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
     }
     
     func reachabilityChanged(note: NSNotification) {
@@ -91,39 +91,29 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func textFieldEditingChange(sender: AnyObject) {
+        errorLoginLabel.text = ""
         if(!usernameTextField.text!.isEmpty && !passwordTextField.text!.isEmpty){
             buttonLogin.enabled = true
-            buttonLogin.backgroundColor = UIColor(hex: "003366").colorWithAlphaComponent(1)
+            buttonLogin.backgroundColor = UIColor(hex: "FF1300").colorWithAlphaComponent(1)
         } else {
             buttonLogin.enabled = false
-            buttonLogin.backgroundColor = UIColor(hex: "003366").colorWithAlphaComponent(0.6)
+            buttonLogin.backgroundColor = UIColor(hex: "FF1300").colorWithAlphaComponent(0.6)
         }
     }
     
-    @IBAction func textFieldEditingDidBegin(sender: AnyObject) {
-        errorLoginLabel.text = ""
-        if(sender.tag == 1) {
-            customUIViewController.TextFieldLogin(usernameTextField, active: true, imageTextField: doctorImage)
-        } else {
-            customUIViewController.TextFieldLogin(passwordTextField, active: true, imageTextField: lockImage)
-        }
+    func keyboardDidShow(notification: NSNotification) {
+        self.viewModal.frame.origin.y -= 100
     }
     
-    @IBAction func textFieldEditingDidEnd(sender: AnyObject) {
-        if(sender.tag == 1) {
-            customUIViewController.TextFieldLogin(usernameTextField, active: false, imageTextField: doctorImage)
-        } else {
-            customUIViewController.TextFieldLogin(passwordTextField, active: false, imageTextField: lockImage)
-        }
+    func keyboardDidHide(notification: NSNotification) {
+        self.viewModal.frame.origin.y = 215
     }
-    
     
     @IBAction func LoginButtonAction(sender: UIButton) {
         self.buttonLogin.enabled = false
-        self.buttonLogin.backgroundColor = UIColor(hex: "003366").colorWithAlphaComponent(0.6)
+        self.buttonLogin.backgroundColor = UIColor(hex: "FF1300").colorWithAlphaComponent(0.6)
         usernameTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
-        logoImage.hidden = true
         self.viewModal.addSubview(self.loading)
         loading.indicatorColor = UIColor(hex: "34AADC")
         loading.indicatorStyle = DTIIndicatorStyle.convInv(.spotify)
@@ -135,7 +125,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             } else {
                 AlertWarningNetwork()
                 self.loading.stopActivity(true)
-                self.logoImage.hidden = false
                 self.buttonLogin.enabled = true
             }
         }
@@ -187,7 +176,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     self.presentViewController(initViewController, animated: true, completion: nil)
                     break
                 case .Failure(_, _):
-                    self.logoImage.hidden = false
                     
                     if let data = response.2.data {
                         do {
@@ -223,9 +211,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         self.errorLoginLabel.text = message
         self.passwordTextField.text = ""
         self.buttonLogin.enabled = false
-        self.buttonLogin.backgroundColor = UIColor(hex: "003366").colorWithAlphaComponent(0.6)
-        print(message)
-        
+        self.buttonLogin.backgroundColor = UIColor(hex: "FF1300").colorWithAlphaComponent(0.6)
     }
     
     func AlertWarningNetwork() {

@@ -212,7 +212,32 @@ angular.module("app.common.CommonService", [])
             }];
             return list
         }
+        commonService.getModulesForUser = function() {
+            var result = api.one("module/GetModulesForUser");
+            return result.get();
+        }
 
+        commonService.RegExpMobilePhone = function(MobilePhone) {
+            var auMobilePhone = new RegExp(/^(\+61|0061|0)?4[0-9]{8}$/);
+            if (!auMobilePhone.test(MobilePhone)) {
+               return false
+            }
+            return true
+        }
+        commonService.RegExpHomePhone= function(HomPhone) {
+            var auHomPhone = new RegExp(/^[0-9]{6,10}$/);
+            if (!auHomPhone.test(HomPhone)) {
+               return false
+            }
+            return true
+        }
+        commonService.RegExpWorkPhone= function(WorkPhone) {
+            var auWorkPhone = new RegExp(/^[*#-_0-9]{6,20}$/);
+            if (!auWorkPhone.test(WorkPhone)) {
+              return false
+             }
+             return true
+        }
         commonService.GetNamDoctor = function() {
             var list = [{
                 Name: "First Surgeon Available",

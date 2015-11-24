@@ -1,8 +1,8 @@
 angular.module('app.authentication.doctor.profile.controller', [])
 
-app.controller('doctorProfileCtrl', function($scope, $modal){
+app.controller('doctorProfileCtrl', function($scope, $uibModal){
 	$scope.changePassword = function(){
-		var modalInstance = $modal.open({
+		var modalInstance = $uibModal.open({
 			animation: true,
 			templateUrl:'modules/doctor/views/doctorModalChangePassword.html',
 			controller: 'doctorModalChangePasswordCtrl',

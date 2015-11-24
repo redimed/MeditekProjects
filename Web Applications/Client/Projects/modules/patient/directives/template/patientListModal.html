@@ -33,7 +33,7 @@
 															</div>
 															<div class="fileinput-preview fileinput-exists thumbnail" style="max-width:350px;" ng-show="uploader.queue.length!=0" >
 															</div>
-															<img dimage dimage-uid="info.img" dimage-size="'300'" ng-show="uploader.queue.length==0 && info.img">
+															<div class="thumbnail" ng-show="uploader.queue.length==0 && info.img"><img dimage dimage-uid="info.img" dimage-size="'300'" ng-show="uploader.queue.length==0 && info.img"></div>
 															<div>
 																<span class="btn green btn-file" ng-if="isShowFull==true">
 																	<span class="fileinput-new">
@@ -50,8 +50,7 @@
 												<!-- end avatar -->
 											</div>
 											<div class="col-md-4" id="columm2" ng-if="listShow.columm2">
-												<h4><b>Person Information</b></h4>
-												<hr>
+												<h4 class="form-section bold">Person Information</h4>
 												<!-- begin title -->
 									            <div class="form-group">
 									            	<label class="control-label col-md-4">Title</label>
@@ -82,8 +81,11 @@
 												<div class="form-group">
 													<label class="control-label col-md-4">Date of Birth</label>
 													<div class="col-md-8">
-														<input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB=''" / readonly>
-														<span style="color:red;">{{ermsg.DOB}}</span>
+														<div class="input-icon">
+															<i class="glyphicon glyphicon-calendar"></i>
+															<input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB=''" />
+															<span style="color:red;">{{ermsg.DOB}}</span>
+														</div>
 													</div>
 												</div>
 												<!-- end Date of Birth -->
@@ -106,62 +108,105 @@
 												<!-- end Occupation -->
 											</div>
 											<div class="col-md-4" id="columm3" ng-if="listShow.columm3">
-												<h4><b>Contact Information</b></h4>
-												<hr>
+												<h4 class="form-section bold">Contact Information</b></h4>
 												<!-- Email -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Email</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Email" ng-disabled="true" ng-model="info.Email1"></div>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="glyphicon glyphicon-envelope"></i>
+															<input type="text" class="form-control" placeholder="Email" ng-disabled="true" ng-model="info.Email1">
+														</div>
+													</div>
 												</div>
 												<!-- end Email -->
 												<!-- Home Phone -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Home Phone</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')"><span style="color:red;">{{ermsg.HomePhoneNumber}}</span></div>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="glyphicon glyphicon-phone-alt"></i>
+															<input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')"><span style="color:red;">{{ermsg.HomePhoneNumber}}</span>
+														</div>
+													</div>
 												</div>
 												<!-- end Home Phone -->
 												<!-- Mobile Phone -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Mobile Phone</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Mobile Phone" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber"></div>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="glyphicon glyphicon-phone"></i>
+															<input type="text" class="form-control" placeholder="Mobile Phone" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber">
+														</div>
+													</div>
 												</div>
 												<!-- end Mobile Phone -->
 												<!-- Address1 -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Address1</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address1" ng-model="info.Address1" ng-style="er.Address1"ng-change="ermsg.Address1='';checkDataNull('Address1')" ><span style="color:red;">{{ermsg.Address1}}</span></div>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="glyphicon glyphicon-road"></i>
+															<input type="text" class="form-control" placeholder="Address1" ng-model="info.Address1" ng-style="er.Address1"ng-change="ermsg.Address1='';checkDataNull('Address1')" ><span style="color:red;">{{ermsg.Address1}}</span>
+														</div>
+													</div>
 												</div>
 												<!-- end Address1 -->
 												<!-- Address2 -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Address2</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Address2" ng-model="info.Address2" ng-style="er.Address2"ng-change="ermsg.Address2='';checkDataNull('Address2')" ><span style="color:red;">{{ermsg.Address2}}</span></div>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="glyphicon glyphicon-road"></i>
+															<input type="text" class="form-control" placeholder="Address2" ng-model="info.Address2" ng-style="er.Address2"ng-change="ermsg.Address2='';checkDataNull('Address2')" ><span style="color:red;">{{ermsg.Address2}}</span>
+														</div>
+													</div>
 												</div>
 												<!-- end Address2 -->
 												<!-- Suburb -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Suburb</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Suburb" ng-model="info.Suburb" ng-style="er.Suburb"ng-change="ermsg.Suburb='';checkDataNull('Suburb')" ><span style="color:red;">{{ermsg.Suburb}}</span></div>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="glyphicon glyphicon-tree-conifer"></i>
+															<input type="text" class="form-control" placeholder="Suburb" ng-model="info.Suburb" ng-style="er.Suburb"ng-change="ermsg.Suburb='';checkDataNull('Suburb')" ><span style="color:red;">{{ermsg.Suburb}}</span>
+														</div>
+													</div>
 												</div>
 												<!-- end Surburb -->
 												<!-- Postcode -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Postcode</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Postcode" ng-model="info.Postcode" ng-style="er.Postcode"ng-change="ermsg.Postcode='';checkDataNull('Postcode')" ><span style="color:red;">{{ermsg.Postcode}}</span></div>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="glyphicon glyphicon-map-marker"></i>
+															<input type="text" class="form-control" placeholder="Postcode" ng-model="info.Postcode" ng-style="er.Postcode"ng-change="ermsg.Postcode='';checkDataNull('Postcode')" ><span style="color:red;">{{ermsg.Postcode}}</span>
+														</div>
+													</div>
 												</div>
 												<!-- end Postcode -->
 												<!-- State -->
 												<div class="form-group">
 													<label class="control-label col-md-4">State</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="State" ng-model="info.State" ng-style="er.State"ng-change="ermsg.State='';checkDataNull('State')" ><span style="color:red;">{{ermsg.State}}</span></div>
+													<div class="col-md-8">
+														<div class="input-icon">
+															<i class="glyphicon glyphicon-globe"></i>
+															<select class="form-control" ng-model="info.State"ng-options="s.code as s.name for s in state" ng-style="er.State" ng-change="ermsg.State=''" >
+															</select><span style="color:red;">{{ermsg.State}}</span>
+														</div>
+													</div>
 												</div>
 												<!-- end Postcode -->
 												<!-- Country -->
 												<div class="form-group">
 													<label class="control-label col-md-4">Country</label>
 													<div class="col-md-8">
-														<select class="form-control" ng-model="info.CountryID1" ng-options="c.ID as c.ShortName for c in countries">
-														</select>
+														<div class="input-icon">
+															<i class="fa fa-flag"></i>
+															<select class="form-control" ng-model="info.CountryID1" ng-options="c.ID as c.ShortName for c in countries">
+															</select>
+														</div>
 													</div>
 												</div>
 												<!-- end Country -->

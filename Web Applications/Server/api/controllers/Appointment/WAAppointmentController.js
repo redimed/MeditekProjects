@@ -17,10 +17,13 @@ module.exports = {
                 })
                 .catch(function(err) {
                     if (HelperService.CheckExistData(err) &&
-                        HelperService.CheckExistData(err.transaction)) {
+                        HelperService.CheckExistData(err.transaction) &&
+                        HelperService.CheckExistData(err.error)) {
                         err.transaction.rollback();
+                        res.serverError(ErrorWrap(err.error));
+                    } else {
+                        res.serverError(ErrorWrap(err));
                     }
-                    res.serverError(ErrorWrap(err.error));
                 });
         }
     },
@@ -36,24 +39,27 @@ module.exports = {
             res.serverError('data failed');
         } else {
             //filter WAAppointment
-            if (!HelperService.CheckExistData(data.Filter)) {
-                data.Filter = [];
-            }
-            data.Filter.push({
-                "TelehealthAppointment": {
-                    "Type": "WAA"
-                }
-            });
+            // if (!HelperService.CheckExistData(data.Filter)) {
+            //     data.Filter = [];
+            // }
+            // data.Filter.push({
+            //     "TelehealthAppointment": {
+            //         "Type": "WAA"
+            //     }
+            // });
             Services.GetListAppointment(data, req.user)
                 .then(function(success) {
                     res.ok(success.data);
                 })
                 .catch(function(err) {
-                    if (HelperService.CheckPostRequest(err) &&
-                        HelperService.CheckPostRequest(err.transaction)) {
+                    if (HelperService.CheckExistData(err) &&
+                        HelperService.CheckExistData(err.transaction) &&
+                        HelperService.CheckExistData(err.error)) {
                         err.transaction.rollback();
+                        res.serverError(ErrorWrap(err.error));
+                    } else {
+                        res.serverError(ErrorWrap(err));
                     }
-                    res.serverError(ErrorWrap(err));
                 });
         }
     },
@@ -70,11 +76,14 @@ module.exports = {
                 res.ok(success);
             })
             .catch(function(err) {
-                if (HelperService.CheckPostRequest(err) &&
-                    HelperService.CheckPostRequest(err.transaction)) {
+                if (HelperService.CheckExistData(err) &&
+                    HelperService.CheckExistData(err.transaction) &&
+                    HelperService.CheckExistData(err.error)) {
                     err.transaction.rollback();
+                    res.serverError(ErrorWrap(err.error));
+                } else {
+                    res.serverError(ErrorWrap(err));
                 }
-                res.serverError(ErrorWrap(err));
             });
     },
     /*
@@ -98,11 +107,14 @@ module.exports = {
                         res.ok('success');
                     })
                     .catch(function(err) {
-                        if (HelperService.CheckPostRequest(err) &&
-                            HelperService.CheckPostRequest(err.transaction)) {
+                        if (HelperService.CheckExistData(err) &&
+                            HelperService.CheckExistData(err.transaction) &&
+                            HelperService.CheckExistData(err.error)) {
                             err.transaction.rollback();
+                            res.serverError(ErrorWrap(err.error));
+                        } else {
+                            res.serverError(ErrorWrap(err));
                         }
-                        res.serverError(ErrorWrap(err.error));
                     });
             } else {
                 res.serverError('failed');
@@ -127,11 +139,14 @@ module.exports = {
                     res.ok('success');
                 })
                 .catch(function(err) {
-                    if (HelperService.CheckPostRequest(err) &&
-                        HelperService.CheckPostRequest(err.transaction)) {
+                    if (HelperService.CheckExistData(err) &&
+                        HelperService.CheckExistData(err.transaction) &&
+                        HelperService.CheckExistData(err.error)) {
                         err.transaction.rollback();
+                        res.serverError(ErrorWrap(err.error));
+                    } else {
+                        res.serverError(ErrorWrap(err));
                     }
-                    res.serverError(ErrorWrap(err));
                 });
         }
     }

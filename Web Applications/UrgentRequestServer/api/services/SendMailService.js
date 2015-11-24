@@ -11,8 +11,8 @@ if (isTestApp) {
         secure: false,
         port: 25,
         auth: {
-            user: "programmer2",
-            pass: "Hello8080"
+            user: "onlinebooking",
+            pass: "P@ssw0rd!"
         },
         tls: {
             rejectUnauthorized: false

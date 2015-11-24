@@ -129,8 +129,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(department, options, callback) {
-                department.ModifiedDate = new Date();
+            beforeBulkUpdate: function(department, callback) {
+                department.fields.push('ModifiedDate');
+                department.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

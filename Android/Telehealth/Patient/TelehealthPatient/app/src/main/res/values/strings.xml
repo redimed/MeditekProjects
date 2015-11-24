@@ -85,9 +85,11 @@
     <string name="drawer_close">Close</string>
 
     <!-- Home Layout-->
+    <string name="home_title">Home</string>
     <string name="green_btn">Profile</string>
     <string name="blue_btn">Tracking Referrals</string>
     <string name="red_btn">Call Us 8AM-5PM</string>
+    <string name="phone_call">0892300900</string>
     <string name="orange_btn">FAQs</string>
     <string name="urgent_btn">URGENT CARE</string>
     <string name="contain_bottom1">Personalised + Customised,</string>
@@ -96,12 +98,10 @@
     <string name="contain_bottom2">anywhere</string>
 
     <!-- Appointment Layout-->
-    <string name="lbl_from_time">From Time</string>
-    <string name="lbl_to_time">To Time</string>
-    <string name="lbl_status">Status</string>
+    <string name="lbl_date">Date</string>
+    <string name="lbl_time">Time</string>
     <string name="lbl_doctor">Doctor</string>
-    <string name="lbl_email">Email</string>
-    <string name="lbl_work">Work Phone</string>
+    <string name="lbl_status">Status</string>
     <string name="lbl_image">Image</string>
     <string name="btn_upload">Upload</string>
 
@@ -114,5 +114,30 @@
 
     <!-- List Appointment-->
     <string name="no_data_result">No Data Result</string>
+    <string name="ref_no">Referral No</string>
+    <string name="ref_pra">Referring Practitioner</string>
+    <string name="pre_pra">Preferred Practitioner</string>
 
+    <!-- Profile Layout-->
+    <string name="profile_title">PROFILE</string>
+    <string name="profile_type">PATIENT</string>
+    <string name="profile_dob">Date of Birth</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_home_phone">Home Phone</string>
+    <string name="profile_address">Address</string>
+    <string name="profile_suburb">Suburb</string>
+    <string name="profile_post_code">Post Code</string>
+    <string name="profile_country">Country</string>
+    <string name="none">NONE</string>
+
+    <!-- Sub Tracking Layout-->
+    <string name="sub_tracking_received">Received</string>
+    <string name="sub_tracking_appt_pending">&#160;&#160;&#160;Appt&#x000A;pending</string>
+    <string name="sub_tracking_appt_time">Appt&#x000A;time</string>
+    <string name="sub_tracking_attend">Attended</string>
+    <string name="sub_tracking_wait">&#160;&#160;&#160;Wait&#x000A;&#160;&#160;&#160;&#160;&#160;list&#x000A;&#160;surgery</string>
+    <string name="sub_tracking_finish">Finish</string>
+    <string name="sub_appointment">Appointment</string>
+
+    <!-- Notification-->
 </resources>

@@ -45,6 +45,16 @@ module.exports = {
                 }
             }
         },
+        AppID: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
         SecretKey: {
             type: Sequelize.STRING(255),
             allowNull: true,
@@ -71,6 +81,15 @@ module.exports = {
 
                 isInt: {
                     msg: 'Must be an integer!'
+                }
+            }
+        },
+        MaxExpiredDate: {
+            type: Sequelize.DATE,
+            allowNull: true,
+            validate: {
+                isDate: {
+                    msg: 'Invalid!'
                 }
             }
         },

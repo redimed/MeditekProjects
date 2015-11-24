@@ -19,7 +19,6 @@ module.exports = {
                 return;
             }
         }
-
         //get client's IP
         data.ip = req.headers['X-Client-IP'] ||
             req.headers['X-Forwarded-For'] ||
@@ -41,7 +40,7 @@ module.exports = {
                 phoneNumber: data.phoneNumber,
                 gender: data.gender,
                 email: data.email,
-                DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB)) ? data.DOB : null,
+                DOB: (HelperService.CheckExistData(data.DOB)) ? data.DOB : null,
                 suburb: data.suburb,
                 IP: data.ip,
                 requestDate: data.requestDate,
@@ -53,8 +52,11 @@ module.exports = {
                 physiotherapy: data.physiotherapy,
                 specialist: data.specialist,
                 handTherapy: data.handTherapy,
+                exerciseRehab: data.exerciseRehab,
                 GP: data.GP,
                 rehab: data.rehab,
+                specialistType: data.specialistType,
+                treatment: data.treatment,
                 tried: 1,
                 status: 'pending',
                 interval: 5,
@@ -64,29 +66,34 @@ module.exports = {
             .then(function(URCreated) {
                 //convert service type and gp referral
                 var GPReferral = Services.ConvertData.GPReferral(data.GPReferral);
-                var serviceType = Services.ConvertData.ServiceType(data);
-                var subjectEmail = '[Testing] - [' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
+                var serviceType = Services.ConvertData.ServiceType(data, data.urgentRequestType === 'WorkInjury');
+                var treatmentType = Services.ConvertData.TreatmentType(data);
+                var subjectEmail = '[' + data.urgentRequestType + '] - [' + Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                     '] - [' + data.firstName + ' ' +
                     data.lastName + '] - [' + data.phoneNumber + ']';
                 var emailInfo = {
-                    from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
-                    email: 'HealthScreenings@redimed.com.au',
-                    patientEmail: (!_.isUndefined(data.email) && !_.isNull(data.email)) ? data.email : '',
+                    from: 'Redimed UrgentCare <onlinebooking@redimed.com.au>',
+                    email: 'onlinebooking@redimed.com.au',
+                    patientEmail: (HelperService.CheckExistData(data.email) && data.email.length !== 0) ? data.email : '(None)',
                     subject: subjectEmail,
                     confirmed: APIService.UrgentCareConfirmURL + '/' + data.UID,
-                    urgentRequestType: data.urgentRequestType || '',
+                    urgentRequestType: (HelperService.CheckExistData(data.urgentRequestType) && data.urgentRequestType.length !== 0) ? data.urgentRequestType : '(None)',
                     patientName: data.firstName + ' ' + data.lastName,
                     requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                     phoneNumber: data.phoneNumber,
-                    suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb)) ? data.suburb : '',
-                    DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB)) ? data.DOB : '',
+                    suburb: (HelperService.CheckExistData(data.suburb) && data.suburb.length !== 0) ? data.suburb : '(None)',
+                    DOB: (HelperService.CheckExistData(data.DOB) && data.DOB.length !== 0) ? data.DOB : '(None)',
                     GPReferral: GPReferral,
                     serviceType: serviceType,
-                    description: (!_.isUndefined(data.description) && !_.isNull(data.description)) ? data.description : '',
-                    companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName)) ? data.companyName : '',
-                    contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson)) ? data.contactPerson : '',
-                    companyPhoneNumber: (!_.isUndefined(data.companyPhoneNumber) && !_.isNull(data.companyPhoneNumber)) ? data.companyPhoneNumber : '',
-                    bcc: 'pnguyen@redimed.com.au, meditekcompany@gmail.com'
+                    specialist: data.specialist,
+                    specialistType: (HelperService.CheckExistData(data.specialistType) && data.specialistType.length !== 0) ? data.specialistType : '(None)',
+                    treatment: data.treatment,
+                    treatmentType: treatmentType,
+                    description: (HelperService.CheckExistData(data.description) && data.description.length !== 0) ? data.description : '(None)',
+                    companyName: (HelperService.CheckExistData(data.companyName) && data.companyName.length !== 0) ? data.companyName : '(None)',
+                    contactPerson: (HelperService.CheckExistData(data.contactPerson) && data.contactPerson.length !== 0) ? data.contactPerson : '(None)',
+                    companyPhoneNumber: (HelperService.CheckExistData(data.companyPhoneNumber) && data.companyPhoneNumber.length !== 0) ? data.companyPhoneNumber : '(None)',
+                    bcc: 'meditekcompany@gmail.com, pnguyen@redimed.com.au'
                 };
 
                 /*
@@ -98,9 +105,7 @@ module.exports = {
                     if (err) {
                         console.log(err);
                     } else {
-                        if (!_.isUndefined(data.email) &&
-                            !_.isNull(data.email) &&
-                            data.email.length !== 0) {
+                        if (HelperService.CheckExistData(data.email)) {
                             var CallBackSendMailPatient = function(err, responseStatus, html, text) {
                                 if (err) {
                                     console.log(err);
@@ -108,21 +113,25 @@ module.exports = {
                             };
                             //send email and sms to customer
                             var emailInfoPatient = {
-                                from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
+                                from: 'Redimed UrgentCare <onlinebooking@redimed.com.au>',
                                 email: data.email.toLowerCase(),
                                 subject: 'Request Received',
-                                urgentRequestType: data.urgentRequestType || '',
+                                urgentRequestType: (HelperService.CheckExistData(data.urgentRequestType) && data.urgentRequestType.length !== 0) ? data.urgentRequestType : '(None)',
                                 patientName: data.firstName + ' ' + data.lastName,
                                 requestDate: Services.moment(data.requestDate).format('DD/MM/YYYY HH:mm:ss'),
                                 phoneNumber: data.phoneNumber,
-                                suburb: (!_.isUndefined(data.suburb) && !_.isNull(data.suburb)) ? data.suburb : '',
-                                DOB: (!_.isUndefined(data.DOB) && !_.isNull(data.DOB)) ? data.DOB : '',
+                                suburb: (HelperService.CheckExistData(data.suburb) && data.suburb.length !== 0) ? data.suburb : '(None)',
+                                DOB: (HelperService.CheckExistData(data.DOB) && data.DOB.length !== 0) ? data.DOB : '(None)',
                                 GPReferral: GPReferral,
                                 serviceType: serviceType,
-                                description: (!_.isUndefined(data.description) && !_.isNull(data.description)) ? data.description : '',
-                                companyName: (!_.isUndefined(data.companyName) && !_.isNull(data.companyName)) ? data.companyName : '',
-                                contactPerson: (!_.isUndefined(data.contactPerson) && !_.isNull(data.contactPerson)) ? data.contactPerson : '',
-                                companyPhoneNumber: (!_.isUndefined(data.companyPhoneNumber) && !_.isNull(data.companyPhoneNumber)) ? data.companyPhoneNumber : '',
+                                specialist: data.specialist,
+                                specialistType: (HelperService.CheckExistData(data.specialistType) && data.specialistType.length !== 0) ? data.specialistType : '(None)',
+                                treatment: data.treatment,
+                                treatmentType: treatmentType,
+                                description: (HelperService.CheckExistData(data.description) && data.description.length !== 0) ? data.description : '(None)',
+                                companyName: (HelperService.CheckExistData(data.companyName) && data.companyName.length !== 0) ? data.companyName : '(None)',
+                                contactPerson: (HelperService.CheckExistData(data.contactPerson) && data.contactPerson.length !== 0) ? data.contactPerson : '(None)',
+                                companyPhoneNumber: (HelperService.CheckExistData(data.companyPhoneNumber) && data.companyPhoneNumber.length !== 0) ? data.companyPhoneNumber : '(None)',
                             };
                             if (data.urgentRequestType === 'WorkInjury') {
                                 SendMailService.SendMail('WorkInjuryReceive', emailInfoPatient, CallBackSendMailPatient);
@@ -240,7 +249,7 @@ module.exports = {
                             status: 500
                         });
                     } else {
-                        if (!_.isUndefined(URUpdated[0])) {
+                        if (HelperService.CheckExistData(URUpdated[0])) {
                             var htmlConfirmed =
                                 '<table><tr><td><b>Confirmed Success</b></td></tr>' +
                                 '<tr><td>UrgentCare Type: ' + (URUpdated[0].urgentRequestType === null ? '' : URUpdated[0].urgentRequestType) + '</td></tr>' +

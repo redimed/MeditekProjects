@@ -34,11 +34,17 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL PLUGINS -->
         <!-- BEGIN table_datatables_editable -->
-        <link href="theme/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+        <!-- <link href="theme/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" /> -->
         <!-- END table_datatables_editable -->
     <!-- END PAGE LEVEL PLUGINS -->
 
     <!-- BEGIN PAGE LEVEL STYLE -->
+    <link href="./theme/assets/admin/pages/css/profile-old.css" rel="stylesheet" type="text/css"/>
+
+    <!-- icheck -->
+    <!-- <link href="theme/assets/global/plugins/icheck/skins/all.css" rel="stylesheet"/> -->
+    <!-- end icheck -->
+
 
     <!-- profile 2 -->
     <link href="theme/assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css" />
@@ -46,6 +52,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <!-- BEGIN component bootstrap fileinput -->
     <link href="theme/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+
     <!-- END component bootstrap fileinput -->
 
     <!-- BEGIN component_date_time_pickers -->
@@ -53,13 +60,14 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="theme/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
     <link href="theme/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
     <link href="theme/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
-    <link href="theme/assets/global/plugins/clockface/css/clockface.css" rel="stylesheet" type="text/css" />
+    <!-- <link href="theme/assets/global/plugins/clockface/css/clockface.css" rel="stylesheet" type="text/css" /> -->
     <!-- BEGIN component_date_time_pickers -->
 
     <!-- BEGIN portfolio -->
     <link href="theme/assets/global/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
     <link href="theme/assets/admin/pages/css/portfolio.css" rel="stylesheet" type="text/css"/>
     <!-- END portfolio -->
+
 
     <!-- END PAGE LEVEL STYLE -->
 
@@ -144,12 +152,12 @@ License: You must have a valid license purchased only from themeforest(the above
             <script src="theme/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
             <script src="theme/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
             <script src="theme/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-            <script src="theme/assets/global/plugins/clockface/js/clockface.js" type="text/javascript"></script>
+            <!--<script src="theme/assets/global/plugins/clockface/js/clockface.js" type="text/javascript"></script>-->
             <!-- end date picker -->
 
             <!-- BEGIN table_datatables_editable -->
-            <script src="theme/assets/global/scripts/datatable.js" type="text/javascript"></script>
-            <script src="theme/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+            <!--<script src="theme/assets/global/scripts/datatable.js" type="text/javascript"></script>
+            <script src="theme/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>-->
             <!-- END table_datatables_editable -->
 
             <!-- form wizard -->
@@ -235,6 +243,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END MODULE home -->
 
         <!-- BEGIN MODULE appointment -->
+        <script src="modules/appointment/js/Appointment_helper.js" ></script>
         <script src="modules/appointment/appointment.js" ></script>
         <script src="modules/appointment/controllers/appointmentCtrl.js"></script>
         <script src="modules/appointment/controllers/appointmentListCtrl.js"></script>
@@ -253,6 +262,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="modules/urgentCare/controllers/urgentCareListDetailCtrl.js"></script>
         <script src="modules/urgentCare/directives/urgentCareListDirective.js"></script>
         <script src="modules/urgentCare/directives/urgentCareDetailDirective.js"></script>
+        <script src="modules/urgentCare/services/urgentCareService.js"></script>
         <!-- END MODULE urgentCare -->
 
 
@@ -333,7 +343,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- end portfilo -->
 
         <!-- BEGIN table_datatables_editable -->
-        <script src="./theme/assets/pages/scripts/table-datatables-editable.min.js" type="text/javascript"></script>
+        <!--<script src="./theme/assets/pages/scripts/table-datatables-editable.min.js" type="text/javascript"></script>-->
         <!-- END table_datatables_editable -->
 
         <!-- begin form wizard -->
@@ -359,7 +369,12 @@ License: You must have a valid license purchased only from themeforest(the above
         <script type="text/javascript">
             $(document).ready(function()
             {
-                App.init(); // Run metronic theme  
+                // App.init(); // Run metronic theme 
+                App.initAjax();
+                App.setAssetsPath('theme/assets/'); // Set the assets folder path  
+                // App.initComponents(); // init core components
+                // ComponentsDateTimePickers.init(); // init todo page
+                // FormWizard.init(); // form step
             });
         </script>
         <!-- END JAVASCRIPTS -->

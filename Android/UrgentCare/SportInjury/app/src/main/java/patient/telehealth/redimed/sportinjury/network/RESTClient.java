@@ -39,6 +39,7 @@ public class RESTClient {
         public void intercept(RequestFacade paramRequestFacade) {
             paramRequestFacade.addHeader("Accept", "application/json");
             paramRequestFacade.addHeader("Content-Type", "application/json");
+            paramRequestFacade.addHeader("Version", "1.0");
         }
     }
 

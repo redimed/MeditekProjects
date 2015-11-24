@@ -22,7 +22,7 @@ public class UrgentRequestModel {
     @SerializedName("DOB")
     public String DOB;
 
-    @SerializedName("Email")
+    @SerializedName("email")
     public String email;
 
     @SerializedName("description")
@@ -37,6 +37,9 @@ public class UrgentRequestModel {
     @SerializedName("specialist")
     public String SpecialList;
 
+    @SerializedName("specialistType")
+    public String SpecialType;
+
     @SerializedName("handTherapy")
     public String HandTherapy;
 
@@ -44,7 +47,7 @@ public class UrgentRequestModel {
     public String GeneralClinic;
 
     @SerializedName("urgentRequestType")
-    public String ServiceType;
+    public String UrgentRequestType;
 
     @SerializedName("companyName")
     public String CompanyName;
@@ -143,6 +146,14 @@ public class UrgentRequestModel {
         SpecialList = specialList;
     }
 
+    public String getSpecialType() {
+        return SpecialType;
+    }
+
+    public void setSpecialType(String specialType) {
+        SpecialType = specialType;
+    }
+
     public String getHandTherapy() {
         return HandTherapy;
     }
@@ -159,12 +170,12 @@ public class UrgentRequestModel {
         this.GeneralClinic = generalClinic;
     }
 
-    public String getServiceType() {
-        return ServiceType;
+    public String getUrgentRequestType() {
+        return UrgentRequestType;
     }
 
-    public void setServiceType(String serviceType) {
-        ServiceType = serviceType;
+    public void setUrgentRequestType(String urgentRequestType) {
+        UrgentRequestType = urgentRequestType;
     }
 
     public String getCompanyName() {

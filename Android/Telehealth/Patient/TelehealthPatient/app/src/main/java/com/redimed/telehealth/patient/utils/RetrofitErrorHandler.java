@@ -1,15 +1,21 @@
 package com.redimed.telehealth.patient.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.redimed.telehealth.patient.LauncherActivity;
+import com.redimed.telehealth.patient.MainActivity;
+import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 
 import org.json.JSONObject;
 
 import java.net.SocketTimeoutException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;
@@ -27,7 +33,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
         String errorDescription;
 
         if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
-            if (cause.getCause() instanceof SocketTimeoutException){
+            if (cause.getCause() instanceof SocketTimeoutException) {
                 errorDescription = "Network Timeout";
             } else {
                 errorDescription = "Network Error";
@@ -35,8 +41,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
         } else {
             if (cause.getResponse() == null) {
                 errorDescription = "No Response From Server";
-            }
-            else {
+            } else {
                 try {
                     ErrorResponse errorResponse = (ErrorResponse) cause.getBodyAs(ErrorResponse.class);
                     errorDescription = errorResponse.error.data.message;
@@ -44,10 +49,24 @@ public class RetrofitErrorHandler implements ErrorHandler {
                     try {
                         String json = new String(((TypedByteArray) cause.getResponse().getBody()).getBytes());
                         JSONObject dataObject = new JSONObject(json);
-                        if (dataObject.optString("ErrorType").equalsIgnoreCase("jwt expired")){
-                            errorDescription = "TokenExpiredError";
-                        }else
-                            errorDescription = dataObject.optString("ErrorsList");
+                        String strError = dataObject.optString("ErrorsList");
+                        Log.d(TAG, strError);
+                        if (strError.equalsIgnoreCase("[\"notAuthenticated\"]")){
+                            errorDescription = "Sorry for inconvenience, please activation application again!";
+                            new Timer().schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    MyApplication.getInstance().clearApplication();
+                                    Context context = MyApplication.getInstance().getApplicationContext();
+                                    Intent i = new Intent(context, LauncherActivity.class);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    context.startActivity(i);
+                                }
+                            }, 2500);
+                        }
+                        else {
+                            errorDescription = strError;
+                        }
                     } catch (Exception ex2) {
                         Log.e(TAG, "HandleError: " + ex2.getLocalizedMessage());
                         errorDescription = "Error Unknown";
@@ -56,6 +75,10 @@ public class RetrofitErrorHandler implements ErrorHandler {
             }
         }
         return new Exception(errorDescription);
+    }
+
+    private void Reconnect(){
+
     }
 }
 

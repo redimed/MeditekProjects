@@ -7,12 +7,15 @@
     <dimen name="cp_dialog_height">300dp</dimen>
 
     <dimen name="size_title">25dp</dimen>
-    <dimen name="size_txt">20dp</dimen>
+    <dimen name="size_txt">15dp</dimen>
 
     <dimen name="button_width">100dp</dimen>
     <dimen name="button_height">40dp</dimen>
 
     <dimen name="info_icon_width">20dp</dimen>
     <dimen name="info_icon_height">20dp</dimen>
+
+    <dimen name="home_text_size">12dp</dimen>
+    <dimen name="tracking_text_size">10dp</dimen>
 
 </resources>

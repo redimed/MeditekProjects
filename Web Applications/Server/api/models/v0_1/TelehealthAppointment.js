@@ -250,8 +250,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(telehealthappointment, options, callback) {
-                telehealthappointment.ModifiedDate = new Date();
+            beforeBulkUpdate: function(telehealthappointment, callback) {
+                telehealthappointment.fields.push('ModifiedDate');
+                telehealthappointment.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

@@ -1,30 +1,29 @@
 angular.module('app.authentication.doctor.directive.detail', [])
-.directive('doctorDetail', function(doctorService, CommonService, $filter, $cookies, toastr, $modal, $timeout) {
+.directive('doctorDetail', function(doctorService, CommonService, $filter, $http, $cookies, toastr, $uibModal, $timeout) {
 
 	return {
-
 		restrict: 'EA',
 		templateUrl: 'modules/doctor/directives/templates/detail.html',
 		scope: {
-			doctorId:'=',
-			accountId: '=',
-			departmentId: '=',
-			success: '=',
-			onCancel: '='
+			uid: '=onUid',
+			info:'=onData',
+            isShowFull:'=onShowfull',
+            listShow:'=onListshow',
+            onCancel: '='
 		},
-		controller: function($scope, FileUploader, toastr, $state) {
-
-			// // Signature
-			var uploader = $scope.uploader = new FileUploader({
-				// url: 'http://192.168.1.2:3005/api/uploadFile',
-				// url: CommonService.ApiUploadFile,
-				url : 'http://testapp.redimed.com.au:3005/api/uploadFile',
-		        // url: 'http://localhost:3005/api/uploadFile',
-		        headers:{Authorization:'Bearer '+$cookies.get("token")},
-				alias : 'uploadFile'
-			});
-			
-			// // FILTERS
+		controller:function($scope, FileUploader) {
+			// Profile Image
+		    var uploader = $scope.uploader = new FileUploader({
+		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
+		    	url: o.const.uploadFileUrl,
+		    	headers:{
+		    		Authorization:'Bearer '+$cookies.get("token"),
+		    		systemtype:'WEB',
+		    	},
+		    	withCredentials:true,
+		    	alias : 'uploadFile'
+		    });
+		    // FILTERS
 		    uploader.filters.push({
 		        name: 'customFilter',
 		        fn: function (item /*{File|FileLikeObject}*/, options) {
@@ -32,53 +31,31 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		        }
 		    });
 
-		 //    // CALLBACKS
-		    uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-		        // console.info('onWhenAddingFileFailed', item, filter, options);
-		    };
+		    // CALLBACKS
 		    uploader.onAfterAddingFile = function (fileItem) {
-		        // console.info('onAfterAddingFile', fileItem);
-		    };
-
-		    uploader.onAfterAddingAll = function (addedFileItems) {
-		        // console.info('onAfterAddingAll', addedFileItems);
-		    };
-		    uploader.onBeforeUploadItem = function (item) {
-		        // console.info('onBeforeUploadItem', item);
-		    };
-		    uploader.onProgressItem = function (fileItem, progress) {
-		        // console.info('onProgressItem', fileItem, progress);
-		    };
-		    uploader.onProgressAll = function (progress) {
-		        // console.info('onProgressAll', progress);
+		    	var box = document.getElementById('viewIMG');
+		    	box.removeAttribute("class");
+		    	if($scope.info.FileUID_img!=undefined && $scope.info.FileUID_img!=null &&
+		    		$scope.info.FileUID_img!="")
+		    		$scope.info.ischangeimg = true;
+		    	else
+		    		$scope.info.ischangeimg = false;
 		    };
 		    uploader.onSuccessItem = function (fileItem, response, status, headers) {
 		        // console.info('onSuccessItem', fileItem, response, status, headers);
 		    };
-		    uploader.onErrorItem = function (fileItem, response, status, headers) {
-		        // console.info('onErrorItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCancelItem = function (fileItem, response, status, headers) {
-		        // console.info('onCancelItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
-		        // console.info('onCompleteItem', fileItem, response, status, headers);
-		    };
-		    uploader.onCompleteAll = function () {
-		        // console.info('onCompleteAll');
-		    };
 
-		 //    // Profile Image
 		    var uploaders = $scope.uploaders = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
-		    	// url: CommonService.ApiUploadFile,
-		    	url : 'http://testapp.redimed.com.au:3005/api/uploadFile',
-		        // url: 'http://localhost:3005/api/uploadFile',
-		        headers:{Authorization:'Bearer '+$cookies.get("token")},
+		    	url: o.const.uploadFileUrl,
+		    	headers:{
+		    		Authorization:'Bearer '+$cookies.get("token"),
+		    		systemtype:'WEB',
+		    	},
+		    	withCredentials:true,
 		    	alias : 'uploadFile'
 		    });
-			
-			// // FILTERS
+		    // FILTERS
 		    uploaders.filters.push({
 		        name: 'customFilter',
 		        fn: function (item /*{File|FileLikeObject}*/, options) {
@@ -86,226 +63,209 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		        }
 		    });
 
-		 //    // CALLBACKS
-		    uploaders.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-		        // console.info('onWhenAddingFileFailed', item, filter, options);
-		    };
+		    // CALLBACKS
 		    uploaders.onAfterAddingFile = function (fileItem) {
-		        // console.info('onAfterAddingFile', fileItem);
-		    };
-
-		    uploaders.onAfterAddingAll = function (addedFileItems) {
-		        // console.info('onAfterAddingAll', addedFileItems);
-		    };
-		    uploaders.onBeforeUploadItem = function (item) {
-		        // console.info('onBeforeUploadItem', item);
-		    };
-		    uploaders.onProgressItem = function (fileItem, progress) {
-		        // console.info('onProgressItem', fileItem, progress);
-		    };
-		    uploaders.onProgressAll = function (progress) {
-		        // console.info('onProgressAll', progress);
+		    	if($scope.info.FileUID_sign!=undefined && $scope.info.FileUID_sign!=null && $scope.info.FileUID_sign!="")
+		    		$scope.info.ischangesign = true;
+		    	else
+		    		$scope.info.ischangesign = false;
 		    };
 		    uploaders.onSuccessItem = function (fileItem, response, status, headers) {
 		        // console.info('onSuccessItem', fileItem, response, status, headers);
 		    };
-		    uploaders.onErrorItem = function (fileItem, response, status, headers) {
-		        // console.info('onErrorItem', fileItem, response, status, headers);
-		    };
-		    uploaders.onCancelItem = function (fileItem, response, status, headers) {
-		        // console.info('onCancelItem', fileItem, response, status, headers);
-		    };
-		    uploaders.onCompleteItem = function (fileItem, response, status, headers) {
-		        // console.info('onCompleteItem', fileItem, response, status, headers);
-		    };
-		    uploaders.onCompleteAll = function () {
-		        // console.info('onCompleteAll');
-		    };
-
-		    // Save data
-			$scope.save = function(data) {
-
-				var info = {
-					UID: data.UID,
-					Title: data.Titles,
-					FirstName: data.FirstName,
-					MiddleName: data.MiddleName,
-					LastName: data.LastName,
-					DOB: data.DOB,
-					Address1: data.Address1,
-					Address2: data.Address2,
-					Postcode: data.Postcode,
-					Suburb: data.Suburb,
-					State: data.State,
-					CountryID: data.CountryID,
-					HomePhoneNumber: data.HomePhoneNumber,
-					WorkPhoneNumber: data.WorkPhoneNumber,
-					HealthLink: data.HealthLinkID,
-					ProviderNumber: data.ProviderNumber,
-					Enable: data.Enable,
-					UserAccountID: data.UserAccountID
-				};
-
-				doctorService.validinfo(info)
-				.then(function(success) {
-
-					doctorService.updateDoctor(info)
-					.then(function(response) {
-						$scope.success = true;
-
-						// Upload profileImage
-						if(uploaders.queue.length > 0) {
-
-							if(data.profileImageUID !== undefined) {
-								var info = {
-									isEnable: false,
-									fileUID: data.profileImageUID,
-									headers:{Authorization:'Bearer '+$cookies.get("token")}
-								};
-								// Enable or Disable
-								doctorService.getEnableFile(info)
-								.then(function(success) {
-									for (var i = 0; i < uploaders.queue.length; i++) 
-						            {
-						                var item=uploaders.queue[i];
-						                item.formData[i]={};
-						                item.formData[i].userUID = response[0].UID;
-						                item.formData[i].fileType = 'ProfileImage';
-						            }
-									uploaders.uploadAll();
-								}, function(err) {});
-							} else {
-								for (var i = 0; i < uploaders.queue.length; i++) 
-					            {
-					                var item=uploaders.queue[i];
-					                item.formData[i]={};
-					                item.formData[i].userUID = response[0].UID;
-					                item.formData[i].fileType = 'ProfileImage';
-					            }
-								uploaders.uploadAll();
-							}
-							
-						}
-
-						// Upload Signature
-						if(uploader.queue.length > 0) {
-
-							if(data.signatureUID !== undefined) {
-								var info = {
-									isEnable: false,
-									fileUID: data.signatureUID,
-									headers:{Authorization:'Bearer '+$cookies.get("token")}
-								};
-								// Enable or Disable
-								doctorService.getEnableFile(info)
-								.then(function(success) {
-									for (var i = 0; i < uploader.queue.length; i++) 
-						            {
-						                var item=uploader.queue[i];
-						                item.formData[i]={};
-						                item.formData[i].userUID = response[0].UID;
-						                item.formData[i].fileType = 'Signature';
-						            }
-					            	uploader.uploadAll();
-								}, function(err) {});   
-							} else {
-									for (var i = 0; i < uploader.queue.length; i++) 
-						            {
-						                var item=uploader.queue[i];
-						                item.formData[i]={};
-						                item.formData[i].userUID = response[0].UID;
-						                item.formData[i].fileType = 'Signature';
-						            }
-					            	uploader.uploadAll();
-							}
-
-				        }
-
-					}, function(err) {
-						toastr.error('Updated Failed');
-					});
-
-				}, function(err) {});
-
-			}
-
 
 		},
 		link: function(scope, ele, attrs) {
+			console.log(scope.info);
+			var data = {};
+			scope.state = [
+				{'code':'VIC', 'name':'Victoria'},
+				{'code':'TAS', 'name':'Tasmania'},
+				{'code':'QLD', 'name':'Queensland'},
+				{'code':'NSW', 'name':'New South Wales'},
+				{'code':'WA', 'name':'Western Australia'},
+				{'code':'NT', 'name':'Northern Territory'},
+				{'code':'ACT', 'name':'Australian Capital Territory'}
+			];
+			scope.titles = [
+				{'id':'Mr', 'name':'Mr'},
+				{'id':'Mrs', 'name':'Mrs'},
+				{'id':'Ms', 'name':'Ms'},
+				{'id':'Dr', 'name':'Dr'}
+			];
+
+			var oriInfo,clearInfo;
+			// scope.info.img_change = false;
+			scope.infoChanged = function() {
+		        return angular.equals(oriInfo, scope.info);
+		    };
+
+			scope.infoClear = function() {
+			    return !angular.equals(clearInfo, scope.info);
+		    };
+
+			doctorService.listCountry()
+			.then(function(response){
+				scope.country = response;
+			},function(err){
+				console.log(err);
+			});
+
+			$timeout(function(){
+				var tabtable        = document.getElementById("tabtable");
+				var tabtablecontent = document.getElementById("tabtablecontent");
+				if(scope.isShowFull==false){
+					document.getElementById("box").className = "";
+					var tab_UserAccount = document.getElementById("tab_UserAccount");
+					var tab1            = document.getElementById("tab1");
+					
+					tabtable.removeChild(tab1);
+					tabtablecontent.removeChild(tab_UserAccount);
+					$("#tabtablecontent :input").prop('disabled', true);
+				}
+
+				if(scope.listShow!= undefined && scope.listShow!=null && 
+					  scope.listShow!='' && scope.listShow.length!=0){
+					if(scope.listShow.columm2 && scope.listShow.columm2 == true) {
+						document.getElementById("tab2").className = "active";
+						document.getElementById("tab_Basic").className = "tab-pane active";
+					}
+					else if(scope.listShow.columm3 && scope.listShow.columm3 == true) {
+						document.getElementById("tab3").className = "active";
+						document.getElementById("tab_Contact").className = "tab-pane active";
+					}
+					else if(scope.listShow.columm4 && scope.listShow.columm4 == true) {
+						document.getElementById("tab4").className = "active";
+						document.getElementById("tab_signature").className = "tab-pane active";
+					}
+					
+					
+				}
+				else{
+					scope.listShow={
+						columm2 : true,
+						columm3 : true,
+						columm4 : true
+					};
+				}
+		    },0);
 
 			$timeout(function(){
 				App.initAjax();
 				ComponentsDateTimePickers.init(); // init todo page
-			});
+				oriInfo = angular.copy(scope.info);
+			},50);
 
-			// Variable
-			var info_list = {
-				UID: scope.doctorId,
-				UserAccountID: scope.accountId,
-				DepartmentID: scope.departmentId
-			};
+			scope.removeImg = function(value){
+				if(value=="ProfileImage"){
+			    	scope.info.ischangeimg = null;
+			    	scope.uploader.queue.length = 0;
+			    	document.getElementById("viewIMG").className = "thumbnail";
+			    }
+			    if(value=="Signature"){
+			    	scope.info.ischangesign = null;
+			    	scope.uploaders.queue.length = 0;
+			    }
+		    };
 
-			doctorService.getByidDoctor(info_list)
-			.then(function(result) {
-				scope.info = angular.copy(result[0]);
-				if(result[0].HealthLink !== 'undefined') {
-					scope.info.HealthLinkID = result[0].HealthLink;
-				}
-				if(result[0].Title !== 'undefined') {
-					scope.info.Titles = result[0].Title;
-				}
-				if(result[0].DepartmentID !== '' || result[0].DepartmentID !== null) {
-					doctorService.getoneDepartment(result[0].DepartmentID)
-					.then(function(result_dpm) {
-						if(result_dpm !== undefined) {
-							scope.info.Department = result_dpm.DepartmentName;
-						} else {
-							scope.info.Department = '';
-						}
-						
-					}, function(err) {});
-				}
+		    scope.checkDataNull = function(name){
+		    	if(scope.info[name].length==0)
+		    		scope.info[name] = null;
+		    };
 
-				doctorService.getFile(info_list)
-				.then(function(result_f) {
-
-					for(var i=0; i< result_f.length; i++) {
-						if(result_f[i].UID !== undefined) {
-							if(result_f[i].FileType === "Signature") {
-								// scope.signature = 'http://localhost:3005/api/downloadFile/' + result_f[i].UID;
-								scope.signature = 'http://testapp.redimed.com.au:3005/api/downloadFile/' + result_f[i].UID;
-								scope.info.signatureUID = result_f[i].UID;
-							}
-							if(result_f[i].FileType === "ProfileImage") {
-								// scope.profileImage = 'http://localhost:3005/api/downloadFile/' + result_f[i].UID;
-								scope.profileImage = 'http://testapp.redimed.com.au:3005/api/downloadFile/' + result_f[i].UID;
-								scope.info.profileImageUID = result_f[i].UID;
-							}
-						}
+		    scope.save = function() {
+		    	if(scope.info!=undefined && scope.info!=null){
+					if(scope.info.UID!=undefined && scope.info.UID!=null && scope.info.UID!=''){
+						data.UID = scope.info.UID;
+						data.UserAccountID = scope.info.UserAccountID;
+						delete scope.info['UID'];
+						data.info = scope.info;
+						data.RoleId = scope.info.UserAccount.RelUserRoles.length!=0?scope.info.UserAccount.RelUserRoles[0].RoleId:null;
 					}
+				}
+		    	doctorService.validate(data.info)
+		    	.then(function(result){
+		    		scope.er ='';
+		    		doctorService.updateDoctor(data)
+		    		.then(function(response){
+		    			if(response.message=="success"){
+		    				if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
+							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
+							   	if(scope.info.ischangeimg==true){
+								   	$http({
+									  method: 'GET',
+									  url: o.const.fileBaseUrl+'/api/enableFile/false/'+scope.info.FileUID_img
+									}).then(function (response) {
+										scope.uploader.queue[0].formData[0]={};
+										scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
+										scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+										scope.uploader.uploadAll();
+									},function (err) {
+										console.log(err);
+									});
+								}
+								else{
+									scope.uploader.queue[0].formData[0]={};
+									scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
+									scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+									scope.uploader.uploadAll();
+								}
+							}
+							if(scope.uploaders.queue[0]!=undefined && scope.uploaders.queue[0]!=null &&
+							   scope.uploaders.queue[0]!='' && scope.uploaders.queue[0].length!=0){
+							   	console.log(scope.info.ischangesign);
+							   	if(scope.info.ischangesign==true){
+								   	$http({
+									  method: 'GET',
+									  url: o.const.fileBaseUrl+'/api/enableFile/false/'+scope.info.FileUID_sign
+									}).then(function (response) {
+										scope.uploaders.queue[0].formData[0]={};
+										scope.uploaders.queue[0].formData[0].fileType = "Signature";
+										scope.uploaders.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+										scope.uploaders.uploadAll();
+									},function (err) {
+										console.log(err);
+									});
+								}
+								else{
+									scope.uploaders.queue[0].formData[0]={};
+									scope.uploaders.queue[0].formData[0].fileType = "Signature";
+									scope.uploaders.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+									scope.uploaders.uploadAll();
+								}
+							}
+		    				toastr.success("Update Successfully!","Success!!");
+		    				console.log(scope.uploader.queue);
+		    				console.log(scope.uploaders.queue);
+		    				scope.onCancel();
+		    			}
+		    		},function(err){
+		    			console.log(err);
+		    			toastr.error("Data error, check data again","Error!!!");
+			    		scope.er ={};
+						scope.ermsg ={};
+						if(err.data.message.ErrorsList && err.data.message.ErrorsList.length >0){
+							for(var i = 0; i < err.data.message.ErrorsList.length; i++){
+								scope.er[err.data.message.ErrorsList[i].field] ={'border': '2px solid #DCA7B0'};
+								scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList[i].message;
+							}
+						}
+		    		})
+		    	},function(err){
+		    			console.log(err);
+		    		toastr.error("Data error, check data again","Error!!!");
+		    		scope.er ={};
+					scope.ermsg ={};
+					for(var i = 0; i < err.length; i++){
+						scope.er[err[i].field] = {};
+						scope.er[err[i].field].css ={'border': '2px solid #DCA7B0'};
+						scope.er[err[i].field].msg = err[i].message;
+					}
+		    	});
+		    };
 
-				}, function(err) {});
+		}
 
-			}, function(err) {});
-
-			
-			// Title
-			scope.titles = [
-				{'id':'1', 'name':'Mr'},
-				{'id':'2', 'name':'Mrs'},
-				{'id':'3', 'name':'Ms'},
-				{'id':'4', 'name':'Dr'}
-			];
-
-			// Country List
-			doctorService.listCountry()
-			.then(function(result) {
-				scope.country = result;
-			}, function(err) {});
-
-
-		} // end link
-
-	} // end return
+	}
 
 });

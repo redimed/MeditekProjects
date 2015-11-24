@@ -18,6 +18,7 @@
 		AF00C4061BDA16150001A7F4 /* leftBody.png in Resources */ = {isa = PBXBuildFile; fileRef = AF00C4021BDA16150001A7F4 /* leftBody.png */; };
 		AF00C4071BDA16150001A7F4 /* rightBody.png in Resources */ = {isa = PBXBuildFile; fileRef = AF00C4031BDA16150001A7F4 /* rightBody.png */; };
 		AF0A3E9B1BE70799007F0C67 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */; };
+		AF1FF8F41BF09AAA000BB306 /* TrackingRefferalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */; };
 		AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */ = {isa = PBXBuildFile; fileRef = AF3902F51BCDE8DD00173A58 /* FAQs.html */; };
 		AF3DA2FF1BD8C738006C1071 /* MAActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3DA2FE1BD8C738006C1071 /* MAActivityIndicatorView.swift */; };
 		AF4498AA1BDF11CE005A905E /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4498A91BDF11CE005A905E /* Patient.swift */; };
@@ -47,6 +48,7 @@
 		AF9440171BBA6972003F3B07 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9440161BBA6972003F3B07 /* OpenTok.framework */; };
 		AF9F48FC1BB509220044D72F /* GetAndPostDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FB1BB509220044D72F /* GetAndPostDataController.swift */; };
 		AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */; };
+		AFE52D631BFAEBC90051B52D /* ringtone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AFE52D621BFAEBC90051B52D /* ringtone.mp3 */; };
 		AFEBD1DD1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEBD1DC1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift */; };
 		AFEBD1E11BD5E112005FE581 /* MyPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEBD1DF1BD5E112005FE581 /* MyPopupViewController.swift */; };
 		AFEBD1E21BD5E112005FE581 /* MyPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFEBD1E01BD5E112005FE581 /* MyPopupViewController.xib */; };
@@ -131,6 +133,7 @@
 		AF00C4021BDA16150001A7F4 /* leftBody.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftBody.png; sourceTree = "<group>"; };
 		AF00C4031BDA16150001A7F4 /* rightBody.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightBody.png; sourceTree = "<group>"; };
 		AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingRefferalViewController.swift; sourceTree = "<group>"; };
 		AF3902F51BCDE8DD00173A58 /* FAQs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = FAQs.html; sourceTree = "<group>"; };
 		AF3DA2FE1BD8C738006C1071 /* MAActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAActivityIndicatorView.swift; sourceTree = "<group>"; };
 		AF4498A91BDF11CE005A905E /* Patient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
@@ -161,6 +164,7 @@
 		AF9440211BBA7DD8003F3B07 /* Telehealth-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Telehealth-Bridging-Header.h"; sourceTree = "<group>"; };
 		AF9F48FB1BB509220044D72F /* GetAndPostDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAndPostDataController.swift; sourceTree = "<group>"; };
 		AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationAPI.swift; sourceTree = "<group>"; };
+		AFE52D621BFAEBC90051B52D /* ringtone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ringtone.mp3; sourceTree = "<group>"; };
 		AFEBD1DC1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIVViewController-SLPopup.swift"; path = "../UIVViewController-SLPopup.swift"; sourceTree = "<group>"; };
 		AFEBD1DF1BD5E112005FE581 /* MyPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPopupViewController.swift; sourceTree = "<group>"; };
 		AFEBD1E01BD5E112005FE581 /* MyPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPopupViewController.xib; sourceTree = "<group>"; };
@@ -336,6 +340,7 @@
 		AF78A2F61BC36807003E4E98 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AFE52D621BFAEBC90051B52D /* ringtone.mp3 */,
 				AFFDC22B1BD7780800DA3236 /* Image */,
 				AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */,
 				AF3902F51BCDE8DD00173A58 /* FAQs.html */,
@@ -487,7 +492,6 @@
 		AFF27DF71BB39C3A00B325E8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */,
 				AFEE34D81BB0413600471592 /* ViewController.swift */,
 				AFEDCB1B1BBA2E89007D584D /* NavigationHomeViewController.swift */,
 				AFF10DB11BB241DA005E9838 /* InformationViewController.swift */,
@@ -500,6 +504,8 @@
 				AF00C3FE1BDA13A20001A7F4 /* BodyUploadViewController.swift */,
 				AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */,
 				AF7B5F431BE74D6D0043B14D /* AppointmentListsViewController.swift */,
+				AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */,
+				AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -661,6 +667,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFE52D631BFAEBC90051B52D /* ringtone.mp3 in Resources */,
 				AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */,
 				AFEE35321BB0415D00471592 /* Info.plist in Resources */,
 				AF00C4061BDA16150001A7F4 /* leftBody.png in Resources */,
@@ -763,6 +770,7 @@
 				AF4498AA1BDF11CE005A905E /* Patient.swift in Sources */,
 				AFF21D321BB129DB006A190E /* ScreenCallingViewController.swift in Sources */,
 				AFEDCB1C1BBA2E89007D584D /* NavigationHomeViewController.swift in Sources */,
+				AF1FF8F41BF09AAA000BB306 /* TrackingRefferalViewController.swift in Sources */,
 				AFF10DF31BB24414005E9838 /* TPKeyboardAvoidingTableView.m in Sources */,
 				AFEE35301BB0415D00471592 /* DesignableView.swift in Sources */,
 				AFEE352D1BB0415D00471592 /* DesignableTabBarController.swift in Sources */,
@@ -955,7 +963,7 @@
 					"$(PROJECT_DIR)/Telehealth",
 				);
 				INFOPLIST_FILE = Telehealth/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = au.com.redimed.telehealthPatient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -980,7 +988,7 @@
 					"$(PROJECT_DIR)/Telehealth",
 				);
 				INFOPLIST_FILE = Telehealth/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = au.com.redimed.telehealthPatient;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -5,27 +5,215 @@ var generatePassword = require('password-generator');
 
 module.exports = {
 	
-	/*  
-		GetDoctor: Get all data from specific table
-		Ouput: Information of doctor table
+	/*  LoadlistDoctor : Get all data from specific table
+		input          : object which has multi properties
+						data:{
+							limit  : 20 number of limit item will get
+							offset : 1 number of offset item will get
+							attributes : [] array contain attributes that user want get
+							Search : {} object condition of querys
+							order  : [] array order
+						}
+		Ouput:  
+			* if result has value, server return doctor's data
+			* else if result doesn't have value, server return message "No data result"
+			* if server query error, server return an array error.
 	*/
-	GetDoctor: function(req, res) {
-
+	LoadlistDoctor: function(req, res) {
 		// Information
-		var postData = req.body.data;
-		Services
-			.Doctor
-				.findallDoctor(postData)
-					.then(function(result) {
-						res.ok({
-							data: result
-						});
-					})
-					.catch(function(err) {
-						res.serverError(ErrorWrap(err));
-					});
+		var data = req.body.data;
+		Services.Doctor.LoadlistDoctor(data)
+		.then(function(result){
+			if(result!==undefined && result!==null && result!=='')
+				res.ok({message:"success",data:result.rows,count:result.count});
+			else{
+				var err = new Error("SERVER ERROR");
+				err.pushError("No data result");
+				res.ok({message:ErrorWrap(err)});
+			}
+		})
+		.catch(function(err){
+			res.serverError({message:ErrorWrap(err)});
+		});
 
 	},
+
+	/*  DetailDoctor : Get detail's doctor by doctor's UID
+		input        : doctor's UID
+		output       :
+			* if server return info has value, server will query in table FileUpLoad - get all image
+				of this doctor. If server return success has value, add success's value into 
+				info's imgage attributes, else add null into info's image attributes.
+			* if server return info doesn't have value, server return a message 'No data result'.
+			* if server query error, server return an array error.
+	*/
+	DetailDoctor: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.DetailDoctor(data)
+		.then(function(info){
+			if(info!=null && info!=""){
+				FileUpload.findAll({
+					where:{
+						UserAccountID : info.UserAccountID,
+						FileType : {$in: ["ProfileImage", "Signature"]},
+						Enable : 'Y'
+					}
+				})
+				.then(function(success){
+					if(success!==undefined && success!==null && success!=='' && success.length!==0){
+						for(var i = 0;i < success.length; i++){
+							if(success[i].FileType =="ProfileImage")
+								info.dataValues.FileUID_img = success[i].UID?success[i].UID:null;
+							if(success[i].FileType =="Signature")
+								info.dataValues.FileUID_sign = success[i].UID?success[i].UID:null;
+						}
+						res.ok({status:200, message:"success", data:info});
+					}
+					else{
+						info.dataValues.FileUID = null;
+						res.ok({status:200, message:"success", data:info});
+					}
+				},function(err){
+					var err = new Error("SERVER ERROR");
+					err.pushError("Server Error");
+					res.notFound({message:ErrorWrap(err)});
+				});
+			}
+			else {
+				var err = new Error("SERVER ERROR");
+				err.pushError("No data result");
+				res.ok({message:ErrorWrap(err)});
+			}
+		})
+		.catch(function(err){
+			res.serverError({message:ErrorWrap(err)});
+		})
+	},
+
+	/*	UpdateDoctor : update doctor's information
+		input        : an object contain information
+							data :{
+								info {}    : doctor's information will be updated,
+								UID string : doctor'UID 
+							}
+		output       :
+						*	if server return result has value = 1, server'll return message
+								'success' into client.
+						*	if server return result has value = 0, server'll return message
+								'No data result' into client.
+						*	if server query error, server return an array error into client.
+	*/
+	UpdateDoctor: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.UpdateDoctor(data)
+		.then(function(result){
+			if(result!=null && result!="" && result[0]==1)
+				res.ok({message:"success",data:result});
+			else {
+				var err = new Error("SERVER ERROR");
+				err.pushError("No data result");
+				res.ok({message:ErrorWrap(err)});
+			}
+		})
+		.catch(function(err){
+			res.serverError({message:ErrorWrap(err)});
+		})
+	},
+
+	/*	GetDoctor : Get detail's doctor by UserAccount's UID
+		input     : an object contain data
+						data: {
+							UID string : UserAccount's UID
+						}
+		output       :
+			* if server return info has value, server will query in table FileUpLoad - get all image
+				of this doctor. If server return success has value, add success's value into 
+				info's imgage attributes, else add null into info's image attributes.
+			* if server return info doesn't have value, server return a message 'No data result'.
+			* if server query error, server return an array error.
+	*/
+	GetDoctor: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.GetDoctor(data)
+		.then(function(info){
+			if(info!=undefined&&info!=null&&info!=''&&info.length!=0){
+				FileUpload.findAll({
+					where:{
+						UserAccountID : info.UserAccountID,
+						FileType : {$in: ["ProfileImage", "Signature"]},
+						Enable : 'Y'
+					}
+				})
+				.then(function(success){
+					console.log(success);
+					if(success!==undefined && success!==null && success!=='' && success.length!==0){
+						for(var i = 0;i < success.length; i++){
+							if(success[i].FileType =="ProfileImage")
+								info.dataValues.FileUID_img = success[i].UID?success[i].UID:null;
+							if(success[i].FileType =="Signature")
+								info.dataValues.FileUID_sign = success[i].UID?success[i].UID:null;
+						}
+						res.ok({status:200, message:"success", data:info});
+					}
+					else{
+						info.dataValues.FileUID = null;
+						res.ok({status:200, message:"success", data:info});
+					}
+				},function(err){
+					var err = new Error("SERVER ERROR");
+					err.pushError("Server Error");
+					res.notFound({message:ErrorWrap(err)});
+				});
+			}
+			else{
+				res.ok({message:"no data result"});
+			}
+		})
+		.catch(function(err){
+			console.log(err);
+			res.serverError({message:ErrorWrap(err)});
+		});
+	},
+
+
+	CheckDoctor: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.CheckDoctor(data)
+		.then(function(result){
+			res.ok({message:"success",data:result});
+		})
+		.catch(function(err){
+			res.serverError({message:ErrorWrap(err)});
+		})
+	},
+
+	CheckInfo: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.validation(data)
+		.then(function(success){
+			res.ok(success);
+		},function(err){
+			console.log(err);
+			res.serverError(ErrorWrap(err));
+		});
+	},
+
+	CreateDoctorByNewAccount: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.CreateDoctorByNewAccount(data)
+		.then(function(success){
+			if(success!=null && success!=""){
+				res.ok(success);
+			}
+			else {
+				res.ok({message:"No data result"});
+			}
+		})
+		.catch(function(err){
+			res.serverError(ErrorWrap(err));
+		})
+	},
+
 	/*
 		doctorAppointment: List doctor for Appointment
 	*/
@@ -177,42 +365,42 @@ module.exports = {
 		Input: info's doctor
 		Ouput: success or error
 	*/
-	UpdateDoctor: function(req, res) {
+	// UpdateDoctor: function(req, res) {
 
-		var data = req.body.data;
+	// 	var data = req.body.data;
 
-		data.ModifiedDate = moment(new Date(), 'YYYY-MM-DD HH:mm:ss Z');;
-		data.ModifiedBy = req.user?req.user.ID:null;
+	// 	data.ModifiedDate = moment(new Date(), 'YYYY-MM-DD HH:mm:ss Z');;
+	// 	data.ModifiedBy = req.user?req.user.ID:null;
 
-		Services.Doctor.UpdateDoctor(data)
-		.then(function(result) {
+	// 	Services.Doctor.UpdateDoctor(data)
+	// 	.then(function(result) {
 		
-			var info = {
-				Enable: data.Enable,
-				UserAccountID: data.UserAccountID
-			};
+	// 		var info = {
+	// 			Enable: data.Enable,
+	// 			UserAccountID: data.UserAccountID
+	// 		};
 
-			Services.Doctor.UpdateAccountDoctor(info)
-			.then(function(success) {
+	// 		Services.Doctor.UpdateAccountDoctor(info)
+	// 		.then(function(success) {
 
-				Services.Doctor.GetOneUser(data)
-				.then(function(result_u) {
-					res.ok(result_u);
-				})
-				.catch(function(err) {
-					res.serverError(ErrorWrap(err));
-				});
+	// 			Services.Doctor.GetOneUser(data)
+	// 			.then(function(result_u) {
+	// 				res.ok(result_u);
+	// 			})
+	// 			.catch(function(err) {
+	// 				res.serverError(ErrorWrap(err));
+	// 			});
 
-			})
-			.catch(function(err) {
-				res.serverError(ErrorWrap(err));
-			});
+	// 		})
+	// 		.catch(function(err) {
+	// 			res.serverError(ErrorWrap(err));
+	// 		});
 
-		})
-		.catch(function(err) {
-			res.serverError(ErrorWrap(err));
-		});
-	},
+	// 	})
+	// 	.catch(function(err) {
+	// 		res.serverError(ErrorWrap(err));
+	// 	});
+	// },
 	/*
 		GetFile: Get UID's fileupload
 		Input: UserAccountID

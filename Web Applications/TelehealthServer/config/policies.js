@@ -23,13 +23,13 @@ var policies = {
     // '*': "hasToken", //bật lên khi relase, hầu hết tất cả api đều phải có token
 };
 
-//Begin module Telehealth
+// Begin module Telehealth
 var telehealthPolicies = require('./policies/TelehealthPolicies');
 _.extend(policies, telehealthPolicies);
 //End module Telehealth
 //Begin module Socket
 var socketPolicies = require('./policies/SocketPolicies');
 _.extend(policies, socketPolicies);
-//End module Socket
+// End module Socket
 module.exports.policies = policies;
 //

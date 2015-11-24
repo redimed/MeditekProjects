@@ -21,7 +21,7 @@ module.exports = {
                     args: 4,
                     msg: 'Must be an UUID V4!'
                 },
-                is:/^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}$/
+                is: /^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}$/
             }
         },
         UserAccountID: {
@@ -31,7 +31,7 @@ module.exports = {
                 isInt: {
                     msg: 'Must be an integer!'
                 },
-                isNumeric : true
+                isNumeric: true
             },
             references: {
                 model: 'UserAccount',
@@ -45,8 +45,7 @@ module.exports = {
                 len: {
                     args: [0, 45],
                     msg: 'Too long!'
-                },
-                isIn : [['0', '1', '2', '3']]
+                }
             }
         },
         MaritalStatus: {
@@ -57,7 +56,7 @@ module.exports = {
                     args: [0, 100],
                     msg: 'Too long!'
                 },
-                is:/^[a-zA-Z0-9\s]{0,100}$/
+                is: /^[a-zA-Z0-9\s]{0,100}$/
             }
         },
         FirstName: {
@@ -68,7 +67,7 @@ module.exports = {
                     args: [0, 50],
                     msg: 'Too long!'
                 },
-                is:/^[a-zA-Z0-9\s]{0,50}$/
+                is: /^[a-zA-Z0-9\s]{0,50}$/
             }
         },
         MiddleName: {
@@ -79,7 +78,7 @@ module.exports = {
                     args: [0, 100],
                     msg: 'Too long!'
                 },
-                is:/^[a-zA-Z0-9\s]{0,100}$/
+                is: /^[a-zA-Z0-9\s]{0,100}$/
             }
         },
         LastName: {
@@ -90,7 +89,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is:/^[a-zA-Z0-9\s]{0,50}$/
+                is: /^[a-zA-Z0-9\s]{0,50}$/
             }
         },
         PreferredName: {
@@ -101,7 +100,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is:/^[a-zA-Z0-9\s]{0,255}$/
+                is: /^[a-zA-Z0-9\s]{0,255}$/
             }
         },
         PreviousName: {
@@ -112,7 +111,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is:/^[a-zA-Z0-9\s]{0,255}$/
+                is: /^[a-zA-Z0-9\s]{0,255}$/
             }
         },
         DOB: {
@@ -123,7 +122,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is:/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/
+                is: /^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/
             }
         },
         Gender: {
@@ -135,7 +134,9 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                isIn: [['M', 'F']]
+                isIn: [
+                    ['M', 'F']
+                ]
             }
         },
         Indigenous: {
@@ -157,7 +158,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is:/^[a-zA-Z\s]{0,255}$/
+                is: /^[a-zA-Z0-9\s]{0,255}$/
             }
         },
         Address1: {
@@ -168,7 +169,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is:/^[a-zA-Z0-9\s\/]{0,255}$/
+                is: /^[a-zA-Z0-9\s\/]{0,255}$/
             }
         },
         Address2: {
@@ -179,7 +180,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is:/^[a-zA-Z0-9\s\/]{0,255}$/
+                is: /^[a-zA-Z0-9\s\/]{0,255}$/
             }
         },
         Postcode: {
@@ -190,7 +191,7 @@ module.exports = {
                     args: [0, 10],
                     msg: 'Too long!'
                 },
-                is:/^[0-9]{4,10}$/
+                is: /^[0-9]{4,10}$/
             }
         },
         Suburb: {
@@ -201,7 +202,7 @@ module.exports = {
                     args: [0, 100],
                     msg: 'Too long!'
                 },
-                is:/^[a-zA-Z\s]{0,100}$/
+                is: /^[a-zA-Z0-9\s]{0,100}$/
             }
         },
         State: {
@@ -212,7 +213,7 @@ module.exports = {
                     args: [0, 100],
                     msg: 'Too long!'
                 },
-                is:/^[a-zA-Z\s]{0,100}$/
+                is: /^[a-zA-Z\s]{0,100}$/
             }
         },
         CountryID1: {
@@ -222,7 +223,7 @@ module.exports = {
                 isInt: {
                     msg: 'Must be an integer!'
                 },
-                isNumeric : true
+                isNumeric: true
             },
             references: {
                 model: 'Country',
@@ -236,7 +237,7 @@ module.exports = {
                 isInt: {
                     msg: 'Must be an integer!'
                 },
-                isNumeric : true
+                isNumeric: true
             },
             references: {
                 model: 'Country',
@@ -273,7 +274,7 @@ module.exports = {
                     args: [0, 20],
                     msg: 'Too long!'
                 },
-                is : /^[1-9]{9}$/
+                is: /^[1-9]{9}$/
             }
         },
         WorkPhoneNumber: {
@@ -284,7 +285,7 @@ module.exports = {
                     args: [0, 20],
                     msg: 'Too long!'
                 },
-                is : /^[1-9]{9}$/
+                is: /^[1-9]{9}$/
             }
         },
         FaxNumber: {
@@ -295,7 +296,7 @@ module.exports = {
                     args: [0, 20],
                     msg: 'Too long!'
                 },
-                is : /^[1-9]{9}$/
+                is: /^[1-9]{9}$/
             }
         },
         InterpreterRequired: {
@@ -391,8 +392,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(patient, options, callback) {
-                patient.ModifiedDate = new Date();
+            beforeBulkUpdate: function(patient, callback) {
+                patient.fields.push('ModifiedDate');
+                patient.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

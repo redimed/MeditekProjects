@@ -1,6 +1,6 @@
 var $q = require('q');
 var o=require("../HelperService");
-
+var moment=require("moment");
 /**
  * Validation: 
  * Kiểm tra thông tin user request
@@ -47,10 +47,20 @@ function Validation(userAccess)
 		else if(systems.indexOf(userAccess.SystemType)>=0)
 		{
 			//Kiểm tra nếu là mobile system thì cần có deviceId
-			if(mobileSystems.indexOf(userAccess.SystemType)>=0 && !userAccess.DeviceID)
+			if(mobileSystems.indexOf(userAccess.SystemType)>=0)
 			{
-				error.pushError('deviceId.notProvided');
-				throw error;
+				if(!userAccess.DeviceID)
+				{
+					error.pushError('deviceId.notProvided');
+					throw error;
+				}
+
+				if(!userAccess.AppID)
+				{
+					error.pushError('appId.notProvided');
+					throw error;
+				}
+				
 			}
 		}
 		else
@@ -82,8 +92,26 @@ module.exports={
 		var error=new Error("MakeUserToken.Error");
 		return Validation(userAccess)
 		.then(function(data){
-			return Services.UserAccount.GetUserAccountDetails({UID:userAccess.UserUID},null,transaction)
-			.then(function(user){
+			
+			return UserAccount.findOne({
+				where:{UID:userAccess.UserUID,Enable:'Y'},
+				include: {
+		            model: RelUserRole,
+		            attributes: ['ID', 'UserAccountId', 'RoleId'],
+		            include: {
+		                model: Role,
+		                attributes: ['ID', 'UID', 'RoleCode', 'RoleName']
+		            }
+		        }
+			},{transaction:transaction})
+			// return Services.UserAccount.GetUserAccountDetails({UID:userAccess.UserUID},null,transaction)
+			.then(function(u){
+				var user=u.dataValues;
+				var listRoles = [];
+        		_.each(user.RelUserRoles, function(item) {
+		            listRoles.push(item.Role.dataValues);
+		        });
+        		user.roles=listRoles;
 				if(o.checkData(user))
 				{
 					//Truy vấn userToken (để xem có tồn tại hay chưa)
@@ -103,7 +131,8 @@ module.exports={
 							return UserToken.findOne({
 								where:{
 									UserAccountID:user.ID,
-									DeviceID:userAccess.DeviceID
+									DeviceID:userAccess.DeviceID,
+									AppID:userAccess.AppID,
 								}
 							},{transaction:transaction})
 						}
@@ -111,39 +140,64 @@ module.exports={
 
 					return CheckExist()	
 					.then(function(ut){
+						console.log("check userSecretExpiration:",userAccess.SystemType,o.getMaxRole(user.roles));
+						var userSecretExpiration=o.getUserSecretExpiration(userAccess.SystemType,o.getMaxRole(user.roles));
+						var tokenExpired=userSecretExpiration.secretKeyExpired;
+						var maxTimePlus=userSecretExpiration.maxTimePlus;
+						var maxExpiredDate=null;
+						if(o.checkListData(tokenExpired,maxTimePlus))
+						{
+							maxExpiredDate=moment().add(tokenExpired+maxTimePlus,'seconds').toDate();
+						}
 						if(o.checkData(ut))
 						{
+							console.log("=========================update user token");
 							//Nếu userToken đã tồn tại thì update userToken với secret key mới
 							//đồng thời cập nhật tokenExpired
-							return ut.updateAttributes({
-								SecretKey:UUIDService.Create(),
-								SecretCreatedDate:new Date(),
-								TokenExpired:o.const.authSecretExprired[userAccess.SystemType],
-								Enable:'Y',
-							},{transaction:transaction})
-							.then(function(result){
-								return result;
-							},function(err){
-								o.exlog(err);
-								error.pushError("userToken.updateError");
+							if(o.checkData(userSecretExpiration))
+							{
+								console.log("result check:",userSecretExpiration);
+								
+								return ut.updateAttributes({
+									SecretKey:UUIDService.Create(),
+									SecretCreatedDate:new Date(),
+									// TokenExpired:o.const.authSecretExprired[userAccess.SystemType],
+									TokenExpired:tokenExpired,
+									MaxExpiredDate:maxExpiredDate,
+									Enable:'Y',
+								},{transaction:transaction})
+								.then(function(result){
+									return result;
+								},function(err){
+									o.exlog(err);
+									error.pushError("userToken.updateError");
+									throw error;
+								})
+							}
+							else
+							{
+								error.pushError("userSecretExpirationConfig.notFound");
 								throw error;
-							})
+							}
 						}
 						else
 						{
+							console.log("=========================create user token");
 							//Nếu userToken chưa tồn tại thì tạo mới userToken:
 							var insertInfo={
 								UserAccountID:user.ID,
 								SystemType:userAccess.SystemType,
 								SecretKey:UUIDService.Create(),
 								SecretCreatedDate:new Date(),
-								TokenExpired:o.const.authSecretExprired[userAccess.SystemType],
+								TokenExpired:tokenExpired,
+								MaxExpiredDate:maxExpiredDate,
 								Enable:'Y',
 							};
 							//Nếu system type là mobile thì yêu cầu cần có DeviceID
 							if(userAccess.SystemType!=HelperService.const.systemType.website)
 							{
 								insertInfo.DeviceID=userAccess.DeviceID;
+								insertInfo.AppID=userAccess.AppID;
 							}
 
 							return UserToken.create(insertInfo,{transaction:transaction})
@@ -206,7 +260,8 @@ module.exports={
 							return UserToken.findOne({
 								where:{
 									UserAccountID:user.ID,
-									DeviceID:userAccess.DeviceID
+									DeviceID:userAccess.DeviceID,
+									AppID:userAccess.AppID,
 								}
 							},{transaction:transaction})
 						}

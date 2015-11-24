@@ -65,6 +65,16 @@ module.exports = {
                 }
             }
         },
+        AppID: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
         TokenCreatedDate: {
             type: Sequelize.DATE,
             allowNull: true,
@@ -146,8 +156,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(useractivation, options, callback) {
-                useractivation.ModifiedDate = new Date();
+            beforeBulkUpdate: function(useractivation, callback) {
+                useractivation.fields.push('ModifiedDate');
+                useractivation.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

@@ -59,15 +59,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group form-md-line-input  ">
-                                            <select class="form-control" ng-model="appointment.Status" name="Status">
-                                                <option value="Waiting for approval">Pending</option>
-                                                <option value="Attended">Attended</option>
-                                                <option value="Waitlist">Wait List Surgery</option>
-                                                <option value="Pending">Pending</option>
-                                                <option value="Finish">Finish</option>
-                                                <option value="Received">Received</option>
-                                                <option value="Cancelled">Cancelled</option>
-                                                <option value="Approved">Appointment Time</option>
+                                             <select class="form-control" name="Status" ng-model="appointment.Status" ng-options="item.value as item.name for item in Status.apptStatus">
                                             </select>
                                             <label for="time" class="control-label">Status</label>
                                         </div>
@@ -496,7 +488,7 @@
                     <div class="tab-pane" id="patient">
                         <div class="row" ng-if="appointment.Patients.length != 0">
                             <div class="col-md-12 co-xs-12 pull-left">
-                                <h4><b>PATIENT NO :</b><span class="text-danger"> Linked [ {{appointment.Patients[0].UID}} ]</span></h4>
+                                <h4><b>PATIENT NO :</b><span class="text-danger"> Linked</span></h4>
                             </div>
                         </div>
                         <div class="row">
@@ -522,7 +514,7 @@
                                 <div class="form-group form-md-line-input  ">
                                     <div class="input-icon">
                                         <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control form-control-inline date-picker" ng-model="ShowData.patient.DOB" ng-disabled="ShowData.isLinkPatient" data-date-format="dd/mm/yyyy">
+                                        <input type="text" class="form-control form-control-inline date-picker" ng-model="ShowData.patient.DOB" ng-disabled="ShowData.isLinkPatient" data-date-format="dd/mm/yyyy" data-date-end-date="0d">
                                         <label class="control-label">Date of Birth</label>
                                     </div>
                                 </div>
@@ -1039,7 +1031,7 @@
                                         <div class="form-group ">
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                                 <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
-                                                    <img src="./theme/assets/global/images/no_image.png" width="100%" height="100%">
+                                                    <img src="./theme/assets/global/images/signature.jpg" width="100%" height="100%">
                                                 </div>
                                                 <br>
                                                 <div>

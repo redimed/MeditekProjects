@@ -8,7 +8,7 @@ module.exports = {
         return ['UID', 'Fund', 'Correspondence', 'Description', 'RefName',
             'RefHealthLink', 'RefAddress', 'RefTelePhone',
             'RefPostCode', 'RefSignature', 'RefDate', 'RefProviderNumber',
-            'RefDurationOfReferral', 'PresentComplain', 'Allergy'
+            'RefDurationOfReferral', 'PresentComplain', 'Allergy', 'Type'
         ];
     },
     PatientAppointment: function() {
@@ -53,7 +53,7 @@ module.exports = {
         ];
     },
     UserAccount: function() {
-        return ['UID', 'UserName', 'Email', 'PhoneNumber', 'Activated', 'Enable'];
+        return ['ID', 'UID', 'UserName', 'Email', 'PhoneNumber', 'Activated', 'Enable'];
     },
     WAAppointment: function() {
         return ['RefFax', 'IsUsualGP', 'UsualGPName', 'UsualGPContactNumber',

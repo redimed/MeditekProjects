@@ -25,7 +25,7 @@ class AppointmentListTableViewController: UITableViewController,AppointmentListT
         }
         //clear bottom line in table view
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        getAppointmentList()
+//        getAppointmentList()
         
     }
     
@@ -63,42 +63,42 @@ class AppointmentListTableViewController: UITableViewController,AppointmentListT
         }
     }
     //Giap: Get Appointment List
-    func getAppointmentList() {
-        appointmentApi.getListAppointmentByUID(patientUid, Limit: "100", completionHandler: {
-            response in
-            print(response)
-            
-            if response["ErrorsList"] != nil {
-                print("Error")
-                self.alertMessage("Error", message: response["ErrorsList"][0].string!)
-            }else if response["TimeOut"] ==  "Request Time Out" {
-                self.alertMessage("Error", message: "Request Time Out")
-            }
-            else {
-                var UIDApointment : String!
-                var FromTime : String!
-                var ToTime : String!
-                var Status : String!
-                var NameDoctor : String!
-                var data = response["rows"]
-                let countAppointment = data.count
-                
-                for var i = 0 ; i < countAppointment ;i++ {
-                    UIDApointment = data[i]["UID"].string
-                    FromTime = data[i]["FromTime"].string
-                    ToTime = data[i]["ToTime"].string
-                    Status = data[i]["Status"].string
-                    NameDoctor = data[i]["Doctors"][0]["FirstName"].string != nil ? data[i]["Doctors"][0]["FirstName"].string : ""
-                    
-                    self.Appointment.append(AppointmentList(UIDApointment: UIDApointment, ToTime: ToTime, Status: Status, FromTime: FromTime, NameDoctor: NameDoctor))
-                    
-                }
-                self.view.hideLoading()
-                self.tableView.reloadData()
-            }
-        })
-        
-    }
+//    func getAppointmentList() {
+//        appointmentApi.getListAppointmentByUID(patientUid, Limit: "100", completionHandler: {
+//            response in
+//            print(response)
+//            
+//            if response["ErrorsList"] != nil {
+//                print("Error")
+//                self.alertMessage("Error", message: response["ErrorsList"][0].string!)
+//            }else if response["TimeOut"] ==  "Request Time Out" {
+//                self.alertMessage("Error", message: "Request Time Out")
+//            }
+//            else {
+//                var UIDApointment : String!
+//                var FromTime : String!
+//                var ToTime : String!
+//                var Status : String!
+//                var NameDoctor : String!
+//                var data = response["rows"]
+//                let countAppointment = data.count
+//                
+//                for var i = 0 ; i < countAppointment ;i++ {
+//                    UIDApointment = data[i]["UID"].string
+//                    FromTime = data[i]["FromTime"].string
+//                    ToTime = data[i]["ToTime"].string
+//                    Status = data[i]["Status"].string
+//                    NameDoctor = data[i]["Doctors"][0]["FirstName"].string != nil ? data[i]["Doctors"][0]["FirstName"].string : ""
+//                    
+//                    self.Appointment.append(AppointmentList(UIDApointment: UIDApointment, ToTime: ToTime, Status: Status, FromTime: FromTime, NameDoctor: NameDoctor))
+//                    
+//                }
+//                self.view.hideLoading()
+//                self.tableView.reloadData()
+//            }
+//        })
+    
+//    }
     
 
     

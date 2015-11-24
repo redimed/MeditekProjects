@@ -21,9 +21,13 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        
+        loadDataJson()
+    }
+    override func viewDidAppear(animated: Bool) {
         pagingImage()
         resetTimer()
-        loadDataJson()
     }
     func resetTimer() {
         timer?.invalidate()
@@ -37,15 +41,21 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
             page = 0
             autoSlide(page)
         }else {
-            autoSlide(page + 1)
-            page++
+            if page == numberofPage {
+                page = 0
+                autoSlide(page + 1)
+                page++
+            }else{
+                autoSlide(page + 1)
+                page++
+            }
         }
     }
     
     //page Controller
     func pagingImage(){
-        self.pageTitles = NSArray(objects: "Explore","Lest","contruction")
-        self.pageImages = NSArray(objects: "chef2","sore back","construction")
+        self.pageTitles = NSArray(objects: "Explore","Lest","contruction","ss")
+        self.pageImages = NSArray(objects: "truck","chef","construction","sore back")
         pageControl.numberOfPages = pageImages.count
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         self.pageViewController.dataSource = self
@@ -77,10 +87,13 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
         }
         
         let vc: ContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ContentViewController") as! ContentViewController
-        vc.imageFile = self.pageImages[index] as! String
-        vc.titleText = self.pageTitles[index] as! String
-        vc.pageIndex = index
-        vc.delegate = self
+        
+        if index < pageImages.count {
+            vc.imageFile = self.pageImages[index] as! String
+            vc.titleText = self.pageTitles[index] as! String
+            vc.pageIndex = index
+            vc.delegate = self
+        }
         return vc
         
         
@@ -139,7 +152,8 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     //change currentPage in PageControl
     func changePageImage(controller: ContentViewController, index: Int) {
         pageControl.currentPage = index
-//        page = index
+        page = index
+       
         
     }
     
@@ -147,11 +161,11 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     //send data by segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "RehabSegue" {
+        if segue.identifier == "TreatmentSegue" {
             let submitViewController = segue.destinationViewController as! SubmitInjuryViewController
             submitViewController.pastUrls = pastUrls
-            submitViewController.NavigateBarTitle = "Rehab"
-            submitViewController.Rehab = "Y"
+            submitViewController.NavigateBarTitle = "Treatment"
+            submitViewController.treatment = "Y"
         }else if segue.identifier == "specialistSegue" {
             let submitViewController = segue.destinationViewController as! SubmitInjuryViewController
             submitViewController.pastUrls = pastUrls
@@ -180,24 +194,7 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
     }
     
     @IBAction func CallUsButton(sender: AnyObject) {
-        callAlertMessage("", message: "You want to contact us?")
-    }
-    
-    //Giap: Show alert message
-    func callAlertMessage(title : String,message : String){
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            // ...
-        }
-        alertController.addAction(cancelAction)
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-            UIApplication.sharedApplication().openURL(NSURL(string: "tel://0892300900")!)
-        }
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
-        }
+         UIApplication.sharedApplication().openURL(NSURL(string: "tel://0892300900")!)
     }
     
     // load data from JSON file

@@ -1,19 +1,12 @@
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    bcrypt = require('bcryptjs');
-passport.serializeUser(function(data, done) {
-    done(null, data.user.ID);
+    bcrypt = require('bcryptjs'),
+    moment = require('moment');
+passport.serializeUser(function(sessionUser, done) {
+    done(null, sessionUser);
 });
-passport.deserializeUser(function(ID, done) {
-    UserAccount.findOne({
-        where: {
-            ID: ID
-        }
-    }).then(function(user) {
-        done(null, user.dataValues);
-    }, function(err) {
-        done(err);
-    })
+passport.deserializeUser(function(sessionUser, done) {
+    done(null, sessionUser);
 });
 passport.use(new LocalStrategy({
     usernameField: 'username',
@@ -22,33 +15,73 @@ passport.use(new LocalStrategy({
 }, function(req, u, p, done) {
     var deviceId = req.headers.deviceid;
     var deviceType = req.headers.systemtype;
+    var appid = req.headers.appid;
+    var activationInfo = null;
+    if (req.body.activationInfo) activationInfo = req.body.activationInfo;
+    var requestBody = {
+        'UserName': u,
+        'Password': p,
+        'UserUID': !activationInfo ? null : activationInfo.userUID,
+        'DeviceID': !activationInfo ? null : deviceId,
+        'VerificationToken': !activationInfo ? null : activationInfo.verifyCode,
+        'AppID': appid
+    }
     TelehealthService.MakeRequest({
         path: '/api/login',
         method: 'POST',
-        body: {
-            'UserName': u,
-            'Password': p
-        },
+        body: requestBody,
         headers: {
             'DeviceID': deviceId,
-            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()]
+            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()],
+            'AppID': appid
         }
     }).then(function(response) {
         var data = response.getBody();
         var user = data.user;
-        TelehealthUser.find({
+        TelehealthUser.findOrCreate({
             where: {
-                userAccountID: user.ID
+                UserAccountID: user.ID
             },
-            attributes: ['UID']
-        }).then(function(teleUser) {
-            if (teleUser) {
-                user.UserUID = user.UID;
-                user.UID = teleUser.UID;
-                data.user = user;
-                return done(null, data, response.getBody().message);
-            } else return done(null, false, {
-                message: 'Wrong Username Or Password!'
+            defaults: {
+                UID: UUIDService.GenerateUUID()
+            }
+        }).spread(function(teleUser, created) {
+            user.TeleUID = teleUser.UID;
+            if (activationInfo) user.PatientUID = activationInfo.patientUID;
+            user.SystemType = HelperService.const.systemType[deviceType.toLowerCase()];
+            user.DeviceID = deviceId;
+            data.user = user;
+            RefreshToken.find({
+                where: {
+                    UserAccountID: user.ID,
+                    SystemType: HelperService.const.systemType[deviceType.toLowerCase()],
+                    DeviceID: deviceId
+                }
+            }).then(function(refreshToken) {
+                if (refreshToken) {
+                    var secretExpiredPlusAt = null;
+                    if (HelperService.checkListData(refreshToken.SecretExpired, refreshToken.SecretExpiredPlus)) secretExpiredPlusAt = moment(refreshToken.SecretCreatedAt).add(refreshToken.SecretExpired + refreshToken.SecretExpiredPlus, 'seconds').toDate();
+                    var sessionUser = {
+                        ID: user.ID,
+                        UID: user.UID,
+                        Activated: user.Activated,
+                        roles: user.roles,
+                        SystemType: HelperService.const.systemType[deviceType.toLowerCase()],
+                        DeviceID: deviceId,
+                        SecretKey: refreshToken.SecretKey,
+                        SecretCreatedAt: refreshToken.SecretCreatedAt,
+                        SecretExpired: refreshToken.SecretExpired,
+                        SecretExpiredPlus: refreshToken.SecretExpiredPlus,
+                        SecretExpiredPlusAt: secretExpiredPlusAt,
+                        AppID: refreshToken.AppID
+                    }
+                    data.sessionUser = sessionUser;
+                    return done(null, data, response.getBody().message);
+                } else return done(null, false, {
+                    message: 'Error'
+                })
+            }).catch(function(err) {
+                return done(err);
             })
         }).catch(function(err) {
             return done(err);

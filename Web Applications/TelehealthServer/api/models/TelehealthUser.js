@@ -2,67 +2,60 @@ module.exports = {
     attributes: {
         ID: {
             type: Sequelize.INTEGER,
-            field: 'ID',
             primaryKey: true,
             autoIncrement: true
         },
         UID: {
-            type: Sequelize.STRING,
-            field: 'UID'
+            type: Sequelize.STRING
         },
-        userAccountID: {
-            type: Sequelize.INTEGER,
-            field: 'UserAccountID'
+        UserAccountID: {
+            type: Sequelize.INTEGER
         },
-        firstName: {
-            type: Sequelize.STRING,
-            field: 'FirstName'
+        FirstName: {
+            type: Sequelize.STRING
         },
-        lastName: {
-            type: Sequelize.STRING,
-            field: 'LastName'
+        LastName: {
+            type: Sequelize.STRING
         },
-        dob: {
-            type: Sequelize.DATE,
-            field: 'DOB'
+        DOB: {
+            type: Sequelize.DATE
         },
-        address1: {
-            type: Sequelize.STRING,
-            field: 'Address1',
+        Address1: {
+            type: Sequelize.STRING
         },
-        address2: {
-            type: Sequelize.STRING,
-            field: 'Address2'
+        Address2: {
+            type: Sequelize.STRING
         },
-        createdDate: {
-            type: Sequelize.DATE,
-            field: 'CreatedDate'
+        CreatedDate: {
+            type: Sequelize.DATE
         },
-        createdBy: {
-            type: Sequelize.INTEGER,
-            field: 'CreatedBy'
+        CreatedBy: {
+            type: Sequelize.INTEGER
         },
-        modifiedDate: {
-            type: Sequelize.DATE,
-            field: 'ModifiedDate'
+        ModifiedDate: {
+            type: Sequelize.DATE
         },
-        modifiedBy: {
-            type: Sequelize.INTEGER,
-            field: 'ModifiedBy'
+        ModifiedBy: {
+            type: Sequelize.INTEGER
         }
     },
     associations: function() {
         TelehealthUser.belongsTo(UserAccount, {
-            foreignKey: 'userAccountID'
+            foreignKey: 'UserAccountID'
         });
     },
     options: {
         tableName: 'TelehealthUser',
-        timestamps: true,
-        createdAt: 'createdDate',
-        updatedAt: 'modifiedDate',
-        classMethods: {},
-        instanceMethods: {},
-        hooks: {}
+        timestamps: false,
+        hooks: {
+            beforeCreate: function(telehealthuser, options, callback) {
+                telehealthuser.CreatedDate = new Date();
+                callback();
+            },
+            beforeUpdate: function(telehealthuser, options, callback) {
+                telehealthuser.ModifiedDate = new Date();
+                callback();
+            }
+        }
     }
 };

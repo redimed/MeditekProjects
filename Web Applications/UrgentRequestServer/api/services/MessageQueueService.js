@@ -30,31 +30,36 @@ module.exports = {
                 .spread(function(UR) {
                     //check tried and confirmed urgent request
                     if (UR.tried < 3 && UR.status === 'pending') {
-                        var subjectEmail = '[Testing] -[' + UR.urgentRequestType + '] - [' + (UR.tried == 1 ? '2nd' : '3rd') + '] - [' +
+                        var subjectEmail = '[' + UR.urgentRequestType + '] - [' + (UR.tried == 1 ? '2nd' : '3rd') + '] - [' +
                             Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss') +
                             '] - [' + UR.firstName + ' ' +
                             UR.lastName + '] - [' + UR.phoneNumber + ']';
                         var GPReferral = Services.ConvertData.GPReferral(UR.GPReferral);
-                        var serviceType = Services.ConvertData.ServiceType(UR);
+                        var serviceType = Services.ConvertData.ServiceType(UR, UR.urgentRequestType === 'WorkInjury');
+                        var treatmentType = Services.ConvertData.TreatmentType(UR);
                         var emailInfo = {
-                            from: 'Redimed UrgentCare <HealthScreenings@redimed.com.au>',
-                            email: 'HealthScreenings@redimed.com.au',
-                            patientEmail: (!_.isUndefined(UR.email) && !_.isNull(UR.email)) ? UR.email : '',
+                            from: 'Redimed UrgentCare <onlinebooking@redimed.com.au>',
+                            email: 'onlinebooking@redimed.com.au',
+                            patientEmail: (HelperService.CheckExistData(UR.email) && UR.email.length !== 0) ? UR.email : '(None)',
                             subject: subjectEmail,
                             confirmed: APIService.UrgentCareConfirmURL + '/' + UR.UID,
-                            urgentRequestType: UR.urgentRequestType,
+                            urgentRequestType: (HelperService.CheckExistData(UR.urgentRequestType) && UR.urgentRequestType.length !== 0) ? UR.urgentRequestType : '(None)',
                             patientName: UR.firstName + ' ' + UR.lastName,
-                            requestDate: Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss'),
-                            phoneNumber: UR.phoneNumber,
-                            suburb: (!_.isUndefined(UR.suburb) && !_.isNull(UR.suburb)) ? UR.suburb : '',
-                            DOB: (!_.isUndefined(UR.DOB) && !_.isNull(UR.DOB)) ? UR.DOB : '',
+                            requestDate: (HelperService.CheckExistData(UR.requestDate) && UR.requestDate.length !== 0) ? Services.moment(UR.requestDate).format('DD/MM/YYYY HH:mm:ss') : '(None)',
+                            phoneNumber: (HelperService.CheckExistData(UR.phoneNumber) && UR.phoneNumber.length !== 0) ? UR.phoneNumber : '(None)',
+                            suburb: (HelperService.CheckExistData(UR.suburb) && UR.suburb.length !== 0) ? UR.suburb : '(None)',
+                            DOB: (HelperService.CheckExistData(UR.DOB) && UR.DOB.length !== 0) ? UR.DOB : '(None)',
                             GPReferral: GPReferral,
                             serviceType: serviceType,
-                            description: (!_.isUndefined(UR.description) && !_.isNull(UR.description)) ? UR.description : '',
-                            companyName: (!_.isUndefined(UR.companyName) && !_.isNull(UR.companyName)) ? UR.companyName : '',
-                            contactPerson: (!_.isUndefined(UR.contactPerson) && !_.isNull(UR.contactPerson)) ? UR.contactPerson : '',
-                            companyPhoneNumber: (!_.isUndefined(UR.companyPhoneNumber) && !_.isNull(UR.companyPhoneNumber)) ? UR.companyPhoneNumber : '',
-                            bcc: 'pnguyen@redimed.com.au, meditekcompany@gmail.com'
+                            specialist: UR.specialist,
+                            specialistType: (HelperService.CheckExistData(UR.specialistType) && UR.specialistType.length !== 0) ? UR.specialistType : '(None)',
+                            treatment: UR.treatment,
+                            treatmentType: treatmentType,
+                            description: (HelperService.CheckExistData(UR.description) && UR.description.length !== 0) ? UR.description : '(None)',
+                            companyName: (HelperService.CheckExistData(UR.companyName) && UR.companyName.length !== 0) ? UR.companyName : '(None)',
+                            contactPerson: (HelperService.CheckExistData(UR.contactPerson) && UR.contactPerson.length !== 0) ? UR.contactPerson : '(None)',
+                            companyPhoneNumber: (HelperService.CheckExistData(UR.companyPhoneNumber) && UR.companyPhoneNumber.length !== 0) ? UR.companyPhoneNumber : '(None)',
+                            bcc: 'meditekcompany@gmail.com, pnguyen@redimed.com.au'
                         };
                         var CallBackSendMail = function(err, responseStatus, html, text) {
                                 if (err) {

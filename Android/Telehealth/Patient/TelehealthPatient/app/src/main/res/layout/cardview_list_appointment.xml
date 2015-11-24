@@ -20,25 +20,27 @@
         android:orientation="horizontal"
         android:layout_gravity="center">
 
-        <TextView
-            android:id="@+id/lblTime"
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:id="@+id/lblNo"
             android:layout_width="120dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/lblDoctor"
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:id="@+id/lblDoctorRef"
             android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:gravity="center"/>
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_gravity="center"/>
 
 
-        <TextView
-            android:id="@+id/lblStatus"
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:id="@+id/lblDoctorPre"
             android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:gravity="center"/>
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

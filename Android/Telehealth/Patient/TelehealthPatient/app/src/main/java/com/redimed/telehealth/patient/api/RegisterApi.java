@@ -26,24 +26,30 @@ public interface RegisterApi {
     @POST("/api/telehealth/user/verifyActivationCode")
     void verify(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
 
-    @POST("/api/telehealth/user/details")
-    void getDetailsPatient(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
+    @GET("/api/telehealth/user/details/{teleUID}")
+    void getDetailsPatient(@Path("teleUID") String teleUID, Callback<JsonObject> callback);
 
-    @POST("/api/telehealth/user/appointments")
-    void getAppointmentPatients(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
+    @GET("/api/telehealth/user/appointments/{patientUID}")
+    void getAppointmentPatients(@Path("patientUID") String patientUID,
+                                Callback<JsonObject> callback);
 
-    @POST("/api/telehealth/user/appointmentDetails")
-    void getAppointmentDetails(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
+    @GET("/api/telehealth/user/telehealthAppointmentDetails/{apptUID}")
+    void getAppointmentDetails(@Path("apptUID") String apptUID, Callback<JsonObject> callback);
 
     //3005
     @Multipart
     @POST("/api/uploadFile")
-    void uploadFile(@Header("Authorization") String auth,
-                    @Header("DeviceID") String deviceId, @Header("SystemType") String systemType,
-                    @Part("userUID") String accountUID, @Part("fileType") String fileType,
-                    @Part("bodyPart") String bodyPart, @Part("description") String description,
-                    @Part("uploadFile") TypedFile uploadFile, Callback<JsonObject> callback);
+    void uploadFile(@Part("userUID") String userUID, @Part("fileType") String fileType, @Part("bodyPart") String bodyPart,
+                    @Part("description") String description, @Part("uploadFile") TypedFile uploadFile,
+                    Callback<JsonObject> callback);
 
     @POST("/api/telehealth/appointment/updateFile")
     void addAppointmentFile(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
+
+    //3005
+    @POST("/api/refresh-token/GetNewToken")
+    void getNewToken(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @POST("/api/telehealth/user/updateToken")
+    void updateToken(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 }

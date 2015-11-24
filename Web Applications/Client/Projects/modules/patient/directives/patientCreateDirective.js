@@ -30,11 +30,23 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 
 		},
 		link: function(scope, elem, attrs){
+			// State
+			scope.state = [
+				{'code':'VIC', 'name':'Victoria'},
+				{'code':'TAS', 'name':'Tasmania'},
+				{'code':'QLD', 'name':'Queensland'},
+				{'code':'NSW', 'name':'New South Wales'},
+				{'code':'WA', 'name':'Western Australia'},
+				{'code':'NT', 'name':'Northern Territory'},
+				{'code':'ACT', 'name':'Australian Capital Territory'}
+			];
+
+			// Title
 			scope.titles = [
-				{id:"0", name:'Mr'},
-				{id:"1", name:'Mrs'},
-				{id:"2", name:'Ms'},
-				{id:"3", name:'Dr'}
+				{'id':'Mr', 'name':'Mr'},
+				{'id':'Mrs', 'name':'Mrs'},
+				{'id':'Ms', 'name':'Ms'},
+				{'id':'Dr', 'name':'Dr'}
 			];
 			//services getListCountry
 			//call Api getListCountry from server
@@ -104,6 +116,13 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 								scope.isShowEmail1 = result.data.data.Email1;
 								scope.data.Email1 = result.data.data.Email1;
 								scope.isShowNext = true;
+								scope.data.CountryID1 = 14;
+								scope.data.Title= null;
+								scope.data.Gender= null;
+								scope.data.Address1= null;
+								scope.data.Suburb= null;
+								scope.data.Postcode= null;
+								scope.data.State = null;
 								// scope.data.DOB = new Date('1/1/1990');
 							}
 							else{
@@ -190,14 +209,20 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						scope.ermsg={};
 						scope.loadingCreate = false;
 						toastr.error("Please check data again.","ERROR");
-						scope.er = scope.er?scope.er:{};
-						for(var i = 0; i < err.data.message.ErrorsList.length; i++){
-							scope.er[err.data.message.ErrorsList[i].field] ={'border': '2px solid #DCA7B0'};
-							scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList[i].message;
+						if(err.data.message.ErrorsList[0].field!=undefined){
+							for(var i = 0; i < err.data.message.ErrorsList.length; i++){
+								scope.er[err.data.message.ErrorsList[i].field] ={'border': '2px solid #DCA7B0'};
+								scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList[i].message;
+							}
+						}
+						else{
+							for(var i = 0; i < err.data.message.ErrorsList.length; i++){
+								scope.er[err.data.message.ErrorsList[i].path] ={'border': '2px solid #DCA7B0'};
+								scope.ermsg[err.data.message.ErrorsList[i].path] = "invalid value";
+							}
 						}
 					});
 				},function(err){
-					console.log(err);
 					scope.loadingCreate = false;
 					scope.er={};
 					scope.ermsg={};
@@ -209,6 +234,11 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 					}
 				});
 			};
+
+			scope.checkDataNull = function(name){
+		    	if(scope.data[name].length==0)
+		    		scope.data[name] = null;
+		    };
 
 		},
 		templateUrl:"modules/patient/directives/template/patientCreate.html"

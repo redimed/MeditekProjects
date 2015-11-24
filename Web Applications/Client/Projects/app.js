@@ -36,7 +36,7 @@ app
         });
         //END TOASTR CONFIG
         // JWT SIGN
-        $httpProvider.interceptors.push(function($q, $location, $cookies) {
+        $httpProvider.interceptors.push(function($q, $location, $cookies,$rootScope) {
             return {
                 'request': function(config) {
                     config.headers = config.headers || {};
@@ -56,9 +56,47 @@ app
                 'response':function(response){
                     if(response.status===202)
                     {
-                        $cookies.put('token',response.headers().newtoken);
-                        // alert("OK")
-                        // alert(response.headers());
+                        //$cookies.put('token',response.headers().newtoken);
+                        // $.ajax({
+                        //     url: a_cross_domain_url,
+                        //     xhrFields: {
+                        //         withCredentials: true
+                        //     },
+
+                        // });
+
+                        $.ajax({
+                            type: "POST",
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            headers:{
+                                Authorization:'Bearer '+$cookies.get('token'),
+                                systemtype:'WEB'
+                            },
+                            url: o.const.restBaseUrl+'/api/refresh-token/GetNewToken',
+                            data: {refreshCode:$rootScope.refreshCode},
+                            success: function(data){
+                                //STANDARD
+                                /*if(data && data.status=='hasToken')
+                                {
+                                    $cookies.put("token", data.token);
+                                    $rootScope.refreshCode=data.refreshCode;
+                                }
+                                else
+                                {
+                                    alert(JSON.stringify(data));
+                                }*/
+                                if(data)
+                                {
+                                    if(data.refreshCode!=$rootScope.refreshCode)
+                                    {
+                                        $cookies.put("token", data.token);
+                                        $rootScope.refreshCode=data.refreshCode;
+                                    }
+                                }
+                            },
+                        });
                     }
                     return response;
                 },
@@ -172,15 +210,16 @@ app
         })
 
         $rootScope.$on('$viewContentLoaded', function() {
-             App.initAjax();
-            App.initComponents(); // init core components
+            App.initAjax();
+            FormWizard.init(); // form step
+            ComponentsDateTimePickers.init(); // init todo page
+
             ComponentsSelect2.init(); // init todo page
             ComponentsBootstrapSelect.init(); // init todo page
-            //ComponentsDateTimePickers.init(); // init todo page
-            FormWizard.init(); // form step
         });
         $rootScope.$on('$includeContentLoaded', function() {
             App.initAjax();
+            FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page
         });
     })

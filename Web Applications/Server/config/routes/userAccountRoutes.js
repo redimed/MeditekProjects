@@ -115,11 +115,20 @@ module.exports={
     	action:'GetSecretKey'
 	},
 
+	'post /api/refresh-token/GetNewToken':{
+		controller:'UserAccount/v0_1/RefreshTokenController',
+		action:'GetNewToken'
+	},
+
 	'post /api/user-account/get-DetailUser':{
 		controller:'UserAccount/v0_1/UserAccountController',
     	action:'getDetailUser'
 	},
 
+	'get /api/user-account/force/changepass':{
+		controller:'UserAccount/v0_1/UserAccountController',
+    	action:'forceChangePass'
+	},
 
 	'get /test':'TestController.test',
     'get /testAdmin':'TestController.testAdmin',

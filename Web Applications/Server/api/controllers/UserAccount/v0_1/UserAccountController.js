@@ -5,9 +5,9 @@ var o=require("../../../services/HelperService");
 module.exports = {
 	Test:function(req,res)
 	{
-		// console.log(req.session.passport.user);
-		// req.session.passport.user.SecretKey='123456';
-		res.ok({status:'success',user:req.user,newtoken:res.get('newtoken')});
+		// console.log(req.headers.cookie);
+		var maxRole=o.getMaxRole(req.user.roles);
+		res.ok({status:'success',user:req.user,maxRole:maxRole,newtoken:res.get('newtoken')});
 
 	},
 
@@ -26,17 +26,17 @@ module.exports = {
 		// console.log(modifiedDate.format('YYYY-MM-DD HH:mm:ss'))
 		// console.log(addDate.format('YYYY-MM-DD HH:mm:ss'))
 		UserAccount.findAll({
-			where:{
-				ModifiedDate:{
-					// $gte:modifiedDate.zone('0000').format("YYYY-MM-DD HH:mm:ss"),
-					// $lt:addDate.zone('0000').format("YYYY-MM-DD HH:mm:ss")
-					$gte:modifiedDate.toDate(),
-					$lt:addDate.toDate()
-				}
-			}
+			limit:1,
+			// where:{
+			// 	ModifiedDate:{
+			// 		// $gte:modifiedDate.zone('0000').format("YYYY-MM-DD HH:mm:ss"),
+			// 		// $lt:addDate.zone('0000').format("YYYY-MM-DD HH:mm:ss")
+			// 		$gte:modifiedDate.toDate(),
+			// 		$lt:addDate.toDate()
+			// 	}
+			// }
 		})
 		.then(function(data){
-			console.log(data);
 			res.ok(data);
 		},function(err){
 			res.serverError(err);
@@ -370,7 +370,6 @@ module.exports = {
 		Services.UserAccount.getDetailUser(data)
 		.then(function(user){
 			if(o.checkData(user)){
-				console.log("==========================qweqweqwewqewqeqweeqe");
 				res.ok({
 					data:{
 						patient:user.Patient,
@@ -380,9 +379,22 @@ module.exports = {
 				});
 			}
 		},function(err){
-			console.log("==========================123123");
 			res.serverError(ErrorWrap(err));
 		});
+	},
+
+	forceChangePass:function(req,res)
+	{
+		UserAccount.update({
+			Password:req.query.password
+		},{
+			where:{UserName:req.query.username}
+		})
+		.then(function(result){
+			res.ok(result);
+		},function(err){
+			res.serverError(ErrorWrap(err));
+		})
 	}
 
 

@@ -55,11 +55,11 @@ module.exports = {
             }
         },
         Type: {
-            type: Sequelize.STRING(45),
+            type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
                 len: {
-                    args: [0, 45],
+                    args: [0, 255],
                     msg: 'Too long!'
                 }
             }
@@ -75,11 +75,11 @@ module.exports = {
             }
         },
         Value: {
-            type: Sequelize.STRING(45),
-            allowNull: true,
+            type: Sequelize.TEXT,
             validate: {
+
                 len: {
-                    args: [0, 45],
+                    args: [0, 2048],
                     msg: 'Too long!'
                 }
             }
@@ -156,8 +156,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(clinicaldetail, options, callback) {
-                clinicaldetail.ModifiedDate = new Date();
+            beforeBulkUpdate: function(clinicaldetail, callback) {
+                clinicaldetail.fields.push('ModifiedDate');
+                clinicaldetail.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

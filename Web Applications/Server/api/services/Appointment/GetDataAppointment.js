@@ -135,6 +135,7 @@ module.exports = {
             InterpreterRequired: data.InterpreterRequired,
             InterpreterLanguage: data.InterpreterLanguage,
             OtherSpecialNeed: data.OtherSpecialNeed,
+            MedicareEligible: data.MedicareEligible,
             MedicareNumber: data.MedicareNumber,
             MedicareReferenceNumber: data.MedicareReferenceNumber,
             ExpiryDate: data.ExpiryDate,
@@ -194,6 +195,8 @@ module.exports = {
         preferredPractitioner.Doctor.IsRenewReferral = data.IsRenewReferral;
         preferredPractitioner.Doctor.PathologyProvider = data.PathologyProvider;
         preferredPractitioner.Doctor.RadiologyProvider = data.RadiologyProvider;
+        preferredPractitioner.Doctor.RefDate = data.RefDate;
+        preferredPractitioner.Doctor.RefDurationOfReferral = data.RefDurationOfReferral;
         return preferredPractitioner;
     },
     WAAppointment: function(data) {

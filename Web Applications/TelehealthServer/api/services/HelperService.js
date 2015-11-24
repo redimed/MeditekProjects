@@ -1,9 +1,25 @@
+var fs = require('fs');
 function checkData(value) {
     var result = true;
     if (value === undefined || value === null || value === '') {
         result = false;
     } else if (_.isObject(value) && _.isEmpty(value)) {
         result = false;
+    }
+    return result;
+}
+function checkListData() {
+    var result = true;
+    for (var i = 0; i < arguments.length; i++) {
+        if (arguments[i] === undefined || arguments[i] === null || arguments[i] === '') {
+            result = false;
+        } else if (_.isObject(arguments[i]) && _.isEmpty(arguments[i])) {
+            result = false;
+        }
+        if (result === false) {
+            console.log(">>>>>>>> Vi tri data truyen den bi loi:", i);
+            break;
+        }
     }
     return result;
 }
@@ -62,5 +78,19 @@ module.exports = {
         } else {
             return false;
         }
-    }
+    },
+    cleanObject: function(obj) {
+        if (_.isObject(obj)) {
+            for (var key in obj) {
+                if (!checkData(obj[key])) {
+                    delete obj[key];
+                }
+            }
+        } else {
+            obj = {};
+        }
+        return obj;
+    },
+    checkListData: checkListData,
+    checkData: checkData
 }

@@ -132,6 +132,72 @@
                 </div>
             </div>
             <hr>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group form-md-line-input">
+                        <input type="text" class="form-control edited" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Address1" name="Address">
+                        <label class="control-label">Address1
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group form-md-line-input">
+                        <input type="text" class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Address2">
+                        <label class="control-label">Address2</label>
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group form-md-line-input">
+                        <input type="text" class="form-control edited" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Suburb" name="Suburb">
+                        <label class="control-label">Suburb
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group form-md-line-input">
+                        <input type="text" class="form-control edited" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.Postcode" name="Postcode">
+                        <label class="control-label">Postcode
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group form-md-line-input">
+                        <input type="text" class="form-control edited" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PhoneNumber" name="PhoneNumber">
+                        <label class="control-label">Contact Number(M)
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group form-md-line-input">
+                        <input type="text" class="form-control edited" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.HomePhoneNumber" name="HomePhoneNumber">
+                        <label class="control-label">Contact Number(H)</label>
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group form-md-line-input">
+                        <input type="text" class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.FaxNumber">
+                        <label class="control-label">Fax Number</label>
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
             <!-- 2 -->
             <div class="row">
                 <div class="col-md-12 col-sm-12 ">
@@ -143,7 +209,7 @@
                                     <input type="radio" name="InterpreterRequired" id="InterpreterRequired" value="Y" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterRequired"> Yes
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="InterpreterRequired" id="InterpreterRequired" value="N" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterRequired"> No
+                                    <input type="radio" name="InterpreterRequired" id="InterpreterRequired" value="N" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-click="InterpreterRequiredNo()"> No
                                 </label>
                                 <label class="radio-inline">
                                     If yes, language/dialect

@@ -468,9 +468,12 @@ angular.module('app.authentication.patient.services',[])
 		var info = {
 			FirstName:postData.FirstName,
 			LastName:postData.LastName,
-			PhoneNumber:postData.WorkPhoneNumber,
+			PhoneNumber:postData.PhoneNumber,
 			DOB:postData.DOB,
 			Address1:postData.Address1,
+			Address2:postData.Address2,
+			// Email1:postData.Email2,
+			// HomePhoneNumber:postData.HomePhoneNumber,
 			Suburb:postData.Suburb,
 			Postcode:postData.Postcode
 		};

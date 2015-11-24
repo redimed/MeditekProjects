@@ -47,7 +47,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".CallActivity"
             android:label="@string/title_activity_call"
-            android:screenOrientation="portrait" />
+            android:keepScreenOn="true"
+            android:showOnLockScreen="true"
+            android:screenOrientation="sensorPortrait"/>
         <activity android:name=".MainActivity"
             android:launchMode="singleTask"
             android:label="@string/title_activity_main"
@@ -64,6 +66,15 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="Restart_Socket_Service" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".receiver.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <!-- Receives the actual messages. -->
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.redimed.telehealth.patient" />
             </intent-filter>
         </receiver>
         <receiver android:name="com.google.android.gms.gcm.GcmReceiver"

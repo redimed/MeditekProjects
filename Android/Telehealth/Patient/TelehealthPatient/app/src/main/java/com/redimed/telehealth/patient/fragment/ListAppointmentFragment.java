@@ -146,7 +146,7 @@ public class ListAppointmentFragment extends Fragment {
                         listAppointment.add(appointment);
                     }
                 }
-                rvAdapter.swapDataAppointment(listAppointment, getActivity());
+                rvAdapter.swapDataAppointment(listAppointment);
                 if (listAppointment.size() == 0) {
                     lblNoData.setVisibility(View.VISIBLE);
                 }

@@ -13,8 +13,10 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -82,6 +84,12 @@ public class AppointmentDetails extends Fragment {
     Button btnUpload;
     @Bind(R.id.rvImageAppointment)
     RecyclerView rvImageAppointment;
+    @Bind(R.id.toolBar)
+    Toolbar toolBar;
+    @Bind(R.id.lblTitle)
+    TextView lblTitle;
+    @Bind(R.id.lblHome)
+    TextView btnHome;
 
     public AppointmentDetails() {}
 
@@ -112,6 +120,18 @@ public class AppointmentDetails extends Fragment {
             @Override
             public void onClick(View v) {
                 DialogUploadImage();
+            }
+        });
+
+        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        appCompatActivity.setSupportActionBar(toolBar);
+        toolBar.setBackgroundResource(R.drawable.detail_appt_bg);
+        lblTitle.setText(getResources().getString(R.string.appt_title));
+        btnHome.setText(getResources().getString(R.string.home_title));
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) v.getContext()).Display(0);
             }
         });
         return v;

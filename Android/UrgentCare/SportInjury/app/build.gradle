@@ -12,7 +12,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
     defaultConfig {
-        applicationId "patient.telehealth.redimed.sportinjury"
+        applicationId "telehealth.redimed.sportinjury"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1

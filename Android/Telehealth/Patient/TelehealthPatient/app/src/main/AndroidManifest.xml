@@ -21,10 +21,9 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE" android:protectionLevel="signature" />
     <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-    <permission android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE" android:protectionLevel="signature" />
 
     <application
         android:name=".MyApplication"
@@ -73,28 +72,22 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
                 <category android:name="com.redimed.telehealth.patient" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".service.SocketService"
-            android:enabled="true" />
-        <service android:name=".service.MyGcmListenerService"
-            android:exported="false">
+        <service android:name=".service.SocketService" android:enabled="true" />
+        <service android:name=".service.MyGcmListenerService" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-        <service android:name=".service.MyInstanceIDListenerService"
-            android:exported="false">
+        <service android:name=".service.MyInstanceIDListenerService" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
-        <service android:name=".service.RegistrationIntentService"
-            android:enabled="true"
-            android:exported="false">
+        <service android:name=".service.RegistrationIntentService" android:enabled="true" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>

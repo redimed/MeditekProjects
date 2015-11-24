@@ -16,21 +16,22 @@
 
 package com.redimed.telehealth.patient.service;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 import com.google.android.gms.gcm.GcmListenerService;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.redimed.telehealth.patient.ActivationActivity;
-import com.redimed.telehealth.patient.utils.Config;
+import com.redimed.telehealth.patient.CallActivity;
+import com.redimed.telehealth.patient.R;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -38,26 +39,40 @@ public class MyGcmListenerService extends GcmListenerService {
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
+        Log.d(TAG, data.toString() );
+
         String message = data.getString("message");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
-        sendNotification(message);
+        if (message != null){
+            sendNotification(message);
+        }
     }
 
     private void sendNotification(String message) {
-        Intent intent = new Intent(this, ActivationActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        Log.d(TAG, message);
+        Intent intent = new Intent(getApplicationContext(), CallActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle("GCM Message")
-                .setContentText(message)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+        NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setTicker(getResources().getString(R.string.not_title))
+                .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
+                .setContentIntent(contentIntent);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//            builder = builder.setContent(getComplexNotificationView());
+//        } else {
+//            builder = builder.setContentTitle(getTitle())
+//                    .setContentText(getText())
+//                    .setSmallIcon(android.R.drawable.ic_menu_gallery);
+//        }
+
+        RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.custom_notification_call);
+        contentView.setTextViewText(R.id.title, "Custom notification");
+        contentView.setTextViewText(R.id.text, "This is a custom layout");
+        contentView.setOnClickPendingIntent(R.id.btnEnd, contentIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(Config.NotificationID, notificationBuilder.build());
+        notificationManager.notify(100, builder.build());
     }
 }

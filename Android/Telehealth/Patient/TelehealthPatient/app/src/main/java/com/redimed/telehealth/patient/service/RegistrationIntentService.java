@@ -31,7 +31,7 @@ import com.google.android.gms.iid.InstanceID;
 
 import com.redimed.telehealth.patient.utils.Config;
 
-public class RegistrationIntentService extends IntentService {
+public class    RegistrationIntentService extends IntentService {
 
     private static String TAG = "RegIntentService";
     private static SharedPreferences.Editor editor;

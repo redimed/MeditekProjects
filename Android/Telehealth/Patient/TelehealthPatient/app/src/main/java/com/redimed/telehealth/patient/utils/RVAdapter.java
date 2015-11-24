@@ -44,7 +44,7 @@ public class RVAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<Category> categories;
     private List<Appointment> listAppointment;
     private static String firstName, lastName, dateTime, status;
-    private FragmentActivity fragmentActivity;
+//    private FragmentActivity fragmentActivity;
 
     public RVAdapter(Context context, int type) {
         this.context = context;
@@ -60,7 +60,7 @@ public class RVAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public void swapDataAppointment(List<Appointment> data, FragmentActivity fragmentActivity) {
-        this.fragmentActivity = fragmentActivity;
+//        this.fragmentActivity = fragmentActivity;
         listAppointment.clear();
         listAppointment.addAll(data);
         notifyDataSetChanged();
@@ -102,13 +102,13 @@ public class RVAdapter extends RecyclerView.Adapter<ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   SubTracking(itemView, getAdapterPosition());
+                    SubTracking(itemView, getAdapterPosition());
                 }
             });
         }
     }
 
-    private void SubTracking(View v, int position){
+    private void SubTracking(View v, int position) {
         Fragment fragment = new TrackingFragment();
         Bundle bundle = new Bundle();
         bundle.putString("apptUID", listAppointment.get(position).getUID());
@@ -165,18 +165,25 @@ public class RVAdapter extends RecyclerView.Adapter<ViewHolder> {
             case TYPE_APPOINTMENT:
                 AppointmentViewHolder appointmentViewHolder = (AppointmentViewHolder) viewHolder;
                 Doctor[] doctors = listAppointment.get(position).getDoctor();
-
                 dateTime = listAppointment.get(position).getFromTime();
                 status = listAppointment.get(position).getStatus();
-                for (int i = 0; i < doctors.length; i++) {
-                    firstName = doctors[i].getFirstName() == null
-                            ? " " : doctors[i].getFirstName();
-                    lastName = doctors[i].getLastName() == null
-                            ? " " : doctors[i].getLastName();
+                for (Doctor doctor : doctors) {
+                    Log.d(doctor.getFirstName(), " == " + doctor.getLastName());
+                    firstName = doctor.getFirstName() == null ? " " : doctor.getFirstName();
+                    lastName = doctor.getLastName() == null ? " " : doctor.getLastName();
+                }
+                if (!firstName.equalsIgnoreCase(" ")) {
+                    int no = position + 1;
+                    String ref;
+                    if (no <= 9) {
+                        ref = "Ref0" + no;
+                    } else {
+                        ref = "Ref" + no;
+                    }
+                    appointmentViewHolder.lblNo.setText(ref);
+                    appointmentViewHolder.lblDoctorRef.setText(listAppointment.get(position).getTelehealthAppointment().getRefName());
                     appointmentViewHolder.lblDoctorPre.setText(firstName + lastName);
                 }
-                appointmentViewHolder.lblNo.setText("Ref" + (position + 1));
-                appointmentViewHolder.lblDoctorRef.setText(listAppointment.get(position).getTelehealthAppointment().getRefName());
                 break;
         }
     }

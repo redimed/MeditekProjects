@@ -21,7 +21,6 @@ class AppointmentListTableViewCell: UITableViewCell {
     weak var delegate : AppointmentListTableViewCellDelegate?
     
     func configAppointment(Appointment:AppointmentList){
-        print(Appointment.FromTime)
         if Appointment.FromTime == "" {
         }else {
             appointmentDate.text = Appointment.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDateTime)

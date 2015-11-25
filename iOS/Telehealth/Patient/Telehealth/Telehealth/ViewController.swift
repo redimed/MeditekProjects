@@ -38,6 +38,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
     }
     //Giap: Validate email and change view
     @IBAction func btnCheckPhoneAction(sender: DesignableButton)  {
+         view.endEditing(true)
         //Check email if email is valid return message
         if (phoneTextField.text == "" || validatePhoneNumber(phoneTextField.text!) == false){
             animationView(viewPhoneNumber)
@@ -55,9 +56,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     self.view.hideLoading()
                     if let cookie = defaults.valueForKey("Set-Cookie") as? String{
                         cookies = cookie
-                        print("bbb----",cookies)
                     }
-
                     self.performSegueWithIdentifier("phoneRegisterSegue", sender: self)
                 }else {
                     self.view.hideLoading()

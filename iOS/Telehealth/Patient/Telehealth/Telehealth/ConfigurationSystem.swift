@@ -20,6 +20,7 @@ var userUID = String()
 var cookies = String()
 var PatientInfo : Patient!
 let phoneNumberCallUs = "0892300900"
+var statusCallingNotification = ""
 struct ConfigurationSystem {
     static let http = "http://testapp.redimed.com.au"
     

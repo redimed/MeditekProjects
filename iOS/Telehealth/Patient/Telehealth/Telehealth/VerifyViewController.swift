@@ -45,6 +45,7 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
     
     //Giap: Handle verify code and check field is valid
     @IBAction func VerifyButtonAction(sender: UIButton)  {
+        view.endEditing(true)
         if textFieldVerifyCode.text == "" || textFieldVerifyCode.text?.length < 6 {
             //Start animation
             textFieldVerifyCode.animation = "shake"
@@ -63,14 +64,14 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
             //Send request phone number to server
             verifyPhoneNumberController.CheckVerifyPhoneNumber(textFieldVerifyCode.text!,deviceID: config.deviceID!,phoneNumber:phoneNumber){
                 response in
-                print(response)
                 if response["status"] == "success"{
                     self.view.hideLoading()
+                        print("vvvvvvvvv-------",response["teleUID"])
                     let defaults = NSUserDefaults.standardUserDefaults()
-                    let uid = response["user"]["TeleUID"].string! as String 
+                    let uid = response["teleUID"].string! as String
                     let token = response["token"].string! as String
-                    let patientUID = response["user"]["PatientUID"].string! as String
-                    let userUID = response["user"]["UID"].string! as String
+                    let patientUID = response["patientUID"].string! as String
+                    let userUID = response["userUID"].string! as String
                     let refreshCode = response["refreshCode"].string! as String
                  
                 
@@ -95,7 +96,6 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                         let message : String = String(response["ErrorsList"][0])
                         self.textFieldVerifyCode.text = ""
                         self.alertMessage("Error", message: message)
-                        
                     }
                     
                 }

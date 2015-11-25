@@ -36,8 +36,10 @@ class InformationViewController: UIViewController {
     //get information patient
     func getInformationPatient(){
         if let uuid = defaults.valueForKey("uid") as? String {
+            
             InformationPatient.getInformationPatientByUUID(uuid){
                 response in
+                
                 if response["message"] == "success" {
                     self.view.hideLoading()
                     self.fullName.text = PatientInfo.FirstName + " " + PatientInfo.MiddleName + " " + PatientInfo.LastName
@@ -49,7 +51,7 @@ class InformationViewController: UIViewController {
                     self.emailLabel.text = PatientInfo.Email1
                     self.homePhoneLabel.text = PatientInfo.HomePhoneNumber
                 } else if response["message"] == "error"{
-                    self.alertMessage("Error", message: ErrorMessage.NoData)
+                    self.alertMessage("Error", message: response["ErrorType"].string!)
                 }else {
                     self.view.hideLoading()
                     if response["TimeOut"].string ==  ErrorMessage.TimeOut {
@@ -82,6 +84,29 @@ class InformationViewController: UIViewController {
         }
     }
     
+    @IBAction func LogoutAction(sender: AnyObject) {
+        
+        
+        let alertController = UIAlertController(title: "Logout", message: "Are you sure?", preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        }
+        alertController.addAction(cancelAction)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.removeObjectForKey("verifyUser")
+            defaults.synchronize()
+            
+            self.performSegueWithIdentifier("logoutSegue", sender: self)
+        }
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            // ...
+        }
+        
+    }
     
     
 }

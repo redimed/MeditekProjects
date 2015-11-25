@@ -20,12 +20,18 @@ extension String
         dateFormatter.dateFormat = time//this your string date format
         dateFormatter.timeZone = NSTimeZone(name: "UTC")
         let date = dateFormatter.dateFromString(self)
+        if date != nil {
+            dateFormatter.dateFormat = format///this is you want to convert format
+            dateFormatter.timeZone = NSTimeZone(name: "UTC")
+            let timeStamp = dateFormatter.stringFromDate(date!)
+            return String(timeStamp)
+        }else {
+            return String(self)
+        }
         
-        dateFormatter.dateFormat = format///this is you want to convert format
-        dateFormatter.timeZone = NSTimeZone(name: "UTC")
-        let timeStamp = dateFormatter.stringFromDate(date!)
+       
         //Return Parsed Date
-        return String(timeStamp)
+        
     }
 
     //Change format Male or Female

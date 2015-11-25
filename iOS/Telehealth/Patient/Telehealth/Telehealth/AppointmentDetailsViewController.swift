@@ -60,7 +60,7 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
             response in
 
             if response["message"] == "error"{
-                self.alertMessage("Error", message: ErrorMessage.NoData)
+//                self.alertMessage("Error", message: ErrorMessage.NoData)
             }else {
                 let countImage = response.count
                 

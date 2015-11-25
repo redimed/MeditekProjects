@@ -39,8 +39,8 @@ class GetAndPostDataController {
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         let parameters = [
             "data": [
-                // "phone":"+61"+phoneNumber,
-                "phone":"+841654901590",
+                 "phone":"+61"+phoneNumber,
+//                "phone":"+841654901590",
                 "deviceId":deviceID,
                 "deviceType": "ios"
             ]
@@ -54,9 +54,8 @@ class GetAndPostDataController {
             }
             switch result {
             case .Success(let JSONData):
-                
-                completionHandler(JSON(JSONData) )
-                
+                    print(JSONData)
+                 completionHandler(JSON(JSONData))
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
                 completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
@@ -67,6 +66,7 @@ class GetAndPostDataController {
         }
         
     }
+    
     //Giap: Check verify code
     func CheckVerifyPhoneNumber (verifyCode:String,deviceID:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
         
@@ -76,8 +76,8 @@ class GetAndPostDataController {
                 "code":verifyCode,
                 "deviceId":deviceID,
                 "deviceType": "ios",
-                // "Phone":"+61" + phoneNumber
-                "phone":"+841654901590"
+                 "Phone":"+61" + phoneNumber
+//                "phone":"+841654901590"
             ]
         ]
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.CheckVerifyCode ,headers:headers, parameters: parameters).responseJSON{
@@ -86,8 +86,14 @@ class GetAndPostDataController {
             switch result {
             case .Success(let JSONData):
                 print(JSON(JSONData))
-                completionHandler(JSON(JSONData) )
-                
+                var data = JSON(JSONData)
+                let verifyCode = data["verifyCode"].string! as String
+                let patientUID = data["patientUID"].string!   as String
+                let userUID = data["userUID"].string!  as String
+                self.loginApi(userUID: userUID, patientUID: patientUID, verifyCode: verifyCode){
+                    dataResponse in
+                    completionHandler(dataResponse)
+                }
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
                 completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
@@ -97,6 +103,86 @@ class GetAndPostDataController {
             }
         }
     }
+    
+    func loginApi(userUID userUID:String,patientUID:String,verifyCode:String,completionHandler:(JSON) -> Void){
+        let parameters = [
+                "UserName":"1",
+                "Password":"2",
+                "UserUID": userUID,
+                "DeviceID":config.deviceID! as String,
+                "VerificationToken":verifyCode,
+                "AppID":UIApplication.sharedApplication().bundleID()
+        ]
+        Alamofire.request(.POST, ConfigurationSystem.Http_3005 + UrlAPICheckPhoneNumber.apiLogin ,headers:headers, parameters: parameters).responseJSON{
+            request, response, result in
+            print("Reponse--",response)
+            if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
+                if requireupdatetoken as! String == "true" {
+                    print("Reponse",requireupdatetoken)
+                    self.getNewToken()
+                }
+            }
+ 
+            switch result {
+            case .Success(let JSONData):
+                let data = JSON(JSONData)
+                self.informationUser(data,patientUID: patientUID){
+                    dataResponse in
+                    completionHandler(dataResponse)
+                }
+            case .Failure(let data, let error):
+                completionHandler(JSON(data!))
+                print("Request failed with error: \(error)")
+                if let data = data {
+                    print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                }
+            }
+        }
+        
+    }
+    
+    
+    
+    func informationUser(data:JSON,patientUID:String ,completionHandler:(JSON) -> Void){
+        let uid = data["user"]["UID"].string! as String
+        let token = data["token"].string! as String
+        let refreshCode = data["refreshCode"].string! as String
+        Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getUserInfo + uid ,headers:headers).responseJSON{
+            request, response, result in
+            if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
+                if requireupdatetoken as! String == "true" {
+                    print("Reponse",requireupdatetoken)
+                    self.getNewToken()
+                }
+            }
+
+            switch result {
+            case .Success(let JSONData):
+                let data = JSON(JSONData)
+                let userInfo = [
+                    "patientUID":patientUID,
+                    "token":token,
+                    "refreshCode":refreshCode,
+                    "userUID":uid,
+                    "teleUID":data["UID"].string! as String,
+                    "status":"success"
+                ]
+                completionHandler(JSON(userInfo))
+                
+                
+            case .Failure(let data, let error):
+                completionHandler(JSON(data!))
+                print("Request failed with error: \(error)")
+                if let data = data {
+                    print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                }
+            }
+        }
+
+    }
+
+
+    
     //Giap: Get information Patient by UID
     func getInformationPatientByUUID(UUID:String,completionHandler:(JSON) -> Void){
         Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getInformationPatientByUID + UUID,headers:headers).responseJSON{
@@ -110,10 +196,11 @@ class GetAndPostDataController {
             case .Success(let JSONData):
                 
                 var data = JSON(JSONData)
+                
                 print(data)
                 let jsonInformation = data["data"][0] != nil ? data["data"][0] : ""
                 if jsonInformation == "" {
-                    completionHandler(JSON(["message":"error"]))
+                    completionHandler(JSON(["message":"error","ErrorType":data["ErrorType"]]))
                     
                 }else {
                     let MiddleName = jsonInformation["MiddleName"].string ?? ""
@@ -168,7 +255,7 @@ class GetAndPostDataController {
             }
             switch result {
             case .Success(let JSONData):
-                
+                print(JSON(JSONData))
                 completionHandler(JSON(JSONData))
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
@@ -265,7 +352,7 @@ class GetAndPostDataController {
                         self.getNewToken()
                     }
                 }
-
+                
                 switch result {
                 case .Success(let JSONData):
                     var data = JSON(JSONData)
@@ -365,7 +452,48 @@ class GetAndPostDataController {
             }
         }
     }
-    
+    func updateTokenPush(uuid:String){
+        print("aaaaaaaaa",defaults.valueForKey("deviceToken"))
+        if let deviceToken = defaults.valueForKey("deviceToken"){
+            let parameters = [
+                "data" : [
+                    "uid":uuid,
+                    "token":deviceToken
+                ]
+            ]
+             print(parameters)
+            let headersPush = [
+                "Authorization": "Bearer \(tokens)",
+                "Version" : "1.0",
+                "systemtype": "IOS",
+                "deviceId" : config.deviceID! as String,
+                "useruid":"\(userUID ?? "")",
+                "Cookie": cookies as String,
+                "appid":UIApplication.sharedApplication().bundleID()
+            ]
+            Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.updateTokenPush, headers:headersPush, parameters: parameters)
+                .responseJSON {
+                    request, response, result in
+                    if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
+                        if requireupdatetoken as! String == "true" {
+                            self.getNewToken()
+                        }
+                    }
+                    switch result {
+                    case .Success(let JSONData):
+                        let data = JSON(JSONData)
+                        print("data---",data)
+                        
+                    case .Failure(let data, let error):
+                        print("Request failed with error: \(error)")
+                        if let data = data {
+                            print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                        }
+                    }
+            }
+        }
+       
+    }
     
     
 }

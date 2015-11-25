@@ -1,9 +1,10 @@
 angular.module('app.unAuthentication.service', [])
-.factory("UnauthenticatedService", function(Restangular) {
+.factory("UnauthenticatedService", function(Restangular,AuthRestangular) {
     var services = {};
     var api = Restangular.all("api");
+    var authApi = AuthRestangular.all("api");
     services.login = function(options) {
-        return api.all('login').post(options);
+        return authApi.all('login').post(options);
     },
     services.checkPhoneUserAccount = function(data) {
         var instanceApi = api.all('checkphoneUserAccount');

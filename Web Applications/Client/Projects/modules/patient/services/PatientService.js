@@ -202,7 +202,7 @@ angular.module('app.authentication.patient.services',[])
 			//validate Gender
 			if('Gender' in info)
 			if(info.Gender){
-				if(info.Gender != "F" && info.Gender != "M"){
+				if(info.Gender != "Female" && info.Gender != "Male" && info.Gender != "Other"){
 					error.push({field:"Gender",message:"invalid value"});
 				}
 			}
@@ -337,7 +337,7 @@ angular.module('app.authentication.patient.services',[])
 			//validate WorkPhone
 			if('WorkPhoneNumber' in info){
 				if(info.WorkPhoneNumber){
-					var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{6-10}$/);
+					var auWorkPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var WorkPhoneNumber=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
 						error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -348,7 +348,7 @@ angular.module('app.authentication.patient.services',[])
 			//validate HomePhoneNumber? hoi a Tan su dung exception
 			if('HomePhoneNumber' in info){
 				if(info.HomePhoneNumber){
-					var auHomePhoneNumberPattern=new RegExp(/^[1-9]{6-10}$/);
+					var auHomePhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auHomePhoneNumberPattern.test(HomePhone)){
 						error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});

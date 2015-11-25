@@ -13,10 +13,10 @@ function sendSMS(toNumber, content) {
     });
 };
 module.exports = {
-    GetUserDetails: function(req, res) {
+    GetPatientDetails: function(req, res) {
         var params = req.params.all();
         if (!params.uid) {
-            var err = new Error("Telehealth.GetUserDetails.Error");
+            var err = new Error("Telehealth.GetPatientDetails.Error");
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
@@ -24,7 +24,7 @@ module.exports = {
         var headers = req.headers;
         var deviceType = headers.systemtype;
         if (!uid || !deviceType || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
-            var err = new Error("Telehealth.GetUserDetails.Error");
+            var err = new Error("Telehealth.GetPatientDetails.Error");
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
         }
@@ -39,13 +39,58 @@ module.exports = {
                             res.json(err.getCode(), err.getBody());
                         });
                     } else {
-                        var err = new Error("Telehealth.GetUserDetails.Error");
+                        var err = new Error("Telehealth.GetPatientDetails.Error");
                         err.pushError("User Is Not Exist");
                         return res.serverError(ErrorWrap(err));
                     }
                 })
             } else {
-                var err = new Error("Telehealth.GetUserDetails.Error");
+                var err = new Error("Telehealth.GetPatientDetails.Error");
+                err.pushError("User Is Not Exist");
+                return res.serverError(ErrorWrap(err));
+            }
+        })
+    },
+    GetTelehealthUser: function(req, res) {
+        var params = req.params.all();
+        if (!params.uid) {
+            var err = new Error("Telehealth.GetTelehealthUser.Error");
+            err.pushError("Invalid Params");
+            return res.serverError(ErrorWrap(err));
+        }
+        var uid = params.uid;
+        var headers = req.headers;
+        var deviceType = headers.systemtype;
+        if (!uid || !deviceType || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
+            var err = new Error("Telehealth.GetTelehealthUser.Error");
+            err.pushError("Invalid Params");
+            return res.serverError(ErrorWrap(err));
+        }
+        UserAccount.find({
+            where: {
+                UID: uid
+            }
+        }).then(function(user) {
+            if (user) {
+                TelehealthUser.findOrCreate({
+                    where: {
+                        UserAccountID: user.ID
+                    },
+                    defaults: {
+                        UID: UUIDService.GenerateUUID()
+                    }
+                }).spread(function(teleUser, created) {
+                    if (teleUser) return res.ok(teleUser);
+                    else {
+                        var err = new Error("Telehealth.GetTelehealthUser.Error");
+                        err.pushError("User Is Not Exist");
+                        return res.serverError(ErrorWrap(err));
+                    }
+                }).catch(function(err) {
+                    return res.serverError(ErrorWrap(err));
+                })
+            } else {
+                var err = new Error("Telehealth.GetTelehealthUser.Error");
                 err.pushError("User Is Not Exist");
                 return res.serverError(ErrorWrap(err));
             }
@@ -110,39 +155,6 @@ module.exports = {
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
         })
-    },
-    TelehealthLogout: function(req, res) {
-        req.logout();
-        res.ok({
-            status: "success"
-        });
-    },
-    TelehealthLogin: function(req, res) {
-        var deviceId = req.headers.deviceid;
-        var deviceType = req.headers.systemtype;
-        passport.authenticate('local', function(err, u, info) {
-            if ((err) || (!u)) {
-                if (!err) var err = info;
-                return res.unauthorize(err);
-            }
-            req.logIn(u.sessionUser, function(err) {
-                if (err) res.unauthorize(err);
-                else {
-                    if (!deviceType || !deviceId || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
-                        var err = new Error("TelehealthLogin");
-                        err.pushError("Invalid Params");
-                        return res.serverError(ErrorWrap(err));
-                    }
-                    res.ok({
-                        status: 'success',
-                        message: info.message,
-                        user: u.user,
-                        token: u.token,
-                        refreshCode: u.refreshCode
-                    });
-                }
-            });
-        })(req, res);
     },
     UpdateDeviceToken: function(req, res) {
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
@@ -291,32 +303,7 @@ module.exports = {
                                     verifyCode: data.VerificationToken,
                                     patientUID: patient.UID
                                 }
-                                req.body.activationInfo = activationInfo;
-                                req.body.username = 1;
-                                req.body.password = 2;
-                                passport.authenticate('local', function(err, u, info) {
-                                    if ((err) || (!u)) {
-                                        if (!err) var err = info;
-                                        return res.unauthorize(err);
-                                    }
-                                    req.logIn(u.sessionUser, function(err) {
-                                        if (err) res.unauthorize(err);
-                                        else {
-                                            if (!deviceType || !deviceId || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
-                                                var err = new Error("TelehealthLogin");
-                                                err.pushError("Invalid Params");
-                                                return res.serverError(ErrorWrap(err));
-                                            }
-                                            res.ok({
-                                                status: 'success',
-                                                message: info.message,
-                                                user: u.user,
-                                                token: u.token,
-                                                refreshCode: u.refreshCode
-                                            });
-                                        }
-                                    });
-                                })(req, res);
+                                return res.ok(activationInfo);
                             }).catch(function(err) {
                                 return res.serverError(err.getBody());
                             })
@@ -342,6 +329,84 @@ module.exports = {
             res.serverError(ErrorWrap(err));
         }
     },
+    PushNotification: function(req, res) {
+        if (typeof req.body == 'undefined' || !HelperService.toJson(req.body)) {
+            var err = new Error("Telehealth.PushNotification.Error");
+            err.pushError("Invalid Params");
+            res.serverError(ErrorWrap(err));
+            return;
+        }
+        var info = HelperService.toJson(req.body);
+        var data = info.data;
+        var title = info.title;
+        var category = info.category;
+        var uid = info.uid;
+        if (!uid || !data) {
+            var err = new Error("Telehealth.PushNotification.Error");
+            err.pushError("Invalid Params");
+            return res.serverError(ErrorWrap(err));
+        }
+        var iosMess = {
+            badge: 1,
+            alert: title ? title : 'Notification From REDiMED',
+            payload: {
+                "data": data
+            },
+            category: category ? category : null
+        };
+        var androidMess = {
+            collapseKey: 'REDiMED',
+            priority: 'high',
+            contentAvailable: true,
+            delayWhileIdle: true,
+            timeToLive: 3,
+            data: {
+                "data": data
+            },
+            notification: {
+                title: "REDiMED",
+                icon: "ic_launcher",
+                body: title ? title : 'Notification From REDiMED'
+            }
+        };
+        TelehealthUser.FindByUID(uid).then(function(teleUser) {
+            if (teleUser) {
+                TelehealthDevice.findAll({
+                    where: {
+                        TelehealthUserID: teleUser.ID
+                    }
+                }).then(function(devices) {
+                    var iosDevices = [];
+                    var androidDevices = [];
+                    if (devices) {
+                        for (var i = 0; i < devices.length; i++) {
+                            if (devices[i].Type == 'IOS') iosDevices.push(devices[i].DeviceToken);
+                            else androidDevices.push(devices[i].DeviceToken);
+                        }
+                        if (iosDevices.length > 0) TelehealthService.SendAPNPush(iosMess, iosDevices);
+                        if (androidDevices.length > 0) {
+                            TelehealthService.SendGCMPush(androidMess, androidDevices).then(function(result) {
+                                console.log(result);
+                            }).catch(function(err) {
+                                console.log(err);
+                            })
+                        }
+                        return res.ok({
+                            status: 'success'
+                        });
+                    } else {
+                        var err = new Error("Telehealth.PushNotification.Error");
+                        err.pushError("No Devices Was Found");
+                        return res.serverError(ErrorWrap(err));
+                    }
+                })
+            } else {
+                var err = new Error("Telehealth.PushNotification.Error");
+                err.pushError("User Not Exist");
+                return res.serverError(ErrorWrap(err));
+            }
+        })
+    },
     TestPushAPN: function(req, res) {
         var tokens = [];
         TelehealthDevice.findAll({
@@ -357,8 +422,16 @@ module.exports = {
                     badge: 2,
                     alert: 'Test Push Notification',
                     payload: {
-                        data: 'user1'
-                    }
+                        "data": {
+                            "apiKey": "45364382",
+                            "message": "call",
+                            "fromName": "",
+                            "sessionId": "",
+                            "token": "",
+                            "from": ""
+                        }
+                    },
+                    category: "CALLING_MESSAGE"
                 };
                 TelehealthService.SendAPNPush(opts, tokens);
                 return res.ok({
@@ -387,8 +460,14 @@ module.exports = {
                     delayWhileIdle: true,
                     timeToLive: 3,
                     data: {
-                        data1: 'user1',
-                        data2: 'user2'
+                        "data": {
+                            "apiKey": "45364382",
+                            "message": "call",
+                            "fromName": "",
+                            "sessionId": "",
+                            "token": "",
+                            "from": ""
+                        }
                     },
                     notification: {
                         title: "Redimed",

@@ -48,6 +48,82 @@ module.exports = {
         var message = req.param('message');
         var data = {};
         if (!message || !from || !to) return;
+        var fromName = req.param('fromName');
+        var sessionId = null;
+        var tokenOptions = {
+            role: 'moderator'
+        };
+        var token = null;
+
+        if (message.toLowerCase() == 'call') {
+            sessionId = req.param('sessionId');
+            if (!sessionId) return;
+            token = opentok.generateToken(sessionId, tokenOptions);
+            var iosMess = {
+                badge: 1,
+                alert: 'Calling From ' + (!fromName ? 'Unknown' : fromName),
+                payload: {
+                    "data": {
+                        "apiKey": config.OpentokAPIKey,
+                        "message": message,
+                        "fromName": (!fromName ? 'Unknown' : fromName),
+                        "sessionId": sessionId,
+                        "token": token,
+                        "from": from
+                    }
+                },
+                category: "CALLING_MESSAGE"
+            };
+            var androidMess = {
+                collapseKey: 'REDiMED',
+                priority: 'high',
+                contentAvailable: true,
+                delayWhileIdle: true,
+                timeToLive: 3,
+                data: {
+                    "data": {
+                        "apiKey": config.OpentokAPIKey,
+                        "message": message,
+                        "fromName": (!fromName ? 'Unknown' : fromName),
+                        "sessionId": sessionId,
+                        "token": token,
+                        "from": from
+                    }
+                },
+                notification: {
+                    title: "REDiMED",
+                    icon: "ic_launcher",
+                    body: 'Calling From ' + (!fromName ? 'Unknown' : fromName)
+                }
+            };
+            TelehealthService.FindByUID(to).then(function(teleUser) {
+                if (teleUser) {
+                    TelehealthDevice.findAll({
+                        where: {
+                            TelehealthUserID: teleUser.ID
+                        }
+                    }).then(function(devices) {
+                        var iosDevices = [];
+                        var androidDevices = [];
+                        if (devices) {
+                            for (var i = 0; i < devices.length; i++) {
+                                if (devices[i].Type == 'IOS') iosDevices.push(devices[i].DeviceToken);
+                                else androidDevices.push(devices[i].DeviceToken);
+                            }
+                            if (iosDevices.length > 0) TelehealthService.SendAPNPush(iosMess, iosDevices);
+                            if (androidDevices.length > 0) {
+                                TelehealthService.SendGCMPush(androidMess, androidDevices).then(function(result) {
+                                    console.log(result);
+                                }).catch(function(err) {
+                                    console.log(err);
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        }
+        
         var roomList = sails.sockets.rooms();
         if (roomList.length > 0) {
             for (var i = 0; i < roomList.length; i++) {
@@ -55,13 +131,6 @@ module.exports = {
                     data.from = from;
                     data.message = message;
                     if (message.toLowerCase() == 'call') {
-                        var fromName = req.param('fromName');
-                        var sessionId = req.param('sessionId');
-                        if (!sessionId) return;
-                        var tokenOptions = {
-                            role: 'moderator'
-                        };
-                        var token = opentok.generateToken(sessionId, tokenOptions);
                         data.apiKey = config.OpentokAPIKey;
                         data.sessionId = sessionId;
                         data.token = token;

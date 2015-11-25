@@ -9,13 +9,13 @@ var gcmSender = new gcm.Sender(config.GCMApiKey);
 var apn = require('apn');
 var options = {
     //=======Dev======
-    // cert: rootPath + '/config/push_key/TelePushCert.pem',
-    // key: rootPath + '/config/push_key/TelePushKey.pem',
+    cert: rootPath + '/config/push_key/TelePushCert.pem',
+    key: rootPath + '/config/push_key/TelePushKey.pem',
     //=======Production=========
-    cert: rootPath + '/config/push_key/TelePatientPushCert.pem',
-    key: rootPath + '/config/push_key/TelePatientPushKey.pem',
+    // cert: rootPath + '/config/push_key/TelePatientPushCert.pem',
+    // key: rootPath + '/config/push_key/TelePatientPushKey.pem',
     passphrase: '1234',
-    production: true
+    production: false
 };
 var apnConnection = new apn.Connection(options);
 apnConnection.on("connected", function() {
@@ -123,7 +123,7 @@ module.exports = {
             headers: headers
         })
     },
-    GetAppointmentList: function(headers, type) {
+    GetAppointmentList: function(headers, type, query) {
         delete headers['if-none-match'];
         var typeArr = ['WAA', 'TEL'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
@@ -198,9 +198,10 @@ module.exports = {
         var defer = $q.defer();
         var message = new gcm.Message(opts)
         var regTokens = tokens;
+
         gcmSender.send(message, {
-            registrationTokens: regTokens
-        }, function(err, result) {
+            registrationIds: regTokens
+        }, 10 , function(err, result) {
             if (err) defer.reject({
                 message: err
             });
@@ -217,6 +218,7 @@ module.exports = {
         note.badge = opts.badge ? opts.badge : 1;
         note.sound = "ping.aiff";
         note.alert = opts.alert ? opts.alert : 'You have a new message!';
+        note.category = opts.category ? opts.category : null;
         note.payload = opts.payload ? opts.payload : {};
         apnConnection.pushNotification(note, regTokens);
     }

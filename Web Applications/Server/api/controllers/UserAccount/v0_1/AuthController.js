@@ -27,7 +27,7 @@ module.exports = {
         var error=new ErrorWrap("login.Error");
 
         passport.authenticate('local', function(err, user, info) 
-        {
+        {   
             if ((err) || (!user)) 
             {
                 if(!err) 

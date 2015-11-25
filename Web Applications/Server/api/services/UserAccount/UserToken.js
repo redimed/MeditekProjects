@@ -102,8 +102,9 @@ module.exports={
 		                model: Role,
 		                attributes: ['ID', 'UID', 'RoleCode', 'RoleName']
 		            }
-		        }
-			},{transaction:transaction})
+		        },
+		        transaction:transaction,
+			})
 			// return Services.UserAccount.GetUserAccountDetails({UID:userAccess.UserUID},null,transaction)
 			.then(function(u){
 				var user=u.dataValues;
@@ -123,8 +124,9 @@ module.exports={
 								where:{
 									UserAccountID:user.ID,
 									SystemType:HelperService.const.systemType.website
-								}
-							},{transaction:transaction});
+								},
+								transaction:transaction,
+							});
 						}
 						else
 						{
@@ -133,8 +135,9 @@ module.exports={
 									UserAccountID:user.ID,
 									DeviceID:userAccess.DeviceID,
 									AppID:userAccess.AppID,
-								}
-							},{transaction:transaction})
+								},
+								transaction:transaction,
+							})
 						}
 					}
 
@@ -252,8 +255,9 @@ module.exports={
 								where:{
 									UserAccountID:user.ID,
 									SystemType:HelperService.const.systemType.website
-								}
-							},{transaction:transaction});
+								},
+								transaction:transaction,
+							});
 						}
 						else
 						{
@@ -262,8 +266,9 @@ module.exports={
 									UserAccountID:user.ID,
 									DeviceID:userAccess.DeviceID,
 									AppID:userAccess.AppID,
-								}
-							},{transaction:transaction})
+								},
+								transaction:transaction,
+							})
 						}
 					}
 					return CheckExist()

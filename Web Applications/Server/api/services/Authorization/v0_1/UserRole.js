@@ -94,8 +94,9 @@ module.exports={
 						}
 						//Kiem tra xem UserRole da ton tai hay chua
 						return RelUserRole.findOne({
-							where:dupCondition
-						},{transaction:transaction})
+							where:dupCondition,
+							transaction:transaction,
+						})
 						.then(function(userRole){
 							if(o.checkData(userRole))
 							{

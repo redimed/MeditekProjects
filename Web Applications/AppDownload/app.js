@@ -7,13 +7,13 @@ var bodyParser = require('body-parser');
 var MobileDetect = require('mobile-detect');
 //tham khao: http://hgoebl.github.io/mobile-detect.js/doc/MobileDetect.html
 var sportInjuryLink={
-  AndroidOS:'https://play.google.com/store/apps/details?id=com.mobirix.dragonseal&hl=en',
+  AndroidOS:'https://play.google.com/store/apps/details?id=telehealth.redimed.sportinjury',
   BlackBerryOS:'',
   PalmOS:'',
   SymbianOS:'',
   WindowsMobileOS:'',
   WindowsPhoneOS:'',
-  iOS:'https://itunes.apple.com/us/app/webmd-trusted-health-wellness/id295076329?mt=8', 
+  iOS:'https://itunes.apple.com/us/app/redimed-health-sports-injury/id1055589877?ls=1&mt=8', 
   MeeGoOS:'',
   MaemoOS:'',
   JavaOS:'',

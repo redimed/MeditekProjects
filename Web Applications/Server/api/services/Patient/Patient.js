@@ -104,7 +104,7 @@ module.exports = {
 
 				//validate Gender
 				if(data.Gender!=undefined && data.Gender){
-					if(data.Gender != "F" && data.Gender != "M"){
+					if(data.Gender != "Female" && data.Gender != "Male" && data.Gender != "Other"){
 						errors.push({field:"Gender",message:"invalid value"});
 						err.pushErrors(errors);
 					}
@@ -323,7 +323,7 @@ module.exports = {
 				//validate Gender
 				if('Gender' in data){
 					if(data.Gender){
-						if(data.Gender != "F" && data.Gender != "M"){
+						if(data.Gender != "Female" && data.Gender != "Male" && data.Gender != "Other"){
 							errors.push({field:"Gender",message:"invalid value"});
 							err.pushErrors(errors);
 						}
@@ -916,7 +916,7 @@ module.exports = {
 
 	CheckPatient : function(data, transaction) {
 		var info = {};
-		return Services.Patient.validation(data)
+		return Services.Patient.validation(data,false)
 		.then(function(success){
 			if(check.checkData(data.PhoneNumber)){
 				// data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;

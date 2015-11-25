@@ -135,7 +135,7 @@ module.exports = {
                     msg: 'Too long!'
                 },
                 isIn: [
-                    ['M', 'F']
+                    ['Male', 'Female','Other']
                 ]
             }
         },

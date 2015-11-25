@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
@@ -18,8 +20,10 @@ import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.fragment.AppointmentDetails;
+import com.redimed.telehealth.patient.fragment.TrackingFragment;
 import com.redimed.telehealth.patient.models.Appointment;
 import com.redimed.telehealth.patient.models.Category;
+import com.redimed.telehealth.patient.models.Doctor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +43,7 @@ public class RVAdapter extends RecyclerView.Adapter<ViewHolder> {
     private Context context;
     private List<Category> categories;
     private List<Appointment> listAppointment;
-    private static String appointmentUID, firstName, lastName, dateTime, status;
-    private FragmentActivity fragmentActivity;
+    private static String firstName, lastName, dateTime, status;
 
     public RVAdapter(Context context, int type) {
         this.context = context;
@@ -55,8 +58,7 @@ public class RVAdapter extends RecyclerView.Adapter<ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void swapDataAppointment(List<Appointment> data, FragmentActivity fragmentActivity) {
-        this.fragmentActivity = fragmentActivity;
+    public void swapDataAppointment(List<Appointment> data) {
         listAppointment.clear();
         listAppointment.addAll(data);
         notifyDataSetChanged();
@@ -84,31 +86,34 @@ public class RVAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public class AppointmentViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.lblNo)
+        TextView lblNo;
+        @Bind(R.id.lblDoctorRef)
+        TextView lblDoctorRef;
+        @Bind(R.id.lblDoctorPre)
+        TextView lblDoctorPre;
 
-        @Bind(R.id.lblTime)
-        TextView lblDate;
-        @Bind(R.id.lblDoctor)
-        TextView lblDoctor;
-        @Bind(R.id.lblStatus)
-        TextView lblStatus;
-
-        public AppointmentViewHolder(View itemView) {
+        public AppointmentViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setClickable(true);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Fragment fragment = new AppointmentDetails();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("apptUID", appointmentUID);
-                    fragment.setArguments(bundle);
-                    FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+                    SubTracking(itemView, getAdapterPosition());
                 }
             });
         }
+    }
 
+    private void SubTracking(View v, int position) {
+        Fragment fragment = new TrackingFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("apptUID", listAppointment.get(position).getUID());
+        bundle.putString("status", listAppointment.get(position).getStatus());
+        bundle.putString("fromTime", listAppointment.get(position).getFromTime());
+        fragment.setArguments(bundle);
+        ((MainActivity) v.getContext()).PerformNoBackStackTransaction(fragment);
     }
 
     @Override
@@ -157,17 +162,23 @@ public class RVAdapter extends RecyclerView.Adapter<ViewHolder> {
 
             case TYPE_APPOINTMENT:
                 AppointmentViewHolder appointmentViewHolder = (AppointmentViewHolder) viewHolder;
-                appointmentUID = listAppointment.get(position).getUID();
+                Doctor[] doctors = listAppointment.get(position).getDoctor();
                 dateTime = listAppointment.get(position).getFromTime();
                 status = listAppointment.get(position).getStatus();
-                firstName = listAppointment.get(position).getDoctor()[0].getFirstName() == null
-                        ? " " : listAppointment.get(position).getDoctor()[0].getFirstName();
-                lastName = listAppointment.get(position).getDoctor()[0].getLastName() == null
-                        ? " " : listAppointment.get(position).getDoctor()[0].getLastName();
-
-                appointmentViewHolder.lblDoctor.setText(firstName + lastName);
-                appointmentViewHolder.lblDate.setText(MyApplication.getInstance().ConvertDateTime(dateTime));
-                appointmentViewHolder.lblStatus.setText(status);
+                for (Doctor doctor : doctors) {
+                    firstName = doctor.getFirstName() == null ? " " : doctor.getFirstName();
+                    lastName = doctor.getLastName() == null ? " " : doctor.getLastName();
+                }
+                int no = position + 1;
+                String ref;
+                if (no <= 9) {
+                    ref = "Ref0" + no;
+                } else {
+                    ref = "Ref" + no;
+                }
+                appointmentViewHolder.lblNo.setText(ref);
+                appointmentViewHolder.lblDoctorRef.setText(listAppointment.get(position).getTelehealthAppointment().getRefName());
+                appointmentViewHolder.lblDoctorPre.setText(firstName + lastName);
                 break;
         }
     }

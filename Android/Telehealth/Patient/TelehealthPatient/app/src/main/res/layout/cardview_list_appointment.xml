@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/tools"
     android:id="@+id/cvAppointment"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="50dp"
     android:clickable="true"
     android:focusable="true"
@@ -20,25 +20,27 @@
         android:orientation="horizontal"
         android:layout_gravity="center">
 
-        <TextView
-            android:id="@+id/lblTime"
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:id="@+id/lblNo"
             android:layout_width="120dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/lblDoctor"
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:id="@+id/lblDoctorRef"
             android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:gravity="center"/>
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_gravity="center"/>
 
 
-        <TextView
-            android:id="@+id/lblStatus"
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:id="@+id/lblDoctorPre"
             android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:gravity="center"/>
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

@@ -1,11 +1,18 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'REDIMED'
+            keyPassword 'REDIMED'
+            storeFile file('C:/Users/LamNguyen/Desktop/Release/UrgentCare.jks')
+            storePassword 'redimed1234567'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
-
     defaultConfig {
-        applicationId "patient.telehealth.redimed.sportinjury"
+        applicationId "telehealth.redimed.sportinjury"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -14,16 +21,25 @@ android {
         renderscriptSupportModeEnabled true
     }
     buildTypes {
+        debug {
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    output.outputFile = new File(
+                            output.outputFile.parent,
+                            output.outputFile.name.replace(".apk", "SportInjury.apk"))
+                }
+            }
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:support-v4:23.0.1'
     compile 'com.google.code.gson:gson:2.3'

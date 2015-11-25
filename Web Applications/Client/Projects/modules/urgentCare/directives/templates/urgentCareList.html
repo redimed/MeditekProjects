@@ -32,35 +32,57 @@
                     <!-- <table class="table table-hover table-bordered flip-content"> -->
                         <thead class="flip-content">
                             <tr>
-                                <th width="1">#</th>
+                                <th>#</th>
                                 <th>
                                     Full Name
-                                    <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('FullName','ASC')" ng-show="typeFullName == 'ASC'"></i>
-                                    <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('FullName','DESC')" ng-show="typeFullName == 'DESC'"></i>
+                                    <i class="fa fa-sort-asc"  ng-click="sort('FirstName','ASC')" ng-show="fieldSort.FirstName=='ASC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('FirstName','DESC')"ng-show="fieldSort.FirstName=='DESC'"></i>
                                 </th>
-                                <th>Request Type</th>
-                                <th width="200px">
+                                <th>
+                                    Request Type
+                                    <i class="fa fa-sort-asc"  ng-click="sort('UrgentRequestType','ASC')" ng-show="fieldSort.UrgentRequestType=='ASC'" ></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('UrgentRequestType','DESC')"ng-show="fieldSort.UrgentRequestType=='DESC'"></i>
+                                </th>
+                                <th>
                                     Request Time
+                                    <i class="fa fa-sort-asc"  ng-click="sort('RequestDate','ASC')" ng-show="fieldSort.RequestDate=='ASC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('RequestDate','DESC')"ng-show="fieldSort.RequestDate=='DESC'"></i>
                                 </th>
-                                <th>Phone Number</th>
-                                <th>Suburb</th>
-                                <th width="170px">Status</th>
+                                <th>
+                                    Phone Number
+                                    <i class="fa fa-sort-asc"  ng-click="sort('PhoneNumber','ASC')" ng-show="fieldSort.PhoneNumber=='ASC'" ></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('PhoneNumber','DESC')"ng-show="fieldSort.PhoneNumber=='DESC'"></i>
+                                </th>
+                                <th>
+                                    Suburb
+                                    <i class="fa fa-sort-asc"  ng-click="sort('Suburb','ASC')" ng-show="fieldSort.Suburb=='ASC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('Suburb','DESC')"ng-show="fieldSort.Suburb=='DESC'"></i>
+                                </th>
+                                <th>
+                                    Status
+                                    <i class="fa fa-sort-asc"  ng-click="sort('Status','ASC')" ng-show="fieldSort.Status=='ASC'"></i>
+                                    <i class="fa fa-sort-desc" ng-click="sort('Status','DESC')"ng-show="fieldSort.Status=='DESC'"></i>
+                                </th>
                             </tr>
                             <tr ng-hide="toggle">
                                 <td></td>
-                                <td><input type="text" class="form-control"></td>
-                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control" ng-model="search.FullName" ng-keypress="Search(search,$event.which)"></td>
+                                <td><input type="text" class="form-control" ng-model="search.RequestType" ng-keypress="Search(search,$event.which)"></td>
                                 <td>
-                                    <div class="input-group input-medium date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
-                                        <input type="text" class="form-control" name="from">
-                                        <span class="input-group-addon"> to </span>
-                                        <input type="text" class="form-control" name="to"> 
+                                    <div class="form-inline">
+                                        <input type="text" class="form-control date-picker input-small"  ng-model="search.RequestDate.from" style="font-size:13px;" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" readonly>  to 
+                                        <input type="text" class="form-control date-picker input-small"  ng-model="search.RequestDate.to" data-date-format="dd/mm/yyyy" ng-change="Search(search,flag)" readonly>
                                     </div>
+                                    <!-- <div class="input-group input-medium date-picker input-daterange" data-date-format="dd/mm/yyyy" >
+                                        <input type="text" class="form-control" ng-model="search.RequestDate.from" ng-change="Search(search,flag)">
+                                        <span class="input-group-addon"> to </span>
+                                        <input type="text" class="form-control" ng-model="search.RequestDate.to" ng-change="Search(search,flag)"> 
+                                    </div> -->
                                 </td>
-                                <td><input type="text" class="form-control"></td>
-                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control" ng-model="search.PhoneNumber" ng-keypress="Search(search,$event.which)"></td>
+                                <td><input type="text" class="form-control" ng-model="search.Suburb" ng-keypress="Search(search,$event.which)"></td>
                                 <td>
-                                    <select class="form-control">
+                                    <select class="form-control" ng-model="search.Status" ng-change="Search(search,flag)" ng-options=" s.id as s.name for s in status">
                                         <option value="">All</option>
                                         <option value="">Pending</option>
                                         <option value="">Confirmed</option>
@@ -71,32 +93,16 @@
                         </thead>
                         <tbody>
                             <tbody>
-                                <tr ng-click="openModal()">
-                                    <td>1</td>
-                                    <td>Hitoshi Yagami</td>
-                                    <td>Type 1</td>
-                                    <td>20/12/2015 11:22:44</td>
-                                    <td>61 2456 7896</td>
-                                    <td></td>
-                                    <td><span class="label label-warning">Pending</span></td>
-                                </tr>
-                                <tr ng-click="openModal()">
-                                    <td>2</td>
-                                    <td>Hitoshi Yagami</td>
-                                    <td>Type 1</td>
-                                    <td>20/12/2015 11:22:44</td>
-                                    <td>61 2456 7896</td>
-                                    <td></td>
-                                    <td><span class="label label-success">Confirmed</span></td>
-                                </tr>
-                                <tr ng-click="openModal()">
-                                    <td>3</td>
-                                    <td>Hitoshi Yagami</td>
-                                    <td>Type 1</td>
-                                    <td>20/12/2015 11:22:44</td>
-                                    <td>61 2456 7896</td>
-                                    <td></td>
-                                    <td><span class="label label-danger">Not Responded</span></td>
+                                <tr ng-repeat=" u in urgent" ng-click="clickDetail(u.UID)">
+                                    <td>{{u.stt}}</td>
+                                    <td>{{u.FirstName}} {{u.LastName}}</td>
+                                    <td>{{u.UrgentRequestType}}</td>
+                                    <td>{{u.RequestDate}}</td>
+                                    <td>{{u.PhoneNumber}}</td>
+                                    <td>{{u.Suburb}}</td>
+                                    <td>
+                                        <span class="label" ng-class="{'label-warning':u.Status=='pending','label-success':u.Status=='confirmed','label-danger':u.Status=='spending'}">{{u.Status}}</span>
+                                    </td>
                                 </tr>
                             </tbody>
                     </table>
@@ -111,10 +117,25 @@
             </div>
             <div class="col-md-7 col-sm-12" style="text-align:right">
                 <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-                    <pagination boundary-links="true " total-items="filteredTodos.length " ng-model="currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="numPerPage " max-size="maxSize "></pagination>
+                    <uib-pagination 
+                        boundary-links="true " 
+                        total-items="count " 
+                        ng-model="searchObjectMap.currentPage " 
+                        class="pagination-sm " 
+                        previous-text="&lsaquo; " 
+                        next-text="&rsaquo; " 
+                        first-text="&laquo; " 
+                        last-text="&raquo; " 
+                        items-per-page="searchObjectMap.limit " 
+                        max-size="searchObjectMap.maxSize "
+                        ng-change="setPage()">
+                    </uib-pagination>
                 </div>
             </div>
         </div>
         <!-- end pagination -->
     </div>
 </div>
+<script type="text/ng-template " id="urgentCareDetail">
+    <urgentcare-detail on-data="data" on-cancel="close" ></urgentcare-detail>
+</script>

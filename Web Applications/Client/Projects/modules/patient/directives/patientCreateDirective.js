@@ -38,7 +38,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 				{'code':'NSW', 'name':'New South Wales'},
 				{'code':'WA', 'name':'Western Australia'},
 				{'code':'NT', 'name':'Northern Territory'},
-				{'code':'ACT', 'name':'Australia Capital Territory'}
+				{'code':'ACT', 'name':'Australian Capital Territory'}
 			];
 
 			// Title
@@ -97,7 +97,15 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 				var verifyData = {
 					FirstName:data.FirstName,
 					LastName:data.LastName,
-					PhoneNumber:data.PhoneNumber
+					PhoneNumber:data.PhoneNumber,
+					DOB:data.DOB,
+					Address1:data.Address1,
+					Address2:data.Address2,
+					Suburb:data.Suburb,
+					Postcode:data.Postcode,
+					Email1:data.Email1,
+					HomePhoneNumber:data.HomePhoneNumber,
+					Gender:data.Gender
 				};
 				PatientService.validateCheckPhone(data)
 				.then(function(success){
@@ -114,15 +122,17 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 								scope.loadingCheck = false;
 								toastr.success("Phone Number can be choose to create patient","SUCCESS");
 								scope.isShowEmail1 = result.data.data.Email1;
-								scope.data.Email1 = result.data.data.Email1;
+								scope.data.Email1 = verifyData.Email1;
 								scope.isShowNext = true;
 								scope.data.CountryID1 = 14;
 								scope.data.Title= null;
-								scope.data.Gender= null;
-								scope.data.Address1= null;
-								scope.data.Suburb= null;
-								scope.data.Postcode= null;
+								scope.data.Gender= verifyData.Gender;
+								scope.data.Address1= verifyData.Address1;
+								scope.data.Address2= verifyData.Address2;
+								scope.data.Suburb= verifyData.Suburb;
+								scope.data.Postcode= verifyData.Postcode;
 								scope.data.State = null;
+								scope.data.HomePhoneNumber = verifyData.HomePhoneNumber;
 								// scope.data.DOB = new Date('1/1/1990');
 							}
 							else{

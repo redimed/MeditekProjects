@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -97,8 +99,8 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activation);
-        registerApi = RESTClient.getRegisterApi();
 
+        registerApi = RESTClient.getRegisterApi();
         gson = new Gson();
         ButterKnife.bind(this);
         layoutContainer.setAnimateFirstView(true);
@@ -197,7 +199,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         Matcher matcherPhoneExpression = patternPhoneExpression.matcher(txtPhone.getText());
         String postCode = lblPhoneCode.getText().toString();
         postCode = postCode.substring(1, postCode.length() - 1);
-
         if (matcherPhoneExpression.matches()) {
             char subPhone = txtPhone.getText().charAt(0);
             String phoneNumber;
@@ -241,8 +242,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                     }
                 }
             });
-        }
-        else {
+        } else {
             new DialogConnection(ActivationActivity.this).show();
             startService(new Intent(getApplicationContext(), RegistrationIntentService.class));
         }
@@ -263,11 +263,19 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                         String status = jsonObject.get("status").getAsString();
                         if (status.equalsIgnoreCase("success")) {
                             SharedPreferences.Editor uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE).edit();
-                            uidTelehealth.putString("uid", jsonObject.get("uid").getAsString());
-                            uidTelehealth.putString("accountUID", jsonObject.get("userUID").getAsString());
-                            uidTelehealth.putString("patientUID", jsonObject.get("patientUID").getAsString());
-                            uidTelehealth.putString("token", jsonObject.get("token").getAsString());
-                            uidTelehealth.putString("deviceId", spDevice.getString("deviceID", null));
+                            JsonObject userJson = jsonObject.get("user").getAsJsonObject();
+                            uidTelehealth.putString("token", jsonObject.get("token").isJsonNull() ?
+                                    " " : jsonObject.get("token").getAsString());
+                            uidTelehealth.putString("uid", userJson.get("TeleUID").isJsonNull() ?
+                                    " " : userJson.get("TeleUID").getAsString());
+                            uidTelehealth.putString("userUID", userJson.get("UID").isJsonNull() ?
+                                    " " : userJson.get("UID").getAsString());
+                            uidTelehealth.putString("patientUID", userJson.get("PatientUID").isJsonNull() ?
+                                    " " : userJson.get("PatientUID").getAsString());
+                            uidTelehealth.putString("deviceID", spDevice.getString("deviceID", null) == null ?
+                                    " " : spDevice.getString("deviceID", null));
+                            uidTelehealth.putString("refreshCode", jsonObject.get("refreshCode").isJsonNull() ?
+                                    " " : jsonObject.get("refreshCode").getAsString());
                             uidTelehealth.apply();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();

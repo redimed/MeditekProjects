@@ -14,7 +14,7 @@ app.controller('showImageController', function($scope, $modalInstance, toastr, L
             });
     };
 });
-app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstance, getid, AppointmentService, CommonService, $cookies, toastr, PatientService) {
+app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstance, getid, AppointmentService, CommonService, $cookies, toastr, PatientService ,AuthenticationService) {
 
     $modalInstance.rendered.then(function() {
         App.initComponents(); // init core components
@@ -25,6 +25,12 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         Portfolio.init();
         //ComponentsDropdowns.init(); // init todo page
     });
+    console.log(getid)
+     $scope.loadListContry = function() {
+        AuthenticationService.getListCountry().then(function(response) {
+            $scope.ListContry = response.data;
+        })
+    }
     $scope.Status = {
         apptStatus: AppointConstant.apptStatus
     };
@@ -233,19 +239,52 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             }
         });
     };
-
+    $scope.CheckValidation = function() {
+        var stringAlert = null
+        if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate !== '') {
+            if ($scope.ShowData.DateTimeAppointmentDateTime != null && $scope.ShowData.DateTimeAppointmentDateTime !== '') {
+                if ($scope.appointment.Patients.length > 0) {
+                    if ($scope.appointment.Doctors.length > 0) {
+                        stringAlert = null;
+                    } else {
+                        stringAlert = "Please Choose Treating Practitioner";
+                    };
+                } else {
+                    stringAlert = "Please Link Patients";
+                };
+            } else {
+                stringAlert = "Please Choose Appointment Time";
+            };
+        } else {
+            stringAlert = "Please Choose Appointment Date";
+        }
+        return stringAlert
+    }
     $scope.submitUpdate = function() {
-        swal({
-                title: "Are you sure ?",
-                text: "Update Appointment",
-                type: "info",
-                showCancelButton: true,
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true,
-            },
-            function() {
-                $scope.updateAppointment();
-            });
+        var stringAlert = null;
+        if ($scope.appointment.Status == 'Approved' || $scope.appointment.Status == 'Attended' || $scope.appointment.Status == 'Waitlist' || $scope.appointment.Status == 'Finished') {
+            stringAlert = $scope.CheckValidation()
+        };
+        if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate != ''  || 
+            $scope.ShowData.DateTimeAppointmentDateTime != null && $scope.ShowData.DateTimeAppointmentDateTime != '') {
+            stringAlert = $scope.CheckValidation();
+
+        };
+        if (stringAlert == null) {
+            swal({
+                    title: "Are you sure ?",
+                    text: "Update Appointment",
+                    type: "info",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                },
+                function() {
+                    $scope.updateAppointment();
+                });
+        }else{
+            toastr.error(stringAlert);
+        };
     }
 
     $scope.updateAppointment = function() {
@@ -321,10 +360,19 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             };
             AppointmentService.upDateApppointment(postData).then(function(response) {
                 if (response == 'success') {
+                    toastr.success("Update appointment successfully !");
                     $modalInstance.close('success');
-                    swal("Success.");
+                    swal.close();
                 };
-
+            },function(err) {
+               if(err.status == 401){
+                $modalInstance.close('err');
+                swal.close();
+               }else{
+                $modalInstance.close('err');
+                swal.close();
+                toastr.error('Update Appointment Failed');
+               }
             });
         };
     };

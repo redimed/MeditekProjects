@@ -27,7 +27,7 @@ module.exports = {
         var error=new ErrorWrap("login.Error");
 
         passport.authenticate('local', function(err, user, info) 
-        {
+        {   
             if ((err) || (!user)) 
             {
                 if(!err) 
@@ -86,6 +86,14 @@ module.exports = {
                     }
                     else
                     {
+                        //---------------------------------------------
+                        if(req.headers.systemtype==o.const.systemType.website)
+                        {
+                            var connectInfo=_.cloneDeep(userAccess);
+                            connectInfo.sid=req.sessionID;
+                            RedisService.pushUserConnect(connectInfo);
+                        }
+                        //---------------------------------------------
                         if(user.Activated=='Y')
                         {
                             res.ok({
@@ -126,9 +134,18 @@ module.exports = {
             DeviceID:req.headers.deviceid,
             AppID:req.headers.appid,
         }
+        
         Services.RefreshToken.MakeRefreshToken(userAccess)
         .then(function(data){
             req.logout();
+            //------------------------------------------
+            if(req.headers.systemtype==o.const.systemType.website)
+            {
+                var connectInfo=_.cloneDeep(userAccess);
+                connectInfo.sid=req.sessionID;
+                RedisService.removeUserConnect(connectInfo);
+            }            
+            //------------------------------------------
             res.ok({status:'success'});
         },function(err){
             res.serverError(ErrorWrap(err));

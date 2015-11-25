@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/all_background"
     tools:context="com.redimed.telehealth.patient.ModelActivity">
 
     <ImageView
@@ -48,7 +47,6 @@
             android:fontFamily="sans-serif-light"
             android:textAllCaps="false"
             android:text="Upload"
-            android:background="#67000000"
             android:textSize="17sp"
             android:textStyle="bold" />
 

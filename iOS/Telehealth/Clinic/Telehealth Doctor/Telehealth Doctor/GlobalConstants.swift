@@ -7,23 +7,32 @@
 //
 
 import Foundation
+import Alamofire
+import SwiftyJSON
 
-let STRING_URL_SERVER = "http://testapp.redimed.com.au:3009"
+let URL_SERVER_3009 = "http://192.168.1.130:3009"
+let URL_SERVER_3005 = "http://192.168.1.130:3005"
 
-/// temp for download image
-let URL_DOWNLOAD_IMAGE = "http://testapp.redimed.com.au:3005"
 
-let AUTHORIZATION = STRING_URL_SERVER + "/api/telehealth/user/login"
+// URL Request API
+let AUTHORIZATION = URL_SERVER_3009 + "/api/telehealth/user/login"
 
-let GENERATESESSION = STRING_URL_SERVER + "/api/telehealth/socket/generateSession"
+let GENERATESESSION = URL_SERVER_3009 + "/api/telehealth/socket/generateSession"
 
-let APPOINTMENT_DETAIL = STRING_URL_SERVER + "/api/telehealth/user/appointmentDetails"
+let TELEAPPOINTMENT_DETAIL = URL_SERVER_3009 + "/api/telehealth/user/telehealthAppointmentDetails/"
 
-let DOWNLOAD_IMAGE_APPOINTMENT = URL_DOWNLOAD_IMAGE + "/api/downloadFile/"
+let WAAPPOINTMENT_DETAIL = URL_SERVER_3009 + "/api/telehealth/user/WAAppointmentDetails/"
 
-/// Socket Emit
-let GET_ONLINE_USERS : NSDictionary = ["url": "/api/telehealth/socket/onlineList"]
+let APPOINTMENTLIST_WA = URL_SERVER_3009 + "/api/telehealth/appointment/list/WAA"
 
+let APPOINTMENTLIST_TeleHealth = URL_SERVER_3009 + "/api/telehealth/appointment/list/TEL"
+
+let DOWNLOAD_IMAGE_APPOINTMENT = URL_SERVER_3005 + "/api/downloadFile/"
+
+let GET_NEW_TOKEN = URL_SERVER_3005 + "/api/refresh-token/GetNewToken"
+
+
+// Socket Emit
 let TRANSFER_IN_CALL = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
 
 let MAKE_CALL = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@&sessionId=%@&fromName=%@"
@@ -31,7 +40,6 @@ let MAKE_CALL = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@
 let JOIN_ROOM = "/api/telehealth/socket/joinRoom?uid=%@"
 
 var AUTHTOKEN = ""
-var COREAUTH = ""
 
 func formatString(dateString: String) -> String {
     let dateFormatter = NSDateFormatter()
@@ -45,10 +53,21 @@ func formatString(dateString: String) -> String {
     return ""
 }
 
+func formatforList(dateString: String) -> String {
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.timeZone = NSTimeZone(name: "UTC")
+    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000Z"
+    if let datePublished = dateFormatter.dateFromString(dateString) {
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+        let dateFormated = dateFormatter.stringFromDate(datePublished)
+        return dateFormated
+    }
+    return ""
+}
+
 /**
 *  Alert Title and Message for JSSAlertView
 */
-
-var warning_Network = (title: "No Connection", mess: "Unable to connect to the Internet")
-var connection_Server = (title: "Error")
+var err_Mess_Network = "The Internet connection appears to be offline"
+var err_Mess_sessionExpired = "Your session is expired. Please login again!"
 

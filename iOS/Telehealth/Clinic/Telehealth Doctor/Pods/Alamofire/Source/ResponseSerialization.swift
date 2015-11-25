@@ -238,7 +238,7 @@ extension Request {
         options options: NSJSONReadingOptions = .AllowFragments)
         -> GenericResponseSerializer<AnyObject>
     {
-        return GenericResponseSerializer { _, _, data in
+        return GenericResponseSerializer { req, res, data in
             guard let validData = data else {
                 let failureReason = "JSON could not be serialized because input data was nil."
                 let error = Error.errorWithCode(.JSONSerializationFailed, failureReason: failureReason)

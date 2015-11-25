@@ -12,13 +12,13 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'VerifyActivationCode'
     },
-    'POST /api/telehealth/user/login': {
+    'GET /api/telehealth/user/:uid': {
         controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'TelehealthLogin'
+        action: 'GetTelehealthUser'
     },
     'GET /api/telehealth/user/details/:uid': {
         controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'GetUserDetails'
+        action: 'GetPatientDetails'
     },
     'GET /api/telehealth/user/appointments/:uid/:type?/:limit?': {
         controller: 'Telehealth/v1_0/TelehealthController',
@@ -31,6 +31,10 @@ module.exports.routes = {
     'GET /api/telehealth/user/WAAppointmentDetails/:uid':{
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetWAAppointmentDetails'
+    },
+    'POST /api/telehealth/user/pushNotification':{
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'PushNotification'
     },
     //================Telehealth Socket Routes==========================
     '/api/telehealth/socket/joinRoom': {
@@ -53,5 +57,14 @@ module.exports.routes = {
     'GET /api/telehealth/appointment/list/:type?':{
         controller: 'Telehealth/v1_0/AppointmentController',
         action: 'ListAppointment'
+    },
+    //=================Test Push Notification=============================
+    'GET /api/testPushAPN':{
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action:'TestPushAPN'
+    },
+    'GET /api/testPushGCM':{
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action:'TestPushGCM'
     }
 };

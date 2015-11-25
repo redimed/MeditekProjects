@@ -25,13 +25,12 @@ public class FAQsFragment extends Fragment {
 
     private View v;
     private String TAG = "FAQs";
+    private String page;
 
     @Bind(R.id.webFAQs)
     WebView webViewFAQs;
 
-    public FAQsFragment() {
-        // Required empty public constructor
-    }
+    public FAQsFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +39,16 @@ public class FAQsFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_faqs, container, false);
         ButterKnife.bind(this, v);
         String url = "file:///android_asset/FAQs.html";
+        Bundle bundle = getArguments();
+        if (bundle != null){
+            page = getArguments().getString("urgentCare");
+            if (page.equalsIgnoreCase("UR")){
+                url = "file:///android_asset/UrgentCare.html";
+            }
+            else {
+                url = "file:///android_asset/FAQs.html";
+            }
+        }
         WebSettings webSettings = webViewFAQs.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webViewFAQs.setBackgroundColor(Color.TRANSPARENT);

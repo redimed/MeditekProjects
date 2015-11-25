@@ -74,6 +74,11 @@ module.exports = function(appointmentUID, userInfo) {
                     model: Doctor,
                     attributes: Services.AttributesAppt.Doctor(),
                     required: false,
+                    include: [{
+                        model: Country,
+                        required: false,
+                        attributes: Services.AttributesAppt.Country()
+                    }]
                 }]
             }, {
                 model: Doctor,

@@ -32,10 +32,26 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
         });
 
     };
-
+    $scope.InterpreterRequiredNo = function() {
+        $scope.requestInfo.TelehealthAppointment.PatientAppointment.InterpreterLanguage = null;
+    };
     $scope.loadAllDoctor();
+    $scope.SkincancerOThers = function() {
+        if ($scope.requestInfo.TelehealthAppointment.ClinicalDetails !== undefined) {
+            if ($scope.SkincancerOThers !== 'Yes') {
+                if ($scope.requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.OThers'] !== undefined) {
+                    $scope.requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.OThers'].Value = null;
+                };
+            };
+            if ($scope.PNSOther !== 'Yes') {
+                if ($scope.requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Other'] !== undefined) {
+                    $scope.requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Other'].Value = null;
+                };
+            };
+        }
+    };
     $scope.sendRequestAppointment = function() {
-
+        $scope.SkincancerOThers();
         if ($scope.requestInfo.TelehealthAppointment.PatientAppointment.Gender === 'Other') {
             $scope.requestInfo.TelehealthAppointment.PatientAppointment.Gender = $scope.showData.GenderOther;
         }
@@ -74,8 +90,9 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
             ClinicalDetailsTemp = [];
         };
         $scope.requestInfo.TelehealthAppointment.ClinicalDetails = ClinicalDetailsTemp;
+
         $scope.requestInfo.RequestDate = moment().format('YYYY-MM-DD HH:mm:ss Z');
-        
+
         WAAppointmentService.RequestWAApointment($scope.requestInfo).then(function(response) {
             if (response == 'success') {
                 swal({
@@ -121,15 +138,15 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
     };
 
     $scope.ClickUploader = function(Type) {
-            angular.element('#' + Type).click();
-            uploader.onAfterAddingFile = function(fileItem) {
-                var position = fileItem.formData.length
-                fileItem.formData.push({
-                    fileTypeClinical: Type
-                });
-            };
+        angular.element('#' + Type).click();
+        uploader.onAfterAddingFile = function(fileItem) {
+            var position = fileItem.formData.length
+            fileItem.formData.push({
+                fileTypeClinical: Type
+            });
         };
-        // CALLBACKS
+    };
+    // CALLBACKS
     uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
         console.info('onWhenAddingFileFailed', item, filter, options);
     };
@@ -140,7 +157,8 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
         console.info('onAfterAddingAll', addedFileItems);
     };
     uploader.onBeforeUploadItem = function(item) {
-        console.info('onBeforeUploadItem', item);
+        item.headers.Authorization = ('Bearer ' + $cookies.get("token"));
+        console.info('onBeforeUploadItem', item.headers);
     };
     uploader.onProgressItem = function(fileItem, progress) {
         console.info('onProgressItem', fileItem, progress);
@@ -174,6 +192,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
                     $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key] = {};
                 };
             };
+
             if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].Value) {
                 $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].Value = '';
             };
@@ -186,9 +205,9 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
             var key = 'Clinical__Details.Telehealth__WAAppointment.Notes.' + fileItem.formData[0].fileTypeClinical;
             if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails) {
                 $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];
-                if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key]) {
-                    $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key] = {};
-                };
+            };
+            if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key]) {
+                $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key] = {};
             };
             if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].FileUploads) {
                 $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].FileUploads = [];

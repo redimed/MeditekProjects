@@ -164,6 +164,17 @@
 												<!-- end profileImage -->
 											</div>
 											<div class="col-md-8 col-sm-8 col-md-offset-1 col-sm-offset-1">
+												<!-- Role  -->
+		                                    	<div class="form-group" ng-style="er.RoleId">
+		                                                <label class="radio-inline">
+		                                                	<input name="Role" type="radio" ng-model="data.RoleId" ng-value="4" ng-change="ermsg.RoleId='';checkDataNull('RoleId')"> Extertal Practitioner
+		                                                </label>
+		                                       	        <label class="radio-inline">
+		                                       	        	<input name="Role" type="radio" ng-model="data.RoleId" ng-value="5" ng-change="ermsg.RoleId='';checkDataNull('RoleId')"> Intertal Practitioner
+		                                       	        </label>
+		                                       	        <span style="color:red;">{{ermsg.RoleId}}</span>
+		                                    	</div>
+												<!-- End Role -->
 												<!-- Healthlink ID -->
 												<div class="form-group">
 													<label class="control-label col-md-2 col-sm-2">Healthlink ID</label>
@@ -179,7 +190,7 @@
 													<div class="col-md-8 col-sm-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-calendar"></i>
-	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="data.DOB" ng-style="er.DOB" data-date-format="dd/mm/yyyy" ng-change="ermsg.DOB='';checkDataNull('DOB')" readonly="true">
+	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="data.DOB" ng-style="er.DOB" data-date-format="dd/mm/yyyy" ng-change="ermsg.DOB='';checkDataNull('DOB')" >
 	           												<span style="color:red;">{{ermsg.DOB}}</span>
 														</div>
 													</div>
@@ -344,7 +355,7 @@
 												<label class="control-label col-md-3 col-sm-3">Signature</label>
 												<div class="fileinput fileinput-new col-md-6 col-sm-6" data-provides="fileinput">
 													<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
-															<img src="theme/assets/global/images/no_signature.png" width="100%" height="100%">
+															<img src="theme/assets/global/images/signature.jpg" width="100%" height="100%">
 														</div>
 													<div>
 														<span class="btn green btn-file">

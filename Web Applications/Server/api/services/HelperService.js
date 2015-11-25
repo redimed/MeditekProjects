@@ -114,7 +114,7 @@ module.exports = {
         //except (,),whitespace,- in phone number
         phoneExceptChars: /[\(\)\s\-]/g,
         //autralian home phone number
-        auHomePhoneNumber: /^[1-9]{9}$/,
+        auHomePhoneNumber: /^[0-9]{6,10}$/,
 
         //character
         character: /^[a-zA-Z\s0-9]{0,255}$/,
@@ -647,4 +647,13 @@ module.exports = {
         }
     },
     
+    getCookieSid:function(cookie)
+    {
+        var index=cookie.indexOf('sails.sid');
+        cookie=cookie.slice(index);
+        cookie=cookie.slice('sails.sid=s%3A'.length);
+        index=cookie.indexOf('.');
+        cookie=cookie.slice(0,index);
+        return cookie;
+    },
 }

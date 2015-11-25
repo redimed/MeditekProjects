@@ -42,8 +42,9 @@ module.exports = {
 		}
 
 		return UserAccount.findOne({
-			where:whereClause
-		},{transaction:transaction})
+			where:whereClause,
+			transaction:transaction,
+		})
 		.then(function(user){
 			if(user)
 			{
@@ -180,8 +181,9 @@ module.exports = {
 								where:{
 									UserAccountID:user.ID,
 									Type:HelperService.const.systemType.website
-								}
-							},{transaction:transaction});
+								},
+								transaction:transaction,
+							});
 						}
 						else
 						{
@@ -414,8 +416,9 @@ module.exports = {
 							//hay chưa dựa vào UserId và SystemType='WEB'
 							VerificationToken=activationInfo.VerificationToken;
 							return UserActivation.findOne({
-								where:{UserAccountID:user.ID,Type:o.const.systemType.website}
-							},{transaction:transaction})
+								where:{UserAccountID:user.ID,Type:o.const.systemType.website},
+								transaction:transaction,
+							})
 						}
 						else
 						{
@@ -568,8 +571,9 @@ module.exports = {
 			throw err;
 		}
 		return UserAccount.update({Activated:'N'},{
-			where:whereClause
-		},{transaction:transaction});
+			where:whereClause,
+			transaction:transaction,
+		});
 	},
 
 	/**
@@ -603,8 +607,9 @@ module.exports = {
 			throw err;
 		}
 		return UserAccount.update({Activated:'Y'},{
-			where:whereClause
-		},{transaction:transaction});
+			where:whereClause,
+			transaction:transaction,
+		});
 	}
 
 }

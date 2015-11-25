@@ -160,8 +160,9 @@ module.exports = {
 			{
 				
 				UserAccount.findOne({
-					where:{UserName:UserName}
-				},{transaction:transaction})
+					where:{UserName:UserName},
+					transaction:transaction,
+				})
 				.then(function(user){
 					if(user)
 					{
@@ -191,8 +192,9 @@ module.exports = {
 			if(Email)
 			{
 				UserAccount.findOne({
-					where:{Email:Email}
-				},{transaction:transaction})
+					where:{Email:Email},
+					transaction:transaction,
+				})
 				.then(function(user){
 					if(user)
 					{
@@ -222,8 +224,9 @@ module.exports = {
 			if(PhoneNumber)
 			{
 				UserAccount.findOne({
-					where:{PhoneNumber:PhoneNumber}
-				},{transaction:transaction})
+					where:{PhoneNumber:PhoneNumber},
+					transaction:transaction,
+				})
 				.then(function(user){
 					if(user)
 					{
@@ -359,8 +362,9 @@ module.exports = {
 		//---------------------------------------------
  		//Lấy thông tin user tương ứng với id
 		return UserAccount.findOne({
-			where:{ID:userInfo.ID}
-		},{transaction:transaction})
+			where:{ID:userInfo.ID},
+			transaction:transaction,
+		})
 		.then(function(u){
 			if(u)
 			{
@@ -420,8 +424,9 @@ module.exports = {
 			throw err;
 		}
 		return UserAccount.update({Enable:'N'},{
-			where:whereClause
-		},{transaction:transaction});
+			where:whereClause,
+			transaction:transaction,
+		});
 	},
 
 
@@ -456,8 +461,9 @@ module.exports = {
 			throw err;
 		}
 		return UserAccount.update({Enable:'Y'},{
-			where:whereClause
-		},{transaction:transaction});
+			where:whereClause,
+			transaction:transaction,
+		});
 	},
 
 	/**
@@ -534,8 +540,9 @@ module.exports = {
 		.then(function(data){
 			return UserAccount.findOne({
 				where:whereClause,
-				attributes:attributes
-			},{transaction:transaction})
+				attributes:attributes,
+				transaction:transaction,
+			})
 			.then(function(user){
 				return user;
 			},function(err){
@@ -611,8 +618,9 @@ module.exports = {
 		//Tính tổng số kết quả tương ứng điều kiện whereClause
 		var totalRows=0;
 		return UserAccount.count({
-			where:whereClause
-		},{transaction:transaction})
+			where:whereClause,
+			transaction:transaction,
+		})
 		.then(function(count){
 			totalRows=count;
 			return UserAccount.findAll({
@@ -620,7 +628,8 @@ module.exports = {
 				limit:limit,
 				offset:offset,
 				attributes:attributes,
-				order:order
+				order:order,
+				transaction:transaction,
 			})
 		},function(err){
 			throw err;
@@ -738,9 +747,10 @@ module.exports = {
 					return FileUpload.update({Enable:'N'},{
 						where:{
 							UserAccountID:user.ID,
-							FileType:Type
-						}
-					},{transaction:transaction})
+							FileType:Type,
+						},
+						transaction:transaction,
+					})
 					.then(function(result){
 						if(result[0]>0)
 							return {status:'success'};
@@ -878,8 +888,9 @@ module.exports = {
 							FileType:Type,
 							Enable:'Y'
 						},
-						attributes:attributes
-					},{transaction:transaction})
+						attributes:attributes,
+						transaction:transaction,
+					})
 					.then(function(file){
 						return file;
 					},function(err){
@@ -961,8 +972,9 @@ module.exports = {
 			return UserAccount.findOne({
 				where:{
 					$or:whereClause
-				}
-			},{transaction:transaction})
+				},
+				transaction:transaction,
+			})
 			.then(function(user){
 				return user;
 			},function(err){

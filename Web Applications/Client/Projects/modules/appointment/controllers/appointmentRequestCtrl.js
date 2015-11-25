@@ -2,9 +2,9 @@ var app = angular.module('app.authentication.appointment.request.controller', [
     'app.authentication.appointment.request.modal.controller'
 ]);
 
-app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval,CommonService) {
+app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval, CommonService) {
     $scope.userInfo = $cookies.getObject('userInfo');
-    console.log('$scope.userInfo',$scope.userInfo);
+    console.log('$scope.userInfo', $scope.userInfo);
     $scope.doctors = [];
     $scope.details = [];
 
@@ -56,7 +56,7 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
 
 
     $scope.SubmitRequest = function() {
-         $scope.laddaLoadingBar = true;
+        $scope.laddaLoadingBar = true;
         ((uploader.queue.length > 0) ? $scope.SendRequestUploadFile() : $scope.sendRequestAppointment());
     }
 
@@ -116,26 +116,16 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
     };
 
     $scope.SendRequestUploadFile = function() {
-        for (var i = 0; i < uploader.queue.length; i++) {
-            console.log(' uploader.queue', uploader.queue);
-            var item = uploader.queue[i];
-            item.formData[i] = {};
-            item.formData[i].userUID = $cookies.getObject('userInfo').UID;
-            item.formData[i].fileType = 'MedicalImage';
-        };
+        console.log('uploader',uploader);
         uploader.uploadAll();
     }
 
     var uploader = $scope.uploader = new FileUploader({
         url: o.const.uploadFileUrl,
-        headers:{
-            Authorization:('Bearer '+$cookies.get("token")),
-            systemtype:'WEB'
-        },
-        withCredentials :true,
+        withCredentials: true,
         alias: 'uploadFile'
     });
-
+    console.log('uploader', uploader);
     // FILTERS
 
     uploader.filters.push({
@@ -157,6 +147,13 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
         console.info('onAfterAddingAll', addedFileItems);
     };
     uploader.onBeforeUploadItem = function(item) {
+        item.headers = {
+            Authorization: ('Bearer ' + $cookies.get("token")),
+            systemtype: 'WEB'
+        };
+        item.formData[0] = {};
+        item.formData[0].userUID = $cookies.getObject('userInfo').UID;
+        item.formData[0].fileType = 'MedicalImage';
         console.info('onBeforeUploadItem', item);
     };
     uploader.onProgressItem = function(fileItem, progress) {
@@ -185,8 +182,6 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
     uploader.onCompleteAll = function() {
         $scope.sendRequestAppointment();
     };
-
-    console.info('uploader', uploader);
 
     $scope.ModalBodyPart = function() {
         var modalInstance = $modal.open({

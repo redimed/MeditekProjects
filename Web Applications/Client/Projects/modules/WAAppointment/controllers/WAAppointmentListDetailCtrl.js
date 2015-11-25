@@ -116,14 +116,19 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
                 }
             }
             var isExist = false;
-
+            
             ClinicalDetailsTemp.forEach(function(valueTemp, keyTemp) {
-                if (valueTemp.Section == object.Section &&
-                    valueTemp.Category == object.Category &&
-                    valueTemp.Type == object.Type &&
-                    valueTemp.Name == object.Name) {
+                if (valueTemp !== undefined) {
+                    if (valueTemp.Section == object.Section &&
+                        valueTemp.Category == object.Category &&
+                        valueTemp.Type == object.Type &&
+                        valueTemp.Name == object.Name) {
+                        isExist = true;
+                    }
+                }else{
                     isExist = true;
-                }
+                };
+                
             })
             if (!isExist) {
                 ClinicalDetailsTemp.push(object);
@@ -131,9 +136,11 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
         };
         var countCliniDetail = 0;
         ClinicalDetailsTemp.forEach(function(value, key) {
-            if (value.Value != 'N' && value.Value != null) {
-                countCliniDetail++;
-            };
+            if (value !== undefined) {
+                 if (value.Value != 'N' && value.Value != null) {
+                    countCliniDetail++;
+                };
+            };  
         })
         if (countCliniDetail == 0) {
             ClinicalDetailsTemp = [];

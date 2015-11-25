@@ -112,7 +112,7 @@ module.exports = {
                             }
                             if (iosDevices.length > 0) TelehealthService.SendAPNPush(iosMess, iosDevices);
                             if (androidDevices.length > 0) {
-                                TelehealthService.SendGCMPush(opts, tokens).then(function(result) {
+                                TelehealthService.SendGCMPush(androidMess, androidDevices).then(function(result) {
                                     console.log(result);
                                 }).catch(function(err) {
                                     console.log(err);

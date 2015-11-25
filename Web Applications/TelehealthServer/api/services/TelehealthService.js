@@ -123,7 +123,7 @@ module.exports = {
             headers: headers
         })
     },
-    GetAppointmentList: function(headers, type) {
+    GetAppointmentList: function(headers, type, query) {
         delete headers['if-none-match'];
         var typeArr = ['WAA', 'TEL'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];

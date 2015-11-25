@@ -395,8 +395,14 @@ module.exports = {
                     delayWhileIdle: true,
                     timeToLive: 3,
                     data: {
-                        data1: 'user1',
-                        data2: 'user2'
+                       "data": {
+                            "apiKey": "45364382",
+                            "message": "call",
+                            "fromName": "",
+                            "sessionId": "",
+                            "token": "",
+                            "from": ""
+                        }
                     },
                     notification: {
                         title: "Redimed",

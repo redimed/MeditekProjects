@@ -198,6 +198,7 @@ module.exports = {
         var defer = $q.defer();
         var message = new gcm.Message(opts)
         var regTokens = tokens;
+
         gcmSender.send(message, {
             registrationIds: regTokens
         }, 10 , function(err, result) {

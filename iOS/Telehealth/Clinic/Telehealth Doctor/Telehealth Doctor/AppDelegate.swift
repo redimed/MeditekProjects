@@ -15,19 +15,21 @@ import Socket_IO_Client_Swift
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    let userDefaultsLogin = NSUserDefaults.standardUserDefaults()
+    let userDefault = NSUserDefaults.standardUserDefaults()
     let reachability = Reachability.reachabilityForInternetConnection()
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
-        //        let userName = userDefaultsLogin.valueForKey(KeyNSUserDefault.userNameKey) as? String
-        //        if userName == "" {
-        let loginVC : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginView") as UIViewController
-        self.window?.rootViewController = loginVC
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
         
-        //        } else {
-        //            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        //        }
+        if let _: NSDictionary = userDefault.valueForKey("infoDoctor") as? NSDictionary {
+                let homeviewVC: UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as UIViewController
+                self.window?.rootViewController = homeviewVC
+        } else {
+            let loginVC : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginView") as UIViewController
+            self.window?.rootViewController = loginVC
+        }
+        
+        
         return true
     }
     
@@ -38,13 +40,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidEnterBackground(application: UIApplication) {
         UIApplication.sharedApplication().idleTimerDisabled = true
-        print("enter background")
+        userDefault.setValue(SingleTon.headers["Authorization"]! as String, forKey: "authToken")
+        print("Enter background")
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
-        print("enter foreground")
+        print("Enter from foreground")
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
     
@@ -64,13 +67,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.kreatived.Telehealth_Doctor" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls[urls.count-1]
-        }()
+    }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         let modelURL = NSBundle.mainBundle().URLForResource("Telehealth_Doctor", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
-        }()
+    }()
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
@@ -95,7 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return coordinator
-        }()
+    }()
     
     lazy var managedObjectContext: NSManagedObjectContext = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
@@ -103,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
-        }()
+    }()
     
     // MARK: - Core Data Saving support
     

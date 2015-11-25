@@ -11,11 +11,3 @@ target 'Telehealth Doctor' do
  pod 'UIView+draggable', '~> 1.0'
 end
 
-target 'Telehealth DoctorTests' do
-
-end
-
-target 'Telehealth DoctorUITests' do
-
-end
-

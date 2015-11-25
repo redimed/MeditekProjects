@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/btnEnd"
+        android:layout_width="100dp"
+        android:layout_height="?android:actionBarSize"
+        android:layout_gravity="center"
+        android:drawableTop="@drawable/icon_end_call"
+        android:padding="5dp"/>
+
+    <Button
+        android:id="@+id/btnAnswer"
+        android:layout_width="100dp"
+        android:layout_height="?android:actionBarSize"
+        android:layout_gravity="center"
+        android:drawableTop="@drawable/phone_receiver_icon"
+        android:padding="15dp"/>
 
 </LinearLayout>

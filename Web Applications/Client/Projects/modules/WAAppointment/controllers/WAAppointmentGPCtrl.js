@@ -32,7 +32,9 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
         });
 
     };
-
+    $scope.InterpreterRequiredNo = function(){
+        $scope.requestInfo.TelehealthAppointment.PatientAppointment.InterpreterLanguage = null;
+    };
     $scope.loadAllDoctor();
     $scope.sendRequestAppointment = function() {
 

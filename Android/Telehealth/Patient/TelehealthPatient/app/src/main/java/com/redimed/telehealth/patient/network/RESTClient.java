@@ -63,7 +63,7 @@ public class RESTClient {
                 .build();
 
         restAdapterCore = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(Config.apiURLCore)
                 .setClient(new InterceptingOkClient(okHttpClient))
                 .setRequestInterceptor(new SessionRequestInterceptorCore())

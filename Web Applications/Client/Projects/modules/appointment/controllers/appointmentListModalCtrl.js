@@ -14,7 +14,7 @@ app.controller('showImageController', function($scope, $modalInstance, toastr, L
             });
     };
 });
-app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstance, getid, AppointmentService, CommonService, $cookies, toastr, PatientService) {
+app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstance, getid, AppointmentService, CommonService, $cookies, toastr, PatientService ,AuthenticationService) {
 
     $modalInstance.rendered.then(function() {
         App.initComponents(); // init core components
@@ -25,6 +25,12 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         Portfolio.init();
         //ComponentsDropdowns.init(); // init todo page
     });
+    console.log(getid)
+     $scope.loadListContry = function() {
+        AuthenticationService.getListCountry().then(function(response) {
+            $scope.ListContry = response.data;
+        })
+    }
     $scope.Status = {
         apptStatus: AppointConstant.apptStatus
     };
@@ -194,10 +200,12 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         return true;
     };
     var checkOtherInput = function() {
-        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other']) && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other'].Value) {
+        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other']) 
+            && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Lacerations.Other'].Value) {
             $scope.Other.LacerationsOther = 'Y';
         };
-        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other']) && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'].Value) {
+        if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other']) 
+            && $scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.Skin__cancer.Other'].Value) {
             $scope.Other.SkincancerOther = 'Y';
         };
         if (checkDateUndefined($scope.appointment.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__Appointment.PNS.Other']) &&
@@ -257,11 +265,11 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         if ($scope.appointment.Status == 'Approved' || $scope.appointment.Status == 'Attended' || $scope.appointment.Status == 'Waitlist' || $scope.appointment.Status == 'Finished') {
             stringAlert = $scope.CheckValidation()
         };
-        if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate != ''  || $scope.ShowData.DateTimeAppointmentDateTime != null && $scope.ShowData.DateTimeAppointmentDateTime != '') {
-            stringAlert = $scope.CheckValidation()
+        if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate != ''  || 
+            $scope.ShowData.DateTimeAppointmentDateTime != null && $scope.ShowData.DateTimeAppointmentDateTime != '') {
+            stringAlert = $scope.CheckValidation();
 
         };
-        console.log(stringAlert)
         if (stringAlert == null) {
             swal({
                     title: "Are you sure ?",
@@ -352,13 +360,18 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             };
             AppointmentService.upDateApppointment(postData).then(function(response) {
                 if (response == 'success') {
+                    toastr.success("Update appointment successfully !");
                     $modalInstance.close('success');
-                    swal("Success");
+                    swal.close();
                 };
             },function(err) {
                if(err.status == 401){
                 $modalInstance.close('err');
                 swal.close();
+               }else{
+                $modalInstance.close('err');
+                swal.close();
+                toastr.error('Update Appointment Failed');
                }
             });
         };

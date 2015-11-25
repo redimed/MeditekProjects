@@ -6,8 +6,10 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -62,8 +64,15 @@ public class ListAppointmentFragment extends Fragment {
     SwipeRefreshLayout swipeInfo;
     @Bind(R.id.lblNoData)
     TextView lblNoData;
+    @Bind(R.id.toolBar)
+    Toolbar toolBar;
+    @Bind(R.id.lblTitle)
+    TextView lblTitle;
+    @Bind(R.id.lblHome)
+    TextView btnHome;
 
-    public ListAppointmentFragment() {}
+    public ListAppointmentFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -107,16 +116,28 @@ public class ListAppointmentFragment extends Fragment {
             }
         });
 
+        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        appCompatActivity.setSupportActionBar(toolBar);
+        toolBar.setBackgroundResource(R.drawable.appointment_list_bg);
+        lblTitle.setText(getResources().getString(R.string.list_appt_title));
+        btnHome.setText(getResources().getString(R.string.home_title));
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) v.getContext()).Display(0);
+            }
+        });
+
         return v;
     }
 
     //    Get list Appointment to Patient
     private void GetListAppointmentPatient() {
+        listAppointment.clear();
         telehealthPatient = v.getContext().getSharedPreferences("TelehealthUser", v.getContext().MODE_PRIVATE);
         registerApi.getAppointmentPatients(telehealthPatient.getString("patientUID", null), new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                listAppointment.clear();
                 swipeInfo.setRefreshing(false);
                 String data = jsonObject.get("rows").toString();
                 Appointment[] appointments = gson.fromJson(data, Appointment[].class);
@@ -125,7 +146,7 @@ public class ListAppointmentFragment extends Fragment {
                         listAppointment.add(appointment);
                     }
                 }
-                rvAdapter.swapDataAppointment(listAppointment, getActivity());
+                rvAdapter.swapDataAppointment(listAppointment);
                 if (listAppointment.size() == 0) {
                     lblNoData.setVisibility(View.VISIBLE);
                 }

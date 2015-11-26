@@ -1,7 +1,6 @@
 var moment=require('moment');
 var jwt = require('jsonwebtoken');
 var o=require("../../../services/HelperService");
-var md5 = require('md5');
 module.exports={
 	/**
 	 * Trả về token mới + refreshCode mới cho client
@@ -46,7 +45,7 @@ module.exports={
 					{
 						var payload={
 							UID:req.user.UID,
-							RefreshCode:md5(rt.RefreshCode)
+							RefreshCode:o.md5(rt.RefreshCode)
 						};
 						var token=jwt.sign(
 		                    payload,
@@ -98,7 +97,7 @@ module.exports={
 				var refreshToken=rt.dataValues;
 				var payload={
 					UID:req.user.UID,
-					RefreshCode:md5(refreshToken.RefreshCode)
+					RefreshCode:o.md5(refreshToken.RefreshCode)
 				};
 				var token=jwt.sign(
                     payload,

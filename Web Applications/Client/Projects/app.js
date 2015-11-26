@@ -74,7 +74,7 @@ app
                                 Authorization:'Bearer '+$cookies.get('token'),
                                 systemtype:'WEB'
                             },
-                            url: o.const.restBaseUrl+'/api/refresh-token/GetNewToken',
+                            url: o.const.authBaseUrl+'/api/refresh-token/GetNewToken',
                             data: {refreshCode:$rootScope.refreshCode},
                             success: function(data){
                                 //STANDARD
@@ -157,6 +157,12 @@ app
         return Restangular.withConfig(function(RestangularConfigurer) {
             RestangularConfigurer.setFullResponse(true);
             RestangularConfigurer.setBaseUrl(o.const.fileBaseUrl);
+        });
+    })
+    //SETTING RESTANGULAR FOR AUTHENTICATION
+    .factory('AuthRestangular',function(Restangular){
+        return Restangular.withConfig(function(RestangularConfigurer) {
+            RestangularConfigurer.setBaseUrl(o.const.authBaseUrl);
         });
     })
     .run(function($rootScope, $cookies, $window, $state, Restangular, toastr, settings) {

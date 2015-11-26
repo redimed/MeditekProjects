@@ -104,6 +104,17 @@ angular.module('app.authentication.doctor.service', [])
 				error.push({field:"Title",message:"required"});
 				// toastr.error('Title is required');
 			}
+
+			//validate UserName
+			if(info.UserName){
+				if(info.UserName.length < 0 || info.UserName.length > 255){
+					error.push({field:"UserName",message:"max length"});
+				}
+			}
+			else {
+				error.push({field:"UserName",message:"required"});
+				// toastr.error('UserName is required');
+			}
 			
 			//validate FirstName
 			if(info.FirstName){
@@ -370,9 +381,9 @@ angular.module('app.authentication.doctor.service', [])
 						error.push({field:"DepartmentID",message:"length"});
 					}
 				}
-				else {
-					error.push({field:"DepartmentID",message:"required"});
-				}
+				// else {
+				// 	error.push({field:"DepartmentID",message:"required"});
+				// }
 			}
 
 			// validate ProviderNumber

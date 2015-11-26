@@ -242,10 +242,10 @@ module.exports = {
 						err.pushErrors(error);
 					}
 				}
-				else {
-					error.push({field:"DepartmentID",message:"required"});
-					err.pushErrors(error);
-				}
+				// else {
+				// 	error.push({field:"DepartmentID",message:"required"});
+				// 	err.pushErrors(error);
+				// }
 
 				// validate ProviderNumber
 				if(info.ProviderNumber!=undefined && info.ProviderNumber) {
@@ -537,10 +537,10 @@ module.exports = {
 							err.pushErrors(error);
 						}
 					}
-					else {
-						error.push({field:"DepartmentID",message:"required"});
-						err.pushErrors(error);
-					}
+					// else {
+					// 	error.push({field:"DepartmentID",message:"required"});
+					// 	err.pushErrors(error);
+					// }
 				}
 
 				// validate ProviderNumber
@@ -630,6 +630,21 @@ module.exports = {
 					error.push({field:"Title",message:"required"});
 					err.pushErrors(error);
 					// toastr.error('Title is required');
+				}
+			}
+
+			//validate UserName
+			if('UserName' in info){
+				if(info.UserName){
+					if(info.UserName.length < 0 || info.UserName.length > 50){
+						error.push({field:"UserName",message:"max length"});
+						err.pushErrors(error);
+					}
+				}
+				else {
+					error.push({field:"UserName",message:"required"});
+					err.pushErrors(error);
+					// toastr.error('UserName is required');
 				}
 			}
 			
@@ -979,6 +994,7 @@ module.exports = {
 		var isHaveRole = false;
 		return sequelize.transaction()
 		.then(function(t){
+			console.log(data.info);
 			return Services.Doctor.validation(data.info)
 			.then(function(result){
 				if(result!=undefined && result!=null&& result!=''){
@@ -987,6 +1003,23 @@ module.exports = {
 							UID : data.UID
 						},
 						transaction:t
+					})
+					.then(function(user){
+						var uid = data.info.UserAccount['UID'];
+						delete data.info.UserAccount['PhoneNumber'];
+						delete data.info.UserAccount['UserName'];
+						delete data.info.UserAccount['Email'];
+						delete data.info.UserAccount['UID'];
+						delete data.info.UserAccount['Password'];
+						return UserAccount.update(data.info.UserAccount,{
+							where : {
+								UID : uid
+							},
+							transaction:t
+						});
+					},function(err){
+						t.rollback();
+						throw err;
 					});
 				}
 			},function(err){

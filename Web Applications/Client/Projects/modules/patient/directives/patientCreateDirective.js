@@ -12,10 +12,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		    var uploader = $scope.uploader = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	url: o.const.uploadFileUrl,
-		    	headers:{
-		    		Authorization:'Bearer '+$cookies.get("token"),
-		    		systemtype:'WEB',
-		    	},
+
 		    	withCredentials:true,
 		    	alias : 'uploadFile'
 		    });
@@ -27,6 +24,13 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		            return this.queue.length < 10;
 		        }
 		    });
+		    uploader.onBeforeUploadItem = function(item) {
+		    	item.headers={
+		    		Authorization:'Bearer '+$cookies.get("token"),
+		    		systemtype:'WEB',
+		    	},
+		        console.info('onBeforeUploadItem', item);
+		    };
 
 		},
 		link: function(scope, elem, attrs){

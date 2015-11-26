@@ -17,17 +17,15 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
             uid: '=onUid',
             isShowFull:'=onShowfull',
             listShow:'=onListshow',
-            onCancel: '='
+            onCancel: '=',
+            activeUser: '=onActive'
         },
         controller:function($scope, FileUploader) {
 			// Profile Image
 		    var uploader = $scope.uploader = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	url: o.const.uploadFileUrl,
-		    	headers:{
-		    		Authorization:'Bearer '+$cookies.get("token"),
-		    		systemtype:'WEB',
-		    	},
+
 		    	withCredentials:true,
 		    	alias : 'uploadFile'
 		    });
@@ -51,6 +49,13 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    	else{
 		    		$scope.info.img_change = false;
 		    	}
+		    };
+		    uploader.onBeforeUploadItem = function(item) {
+		    	item.headers={
+		    		Authorization:'Bearer '+$cookies.get("token"),
+		    		systemtype:'WEB',
+		    	},
+		        console.info('onBeforeUploadItem', item);
 		    };
 		    // uploader.onSuccessItem = function (fileItem, response, status, headers) {
 		    //     console.info('onSuccessItem', fileItem, response, status, headers);
@@ -145,6 +150,12 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    	if(scope.info[name].length==0)
 		    		scope.info[name] = null;
 		    };
+
+		    scope.changeEnable = function(Enable) {
+		    	scope.info.EnableUser = Enable;
+		    	console.log(Enable);
+		    };
+
 		    scope.savechange = function(){
 				PatientService.validate(scope.info)
 					.then(function(result){

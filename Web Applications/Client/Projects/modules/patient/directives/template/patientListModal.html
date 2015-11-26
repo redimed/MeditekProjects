@@ -107,6 +107,11 @@
 													<div class="col-md-8"><input type="text" class="form-control" placeholder="Occupation" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation='';checkDataNull('Occupation')"><span style="color:red;">{{ermsg.Occupation}}</span></div>
 												</div>
 												<!-- end Occupation -->
+												<!-- Enable User -->
+												<div class="form-group">
+													<label class="control-label col-md-4"><input type="checkbox" ng-model="activeUser" ng-true-value="'Y'" ng-false-value="'N'" ng-click="changeEnable(activeUser)" />Enable</label>
+												</div>
+												<!-- end Enable User -->
 											</div>
 											<div class="col-md-4" id="columm3" ng-if="listShow.columm3">
 												<h4 class="form-section bold">Contact Information</b></h4>

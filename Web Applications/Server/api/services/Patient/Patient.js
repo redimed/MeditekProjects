@@ -662,6 +662,7 @@ module.exports = {
 		output:update patient into table Patient
 	*/
 	UpdatePatient : function(data, transaction) {
+		console.log(data);
 		var isHaveRole = false;
 		if(check.checkData(data)){
 			data.ModifiedDate = new Date();
@@ -701,8 +702,26 @@ module.exports = {
 							UID : patientInfo.UID
 						},
 						transaction:t
+					})
+					.then(function(user){
+						if(data.EnableUser!=undefined && data.EnableUser!=null && data.EnableUser!=""){
+							return UserAccount.update({
+								Enable : data.EnableUser
+							},{
+								where : {
+									UID : data.UserAccount.UID
+								}
+							});
+						}
+						else {
+							return user;
+						}
+					},function(err){
+						t.rollback();
+						throw err;
 					});
 				}, function(err){
+					t.rollback();
 					throw err;
 				})
 				.then(function(result){
@@ -827,7 +846,7 @@ module.exports = {
 			include:[
 				{
 	            	model: UserAccount,
-	            	attributes: ['PhoneNumber','Email','ID','UID'],
+	            	attributes: ['PhoneNumber','Email','ID','UID','Enable'],
 			    	required: true,
 			    	include:[
 				  		{

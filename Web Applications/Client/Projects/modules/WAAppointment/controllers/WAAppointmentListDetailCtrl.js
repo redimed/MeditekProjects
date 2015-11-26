@@ -16,6 +16,7 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
         })
     }
     $scope.loadListContry();
+    $scope.submited = false;
     $scope.ViewDoc = function(Url, UID) {
         var LinkUID = Url + UID;
         CommonService.downloadFile(UID)
@@ -273,14 +274,14 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
         });
     };
     $scope.submitUpdate = function() {
+        $scope.submited = true
         if ($scope.userForm.$valid) {
             var stringAlert = null;
             if ($scope.wainformation.Status == 'Approved' || $scope.wainformation.Status == 'Attended' || $scope.wainformation.Status == 'Waitlist' || $scope.wainformation.Status == 'Finished') {
-                stringAlert = $scope.CheckValidation()
+                stringAlert = $scope.CheckValidation();
             };
             if ($scope.info.appointmentDate != null && $scope.info.appointmentDate != '' || $scope.info.appointmentTime != null && $scope.info.appointmentTime != '') {
-                stringAlert = $scope.CheckValidation()
-
+                stringAlert = $scope.CheckValidation();
             };
             if (stringAlert == null) {
                 swal({

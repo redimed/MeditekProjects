@@ -202,7 +202,7 @@ angular.module('app.authentication.patient.services',[])
 			//validate Gender
 			if('Gender' in info)
 			if(info.Gender){
-				if(info.Gender != "Female" && info.Gender != "Male" && info.Gender != "Other"){
+				if(info.Gender != "Female" && info.Gender != "Male" && info.Gender !="Other"){
 					error.push({field:"Gender",message:"invalid value"});
 				}
 			}

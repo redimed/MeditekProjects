@@ -274,7 +274,7 @@ module.exports = {
                     args: [0, 20],
                     msg: 'Too long!'
                 },
-                is: /^[1-9]{9}$/
+                is: /^[0-9]{6,10}$/
             }
         },
         WorkPhoneNumber: {
@@ -285,7 +285,7 @@ module.exports = {
                     args: [0, 20],
                     msg: 'Too long!'
                 },
-                is: /^[1-9]{9}$/
+                is: /^[0-9]{6,10}$/
             }
         },
         FaxNumber: {

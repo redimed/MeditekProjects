@@ -31,7 +31,7 @@ class AppointmentListsViewController: UIViewController {
         if let patientUID = defaults.valueForKey("patientUID") as? String {
             appointmentApi.getListAppointmentByUID(patientUID, Limit: "100", completionHandler: {
                 response in
-                
+                    print("---response-",response)
                 if response["ErrorsList"] != nil {
                     print("Error")
                     self.alertMessage("Error", message: response["ErrorsList"][0].string!)
@@ -47,7 +47,6 @@ class AppointmentListsViewController: UIViewController {
                     var Type:String!
                     var data = response["rows"]
                     let countAppointment = data.count
-                     print("--------data",data[0])
                     for var i = 0 ; i < countAppointment ;i++ {
                        
                         UIDApointment = data[i]["UID"].string ?? ""

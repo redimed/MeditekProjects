@@ -11,11 +11,13 @@ import UIKit
 
 //Giap: API verify phone number and send verifycode
 struct UrlAPICheckPhoneNumber  {
+    static let apiLogin = "/api/login"
     static let SendVerifyCodePhoneNumber = "/api/telehealth/user/requestActivationCode"
     static let CheckVerifyCode = "/api/telehealth/user/verifyActivationCode"
     
 }
 struct UrlInformationPatient  {
+    static let getUserInfo = "/api/telehealth/user/"
     static let getInformationPatientByUID = "/api/telehealth/user/details/"
     static let getAppointmentList = "/api/telehealth/user/appointments/"
     static let getAppointmentDetails = "/api/telehealth/user/telehealthAppointmentDetails/"
@@ -24,6 +26,7 @@ struct UrlInformationPatient  {
     static let updateImageToAppointment = "/api/telehealth/appointment/updateFile"
     static let downloadImage = "/api/downloadFile/400"
     static let getNewToken = "/api/refresh-token/GetNewToken"
+    static let updateTokenPush = "/api/telehealth/user/updateToken"
 }
 
 //Giap: API Socket
@@ -44,7 +47,7 @@ struct MessageString  {
 }
 
 struct ErrorMessage {
-    static let NoData = "Can't get data"
+    static let NoData = "No appointment details!"
     static let TimeOut = "Request Time Out"
     static let TimeOutToken = "jwt expired"
 }
@@ -95,6 +98,11 @@ struct colorStatusAppointment{
     static let colorReceived = UIColor(red: 72/255, green: 191/255, blue: 226/255, alpha: 1.0)
     static let colorApproved = "Approved"
     static let colorFinished = "Finished"
+}
+struct notifyMessage {
+    static let ClickNotify = "ClickNotify"
+    static let ClickAnswer = "ClickAnswer"
+    static let ClickDesline = "ClickDesline"
 }
 
 

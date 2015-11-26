@@ -159,17 +159,17 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
         if segue.identifier == "physioSegue" {
             let submitViewController = segue.destinationViewController as! SubmitInjuryViewController
             submitViewController.pastUrls = pastUrls
-            submitViewController.NavigateBarTitle = "Physio Therapist"
+            submitViewController.NavigateBarTitle = "Physio"
             submitViewController.physiotherapy = "Y"
         }else if segue.identifier == "specialistSegue" {
             let submitViewController = segue.destinationViewController as! SubmitInjuryViewController
             submitViewController.pastUrls = pastUrls
-            submitViewController.NavigateBarTitle = "Specialist Clinic"
+            submitViewController.NavigateBarTitle = "Specialists"
             submitViewController.specialist = "Y"
         }else if segue.identifier == "generalSegue" {
             let submitViewController = segue.destinationViewController as! SubmitInjuryViewController
             submitViewController.pastUrls = pastUrls
-            submitViewController.NavigateBarTitle = "General Clinic"
+            submitViewController.NavigateBarTitle = "GP"
             submitViewController.GP = "Y"
         }else if segue.identifier == "handTherapistSegue" {
             let submitViewController = segue.destinationViewController as! SubmitInjuryViewController
@@ -183,7 +183,7 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
         }else if segue.identifier == "UrgentCareSegue"{
             let data = segue.destinationViewController as! FAQsViewController
             data.fileName = "UrgentCare"
-            data.navigationBarString = "UrgentCare"
+            data.navigationBarString = "ABOUT US"
             
         }
 

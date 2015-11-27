@@ -1990,9 +1990,9 @@
       "resolved": "https://registry.npmjs.org/media-typer/-/media-typer-0.2.0.tgz"
     },
     "meditek_library": {
-      "version": "0.0.0",
-      "from": "git+https://d7fe3a26e99f83e5329bcc6f4e5447207f56128e:x-oauth-basic@github.com/redimed/MeditekLibrary.git#master",
-      "resolved": "git+https://d7fe3a26e99f83e5329bcc6f4e5447207f56128e:x-oauth-basic@github.com/redimed/MeditekLibrary.git#c124744a508d9ff995a93cc720bef8e8cfcf4765"
+      "version": "0.0.1",
+      "from": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#master",
+      "resolved": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#6c89dc621e8b0d68847b2c6e16d9824942b7f151"
     },
     "memoizee": {
       "version": "0.3.9",
@@ -2871,15 +2871,15 @@
           "from": "https://registry.npmjs.org/generic-pool/-/generic-pool-2.0.4.tgz",
           "resolved": "https://registry.npmjs.org/generic-pool/-/generic-pool-2.0.4.tgz"
         },
-        "lodash": {
-          "version": "2.4.2",
-          "from": "https://registry.npmjs.org/lodash/-/lodash-2.4.2.tgz",
-          "resolved": "https://registry.npmjs.org/lodash/-/lodash-2.4.2.tgz"
-        },
         "moment": {
           "version": "2.5.1",
           "from": "https://registry.npmjs.org/moment/-/moment-2.5.1.tgz",
           "resolved": "https://registry.npmjs.org/moment/-/moment-2.5.1.tgz"
+        },
+        "lodash": {
+          "version": "2.4.2",
+          "from": "https://registry.npmjs.org/lodash/-/lodash-2.4.2.tgz",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-2.4.2.tgz"
         },
         "toposort-class": {
           "version": "0.3.1",

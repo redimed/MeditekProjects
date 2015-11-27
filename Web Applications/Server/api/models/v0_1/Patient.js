@@ -169,7 +169,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is: /^[a-zA-Z0-9\s\/]{0,255}$/
+                is: /^[a-zA-Z0-9\s,'-\/]{0,255}$/
             }
         },
         Address2: {
@@ -180,7 +180,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is: /^[a-zA-Z0-9\s\/]{0,255}$/
+                is: /^[a-zA-Z0-9\s,'-\/]{0,255}$/
             }
         },
         Postcode: {

@@ -63,6 +63,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 
 		},
 		link: function(scope, elem, attrs){
+			console.log(scope.activeUser);
 			var data = {};
         	scope.info = {};
 			data.UID = scope.uid;
@@ -73,6 +74,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					scope.info.DOB = /^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/.test(scope.info.DOB)?scope.info.DOB:null;
 					scope.info.img = scope.info.FileUID?scope.info.FileUID:null;
 					scope.info.img_change = null;
+					console.log(scope.info);
 					oriInfo = angular.copy(scope.info);
 				}
 				else{
@@ -157,6 +159,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    };
 
 		    scope.savechange = function(){
+
 				PatientService.validate(scope.info)
 					.then(function(result){
 						scope.er ='';
@@ -192,6 +195,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 							scope.info = angular.copy(oriInfo);
 						});
 				}, function(err){
+
 					toastr.error("Please check data again.","ERROR");
 					scope.er ={};
 					scope.ermsg ={};

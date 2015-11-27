@@ -133,6 +133,7 @@ module.exports = {
 			PhoneNumber: data.PhoneNumber,
 			Password: data.Password
 		};
+		var info_user = {};
 		if(data.captcha){
 			request.get({
 		        url:"https://www.google.com/recaptcha/api/siteverify?secret=%276LcDaxATAAAAAGAlZHx7jZFllXynb6TBDeelzP3X%27&response="+data.captcha
@@ -153,7 +154,11 @@ module.exports = {
 									// Create Role
 									Services.UserRole.CreateUserRoleWhenCreateUser(result, info_role, t)
 									.then(function(success) {
-
+										info_user = {
+											UID   : result.UID,
+											email : result.Email,
+											ID    : result.ID
+										};
 										data.CreatedDate = dated;
 										data.CreatedBy = req.user?req.user.ID:null;
 										data.UserAccountID = result.ID;
@@ -165,7 +170,7 @@ module.exports = {
 										// Create Doctor
 										Services.Doctor.CreateDoctor(data, t)
 										.then(function(success) {
-											t.commit();
+
 											var info_actv = {
 												UserUID: result.UID,
 												Type: HelperService.const.systemType.website,
@@ -173,19 +178,21 @@ module.exports = {
 											};
 
 											// Activation
-											Services.UserActivation.CreateUserActivation(info_actv)
+											Services.UserActivation.CreateUserActivation(info_actv,t)
 											.then(function(result_actv) {
 												
 												var info_show = {
 													UID: result.UID,
 													VerificationCode: result_actv.VerificationCode
 												};
-
+												t.commit();
 												res.ok({
-													data: info_show
+													data: info_show,
+													useraccount: info_user
 												});
 											})
 											.catch(function(err) {
+												t.rollback();
 												res.serverError(ErrorWrap(err));
 											});
 

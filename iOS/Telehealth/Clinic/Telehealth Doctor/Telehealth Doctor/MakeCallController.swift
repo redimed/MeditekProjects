@@ -30,7 +30,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     var publisher : OTPublisher?
     var subscriber : OTSubscriber?
     var idOnlineUser : Int!
-    let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("infoDoctor") as! NSDictionary
+    let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("teleUserInfo") as! NSDictionary
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var avAudioPlayer : AVAudioPlayer?
     var soundFileURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("call", ofType: "wav")!)
@@ -159,7 +159,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             }
         }
         
-        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["TeleUID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
+        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
     }
     
     func lostConnection() {
@@ -179,6 +179,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
      spend for end call and back view controller
      */
     func endCall() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "handleCall", object: nil)
         sessionDidDisconnect(session!)
         doUnsubscribe()
         self.navigationController!.popViewControllerAnimated(true)
@@ -209,9 +210,9 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         case 1: // ---end call---
             isClickEnd = true
             if isAnswer {
-                SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["TeleUID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "end")])
+                SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "end")])
             } else {
-                SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["TeleUID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "cancel")])
+                SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "cancel")])
             }
             
             endCall()
@@ -276,7 +277,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         publisher!.view.frame = CGRect(x: 0.0, y: 0, width: screenSize.width, height: screenSize.height)
         
         /// Emit call patient
-        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["TeleUID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
+        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
         playSoundCall()
         /**
         button controller call to publisherview

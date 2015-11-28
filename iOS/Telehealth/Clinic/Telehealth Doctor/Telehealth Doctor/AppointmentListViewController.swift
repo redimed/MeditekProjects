@@ -13,23 +13,24 @@ import SwiftyJSON
 class AppointmentListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var navigaButton: [UIButton]!
     var refreshControl : UIRefreshControl!
-    let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("infoDoctor") as! NSDictionary
+    let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("teleUserInfo") as! NSDictionary
+    var titleView2: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         SingleTon.onlineUser_Singleton.removeAll()
+        
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "reloadDataTable", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadTable:", name: "reloadDataTable", object: nil)
         
         if SingleTon.flagSegue == true { // list telehealth-appointment
-            navigationItem.title = "TeleHealth Appointment"
+            titleView2 = "Telehealth Appointment"
             getAppointmentList(APPOINTMENTLIST_TeleHealth)
-        }
-        else { // list WA-appointment
-            navigationItem.title = "WA Appointment"
+        } else { // list WA-appointment
+            titleView2 = "WA Appointment"
             getAppointmentList(APPOINTMENTLIST_WA)
         }
         
@@ -38,16 +39,27 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         self.refreshControl.addTarget(self, action: "emitOnlineUser:", forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(refreshControl)
         
-        tableView.estimatedRowHeight = 60.0
+        tableView.estimatedRowHeight = 90.0
         tableView.rowHeight = UITableViewAutomaticDimension
     }
+    
     override func viewDidAppear(animated: Bool) {
         tableView.reloadData()
     }
     
     override func viewWillAppear(animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationItem.setHidesBackButton(true, animated: true)
         
+        for button in navigaButton {
+            switch button.tag {
+            case 50:
+                button.setTitle("Home", forState: UIControlState.Normal)
+            default:
+                button.setTitle(titleView2, forState: UIControlState.Normal)
+                break;
+            }
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -83,7 +95,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! AppointmentTableViewCell
         
         guard let numberArrOnline: Int = SingleTon.onlineUser_Singleton.count where numberArrOnline > 0 else {
-            print("numberArrOnline not count value for singleton online user list")
+            print("AppointmentListViewController - table view array fatal error optional value")
             self.tableView.reloadData()
             return cell
         }
@@ -106,6 +118,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         cell.submitDate.text = formatforList(singletonOnlineUser.requestDateAppoinment)
         cell.appoinmentDate.text = formatforList(singletonOnlineUser.appoinmentDate)
         cell.callButton.enabled = true
+        cell.statusApt.text = singletonOnlineUser.statusApt
         if let status = singletonOnlineUser.status {
             if status != 0 {
                 cell.statusImageView.hidden = false
@@ -118,7 +131,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         guard let identiSegue = segue.identifier else {
-            print("segue identify is empty")
+            print("unwind home segue")
             return
         }
         switch identiSegue {
@@ -131,11 +144,13 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
             if let indexPath = sender!.tag {
                 let destinationController = segue.destinationViewController as! DetailAppointmentVC
                 destinationController.uidUser = indexPath
+                destinationController.oldTitle = "Telehealth Appointment"
             }
         case "WAAppointment":
             if let indexPath = sender!.tag {
                 let destinationController = segue.destinationViewController as! DetailAppointmentVC
                 destinationController.uidUser = indexPath
+                destinationController.oldTitle = "WA Appointment"
             }
         default:
             return
@@ -149,7 +164,6 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     func getAppointmentList(url: String) {
         request(.GET, url, headers: SingleTon.headers)
             .responseJSONReToken { response in
-                
                 guard response.2.error == nil else {
                     if let data = response.2.data {
                         JSSAlertView().warning(self, title: "Error", text: resJSONError(data))
@@ -163,7 +177,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
                     SingleTon.onlineUser_Singleton.removeAll()
                     for var i = 0; i < readableJSON.count ; ++i {
                         let onlineObj : OnlineUsers = OnlineUsers(userId: "\(i+1)",
-                            requestDateAppoinment: readableJSON[i]["RequestDate"].stringValue,
+                            requestDateAppoinment: readableJSON[i]["CreatedDate"].stringValue,
                             appoinmentDate: readableJSON[i]["FromTime"].stringValue,
                             UID: readableJSON[i]["UID"].stringValue,
                             status: readableJSON[i]["IsOnline"].intValue,
@@ -174,17 +188,16 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
                             firstNamePatient: readableJSON[i]["Patients"][0]["FirstName"].stringValue.isEmpty ? readableJSON[i]["TelehealthAppointment"]["PatientAppointment"]["FirstName"].stringValue : readableJSON[i]["Patients"][0]["FirstName"].stringValue,
                             midleNamePatient: readableJSON[i]["Patients"][0]["MiddleName"].stringValue.isEmpty ? readableJSON[i]["TelehealthAppointment"]["PatientAppointment"]["MiddleName"].stringValue : readableJSON[i]["Patients"][0]["MiddleName"].stringValue,
                             lastNamePatient: readableJSON[i]["Patients"][0]["LastName"].stringValue.isEmpty ? readableJSON[i]["TelehealthAppointment"]["PatientAppointment"]["LastName"].stringValue : readableJSON[i]["Patients"][0]["LastName"].stringValue,
-                            TeleUID: readableJSON[i]["TeleUID"].stringValue
+                            TeleUID: readableJSON[i]["TeleUID"].stringValue,
+                            statusApt: readableJSON[i]["Status"].stringValue
                         )
-                        if readableJSON[i]["Status"] == "Received" {
-                            SingleTon.onlineUser_Singleton.append(onlineObj)
-                            self.tableView.reloadData()
-                            self.tableView.tableFooterView = UIView(frame: CGRect.zero)
-                        }
+                        
+                        SingleTon.onlineUser_Singleton.append(onlineObj)
+                        self.tableView.reloadData()
+                        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
                     }
                 }
         }
     }
-    
 }
 

@@ -8,27 +8,21 @@
 
 import UIKit
 import CoreData
-import ReachabilitySwift
-import Socket_IO_Client_Swift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     let userDefault = NSUserDefaults.standardUserDefaults()
-    let reachability = Reachability.reachabilityForInternetConnection()
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
-        
-        if let _: NSDictionary = userDefault.valueForKey("infoDoctor") as? NSDictionary {
-                let homeviewVC: UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as UIViewController
-                self.window?.rootViewController = homeviewVC
+        if let _: NSDictionary = userDefault.valueForKey("teleUserInfo") as? NSDictionary {
+            let homeviewVC: UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as UIViewController
+            self.window?.rootViewController = homeviewVC
         } else {
             let loginVC : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginView") as UIViewController
             self.window?.rootViewController = loginVC
         }
-        
         
         return true
     }
@@ -39,9 +33,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(application: UIApplication) {
-        UIApplication.sharedApplication().idleTimerDisabled = true
-        userDefault.setValue(SingleTon.headers["Authorization"]! as String, forKey: "authToken")
-        print("Enter background")
+        if let flagHeaderVal = SingleTon.headers {
+            if let tokenEnterBG: String = flagHeaderVal["Authorization"]! as String {
+                userDefault.setValue(tokenEnterBG, forKey: "authToken")
+                print("Enter background")
+            }
+        }
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }

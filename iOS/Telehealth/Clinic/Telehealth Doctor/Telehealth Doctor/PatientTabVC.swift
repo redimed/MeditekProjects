@@ -36,7 +36,7 @@ class PatientTabVC: UIViewController {
                     if aLabel.text != nil && !aLabel.text!.isEmpty {
                         let border = CALayer()
                         let width = CGFloat(1.0)
-                        border.borderColor = UIColor.blackColor().CGColor
+                        border.borderColor = UIColor.lightGrayColor().CGColor
                         border.frame = CGRect(x: 0, y: aLabel.frame.size.height - width, width:  aLabel.frame.size.width, height: width)
                         border.borderWidth = 0.5
                         aLabel.layer.addSublayer(border)

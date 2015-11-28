@@ -44,6 +44,7 @@
 		0045A2E61BCF8FC900AC4028 /* MedicalImage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0045A2E51BCF8FC900AC4028 /* MedicalImage.xib */; };
 		0045A2E81BCF8FD100AC4028 /* PatientTabVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0045A2E71BCF8FD100AC4028 /* PatientTabVC.xib */; };
 		004F6D191BB9A02200242CE9 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004F6D181BB9A02200242CE9 /* CustomViewController.swift */; };
+		00525A661C05970C007A56D5 /* ModalFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00525A651C05970C007A56D5 /* ModalFilterVC.swift */; };
 		005BE58C1BF03DEA00134D84 /* HistorySkinHandVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005BE58A1BF03DEA00134D84 /* HistorySkinHandVC.swift */; };
 		005BE58D1BF03DEA00134D84 /* HistorySkinHandVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 005BE58B1BF03DEA00134D84 /* HistorySkinHandVC.xib */; };
 		005BE5921BF0426B00134D84 /* Relevant_Allergy_CurrentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005BE5901BF0426B00134D84 /* Relevant_Allergy_CurrentVC.swift */; };
@@ -52,6 +53,7 @@
 		005BE5991BF042A700134D84 /* PathologyProviderVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 005BE5971BF042A700134D84 /* PathologyProviderVC.xib */; };
 		0061A4441BD7773100617B25 /* MedicalImageCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0061A4421BD7773100617B25 /* MedicalImageCVC.swift */; };
 		0061A4451BD7773100617B25 /* MedicalImageCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0061A4431BD7773100617B25 /* MedicalImageCVC.xib */; };
+		007AE7CF1C06AE17005364FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 007AE7CE1C06AE17005364FE /* Assets.xcassets */; };
 		008FB2351BB93E3A00684968 /* TOPVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008FB2341BB93E3A00684968 /* TOPVCViewController.swift */; };
 		008FB2371BB93F4500684968 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2361BB93F4500684968 /* AudioToolbox.framework */; };
 		008FB2391BB93F4B00684968 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2381BB93F4B00684968 /* AVFoundation.framework */; };
@@ -85,7 +87,6 @@
 		AFF21D7F1BB12D8B006A190E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D7E1BB12D8B006A190E /* LoginViewController.swift */; };
 		AFF21D821BB12D8B006A190E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFF21D801BB12D8B006A190E /* Main.storyboard */; };
 		AFF21D851BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D831BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld */; };
-		AFF21D871BB12D8B006A190E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFF21D861BB12D8B006A190E /* Assets.xcassets */; };
 		AFF21D8A1BB12D8B006A190E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFF21D881BB12D8B006A190E /* LaunchScreen.storyboard */; };
 		AFF21D951BB12D8B006A190E /* Telehealth_DoctorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D941BB12D8B006A190E /* Telehealth_DoctorTests.swift */; };
 		AFF21DA01BB12D8B006A190E /* Telehealth_DoctorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D9F1BB12D8B006A190E /* Telehealth_DoctorUITests.swift */; };
@@ -148,6 +149,7 @@
 		0045A2E51BCF8FC900AC4028 /* MedicalImage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MedicalImage.xib; sourceTree = "<group>"; };
 		0045A2E71BCF8FD100AC4028 /* PatientTabVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PatientTabVC.xib; sourceTree = "<group>"; };
 		004F6D181BB9A02200242CE9 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
+		00525A651C05970C007A56D5 /* ModalFilterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalFilterVC.swift; sourceTree = "<group>"; };
 		005BE58A1BF03DEA00134D84 /* HistorySkinHandVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistorySkinHandVC.swift; sourceTree = "<group>"; };
 		005BE58B1BF03DEA00134D84 /* HistorySkinHandVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistorySkinHandVC.xib; sourceTree = "<group>"; };
 		005BE5901BF0426B00134D84 /* Relevant_Allergy_CurrentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Relevant_Allergy_CurrentVC.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 		005BE5971BF042A700134D84 /* PathologyProviderVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PathologyProviderVC.xib; sourceTree = "<group>"; };
 		0061A4421BD7773100617B25 /* MedicalImageCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicalImageCVC.swift; sourceTree = "<group>"; };
 		0061A4431BD7773100617B25 /* MedicalImageCVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MedicalImageCVC.xib; sourceTree = "<group>"; };
+		007AE7CE1C06AE17005364FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		008FB2341BB93E3A00684968 /* TOPVCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOPVCViewController.swift; sourceTree = "<group>"; };
 		008FB2361BB93F4500684968 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		008FB2381BB93F4B00684968 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -191,7 +194,6 @@
 		AFF21D7E1BB12D8B006A190E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AFF21D811BB12D8B006A190E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AFF21D841BB12D8B006A190E /* Telehealth_Doctor.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Telehealth_Doctor.xcdatamodel; sourceTree = "<group>"; };
-		AFF21D861BB12D8B006A190E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AFF21D891BB12D8B006A190E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AFF21D8B1BB12D8B006A190E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AFF21D901BB12D8B006A190E /* Telehealth Doctor.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Telehealth Doctor.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -358,6 +360,7 @@
 			children = (
 				AFF21DE91BB145B1006A190E /* AppointmentListViewController.swift */,
 				00A9E5B71BC3720A0055A594 /* AppointmentTableViewCell.swift */,
+				00525A651C05970C007A56D5 /* ModalFilterVC.swift */,
 			);
 			name = "Appointment List";
 			sourceTree = "<group>";
@@ -636,7 +639,7 @@
 				AFF10DF51BB279FE005E9838 /* Controllers */,
 				AFF10E011BB286E1005E9838 /* Model */,
 				AFF21D801BB12D8B006A190E /* Main.storyboard */,
-				AFF21D861BB12D8B006A190E /* Assets.xcassets */,
+				007AE7CE1C06AE17005364FE /* Assets.xcassets */,
 				00D512801BB4E82F0068942D /* Supporting Files */,
 			);
 			path = "Telehealth Doctor";
@@ -777,6 +780,7 @@
 				0045A2E21BCF8F9100AC4028 /* ClinicalMedical.xib in Resources */,
 				001C6D051BF9BF5000877F4B /* Medi_Infomation.xib in Resources */,
 				AFF21D8A1BB12D8B006A190E /* LaunchScreen.storyboard in Resources */,
+				007AE7CF1C06AE17005364FE /* Assets.xcassets in Resources */,
 				00C9599D1BD0E5B000E3FFAD /* call.wav in Resources */,
 				004565071BF02EC9005ABA28 /* Kin_Guardian.xib in Resources */,
 				0045A2E41BCF8FB200AC4028 /* PresentComplain.xib in Resources */,
@@ -784,7 +788,6 @@
 				00B0AFAD1BDA2B5600871786 /* DetailImageVC.xib in Resources */,
 				001C28CC1BCEAD4D005A82D7 /* video.mp4 in Resources */,
 				005BE5931BF0426B00134D84 /* Relevant_Allergy_CurrentVC.xib in Resources */,
-				AFF21D871BB12D8B006A190E /* Assets.xcassets in Resources */,
 				0045A2E81BCF8FD100AC4028 /* PatientTabVC.xib in Resources */,
 				AFF21D821BB12D8B006A190E /* Main.storyboard in Resources */,
 				0061A4451BD7773100617B25 /* MedicalImageCVC.xib in Resources */,
@@ -892,6 +895,7 @@
 				00D512791BB4E63E0068942D /* HomeViewController.swift in Sources */,
 				002908771BC2552A00FED16E /* DTIAnimWave.swift in Sources */,
 				008FB2351BB93E3A00684968 /* TOPVCViewController.swift in Sources */,
+				00525A661C05970C007A56D5 /* ModalFilterVC.swift in Sources */,
 				0045A2DE1BCF88BC00AC4028 /* DetailAppointmentVC.swift in Sources */,
 				005BE58C1BF03DEA00134D84 /* HistorySkinHandVC.swift in Sources */,
 				00D5127B1BB4E6560068942D /* MakeCallController.swift in Sources */,
@@ -1078,7 +1082,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Pods/OpenTok";

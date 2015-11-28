@@ -6,7 +6,8 @@
     <!-- <div class="modal-body" style="overflow-y:scroll; overflow-x:hidden; max-height:400px;"> -->
     <div class="modal-body">
         <!--  -->
-        <div class="tabbable">
+        
+            <div class="tabbable">
             <ul class="nav nav-tabs nav-tabs-lg">
                 <li class="active">
                     <a href="index.html#appointment" data-toggle="tab" aria-expanded="true">
@@ -45,7 +46,8 @@
                 </li>
             </ul>
             <fieldset ng-disabled="checkRoleUpdate">
-                <div class="tab-content" style="padding: 2em 1em; margin: 0 auto">
+                <form name="userForm" novalidate>
+                    <div class="tab-content" style="padding: 2em 1em; margin: 0 auto">
                     <div class="tab-pane active" id="appointment">
                         <div class="row">
                             <div class="col-md-6">
@@ -493,65 +495,83 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" ng-model="ShowData.patient.FirstName" placeholder="First Name" ng-disabled="ShowData.isLinkPatient">
-                                    <label class="control-label">First Name</label>
+                                <div class="form-group form-md-line-input " ng-class="{'has-error': userForm.FirstName.$invalid && submited} ">
+                                    <input type="text" class="form-control edited" ng-model="ShowData.patient.FirstName" placeholder="" ng-disabled="ShowData.isLinkPatient" name="FirstName" required>
+                                    <label class="control-label">First Name
+                                        <span class="required"> * </span>
+                                    </label>
+                                    <p ng-show="userForm.FirstName.$invalid && submited" class="help-block">First name is required</p>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" ng-model="ShowData.patient.MiddleName" placeholder="Middle Name" ng-disabled="ShowData.isLinkPatient">
+                                    <input type="text" class="form-control" ng-model="ShowData.patient.MiddleName" placeholder="" ng-disabled="ShowData.isLinkPatient">
                                     <label class="control-label">Middle Name</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group form-md-line-input ">
-                                    <input type="text" class="form-control" ng-model="ShowData.patient.LastName" placeholder="Last Name" ng-disabled="ShowData.isLinkPatient">
-                                    <label class="control-label">Last Name</label>
+                                <div class="form-group form-md-line-input " ng-class="{'has-error': userForm.LastName.$invalid && !userForm.LastName.$pristine} ">
+                                    <input type="text" class="form-control edited" ng-model="ShowData.patient.LastName" placeholder="" ng-disabled="ShowData.isLinkPatient" required name="LastName">
+                                    <p ng-show="userForm.LastName.$invalid && submited" class="help-block">Last name is required</p>
+                                    <label class="control-label">Last Name
+                                        <span class="required"> * </span>
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group form-md-line-input  ">
+                                <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.DOB.$invalid && submited} ">
                                     <div class="input-icon">
                                         <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control form-control-inline date-picker" ng-model="ShowData.patient.DOB" ng-disabled="ShowData.isLinkPatient" data-date-format="dd/mm/yyyy" data-date-end-date="0d">
-                                        <label class="control-label">Date of Birth</label>
+                                        <input type="text" class="form-control form-control-inline date-picker edited" ng-model="ShowData.patient.DOB" ng-disabled="ShowData.isLinkPatient" data-date-format="dd/mm/yyyy" data-date-end-date="0d" name="DOB" required>
+                                        <p ng-show="userForm.DOB.$invalid && submited" class="help-block">Date of birth is required</p>
+                                        <label class="control-label">Date of Birth
+                                            <span class="required"> * </span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group form-md-line-input  ">
+                                <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.WorkPhoneNumber.$invalid && submited} ">
                                     <div class="input-icon">
                                         <i class="fa fa-mobile"></i>
-                                        <input type="text" class="form-control" ng-model="ShowData.patient.WorkPhoneNumber" ng-disabled="ShowData.isLinkPatient">
-                                        <label class="control-label">Contact Number (M)</label>
+                                        <input type="text" class="form-control edited" ng-model="ShowData.patient.WorkPhoneNumber" ng-disabled="ShowData.isLinkPatient"  name="WorkPhoneNumber" required ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/">
+                                        <p ng-show="userForm.WorkPhoneNumber.$error.required && submited" class="help-block">Contact Number (M) is required</p>
+                                        <p ng-show="userForm.WorkPhoneNumber.$error.pattern && submited" class="help-block">This is not a mobile phone number</p>
+                                        <label class="control-label">Contact Number (M)
+                                            <span class="required"> * </span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group form-md-line-input  ">
+                                <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.HomePhoneNumber.$invalid}">
                                     <div class="input-icon">
                                         <i class="fa fa-phone"></i>
-                                        <input type="text" class="form-control" ng-model="ShowData.patient.HomePhoneNumber" ng-disabled="ShowData.isLinkPatient">
+                                        <input type="text" class="form-control edited" ng-model="ShowData.patient.HomePhoneNumber" ng-disabled="ShowData.isLinkPatient" name="HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/">
+                                        <p ng-show="userForm.HomePhoneNumber.$error.pattern" class="help-block">This is not a home phone number</p>
                                         <label class="control-label">Contact Number (H)</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group form-md-line-input  ">
+                                <div class="form-group form-md-line-input  " ng-class="{'has-error': userForm.Email1.$invalid}">
                                     <div class="input-icon">
                                         <i class="fa fa-envelope"></i>
-                                        <input type="text" class="form-control" ng-model="ShowData.patient.Email1" ng-disabled="ShowData.isLinkPatient">
+                                        <input type="text" class="form-control" ng-model="ShowData.patient.Email1" ng-disabled="ShowData.isLinkPatient" name="Email1" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/">
+                                        <p ng-show="userForm.Email1.$error.pattern" class="help-block">Please enter a valid email address.</p>
                                         <label class="control-label">Email Address</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-md-line-input ">
+                                <div class="form-group form-md-line-input " ng-class="{'has-error': userForm.Address1.$invalid && submited}">
                                     <div class="input-icon">
                                         <i class="fa fa-send"></i>
-                                        <input type="text" class="form-control" ng-model="ShowData.patient.Address1" placeholder="Address1" ng-disabled="ShowData.isLinkPatient">
-                                        <label class="control-label">Address1</label>
+                                        <input type="text" class="form-control edited" ng-model="ShowData.patient.Address1" placeholder="" ng-disabled="ShowData.isLinkPatient" name="Address1" required>
+                                        <label class="control-label">Address1
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <p ng-show="userForm.Address1.$invalid && submited" class="help-block">Address1 name is required</p>
                                     </div>
                                 </div>
                             </div>
@@ -559,7 +579,7 @@
                                 <div class="form-group form-md-line-input ">
                                     <div class="input-icon">
                                         <i class="fa fa-send"></i>
-                                        <input type="text" class="form-control" ng-model="ShowData.patient.Address2" placeholder="Address2" ng-disabled="ShowData.isLinkPatient">
+                                        <input type="text" class="form-control" ng-model="ShowData.patient.Address2" placeholder="" ng-disabled="ShowData.isLinkPatient">
                                         <label class="control-label">Address2</label>
                                     </div>
                                 </div>
@@ -567,15 +587,21 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" ng-model="ShowData.patient.Suburb" ng-disabled="ShowData.isLinkPatient">
-                                    <label class="control-label">Suburb</label>
+                                <div class="form-group form-md-line-input " ng-class="{'has-error': userForm.Suburb.$invalid && submited}">
+                                    <input type="text" class="form-control edited" ng-model="ShowData.patient.Suburb" ng-disabled="ShowData.isLinkPatient" name="Suburb" required>
+                                    <label class="control-label">Suburb
+                                        <span class="required"> * </span>
+                                    </label>
+                                    <p ng-show="userForm.Suburb.$invalid && submited" class="help-block">Suburb name is required</p>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" ng-model="ShowData.patient.Postcode" ng-disabled="ShowData.isLinkPatient">
-                                    <label class="control-label">Postcode</label>
+                                <div class="form-group form-md-line-input  " ng-class="{'has-error': userForm.Postcode.$invalid && submited}">
+                                    <input type="text" class="form-control edited" ng-model="ShowData.patient.Postcode" ng-disabled="ShowData.isLinkPatient" name="Postcode" required>
+                                    <label class="control-label">Postcode
+                                        <span class="required"> * </span>
+                                    </label>
+                                    <p ng-show="userForm.Postcode.$invalid && submited" class="help-block">Postcode name is required</p>
                                 </div>
                             </div>
                         </div>
@@ -610,34 +636,34 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group form-md-line-input ">
-                                            <input type="text" placeholder="Firstname" ng-model="appointment.Doctors[0].FirstName" disabled="true" class="form-control">
-                                            <label class="control-label">Firstname</label>
+                                            <input type="text" placeholder="" ng-model="appointment.Doctors[0].FirstName" disabled="true" class="form-control">
+                                            <label class="control-label">First Name</label>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group form-md-line-input ">
-                                            <input type="text" placeholder="Middlename" ng-model="appointment.Doctors[0].MiddleName" disabled="true" class="form-control">
-                                            <label class="control-label">Middlename</label>
+                                            <input type="text" placeholder="" ng-model="appointment.Doctors[0].MiddleName" disabled="true" class="form-control">
+                                            <label class="control-label">Middle Name</label>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group form-md-line-input ">
-                                            <input type="text" placeholder="Lastname" ng-model="appointment.Doctors[0].LastName" disabled="true" class="form-control">
-                                            <label class="control-label">Lastname</label>
+                                            <input type="text" placeholder="" ng-model="appointment.Doctors[0].LastName" disabled="true" class="form-control">
+                                            <label class="control-label">Last Name</label>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group form-md-line-input ">
                                             <div class="input-icon">
                                                 <i class="fa fa-mobile"></i>
-                                                <input type="text" placeholder="Contact Number (M)" ng-model="appointment.Doctors[0].WorkPhoneNumber" disabled="true" class="form-control">
+                                                <input type="text" placeholder="" ng-model="appointment.Doctors[0].WorkPhoneNumber" disabled="true" class="form-control">
                                                 <label class="control-label">Contact Number (M)</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="form-group form-md-line-input ">
-                                            <input type="text" placeholder="Department" ng-model="appointment.Doctors[0].Department.DepartmentName" disabled="true" class="form-control">
+                                            <input type="text" placeholder="" ng-model="appointment.Doctors[0].Department.DepartmentName" disabled="true" class="form-control">
                                             <label class="control-label">Department</label>
                                         </div>
                                     </div>
@@ -696,55 +722,55 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" placeholder="Firstname" ng-model="appointment.TelehealthAppointment.Doctors[0].FirstName" disabled="true">
-                                    <label class="form-label">Firstname</label>
+                                    <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].FirstName" disabled="true">
+                                    <label class="form-label">First Name</label>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" placeholder="Middlename" ng-model="appointment.TelehealthAppointment.Doctors[0].MiddleName" disabled="true">
-                                    <label class="form-label">Middlename</label>
+                                    <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].MiddleName" disabled="true">
+                                    <label class="form-label">Middle Name</label>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" placeholder="Lastname" ng-model="appointment.TelehealthAppointment.Doctors[0].LastName" disabled="true">
-                                    <label class="form-label">Lastname</label>
+                                    <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].LastName" disabled="true">
+                                    <label class="form-label">Last Name</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" placeholder="Address1" ng-model="appointment.TelehealthAppointment.Doctors[0].Address1" disabled="true">
+                                    <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].Address1" disabled="true">
                                     <label class="control-label">Address1</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" placeholder="Address2" ng-model="appointment.TelehealthAppointment.Doctors[0].Address2" disabled="true">
+                                    <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].Address2" disabled="true">
                                     <label class="control-label">Address2</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" placeholder="Workphone" ng-model="appointment.TelehealthAppointment.Doctors[0].WorkPhoneNumber" disabled="true">
-                                    <label class="control-label">Workphone</label>
+                                    <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].WorkPhoneNumber" disabled="true">
+                                    <label class="control-label">Work Phone</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" placeholder="HomePhone" ng-model="appointment.TelehealthAppointment.Doctors[0].HomePhoneNumber" disabled="true">
-                                    <label class="control-label">HomePhone</label>
+                                    <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].HomePhoneNumber" disabled="true">
+                                    <label class="control-label">Home Phone</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" placeholder="Postcode" ng-model="appointment.TelehealthAppointment.Doctors[0].Postcode" disabled="true">
-                                    <label class="control-label">Postcode</label>
+                                    <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].Postcode" disabled="true">
+                                    <label class="control-label">Post Code</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" placeholder="Suburb" ng-model="appointment.TelehealthAppointment.Doctors[0].Suburb" disabled="true">
+                                    <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].Suburb" disabled="true">
                                     <label class="control-label">Suburb</label>
                                 </div>
                             </div>
@@ -753,273 +779,26 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group form-md-line-input">
-                                            <select name="States" id="States" class="form-control" disabled>
-                                                <option value=""></option>
-                                                <option value="Victoria" selected>Victoria</option>
-                                                <option value="New_South_Wales">New South Wales</option>
-                                                <option value="Queensland">Queensland</option>
-                                                <option value="Austria_Capital_Territory">Austria Capital Territory</option>
-                                                <option value="Northern_Territory">Northern Territory</option>
-                                                <option value="Western_Australia">Western Australia</option>
-                                                <option value="Tasmania">Tasmania</option>
-                                            </select>
-                                            <label for="State">States</label>
-                                            <!-- <span class="help-block">Error State</span> -->
+                                        <div class="form-group form-md-line-input  ">
+                                            <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].State" disabled="true">
+                                            <label class="control-label">States</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group form-md-line-input">
-                                            <select name="country" id="Country" class="form-control edited" disabled>
-                                                <option value=""></option>
-                                                <option value="AF">Afghanistan</option>
-                                                <option value="AL">Albania</option>
-                                                <option value="DZ">Algeria</option>
-                                                <option value="AS">American Samoa</option>
-                                                <option value="AD">Andorra</option>
-                                                <option value="AO">Angola</option>
-                                                <option value="AI">Anguilla</option>
-                                                <option value="AR">Argentina</option>
-                                                <option value="AM">Armenia</option>
-                                                <option value="AW">Aruba</option>
-                                                <option value="AU" selected="true">Australia</option>
-                                                <option value="AT">Austria</option>
-                                                <option value="AZ">Azerbaijan</option>
-                                                <option value="BS">Bahamas</option>
-                                                <option value="BH">Bahrain</option>
-                                                <option value="BD">Bangladesh</option>
-                                                <option value="BB">Barbados</option>
-                                                <option value="BY">Belarus</option>
-                                                <option value="BE">Belgium</option>
-                                                <option value="BZ">Belize</option>
-                                                <option value="BJ">Benin</option>
-                                                <option value="BM">Bermuda</option>
-                                                <option value="BT">Bhutan</option>
-                                                <option value="BO">Bolivia</option>
-                                                <option value="BA">Bosnia and Herzegowina</option>
-                                                <option value="BW">Botswana</option>
-                                                <option value="BV">Bouvet Island</option>
-                                                <option value="BR">Brazil</option>
-                                                <option value="IO">British Indian Ocean Territory</option>
-                                                <option value="BN">Brunei Darussalam</option>
-                                                <option value="BG">Bulgaria</option>
-                                                <option value="BF">Burkina Faso</option>
-                                                <option value="BI">Burundi</option>
-                                                <option value="KH">Cambodia</option>
-                                                <option value="CM">Cameroon</option>
-                                                <option value="CA">Canada</option>
-                                                <option value="CV">Cape Verde</option>
-                                                <option value="KY">Cayman Islands</option>
-                                                <option value="CF">Central African Republic</option>
-                                                <option value="TD">Chad</option>
-                                                <option value="CL">Chile</option>
-                                                <option value="CN">China</option>
-                                                <option value="CX">Christmas Island</option>
-                                                <option value="CC">Cocos (Keeling) Islands</option>
-                                                <option value="CO">Colombia</option>
-                                                <option value="KM">Comoros</option>
-                                                <option value="CG">Congo</option>
-                                                <option value="CD">Congo, the Democratic Republic of the</option>
-                                                <option value="CK">Cook Islands</option>
-                                                <option value="CR">Costa Rica</option>
-                                                <option value="CI">Cote d'Ivoire</option>
-                                                <option value="HR">Croatia (Hrvatska)</option>
-                                                <option value="CU">Cuba</option>
-                                                <option value="CY">Cyprus</option>
-                                                <option value="CZ">Czech Republic</option>
-                                                <option value="DK">Denmark</option>
-                                                <option value="DJ">Djibouti</option>
-                                                <option value="DM">Dominica</option>
-                                                <option value="DO">Dominican Republic</option>
-                                                <option value="EC">Ecuador</option>
-                                                <option value="EG">Egypt</option>
-                                                <option value="SV">El Salvador</option>
-                                                <option value="GQ">Equatorial Guinea</option>
-                                                <option value="ER">Eritrea</option>
-                                                <option value="EE">Estonia</option>
-                                                <option value="ET">Ethiopia</option>
-                                                <option value="FK">Falkland Islands (Malvinas)</option>
-                                                <option value="FO">Faroe Islands</option>
-                                                <option value="FJ">Fiji</option>
-                                                <option value="FI">Finland</option>
-                                                <option value="FR">France</option>
-                                                <option value="GF">French Guiana</option>
-                                                <option value="PF">French Polynesia</option>
-                                                <option value="TF">French Southern Territories</option>
-                                                <option value="GA">Gabon</option>
-                                                <option value="GM">Gambia</option>
-                                                <option value="GE">Georgia</option>
-                                                <option value="DE">Germany</option>
-                                                <option value="GH">Ghana</option>
-                                                <option value="GI">Gibraltar</option>
-                                                <option value="GR">Greece</option>
-                                                <option value="GL">Greenland</option>
-                                                <option value="GD">Grenada</option>
-                                                <option value="GP">Guadeloupe</option>
-                                                <option value="GU">Guam</option>
-                                                <option value="GT">Guatemala</option>
-                                                <option value="GN">Guinea</option>
-                                                <option value="GW">Guinea-Bissau</option>
-                                                <option value="GY">Guyana</option>
-                                                <option value="HT">Haiti</option>
-                                                <option value="HM">Heard and Mc Donald Islands</option>
-                                                <option value="VA">Holy See (Vatican City State)</option>
-                                                <option value="HN">Honduras</option>
-                                                <option value="HK">Hong Kong</option>
-                                                <option value="HU">Hungary</option>
-                                                <option value="IS">Iceland</option>
-                                                <option value="IN">India</option>
-                                                <option value="ID">Indonesia</option>
-                                                <option value="IR">Iran (Islamic Republic of)</option>
-                                                <option value="IQ">Iraq</option>
-                                                <option value="IE">Ireland</option>
-                                                <option value="IL">Israel</option>
-                                                <option value="IT">Italy</option>
-                                                <option value="JM">Jamaica</option>
-                                                <option value="JP">Japan</option>
-                                                <option value="JO">Jordan</option>
-                                                <option value="KZ">Kazakhstan</option>
-                                                <option value="KE">Kenya</option>
-                                                <option value="KI">Kiribati</option>
-                                                <option value="KP">Korea, Democratic People's Republic of</option>
-                                                <option value="KR">Korea, Republic of</option>
-                                                <option value="KW">Kuwait</option>
-                                                <option value="KG">Kyrgyzstan</option>
-                                                <option value="LA">Lao People's Democratic Republic</option>
-                                                <option value="LV">Latvia</option>
-                                                <option value="LB">Lebanon</option>
-                                                <option value="LS">Lesotho</option>
-                                                <option value="LR">Liberia</option>
-                                                <option value="LY">Libyan Arab Jamahiriya</option>
-                                                <option value="LI">Liechtenstein</option>
-                                                <option value="LT">Lithuania</option>
-                                                <option value="LU">Luxembourg</option>
-                                                <option value="MO">Macau</option>
-                                                <option value="MK">Macedonia, The Former Yugoslav Republic of</option>
-                                                <option value="MG">Madagascar</option>
-                                                <option value="MW">Malawi</option>
-                                                <option value="MY">Malaysia</option>
-                                                <option value="MV">Maldives</option>
-                                                <option value="ML">Mali</option>
-                                                <option value="MT">Malta</option>
-                                                <option value="MH">Marshall Islands</option>
-                                                <option value="MQ">Martinique</option>
-                                                <option value="MR">Mauritania</option>
-                                                <option value="MU">Mauritius</option>
-                                                <option value="YT">Mayotte</option>
-                                                <option value="MX">Mexico</option>
-                                                <option value="FM">Micronesia, Federated States of</option>
-                                                <option value="MD">Moldova, Republic of</option>
-                                                <option value="MC">Monaco</option>
-                                                <option value="MN">Mongolia</option>
-                                                <option value="MS">Montserrat</option>
-                                                <option value="MA">Morocco</option>
-                                                <option value="MZ">Mozambique</option>
-                                                <option value="MM">Myanmar</option>
-                                                <option value="NA">Namibia</option>
-                                                <option value="NR">Nauru</option>
-                                                <option value="NP">Nepal</option>
-                                                <option value="NL">Netherlands</option>
-                                                <option value="AN">Netherlands Antilles</option>
-                                                <option value="NC">New Caledonia</option>
-                                                <option value="NZ">New Zealand</option>
-                                                <option value="NI">Nicaragua</option>
-                                                <option value="NE">Niger</option>
-                                                <option value="NG">Nigeria</option>
-                                                <option value="NU">Niue</option>
-                                                <option value="NF">Norfolk Island</option>
-                                                <option value="MP">Northern Mariana Islands</option>
-                                                <option value="NO">Norway</option>
-                                                <option value="OM">Oman</option>
-                                                <option value="PK">Pakistan</option>
-                                                <option value="PW">Palau</option>
-                                                <option value="PA">Panama</option>
-                                                <option value="PG">Papua New Guinea</option>
-                                                <option value="PY">Paraguay</option>
-                                                <option value="PE">Peru</option>
-                                                <option value="PH">Philippines</option>
-                                                <option value="PN">Pitcairn</option>
-                                                <option value="PL">Poland</option>
-                                                <option value="PT">Portugal</option>
-                                                <option value="PR">Puerto Rico</option>
-                                                <option value="QA">Qatar</option>
-                                                <option value="RE">Reunion</option>
-                                                <option value="RO">Romania</option>
-                                                <option value="RU">Russian Federation</option>
-                                                <option value="RW">Rwanda</option>
-                                                <option value="KN">Saint Kitts and Nevis</option>
-                                                <option value="LC">Saint LUCIA</option>
-                                                <option value="VC">Saint Vincent and the Grenadines</option>
-                                                <option value="WS">Samoa</option>
-                                                <option value="SM">San Marino</option>
-                                                <option value="ST">Sao Tome and Principe</option>
-                                                <option value="SA">Saudi Arabia</option>
-                                                <option value="SN">Senegal</option>
-                                                <option value="SC">Seychelles</option>
-                                                <option value="SL">Sierra Leone</option>
-                                                <option value="SG">Singapore</option>
-                                                <option value="SK">Slovakia (Slovak Republic)</option>
-                                                <option value="SI">Slovenia</option>
-                                                <option value="SB">Solomon Islands</option>
-                                                <option value="SO">Somalia</option>
-                                                <option value="ZA">South Africa</option>
-                                                <option value="GS">South Georgia and the South Sandwich Islands</option>
-                                                <option value="ES">Spain</option>
-                                                <option value="LK">Sri Lanka</option>
-                                                <option value="SH">St. Helena</option>
-                                                <option value="PM">St. Pierre and Miquelon</option>
-                                                <option value="SD">Sudan</option>
-                                                <option value="SR">Suriname</option>
-                                                <option value="SJ">Svalbard and Jan Mayen Islands</option>
-                                                <option value="SZ">Swaziland</option>
-                                                <option value="SE">Sweden</option>
-                                                <option value="CH">Switzerland</option>
-                                                <option value="SY">Syrian Arab Republic</option>
-                                                <option value="TW">Taiwan, Province of China</option>
-                                                <option value="TJ">Tajikistan</option>
-                                                <option value="TZ">Tanzania, United Republic of</option>
-                                                <option value="TH">Thailand</option>
-                                                <option value="TG">Togo</option>
-                                                <option value="TK">Tokelau</option>
-                                                <option value="TO">Tonga</option>
-                                                <option value="TT">Trinidad and Tobago</option>
-                                                <option value="TN">Tunisia</option>
-                                                <option value="TR">Turkey</option>
-                                                <option value="TM">Turkmenistan</option>
-                                                <option value="TC">Turks and Caicos Islands</option>
-                                                <option value="TV">Tuvalu</option>
-                                                <option value="UG">Uganda</option>
-                                                <option value="UA">Ukraine</option>
-                                                <option value="AE">United Arab Emirates</option>
-                                                <option value="GB">United Kingdom</option>
-                                                <option value="US">United States</option>
-                                                <option value="UM">United States Minor Outlying Islands</option>
-                                                <option value="UY">Uruguay</option>
-                                                <option value="UZ">Uzbekistan</option>
-                                                <option value="VU">Vanuatu</option>
-                                                <option value="VE">Venezuela</option>
-                                                <option value="VN">Viet Nam</option>
-                                                <option value="VG">Virgin Islands (British)</option>
-                                                <option value="VI">Virgin Islands (U.S.)</option>
-                                                <option value="WF">Wallis and Futuna Islands</option>
-                                                <option value="EH">Western Sahara</option>
-                                                <option value="YE">Yemen</option>
-                                                <option value="ZM">Zambia</option>
-                                                <option value="ZW">Zimbabwe</option>
-                                            </select>
-                                            <label for="Country">Country</label>
-                                            <!-- <span class="help-block">Error Country</span> -->
+                                         <div class="form-group form-md-line-input  ">
+                                            <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].Country.ShortName" disabled="true">
+                                            <label class="control-label">Country</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-md-line-input  ">
-                                            <input type="text" class="form-control" placeholder="Healthlink ID" ng-model="appointment.TelehealthAppointment.Doctors[0].HealthLink" disabled="true">
+                                            <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].HealthLink" disabled="true">
                                             <label class="control-label">Healthlink ID</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-md-line-input  ">
-                                            <input type="text" class="form-control" placeholder="number" ng-model="appointment.TelehealthAppointment.Doctors[0].ProviderNumber" disabled="true">
+                                            <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].ProviderNumber" disabled="true">
                                             <label class="control-label">Provider Number</label>
                                         </div>
                                     </div>
@@ -1035,11 +814,6 @@
                                                 </div>
                                                 <br>
                                                 <div>
-                                               <!--  <span class="btn green btn-file">
-    					                            <span class="fileinput-new">Signature </span>
-                                                    <span class="fileinput-exists">Change </span>
-                                                    <input type="file" name="...">
-                                                </span> -->
                                                 <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">Remove </a>
                                                 </div>
                                             </div>
@@ -1066,16 +840,17 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
+                </form>
             </fieldset>
-        </div>
+            </div>
         <!--  -->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn default" data-dismiss="modal" ng-click="close()">
             <i class="icon-action-undo"></i> Close
         </button>
-        <button type="button" class="btn green" ng-click="submitUpdate()" ng-show="!checkRoleUpdate">
+        <button type="submit" class="btn green" ng-click="submitUpdate()" ng-show="!checkRoleUpdate">
             <i class="glyphicon glyphicon-save"></i> Save changes
         </button>
     </div>

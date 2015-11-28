@@ -7,8 +7,7 @@ module.exports.myconf = {
     OpentokAPIKey: '45364382',
     OpentokAPISecret: 'eaacb0aba8fa68400314cb9b3316ca12a3dcbd86',
     //============ GCM Push Notification =============
-    GCMApiKey: 'AIzaSyChaE4-AETpWum-4-TOoxM7HZg3NvaFL6I',
-    TokenExpired: '2m',
+    GCMApiKey: 'AIzaSyDz2pMblr_p6HwWqCeBNUoxuat1rcOQwdk',
     // CoreAPI: 'http://testapp.redimed.com.au:3005',
     CoreAPI: 'http://telehealthvietnam.com.vn:3005'
 };

@@ -31,7 +31,8 @@
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="left|start"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@android:color/white">
 
         <ImageView
             android:id="@+id/avatarPatient"
@@ -42,7 +43,7 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/blank_avatar"/>
 
-        <TextView
+        <com.redimed.telehealth.patient.font.RobotoTextView
             android:id="@+id/lblNamePatient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

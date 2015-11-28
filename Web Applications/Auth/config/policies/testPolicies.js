@@ -1,0 +1,10 @@
+module.exports={
+	'TestController':{
+		'test':['isAuthenticated'],
+		'testAdmin':['isAuthenticated','isAdmin'],
+		'testAssistant':['isAuthenticated','isAssistant'],
+		'testGp':['isAuthenticated','isExternalPractitioner'],
+		'testDoctor':['isAuthenticated','isInternalPractitioner'],
+		'testPatient':['isAuthenticated','isPatient']
+  	},
+}

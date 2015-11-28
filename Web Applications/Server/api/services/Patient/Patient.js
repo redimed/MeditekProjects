@@ -104,7 +104,7 @@ module.exports = {
 
 				//validate Gender
 				if(data.Gender!=undefined && data.Gender){
-					if(data.Gender != "F" && data.Gender != "M"){
+					if(data.Gender != "Female" && data.Gender != "Male" && data.Gender != "Other"){
 						errors.push({field:"Gender",message:"invalid value"});
 						err.pushErrors(errors);
 					}
@@ -323,7 +323,7 @@ module.exports = {
 				//validate Gender
 				if('Gender' in data){
 					if(data.Gender){
-						if(data.Gender != "F" && data.Gender != "M"){
+						if(data.Gender != "Female" && data.Gender != "Male" && data.Gender != "Other"){
 							errors.push({field:"Gender",message:"invalid value"});
 							err.pushErrors(errors);
 						}
@@ -662,6 +662,7 @@ module.exports = {
 		output:update patient into table Patient
 	*/
 	UpdatePatient : function(data, transaction) {
+		console.log(data);
 		var isHaveRole = false;
 		if(check.checkData(data)){
 			data.ModifiedDate = new Date();
@@ -701,8 +702,26 @@ module.exports = {
 							UID : patientInfo.UID
 						},
 						transaction:t
+					})
+					.then(function(user){
+						if(data.EnableUser!=undefined && data.EnableUser!=null && data.EnableUser!=""){
+							return UserAccount.update({
+								Enable : data.EnableUser
+							},{
+								where : {
+									UID : data.UserAccount.UID
+								}
+							});
+						}
+						else {
+							return user;
+						}
+					},function(err){
+						t.rollback();
+						throw err;
 					});
 				}, function(err){
+					t.rollback();
 					throw err;
 				})
 				.then(function(result){
@@ -827,7 +846,7 @@ module.exports = {
 			include:[
 				{
 	            	model: UserAccount,
-	            	attributes: ['PhoneNumber','Email','ID','UID'],
+	            	attributes: ['PhoneNumber','Email','ID','UID','Enable'],
 			    	required: true,
 			    	include:[
 				  		{
@@ -916,7 +935,7 @@ module.exports = {
 
 	CheckPatient : function(data, transaction) {
 		var info = {};
-		return Services.Patient.validation(data)
+		return Services.Patient.validation(data,false)
 		.then(function(success){
 			if(check.checkData(data.PhoneNumber)){
 				// data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;

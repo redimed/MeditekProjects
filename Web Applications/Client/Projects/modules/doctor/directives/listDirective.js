@@ -10,6 +10,7 @@ angular.module('app.authentication.doctor.directive.list', [])
 			reload: '='
 		},
 		link: function(scope, ele, attr) {
+			scope.search = {};
 			scope.EnableChoose = [
 				{id:null,name:"All"},
 				{id:"Y",name:"Enable"},
@@ -73,6 +74,7 @@ angular.module('app.authentication.doctor.directive.list', [])
 	        };
 
 			scope.Search = function(data,e){
+				console.log(data);
 				if(e==13){
 					scope.searchObjectMap.Search = data;
 					scope.loadList(scope.searchObjectMap);

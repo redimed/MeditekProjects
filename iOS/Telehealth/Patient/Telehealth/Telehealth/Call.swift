@@ -12,9 +12,22 @@ import SwiftyJSON
 //class handle get and set data calling
 class saveData {
     var data: JSON = ""
+    var apiKey : String!
+    var message : String!
+    var fromName : String!
+    var sessionId : String!
+    var token : String!
+    var from : String!
+    
+    
     init(){}
-    init(data:JSON){
-        self.data = data
+    init(apiKey:String,message:String,fromName:String,sessionId:String,token:String,from:String){
+        self.apiKey = apiKey
+        self.message = message
+        self.fromName = fromName
+        self.sessionId = sessionId
+        self.token = token
+        self.from = from
     }
 }
 

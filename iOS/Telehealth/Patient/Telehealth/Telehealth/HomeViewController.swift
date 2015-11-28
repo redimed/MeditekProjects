@@ -12,6 +12,7 @@ import SwiftyJSON
 import AVFoundation
 
 class HomeViewController: UIViewController,UIPopoverPresentationControllerDelegate,MyPopupViewControllerDelegate,UIPageViewControllerDataSource,ContentViewDelegate,AVAudioPlayerDelegate{
+     let ServerApi = GetAndPostDataController()
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var pageView: UIView!
     var uid = String()
@@ -22,12 +23,53 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     var page = 0
     var backMusic: AVAudioPlayer!
        override func viewDidLoad() {
+        
         super.viewDidLoad()
         //Get uuid user in locacalstorage
-        if let uuid = defaults.valueForKey("uid") as? String {uid = uuid}
+        
         if let token = defaults.valueForKey("token") as? String {tokens = token}
         if let userUIDs = defaults.valueForKey("userUID") as? String{userUID = userUIDs}
         if let cookie = defaults.valueForKey("Set-Cookie") as? String{cookies = cookie}
+        if let uuid = defaults.valueForKey("uid") as? String {
+            uid = uuid
+            ServerApi.updateTokenPush(uid)
+        }
+        
+        //check status notify and handle action
+        switch statusCallingNotification {
+            case notifyMessage.ClickNotify :
+                openPopUpCalling()
+                statusCallingNotification = ""
+                break
+            case notifyMessage.ClickAnswer :
+                openScreenCall()
+                statusCallingNotification = ""
+                break
+            case notifyMessage.ClickDesline :
+                if let from  = savedData.from {
+                    emitDataToServer(MessageString.Decline, uidFrom: uid, uuidTo: from)
+                }
+                statusCallingNotification = ""
+                break
+            default: break
+        }
+        
+//        if statusCallingNotification == notifyMessage.ClickNotify {
+//            openPopUpCalling()
+//            statusCallingNotification = ""
+//        }else if statusCallingNotification == notifyMessage.ClickAnswer{
+//            openScreenCall()
+//            statusCallingNotification = ""
+//        }else if statusCallingNotification == notifyMessage.ClickDesline{
+//            if let from  = savedData.from {
+//                emitDataToServer(MessageString.Decline, uidFrom: uid, uuidTo: from)
+//            }
+//            statusCallingNotification = ""
+//        }
+
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "openPopUpCalling", name: "openPopUpCalling", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "openScreenCall", name: "openScreenCall", object: nil)
         
         //Connect Socket
         openSocket()
@@ -35,8 +77,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         resetTimer()
     }
     override func viewWillAppear(animated: Bool) {
-        
-    }
+           }
     //Play ringtone while have calling
     func playRingtone() {
         backMusic = setupAudioPlayerWithFile("ringtone", type: "mp3")
@@ -231,15 +272,25 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     func pressOK(sender: MyPopupViewController) {
         backMusic.stop()
         self.dismissPopupViewController(.Fade)
-        emitDataToServer(MessageString.CallAnswer, uidFrom: uid, uuidTo: savedData.data[0]["from"].string!)
-        let homeMain = self.storyboard?.instantiateViewControllerWithIdentifier("ScreenCallingStoryboard") as! ScreenCallingViewController
-        self.presentViewController(homeMain, animated: true, completion: nil)
+        if let from  = savedData.from {
+            emitDataToServer(MessageString.CallAnswer, uidFrom: uid, uuidTo: from)
+        }
+        openScreenCall()
         
     }
+    
     func pressCancel(sender: MyPopupViewController) {
         backMusic.stop()
-        emitDataToServer(MessageString.Decline, uidFrom: uid, uuidTo: savedData.data[0]["from"].string!)
+        if let from  = savedData.from {
+            emitDataToServer(MessageString.Decline, uidFrom: uid, uuidTo: from)
+        }
         self.dismissPopupViewController(.Fade)
+    }
+    
+    //open screen calling 
+    func openScreenCall(){
+        let homeMain = self.storyboard?.instantiateViewControllerWithIdentifier("ScreenCallingStoryboard") as! ScreenCallingViewController
+        self.presentViewController(homeMain, animated: true, completion: nil)
     }
     
     func emitDataToServer(message:String,uidFrom:String,uuidTo:String){
@@ -268,14 +319,17 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             sharedSocket.socket.on("receiveMessage"){data, ack in
                 print("calling to me")
                 let dataCalling = JSON(data)
-                
+                print("From name",dataCalling[0])
                 let message : String = data[0]["message"] as! String
-                print("message:",message)
                 if message == MessageString.Call {
-                    //save data to temp class
-                    savedData = saveData(data: dataCalling)
-                    self.displayViewController(.TopBottom)
-                    self.playRingtone()
+//                    let apiKey : String = data[0]["apiKey"] as! String
+//                    let fromName : String = data[0]["fromName"] as! String
+//                    let sessionId : String = data[0]["sessionId"] as! String
+//                    let token : String = data[0]["token"] as! String
+//                    let from : String = data[0]["from"] as! String
+//                    savedData = saveData(apiKey: apiKey, message: message, fromName: fromName, sessionId: sessionId, token: token, from: from)
+//                    self.displayViewController(.TopBottom)
+//                    self.playRingtone()
                     NSNotificationCenter.defaultCenter().postNotificationName("AnswerCall", object: self)
                 }else if message == MessageString.CallEndCall {
                     NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
@@ -283,23 +337,15 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
                     NSNotificationCenter.defaultCenter().postNotificationName("cancelCall", object: self)
                 }
             }
-            sharedSocket.socket.on("refreshToken") {data, ack in
-                
-                let dataCalling = JSON(data)
-                
-                if let newToken = dataCalling[0]["token"].string {
-                    let defaults = NSUserDefaults.standardUserDefaults()
-                        defaults.setValue(newToken, forKey: "token")
-                        defaults.synchronize()
-                        tokens = newToken
-                }
-                
-               
-            }
         })
         //Socket connecting
         sharedSocket.socket.connect()
         
+    }
+    
+    func openPopUpCalling(){
+        self.displayViewController(.TopBottom)
+        self.playRingtone()
     }
     //undwid home
     @IBAction func unwindToHome(segue:UIStoryboardSegue) {

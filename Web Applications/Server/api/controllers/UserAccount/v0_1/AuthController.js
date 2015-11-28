@@ -8,7 +8,6 @@ var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
 var o=require("../../../services/HelperService");
-var md5 = require('md5');
 var moment=require('moment');
 module.exports = {
 
@@ -27,7 +26,7 @@ module.exports = {
         var error=new ErrorWrap("login.Error");
 
         passport.authenticate('local', function(err, user, info) 
-        {
+        {   
             if ((err) || (!user)) 
             {
                 if(!err) 
@@ -70,7 +69,7 @@ module.exports = {
                 }
                 var payload={
                     UID:user.UID,
-                    RefreshCode:md5(rt.RefreshCode),
+                    RefreshCode:o.md5(rt.RefreshCode),
                 };
                 var token=jwt.sign(
                     payload,

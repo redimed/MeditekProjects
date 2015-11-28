@@ -10,10 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 import com.redimed.telehealth.patient.MainActivity;
+import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.network.RESTClient;
@@ -36,7 +39,7 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
     private Picasso picasso;
 
     @Bind(R.id.btnBack)
-    Button btnBack;
+    TextView btnBack;
     @Bind(R.id.btnAppt)
     Button btnAppt;
     @Bind(R.id.imgCircleBlurReceived)
@@ -51,6 +54,16 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
     ImageView imgCircleBlurWait;
     @Bind(R.id.imgCircleBlurFinish)
     ImageView imgCircleBlurFinish;
+    @Bind(R.id.lblApp_Time)
+    TextView lblApp_Time;
+    @Bind(R.id.lblApp_Date)
+    TextView lblApp_Date;
+    @Bind(R.id.lblApp_Location)
+    TextView lblApp_Location;
+    @Bind(R.id.lineApptTime)
+    View lineAppTime;
+    @Bind(R.id.layoutApptTime)
+    LinearLayout layoutApptTime;
 
     public TrackingFragment() {}
 
@@ -70,27 +83,9 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
         btnAppt.setOnClickListener(this);
 
         DisplayTracking(status);
+        Log.d(TAG, status);
         return v;
     }
-
-//    private void GetStatusAppointment(String appointmentUID) {
-//        restClient.getAppointmentDetails(appointmentUID, new Callback<JsonObject>() {
-//            @Override
-//            public void success(JsonObject jsonObject, Response response) {
-//                if (jsonObject.get("data").getAsJsonObject() != null) {
-//                    Log.d(TAG, jsonObject.get("data").getAsJsonObject().get("Status").getAsString());
-//                    time = MyApplication.getInstance().ConvertTime(jsonObject.get("data").getAsJsonObject().get("FromTime").getAsString());
-//                    date = MyApplication.getInstance().ConvertDate(jsonObject.get("data").getAsJsonObject().get("FromTime").getAsString());
-//                    DisplayTracking(jsonObject.get("data").getAsJsonObject().get("Status").getAsString());
-//                }
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//
-//            }
-//        });
-//    }
 
     private void DisplayTracking(String status) {
         switch (status) {
@@ -105,7 +100,7 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
                         .transform(new BlurTransformation(v.getContext(), 20))
                         .into(imgCircleBlurAttended);
                 break;
-            case "Waitlist":
+            case "Waiting for approval":
                 picasso = new Picasso.Builder(v.getContext()).listener(new Picasso.Listener() {
                     @Override
                     public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
@@ -139,6 +134,11 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
                         .into(imgCircleBlurReceived);
                 break;
             case "Approved":
+                layoutApptTime.setVisibility(View.VISIBLE);
+                lineAppTime.setVisibility(View.VISIBLE);
+                lblApp_Date.setText(MyApplication.getInstance().ConvertDate(fromTime));
+                lblApp_Time.setText(MyApplication.getInstance().ConvertTime(fromTime));
+                lblApp_Location.setText("None");
                 picasso = new Picasso.Builder(v.getContext()).listener(new Picasso.Listener() {
                     @Override
                     public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
@@ -184,7 +184,7 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnBack:
-                ((MainActivity) v.getContext()).Display(2);
+                ((MainActivity) v.getContext()).Display(0);
                 break;
             case R.id.btnAppt:
                 Fragment fragment = new AppointmentDetails();

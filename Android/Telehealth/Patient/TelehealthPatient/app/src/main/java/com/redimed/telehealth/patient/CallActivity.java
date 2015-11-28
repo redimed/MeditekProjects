@@ -1,13 +1,15 @@
 package com.redimed.telehealth.patient;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.provider.MediaStore;
+import android.os.PowerManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -46,6 +48,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     private String sessionId, token, apiKey, to, from;
     private static final boolean SUBSCRIBE_TO_SELF = false;
     private MediaPlayer ringtone;
+    private Window window;
 
     @Bind(R.id.fabHold)
     FloatingActionButton fabHold;
@@ -73,8 +76,12 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         setContentView(R.layout.activity_call);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         ButterKnife.bind(this);
 
         streamOpenTok = new ArrayList<Stream>();

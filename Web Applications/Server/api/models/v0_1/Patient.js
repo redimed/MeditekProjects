@@ -135,7 +135,7 @@ module.exports = {
                     msg: 'Too long!'
                 },
                 isIn: [
-                    ['M', 'F']
+                    ['Male', 'Female','Other']
                 ]
             }
         },
@@ -169,7 +169,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is: /^[a-zA-Z0-9\s\/]{0,255}$/
+                is: /^[a-zA-Z0-9\s,'-\/]{0,255}$/
             }
         },
         Address2: {
@@ -180,7 +180,7 @@ module.exports = {
                     args: [0, 255],
                     msg: 'Too long!'
                 },
-                is: /^[a-zA-Z0-9\s\/]{0,255}$/
+                is: /^[a-zA-Z0-9\s,'-\/]{0,255}$/
             }
         },
         Postcode: {
@@ -274,7 +274,7 @@ module.exports = {
                     args: [0, 20],
                     msg: 'Too long!'
                 },
-                is: /^[1-9]{9}$/
+                is: /^[0-9]{6,10}$/
             }
         },
         WorkPhoneNumber: {
@@ -285,7 +285,7 @@ module.exports = {
                     args: [0, 20],
                     msg: 'Too long!'
                 },
-                is: /^[1-9]{9}$/
+                is: /^[0-9]{6,10}$/
             }
         },
         FaxNumber: {

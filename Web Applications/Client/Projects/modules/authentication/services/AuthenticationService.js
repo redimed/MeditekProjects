@@ -1,9 +1,10 @@
 angular.module('app.authentication.service', [])
-.factory("AuthenticationService", function(Restangular) {
+.factory("AuthenticationService", function(Restangular,AuthRestangular) {
     var services = {};
     var api = Restangular.all("api");
+    var authApi = AuthRestangular.all("api");
     services.logout = function(options) {
-        return api.one('logout').get();
+        return authApi.one('logout').get();
     };
 
     services.getListCountry = function() {

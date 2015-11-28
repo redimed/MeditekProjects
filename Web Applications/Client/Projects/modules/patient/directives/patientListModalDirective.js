@@ -17,17 +17,15 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
             uid: '=onUid',
             isShowFull:'=onShowfull',
             listShow:'=onListshow',
-            onCancel: '='
+            onCancel: '=',
+            activeUser: '=onActive'
         },
         controller:function($scope, FileUploader) {
 			// Profile Image
 		    var uploader = $scope.uploader = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	url: o.const.uploadFileUrl,
-		    	headers:{
-		    		Authorization:'Bearer '+$cookies.get("token"),
-		    		systemtype:'WEB',
-		    	},
+
 		    	withCredentials:true,
 		    	alias : 'uploadFile'
 		    });
@@ -52,12 +50,20 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    		$scope.info.img_change = false;
 		    	}
 		    };
+		    uploader.onBeforeUploadItem = function(item) {
+		    	item.headers={
+		    		Authorization:'Bearer '+$cookies.get("token"),
+		    		systemtype:'WEB',
+		    	},
+		        console.info('onBeforeUploadItem', item);
+		    };
 		    // uploader.onSuccessItem = function (fileItem, response, status, headers) {
 		    //     console.info('onSuccessItem', fileItem, response, status, headers);
 		    // };
 
 		},
 		link: function(scope, elem, attrs){
+			console.log(scope.activeUser);
 			var data = {};
         	scope.info = {};
 			data.UID = scope.uid;
@@ -68,6 +74,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					scope.info.DOB = /^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/.test(scope.info.DOB)?scope.info.DOB:null;
 					scope.info.img = scope.info.FileUID?scope.info.FileUID:null;
 					scope.info.img_change = null;
+					console.log(scope.info);
 					oriInfo = angular.copy(scope.info);
 				}
 				else{
@@ -145,7 +152,14 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    	if(scope.info[name].length==0)
 		    		scope.info[name] = null;
 		    };
+
+		    scope.changeEnable = function(Enable) {
+		    	scope.info.EnableUser = Enable;
+		    	console.log(Enable);
+		    };
+
 		    scope.savechange = function(){
+
 				PatientService.validate(scope.info)
 					.then(function(result){
 						scope.er ='';
@@ -181,6 +195,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 							scope.info = angular.copy(oriInfo);
 						});
 				}, function(err){
+
 					toastr.error("Please check data again.","ERROR");
 					scope.er ={};
 					scope.ermsg ={};

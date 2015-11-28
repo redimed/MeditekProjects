@@ -4,10 +4,17 @@ var env='meditekServer'; //local,meditekServer,testApp,app
 var configRestBaseUrl={
 	// 'local':'http://192.168.1.97:3000',
 	//'local':'http://192.168.1.235:3005',
-	 'local':'http://localhost:3005',
+	'local':'http://localhost:3005',
 	'meditekServer':'http://telehealthvietnam.com.vn:3005',
 	'testApp':'http://testapp.redimed.com.au:3005',
 	'app':'http://apps.redimed.com.au:3005',
+};
+
+var configAuthBaseUrl={
+	'local':'http://localhost:3006',
+	'meditekServer':'http://telehealthvietnam.com.vn:3006',
+	'testApp':'http://testapp.redimed.com.au:3006',
+	'app':'http://apps.redimed.com.au:3006',
 };
 
 
@@ -15,25 +22,30 @@ if(env == "local")
 {
 	var _restBaseURL=configRestBaseUrl.local;
 	var _fileBaseURL=configRestBaseUrl.local;
+	var _authBaseURL=configAuthBaseUrl.local;
 }
 else if(env == 'meditekServer')
 {
 	var _restBaseURL=configRestBaseUrl.meditekServer;
 	var _fileBaseURL=configRestBaseUrl.meditekServer;
+	var _authBaseURL=configAuthBaseUrl.meditekServer;
 }
 else if(env == 'testApp')
 {
 	var _restBaseURL=configRestBaseUrl.testApp;
 	var _fileBaseURL=configRestBaseUrl.testApp;
+	var _authBaseURL=configAuthBaseUrl.testApp;
 }
 else if (env == 'testAppLocal')
 {
 	var _restBaseURL=configRestBaseUrl.local;
 	var _fileBaseURL=configRestBaseUrl.local;
+	var _authBaseURL=configAuthBaseUrl.local;
 }
 else if(env =='app')
 {
 	var _restBaseURL=configRestBaseUrl.app;
 	var _fileBaseURL=configRestBaseUrl.app;
+	var _authBaseURL=configAuthBaseUrl.app;
 }
 

@@ -53,7 +53,8 @@ module.exports = {
         var headers = req.headers;
         var params = req.params.all();
         var type = params.type;
-        TelehealthService.GetAppointmentList(headers, type).then(function(response) {
+        var query = req.query;
+        TelehealthService.GetAppointmentList(headers, type, query).then(function(response) {
             var data = response.getBody();
             if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
             if (data.count > 0) {

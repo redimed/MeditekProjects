@@ -93,13 +93,14 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 	            scope.loadList(scope.searchObjectMap);
 	        };
 
-			scope.clickOpen = function(patientUID){
-				//scope.ID = patientUID;
+			scope.clickOpen = function(patientUID,Enable){
 				var modalInstance = $uibModal.open({
 					templateUrl: 'patientListmodal',
 					controller: function($scope){
 						$scope.ID = patientUID;
+						$scope.enable = Enable;
 						$scope.close = function() {
+							scope.loadList(scope.searchObjectMap);
 							modalInstance.close();
 						};
 					},
@@ -134,42 +135,48 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				scope.loadList(scope.searchObjectMap);
 			};
 
-			scope.selectPatient = function(patientUID,stt){
-				if(!scope.appointment){
-					if(scope.uidReturn==patientUID){
-						scope.uidReturn='';
-						scope.checked = false;
-					}
-					else{
-						scope.checked = true;
-						scope.uidReturn=patientUID;
-					}
-				}
-				else{
-					scope.uidReturn=patientUID;
-					swal({   
-						title: "Are you sure?", 
-						text: "Are you want to link this patient to the current appointment?" ,
-						type: "warning",   
-						showCancelButton: true,   
-						confirmButtonColor: "#DD6B55",   
-						confirmButtonText: "Ok",   
-						cancelButtonText: "Cancel",   
-						closeOnConfirm: true,   
-						closeOnCancel: true 
-					}, 
-					function(isConfirm){   
-						if (isConfirm) {  
-							scope.uidReturn=patientUID;   
-							scope.appointment.runIfSuccess({UID:patientUID});
-						}else{
+			scope.selectPatient = function(patientUID,stt,Enable){
+				if(Enable=='Y'){
+					if(!scope.appointment){
+						if(scope.uidReturn==patientUID){
 							scope.uidReturn='';
 							scope.checked = false;
-							scope.loadList(scope.searchObjectMap);
 						}
-					});
+						else{
+							scope.checked = true;
+							scope.uidReturn=patientUID;
+						}
+					}
+					else{
+
+						scope.uidReturn=patientUID;
+						swal({   
+							title: "Are you sure?", 
+							text: "Are you want to link this patient to the current appointment?" ,
+							type: "warning",   
+							showCancelButton: true,   
+							confirmButtonColor: "#DD6B55",   
+							confirmButtonText: "Ok",   
+							cancelButtonText: "Cancel",   
+							closeOnConfirm: true,   
+							closeOnCancel: true 
+						}, 
+						function(isConfirm){   
+							if (isConfirm) {  
+								scope.uidReturn=patientUID;   
+								scope.appointment.runIfSuccess({UID:patientUID});
+							}else{
+								scope.uidReturn='';
+								scope.checked = false;
+								scope.loadList(scope.searchObjectMap);
+							}
+						});
+					}
 				}
-				
+				else {
+					sweetAlert("Error.", "Patient Disable!", "error");;
+				}
+
 			};
 
 			scope.createPatient= function () {

@@ -202,7 +202,7 @@ angular.module('app.authentication.patient.services',[])
 			//validate Gender
 			if('Gender' in info)
 			if(info.Gender){
-				if(info.Gender != "Female" && info.Gender != "Male" && info.Gender != "Other"){
+				if(info.Gender != "Female" && info.Gender != "Male" && info.Gender !="Other"){
 					error.push({field:"Gender",message:"invalid value"});
 				}
 			}
@@ -314,7 +314,7 @@ angular.module('app.authentication.patient.services',[])
 			// validate Email? hoi a Tan su dung exception
 			if('Email1' in info){
 				if(info.Email1){
-					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
 					if(!EmailPattern.test(info.Email1)){
 						error.push({field:"Email1",message:"invalid email"});
 					}
@@ -461,7 +461,10 @@ angular.module('app.authentication.patient.services',[])
 	};
 
 	PatientService.postDatatoDirective = function(info) {
-		postData = info;
+		postData = angular.copy(info);
+		if(postData.Gender !=null && postData.Gender !=='Male' && postData.Gender !=='Female'){
+			postData.Gender = 'Other';
+		}
 	};
 
 	PatientService.getDatatoDirective = function(){
@@ -472,8 +475,9 @@ angular.module('app.authentication.patient.services',[])
 			DOB:postData.DOB,
 			Address1:postData.Address1,
 			Address2:postData.Address2,
-			// Email1:postData.Email2,
-			// HomePhoneNumber:postData.HomePhoneNumber,
+			Email1:postData.Email1,
+			HomePhoneNumber:postData.HomePhoneNumber,
+			Gender:postData.Gender,
 			Suburb:postData.Suburb,
 			Postcode:postData.Postcode
 		};

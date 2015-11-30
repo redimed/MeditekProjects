@@ -1,76 +1,61 @@
 <form class="register-form margin-bottom-40" role="form" class="">
-    <h3><b>Sign Up</b></h3>
-    <p>Enter your personal details below:</p>
-    <div class="row">
-        <div class="col-md-4 col-sm-4">
-            <h4><span class="my-step-number">1</span><b>User Account</b></h4></div>
-        <div class="col-md-4 col-sm-4">
-            <h4><span class="my-step-number">2</span><b>Personal Info</b></h4></div>
-        <!--<div class="col-md-4 col-sm-4">
-            <h4><span class="my-step-number">3</span><b>Signature</b></h4></div>-->
+    <h3 class="form-title font-green">Sign Up</h3>
+    <p class="hint"> Enter your personal details below: </p>
+    <div class="row" style="text-align:center">
+        <div class="col-md-6 col-sm-6"><h4><span class="my-step-number">1</span>User Account</h4></div>
+        <div class="col-md-6 col-sm-6"><h4><span class="my-step-number">2</span>Personal Info</h4></div>
     </div>
     <div ng-show="step==1">
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="progress progress-sm progress-striped active">
-                    <div class="progress-bar progress-bar-danger " style="width: 50%">
-                        <span class="sr-only">50% Complete (success) </span>
+                    <div class="progress-bar progress-bar-danger" style="width: 30%">
                     </div>
-                    <!-- <div class="progress-bar progress-bar-warning" style="width: 40%">
-						<span class="sr-only">20% Complete (warning) </span>
-					</div>
-					<div class="progress-bar progress-bar-danger" style="width: 40%">
-						<span class="sr-only">10% Complete (danger) </span>
-					</div> -->
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <div class="form-group form-md-line-input ">
+                <div class="form-group">
+                    <label class="control-label">Username</label>
                     <input class="form-control" ng-model="data.UserName" />
-                    <label for="Username">Username</label>
-                    <!-- <span class="help-block">Error Username</span> -->
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
-                    <input class="form-control" type="password" id="register_password" ng-model="data.Password" />
-                    <label for="Password">Password</label>
-                    <!-- <span class="help-block">Error Password</span> -->
+                <div class="form-group">
+                    <label class="control-label">Password</label>
+                    <input class="form-control" type="password" ng-model="data.Password" />
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
+                <div class="form-group ">
+                    <label class="control-label">Re-type Your Password</label>
                     <input class="form-control" type="password" ng-model="data.RePassword" />
-                    <label for="RePassword">Re-type Your Password</label>
-                    <!-- <span class="help-block">Error Re-type Your Password</span> -->
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row margin-bottom-20">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
-                    <input type="input" class="form-control" id="txtMobile" maxlength="17" ng-model="data.PhoneNumber">
-                    <label for="Mobile">Mobile</label>
-                    <!-- <span class="help-block">Error Mobile</span> -->
+                <div class="form-group">
+                    <label class="control-label">Mobile</label>
+                    <input type="input" class="form-control" maxlength="17" ng-model="data.PhoneNumber">
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
-                    <input id="txtEmail" class="form-control" type="text" ng-model="data.Email" />
-                    <label for="Email">Email</label>
-                    <!-- <span class="help-block">Error Mobile</span> -->
+                <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <input class="form-control" type="text" ng-model="data.Email" />
                 </div>
             </div>
         </div>
-        <hr>
         <div class="form-actions">
-            <a href="" id="register-back-btn" class="btn btn-default pull" ng-click="stepback_one()"><i class="m-icon-swapleft"></i> Cancel </a>
-            <button ng-click="checkUser(data)" ladda-button="loadingpage" data-style="expand-right" class="btn blue pull-right button-submit ladda-button">
-                <span class="ladda-label"> Continue <i class="m-icon-swapright m-icon-white"></i></span>
+            <a href="" id="register-back-btn" class="btn btn-default uppercase pull-left" ng-click="stepback_one()">
+                <i class="glyphicon glyphicon-arrow-left"></i> Cancel 
+            </a>
+            <button ng-click="checkUser(data)" ladda-button="loadingpage" data-style="expand-right" class="btn green uppercase pull-right button-submit ladda-button">
+                <span class="ladda-label"> Continue <i class="glyphicon glyphicon-arrow-right"></i></span>
             </button>
         </div>
     </div>
@@ -78,110 +63,90 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="progress progress-sm progress-striped active">
-                    <div class="progress-bar progress-bar-danger" style="width: 50%">
-                        <span class="sr-only">50% Complete (success) </span>
-                    </div>
-                    <!--<div class="progress-bar progress-bar-warning" style="width: 50%">
-                        <span class="sr-only">20% Complete (warning) </span>
-                    </div>-->
+                    <div class="progress-bar progress-bar-danger" style="width: 100%"></div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
-                    <input type="input" class="form-control" id="txtFirstName" ng-model="data.FirstName">
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group ">
                     <label for="Firstname">Firstname</label>
-                    <!-- <span class="help-block">Error Firstname</span> -->
+                    <input type="input" class="form-control" id="txtFirstName" ng-model="data.FirstName">
                 </div>
             </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
-                    <input type="input" class="form-control" id="txtMiddlename" ng-model="data.MiddleName">
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group">
                     <label for="Middlename">Middlename</label>
-                    <!-- <span class="help-block">Error Middlename</span> -->
+                    <input type="input" class="form-control" id="txtMiddlename" ng-model="data.MiddleName">
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <!-- LastName -->
-            <div class="col-md-12 col-sm-12">
-                <div class="form-group form-md-line-input ">
-                    <input type="input" class="form-control" id="txtLastName" ng-model="data.LastName">
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group ">
                     <label for="Lastname">Lastname</label>
-                    <!-- <span class="help-block">Error Lastname</span> -->
+                    <input type="input" class="form-control" id="txtLastName" ng-model="data.LastName">
                 </div>
             </div>
-            <!-- LastName -->
         </div>
         <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
-                    <input id="txtHealthlinkID" class="form-control" type="text" ng-model="data.HealthLinkID">
+            <div class="col-md-8 col-sm-8">
+                <div class="form-group ">
                     <label for="HealthlinkID">Healthlink ID</label>
-                    <!-- <span class="help-block">Error HealthlinkID</span> -->
+                    <input id="txtHealthlinkID" class="form-control" type="text" ng-model="data.HealthLinkID">
                 </div>
             </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group ">
+                    <label for="Providernumber">Provider No.</label>
                     <input type="input" class="form-control" id="txtProviderNumber" ng-model="data.ProviderNumber">
-                    <label for="Providernumber">Providernumber</label>
-                    <!-- <span class="help-block">Error Providernumber</span> -->
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
-                    <input type="input" maxlength="10" class="form-control" id="txtWorkphone" ng-model="data.WorkPhoneNumber">
+                <div class="form-group ">
                     <label for="Workphone">Workphone</label>
-                    <!-- <span class="help-block">Error Workphone</span> -->
+                    <input type="input" maxlength="10" class="form-control" id="txtWorkphone" ng-model="data.WorkPhoneNumber">
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
-                    <input type="input" maxlength="10" class="form-control" id="txtWorkphone" ng-model="data.HomePhoneNumber">
+                <div class="form-group ">
                     <label for="Homephone">Homephone</label>
-                    <!-- <span class="help-block">Error Homephone</span> -->
+                    <input type="input" maxlength="10" class="form-control" id="txtWorkphone" ng-model="data.HomePhoneNumber">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <div class="form-group form-md-line-input ">
-                    <input class="form-control" type="text" ng-model="data.Address1">
+                <div class="form-group">
                     <label for="Address1">Address1</label>
-                    <!-- <span class="help-block">Error Address1</span> -->
+                    <input class="form-control" type="text" ng-model="data.Address1">
                 </div>
             </div>
             <div class="col-md-12 col-sm-12">
-                <div class="form-group form-md-line-input ">
-                    <input class="form-control" type="text" ng-model="data.Address2">
+                <div class="form-group">
                     <label for="Address2">Address2</label>
-                    <!-- <span class="help-block">Error Address2</span> -->
+                    <input class="form-control" type="text" ng-model="data.Address2">
                 </div>
             </div>
-        </div>
-        
+        </div> 
         <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
-                    <input id="txtPostcode" maxlength="4" class="form-control" type="text" ng-model="data.Postcode">
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group">
                     <label for="Postcode">Postcode</label>
-                    <!-- <span class="help-block">Error Postcode</span> -->
+                    <input id="txtPostcode" maxlength="4" class="form-control" type="text" ng-model="data.Postcode">
                 </div>
             </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
-                    <input id="txtSuburb" class="form-control" type="text" ng-model="data.Suburb">
+            <div class="col-md-8 col-sm-8">
+                <div class="form-group">
                     <label for="Suburb">Suburb</label>
-                    <!-- <span class="help-block">Error Suburb</span> -->
+                    <input id="txtSuburb" class="form-control" type="text" ng-model="data.Suburb">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
+                <div class="form-group">
+                    <label for="State">States</label>
                     <select ng-model="data.State" id="States" class="form-control">
                         <option value=""></option>
                         <option value="Victoria">Victoria</option>
@@ -192,28 +157,24 @@
                         <option value="Western_Australia">Western Australia</option>
                         <option value="Tasmania">Tasmania</option>
                     </select>
-                    <label for="State">States</label>
-                    <!-- <span class="help-block">Error State</span> -->
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
-                <div class="form-group form-md-line-input ">
+                <div class="form-group">
+                    <label for="Country">Country</label>
                     <select ng-model="data.CountryID" ng-options="c.ID as c.ShortName for c in country" id="Country" class="form-control edited" >
                         <option value=""></option>
                     </select>
-                    <label for="Country">Country</label>
-                    <!-- <span class="help-block">Error Country</span> -->
+                    
                 </div>
             </div>
         </div>
-         <div class="row">
-            <div vc-recaptcha theme="light" key="'6LcDaxATAAAAANkBcFO0-jBGQzwIzX4-n9hlYs0v'" ng-model="data.captcha"></div>
+         <div class="row margin-top-10 margin-bottom-20">
+            <div class="col-md-12"><div vc-recaptcha theme="light" key="'6LcDaxATAAAAANkBcFO0-jBGQzwIzX4-n9hlYs0v'" ng-model="data.captcha"></div></div>
         </div>
-        <hr>
         <div class="form-actions">
-            <a href="" id="register-back-btn" class="btn btn-default pull" ng-click="btn_back()"><i class="m-icon-swapleft"></i> Back</a>
-            <!-- <button type="submit" id="register-submit-btn" class="btn green pull-right">Register <i class="m-icon-swapright m-icon-white"></i></button> -->
-            <button type="submit" id="register-submit-btn" class="btn blue pull-right" ng-click="save(data)">Continue <i class="m-icon-swapright m-icon-white"></i></button>
+            <a href="" id="register-back-btn" class="btn btn-default uppercase pull-left" ng-click="btn_back()"><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
+            <button type="submit" id="register-submit-btn" class="btn green uppercase pull-right" ng-click="save(data)">Register <i class="glyphicon glyphicon-arrow-right"></i></button>
         </div>
     </div>
     <!--<div ng-show="step==3">
@@ -302,13 +263,13 @@
 <style type="text/css">
 @media (min-width: 1368px) {
     .login .content {
-        width: 35% !important;
+        width: 25% !important;
     }
 }
 
 @media (max-width: 1367px) {
     .login .content {
-        width: 60% !important;
+        width: 40% !important;
     }
 }
 </style>

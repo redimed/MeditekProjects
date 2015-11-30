@@ -7,6 +7,10 @@ var FormWizard = function() {
             if (!jQuery().bootstrapWizard) {
                 return;
             }
+
+            jQuery.validator.addMethod("MailCus", function(value, element) {
+                return this.optional(element) || /^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/.test(value);
+            }, "Please enter a valid email address.");
             jQuery.validator.addMethod("MobilePhone", function(value, element) {
                 return this.optional(element) || /^(\+61|0061|0)?4[0-9]{8}$/.test(value);
             }, "This is not a mobile phone number");
@@ -16,7 +20,6 @@ var FormWizard = function() {
              jQuery.validator.addMethod("Work", function(value, element) {
                 return this.optional(element) || /^[*#-_0-9]{6,20}$/.test(value);
             }, "This is not a work phone number");
-
             function format(state) {
                 if (!state.id) return state.text; // optgroup
                 return "<img class='flag' src='../../assets/global/img/flags/" + state.id.toLowerCase() + ".png'/>&nbsp;&nbsp;" + state.text;
@@ -59,6 +62,18 @@ var FormWizard = function() {
                     Suburb: {
                         required: true
                     },
+                    InterpreterLanguage:{
+                        required: true
+                    },
+                    UsualGPName:{
+                        required:true
+                    },
+                    cancersTreatmens:{
+                        required:true
+                    },
+                    previousHandSurgery:{
+                        required:true
+                    },
                     Postcode: {
                         required: true,
                         maxlength: 10,
@@ -78,7 +93,7 @@ var FormWizard = function() {
                         Home:true
                     },
                     Email: {
-                        email: true
+                        MailCus: true
                     },
                     'examination[]': {
                         required: true,

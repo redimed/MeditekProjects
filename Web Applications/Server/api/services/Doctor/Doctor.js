@@ -188,7 +188,7 @@ module.exports = {
 
 				//validate WorkPhone
 				if(info.WorkPhoneNumber!=undefined && info.WorkPhoneNumber){
-					var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var auWorkPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var WorkPhoneNumber=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
 						error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -198,7 +198,7 @@ module.exports = {
 
 				//validate HomePhoneNumber? hoi a Tan su dung exception
 				if(info.HomePhoneNumber!=undefined && info.HomePhoneNumber){
-					var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var auHomePhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auHomePhoneNumberPattern.test(HomePhone)){
 						error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -242,10 +242,10 @@ module.exports = {
 						err.pushErrors(error);
 					}
 				}
-				else {
-					error.push({field:"DepartmentID",message:"required"});
-					err.pushErrors(error);
-				}
+				// else {
+				// 	error.push({field:"DepartmentID",message:"required"});
+				// 	err.pushErrors(error);
+				// }
 
 				// validate ProviderNumber
 				if(info.ProviderNumber!=undefined && info.ProviderNumber) {
@@ -475,7 +475,7 @@ module.exports = {
 				//validate WorkPhone
 				if('WorkPhoneNumber' in info){
 					if(info.WorkPhoneNumber){
-						var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+						var auWorkPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 						var WorkPhoneNumber=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
 						if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
 							error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -487,7 +487,7 @@ module.exports = {
 				//validate HomePhoneNumber? hoi a Tan su dung exception
 				if('HomePhoneNumber' in info){
 					if(info.HomePhoneNumber){
-						var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+						var auHomePhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 						var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
 						if(!auHomePhoneNumberPattern.test(HomePhone)){
 							error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -537,10 +537,10 @@ module.exports = {
 							err.pushErrors(error);
 						}
 					}
-					else {
-						error.push({field:"DepartmentID",message:"required"});
-						err.pushErrors(error);
-					}
+					// else {
+					// 	error.push({field:"DepartmentID",message:"required"});
+					// 	err.pushErrors(error);
+					// }
 				}
 
 				// validate ProviderNumber
@@ -630,6 +630,21 @@ module.exports = {
 					error.push({field:"Title",message:"required"});
 					err.pushErrors(error);
 					// toastr.error('Title is required');
+				}
+			}
+
+			//validate UserName
+			if('UserName' in info){
+				if(info.UserName){
+					if(info.UserName.length < 0 || info.UserName.length > 50){
+						error.push({field:"UserName",message:"max length"});
+						err.pushErrors(error);
+					}
+				}
+				else {
+					error.push({field:"UserName",message:"required"});
+					err.pushErrors(error);
+					// toastr.error('UserName is required');
 				}
 			}
 			
@@ -979,6 +994,7 @@ module.exports = {
 		var isHaveRole = false;
 		return sequelize.transaction()
 		.then(function(t){
+			console.log(data.info);
 			return Services.Doctor.validation(data.info)
 			.then(function(result){
 				if(result!=undefined && result!=null&& result!=''){
@@ -987,6 +1003,23 @@ module.exports = {
 							UID : data.UID
 						},
 						transaction:t
+					})
+					.then(function(user){
+						var uid = data.info.UserAccount['UID'];
+						delete data.info.UserAccount['PhoneNumber'];
+						delete data.info.UserAccount['UserName'];
+						delete data.info.UserAccount['Email'];
+						delete data.info.UserAccount['UID'];
+						delete data.info.UserAccount['Password'];
+						return UserAccount.update(data.info.UserAccount,{
+							where : {
+								UID : uid
+							},
+							transaction:t
+						});
+					},function(err){
+						t.rollback();
+						throw err;
 					});
 				}
 			},function(err){
@@ -1213,6 +1246,16 @@ module.exports = {
 	DoctorAppointment: function() {
 
 		return Doctor.findAll({
+						include: [
+							{
+				            	model: UserAccount,
+				            	attributes: ['PhoneNumber'],
+				            	required: true,
+				            	where:{
+				            		Enable:'Y'
+				            	}
+				            }
+						],
 						where: {
 							Enable: 'Y'
 						}

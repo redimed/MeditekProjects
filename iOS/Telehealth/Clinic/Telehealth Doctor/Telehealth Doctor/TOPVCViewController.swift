@@ -7,20 +7,68 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-class TOPVCViewController: UINavigationController {
+class TOPVCViewController: UINavigationController, UIPopoverPresentationControllerDelegate {
+    
+    
+    @IBOutlet weak var navigation: UINavigationBar!
+    @IBOutlet weak var rightBarButton: UIBarButtonItem!
+    let button = UIButton(type: .System)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override func viewWillAppear(animated: Bool) {
+        let imageView = UIImageView(frame: CGRectMake(30, 5, 180, 35))
+        imageView.image = UIImage(named: "logo.png")
+        imageView.contentMode = UIViewContentMode.ScaleAspectFit
+        navigation.addSubview(imageView)
+
+
+        button.frame = CGRectMake(self.view.frame.size.width - 250, 0, 300, 50)
+        button.setTitle(JSON(NSUserDefaults.standardUserDefaults().valueForKey("userInfo")!)["UserName"].stringValue, forState: .Normal)
+        button.titleLabel?.font = UIFont.systemFontOfSize(20)
+        button.setTitleColor(UIColor(hex: "898C90"), forState: UIControlState.Normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.addTarget(self, action: "viewDetailDoctor", forControlEvents: UIControlEvents.TouchUpInside)
+        navigation.addSubview(button)
+
+        let imgViewicon = UIImageView(frame: CGRectMake(button.frame.origin.x + 50, 5, 30, 30))
+        imgViewicon.image = UIImage(named: "doctor-active.png")
+        imgViewicon.contentMode = UIViewContentMode.ScaleAspectFit
+        navigation.addSubview(imgViewicon)
+        
+
+    }
+    
+    func viewDetailDoctor() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let logoutAction = UIAlertAction(title: "Log out", style: UIAlertActionStyle.Destructive, handler: {(alert :UIAlertAction) in
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("userInfo")
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("teleUserInfo")
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("authToken")
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("refCode")
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("deviceId")
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let loginVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginView") as? LoginViewController {
+                    self.presentViewController(loginVC, animated: true, completion: nil)
+                }
+            })
+        })
+        
+        alertController.addAction(logoutAction)
+        
+        alertController.popoverPresentationController?.sourceView = button
+        alertController.popoverPresentationController?.sourceRect = CGRectMake(200, 35, 300, 50)
+        
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }

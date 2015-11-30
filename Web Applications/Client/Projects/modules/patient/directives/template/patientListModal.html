@@ -55,7 +55,8 @@
 									            <div class="form-group">
 									            	<label class="control-label col-md-4">Title</label>
 									            	<div class="col-md-8">
-									            		<select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title"> </select>
+									            		<select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title" ng-style="er.Title" ng-change="ermsg.Title='';checkDataNull('Title')"> </select>
+									            		<span style="color:red;">{{ermsg.Title}}</span>
 									            	</div>
 									            </div>
 									            <!-- end title -->
@@ -83,7 +84,7 @@
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-calendar"></i>
-															<input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB=''" />
+															<input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB=''" />
 															<span style="color:red;">{{ermsg.DOB}}</span>
 														</div>
 													</div>
@@ -107,6 +108,11 @@
 													<div class="col-md-8"><input type="text" class="form-control" placeholder="Occupation" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation='';checkDataNull('Occupation')"><span style="color:red;">{{ermsg.Occupation}}</span></div>
 												</div>
 												<!-- end Occupation -->
+												<!-- Enable User -->
+												<div class="form-group">
+													<label class="control-label col-md-4"><input type="checkbox" ng-model="activeUser" ng-true-value="'Y'" ng-false-value="'N'" ng-click="changeEnable(activeUser)" />Enable</label>
+												</div>
+												<!-- end Enable User -->
 											</div>
 											<div class="col-md-4" id="columm3" ng-if="listShow.columm3">
 												<h4 class="form-section bold">Contact Information</b></h4>

@@ -130,14 +130,17 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
         
         if aButton?.titleLabel?.text == "Exercise Rehab"{
             exerciseRehab = "Y"
+            physiotherapy = "N"
+             handTherapy = "N"
         } else if aButton?.titleLabel?.text == "Physiotherapy" {
             physiotherapy = "Y"
+            exerciseRehab = "N"
+            handTherapy = "N"
         } else if  aButton?.titleLabel?.text == "Hand Therapy" {
             handTherapy = "Y"
+            exerciseRehab = "N"
+            physiotherapy = "N"
         }
-        
-        
-        
     }
     
     //custom textFiled
@@ -286,6 +289,7 @@ class SubmitInjuryViewController: UIViewController,SSRadioButtonControllerDelega
             case .Success(let JSONData):
                 let data = JSON(JSONData)
                 if data["data"].string == "success" {
+                     infor.phoneNumber = self.contactPhoneTextField.text
                     self.successAlert(infor)
                 }else {
                 

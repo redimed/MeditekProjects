@@ -12,10 +12,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		    var uploader = $scope.uploader = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	url: o.const.uploadFileUrl,
-		    	headers:{
-		    		Authorization:'Bearer '+$cookies.get("token"),
-		    		systemtype:'WEB',
-		    	},
+
 		    	withCredentials:true,
 		    	alias : 'uploadFile'
 		    });
@@ -27,6 +24,13 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		            return this.queue.length < 10;
 		        }
 		    });
+		    uploader.onBeforeUploadItem = function(item) {
+		    	item.headers={
+		    		Authorization:'Bearer '+$cookies.get("token"),
+		    		systemtype:'WEB',
+		    	},
+		        console.info('onBeforeUploadItem', item);
+		    };
 
 		},
 		link: function(scope, elem, attrs){
@@ -102,7 +106,10 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 					Address1:data.Address1,
 					Address2:data.Address2,
 					Suburb:data.Suburb,
-					Postcode:data.Postcode
+					Postcode:data.Postcode,
+					Email1:data.Email1,
+					HomePhoneNumber:data.HomePhoneNumber,
+					Gender:data.Gender
 				};
 				PatientService.validateCheckPhone(data)
 				.then(function(success){
@@ -119,16 +126,17 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 								scope.loadingCheck = false;
 								toastr.success("Phone Number can be choose to create patient","SUCCESS");
 								scope.isShowEmail1 = result.data.data.Email1;
-								scope.data.Email1 = result.data.data.Email1;
+								scope.data.Email1 = verifyData.Email1;
 								scope.isShowNext = true;
 								scope.data.CountryID1 = 14;
 								scope.data.Title= null;
-								scope.data.Gender= null;
+								scope.data.Gender= verifyData.Gender;
 								scope.data.Address1= verifyData.Address1;
 								scope.data.Address2= verifyData.Address2;
 								scope.data.Suburb= verifyData.Suburb;
 								scope.data.Postcode= verifyData.Postcode;
 								scope.data.State = null;
+								scope.data.HomePhoneNumber = verifyData.HomePhoneNumber;
 								// scope.data.DOB = new Date('1/1/1990');
 							}
 							else{

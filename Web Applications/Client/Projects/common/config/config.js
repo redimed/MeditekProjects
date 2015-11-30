@@ -32,7 +32,9 @@ var o = {
 
         fileBaseUrl: _fileBaseURL,
 
-        uploadFileUrl: _uploadURL
+        uploadFileUrl: _uploadURL,
+
+        authBaseUrl:_authBaseURL,
     },
 
     checkData: function(value) {

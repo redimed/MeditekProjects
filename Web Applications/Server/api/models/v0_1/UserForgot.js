@@ -1,11 +1,12 @@
 module.exports = {
     attributes: {
-        UserAccountID: {
-            type: Sequelize.BIGINT(20),
-            allowNull: true,
+        UserAccountUID: {
+            type: Sequelize.STRING(255),
+            allowNull: false,
             validate: {
-                isInt: {
-                    msg: 'Must be an integer!'
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
                 }
             },
             references: {
@@ -34,7 +35,7 @@ module.exports = {
         },
         Token: {
             type: Sequelize.STRING(255),
-            allowNull: true,
+            allowNull: false,
             validate: {
                 len: {
                     args: [0, 255],

@@ -1,19 +1,30 @@
 <!-- BEGIN HEADER -->
 	<!-- BEGIN HEADER INNER -->
 	<div class="page-header-inner">
+		
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="javascript:;" ui-sref="loggedIn.home.list">
 				<img src="/{{settings.globalPath}}/images/logoRedimed.png" alt="logo" class="logo-default" width="100%" />
 			</a>
-			<div class="menu-toggler sidebar-toggler hide">
-				<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
-			</div>
+			<div class="menu-toggler sidebar-toggler"></div>
 		</div>
 		<!-- END LOGO -->
+		<!-- BEGIN HEADER SEARCH BOX -->
+        <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
+        <form class="search-form open" action="extra_search.html" method="GET">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Patient search ..." name="query">
+                <span class="input-group-btn">
+                    <a href="javascript:;" class="btn submit">
+                        <i class="icon-magnifier"></i>
+                    </a>
+                </span>
+            </div>
+        </form>
+        <!-- END HEADER SEARCH BOX -->
 		<!-- BEGIN RESPONSIVE MENU TOGGLER -->
-		<a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
-		</a>
+		<a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"></a>
 		<!-- END RESPONSIVE MENU TOGGLER -->
 		<!-- BEGIN TOP NAVIGATION MENU -->
 		<div class="top-menu">
@@ -58,4 +69,9 @@
 	</div>
 	<!-- END HEADER INNER -->
 <!-- END HEADER -->
+
+<script>
+	Layout.init(); // init current layout
+</script>
+
 

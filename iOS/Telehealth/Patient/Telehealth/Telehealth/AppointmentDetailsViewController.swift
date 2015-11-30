@@ -42,6 +42,9 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
         
         print("-------",appointmentDetails.Type)
         self.getListImage(appointmentDetails.UIDApointment,appointmentDetails.Type)
+    
+       
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,7 +60,7 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
             response in
 
             if response["message"] == "error"{
-                self.alertMessage("Error", message: ErrorMessage.NoData)
+//                self.alertMessage("Error", message: ErrorMessage.NoData)
             }else {
                 let countImage = response.count
                 

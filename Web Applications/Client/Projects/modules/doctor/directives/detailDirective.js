@@ -16,10 +16,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    var uploader = $scope.uploader = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	url: o.const.uploadFileUrl,
-		    	headers:{
-		    		Authorization:'Bearer '+$cookies.get("token"),
-		    		systemtype:'WEB',
-		    	},
+
 		    	withCredentials:true,
 		    	alias : 'uploadFile'
 		    });
@@ -44,14 +41,18 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    uploader.onSuccessItem = function (fileItem, response, status, headers) {
 		        // console.info('onSuccessItem', fileItem, response, status, headers);
 		    };
+		    uploader.onBeforeUploadItem = function(item) {
+		    	item.headers={
+		    		Authorization:'Bearer '+$cookies.get("token"),
+		    		systemtype:'WEB',
+		    	},
+		        console.info('onBeforeUploadItem', item);
+		    };
 
 		    var uploaders = $scope.uploaders = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	url: o.const.uploadFileUrl,
-		    	headers:{
-		    		Authorization:'Bearer '+$cookies.get("token"),
-		    		systemtype:'WEB',
-		    	},
+
 		    	withCredentials:true,
 		    	alias : 'uploadFile'
 		    });
@@ -69,6 +70,13 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    		$scope.info.ischangesign = true;
 		    	else
 		    		$scope.info.ischangesign = false;
+		    };
+		    uploaders.onBeforeUploadItem = function(item) {
+		    	item.headers={
+		    		Authorization:'Bearer '+$cookies.get("token"),
+		    		systemtype:'WEB',
+		    	},
+		        console.info('onBeforeUploadItem', item);
 		    };
 		    uploaders.onSuccessItem = function (fileItem, response, status, headers) {
 		        // console.info('onSuccessItem', fileItem, response, status, headers);

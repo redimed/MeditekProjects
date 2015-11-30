@@ -16,6 +16,7 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
         })
     }
     $scope.loadListContry();
+    $scope.submited = false;
     $scope.ViewDoc = function(Url, UID) {
         var LinkUID = Url + UID;
         CommonService.downloadFile(UID)
@@ -116,14 +117,19 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
                 }
             }
             var isExist = false;
-
+            
             ClinicalDetailsTemp.forEach(function(valueTemp, keyTemp) {
-                if (valueTemp.Section == object.Section &&
-                    valueTemp.Category == object.Category &&
-                    valueTemp.Type == object.Type &&
-                    valueTemp.Name == object.Name) {
+                if (valueTemp !== undefined) {
+                    if (valueTemp.Section == object.Section &&
+                        valueTemp.Category == object.Category &&
+                        valueTemp.Type == object.Type &&
+                        valueTemp.Name == object.Name) {
+                        isExist = true;
+                    }
+                }else{
                     isExist = true;
-                }
+                };
+                
             })
             if (!isExist) {
                 ClinicalDetailsTemp.push(object);
@@ -131,9 +137,11 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
         };
         var countCliniDetail = 0;
         ClinicalDetailsTemp.forEach(function(value, key) {
-            if (value.Value != 'N' && value.Value != null) {
-                countCliniDetail++;
-            };
+            if (value !== undefined) {
+                 if (value.Value != 'N' && value.Value != null) {
+                    countCliniDetail++;
+                };
+            };  
         })
         if (countCliniDetail == 0) {
             ClinicalDetailsTemp = [];
@@ -266,14 +274,14 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
         });
     };
     $scope.submitUpdate = function() {
+        $scope.submited = true
         if ($scope.userForm.$valid) {
             var stringAlert = null;
             if ($scope.wainformation.Status == 'Approved' || $scope.wainformation.Status == 'Attended' || $scope.wainformation.Status == 'Waitlist' || $scope.wainformation.Status == 'Finished') {
-                stringAlert = $scope.CheckValidation()
+                stringAlert = $scope.CheckValidation();
             };
             if ($scope.info.appointmentDate != null && $scope.info.appointmentDate != '' || $scope.info.appointmentTime != null && $scope.info.appointmentTime != '') {
-                stringAlert = $scope.CheckValidation()
-
+                stringAlert = $scope.CheckValidation();
             };
             if (stringAlert == null) {
                 swal({

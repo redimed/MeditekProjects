@@ -95,7 +95,7 @@
             <div class="row" ng-if="requestInfo.TelehealthAppointment.WAAppointment.IsUsualGP == 'N'">
                 <div class="col-md-12">
                     <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control" placeholder=""  ng-model="requestInfo.TelehealthAppointment.WAAppointment.UsualGPName" />
+                            <input type="text" class="form-control edited" placeholder=""  ng-model="requestInfo.TelehealthAppointment.WAAppointment.UsualGPName" name="UsualGPName" />
                             <label class="control-label">If no, name of patients usual GP</label>
                             <div class="form-control-focus"> </div>
                     </div>
@@ -106,7 +106,7 @@
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
                         <div class="input-icon">
-                            <input type="text" class="form-control edited" placeholder="Contact Number" name="HomePhoneNumber" ng-model="requestInfo.TelehealthAppointment.WAAppointment.UsualGPContactNumber">
+                            <input type="text" class="form-control edited" placeholder="Contact Number" name="PhoneNumber" ng-model="requestInfo.TelehealthAppointment.WAAppointment.UsualGPContactNumber">
                             <label class="control-label">Contact Number</label>
                             <div class="form-control-focus"> </div>
                             <i class="glyphicon glyphicon-phone"></i>
@@ -291,8 +291,8 @@
                                         </span>
                                     </label>
                                     <label class="">
-                                        <input type="checkbox" ng-model="Skin_cancer_Others" ng-click="click_other()"> Others
-                                        <input type="text" size="15" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.OThers'].Value" ng-disabled="Skin_cancer_Others == false" />
+                                        <input type="checkbox" ng-model="SkincancerOThers" ng-true-value="'Yes'" ng-false-value="'N'"> Others
+                                        <input type="text" size="15" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.OThers'].Value" ng-show="SkincancerOThers == 'Yes'" />
                                     </label>
                                 </div>
                                 <div class="checkbox-list" ng-show="tab1 == 'hand_condition'">
@@ -318,8 +318,8 @@
                                     <label class="control-label">
                                         <input type="checkbox" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Complex__Reconstructive__Case'].Value" ng-true-value="'Y'" ng-false-value="null"> Complex Reconstructive Case</label>
                                     <label class="control-label">
-                                        <input type="checkbox"> Other &nbsp;
-                                        <input type="text" placeholder="Other" size="15" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Other'].Value" ng-true-value="'Y'" ng-false-value="null">
+                                        <input type="checkbox" ng-model="PNSOther" ng-true-value="'Yes'" ng-false-value="'N'"> Other &nbsp;
+                                        <input type="text" placeholder="Other" size="15" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Other'].Value" ng-true-value="'Y'" ng-false-value="null" ng-show="PNSOther == 'Yes'">
                                     </label>
                                 </div>
                             </div>
@@ -389,7 +389,7 @@
                 </h5>
                 <div class="col-md-6 col-sm-6" ng-show="skin_cancers_radio == 'Yes'">
                     <div class="form-group">
-                        <textarea class="form-control" rows="3" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].Value"></textarea>
+                        <textarea class="form-control edited" rows="4" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].Value" name="cancersTreatmens"></textarea>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6" ng-show="skin_cancers_radio == 'Yes'">
@@ -455,7 +455,7 @@
                 </h5>
                 <div class="col-md-6 col-sm-6" ng-show="hand_surgery_radio == 'Yes'">
                     <div class="form-group">
-                        <textarea class="form-control" rows="3" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.previousHandSurgery'].Value"></textarea>
+                        <textarea class="form-control edited" rows="4" ng-model="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.previousHandSurgery'].Value" name="previousHandSurgery"></textarea>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6" ng-show="hand_surgery_radio == 'Yes'">

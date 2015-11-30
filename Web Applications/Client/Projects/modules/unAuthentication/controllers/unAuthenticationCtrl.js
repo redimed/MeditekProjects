@@ -1,7 +1,8 @@
 var app = angular.module('app.unAuthentication.controller', [
 	'app.unAuthentication.login.controller',
 	'app.unAuthentication.register.controller',
-	'app.unAuthentication.activation.controller'
+	'app.unAuthentication.activation.controller',
+	'app.unAuthentication.forgot.controller',
 ]);
 
 app.controller('unAuthenticationCtrl', function($scope, $q, toastr){

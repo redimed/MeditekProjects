@@ -15,10 +15,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 		    var uploader = $scope.uploader = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
 		    	url: o.const.uploadFileUrl,
-		    	headers:{
-		    		Authorization:'Bearer '+$cookies.get("token"),
-		    		systemtype:'WEB',
-		    	},
+
 		    	withCredentials:true,
 		    	alias : 'uploadFile'
 		    });
@@ -41,8 +38,12 @@ angular.module('app.authentication.doctor.directive.create', [])
 		    uploader.onAfterAddingAll = function (addedFileItems) {
 		        // console.info('onAfterAddingAll', addedFileItems);
 		    };
-		    uploader.onBeforeUploadItem = function (item) {
-			        
+		    uploader.onBeforeUploadItem = function(item) {
+		    	item.headers={
+		    		Authorization:'Bearer '+$cookies.get("token"),
+		    		systemtype:'WEB',
+		    	},
+		        console.info('onBeforeUploadItem', item);
 		    };
 		    uploader.onProgressItem = function (fileItem, progress) {
 		        // console.info('onProgressItem', fileItem, progress);
@@ -102,6 +103,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 			};
 
 			scope.back_2 = function() {
+				delete scope.data['DepartmentID','ProviderNumber'];
 				scope.isBlockStep1 =false;
 				scope.isShowNext=false;
 				scope.isShowNext3=true;

@@ -38,9 +38,9 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let apiKey = savedData.data[0]["apiKey"] != nil ? savedData.data[0]["apiKey"] : ""
-        let sessionId = savedData.data[0]["sessionId"] != nil ? savedData.data[0]["sessionId"] : ""
-        let token = savedData.data[0]["token"] != nil ? savedData.data[0]["token"] : ""
+        let apiKey = savedData.apiKey != nil ? savedData.apiKey : ""
+        let sessionId = savedData.sessionId != nil ? savedData.sessionId : ""
+        let token = savedData.token != nil ? savedData.token : ""
         print("token calling : \(token)")
         ApiKey = String(apiKey)
         // Replace with your generated session ID

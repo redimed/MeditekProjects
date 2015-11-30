@@ -104,6 +104,17 @@ angular.module('app.authentication.doctor.service', [])
 				error.push({field:"Title",message:"required"});
 				// toastr.error('Title is required');
 			}
+
+			//validate UserName
+			if(info.UserName){
+				if(info.UserName.length < 0 || info.UserName.length > 255){
+					error.push({field:"UserName",message:"max length"});
+				}
+			}
+			else {
+				error.push({field:"UserName",message:"required"});
+				// toastr.error('UserName is required');
+			}
 			
 			//validate FirstName
 			if(info.FirstName){
@@ -150,7 +161,7 @@ angular.module('app.authentication.doctor.service', [])
 
 			//validate Email
 			if(info.Email){
-				var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+				var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
 				var Email=info.Email.replace('/[\(\)\s\-]/g','');
 				if(!EmailPattern.test(Email)){
 					error.push({field:"Email",message:"invalid email"});
@@ -299,7 +310,7 @@ angular.module('app.authentication.doctor.service', [])
 			// validate Email? hoi a Tan su dung exception
 			if('Email' in info){
 				if(info.Email){
-					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
 					if(!EmailPattern.test(info.Email)){
 						error.push({field:"Email",message:"invalid email"});
 					}
@@ -322,7 +333,7 @@ angular.module('app.authentication.doctor.service', [])
 			//validate WorkPhone
 			if('WorkPhoneNumber' in info){
 				if(info.WorkPhoneNumber){
-					var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var auWorkPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var WorkPhoneNumber=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
 						error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -333,7 +344,7 @@ angular.module('app.authentication.doctor.service', [])
 			//validate HomePhoneNumber? hoi a Tan su dung exception
 			if('HomePhoneNumber' in info){
 				if(info.HomePhoneNumber){
-					var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var auHomePhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auHomePhoneNumberPattern.test(HomePhone)){
 						error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -370,9 +381,9 @@ angular.module('app.authentication.doctor.service', [])
 						error.push({field:"DepartmentID",message:"length"});
 					}
 				}
-				else {
-					error.push({field:"DepartmentID",message:"required"});
-				}
+				// else {
+				// 	error.push({field:"DepartmentID",message:"required"});
+				// }
 			}
 
 			// validate ProviderNumber

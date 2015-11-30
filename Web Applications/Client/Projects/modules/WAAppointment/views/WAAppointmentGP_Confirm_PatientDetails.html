@@ -10,37 +10,35 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-4">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Title</label>
+                                <label class="col-md-5 col-sm-5 control-label">Title</label>
                                 <div class="col-md-7 col-sm-7">
                                     <p class="form-control-static" data-display="Title">{{requestInfo.TelehealthAppointment.PatientAppointment.Title}}</p>
                                 </div>
                             </div>
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >First name</label>
+                                <label class="col-md-5 col-sm-5 control-label">First name</label>
                                 <div class="col-md-7 col-sm-7">
                                     <p class="form-control-static" data-display="FirstName">{{requestInfo.TelehealthAppointment.PatientAppointment.FirstName}}</p>
                                 </div>
                             </div>
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Family name</label>
+                                <label class="col-md-5 col-sm-5 control-label">Family name</label>
                                 <div class="col-md-7 col-sm-7">
                                     <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.LastName}}</p>
                                 </div>
                             </div>
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Preferred name</label>
+                                <label class="col-md-5 col-sm-5 control-label">Preferred name</label>
                                 <div class="col-md-7 col-sm-7">
                                     <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.PreferredName}}</p>
                                 </div>
                             </div>
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-5 col-sm-5 control-label" >Previous name</label>
+                                <label class="col-md-5 col-sm-5 control-label">Previous name</label>
                                 <div class="col-md-7 col-sm-7">
                                     <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.PreviousName}}</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
                             <div class="form-group form-md-line-input">
                                 <label class="col-md-5 col-sm-5 control-label">Marital Status</label>
                                 <div class="col-md-7 col-sm-7">
@@ -53,6 +51,8 @@
                                     <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.CountryOfBirth}}</p>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
                             <div class="form-group form-md-line-input">
                                 <label class="col-md-5 col-sm-5 control-label">Date of Birth</label>
                                 <div class="col-md-7 col-sm-7">
@@ -71,29 +71,70 @@
                                     <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.Indigenous}}</p>
                                 </div>
                             </div>
+                            <div class="form-group form-md-line-input">
+                                <label class="col-md-5 col-sm-5 control-label">Address1</label>
+                                <div class="col-md-7 col-sm-7">
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.Address1}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group form-md-line-input">
+                                <label class="col-md-5 col-sm-5 control-label">Address2</label>
+                                <div class="col-md-7 col-sm-7">
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.Address2}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group form-md-line-input">
+                                <label class="col-md-5 col-sm-5 control-label">Suburb</label>
+                                <div class="col-md-7 col-sm-7">
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.Suburb}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group form-md-line-input">
+                                <label class="col-md-5 col-sm-5 control-label">Postcode</label>
+                                <div class="col-md-7 col-sm-7">
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.Postcode}}</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-4 col-sm-4">
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-7 col-sm-7 control-label">Interpreter required</label>
-                                <div class="col-md-5 col-sm-5">
+                                <label class="col-md-5 col-sm-5 control-label">Contact Number(M)</label>
+                                <div class="col-md-7 col-sm-7">
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.PhoneNumber}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group form-md-line-input">
+                                <label class="col-md-5 col-sm-5 control-label">Contact Number(H)</label>
+                                <div class="col-md-7 col-sm-7">
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.HomePhoneNumber}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group form-md-line-input">
+                                <label class="col-md-5 col-sm-5 control-label">Fax Number</label>
+                                <div class="col-md-7 col-sm-7">
+                                    <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.FaxNumber}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group form-md-line-input">
+                                <label class="col-md-5 col-sm-5 control-label">Interpreter required</label>
+                                <div class="col-md-7 col-sm-7">
                                     <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.InterpreterLanguage}}</p>
                                 </div>
                             </div>
                             <div class="form-group form-md-line-input">
-                                <label class="col-md-7 col-sm-7 control-label">Other special needs</label>
-                                <div class="col-md-5 col-sm-5">
+                                <label class="col-md-5 col-sm-5 control-label">Other special needs</label>
+                                <div class="col-md-7 col-sm-7">
                                     <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.PatientAppointment.OtherSpecialNeed}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>   
+            </div>
         </div>
     </div>
-
     <!-- patient details #2 -->
-<!--     <div class="panel panel-info">
+    <!--     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title uppercase bold">&nbsp;</h3>
         </div>
@@ -136,7 +177,6 @@
             </div>
         </div>
     </div> -->
-
     <!-- patient details #4 -->
     <!-- <div class="panel panel-info">
         <div class="panel-heading">
@@ -212,7 +252,6 @@
             </div>
         </div>
     </div> -->
-
     <!-- patient details #5 -->
     <!-- <div class="panel panel-info">
         <div class="panel-heading">
@@ -252,5 +291,3 @@
         </div>
     </div> -->
 </div>
-
-

@@ -74,7 +74,7 @@ app
                                 Authorization:'Bearer '+$cookies.get('token'),
                                 systemtype:'WEB'
                             },
-                            url: o.const.restBaseUrl+'/api/refresh-token/GetNewToken',
+                            url: o.const.authBaseUrl+'/api/refresh-token/GetNewToken',
                             data: {refreshCode:$rootScope.refreshCode},
                             success: function(data){
                                 //STANDARD
@@ -159,6 +159,12 @@ app
             RestangularConfigurer.setBaseUrl(o.const.fileBaseUrl);
         });
     })
+    //SETTING RESTANGULAR FOR AUTHENTICATION
+    .factory('AuthRestangular',function(Restangular){
+        return Restangular.withConfig(function(RestangularConfigurer) {
+            RestangularConfigurer.setBaseUrl(o.const.authBaseUrl);
+        });
+    })
     .run(function($rootScope, $cookies, $window, $state, Restangular, toastr, settings) {
         // RESTANGULAR ERROR HANDLING
         // Restangular.setErrorInterceptor(function (response) {
@@ -190,7 +196,7 @@ app
 
         $rootScope.$on('$stateChangeSuccess', function(e, toState, toParams, fromState, fromParams) {
             if (!$cookies.get("userInfo")) {
-                if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register" && toState.name !== "unAuthentication.activation") {
+                if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register" && toState.name !== "unAuthentication.activation" && toState.name !== "unAuthentication.forgot") {
                     e.preventDefault();
                     $state.go("unAuthentication.login", null, {
                         location: "replace",
@@ -214,11 +220,11 @@ app
             FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page
 
-            ComponentsSelect2.init(); // init todo page
-            ComponentsBootstrapSelect.init(); // init todo page
+            //ComponentsSelect2.init(); // init todo page
+            //ComponentsBootstrapSelect.init(); // init todo page
         });
         $rootScope.$on('$includeContentLoaded', function() {
-            App.initAjax();
+            //App.initAjax();
             FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page
         });

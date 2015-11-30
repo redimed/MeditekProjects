@@ -1,7 +1,9 @@
 var requestify = require('requestify');
 var config = sails.config.myconf;
 var jwt = require('jsonwebtoken');
+var url = require('url');
 var $q = require('q');
+var http = require('http');
 var _ = require('lodash');
 var rootPath = process.cwd();
 var gcm = require('node-gcm');
@@ -9,13 +11,13 @@ var gcmSender = new gcm.Sender(config.GCMApiKey);
 var apn = require('apn');
 var options = {
     //=======Dev======
-    cert: rootPath + '/config/push_key/TelePushCert.pem',
-    key: rootPath + '/config/push_key/TelePushKey.pem',
+    // cert: rootPath + '/config/push_key/TelePushCert.pem',
+    // key: rootPath + '/config/push_key/TelePushKey.pem',
     //=======Production=========
-    // cert: rootPath + '/config/push_key/TelePatientPushCert.pem',
-    // key: rootPath + '/config/push_key/TelePatientPushKey.pem',
+    cert: rootPath + '/config/push_key/TelePatientPushCert.pem',
+    key: rootPath + '/config/push_key/TelePatientPushKey.pem',
     passphrase: '1234',
-    production: false
+    production: true
 };
 var apnConnection = new apn.Connection(options);
 apnConnection.on("connected", function() {
@@ -194,14 +196,58 @@ module.exports = {
             withCredentials: true
         })
     },
+    TestMakeRequest: function(info) {
+        var defer = $q.defer();
+        var urlParts = url.parse(config.CoreAPI);
+        if (urlParts.host === null) defer.reject({
+            message: 'Url is invalid'
+        });
+        var options = {
+            host: urlParts.hostname,
+            port: !urlParts.port ? (urlParts.protocol === 'https:' ? 443 : 80) : urlParts.port,
+            path: info.path,
+            method: info.method,
+            params: !info.params ? null : info.params,
+            headers: !info.headers ? null : info.headers,
+            withCredentials: true
+        };
+        var result = {};
+        var request = http.request(options, function(res) {
+            var bodyData = '';
+            res.setEncoding('utf8');
+            res.on('data', function(chunk) {
+                bodyData += chunk;
+                result.headers = res.headers;
+                result.code = res.statusCode;
+            })
+            res.on('end', function() {
+                try {
+                    result.body = JSON.parse(bodyData);
+                } catch (e) {
+                    result.body = bodyData;
+                }
+                if (result.code >= 200 && result.code <= 300) {
+                    defer.resolve(result);
+                    return;
+                }
+                defer.reject(result.body);
+            })
+        })
+        request.on('error', function(err) {
+            defer.reject(err);
+        })
+        request.write(info.body ? JSON.stringify(info.body): '');
+        console.log("====Request====: ",request);
+        request.end();
+        return defer.promise;
+    },
     SendGCMPush: function(opts, tokens) {
         var defer = $q.defer();
         var message = new gcm.Message(opts)
         var regTokens = tokens;
-
         gcmSender.send(message, {
             registrationIds: regTokens
-        }, 10 , function(err, result) {
+        }, 10, function(err, result) {
             if (err) defer.reject({
                 message: err
             });
@@ -216,7 +262,7 @@ module.exports = {
         var note = new apn.Notification();
         note.expiry = Math.floor(Date.now() / 1000) + 3600;
         note.badge = opts.badge ? opts.badge : 1;
-        note.sound = "ping.aiff";
+        note.sound = "ringtone.mp3";
         note.alert = opts.alert ? opts.alert : 'You have a new message!';
         note.category = opts.category ? opts.category : null;
         note.payload = opts.payload ? opts.payload : {};

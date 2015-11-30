@@ -16,32 +16,61 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var usernameTextField: DesignableTextField!
     @IBOutlet weak var passwordTextField: DesignableTextField!
-    @IBOutlet weak var buttonLogin: DesignableButton!
+    @IBOutlet weak var buttonLogin: UIButton!
     @IBOutlet weak var viewModal: DesignableView!
     @IBOutlet weak var errorLoginLabel: UILabel!
     @IBOutlet weak var versionLabel: UILabel!
     
     let customUIViewController : CustomViewController = CustomViewController()
     let reachability = Reachability.reachabilityForInternetConnection()
+    
     // declare loading indicator
     let loading: DTIActivityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:110.0, y:200, width:90, height:25))
     let userDefault = NSUserDefaults.standardUserDefaults()
-    
+    let deviceId = (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.usernameTextField.delegate = self
+        self.passwordTextField.delegate = self
+    }
+    
+//    func textFieldDidBeginEditing(textField: UITextField) {
+//        animateViewMoving(true, moveValue: 130)
+//    }
+//    func textFieldDidEndEditing(textField: UITextField) {
+//        animateViewMoving(false, moveValue: 130)
+//    }
+//    
+//    func animateViewMoving (up:Bool, moveValue :CGFloat){
+//        let movementDuration:NSTimeInterval = 0.3
+//        let movement:CGFloat = ( up ? -moveValue : moveValue)
+//        UIView.beginAnimations("animateView", context: nil)
+//        UIView.setAnimationBeginsFromCurrentState(true)
+//        UIView.setAnimationDuration(movementDuration )
+//        self.scrollView.setContentOffset(CGPointMake(0, 150), animated: true)
+//        UIView.commitAnimations()
+//    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
         usernameTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
         passwordTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
+        
+        self.usernameTextField.becomeFirstResponder()
+        
         buttonLogin.backgroundColor = UIColor(hex: "FF1300").colorWithAlphaComponent(0.6)
         
         viewModal.animation = "squeezeDown"
         viewModal.animate()
         
-        self.usernameTextField.delegate = self
-        self.passwordTextField.delegate = self
-//        self.usernameTextField.becomeFirstResponder()
+        versionLabel.text = UIApplication.versionBuild()
+        self.userDefault.setValue(deviceId, forKey: "deviceId")
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:", name: ReachabilityChangedNotification, object: reachability)
         reachability?.startNotifier()
         if let reachability = reachability {
@@ -55,10 +84,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "AlertWarningNetwork", userInfo: nil, repeats: false)
             }
         }
-        versionLabel.text = UIApplication.versionBuild()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
     }
     
     func reachabilityChanged(note: NSNotification) {
@@ -101,14 +126,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         }
     }
     
-    func keyboardDidShow(notification: NSNotification) {
-        self.viewModal.frame.origin.y -= 100
-    }
-    
-    func keyboardDidHide(notification: NSNotification) {
-        self.viewModal.frame.origin.y = 215
-    }
-    
     @IBAction func LoginButtonAction(sender: UIButton) {
         self.buttonLogin.enabled = false
         self.buttonLogin.backgroundColor = UIColor(hex: "FF1300").colorWithAlphaComponent(0.6)
@@ -135,11 +152,11 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         let username : String = usernameTextField.text!
         let password : String = passwordTextField.text!
         
-        let paramester = ["username": username, "password": password]
+        let paramester = ["UserName": username, "Password": password]
         
         let headerLogin = [
             "systemtype": "IOS",
-            "deviceId": (UIDevice.currentDevice().identifierForVendor?.UUIDString)! as String,
+            "deviceId": self.userDefault.valueForKey("deviceId") as! String,
             "appid": NSBundle.mainBundle().bundleIdentifier! as String
         ]
         
@@ -147,18 +164,16 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseJSON { response -> Void in
-                self.loading.stopActivity(true)
-                
                 switch response.2 {
                 case .Success:
                     let userJSON = JSON(response.2.value!["user"] as! NSDictionary)
-                    var user = [String: String]()
                     
+                    var user = [String: String]()
                     for (key, object) in userJSON {
                         user[key] = object.stringValue
                     }
+                    self.userDefault.setObject(user, forKey: "userInfo")
                     
-                    self.userDefault.setObject(user, forKey: "infoDoctor")
                     self.userDefault.setValue("Bearer \(response.2.value!["token"] as! String)", forKey: "authToken")
                     self.userDefault.setValue(response.2.value!["refreshCode"] as! String, forKey: "refCode")
                     
@@ -172,14 +187,44 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                         }
                     }
                     
-                    let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
-                    self.presentViewController(initViewController, animated: true, completion: nil)
+                    let headergetUser = [
+                        "Cookie" : NSUserDefaults.standardUserDefaults().valueForKey("Cookie") as! String,
+                        "Authorization": NSUserDefaults.standardUserDefaults().valueForKey("authToken") as! String,
+                        "systemtype": "IOS",
+                        "deviceId": self.userDefault.valueForKey("deviceId") as! String,
+                        "useruid": userJSON["UID"].stringValue,
+                        "appid": NSBundle.mainBundle().bundleIdentifier! as String
+                    ]
+                    
+                    request(.GET, GET_TELEUSER+userJSON["UID"].stringValue, headers: headergetUser)
+                        .validate(statusCode: 200..<300)
+                        .validate(contentType: ["application/json"])
+                        .responseJSON { response -> Void in
+                            self.loading.stopActivity(true)
+                            guard response.2.error == nil else {
+                                print("error get data tele user info", response.2.error!)
+                                return
+                            }
+                            
+                            if let value: AnyObject = response.2.value {
+                                let readableJSON = JSON(value)
+                                
+                                var user = [String: String]()
+                                for (key, object) in readableJSON {
+                                    user[key] = object.stringValue
+                                }
+                                self.userDefault.setObject(user, forKey: "teleUserInfo")
+                                let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
+                                self.presentViewController(initViewController, animated: true, completion: nil)
+                            }
+                    }
                     break
                 case .Failure(_, _):
-                    
+                    self.loading.stopActivity(true)
                     if let data = response.2.data {
                         do {
                             let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as! [String: AnyObject]
+                            print(json)
                             if let errorType = json["ErrorType"] as? String {
                                 if let codeErr: Int = response.1?.statusCode {
                                     switch codeErr{
@@ -193,15 +238,11 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                                 }
                             }
                         } catch let error as NSError {
-                            print("Failed to load: \(error.localizedDescription)")
+                            self.errorLogin("\(error.localizedDescription)")
                         }
                     }
                 }
         }
-    }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
     }
     
     func errorLogin(message: String) {
@@ -226,7 +267,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
 
 
 extension UIApplication {
-    
     class func appVersion() -> String {
         return NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
     }

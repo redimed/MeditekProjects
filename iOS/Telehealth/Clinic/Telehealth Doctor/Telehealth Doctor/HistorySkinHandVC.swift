@@ -11,46 +11,44 @@ import SwiftyJSON
 
 class HistorySkinHandVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var labelTitle: UILabel!
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var yesBtn: UIButton!
-    @IBOutlet weak var noBtn: UIButton!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noBtnHand: UIButton!
+    @IBOutlet weak var yesBtnHand: UIButton!
+    
+    @IBOutlet weak var noBtnSkin: UIButton!
+    @IBOutlet weak var yesBtnSkin: UIButton!
+    
+    @IBOutlet weak var textViewHandSur: UITextView!
+    @IBOutlet weak var textViewSkinCancer: UITextView!
+    
+    @IBOutlet weak var tableViewSkin: UITableView!
+    @IBOutlet weak var tableViewHand: UITableView!
+    
     var fileUpload: JSON!
     var cliniCalDetails: JSON! = SingleTon.detailAppointMentObj["TelehealthAppointment"]["ClinicalDetails"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if self.title != "CancerandTreatments" {
-            labelTitle.text = "History of Previous hand surgery"
-        }
-        tableView.tableFooterView = UIView(frame: CGRect.zero)
         loadData()
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         for var i = 0; i < cliniCalDetails.count; ++i {
-            if self.title != "CancerandTreatments" {
-                if cliniCalDetails[i]["Name"].stringValue == "cancersTreatmens" {
-                    if let dataTable: JSON = cliniCalDetails[i]["FileUploads"] {
-                        if dataTable.count > 0 {
-                            fileUpload = dataTable
-                            return dataTable.count
-                        }
-                    }
-                }
-            } else {
-                if cliniCalDetails[i]["Name"].stringValue == "previousHandSurgery" {
-                    if let dataTable: JSON = cliniCalDetails[i]["FileUploads"] {
-                        if dataTable.count > 0 {
-                            fileUpload = dataTable
-                            return dataTable.count
-                        }
+            if cliniCalDetails[i]["Name"].stringValue == "cancersTreatmens" {
+                if let dataTable: JSON = cliniCalDetails[i]["FileUploads"] {
+                    if dataTable.count > 0 {
+                        fileUpload = dataTable
+                        return dataTable.count
                     }
                 }
             }
-            
+            if cliniCalDetails[i]["Name"].stringValue == "previousHandSurgery" {
+                if let dataTable: JSON = cliniCalDetails[i]["FileUploads"] {
+                    if dataTable.count > 0 {
+                        fileUpload = dataTable
+                        return dataTable.count
+                    }
+                }
+            }
         }
         return 0
     }
@@ -63,15 +61,21 @@ class HistorySkinHandVC: UIViewController, UITableViewDelegate, UITableViewDataS
     
     func loadData() {
         for var i = 0; i < cliniCalDetails.count; ++i {
-            if self.title == "CancerandTreatments" && cliniCalDetails[i]["Name"].stringValue == "cancersTreatmens"  {
-                textView.hidden = false
-                yesBtn.setImage(UIImage(named: "radio-check"), forState: .Normal)
-                textView.text = cliniCalDetails[i]["Value"].stringValue
+            if cliniCalDetails[i]["Name"].stringValue == "cancersTreatmens"  {
+                if cliniCalDetails[i]["Value"].stringValue.characters.count > 0 {
+                    yesBtnSkin.setImage(UIImage(named: "checked"), forState: .Normal)
+                    textViewSkinCancer.text = cliniCalDetails[i]["Value"].stringValue
+                } else {
+                    noBtnSkin.setImage(UIImage(named: "checked"), forState: .Normal)
+                }
             }
-            if self.title != "CancerandTreatments" && cliniCalDetails[i]["Name"].stringValue == "previousHandSurgery" {
-                yesBtn.setImage(UIImage(named: "radio-check"), forState: .Normal)
-                textView.hidden = false
-                textView.text = cliniCalDetails[i]["Value"].stringValue
+            if cliniCalDetails[i]["Name"].stringValue == "previousHandSurgery" {
+                if cliniCalDetails[i]["Value"].stringValue.characters.count > 0 {
+                    yesBtnHand.setImage(UIImage(named: "checked"), forState: .Normal)
+                    textViewHandSur.text = cliniCalDetails[i]["Value"].stringValue
+                } else {
+                    noBtnHand.setImage(UIImage(named: "checked"), forState: .Normal)
+                }
             }
         }
     }

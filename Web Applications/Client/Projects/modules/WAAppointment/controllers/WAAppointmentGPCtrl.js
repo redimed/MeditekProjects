@@ -44,7 +44,8 @@ app.controller('showSkinCancerController', function($scope, $modalInstance, toas
         $modalInstance.dismiss('cancel');
     };
 });
-app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval, AuthenticationService) {
+
+app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $rootScope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval, AuthenticationService) {
     $scope.ListContry = [];
     $scope.loadListContry = function() {
         AuthenticationService.getListCountry().then(function(response) {
@@ -221,7 +222,11 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
         console.info('onAfterAddingAll', addedFileItems);
     };
     uploader.onBeforeUploadItem = function(item) {
-        item.headers.Authorization = ('Bearer ' + $cookies.get("token"));
+        //item.headers.Authorization = ('Bearer ' + $cookies.get("token"));
+        item.headers={
+            Authorization:'Bearer '+$cookies.get("token"),
+            systemtype:'WEB',
+        },
         console.info('onBeforeUploadItem', item.headers);
     };
     uploader.onProgressItem = function(fileItem, progress) {
@@ -250,6 +255,10 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $co
 
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
         console.info('onCompleteItem', fileItem, response, status, headers);
+        if(Boolean(headers.requireupdatetoken)===true)
+        {
+            $rootScope.getNewToken();
+        }
         if (response.status == 'success') {
             var key = 'Clinical__Details.Telehealth__WAAppointment.Notes.' + fileItem.formData[0].fileTypeClinical;
             if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails) {

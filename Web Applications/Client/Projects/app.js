@@ -47,57 +47,46 @@ app
                     return config;
                 },
                 'responseError': function(response) {
+                    var message={
+                        "isAuthenticated.sessionUserMismatchedUserAccess": "401:001: Access agent is invalid.",
+                        "isAuthenticated.secretExpiredPlusAt": "401:002: Session has expired (plus).",
+                        "isAuthenticated.oldRefreshCodeExpired": "401:003: Refresh code expired.",
+                        "isAuthenticated.invalidRefreshCode": "401:004: Refresh code is invalid.",
+                        "isAuthenticated.refreshTokenQueryError": "401:005: Server error.",
+                        "isAuthenticated.secretKeyExpired": "401:006: Session has expired.",
+                        "isAuthenticated.tokenInvalid": "401:007: Token is invalid.",
+                        "isAuthenticated.authorizationFailPattern": "401:008: Invalid token format.",
+                        "isAuthenticated.authorizationNotProvided": "401:009: Token is not provided.",
+                        "isAuthenticated.someoneElseLoggedIn": "401:010: Someone else is logged in.",
+                        "isAuthenticated.notAuthenticated": "401:011: You are not logged in.",
+                    };
                     if (response.status === 401 || response.status === 403) {
+                        if(response.data.ErrorsList && response.data.ErrorsList[0])
+                        {
+                            if(message[response.data.ErrorsList[0]])
+                            {
+                                alert(message[response.data.ErrorsList[0]]);
+                            }
+                            else
+                            {
+                                alert("401:0xx : Error");
+                            }
+                        }
                         $location.path('/login');
                     }
                     return $q.reject(response);
                 },
 
                 'response':function(response){
-                    if(response.status===202)
+                    /*if(response.status===202)
                     {
-                        //$cookies.put('token',response.headers().newtoken);
-                        // $.ajax({
-                        //     url: a_cross_domain_url,
-                        //     xhrFields: {
-                        //         withCredentials: true
-                        //     },
-
-                        // });
-
-                        $.ajax({
-                            type: "POST",
-                            xhrFields: {
-                                withCredentials: true
-                            },
-                            headers:{
-                                Authorization:'Bearer '+$cookies.get('token'),
-                                systemtype:'WEB'
-                            },
-                            url: o.const.authBaseUrl+'/api/refresh-token/GetNewToken',
-                            data: {refreshCode:$rootScope.refreshCode},
-                            success: function(data){
-                                //STANDARD
-                                /*if(data && data.status=='hasToken')
-                                {
-                                    $cookies.put("token", data.token);
-                                    $rootScope.refreshCode=data.refreshCode;
-                                }
-                                else
-                                {
-                                    alert(JSON.stringify(data));
-                                }*/
-                                if(data)
-                                {
-                                    if(data.refreshCode!=$rootScope.refreshCode)
-                                    {
-                                        $cookies.put("token", data.token);
-                                        $rootScope.refreshCode=data.refreshCode;
-                                    }
-                                }
-                            },
-                        });
+                        $rootScope.getNewToken();
+                    }*/
+                    if(Boolean(response.headers().requireupdatetoken)===true)
+                    {
+                        $rootScope.getNewToken();
                     }
+                    
                     return response;
                 },
             };
@@ -228,5 +217,42 @@ app
             FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page
         });
+
+        //Get New Token
+        $rootScope.getNewToken=function()
+        {
+            $.ajax({
+                type: "POST",
+                xhrFields: {
+                    withCredentials: true
+                },
+                headers:{
+                    Authorization:'Bearer '+$cookies.get('token'),
+                    systemtype:'WEB'
+                },
+                url: o.const.authBaseUrl+'/api/refresh-token/GetNewToken',
+                data: {refreshCode:$rootScope.refreshCode},
+                success: function(data){
+                    //STANDARD
+                    /*if(data && data.status=='hasToken')
+                    {
+                        $cookies.put("token", data.token);
+                        $rootScope.refreshCode=data.refreshCode;
+                    }
+                    else
+                    {
+                        alert(JSON.stringify(data));
+                    }*/
+                    if(data)
+                    {
+                        if(data.refreshCode!=$rootScope.refreshCode)
+                        {
+                            $cookies.put("token", data.token);
+                            $rootScope.refreshCode=data.refreshCode;
+                        }
+                    }
+                },
+            });
+        }
     })
     

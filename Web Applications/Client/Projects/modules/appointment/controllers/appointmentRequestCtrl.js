@@ -2,7 +2,7 @@ var app = angular.module('app.authentication.appointment.request.controller', [
     'app.authentication.appointment.request.modal.controller'
 ]);
 
-app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval, CommonService) {
+app.controller('appointmentRequestCtrl', function($scope, $rootScope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval, CommonService) {
     $scope.userInfo = $cookies.getObject('userInfo');
     console.log('$scope.userInfo', $scope.userInfo);
     $scope.doctors = [];
@@ -173,6 +173,10 @@ app.controller('appointmentRequestCtrl', function($scope, $cookies, AppointmentS
     };
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
         console.info('onCompleteItem', fileItem, response, status, headers);
+        if(Boolean(headers.requireupdatetoken)===true)
+        {
+            $rootScope.getNewToken();
+        }
         if (response.status == 'success') {
             $scope.requestInfo.FileUploads.push({
                 UID: response.fileUID

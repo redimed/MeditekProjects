@@ -61,13 +61,13 @@ module.exports={
 			modulemapF[moduleMapOrder[module.parent]].nodes[moduleMapOrder[module.uid]]=module;
 		})
 
-		console.log(">>>>>>>>>>>>>>>>.2")
-		console.log(JSON.stringify(modulemapF['root']));
+		/*console.log(">>>>>>>>>>>>>>>>.2")
+		console.log(JSON.stringify(modulemapF['root']));*/
 		/*_.each(modules,function(module){
 			if(!moduleMap[module.parent])
 				moduleMap[module.parent]={};
 			moduleMap[module.parent][module.uid]=module;
 		})*/
-		return res.ok({data:modulemapF['root']});
+		return res.ok({data:modulemapF['root'],date:new Date()});
 	}
 }

@@ -188,7 +188,7 @@ module.exports = {
 
 				//validate WorkPhone
 				if(info.WorkPhoneNumber!=undefined && info.WorkPhoneNumber){
-					var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var auWorkPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var WorkPhoneNumber=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
 						error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -198,7 +198,7 @@ module.exports = {
 
 				//validate HomePhoneNumber? hoi a Tan su dung exception
 				if(info.HomePhoneNumber!=undefined && info.HomePhoneNumber){
-					var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var auHomePhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auHomePhoneNumberPattern.test(HomePhone)){
 						error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -475,7 +475,7 @@ module.exports = {
 				//validate WorkPhone
 				if('WorkPhoneNumber' in info){
 					if(info.WorkPhoneNumber){
-						var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+						var auWorkPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 						var WorkPhoneNumber=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
 						if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
 							error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -487,7 +487,7 @@ module.exports = {
 				//validate HomePhoneNumber? hoi a Tan su dung exception
 				if('HomePhoneNumber' in info){
 					if(info.HomePhoneNumber){
-						var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+						var auHomePhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 						var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
 						if(!auHomePhoneNumberPattern.test(HomePhone)){
 							error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -1246,6 +1246,16 @@ module.exports = {
 	DoctorAppointment: function() {
 
 		return Doctor.findAll({
+						include: [
+							{
+				            	model: UserAccount,
+				            	attributes: ['PhoneNumber'],
+				            	required: true,
+				            	where:{
+				            		Enable:'Y'
+				            	}
+				            }
+						],
 						where: {
 							Enable: 'Y'
 						}

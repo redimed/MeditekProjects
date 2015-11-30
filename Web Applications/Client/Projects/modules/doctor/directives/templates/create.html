@@ -54,7 +54,7 @@
 								<div class="tab-pane active" id="tab1">
 									<!-- country -->
 									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3">Title</label>
+										<label class="control-label col-md-3 col-sm-3">Title<span class="required">* </span></label>
 										<div class="col-md-6 col-sm-6">
 											<select class="form-control" ng-model="data.Title" ng-disabled="isBlockStep2" ng-options="options.id as options.name for options in titles" ng-style="er.Title" ng-change="ermsg.Title='';checkDataNull('Title')">
 												<option value=''>Select Title</option>
@@ -65,7 +65,7 @@
 									<!-- end country -->
 									<!-- Begin UserName -->
 										<div class="form-group ">
-											<label class="control-label col-md-3 col-sm-3">UserName</label>
+											<label class="control-label col-md-3 col-sm-3">UserName<span class="required">* </span></label>
 											<div class="col-md-6 col-sm-6">
 												<input type="text" class="form-control" placeholder="" ng-model="data.UserName" ng-disabled="isBlockStep1" ng-style="er.UserName" ng-change="ermsg.UserName='';checkDataNull('UserName')">
 												<span style="color:red;">{{ermsg.UserName}}</span>
@@ -74,7 +74,7 @@
 									<!-- End UserName -->
 									<!-- Begin Firstname -->
 									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3">Firstname</label>
+										<label class="control-label col-md-3 col-sm-3">FirstName<span class="required">* </span></label>
 										<div class="col-md-6 col-sm-6">
 											<input type="text" class="form-control" placeholder="" ng-model="data.FirstName" ng-disabled="isBlockStep1" ng-style="er.FirstName" ng-change="ermsg.FirstName='';checkDataNull('FirstName')">
 											<span style="color:red;">{{ermsg.FirstName}}</span>
@@ -83,7 +83,7 @@
 									<!-- End Firstname -->
 									<!-- Begin Middlename -->
 									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3">Middlename</label>
+										<label class="control-label col-md-3 col-sm-3">MiddleName</label>
 										<div class="col-md-6 col-sm-6">
 											<input type="text" class="form-control" placeholder="" ng-model="data.MiddleName" ng-disabled="isBlockStep1" ng-style="er.MiddleName" ng-change="ermsg.MiddleName='';checkDataNull('MiddleName')">
 											<span style="color:red;">{{ermsg.MiddleName}}</span>
@@ -92,7 +92,7 @@
 									<!-- End Middlename -->
 									<!-- Begin Surname -->
 										<div class="form-group ">
-											<label class="control-label col-md-3 col-sm-3">Lastname</label>
+											<label class="control-label col-md-3 col-sm-3">LastName<span class="required">* </span></label>
 											<div class="col-md-6 col-sm-6">
 												<input type="text" class="form-control" placeholder="" ng-model="data.LastName" ng-disabled="isBlockStep1" ng-style="er.LastName" ng-change="ermsg.LastName='';checkDataNull('LastName')">
 												<span style="color:red;">{{ermsg.LastName}}</span>
@@ -101,7 +101,7 @@
 									<!-- End Surname -->
 									<!-- begin MobilePhone -->
 									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3">MobilePhone</label>
+										<label class="control-label col-md-3 col-sm-3">MobilePhone<span class="required">* </span></label>
 										<div class="col-md-6 col-sm-6">
 											<div class="input-icon">
 												<i class="glyphicon glyphicon-phone"></i>
@@ -113,7 +113,7 @@
 									<!-- end MobilePhone -->
 									<!-- begin Email -->
 									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3">Email</label>
+										<label class="control-label col-md-3 col-sm-3">Email<span class="required">* </span></label>
 										<div class="col-md-6 col-sm-6">
 											<div class="input-icon">
 												<i class="glyphicon glyphicon-envelope"></i>
@@ -155,18 +155,21 @@
 											<div class="col-md-8 col-sm-8 col-md-offset-1 col-sm-offset-1">
 												<!-- Role  -->
 		                                    	<div class="form-group" ng-style="er.RoleId">
-		                                                <label class="radio-inline">
+													<label class="control-label col-md-2 col-sm-2">Role<span class="required">* </span></label>
+													<div class="col-md-8 col-sm-8">
+														<label class="radio-inline">
 		                                                	<input name="Role" type="radio" ng-model="data.RoleId" ng-value="4" ng-change="ermsg.RoleId='';checkDataNull('RoleId')"> Extertal Practitioner
 		                                                </label>
 		                                       	        <label class="radio-inline">
 		                                       	        	<input name="Role" type="radio" ng-model="data.RoleId" ng-value="5" ng-change="ermsg.RoleId='';checkDataNull('RoleId')"> Intertal Practitioner
 		                                       	        </label>
 		                                       	        <span style="color:red;">{{ermsg.RoleId}}</span>
-		                                    	</div>
+													</div>
+												</div>
 												<!-- End Role -->
 												<!-- Healthlink ID -->
 												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">Healthlink ID</label>
+													<label class="control-label col-md-2 col-sm-2">Healthlink ID<span class="required">* </span></label>
 													<div class="col-md-8 col-sm-8">
 														<input type="text" placeholder="" class="form-control" ng-model="data.HealthLinkID" ng-style="er.HealthLinkID" ng-change="ermsg.HealthLinkID='';checkDataNull('HealthLinkID')">
 														<span style="color:red;">{{ermsg.HealthLinkID}}</span>
@@ -175,11 +178,11 @@
 												<!-- End Healthlink ID -->
 												<!-- begin DOB -->
 												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">Date of Birth</label>
+													<label class="control-label col-md-2 col-sm-2">Date of Birth<span class="required">* </span></label>
 													<div class="col-md-8 col-sm-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-calendar"></i>
-	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="data.DOB" ng-style="er.DOB" data-date-format="dd/mm/yyyy" ng-change="ermsg.DOB='';checkDataNull('DOB')" >
+	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="data.DOB" ng-style="er.DOB" data-date-format="dd/mm/yyyy"date-start-date="1/1/1900" data-date-end-date="0d" ng-change="ermsg.DOB='';checkDataNull('DOB')" >
 	           												<span style="color:red;">{{ermsg.DOB}}</span>
 														</div>
 													</div>
@@ -187,7 +190,7 @@
 												<!-- end DOB -->
 												<!-- begin Homephone -->
 												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">Homephone</label>
+													<label class="control-label col-md-2 col-sm-2">HomePhone</label>
 													<div class="col-md-8 col-sm-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-phone-alt"></i>
@@ -199,7 +202,7 @@
 												<!-- end Homephone -->
 												<!-- begin Workphone -->
 												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">Workphone</label>
+													<label class="control-label col-md-2 col-sm-2">WorkPhone</label>
 													<div class="col-md-8 col-sm-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-phone"></i>
@@ -212,7 +215,7 @@
 
 												<!-- Begin Address1 -->
 												<div class="form-group ">
-													<label class="control-label col-md-2 col-sm-2">Address1</label>
+													<label class="control-label col-md-2 col-sm-2">Address1<span class="required">* </span></label>
 													<div class="col-md-8 col-sm-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-road"></i>
@@ -236,7 +239,7 @@
 												<!-- End Address2 -->
 												<!-- begin Suburb -->
 												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">Suburb</label>
+													<label class="control-label col-md-2 col-sm-2">Suburb<span class="required">* </span></label>
 													<div class="col-md-8 col-sm-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-tree-conifer"></i>
@@ -248,7 +251,7 @@
 												<!-- end Suburb -->
 												<!-- begin Postcode -->
 												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">Postcode</label>
+													<label class="control-label col-md-2 col-sm-2">Postcode<span class="required">* </span></label>
 													<div class="col-md-8 col-sm-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-map-marker"></i>
@@ -261,7 +264,7 @@
 
 												<!-- begin State -->
 												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">State</label>
+													<label class="control-label col-md-2 col-sm-2">State<span class="required">* </span></label>
 													<div class="col-md-8 col-sm-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-globe"></i>
@@ -275,7 +278,7 @@
 												<!-- end State -->
 												<!-- country -->
 												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">Country</label>
+													<label class="control-label col-md-2 col-sm-2">Country<span class="required">* </span></label>
 													<div class="col-md-8 col-sm-8">
 														<div class="input-icon">
 															<i class="fa fa-flag"></i>
@@ -308,7 +311,7 @@
 											<!-- end Clinical Department -->
 											<!-- Provider Number -->
 											<div class="form-group">
-												<label class="control-label col-md-3 col-sm-3">Provider Number</label>
+												<label class="control-label col-md-3 col-sm-3">Provider Number<span class="required">* </span></label>
 												<div class="col-md-6 col-sm-6">
 													<input type="text" placeholder="" class="form-control"  ng-model="data.ProviderNumber" ng-style="er.ProviderNumber" ng-change="ermsg.ProviderNumber='';checkDataNull('ProviderNumber')">
 													<span style="color:red;">{{ermsg.ProviderNumber}}</span>

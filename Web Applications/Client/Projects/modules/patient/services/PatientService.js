@@ -314,7 +314,7 @@ angular.module('app.authentication.patient.services',[])
 			// validate Email? hoi a Tan su dung exception
 			if('Email1' in info){
 				if(info.Email1){
-					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
 					if(!EmailPattern.test(info.Email1)){
 						error.push({field:"Email1",message:"invalid email"});
 					}

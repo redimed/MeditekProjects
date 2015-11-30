@@ -39,7 +39,7 @@
 								<div class="tab-pane active" id="tab1">
 									<!-- Begin Firstname -->
 									<div class="form-group">
-										<label class="control-label col-md-4">Firstname <span class="required">* </span></label>
+										<label class="control-label col-md-4">FirstName <span class="required">* </span></label>
 										<div class="col-md-4">
 											<input type="text" class="form-control" name="Firstname" placeholder="Firstname"ng-model="data.FirstName" ng-style="er.FirstName" ng-disabled="isBlockStep1" ng-change="ermsg.FirstName=''" /><span style="color:red;">{{ermsg.FirstName}}</span>
 											<span class="help-block">Provide your Firstname </span>
@@ -48,7 +48,7 @@
 									<!-- End Firstname -->
 									<!-- Begin Middlename -->
 									<div class="form-group">
-										<label class="control-label col-md-4">Middlename</label>
+										<label class="control-label col-md-4">MiddleName</label>
 										<div class="col-md-4">
 											<input type="text" class="form-control" placeholder="Middlename"ng-model="data.MiddleName" ng-style="er.MiddleName" ng-disabled="isBlockStep1" ng-change="ermsg.MiddleName=''" />
 											<span style="color:red;">{{ermsg.MiddleName}}</span>
@@ -58,23 +58,23 @@
 									<!-- End Middlename -->
 									<!-- Begin Lastname -->
 									<div class="form-group ">
-										<label class="control-label col-md-4">Lastname <span class="required">* </span></label>
+										<label class="control-label col-md-4">LastName <span class="required">* </span></label>
 										<div class="col-md-4">
 											<input type="text" class="form-control" name="Lastname" placeholder="Lastname" ng-model="data.LastName" ng-style="er.LastName" ng-disabled="isBlockStep1" ng-change="ermsg.LastName=''" /><span style="color:red;">{{ermsg.LastName}}</span>
-											<span class="help-block">Provide your Lastname </span>
+											<span class="help-block">Provide your LastName </span>
 										</div>
 									</div>
 									<!-- End Lastname -->
 									<!-- begin phone -->
 									<div class="form-group">
-										<label class="control-label col-md-4">Mobilephone <span class="required">* </span>
+										<label class="control-label col-md-4">MobilePhone <span class="required">* </span>
 										</label>
 										<div class="col-md-4">
 											<div class="input-icon">
 												<i class="glyphicon glyphicon-phone"></i>
 												<input type="text" class="form-control" name="Mobilephone" placeholder="+61 8888 8888" ng-model="data.PhoneNumber" ng-style="er.PhoneNumber" ng-disabled="isBlockStep1" ng-change="ermsg.PhoneNumber=''" />
 												<span style="color:red;">{{ermsg.PhoneNumber}}</span>
-												<span class="help-block">Provide your Mobilephone </span>
+												<span class="help-block">Provide your MobilePhone </span>
 											</div>
 										</div>
 									</div>
@@ -124,7 +124,7 @@
 									            <!-- end title -->
 												<!-- Begin First name -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Firstname<span class="required">* </span></label>
+													<label class="control-label col-md-4">FirstName<span class="required">* </span></label>
 													<div class="col-md-8">
 														<input type="text" class="form-control" placeholder="Firstname"ng-model="data.FirstName" ng-style="er.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName='';checkDataNull('FirstName')" />
 														<span style="color:red;">{{ermsg.FirstName}}</span>
@@ -133,7 +133,7 @@
 												<!-- End First name -->
 												<!-- Begin Middle name -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Middlename</label>
+													<label class="control-label col-md-4">MiddleName</label>
 													<div class="col-md-8">
 														<input type="text" class="form-control" placeholder="Middlename" ng-model="data.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName='';checkDataNull('MiddleName')" />
 														<span style="color:red;">{{ermsg.MiddleName}}</span>
@@ -142,7 +142,7 @@
 												<!-- End Middle name -->
 												<!-- Begin Sur name -->
 												<div class="form-group ">
-													<label class="control-label col-md-4">Lastname<span class="required">* </span></label>
+													<label class="control-label col-md-4">LastName<span class="required">* </span></label>
 													<div class="col-md-8">
 														<input type="text" class="form-control" placeholder="Lastname" ng-model="data.LastName" ng-style="er.LastName" ng-change="ermsg.LastName='';checkDataNull('LastName')" />
 														<span style="color:red;">{{ermsg.LastName}}</span>
@@ -155,7 +155,7 @@
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-calendar"></i>
-															<input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy" ng-model="data.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB='';checkDataNull('DOB')" />
+															<input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" data-date-end-date="0d" ng-model="data.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB='';checkDataNull('DOB')" />
 															<span style="color:red;">{{ermsg.DOB}}</span>
 														</div>
 													</div>
@@ -200,7 +200,7 @@
 												<!-- end Email -->
 												<!-- begin Home Phone -->
 												<div class="form-group">
-													<label class="control-label col-md-3">Homephone</label>
+													<label class="control-label col-md-3">HomePhone</label>
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-phone-alt"></i>
@@ -223,7 +223,7 @@
 												<!-- end Mobile -->
 												<!-- begin WorkPhone -->
 												<div class="form-group">
-													<label class="control-label col-md-3">Workphone</label>
+													<label class="control-label col-md-3">WorkPhone</label>
 													<div class="col-md-8">
 														<div class="input-icon">
 															<i class="glyphicon glyphicon-phone-alt"></i>

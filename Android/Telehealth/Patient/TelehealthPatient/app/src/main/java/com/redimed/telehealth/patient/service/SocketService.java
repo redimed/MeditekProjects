@@ -7,10 +7,12 @@ import android.content.SharedPreferences.*;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.redimed.telehealth.patient.CallActivity;
 import com.redimed.telehealth.patient.MainActivity;
+import com.redimed.telehealth.patient.ModelActivity;
 import com.redimed.telehealth.patient.utils.Config;
 
 import org.json.JSONException;
@@ -34,6 +36,7 @@ public class SocketService extends Service {
     private Intent i;
     private static SharedPreferences uidTelehealth;
     private String auth, deviceId;
+    private LocalBroadcastManager localBroadcastManager;
 
     private void initializeSocket() {
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
@@ -72,7 +75,8 @@ public class SocketService extends Service {
         socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
         socket.on("receiveMessage", onReceiveMessage);
         socket.on("errorMsg", onReceiveError);
-        return START_STICKY;
+//        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     public static void sendData(String url, Map<String, Object> params) throws Throwable {
@@ -167,17 +171,12 @@ public class SocketService extends Service {
                     startActivity(i);
                 }
                 if (message.equalsIgnoreCase("cancel")) {
-                    Log.d(TAG, message.toString());
-                    i = new Intent(getApplicationContext(), CallActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("message", data.get("message").toString());
-                    startActivity(i);
+                    localBroadcastManager = LocalBroadcastManager.getInstance(SocketService.this);
+                    localBroadcastManager.sendBroadcast(new Intent("call.action.cancel"));
                 }
                 if (message.equalsIgnoreCase("end")) {
-                    i = new Intent(getApplicationContext(), MainActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("message", data.get("message").toString());
-                    startActivity(i);
+                    localBroadcastManager = LocalBroadcastManager.getInstance(SocketService.this);
+                    localBroadcastManager.sendBroadcast(new Intent("call.action.end"));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

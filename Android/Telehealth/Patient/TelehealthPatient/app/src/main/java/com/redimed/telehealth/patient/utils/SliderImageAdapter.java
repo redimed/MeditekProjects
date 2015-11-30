@@ -63,7 +63,10 @@ public class SliderImageAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View viewLayout = inflater.inflate(R.layout.slider_image, container, false);
         ButterKnife.bind(this, viewLayout);
-        Picasso.with(viewLayout.getContext()).load(resourcesIMG[position]).fit().centerCrop().into(imgSlider);
+        Picasso.with(viewLayout.getContext())
+                .load(resourcesIMG[position])
+                .fit().centerCrop()
+                .into(imgSlider);
         container.addView(viewLayout);
 
         return viewLayout;

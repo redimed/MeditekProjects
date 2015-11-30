@@ -2,9 +2,11 @@ package com.redimed.telehealth.patient;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +27,7 @@ import com.opentok.android.Session;
 import com.opentok.android.Stream;
 import com.opentok.android.Subscriber;
 import com.opentok.android.SubscriberKit;
+import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
 import com.squareup.picasso.Picasso;
@@ -38,17 +41,17 @@ import butterknife.ButterKnife;
 
 public class CallActivity extends AppCompatActivity implements View.OnClickListener, PublisherKit.PublisherListener, SubscriberKit.VideoListener, Session.SessionListener {
 
-    private String TAG = "CALL", nameCaller;
     private Intent i;
-    private Session sessionOpenTok;
     private Publisher publisher;
+    private MediaPlayer ringtone;
     private Subscriber subscriber;
+    private Session sessionOpenTok;
+    private String TAG = "CALL", nameCaller;
     private ArrayList<Stream> streamOpenTok;
     private static final String LOGTAG = "OpenTok";
     private String sessionId, token, apiKey, to, from;
+    private LocalBroadcastManager localBroadcastManager;
     private static final boolean SUBSCRIBE_TO_SELF = false;
-    private MediaPlayer ringtone;
-    private Window window;
 
     @Bind(R.id.fabHold)
     FloatingActionButton fabHold;
@@ -72,35 +75,39 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     ViewFlipper vfCall;
     @Bind(R.id.lblCaller)
     TextView lblCaller;
+    @Bind(R.id.imgCaller)
+    ImageView imgCaller;
+
+    BootReceiver receiver = new BootReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("call.action.cancel")) {
+                DeclineCommunication("cancel");
+            } else if (intent.getAction().equals("call.action.end")) {
+                EndCommunication();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         setContentView(R.layout.activity_call);
         ButterKnife.bind(this);
+
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("call.action.cancel");
+        intentFilter.addAction("call.action.end");
+        localBroadcastManager.registerReceiver(receiver, intentFilter);
 
         streamOpenTok = new ArrayList<Stream>();
         Picasso.with(getApplicationContext()).load(R.drawable.logo_bg_redimed)
                 .transform(new BlurTransformation(getApplicationContext(), 15))
                 .into(imgLogoCall);
 
-//        ringtone = MediaPlayer.create(this, R.raw.ringtone);
-//        ringtone.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//            @Override
-//            public void onCompletion(MediaPlayer mp) {
-//                if (mp.isPlaying()) {
-//                    mp.reset();
-//                    mp.release();
-//                    mp = null;
-//                }
-//            }
-//        });
-//        ringtone.start();
+        Picasso.with(getApplicationContext()).load(R.drawable.img_avatar_caller)
+                .into(imgCaller);
 
         btnDecline.setOnClickListener(this);
         btnAnswer.setOnClickListener(this);
@@ -112,37 +119,43 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    private void stopPlaying() {
+        if (ringtone != null) {
+            if (ringtone.isPlaying()) {
+                ringtone.stop();
+                ringtone.release();
+                ringtone = null;
+            }
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
+        this.finish();
         if (sessionOpenTok != null)
             sessionOpenTok.disconnect();
+        localBroadcastManager.unregisterReceiver(receiver);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        int position = vfCall.getDisplayedChild();
-        Log.d(TAG, position + " ");
-        if (position == 0) {
-            DeclineCommunication("decline");
-        }
-        if (position == 1) {
-            Map<String, Object> params = new HashMap<String, Object>();
-            params.put("from", from);
-            params.put("to", to);
-            params.put("message", "end");
-            try {
-                SocketService.sendData("socket/messageTransfer", params);
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
-            publisher = null;
-            subscriber = null;
-            streamOpenTok.clear();
-            sessionOpenTok.disconnect();
-            finish();
-            sendBroadcast(new Intent("Restart_Socket_Service"));
-        }
+        localBroadcastManager.unregisterReceiver(receiver);
     }
 
     @Override
@@ -154,7 +167,14 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     private void ListenSocket() {
         i = getIntent();
         if (i.getExtras() != null) {
-            if (i.getExtras().getString("message").equalsIgnoreCase("call")) {
+            if (i.getExtras().getString("message").equals("call")) {
+                ringtone = MediaPlayer.create(this, R.raw.ringtone);
+                if (ringtone.isPlaying()) {
+                    stopPlaying();
+                } else {
+                    ringtone.setLooping(true);
+                    ringtone.start();
+                }
                 sessionId = i.getExtras().getString("sessionId");
                 token = i.getExtras().getString("token");
                 apiKey = i.getExtras().getString("apiKey");
@@ -162,12 +182,9 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 from = i.getExtras().getString("from");
                 nameCaller = i.getExtras().getString("fromName");
                 lblCaller.setText(nameCaller == null ? "Calling...." : nameCaller + "calling....");
-            }
-            if (i.getExtras().getString("message").equalsIgnoreCase("cancel")) {
-                DeclineCommunication("cancel");
-            }
-            if (i.getExtras().getString("message").equalsIgnoreCase("end")) {
-                EndCommunication();
+                if (!MyApplication.getInstance().IsMyServiceRunning(SocketService.class)){
+                    startService(new Intent(this, SocketService.class));
+                }
             }
         }
     }
@@ -176,16 +193,10 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.btnDecline):
-//                Log.d(TAG, ringtone.isPlaying() + "");
-//                if (ringtone.isPlaying()){
-//                    ringtone.stop();
-//                }
                 DeclineCommunication("decline");
                 break;
             case (R.id.btnAnswer):
-//                if (ringtone.isPlaying()){
-//                    ringtone.stop();
-//                }
+                stopPlaying();
                 AnswerCommunication();
                 break;
             case R.id.fabHold:
@@ -195,9 +206,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 MuteCommunication();
                 break;
             case R.id.fabEndCall:
-//                if (ringtone.isPlaying()){
-//                    ringtone.stop();
-//                }
                 EndCommunication();
                 break;
         }
@@ -229,15 +237,15 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             subscriber = null;
             streamOpenTok.clear();
             sessionOpenTok.disconnect();
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
+        this.finish();
     }
 
     //    Refuse appointment
     private void DeclineCommunication(String message) {
+        stopPlaying();
         if (message.equalsIgnoreCase("decline")) {
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("from", from);
@@ -248,8 +256,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 publisher = null;
                 subscriber = null;
                 streamOpenTok.clear();
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
             } catch (Throwable throwable) {
                 throwable.printStackTrace();
             }
@@ -257,9 +263,8 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             publisher = null;
             subscriber = null;
             streamOpenTok.clear();
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
         }
+        this.finish();
     }
 
     //Click button hold on a call

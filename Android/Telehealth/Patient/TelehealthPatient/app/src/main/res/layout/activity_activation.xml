@@ -9,8 +9,7 @@
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="?android:actionBarSize"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/logo_redimed" />
+        android:layout_marginTop="20dp" />
 
     <ViewFlipper
         android:id="@+id/layoutContainer"
@@ -47,7 +46,10 @@
                     android:singleLine="true"
                     android:textColor="@android:color/black"
                     android:textColorHint="@android:color/black"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -60,8 +62,8 @@
                     android:id="@+id/btnBack"
                     android:layout_width="?android:actionBarSize"
                     android:layout_height="50dp"
-                    android:background="#6fff0003"
                     android:layout_gravity="center_vertical"
+                    android:background="#6fff0003"
                     android:clickable="true">
 
                     <com.redimed.telehealth.patient.font.MaterialDesignIconsTextView
@@ -99,10 +101,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_contains"
-                android:textColor="@color/greyFont"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="20dp"
+                android:text="@string/text_contains"
+                android:textColor="@color/greyFont" />
 
             <LinearLayout
                 android:layout_width="320dp"
@@ -125,9 +127,9 @@
                     <View
                         android:layout_width="1dp"
                         android:layout_height="45dp"
-                        android:layout_gravity="center"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
                         android:background="@android:color/darker_gray" />
 
                 </RelativeLayout>
@@ -195,9 +197,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="@string/title_bottom_activation"
-        android:textColor="@color/lightFont"
+        android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
         android:gravity="center"
-        android:layout_alignParentBottom="true"/>
+        android:text="@string/title_bottom_activation"
+        android:textColor="@color/lightFont" />
 </RelativeLayout>

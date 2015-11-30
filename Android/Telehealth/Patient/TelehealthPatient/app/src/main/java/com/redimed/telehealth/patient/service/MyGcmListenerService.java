@@ -28,6 +28,7 @@ public class MyGcmListenerService extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
         if (message != null){
+            Log.d(TAG, message);
             sendNotification(message);
         }
     }

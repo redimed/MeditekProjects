@@ -47,7 +47,8 @@ app.config(function($stateProvider,$urlRouterProvider){
 			url: '/forgot',
 			views: {
 				'main-content': {
-					templateUrl: 'modules/unAuthentication/views/forgot.html'
+					templateUrl: 'modules/unAuthentication/views/forgot.html',
+					controller: 'forgotCtrl',
 				}
 			}
 		});

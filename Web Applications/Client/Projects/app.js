@@ -196,7 +196,7 @@ app
 
         $rootScope.$on('$stateChangeSuccess', function(e, toState, toParams, fromState, fromParams) {
             if (!$cookies.get("userInfo")) {
-                if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register" && toState.name !== "unAuthentication.activation") {
+                if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register" && toState.name !== "unAuthentication.activation" && toState.name !== "unAuthentication.forgot") {
                     e.preventDefault();
                     $state.go("unAuthentication.login", null, {
                         location: "replace",
@@ -220,11 +220,11 @@ app
             FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page
 
-            ComponentsSelect2.init(); // init todo page
-            ComponentsBootstrapSelect.init(); // init todo page
+            //ComponentsSelect2.init(); // init todo page
+            //ComponentsBootstrapSelect.init(); // init todo page
         });
         $rootScope.$on('$includeContentLoaded', function() {
-            App.initAjax();
+            //App.initAjax();
             FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page
         });

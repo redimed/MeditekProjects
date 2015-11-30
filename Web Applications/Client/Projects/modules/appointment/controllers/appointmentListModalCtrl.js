@@ -271,12 +271,11 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         if ($scope.userForm.$valid) {
             var stringAlert = null;
             if ($scope.appointment.Status == 'Approved' || $scope.appointment.Status == 'Attended' || $scope.appointment.Status == 'Waitlist' || $scope.appointment.Status == 'Finished') {
-                stringAlert = $scope.CheckValidation()
+                stringAlert = $scope.CheckValidation();
             };
             if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate != ''  || 
                 $scope.ShowData.DateTimeAppointmentDateTime != null && $scope.ShowData.DateTimeAppointmentDateTime != '') {
                 stringAlert = $scope.CheckValidation();
-
             };
             if (stringAlert == null) {
                 swal({
@@ -292,7 +291,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
                     });
             }else{
                 toastr.error(stringAlert);
-            };
+            }
         }else{
             toastr.error('Please check input data');
         }

@@ -58,6 +58,10 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/AppointmentController',
         action: 'ListAppointment'
     },
+    'POST /api/telehealth/appointment/list':{
+        controller: 'Telehealth/v1_0/AppointmentController',
+        action: 'ListAppointment'
+    },
     //=================Test Push Notification=============================
     'GET /api/testPushAPN':{
         controller: 'Telehealth/v1_0/TelehealthController',

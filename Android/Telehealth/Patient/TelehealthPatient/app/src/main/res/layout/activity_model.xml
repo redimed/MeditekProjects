@@ -9,8 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="?android:actionBarSize"
         android:layout_marginBottom="30dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/logo_redimed" />
+        android:layout_marginTop="20dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"

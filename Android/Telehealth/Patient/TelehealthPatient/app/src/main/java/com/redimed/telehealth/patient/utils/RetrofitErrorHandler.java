@@ -13,6 +13,7 @@ import com.redimed.telehealth.patient.R;
 
 import org.json.JSONObject;
 
+import java.io.InterruptedIOException;
 import java.net.SocketTimeoutException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,7 +34,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
         String errorDescription;
 
         if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
-            if (cause.getCause() instanceof SocketTimeoutException) {
+            if (cause.getCause() instanceof SocketTimeoutException || cause.getCause() instanceof InterruptedIOException) {
                 errorDescription = "Network Timeout";
             } else {
                 errorDescription = "Network Error";

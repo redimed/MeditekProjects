@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +19,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -81,14 +84,17 @@ public class MainActivity extends AppCompatActivity {
     TextView lblNamePatient;
     @Bind(R.id.avatarPatient)
     ImageView avatarPatient;
+    @Bind(R.id.logo)
+    ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         startService(new Intent(getApplicationContext(), SocketService.class));
         ButterKnife.bind(this);
+        Picasso.with(this).load(R.drawable.logo_redimed).into(logo);
+
         gson = new Gson();
         restClient = RESTClient.getRegisterApi();
         spDevice = this.getSharedPreferences("DeviceInfo", MODE_PRIVATE);
@@ -106,16 +112,15 @@ public class MainActivity extends AppCompatActivity {
         GetDetailsPatient();
         SendToken();
         Display(0);
-
     }
 
     private void initializeData() {
         categories = new ArrayList<Category>();
-        categories.add(new Category(R.drawable.person_icon, "Home", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.person_icon, "Information", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.person_icon, "Telehealth", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.person_icon, "FAQs", R.drawable.circled_chevron_right_icon));
-        categories.add(new Category(R.drawable.person_icon, "LogOut", R.drawable.circled_chevron_right_icon));
+        categories.add(new Category(R.drawable.person_icon, "Home"));
+        categories.add(new Category(R.drawable.person_icon, "Information"));
+        categories.add(new Category(R.drawable.person_icon, "Telehealth"));
+        categories.add(new Category(R.drawable.person_icon, "FAQs"));
+        categories.add(new Category(R.drawable.person_icon, "LogOut"));
     }
 
     private void GetDetailsPatient() {
@@ -150,11 +155,11 @@ public class MainActivity extends AppCompatActivity {
         }
         lblNamePatient.setText(firstName + " " + lastName);
 
-        Picasso.with(this).load(R.drawable.blank_avatar)
-                .transform(new CircleTransform())
-                .resize(200, 200)
-                .centerCrop()
-                .into(avatarPatient);
+//        Picasso.with(this).load(R.drawable.blank_avatar)
+//                .transform(new CircleTransform())
+//                .resize(200, 200)
+//                .centerCrop()
+//                .into(avatarPatient);
 
         avatarPatient.setOnClickListener(new View.OnClickListener() {
             @Override

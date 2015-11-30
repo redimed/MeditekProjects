@@ -14,8 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/logo_redimed" />
+            android:layout_marginTop="10dp" />
 
         <!-- Framelayout to display Fragments -->
         <FrameLayout
@@ -40,8 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/blank_avatar"/>
+            android:layout_marginTop="40dp"/>
 
         <com.redimed.telehealth.patient.font.RobotoTextView
             android:id="@+id/lblNamePatient"

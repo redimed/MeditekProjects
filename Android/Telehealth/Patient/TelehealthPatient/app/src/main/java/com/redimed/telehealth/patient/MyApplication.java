@@ -1,8 +1,12 @@
 package com.redimed.telehealth.patient;
 
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -10,6 +14,7 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.redimed.telehealth.patient.network.RESTClient;
+import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
 
 import java.io.File;
@@ -24,6 +29,7 @@ public class MyApplication extends Application {
 
     private String TAG = "MyApplication";
     private static MyApplication myApplication;
+    private BroadcastReceiver receiver;
 
     public static MyApplication getInstance() {
         return myApplication;
@@ -34,6 +40,11 @@ public class MyApplication extends Application {
         super.onCreate();
         myApplication = this;
         RESTClient.InitRESTClient(this);
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        intentFilter.addAction(Intent.ACTION_SCREEN_ON);
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        receiver = new BootReceiver ();
+        registerReceiver(receiver, intentFilter);
         startService(new Intent(getApplicationContext(), RegistrationIntentService.class));
     }
 
@@ -103,5 +114,15 @@ public class MyApplication extends Application {
             e.printStackTrace();
         }
         return finalDate;
+    }
+
+    public boolean IsMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

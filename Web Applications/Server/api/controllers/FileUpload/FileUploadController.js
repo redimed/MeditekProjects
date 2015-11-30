@@ -118,6 +118,7 @@ module.exports = {
         })
     },
     DownloadFile: function(req, res) {
+
         var params = req.params.all();
         Services.FileUpload.DownloadFile({
             output: rootPath + '/temp/',
@@ -125,7 +126,8 @@ module.exports = {
             size: params.size
         }, function(err, output, fileName) {
             res.set('filename',fileName);
-            res.header('Access-Control-Expose-Headers', 'filename');
+            // res.set('testtesttesttest',true);
+            res.header('Access-Control-Expose-Headers', HelperService.const.exposeHeaders);
             if (err) return res.serverError(ErrorWrap(err));
             res.attachment(fileName);
             var file = fs.createReadStream(output);

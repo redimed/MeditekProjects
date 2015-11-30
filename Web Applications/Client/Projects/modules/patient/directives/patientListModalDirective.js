@@ -10,7 +10,7 @@
 // </patient-listmodal>
 
 var app = angular.module('app.authentication.patient.list.modal.directive',[]);
-app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $timeout, $cookies, CommonService, $http){
+app.directive('patientListmodal', function(PatientService, $state, toastr, AuthenticationService, $rootScope, $timeout, $cookies, CommonService, $http){
 	return{
 		restrict: 'EA',
         scope: {
@@ -60,7 +60,13 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    // uploader.onSuccessItem = function (fileItem, response, status, headers) {
 		    //     console.info('onSuccessItem', fileItem, response, status, headers);
 		    // };
-
+		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
+		        console.info('onCompleteItem', fileItem, response, status, headers);
+		        if(Boolean(headers.requireupdatetoken)===true)
+		        {
+		            $rootScope.getNewToken();
+		        }
+		    };
 		},
 		link: function(scope, elem, attrs){
 			console.log(scope.activeUser);

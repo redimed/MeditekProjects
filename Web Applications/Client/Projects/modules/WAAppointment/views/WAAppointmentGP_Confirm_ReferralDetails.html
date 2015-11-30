@@ -161,6 +161,7 @@
                             <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value">Melanoma :{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Melanoma'].Value}}</p>
                             <br>
                             <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value">Merkel :{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.Merkel'].Value}}</p>
+                            <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.OThers'].Value">Others :{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Skin__cancer.OThers'].Value}}</p>
                         </div>
                     </div>
                     <div class="form-group form-md-line-input">
@@ -189,7 +190,7 @@
                                 <br>
                                 <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Complex__Reconstructive__Case'].Value">Complex Reconstructive Case</p>
                                 <br>
-                                 <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Other'].Value">Other</p>
+                                 <p class="form-control-static" data-display="" ng-if="requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Other'].Value">Other :{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.PNS.Other'].Value}}</p>
                                 <br>
                             </p>
                         </div>
@@ -253,6 +254,31 @@
                                     </tbody>
                                 </table>
                             </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="form-group form-md-line-input">
+                            <label class="col-md-5 col-sm-5 control-label">Pathology provider</label>
+                            <div class="col-md-7 col-sm-7">
+                                <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.WAAppointment.PathologyProvider}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group form-md-line-input">
+                            <label class="col-md-5 col-sm-5 control-label">Radiology provider</label>
+                            <div class="col-md-7 col-sm-7">
+                                <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.WAAppointment.RadiologyProvider}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group form-md-line-input">
+                            <label class="col-md-5 col-sm-5 control-label">Other Notes</label>
+                            <div class="col-md-7 col-sm-7">
+                                <p class="form-control-static" data-display="">{{requestInfo.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.OtherNotes'].Value}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

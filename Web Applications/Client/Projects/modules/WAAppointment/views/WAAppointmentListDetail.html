@@ -394,7 +394,7 @@
                                                                         <div class="form-group form-md-line-input" ng-show="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-class="{'has-error': userForm.InterpreterLanguage.$invalid && submited} ">
                                                                             <label class="control-label col-md-4 col-sm-4">If yes, language/dialect </label>
                                                                             <div class="col-md-6 col-sm-6" >
-                                                                                <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage" name="InterpreterLanguage" required>
+                                                                                <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage" name="InterpreterLanguage" ng-required="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'">
                                                                                 <p ng-show="userForm.InterpreterLanguage.$invalid && submited" class="help-block">Field is required</p>
                                                                                 <div class="form-control-focus"> </div>
                                                                             </div>
@@ -604,9 +604,9 @@
                                     </div>
                                     <div class="row pull-right">
                                         <div class="col-md-12 co-xs-12">
-                                            <button class="btn red" ng-click="selectPatient()">
-                                            <i class="glyphicon glyphicon-plus"></i> Link Patient
-                                        </button>
+                                            <span class="btn red" ng-click="selectPatient()">
+                                                <i class="glyphicon glyphicon-plus"></i> Link Patient
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

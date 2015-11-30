@@ -212,10 +212,14 @@ public class MAActivityIndicatorView: UIView {
         let offsetX = (CGRectGetWidth(self.frame) - widthUsed)/2
         
         let posY = (CGRectGetHeight(self.frame) - 2*radiusForCircle)/2
-        
+        let colorRed =  UIColor(red: 180/255, green: 31/255, blue: 70/255, alpha: 1)
+        let colorGreen =  UIColor(red: 45/255, green: 141/255, blue: 67/255, alpha: 1)
+        let colorBlue =  UIColor(red: 30/255, green: 45/255, blue: 92/255, alpha: 1)
+        let colorYellow =  UIColor(red: 244/255, green: 122/255, blue: 32/255, alpha: 1)
+        let colorArr = [colorGreen,colorBlue,colorRed,colorYellow]
         for i in 0..<numberOfCircles {
-            if let colorFromDelegate = delegate?.activityIndicatorView(self, circleBackgroundColorAtIndex: i) {
-                color = colorFromDelegate
+            if let _ = delegate?.activityIndicatorView(self, circleBackgroundColorAtIndex: i) {
+                color = colorArr[i]
             } else {
                 color = defaultColor
             }

@@ -9,7 +9,7 @@
 import UIKit
 
 class InformationViewController: UIViewController {
-    let InformationPatient = GetAndPostDataController()
+    let api = GetAndPostDataController()
     
 
    
@@ -37,7 +37,7 @@ class InformationViewController: UIViewController {
     func getInformationPatient(){
         if let uuid = defaults.valueForKey("uid") as? String {
             
-            InformationPatient.getInformationPatientByUUID(uuid){
+            api.getInformationPatientByUUID(uuid){
                 response in
                 
                 if response["message"] == "success" {
@@ -84,6 +84,8 @@ class InformationViewController: UIViewController {
         }
     }
     
+    
+    //handle logout
     @IBAction func LogoutAction(sender: AnyObject) {
         
         

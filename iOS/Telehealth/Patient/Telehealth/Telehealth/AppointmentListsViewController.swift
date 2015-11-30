@@ -11,7 +11,7 @@ import UIKit
 class AppointmentListsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    let appointmentApi = GetAndPostDataController()
+    let api = GetAndPostDataController()
     var patientUid = String()
     var Appointment : [AppointmentList] = []
 
@@ -29,7 +29,7 @@ class AppointmentListsViewController: UIViewController {
     //Giap: Get Appointment List
     func getAppointmentList() {
         if let patientUID = defaults.valueForKey("patientUID") as? String {
-            appointmentApi.getListAppointmentByUID(patientUID, Limit: "100", completionHandler: {
+            api.getListAppointmentByUID(patientUID, Limit: "100", completionHandler: {
                 response in
                     print("---response-",response)
                 if response["ErrorsList"] != nil {
@@ -48,7 +48,6 @@ class AppointmentListsViewController: UIViewController {
                     var data = response["rows"]
                     let countAppointment = data.count
                     for var i = 0 ; i < countAppointment ;i++ {
-                       
                         UIDApointment = data[i]["UID"].string ?? ""
                         FromTime = data[i]["FromTime"].string ?? ""
                         ToTime = data[i]["ToTime"].string ?? ""
@@ -62,9 +61,8 @@ class AppointmentListsViewController: UIViewController {
                 }
             })
         }
-        
-        
     }
+    //sending data by segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "TrackingRefferalSegue" {
             let Tracking = segue.destinationViewController as! TrackingRefferalViewController

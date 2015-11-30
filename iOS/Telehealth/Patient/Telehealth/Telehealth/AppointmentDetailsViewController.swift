@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate, UIViewControllerTransitioningDelegate,UIAlertViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPopoverControllerDelegate ,NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate,reloadCollectionDelegate{
-    let appointmentApi = GetAndPostDataController()
+    let api = GetAndPostDataController()
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var doctorName: UILabel!
@@ -56,7 +56,7 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     
     //Giap:Get list Image with Appointment
     func getListImage(UIDAppointment:String,_ Type:String){
-        self.appointmentApi.getAppointmentDetails(UIDAppointment,type:Type, completionHandler: {
+        self.api.getAppointmentDetails(UIDAppointment,type:Type, completionHandler: {
             response in
 
             if response["message"] == "error"{
@@ -78,7 +78,7 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     }
     //Giap: Download image
     func downloadImage(imageUID:String){
-        appointmentApi.getImageAppointment(imageUID, completionHandler: { response in
+        api.getImageAppointment(imageUID, completionHandler: { response in
             let image = UIImage(data: response)
             if image == nil {
                 print(image)
@@ -210,7 +210,6 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
         else
         {
             popover=UIPopoverController(contentViewController: picker!)
-            
             popover!.presentPopoverFromRect(selectOptionImage.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
     }
@@ -246,7 +245,7 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
         alert.addButtonWithTitle("Ok")
         alert.show()
     }
-    
+    //Add new item to collection view
     func reloadCollectionView(controller: BodyUploadViewController, sender: UIImage) {
         
         ArrayImageUID.append(sender)

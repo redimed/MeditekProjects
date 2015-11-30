@@ -73,6 +73,9 @@ struct FAIcon {
     static let pause = "\u{f04c}"
     static let play = "\u{f04b}"
     static let fa_close = "\u{f00d}"
+    static let microphone_on = "\u{f130}"
+    static let microphone_off = "\u{f131}"
+
 }
 struct formatTime {
     static let dateTime = "yyyy-MM-dd HH:mm:ss"

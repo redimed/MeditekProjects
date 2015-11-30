@@ -32,7 +32,10 @@ class MyPopupViewController: UIViewController , MAActivityIndicatorViewDelegate 
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        self.view.layer.cornerRadius = 22
+        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
+//        self.view.layer.cornerRadius = 22
+        view.frame = CGRect(x: 0.0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
+
         self.view.layer.masksToBounds = true
         uuidTo = String(savedData.data[0]["from"])
         //Get uuid from in localstorage
@@ -40,8 +43,8 @@ class MyPopupViewController: UIViewController , MAActivityIndicatorViewDelegate 
             uuidFrom = uuid
             
         }
-        declineBtn.layer.cornerRadius = 10
-        answerBtn.layer.cornerRadius = 10
+        declineBtn.layer.cornerRadius = 25
+        answerBtn.layer.cornerRadius = 25
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
             self.indicatorView1 = MAActivityIndicatorView(frame: self.viewForActivity1.frame)
@@ -50,7 +53,6 @@ class MyPopupViewController: UIViewController , MAActivityIndicatorViewDelegate 
             self.indicatorView1.numberOfCircles      = 4
             self.indicatorView1.maxRadius            = 16
             self.indicatorView1.delegate = self
-            // self.indicatorView1.backgroundColor = UIColor.lightGrayColor()
             self.indicatorView1.startAnimating()
             self.view.addSubview(self.indicatorView1)
             
@@ -69,6 +71,8 @@ class MyPopupViewController: UIViewController , MAActivityIndicatorViewDelegate 
     func cancelCall() {
         self.delegate?.pressCancel(self)
     }
+
+    
     func activityIndicatorView(activityIndicatorView: MAActivityIndicatorView, circleBackgroundColorAtIndex index: NSInteger) -> UIColor {
         
         let R = CGFloat(arc4random() % 256)/255

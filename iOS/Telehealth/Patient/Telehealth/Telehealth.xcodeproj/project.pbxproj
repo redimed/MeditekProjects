@@ -26,7 +26,6 @@
 		AF4498AE1BDF1238005A905E /* Call.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4498AD1BDF1238005A905E /* Call.swift */; };
 		AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */; };
 		AF5AD22E1BCB97290054B4C3 /* ExtensionHandleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */; };
-		AF7726081BCE5E42007F29AC /* AppointmentListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7726061BCE5E42007F29AC /* AppointmentListTableViewController.swift */; };
 		AF7B5F441BE74D6D0043B14D /* AppointmentListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7B5F431BE74D6D0043B14D /* AppointmentListsViewController.swift */; };
 		AF840FF11BCCA39900F69EF8 /* FAQsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */; };
 		AF943FF11BBA6221003F3B07 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FF01BBA6221003F3B07 /* OpenTok.framework */; };
@@ -141,7 +140,6 @@
 		AF4498AD1BDF1238005A905E /* Call.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Call.swift; sourceTree = "<group>"; };
 		AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
 		AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionHandleData.swift; sourceTree = "<group>"; };
-		AF7726061BCE5E42007F29AC /* AppointmentListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListTableViewController.swift; sourceTree = "<group>"; };
 		AF7B5F431BE74D6D0043B14D /* AppointmentListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListsViewController.swift; sourceTree = "<group>"; };
 		AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQsViewController.swift; sourceTree = "<group>"; };
 		AF943FF01BBA6221003F3B07 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = "../../../../../OpenTok-iOS-2.6.0/OpenTok.framework"; sourceTree = "<group>"; };
@@ -322,7 +320,6 @@
 		AF4498A71BDF1141005A905E /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				AF7726061BCE5E42007F29AC /* AppointmentListTableViewController.swift */,
 				AFEE34D61BB0413600471592 /* AppDelegate.swift */,
 			);
 			name = Other;
@@ -777,7 +774,6 @@
 				AFEE352A1BB0415D00471592 /* DesignableButton.swift in Sources */,
 				AFEE34D91BB0413600471592 /* ViewController.swift in Sources */,
 				AFEE35411BB0415D00471592 /* TransitionZoom.swift in Sources */,
-				AF7726081BCE5E42007F29AC /* AppointmentListTableViewController.swift in Sources */,
 				AFEE352E1BB0415D00471592 /* DesignableTextField.swift in Sources */,
 				AF00C3FD1BD9F1DE0001A7F4 /* ImageDetailViewController.swift in Sources */,
 				AF3DA2FF1BD8C738006C1071 /* MAActivityIndicatorView.swift in Sources */,

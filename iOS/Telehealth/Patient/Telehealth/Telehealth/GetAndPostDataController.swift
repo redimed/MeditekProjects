@@ -39,8 +39,8 @@ class GetAndPostDataController {
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         let parameters = [
             "data": [
-                 "phone":"+61"+phoneNumber,
-//                "phone":"+841654901590",
+//                 "phone":"+61"+phoneNumber,
+                "phone":"+841654901590",
                 "deviceId":deviceID,
                 "deviceType": "ios"
             ]
@@ -76,8 +76,8 @@ class GetAndPostDataController {
                 "code":verifyCode,
                 "deviceId":deviceID,
                 "deviceType": "ios",
-                 "Phone":"+61" + phoneNumber
-//                "phone":"+841654901590"
+//                 "Phone":"+61" + phoneNumber
+                "phone":"+841654901590"
             ]
         ]
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.CheckVerifyCode ,headers:headers, parameters: parameters).responseJSON{

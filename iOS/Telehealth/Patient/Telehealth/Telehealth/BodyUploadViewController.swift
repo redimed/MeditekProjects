@@ -14,7 +14,7 @@ protocol reloadCollectionDelegate{
 
 class BodyUploadViewController: UIViewController {
     var imageSelect : UIImage!
-    let appointmentApi = GetAndPostDataController()
+    let api = GetAndPostDataController()
     var appointmentID = String()
     @IBOutlet var myGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var image: UIImageView!
@@ -39,11 +39,11 @@ class BodyUploadViewController: UIViewController {
     @IBAction func UploadImageButton(sender: AnyObject) {
         view.showLoading()
         if let userUID = defaults.valueForKey("userUID") as? String {
-            appointmentApi.uploadImage(image.image!,userUID: userUID){
+            api.uploadImage(image.image!,userUID: userUID){
                 response in
                 
                 if response["status"] == "success"{
-                    self.appointmentApi.updateImageToAppointment(response["fileUID"].string!, apptID: self.appointmentID){
+                    self.api.updateImageToAppointment(response["fileUID"].string!, apptID: self.appointmentID){
                         response in
                         if response["status"] == "success"{
                             self.view.hideLoading()

@@ -12,7 +12,7 @@ import SwiftyJSON
 import AVFoundation
 
 class HomeViewController: UIViewController,UIPopoverPresentationControllerDelegate,MyPopupViewControllerDelegate,UIPageViewControllerDataSource,ContentViewDelegate,AVAudioPlayerDelegate{
-     let ServerApi = GetAndPostDataController()
+     let api = GetAndPostDataController()
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var pageView: UIView!
     var uid = String()
@@ -32,7 +32,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         if let cookie = defaults.valueForKey("Set-Cookie") as? String{cookies = cookie}
         if let uuid = defaults.valueForKey("uid") as? String {
             uid = uuid
-            ServerApi.updateTokenPush(uid)
+            api.updateTokenPush(uid)
         }
         
         //check status notify and handle action
@@ -53,21 +53,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
                 break
             default: break
         }
-        
-//        if statusCallingNotification == notifyMessage.ClickNotify {
-//            openPopUpCalling()
-//            statusCallingNotification = ""
-//        }else if statusCallingNotification == notifyMessage.ClickAnswer{
-//            openScreenCall()
-//            statusCallingNotification = ""
-//        }else if statusCallingNotification == notifyMessage.ClickDesline{
-//            if let from  = savedData.from {
-//                emitDataToServer(MessageString.Decline, uidFrom: uid, uuidTo: from)
-//            }
-//            statusCallingNotification = ""
-//        }
-
-        
+//        self.displayViewController(.TopBottom)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "openPopUpCalling", name: "openPopUpCalling", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "openScreenCall", name: "openScreenCall", object: nil)
         
@@ -176,14 +162,10 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         
         let vc = viewController as! ContentViewController
         var index = vc.pageIndex as Int
-        
-        
         if (index == 0 || index == NSNotFound)
         {
             return nil
-            
         }
-        
         index--
         return self.viewControllerAtIndex(index)
         
@@ -225,8 +207,6 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         page = index
        
     }
-    
-    
     //Giap: Change view AnswerCall by StoryboardID
     func AnswerCall(){
         backMusic.stop()
@@ -235,19 +215,14 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     
     //display popup call
     func displayViewController(animationType: SLpopupViewAnimationType) {
-        
         let myPopupViewController:MyPopupViewController = MyPopupViewController(nibName:"MyPopupViewController", bundle: nil)
         myPopupViewController.delegate = self
         self.presentpopupViewController(myPopupViewController, animationType: animationType, completion: { () -> Void in
             
         })
-        
-        
-        
     }
     
     @IBAction func ContactUsAction(sender: AnyObject) {
-        
         callAlertMessage("", message: MessageString.QuestionCallPhone)
     }
     
@@ -303,9 +278,9 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             // Called on every event
             sharedSocket.socket.onAny {
-                //                print("got event: \($0.event) with items \($0.items)")
-                let a = $0.event
-                let b = $0.items
+                //print("got event: \($0.event) with items \($0.items)")
+                _ = $0.event
+                _ = $0.items
             }
             // Socket Events
             sharedSocket.socket.on("connect") {data, ack in
@@ -322,14 +297,14 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
                 print("From name",dataCalling[0])
                 let message : String = data[0]["message"] as! String
                 if message == MessageString.Call {
-//                    let apiKey : String = data[0]["apiKey"] as! String
-//                    let fromName : String = data[0]["fromName"] as! String
-//                    let sessionId : String = data[0]["sessionId"] as! String
-//                    let token : String = data[0]["token"] as! String
-//                    let from : String = data[0]["from"] as! String
-//                    savedData = saveData(apiKey: apiKey, message: message, fromName: fromName, sessionId: sessionId, token: token, from: from)
-//                    self.displayViewController(.TopBottom)
-//                    self.playRingtone()
+                    //                    let apiKey : String = data[0]["apiKey"] as! String
+                    //                    let fromName : String = data[0]["fromName"] as! String
+                    //                    let sessionId : String = data[0]["sessionId"] as! String
+                    //                    let token : String = data[0]["token"] as! String
+                    //                    let from : String = data[0]["from"] as! String
+                    //                    savedData = saveData(apiKey: apiKey, message: message, fromName: fromName, sessionId: sessionId, token: token, from: from)
+                    //                    self.displayViewController(.TopBottom)
+                    //                    self.playRingtone()
                     NSNotificationCenter.defaultCenter().postNotificationName("AnswerCall", object: self)
                 }else if message == MessageString.CallEndCall {
                     NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
@@ -356,7 +331,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         }
         
     }
-
+    //Call us
     @IBAction func callUsButton(sender: AnyObject) {
         UIApplication.sharedApplication().openURL(NSURL(string: "tel://\(phoneNumberCallUs)")!)
     }

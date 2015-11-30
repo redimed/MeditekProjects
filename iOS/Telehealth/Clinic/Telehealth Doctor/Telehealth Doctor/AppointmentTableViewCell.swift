@@ -19,4 +19,6 @@ class AppointmentTableViewCell: UITableViewCell {
     @IBOutlet weak var statusImageView: UIImageView!
     @IBOutlet weak var teleAppointment: UIButton!
     @IBOutlet weak var waAppointment: UIButton!
+    @IBOutlet weak var statusApt: UILabel!
+    
 }

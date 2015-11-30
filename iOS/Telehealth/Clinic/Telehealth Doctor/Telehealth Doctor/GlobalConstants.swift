@@ -7,15 +7,23 @@
 //
 
 import Foundation
-import Alamofire
-import SwiftyJSON
 
-let URL_SERVER_3009 = "http://192.168.1.130:3009"
-let URL_SERVER_3005 = "http://192.168.1.130:3005"
+let URL_SERVER_3009 = "http://testapp.redimed.com.au:3009"
+let URL_SERVER_3005 = "http://testapp.redimed.com.au:3005"
 
+struct Platform {
+    static let isSimulator: Bool = {
+        var isSim = false
+        #if arch(i386) || arch(x86_64)
+            isSim = true
+        #endif
+        return isSim
+    }()
+}
 
 // URL Request API
-let AUTHORIZATION = URL_SERVER_3009 + "/api/telehealth/user/login"
+let AUTHORIZATION = URL_SERVER_3005 + "/api/login"
+let GET_TELEUSER = URL_SERVER_3009 + "/api/telehealth/user/"
 
 let GENERATESESSION = URL_SERVER_3009 + "/api/telehealth/socket/generateSession"
 
@@ -30,6 +38,8 @@ let APPOINTMENTLIST_TeleHealth = URL_SERVER_3009 + "/api/telehealth/appointment/
 let DOWNLOAD_IMAGE_APPOINTMENT = URL_SERVER_3005 + "/api/downloadFile/"
 
 let GET_NEW_TOKEN = URL_SERVER_3005 + "/api/refresh-token/GetNewToken"
+
+
 
 
 // Socket Emit

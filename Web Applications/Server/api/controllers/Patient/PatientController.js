@@ -248,10 +248,10 @@ module.exports = {
         var data = req.body.data;
         if (typeof(data) == 'string') {
             data = JSON.parse(data);
-        }
-        for (var key in data) {
-            if (typeof(data[key]) == 'string')
-                data[key] = JSON.parse(data[key]);
+            for (var key in data) {
+                if (typeof(data[key]) == 'string')
+                    data[key] = JSON.parse(data[key]);
+            }
         }
         Services.Patient.LoadListPatient(data)
             .then(function(result) {

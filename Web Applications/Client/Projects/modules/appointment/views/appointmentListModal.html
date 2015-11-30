@@ -6,7 +6,8 @@
     <!-- <div class="modal-body" style="overflow-y:scroll; overflow-x:hidden; max-height:400px;"> -->
     <div class="modal-body">
         <!--  -->
-        <div class="tabbable">
+        
+            <div class="tabbable">
             <ul class="nav nav-tabs nav-tabs-lg">
                 <li class="active">
                     <a href="index.html#appointment" data-toggle="tab" aria-expanded="true">
@@ -45,7 +46,8 @@
                 </li>
             </ul>
             <fieldset ng-disabled="checkRoleUpdate">
-                <div class="tab-content" style="padding: 2em 1em; margin: 0 auto">
+                <form name="userForm" novalidate>
+                    <div class="tab-content" style="padding: 2em 1em; margin: 0 auto">
                     <div class="tab-pane active" id="appointment">
                         <div class="row">
                             <div class="col-md-6">
@@ -493,9 +495,12 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" ng-model="ShowData.patient.FirstName" placeholder="" ng-disabled="ShowData.isLinkPatient">
-                                    <label class="control-label">First Name</label>
+                                <div class="form-group form-md-line-input " ng-class="{'has-error': userForm.FirstName.$invalid && submited} ">
+                                    <input type="text" class="form-control edited" ng-model="ShowData.patient.FirstName" placeholder="" ng-disabled="ShowData.isLinkPatient" name="FirstName" required>
+                                    <label class="control-label">First Name
+                                        <span class="required"> * </span>
+                                    </label>
+                                    <p ng-show="userForm.FirstName.$invalid && submited" class="help-block">First name is required</p>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -505,53 +510,68 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group form-md-line-input ">
-                                    <input type="text" class="form-control" ng-model="ShowData.patient.LastName" placeholder="" ng-disabled="ShowData.isLinkPatient">
-                                    <label class="control-label">Last Name</label>
+                                <div class="form-group form-md-line-input " ng-class="{'has-error': userForm.LastName.$invalid && !userForm.LastName.$pristine} ">
+                                    <input type="text" class="form-control edited" ng-model="ShowData.patient.LastName" placeholder="" ng-disabled="ShowData.isLinkPatient" required name="LastName">
+                                    <p ng-show="userForm.LastName.$invalid && submited" class="help-block">Last name is required</p>
+                                    <label class="control-label">Last Name
+                                        <span class="required"> * </span>
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group form-md-line-input  ">
+                                <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.DOB.$invalid && submited} ">
                                     <div class="input-icon">
                                         <i class="fa fa-calendar"></i>
-                                        <input type="text" class="form-control form-control-inline date-picker" ng-model="ShowData.patient.DOB" ng-disabled="ShowData.isLinkPatient" data-date-format="dd/mm/yyyy" data-date-end-date="0d">
-                                        <label class="control-label">Date of Birth</label>
+                                        <input type="text" class="form-control form-control-inline date-picker edited" ng-model="ShowData.patient.DOB" ng-disabled="ShowData.isLinkPatient" data-date-format="dd/mm/yyyy" data-date-end-date="0d" name="DOB" required>
+                                        <p ng-show="userForm.DOB.$invalid && submited" class="help-block">Date of birth is required</p>
+                                        <label class="control-label">Date of Birth
+                                            <span class="required"> * </span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group form-md-line-input  ">
+                                <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.WorkPhoneNumber.$invalid && submited} ">
                                     <div class="input-icon">
                                         <i class="fa fa-mobile"></i>
-                                        <input type="text" class="form-control" ng-model="ShowData.patient.WorkPhoneNumber" ng-disabled="ShowData.isLinkPatient">
-                                        <label class="control-label">Contact Number (M)</label>
+                                        <input type="text" class="form-control edited" ng-model="ShowData.patient.WorkPhoneNumber" ng-disabled="ShowData.isLinkPatient"  name="WorkPhoneNumber" required ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/">
+                                        <p ng-show="userForm.WorkPhoneNumber.$error.required && submited" class="help-block">Contact Number (M) is required</p>
+                                        <p ng-show="userForm.WorkPhoneNumber.$error.pattern && submited" class="help-block">This is not a mobile phone number</p>
+                                        <label class="control-label">Contact Number (M)
+                                            <span class="required"> * </span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group form-md-line-input  ">
+                                <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.HomePhoneNumber.$invalid}">
                                     <div class="input-icon">
                                         <i class="fa fa-phone"></i>
-                                        <input type="text" class="form-control" ng-model="ShowData.patient.HomePhoneNumber" ng-disabled="ShowData.isLinkPatient">
+                                        <input type="text" class="form-control edited" ng-model="ShowData.patient.HomePhoneNumber" ng-disabled="ShowData.isLinkPatient" name="HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/">
+                                        <p ng-show="userForm.HomePhoneNumber.$error.pattern" class="help-block">This is not a home phone number</p>
                                         <label class="control-label">Contact Number (H)</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group form-md-line-input  ">
+                                <div class="form-group form-md-line-input  " ng-class="{'has-error': userForm.Email1.$invalid}">
                                     <div class="input-icon">
                                         <i class="fa fa-envelope"></i>
-                                        <input type="text" class="form-control" ng-model="ShowData.patient.Email1" ng-disabled="ShowData.isLinkPatient">
+                                        <input type="text" class="form-control" ng-model="ShowData.patient.Email1" ng-disabled="ShowData.isLinkPatient" name="Email1" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/">
+                                        <p ng-show="userForm.Email1.$error.pattern" class="help-block">Please enter a valid email address.</p>
                                         <label class="control-label">Email Address</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group form-md-line-input ">
+                                <div class="form-group form-md-line-input " ng-class="{'has-error': userForm.Address1.$invalid && submited}">
                                     <div class="input-icon">
                                         <i class="fa fa-send"></i>
-                                        <input type="text" class="form-control" ng-model="ShowData.patient.Address1" placeholder="" ng-disabled="ShowData.isLinkPatient">
-                                        <label class="control-label">Address1</label>
+                                        <input type="text" class="form-control edited" ng-model="ShowData.patient.Address1" placeholder="" ng-disabled="ShowData.isLinkPatient" name="Address1" required>
+                                        <label class="control-label">Address1
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <p ng-show="userForm.Address1.$invalid && submited" class="help-block">Address1 name is required</p>
                                     </div>
                                 </div>
                             </div>
@@ -567,15 +587,21 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" ng-model="ShowData.patient.Suburb" ng-disabled="ShowData.isLinkPatient">
-                                    <label class="control-label">Suburb</label>
+                                <div class="form-group form-md-line-input " ng-class="{'has-error': userForm.Suburb.$invalid && submited}">
+                                    <input type="text" class="form-control edited" ng-model="ShowData.patient.Suburb" ng-disabled="ShowData.isLinkPatient" name="Suburb" required>
+                                    <label class="control-label">Suburb
+                                        <span class="required"> * </span>
+                                    </label>
+                                    <p ng-show="userForm.Suburb.$invalid && submited" class="help-block">Suburb name is required</p>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group form-md-line-input  ">
-                                    <input type="text" class="form-control" ng-model="ShowData.patient.Postcode" ng-disabled="ShowData.isLinkPatient">
-                                    <label class="control-label">Postcode</label>
+                                <div class="form-group form-md-line-input  " ng-class="{'has-error': userForm.Postcode.$invalid && submited}">
+                                    <input type="text" class="form-control edited" ng-model="ShowData.patient.Postcode" ng-disabled="ShowData.isLinkPatient" name="Postcode" required>
+                                    <label class="control-label">Postcode
+                                        <span class="required"> * </span>
+                                    </label>
+                                    <p ng-show="userForm.Postcode.$invalid && submited" class="help-block">Postcode name is required</p>
                                 </div>
                             </div>
                         </div>
@@ -760,7 +786,7 @@
                                     </div>
                                     <div class="col-md-6">
                                          <div class="form-group form-md-line-input  ">
-                                            <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].Country" disabled="true">
+                                            <input type="text" class="form-control" placeholder="" ng-model="appointment.TelehealthAppointment.Doctors[0].Country.ShortName" disabled="true">
                                             <label class="control-label">Country</label>
                                         </div>
                                     </div>
@@ -814,21 +840,23 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
+                </form>
             </fieldset>
-        </div>
+            </div>
         <!--  -->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn default" data-dismiss="modal" ng-click="close()">
             <i class="icon-action-undo"></i> Close
         </button>
-        <button type="button" class="btn green" ng-click="submitUpdate()" ng-show="!checkRoleUpdate">
+        <button type="submit" class="btn green" ng-click="submitUpdate()" ng-show="!checkRoleUpdate">
             <i class="glyphicon glyphicon-save"></i> Save changes
         </button>
     </div>
 </div>
 <script type="text/ng-template" id="showImageTemplate">
+
     <div class="modal-header my-modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"></button>
     </div>

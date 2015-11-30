@@ -103,6 +103,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 			};
 
 			scope.back_2 = function() {
+				delete scope.data['DepartmentID','ProviderNumber'];
 				scope.isBlockStep1 =false;
 				scope.isShowNext=false;
 				scope.isShowNext3=true;

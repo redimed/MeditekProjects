@@ -1,5 +1,2 @@
-//TODO
-module.exports = function (req, res, next) {
-    res.header('Access-Control-Expose-Headers', sails.config.cors.exposeHeaders);
-    next();
-};
+var meditek_library=require("meditek_library");
+module.exports=meditek_library.setExposeHeaders;

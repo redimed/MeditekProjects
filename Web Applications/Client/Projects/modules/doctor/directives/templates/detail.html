@@ -52,7 +52,7 @@
                                 <div class="tab-pane active" id="tab_UserAccount">
                                     <div class="form-horizontal">
 	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-ms-3">Username</label>
+	                                        <label class="control-label col-md-3 col-ms-3">UserName</label>
 	                                        <div class="col-md-6 col-sm-6">
 	                                            <div class="input-icon">
 	                                                <i class="glyphicon glyphicon-user"></i>
@@ -111,7 +111,7 @@
 	                                    <!-- end title -->
 	                                    <!-- Begin Firstname -->
 	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Firstname</label>
+	                                        <label class="control-label col-md-3 col-sm-3">FirstName</label>
 	                                        <div class="col-md-6 col-sm-6">
 	                                            <input type="text" class="form-control" placeholder="Firstname" ng-model="info.FirstName" ng-style="er.FirstName.css" ng-change="ermsg.FirstName='';checkDataNull('FirstName')" >
 	                                            <span style="color:red;">{{er.FirstName.msg}}</span>
@@ -120,7 +120,7 @@
 	                                    <!-- End Firstname -->
 	                                    <!-- Begin Middlename -->
 	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Middlename</label>
+	                                        <label class="control-label col-md-3 col-sm-3">MiddleName</label>
 	                                        <div class="col-md-6 col-sm-6">
 	                                            <input type="text" class="form-control" placeholder="Middlename" ng-model="info.MiddleName" ng-style="er.MiddleName.css" ng-change="ermsg.MiddleName='';checkDataNull('MiddleName')" >
 	                                            <span style="color:red;">{{er.MiddleName.msg}}</span>
@@ -129,7 +129,7 @@
 	                                    <!-- End Middlename -->
 	                                    <!-- Begin Surname -->
 	                                    <div class="form-group ">
-	                                        <label class="control-label col-md-3 col-sm-3">Lastname</label>
+	                                        <label class="control-label col-md-3 col-sm-3">LastName</label>
 	                                        <div class="col-md-6 col-sm-6">
 	                                            <input type="text" class="form-control" placeholder="Lastname" ng-model="info.LastName" ng-style="er.LastName.css" ng-change="ermsg.LastName='';checkDataNull('LastName')" >
 	                                            <span style="color:red;">{{er.LastName.msg}}</span>
@@ -142,7 +142,7 @@
 	                                        <div class="col-md-6 col-sm-6">
 	                                            <div class="input-icon">
 	                                                <i class="fa fa-calendar"></i>
-	                                                <input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy" ng-model="info.DOB" id="DOB" ng-style="er.DOB.css" ng-change="ermsg.DOB=''" />
+	                                                <input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy"data-date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB.css" ng-change="ermsg.DOB=''" />
 	                                                <span style="color:red;">{{er.DOB.msg}}</span>
 	                                            </div>
 	                                        </div>
@@ -192,7 +192,7 @@
                                 	<div class="form-horizontal">
                                 		<!-- begin Workphone -->
 	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Workphone</label>
+	                                        <label class="control-label col-md-3 col-sm-3">WorkPhone</label>
 	                                        <div class="col-md-6 col-sm-6">
 	                                            <div class="input-icon">
 	                                                <i class="glyphicon glyphicon-phone"></i>
@@ -204,7 +204,7 @@
 	                                    <!-- end Workphone -->
 	                                    <!-- begin Homephone -->
 	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Homephone</label>
+	                                        <label class="control-label col-md-3 col-sm-3">HomePhone</label>
 	                                        <div class="col-md-6 col-sm-6">
 	                                            <div class="input-icon">
 	                                                <i class="glyphicon glyphicon-phone-alt"></i>

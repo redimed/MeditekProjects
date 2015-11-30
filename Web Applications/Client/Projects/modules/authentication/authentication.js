@@ -8,6 +8,7 @@ var app = angular.module('app.authentication', [
 	'app.authentication.patient',
 	'app.authentication.user',
 	'app.authentication.WAAppointment',
+	'app.authentication.consultation',
 ]);
 
 app.config(function($stateProvider){

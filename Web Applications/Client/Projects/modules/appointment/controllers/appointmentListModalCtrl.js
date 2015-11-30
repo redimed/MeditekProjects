@@ -26,6 +26,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         //ComponentsDropdowns.init(); // init todo page
     });
     console.log(getid)
+    $scope.submited = false;
      $scope.loadListContry = function() {
         AuthenticationService.getListCountry().then(function(response) {
             $scope.ListContry = response.data;
@@ -174,6 +175,11 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         };
         if (!$scope.ShowData.isLinkPatient) {
             $scope.appointment.TelehealthAppointment.PatientAppointment = $scope.ShowData.patient;
+        }else{
+            console.log($scope.appointment.Patients[0].UserAccount);
+            if ($scope.appointment.Patients[0].UserAccount != undefined && $scope.appointment.Patients[0].UserAccount !==null && $scope.appointment.Patients[0].UserAccount !== '') {
+                $scope.ShowData.patient.WorkPhoneNumber = angular.copy($scope.appointment.Patients[0].UserAccount.PhoneNumber);
+            };
         };
         $scope.referringPractitionerDateTemp = formatDate($scope.appointment.Doctors.RefDate);
 
@@ -261,30 +267,34 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
         return stringAlert
     }
     $scope.submitUpdate = function() {
-        var stringAlert = null;
-        if ($scope.appointment.Status == 'Approved' || $scope.appointment.Status == 'Attended' || $scope.appointment.Status == 'Waitlist' || $scope.appointment.Status == 'Finished') {
-            stringAlert = $scope.CheckValidation()
-        };
-        if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate != ''  || 
-            $scope.ShowData.DateTimeAppointmentDateTime != null && $scope.ShowData.DateTimeAppointmentDateTime != '') {
-            stringAlert = $scope.CheckValidation();
-
-        };
-        if (stringAlert == null) {
-            swal({
-                    title: "Are you sure ?",
-                    text: "Update Appointment",
-                    type: "info",
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    showLoaderOnConfirm: true,
-                },
-                function() {
-                    $scope.updateAppointment();
-                });
+        $scope.submited = true;
+        if ($scope.userForm.$valid) {
+            var stringAlert = null;
+            if ($scope.appointment.Status == 'Approved' || $scope.appointment.Status == 'Attended' || $scope.appointment.Status == 'Waitlist' || $scope.appointment.Status == 'Finished') {
+                stringAlert = $scope.CheckValidation();
+            };
+            if ($scope.ShowData.DateTimeAppointmentDate != null && $scope.ShowData.DateTimeAppointmentDate != ''  || 
+                $scope.ShowData.DateTimeAppointmentDateTime != null && $scope.ShowData.DateTimeAppointmentDateTime != '') {
+                stringAlert = $scope.CheckValidation();
+            };
+            if (stringAlert == null) {
+                swal({
+                        title: "Are you sure ?",
+                        text: "Update Appointment",
+                        type: "info",
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        showLoaderOnConfirm: true,
+                    },
+                    function() {
+                        $scope.updateAppointment();
+                    });
+            }else{
+                toastr.error(stringAlert);
+            }
         }else{
-            toastr.error(stringAlert);
-        };
+            toastr.error('Please check input data');
+        }
     }
 
     $scope.updateAppointment = function() {
@@ -358,6 +368,7 @@ app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstan
             var postData = {
                 data: $scope.appointment
             };
+            console.log(postData);
             AppointmentService.upDateApppointment(postData).then(function(response) {
                 if (response == 'success') {
                     toastr.success("Update appointment successfully !");

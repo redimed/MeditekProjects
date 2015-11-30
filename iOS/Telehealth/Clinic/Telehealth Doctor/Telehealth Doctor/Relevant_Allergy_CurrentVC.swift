@@ -9,17 +9,17 @@
 import UIKit
 import SwiftyJSON
 
-class Relevant_Allergy_CurrentVC: UIViewController {
+class Relevant_Allergy_CurrentVC: UIViewController, UIScrollViewDelegate {
     
     var cliniCalDetails: JSON!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var textViewMain: UITextView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         cliniCalDetails = SingleTon.detailAppointMentObj["TelehealthAppointment"]["ClinicalDetails"]
-        
         let arrKey = ["MedicalHistory", "SocialFactors", "Allergies", "Medication", "InvestigationTests"]
         
         switch self.title! {
@@ -56,5 +56,9 @@ class Relevant_Allergy_CurrentVC: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        scrollView.setContentOffset(CGPointMake(0, scrollView.contentOffset.y), animated: true)
     }
 }

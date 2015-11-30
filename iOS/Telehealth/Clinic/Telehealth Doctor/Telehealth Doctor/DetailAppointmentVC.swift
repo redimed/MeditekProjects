@@ -14,24 +14,23 @@ import Spring
 class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var gradientBackground: UIImageView!
-    
     @IBOutlet var btnCollectMenu: [UIButton]!
     @IBOutlet weak var viewButton: UIView!
+    @IBOutlet var navigaButton: [UIButton]!
+    @IBOutlet weak var tableView: UITableView!
     
     var xibVC : UIViewController!
     var uidUser : Int?
     let loading: DTIActivityIndicatorView = DTIActivityIndicatorView()
     var customUI: CustomViewController = CustomViewController()
     var URL: String?
-    
+    var oldTitle: String?
     
     //    Declare for WA Appointment
     var arrayForMainDetail : NSMutableArray = NSMutableArray()
     var mainDetail : NSMutableArray = NSMutableArray()
     var contentDict : NSMutableDictionary = NSMutableDictionary()
-    @IBOutlet weak var tableView: UITableView!
-    
+    var mainImageMenu : NSMutableArray = NSMutableArray()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,29 +41,40 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
         self.loading.indicatorStyle = DTIIndicatorStyle.convInv(.doubleBounce)
         self.loading.startActivity()
         
-        navigationItem.title = SingleTon.onlineUser_Singleton[uidUser!].fullNamePatient == nil ? "Detail Appointment" : SingleTon.onlineUser_Singleton[uidUser!].fullNamePatient
+        guard let numberArrOnlineUser: Int = SingleTon.onlineUser_Singleton.count where numberArrOnlineUser > 0 else {
+            print("DetailViewController - user detail fatal error optional value")
+            return
+        }
+        
         if SingleTon.flagSegue == true {
             URL = TELEAPPOINTMENT_DETAIL + SingleTon.onlineUser_Singleton[uidUser!].UID
         } else {
             URL = WAAPPOINTMENT_DETAIL + SingleTon.onlineUser_Singleton[uidUser!].UID
             
+            let imgView = UIImageView(image: UIImage(named: "BG-DetailApt"))
+            imgView.contentMode = UIViewContentMode.ScaleAspectFill
+            tableView.backgroundView = imgView
+            tableView.estimatedRowHeight = 130
+            tableView.rowHeight = UITableViewAutomaticDimension
+            
             // Declare value of table menu
             arrayForMainDetail = ["0","0","0","0","0","0"]
-            mainDetail = ["Appointment", "Patient", "Referral", "Clinical Details & Relevant Medical History", "Medical Images", "Present Complain & Allergy"]
+            mainDetail = ["Appointment", "Clinical Details & Relevant Medical History", "Present Complain & Allergy", "Medical Images", "Patient", "Referral"]
+            mainImageMenu = [ UIImage(named: "basic-info")!, UIImage(named: "clinical-detail")!, UIImage(named: "present-complain")!, UIImage(named: "medical-image")!, UIImage(named: "patient")!, UIImage(named: "handshake-100")! ]
             
             let clinic: NSArray = ["Relevant Past Medical History", "Relevant Social Factors", "Allegiers", "Current Medication", "Relevant Investigation & Test", "Pathology & Radiology"]
             
             let patient: NSArray = ["Basic Information", "Contact Information", "Kin/Guardian", "Medicare Information"]
             
-            let referral: NSArray = ["Referral Information", "Reason for referral/Presenting Problem", "History of Previous Skin cancers and treatmens", "History of Previous Hand surgery"]
+            let referral: NSArray = ["Referral Information", "Reason for referral/Presenting Problem", "History of Previous Skin cancers/ hand surgery"]
             
-            var strParse = mainDetail.objectAtIndex(1) as? String
+            var strParse = mainDetail.objectAtIndex(4) as? String
             contentDict.setValue(patient, forKey: strParse!)
             
-            strParse = mainDetail.objectAtIndex(2) as? String
+            strParse = mainDetail.objectAtIndex(5) as? String
             contentDict.setValue(referral, forKey: strParse!)
             
-            strParse = mainDetail.objectAtIndex(3) as? String
+            strParse = mainDetail.objectAtIndex(1) as? String
             contentDict.setValue(clinic, forKey: strParse!)
         }
         
@@ -109,8 +119,20 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        for button in navigaButton {
+            switch button.tag {
+            case 50:
+                button.setTitle(oldTitle, forState: UIControlState.Normal)
+            default:
+                button.setTitle(SingleTon.onlineUser_Singleton[uidUser!].fullNamePatient == nil ? "Detail Appointment" : SingleTon.onlineUser_Singleton[uidUser!].fullNamePatient, forState: UIControlState.Normal)
+                break;
+            }
+        }
+    }
+    
     func loadXibView() {
-        
         for button in self.btnCollectMenu {
             button.enabled = true
             if button.tag == 0 {
@@ -125,16 +147,10 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
             tableView.hidden = false
         } else {
             viewButton.hidden = false
-            gradientBackground.hidden = false
-            customUI.BlurLayer(gradientBackground)
         }
         
         loading.stopActivity(true)
         
-    }
-    
-    func hardProcessingWithString(data: NSData, completion: (result: Int) -> Void) {
-        completion(result: 0)
     }
     
     override func didReceiveMemoryWarning() {
@@ -190,10 +206,9 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
                 
                 UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
                     
-                    
                     let layer = CAGradientLayer()
-                    layer.frame = button.bounds
-                    layer.colors = [UIColor(hex: "FF2A68").CGColor, UIColor(hex: "FF5E3A").CGColor]
+                    layer.frame = CGRectMake(0, button.frame.size.height / 4, button.frame.size.width + 2, button.frame.size.height - 60)
+                    layer.contents = UIImage(named: "main-menu-choose")?.CGImage
                     button.layer.addSublayer(layer)
                     button.alpha = 0.8
                     
@@ -209,6 +224,27 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
             button.layer.addSublayer(border)
             button.layer.masksToBounds = true
         }
+    }
+    
+    func animateUIViewSelect(view: UIView) {
+        UIView.animateWithDuration(0.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            
+            view.alpha = 0.0
+            
+            }, completion: {
+                (finished: Bool) -> Void in
+                
+                UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+
+                    UIGraphicsBeginImageContext(self.view.frame.size)
+                    UIImage(named: "main-menu-choose")?.drawInRect(CGRect(x: 0,y: (view.frame.size.height / 6) + 5, width: view.frame.size.width + 3, height: view.frame.size.height / 2))
+                    let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                    view.backgroundColor = UIColor(patternImage: image)
+                    view.alpha = 0.8
+                    
+                    }, completion: nil)
+        })
     }
     
     
@@ -233,21 +269,30 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 113.5
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 1
     }
     
+    var headerView2 = UIView()
+    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 40))
+        let headerView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 113.5))
+        headerView2 = headerView
         headerView.backgroundColor = UIColor.clearColor()
         headerView.tag = section
         
-        let headerString = UILabel(frame: CGRectMake(10, 10, tableView.frame.size.width - 10, 30)) as UILabel
+        let headerString = UILabel(frame: CGRectMake(74, headerView.frame.size.height / 4 - 10, 195, 70)) as UILabel
+        headerString.textColor = UIColor.whiteColor()
+        headerString.numberOfLines = 2
         headerString.text = mainDetail.objectAtIndex(section) as? String
-        headerView.addSubview(headerString)
+        headerView2.addSubview(headerString)
+        
+        let imageView = UIImageView(frame: CGRectMake(8, headerView.frame.size.height / 4, 50, 50)) as UIImageView
+        imageView.image = mainImageMenu.objectAtIndex(section) as? UIImage
+        headerView2.addSubview(imageView)
         
         let headerTapped = UITapGestureRecognizer(target: self, action: "sectionHeaderTapped:")
         headerView.addGestureRecognizer(headerTapped)
@@ -277,23 +322,29 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
             xibVC.view.removeFromSuperview()
             switch indexPath.section {
             case 0: // Appointment
+                animateUIViewSelect(headerView2)
                 xibVC = Appointment(nibName: "Appointment", bundle: nil)
                 containerView.addSubview(xibVC.view)
-            case 1: // Patient
-                xibVC = BasicInfoWAPatient(nibName: "BasicInfoWAPatient", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            case 2: // Referral
-                xibVC = Referral_InformationVC(nibName: "Referral InformationVC", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            case 3: // Clinical Details & Relevant Medical History
+            case 1: // Clinical Details & Relevant Medical History
+                animateUIViewSelect(headerView2)
                 xibVC = Relevant_Allergy_CurrentVC(nibName: "Relevant_Allergy_CurrentVC", bundle: nil)
                 xibVC.title = "Relevant Past Medical History"
                 containerView.addSubview(xibVC.view)
-            case 4: // Medical Images
+            case 2: // Present Complain & Allergy
+                animateUIViewSelect(headerView2)
+                xibVC = PresentComplain(nibName: "PresentComplain", bundle: nil)
+                containerView.addSubview(xibVC.view)
+            case 3: // Medical Images
+                animateUIViewSelect(headerView2)
                 xibVC = MedicalImage(nibName: "MedicalImage", bundle: nil)
                 containerView.addSubview(xibVC.view)
-            case 5: // Present Complain & Allergy
-                xibVC = PresentComplain(nibName: "PresentComplain", bundle: nil)
+            case 4: // Patient
+                animateUIViewSelect(headerView2)
+                xibVC = BasicInfoWAPatient(nibName: "BasicInfoWAPatient", bundle: nil)
+                containerView.addSubview(xibVC.view)
+            case 5: // Referral
+                animateUIViewSelect(headerView2)
+                xibVC = Referral_InformationVC(nibName: "Referral InformationVC", bundle: nil)
                 containerView.addSubview(xibVC.view)
             default:
                 break;
@@ -303,12 +354,26 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        tableView.rowHeight = 70
+        self.tableView.separatorColor = UIColor.whiteColor()
         let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
         let manyCells: Bool = arrayForMainDetail.objectAtIndex(indexPath.section).boolValue
         if manyCells {
             let content = contentDict.valueForKey(mainDetail.objectAtIndex(indexPath.section) as! String) as! NSArray
             cell.textLabel?.text = content.objectAtIndex(indexPath.row) as? String
-            cell.backgroundColor = UIColor(hex: "DBDDDE")
+            cell.backgroundColor = UIColor(hex: "1ac6ff")
+            
+            UIGraphicsBeginImageContext(cell.frame.size)
+            UIImage(named: "main-menu-choose")?.drawInRect(CGRect(x: 0, y: (cell.frame.size.height / 6) - 10, width: cell.frame.size.width, height: (cell.frame.size.height / 2) - 10))
+            
+            let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+            
+            UIGraphicsEndImageContext()
+            
+            let bgColorView = UIView()
+            
+            bgColorView.backgroundColor = UIColor(patternImage: image)
+            cell.selectedBackgroundView = bgColorView
         }
         return cell
     }
@@ -316,42 +381,7 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         xibVC.view.removeFromSuperview()
         switch indexPath.section {
-        case 1: // Patient
-            switch indexPath.row {
-            case 0:
-                xibVC = BasicInfoWAPatient(nibName: "BasicInfoWAPatient", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            case 1:
-                xibVC = ContactInfoWAPatient(nibName: "ContactInfoWAPatient", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            case 2:
-                xibVC = Kin_Guardian(nibName: "Kin_Guardian", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            case 3:
-                xibVC = Medi_Infomation(nibName: "Medi_Infomation", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            default:
-                break;
-            }
-        case 2: // Referral
-            switch indexPath.row {
-            case 0:
-                xibVC = Referral_InformationVC(nibName: "Referral InformationVC", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            case 1:
-                xibVC = ReasonforPresentingVC(nibName: "ReasonforPresentingVC", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            case 2:
-                xibVC = HistorySkinHandVC(nibName: "HistorySkinHandVC", bundle: nil)
-                xibVC.title = "CancerandTreatments"
-                containerView.addSubview(xibVC.view)
-            case 3:
-                xibVC = HistorySkinHandVC(nibName: "HistorySkinHandVC", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            default:
-                break;
-            }
-        case 3: // Clinical Details & Relevant Medical History
+        case 1: // Clinical Details & Relevant Medical History
             let index = mainDetail[indexPath.section] as! String
             switch indexPath.row {
             case 0:
@@ -376,6 +406,37 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
                 containerView.addSubview(xibVC.view)
             case 5:
                 xibVC = PathologyProviderVC(nibName: "PathologyProviderVC", bundle: nil)
+                containerView.addSubview(xibVC.view)
+            default:
+                break;
+            }
+        case 4: // Patient
+            switch indexPath.row {
+            case 0:
+                xibVC = BasicInfoWAPatient(nibName: "BasicInfoWAPatient", bundle: nil)
+                containerView.addSubview(xibVC.view)
+            case 1:
+                xibVC = ContactInfoWAPatient(nibName: "ContactInfoWAPatient", bundle: nil)
+                containerView.addSubview(xibVC.view)
+            case 2:
+                xibVC = Kin_Guardian(nibName: "Kin_Guardian", bundle: nil)
+                containerView.addSubview(xibVC.view)
+            case 3:
+                xibVC = Medi_Infomation(nibName: "Medi_Infomation", bundle: nil)
+                containerView.addSubview(xibVC.view)
+            default:
+                break;
+            }
+        case 5: // Referral
+            switch indexPath.row {
+            case 0:
+                xibVC = Referral_InformationVC(nibName: "Referral InformationVC", bundle: nil)
+                containerView.addSubview(xibVC.view)
+            case 1:
+                xibVC = ReasonforPresentingVC(nibName: "ReasonforPresentingVC", bundle: nil)
+                containerView.addSubview(xibVC.view)
+            case 2:
+                xibVC = HistorySkinHandVC(nibName: "HistorySkinHandVC", bundle: nil)
                 containerView.addSubview(xibVC.view)
             default:
                 break;

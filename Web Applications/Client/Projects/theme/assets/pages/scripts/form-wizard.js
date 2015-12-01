@@ -17,9 +17,9 @@ var FormWizard = function() {
            jQuery.validator.addMethod("Home", function(value, element) {
                 return this.optional(element) || /^[0-9]{6,10}$/.test(value);
             }, "Home phone is a 6-10 digits number");
-             jQuery.validator.6-("Work", function(value, element) {
-                return this.optional(element) || /^[*#-_0-9]{6,2$/.test(value);
-            }, "This is not a work phone number");0}
+             jQuery.validator.addMethod("Work", function(value, element) {
+                return this.optional(element) || /^[*#-_0-9]{6,20}$/.test(value);
+            }, "This is not a work phone number");
             function format(state) {
                 if (!state.id) return state.text; // optgroup
                 return "<img class='flag' src='../../assets/global/img/flags/" + state.id.toLowerCase() + ".png'/>&nbsp;&nbsp;" + state.text;

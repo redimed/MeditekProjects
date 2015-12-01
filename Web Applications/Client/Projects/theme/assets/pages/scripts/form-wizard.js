@@ -13,10 +13,10 @@ var FormWizard = function() {
             }, "Please enter a valid email address.");
             jQuery.validator.addMethod("MobilePhone", function(value, element) {
                 return this.optional(element) || /^(\+61|0061|0)?4[0-9]{8}$/.test(value);
-            }, "This is not a mobile phone number");
+            }, "Phone number is a 10 digits number. Eg: 04 xxxx xxxx");
            jQuery.validator.addMethod("Home", function(value, element) {
                 return this.optional(element) || /^[0-9]{6,10}$/.test(value);
-            }, "This is not a home phone number");
+            }, "Home phone is a 6-10 digits number");
              jQuery.validator.addMethod("Work", function(value, element) {
                 return this.optional(element) || /^[*#-_0-9]{6,20}$/.test(value);
             }, "This is not a work phone number");
@@ -79,6 +79,9 @@ var FormWizard = function() {
                         maxlength: 10,
                         number: true,
                         minlength: 4
+                    },
+                    State:{
+                         required: true
                     },
                     PhoneNumber: {
                         required: true,

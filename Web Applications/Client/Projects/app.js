@@ -214,6 +214,7 @@ app
         });
         $rootScope.$on('$includeContentLoaded', function() {
             // App.initAjax();
+            App.initAjax();
             FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page
         });

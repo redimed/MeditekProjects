@@ -11,7 +11,6 @@ app.controller('showSkinCancerController', function($scope, $modalInstance, toas
         };
     };
     $scope.requestInfo.TelehealthAppointment.ClinicalDetails = angular.copy(ClinicalDetails);
-    console.log($scope.requestInfo.TelehealthAppointment.ClinicalDetails);
     for (var keyRequestInfo in $scope.requestInfo.TelehealthAppointment.ClinicalDetails) {
         var res = keyRequestInfo.split(".");
         if ($scope.requestInfo.TelehealthAppointment.ClinicalDetails[keyRequestInfo].Value != null && $scope.requestInfo.TelehealthAppointment.ClinicalDetails[keyRequestInfo].Value != '') {
@@ -27,9 +26,9 @@ app.controller('showSkinCancerController', function($scope, $modalInstance, toas
             var key = 'Clinical__Details.Telehealth__WAAppointment.'+type+'.'+name;
             if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails) {
                 $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];
-                if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key]) {
-                    $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key] = {};
-                };
+            };
+            if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key]) {
+                $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key] = {};
             };
             if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].Value) {
                 $scope.requestInfo.TelehealthAppointment.ClinicalDetails[key].Value = '';
@@ -47,6 +46,7 @@ app.controller('showSkinCancerController', function($scope, $modalInstance, toas
 
 app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $rootScope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval, AuthenticationService) {
     $scope.ListContry = [];
+    $scope.State = WAConstant.State;
     $scope.loadListContry = function() {
         AuthenticationService.getListCountry().then(function(response) {
             $scope.ListContry = response.data;
@@ -325,6 +325,11 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
             };
         });
     };
+    $scope.Speciality = function(){
+        if($scope.requestInfo.TelehealthAppointment.PreferredPractitioner[0].Speciality ==''){
+            $scope.requestInfo.TelehealthAppointment.PreferredPractitioner[0].Name = '';
+        };
+    }
     $scope.Submit = function() {
         $scope.laddaLoadingBar = true;
         swal({

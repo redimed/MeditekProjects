@@ -1,6 +1,5 @@
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
 var config = sails.config.myconf;
 //****Twilio Client for sending SMS
 var twilioClient = require('twilio')(config.twilioSID, config.twilioToken);

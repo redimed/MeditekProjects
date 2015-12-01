@@ -74,6 +74,14 @@ app
                         }
                         $location.path('/login');
                     }
+                    else
+                    {
+                        if(Boolean(response.headers().requireupdatetoken)===true)
+                        {
+                            $rootScope.getNewToken();
+                        }
+                    }
+                    
                     return $q.reject(response);
                 },
 

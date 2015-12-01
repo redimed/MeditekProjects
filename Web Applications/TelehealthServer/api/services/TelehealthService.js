@@ -14,8 +14,8 @@ var options = {
     // cert: rootPath + '/config/push_key/TelePushCert.pem',
     // key: rootPath + '/config/push_key/TelePushKey.pem',
     //=======Production=========
-    cert: rootPath + '/config/push_key/TelePatientPushCert.pem',
-    key: rootPath + '/config/push_key/TelePatientPushKey.pem',
+    cert: rootPath + '/config/push_key/TelePushCert_Production.pem',
+    key: rootPath + '/config/push_key/TelePushKey_Production.pem',
     passphrase: '1234',
     production: true
 };
@@ -187,7 +187,7 @@ module.exports = {
         return defer.promise;
     },
     MakeRequest: function(info) {
-        return requestify.request(config.CoreAPI + info.path, {
+        return requestify.request((info.host ? info.host : config.CoreAPI) + info.path, {
             method: info.method,
             body: !info.body ? null : info.body,
             params: !info.params ? null : info.params,

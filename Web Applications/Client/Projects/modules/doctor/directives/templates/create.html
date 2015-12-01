@@ -166,63 +166,61 @@
 		                                       	        <span style="color:red;">{{ermsg.RoleId}}</span>
 													</div>
 												</div>
-												<!-- End Role -->
-												<!-- Healthlink ID -->
-												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">Healthlink ID<span class="required">* </span></label>
-													<div class="col-md-8 col-sm-8">
-														<input type="text" placeholder="" class="form-control" ng-model="data.HealthLinkID" ng-style="er.HealthLinkID" ng-change="ermsg.HealthLinkID='';checkDataNull('HealthLinkID')">
-														<span style="color:red;">{{ermsg.HealthLinkID}}</span>
+											</div>
+											<!-- End Role -->
+											<!-- Healthlink ID -->
+											<div class="form-group">
+												<label class="control-label col-md-2 col-sm-2">Healthlink ID<span class="required">* </span></label>
+												<div class="col-md-8 col-sm-8">
+													<input type="text" placeholder="" class="form-control" ng-model="data.HealthLinkID" ng-style="er.HealthLinkID" ng-change="ermsg.HealthLinkID='';checkDataNull('HealthLinkID')">
+													<span style="color:red;">{{ermsg.HealthLinkID}}</span>
+												</div>
+											</div>
+											<!-- End Healthlink ID -->
+											<!-- begin DOB -->
+											<div class="form-group">
+												<label class="control-label col-md-2 col-sm-2">Date of Birth<span class="required">* </span></label>
+												<div class="col-md-8 col-sm-8">
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-calendar"></i>
+           												<input type="text" class="form-control form-control-inline date-picker" ng-model="data.DOB" ng-style="er.DOB" data-date-format="dd/mm/yyyy"date-start-date="1/1/1900" data-date-end-date="0d" ng-change="ermsg.DOB='';checkDataNull('DOB')" >
+           												<span style="color:red;">{{ermsg.DOB}}</span>
 													</div>
 												</div>
-												<!-- End Healthlink ID -->
-												<!-- begin DOB -->
-												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">Date of Birth<span class="required">* </span></label>
-													<div class="col-md-8 col-sm-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-calendar"></i>
-	           												<input type="text" class="form-control form-control-inline date-picker" ng-model="data.DOB" ng-style="er.DOB" data-date-format="dd/mm/yyyy"date-start-date="1/1/1900" data-date-end-date="0d" ng-change="ermsg.DOB='';checkDataNull('DOB')" >
-	           												<span style="color:red;">{{ermsg.DOB}}</span>
-														</div>
+											</div>
+											<!-- end DOB -->
+											<!-- begin Homephone -->
+											<div class="form-group">
+												<label class="control-label col-md-2 col-sm-2">HomePhone</label>
+												<div class="col-md-8 col-sm-8">
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-phone-alt"></i>
+														<input type="text" class="form-control" placeholder="" ng-model="data.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')">
+														<span style="color:red;">{{ermsg.HomePhoneNumber}}</span>
 													</div>
 												</div>
-												<!-- end DOB -->
-												<!-- begin Homephone -->
-												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">HomePhone</label>
-													<div class="col-md-8 col-sm-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-phone-alt"></i>
-															<input type="text" class="form-control" placeholder="" ng-model="data.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')">
-															<span style="color:red;">{{ermsg.HomePhoneNumber}}</span>
-														</div>
-													</div>
-												</div>
-												<!-- end Homephone -->
-												<!-- begin Workphone -->
-												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">WorkPhone</label>
-													<div class="col-md-8 col-sm-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-phone"></i>
-															<input type="text" class="form-control" placeholder="" ng-model="data.WorkPhoneNumber" ng-style="er.WorkPhoneNumber" ng-change="ermsg.WorkPhoneNumber='';checkDataNull('WorkPhoneNumber')">
-															<span style="color:red;">{{ermsg.WorkPhoneNumber}}</span>
-														</div>
+											</div>
+											<!-- end Homephone -->
+											<!-- begin Workphone -->
+											<div class="form-group">
+												<label class="control-label col-md-2 col-sm-2">WorkPhone</label>
+												<div class="col-md-8 col-sm-8">
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-phone"></i>
+														<input type="text" class="form-control" placeholder="" ng-model="data.WorkPhoneNumber" ng-style="er.WorkPhoneNumber" ng-change="ermsg.WorkPhoneNumber='';checkDataNull('WorkPhoneNumber')">
+														<span style="color:red;">{{ermsg.WorkPhoneNumber}}</span>
 													</div>
 												</div>
 											</div>
 											<!-- end Workphone -->
-
-												<!-- Begin Address1 -->
-												<div class="form-group ">
-													<label class="control-label col-md-2 col-sm-2">Address1<span class="required">* </span></label>
-													<div class="col-md-8 col-sm-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-road"></i>
-															<input type="text" class="form-control" placeholder="" ng-model="data.Address1" ng-style="er.Address1" ng-change="ermsg.Address1='';checkDataNull('Address1')">
-															<span style="color:red;">{{ermsg.Address1}}</span>
-														</div>
+											<!-- Begin Address1 -->
+											<div class="form-group ">
+												<label class="control-label col-md-2 col-sm-2">Address1<span class="required">* </span></label>
+												<div class="col-md-8 col-sm-8">
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-road"></i>
+														<input type="text" class="form-control" placeholder="" ng-model="data.Address1" ng-style="er.Address1" ng-change="ermsg.Address1='';checkDataNull('Address1')">
+														<span style="color:red;">{{ermsg.Address1}}</span>
 													</div>
 												</div>
 											</div>
@@ -237,57 +235,56 @@
 														<span style="color:red;">{{ermsg.Address2}}</span>
 													</div>
 												</div>
-												<!-- End Address2 -->
-												<!-- begin Suburb -->
-												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">Suburb<span class="required">* </span></label>
-													<div class="col-md-8 col-sm-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-tree-conifer"></i>
-															<input type="text" class="form-control" placeholder="" ng-model="data.Suburb" ng-style="er.Suburb" ng-change="ermsg.Suburb='';checkDataNull('Suburb')">
-															<span style="color:red;">{{ermsg.Suburb}}</span>
-														</div>
+											</div>
+											<!-- End Address2 -->
+											<!-- begin Suburb -->
+											<div class="form-group">
+												<label class="control-label col-md-2 col-sm-2">Suburb<span class="required">* </span></label>
+												<div class="col-md-8 col-sm-8">
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-tree-conifer"></i>
+														<input type="text" class="form-control" placeholder="" ng-model="data.Suburb" ng-style="er.Suburb" ng-change="ermsg.Suburb='';checkDataNull('Suburb')">
+														<span style="color:red;">{{ermsg.Suburb}}</span>
 													</div>
 												</div>
-												<!-- end Suburb -->
-												<!-- begin Postcode -->
-												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">Postcode<span class="required">* </span></label>
-													<div class="col-md-8 col-sm-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-map-marker"></i>
-															<input type="text" class="form-control" placeholder="" ng-model="data.Postcode" ng-style="er.Postcode" ng-change="ermsg.Postcode='';checkDataNull('Postcode')">
-															<span style="color:red;">{{ermsg.Postcode}}</span>
-														</div>
+											</div>
+											<!-- end Suburb -->
+											<!-- begin Postcode -->
+											<div class="form-group">
+												<label class="control-label col-md-2 col-sm-2">Postcode<span class="required">* </span></label>
+												<div class="col-md-8 col-sm-8">
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-map-marker"></i>
+														<input type="text" class="form-control" placeholder="" ng-model="data.Postcode" ng-style="er.Postcode" ng-change="ermsg.Postcode='';checkDataNull('Postcode')">
+														<span style="color:red;">{{ermsg.Postcode}}</span>
 													</div>
 												</div>
 											</div>
 											<!-- end Postcode -->
-												<!-- begin State -->
-												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">State<span class="required">* </span></label>
-													<div class="col-md-8 col-sm-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-globe"></i>
-															<select ng-init="data.State == st[4]" ng-model="data.State" class="form-control" ng-options="st.code as st.name for st in state" ng-style="er.State" ng-change="ermsg.State='';checkDataNull('State')">
-										                        <option value="">Select State</option>
-										                    </select>
-										                    <span style="color:red;">{{ermsg.State}}</span>
-										                </div>
-													</div>
+											<!-- begin State -->
+											<div class="form-group">
+												<label class="control-label col-md-2 col-sm-2">State<span class="required">* </span></label>
+												<div class="col-md-8 col-sm-8">
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-globe"></i>
+														<select ng-init="data.State == st[4]" ng-model="data.State" class="form-control" ng-options="st.code as st.name for st in state" ng-style="er.State" ng-change="ermsg.State='';checkDataNull('State')">
+									                        <option value="">Select State</option>
+									                    </select>
+									                    <span style="color:red;">{{ermsg.State}}</span>
+									                </div>
 												</div>
-												<!-- end State -->
-												<!-- country -->
-												<div class="form-group">
-													<label class="control-label col-md-2 col-sm-2">Country<span class="required">* </span></label>
-													<div class="col-md-8 col-sm-8">
-														<div class="input-icon">
-															<i class="fa fa-flag"></i>
-															<select class="select2 form-control" ng-model="data.CountryID" ng-style="er.CountryID" ng-change="ermsg.CountryID='';checkDataNull('CountryID')" ng-options="c.ID as c.ShortName for c in country">
-																<option value="">Select Country</option>
-															</select>
-															<span style="color:red;">{{ermsg.CountryID}}</span>
-														</div>
+											</div>
+											<!-- end State -->
+											<!-- country -->
+											<div class="form-group">
+												<label class="control-label col-md-2 col-sm-2">Country<span class="required">* </span></label>
+												<div class="col-md-8 col-sm-8">
+													<div class="input-icon">
+														<i class="fa fa-flag"></i>
+														<select class="select2 form-control" ng-model="data.CountryID" ng-style="er.CountryID" ng-change="ermsg.CountryID='';checkDataNull('CountryID')" ng-options="c.ID as c.ShortName for c in country">
+															<option value="">Select Country</option>
+														</select>
+														<span style="color:red;">{{ermsg.CountryID}}</span>
 													</div>
 												</div>
 											</div>
@@ -296,149 +293,143 @@
 									</div>
 								</div>
 								<div class="tab-pane active" id="tab3">
-									<div style="margin:2em;">
-										<div class="row">
-											<!--  Clinical Department-->
-											<div class="form-group">
-												<label class="control-label col-md-3 col-sm-3">Clinical Department</label>
-												<div class="col-md-6 col-sm-6">
-													<select class="form-control" ng-model="data.DepartmentID" ng-options="d.ID as d.DepartmentName for d in department" ng-style="er.DepartmentID" ng-change="ermsg.DepartmentID='';checkDataNull('DepartmentID')">
-														<option value="">Clinical Department</option>
-													</select>
-													<span style="color:red;">{{ermsg.DepartmentID}}</span>
-												</div>
-											</div>
-											<!-- end Clinical Department -->
-											<!-- Provider Number -->
-											<div class="form-group">
-												<label class="control-label col-md-3 col-sm-3">Provider Number<span class="required">* </span></label>
-												<div class="col-md-6 col-sm-6">
-													<input type="text" placeholder="" class="form-control"  ng-model="data.ProviderNumber" ng-style="er.ProviderNumber" ng-change="ermsg.ProviderNumber='';checkDataNull('ProviderNumber')">
-													<span style="color:red;">{{ermsg.ProviderNumber}}</span>
-												</div>
-											</div>
-											<!-- Provider Number -->
-											<!-- Type -->
-											<div class="form-group">
-												<label class="control-label col-md-3 col-sm-3">Type</label>
-												<div class="col-md-6 col-sm-6">
-													<select class="form-control" ng-model="data.Type" ng-style="er.Type" ng-change="ermsg.Type='';checkDataNull('Type')">
-														<option value="">Type</option>
-														<option value="EXTERTAL_PRACTITIONER">External Practition</option>
-														<option value="INTERNAL_PRACTITIONER">Internal Practition</option>
-													</select>
-													<span style="color:red;">{{ermsg.Type}}</span>
-												</div>
-											</div>
-											<!-- End Type -->
-											<!-- Type -->
-											<div class="form-group">
-												<label class="control-label col-md-3 col-sm-3">Speciality</label>
-												<div class="col-md-6 col-sm-6">
-													<select class="form-control" ng-model="data.Speciality"ng-style="er.Speciality" ng-change="ermsg.Speciality='';checkDataNull('Speciality')">
-														<option value="">Type</option>
-														<option value="PlasticSurgeon">Plastic Surgeon</option>
-														<option value="OrthopaedicSurgeon">Orthopaedic Surgeon</option>
-													</select>
-													<span style="color:red;">{{ermsg.Speciality}}</span>
-												</div>
-											</div>
-											<!-- End Type -->
-											<!-- begin specialities -->
-											<div class="form-group">
-									            <label class="control-label col-md-3 col-sm-3">Specialities</label>
-									            <div class="col-md-6 col-sm-6">
-									            	<select class="form-control Specialities select2-multiple" multiple>
-									            		<optgroup label="Alaskan">
-										                    <option value="AK">Alaska</option>
-										                    <option value="HI" disabled="disabled">Hawaii</option>
-										                </optgroup>
-										                <optgroup label="Pacific Time Zone">
-										                    <option value="CA">California</option>
-										                    <option value="NV">Nevada</option>
-										                    <option value="OR">Oregon</option>
-										                    <option value="WA">Washington</option>
-										                </optgroup>
-										                <optgroup label="Mountain Time Zone">
-										                    <option value="AZ">Arizona</option>
-										                    <option value="CO">Colorado</option>
-										                    <option value="ID">Idaho</option>
-										                    <option value="MT">Montana</option>
-										                    <option value="NE">Nebraska</option>
-										                    <option value="NM">New Mexico</option>
-										                    <option value="ND">North Dakota</option>
-										                    <option value="UT">Utah</option>
-										                    <option value="WY">Wyoming</option>
-										                </optgroup>
-										                <optgroup label="Central Time Zone">
-										                    <option value="AL">Alabama</option>
-										                    <option value="AR">Arkansas</option>
-										                    <option value="IL">Illinois</option>
-										                    <option value="IA">Iowa</option>
-										                    <option value="KS">Kansas</option>
-										                    <option value="KY">Kentucky</option>
-										                    <option value="LA">Louisiana</option>
-										                    <option value="MN">Minnesota</option>
-										                    <option value="MS">Mississippi</option>
-										                    <option value="MO">Missouri</option>
-										                    <option value="OK">Oklahoma</option>
-										                    <option value="SD">South Dakota</option>
-										                    <option value="TX">Texas</option>
-										                    <option value="TN">Tennessee</option>
-										                    <option value="WI">Wisconsin</option>
-										                </optgroup>
-										                <optgroup label="Eastern Time Zone">
-										                    <option value="CT">Connecticut</option>
-										                    <option value="DE">Delaware</option>
-										                    <option value="FL">Florida</option>
-										                    <option value="GA">Georgia</option>
-										                    <option value="IN">Indiana</option>
-										                    <option value="ME">Maine</option>
-										                    <option value="MD">Maryland</option>
-										                    <option value="MA">Massachusetts</option>
-										                    <option value="MI">Michigan</option>
-										                    <option value="NH">New Hampshire</option>
-										                    <option value="NJ">New Jersey</option>
-										                    <option value="NY">New York</option>
-										                    <option value="NC">North Carolina</option>
-										                    <option value="OH">Ohio</option>
-										                    <option value="PA">Pennsylvania</option>
-										                    <option value="RI">Rhode Island</option>
-										                    <option value="SC">South Carolina</option>
-										                    <option value="VT">Vermont</option>
-										                    <option value="VA">Virginia</option>
-										                    <option value="WV">West Virginia</option>
-										                </optgroup>
-									            	</select>
-									            </div>
-									        </div>
-											<!-- end specialities -->
-											
-											<!-- signature -->
-											<div class="form-group">
-												<label class="control-label col-md-3 col-sm-3">Signature</label>
-												<div class="fileinput fileinput-new col-md-6 col-sm-6" data-provides="fileinput">
-													<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
-															<img src="theme/assets/global/images/signature.jpg" width="100%" height="100%">
-														</div>
-													<div>
-														<span class="btn green btn-file">
-														<span class="fileinput-new">
-														Signature </span>
-														<span class="fileinput-exists">
-														Change </span>
-														<input type="file" nv-file-select uploader="uploader">
-														</span>
-														<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-														Remove </a>
-													</div>
-													<br>												</div>
-												<div class="clearfix margin-top-10"></div>
-											</div>
-											<!-- end signature -->
-											
+									<!--  Clinical Department-->
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3">Clinical Department</label>
+										<div class="col-md-6 col-sm-6">
+											<select class="form-control" ng-model="data.DepartmentID" ng-options="d.ID as d.DepartmentName for d in department" ng-style="er.DepartmentID" ng-change="ermsg.DepartmentID='';checkDataNull('DepartmentID')">
+												<option value="">Clinical Department</option>
+											</select>
+											<span style="color:red;">{{ermsg.DepartmentID}}</span>
 										</div>
 									</div>
+									<!-- end Clinical Department -->
+									<!-- Provider Number -->
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3">Provider Number<span class="required">* </span></label>
+										<div class="col-md-6 col-sm-6">
+											<input type="text" placeholder="" class="form-control"  ng-model="data.ProviderNumber" ng-style="er.ProviderNumber" ng-change="ermsg.ProviderNumber='';checkDataNull('ProviderNumber')">
+											<span style="color:red;">{{ermsg.ProviderNumber}}</span>
+										</div>
+									</div>
+									<!-- Provider Number -->
+									<!-- Type -->
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3">Type</label>
+										<div class="col-md-6 col-sm-6">
+											<select class="form-control" ng-model="data.Type" ng-style="er.Type" ng-change="ermsg.Type='';checkDataNull('Type')">
+												<option value="">Type</option>
+												<option value="EXTERTAL_PRACTITIONER">External Practition</option>
+												<option value="INTERNAL_PRACTITIONER">Internal Practition</option>
+											</select>
+											<span style="color:red;">{{ermsg.Type}}</span>
+										</div>
+									</div>
+									<!-- End Type -->
+									<!-- Type -->
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3">Speciality</label>
+										<div class="col-md-6 col-sm-6">
+											<select class="form-control" ng-model="data.Speciality"ng-style="er.Speciality" ng-change="ermsg.Speciality='';checkDataNull('Speciality')">
+												<option value="">Type</option>
+												<option value="PlasticSurgeon">Plastic Surgeon</option>
+												<option value="OrthopaedicSurgeon">Orthopaedic Surgeon</option>
+											</select>
+											<span style="color:red;">{{ermsg.Speciality}}</span>
+										</div>
+									</div>
+									<!-- End Type -->
+									<!-- begin specialities -->
+									<div class="form-group">
+							            <label class="control-label col-md-3 col-sm-3">Specialities</label>
+							            <div class="col-md-6 col-sm-6">
+							            	<select id="Specialities" class="form-control select2-multiple" multiple>
+							            		<optgroup label="Alaskan">
+								                    <option value="AK">Alaska</option>
+								                    <option value="HI" disabled="disabled">Hawaii</option>
+								                </optgroup>
+								                <optgroup label="Pacific Time Zone">
+								                    <option value="CA">California</option>
+								                    <option value="NV">Nevada</option>
+								                    <option value="OR">Oregon</option>
+								                    <option value="WA">Washington</option>
+								                </optgroup>
+								                <optgroup label="Mountain Time Zone">
+								                    <option value="AZ">Arizona</option>
+								                    <option value="CO">Colorado</option>
+								                    <option value="ID">Idaho</option>
+								                    <option value="MT">Montana</option>
+								                    <option value="NE">Nebraska</option>
+								                    <option value="NM">New Mexico</option>
+								                    <option value="ND">North Dakota</option>
+								                    <option value="UT">Utah</option>
+								                    <option value="WY">Wyoming</option>
+								                </optgroup>
+								                <optgroup label="Central Time Zone">
+								                    <option value="AL">Alabama</option>
+								                    <option value="AR">Arkansas</option>
+								                    <option value="IL">Illinois</option>
+								                    <option value="IA">Iowa</option>
+								                    <option value="KS">Kansas</option>
+								                    <option value="KY">Kentucky</option>
+								                    <option value="LA">Louisiana</option>
+								                    <option value="MN">Minnesota</option>
+								                    <option value="MS">Mississippi</option>
+								                    <option value="MO">Missouri</option>
+								                    <option value="OK">Oklahoma</option>
+								                    <option value="SD">South Dakota</option>
+								                    <option value="TX">Texas</option>
+								                    <option value="TN">Tennessee</option>
+								                    <option value="WI">Wisconsin</option>
+								                </optgroup>
+								                <optgroup label="Eastern Time Zone">
+								                    <option value="CT">Connecticut</option>
+								                    <option value="DE">Delaware</option>
+								                    <option value="FL">Florida</option>
+								                    <option value="GA">Georgia</option>
+								                    <option value="IN">Indiana</option>
+								                    <option value="ME">Maine</option>
+								                    <option value="MD">Maryland</option>
+								                    <option value="MA">Massachusetts</option>
+								                    <option value="MI">Michigan</option>
+								                    <option value="NH">New Hampshire</option>
+								                    <option value="NJ">New Jersey</option>
+								                    <option value="NY">New York</option>
+								                    <option value="NC">North Carolina</option>
+								                    <option value="OH">Ohio</option>
+								                    <option value="PA">Pennsylvania</option>
+								                    <option value="RI">Rhode Island</option>
+								                    <option value="SC">South Carolina</option>
+								                    <option value="VT">Vermont</option>
+								                    <option value="VA">Virginia</option>
+								                    <option value="WV">West Virginia</option>
+								                </optgroup>
+							            	</select>
+							            </div>
+							        </div>
+									<!-- end specialities -->
+									<!-- signature -->
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3">Signature</label>
+										<div class="fileinput fileinput-new col-md-6 col-sm-6" data-provides="fileinput">
+											<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
+													<img src="theme/assets/global/images/signature.jpg" width="100%" height="100%">
+												</div>
+											<div>
+												<span class="btn green btn-file">
+												<span class="fileinput-new">
+												Signature </span>
+												<span class="fileinput-exists">
+												Change </span>
+												<input type="file" nv-file-select uploader="uploader">
+												</span>
+												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+												Remove </a>
+											</div>
+											<br>												</div>
+										<div class="clearfix margin-top-10"></div>
+									</div>
+									<!-- end signature -->
 								</div>
 							</div>
 						</div>
@@ -484,6 +475,6 @@
 <!-- END PAGE CONTENT-->
 
 <script type="text/javascript">
-$('.Specialities').select2();
+$('#Specialities').select2();
 </script>
 

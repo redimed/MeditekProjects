@@ -240,6 +240,12 @@ ul.my-ul {
 .my-fileinput{
     border: 1px solid #ccc;
 }
+
+img.profile-imge{
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+}
 /*phan quoc chien*/
 
 .sweet-alert .sa-icon {

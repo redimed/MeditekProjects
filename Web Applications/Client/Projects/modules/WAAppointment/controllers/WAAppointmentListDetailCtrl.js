@@ -46,7 +46,6 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
                     if (keyOther != 0) {
                         keyOther = keyOther.split(" ").join("");
                     }
-
                     $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail] = {};
                     $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].Value = valueRes.Value;
                     $scope.wainformation.TelehealthAppointment.ClinicalDetails[keyClinicalDetail].FileUploads = valueRes.FileUploads;
@@ -177,7 +176,6 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
                 $scope.wainformation.TelehealthAppointment.PatientAppointment.DVANumber = null;
             };
         };
-        console.log($scope.wainformation.TelehealthAppointment);
         if ($scope.wainformation.TelehealthAppointment.WAAppointment !== null) {
             if (!$scope.wainformation.TelehealthAppointment.WAAppointment.IsUsualGP) {
                 if ($scope.wainformation.TelehealthAppointment.WAAppointment.IsUsualGP == 'Y') {

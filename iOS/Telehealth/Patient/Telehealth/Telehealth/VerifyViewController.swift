@@ -20,7 +20,7 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
     let colorCustom = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
     var phoneNumber = String()
     
-    let verifyPhoneNumberController = GetAndPostDataController()
+    let api = GetAndPostDataController()
     
     
     override func viewDidLoad() {
@@ -62,11 +62,11 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
             
             view.showLoading()
             //Send request phone number to server
-            verifyPhoneNumberController.CheckVerifyPhoneNumber(textFieldVerifyCode.text!,deviceID: config.deviceID!,phoneNumber:phoneNumber){
+            api.CheckVerifyPhoneNumber(textFieldVerifyCode.text!,deviceID: config.deviceID!,phoneNumber:phoneNumber){
                 response in
                 if response["status"] == "success"{
                     self.view.hideLoading()
-                        print("vvvvvvvvv-------",response["teleUID"])
+                    
                     let defaults = NSUserDefaults.standardUserDefaults()
                     let uid = response["teleUID"].string! as String
                     let token = response["token"].string! as String

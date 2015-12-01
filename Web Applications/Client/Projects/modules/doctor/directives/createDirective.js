@@ -1,5 +1,5 @@
 angular.module('app.authentication.doctor.directive.create', [])
-.directive('doctorCreate', function(doctorService, UnauthenticatedService, CommonService, $timeout, $cookies, $filter, toastr, $stateParams, $uibModal, $state) {
+.directive('doctorCreate', function(doctorService, UnauthenticatedService, CommonService, $timeout,$rootScope, $cookies, $filter, toastr, $stateParams, $uibModal, $state) {
 
 	return {
 		//
@@ -61,7 +61,11 @@ angular.module('app.authentication.doctor.directive.create', [])
 		        // console.info('onCancelItem', fileItem, response, status, headers);
 		    };
 		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
-		        // console.info('onCompleteItem', fileItem, response, status, headers);
+		        console.info('onCompleteItem', fileItem, response, status, headers);
+		        if(Boolean(headers.requireupdatetoken)===true)
+		        {
+		            $rootScope.getNewToken();
+		        }
 		    };
 		    uploader.onCompleteAll = function () {
 		        // console.info('onCompleteAll');

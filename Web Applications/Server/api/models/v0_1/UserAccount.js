@@ -204,19 +204,25 @@ module.exports = {
 
                 useraccount.fields.push('Password');
                 console.log(useraccount.attributes.Password);
-                bcrypt.genSalt(10, function(err, salt) {
-                    bcrypt.hash(useraccount.attributes.Password, salt, null, function(err, hash) {
-                        if (err) {
-                            console.log(err);
-                            callback(err);
-                        } else {
-                            useraccount.attributes.Password = hash;
-                            callback();
-                        }
+
+                if(useraccount.attributes.Password)
+                {
+                    bcrypt.genSalt(10, function(err, salt) {
+                        bcrypt.hash(useraccount.attributes.Password, salt, null, function(err, hash) {
+                            if (err) {
+                                console.log(err);
+                                callback(err);
+                            } else {
+                                useraccount.attributes.Password = hash;
+                                callback();
+                            }
+                        });
                     });
-                });
-
-
+                }
+                else
+                {
+                    callback();
+                }
                 //callback();
             }
         }

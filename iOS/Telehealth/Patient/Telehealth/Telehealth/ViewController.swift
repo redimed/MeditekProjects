@@ -46,34 +46,37 @@ class ViewController: UIViewController,UITextFieldDelegate {
         }
         else{
             phoneTextField.layer.borderWidth = 0
-            
             view.showLoading()
-            
-            api.SendVerifyPhoneNumber(config.deviceID!,phoneNumber: phoneTextField.text!){
-                response in
-                //Check status API responsed
-                if(response["status"] == "success"){
-                    self.view.hideLoading()
-                    if let cookie = defaults.valueForKey("Set-Cookie") as? String{
-                        cookies = cookie
-                    }
-                    self.performSegueWithIdentifier("phoneRegisterSegue", sender: self)
-                }else {
-                    self.view.hideLoading()
-                    if response["TimeOut"].string ==  ErrorMessage.TimeOut {
-                        self.alertMessage("Error", message: ErrorMessage.TimeOut)
-                    }else {
-                        print(response)
-                        let message : String = String(response["ErrorsList"][0])
-                        self.alertMessage("Error", message: message)
-                    }
-                    
-                }
-            }
+            requestPhoneNumberToServer()
         }
         
     }
+    //Sending phone number to server and check user in DB
+    func requestPhoneNumberToServer(){
+        api.SendVerifyPhoneNumber(config.deviceID!,phoneNumber: phoneTextField.text!){
+            response in
+            //Check status API responsed
+            if(response["status"] == "success"){
+                self.view.hideLoading()
+                if let cookie = defaults.valueForKey("Set-Cookie") as? String{
+                    cookies = cookie
+                }
+                self.performSegueWithIdentifier("phoneRegisterSegue", sender: self)
+            }else {
+                self.view.hideLoading()
+                if response["TimeOut"].string ==  ErrorMessage.TimeOut {
+                    self.alertMessage("Error", message: ErrorMessage.TimeOut)
+                }else {
+                    print(response)
+                    let message : String = String(response["ErrorsList"][0])
+                    self.alertMessage("Error", message: message)
+                }
+                
+            }
+        }
+    }
     
+    //sending data by segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "phoneRegisterSegue" {
             let destVC = segue.destinationViewController as! VerifyViewController
@@ -81,14 +84,10 @@ class ViewController: UIViewController,UITextFieldDelegate {
             
         }
     }
-    
-    
-    
     //Giap:  Close keyboard if touch out textfield
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         view.endEditing(true)
     }
-    
     
     //Giap: Hide navigation bar
     override func viewWillDisappear(animated: Bool) {
@@ -125,7 +124,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
             
         }
     }
-    
+    //Validate lenght textfield
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let hashValue = string.hash
         

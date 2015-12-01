@@ -52,4 +52,11 @@ public interface RegisterApi {
 
     @POST("/api/telehealth/user/updateToken")
     void updateToken(@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    //3005
+    @POST("/api/login")
+    void login (@Body JsonObject jsonObject, Callback<JsonObject> callback);
+
+    @GET("/api/telehealth/user/{uid}")
+    void getTelehealthUID (@Path("uid") String userID, Callback<JsonObject> callback);
 }

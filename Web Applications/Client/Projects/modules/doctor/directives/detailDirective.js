@@ -1,5 +1,5 @@
 angular.module('app.authentication.doctor.directive.detail', [])
-.directive('doctorDetail', function(doctorService, CommonService, $filter, $http, $cookies, toastr, $uibModal, $timeout) {
+.directive('doctorDetail', function(doctorService, CommonService, $filter, $http, $rootScope, $cookies, toastr, $uibModal, $timeout) {
 
 	return {
 		restrict: 'EA',
@@ -48,6 +48,13 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    	},
 		        console.info('onBeforeUploadItem', item);
 		    };
+		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
+		        console.info('onCompleteItem', fileItem, response, status, headers);
+		        if(Boolean(headers.requireupdatetoken)===true)
+		        {
+		            $rootScope.getNewToken();
+		        }
+		    };
 
 		    var uploaders = $scope.uploaders = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
@@ -80,6 +87,13 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    };
 		    uploaders.onSuccessItem = function (fileItem, response, status, headers) {
 		        // console.info('onSuccessItem', fileItem, response, status, headers);
+		    };
+		    uploaders.onCompleteItem = function (fileItem, response, status, headers) {
+		        console.info('onCompleteItem', fileItem, response, status, headers);
+		        if(Boolean(headers.requireupdatetoken)===true)
+		        {
+		            $rootScope.getNewToken();
+		        }
 		    };
 
 		},

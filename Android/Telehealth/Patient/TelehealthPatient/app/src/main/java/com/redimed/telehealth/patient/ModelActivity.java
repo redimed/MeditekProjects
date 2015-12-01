@@ -1,5 +1,7 @@
 package com.redimed.telehealth.patient;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -7,18 +9,16 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
 import com.redimed.telehealth.patient.api.RegisterApi;
+import com.redimed.telehealth.patient.fragment.AppointmentDetails;
 import com.redimed.telehealth.patient.models.FileUpload;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.CountingTypedFile;
@@ -27,34 +27,33 @@ import com.redimed.telehealth.patient.utils.DialogConnection;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import static android.graphics.BitmapFactory.*;
-
 public class ModelActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String TAG = "MODEL";
     private Intent i;
+    private Gson gson;
+    private long totalSize = 0;
+    private String TAG = "MODEL";
+    private boolean shouldFinish = false;
+    private static final int RESULT_RELOAD = 3;
     private String picturePath, appointmentUID;
     private RegisterApi registerApiCore, registerApi;
     private String bodyPart, auth, deviceID, userUID, cookie;
-    private long totalSize = 0;
-    private boolean shouldFinish = false;
     private static SharedPreferences uidTelehealth, spDevice;
-    private Gson gson;
 
+    @Bind(R.id.btnUpload)
+    Button btnUpload;
     @Bind(R.id.imgUpload)
     ImageView imgUpload;
     @Bind(R.id.progressBarUpload)
     ProgressBar progressBarUpload;
-    @Bind(R.id.btnUpload)
-    Button btnUpload;
+    @Bind(R.id.logo)
+    ImageView logo;
 
 
     @Override
@@ -62,6 +61,7 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_model);
         ButterKnife.bind(this);
+        Picasso.with(this).load(R.drawable.logo_redimed).into(logo);
 
         registerApiCore = RESTClient.getRegisterApiCore();
         registerApi = RESTClient.getRegisterApi();
@@ -158,10 +158,8 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
                         fileUpload.setFileUID(jsonObject.get("fileUID").getAsString());
                         fileUpload.setApptUID(appointmentUID);
 
-                        Log.d(TAG, fileUpload.toString());
                         JsonObject fileJson = new JsonObject();
                         fileJson.addProperty("data", gson.toJson(fileUpload));
-                        Log.d(TAG, fileJson.toString());
 
                         registerApi.addAppointmentFile(fileJson, new Callback<JsonObject>() {
                             @Override
@@ -170,6 +168,7 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
                                 String status = jsonObject.get("status").getAsString();
                                 if (status.equalsIgnoreCase("success")) {
                                     finish();
+                                    setResult(Activity.RESULT_OK);
                                 }
                             }
 
@@ -202,6 +201,11 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
             int progress = values[0];
             pb.setProgress(progress);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override

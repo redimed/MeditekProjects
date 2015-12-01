@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.patient.create.directive',[]);
-app.directive('patientCreate',function(toastr, PatientService, $state, $timeout, $cookies, AuthenticationService){
+app.directive('patientCreate',function(toastr, PatientService, $state, $timeout, $rootScope, $cookies, AuthenticationService){
 	return {
 		scope :{
 			appointment:'=',
@@ -30,6 +30,13 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		    		systemtype:'WEB',
 		    	},
 		        console.info('onBeforeUploadItem', item);
+		    };
+		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
+		        console.info('onCompleteItem', fileItem, response, status, headers);
+		        if(Boolean(headers.requireupdatetoken)===true)
+		        {
+		            $rootScope.getNewToken();
+		        }
 		    };
 
 		},

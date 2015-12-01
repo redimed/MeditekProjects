@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/activation_screen"
+    android:id="@+id/launcherLayout"
     android:orientation="vertical">
 
     <ImageView
@@ -10,8 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_centerInParent="true"
         android:layout_height="?android:actionBarSize"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/logo_redimed" />
+        android:layout_marginTop="20dp"/>
 
     <com.redimed.telehealth.patient.font.RobotoTextView
         android:id="@+id/welcome_text"

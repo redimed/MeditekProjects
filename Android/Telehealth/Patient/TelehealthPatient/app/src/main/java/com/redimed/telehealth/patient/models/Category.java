@@ -8,10 +8,9 @@ public class Category {
     private String title;
     private int icon;
 
-    public Category(int scrImg, String title, int icon) {
+    public Category(int scrImg, String title) {
         this.scrImg = scrImg;
         this.title = title;
-        this.icon = icon;
     }
 
     public int getScrImg() {

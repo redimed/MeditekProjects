@@ -26,7 +26,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.MainActivity;
@@ -34,22 +33,16 @@ import com.redimed.telehealth.patient.ModelActivity;
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
-import com.redimed.telehealth.patient.models.Appointment;
 import com.redimed.telehealth.patient.models.Doctor;
 import com.redimed.telehealth.patient.models.FileUpload;
-import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.Config;
 import com.redimed.telehealth.patient.utils.RVAdapterImage;
-
 import java.io.ByteArrayOutputStream;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -62,6 +55,7 @@ public class AppointmentDetails extends Fragment {
     private String TAG = "DETAILS";
     private static final int RESULT_PHOTO = 1;
     private static final int RESULT_CAMERA = 2;
+    private static final int RESULT_RELOAD = 3;
     private View v;
     private SharedPreferences telehealthPatient;
     private RegisterApi registerApi;
@@ -105,7 +99,6 @@ public class AppointmentDetails extends Fragment {
         registerApi = RESTClient.getRegisterApi();
 
         appointmentUID = this.getArguments().getString("appointmentUID", null);
-        Log.d(TAG, appointmentUID);
         if (appointmentUID != null) {
             GetAppointmentDetails(appointmentUID);
         }
@@ -269,11 +262,15 @@ public class AppointmentDetails extends Fragment {
                         picturePath = cursor.getString(columnIndex);
                         cursor.close();
                         break;
+                    case RESULT_RELOAD:
+                        Log.d(TAG, "==========OK========");
+                        break;
                 }
                 i = new Intent(v.getContext(), ModelActivity.class);
                 i.putExtra("picturePath", picturePath);
                 i.putExtra("appointmentUID", appointmentUID);
-                startActivity(i);
+//                startActivity(i);
+                startActivityForResult(i, RESULT_RELOAD);
             } else {
                 Toast.makeText(v.getContext(), "You haven't picked Image", Toast.LENGTH_LONG).show();
             }

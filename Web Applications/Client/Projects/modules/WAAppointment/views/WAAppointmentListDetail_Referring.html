@@ -118,7 +118,7 @@
         <div class="row">
             <div class="col-md-6 col-sm-6">
                 <div class="form-group form-md-line-input">
-                     <select class="form-control edited" ng-model="wainformation.TelehealthAppointment.Doctors[0].State" required>
+                     <select class="form-control" ng-model="wainformation.TelehealthAppointment.Doctors[0].State" disabled>
                             <option value=""></option>
                             <option value="WA">Western Australia</option>
                             <option value="VIC">Victoria</option>
@@ -128,6 +128,7 @@
                             <option value="NT">Northern Territory</option>
                             <option value="ACT">Australian Capital Territory</option>
                     </select>
+                    <label class="control-label">State</label>
                     <!-- <div class="input-icon">
                         <div class="form-control">{{wainformation.TelehealthAppointment.Doctors[0].State}}</div>
                         <label class="control-label">State</label>

@@ -114,6 +114,9 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 				//service validate data
 				var verifyData = {
 					FirstName:data.FirstName,
+					MiddleName:data.MiddleName,
+					Title:data.Title,
+					State:data.State,
 					LastName:data.LastName,
 					PhoneNumber:data.PhoneNumber,
 					DOB:data.DOB,
@@ -143,13 +146,13 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 								scope.data.Email1 = verifyData.Email1;
 								scope.isShowNext = true;
 								scope.data.CountryID1 = 14;
-								scope.data.Title= null;
+								scope.data.Title= verifyData.Title;
 								scope.data.Gender= verifyData.Gender;
 								scope.data.Address1= verifyData.Address1;
 								scope.data.Address2= verifyData.Address2;
 								scope.data.Suburb= verifyData.Suburb;
 								scope.data.Postcode= verifyData.Postcode;
-								scope.data.State = null;
+								scope.data.State = verifyData.State;
 								scope.data.HomePhoneNumber = verifyData.HomePhoneNumber;
 								// scope.data.DOB = new Date('1/1/1990');
 							}

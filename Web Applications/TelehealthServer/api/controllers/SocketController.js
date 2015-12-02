@@ -43,6 +43,7 @@ module.exports = {
             });
             return;
         }
+        console.log("====Params====: ",req.params.all());
         var from = req.param('from');
         var to = req.param('to');
         var message = req.param('message');

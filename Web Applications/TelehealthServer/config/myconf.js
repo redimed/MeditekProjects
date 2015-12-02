@@ -9,6 +9,6 @@ module.exports.myconf = {
     //============ GCM Push Notification =============
     GCMApiKey: 'AIzaSyDz2pMblr_p6HwWqCeBNUoxuat1rcOQwdk',
     // CoreAPI: 'http://testapp.redimed.com.au:3005',
-    CoreAPI: 'http://telehealthvietnam.com.vn:3005',
-    AuthAPI: 'http://telehealthvietnam.com.vn:3006'
+    CoreAPI: 'http://192.168.1.130:3005',
+    AuthAPI: 'http://192.168.1.130:3005'
 };

@@ -470,11 +470,14 @@ angular.module('app.authentication.patient.services',[])
 	PatientService.getDatatoDirective = function(){
 		var info = {
 			FirstName:postData.FirstName,
+			MiddleName:postData.MiddleName,
+			Title:postData.Title,
 			LastName:postData.LastName,
 			PhoneNumber:postData.PhoneNumber,
 			DOB:postData.DOB,
 			Address1:postData.Address1,
 			Address2:postData.Address2,
+			State:postData.State,
 			Email1:postData.Email1,
 			HomePhoneNumber:postData.HomePhoneNumber,
 			Gender:postData.Gender,

@@ -419,7 +419,7 @@
                                                 <div id="tab_2-2" class="tab-pane">
                                                     <div class="row">
                                                         <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$invalid && submited}">
+                                                            <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$invalid}">
                                                                 <div class="input-icon">
                                                                     <input type="text" class="form-control edited" name="TelehealthAppointment_PatientAppointment_PhoneNumber" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" required>
                                                                     <label class="control-label">Contact number (M)</label>
@@ -514,7 +514,7 @@
                                                          <div class="col-md-6 col-sm-6">
                                                             <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.State.$invalid && submited} ">
                                                                 <div class="input-icon">
-                                                                    <select class="form-control edited" ng-model="wainformation.TelehealthAppointment.PatientAppointment.State" required>
+                                                                    <select class="form-control edited" ng-model="wainformation.TelehealthAppointment.PatientAppointment.State" required name="State">
                                                                             <option value=""></option>
                                                                             <option value="WA">Western Australia</option>
                                                                             <option value="VIC">Victoria</option>
@@ -626,7 +626,7 @@
                                     </div>
                                     <div class="row pull-right">
                                         <div class="col-md-12 co-xs-12">
-                                            <span class="btn red" ng-click="selectPatient()">
+                                            <span class="btn red" ng-click="selectPatient()" ng-hide="checkRoleUpdate">
                                                 <i class="glyphicon glyphicon-plus"></i> Link Patient
                                             </span>
                                         </div>

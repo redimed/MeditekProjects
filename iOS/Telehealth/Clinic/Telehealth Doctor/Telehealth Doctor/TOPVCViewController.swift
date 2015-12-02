@@ -25,28 +25,27 @@ class TOPVCViewController: UINavigationController, UIPopoverPresentationControll
         imageView.image = UIImage(named: "logo.png")
         imageView.contentMode = UIViewContentMode.ScaleAspectFit
         navigation.addSubview(imageView)
-
-
+        
+        
         button.frame = CGRectMake(self.view.frame.size.width - 250, 0, 300, 50)
         button.setTitle(JSON(NSUserDefaults.standardUserDefaults().valueForKey("userInfo")!)["UserName"].stringValue, forState: .Normal)
         button.titleLabel?.font = UIFont.systemFontOfSize(20)
         button.setTitleColor(UIColor(hex: "898C90"), forState: UIControlState.Normal)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
-        button.addTarget(self, action: "viewDetailDoctor", forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: "viewDetailDoctor", forControlEvents: UIControlEvents.TouchDown)
         navigation.addSubview(button)
-
+        
         let imgViewicon = UIImageView(frame: CGRectMake(button.frame.origin.x + 50, 5, 30, 30))
         imgViewicon.image = UIImage(named: "doctor-active.png")
         imgViewicon.contentMode = UIViewContentMode.ScaleAspectFit
         navigation.addSubview(imgViewicon)
-        
-
     }
     
     func viewDetailDoctor() {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let optionMenu: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
-        let logoutAction = UIAlertAction(title: "Log out", style: UIAlertActionStyle.Destructive, handler: {(alert :UIAlertAction) in
+        optionMenu.addAction(UIAlertAction(title: "Log out", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) -> Void in
+            
             NSUserDefaults.standardUserDefaults().removeObjectForKey("userInfo")
             NSUserDefaults.standardUserDefaults().removeObjectForKey("teleUserInfo")
             NSUserDefaults.standardUserDefaults().removeObjectForKey("authToken")
@@ -58,14 +57,13 @@ class TOPVCViewController: UINavigationController, UIPopoverPresentationControll
                     self.presentViewController(loginVC, animated: true, completion: nil)
                 }
             })
-        })
+        }))
         
-        alertController.addAction(logoutAction)
-        
-        alertController.popoverPresentationController?.sourceView = button
-        alertController.popoverPresentationController?.sourceRect = CGRectMake(200, 35, 300, 50)
-        
-        presentViewController(alertController, animated: true, completion: nil)
+        let popover: UIPopoverPresentationController = optionMenu.popoverPresentationController!
+        popover.sourceView = button
+        popover.sourceRect = button.bounds
+        optionMenu.view.layoutIfNeeded()
+        self.presentViewController(optionMenu, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {

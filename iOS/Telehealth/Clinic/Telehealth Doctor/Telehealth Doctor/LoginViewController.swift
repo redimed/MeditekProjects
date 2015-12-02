@@ -36,23 +36,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         self.passwordTextField.delegate = self
     }
     
-//    func textFieldDidBeginEditing(textField: UITextField) {
-//        animateViewMoving(true, moveValue: 130)
-//    }
-//    func textFieldDidEndEditing(textField: UITextField) {
-//        animateViewMoving(false, moveValue: 130)
-//    }
-//    
-//    func animateViewMoving (up:Bool, moveValue :CGFloat){
-//        let movementDuration:NSTimeInterval = 0.3
-//        let movement:CGFloat = ( up ? -moveValue : moveValue)
-//        UIView.beginAnimations("animateView", context: nil)
-//        UIView.setAnimationBeginsFromCurrentState(true)
-//        UIView.setAnimationDuration(movementDuration )
-//        self.scrollView.setContentOffset(CGPointMake(0, 150), animated: true)
-//        UIView.commitAnimations()
-//    }
-    
     override func viewWillAppear(animated: Bool) {
         
         usernameTextField.clearButtonMode = UITextFieldViewMode.WhileEditing
@@ -200,7 +183,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                         .validate(statusCode: 200..<300)
                         .validate(contentType: ["application/json"])
                         .responseJSON { response -> Void in
-                            self.loading.stopActivity(true)
+                            print(response)
                             guard response.2.error == nil else {
                                 print("error get data tele user info", response.2.error!)
                                 return
@@ -216,6 +199,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                                 self.userDefault.setObject(user, forKey: "teleUserInfo")
                                 let initViewController : UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as! UINavigationController
                                 self.presentViewController(initViewController, animated: true, completion: nil)
+                                self.loading.stopActivity(true)
                             }
                     }
                     break

@@ -122,7 +122,13 @@ module.exports = {
         var data = req.body.data;
         Services.Patient.GetPatient(data)
             .then(function(info) {
+                console.log(info);
                 if (info != null && info != undefined && info != '') {
+                    info[0].dataValues.FileUID = info[0].dataValues.UserAccount.FileUploads[0].UID;
+                    info[0].dataValues.PhoneNumber = info[0].dataValues.UserAccount.PhoneNumber;
+                    info[0].dataValues.CountryName = info[0].dataValues.Country.ShortName;
+                    delete info[0].dataValues['UserAccount'];
+                    delete info[0].dataValues['Country'];
                     res.ok({
                         status: 200,
                         message: "Success",

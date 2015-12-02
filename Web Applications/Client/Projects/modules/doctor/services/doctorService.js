@@ -42,6 +42,11 @@ angular.module('app.authentication.doctor.service', [])
 		return createDoctorByNewAccount.post({data:data});
 	}
 
+	services.updateSignature = function(data) {
+		var updateSignature = api.all('doctor/update-sign');
+		return updateSignature.post({data:data});
+	}
+
 	services.checkphoneUserAccount = function(data) {
 		var instanceApi = api.all('checkphoneUserAccount');
 		return instanceApi.post({data: data});

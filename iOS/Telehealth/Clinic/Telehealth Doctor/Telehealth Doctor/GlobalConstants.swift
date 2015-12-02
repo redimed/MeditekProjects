@@ -8,21 +8,13 @@
 
 import Foundation
 
-let URL_SERVER_3009 = "http://testapp.redimed.com.au:3009"
-let URL_SERVER_3005 = "http://testapp.redimed.com.au:3005"
+let URL_SERVER_3009 = "http://192.168.1.130:3009"
+let URL_SERVER_3005 = "http://192.168.1.130:3005"
+let URL_SERVER_3006 = "http://192.168.1.130:3006"
 
-struct Platform {
-    static let isSimulator: Bool = {
-        var isSim = false
-        #if arch(i386) || arch(x86_64)
-            isSim = true
-        #endif
-        return isSim
-    }()
-}
+// request url
+let AUTHORIZATION = URL_SERVER_3006 + "/api/login"
 
-// URL Request API
-let AUTHORIZATION = URL_SERVER_3005 + "/api/login"
 let GET_TELEUSER = URL_SERVER_3009 + "/api/telehealth/user/"
 
 let GENERATESESSION = URL_SERVER_3009 + "/api/telehealth/socket/generateSession"
@@ -37,12 +29,10 @@ let APPOINTMENTLIST_TeleHealth = URL_SERVER_3009 + "/api/telehealth/appointment/
 
 let DOWNLOAD_IMAGE_APPOINTMENT = URL_SERVER_3005 + "/api/downloadFile/"
 
-let GET_NEW_TOKEN = URL_SERVER_3005 + "/api/refresh-token/GetNewToken"
+let GET_NEW_TOKEN = URL_SERVER_3006 + "/api/refresh-token/GetNewToken"
 
 
-
-
-// Socket Emit
+// socket emit url
 let TRANSFER_IN_CALL = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
 
 let MAKE_CALL = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@&sessionId=%@&fromName=%@"
@@ -76,8 +66,19 @@ func formatforList(dateString: String) -> String {
 }
 
 /**
-*  Alert Title and Message for JSSAlertView
+*  alert message for UIAlertController
 */
 var err_Mess_Network = "The Internet connection appears to be offline"
 var err_Mess_sessionExpired = "Your session is expired. Please login again!"
+
+// check platform simulator or real device
+struct Platform {
+    static let isSimulator: Bool = {
+        var isSim = false
+        #if arch(i386) || arch(x86_64)
+            isSim = true
+        #endif
+        return isSim
+    }()
+}
 

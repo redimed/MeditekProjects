@@ -59,6 +59,7 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            
             SingleTon.socket.onAny {
                 if let event: String! = $0.event {
                     if event != "onlineUser" {
@@ -78,7 +79,7 @@ class HomeViewController: UIViewController {
                 SingleTon.socket.emit("get", ["url": NSString(format: JOIN_ROOM, self.userUID!)])
             }
             
-            SingleTon.socket.on("onlineUser") {data, ack in
+            SingleTon.socket.on("onlineUser") { data, ack in
                 SingleTon.onlineUser_Singleton.removeAll()
                 NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTable", object: self)
             }
@@ -92,12 +93,13 @@ class HomeViewController: UIViewController {
             SingleTon.socket.on("errorMsg") { data, ack in
                 debugPrint("error event: ", data)
             }
+            
         })
         SingleTon.socket.connect()
         
         request(.GET, GENERATESESSION, headers: SingleTon.headers)
             .responseJSONReToken() { response in
-
+                
                 guard response.2.error == nil else {
                     if let data = response.2.data {
                         JSSAlertView().warning(self, title: "Error", text: resJSONError(data))

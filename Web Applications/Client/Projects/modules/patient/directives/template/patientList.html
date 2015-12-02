@@ -14,11 +14,12 @@
 	</div>
 	<div class="portlet-body">
 		<!-- begin filter -->
-		<span ng-hide="toggle">
+		<!-- <span ng-hide="toggle">
 			<div class="table-scrollable">
 				<table class="table table-hover">
 					<thead>
 						<tr style="width:100%;">
+							<th>&nbsp;</th>
 							<th ng-repeat="i in items">
 								<label class="label-control">{{i.name}} </label>
 							</th>
@@ -27,6 +28,14 @@
 					</thead>
 					<tbody>
 						<tr style="width:100%;">
+							<th>&nbsp;</th>
+							<th ng-repeat="i in items">
+								<label class="label-control">{{i.name}} </label>
+							</th>
+							<th style="width:10%;">Enable</th>
+						</tr>
+						<tr style="width:100%;">
+							<td>&nbsp;</td>
 							<td ng-repeat="i in items">
 								<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-keypress="Search(search,$event.which)">
 							</td>
@@ -38,7 +47,7 @@
 				</table>
 			</div>
         </span>
-        <span ng-show="toggle"></span>
+        <span ng-show="toggle"></span> -->
         <!-- end filter -->
 		<!-- begin table -->
 		<div class="table-scrollable">
@@ -53,6 +62,15 @@
  					</th>
  					<th><label>Enable</label></th>
  					<th ng-if="isShowSelectButton">&nbsp;</th>
+				</tr>
+				<tr style="width:100%;" ng-hide="toggle">
+					<th>&nbsp;</th>
+					<th ng-repeat="i in items">
+						<input type="text" class="form-control" placeholder="{{i.name}}" ng-model="search[i.field]" ng-keypress="Search(search,$event.which)">
+					</th>
+					<th style="width:10%;">
+						<select class="form-control" ng-change="Search(search,flag)" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select>
+					</th>
 				</tr>
 			</thead>
 			<tbody>

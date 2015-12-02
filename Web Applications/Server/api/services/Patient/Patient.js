@@ -819,7 +819,23 @@ module.exports = {
 						 {
 			            	model: UserAccount,
 			            	attributes: ['PhoneNumber'],
-			            	required: true
+			            	required: true,
+			            	include: [
+								{
+					            	model: FileUpload,
+					            	attributes: ['UID'],
+					            	required: false,
+					            	where:{
+					            		FileType:'ProfileImage',
+					            		Enable:'Y'
+					            	}
+					            }
+							]
+			            },
+			            {
+			            	model:Country,
+			            	attributes:['ShortName'],
+			            	required:false
 			            }
 					]
 				});

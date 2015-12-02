@@ -7,6 +7,7 @@
     <customFonts key="customFonts">
         <mutableArray key="FontAwesome.otf">
             <string>FontAwesome</string>
+            <string>FontAwesome</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -21,68 +22,152 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="282"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="452"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CJ-TD-ajd">
-                    <rect key="frame" x="72" y="203" width="84" height="38"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="QQW-x4-eOQ">
+                    <rect key="frame" x="40" y="20" width="240" height="46"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="240" id="0YD-mc-UAf"/>
+                        <constraint firstAttribute="height" constant="46" id="k51-dV-jgn"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v2i-6s-woh">
+                    <rect key="frame" x="0.0" y="66" width="320" height="386"/>
+                    <animations/>
+                </imageView>
+                <button opaque="NO" contentMode="redraw" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CJ-TD-ajd">
+                    <rect key="frame" x="70" y="352" width="50" height="50"/>
                     <animations/>
                     <color key="backgroundColor" red="0.70980392160000005" green="0.1176470588" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal">
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="Aii-zT-1ox"/>
+                        <constraint firstAttribute="height" constant="50" id="OKq-FM-zdr"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" image="End Call-50">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
                         <action selector="btnCancel:" destination="-1" eventType="touchUpInside" id="ewY-qq-O05"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wdr-tl-1mk">
-                    <rect key="frame" x="173" y="202" width="84" height="38"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oiX-Du-8jU">
+                    <rect key="frame" x="0.0" y="133" width="320" height="76"/>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="76" id="coO-HN-6Zv"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nzt-lT-XCk">
+                    <rect key="frame" x="0.0" y="86" width="320" height="47"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="47" id="fNf-PM-F2E"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ofe-Dd-bPi">
+                    <rect key="frame" x="0.0" y="422" width="320" height="30"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="47Q-fI-BsY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calling..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sG-d2-0WQ">
+                                <rect key="frame" x="127" y="5" width="66" height="20.5"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PWf-S7-EE0">
+                                <rect key="frame" x="104" y="8" width="15" height="15"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.23529411759999999" green="0.56470588239999997" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="2tK-xz-Onl"/>
+                                    <constraint firstAttribute="width" constant="15" id="nRH-ST-Xdu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
+                                <state key="normal" title="">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnOK:" destination="-1" eventType="touchUpInside" id="s3j-YR-TBE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <constraints>
+                            <constraint firstItem="PWf-S7-EE0" firstAttribute="centerY" secondItem="47Q-fI-BsY" secondAttribute="centerY" constant="0.5" id="DDt-nd-5Pf"/>
+                            <constraint firstItem="0sG-d2-0WQ" firstAttribute="centerX" secondItem="47Q-fI-BsY" secondAttribute="centerX" id="TdA-cM-jeg"/>
+                            <constraint firstItem="PWf-S7-EE0" firstAttribute="centerX" secondItem="47Q-fI-BsY" secondAttribute="centerX" constant="-48.5" id="eu3-ji-e0R"/>
+                            <constraint firstItem="0sG-d2-0WQ" firstAttribute="centerY" secondItem="47Q-fI-BsY" secondAttribute="centerY" id="xRb-1A-JNa"/>
+                        </constraints>
+                    </view>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="3aX-N3-R8v"/>
+                    </constraints>
+                    <blurEffect style="dark"/>
+                </visualEffectView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wdr-tl-1mk">
+                    <rect key="frame" x="200" y="352" width="50" height="50"/>
                     <animations/>
                     <color key="backgroundColor" red="0.23529411759999999" green="0.56470588239999997" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
-                    <state key="normal">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Oyq-4B-1AO"/>
+                        <constraint firstAttribute="width" constant="50" id="hzG-Pk-cS5"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="25"/>
+                    <state key="normal" title="">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="btnOK:" destination="-1" eventType="touchUpInside" id="2Lt-Hw-7sr"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calling..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sG-d2-0WQ">
-                    <rect key="frame" x="127" y="71" width="66" height="21"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="End Call-50" translatesAutoresizingMaskIntoConstraints="NO" id="tBS-K9-b6N">
-                    <rect key="frame" x="101" y="212" width="26" height="21"/>
-                    <animations/>
-                </imageView>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oiX-Du-8jU">
-                    <rect key="frame" x="28" y="92" width="265" height="76"/>
-                    <animations/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Phone-50" translatesAutoresizingMaskIntoConstraints="NO" id="qJK-4J-L81">
-                    <rect key="frame" x="204" y="211" width="22" height="22"/>
-                    <animations/>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nzt-lT-XCk">
-                    <rect key="frame" x="54" y="32" width="212" height="47"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <animations/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Ofe-Dd-bPi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1bH-Lh-aX2"/>
+                <constraint firstItem="v2i-6s-woh" firstAttribute="top" secondItem="QQW-x4-eOQ" secondAttribute="bottom" id="8c5-UW-AxH"/>
+                <constraint firstItem="Nzt-lT-XCk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GHI-w6-458"/>
+                <constraint firstItem="v2i-6s-woh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="I86-Jc-B2o"/>
+                <constraint firstAttribute="bottom" secondItem="v2i-6s-woh" secondAttribute="bottom" id="JV2-4s-KyJ"/>
+                <constraint firstItem="QQW-x4-eOQ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="KoX-G0-QRL"/>
+                <constraint firstItem="Ofe-Dd-bPi" firstAttribute="top" secondItem="8CJ-TD-ajd" secondAttribute="bottom" constant="20" id="MYw-Tn-rYm"/>
+                <constraint firstAttribute="trailing" secondItem="Nzt-lT-XCk" secondAttribute="trailing" id="Mee-cC-fru"/>
+                <constraint firstAttribute="trailing" secondItem="oiX-Du-8jU" secondAttribute="trailing" id="OEQ-PQ-hbf"/>
+                <constraint firstAttribute="trailing" secondItem="Wdr-tl-1mk" secondAttribute="trailing" constant="70" id="QsN-WD-YhF"/>
+                <constraint firstAttribute="trailing" secondItem="Ofe-Dd-bPi" secondAttribute="trailing" id="RJl-r4-Z3C"/>
+                <constraint firstItem="oiX-Du-8jU" firstAttribute="top" secondItem="Nzt-lT-XCk" secondAttribute="bottom" id="WwI-FR-w9h"/>
+                <constraint firstItem="QQW-x4-eOQ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="aka-AT-J5y"/>
+                <constraint firstItem="oiX-Du-8jU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="d2L-oJ-cvW"/>
+                <constraint firstAttribute="bottom" secondItem="Ofe-Dd-bPi" secondAttribute="bottom" id="kMc-7m-R6u"/>
+                <constraint firstItem="8CJ-TD-ajd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="70" id="kbo-Kr-Kkt"/>
+                <constraint firstItem="Ofe-Dd-bPi" firstAttribute="top" secondItem="Wdr-tl-1mk" secondAttribute="bottom" constant="20" id="l1s-Dd-fU2"/>
+                <constraint firstItem="Nzt-lT-XCk" firstAttribute="top" secondItem="QQW-x4-eOQ" secondAttribute="bottom" constant="20" id="qJT-dv-Fwe"/>
+                <constraint firstAttribute="trailing" secondItem="v2i-6s-woh" secondAttribute="trailing" id="urm-c0-NJ4"/>
+                <constraint firstItem="QQW-x4-eOQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="vt9-bM-uLw"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="885" y="507"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="KoX-G0-QRL"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="662" y="464"/>
         </view>
     </objects>
     <resources>
         <image name="End Call-50" width="26" height="21"/>
-        <image name="Phone-50" width="22" height="22"/>
+        <image name="Logo" width="2542" height="494"/>
     </resources>
 </document>

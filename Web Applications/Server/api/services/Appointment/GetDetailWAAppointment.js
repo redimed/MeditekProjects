@@ -103,6 +103,10 @@ module.exports = function(appointmentUID, userInfo) {
                     model: Department,
                     attributes: Services.AttributesAppt.Department(),
                     required: false
+                }, {
+                    model: FileUpload,
+                    required: false,
+                    attributes: Services.AttributesAppt.FileUpload()
                 }],
                 where: filter.InternalPractitioner
             }, {

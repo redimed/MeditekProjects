@@ -36,8 +36,7 @@
                     <ImageView
                         android:id="@+id/avatarPatient"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/blank_avatar" />
+                        android:layout_height="80dp" />
 
                 </RelativeLayout>
 

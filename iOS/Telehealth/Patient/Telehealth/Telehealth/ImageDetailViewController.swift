@@ -9,7 +9,7 @@
 import UIKit
 
 class ImageDetailViewController: UIViewController {
-    let appointmentApi = GetAndPostDataController()
+    let api = GetAndPostDataController()
     @IBOutlet weak var imageView: UIImageView!
     var imageDetail : UIImage!
     override func viewDidLoad() {

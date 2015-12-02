@@ -1,5 +1,5 @@
 angular.module('app.authentication.doctor.directive.create', [])
-.directive('doctorCreate', function(doctorService, UnauthenticatedService, CommonService, $timeout, $cookies, $filter, toastr, $stateParams, $uibModal, $state) {
+.directive('doctorCreate', function(doctorService, UnauthenticatedService, CommonService, $timeout,$rootScope, $cookies, $filter, toastr, $stateParams, $uibModal, $state) {
 
 	return {
 		//
@@ -54,21 +54,37 @@ angular.module('app.authentication.doctor.directive.create', [])
 		    uploader.onSuccessItem = function (fileItem, response, status, headers) {
 		        // console.info('onSuccessItem', fileItem, response, status, headers);
 		    };
-		    uploader.onErrorItem = function (fileItem, response, status, headers) {
-		        // console.info('onErrorItem', fileItem, response, status, headers);
+		    uploader.onErrorItem = function(fileItem, response, status, headers) {
+		        console.info('onErrorItem', fileItem, response, status, headers);
+		        if(Boolean(headers.requireupdatetoken)===true)
+		        {
+		            $rootScope.getNewToken();
+		        }
 		    };
 		    uploader.onCancelItem = function (fileItem, response, status, headers) {
 		        // console.info('onCancelItem', fileItem, response, status, headers);
 		    };
 		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
-		        // console.info('onCompleteItem', fileItem, response, status, headers);
+		        console.info('onCompleteItem', fileItem, response, status, headers);
+		        if(Boolean(headers.requireupdatetoken)===true)
+		        {
+		            $rootScope.getNewToken();
+		        }
 		    };
 		    uploader.onCompleteAll = function () {
 		        // console.info('onCompleteAll');
+		        console.log($scope.value);
+		        doctorService.updateSignature($scope.value)
+				.then(function(result){
+					console.log(result);
+				},function(err){
+					console.log(err);
+				});
 		    };
 
 		},
 		link: function(scope, ele, attr) {
+			scope.value;
 			scope.isStep2 = false;
 			scope.er={};
 			scope.ermsg={};
@@ -94,6 +110,8 @@ angular.module('app.authentication.doctor.directive.create', [])
 			// Back
 			scope.back_1 = function() {
 				$("#tab1 :input").removeAttr("disabled");
+				$("#RoleId span").removeAttr("class");
+				scope.ermsg = {};
 				scope.isBlockStep1 =false;
 				scope.isShowNext=true;
 				scope.isShowNext3=false;
@@ -103,6 +121,9 @@ angular.module('app.authentication.doctor.directive.create', [])
 			};
 
 			scope.back_2 = function() {
+				delete scope.data['DepartmentID','ProviderNumber'];
+				scope.ermsg ={};
+				$('#info2 :input').prop('disabled', false);
 				scope.isBlockStep1 =false;
 				scope.isShowNext=false;
 				scope.isShowNext3=true;
@@ -215,6 +236,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 						scope.isShowNext4=true;
 						data.DepartmentID = null;
 						data.ProviderNumber = null;
+						$('#info2 :input').prop('disabled', true);
 						if(scope.uploader.queue[0]!==undefined && scope.uploader.queue[0]!==null && 
 						 scope.uploader.queue[0]!=='' && scope.uploader.queue[0].length!==0){
 					    	scope.uploader.queue[0].formData[0]={};
@@ -267,6 +289,8 @@ angular.module('app.authentication.doctor.directive.create', [])
 							}
 							console.log(scope.uploader.queue);
 							scope.uploader.uploadAll();
+							scope.value = success;
+							
 						}
 						$state.go('authentication.doctor.list',null, {
 			           		'reload': true

@@ -78,6 +78,10 @@ module.exports = function(appointmentUID, userInfo) {
                         model: Country,
                         required: false,
                         attributes: Services.AttributesAppt.Country()
+                    }, {
+                        model: FileUpload,
+                        required: false,
+                        attributes: Services.AttributesAppt.FileUpload()
                     }]
                 }]
             }, {
@@ -88,6 +92,10 @@ module.exports = function(appointmentUID, userInfo) {
                     model: Department,
                     attributes: Services.AttributesAppt.Department(),
                     required: false
+                }, {
+                    model: FileUpload,
+                    required: false,
+                    attributes: Services.AttributesAppt.FileUpload()
                 }],
                 where: filter.InternalPractitioner
             }, {

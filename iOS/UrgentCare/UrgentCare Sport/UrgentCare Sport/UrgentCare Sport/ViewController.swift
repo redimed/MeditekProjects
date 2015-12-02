@@ -183,7 +183,7 @@ class ViewController: UIViewController,UIPageViewControllerDataSource,ContentVie
         }else if segue.identifier == "UrgentCareSegue"{
             let data = segue.destinationViewController as! FAQsViewController
             data.fileName = "UrgentCare"
-            data.navigationBarString = "ABOUT US"
+            data.navigationBarString = "About REDIMED"
             
         }
 

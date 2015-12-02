@@ -56,7 +56,7 @@ module.exports = {
         var query = req.query;
         TelehealthService.GetAppointmentList(headers, type, query).then(function(response) {
             var data = response.getBody();
-            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
+            if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
             if (data.count > 0) {
                 appts = data.rows;
                 TelehealthUser.findAll().then(function(teleUsers) {

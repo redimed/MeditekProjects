@@ -1,5 +1,5 @@
 angular.module('app.authentication.doctor.directive.detail', [])
-.directive('doctorDetail', function(doctorService, CommonService, $filter, $http, $cookies, toastr, $uibModal, $timeout) {
+.directive('doctorDetail', function(doctorService, CommonService, $filter, $http, $rootScope, $cookies, toastr, $uibModal, $timeout) {
 
 	return {
 		restrict: 'EA',
@@ -48,6 +48,20 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    	},
 		        console.info('onBeforeUploadItem', item);
 		    };
+		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
+		        console.info('onCompleteItem', fileItem, response, status, headers);
+		        if(Boolean(headers.requireupdatetoken)===true)
+		        {
+		            $rootScope.getNewToken();
+		        }
+		    };
+		    uploader.onErrorItem = function(fileItem, response, status, headers) {
+		        console.info('onErrorItem', fileItem, response, status, headers);
+		        if(Boolean(headers.requireupdatetoken)===true)
+		        {
+		            $rootScope.getNewToken();
+		        }
+		    };
 
 		    var uploaders = $scope.uploaders = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
@@ -81,10 +95,32 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    uploaders.onSuccessItem = function (fileItem, response, status, headers) {
 		        // console.info('onSuccessItem', fileItem, response, status, headers);
 		    };
+		    uploaders.onCompleteItem = function (fileItem, response, status, headers) {
+		        console.info('onCompleteItem', fileItem, response, status, headers);
+		        if(Boolean(headers.requireupdatetoken)===true)
+		        {
+		            $rootScope.getNewToken();
+		        }
+				console.log($scope.doctorUID);
+		        doctorService.updateSignature($scope.doctorUID)
+				.then(function(result){
+					console.log(result);
+				},function(err){
+					console.log(err);
+				});
+		    };
+		    uploaders.onErrorItem = function(fileItem, response, status, headers) {
+		        console.info('onErrorItem', fileItem, response, status, headers);
+		        if(Boolean(headers.requireupdatetoken)===true)
+		        {
+		            $rootScope.getNewToken();
+		        }
+		    };
 
 		},
 		link: function(scope, ele, attrs) {
 			console.log(scope.info);
+			scope.doctorUID = {};
 			var data = {};
 			scope.state = [
 				{'code':'VIC', 'name':'Victoria'},
@@ -186,6 +222,9 @@ angular.module('app.authentication.doctor.directive.detail', [])
 					if(scope.info.UID!=undefined && scope.info.UID!=null && scope.info.UID!=''){
 						data.UID = scope.info.UID;
 						data.UserAccountID = scope.info.UserAccountID;
+						scope.doctorUID = {
+							DoctorUID : scope.info.UID
+						};
 						delete scope.info['UID'];
 						data.info = scope.info;
 						data.RoleId = scope.info.UserAccount.RelUserRoles.length!=0?scope.info.UserAccount.RelUserRoles[0].RoleId:null;

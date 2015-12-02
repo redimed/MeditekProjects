@@ -2,7 +2,7 @@ var app = angular.module('app.authentication.home.list.controller',[
 	'app.authentication.home.list.detail.controller',
 ]);
 
-app.controller('homeListCtrl', function($scope, MovieRetriever){
+app.controller('homeListCtrl', function($scope, MovieRetriever, $state){
 	$scope.movies = MovieRetriever.getmovies("...");
 	$scope.movies.then(function(data){
 		$scope.movies = data;
@@ -25,6 +25,8 @@ app.controller('homeListCtrl', function($scope, MovieRetriever){
 	}
 
 	$scope.movies=[];
+
+	
 
     // gives another movie array on change
     // $scope.updateMovies = function(typed){

@@ -1,6 +1,5 @@
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
 var config = sails.config.myconf;
 //****Twilio Client for sending SMS
 var twilioClient = require('twilio')(config.twilioSID, config.twilioToken);
@@ -33,7 +32,7 @@ module.exports = {
                 teleUser.getUserAccount().then(function(user) {
                     if (user) {
                         TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
-                            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
+                            if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
                             return res.ok(response.getBody());
                         }, function(err) {
                             res.json(err.getCode(), err.getBody());
@@ -108,7 +107,7 @@ module.exports = {
         var type = params.type;
         var headers = req.headers;
         TelehealthService.GetAppointmentsByPatient(patientUID, limit, type, headers).then(function(response) {
-            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
+            if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
             return res.ok(response.getBody());
         }, function(err) {
             res.json(err.getCode(), err.getBody());
@@ -129,7 +128,7 @@ module.exports = {
             return res.serverError(ErrorWrap(err));
         }
         TelehealthService.GetTelehealthAppointmentDetails(apptUID, headers).then(function(response) {
-            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
+            if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
             return res.ok(response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
@@ -150,7 +149,7 @@ module.exports = {
             return res.serverError(ErrorWrap(err));
         }
         TelehealthService.GetWAAppointmentDetails(apptUID, headers).then(function(response) {
-            if (response.getCode() == 202) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken ? response.getHeaders().requireupdatetoken : null);
+            if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
             return res.ok(response.getBody());
         }).catch(function(err) {
             res.json(err.getCode(), err.getBody());
@@ -219,6 +218,7 @@ module.exports = {
             }).then(function(user) {
                 if (user) {
                     TelehealthService.MakeRequest({
+                        host: config.AuthAPI,
                         path: '/api/user-activation/create-user-activation',
                         method: 'POST',
                         body: {
@@ -282,6 +282,7 @@ module.exports = {
                     user.getPatient().then(function(patient) {
                         if (patient) {
                             TelehealthService.MakeRequest({
+                                host: config.AuthAPI,
                                 path: '/api/user-activation/activation',
                                 method: 'GET',
                                 params: {

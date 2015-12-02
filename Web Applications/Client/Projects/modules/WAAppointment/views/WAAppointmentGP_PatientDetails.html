@@ -83,7 +83,7 @@
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group form-md-line-input">
-                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.DOB" data-date-end-date="0d">
+                            <input type="text" class="form-control date-picker edited" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.DOB" data-date-end-date="0d" name="DOB">
                             <label class="control-label">Date of Birth</label>
                             <div class="form-control-focus"> </div>
                         </div>
@@ -173,8 +173,17 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
-                        <input type="text" class="form-control edited" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PhoneNumber" name="PhoneNumber">
-                        <label class="control-label">Contact Number(M)
+                        <select class="form-control edited" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.State" name="State">
+                                <option value=""></option>
+                                <option value="WA">Western Australia</option>
+                                <option value="VIC">Victoria</option>
+                                <option value="TAS">Tasmania</option>
+                                <option value="QLD">Queensland</option>
+                                <option value="NSW">New South Wales</option>
+                                <option value="NT">Northern Territory</option>
+                                <option value="ACT">Australian Capital Territory</option>
+                        </select>
+                        <label class="control-label">State
                             <span class="required"> * </span>
                         </label>
                         <div class="form-control-focus"> </div>
@@ -182,13 +191,23 @@
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
+                        <input type="text" class="form-control edited" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.PhoneNumber" name="PhoneNumber">
+                        <label class="control-label">Contact Number(M)
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="form-control-focus"> </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group form-md-line-input">
                         <input type="text" class="form-control edited" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.HomePhoneNumber" name="HomePhoneNumber">
                         <label class="control-label">Contact Number(H)</label>
                         <div class="form-control-focus"> </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-md-line-input">
                         <input type="text" class="form-control" ng-model="requestInfo.TelehealthAppointment.PatientAppointment.FaxNumber">

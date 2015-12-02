@@ -42,6 +42,11 @@ angular.module('app.authentication.doctor.service', [])
 		return createDoctorByNewAccount.post({data:data});
 	}
 
+	services.updateSignature = function(data) {
+		var updateSignature = api.all('doctor/update-sign');
+		return updateSignature.post({data:data});
+	}
+
 	services.checkphoneUserAccount = function(data) {
 		var instanceApi = api.all('checkphoneUserAccount');
 		return instanceApi.post({data: data});
@@ -161,7 +166,7 @@ angular.module('app.authentication.doctor.service', [])
 
 			//validate Email
 			if(info.Email){
-				var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+				var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
 				var Email=info.Email.replace('/[\(\)\s\-]/g','');
 				if(!EmailPattern.test(Email)){
 					error.push({field:"Email",message:"invalid email"});
@@ -310,7 +315,7 @@ angular.module('app.authentication.doctor.service', [])
 			// validate Email? hoi a Tan su dung exception
 			if('Email' in info){
 				if(info.Email){
-					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
 					if(!EmailPattern.test(info.Email)){
 						error.push({field:"Email",message:"invalid email"});
 					}
@@ -333,7 +338,7 @@ angular.module('app.authentication.doctor.service', [])
 			//validate WorkPhone
 			if('WorkPhoneNumber' in info){
 				if(info.WorkPhoneNumber){
-					var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var auWorkPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var WorkPhoneNumber=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
 						error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -344,7 +349,7 @@ angular.module('app.authentication.doctor.service', [])
 			//validate HomePhoneNumber? hoi a Tan su dung exception
 			if('HomePhoneNumber' in info){
 				if(info.HomePhoneNumber){
-					var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var auHomePhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auHomePhoneNumberPattern.test(HomePhone)){
 						error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});

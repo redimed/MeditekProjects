@@ -4,14 +4,13 @@
 /*body { background-color: white;}*/
 
 .login {
-    background-color: white !important;
-
+    background-color: #ccc !important;
 
 }
 
 .content {
-    border: 1px solid #ccc;
-    width: 380px !important;
+    /*border: 1px solid #ccc;*/
+    /*width: 380px !important;*/
 }
 
 .register-form {
@@ -23,15 +22,50 @@
 }
 
 .page-header.navbar {
-    background: white url('../img/bk-header.png');
-    background-size: 100% 46px;
+    background-color: white;
+    box-shadow: 0px 0px 30px 0px #888; 
+    height: 60px;
 }
 
+.page-header.navbar .search-form{
+    background-color: #f1f4f7 !important;
+    border-radius: 20px;
+    margin: 7px 0px;
+}
+
+.page-header.navbar .search-form .input-group .form-control {
+    color: #959fad;
+}
+
+.page-header.navbar .page-logo {
+    width: 300px;
+    margin: 7px 0px;
+}
+
+.page-header.navbar .top-menu ul {
+    margin: 7px 0;
+}
+
+.page-header.navbar .top-menu .navbar-nav>li.dropdown:last-child a:hover {
+    background-color: #f1f4f7;
+}
+
+.my-page-title{
+    background-color: #454d58;
+    color: white;
+    display: block;
+    margin: -6px 0px 10px -20px;
+    padding: 12px 20px;
+    /*font-weight: bold;*/
+    font-family: sans-serif;
+}
 .my-modal-body {
     padding: 0em 2em 2em 2em;
 }
 
-
+.page-sidebar .page-sidebar-menu, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu {
+    margin-top: 77px;
+}
 /*fix sitebar*/
 @media (min-width: 992px){}
 .page-sidebar {
@@ -40,7 +74,8 @@
 
 @media (min-width: 992px){}
 .page-content-wrapper .page-content {
-    margin-left: 300px;
+    margin-left: 300px; 
+    margin-top: -5px;
 }
 
 /*fix label input_md*/
@@ -95,7 +130,7 @@ ul.my-ul {
 }
 
 .my-step-number {
-    background-color: #eee;
+    background-color: #dde3ec;
     display: inline-block;
     text-align: center !important;
     font-size: 16px;
@@ -204,6 +239,12 @@ ul.my-ul {
 
 .my-fileinput{
     border: 1px solid #ccc;
+}
+
+img.profile-imge{
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
 }
 /*phan quoc chien*/
 

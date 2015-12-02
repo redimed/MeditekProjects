@@ -394,7 +394,7 @@
                                                                         <div class="form-group form-md-line-input" ng-show="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-class="{'has-error': userForm.InterpreterLanguage.$invalid && submited} ">
                                                                             <label class="control-label col-md-4 col-sm-4">If yes, language/dialect </label>
                                                                             <div class="col-md-6 col-sm-6" >
-                                                                                <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage" name="InterpreterLanguage" required>
+                                                                                <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage" name="InterpreterLanguage" ng-required="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'">
                                                                                 <p ng-show="userForm.InterpreterLanguage.$invalid && submited" class="help-block">Field is required</p>
                                                                                 <div class="form-control-focus"> </div>
                                                                             </div>
@@ -419,13 +419,13 @@
                                                 <div id="tab_2-2" class="tab-pane">
                                                     <div class="row">
                                                         <div class="col-md-6 col-sm-6">
-                                                            <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$invalid && submited}">
+                                                            <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$invalid}">
                                                                 <div class="input-icon">
                                                                     <input type="text" class="form-control edited" name="TelehealthAppointment_PatientAppointment_PhoneNumber" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" required>
                                                                     <label class="control-label">Contact number (M)</label>
                                                                     <div class="form-control-focus"> </div>
                                                                     <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.required && submited" class="help-block">Contact Number (M) is required</p>
-                                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.pattern" class="help-block">This is not a mobile phone number</p>
+                                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.pattern" class="help-block">Phone number is a 10 digits number. Eg: 04 xxxx xxxx</p>
                                                                     <i class="glyphicon glyphicon-phone"></i>
                                                                 </div>
                                                             </div>
@@ -436,7 +436,7 @@
                                                                     <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.HomePhoneNumber" name="TelehealthAppointment_PatientAppointment_HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/">
                                                                     <label class="control-label">Contact number (H)</label>
                                                                     <div class="form-control-focus"> </div>
-                                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$error.pattern" class="help-block">This is not a home phone number</p>
+                                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$error.pattern" class="help-block">Home phone is a 4-10 digits number</p>
                                                                     <i class="glyphicon glyphicon-phone-alt"></i>
                                                                 </div>
                                                             </div>
@@ -506,6 +506,28 @@
                                                                         <span class="required"> * </span>
                                                                     </label>
                                                                     <p ng-show="userForm.Postcode.$invalid && submited" class="help-block">Postcode name is required</p>
+                                                                    <div class="form-control-focus"> </div>
+                                                                    <i class="glyphicon glyphicon-map-marker"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                         <div class="col-md-6 col-sm-6">
+                                                            <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.State.$invalid && submited} ">
+                                                                <div class="input-icon">
+                                                                    <select class="form-control edited" ng-model="wainformation.TelehealthAppointment.PatientAppointment.State" required name="State">
+                                                                            <option value=""></option>
+                                                                            <option value="WA">Western Australia</option>
+                                                                            <option value="VIC">Victoria</option>
+                                                                            <option value="TAS">Tasmania</option>
+                                                                            <option value="QLD">Queensland</option>
+                                                                            <option value="NSW">New South Wales</option>
+                                                                            <option value="NT">Northern Territory</option>
+                                                                            <option value="ACT">Australian Capital Territory</option>
+                                                                    </select>
+                                                                    <label class="control-label">State
+                                                                        <span class="required"> * </span>
+                                                                    </label>
+                                                                    <p ng-show="userForm.State.$invalid && submited" class="help-block">State name is required</p>
                                                                     <div class="form-control-focus"> </div>
                                                                     <i class="glyphicon glyphicon-map-marker"></i>
                                                                 </div>
@@ -604,9 +626,9 @@
                                     </div>
                                     <div class="row pull-right">
                                         <div class="col-md-12 co-xs-12">
-                                            <button class="btn red" ng-click="selectPatient()">
-                                            <i class="glyphicon glyphicon-plus"></i> Link Patient
-                                        </button>
+                                            <span class="btn red" ng-click="selectPatient()" ng-hide="checkRoleUpdate">
+                                                <i class="glyphicon glyphicon-plus"></i> Link Patient
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -673,7 +695,7 @@
                                                                             <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.ConsultantContactNumber" name="TelehealthAppointment_WAAppointment_ConsultantContactNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/">
                                                                             <label class="control-label">Contact number</label>
                                                                             <div class="form-control-focus"> </div>
-                                                                            <p ng-show="userForm.TelehealthAppointment_WAAppointment_ConsultantContactNumber.$error.pattern" class="help-block">This is not a home phone number</p>
+                                                                            <p ng-show="userForm.TelehealthAppointment_WAAppointment_ConsultantContactNumber.$error.pattern" class="help-block">Phone number is a 10 digits number. Eg: 04 xxxx xxxx</p>
                                                                             <i class="glyphicon glyphicon-phone"></i>
                                                                         </div>
                                                                     </div>
@@ -739,7 +761,7 @@
                                                                             <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.UsualGPContactNumber" name="TelehealthAppointment_WAAppointment_UsualGPContactNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" />
                                                                             <label class="control-label">Contact Number</label>
                                                                             <div class="form-control-focus"> </div>
-                                                                            <p ng-show="userForm.TelehealthAppointment_WAAppointment_UsualGPContactNumber.$error.pattern" class="help-block">This is not a mobile phone number</p>
+                                                                            <p ng-show="userForm.TelehealthAppointment_WAAppointment_UsualGPContactNumber.$error.pattern" class="help-block">Phone number is a 10 digits number. Eg: 04 xxxx xxxx</p>
                                                                             <i class="glyphicon glyphicon-phone"></i>
                                                                         </div>
                                                                     </div>

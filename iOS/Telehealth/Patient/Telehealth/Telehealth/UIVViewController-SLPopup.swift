@@ -58,6 +58,7 @@ extension UIViewController {
 //    }
     
     func presentpopupViewController(popupViewController: UIViewController, animationType:SLpopupViewAnimationType, completion:() -> Void) {
+        
         let sourceView:UIView = self.getTopView()
         self.popupViewController = popupViewController
         let popupView:UIView = popupViewController.view

@@ -188,7 +188,7 @@ module.exports = {
 
 				//validate WorkPhone
 				if(info.WorkPhoneNumber!=undefined && info.WorkPhoneNumber){
-					var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var auWorkPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var WorkPhoneNumber=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
 						error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -198,7 +198,7 @@ module.exports = {
 
 				//validate HomePhoneNumber? hoi a Tan su dung exception
 				if(info.HomePhoneNumber!=undefined && info.HomePhoneNumber){
-					var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+					var auHomePhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
 					if(!auHomePhoneNumberPattern.test(HomePhone)){
 						error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -260,28 +260,28 @@ module.exports = {
 				}
 
 				// validate Type
-				if(info.Type!=undefined && info.Type) {
-					if(info.Type.length < 0) {
-						error.push({field:"Type",message:"length"});
-						err.pushErrors(error);
-					}
-				}
-				else {
-					error.push({field:"Type",message:"required"});
-					err.pushErrors(error);
-				}
+				// if(info.Type!=undefined && info.Type) {
+				// 	if(info.Type.length < 0) {
+				// 		error.push({field:"Type",message:"length"});
+				// 		err.pushErrors(error);
+				// 	}
+				// }
+				// else {
+				// 	error.push({field:"Type",message:"required"});
+				// 	err.pushErrors(error);
+				// }
 
 				// validate Speciality
-				if(info.Speciality!=undefined && info.Speciality) {
-					if(info.Speciality.length < 0) {
-						error.push({field:"Speciality",message:"length"});
-						err.pushErrors(error);
-					}
-				}
-				else {
-					error.push({field:"Speciality",message:"required"});
-					err.pushErrors(error);
-				}
+				// if(info.Speciality!=undefined && info.Speciality) {
+				// 	if(info.Speciality.length < 0) {
+				// 		error.push({field:"Speciality",message:"length"});
+				// 		err.pushErrors(error);
+				// 	}
+				// }
+				// else {
+				// 	error.push({field:"Speciality",message:"required"});
+				// 	err.pushErrors(error);
+				// }
 
 				//validate HealthLinkID
 				if(info.HealthLinkID!=undefined && info.HealthLinkID){
@@ -475,7 +475,7 @@ module.exports = {
 				//validate WorkPhone
 				if('WorkPhoneNumber' in info){
 					if(info.WorkPhoneNumber){
-						var auWorkPhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+						var auWorkPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 						var WorkPhoneNumber=info.WorkPhoneNumber.replace(/[\(\)\s\-]/g,'');
 						if(!auWorkPhoneNumberPattern.test(WorkPhoneNumber)){
 							error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -487,7 +487,7 @@ module.exports = {
 				//validate HomePhoneNumber? hoi a Tan su dung exception
 				if('HomePhoneNumber' in info){
 					if(info.HomePhoneNumber){
-						var auHomePhoneNumberPattern=new RegExp(/^[1-9]{9}$/);
+						var auHomePhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 						var HomePhone=info.HomePhoneNumber.replace(/[\(\)\s\-]/g,'');
 						if(!auHomePhoneNumberPattern.test(HomePhone)){
 							error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -558,32 +558,32 @@ module.exports = {
 				}
 
 				// validate Type
-				if('Type' in info){
-					if(info.Type) {
-						if(info.Type.length < 0) {
-							error.push({field:"Type",message:"length"});
-							err.pushErrors(error);
-						}
-					}
-					else {
-						error.push({field:"Type",message:"required"});
-						err.pushErrors(error);
-					}
-				}
+				// if('Type' in info){
+				// 	if(info.Type) {
+				// 		if(info.Type.length < 0) {
+				// 			error.push({field:"Type",message:"length"});
+				// 			err.pushErrors(error);
+				// 		}
+				// 	}
+				// 	else {
+				// 		error.push({field:"Type",message:"required"});
+				// 		err.pushErrors(error);
+				// 	}
+				// }
 
 				// validate Speciality
-				if('Speciality' in info){
-					if(info.Speciality) {
-						if(info.Speciality.length < 0) {
-							error.push({field:"Speciality",message:"length"});
-							err.pushErrors(error);
-						}
-					}
-					else {
-						error.push({field:"Speciality",message:"required"});
-						err.pushErrors(error);
-					}
-				}
+				// if('Speciality' in info){
+				// 	if(info.Speciality) {
+				// 		if(info.Speciality.length < 0) {
+				// 			error.push({field:"Speciality",message:"length"});
+				// 			err.pushErrors(error);
+				// 		}
+				// 	}
+				// 	else {
+				// 		error.push({field:"Speciality",message:"required"});
+				// 		err.pushErrors(error);
+				// 	}
+				// }
 
 				//validate HealthLinkID
 				if('HealthLinkID' in info){
@@ -1191,7 +1191,7 @@ module.exports = {
 	},
 
 	CreateDoctorByNewAccount : function(data, transaction) {
-		var userUID;
+		var userUID,DoctorUID;
 		return sequelize.transaction()
 		.then(function(t){
 			return Services.Doctor.validation(data,true)
@@ -1220,6 +1220,7 @@ module.exports = {
 				throw err;
 			})
 			.then(function(result){
+				DoctorUID = result.UID;
 				return RelUserRole.create({
 					UserAccountId : data.UserAccountID,
 					RoleId        : data.RoleId,
@@ -1231,6 +1232,7 @@ module.exports = {
 			})
 			.then(function(success){
 				success.dataValues.userUID = userUID;
+				success.dataValues.DoctorUID = DoctorUID;
 				t.commit();
 				return success;
 			},function(err){
@@ -1240,12 +1242,100 @@ module.exports = {
 		});
 	},
 
+	GetListSpeciality: function() {
+		return Speciality.findAll({
+			attributes:['ID','Name']
+		});
+	},
+
+	UpdateSignature: function(data) {
+		if(data.DoctorUID!=null && data.DoctorUID!=""){
+			return sequelize.transaction()
+			.then(function(t){
+				return Doctor.findAll({
+					attributes:['ID','UserAccountID'],
+					transaction:t,
+					where:{
+						UID:data.DoctorUID
+					}
+				})
+				.then(function(result){
+					if(result[0]==null){
+						return ['2'];
+					}
+					else {
+						return FileUpload.findAll({
+							attributes:['ID','FileName','UID'],
+							where:{
+								UserAccountID : result[0].UserAccountID,
+								FileType:'Signature',
+								Enable:'Y'
+							},
+							transaction:t
+						});
+					}
+				},function(err){
+					t.rollback();
+					throw err;
+				})
+				.then(function(result){
+					if(result[0]==null){
+						return ['3'];
+					}
+					else if(result[0]=='2') {
+						return ['2'];
+					}
+					else{
+						return Doctor.update({
+							Signature: result[0].ID
+						},{
+							where:{
+								UID : data.DoctorUID
+							},
+							transaction:t
+						});
+					}
+				},function(err){
+					t.rollback();
+					throw err;
+				})
+				.then(function(success){
+					if(success[0]==1){
+						t.commit();
+						return success;
+					}
+					else {
+						return success;
+					}
+				},function(err){
+					t.rollback();
+					throw err;
+				})
+			},function(err){
+				throw err;
+			});
+		}
+		else{
+			return null;
+		}
+	},
+
 	/*
 		DoctorAppointment: List doctor for Appointment
 	*/
 	DoctorAppointment: function() {
 
 		return Doctor.findAll({
+						include: [
+							{
+				            	model: UserAccount,
+				            	attributes: ['PhoneNumber'],
+				            	required: true,
+				            	where:{
+				            		Enable:'Y'
+				            	}
+				            }
+						],
 						where: {
 							Enable: 'Y'
 						}

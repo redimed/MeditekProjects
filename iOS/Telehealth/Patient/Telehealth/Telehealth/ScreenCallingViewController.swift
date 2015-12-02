@@ -30,25 +30,29 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     var subscriber : OTSubscriber?
     var uuidFrom = String()
     var uuidTo = String()
+    @IBOutlet weak var displayTimeLabel: UILabel!
     @IBOutlet weak var buttonHoldCall: DesignableButton!
     @IBOutlet weak var buttonEndCall: DesignableButton!
     @IBOutlet weak var buttonMuteCall: DesignableButton!
+    @IBOutlet weak var buttonOffMic: DesignableButton!
     let panRec = UIPanGestureRecognizer()
-    
+    var startTime = NSTimeInterval()
+    var timer:NSTimer = NSTimer()
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         let apiKey = savedData.apiKey != nil ? savedData.apiKey : ""
         let sessionId = savedData.sessionId != nil ? savedData.sessionId : ""
         let token = savedData.token != nil ? savedData.token : ""
-        print("token calling : \(token)")
+        
         ApiKey = String(apiKey)
         // Replace with your generated session ID
         SessionID = String(sessionId)
         // Replace with your generated token
         Token = String(token)
         //get UUID to
-        uuidTo = String(savedData.data[0]["from"])
+        uuidTo = String(savedData.from)
         //Get uuid from in localstorage
         if let uuid = defaults.valueForKey("uid") as? String {
             uuidFrom = uuid
@@ -56,6 +60,45 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         NSNotificationCenter.defaultCenter().removeObserver(self,name:"endCallAnswer",object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "endCallAnswer", name: "endCallAnswer", object: nil)
         
+    }
+    //start count timer call
+    func start() {
+        if (!timer.valid) {
+            let aSelector : Selector = "updateTime"
+            timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
+            startTime = NSDate.timeIntervalSinceReferenceDate()
+        }
+    }
+    //stop count timer call
+    func stop() {
+        timer.invalidate()
+    }
+    //func handle count timer
+    func updateTime() {
+        let currentTime = NSDate.timeIntervalSinceReferenceDate()
+        
+        //Find the difference between current time and start time.
+        var elapsedTime: NSTimeInterval = currentTime - startTime
+        
+        //calculate the minutes in elapsed time.
+        let minutes = UInt8(elapsedTime / 60.0)
+        elapsedTime -= (NSTimeInterval(minutes) * 60)
+        
+        //calculate the seconds in elapsed time.
+        let seconds = UInt8(elapsedTime)
+        elapsedTime -= NSTimeInterval(seconds)
+        
+        //find out the fraction of milliseconds to be displayed.
+        let fraction = UInt8(elapsedTime * 100)
+        
+        //add the leading zero for minutes, seconds and millseconds and store them as string constants
+        
+        let strMinutes = String(format: "%02d", minutes)
+        let strSeconds = String(format: "%02d", seconds)
+        _ = String(format: "%02d", fraction)
+        
+        //concatenate minuets, seconds and milliseconds as assign it to the UILabel
+        displayTimeLabel.text = "\(strMinutes):\(strSeconds)"
     }
     
     //Giap: Open or close publisher video
@@ -72,8 +115,9 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
             publisher?.view.hidden = false
         }
     }
-    //Giap: On or Off mic
+    //Giap: On or Off speaker
     @IBAction func buttonMuteAudioAction(sender: DesignableButton) {
+     
         if publisher?.publishAudio.boolValue == true {
             publisher?.publishAudio = false
             sender.setTitle(FAIcon.volume_up, forState: .Normal)
@@ -81,7 +125,20 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
             publisher?.publishAudio = true
             sender.setTitle(FAIcon.volume_off, forState: .Normal)
         }
+
     }
+    
+    @IBAction func buttonOnOffMic(sender: AnyObject) {
+        if subscriber?.subscribeToAudio == true{
+            subscriber?.subscribeToAudio = false
+            sender.setTitle(FAIcon.microphone_on, forState: .Normal)
+        }else {
+            subscriber?.subscribeToAudio = true
+            sender.setTitle(FAIcon.microphone_off, forState: .Normal)
+        }
+        
+    }
+    
     @IBAction func buttonEndCallAction(sender: DesignableButton) {
         emitDataToServer(MessageString.CallEndCall)
         endCallAnswer()
@@ -154,9 +211,9 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
             showAlert(error.localizedDescription)
         }
         view.addSubview((publisher?.view)!)
-        //        view.addSubview(buttonEndCall)
-        //        view.addSubview(buttonHoldCall)
-        //        view.addSubview(buttonMuteCall)
+//                view.addSubview(buttonEndCall)
+//                view.addSubview(buttonHoldCall)
+//                view.addSubview(buttonMuteCall)
         panRec.addTarget(self, action: "draggedView:")
         publisher!.view.frame = CGRect(x: 0.0, y: 0, width: videoWidthSub, height: videoHeightSub)
         publisher?.view.userInteractionEnabled = true
@@ -266,6 +323,8 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         subscriber?.view.addSubview(buttonEndCall)
         subscriber?.view.addSubview(buttonHoldCall)
         subscriber?.view.addSubview(buttonMuteCall)
+        subscriber?.view.addSubview(buttonOffMic)
+        start()
         view.hideLoading()
         
     }

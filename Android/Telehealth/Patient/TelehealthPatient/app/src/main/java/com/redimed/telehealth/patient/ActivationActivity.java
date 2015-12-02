@@ -89,7 +89,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     private String TAG = "ACTIVATION";
     private CountryPicker countryPicker;
     private String phoneCode;
-    private RegisterApi registerApi;
+    private RegisterApi registerApi, registerApiCore;
     private Gson gson;
     private TelehealthUser telehealthUser;
     private JsonObject patientJSON;
@@ -101,8 +101,10 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_activation);
 
         registerApi = RESTClient.getRegisterApi();
+        registerApiCore = RESTClient.getRegisterApiCore();
         gson = new Gson();
         ButterKnife.bind(this);
+        Picasso.with(this).load(R.drawable.logo_redimed).into(mLogo);
         layoutContainer.setAnimateFirstView(true);
 
         phoneCode = "+61";
@@ -182,6 +184,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                 RequestCode();
                 break;
             case R.id.btnBack:
+                btnRequestCode.setEnabled(true);
                 switchView(R.anim.in_from_right, R.anim.out_to_left, findViewById(R.id.layoutRegisterFone));
                 txtPhone.setText("");
                 break;
@@ -214,6 +217,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
     //Register phone number with get token device
     private void GetDeviceInfo(String phoneNumber) {
+        btnRequestCode.setEnabled(false);
         spDevice = getApplicationContext().getSharedPreferences("DeviceInfo", MODE_PRIVATE);
         boolean sendToken = spDevice.getBoolean("sendToken", false);
 
@@ -235,6 +239,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
                 @Override
                 public void failure(RetrofitError error) {
+                    btnRequestCode.setEnabled(true);
                     if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
                         new DialogConnection(ActivationActivity.this).show();
                     } else {
@@ -260,25 +265,73 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                 registerApi.verify(patientJSON, new Callback<JsonObject>() {
                     @Override
                     public void success(JsonObject jsonObject, Response response) {
-                        String status = jsonObject.get("status").getAsString();
-                        if (status.equalsIgnoreCase("success")) {
-                            SharedPreferences.Editor uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE).edit();
-                            JsonObject userJson = jsonObject.get("user").getAsJsonObject();
-                            uidTelehealth.putString("token", jsonObject.get("token").isJsonNull() ?
-                                    " " : jsonObject.get("token").getAsString());
-                            uidTelehealth.putString("uid", userJson.get("TeleUID").isJsonNull() ?
-                                    " " : userJson.get("TeleUID").getAsString());
-                            uidTelehealth.putString("userUID", userJson.get("UID").isJsonNull() ?
-                                    " " : userJson.get("UID").getAsString());
-                            uidTelehealth.putString("patientUID", userJson.get("PatientUID").isJsonNull() ?
-                                    " " : userJson.get("PatientUID").getAsString());
-                            uidTelehealth.putString("deviceID", spDevice.getString("deviceID", null) == null ?
-                                    " " : spDevice.getString("deviceID", null));
-                            uidTelehealth.putString("refreshCode", jsonObject.get("refreshCode").isJsonNull() ?
-                                    " " : jsonObject.get("refreshCode").getAsString());
+                        if (!jsonObject.isJsonNull()) {
+                            final SharedPreferences.Editor uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE).edit();
+                            uidTelehealth.putString("userUID", jsonObject.get("userUID").isJsonNull() ?
+                                    " " : jsonObject.get("userUID").getAsString());
+                            uidTelehealth.putString("patientUID", jsonObject.get("patientUID").isJsonNull() ?
+                                    " " : jsonObject.get("patientUID").getAsString());
                             uidTelehealth.apply();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                            finish();
+
+                            final JsonObject jsonLogin = new JsonObject();
+                            jsonLogin.addProperty("UserName", "android");
+                            jsonLogin.addProperty("Password", "android");
+                            jsonLogin.addProperty("UserUID", jsonObject.get("userUID").isJsonNull() ?
+                                    " " : jsonObject.get("userUID").getAsString());
+                            jsonLogin.addProperty("DeviceID", spDevice.getString("deviceID", null));
+                            jsonLogin.addProperty("VerificationToken", jsonObject.get("verifyCode").isJsonNull() ?
+                                    " " : jsonObject.get("verifyCode").getAsString());
+                            jsonLogin.addProperty("AppID", "com.redimed.telehealth.patient");
+                            Log.d(TAG, jsonLogin + " ");
+                            registerApiCore.login(jsonLogin, new Callback<JsonObject>() {
+                                @Override
+                                public void success(JsonObject jsonObject, Response response) {
+                                    Log.d(TAG, jsonObject + " ");
+                                    String status = jsonObject.get("status").isJsonNull() ?
+                                            " " : jsonObject.get("status").getAsString();
+                                    if (status.equalsIgnoreCase("success")) {
+                                        JsonObject userJson = jsonObject.get("user").getAsJsonObject();
+                                        uidTelehealth.putString("token", jsonObject.get("token").isJsonNull() ?
+                                                " " : jsonObject.get("token").getAsString());
+
+                                        uidTelehealth.putString("deviceID", spDevice.getString("deviceID", null));
+                                        uidTelehealth.putString("refreshCode", jsonObject.get("refreshCode").isJsonNull() ?
+                                                " " : jsonObject.get("refreshCode").getAsString());
+                                        uidTelehealth.commit();
+
+                                        String userUID = userJson.get("UID").isJsonNull() ? " " : userJson.get("UID").getAsString();
+                                        registerApi.getTelehealthUID(userUID, new Callback<JsonObject>() {
+                                            @Override
+                                            public void success(JsonObject jsonObject, Response response) {
+                                                Log.d(TAG, jsonObject + " ");
+                                                uidTelehealth.putString("uid", jsonObject.get("UID").isJsonNull() ?
+                                                        " " : jsonObject.get("UID").getAsString());
+                                                uidTelehealth.commit();
+                                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                                finish();
+                                            }
+
+                                            @Override
+                                            public void failure(RetrofitError error) {
+                                                if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
+                                                    new DialogConnection(ActivationActivity.this).show();
+                                                } else {
+                                                    new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
+                                        new DialogConnection(ActivationActivity.this).show();
+                                    } else {
+                                        new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                                    }
+                                }
+                            });
                         }
                     }
 

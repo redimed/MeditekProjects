@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }
-        //push notification
+        //create setting push notification
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound, UIUserNotificationType.Alert, UIUserNotificationType.Badge], categories: nil))
         let notificationActionOk :UIMutableUserNotificationAction = UIMutableUserNotificationAction()
         notificationActionOk.identifier = "Answer"
@@ -80,8 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-        print("identifier 222222", identifier)
-                switch (identifier!) {
+            switch (identifier!) {
                 case "Answer":
                    setDataCalling(userInfo)
                    statusCallingNotification = notifyMessage.ClickAnswer
@@ -90,9 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 case "Desline":
                     completionHandler()
                 default: break
-        
                 }
-        
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData)
@@ -128,6 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         print("applicationDidEnterBackground")
+        
         
     }
     

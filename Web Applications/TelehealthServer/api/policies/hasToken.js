@@ -10,3 +10,5 @@ module.exports = function(req, res, next) {
         return res.unauthorize(ErrorWrap(error));
     }
 }
+// var meditek_library=require("meditek_library");
+// module.exports=meditek_library.isAuthenticated;

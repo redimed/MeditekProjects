@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "appdynamics":"~4.1.7",
     "apn": "^1.7.5",
     "async": "^1.4.2",
     "bcrypt-nodejs": "0.0.3",

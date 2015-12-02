@@ -22,7 +22,7 @@ var PatientInfo : Patient!
 let phoneNumberCallUs = "0892300900"
 var statusCallingNotification = ""
 struct ConfigurationSystem {
-    static let http = "http://192.168.1.130"
+    static let http = "http://testapp.redimed.com.au"
     
     
     static let Http_3009 = "\(http):3009"
@@ -37,6 +37,8 @@ struct ConfigurationSystem {
         textField.layer.borderWidth = 1
         textField.cornerRadius = 4
     }
+    
+    
     //Giap: Check input only number
     func validateInputOnlyNumber(value: Int) -> Bool {
         switch value {

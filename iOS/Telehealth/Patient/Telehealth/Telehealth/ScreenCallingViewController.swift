@@ -38,6 +38,8 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     let panRec = UIPanGestureRecognizer()
     var startTime = NSTimeInterval()
     var timer:NSTimer = NSTimer()
+    
+    @IBOutlet weak var timeEffect: UIVisualEffectView!
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -117,7 +119,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     }
     //Giap: On or Off speaker
     @IBAction func buttonMuteAudioAction(sender: DesignableButton) {
-     
+   
         if publisher?.publishAudio.boolValue == true {
             publisher?.publishAudio = false
             sender.setTitle(FAIcon.volume_up, forState: .Normal)
@@ -135,12 +137,14 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         }else {
             subscriber?.subscribeToAudio = true
             sender.setTitle(FAIcon.microphone_off, forState: .Normal)
+            
         }
         
     }
     
     @IBAction func buttonEndCallAction(sender: DesignableButton) {
         emitDataToServer(MessageString.CallEndCall)
+        
         endCallAnswer()
     }
     
@@ -300,7 +304,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     
     func session(session: OTSession, connectionDestroyed connection : OTConnection) {
         NSLog("session connectionDestroyed (\(connection.connectionId))")
-        endCallAnswer()
+//        endCallAnswer()
     }
     
     func session(session: OTSession, didFailWithError error: OTError) {
@@ -324,6 +328,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         subscriber?.view.addSubview(buttonHoldCall)
         subscriber?.view.addSubview(buttonMuteCall)
         subscriber?.view.addSubview(buttonOffMic)
+        subscriber?.view.addSubview(timeEffect)
         start()
         view.hideLoading()
         
@@ -375,6 +380,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     
     func endCallAnswer() {
         sessionDidDisconnect(session!)
+        session?.disconnect()
         doUnsubscribe()
         self.dismissViewControllerAnimated(true, completion: nil)
     }

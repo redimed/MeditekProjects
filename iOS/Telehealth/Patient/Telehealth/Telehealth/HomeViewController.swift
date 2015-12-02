@@ -53,7 +53,6 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
                 break
             default: break
         }
-//        self.displayViewController(.TopBottom)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "openPopUpCalling", name: "openPopUpCalling", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "openScreenCall", name: "openScreenCall", object: nil)
         
@@ -305,7 +304,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
                     //                    savedData = saveData(apiKey: apiKey, message: message, fromName: fromName, sessionId: sessionId, token: token, from: from)
                     //                    self.displayViewController(.TopBottom)
                     //                    self.playRingtone()
-                    NSNotificationCenter.defaultCenter().postNotificationName("AnswerCall", object: self)
+//                    NSNotificationCenter.defaultCenter().postNotificationName("AnswerCall", object: self)
                 }else if message == MessageString.CallEndCall {
                     NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
                 }else if message == MessageString.Cancel {

@@ -90,7 +90,7 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                     self.performSegueWithIdentifier("VerifyToHomeSegue", sender: self)
                 }else {
                     self.view.hideLoading()
-                    if response["TimeOut"].string ==  ErrorMessage.TimeOut {
+                    if response["TimeOut"].string ==  ErrorMessage.TimeOut || response["ErrorsList"][0].string == nil {
                         self.alertMessage("Error", message: ErrorMessage.TimeOut)
                     }else {
                         let message : String = String(response["ErrorsList"][0])

@@ -52,7 +52,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         // Replace with your generated token
         Token = String(token)
         //get UUID to
-        uuidTo = String(savedData.data[0]["from"])
+        uuidTo = String(savedData.from)
         //Get uuid from in localstorage
         if let uuid = defaults.valueForKey("uid") as? String {
             uuidFrom = uuid
@@ -211,9 +211,9 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
             showAlert(error.localizedDescription)
         }
         view.addSubview((publisher?.view)!)
-        //        view.addSubview(buttonEndCall)
-        //        view.addSubview(buttonHoldCall)
-        //        view.addSubview(buttonMuteCall)
+//                view.addSubview(buttonEndCall)
+//                view.addSubview(buttonHoldCall)
+//                view.addSubview(buttonMuteCall)
         panRec.addTarget(self, action: "draggedView:")
         publisher!.view.frame = CGRect(x: 0.0, y: 0, width: videoWidthSub, height: videoHeightSub)
         publisher?.view.userInteractionEnabled = true

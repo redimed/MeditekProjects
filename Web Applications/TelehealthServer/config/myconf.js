@@ -10,5 +10,5 @@ module.exports.myconf = {
     GCMApiKey: 'AIzaSyDz2pMblr_p6HwWqCeBNUoxuat1rcOQwdk',
     // CoreAPI: 'http://testapp.redimed.com.au:3005',
     CoreAPI: 'http://192.168.1.130:3005',
-    AuthAPI: 'http://192.168.1.130:3005'
+    AuthAPI: 'http://192.168.1.130:3006'
 };

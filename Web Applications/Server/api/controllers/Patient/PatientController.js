@@ -124,7 +124,7 @@ module.exports = {
             .then(function(info) {
                 console.log(info);
                 if (info != null && info != undefined && info != '') {
-                    info[0].dataValues.FileUID = info[0].dataValues.UserAccount.FileUploads[0].UID;
+                    info[0].dataValues.FileUID = info[0].dataValues.UserAccount.FileUploads[0]?info[0].dataValues.UserAccount.FileUploads[0].UID:null;
                     info[0].dataValues.PhoneNumber = info[0].dataValues.UserAccount.PhoneNumber;
                     info[0].dataValues.CountryName = info[0].dataValues.Country.ShortName;
                     delete info[0].dataValues['UserAccount'];

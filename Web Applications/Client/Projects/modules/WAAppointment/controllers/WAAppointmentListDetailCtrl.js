@@ -297,6 +297,7 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
                 toastr.error(stringAlert);
             };
         } else {
+            console.log($scope.userForm.$error);
             toastr.error("Please check input data");
         }
     };

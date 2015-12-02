@@ -55,6 +55,13 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		            $rootScope.getNewToken();
 		        }
 		    };
+		    uploader.onErrorItem = function(fileItem, response, status, headers) {
+		        console.info('onErrorItem', fileItem, response, status, headers);
+		        if(Boolean(headers.requireupdatetoken)===true)
+		        {
+		            $rootScope.getNewToken();
+		        }
+		    };
 
 		    var uploaders = $scope.uploaders = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
@@ -90,6 +97,13 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    };
 		    uploaders.onCompleteItem = function (fileItem, response, status, headers) {
 		        console.info('onCompleteItem', fileItem, response, status, headers);
+		        if(Boolean(headers.requireupdatetoken)===true)
+		        {
+		            $rootScope.getNewToken();
+		        }
+		    };
+		    uploaders.onErrorItem = function(fileItem, response, status, headers) {
+		        console.info('onErrorItem', fileItem, response, status, headers);
 		        if(Boolean(headers.requireupdatetoken)===true)
 		        {
 		            $rootScope.getNewToken();

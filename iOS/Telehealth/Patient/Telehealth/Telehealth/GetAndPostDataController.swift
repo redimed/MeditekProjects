@@ -87,14 +87,20 @@ class GetAndPostDataController {
             case .Success(let JSONData):
                 print(JSON(JSONData))
                 var data = JSON(JSONData)
-                let verifyCode = data["verifyCode"].string! as String
-                let patientUID = data["patientUID"].string!   as String
-                let userUID = data["userUID"].string!  as String
-                self.loginApi(userUID: userUID, patientUID: patientUID, verifyCode: verifyCode){
-                    dataResponse in
-                    completionHandler(dataResponse)
+                if data["ErrorType"] == nil {
+                    let verifyCode = data["verifyCode"].string! as String
+                    let patientUID = data["patientUID"].string!   as String
+                    let userUID = data["userUID"].string!  as String
+                    self.loginApi(userUID: userUID, patientUID: patientUID, verifyCode: verifyCode){
+                        dataResponse in
+                        completionHandler(dataResponse)
+                    }
+
+                }else {
+                    completionHandler(data)
                 }
-            case .Failure(let data, let error):
+                
+                case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
                 completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
                 if let data = data {
@@ -122,7 +128,6 @@ class GetAndPostDataController {
                     self.getNewToken()
                 }
             }
- 
             switch result {
             case .Success(let JSONData):
                 let data = JSON(JSONData)
@@ -144,6 +149,7 @@ class GetAndPostDataController {
     
     
     func informationUser(data:JSON,patientUID:String ,completionHandler:(JSON) -> Void){
+        print("get uer------",data)
         let uid = data["user"]["UID"].string! as String
         let token = data["token"].string! as String
         let refreshCode = data["refreshCode"].string! as String
@@ -247,7 +253,7 @@ class GetAndPostDataController {
     func getListAppointmentByUID(UID:String,Limit:String,completionHandler:(JSON) -> Void) {
         Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentList + UID ,headers:headers).responseJSON{
             request, response, result in
-            print("Reponse----GetAppointmentList",response!.allHeaderFields)
+          
             if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
                 if requireupdatetoken as! String == "true" {
                     self.getNewToken()

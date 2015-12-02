@@ -214,6 +214,45 @@ module.exports = {
 		})
 	},
 
+	GetListSpeciality: function(req, res) {
+		Services.Doctor.GetListSpeciality()
+		.then(function(data){
+			if(data!=null && data!="")
+				res.ok({message:"success",data:data});
+			else
+				res.ok({message:"no data result",data:null});
+		})
+		.catch(function(err){
+			res.serverError(ErrorWrap(err));
+		});
+	},
+
+	UpdateSignature: function(req, res) {
+		var data = req.body.data;
+		Services.Doctor.UpdateSignature(data)
+		.then(function(result){
+			if(result==null)
+				res.ok({message:"NotFound.Update"});
+			else{
+				if(result[0]=='0'){
+					res.ok({message:"NotFound.Update"});
+				}
+				else if(result[0]=='1'){
+					res.ok({message:"success"});
+				}
+				else if(result[0]=='2'){
+					res.ok({message:"NotFound.Doctor"});
+				}
+				else{
+					res.ok({message:"NotFound.Signature"});
+				}
+			}
+		})
+		.catch(function(err){
+			res.serverError(ErrorWrap(err));
+		});
+	},
+
 	/*
 		doctorAppointment: List doctor for Appointment
 	*/

@@ -17,7 +17,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
-    <title ng-bind="$state.current.data.pageTitle"></title>
+    <title ng-bind="$state.current.data.pageTitle">Loading...</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -46,6 +46,9 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <!-- BEGIN PAGE LEVEL STYLE -->
         <link href="./theme/assets/admin/pages/css/profile-old.css" rel="stylesheet" type="text/css"/>
+
+        <!-- page_user_account_profile1_account -->
+        <link href="./theme/assets/pages/css/profile.min.css" rel="stylesheet" type="text/css" />
 
         <!-- profile 2 -->
             <link href="theme/assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css" />
@@ -300,9 +303,6 @@ License: You must have a valid license purchased only from themeforest(the above
             <script src="modules/WAAppointment/directives/WAAppointmentList.js"></script>
         <!-- END MODULE WAAppointment -->
 
-        <!-- ngThumb -->
-        <script src="theme/assets/global/libs/angular-file-upload/examples/image-preview/directives.js"></script>
-        <!-- end ngThumb -->
 
         <!-- BEGIN MODULE consultation -->
             <script src="modules/consultation/consultation.js" ></script>

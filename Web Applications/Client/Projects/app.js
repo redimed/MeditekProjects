@@ -74,6 +74,14 @@ app
                         }
                         $location.path('/login');
                     }
+                    else
+                    {
+                        if(Boolean(response.headers().requireupdatetoken)===true)
+                        {
+                            $rootScope.getNewToken();
+                        }
+                    }
+                    
                     return $q.reject(response);
                 },
 
@@ -213,7 +221,8 @@ app
             //ComponentsBootstrapSelect.init(); // init todo page
         });
         $rootScope.$on('$includeContentLoaded', function() {
-            //App.initAjax();
+            // App.initAjax();
+            App.initAjax();
             FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page
         });

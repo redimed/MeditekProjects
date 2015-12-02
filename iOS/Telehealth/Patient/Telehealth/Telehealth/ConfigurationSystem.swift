@@ -27,6 +27,7 @@ struct ConfigurationSystem {
     
     static let Http_3009 = "\(http):3009"
     static let Http_3005 =  "\(http):3005"
+     static let Http_3006 =  "\(http):3006"
     let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
     
 

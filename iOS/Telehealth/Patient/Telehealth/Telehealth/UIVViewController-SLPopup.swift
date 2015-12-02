@@ -113,8 +113,6 @@ extension UIViewController {
         
     }
     func slideView(popupView: UIView, sourceView:UIView, overlayView:UIView, animationType: SLpopupViewAnimationType) {
-        print("----soure",sourceView.bounds.size)
-        print("----popup",popupView.bounds.size)
         let sourceSize: CGSize = sourceView.bounds.size
         let popupSize: CGSize = popupView.bounds.size
         var popupStartRect:CGRect

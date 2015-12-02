@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "appdynamics":"~4.1.7",
     "ejs": "~0.8.4",
     "email-templates": "^2.0.1",
     "getmac": "^1.0.7",

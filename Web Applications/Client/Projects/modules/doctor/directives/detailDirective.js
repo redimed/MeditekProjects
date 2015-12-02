@@ -101,6 +101,13 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		        {
 		            $rootScope.getNewToken();
 		        }
+				console.log($scope.doctorUID);
+		        doctorService.updateSignature($scope.doctorUID)
+				.then(function(result){
+					console.log(result);
+				},function(err){
+					console.log(err);
+				});
 		    };
 		    uploaders.onErrorItem = function(fileItem, response, status, headers) {
 		        console.info('onErrorItem', fileItem, response, status, headers);
@@ -113,6 +120,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		},
 		link: function(scope, ele, attrs) {
 			console.log(scope.info);
+			scope.doctorUID = {};
 			var data = {};
 			scope.state = [
 				{'code':'VIC', 'name':'Victoria'},
@@ -214,6 +222,9 @@ angular.module('app.authentication.doctor.directive.detail', [])
 					if(scope.info.UID!=undefined && scope.info.UID!=null && scope.info.UID!=''){
 						data.UID = scope.info.UID;
 						data.UserAccountID = scope.info.UserAccountID;
+						scope.doctorUID = {
+							DoctorUID : scope.info.UID
+						};
 						delete scope.info['UID'];
 						data.info = scope.info;
 						data.RoleId = scope.info.UserAccount.RelUserRoles.length!=0?scope.info.UserAccount.RelUserRoles[0].RoleId:null;

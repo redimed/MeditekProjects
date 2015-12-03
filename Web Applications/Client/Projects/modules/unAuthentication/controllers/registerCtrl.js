@@ -97,8 +97,14 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
                     });
                 }, function(err) {});
                         
-            }, function(err) {});
-        }, function(err) {});
+            }, function(err) {
+            	console.log(err);
+            	toastr.error("server error","error");
+            });
+        }, function(err) {
+        	toastr.error("server error!","error");
+        	console.log(err);
+        });
 
     }
 

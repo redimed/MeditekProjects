@@ -308,6 +308,7 @@ module.exports = {
 			}
 		}
 		else{
+
 			try {
 
 				//validate Title
@@ -1191,7 +1192,8 @@ module.exports = {
 	},
 
 	CreateDoctorByNewAccount : function(data, transaction) {
-		var userUID,DoctorUID;
+		var userUID,userID,Doctors,User;
+		var SpecialityList = [];
 		return sequelize.transaction()
 		.then(function(t){
 			return Services.Doctor.validation(data,true)
@@ -1211,7 +1213,9 @@ module.exports = {
 				throw err;
 			})
 			.then(function(user){
+				User = user;
 				userUID = user.UID;
+				userID = user.ID;
 				data.UserAccountID = user.ID;
 				data.HealthLink = data.HealthLinkID;
 				return Doctor.create(data,{transaction:t});
@@ -1219,26 +1223,29 @@ module.exports = {
 				t.rollback();
 				throw err;
 			})
-			.then(function(result){
-				DoctorUID = result.UID;
-				return RelUserRole.create({
-					UserAccountId : data.UserAccountID,
-					RoleId        : data.RoleId,
-					SiteId        : 1
-				},{transaction:t});
+			.then(function(doctorObj){
+				Doctors = doctorObj;
+				return Doctors.addSpeciality(data.Speciality,{transaction:t});
+			},function(err){
+				console.log(err);
+				t.rollback();
+				throw err;
+			})
+			.then(function(addSpecialitiesComplete){
+				return User.addRole(data.RoleId,{SiteId:1}
+				,{transaction:t});
 			},function(err){
 				t.rollback();
 				throw err;
 			})
 			.then(function(success){
-				success.dataValues.userUID = userUID;
-				success.dataValues.DoctorUID = DoctorUID;
+
 				t.commit();
 				return success;
 			},function(err){
 				t.rollback();
 				throw err;
-			});
+			})
 		});
 	},
 

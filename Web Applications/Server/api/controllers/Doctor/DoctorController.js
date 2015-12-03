@@ -189,7 +189,7 @@ module.exports = {
 
 	CheckInfo: function(req, res) {
 		var data = req.body.data;
-		Services.Doctor.validation(data)
+		Services.Doctor.validation(data,false)
 		.then(function(success){
 			res.ok(success);
 		},function(err){
@@ -203,6 +203,7 @@ module.exports = {
 		Services.Doctor.CreateDoctorByNewAccount(data)
 		.then(function(success){
 			if(success!=null && success!=""){
+				
 				res.ok(success);
 			}
 			else {

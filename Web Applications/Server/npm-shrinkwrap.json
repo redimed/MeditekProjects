@@ -339,7 +339,7 @@
     },
     "bindings": {
       "version": "1.2.1",
-      "from": "https://registry.npmjs.org/bindings/-/bindings-1.2.1.tgz",
+      "from": "bindings@1.2.1",
       "resolved": "https://registry.npmjs.org/bindings/-/bindings-1.2.1.tgz"
     },
     "bl": {
@@ -405,11 +405,6 @@
       "version": "1.0.0",
       "from": "https://registry.npmjs.org/buffer-writer/-/buffer-writer-1.0.0.tgz",
       "resolved": "https://registry.npmjs.org/buffer-writer/-/buffer-writer-1.0.0.tgz"
-    },
-    "bufferutil": {
-      "version": "1.2.1",
-      "from": "https://registry.npmjs.org/bufferutil/-/bufferutil-1.2.1.tgz",
-      "resolved": "https://registry.npmjs.org/bufferutil/-/bufferutil-1.2.1.tgz"
     },
     "buildmail": {
       "version": "1.2.5",
@@ -2170,7 +2165,7 @@
     },
     "nan": {
       "version": "2.0.9",
-      "from": "https://registry.npmjs.org/nan/-/nan-2.0.9.tgz",
+      "from": "nan@2.0.9",
       "resolved": "https://registry.npmjs.org/nan/-/nan-2.0.9.tgz"
     },
     "native-or-bluebird": {
@@ -3437,11 +3432,6 @@
       "version": "2.2.1",
       "from": "https://registry.npmjs.org/underscore.string/-/underscore.string-2.2.1.tgz",
       "resolved": "https://registry.npmjs.org/underscore.string/-/underscore.string-2.2.1.tgz"
-    },
-    "utf-8-validate": {
-      "version": "1.2.1",
-      "from": "https://registry.npmjs.org/utf-8-validate/-/utf-8-validate-1.2.1.tgz",
-      "resolved": "https://registry.npmjs.org/utf-8-validate/-/utf-8-validate-1.2.1.tgz"
     },
     "utf8": {
       "version": "2.1.0",

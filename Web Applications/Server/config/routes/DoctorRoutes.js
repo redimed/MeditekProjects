@@ -35,7 +35,7 @@ module.exports = {
 		action:'CreateDoctorByNewAccount'
 	},
 
-	'post /api/doctor/getlist-speciality':{
+	'get /api/doctor/getlist-speciality':{
 		controller:'Doctor/DoctorController',
 		action:'GetListSpeciality'
 	},

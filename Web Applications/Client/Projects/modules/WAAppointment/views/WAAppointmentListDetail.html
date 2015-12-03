@@ -425,7 +425,7 @@
                                                                     <label class="control-label">Contact number (M)</label>
                                                                     <div class="form-control-focus"> </div>
                                                                     <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.required && submited" class="help-block">Contact Number (M) is required</p>
-                                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.pattern" class="help-block">Phone number is a 10 digits number. Eg: 04 xxxx xxxx</p>
+                                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.pattern" class="help-block">Phone number is a 6-10 digits number. Eg: 04 xxxx xxxx</p>
                                                                     <i class="glyphicon glyphicon-phone"></i>
                                                                 </div>
                                                             </div>
@@ -436,7 +436,7 @@
                                                                     <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.HomePhoneNumber" name="TelehealthAppointment_PatientAppointment_HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/">
                                                                     <label class="control-label">Contact number (H)</label>
                                                                     <div class="form-control-focus"> </div>
-                                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$error.pattern" class="help-block">Home phone is a 4-10 digits number</p>
+                                                                    <p ng-show="userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$error.pattern" class="help-block">Home phone is a 6-10 digits number</p>
                                                                     <i class="glyphicon glyphicon-phone-alt"></i>
                                                                 </div>
                                                             </div>
@@ -695,7 +695,7 @@
                                                                             <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.WAAppointment.ConsultantContactNumber" name="TelehealthAppointment_WAAppointment_ConsultantContactNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/">
                                                                             <label class="control-label">Contact number</label>
                                                                             <div class="form-control-focus"> </div>
-                                                                            <p ng-show="userForm.TelehealthAppointment_WAAppointment_ConsultantContactNumber.$error.pattern" class="help-block">Phone number is a 10 digits number. Eg: 04 xxxx xxxx</p>
+                                                                            <p ng-show="userForm.TelehealthAppointment_WAAppointment_ConsultantContactNumber.$error.pattern" class="help-block">Phone number is a 6-10 digits number. Eg: 04 xxxx xxxx</p>
                                                                             <i class="glyphicon glyphicon-phone"></i>
                                                                         </div>
                                                                     </div>

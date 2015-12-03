@@ -306,6 +306,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
                     //                    self.playRingtone()
 //                    NSNotificationCenter.defaultCenter().postNotificationName("AnswerCall", object: self)
                 }else if message == MessageString.CallEndCall {
+//                    config.emitDataToServer(MessageString.CallEndCall, from: self.uid, to: savedData.from)
                     NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
                 }else if message == MessageString.Cancel {
                     NSNotificationCenter.defaultCenter().postNotificationName("cancelCall", object: self)

@@ -39,8 +39,8 @@ class GetAndPostDataController {
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         let parameters = [
             "data": [
-//                 "phone":"+61"+phoneNumber,
-                "phone":"+841654901590",
+                 "phone":"+61"+phoneNumber,
+//                "phone":"+841654901590",
                 "deviceId":deviceID,
                 "deviceType": "ios"
             ]
@@ -76,8 +76,8 @@ class GetAndPostDataController {
                 "code":verifyCode,
                 "deviceId":deviceID,
                 "deviceType": "ios",
-//                 "Phone":"+61" + phoneNumber
-                "phone":"+841654901590"
+                 "Phone":"+61" + phoneNumber
+//                "phone":"+841654901590"
             ]
         ]
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.CheckVerifyCode ,headers:headers, parameters: parameters).responseJSON{
@@ -119,7 +119,7 @@ class GetAndPostDataController {
                 "VerificationToken":verifyCode,
                 "AppID":UIApplication.sharedApplication().bundleID()
         ]
-        Alamofire.request(.POST, ConfigurationSystem.Http_3005 + UrlAPICheckPhoneNumber.apiLogin ,headers:headers, parameters: parameters).responseJSON{
+        Alamofire.request(.POST, ConfigurationSystem.Http_3006 + UrlAPICheckPhoneNumber.apiLogin ,headers:headers, parameters: parameters).responseJSON{
             request, response, result in
             print("Reponse--",response)
             if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
@@ -439,7 +439,7 @@ class GetAndPostDataController {
             let parameters = [
                 "refreshCode" : refreshCode
             ]
-            Alamofire.request(.POST,ConfigurationSystem.Http_3005 + UrlInformationPatient.getNewToken, headers:headers, parameters: parameters)
+            Alamofire.request(.POST,ConfigurationSystem.Http_3006 + UrlInformationPatient.getNewToken, headers:headers, parameters: parameters)
                 .responseJSON {
                     request, response, result in
                     switch result {

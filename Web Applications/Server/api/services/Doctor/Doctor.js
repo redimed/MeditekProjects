@@ -971,6 +971,11 @@ module.exports = {
 					model: Department,
 					attributes:['UID','DepartmentName'],
 					required: false
+				},
+				{
+					model:Speciality,
+					attributes:['Name','ID'],
+					required:false
 				}
 			],
 			attributes:defaultAtrributes,
@@ -993,6 +998,7 @@ module.exports = {
 
 	UpdateDoctor: function(data, transaction) {
 		var isHaveRole = false;
+		var uid;
 		return sequelize.transaction()
 		.then(function(t){
 			console.log(data.info);
@@ -1006,15 +1012,15 @@ module.exports = {
 						transaction:t
 					})
 					.then(function(user){
-						var uid = data.info.UserAccount['UID'];
+						uid = data.info.UserAccount['UID'];
 						delete data.info.UserAccount['PhoneNumber'];
 						delete data.info.UserAccount['UserName'];
 						delete data.info.UserAccount['Email'];
 						delete data.info.UserAccount['UID'];
 						delete data.info.UserAccount['Password'];
-						return UserAccount.update(data.info.UserAccount,{
-							where : {
-								UID : uid
+						return Doctor.findOne({
+							where:{
+								UID : data.UID
 							},
 							transaction:t
 						});
@@ -1024,6 +1030,23 @@ module.exports = {
 					});
 				}
 			},function(err){
+				throw err;
+			})
+			.then(function(doctor){
+				return doctor.setSpecialities(data.info.Speciality,{transaction:t});
+			},function(err){
+				t.rollback();
+				throw err;
+			})
+			.then(function(updatedSpecial){
+				return UserAccount.update(data.info.UserAccount,{
+					where : {
+						UID : uid
+					},
+					transaction:t
+				});
+			},function(err){
+				t.rollback();
 				throw err;
 			})
 			.then(function(result){

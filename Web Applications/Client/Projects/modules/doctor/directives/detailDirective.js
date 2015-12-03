@@ -7,6 +7,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		scope: {
 			uid: '=onUid',
 			info:'=onData',
+			specialities:'=onSpeciality',
             isShowFull:'=onShowfull',
             listShow:'=onListshow',
             onCancel: '='
@@ -198,7 +199,9 @@ angular.module('app.authentication.doctor.directive.detail', [])
 				App.initAjax();
 				ComponentsDateTimePickers.init(); // init todo page
 				oriInfo = angular.copy(scope.info);
-			},50);
+				$('.select2-multiple').select2();
+				$('.select2-container').removeAttr('style');
+			},70);
 
 			scope.removeImg = function(value){
 				if(value=="ProfileImage"){

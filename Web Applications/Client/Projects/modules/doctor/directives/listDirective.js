@@ -83,12 +83,7 @@ angular.module('app.authentication.doctor.directive.list', [])
 
 			scope.sort = function(field,sort) {
 				scope.isClickASC = false;
-				if(field=='UserAccount'){
-					field = 'PhoneNumber';
-				}
-				if(field=='Role'){
-					field = 'RoleName';
-				}
+
 				if(sort==="ASC"){
 					scope.isClickASC = true;
 					scope.fieldSort[field]= 'DESC';
@@ -96,6 +91,12 @@ angular.module('app.authentication.doctor.directive.list', [])
 				else{
 					scope.isClickASC = false;
 					scope.fieldSort[field]= 'ASC';
+				}
+				if(field=='UserAccount'){
+					field = 'PhoneNumber';
+				}
+				if(field=='Role'){
+					field = 'RoleName';
 				}
 				var data = field+" "+sort;
 				scope.searchObjectMap.order = data;
@@ -110,6 +111,17 @@ angular.module('app.authentication.doctor.directive.list', [])
 						templateUrl: 'doctorModal',
 						controller: function($scope,detail){
 							$scope.data = detail;
+							$scope.data.Speciality = [];
+							for(var i = 0; i < $scope.data.Specialities.length; i++){
+								$scope.data.Speciality.push($scope.data.Specialities[i].ID);
+							}
+							delete $scope.data['Specialities'];
+							doctorService.getSpecialities()
+							.then(function(result){
+								$scope.special = angular.copy(result.data);
+							},function(err){
+								console.log(err);
+							});
 							$scope.close = function() {
 								modalInstance.close();
 								scope.loadList(scope.searchObjectMap);

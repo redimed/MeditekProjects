@@ -166,7 +166,7 @@ module.exports = {
 
 				// validate Email? hoi a Tan su dung exception
 				if(info.Email!=undefined && info.Email){
-					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
 					if(!EmailPattern.test(info.Email)){
 						error.push({field:"Email",message:"invalid value"});
 						err.pushErrors(error);
@@ -449,7 +449,7 @@ module.exports = {
 				// validate Email? hoi a Tan su dung exception
 				if('Email' in info){
 					if(info.Email){
-						var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+						var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
 						if(!EmailPattern.test(info.Email)){
 							error.push({field:"Email",message:"invalid value"});
 							err.pushErrors(error);
@@ -709,7 +709,7 @@ module.exports = {
 			//validate Email
 			if('Email' in info){
 				if(info.Email){
-					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
 					var Email=info.Email.replace('/[\(\)\s\-]/g','');
 					if(!EmailPattern.test(Email)){
 						error.push({field:"Email",message:"invalid email"});

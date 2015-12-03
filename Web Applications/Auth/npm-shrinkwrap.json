@@ -185,6 +185,46 @@
       "from": "https://registry.npmjs.org/ap/-/ap-0.2.0.tgz",
       "resolved": "https://registry.npmjs.org/ap/-/ap-0.2.0.tgz"
     },
+    "appdynamics": {
+      "version": "4.1.7",
+      "from": "appdynamics@4.1.7",
+      "resolved": "https://registry.npmjs.org/appdynamics/-/appdynamics-4.1.7.tgz",
+      "dependencies": {
+        "appdynamics-zmq": {
+          "version": "2.5.1",
+          "from": "http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-zmq.tgz",
+          "resolved": "http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-zmq.tgz"
+        },
+        "appdynamics-protobuf": {
+          "version": "0.8.7",
+          "from": "http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-protobuf.tgz",
+          "resolved": "http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-protobuf.tgz"
+        },
+        "appdynamics-jre": {
+          "version": "1.7.0",
+          "from": "http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-jre.tgz",
+          "resolved": "http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-jre.tgz"
+        },
+        "appdynamics-proxy": {
+          "version": "4.1.7",
+          "from": "http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-proxy.tgz",
+          "resolved": "http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-proxy.tgz"
+        },
+        "appdynamics-native": {
+          "version": "4.1.7",
+          "from": "http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-native.tgz",
+          "resolved": "http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-native.tgz"
+        },
+        "node-uuid": {
+          "version": "1.4.1",
+          "from": "node-uuid@"
+        },
+        "set-immediate": {
+          "version": "0.1.1",
+          "from": "set-immediate@*"
+        }
+      }
+    },
     "argparse": {
       "version": "0.1.16",
       "from": "https://registry.npmjs.org/argparse/-/argparse-0.1.16.tgz",
@@ -1991,7 +2031,7 @@
     },
     "meditek_library": {
       "version": "0.0.1",
-      "from": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#master",
+      "from": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#6c89dc621e8b0d68847b2c6e16d9824942b7f151",
       "resolved": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#6c89dc621e8b0d68847b2c6e16d9824942b7f151"
     },
     "memoizee": {

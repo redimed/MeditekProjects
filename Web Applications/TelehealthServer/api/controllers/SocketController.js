@@ -3,47 +3,73 @@ var config = sails.config.myconf;
 var $q = require('q');
 var OpenTok = require('opentok'),
     opentok = new OpenTok(config.OpentokAPIKey, config.OpentokAPISecret);
+
+function emitError(socket, msg) {
+    var err = new Error("Socket.Error");
+    err.pushError(msg);
+    sails.sockets.emit(socket, 'errorMsg', ErrorWrap(err))
+};
+
+function pushGCMNotification(info, devices) {
+    var androidMess = {
+        collapseKey: 'REDiMED',
+        priority: 'high',
+        contentAvailable: true,
+        delayWhileIdle: true,
+        timeToLive: 3,
+        data: info.data ? info.data : {},
+        notification: {
+            title: "REDiMED",
+            icon: "ic_launcher",
+            body: info.content ? info.content : 'Push Notification From REDiMED'
+        }
+    };
+    TelehealthService.SendGCMPush(androidMess, devices).then(function(result) {
+        console.log(result);
+    }).catch(function(err) {
+        console.log(err);
+    })
+};
+
+function pushAPNNotification(info, devices) {
+    var iosMess = {
+        badge: 1,
+        alert: info.content ? info.content : 'Push Notification From REDiMED',
+        payload: info.data ? info.data : {},
+        category: info.category ? info.category : null
+    };
+    TelehealthService.SendAPNPush(iosMess, devices);
+};
+
 module.exports = {
     JoinConferenceRoom: function(req, res) {
         if (!req.isSocket) {
-            res.json(500, {
-                status: 'error',
-                message: 'Socket Request Only!'
-            });
-            return;
+            var err = new Error("Socket.JoinConferenceRoom.Error");
+            err.pushError("Socket Request Only!");
+            return res.serverError(ErrorWrap(err));
         }
         var uid = req.param('uid');
+        var error = null;
         if (uid) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 if (teleUser) {
                     sails.sockets.join(req.socket, uid);
                     sails.sockets.leave(req.socket, req.socket.id);
                     sails.sockets.blast('onlineUser');
-                } else {
-                    sails.sockets.emit(req.socket, 'errorMsg', {
-                        msg: 'User Not Exist!'
-                    });
-                }
+                } else error = "User Is Not Exist";
             }).catch(function(err) {
-                sails.sockets.emit(req.socket, 'errorMsg', {
-                    msg: err
-                });
+                error = err;
             })
-        } else {
-            sails.sockets.emit(req.socket, 'errorMsg', {
-                msg: 'Invalid Parameters!'
-            });
-        }
+        } else error = "Invalid Params";
+        if (error) emitError(req.socket, error);
     },
     MessageTransfer: function(req, res) {
         if (!req.isSocket) {
-            res.json(500, {
-                status: 'error',
-                message: 'Socket Request Only!'
-            });
-            return;
+            var err = new Error("Socket.MessageTransfer.Error");
+            err.pushError("Socket Request Only!");
+            return res.serverError(ErrorWrap(err));
         }
-        console.log("====Params====: ",req.params.all());
+        console.log("====Params====: ", req.params.all());
         var from = req.param('from');
         var to = req.param('to');
         var message = req.param('message');
@@ -55,32 +81,12 @@ module.exports = {
             role: 'moderator'
         };
         var token = null;
-
+        var roomList = sails.sockets.rooms();
         if (message.toLowerCase() == 'call') {
             sessionId = req.param('sessionId');
             if (!sessionId) return;
             token = opentok.generateToken(sessionId, tokenOptions);
-            var iosMess = {
-                badge: 1,
-                alert: 'Calling From ' + (!fromName ? 'Unknown' : fromName),
-                payload: {
-                    "data": {
-                        "apiKey": config.OpentokAPIKey,
-                        "message": message,
-                        "fromName": (!fromName ? 'Unknown' : fromName),
-                        "sessionId": sessionId,
-                        "token": token,
-                        "from": from
-                    }
-                },
-                category: "CALLING_MESSAGE"
-            };
-            var androidMess = {
-                collapseKey: 'REDiMED',
-                priority: 'high',
-                contentAvailable: true,
-                delayWhileIdle: true,
-                timeToLive: 3,
+            var pushInfo = {
                 data: {
                     "data": {
                         "apiKey": config.OpentokAPIKey,
@@ -91,11 +97,8 @@ module.exports = {
                         "from": from
                     }
                 },
-                notification: {
-                    title: "REDiMED",
-                    icon: "ic_launcher",
-                    body: 'Calling From ' + (!fromName ? 'Unknown' : fromName)
-                }
+                content: 'Calling From ' + (!fromName ? 'Unknown' : fromName),
+                category: 'CALLING_MESSAGE'
             };
             TelehealthService.FindByUID(to).then(function(teleUser) {
                 if (teleUser) {
@@ -111,21 +114,13 @@ module.exports = {
                                 if (devices[i].Type == 'IOS') iosDevices.push(devices[i].DeviceToken);
                                 else androidDevices.push(devices[i].DeviceToken);
                             }
-                            if (iosDevices.length > 0) TelehealthService.SendAPNPush(iosMess, iosDevices);
-                            if (androidDevices.length > 0) {
-                                TelehealthService.SendGCMPush(androidMess, androidDevices).then(function(result) {
-                                    console.log(result);
-                                }).catch(function(err) {
-                                    console.log(err);
-                                })
-                            }
+                            if (androidDevices.length > 0) pushGCMNotification(pushInfo, androidDevices);
+                            if (iosDevices.length > 0) pushAPNNotification(pushInfo, iosDevices);
                         }
                     })
                 }
             })
         }
-        
-        var roomList = sails.sockets.rooms();
         if (roomList.length > 0) {
             for (var i = 0; i < roomList.length; i++) {
                 if (roomList[i] == to) {
@@ -146,13 +141,7 @@ module.exports = {
         opentok.createSession({
             mediaMode: "routed"
         }, function(err, session) {
-            if (err) {
-                res.json(500, {
-                    status: 'error',
-                    message: err
-                });
-                return;
-            }
+            if (err) return res.serverError(ErrorWrap(err));
             var sessionId = session.sessionId;
             var tokenOptions = {
                 role: 'moderator',
@@ -160,8 +149,7 @@ module.exports = {
                 // data :'name=Johnny'
             };
             var token = opentok.generateToken(sessionId, tokenOptions);
-            if (token != null && sessionId != null) res.json(200, {
-                status: 'success',
+            if (token != null && sessionId != null) res.ok({
                 message: 'Generate Session Successfully!',
                 data: {
                     apiKey: config.OpentokAPIKey,

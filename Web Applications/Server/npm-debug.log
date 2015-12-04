@@ -1,0 +1,46 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'F:\\nodist/v/nodev0.12.7/node.exe',
+1 verbose cli   'F:\\nodist\\bin\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'shrinkwrap' ]
+2 info using npm@2.11.3
+3 info using node@v0.12.7
+4 verbose stack Error: Problems were encountered
+4 verbose stack Please correct and try again.
+4 verbose stack missing: appdynamics-zmq@http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-zmq.tgz, required by appdynamics@4.1.7
+4 verbose stack missing: appdynamics-protobuf@http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-protobuf.tgz, required by appdynamics@4.1.7
+4 verbose stack missing: appdynamics-jre@http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-jre.tgz, required by appdynamics@4.1.7
+4 verbose stack missing: appdynamics-proxy@http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-proxy.tgz, required by appdynamics@4.1.7
+4 verbose stack missing: appdynamics-native@http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-native.tgz, required by appdynamics@4.1.7
+4 verbose stack extraneous: bindings@1.2.1 C:\Users\luann\Desktop\MeditekProjects\Web Applications\Server\node_modules\bindings
+4 verbose stack extraneous: nan@2.0.9 C:\Users\luann\Desktop\MeditekProjects\Web Applications\Server\node_modules\nan
+4 verbose stack extraneous: zlib@1.0.5 C:\Users\luann\Desktop\MeditekProjects\Web Applications\Server\node_modules\zlib
+4 verbose stack extraneous: npm@2.11.3 C:\Users\luann\Desktop\MeditekProjects\Web Applications\Server\node_modules\npm
+4 verbose stack     at shrinkwrap_ (F:\nodist\bin\node_modules\npm\lib\shrinkwrap.js:37:15)
+4 verbose stack     at F:\nodist\bin\node_modules\npm\lib\shrinkwrap.js:31:5
+4 verbose stack     at F:\nodist\bin\node_modules\npm\lib\ls.js:47:30
+4 verbose stack     at F:\nodist\bin\node_modules\npm\node_modules\read-installed\read-installed.js:138:5
+4 verbose stack     at F:\nodist\bin\node_modules\npm\node_modules\read-installed\read-installed.js:251:14
+4 verbose stack     at cb (F:\nodist\bin\node_modules\npm\node_modules\slide\lib\async-map.js:47:24)
+4 verbose stack     at F:\nodist\bin\node_modules\npm\node_modules\read-installed\read-installed.js:251:14
+4 verbose stack     at cb (F:\nodist\bin\node_modules\npm\node_modules\slide\lib\async-map.js:47:24)
+4 verbose stack     at F:\nodist\bin\node_modules\npm\node_modules\read-installed\read-installed.js:251:14
+4 verbose stack     at cb (F:\nodist\bin\node_modules\npm\node_modules\slide\lib\async-map.js:47:24)
+5 verbose cwd C:\Users\luann\Desktop\MeditekProjects\Web Applications\Server
+6 error Windows_NT 6.3.9600
+7 error argv "F:\\nodist/v/nodev0.12.7/node.exe" "F:\\nodist\\bin\\node_modules\\npm\\bin\\npm-cli.js" "shrinkwrap"
+8 error node v0.12.7
+9 error npm  v2.11.3
+10 error Problems were encountered
+10 error Please correct and try again.
+10 error missing: appdynamics-zmq@http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-zmq.tgz, required by appdynamics@4.1.7
+10 error missing: appdynamics-protobuf@http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-protobuf.tgz, required by appdynamics@4.1.7
+10 error missing: appdynamics-jre@http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-jre.tgz, required by appdynamics@4.1.7
+10 error missing: appdynamics-proxy@http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-proxy.tgz, required by appdynamics@4.1.7
+10 error missing: appdynamics-native@http://packages.appdynamics.com/npm/4.1.7.0/appdynamics-native.tgz, required by appdynamics@4.1.7
+10 error extraneous: bindings@1.2.1 C:\Users\luann\Desktop\MeditekProjects\Web Applications\Server\node_modules\bindings
+10 error extraneous: nan@2.0.9 C:\Users\luann\Desktop\MeditekProjects\Web Applications\Server\node_modules\nan
+10 error extraneous: zlib@1.0.5 C:\Users\luann\Desktop\MeditekProjects\Web Applications\Server\node_modules\zlib
+10 error extraneous: npm@2.11.3 C:\Users\luann\Desktop\MeditekProjects\Web Applications\Server\node_modules\npm
+11 error If you need help, you may report this error at:
+11 error     <https://github.com/npm/npm/issues>
+12 verbose exit [ 1, true ]

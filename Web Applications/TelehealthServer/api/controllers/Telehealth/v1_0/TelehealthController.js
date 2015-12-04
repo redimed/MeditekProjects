@@ -370,7 +370,7 @@ module.exports = {
                 body: title ? title : 'Notification From REDiMED'
             }
         };
-        TelehealthUser.FindByUID(uid).then(function(teleUser) {
+        TelehealthService.FindByUID(uid).then(function(teleUser) {
             if (teleUser) {
                 TelehealthDevice.findAll({
                     where: {

@@ -35,7 +35,7 @@ class BodyUploadViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
+    //click button upload image
     @IBAction func UploadImageButton(sender: AnyObject) {
         view.showLoading()
         if let userUID = defaults.valueForKey("userUID") as? String {

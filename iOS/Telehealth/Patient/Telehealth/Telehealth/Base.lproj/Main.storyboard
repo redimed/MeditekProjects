@@ -316,6 +316,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Aat-2Z-fNP"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="phoneTextField" destination="XIX-hF-pti" id="79M-e1-TIH"/>
                         <outlet property="versionBuildLabel" destination="xtg-sK-tfb" id="NWf-HS-3t3"/>
@@ -325,7 +326,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-307" y="345"/>
+            <point key="canvasLocation" x="-429" y="329"/>
         </scene>
         <!--Activation-->
         <scene sceneID="Ggn-9g-pjU">
@@ -555,6 +556,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Activation" id="n3a-fx-LW5"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="dC6-GC-MvJ" id="0XT-YB-NcJ"/>
                         <outlet property="textFieldVerifyCode" destination="38j-Rt-eRs" id="AyP-sR-wqT"/>
@@ -622,8 +624,8 @@
                                                 <constraint firstAttribute="height" constant="63" id="KAo-SS-82Q"/>
                                                 <constraint firstAttribute="width" constant="60" id="zVl-SR-e6w"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
-                                            <state key="normal" title="Received" backgroundImage="Recelved"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <state key="normal" title="Received" backgroundImage="Icon 1"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="lmc-VS-8YS">
                                             <rect key="frame" x="252" y="172" width="60" height="63"/>
@@ -632,38 +634,38 @@
                                                 <constraint firstAttribute="height" constant="63" id="5yi-Ey-Xjs"/>
                                                 <constraint firstAttribute="width" constant="60" id="KKn-W3-4le"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
-                                            <state key="normal" title="Appt Time" backgroundImage="Apptime"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <state key="normal" title="Appt Time" backgroundImage="Icon 3"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JrL-jE-bkh">
-                                            <rect key="frame" x="252" y="238" width="60" height="63"/>
+                                            <rect key="frame" x="252" y="243" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="T4G-Rx-pOT"/>
                                                 <constraint firstAttribute="height" constant="63" id="eyB-Bs-58F"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
-                                            <state key="normal" title="Attended" backgroundImage="Attended"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <state key="normal" title="Attended" backgroundImage="Icon 4"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="V8g-Sy-Iub">
-                                            <rect key="frame" x="252" y="309" width="60" height="63"/>
+                                            <rect key="frame" x="252" y="312" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="YpU-yU-BsG"/>
                                                 <constraint firstAttribute="height" constant="63" id="kPb-v0-Bhs"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                                            <state key="normal" title="Wait List Surgery" backgroundImage="Waitlist"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <state key="normal" title="Wait List Surgery" backgroundImage="Icon 5"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tls-jC-OOr">
-                                            <rect key="frame" x="252" y="383" width="60" height="63"/>
+                                            <rect key="frame" x="252" y="386" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="63" id="UpF-b1-jFi"/>
                                                 <constraint firstAttribute="width" constant="60" id="efR-Ik-Dob"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                            <state key="normal" title="Finish" backgroundImage="Finish"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <state key="normal" title="Finish" backgroundImage="Icon 6"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Qbf-Zf-6jR">
                                             <rect key="frame" x="252" y="101" width="60" height="63"/>
@@ -672,9 +674,9 @@
                                                 <constraint firstAttribute="width" constant="60" id="0CR-ox-2eN"/>
                                                 <constraint firstAttribute="height" constant="63" id="6xG-If-i7O"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <size key="titleShadowOffset" width="2.2250738585072014e-308" height="0.0"/>
-                                            <state key="normal" title="Appt Pending" backgroundImage="Appentding"/>
+                                            <state key="normal" title="Appt Pending" backgroundImage="Icon 2"/>
                                         </button>
                                     </subviews>
                                     <animations/>
@@ -682,10 +684,10 @@
                                         <constraint firstItem="lmc-VS-8YS" firstAttribute="centerX" secondItem="jF6-R7-CEO" secondAttribute="centerX" constant="122" id="0Y7-PR-G4M"/>
                                         <constraint firstItem="Qbf-Zf-6jR" firstAttribute="centerY" secondItem="jF6-R7-CEO" secondAttribute="centerY" constant="-114" id="8Ad-bu-u75"/>
                                         <constraint firstItem="lmc-VS-8YS" firstAttribute="centerY" secondItem="jF6-R7-CEO" secondAttribute="centerY" constant="-43" id="Jkr-ft-d6O"/>
-                                        <constraint firstItem="V8g-Sy-Iub" firstAttribute="centerY" secondItem="jF6-R7-CEO" secondAttribute="centerY" constant="94" id="KdH-if-DNA"/>
+                                        <constraint firstItem="V8g-Sy-Iub" firstAttribute="centerY" secondItem="jF6-R7-CEO" secondAttribute="centerY" constant="97" id="KdH-if-DNA"/>
                                         <constraint firstItem="V8g-Sy-Iub" firstAttribute="centerX" secondItem="jF6-R7-CEO" secondAttribute="centerX" constant="122" id="OqT-N3-135"/>
-                                        <constraint firstItem="JrL-jE-bkh" firstAttribute="centerY" secondItem="jF6-R7-CEO" secondAttribute="centerY" constant="23" id="SLh-e0-UP2"/>
-                                        <constraint firstItem="Tls-jC-OOr" firstAttribute="centerY" secondItem="jF6-R7-CEO" secondAttribute="centerY" constant="168" id="ZFr-QV-iCt"/>
+                                        <constraint firstItem="JrL-jE-bkh" firstAttribute="centerY" secondItem="jF6-R7-CEO" secondAttribute="centerY" constant="28" id="SLh-e0-UP2"/>
+                                        <constraint firstItem="Tls-jC-OOr" firstAttribute="centerY" secondItem="jF6-R7-CEO" secondAttribute="centerY" constant="171" id="ZFr-QV-iCt"/>
                                         <constraint firstItem="Nkj-4k-y18" firstAttribute="centerX" secondItem="jF6-R7-CEO" secondAttribute="centerX" constant="122" id="bgf-6d-Ecc"/>
                                         <constraint firstItem="Tls-jC-OOr" firstAttribute="centerX" secondItem="jF6-R7-CEO" secondAttribute="centerX" constant="122" id="jfq-1h-lpx"/>
                                         <constraint firstItem="JrL-jE-bkh" firstAttribute="centerX" secondItem="jF6-R7-CEO" secondAttribute="centerX" constant="122" id="mUI-5p-vg4"/>
@@ -913,7 +915,7 @@
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FAe-vm-piX">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomePhone" translatesAutoresizingMaskIntoConstraints="NO" id="FAe-vm-piX">
                                                 <rect key="frame" x="15" y="214" width="40" height="40"/>
                                                 <animations/>
                                                 <constraints>
@@ -948,7 +950,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pbZ-un-Gma">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Address" translatesAutoresizingMaskIntoConstraints="NO" id="pbZ-un-Gma">
                                                 <rect key="frame" x="15" y="276" width="40" height="40"/>
                                                 <animations/>
                                                 <constraints>
@@ -983,7 +985,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h2Z-3h-q5o">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Suburb" translatesAutoresizingMaskIntoConstraints="NO" id="h2Z-3h-q5o">
                                                 <rect key="frame" x="15" y="338" width="40" height="40"/>
                                                 <animations/>
                                                 <constraints>
@@ -1018,7 +1020,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ag0-d9-U5z">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Postcode" translatesAutoresizingMaskIntoConstraints="NO" id="Ag0-d9-U5z">
                                                 <rect key="frame" x="15" y="400" width="40" height="40"/>
                                                 <animations/>
                                                 <constraints>
@@ -1053,7 +1055,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gZn-qP-9Rr">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Country" translatesAutoresizingMaskIntoConstraints="NO" id="gZn-qP-9Rr">
                                                 <rect key="frame" x="15" y="462" width="40" height="40"/>
                                                 <animations/>
                                                 <constraints>
@@ -2087,7 +2089,7 @@
                                             <constraint firstAttribute="height" constant="468" id="ZBQ-4l-vQZ"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qps-iU-Ljw">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Date" translatesAutoresizingMaskIntoConstraints="NO" id="Qps-iU-Ljw">
                                         <rect key="frame" x="9" y="13" width="40" height="40"/>
                                         <animations/>
                                         <constraints>
@@ -2175,7 +2177,7 @@
                                             <action selector="SelectImageUpload:" destination="y3X-e0-VTm" eventType="touchUpInside" id="SwS-9e-rHK"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dpS-sG-ogL">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Time" translatesAutoresizingMaskIntoConstraints="NO" id="dpS-sG-ogL">
                                         <rect key="frame" x="9" y="70" width="40" height="40"/>
                                         <animations/>
                                         <constraints>
@@ -2210,7 +2212,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Hc-F8-VHV">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Doctor" translatesAutoresizingMaskIntoConstraints="NO" id="9Hc-F8-VHV">
                                         <rect key="frame" x="9" y="127" width="40" height="40"/>
                                         <animations/>
                                         <constraints>
@@ -2245,7 +2247,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ve7-pJ-rQa">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Status" translatesAutoresizingMaskIntoConstraints="NO" id="ve7-pJ-rQa">
                                         <rect key="frame" x="9" y="184" width="40" height="40"/>
                                         <animations/>
                                         <constraints>
@@ -2280,7 +2282,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fcA-3T-4Xz">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="fcA-3T-4Xz">
                                         <rect key="frame" x="9" y="241" width="40" height="40"/>
                                         <animations/>
                                         <constraints>
@@ -2603,7 +2605,7 @@
                                     <constraint firstAttribute="width" constant="40" id="bDK-5V-qUK"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="20"/>
-                                <state key="normal" title=""/>
+                                <state key="normal" title=""/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="20"/>
@@ -2644,7 +2646,7 @@
                                     <constraint firstAttribute="height" constant="40" id="nFr-vp-1kH"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="20"/>
-                                <state key="normal" title=""/>
+                                <state key="normal" title=""/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="20"/>
@@ -2717,6 +2719,7 @@
                         <outlet property="buttonMuteCall" destination="HqE-dm-SQU" id="y9i-Am-gDQ"/>
                         <outlet property="buttonOffMic" destination="Gl1-Zc-XgA" id="BJv-yu-a3c"/>
                         <outlet property="displayTimeLabel" destination="sbo-ky-Qn5" id="EpL-59-RtN"/>
+                        <outlet property="timeEffect" destination="Bbb-bV-hU8" id="oLB-xP-hbU"/>
                         <segue destination="yfc-ub-1mr" kind="unwind" unwindAction="unwindToViewController:" id="5qy-GM-Ik2"/>
                     </connections>
                 </viewController>
@@ -2773,23 +2776,33 @@
     </scenes>
     <resources>
         <image name="A1a Copy 2" width="512" height="516"/>
-        <image name="Appentding" width="60" height="63"/>
-        <image name="Apptime" width="60" height="63"/>
-        <image name="Attended" width="60" height="63"/>
+        <image name="Address" width="72" height="72"/>
         <image name="Blue-btn" width="100" height="100"/>
+        <image name="Country" width="72" height="72"/>
+        <image name="Date" width="72" height="72"/>
+        <image name="Doctor" width="72" height="72"/>
         <image name="End Call-50" width="26" height="21"/>
-        <image name="Finish" width="60" height="60"/>
         <image name="Green-btn" width="100" height="100"/>
+        <image name="HomePhone" width="72" height="72"/>
+        <image name="Icon 1" width="394" height="394"/>
+        <image name="Icon 2" width="394" height="394"/>
+        <image name="Icon 3" width="394" height="394"/>
+        <image name="Icon 4" width="394" height="394"/>
+        <image name="Icon 5" width="394" height="394"/>
+        <image name="Icon 6" width="394" height="394"/>
+        <image name="Image" width="72" height="72"/>
         <image name="Line-1" width="2" height="60"/>
         <image name="Logo" width="2542" height="494"/>
         <image name="Nền" width="272" height="345"/>
         <image name="Nền-1" width="271" height="315"/>
         <image name="Orage-btn" width="100" height="100"/>
-        <image name="Recelved" width="60" height="63"/>
+        <image name="Postcode" width="72" height="72"/>
         <image name="Rectangle 1" width="585" height="285"/>
         <image name="Red-btn" width="100" height="100"/>
+        <image name="Status" width="72" height="72"/>
         <image name="Sub-screen_22-1" width="341" height="499"/>
-        <image name="Waitlist" width="60" height="63"/>
+        <image name="Suburb" width="72" height="72"/>
+        <image name="Time" width="72" height="72"/>
         <image name="hand phone" width="1138" height="1877"/>
         <image name="line" width="632" height="2"/>
     </resources>

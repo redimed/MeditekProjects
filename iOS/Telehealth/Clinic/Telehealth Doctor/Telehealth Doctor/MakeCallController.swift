@@ -33,13 +33,14 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("teleUserInfo") as! NSDictionary
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var avAudioPlayer : AVAudioPlayer?
-    var soundFileURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("call", ofType: "wav")!)
+    var soundFileURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("ringing", ofType: "wav")!)
     var loading: DTIActivityIndicatorView!
     var customUI: CustomViewController = CustomViewController()
     var isClickEnd = false
     var isAnswer = false
     var screenCapture: UIView!
     var screenCaptureForPublisher: UIView!
+    //    var timer: NSTimer!
     
     /// declare uiview for off mic screen
     var offMicView: UIView! = UIView(frame: CGRectMake(0, 0, videoWidth, videoHeight))
@@ -84,14 +85,17 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         imgViewOffCamera = UIImageView(frame: CGRectMake((videoWidth / 2) - 16, (videoHeight / 2) - 16 , 32, 32))
         imgViewOffCamera.image = UIImage(named: "no-camera-100")
         
+        
     }
     
+    //    play sound when calling to patient
     func playSoundCall() {
         do {
             try avAudioPlayer = AVAudioPlayer(contentsOfURL: soundFileURL)
             avAudioPlayer?.prepareToPlay()
             avAudioPlayer?.play()
-            avAudioPlayer?.numberOfLoops = -5
+            avAudioPlayer?.volume = 1.0
+            avAudioPlayer?.numberOfLoops = -1
         } catch {
             print("Error set audio player contents of URL")
         }
@@ -278,7 +282,6 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         
         /// Emit call patient
         SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
-        playSoundCall()
         /**
         button controller call to publisherview
         */
@@ -448,7 +451,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     
     func publisher(publisher: OTPublisherKit, streamCreated stream: OTStream) {
         NSLog("publisher streamCreated %@", stream)
-        
+        playSoundCall()
         // Step 3b: (if YES == subscribeToSelf): Our own publisher is now visible to
         // all participants in the OpenTok session. We will attempt to subscribe to
         // our own stream. Expect to see a slight delay in the subscriber video and

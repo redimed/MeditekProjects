@@ -214,11 +214,22 @@ module.exports = {
         Role.belongsToMany(UserAccount, {
             through: 'RelUserRole',
             foreignKey: 'RoleId'
-        });
+        })
         UserAccount.belongsToMany(Role, {
             through: 'RelUserRole',
-            foreignKey: 'ID'
-        });
+            foreignKey: 'UserAccountId'
+        })
+
+        Speciality.belongsToMany(Doctor, {
+            through: 'RelDoctorSpeciality',
+            foreignKey: 'SpecialityID'
+        })
+
+        Doctor.belongsToMany(Speciality, {
+            through: 'RelDoctorSpeciality',
+            foreignKey: 'DoctorID'
+        })
+
 
     }
 };

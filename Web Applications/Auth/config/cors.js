@@ -81,9 +81,9 @@ module.exports.cors = {
     // exposeHeaders:'filename,filetype', //TODO
 
     /**
-     * Security level 1 (high) will respond with a 403 status code to any request 
-     * from a disallowed origin prefixed with the http or https protocol. 
-     * Security level 2 (very high) will do the same, 
+     * Security level 1 (high) will respond with a 403 status code to any request
+     * from a disallowed origin prefixed with the http or https protocol.
+     * Security level 2 (very high) will do the same,
      * but extended to all protocols (so things like Postman and curl won't work).
      */
     securityLevel: 1,

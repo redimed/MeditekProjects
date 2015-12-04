@@ -87,6 +87,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 			scope.value;
 			scope.isStep2 = false;
 			scope.er={};
+			scope.special = [];
 			scope.ermsg={};
 			$timeout(function(){
 				scope.data ={};
@@ -204,7 +205,14 @@ angular.module('app.authentication.doctor.directive.create', [])
 							scope.data.CountryID       = 14;
 						}
 					},function(err){
-						console.log(err);
+						toastr.error("Wrong data!","Error");
+						console.log(result.data[0]);
+						scope.er ={};
+						scope.ermsg ={};
+						for(var i = 0; i < err.data.message.ErrorsList.length; i++){
+							scope.er[err.data.message.ErrorsList[i].field] ={'border': '2px solid #DCA7B0'};
+							scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList.message;
+						}
 					});
 				},function(err){
 					console.log(err);
@@ -236,7 +244,19 @@ angular.module('app.authentication.doctor.directive.create', [])
 						scope.isShowNext4=true;
 						data.DepartmentID = null;
 						data.ProviderNumber = null;
+						data.Speciality =[];
 						$('#info2 :input').prop('disabled', true);
+						doctorService.getSpecialities()
+						.then(function(result){
+							scope.special = angular.copy(result.data);
+							console.log(scope.special);
+							$timeout(function(){
+								$('.select2-multiple').select2();
+								$('.select2-container').removeAttr('style');
+							},10);
+						},function(err){
+							console.log(err);
+						});
 						if(scope.uploader.queue[0]!==undefined && scope.uploader.queue[0]!==null && 
 						 scope.uploader.queue[0]!=='' && scope.uploader.queue[0].length!==0){
 					    	scope.uploader.queue[0].formData[0]={};
@@ -310,8 +330,14 @@ angular.module('app.authentication.doctor.directive.create', [])
 					scope.er ={};
 					scope.ermsg ={};
 					for(var i = 0; i < err.length; i++){
-						scope.er[err[i].field] ={'border': '2px solid #DCA7B0'};
-						scope.ermsg[err[i].field] = err[i].message;
+						if(err[i].field=="Speciality"){
+							$('.select2-selection').css("border","2px solid #DCA7B0");
+							scope.ermsg[err[i].field] = err[i].message;
+						}
+						else {
+							scope.er[err[i].field] ={'border': '2px solid #DCA7B0'};
+							scope.ermsg[err[i].field] = err[i].message;
+						}
 					}
 				});
 				

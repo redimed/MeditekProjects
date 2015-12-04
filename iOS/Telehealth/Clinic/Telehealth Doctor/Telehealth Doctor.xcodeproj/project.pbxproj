@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		001C28CC1BCEAD4D005A82D7 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 001C28CB1BCEAD4D005A82D7 /* video.mp4 */; };
+		0008595D1C0DA93B009686E9 /* ringing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0008595C1C0DA93B009686E9 /* ringing.wav */; };
 		001C6D041BF9BF5000877F4B /* Medi_Infomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001C6D021BF9BF5000877F4B /* Medi_Infomation.swift */; };
 		001C6D051BF9BF5000877F4B /* Medi_Infomation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 001C6D031BF9BF5000877F4B /* Medi_Infomation.xib */; };
 		002053431BBBBE2B00679E10 /* JSSAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002053421BBBBE2B00679E10 /* JSSAlertView.swift */; };
@@ -74,7 +74,6 @@
 		00B0AFAC1BDA2B5600871786 /* DetailImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B0AFAA1BDA2B5600871786 /* DetailImageVC.swift */; };
 		00B0AFAD1BDA2B5600871786 /* DetailImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00B0AFAB1BDA2B5600871786 /* DetailImageVC.xib */; };
 		00B9917F1BC2E3AD0025EA7F /* OnlineUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B9917E1BC2E3AD0025EA7F /* OnlineUsers.swift */; };
-		00C9599D1BD0E5B000E3FFAD /* call.wav in Resources */ = {isa = PBXBuildFile; fileRef = 00C9599C1BD0E5B000E3FFAD /* call.wav */; };
 		00D512791BB4E63E0068942D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D512781BB4E63E0068942D /* HomeViewController.swift */; };
 		00D5127B1BB4E6560068942D /* MakeCallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D5127A1BB4E6560068942D /* MakeCallController.swift */; };
 		00D5127D1BB4E7610068942D /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D5127C1BB4E7610068942D /* GlobalConstants.swift */; };
@@ -111,7 +110,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		001C28CB1BCEAD4D005A82D7 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = video.mp4; path = "Telehealth Doctor/video.mp4"; sourceTree = "<group>"; };
+		0008595C1C0DA93B009686E9 /* ringing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringing.wav; sourceTree = "<group>"; };
 		001C6D021BF9BF5000877F4B /* Medi_Infomation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medi_Infomation.swift; sourceTree = "<group>"; };
 		001C6D031BF9BF5000877F4B /* Medi_Infomation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Medi_Infomation.xib; sourceTree = "<group>"; };
 		002053421BBBBE2B00679E10 /* JSSAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSSAlertView.swift; path = "Telehealth Doctor/JSSAlertView.swift"; sourceTree = "<group>"; };
@@ -180,7 +179,6 @@
 		00B0AFAA1BDA2B5600871786 /* DetailImageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailImageVC.swift; sourceTree = "<group>"; };
 		00B0AFAB1BDA2B5600871786 /* DetailImageVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailImageVC.xib; sourceTree = "<group>"; };
 		00B9917E1BC2E3AD0025EA7F /* OnlineUsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineUsers.swift; sourceTree = "<group>"; };
-		00C9599C1BD0E5B000E3FFAD /* call.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = call.wav; sourceTree = "<group>"; };
 		00D512781BB4E63E0068942D /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		00D5127A1BB4E6560068942D /* MakeCallController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakeCallController.swift; sourceTree = "<group>"; };
 		00D5127C1BB4E7610068942D /* GlobalConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
@@ -593,8 +591,7 @@
 		AFF10DF81BB27A39005E9838 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				00C9599C1BD0E5B000E3FFAD /* call.wav */,
-				001C28CB1BCEAD4D005A82D7 /* video.mp4 */,
+				0008595C1C0DA93B009686E9 /* ringing.wav */,
 			);
 			name = Resource;
 			path = ..;
@@ -779,14 +776,13 @@
 				004565121BF03505005ABA28 /* ReasonforPresentingVC.xib in Resources */,
 				0045A2E21BCF8F9100AC4028 /* ClinicalMedical.xib in Resources */,
 				001C6D051BF9BF5000877F4B /* Medi_Infomation.xib in Resources */,
+				0008595D1C0DA93B009686E9 /* ringing.wav in Resources */,
 				AFF21D8A1BB12D8B006A190E /* LaunchScreen.storyboard in Resources */,
 				007AE7CF1C06AE17005364FE /* Assets.xcassets in Resources */,
-				00C9599D1BD0E5B000E3FFAD /* call.wav in Resources */,
 				004565071BF02EC9005ABA28 /* Kin_Guardian.xib in Resources */,
 				0045A2E41BCF8FB200AC4028 /* PresentComplain.xib in Resources */,
 				0045A2E61BCF8FC900AC4028 /* MedicalImage.xib in Resources */,
 				00B0AFAD1BDA2B5600871786 /* DetailImageVC.xib in Resources */,
-				001C28CC1BCEAD4D005A82D7 /* video.mp4 in Resources */,
 				005BE5931BF0426B00134D84 /* Relevant_Allergy_CurrentVC.xib in Resources */,
 				0045A2E81BCF8FD100AC4028 /* PatientTabVC.xib in Resources */,
 				AFF21D821BB12D8B006A190E /* Main.storyboard in Resources */,

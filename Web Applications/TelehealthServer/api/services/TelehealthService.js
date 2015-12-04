@@ -11,13 +11,13 @@ var gcmSender = new gcm.Sender(config.GCMApiKey);
 var apn = require('apn');
 var options = {
     //=======Dev======
-    // cert: rootPath + '/config/push_key/TelePushCert.pem',
-    // key: rootPath + '/config/push_key/TelePushKey.pem',
+    cert: rootPath + '/config/push_key/TelePushCert.pem',
+    key: rootPath + '/config/push_key/TelePushKey.pem',
     //=======Production=========
-    cert: rootPath + '/config/push_key/TelePushCert_Production.pem',
-    key: rootPath + '/config/push_key/TelePushKey_Production.pem',
+    // cert: rootPath + '/config/push_key/TelePushCert_Production.pem',
+    // key: rootPath + '/config/push_key/TelePushKey_Production.pem',
     passphrase: '1234',
-    production: true
+    production: false
 };
 var apnConnection = new apn.Connection(options);
 apnConnection.on("connected", function() {

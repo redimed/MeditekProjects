@@ -33,7 +33,6 @@ class MyPopupViewController: UIViewController , MAActivityIndicatorViewDelegate 
         
         super.viewDidLoad()
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
-//        self.view.layer.cornerRadius = 22
         view.frame = CGRect(x: 0.0, y: 0, width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
 
         self.view.layer.masksToBounds = true
@@ -51,7 +50,7 @@ class MyPopupViewController: UIViewController , MAActivityIndicatorViewDelegate 
             self.indicatorView1.defaultColor = UIColor.redColor()
             self.indicatorView1.animationDuration    = 1
             self.indicatorView1.numberOfCircles      = 4
-            self.indicatorView1.maxRadius            = 16
+            self.indicatorView1.maxRadius            = 4
             self.indicatorView1.delegate = self
             self.indicatorView1.startAnimating()
             self.view.addSubview(self.indicatorView1)

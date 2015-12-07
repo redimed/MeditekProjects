@@ -27,6 +27,7 @@ struct UrlInformationPatient  {
     static let downloadImage = "/api/downloadFile/400"
     static let getNewToken = "/api/refresh-token/GetNewToken"
     static let updateTokenPush = "/api/telehealth/user/updateToken"
+    static let pushNotify = "/api/telehealth/user/pushNotification"
 }
 
 //Giap: API Socket

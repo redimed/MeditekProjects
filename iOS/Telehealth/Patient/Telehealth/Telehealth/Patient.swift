@@ -9,6 +9,7 @@
 import Foundation
 
 class Patient{
+    
     var MiddleName : String!
     var Address2 : String!
     var Title : String!
@@ -57,6 +58,7 @@ class Patient{
         self.Address1 = Address1
         
     }
+
     
     
     

@@ -11,10 +11,13 @@ import UIKit
 class FAQsViewController: UIViewController,UIWebViewDelegate {
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var progress: UIProgressView!
+    @IBOutlet weak var titleLabel: UILabel!
     var hasFinishedLoading = false
-        override func viewDidLoad() {
+    var titleString = String()
+    override func viewDidLoad() {
         super.viewDidLoad()
-        let localfilePath = NSBundle.mainBundle().URLForResource("FAQs", withExtension: "html");
+        titleLabel.text = titleString
+        let localfilePath = NSBundle.mainBundle().URLForResource(titleString, withExtension: "html");
         let myRequest = NSURLRequest(URL: localfilePath!);
         webView.loadRequest(myRequest);
         webView.delegate = self

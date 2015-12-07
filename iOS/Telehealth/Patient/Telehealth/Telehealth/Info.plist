@@ -19,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>5</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -30,6 +30,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>FontAwesome.otf</string>
+		<string>UTM Avo.ttf</string>
 	</array>
 	<key>UIApplicationExitsOnSuspend</key>
 	<false/>

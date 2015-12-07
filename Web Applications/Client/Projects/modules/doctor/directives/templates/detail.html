@@ -179,7 +179,7 @@
 							            	<div class="col-md-6 col-sm-6">
 							            		<select id="Specialities" class="form-control select2-multiple" ng-model="info.Speciality"ng-style="er.Speciality" ng-change="ermsg.Speciality='';checkDataNull('Speciality')" ng-options="t.ID as t.Name for t in specialities" multiple>
 							            		</select>
-							            		<span style="color:red;">{{ermsg.Speciality}}</span>
+							            		<span style="color:red;">{{er.Speciality.msg}}</span>
 							            	</div>
 							        	</div>
 										<!-- end specialities -->

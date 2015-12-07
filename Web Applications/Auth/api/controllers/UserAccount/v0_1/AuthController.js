@@ -14,7 +14,15 @@ module.exports = {
         shortcuts: false,// không sử dụng shortcuts route
         rest: false// không sử dụng rest route
     },
-
+    /**
+    * @typedef LoginResult
+    * @type Object
+    * @property {string} status 
+    * @property {string} message 
+    * @property {object} user 
+    * @property {string} token 
+    * @property {string} refreshToken
+    */
     /**
      * @function login
      * @memberOf  AuthController
@@ -25,7 +33,7 @@ module.exports = {
      * @param {string} [req.UserUID] uid của user, nếu login bằng mobile
      * @param {string} [req.DeviceID] deviceid của mobile, nếu login bằng mobile
      * @param {string} [req.VerificationToken] nếu login bằng mobile
-     * @return {{status:string, message:string, user:object, token:string,refreshCode:string}}
+     * @return {LoginResult} Logged in info
      */
     login: function(req, res) {
         console.log("============LOGIN===============");
@@ -93,15 +101,15 @@ module.exports = {
                     else
                     {
                         //---------------------------------------------
-                        /*if(req.headers.systemtype==o.const.systemType.website)
+                        if(req.headers.systemtype==o.const.systemType.website)
                         {
                             var connectInfo=_.cloneDeep(userAccess);
                             connectInfo.sid=req.sessionID;
                             RedisService.pushUserConnect(connectInfo);
-                        }*/
-                        var connectInfo=_.cloneDeep(userAccess);
-                        connectInfo.sid=req.sessionID;
-                        RedisService.pushUserConnect(connectInfo);
+                        }
+                        // var connectInfo=_.cloneDeep(userAccess);
+                        // connectInfo.sid=req.sessionID;
+                        // RedisService.pushUserConnect(connectInfo);
                         //---------------------------------------------
                         if(user.Activated=='Y')
                         {
@@ -150,15 +158,15 @@ module.exports = {
         .then(function(data){
             req.logout();
             //------------------------------------------
-            /*if(req.headers.systemtype==o.const.systemType.website)
+            if(req.headers.systemtype==o.const.systemType.website)
             {
                 var connectInfo=_.cloneDeep(userAccess);
                 connectInfo.sid=req.sessionID;
                 RedisService.removeUserConnect(connectInfo);
-            }    */
-            var connectInfo=_.cloneDeep(userAccess);
-            connectInfo.sid=req.sessionID;
-            RedisService.removeUserConnect(connectInfo);        
+            }    
+            // var connectInfo=_.cloneDeep(userAccess);
+            // connectInfo.sid=req.sessionID;
+            // RedisService.removeUserConnect(connectInfo);        
             //------------------------------------------
             res.ok({status:'success'});
         },function(err){

@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var config = ConfigurationSystem()
     let ServerApi = GetAndPostDataController()
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        print("-----device ID-----",UIDevice.currentDevice().identifierForVendor!.UUIDString)
         // Override point for customization after application launch.
         UINavigationBar.appearance().barTintColor = UIColor(red: 51.0/255.0, green: 65.0/255.0, blue: 105.0/255.0, alpha: 1.0)
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
@@ -64,6 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setDataCalling(userInfo)
         statusCallingNotification = notifyMessage.ClickNotify
          NSNotificationCenter.defaultCenter().postNotificationName("openPopUpCalling", object: self)
+         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         completionHandler(.NoData)
     }
     
@@ -85,9 +87,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                    setDataCalling(userInfo)
                    statusCallingNotification = notifyMessage.ClickAnswer
                     NSNotificationCenter.defaultCenter().postNotificationName("openScreenCall", object: self)
+                    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
                      completionHandler()
                 case "Desline":
                     completionHandler()
+                    
+                     setDataCalling(userInfo)
+                    ServerApi.pushNotification("Doctor cancel call", uid: savedData.from, category: "", data: "aaa",completionHandler: {
+                        respone in
+                        
+                    })
+                 UIApplication.sharedApplication().applicationIconBadgeNumber = 0
                 default: break
                 }
     }

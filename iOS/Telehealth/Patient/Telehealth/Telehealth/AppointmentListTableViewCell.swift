@@ -22,12 +22,14 @@ class AppointmentListTableViewCell: UITableViewCell {
     
     func configAppointment(Appointment:AppointmentList){
         if Appointment.FromTime == "" {
+            appointmentDate.text = ""
         }else {
             appointmentDate.text = Appointment.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDateTime)
-            doctorName.text = Appointment.NameDoctor
-            status.text = Appointment.Status
-            UIDAppointment = Appointment.UIDApointment
+            
         }
+        doctorName.text = Appointment.NameDoctor
+        status.text = Appointment.Status
+        UIDAppointment = Appointment.UIDApointment
 
        
       

@@ -14,10 +14,16 @@ class AppointmentListsViewController: UIViewController {
     let api = GetAndPostDataController()
     var patientUid = String()
     var Appointment : [AppointmentList] = []
-
+    var refreshControl: UIRefreshControl!
     override func viewDidLoad() {
         super.viewDidLoad()
         getAppointmentList()
+        
+        //create refreshControl
+        refreshControl = UIRefreshControl()
+        refreshControl.tintColor = UIColor.whiteColor()
+        refreshControl.addTarget(self, action: "getAppointmentList", forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
         // Do any additional setup after loading the view.
     }
 
@@ -28,17 +34,24 @@ class AppointmentListsViewController: UIViewController {
     
     //Giap: Get Appointment List
     func getAppointmentList() {
+         if let token = defaults.valueForKey("token") as? String {
+            tokens = token
+        
+        }
         if let patientUID = defaults.valueForKey("patientUID") as? String {
             api.getListAppointmentByUID(patientUID, Limit: "100", completionHandler: {
                 response in
-                    print("---response-",response)
+//                print("-----respomse",response)
                 if response["ErrorsList"] != nil {
                     print("Error")
                     self.alertMessage("Error", message: response["ErrorsList"][0].string!)
+                    self.refreshControl.endRefreshing()
                 }else if response["TimeOut"] ==  "Request Time Out" {
                     self.alertMessage("Error", message: "Request Time Out")
+                    self.refreshControl.endRefreshing()
                 }
                 else {
+                    self.Appointment = []
                     var UIDApointment : String!
                     var FromTime : String!
                     var ToTime : String!
@@ -57,11 +70,13 @@ class AppointmentListsViewController: UIViewController {
                         self.Appointment.append(AppointmentList(UIDApointment: UIDApointment, ToTime: ToTime, Status: Status, FromTime: FromTime, NameDoctor: NameDoctor,Type:Type))
                     }
                     self.view.hideLoading()
+                    self.refreshControl.endRefreshing()
                     self.tableView.reloadData()
                 }
             })
         }
     }
+
     //sending data by segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "TrackingRefferalSegue" {
@@ -107,6 +122,12 @@ extension AppointmentListsViewController:UITableViewDataSource,UITableViewDelega
         print(Appointment[indexPath.row].UIDApointment)
         performSegueWithIdentifier("TrackingRefferalSegue", sender: self)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
+        UIView.animateWithDuration(0.25, animations: {
+            cell.layer.transform = CATransform3DMakeScale(1, 1, 1)
+        })
     }
    
 }

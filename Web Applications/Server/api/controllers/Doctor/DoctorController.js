@@ -202,8 +202,7 @@ module.exports = {
 		var data = req.body.data;
 		Services.Doctor.CreateDoctorByNewAccount(data)
 		.then(function(success){
-			if(success!=null && success!=""){
-				
+			if(success!=null && success!=""){	
 				res.ok(success);
 			}
 			else {

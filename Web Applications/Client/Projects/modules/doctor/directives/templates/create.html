@@ -130,23 +130,17 @@
 											<!-- profileImage -->
 											<div ng-form name="checkInForm" novalidate>
 												<div class="form-group">
-													<div class="fileinput fileinput-new" data-provides="fileinput">
-														<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
-															<img src="theme/assets/global/images/no_person.jpg"  width="100%" height="100%">
-														</div>
-														<div>
-															<span class="btn green btn-file">
-															<span class="fileinput-new">
-															Select Image </span>
-															<span class="fileinput-exists">
-															Change </span>
-															<input type="file" nv-file-select uploader="uploader">
-															</span>
-															<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-															Remove </a>
-														</div>
+													<canvas id="imageAvatarCanvas" class="thumbnail" ng-show="isChoseAvatar==true" ></canvas>
+													<img class="thumbnail" src="theme/assets/global/images/no_person.jpg" ng-show="isChoseAvatar==false" style="width:350px; height:350px; ">
+													<div class="container">
+														<label for="imageAvatar" style="float:left; padding-right: 1%;"> 
+															<span class="btn green" ng-if="isChoseAvatar==false" style="width: 120px;">Select Image</span>
+															<span class="btn green" ng-if="isChoseAvatar==true" style="width: 120px;">Change</span>
+														</label> 
+														<span class="btn red" ng-if="isChoseAvatar==true"style="width: 120px; float:left" ng-click="Remove('ProfileImage')">Remove</span>
+														<input type="file" id="imageAvatar" ng-click="setType('ProfileImage')" ng-model="aaa" name="imageAvatar" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
 													</div>
-													<div class="clearfix margin-top-10"></div>
+
 												</div>
 											</div>
 											<!-- end profileImage -->
@@ -324,25 +318,22 @@
 							        </div>
 									<!-- end specialities -->
 									<!-- signature -->
-									<div class="form-group">
-										<label class="control-label col-md-3 col-sm-3">Signature</label>
-										<div class="fileinput fileinput-new col-md-6 col-sm-6" data-provides="fileinput">
-											<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 100%;">
-													<img src="theme/assets/global/images/signature.jpg" width="100%" height="100%">
+									<div ng-form name="checkInForm1" novalidate>
+										<div class="form-group">
+											<div class="col-md-6 col-sm-6" style="margin-left:25%;">
+												<canvas id="imageSignatureCanvas" class="thumbnail" ng-show="isChoseSignature==true" ></canvas>
+												<img class="thumbnail" src="theme/assets/global/images/signature.jpg" ng-show="isChoseSignature==false" style="width:100%; height:100%; ">
+												<div class="container">
+													<label for="imageSignature" style="float:left; padding-right: 1%;"> 
+														<span class="btn green" ng-if="isChoseSignature==false" style="width: 120px;">Select Image</span>
+														<span class="btn green" ng-if="isChoseSignature==true" style="width: 120px;">Change</span>
+													</label> 
+													<span class="btn red" ng-if="isChoseSignature==true"style="width: 120px; float:left;" ng-click="Remove('Signature')">Remove</span>
+													<input type="file" id="imageSignature" ng-click="setType('Signature')" nv-file-select uploader="uploader" name="imageSignature" style="color: transparent;  opacity: 0 !important; position: fixed;">
 												</div>
-											<div>
-												<span class="btn green btn-file">
-												<span class="fileinput-new">
-												Signature </span>
-												<span class="fileinput-exists">
-												Change </span>
-												<input type="file" nv-file-select uploader="uploader">
-												</span>
-												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-												Remove </a>
+
 											</div>
-											<br>												</div>
-										<div class="clearfix margin-top-10"></div>
+										</div>
 									</div>
 									<!-- end signature -->
 								</div>
@@ -355,25 +346,25 @@
 									<i class="m-icon-swapleft"></i> Back </a>-->
 
 									<!--Step 1-->
-									<a href="javascript:;" class="btn blue" ng-click="checkUserExist(data)" ng-show="isShowNext">
+									<a href="javascript:;" class="btn blue" ng-click="checkUserExist(data)" ng-show="isShowNext" ng-disabled="disableVerify">
 									Verify <i class="m-icon-swapright m-icon-white"></i>
 									</a>
 									<a href="javascript:;" class="btn blue button-next" ng-show="isShowNext2" ng-click="show2()">
 									Continue <i class="m-icon-swapright m-icon-white"></i>
 									</a>
-									<a href="javascript:;" class="btn default button-previous" ng-show="isShowBack3" ng-click="back_1()"><i class="m-icon-swapleft"></i> Back </a>
-									<a href="javascript:;" class="btn blue" ng-show="isShowNext3" ng-click="CheckInformation(data)">
+									<a href="javascript:;" class="btn default button-previous" ng-show="isShowBack3" ng-click="back_1()" ng-disabled="disableConfirm"><i class="m-icon-swapleft"></i> Back </a>
+									<a href="javascript:;" class="btn blue" ng-show="isShowNext3" ng-click="CheckInformation(data)" ng-disabled="disableConfirm">
 									Confirm <i class="m-icon-swapright m-icon-white"></i>
 									</a>
 									<a href="javascript:;" class="btn blue button-next" ng-show="isShowNext4" ng-click="show4()">
 									Continue <i class="m-icon-swapright m-icon-white"></i>
 									</a>
 									<!--step 2-->
-									<a href="javascript:;" class="btn default button-previous" ng-show="isShowBack4" ng-click="back_2()"><i class="m-icon-swapleft"></i> Back </a>
+									<a href="javascript:;" class="btn default button-previous" ng-show="isShowBack4" ng-click="back_2()" ng-disabled="disableCreate"><i class="m-icon-swapleft"></i> Back </a>
 									<!--<a href="javascript:;" class="btn blue" ng-show="isShowNext5" ng-click="show5(data)">
 									Confirm <i class="m-icon-swapright m-icon-white"></i>
 									</a>-->
-									<a href="javascript:;" class="btn green" ng-show="isShowCreate" ng-click="create(data)">
+									<a href="javascript:;" class="btn green" ng-show="isShowCreate" ng-click="create(data)" ng-disabled="disableCreate">
 									Create <i class="m-icon-swapright m-icon-white"></i>
 									</a>
 								</div>

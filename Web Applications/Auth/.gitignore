@@ -3,3 +3,4 @@ upload_files/*
 temp/*
 logs/*
 .tmp/*
+jsdocs/*

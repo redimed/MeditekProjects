@@ -1,6 +1,2 @@
-var uuid = require('node-uuid');
-module.exports = {
-	GenerateUUID: function(){
-		return uuid.v4();
-	}
-}
+var meditek_library=require("meditek_library");
+module.exports=meditek_library.UUIDService;

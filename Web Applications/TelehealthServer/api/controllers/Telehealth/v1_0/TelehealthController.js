@@ -76,7 +76,7 @@ module.exports = {
                         UserAccountID: user.ID
                     },
                     defaults: {
-                        UID: UUIDService.GenerateUUID()
+                        UID: UUIDService.Create()
                     }
                 }).spread(function(teleUser, created) {
                     if (teleUser) return res.ok(teleUser);
@@ -176,7 +176,7 @@ module.exports = {
                         Type: deviceType
                     },
                     defaults: {
-                        UID: UUIDService.GenerateUUID(),
+                        UID: UUIDService.Create(),
                         DeviceToken: deviceToken
                     }
                 }).spread(function(device, created) {

@@ -1,9 +1,7 @@
 /**
- * AuthController
- *
+ * @namespace AuthController
  * @description : Controller for authentication
  */
-
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
@@ -18,7 +16,16 @@ module.exports = {
     },
 
     /**
-     * login: function xử lý login
+     * @function login
+     * @memberOf  AuthController
+     * @description  xử lý login
+     * @param {Object} req
+     * @param {string} req.UserName Email hoặc PhoneNumber hoặc UserName của user
+     * @param {string} req.Password password của user
+     * @param {string} [req.UserUID] uid của user, nếu login bằng mobile
+     * @param {string} [req.DeviceID] deviceid của mobile, nếu login bằng mobile
+     * @param {string} [req.VerificationToken] nếu login bằng mobile
+     * @return {{status:string, message:string, user:object, token:string,refreshCode:string}}
      */
     login: function(req, res) {
         console.log("============LOGIN===============");
@@ -86,12 +93,15 @@ module.exports = {
                     else
                     {
                         //---------------------------------------------
-                        if(req.headers.systemtype==o.const.systemType.website)
+                        /*if(req.headers.systemtype==o.const.systemType.website)
                         {
                             var connectInfo=_.cloneDeep(userAccess);
                             connectInfo.sid=req.sessionID;
                             RedisService.pushUserConnect(connectInfo);
-                        }
+                        }*/
+                        var connectInfo=_.cloneDeep(userAccess);
+                        connectInfo.sid=req.sessionID;
+                        RedisService.pushUserConnect(connectInfo);
                         //---------------------------------------------
                         if(user.Activated=='Y')
                         {
@@ -124,7 +134,9 @@ module.exports = {
     },
 
     /**
-     * logout: xử lý logout
+     * @function logout xử lý logout
+     * @memberOf AuthController
+     * 
      */
     logout: function(req, res) {
         var userAccess={
@@ -138,12 +150,15 @@ module.exports = {
         .then(function(data){
             req.logout();
             //------------------------------------------
-            if(req.headers.systemtype==o.const.systemType.website)
+            /*if(req.headers.systemtype==o.const.systemType.website)
             {
                 var connectInfo=_.cloneDeep(userAccess);
                 connectInfo.sid=req.sessionID;
                 RedisService.removeUserConnect(connectInfo);
-            }            
+            }    */
+            var connectInfo=_.cloneDeep(userAccess);
+            connectInfo.sid=req.sessionID;
+            RedisService.removeUserConnect(connectInfo);        
             //------------------------------------------
             res.ok({status:'success'});
         },function(err){

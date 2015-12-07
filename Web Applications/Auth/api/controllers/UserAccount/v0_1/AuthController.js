@@ -101,15 +101,15 @@ module.exports = {
                     else
                     {
                         //---------------------------------------------
-                        if(req.headers.systemtype==o.const.systemType.website)
+                        /*if(req.headers.systemtype==o.const.systemType.website)
                         {
                             var connectInfo=_.cloneDeep(userAccess);
                             connectInfo.sid=req.sessionID;
                             RedisService.pushUserConnect(connectInfo);
-                        }
-                        // var connectInfo=_.cloneDeep(userAccess);
-                        // connectInfo.sid=req.sessionID;
-                        // RedisService.pushUserConnect(connectInfo);
+                        }*/
+                        var connectInfo=_.cloneDeep(userAccess);
+                        connectInfo.sid=req.sessionID;
+                        RedisService.pushUserConnect(connectInfo);
                         //---------------------------------------------
                         if(user.Activated=='Y')
                         {
@@ -158,15 +158,15 @@ module.exports = {
         .then(function(data){
             req.logout();
             //------------------------------------------
-            if(req.headers.systemtype==o.const.systemType.website)
+            /*if(req.headers.systemtype==o.const.systemType.website)
             {
                 var connectInfo=_.cloneDeep(userAccess);
                 connectInfo.sid=req.sessionID;
                 RedisService.removeUserConnect(connectInfo);
-            }    
-            // var connectInfo=_.cloneDeep(userAccess);
-            // connectInfo.sid=req.sessionID;
-            // RedisService.removeUserConnect(connectInfo);        
+            }  */  
+            var connectInfo=_.cloneDeep(userAccess);
+            connectInfo.sid=req.sessionID;
+            RedisService.removeUserConnect(connectInfo);        
             //------------------------------------------
             res.ok({status:'success'});
         },function(err){

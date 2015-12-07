@@ -1,20 +1,17 @@
 package com.redimed.telehealth.patient;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -29,27 +26,19 @@ import android.widget.ViewFlipper;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.picker.CountryPicker;
 import com.redimed.telehealth.patient.picker.CountryPickerListener;
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
-import com.redimed.telehealth.patient.service.SocketService;
-import com.redimed.telehealth.patient.utils.BlurTransformation;
 import com.redimed.telehealth.patient.utils.CustomAlertDialog;
 import com.redimed.telehealth.patient.utils.DialogConnection;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.squareup.picasso.Target;
 
 import java.lang.reflect.Field;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -58,7 +47,6 @@ import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.mime.TypedByteArray;
 
 public class ActivationActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -85,11 +73,13 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
     @Bind(R.id.layoutContainer)
     ViewFlipper layoutContainer;
+    @Bind(R.id.activationLayout)
+    RelativeLayout activationLayout;
 
     private String TAG = "ACTIVATION";
     private CountryPicker countryPicker;
     private String phoneCode;
-    private RegisterApi registerApi, registerApiCore;
+    private RegisterApi registerApi, registerApiLogin;
     private Gson gson;
     private TelehealthUser telehealthUser;
     private JsonObject patientJSON;
@@ -99,13 +89,35 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activation);
-
-        registerApi = RESTClient.getRegisterApi();
-        registerApiCore = RESTClient.getRegisterApiCore();
-        gson = new Gson();
         ButterKnife.bind(this);
+        gson = new Gson();
+        registerApi = RESTClient.getRegisterApi();
+        registerApiLogin = RESTClient.getRegisterApiLogin();
+
         Picasso.with(this).load(R.drawable.logo_redimed).into(mLogo);
-        layoutContainer.setAnimateFirstView(true);
+        Picasso.with(this).load(R.drawable.bg_activation)
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                            activationLayout.setBackgroundDrawable(new BitmapDrawable(getApplicationContext().getResources(), bitmap));
+                            activationLayout.invalidate();
+                        } else {
+                            activationLayout.setBackground(new BitmapDrawable(getApplicationContext().getResources(), bitmap));
+                            activationLayout.invalidate();
+                        }
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        Log.d(TAG, "Erorr " + errorDrawable);
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                        Log.d(TAG, "Prepare Load " + placeHolderDrawable);
+                    }
+                });
 
         phoneCode = "+61";
         lblPhoneCode.setText("(+61)");
@@ -127,6 +139,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         btnSubmitCode.setOnClickListener(this);
         btnBack.setOnClickListener(this);
 
+        layoutContainer.setAnimateFirstView(true);
         layoutContainer.setAlpha(0.0f);
         layoutContainer.setDisplayedChild(layoutContainer.indexOfChild(findViewById(R.id.layoutRegisterFone)));
 
@@ -283,7 +296,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                                     " " : jsonObject.get("verifyCode").getAsString());
                             jsonLogin.addProperty("AppID", "com.redimed.telehealth.patient");
                             Log.d(TAG, jsonLogin + " ");
-                            registerApiCore.login(jsonLogin, new Callback<JsonObject>() {
+                            registerApiLogin.login(jsonLogin, new Callback<JsonObject>() {
                                 @Override
                                 public void success(JsonObject jsonObject, Response response) {
                                     Log.d(TAG, jsonObject + " ");

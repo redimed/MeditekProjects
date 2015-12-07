@@ -29,14 +29,15 @@ import retrofit.client.Response;
  * Created by luann on 9/23/2015.
  */
 public class RESTClient {
-    private static String TAG = "RESTCLIENT";
-    private static RestAdapter restAdapter, restAdapterCore;
-    private static OkHttpClient okHttpClient;
-    private static SharedPreferences spDevice, uidTelehealth;
-    private static Context context;
-    private static SharedPreferences.Editor editor;
-    private static JsonObject dataRefresh;
     private static Gson gson;
+    private static Context context;
+    private static JsonObject dataRefresh;
+    private static String TAG = "RESTCLIENT";
+    private static OkHttpClient okHttpClient;
+    private static SharedPreferences.Editor editor;
+    private static SharedPreferences spDevice, uidTelehealth;
+    private static RestAdapter restAdapter, restAdapterCore, restAdapterLogin;
+
 
     public static void InitRESTClient(Context ctx) {
         context = ctx;
@@ -65,6 +66,14 @@ public class RESTClient {
         restAdapterCore = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(Config.apiURLCore)
+                .setClient(new InterceptingOkClient(okHttpClient))
+                .setRequestInterceptor(new SessionRequestInterceptorCore())
+                .setErrorHandler(new RetrofitErrorHandler())
+                .build();
+
+        restAdapterLogin = new RestAdapter.Builder()
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                .setEndpoint(Config.apiURLLogin)
                 .setClient(new InterceptingOkClient(okHttpClient))
                 .setRequestInterceptor(new SessionRequestInterceptorCore())
                 .setErrorHandler(new RetrofitErrorHandler())
@@ -103,6 +112,10 @@ public class RESTClient {
         return restAdapterCore.create(RegisterApi.class);
     }
 
+    public static RegisterApi getRegisterApiLogin() {
+        return restAdapterLogin.create(RegisterApi.class);
+    }
+
     static class InterceptingOkClient extends OkClient
     {
         public InterceptingOkClient(OkHttpClient client) {
@@ -123,7 +136,7 @@ public class RESTClient {
                     gson = new Gson();
                     dataRefresh = new JsonObject();
                     dataRefresh.addProperty("refreshCode", uidTelehealth.getString("refreshCode", null));
-                    RESTClient.getRegisterApiCore().getNewToken(dataRefresh, new Callback<JsonObject>() {
+                    RESTClient.getRegisterApiLogin().getNewToken(dataRefresh, new Callback<JsonObject>() {
                         @Override
                         public void success(JsonObject jsonObject, Response response) {
                             Log.d(TAG, jsonObject + " ");

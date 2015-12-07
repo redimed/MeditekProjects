@@ -2,7 +2,14 @@ package com.redimed.telehealth.patient.fragment;
 
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -12,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -22,8 +30,16 @@ import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
+import com.redimed.telehealth.patient.utils.BlurTransformation;
+import com.redimed.telehealth.patient.utils.CircleTransform;
 import com.redimed.telehealth.patient.utils.CustomAlertDialog;
 import com.redimed.telehealth.patient.utils.DialogConnection;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+import com.squareup.picasso.UrlConnectionDownloader;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,12 +52,12 @@ import retrofit.client.Response;
  */
 public class InformationFragment extends Fragment{
 
-    private String TAG = "INFORMATION", uid;
     private View v;
-    private RegisterApi restClient;
     private Gson gson;
     private Patient[] patients;
-    private SharedPreferences sharedPreferences;
+    private RegisterApi restClient;
+    private String TAG = "INFORMATION", uid;
+    private SharedPreferences sharedPreferences, telehealthPatient;
 
     @Bind(R.id.lblNamePatient)
     TextView lblNamePatient;
@@ -65,6 +81,8 @@ public class InformationFragment extends Fragment{
     SwipeRefreshLayout swipeInfo;
     @Bind(R.id.scrollViewInfo)
     ScrollView scrollViewInfo;
+    @Bind(R.id.avatarPatient)
+    ImageView avatarPatient;
 
     public InformationFragment() {}
 
@@ -72,11 +90,14 @@ public class InformationFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         v = inflater.inflate(R.layout.fragment_information, container, false);
-        restClient = RESTClient.getRegisterApi();
-        uid = getArguments().getString("telehealthUID");
         ButterKnife.bind(this, v);
         gson = new Gson();
+        restClient = RESTClient.getRegisterApi();
+        uid = getArguments().getString("telehealthUID");
+
         sharedPreferences = v.getContext().getSharedPreferences("PatientInfo", v.getContext().MODE_PRIVATE);
+        telehealthPatient = v.getContext().getSharedPreferences("TelehealthUser", v.getContext().MODE_PRIVATE);
+
         patients = gson.fromJson(sharedPreferences.getString("info", null), Patient[].class);
         if (patients != null){
             DisplayInfo(patients);
@@ -92,6 +113,30 @@ public class InformationFragment extends Fragment{
                 ((MainActivity) v.getContext()).Display(0);
             }
         });
+
+        Picasso.with(v.getContext()).load(R.drawable.slider2).transform(new BlurTransformation(v.getContext(), 20))
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                            scrollViewInfo.setBackgroundDrawable(new BitmapDrawable(v.getContext().getResources(), bitmap));
+                            scrollViewInfo.invalidate();
+                        } else {
+                            scrollViewInfo.setBackground(new BitmapDrawable(v.getContext().getResources(), bitmap));
+                            scrollViewInfo.invalidate();
+                        }
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        Log.d(TAG, "Error" + errorDrawable);
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                        Log.d(TAG, "Prepare Load");
+                    }
+                });
         return v;
     }
 
@@ -137,6 +182,52 @@ public class InformationFragment extends Fragment{
                 lblCountry.setText(patient.getCountryName() == null ? "NONE" : patient.getCountryName());
             }
         }
+    }
+
+    private void LoadImageCaller(String url) {
+        Picasso picasso = new Picasso.Builder(v.getContext())
+                .downloader(new UrlConnectionDownloader(v.getContext()) {
+                    @Override
+                    protected HttpURLConnection openConnection(Uri uri) throws IOException {
+                        HttpURLConnection connection = super.openConnection(uri);
+                        connection.addRequestProperty("Authorization", "Bearer " + telehealthPatient.getString("token", null));
+                        connection.addRequestProperty("DeviceID", telehealthPatient.getString("deviceID", null));
+                        connection.addRequestProperty("SystemType", "ARD");
+                        connection.addRequestProperty("Cookie", telehealthPatient.getString("cookie", null));
+                        connection.addRequestProperty("AppID", "com.redimed.telehealth.patient");
+                        return connection;
+                    }
+                })
+                .listener(new Picasso.Listener() {
+                    @Override
+                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+                        Log.d("ERROR PICASSO", exception.getLocalizedMessage());
+                    }
+                }).build();
+
+        picasso.with(v.getContext()).load(url).transform(new CircleTransform())
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                            avatarPatient.setBackgroundDrawable(new BitmapDrawable(v.getContext().getResources(), bitmap));
+                            avatarPatient.invalidate();
+                        } else {
+                            avatarPatient.setBackground(new BitmapDrawable(v.getContext().getResources(), bitmap));
+                            avatarPatient.invalidate();
+                        }
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        avatarPatient.setBackgroundResource(R.drawable.call_blank_avatar);
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                        Log.d(TAG, "Prepare Load");
+                    }
+                });
     }
 
     //Refresh information patient

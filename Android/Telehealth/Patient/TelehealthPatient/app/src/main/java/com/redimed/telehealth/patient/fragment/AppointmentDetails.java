@@ -7,7 +7,10 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -23,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,8 +40,12 @@ import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.models.Doctor;
 import com.redimed.telehealth.patient.models.FileUpload;
 import com.redimed.telehealth.patient.network.RESTClient;
+import com.redimed.telehealth.patient.utils.BlurTransformation;
 import com.redimed.telehealth.patient.utils.Config;
 import com.redimed.telehealth.patient.utils.RVAdapterImage;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,14 +65,14 @@ public class AppointmentDetails extends Fragment {
     private static final int RESULT_CAMERA = 2;
     private static final int RESULT_RELOAD = 3;
     private View v;
-    private SharedPreferences telehealthPatient;
-    private RegisterApi registerApi;
-    private Gson gson;
-    private String fromTime, status, firstDoctor, middleDoctor, lastDoctor, appointmentUID;
-    private List<String> urlPicasso;
-    private LinearLayoutManager layoutManagerCategories;
-    private RVAdapterImage rvAdapterImage;
     private Intent i;
+    private Gson gson;
+    private RegisterApi registerApi;
+    private List<String> urlPicasso;
+    private RVAdapterImage rvAdapterImage;
+    private SharedPreferences telehealthPatient;
+    private LinearLayoutManager layoutManagerCategories;
+    private String fromTime, status, firstDoctor, middleDoctor, lastDoctor, appointmentUID;
 
     @Bind(R.id.lblDate)
     TextView lblDate;
@@ -84,6 +92,10 @@ public class AppointmentDetails extends Fragment {
     TextView lblTitle;
     @Bind(R.id.lblHome)
     TextView btnHome;
+    @Bind(R.id.apptDetailLayout)
+    LinearLayout apptDetailLayout;
+    @Bind(R.id.imgTitle)
+    ImageView imgTitle;
 
     public AppointmentDetails() {}
 
@@ -118,13 +130,36 @@ public class AppointmentDetails extends Fragment {
 
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
         appCompatActivity.setSupportActionBar(toolBar);
-        toolBar.setBackgroundResource(R.drawable.detail_appt_bg);
+
+        Picasso.with(v.getContext()).load(R.drawable.slider2).transform(new BlurTransformation(v.getContext(), 20)).into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    apptDetailLayout.setBackgroundDrawable(new BitmapDrawable(v.getContext().getResources(), bitmap));
+                    apptDetailLayout.invalidate();
+                } else {
+                    apptDetailLayout.setBackground(new BitmapDrawable(v.getContext().getResources(), bitmap));
+                    apptDetailLayout.invalidate();
+                }
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+                Log.d(TAG, "Error " + errorDrawable);
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                Log.d(TAG, "Prepare Load " + placeHolderDrawable);
+            }
+        });
         lblTitle.setText(getResources().getString(R.string.appt_title));
-        btnHome.setText(getResources().getString(R.string.home_title));
+        Picasso.with(v.getContext()).load(R.drawable.detail_appt_icon).into(imgTitle);
+        btnHome.setText(getResources().getString(R.string.back));
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) v.getContext()).Display(0);
+                ((MainActivity) v.getContext()).Display(2);
             }
         });
         return v;
@@ -263,7 +298,8 @@ public class AppointmentDetails extends Fragment {
                         cursor.close();
                         break;
                     case RESULT_RELOAD:
-                        Log.d(TAG, "==========OK========");
+                        Log.d(TAG, "============OK===========");
+                        GetAppointmentDetails(appointmentUID);
                         break;
                 }
                 i = new Intent(v.getContext(), ModelActivity.class);

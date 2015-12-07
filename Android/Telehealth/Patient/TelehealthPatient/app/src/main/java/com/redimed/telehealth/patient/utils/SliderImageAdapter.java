@@ -26,8 +26,6 @@ import butterknife.ButterKnife;
  */
 public class SliderImageAdapter extends PagerAdapter {
 
-    private Activity activity;
-    private List<String> listPath;
     private LayoutInflater inflater;
     private Context context;
     private int[] resourcesIMG = {
@@ -39,13 +37,9 @@ public class SliderImageAdapter extends PagerAdapter {
     @Bind(R.id.imgSlider)
     ImageView imgSlider;
 
-    public SliderImageAdapter(Activity activity, List<String> listPath) {
-        this.activity = activity;
-        this.listPath = listPath;
-    }
 
-    public SliderImageAdapter(Context context) {
-        this.context = context;
+    public SliderImageAdapter(Context ctx) {
+        this.context = ctx;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 

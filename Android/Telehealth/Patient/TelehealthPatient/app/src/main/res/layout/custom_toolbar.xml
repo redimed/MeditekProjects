@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolBar"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:elevation="4dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:elevation="0dp"
+    android:background="@android:color/transparent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,22 +21,31 @@
             android:textAllCaps="false"
             android:textColor="@color/lightFont"
             android:textSize="@dimen/size_txt"
-            android:padding="15dp" />
+            android:layout_marginTop="15dp"/>
 
         <com.redimed.telehealth.patient.font.RobotoTextView
             android:id="@+id/lblTitle"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
             android:text=""
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/lightFont"
-            android:textSize="@dimen/size_txt"
+            android:textSize="@dimen/size_title"
             android:textStyle="bold"
             android:padding="15dp"/>
 
+        <ImageView
+            android:id="@+id/imgTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:alpha="0.5"/>
     </RelativeLayout>
 
 </android.support.v7.widget.Toolbar>

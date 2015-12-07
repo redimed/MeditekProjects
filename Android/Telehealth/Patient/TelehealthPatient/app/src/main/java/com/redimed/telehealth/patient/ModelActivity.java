@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,8 +44,8 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
     private static final int RESULT_RELOAD = 3;
     private String picturePath, appointmentUID;
     private RegisterApi registerApiCore, registerApi;
-    private String bodyPart, auth, deviceID, userUID, cookie;
-    private static SharedPreferences uidTelehealth, spDevice;
+    private String userUID, bodyPart;
+    private static SharedPreferences uidTelehealth;
 
     @Bind(R.id.btnUpload)
     Button btnUpload;
@@ -67,7 +68,6 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
         registerApi = RESTClient.getRegisterApi();
         gson = new Gson();
 
-        spDevice = getSharedPreferences("DeviceInfo", MODE_PRIVATE);
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
         i = getIntent();
         if (i.getExtras() != null) {
@@ -134,10 +134,7 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
 
             final String fileType = "MedicalImage";
             String description = " ";
-            auth = "Bearer " + uidTelehealth.getString("token", null);
-            deviceID = spDevice.getString("deviceID", null);
             userUID = uidTelehealth.getString("userUID", null);
-            cookie = uidTelehealth.getString("cookie", null);
             final File file = new File(picturePath);
             totalSize = file.length();
 
@@ -168,7 +165,11 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
                                 String status = jsonObject.get("status").getAsString();
                                 if (status.equalsIgnoreCase("success")) {
                                     finish();
-                                    setResult(Activity.RESULT_OK);
+                                    i = new Intent();
+                                    i.putExtra("apptUID", appointmentUID);
+                                    i.setAction(Intent.ACTION_GET_CONTENT);
+//                                    setResult(Activity.RESULT_OK);
+                                    startActivityForResult(Intent.createChooser(i, "Reload"), RESULT_RELOAD);
                                 }
                             }
 

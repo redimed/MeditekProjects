@@ -122,15 +122,13 @@
 
     <!-- Profile Layout-->
     <string name="profile_title">PROFILE</string>
-    <string name="profile_type">PATIENT</string>
-    <string name="profile_dob">Date of Birth</string>
-    <string name="profile_email">Email</string>
+    <string name="profile_dob">DOB:</string>
+    <string name="profile_email">Email:</string>
     <string name="profile_home_phone">Home Phone</string>
     <string name="profile_address">Address</string>
     <string name="profile_suburb">Suburb</string>
     <string name="profile_post_code">Post Code</string>
     <string name="profile_country">Country</string>
-    <string name="none">NONE</string>
 
     <!-- Sub Tracking Layout-->
     <string name="sub_tracking_received">Received</string>
@@ -145,6 +143,9 @@
     <string name="sub_tracking_finish">Finish</string>
     <string name="sub_appointment">Appointment</string>
 
+    <!-- Mix-->
+    <string name="none">NONE</string>
+    <string name="back">Back</string>
 
     <!-- Notification-->
     <string name="server_client_id">24396950171-ivlcf1cilo4vbt2c69opb1vcamb3hmur.apps.googleusercontent.com</string>

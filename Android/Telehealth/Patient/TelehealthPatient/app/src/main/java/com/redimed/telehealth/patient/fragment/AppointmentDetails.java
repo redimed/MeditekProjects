@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.MainActivity;
@@ -49,6 +50,7 @@ import com.squareup.picasso.Target;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit.Callback;
@@ -69,6 +71,7 @@ public class AppointmentDetails extends Fragment {
     private Gson gson;
     private RegisterApi registerApi;
     private List<String> urlPicasso;
+    private boolean flagLayout = false;
     private RVAdapterImage rvAdapterImage;
     private SharedPreferences telehealthPatient;
     private LinearLayoutManager layoutManagerCategories;
@@ -97,7 +100,8 @@ public class AppointmentDetails extends Fragment {
     @Bind(R.id.imgTitle)
     ImageView imgTitle;
 
-    public AppointmentDetails() {}
+    public AppointmentDetails() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -231,7 +235,7 @@ public class AppointmentDetails extends Fragment {
     }
 
     private void GetFileUpload(FileUpload[] fileUploads) {
-        for (int i = 0; i < fileUploads.length; i++){
+        for (int i = 0; i < fileUploads.length; i++) {
             urlPicasso.add(Config.apiURLDownload + fileUploads[i].getUID());
         }
         rvAdapterImage.swapData(urlPicasso, telehealthPatient);
@@ -281,6 +285,7 @@ public class AppointmentDetails extends Fragment {
                         columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                         picturePath = cursor.getString(columnIndex);
                         cursor.close();
+                        flagLayout = true;
                         break;
 
                     case RESULT_CAMERA:
@@ -296,22 +301,24 @@ public class AppointmentDetails extends Fragment {
                         columnIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
                         picturePath = cursor.getString(columnIndex);
                         cursor.close();
+                        flagLayout = true;
                         break;
                     case RESULT_RELOAD:
-                        Log.d(TAG, "============OK===========");
+                        flagLayout = false;
                         GetAppointmentDetails(appointmentUID);
                         break;
                 }
-                i = new Intent(v.getContext(), ModelActivity.class);
-                i.putExtra("picturePath", picturePath);
-                i.putExtra("appointmentUID", appointmentUID);
-//                startActivity(i);
-                startActivityForResult(i, RESULT_RELOAD);
+                if (flagLayout) {
+                    i = new Intent(v.getContext(), ModelActivity.class);
+                    i.putExtra("picturePath", picturePath);
+                    i.putExtra("appointmentUID", appointmentUID);
+                    startActivityForResult(i, RESULT_RELOAD);
+                }
             } else {
                 Toast.makeText(v.getContext(), "You haven't picked Image", Toast.LENGTH_LONG).show();
             }
         } catch (Exception ex) {
-            Toast.makeText(v.getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+            Log.d(TAG, ex.getLocalizedMessage());
         }
     }
 

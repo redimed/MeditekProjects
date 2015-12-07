@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
         restClient.updateToken(dataJson, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                Log.d(TAG, jsonObject.toString());
+//                Log.d(TAG, jsonObject.toString());
             }
 
             @Override

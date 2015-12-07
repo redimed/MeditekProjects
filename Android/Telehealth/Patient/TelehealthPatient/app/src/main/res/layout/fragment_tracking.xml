@@ -125,12 +125,55 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imgCircleBlurTime"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true" />
+
+                <ImageView
+                    android:id="@+id/imgTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/sub_tracking_appt_time" />
+
+                <com.redimed.telehealth.patient.font.RobotoTextView
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/sub_tracking_appt_time"
+                    android:textSize="@dimen/tracking_text_size"
+                    android:textColor="@color/lightFont"/>
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="8dp"
+                    android:layout_alignBottom="@+id/imgTime"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="-21dp"
+                    android:background="@drawable/sub_tracking_arrow_icon" />
+
+            </RelativeLayout>
+
+            <View
+                android:visibility="gone"
+                android:id="@+id/lineApptTime"
+                android:layout_width="20dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="-10dp"
+                android:background="@color/line_color_time" />
+
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/layoutApptTime"
                 android:layout_width="wrap_content"
                 android:layout_height="65dp"
-                android:layout_alignParentRight="true"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:background="@drawable/custom_border_radius_view">
@@ -218,50 +261,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <View
-                android:visibility="gone"
-                android:id="@+id/lineApptTime"
-                android:layout_width="20dp"
-                android:layout_height="1dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="-20dp"
-                android:background="@color/line_color_time" />
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/imgCircleBlurTime"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_centerInParent="true" />
-
-                <ImageView
-                    android:id="@+id/imgTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/sub_tracking_appt_time" />
-
-                <com.redimed.telehealth.patient.font.RobotoTextView
-                    android:layout_width="25dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/sub_tracking_appt_time"
-                    android:textSize="@dimen/tracking_text_size"
-                    android:textColor="@color/lightFont"/>
-
-                <View
-                    android:layout_width="10dp"
-                    android:layout_height="8dp"
-                    android:layout_alignBottom="@+id/imgTime"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="-21dp"
-                    android:background="@drawable/sub_tracking_arrow_icon" />
-
-            </RelativeLayout>
 
         </LinearLayout>
 

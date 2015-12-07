@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.redimed.telehealth.patient.R;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -47,6 +49,7 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
 
     @Override
     public void onBindViewHolder(final ImageListViewHolder holder, final int position) {
+        holder.progressBar.setVisibility(View.VISIBLE);
         Picasso picasso = new Picasso.Builder(view.getContext())
                 .downloader(new UrlConnectionDownloader(view.getContext()) {
                     @Override
@@ -64,6 +67,7 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
                     @Override
                     public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
                         holder.imgContains.setVisibility(ImageView.GONE);
+                        holder.progressBar.setVisibility(View.GONE);
                         Log.d("ERROR PICASSO", exception.getLocalizedMessage());
                     }
                 }).build();
@@ -72,7 +76,18 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .error(R.drawable.error_image_icon)
-                .fit().centerInside().into(holder.imgContains);
+                .fit().centerInside().into(holder.imgContains, new Callback() {
+            @Override
+            public void onSuccess() {
+                if (holder.progressBar != null) {
+                    holder.progressBar.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onError() {
+            }
+        });
     }
 
     @Override
@@ -84,12 +99,14 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
         ImageView imgContains;
         RecyclerView rvImageAppointment;
         CardView cardViewImageApp;
+        ProgressBar progressBar;
 
         public ImageListViewHolder(View itemView) {
             super(itemView);
             imgContains = (ImageView) itemView.findViewById(R.id.imgContains);
             rvImageAppointment = (RecyclerView) itemView.findViewById(R.id.rvImageAppointment);
             cardViewImageApp = (CardView) itemView.findViewById(R.id.cardViewImageApp);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
         }
     }
 }

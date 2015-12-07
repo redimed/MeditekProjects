@@ -84,7 +84,7 @@ public class RESTClient {
         public void intercept(RequestInterceptor.RequestFacade paramRequestFacade) {
             paramRequestFacade.addHeader("Accept", "application/json");
             paramRequestFacade.addHeader("Content-Type", "application/json");
-            paramRequestFacade.addHeader("SystemType", "Android");
+            paramRequestFacade.addHeader("SystemType", "ARD");
             paramRequestFacade.addHeader("DeviceID", spDevice.getString("deviceID", null));
             paramRequestFacade.addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", null));
             paramRequestFacade.addHeader("UserUID", uidTelehealth.getString("userUID", null));
@@ -139,7 +139,6 @@ public class RESTClient {
                     RESTClient.getRegisterApiLogin().getNewToken(dataRefresh, new Callback<JsonObject>() {
                         @Override
                         public void success(JsonObject jsonObject, Response response) {
-                            Log.d(TAG, jsonObject + " ");
                             editor = uidTelehealth.edit();
                             editor.putString("token", jsonObject.get("token").isJsonNull() ? " " : jsonObject.get("token").getAsString());
                             editor.putString("refreshCode", jsonObject.get("refreshCode").isJsonNull() ? " " : jsonObject.get("refreshCode").getAsString());

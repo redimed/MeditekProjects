@@ -27,6 +27,10 @@ module.exports = {
 	'post /api/createCode': {
 		controller:'Register/RegisterController',
     	action:'CreateCode'
+	},
+	'post /api/check-user-step1' : {
+		controller:'Register/RegisterController',
+		action:'CheckUserStep1'
 	}
 
 };

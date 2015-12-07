@@ -18,7 +18,8 @@
             <div class="col-md-12 col-sm-12">
                 <div class="form-group">
                     <label class="control-label">Username</label>
-                    <input class="form-control" ng-model="data.UserName" />
+                    <input class="form-control" ng-model="data.UserName" ng-style="ermsg.UserName.css" ng-change="ermsg.UserName='';checkDataNull('UserName')" />
+                    <span style="color:red;">{{ermsg.UserName.msg}}</span>
                 </div>
             </div>
         </div>
@@ -26,13 +27,15 @@
             <div class="col-md-6 col-sm-6">
                 <div class="form-group">
                     <label class="control-label">Password</label>
-                    <input class="form-control" type="password" ng-model="data.Password" />
+                    <input class="form-control" type="password" ng-model="data.Password" ng-style="ermsg.Password.css" ng-change="ermsg.Password='';checkDataNull('Password')" />
+                    <span style="color:red;">{{ermsg.Password.msg}}</span>
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
                 <div class="form-group ">
                     <label class="control-label">Re-type Your Password</label>
-                    <input class="form-control" type="password" ng-model="data.RePassword" />
+                    <input class="form-control" type="password" ng-model="data.RePassword" ng-style="ermsg.RePassword.css" ng-change="ermsg.RePassword='';checkDataNull('RePassword')"/>
+                    <span style="color:red;">{{ermsg.RePassword.msg}}</span>
                 </div>
             </div>
         </div>
@@ -40,13 +43,15 @@
             <div class="col-md-6 col-sm-6">
                 <div class="form-group">
                     <label class="control-label">Mobile</label>
-                    <input type="input" class="form-control" maxlength="17" ng-model="data.PhoneNumber">
+                    <input type="input" class="form-control" ng-model="data.PhoneNumber" ng-style="ermsg.PhoneNumber.css" ng-change="ermsg.PhoneNumber='';checkDataNull('PhoneNumber')"/>
+                    <span style="color:red;">{{ermsg.PhoneNumber.msg}}</span>
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
                 <div class="form-group">
                     <label class="control-label">Email</label>
-                    <input class="form-control" type="text" ng-model="data.Email" />
+                    <input class="form-control" type="text" ng-model="data.Email" ng-style="ermsg.Email.css" ng-change="ermsg.Email='';checkDataNull('Email')"/>
+                    <span style="color:red;">{{ermsg.Email.msg}}</span>
                 </div>
             </div>
         </div>
@@ -70,20 +75,23 @@
         <div class="row">
             <div class="col-md-4 col-sm-4">
                 <div class="form-group ">
-                    <label for="Firstname">Firstname</label>
-                    <input type="input" class="form-control" id="txtFirstName" ng-model="data.FirstName">
+                    <label for="Firstname">FirstName</label>
+                    <input type="input" class="form-control" id="txtFirstName" ng-model="data.FirstName" ng-style="ermsg.FirstName.css" ng-change="ermsg.FirstName='';checkDataNull('FirstName')" />
+                    <span style="color:red;">{{ermsg.FirstName.msg}}</span>
                 </div>
             </div>
             <div class="col-md-4 col-sm-4">
                 <div class="form-group">
-                    <label for="Middlename">Middlename</label>
-                    <input type="input" class="form-control" id="txtMiddlename" ng-model="data.MiddleName">
+                    <label for="Middlename">MiddleName</label>
+                    <input type="input" class="form-control" id="txtMiddlename" ng-model="data.MiddleName" ng-style="ermsg.MiddleName.css" ng-change="ermsg.MiddleName='';checkDataNull('MiddleName')"/>
+                    <span style="color:red;">{{ermsg.MiddleName.msg}}</span>
                 </div>
             </div>
             <div class="col-md-4 col-sm-4">
                 <div class="form-group ">
-                    <label for="Lastname">Lastname</label>
-                    <input type="input" class="form-control" id="txtLastName" ng-model="data.LastName">
+                    <label for="Lastname">LastName</label>
+                    <input type="input" class="form-control" id="txtLastName" ng-model="data.LastName" ng-style="ermsg.LastName.css" ng-change="ermsg.LastName='';checkDataNull('LastName')" />
+                    <span style="color:red;">{{ermsg.LastName.msg}}</span>
                 </div>
             </div>
         </div>
@@ -91,27 +99,31 @@
             <div class="col-md-8 col-sm-8">
                 <div class="form-group ">
                     <label for="HealthlinkID">Healthlink ID</label>
-                    <input id="txtHealthlinkID" class="form-control" type="text" ng-model="data.HealthLinkID">
+                    <input id="txtHealthlinkID" class="form-control" type="text" ng-model="data.HealthLinkID" ng-style="ermsg.HealthLinkID.css" ng-change="ermsg.HealthLinkID='';checkDataNull('HealthLinkID')" />
+                    <span style="color:red;">{{ermsg.HealthLinkID.msg}}</span>
                 </div>
             </div>
             <div class="col-md-4 col-sm-4">
                 <div class="form-group ">
                     <label for="Providernumber">Provider No.</label>
-                    <input type="input" class="form-control" id="txtProviderNumber" ng-model="data.ProviderNumber">
+                    <input type="input" class="form-control" id="txtProviderNumber" ng-model="data.ProviderNumber" ng-style="ermsg.ProviderNumber.css" ng-change="ermsg.ProviderNumber='';checkDataNull('ProviderNumber')"/>
+                    <span style="color:red;">{{ermsg.ProviderNumber.msg}}</span>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-6">
                 <div class="form-group ">
-                    <label for="Workphone">Workphone</label>
-                    <input type="input" maxlength="10" class="form-control" id="txtWorkphone" ng-model="data.WorkPhoneNumber">
+                    <label for="Workphone">WorkPhone</label>
+                    <input type="input" maxlength="10" class="form-control" id="txtWorkphone" ng-model="data.WorkPhoneNumber" ng-style="ermsg.WorkPhoneNumber.css" ng-change="ermsg.WorkPhoneNumber='';checkDataNull('WorkPhoneNumber')"/>
+                    <span style="color:red;">{{ermsg.WorkPhoneNumber.msg}}</span>
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
                 <div class="form-group ">
-                    <label for="Homephone">Homephone</label>
-                    <input type="input" maxlength="10" class="form-control" id="txtWorkphone" ng-model="data.HomePhoneNumber">
+                    <label for="Homephone">HomePhone</label>
+                    <input type="input" maxlength="10" class="form-control" id="txtHomephone" ng-model="data.HomePhoneNumber" ng-style="ermsg.HomePhoneNumber.css" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')"/>
+                    <span style="color:red;">{{ermsg.HomePhoneNumber.msg}}</span>
                 </div>
             </div>
         </div>
@@ -119,13 +131,15 @@
             <div class="col-md-12 col-sm-12">
                 <div class="form-group">
                     <label for="Address1">Address1</label>
-                    <input class="form-control" type="text" ng-model="data.Address1">
+                    <input class="form-control" type="text" ng-model="data.Address1" ng-style="ermsg.Address1.css" ng-change="ermsg.Address1='';checkDataNull('Address1')"/>
+                    <span style="color:red;">{{ermsg.Address1.msg}}</span>
                 </div>
             </div>
             <div class="col-md-12 col-sm-12">
                 <div class="form-group">
                     <label for="Address2">Address2</label>
-                    <input class="form-control" type="text" ng-model="data.Address2">
+                    <input class="form-control" type="text" ng-model="data.Address2"ng-style="ermsg.Address2.css" ng-change="ermsg.Address2='';checkDataNull('Address2')"/>
+                    <span style="color:red;">{{ermsg.Address2.msg}}</span>
                 </div>
             </div>
         </div> 
@@ -133,13 +147,15 @@
             <div class="col-md-4 col-sm-4">
                 <div class="form-group">
                     <label for="Postcode">Postcode</label>
-                    <input id="txtPostcode" maxlength="4" class="form-control" type="text" ng-model="data.Postcode">
+                    <input id="txtPostcode" class="form-control" type="text" ng-model="data.Postcode"ng-style="ermsg.Postcode.css" ng-change="ermsg.Postcode='';checkDataNull('Postcode')"/>
+                    <span style="color:red;">{{ermsg.Postcode.msg}}</span>
                 </div>
             </div>
             <div class="col-md-8 col-sm-8">
                 <div class="form-group">
                     <label for="Suburb">Suburb</label>
-                    <input id="txtSuburb" class="form-control" type="text" ng-model="data.Suburb">
+                    <input id="txtSuburb" class="form-control" type="text" ng-model="data.Suburb" ng-style="ermsg.Suburb.css" ng-change="ermsg.Suburb='';checkDataNull('Suburb')"/>
+                    <span style="color:red;">{{ermsg.Suburb.msg}}</span>
                 </div>
             </div>
         </div>
@@ -147,7 +163,7 @@
             <div class="col-md-6 col-sm-6">
                 <div class="form-group">
                     <label for="State">States</label>
-                    <select ng-model="data.State" id="States" class="form-control">
+                    <select ng-model="data.State" id="States" class="form-control" ng-style="ermsg.State.css" ng-change="ermsg.State='';checkDataNull('State')">
                         <option value=""></option>
                         <option value="Victoria">Victoria</option>
                         <option value="New_South_Wales">New South Wales</option>
@@ -157,20 +173,25 @@
                         <option value="Western_Australia">Western Australia</option>
                         <option value="Tasmania">Tasmania</option>
                     </select>
+                    <span style="color:red;">{{ermsg.State.msg}}</span>
                 </div>
             </div>
             <div class="col-md-6 col-sm-6">
                 <div class="form-group">
                     <label for="Country">Country</label>
-                    <select ng-model="data.CountryID" ng-options="c.ID as c.ShortName for c in country" id="Country" class="form-control edited" >
+                    <select ng-model="data.CountryID" ng-options="c.ID as c.ShortName for c in country" id="Country" class="form-control edited" ng-style="ermsg.CountryID.css" ng-change="ermsg.CountryID='';checkDataNull('CountryID')">
                         <option value=""></option>
                     </select>
+                    <span style="color:red;">{{ermsg.CountryID.msg}}</span>
                     
                 </div>
             </div>
         </div>
          <div class="row margin-top-10 margin-bottom-20">
-            <div class="col-md-12"><div vc-recaptcha theme="light" key="'6LcDaxATAAAAANkBcFO0-jBGQzwIzX4-n9hlYs0v'" ng-model="data.captcha"></div></div>
+            <div class="col-md-12">
+                <div vc-recaptcha theme="light" key="'6LcDaxATAAAAANkBcFO0-jBGQzwIzX4-n9hlYs0v'" ng-model="data.captcha"></div>
+                <span style="color:red;">{{ermsg.captcha.msg}}</span>
+            </div>
         </div>
         <div class="form-actions">
             <a href="" id="register-back-btn" class="btn btn-default uppercase pull-left" ng-click="btn_back()"><i class="glyphicon glyphicon-arrow-left"></i> Back</a>

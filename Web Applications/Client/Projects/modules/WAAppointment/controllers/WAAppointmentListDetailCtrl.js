@@ -15,6 +15,16 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
             $scope.ListContry = response.data;
         })
     }
+    $scope.ShowData = {
+        isLinkPatient: false,
+        patient: []
+    };
+    var checkDateUndefined = function(data) {
+        if (data == ' ' || data == '' || data == undefined) {
+            return false;
+        }
+        return true;
+    };
     $scope.loadListContry();
     $scope.submited = false;
     $scope.ViewDoc = function(Url, UID) {
@@ -26,7 +36,7 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
                 console.log(er);
             })
     }
-    $scope.wainformation = data;
+    $scope.wainformation = angular.copy(data);
     $scope.tab_body_part = 'all';
     $scope.checkRoleUpdate = true;
     if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
@@ -36,6 +46,15 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
     $scope.Temp = angular.copy(data)
     var ClinicalDetailsTemp = [];
     $scope.loadFuntion = function() {
+        if ($scope.wainformation.Patients.length != 0) {
+            $scope.ShowData.isLinkPatient = true;
+            if (checkDateUndefined($scope.wainformation.Patients[0])) {
+                $scope.ShowData.patient = angular.copy($scope.wainformation.Patients[0]);
+                $scope.ShowData.patient.PhoneNumber  = $scope.ShowData.patient.UserAccount.PhoneNumber;
+            };
+        } else {
+            $scope.ShowData.patient = $scope.wainformation.TelehealthAppointment.PatientAppointment;
+        }
         if ($scope.wainformation.TelehealthAppointment != null || $scope.wainformation.TelehealthAppointment != undefined) {
             $scope.wainformation.TelehealthAppointment.ClinicalDetails = {}
             $scope.Temp.TelehealthAppointment.ClinicalDetails.forEach(function(valueRes, indexRes) {
@@ -261,6 +280,9 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
                     if (data.message == 'success') {
                         console.log('patientInfomation', data.data);
                         console.log('$scope.wainformation.Patients', $scope.wainformation.Patients);
+                        $scope.ShowData.isLinkPatient = true;
+                        $scope.ShowData.patient = data.data[0];
+                        $scope.ShowData.patient.PhoneNumber = data.data[0].UserAccount.PhoneNumber;
                         $scope.wainformation.Patients = [];
                         $scope.wainformation.Patients.push({
                             UID: patientUid

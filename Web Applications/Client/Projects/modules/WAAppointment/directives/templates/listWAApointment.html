@@ -78,7 +78,7 @@
                         <tbody>
                             <tbody>
                                 <tr ng-click="WAAppointmentDetail(appt.UID)" ng-repeat="appt in info.listWaapointment.rows">
-                                    <td>{{($index+1)+ 2*(info.paging.currentPage-1)}}</td>
+                                    <td>{{($index+1)+ 20*(info.paging.currentPage-1)}}</td>
                                     <td>
                                         <span ng-if="appt.Patients.length === 0">{{(appt.TelehealthAppointment.PatientAppointment.FirstName !== null)?appt.TelehealthAppointment.PatientAppointment.FirstName:""}} 
                                     {{(appt.TelehealthAppointment.PatientAppointment.LastName !== null)?appt.TelehealthAppointment.PatientAppointment.LastName:""}}

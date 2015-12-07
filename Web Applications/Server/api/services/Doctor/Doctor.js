@@ -1255,8 +1255,7 @@ module.exports = {
 				throw err;
 			})
 			.then(function(addSpecialitiesComplete){
-				return User.addRole(data.RoleId,{SiteId:1}
-				,{transaction:t});
+				return User.addRole(data.RoleId,{transaction:t});
 			},function(err){
 				t.rollback();
 				throw err;
@@ -1264,7 +1263,11 @@ module.exports = {
 			.then(function(success){
 
 				t.commit();
-				return success;
+				var response = {
+					userID  : userID,
+					userUID : userUID
+				};
+				return response;
 			},function(err){
 				t.rollback();
 				throw err;
@@ -1279,14 +1282,15 @@ module.exports = {
 	},
 
 	UpdateSignature: function(data) {
-		if(data.DoctorUID!=null && data.DoctorUID!=""){
+		console.log(data);
+		if(data!=null && data!=""){
 			return sequelize.transaction()
 			.then(function(t){
 				return Doctor.findAll({
 					attributes:['ID','UserAccountID'],
 					transaction:t,
 					where:{
-						UID:data.DoctorUID
+						UserAccountID:data
 					}
 				})
 				.then(function(result){
@@ -1320,7 +1324,7 @@ module.exports = {
 							Signature: result[0].ID
 						},{
 							where:{
-								UID : data.DoctorUID
+								UserAccountID : data
 							},
 							transaction:t
 						});
@@ -1346,7 +1350,9 @@ module.exports = {
 			});
 		}
 		else{
-			return null;
+			var error = new Error("UpdateSignature.queryError");
+			error.pushError("userID.null");
+			return error;
 		}
 	},
 

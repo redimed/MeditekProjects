@@ -1,2 +1,2 @@
 var meditek_library=require("meditek_library");
-module.exports=meditek_library.UUIDService;
+module.exports=meditek_library.Services;

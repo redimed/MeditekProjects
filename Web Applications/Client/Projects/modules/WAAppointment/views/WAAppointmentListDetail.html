@@ -367,13 +367,13 @@
                                                                     <div class="form-group">
                                                                         <div class="radio-list">
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="Indigenous" value="Aboriginal" ng-model="ShowData.Patient.Indigenous" ng-disabled="ShowData.isLinkPatient"> Aboriginal
+                                                                                <input type="radio" name="Indigenous" value="Aboriginal" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> Aboriginal
                                                                             </label>
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="Indigenous" value="Torres Strait Islander" ng-model="ShowData.patient.Indigenous" ng-disabled="ShowData.isLinkPatient"> Torres Strait Islander
+                                                                                <input type="radio" name="Indigenous" value="Torres Strait Islander" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> Torres Strait Islander
                                                                             </label>
                                                                              <label class="radio-inline">
-                                                                                <input type="radio" name="Indigenous" value="" ng-model="ShowData.patient.Indigenous" ng-disabled="ShowData.isLinkPatient"> None
+                                                                                <input type="radio" name="Indigenous" value="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> None
                                                                             </label>
                                                                         </div>
                                                                     </div>
@@ -385,20 +385,20 @@
                                                                     <div class="form-group">
                                                                         <div class="radio-list">
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="InterpreterRequired" id="Yes" value="Y" ng-model="ShowData.patient.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> Yes
+                                                                                <input type="radio" name="InterpreterRequired" id="Yes" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> Yes
                                                                             </label>
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="InterpreterRequired" id="No" value="N" ng-model="ShowData.patient.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> No
+                                                                                <input type="radio" name="InterpreterRequired" id="No" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> No
                                                                             </label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12 col-sm-12">
                                                                     <div class="form-horizontal">
-                                                                        <div class="form-group form-md-line-input" ng-show="ShowData.patient.InterpreterRequired == 'Y'" ng-class="{'has-error': userForm.InterpreterLanguage.$invalid && submited} ">
+                                                                        <div class="form-group form-md-line-input" ng-show="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-class="{'has-error': userForm.InterpreterLanguage.$invalid && submited} ">
                                                                             <label class="control-label col-md-4 col-sm-4">If yes, language/dialect </label>
                                                                             <div class="col-md-6 col-sm-6" >
-                                                                                <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.InterpreterLanguage" name="InterpreterLanguage" ng-required="ShowData.patient.InterpreterRequired == 'Y'" ng-disabled="ShowData.isLinkPatient">
+                                                                                <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" name="InterpreterLanguage" ng-required="ShowData.patient.InterpreterRequired == 'Y'" ng-disabled="ShowData.isLinkPatient">
                                                                                 <p ng-show="userForm.InterpreterLanguage.$invalid && submited" class="help-block">Field is required</p>
                                                                                 <div class="form-control-focus"> </div>
                                                                             </div>
@@ -410,7 +410,7 @@
                                                                         <div class="form-group form-md-line-input">
                                                                             <label class="control-label col-md-4 col-sm-4">Other special needs ?</label>
                                                                             <div class="col-md-6 col-sm-6">
-                                                                                <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.OtherSpecialNeed" ng-disabled="ShowData.isLinkPatient">
+                                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.OtherSpecialNeed" ng-disabled="ShowData.isLinkPatient">
                                                                                 <div class="form-control-focus"> </div>
                                                                             </div>
                                                                         </div>

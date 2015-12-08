@@ -37,6 +37,10 @@ angular.module('app.unAuthentication.service', [])
     services.createCoded = function(data) {
          var instanceApi = api.all('createCode');
         return instanceApi.post({data: data});
+    },
+    services.checkUserStep1 = function(data) {
+        var instanceApi = api.all('check-user-step1');
+        return instanceApi.post({data:data});
     }
     
     return services;

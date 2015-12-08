@@ -18,6 +18,7 @@ import com.redimed.telehealth.patient.utils.Config;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
@@ -158,6 +159,7 @@ public class SocketService extends Service {
             JSONObject data = (JSONObject) args[0];
             try {
                 String message = data.get("message").toString();
+                Log.d(TAG, message);
                 if (message.equalsIgnoreCase("call")) {
                     i = new Intent(getApplicationContext(), CallActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -184,8 +186,19 @@ public class SocketService extends Service {
         }
     };
 
+    public void closeSockets() {
+        if (socket != null) {
+            try {
+                socket.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
-        sendBroadcast(new Intent("Restart_Socket_Service"));
+        closeSockets();
     }
 }

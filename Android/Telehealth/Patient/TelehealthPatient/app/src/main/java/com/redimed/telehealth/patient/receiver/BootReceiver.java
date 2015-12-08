@@ -18,20 +18,18 @@ import com.redimed.telehealth.patient.service.SocketService;
  * Created by luann on 9/23/2015.
  */
 public class BootReceiver extends BroadcastReceiver {
+
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-        if (keyguardManager.inKeyguardRestrictedInputMode()){
-            if (action.equals(Intent.ACTION_SCREEN_OFF) && MyApplication.getInstance().IsMyServiceRunning(SocketService.class)){
+        if (keyguardManager.inKeyguardRestrictedInputMode()) {
+            if (action.equals(Intent.ACTION_SCREEN_OFF) && MyApplication.getInstance().IsMyServiceRunning(SocketService.class)) {
                 context.stopService(new Intent(context, SocketService.class));
-                Log.d("======Stop Socket===== ", MyApplication.getInstance().IsMyServiceRunning(SocketService.class) + "");
             }
-        }else {
-            if (action.equals(Intent.ACTION_SCREEN_ON)){
-                context.startService(new Intent(context, SocketService.class));
-                Log.d("=====Start Socket=====", MyApplication.getInstance().IsMyServiceRunning(SocketService.class) + "");
-            }
+        }
+        if (action.equals(Intent.ACTION_SCREEN_ON) && !MyApplication.getInstance().IsMyServiceRunning(SocketService.class)) {
+            context.startService(new Intent(context, SocketService.class));
         }
     }
 }

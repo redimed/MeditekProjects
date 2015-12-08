@@ -1,6 +1,10 @@
 package com.redimed.telehealth.patient.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -22,6 +27,7 @@ import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,12 +37,12 @@ import butterknife.ButterKnife;
  */
 public class TrackingFragment extends Fragment implements View.OnClickListener {
 
-    private String TAG = "TRACKING";
     private View v;
-    private String appointmentUID, status, fromTime, time, date, location, treating_doctor;
-    private RegisterApi restClient;
     private Gson gson;
     private Picasso picasso;
+    private RegisterApi restClient;
+    private String TAG = "TRACKING";
+    private String appointmentUID, status, fromTime, time, date, location, treating_doctor;
 
     @Bind(R.id.btnBack)
     TextView btnBack;
@@ -64,6 +70,8 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
     View lineAppTime;
     @Bind(R.id.layoutApptTime)
     LinearLayout layoutApptTime;
+    @Bind(R.id.subTrackingLayout)
+    RelativeLayout subTrackingLayout;
 
     public TrackingFragment() {}
 
@@ -83,7 +91,30 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
         btnAppt.setOnClickListener(this);
 
         DisplayTracking(status);
-        Log.d(TAG, status);
+
+        Picasso.with(v.getContext()).load(R.drawable.slider2).transform(new BlurTransformation(v.getContext(), 20)).into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    subTrackingLayout.setBackgroundDrawable(new BitmapDrawable(v.getContext().getResources(), bitmap));
+                    subTrackingLayout.invalidate();
+                } else {
+                    subTrackingLayout.setBackground(new BitmapDrawable(v.getContext().getResources(), bitmap));
+                    subTrackingLayout.invalidate();
+                }
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+                Log.d(TAG, "Error " + errorDrawable);
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                Log.d(TAG, "Prepare Load " + placeHolderDrawable);
+
+            }
+        });
         return v;
     }
 
@@ -96,8 +127,7 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
                         Log.d(TAG, exception.getLocalizedMessage());
                     }
                 }).build();
-                picasso.load(R.drawable.circel_bg)
-                        .transform(new BlurTransformation(v.getContext(), 20))
+                picasso.load(R.drawable.sub_tracking_bg)
                         .into(imgCircleBlurAttended);
                 break;
             case "Waiting for approval":
@@ -107,8 +137,7 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
                         Log.d(TAG, exception.getLocalizedMessage());
                     }
                 }).build();
-                picasso.load(R.drawable.circel_bg)
-                        .transform(new BlurTransformation(v.getContext(), 20))
+                picasso.load(R.drawable.sub_tracking_bg)
                         .into(imgCircleBlurWait);
                 break;
             case "Pending":
@@ -118,8 +147,7 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
                         Log.d(TAG, exception.getLocalizedMessage());
                     }
                 }).build();
-                picasso.load(R.drawable.circel_bg)
-                        .transform(new BlurTransformation(v.getContext(), 20))
+                picasso.load(R.drawable.sub_tracking_bg)
                         .into(imgCircleBlurPending);
                 break;
             case "Received":
@@ -129,8 +157,7 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
                         Log.d(TAG, exception.getLocalizedMessage());
                     }
                 }).build();
-                picasso.load(R.drawable.circel_bg)
-                        .transform(new BlurTransformation(v.getContext(), 20))
+                picasso.load(R.drawable.sub_tracking_bg)
                         .into(imgCircleBlurReceived);
                 break;
             case "Approved":
@@ -145,8 +172,7 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
                         Log.d(TAG, exception.getLocalizedMessage());
                     }
                 }).build();
-                picasso.load(R.drawable.circel_bg)
-                        .transform(new BlurTransformation(v.getContext(), 20))
+                picasso.load(R.drawable.sub_tracking_bg)
                         .into(imgCircleBlurTime);
                 break;
             case "Finished":
@@ -156,8 +182,7 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
                         Log.d(TAG, exception.getLocalizedMessage());
                     }
                 }).build();
-                picasso.load(R.drawable.circel_bg)
-                        .transform(new BlurTransformation(v.getContext(), 20))
+                picasso.load(R.drawable.sub_tracking_bg)
                         .into(imgCircleBlurFinish);
                 break;
         }
@@ -184,7 +209,7 @@ public class TrackingFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnBack:
-                ((MainActivity) v.getContext()).Display(0);
+                ((MainActivity) v.getContext()).Display(2);
                 break;
             case R.id.btnAppt:
                 Fragment fragment = new AppointmentDetails();

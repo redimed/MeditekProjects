@@ -16,10 +16,9 @@ class ViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var phoneTextField: DesignableTextField!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var viewPhoneNumber: DesignableView!
-    var phoneNumber = String()
-    
     @IBOutlet weak var versionBuildLabel: UILabel!
     
+    var phoneNumber = String()
     let api = GetAndPostDataController()
     //Color is red
     let colorCustom = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
@@ -49,11 +48,10 @@ class ViewController: UIViewController,UITextFieldDelegate {
             view.showLoading()
             requestPhoneNumberToServer()
         }
-        
     }
     //Sending phone number to server and check user in DB
     func requestPhoneNumberToServer(){
-        api.SendVerifyPhoneNumber(config.deviceID!,phoneNumber: phoneTextField.text!){
+        api.SendVerifyPhoneNumber(config.deviceID,phoneNumber: phoneTextField.text!){
             response in
             //Check status API responsed
             if(response["status"] == "success"){

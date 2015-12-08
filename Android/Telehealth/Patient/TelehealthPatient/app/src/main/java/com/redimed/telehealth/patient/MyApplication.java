@@ -6,16 +6,22 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
+import com.redimed.telehealth.patient.utils.Config;
 
 import java.io.File;
 import java.text.ParseException;
@@ -27,9 +33,10 @@ import java.util.Date;
  */
 public class MyApplication extends Application {
 
+    private BroadcastReceiver receiver;
     private String TAG = "MyApplication";
     private static MyApplication myApplication;
-    private BroadcastReceiver receiver;
+    private static SharedPreferences.Editor editor;
 
     public static MyApplication getInstance() {
         return myApplication;

@@ -310,6 +310,9 @@ angular.module('app.authentication.doctor.directive.detail', [])
 						scope.er[err[i].field] = {};
 						scope.er[err[i].field].css ={'border': '2px solid #DCA7B0'};
 						scope.er[err[i].field].msg = err[i].message;
+						if(err[i].field == "Speciality"){
+							$(".select2-selection").css("border","2px solid #DCA7B0");
+						}
 					}
 		    	});
 		    };

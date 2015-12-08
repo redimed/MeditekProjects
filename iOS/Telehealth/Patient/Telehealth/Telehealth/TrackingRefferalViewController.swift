@@ -53,14 +53,13 @@ class TrackingRefferalViewController: UIViewController {
             break
         }
     }
-    
     func boxShadowButton(button:UIButton,_ color:UIColor){
         button.layer.shadowOpacity = 8
         button.layer.shadowColor  = UIColor.whiteColor().CGColor
         button.layer.shadowOffset = CGSizeMake(0, 0)
         button.layer.shadowRadius = 6
     }
-
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "appointmentDetailsSegue"{
             let appointmentDetail = segue.destinationViewController as! AppointmentDetailsViewController

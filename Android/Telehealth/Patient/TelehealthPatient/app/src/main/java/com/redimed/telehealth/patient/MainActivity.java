@@ -84,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
     TextView lblNamePatient;
     @Bind(R.id.avatarPatient)
     ImageView avatarPatient;
-    @Bind(R.id.logo)
-    ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         startService(new Intent(getApplicationContext(), SocketService.class));
         ButterKnife.bind(this);
-        Picasso.with(this).load(R.drawable.logo_redimed).into(logo);
 
         gson = new Gson();
         restClient = RESTClient.getRegisterApi();
@@ -260,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
         restClient.updateToken(dataJson, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                Log.d(TAG, jsonObject.toString());
+//                Log.d(TAG, jsonObject.toString());
             }
 
             @Override

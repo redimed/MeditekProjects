@@ -27,6 +27,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         super.viewDidLoad()
         //Get uuid user in locacalstorage
         
+        
         if let token = defaults.valueForKey("token") as? String {tokens = token}
         if let userUIDs = defaults.valueForKey("userUID") as? String{userUID = userUIDs}
         if let cookie = defaults.valueForKey("Set-Cookie") as? String{cookies = cookie}
@@ -112,8 +113,8 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     
     //page Controller
     func pagingImage(){
-        self.pageTitles = NSArray(objects: "Explore", "Today Widget")
-        self.pageImages = NSArray(objects: "Untitled-1_03", "Untitled-1_05")
+        self.pageTitles = NSArray(objects: "Explore", "Today Widget","Home3")
+        self.pageImages = NSArray(objects: "Home1", "Home2","Home3")
         pageControl.numberOfPages = pageImages.count
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         self.pageViewController.dataSource = self
@@ -335,6 +336,19 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     @IBAction func callUsButton(sender: AnyObject) {
         UIApplication.sharedApplication().openURL(NSURL(string: "tel://\(phoneNumberCallUs)")!)
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+       
+
+        if segue.identifier == "FAQsegue" {
+             let FAQs = segue.destinationViewController as! FAQsViewController
+            FAQs.titleString = "FAQs"
+        }else if segue.identifier == "Aboutsegue"{
+             let FAQs = segue.destinationViewController as! FAQsViewController
+            FAQs.titleString = "ABOUT US"
+        }
+    }
+
     
 
 }

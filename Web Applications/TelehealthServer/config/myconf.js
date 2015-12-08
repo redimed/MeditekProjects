@@ -1,3 +1,4 @@
+var rootPath = process.cwd();
 module.exports.myconf = {
 	//============ Twilio SMS Service Key=============
     twilioSID: 'AC7772e542a52ff56dcf0d13f95a99b154',
@@ -8,6 +9,15 @@ module.exports.myconf = {
     OpentokAPISecret: 'eaacb0aba8fa68400314cb9b3316ca12a3dcbd86',
     //============ GCM Push Notification =============
     GCMApiKey: 'AIzaSyDz2pMblr_p6HwWqCeBNUoxuat1rcOQwdk',
+    //============ APN Push Notification DEV=============
+    // APNCert: rootPath + '/config/push_key/TelePushCert.pem',
+    // APNKey: rootPath + '/config/push_key/TelePushKey.pem',
+    // APNIsProduction: false,
+    //============ APN Push Notification PRODUCTION=============
+    APNCert: rootPath + '/config/push_key/TelePushCert_Production.pem',
+    APNKey: rootPath + '/config/push_key/TelePushKey_Production.pem',
+    APNIsProduction: true,
+    //============ URL ===============================
     // CoreAPI: 'http://testapp.redimed.com.au:3005',
     // AuthAPI: 'http://testapp.redimed.com.au:3006',
     CoreAPI: 'http://telehealthvietnam.com.vn:3005',

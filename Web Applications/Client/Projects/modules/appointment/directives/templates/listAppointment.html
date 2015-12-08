@@ -1,12 +1,25 @@
 <!-- BEGIN PAGE HEADER-->
-<h1 class="my-page-title">Telehealth Appointment</h1>
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:;" ui-sref="authentication.home.list">
+                Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Telehealth Appointment</b>
+        </li>
+    </ul>
+</div>
+<br>
 <!-- END PAGE HEADER-->
 <!-- BEGIN BODY -->
 <div class="portlet light bordered">
     <div class="portlet-title">
         <div class="caption font-green">
             <i class="icon-list font-green"></i>
-            <span class="caption-subject bold uppercase"> Telehealth Appointment</span>
+            <span class="caption-subject bold uppercase">{{$state.current.data.pageTitle}}</span>
         </div>
         <div class="actions">
             <a href="javascript:;" class="btn btn-circle red-thunderbird btn-sm" ng-click="toggleFilter()">

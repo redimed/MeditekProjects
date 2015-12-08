@@ -1,6 +1,4 @@
-var app = angular.module('app.authentication.home.list.controller',[
-	'app.authentication.home.list.detail.controller',
-]);
+var app = angular.module('app.authentication.home.list.controller',[]);
 
 app.controller('homeListCtrl', function($scope, MovieRetriever, $state){
 	$scope.movies = MovieRetriever.getmovies("...");

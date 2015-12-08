@@ -8,12 +8,13 @@ app.config(function($stateProvider){
 		.state('authentication.urgentCare', {
 			abstract: true,
 			url: '/urgentCare',
+			data: {title: 'Urgent Care', pageTitle: 'Urgent Care'},
 			templateUrl: 'modules/urgentCare/views/urgentCare.html',
 			controller: 'urgentCareCtrl',
 		})
 		.state('authentication.urgentCare.list', {
 			url: '/list',
-			data: {pageTitle: 'Urgent Care List'},
+			data: {title: 'Urgent Care', pageTitle: 'Urgent Care'},
 			templateUrl: 'modules/urgentCare/views/urgentCareList.html',
 			controller: 'urgentCareListCtrl',
 		})

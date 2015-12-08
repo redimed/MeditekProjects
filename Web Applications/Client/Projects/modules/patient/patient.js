@@ -9,20 +9,20 @@ app.config(function($stateProvider, $urlRouterProvider){
 		.state('authentication.patient', {
 			abstract: true,
 			url: '/patient',
-			data: {pageTitle: 'Patient'},
+			data: {title: 'Patient', pageTitle: 'Patient'},
 			templateUrl: 'modules/patient/views/patient.html',
 			controller: 'patientCtrl'
 		})
 		.state('authentication.patient.list', {
 			url: '/list',
-			data: {pageTitle: 'Patient List'},
+			data: {title: 'Patient', pageTitle: 'Patient'},
 			templateUrl: 'modules/patient/views/patientList.html',
 			controller: 'patientListCtrl'
 			
 		})
 		.state('authentication.patient.create', {
 			url: '/create',
-			data: {pageTitle: 'Patient Create'},
+			data: {title: 'Patient Create', pageTitle: 'Create New Patient'},
 			templateUrl: 'modules/patient/views/patientCreate.html',
 			controller: 'patientCreateCtrl'
 		});

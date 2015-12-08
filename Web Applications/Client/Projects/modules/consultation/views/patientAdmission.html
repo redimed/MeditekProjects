@@ -1,0 +1,212 @@
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="authentication.home.list">
+                Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <a ui-sref="authentication.consultation.list">
+                Consultation</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <a ui-sref="authentication.consultation.detail">Treating Doctor</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Patient Admission</b>
+        </li>
+    </ul>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-md-9 col-sm-9">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="glyphicon glyphicon-eye-open font-green"></i>
+                    <span class="caption-subject bold uppercase">{{$state.current.data.pageTitle}}</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle green" ng-click="PrintPDF()"><i class="fa fa-print"></i> Print PDF </a>
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form class="form-horizontal">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6 col-sm-6">Medicare Eligible</label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="radio-list">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="MedicareEligible" value="Y"> Yes
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="MedicareEligible" value="N"> No
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6 col-sm-6">Medicare Number</label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6 col-sm-6">Medicare Reference Number</label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-6 col-sm-6">Expiry Date</label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions right">
+                        <button type="reset" class="btn btn-default">Reset</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-3">
+        <div class="portlet portlet-fit box green-haze">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject ">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-8">
+                                <div class="thumbnail" style="margin-bottom:3px; border-radius: 50% !important">
+                                    <img src="theme/assets/global/images/no_person.jpg" class="profile-imge" width="100%" style="border-radius: 50% !important" />
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-md-8">
+                                <h3 class="bold">Marcus Doe &nbsp;&nbsp;<i class="icon-symbol-male"></i></h3>
+                                <h5 class="bold uppercase">Patient</h5>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table">
+                    <tr>
+                        <td><i class="fa fa-gift"></i> DOB</td>
+                        <td>02:09.1970</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-paw"></i> Allergy</td>
+                        <td>No Allergy</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-clock-o"></i> Time</td>
+                        <td>07.10.2015 09:90 AM</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-calendar-o"></i> New Appt</td>
+                        <td>
+                            <a href="" class="btn green">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="fa fa-calendar-plus-o"></i>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="portlet portlet-fit box yellow-soft">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject bold uppercase"><i class="glyphicon glyphicon-user"></i> Contact</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table">
+                    <tr>
+                        <td><i class="fa fa-building-o"></i> Company Name</td>
+                        <td>
+                            <label>
+                                <input type="checkbox"> N&N Building</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-gear"></i> NOK Contact</td>
+                        <td>
+                            <label>
+                                <input type="checkbox"> N/A</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-phone"></i> NOK Phone</td>
+                        <td>
+                            <label>
+                                <input type="checkbox"> N/A</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-heart"></i> Insurer</td>
+                        <td>
+                            <label>
+                                <input type="checkbox"> N/A</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-medkit"></i> Treating Doctor</td>
+                        <td>
+                            <label>
+                                <input type="checkbox"> 1111</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-check-circle"></i> Online Users</td>
+                        <td>
+                            <a class="btn btn-sm btn-info">Call &nbsp;&nbsp;<i class="glyphicon glyphicon-earphone"></i></a>
+                            <a class="btn btn-sm btn-danger">Chat &nbsp;&nbsp;<i class="glyphicon glyphicon-comment"></i></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="portlet portlet-fit box grey-mint">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject bold uppercase">
+                        <i class="glyphicon glyphicon-bell"></i> Notification List
+                    </span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <p>1) Reuse of syringes to access medication vials used for > 1 patient</p>
+                <p>2) Failure to property reprocess reusable medical equipment</p>
+            </div>
+        </div>
+    </div>
+</div>

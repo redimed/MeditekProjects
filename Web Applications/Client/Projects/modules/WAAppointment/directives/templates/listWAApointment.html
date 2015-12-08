@@ -98,7 +98,8 @@
                                         <span ng-if="appt.Status === info.apptStatus[2].value" ><img src="./theme/assets/layouts/layout/imgStatus/time.png" ></span>
                                         <span ng-if="appt.Status === info.apptStatus[5].value" ><img src="./theme/assets/layouts/layout/imgStatus/finish.png" ></span>
                                     </td>
-                                    <td>{{appt.FromTime | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td>
+                                    <!-- <td>{{appt.FromTime | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td> -->
+                                    <td>{{appt.FromTime | date: 'dd/MM/yyyy - HH:mm' : 'UTC'}}</td>
                                     <td style="text-align:center">
                                         <span ng-if="appt.TelehealthAppointment.Correspondence === 'Y'" class="text-success"><i class="fa fa-check"></i>
                                         </span>

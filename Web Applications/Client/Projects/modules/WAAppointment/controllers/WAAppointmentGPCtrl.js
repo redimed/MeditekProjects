@@ -169,14 +169,22 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
         withCredentials: true,
         alias: 'uploadFile'
     });
-    // uploader.filters.push({
-    //     name: 'customImage',
-    //     fn: function(item /*{File|FileLikeObject}*/ , options) {
-    //          var type = item.type.split('/');
-    //          console.log('customImage',type);
-    //          return 'image'.indexOf(type[0]) !== -1;
-    //     }
-    // });
+    uploader.filters.push({
+        name: 'customImage',
+        fn: function(item /*{File|FileLikeObject}*/ , options) {
+            var type = item.name.split('.');
+             console.log('customImage',type[type.length-1]);
+             if(('|txt|docx|doc|xls|xlsx|jpg|png|jpeg|bmp|gif|'.indexOf(type[type.length-1]) !== -1)!==true){
+                return false
+             }
+             if (item.size > 1024*1024*15) {
+                return false
+             }else{
+                return true
+             };
+             
+        }
+    });
     $scope.ClickUploader = function(Type) {
         angular.element('#' + Type).click();
         uploader.onAfterAddingFile = function(fileItem) {

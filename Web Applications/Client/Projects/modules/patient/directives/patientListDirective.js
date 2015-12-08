@@ -114,9 +114,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			scope.Search = function(data,e){
 				if(e==13){
 					if(data.UserAccount || data.UserAccount==''){
-						if(data.UserAccount[0]=='0'){
-							data.UserAccount = data.UserAccount.substr(1,data.UserAccount.length);
-						}
+
 						data.PhoneNumber = data.UserAccount;
 					}
 					scope.searchObjectMap.Search = data;

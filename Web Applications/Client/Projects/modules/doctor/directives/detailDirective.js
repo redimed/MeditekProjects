@@ -121,7 +121,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		},
 		link: function(scope, ele, attrs) {
 			console.log(scope.info);
-			scope.doctorUID = {};
+			scope.doctorUID;
 			var data = {};
 			scope.state = [
 				{'code':'VIC', 'name':'Victoria'},
@@ -228,9 +228,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 					if(scope.info.UID!=undefined && scope.info.UID!=null && scope.info.UID!=''){
 						data.UID = scope.info.UID;
 						data.UserAccountID = scope.info.UserAccountID;
-						scope.doctorUID = {
-							DoctorUID : scope.info.UID
-						};
+						scope.doctorUID =  scope.info.UserAccountID;
 						delete scope.info['UID'];
 						data.info = scope.info;
 						data.RoleId = scope.info.UserAccount.RelUserRoles.length!=0?scope.info.UserAccount.RelUserRoles[0].RoleId:null;

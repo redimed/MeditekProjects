@@ -497,6 +497,10 @@ module.exports = {
 		return q.promise;
 	},
 
+	/*
+		whereClause : function that create a where clause for query
+		input : information like 
+	*/
 	whereClause : function(data) {
 		var whereClause = {};
 		whereClause.Patient = {};
@@ -538,6 +542,9 @@ module.exports = {
 				}
 			}
 			if(data.Search.PhoneNumber){
+				if(data.Search.PhoneNumber[0]=='0'){
+					data.Search.PhoneNumber = data.Search.PhoneNumber.substr(1,data.Search.PhoneNumber.length);
+				}
 				whereClause.UserAccount.PhoneNumber = {
 					like:'%'+data.Search.PhoneNumber+'%'
 				}

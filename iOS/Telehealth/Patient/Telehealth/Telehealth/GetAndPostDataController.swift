@@ -18,11 +18,29 @@ class GetAndPostDataController {
         "Authorization": "Bearer \(tokens)",
         "Version" : "1.0",
         "systemtype": "IOS",
-        "deviceId" : config.deviceID as String,
+        "deviceId" : "",
         "useruid":"\(userUID ?? "")",
         "Cookie": cookies as String,
         "appid":UIApplication.sharedApplication().bundleID()
     ]
+    
+    func setHeader(){
+        if let token = defaults.valueForKey("token") as? String {
+            headers["Authorization"] =  "Bearer \(token)"
+        }
+        if let userUIDs = defaults.valueForKey("userUID") as? String{
+            headers["useruid"] = "\(userUIDs ?? "")"
+        }
+        if let cookie = defaults.valueForKey("Set-Cookie") as? String{
+            
+            headers["Cookie"] = cookie as String
+        }
+        if let deviceId = defaults.valueForKey("deviceID") as? String{
+            
+            headers["deviceId"] = deviceId as String
+        }
+
+    }
     
     func setNewToken(token:String,refreshCode:String){
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -34,14 +52,14 @@ class GetAndPostDataController {
         tokens = token
     }
     //Giap: Check phone number and send verify code
-    func SendVerifyPhoneNumber (deviceID:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
+    func SendVerifyPhoneNumber (var phoneNumber:String,completionHandler:(JSON) -> Void){
+        setHeader()
         //Split number 0
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         let parameters = [
             "data": [
-                 "phone":"+61"+phoneNumber,
-//                "phone":"+841654901590",
-                "deviceId":deviceID,
+//                 "phone":"+61"+phoneNumber,
+                "phone":"+841654901590",
                 "deviceType": "ios"
             ]
         ]
@@ -68,18 +86,18 @@ class GetAndPostDataController {
     }
     
     //Giap: Check verify code
-    func CheckVerifyPhoneNumber (verifyCode:String,deviceID:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
-        
+    func CheckVerifyPhoneNumber (verifyCode:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
+        setHeader()
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         let parameters = [
             "data": [
                 "code":verifyCode,
-                "deviceId":deviceID,
                 "deviceType": "ios",
-                 "Phone":"+61" + phoneNumber
-//                "phone":"+841654901590"
+//                 "Phone":"+61" + phoneNumber
+                "phone":"+841654901590"
             ]
         ]
+    
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.CheckVerifyCode ,headers:headers, parameters: parameters).responseJSON{
             request, response, result in
             
@@ -111,15 +129,18 @@ class GetAndPostDataController {
     }
     
     func loginApi(userUID userUID:String,patientUID:String,verifyCode:String,completionHandler:(JSON) -> Void){
+        setHeader()
+         let deviceId = defaults.valueForKey("deviceID") as? String
+            
         let parameters = [
             "UserName":"1",
             "Password":"2",
             "UserUID": userUID,
-            "DeviceID":config.deviceID as String,
+            "DeviceID":deviceId! as String,
             "VerificationToken":verifyCode,
             "AppID":UIApplication.sharedApplication().bundleID()
         ]
-        
+    
         Alamofire.request(.POST, ConfigurationSystem.Http_3006 + UrlAPICheckPhoneNumber.apiLogin ,headers:headers, parameters: parameters).responseJSON{
             request, response, result in
             if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
@@ -131,7 +152,7 @@ class GetAndPostDataController {
             switch result {
             case .Success(let JSONData):
                 let data = JSON(JSONData)
-                
+        
                 self.informationUser(data,patientUID: patientUID){
                     dataResponse in
                     completionHandler(dataResponse)
@@ -150,6 +171,9 @@ class GetAndPostDataController {
     
     
     func informationUser(data:JSON,patientUID:String ,completionHandler:(JSON) -> Void){
+        setHeader()
+        
+        
         let uid = data["user"]["UID"].string! as String
         let token = data["token"].string! as String
         let refreshCode = data["refreshCode"].string! as String
@@ -191,7 +215,7 @@ class GetAndPostDataController {
     
     //Giap: Get information Patient by UID
     func getInformationPatientByUUID(UUID:String,completionHandler:(JSON) -> Void){
-    
+        setHeader()
         Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getInformationPatientByUID + UUID,headers:headers).responseJSON{
             request, response, result in
             if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
@@ -251,9 +275,7 @@ class GetAndPostDataController {
     //Giap: Get List Appointment
     func getListAppointmentByUID(UID:String,Limit:String,completionHandler:(JSON) -> Void) {
         
-        if let token = defaults.valueForKey("token") as? String {
-            headers["Authorization"] = "Bearer \(token)"
-        }
+        setHeader()
         Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentList + UID ,headers:headers).responseJSON{
             request, response, result in
             if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
@@ -281,6 +303,7 @@ class GetAndPostDataController {
     //GIap:Upload Image
     func uploadImage(image:UIImage,userUID:String,completionHandler:(JSON) -> Void)
     {
+        setHeader()
         let imageData = UIImagePNGRepresentation(image)
         let fileType = "MedicalImage"
         Alamofire.upload(
@@ -325,6 +348,7 @@ class GetAndPostDataController {
     
     //update Image to Appointment
     func updateImageToAppointment(fileUID:String,apptID:String,completionHandler:(JSON) -> Void){
+        setHeader()
         let parameters = [
             "data": [
                 "fileUID" : fileUID,
@@ -357,6 +381,7 @@ class GetAndPostDataController {
     }
     //Get appointment Details
     func getAppointmentDetails(appointmentUID:String,type:String,completionHandler:(JSON) -> Void){
+        setHeader()
         if type == "TEL"{
             Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentDetails + appointmentUID,headers:headers).responseJSON{
                 request, response, result in
@@ -374,7 +399,7 @@ class GetAndPostDataController {
                     
                     let jsonImage = data["data"]["FileUploads"] != nil ? data["data"]["FileUploads"] : ""
                     if jsonImage == "" {
-                        completionHandler(JSON(["message":"error"]))
+                        completionHandler(JSON(["message":"NoImage"]))
                     }else {
                         completionHandler(jsonImage)
                     }
@@ -422,6 +447,7 @@ class GetAndPostDataController {
     
     //get image by image UID
     func getImageAppointment(imageUID:String,completionHandler:(NSData) -> Void){
+        setHeader()
         Alamofire.request(.GET,  ConfigurationSystem.Http_3005 + UrlInformationPatient.downloadImage+"/\(imageUID)", headers:headers)
             .responseData { response in
                 if let requireupdatetoken = response.1?.allHeaderFields["requireupdatetoken"] {
@@ -449,16 +475,7 @@ class GetAndPostDataController {
             let parameters = [
                 "refreshCode" : refreshCode
             ]
-            if let token = defaults.valueForKey("token") as? String {
-                headers["Authorization"] =  "Bearer \(token)"
-            }
-            if let userUIDs = defaults.valueForKey("userUID") as? String{
-                headers["useruid"] = "\(userUIDs ?? "")"
-            }
-            if let cookie = defaults.valueForKey("Set-Cookie") as? String{
-                
-                headers["Cookie"] = cookie as String
-            }
+            setHeader()
             Alamofire.request(.POST,ConfigurationSystem.Http_3006 + UrlInformationPatient.getNewToken, headers:headers, parameters: parameters)
                 .responseJSON {
                     request, response, result in
@@ -492,17 +509,9 @@ class GetAndPostDataController {
                     "token":deviceToken
                 ]
             ]
-            print(parameters)
-            let headersPush = [
-                "Authorization": "Bearer \(tokens)",
-                "Version" : "1.0",
-                "systemtype": "IOS",
-                "deviceId" : config.deviceID as String,
-                "useruid":"\(userUID ?? "")",
-                "Cookie": cookies as String,
-                "appid":UIApplication.sharedApplication().bundleID()
-            ]
-            Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.updateTokenPush, headers:headersPush, parameters: parameters)
+            setHeader()
+            
+            Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.updateTokenPush, headers:headers, parameters: parameters)
                 .responseJSON {
                     request, response, result in
                     if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
@@ -526,27 +535,14 @@ class GetAndPostDataController {
     }
     
     func pushNotification(title:String,uid:String,category:String,data:String,completionHandler:(JSON) -> Void){
-        if let token = defaults.valueForKey("token") as? String {
-            tokens = token
-        }
-        if let userUIDs = defaults.valueForKey("userUID") as? String{userUID = userUIDs}
-        if let cookie = defaults.valueForKey("Set-Cookie") as? String{cookies = cookie}
-        let headers_push = [
-            "Authorization": "Bearer \(tokens)",
-            "Version" : "1.0",
-            "systemtype": "IOS",
-            "deviceId" : config.deviceID as String,
-            "useruid":"\(userUID ?? "")",
-            "Cookie": cookies as String,
-            "appid":UIApplication.sharedApplication().bundleID()
-        ]
+        setHeader()
         let parameters = [
             "title":title,
             "uid":uid,
             "category":category,
             "data":data
         ]
-        Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.pushNotify, headers:headers_push, parameters: parameters)
+        Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.pushNotify, headers:headers, parameters: parameters)
             .responseJSON {
                 request, response, result in
                 if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {

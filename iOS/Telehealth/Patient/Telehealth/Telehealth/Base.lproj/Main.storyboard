@@ -597,7 +597,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfS-oV-ps6">
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfS-oV-ps6">
                                             <rect key="frame" x="0.0" y="0.0" width="126" height="27"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
@@ -606,7 +606,7 @@
                                                 <segue destination="7F2-sS-loc" kind="unwind" unwindAction="unwindToViewController:" id="Hmu-l6-8py"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nkj-4k-y18">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nkj-4k-y18">
                                             <rect key="frame" x="24" y="47" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
@@ -616,7 +616,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="Received" backgroundImage="Icon 1"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="lmc-VS-8YS">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="lmc-VS-8YS">
                                             <rect key="frame" x="24" y="193" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
@@ -626,7 +626,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="Appt Time" backgroundImage="Icon 3"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="V8g-Sy-Iub">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="V8g-Sy-Iub">
                                             <rect key="frame" x="24" y="339" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
@@ -636,7 +636,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="Wait List Surgery" backgroundImage="Icon 5"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tls-jC-OOr">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tls-jC-OOr">
                                             <rect key="frame" x="24" y="412" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
@@ -646,7 +646,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="Finish" backgroundImage="Icon 6"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Qbf-Zf-6jR">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Qbf-Zf-6jR">
                                             <rect key="frame" x="24" y="120" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
@@ -720,7 +720,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JrL-jE-bkh">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JrL-jE-bkh">
                                             <rect key="frame" x="24" y="266" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
@@ -754,7 +754,7 @@
                                 <animations/>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6gk-vP-Iza">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6gk-vP-Iza">
                                 <rect key="frame" x="167" y="525" width="143" height="33"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="21"/>

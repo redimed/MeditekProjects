@@ -28,13 +28,12 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         //Get uuid user in locacalstorage
         
         
-        if let token = defaults.valueForKey("token") as? String {tokens = token}
-        if let userUIDs = defaults.valueForKey("userUID") as? String{userUID = userUIDs}
-        if let cookie = defaults.valueForKey("Set-Cookie") as? String{cookies = cookie}
         if let uuid = defaults.valueForKey("uid") as? String {
             uid = uuid
             api.updateTokenPush(uid)
         }
+
+        
         
         //check status notify and handle action
         switch statusCallingNotification {
@@ -296,6 +295,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
                 let dataCalling = JSON(data)
                 print("From name",dataCalling[0])
                 let message : String = data[0]["message"] as! String
+                print("message----",data)
                 if message == MessageString.Call {
                     //                    let apiKey : String = data[0]["apiKey"] as! String
                     //                    let fromName : String = data[0]["fromName"] as! String
@@ -311,6 +311,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
                     NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
                 }else if message == MessageString.Cancel {
                     NSNotificationCenter.defaultCenter().postNotificationName("cancelCall", object: self)
+                    NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
                 }
             }
         })

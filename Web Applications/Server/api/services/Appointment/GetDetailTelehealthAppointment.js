@@ -80,6 +80,9 @@ module.exports = function(appointmentUID, userInfo) {
                         attributes: Services.AttributesAppt.Country()
                     }, {
                         model: FileUpload,
+                        where: {
+                            Enable: 'Y'
+                        },
                         required: false,
                         attributes: Services.AttributesAppt.FileUpload()
                     }]
@@ -94,6 +97,9 @@ module.exports = function(appointmentUID, userInfo) {
                     required: false
                 }, {
                     model: FileUpload,
+                    where: {
+                        Enable: 'Y'
+                    },
                     required: false,
                     attributes: Services.AttributesAppt.FileUpload()
                 }],
@@ -110,6 +116,9 @@ module.exports = function(appointmentUID, userInfo) {
                 }]
             }, {
                 model: FileUpload,
+                where: {
+                    Enable: 'Y'
+                },
                 attributes: Services.AttributesAppt.FileUpload(),
                 required: false,
                 include: [{

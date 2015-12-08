@@ -3,6 +3,10 @@ package com.redimed.telehealth.patient.fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,6 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -29,9 +35,12 @@ import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.models.Appointment;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
+import com.redimed.telehealth.patient.utils.BlurTransformation;
 import com.redimed.telehealth.patient.utils.CustomAlertDialog;
 import com.redimed.telehealth.patient.utils.DialogConnection;
 import com.redimed.telehealth.patient.utils.RVAdapter;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,14 +79,16 @@ public class ListAppointmentFragment extends Fragment {
     TextView lblTitle;
     @Bind(R.id.lblHome)
     TextView btnHome;
+    @Bind(R.id.listApptLayout)
+    LinearLayout listApptLayout;
+    @Bind(R.id.imgTitle)
+    ImageView imgTitle;
 
-    public ListAppointmentFragment() {
-    }
+    public ListAppointmentFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         v = inflater.inflate(R.layout.fragment_list_appointment, container, false);
         ButterKnife.bind(this, v);
 
@@ -118,8 +129,31 @@ public class ListAppointmentFragment extends Fragment {
 
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
         appCompatActivity.setSupportActionBar(toolBar);
-        toolBar.setBackgroundResource(R.drawable.appointment_list_bg);
+        Picasso.with(v.getContext()).load(R.drawable.slider2).transform(new BlurTransformation(v.getContext(), 15))
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                            listApptLayout.setBackgroundDrawable(new BitmapDrawable(v.getContext().getResources(), bitmap));
+                            listApptLayout.invalidate();
+                        } else {
+                            listApptLayout.setBackground(new BitmapDrawable(v.getContext().getResources(), bitmap));
+                            listApptLayout.invalidate();
+                        }
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        Log.d(TAG, "Error " + errorDrawable);
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                        Log.d(TAG, "Prepare Load");
+                    }
+                });
         lblTitle.setText(getResources().getString(R.string.list_appt_title));
+        Picasso.with(v.getContext()).load(R.drawable.appoinment_list_icon).into(imgTitle);
         btnHome.setText(getResources().getString(R.string.home_title));
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override

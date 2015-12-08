@@ -1,16 +1,9 @@
 package com.redimed.telehealth.patient;
 
 import android.animation.ObjectAnimator;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.redimed.telehealth.patient.models.TelehealthUser;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -48,7 +40,7 @@ public class LauncherActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Picasso.with(this).load(R.drawable.logo_redimed).into(mLogo);
-        launcherLayout.setBackgroundResource(R.drawable.activation_screen);
+        launcherLayout.setBackgroundResource(R.drawable.bg_activation);
 
         mApplication = (MyApplication) getApplicationContext();
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);

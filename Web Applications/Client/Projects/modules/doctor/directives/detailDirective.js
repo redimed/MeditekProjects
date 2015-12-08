@@ -194,13 +194,16 @@ angular.module('app.authentication.doctor.directive.detail', [])
 					};
 				}
 		    },0);
-
+			scope.configpage = function() {
+				$('.select2-multiple').select2();
+				$('.select2-container').removeAttr('style');
+			};
 			$timeout(function(){
 				App.initAjax();
 				ComponentsDateTimePickers.init(); // init todo page
 				oriInfo = angular.copy(scope.info);
-				$('.select2-multiple').select2();
-				$('.select2-container').removeAttr('style');
+				// $('.select2-multiple').select2();
+				// $('.select2-container').removeAttr('style');
 			},70);
 
 			scope.removeImg = function(value){

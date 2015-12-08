@@ -51,7 +51,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
     }
     //Sending phone number to server and check user in DB
     func requestPhoneNumberToServer(){
-        api.SendVerifyPhoneNumber(config.deviceID,phoneNumber: phoneTextField.text!){
+        api.SendVerifyPhoneNumber(phoneTextField.text!){
             response in
             //Check status API responsed
             if(response["status"] == "success"){

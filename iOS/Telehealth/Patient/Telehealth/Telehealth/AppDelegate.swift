@@ -17,14 +17,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var config = ConfigurationSystem()
     let ServerApi = GetAndPostDataController()
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        print("-----device ID-----",UIDevice.currentDevice().identifierForVendor!.UUIDString)
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if  defaults.valueForKey("deviceID") as? String == nil {
+            let deviceID = UIDevice.currentDevice().identifierForVendor!.UUIDString
+            defaults.setValue(deviceID, forKey: "deviceID")
+            defaults.synchronize()
+        }else {
+            print("data device-------",defaults.valueForKey("deviceID") as? String)
+        }
+        
+        
+
+        
+        
+        
         // Override point for customization after application launch.
         UINavigationBar.appearance().barTintColor = UIColor(red: 51.0/255.0, green: 65.0/255.0, blue: 105.0/255.0, alpha: 1.0)
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
         
         //check verified in localstorege
-        let defaults = NSUserDefaults.standardUserDefaults()
+        
         if let stringOne = defaults.valueForKey("verifyUser") as? String {
             if stringOne == "Verified" {
                 

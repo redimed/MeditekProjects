@@ -59,7 +59,7 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
         self.api.getAppointmentDetails(UIDAppointment,type:Type, completionHandler: {
             response in
             print(response)
-            if response["message"] == "error"{
+            if response["message"] == "NoImage"{
 //                self.alertMessage("Error", message: ErrorMessage.NoData)
             }else {
                 let countImage = response.count

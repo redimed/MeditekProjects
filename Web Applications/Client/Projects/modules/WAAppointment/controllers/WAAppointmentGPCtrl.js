@@ -174,7 +174,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
         fn: function(item /*{File|FileLikeObject}*/ , options) {
             var type = item.name.split('.');
              console.log('customImage',type[type.length-1]);
-             if(('|txt|docx|doc|xls|xlsx|jpg|png|jpeg|bmp|gif|'.indexOf(type[type.length-1]) !== -1)!==true){
+             if(('|txt|docx|doc|xls|xlsx|jpg|png|jpeg|bmp|gif|pdf|'.indexOf(type[type.length-1]) !== -1)!==true){
                 return false
              }
              if (item.size > 1024*1024*15) {

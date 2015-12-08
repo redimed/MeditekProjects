@@ -54,25 +54,21 @@ public class CountryListAdapter extends BaseAdapter {
 		super();
 		this.context = context;
 		this.countries = countries;
-		inflater = (LayoutInflater) this.context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return countries.size();
 	}
 
 	@Override
 	public Object getItem(int arg0) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public long getItemId(int arg0) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -98,8 +94,7 @@ public class CountryListAdapter extends BaseAdapter {
 		cell.textView.setText(country.getName()+" (+"+country.getPhone()+")");
 
 		// Load drawable dynamically from country code
-		String drawableName = "flag_"
-				+ country.getCode().toLowerCase(Locale.ENGLISH);
+		String drawableName = "flag_" + country.getCode().toLowerCase(Locale.ENGLISH);
 		cell.imageView.setImageResource(getResId(drawableName));
 		return cellView;
 	}

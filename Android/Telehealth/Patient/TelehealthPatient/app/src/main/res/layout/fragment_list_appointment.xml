@@ -1,22 +1,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.redimed.telehealth.patient.fragment.ListAppointmentFragment"
+    android:id="@+id/listApptLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.redimed.telehealth.patient.fragment.ListAppointmentFragment">
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:layout_gravity="center"
+    android:background="@drawable/slider2">
 
     <include layout="@layout/custom_toolbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:layout_height="60dp"
+        android:background="@drawable/appointment_list_title_bg"
         android:orientation="horizontal">
 
         <com.redimed.telehealth.patient.font.RobotoTextView
-            android:layout_width="120dp"
+            android:layout_width="95dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
+            android:paddingTop="10dp"
             android:gravity="center"
             android:text="@string/ref_no"
             android:textColor="@color/lightFont" />
@@ -25,12 +32,13 @@
             android:layout_width="1dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
+            android:layout_marginTop="5dp"
             android:background="@android:color/white" />
 
         <com.redimed.telehealth.patient.font.RobotoTextView
-            android:layout_width="120dp"
+            android:layout_width="125dp"
             android:layout_height="50dp"
-            android:layout_gravity="center"
+            android:layout_gravity="bottom"
             android:gravity="center"
             android:text="@string/ref_pra"
             android:textColor="@color/lightFont" />
@@ -39,12 +47,13 @@
             android:layout_width="1dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
+            android:layout_marginTop="5dp"
             android:background="@android:color/white" />
 
         <com.redimed.telehealth.patient.font.RobotoTextView
             android:layout_width="120dp"
             android:layout_height="50dp"
-            android:layout_gravity="center"
+            android:layout_gravity="bottom"
             android:gravity="center"
             android:text="@string/pre_pra"
             android:textColor="@color/lightFont" />

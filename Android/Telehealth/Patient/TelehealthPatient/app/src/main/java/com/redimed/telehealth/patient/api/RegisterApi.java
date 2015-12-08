@@ -46,14 +46,14 @@ public interface RegisterApi {
     @POST("/api/telehealth/appointment/updateFile")
     void addAppointmentFile(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
 
-    //3005
+    //3006
     @POST("/api/refresh-token/GetNewToken")
     void getNewToken(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
     @POST("/api/telehealth/user/updateToken")
     void updateToken(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
-    //3005
+    //3006
     @POST("/api/login")
     void login (@Body JsonObject jsonObject, Callback<JsonObject> callback);
 

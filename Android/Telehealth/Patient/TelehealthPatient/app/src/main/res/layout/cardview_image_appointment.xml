@@ -11,6 +11,18 @@
     card_view:cardBackgroundColor="@android:color/transparent"
     card_view:cardElevation="0dp">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+
     <ImageView
         android:id="@+id/imgContains"
         android:background="@android:color/transparent"

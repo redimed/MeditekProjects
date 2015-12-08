@@ -125,70 +125,89 @@ module.exports = {
 	*/
 	CreateAccount: function(req, res) {
 		var data = req.body.data;
-		var dated = moment(data.CreatedDate, 'YYYY-MM-DD HH:mm:ss Z');
-		// Variable
-		var userInfo={
-			UserName: data.UserName,
-			Email: data.Email,
-			PhoneNumber: data.PhoneNumber,
-			Password: data.Password
-		};
-		var info_user = {};
-		if(data.captcha){
-			request.get({
-		        url:"https://www.google.com/recaptcha/api/siteverify?secret=%276LcDaxATAAAAAGAlZHx7jZFllXynb6TBDeelzP3X%27&response="+data.captcha
-		    }, function(error, response, body) {
-		    	var captcha = JSON.parse(body);
-		        		if(captcha.success==true){
-				            sequelize.transaction().then(function(t){
-								return Services.UserAccount.CreateUserAccount(userInfo, t)
-								.then(function(result) {
+		if(data == undefined || data == null || data == ""){
+			var error = new Error();
+			error.pushError("CreateAccount.dataNull");
+			res.serverError(ErrorWrap(error));
+		}
+		else{
+			var dated = moment(data.CreatedDate, 'YYYY-MM-DD HH:mm:ss Z');
+			// Variable
+			var userInfo={
+				UserName: data.UserName,
+				Email: data.Email,
+				PhoneNumber: data.PhoneNumber,
+				Password: data.Password
+			};
+			var info_user = {};
+			Services.Register.validate(data)
+			.then(function(success){
+				if(data.captcha){
+					request.get({
+				        url:"https://www.google.com/recaptcha/api/siteverify?secret=%276LcDaxATAAAAAGAlZHx7jZFllXynb6TBDeelzP3X%27&response="+data.captcha
+				    }, function(error, response, body) {
+				    	var captcha = JSON.parse(body);
+				        		if(captcha.success==true){
+						            sequelize.transaction().then(function(t){
+										return Services.UserAccount.CreateUserAccount(userInfo, t)
+										.then(function(result) {
 
-									// Create Role
-									var info_id = {
-										ID: result.ID
-									};
-									var info_role = {
-										RoleCode: data.Type
-									};
-									// Create Role
-									Services.UserRole.CreateUserRoleWhenCreateUser(result, info_role, t)
-									.then(function(success) {
-										info_user = {
-											UID   : result.UID,
-											email : result.Email,
-											ID    : result.ID
-										};
-										data.CreatedDate = dated;
-										data.CreatedBy = req.user?req.user.ID:null;
-										data.UserAccountID = result.ID;
-										if(data.Title) {
-											data.Title = data.Title.toString();
-										} else {
-											data.Title = '';
-										}
-										// Create Doctor
-										Services.Doctor.CreateDoctor(data, t)
-										.then(function(success) {
-
-											var info_actv = {
-												UserUID: result.UID,
-												Type: HelperService.const.systemType.website,
-												CreatedBy: result.ID
+											// Create Role
+											var info_id = {
+												ID: result.ID
 											};
-
-											// Activation
-											Services.UserActivation.CreateUserActivation(info_actv,t)
-											.then(function(result_actv) {
-												
-												var info_show = {
-													UID: result.UID,
-													VerificationCode: result_actv.VerificationCode
+											var info_role = {
+												RoleCode: data.Type
+											};
+											// Create Role
+											Services.UserRole.CreateUserRoleWhenCreateUser(result, info_role, t)
+											.then(function(success) {
+												info_user = {
+													UID   : result.UID,
+													email : result.Email,
+													ID    : result.ID
 												};
-												t.commit();
-												res.ok({
-													data: info_show,
-													useraccount: info_user
+												data.CreatedDate = dated;
+												data.CreatedBy = req.user?req.user.ID:null;
+												data.UserAccountID = result.ID;
+												if(data.Title) {
+													data.Title = data.Title.toString();
+												} else {
+													data.Title = '';
+												}
+												// Create Doctor
+												Services.Doctor.CreateDoctor(data, t)
+												.then(function(success) {
+
+													var info_actv = {
+														UserUID: result.UID,
+														Type: HelperService.const.systemType.website,
+														CreatedBy: result.ID
+													};
+
+													// Activation
+													Services.UserActivation.CreateUserActivation(info_actv,t)
+													.then(function(result_actv) {
+														
+														var info_show = {
+															UID: result.UID,
+															VerificationCode: result_actv.VerificationCode
+														};
+														t.commit();
+														res.ok({
+															data: info_show,
+															useraccount: info_user
+														});
+													})
+													.catch(function(err) {
+														t.rollback();
+														res.serverError(ErrorWrap(err));
+													});
+
+												})
+												.catch(function(err) {
+													t.rollback();
+													res.serverError(ErrorWrap(err));
 												});
 											})
 											.catch(function(err) {
@@ -201,19 +220,21 @@ module.exports = {
 											t.rollback();
 											res.serverError(ErrorWrap(err));
 										});
-									})
-									.catch(function(err) {
-										t.rollback();
-										res.serverError(ErrorWrap(err));
+
 									});
-								})
-								.catch(function(err) {
-									t.rollback();
-									res.serverError(ErrorWrap(err));
-								});
-							});
-						}
-		    });
+								}
+				    });
+				}
+				else {
+					var error = new Error("Server Error");
+					error.pushError("Required Captcha");
+					res.serverError(ErrorWrap(error));
+				}
+			})
+			.catch(function(err){
+				console.log(err);
+				res.serverError(ErrorWrap(err));
+			});
 		}
 		// Create Account
 		
@@ -288,6 +309,17 @@ module.exports = {
 			res.serverError(ErrorWrap(err));
 		});
 
+	},
+
+	CheckUserStep1: function(req, res) {
+		var data = req.body.data;
+		Services.Register.CheckUserStep1(data)
+		.then(function(success){
+			res.ok(success);
+		})
+		.catch(function(err){
+			res.serverError(ErrorWrap(err));
+		});
 	}
 
 };

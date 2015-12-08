@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,14 +40,14 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
 
     private Intent i;
     private Gson gson;
+    private int rotation, xImg, yImg;
     private long totalSize = 0;
     private String TAG = "MODEL";
     private boolean shouldFinish = false;
-    private static final int RESULT_RELOAD = 3;
     private String picturePath, appointmentUID;
     private RegisterApi registerApiCore, registerApi;
-    private String bodyPart, auth, deviceID, userUID, cookie;
-    private static SharedPreferences uidTelehealth, spDevice;
+    private String userUID, bodyPart;
+    private static SharedPreferences uidTelehealth;
 
     @Bind(R.id.btnUpload)
     Button btnUpload;
@@ -54,6 +57,8 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
     ProgressBar progressBarUpload;
     @Bind(R.id.logo)
     ImageView logo;
+    @Bind(R.id.btnRotate)
+    Button btnRotate;
 
 
     @Override
@@ -67,28 +72,58 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
         registerApi = RESTClient.getRegisterApi();
         gson = new Gson();
 
-        spDevice = getSharedPreferences("DeviceInfo", MODE_PRIVATE);
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
+        if (savedInstanceState != null) {
+            rotation = savedInstanceState.getInt("ANGLE");
+        }
+        LoadImageUpload();
+
+        btnUpload.setOnClickListener(this);
+    }
+
+    private void LoadImageUpload() {
         i = getIntent();
         if (i.getExtras() != null) {
             appointmentUID = i.getExtras().getString("appointmentUID");
             picturePath = i.getExtras().getString("picturePath");
+
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(picturePath, options);
-            int imageHeight = options.outHeight;
-            int imageWidth = options.outWidth;
+            final int imageHeight = options.outHeight;
+            final int imageWidth = options.outWidth;
             if (imageWidth > imageHeight) {
                 options.inSampleSize = calculateInSampleSize(options, 512, 256);//if landscape
             } else {
                 options.inSampleSize = calculateInSampleSize(options, 256, 512);//if portrait
             }
             options.inJustDecodeBounds = false;
-            Bitmap bitmap = BitmapFactory.decodeFile(picturePath, options);
+            final Bitmap bitmap = BitmapFactory.decodeFile(picturePath, options);
             imgUpload.setImageBitmap(bitmap);
-        }
 
-        btnUpload.setOnClickListener(this);
+            btnRotate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rotation += 90;
+                    rotation %= 360;
+                    imgUpload.setImageBitmap(getRotatedBitmap(bitmap));
+                }
+            });
+        }
+    }
+
+    private Bitmap getRotatedBitmap(Bitmap bitmap) {
+        if (rotation % 360 == 0) {
+            return bitmap;
+        }
+        Matrix matrix = new Matrix();
+        matrix.postRotate(rotation, bitmap.getWidth(), bitmap.getHeight());
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("ANGLE", rotation);
+        super.onSaveInstanceState(outState);
     }
 
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -134,10 +169,7 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
 
             final String fileType = "MedicalImage";
             String description = " ";
-            auth = "Bearer " + uidTelehealth.getString("token", null);
-            deviceID = spDevice.getString("deviceID", null);
             userUID = uidTelehealth.getString("userUID", null);
-            cookie = uidTelehealth.getString("cookie", null);
             final File file = new File(picturePath);
             totalSize = file.length();
 
@@ -164,11 +196,11 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
                         registerApi.addAppointmentFile(fileJson, new Callback<JsonObject>() {
                             @Override
                             public void success(JsonObject jsonObject, Response response) {
-                                Log.d(TAG, jsonObject.toString());
                                 String status = jsonObject.get("status").getAsString();
                                 if (status.equalsIgnoreCase("success")) {
+                                    Intent returnIntent = new Intent();
+                                    setResult(Activity.RESULT_OK, returnIntent);
                                     finish();
-                                    setResult(Activity.RESULT_OK);
                                 }
                             }
 

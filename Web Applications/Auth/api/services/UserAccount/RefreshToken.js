@@ -1,3 +1,7 @@
+/**
+ * @namespace RefreshTokenService
+ * @description Service for RefreshToken model
+ */
 var $q = require('q');
 var o=require("../HelperService");
 var moment=require("moment");
@@ -78,11 +82,28 @@ function Validation(userAccess)
 
 
 module.exports={
-	
 	/**
-	 * MakeRefreshToken
-	 * Tạo RefreshToken khi login/logout
-	 * 
+	 * @typedef {object} MakeRefreshTokenException
+	 * @memberOf RefreshTokenService
+	 * @property {string} ErrorType value: "MakeRefreshToken.Error"
+	 * @property {Array.<object|string>} ErrorsList Sử dụng ErrorsList[0] <br>
+	 *   ErrorList[0]: </br>
+	 *   - refreshToken.updateError	</br>
+	 *   - refreshToken.queryError	</br>
+	 *   - userAccount.notFound	</br>
+	 *   - userAccount.queryError	</br>
+	 */
+	/**
+	 * @function MakeRefreshToken xử lý tạo RefreshToken mới khi login/logout
+	 * @memberOf RefreshTokenService
+	 * @param { object} userAccess 
+	 * @param {string} userAccess.UserUID
+	 * @param { string} userAccess.SystemType
+	 * @param {string} [userAccess.DeviceID] (mobile)
+	 * @param {string} [userAccess.AppID] (mobile)
+	 * @param {string} transaction
+	 * @return {object} RefreshToken new Refresh Token
+	 * @throws {RefreshTokenService.MakeRefreshTokenException} Nếu có lỗi throw error
 	 */
 	MakeRefreshToken:function(userAccess,transaction)
 	{
@@ -103,7 +124,6 @@ module.exports={
 		        },
 		        transaction:transaction,
 			})
-			// return Services.UserAccount.GetUserAccountDetails({UID:userAccess.UserUID},null,transaction)
 			.then(function(u){
 				var user=u.dataValues;
 				var listRoles = [];
@@ -144,9 +164,10 @@ module.exports={
 						var userSecretExpiration=o.getUserSecretExpiration(userAccess.SystemType,o.getMaxRole(user.roles));
 						var secretExpired=userSecretExpiration.secretKeyExpired;
 						var maxTimePlus=userSecretExpiration.maxTimePlus;
-						console.log('>>>>>>>>>>>>>>>>>>>',userSecretExpiration)
+						console.log('>>>>>>>>>>>>>>>>>>>',userSecretExpiration);
 						if(o.checkData(rt))
 						{
+							//Nếu refresh token đã tồn tại trong database thì update thông tin
 							return rt.updateAttributes({
 									OldCode:null,
 									OldCodeExpiredAt:null,
@@ -167,6 +188,7 @@ module.exports={
 						}
 						else
 						{
+							//Nếu refresh token chưa tồn tại thì tạo mới
 							console.log("=========================create user token");
 							//Nếu refreshToken chưa tồn tại thì tạo mới refreshToken:
 							var insertInfo={
@@ -221,6 +243,11 @@ module.exports={
 	/**
 	 * GetRefreshToken
 	 * Lấy thông tin GetRefreshToken
+	 */
+	/**
+	 * @function GetRefreshToken trả về một RefreshToken theo điều kiện
+	 * @param {[type]} userAccess  [description]
+	 * @param {[type]} transaction [description]
 	 */
 	GetRefreshToken:function(userAccess,transaction)
 	{

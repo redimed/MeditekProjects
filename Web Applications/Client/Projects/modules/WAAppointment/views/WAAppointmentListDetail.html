@@ -120,7 +120,7 @@
                                                     <div class="col-md-6 col-sm-6">
                                                         <div class="form-group form-md-line-input">
                                                             <div class="input-icon">
-                                                                <input type="text" class="form-control timepicker timepicker-no-seconds" ng-model="info.appointmentTime" data-default-time="" data-format="hh:mm A">
+                                                                <input type="text" class="form-control timepicker timepicker-24" ng-model="info.appointmentTime" data-default-time="" data-format="HH:mm">
                                                                 <label class="control-label">Appointment Time</label>
                                                                 <div class="form-control-focus"> </div>
                                                                 <i class="icon-clock"></i>
@@ -398,7 +398,7 @@
                                                                         <div class="form-group form-md-line-input" ng-show="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-class="{'has-error': userForm.InterpreterLanguage.$invalid && submited} ">
                                                                             <label class="control-label col-md-4 col-sm-4">If yes, language/dialect </label>
                                                                             <div class="col-md-6 col-sm-6" >
-                                                                                <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" name="InterpreterLanguage" ng-required="ShowData.patient.InterpreterRequired == 'Y'" ng-disabled="ShowData.isLinkPatient">
+                                                                                <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage" name="InterpreterLanguage" ng-required="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-disabled="ShowData.isLinkPatient">
                                                                                 <p ng-show="userForm.InterpreterLanguage.$invalid && submited" class="help-block">Field is required</p>
                                                                                 <div class="form-control-focus"> </div>
                                                                             </div>
@@ -885,8 +885,8 @@
                                                                     <tbody>
                                                                         <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.referralPresenting'].FileUploads">
                                                                             <td><strong>{{ item.FileName }}</strong></td>
-                                                                            <td ng-click="ViewDoc('1',item.UID)">
-                                                                                <button>View</button>
+                                                                            <td>
+                                                                                <span ng-click="ViewDoc('1',item.UID)" class="btn green">View</span>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -1024,8 +1024,8 @@
                                                                     <tbody>
                                                                         <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].FileUploads">
                                                                             <td><strong>{{ item.FileName }}</strong></td>
-                                                                            <td ng-click="ViewDoc('1',item.UID)">
-                                                                                <button>View</button>
+                                                                            <td>
+                                                                                <span ng-click="ViewDoc('1',item.UID)" class="btn green">View</span>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -1070,8 +1070,8 @@
                                                                     <tbody>
                                                                         <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.previousHandSurgery'].FileUploads">
                                                                             <td><strong>{{ item.FileName }}</strong></td>
-                                                                            <td ng-click="ViewDoc('1',item.UID)">
-                                                                                <button>View</button>
+                                                                            <td>
+                                                                                <span ng-click="ViewDoc('1',item.UID)" class="btn green">View</span>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>

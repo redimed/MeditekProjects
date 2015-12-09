@@ -74,7 +74,7 @@ angular.module('app.authentication.doctor.directive.list', [])
 	        };
 
 			scope.Search = function(data,e){
-				console.log(data);
+
 				if(e==13){
 					scope.searchObjectMap.Search = data;
 					scope.loadList(scope.searchObjectMap);
@@ -111,11 +111,7 @@ angular.module('app.authentication.doctor.directive.list', [])
 						templateUrl: 'doctorModal',
 						controller: function($scope,detail){
 							$scope.data = detail;
-							$scope.data.Speciality = [];
-							for(var i = 0; i < $scope.data.Specialities.length; i++){
-								$scope.data.Speciality.push($scope.data.Specialities[i].ID);
-							}
-							delete $scope.data['Specialities'];
+
 							doctorService.getSpecialities()
 							.then(function(result){
 								$scope.special = angular.copy(result.data);
@@ -129,6 +125,11 @@ angular.module('app.authentication.doctor.directive.list', [])
 						},
 						resolve: {
 			                detail: function () {
+			                	response.data.Speciality = [];
+								for(var i = 0; i < response.data.Specialities.length; i++){
+									response.data.Speciality.push(response.data.Specialities[i].ID);
+								}
+								delete response.data['Specialities'];
 						    	return response.data;
 						    }
 			            },

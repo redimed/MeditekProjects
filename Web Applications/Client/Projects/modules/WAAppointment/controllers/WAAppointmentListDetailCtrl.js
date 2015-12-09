@@ -83,7 +83,7 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
         listDoctorTreatingPractitioner: null,
         patientInfomation: ($scope.wainformation.Patients.length != 0) ? $scope.wainformation.Patients : $scope.wainformation.TelehealthAppointment.PatientAppointment,
         appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('DD/MM/YYYY') : null,
-        appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('h:mm A') : null,
+        appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('HH:mm') : null,
         ExpiryDate: ($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate != null) ? moment($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate).format('DD/MM/YYYY') : null,
         listDoctorTreatingPractitioner: null,
         selectRadioGender: function() {

@@ -254,6 +254,19 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
     $scope.close = function() {
         $modalInstance.close();
     };
+     $scope.showImage = function(Link, UID) {
+        var LinkUID = UID;
+        $modal.open({
+            templateUrl: 'showImageTemplate',
+            controller: 'showImageController',
+            windowClass: 'app-modal-window-full',
+            resolve: {
+                LinkUID: function() {
+                    return LinkUID;
+                }
+            }
+        });
+    };
 
     $scope.selectPatient = function() {
         var modalInstance = $modal.open({

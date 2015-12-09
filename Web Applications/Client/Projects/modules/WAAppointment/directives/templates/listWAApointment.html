@@ -8,7 +8,7 @@
             </li>
             <li>
                 <i class="fa fa-angle-right"></i>
-                <b>Western Australia Appointment</b>
+                <b>Telehealth Appointment</b>
             </li>
         </ul>
     </div>
@@ -62,12 +62,9 @@
                         <td>
                             <input type="text" class="form-control" ng-model="info.data.Search[1].Doctor.FullName" ng-enter="reloadData()">
                         </td>
-                        <td>
-                            <div class="input-group date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
-                                <input type="text" class="form-control" name="from" ng-model="fromCreateDate" ng-change="reloadData()">
-                                <span class="input-group-addon"> to </span>
-                                <input type="text" class="form-control" name="to" ng-model="toCreateDate" ng-change="reloadData()">
-                            </div>
+                        <td class="form-inline">
+                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="reloadData()" data-date-end-date="toCreateDate"> to
+                            <input type="text" class="form-control date-picker input-small" data-date-start-date="fromCreateDate" style="width: 40% !important" data-date-format="dd/mm/yyyy" ng-model="toCreateDate" ng-change="reloadData()">
                         </td>
                         <td width="131px">
                             {{info.data.Filter.Appointment.Status}}
@@ -75,12 +72,9 @@
                                 <option value="">All</option>
                             </select>
                         </td>
-                        <td>
-                            <div class="input-group date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
-                                <input type="text" class="form-control" name="from" ng-model="starFromTime" ng-change="reloadData()">
-                                <span class="input-group-addon"> to </span>
-                                <input type="text" class="form-control" name="to" ng-model="endFromTime" ng-change="reloadData()">
-                            </div>
+                        <td class="form-inline">
+                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" data-date-end-date="endFromTime" ng-model="starFromTime" ng-change="reloadData()"> to
+                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" data-date-end-date="starFromTime" ng-model="endFromTime" ng-change="reloadData()">
                         </td>
                         <td>
                         </td>
@@ -89,7 +83,7 @@
                 <tbody>
                     <tbody>
                         <tr ng-click="WAAppointmentDetail(appt.UID)" ng-repeat="appt in info.listWaapointment.rows">
-                            <td>{{($index+1)+ 2*(info.paging.currentPage-1)}}</td>
+                            <td>{{($index+1)+ 20*(info.paging.currentPage-1)}}</td>
                             <td>
                                 <span ng-if="appt.Patients.length === 0">{{(appt.TelehealthAppointment.PatientAppointment.FirstName !== null)?appt.TelehealthAppointment.PatientAppointment.FirstName:""}} 
                             {{(appt.TelehealthAppointment.PatientAppointment.LastName !== null)?appt.TelehealthAppointment.PatientAppointment.LastName:""}}
@@ -130,4 +124,8 @@
         </div>         
     </div>
 </div>
-<!-- END BODY
+<!-- END BODY-->
+<script type="text/javascript">
+    ComponentsDateTimePickers.init();
+</script>
+

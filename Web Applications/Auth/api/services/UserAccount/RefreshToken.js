@@ -5,19 +5,26 @@
 var $q = require('q');
 var o=require("../HelperService");
 var moment=require("moment");
+
 /**
- * Validation: 
- * Kiểm tra thông tin user request
- * - User nếu login bằng web thì không cần deviceid
- * - User nếu login bằng device thì cần deviceid
- * Input:
- * 	- userAccess: thông tin user truy cập
- * 		+UserUID
- * 		+SystemType
- * 		+DeviceID (bắt buộc nếu systemtype thuộc mobile system)
- * Output:
- *  - Nếu hợp lệ trả về {status:'success'};
- *  - Nếu không hợp lệ quăng về error;
+ * @typedef {object} ValidationException
+ * @memberOf RefreshTokenService
+ * @property {string} ErrorType	 "RefreshToken.Validation.Error"
+ * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]
+ * - params.notProvided</br>
+ * - userUID.notProvided</br>
+ * - systemType.notProvided</br>
+ * - deviceId.notProvided</br>
+ * - appId.notProvided</br>
+ * - systemType.unknown</br>
+ */
+/**
+ * @function Validation
+ * @description Kiểm tra thông tin user truy cập
+ * @memberOf RefreshTokenService
+ * @param {object} userAccess Thông tin user truy cập <UserUID,SystemType,DeviceID,AppID>
+ * @return {object} obj.status="success"
+ * @throws {RefreshTokenService.ValidationException}
  */
 function Validation(userAccess)
 {
@@ -94,7 +101,8 @@ module.exports={
 	 *   - userAccount.queryError	</br>
 	 */
 	/**
-	 * @function MakeRefreshToken xử lý tạo RefreshToken mới khi login/logout
+	 * @function MakeRefreshToken 
+	 * @description Xử lý tạo RefreshToken mới khi login/logout
 	 * @memberOf RefreshTokenService
 	 * @param { object} userAccess 
 	 * @param {string} userAccess.UserUID
@@ -103,7 +111,8 @@ module.exports={
 	 * @param {string} [userAccess.AppID] (mobile)
 	 * @param {string} transaction
 	 * @return {object} RefreshToken new Refresh Token
-	 * @throws {RefreshTokenService.MakeRefreshTokenException} Nếu có lỗi throw error
+	 * @throws {RefreshTokenService.MakeRefreshTokenException}
+	 * @throws {RefreshTokenService.ValidationException}
 	 */
 	MakeRefreshToken:function(userAccess,transaction)
 	{
@@ -188,7 +197,6 @@ module.exports={
 						}
 						else
 						{
-							//Nếu refresh token chưa tồn tại thì tạo mới
 							console.log("=========================create user token");
 							//Nếu refreshToken chưa tồn tại thì tạo mới refreshToken:
 							var insertInfo={
@@ -203,7 +211,7 @@ module.exports={
 								SecretExpired:secretExpired,
 								SecretExpiredPlus:maxTimePlus,
 							};
-							//Nếu system type là mobile thì yêu cầu cần có DeviceID
+							//Nếu system type là mobile thì yêu cầu cần có DeviceID và AppID
 							if(userAccess.SystemType!=HelperService.const.systemType.website)
 							{
 								insertInfo.DeviceID=userAccess.DeviceID;
@@ -241,13 +249,25 @@ module.exports={
 	},
 
 	/**
-	 * GetRefreshToken
-	 * Lấy thông tin GetRefreshToken
+	 * @typedef GetRefreshTokenException
+	 * @memberOf RefreshTokenService
+	 * @property {string} ErrorType value:"GetRefreshToken.Error"
+	 * @property {Array<string.object>} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
+	 * - refreshToken.notFound</br>
+	 * - refreshToken.queryError</br>
+	 * - userAccount.notFound</br>
+	 * - userAccount.queryError</br>
 	 */
 	/**
-	 * @function GetRefreshToken trả về một RefreshToken theo điều kiện
-	 * @param {[type]} userAccess  [description]
-	 * @param {[type]} transaction [description]
+	 * @function GetRefreshToken 
+	 * @description Trả về một RefreshToken theo điều kiện
+	 * @memberOf RefreshTokenService
+	 * @param {object} userAccess  Thông tin user truy cập<UserUID,SystemType,DeviceID,AppID>
+	 * @param {object} transaction DB transaction
+	 * @return {object} refreshToken info
+	 * @throws {RefreshTokenService.GetRefreshTokenException} 
+	 * @throws { UserAccountService.GetUserAccountDetailsException} 
+	 * @throws {RefreshTokenService.ValidationException}
 	 */
 	GetRefreshToken:function(userAccess,transaction)
 	{
@@ -318,7 +338,27 @@ module.exports={
 	},
 
 	/**
-	 * CreateNewRefreshCode
+	 * @typedef {object} CreateNewRefreshCodeException
+	 * @memberOf RefreshTokenService
+	 * @property {string} ErrorType "CreateNewRefreshCode.Error"
+	 * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
+	 * - CreateNewRefreshCode.oldRefreshCodeExpired</br>
+	 * - refreshToken.updateError</br>
+	 * - refreshToken.notFound</br>
+	 * - refreshToken.queryError</br>
+	 * - userAccount.notFound</br>
+	 * - userAccount.queryError</br>
+	 */
+	/**
+	 * function CreateNewRefreshCode
+	 * @description Tạo một Refresh Code mới
+	 * @memberOf RefreshTokenService
+	 * @param {object} userAccess Thông tin user truy cập <UserUID,SystemType,DeviceID,AppID>
+	 * @param {string} payloadRefreshCode refreshCode lưu trong token
+	 * @param {object} transaction DB transaction
+	 * @return {string} "created" hoặc "unnecessary"
+	 * @throws {RefreshTokenService.CreateNewRefreshCodeException}
+	 * @throws {RefreshTokenService.ValidationException}
 	 * 
 	 */
 	CreateNewRefreshCode:function(userAccess,payloadRefreshCode,transaction)

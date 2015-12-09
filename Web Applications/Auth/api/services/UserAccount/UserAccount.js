@@ -1,3 +1,6 @@
+/**
+ * @namespace UserAccountService
+ */
 var $q = require('q');
 var regexp = require('node-regexp');
 var generatePassword = require("password-generator");
@@ -467,19 +470,27 @@ module.exports = {
 	},
 
 	/**
-	 * GetUserAccountDetails: 
-	 * Trả về thông tin user thông qua các tiêu chí UID , UserName, Email, Phone,
-	 * chỉ cần 1 trong 4 tiêu chí được cung cấp thì user tương ứng sẽ được trả về
-	 * Input:
-	 * 	criteria: là json chứa 1 trong các thuộc tính [UID, UserName, Email, Phone]
-	 * 	attributes: chứa các field muốn trả về
-	 * 	transaction: nếu được cung cấp thì sẽ áp dụng transaction vào các câu truy vấn
-	 * Output:
-	 * 	if success return promise getOne UserAccount
-	 * 	if error throw err;
-	 * 	NOTES:
-	 * 		CHÚ Ý, KHÔNG LẤY USER ACCOUNT THÔNG QUA ID VÌ ID THEO CƠ CHẾ TỰ TĂNG, NHƯ THẾ
-	 * 	 	SẼ KHÔNG AN TOÀN VÌ NGƯỜI DÙNG CÓ THỂ DÙNG TOOL ĐỂ TỰ ĐỘNG ĐIỀN ID
+	 * @typedef {object} GetUserAccountDetailsException
+	 * @memberOf UserAccountService
+	 * @property {string} ErrorType "GetUserAccountDetails.Error"
+	 * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
+	 * GetUserAccountDetails.emailInvalid</br>
+	 * GetUserAccountDetails.phoneNumberInvalid</br>
+	 * GetUserAccountDetails.criteriaNotFound</br>
+	 * GetUserAccountDetails.queryError</br>
+	 */
+	/**
+	 * @function GetUserAccountDetails
+	 * @memberOf UserAccountService
+	 * @param {object} criteria điều kiện truy vấn user
+	 * @param {string} [criteria.UID]
+	 * @param {string} [criteria.UserName]
+	 * @param {string} [criteria.Email]
+	 * @param {string} [criteria.PhoneNumber]
+	 * @param {Array.<string>} attributes Các field dữ liệu muốn trả về
+	 * @param {object} transaction DB transaction
+	 * @return {object} user info
+	 * @throws {UserAccountService.GetUserAccountDetailsException}
 	 */
 	GetUserAccountDetails:function(criteria,attributes,transaction)
 	{

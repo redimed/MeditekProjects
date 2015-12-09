@@ -50,8 +50,9 @@ public class MyApplication extends Application {
         IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         intentFilter.addAction(Intent.ACTION_SCREEN_ON);
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        receiver = new BootReceiver ();
+        receiver = new BootReceiver();
         registerReceiver(receiver, intentFilter);
+        AddShortcut();
         startService(new Intent(getApplicationContext(), RegistrationIntentService.class));
     }
 
@@ -131,5 +132,20 @@ public class MyApplication extends Application {
             }
         }
         return false;
+    }
+
+    private void AddShortcut() {
+
+        //Adding shortcut on Home screen
+        Intent shortcutIntent = new Intent(getApplicationContext(), MyApplication.class);
+        shortcutIntent.setAction(Intent.ACTION_MAIN);
+
+        Intent addIntent = new Intent();
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getResources().getString(R.string.app_name));
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.mipmap.ic_launcher));
+        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        getApplicationContext().sendBroadcast(addIntent);
     }
 }

@@ -57,11 +57,11 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     private Intent i;
     private String TAG = "CALL";
-    private long startTime = 0L;
     private Publisher publisher;
     private MediaPlayer ringtone;
     private Subscriber subscriber;
     private Session sessionOpenTok;
+    private long startTime = 0L;
     private long updatedTime = 0L;
     private long timeSwapBuff = 0L;
     private long timeInMilliseconds = 0L;
@@ -109,6 +109,8 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 DeclineCommunication("cancel");
             } else if (intent.getAction().equals("call.action.end")) {
                 EndCommunication();
+            } else if (intent.getAction().equals("call.action.decline")) {
+                DeclineCommunication("decline");
             }
         }
     };
@@ -123,6 +125,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("call.action.cancel");
         intentFilter.addAction("call.action.end");
+        intentFilter.addAction("call.action.decline");
         localBroadcastManager.registerReceiver(receiver, intentFilter);
 
         telehealthPatient = getSharedPreferences("TelehealthUser", getApplicationContext().MODE_PRIVATE);
@@ -144,46 +147,33 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onStart() {
-        Log.d(TAG, "CALL START");
         super.onStart();
     }
 
     @Override
     protected void onResume() {
-        Log.d(TAG, "CALL RESUME");
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        Log.d(TAG, "CALL PAUSE");
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        Log.d(TAG, "CALL STOP");
-        super.onStop();
-        this.finish();
         if (sessionOpenTok != null)
             sessionOpenTok.disconnect();
+        this.finish();
+        super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        Log.d(TAG, "CALL DESTROY");
-        super.onDestroy();
         localBroadcastManager.unregisterReceiver(receiver);
+        timeSwapBuff += timeInMilliseconds;
         customHandler.removeCallbacks(updateTimerThread);
-        startTime = 0L;
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_HOME) {
-            Log.d("Test", "Back button pressed!");
-        }
-        return super.onKeyDown(keyCode, event);
+        super.onDestroy();
     }
 
     @Override
@@ -360,11 +350,9 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     //Click button hold on a call
     private void HoldCommunication() {
         if (publisher.getPublishVideo() == true) {
-//            publisher.setPublishAudio(false);
             subscriber.setSubscribeToAudio(false);
             publisher.setPublishVideo(false);
         } else {
-//            publisher.setPublishAudio(true);
             subscriber.setSubscribeToAudio(true);
             publisher.setPublishVideo(true);
         }
@@ -386,6 +374,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             sessionOpenTok = new Session(CallActivity.this, apiKey, sessionId);
             sessionOpenTok.setSessionListener(this);
             sessionOpenTok.connect(token);
+            startTime = SystemClock.uptimeMillis();
             customHandler.postDelayed(updateTimerThread, 0);
         }
     }
@@ -394,16 +383,17 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         public void run() {
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             updatedTime = timeSwapBuff + timeInMilliseconds;
+
             int secs = (int) (updatedTime / 1000) % 60;
             int min = (int) ((updatedTime / (1000 * 60)) % 60);
             int hours = (int) ((updatedTime / (1000 * 60 * 60)) % 24);
             secs = secs % 60;
-            int milliseconds = (int) (updatedTime % 1000);
-            lblTimer.setText("" + min + ":" + String.format("%02d", secs));
+            lblTimer.setText(String.format("%02d", hours)
+                     + ":" + String.format("%02d", min)
+                     + ":" + String.format("%02d", secs));
             customHandler.postDelayed(this, 0);
         }
     };
-
 
     //Initialize view Publisher (Patient)
     private void AttachPublisherView(Publisher paramPublisher) {
@@ -517,7 +507,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     public void onError(Session session, OpentokError opentokError) {
         Log.i(LOGTAG, "Session exception: " + opentokError.getMessage());
     }
-
 
     @Override
     public void onError(PublisherKit publisherKit, OpentokError opentokError) {

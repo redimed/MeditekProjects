@@ -83,7 +83,8 @@
                             android:gravity="center"
                             android:text="+61"
                             android:textColor="@android:color/black"
-                            android:textSize="17sp" />
+                            android:textSize="17sp"
+                            android:visibility="gone"/>
 
                         <EditText
                             android:id="@+id/txtPhone"
@@ -98,7 +99,8 @@
                             android:singleLine="true"
                             android:textColor="@android:color/black"
                             android:textColorHint="@android:color/black"
-                            android:textSize="17sp" />
+                            android:textSize="17sp"
+                            android:paddingLeft="5dp"/>
                     </LinearLayout>
 
                 </RelativeLayout>

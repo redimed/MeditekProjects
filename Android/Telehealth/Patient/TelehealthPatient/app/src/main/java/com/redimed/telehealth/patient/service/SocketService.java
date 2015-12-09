@@ -32,11 +32,11 @@ import io.socket.emitter.Emitter;
  */
 public class SocketService extends Service {
 
-    private static String TAG = "SocketService";
-    private static Socket socket;
     private Intent i;
-    private static SharedPreferences uidTelehealth;
+    private static Socket socket;
     private String auth, deviceId;
+    private static String TAG = "SocketService";
+    private static SharedPreferences uidTelehealth;
     private LocalBroadcastManager localBroadcastManager;
 
     private void initializeSocket() {

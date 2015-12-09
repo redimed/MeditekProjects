@@ -1,8 +1,9 @@
 <resources>
+    <string name="app_name">Telehealth Patient</string>
+
     <!-- Launcher-->
     <string name="welcome">Welcome to REDiMED</string>
     <string name="title_activity_launcher">Telehealth Patient</string>
-    <string name="app_name">TelehealthPatient</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="confirm_exit">Press Back button again to exit</string>
     <string name="title_activity_call">CallActivity</string>

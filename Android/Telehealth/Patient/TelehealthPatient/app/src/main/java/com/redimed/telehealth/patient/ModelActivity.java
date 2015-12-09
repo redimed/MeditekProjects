@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.api.RegisterApi;
@@ -30,6 +32,7 @@ import com.redimed.telehealth.patient.utils.DialogConnection;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit.Callback;
@@ -40,14 +43,13 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
 
     private Intent i;
     private Gson gson;
-    private int rotation, xImg, yImg;
+    private int rotation;
     private long totalSize = 0;
-    private String TAG = "MODEL";
     private boolean shouldFinish = false;
     private String picturePath, appointmentUID;
-    private RegisterApi registerApiCore, registerApi;
-    private String userUID, bodyPart;
     private static SharedPreferences uidTelehealth;
+    private RegisterApi registerApiCore, registerApi;
+    private String userUID, bodyPart, TAG = "MODEL";
 
     @Bind(R.id.btnUpload)
     Button btnUpload;
@@ -59,7 +61,6 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
     ImageView logo;
     @Bind(R.id.btnRotate)
     Button btnRotate;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,61 +89,46 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
             picturePath = i.getExtras().getString("picturePath");
 
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            final int imageHeight = options.outHeight;
-            final int imageWidth = options.outWidth;
-            if (imageWidth > imageHeight) {
-                options.inSampleSize = calculateInSampleSize(options, 512, 256);//if landscape
-            } else {
-                options.inSampleSize = calculateInSampleSize(options, 256, 512);//if portrait
-            }
             options.inJustDecodeBounds = false;
+
             final Bitmap bitmap = BitmapFactory.decodeFile(picturePath, options);
-            imgUpload.setImageBitmap(bitmap);
+            imgUpload.setImageBitmap(getScaledBitmap(bitmap));
 
             btnRotate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     rotation += 90;
                     rotation %= 360;
-                    imgUpload.setImageBitmap(getRotatedBitmap(bitmap));
+                    imgUpload.setImageBitmap(getScaledBitmap(bitmap));
                 }
             });
         }
     }
 
-    private Bitmap getRotatedBitmap(Bitmap bitmap) {
-        if (rotation % 360 == 0) {
-            return bitmap;
-        }
+    private Bitmap getScaledBitmap(Bitmap bm) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        int newWidth = 1024, newHeight = 1024;
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
         Matrix matrix = new Matrix();
-        matrix.postRotate(rotation, bitmap.getWidth(), bitmap.getHeight());
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        // RESIZE THE BITMAP
+        matrix.postScale(scaleWidth, scaleHeight);
+        if (rotation % 360 == 0) {
+            return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        }
+        else {
+            // ROTATE THE BITMAP
+            matrix.postRotate(rotation);
+            return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt("ANGLE", rotation);
         super.onSaveInstanceState(outState);
-    }
-
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-            // Calculate ratios of height and width to requested height and width
-            final int heightRatio = Math.round((float) height / (float) reqHeight);
-            final int widthRatio = Math.round((float) width / (float) reqWidth);
-
-            // Choose the smallest ratio as inSampleSize value, this will guarantee
-            // a final image with both dimensions larger than or equal to the
-            // requested height and width.
-            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
-        }
-        return inSampleSize;
     }
 
     @Override
@@ -171,6 +157,7 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
             String description = " ";
             userUID = uidTelehealth.getString("userUID", null);
             final File file = new File(picturePath);
+            // TODO: 12/8/2015 Rotate image upload
             totalSize = file.length();
 
             listener = new CountingTypedFile.ProgressListener() {

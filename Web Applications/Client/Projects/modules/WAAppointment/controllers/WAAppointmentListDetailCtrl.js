@@ -37,9 +37,19 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
             })
     }
     $scope.wainformation = angular.copy(data);
+    $scope.FileUploadImage = []
+    $scope.FileUploads = function(){
+        for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
+            $scope.FileUploadImage = $scope.FileUploadImage.concat($scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads)
+        }
+    }
+    $scope.FileUploads()
+    console.log($scope.FileUploadImage)
     $scope.tab_body_part = 'all';
     $scope.checkRoleUpdate = true;
-    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
+    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' 
+        || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' 
+        || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
         $scope.checkRoleUpdate = false;
     };
     console.log('$scope.wainformation', $scope.wainformation);

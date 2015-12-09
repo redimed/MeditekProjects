@@ -22,7 +22,7 @@
     <div class="portlet-title bold uppercase" style="padding:10px;">
         <div class="caption">
             <i class="glyphicon glyphicon-th-list"></i>
-            <span class="caption-subject">Western Australia Appointment</span>
+            <span class="caption-subject">Telehealth Appointment</span>
         </div>
         <div class="tools">
             <a class="remove" ng-click="close()"></a>
@@ -131,7 +131,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6 col-sm-6">
                                                         <div class="form-group form-md-line-input">
-                                                            <div class="form-control">{{wainformation.TelehealthAppointment.PatientAppointment.FirstName}} {{wainformation.TelehealthAppointment.PatientAppointment.MiddleName}} {{wainformation.TelehealthAppointment.PatientAppointment.LastName}}</div>
+                                                            <div class="form-control">{{ShowData.patient.FirstName}} {{ShowData.patient.LastName}}</div>
                                                             <label class="control-label">Patient</label>
                                                             <div class="form-control-focus"> </div>
                                                         </div>
@@ -1118,3 +1118,16 @@
         </fieldset>
     </div>
 </div>
+
+<script type="text/ng-template" id="showImageTemplate">
+
+    <div class="modal-header my-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"></button>
+    </div>
+    <div class="modal-body" style="align:center">
+        <img class="img-responsive" dimage dimage-uid="LinkUID">
+    </div>
+    <div class="modal-footer">
+        <button class="btn green" ng-click="Vieww(LinkUID)">View Full</button>
+    </div>
+</script>

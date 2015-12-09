@@ -17,6 +17,11 @@ app.config(function($stateProvider, $urlRouterProvider){
 			data: {title: 'WAAppointment', pageTitle: 'Western Australia Appointment'},
 			templateUrl: 'modules/WAAppointment/views/WAAppointmentList.html',
 			controller: 'WAAppointmentListCtrl',
+			resolve: {
+				function(){
+					$('.input-daterange').datepicker({});
+				},
+			},
 		})
 		.state('authentication.WAAppointment.list.detail', {
 			url: '/detail',

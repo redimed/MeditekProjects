@@ -1,15 +1,15 @@
 <!-- content page -->
-<div class="portlet light bordered">
+<div class="portlet box green">
 	<div class="portlet-title">
-		<div class="caption font-green">
-			<i class="icon-list font-green"></i>
+		<div class="caption">
+			<i class="icon-list"></i>
 			<span class="caption-subject bold uppercase">Patient</span>
 		</div>
 		<div class="actions">
-			<a href="javascript:;" class="btn btn-circle red btn-sm" ng-click="toggleFilter()"><i class="fa fa-filter"></i> Filter</a>
-			<a  href="javascript:;" class="btn btn-circle blue btn-sm" ng-click="createPatient()" ng-show="isShowCreateButton">
+			<a href="javascript:;" class="btn red btn-sm" ng-click="toggleFilter()"><i class="fa fa-filter"></i> Filter</a>
+			<a  href="javascript:;" class="btn blue btn-sm" ng-click="createPatient()" ng-show="isShowCreateButton">
 			<i class="glyphicon glyphicon-plus"></i> Create</a>
-			<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+			<!-- <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a> -->
 		</div>
 	</div>
 	<div class="portlet-body">
@@ -54,7 +54,7 @@
 			<table class="table table-bordered table-hover table-striped">
 			<thead>
 				<tr style="width:100%;">
-					<th style="width:10%;">#</th>
+					<th width="1">#</th>
 					<th ng-repeat="i in items">
 						{{i.name}} 
 						<i class="fa fa-sort-asc"  ng-click="sort(i.field,'ASC')" ng-show="fieldSort[i.field]=='ASC'" ng-if="i.field!='Enable'" ></i>
@@ -78,9 +78,9 @@
 				<tr ng-repeat="p in patients" style="width:100%;margin-top: -50px;margin-left: -50px;" ng-class="{'is-Choose': p.UID === uidReturn && p.UID!==undefined && p.UID!==null && p.UID!==''}" id="{{p.UID}}">
 					<td ng-click="clickOpen(p.UID,p.UserAccount.Enable)">{{p.stt}}</td>
 					<td ng-repeat="i in items" ng-click="clickOpen(p.UID,p.UserAccount.Enable)">{{i.field=='UserAccount'?p[i.field]['PhoneNumber']:i.field!='Gender'?p[i.field]:p[i.field]=='Male'?'Male':p[i.field]=='Female'?'Female':'Other'}}</td>
-					<td>
+					<td style="text-align:center">
 						<span ng-if="p.UserAccount.Enable != 'N'">
-							<i class="fa fa-check"></i>
+							<i class="glyphicon glyphicon-ok font-green"></i>
 						</span>
 					</td>
 					<td style="width:10%; text-align:center;" ng-if="isShowSelectButton" >
@@ -102,7 +102,7 @@
 					boundary-links="true" 
 					total-items="count" 
 					ng-model="searchObjectMap.currentPage" 
-					class="pagination-sm " 
+					class="pagination-lg " 
 					previous-text="&lsaquo; " 
 					next-text="&rsaquo; " 
 					first-text="&laquo; " 

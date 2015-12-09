@@ -17,24 +17,23 @@
 <!-- END PAGE HEADER-->
 
 <!-- content page -->
-<div class="portlet light bordered">
+<div class="portlet box green">
 	<div class="portlet-title">
-		<div class="caption font-green">
-			<i class="icon-list font-green"></i>
+		<div class="caption">
+			<i class="icon-list"></i>
 			<span class="caption-subject bold uppercase"> {{$state.current.data.pageTitle}}</span>
 		</div>
 		<div class="actions">
-			<a href="javascript:;" class="btn btn-circle red btn-sm" ng-click="toggleFilter()">
+			<a href="javascript:;" class="btn red btn-sm" ng-click="toggleFilter()">
 				<i class="fa fa-filter"></i> Filter
 			</a>
-			<a href="javascript:;" class="btn btn-circle blue btn-sm" ng-click="createDoctor()">
+			<a href="javascript:;" class="btn blue btn-sm" ng-click="createDoctor()">
 				<i class="glyphicon glyphicon-plus"></i> Create
 			</a>
-			<a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+			<!-- <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a> -->
 		</div>
 	</div>
-	<div class="portlet-body">
-		
+	<div class="portlet-body">		
 		<!-- begin table -->
 		<div class="table-scrollable">
 			<table class="table table-bordered table-hover table-striped">
@@ -79,18 +78,17 @@
 			</tbody>
 			</table>
 		</div>
-		<!-- begin pagination -->
 		<div class="row">
-			<div class="col-md-5 col-sm-12">
+			<div class="col-md-5 col-sm-5">
 				&nbsp;
 			</div>
-			<div class="col-md-7 col-sm-12" style="text-align:right">
+			<div class="col-md-7 col-sm-7" style="text-align:right">
 				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
 					<uib-pagination 
 					boundary-links="true" 
 					total-items="count" 
 					ng-model="searchObjectMap.currentPage" 
-					class="pagination-sm " 
+					class="pagination-lg " 
 					previous-text="&lsaquo; " 
 					next-text="&rsaquo; " 
 					first-text="&laquo; " 
@@ -101,11 +99,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- end pagination -->
-		<!-- end table -->
-
-		<!-- begin pagination -->
-		<!-- end paginatiton -->
 	</div>
 </div>
 <!-- end content page -->

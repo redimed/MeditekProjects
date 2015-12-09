@@ -70,7 +70,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 	                currentPage: 1,
 	                maxSize: 5,
 	                attributes:scope.items,
-	                Search:null,
+	                Search:{fir:"gguu"},
 	                order: null
 	            };
 	            scope.search.Enable = null;

@@ -1,15 +1,30 @@
-<form class="register-form margin-bottom-40" role="form" class="">
-    <h3 class="form-title font-green">Sign Up</h3>
-    <p class="hint"> Enter your personal details below: </p>
-    <div class="row" style="text-align:center">
-        <div class="col-md-6 col-sm-6"><h4><span class="my-step-number">1</span>User Account</h4></div>
-        <div class="col-md-6 col-sm-6"><h4><span class="my-step-number">2</span>Personal Info</h4></div>
-    </div>
-    <div ng-show="step==1">
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="progress progress-sm progress-striped active">
-                    <div class="progress-bar progress-bar-danger" style="width: 30%">
+<!-- BEGIN LOGO -->
+<div class="logo">
+    <a href="">
+    <!-- <img src="assets/metronic/assets/admin/layout/img/logo-big.png" alt=""/> -->
+    <img src="/{{settings.globalPath}}/images/logoRedimed.png" alt="" style="width:15%"/>
+    </a>
+</div>
+<!-- END LOGO -->
+<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+<div class="menu-toggler sidebar-toggler">
+</div>
+<!-- END SIDEBAR TOGGLER BUTTON -->
+
+<div class="content">
+    <form class="register-form margin-bottom-40" role="form" class="">
+        <h3 class="form-title font-green">Sign Up</h3>
+        <p class="hint"> Enter your personal details below: </p>
+        <div class="row" style="text-align:center">
+            <div class="col-md-6 col-sm-6"><h4><span class="my-step-number">1</span>User Account</h4></div>
+            <div class="col-md-6 col-sm-6"><h4><span class="my-step-number">2</span>Personal Info</h4></div>
+        </div>
+        <div ng-show="step==1">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="progress progress-sm progress-striped active">
+                        <div class="progress-bar progress-bar-danger" style="width: 30%">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -54,22 +69,13 @@
                     <span style="color:red;">{{ermsg.Email.msg}}</span>
                 </div>
             </div>
-        </div>
-        <div class="form-actions">
-            <a href="" id="register-back-btn" class="btn btn-default uppercase pull-left" ng-click="stepback_one()">
-                <i class="glyphicon glyphicon-arrow-left"></i> Cancel 
-            </a>
-            <button ng-click="checkUser(data)" ladda-button="loadingpage" data-style="expand-right" class="btn green uppercase pull-right button-submit ladda-button">
-                <span class="ladda-label"> Continue <i class="glyphicon glyphicon-arrow-right"></i></span>
-            </button>
-        </div>
-    </div>
-    <div ng-show="step==2">
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="progress progress-sm progress-striped active">
-                    <div class="progress-bar progress-bar-danger" style="width: 100%"></div>
-                </div>
+            <div class="form-actions">
+                <a href="" id="register-back-btn" class="btn btn-default uppercase pull-left" ng-click="stepback_one()">
+                    <i class="glyphicon glyphicon-arrow-left"></i> Cancel 
+                </a>
+                <button ng-click="checkUser(data)" ladda-button="loadingpage" data-style="expand-right" class="btn green uppercase pull-right button-submit ladda-button">
+                    <span class="ladda-label"> Continue <i class="glyphicon glyphicon-arrow-right"></i></span>
+                </button>
             </div>
         </div>
         <div class="row">
@@ -204,101 +210,224 @@
                 <div class="progress progress-sm progress-striped active">
                     <div class="progress-bar progress-bar-danger" style="width: 30%">
                         <span class="sr-only">35% Complete (success) </span>
-                    </div>
-                    <div class="progress-bar progress-bar-warning" style="width: 50%">
-                        <span class="sr-only">20% Complete (warning) </span>
-                    </div>
-                    <div class="progress-bar progress-bar-success" style="width: 20%">
-                        <span class="sr-only">10% Complete (danger) </span>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-        <!--<div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="form-group ">
-                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 400px; height: 150px;">
-                           <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
-                        </div>
-                        <br>
-                        <div style="text-align:right;">
-                            <span class="btn green btn-file">
-                            <span class="fileinput-new">
-                            Signature </span>
-                            <span class="fileinput-exists">
-                            Change </span>
-                            <input type="file" nv-file-select uploader="uploader">
-                            </span>
-                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-                            Remove </a>
-                        </div>
-                    </div>
-                    <div class="clearfix margin-top-10">
+=======
+        <div ng-show="step==2">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="progress progress-sm progress-striped active">
+                        <div class="progress-bar progress-bar-danger" style="width: 100%"></div>
                     </div>
                 </div>
             </div>
-        </div>-->
-        <!--<div class="row">
-            <div class="col-md-6 col-sm-12">
-                <div class="form-group">
-                    <!-- BEGIN REPCAPTCHA -->
-                    <!--<div id="recaptcha_widget" class="form-recaptcha">
-                        <div class="form-recaptcha-img" style="width: 400px">
-                            <a id="recaptcha_image" href="javascript:;"> </a>
-                            <div class="recaptcha_only_if_incorrect_sol display-none" style="color:red"> Incorrect please try again </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group ">
+                        <label for="Firstname">Firstname</label>
+                        <input type="input" class="form-control" id="txtFirstName" ng-model="data.FirstName">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group">
+                        <label for="Middlename">Middlename</label>
+                        <input type="input" class="form-control" id="txtMiddlename" ng-model="data.MiddleName">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group ">
+                        <label for="Lastname">Lastname</label>
+                        <input type="input" class="form-control" id="txtLastName" ng-model="data.LastName">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-sm-8">
+                    <div class="form-group ">
+                        <label for="HealthlinkID">Healthlink ID</label>
+                        <input id="txtHealthlinkID" class="form-control" type="text" ng-model="data.HealthLinkID">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group ">
+                        <label for="Providernumber">Provider No.</label>
+                        <input type="input" class="form-control" id="txtProviderNumber" ng-model="data.ProviderNumber">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group ">
+                        <label for="Workphone">Workphone</label>
+                        <input type="input" maxlength="10" class="form-control" id="txtWorkphone" ng-model="data.WorkPhoneNumber">
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group ">
+                        <label for="Homephone">Homephone</label>
+                        <input type="input" maxlength="10" class="form-control" id="txtWorkphone" ng-model="data.HomePhoneNumber">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label for="Address1">Address1</label>
+                        <input class="form-control" type="text" ng-model="data.Address1">
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label for="Address2">Address2</label>
+                        <input class="form-control" type="text" ng-model="data.Address2">
+                    </div>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group">
+                        <label for="Postcode">Postcode</label>
+                        <input id="txtPostcode" maxlength="4" class="form-control" type="text" ng-model="data.Postcode">
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8">
+                    <div class="form-group">
+                        <label for="Suburb">Suburb</label>
+                        <input id="txtSuburb" class="form-control" type="text" ng-model="data.Suburb">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label for="State">States</label>
+                        <select ng-model="data.State" id="States" class="form-control">
+                            <option value=""></option>
+                            <option value="Victoria">Victoria</option>
+                            <option value="New_South_Wales">New South Wales</option>
+                            <option value="Queensland">Queensland</option>
+                            <option value="Austria_Capital_Territory">Austria Capital Territory</option>
+                            <option value="Northern_Territory">Northern Territory</option>
+                            <option value="Western_Australia">Western Australia</option>
+                            <option value="Tasmania">Tasmania</option>
+                        </select>
+>>>>>>> update giao dien, add module consultation
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label for="Country">Country</label>
+                        <select ng-model="data.CountryID" ng-options="c.ID as c.ShortName for c in country" id="Country" class="form-control edited" >
+                            <option value=""></option>
+                        </select>
+                        
+                    </div>
+                </div>
+            </div>
+             <div class="row margin-top-10 margin-bottom-20">
+                <div class="col-md-12"><div vc-recaptcha theme="light" key="'6LcDaxATAAAAANkBcFO0-jBGQzwIzX4-n9hlYs0v'" ng-model="data.captcha"></div></div>
+            </div>
+            <div class="form-actions">
+                <a href="" id="register-back-btn" class="btn btn-default uppercase pull-left" ng-click="btn_back()"><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
+                <button type="submit" id="register-submit-btn" class="btn green uppercase pull-right" ng-click="save(data)">Register <i class="glyphicon glyphicon-arrow-right"></i></button>
+            </div>
+        </div>
+        <!--<div ng-show="step==3">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="progress progress-sm progress-striped active">
+                        <div class="progress-bar progress-bar-danger" style="width: 30%">
+                            <span class="sr-only">35% Complete (success) </span>
                         </div>
-                        <div class="input-group" style="width: 400px">
-                            <input type="text" class="form-control" id="recaptcha_response_field" ng-model="recaptcha_response_field">
-                            <div class="input-group-btn">
-                                <a class="btn default" href="javascript:Recaptcha.reload()">
-                                    <i class="fa fa-refresh"></i>
-                                </a>
-                                <a class="btn default recaptcha_only_if_image" href="javascript:Recaptcha.switch_type('audio')">
-                                    <i title="Get an audio CAPTCHA" class="fa fa-headphones"></i>
-                                </a>
-                                <a class="btn default recaptcha_only_if_audio" href="javascript:Recaptcha.switch_type('image')">
-                                    <i title="Get an image CAPTCHA" class="fa fa-picture-o"></i>
-                                </a>
-                                <a class="btn default" href="javascript:Recaptcha.showhelp()">
-                                    <i class="fa fa-question-circle"></i>
-                                </a>
+                        <div class="progress-bar progress-bar-warning" style="width: 50%">
+                            <span class="sr-only">20% Complete (warning) </span>
+                        </div>
+                        <div class="progress-bar progress-bar-success" style="width: 20%">
+                            <span class="sr-only">10% Complete (danger) </span>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <!--<div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-group ">
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 400px; height: 150px;">
+                               <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+                            </div>
+                            <br>
+                            <div style="text-align:right;">
+                                <span class="btn green btn-file">
+                                <span class="fileinput-new">
+                                Signature </span>
+                                <span class="fileinput-exists">
+                                Change </span>
+                                <input type="file" nv-file-select uploader="uploader">
+                                </span>
+                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+                                Remove </a>
                             </div>
                         </div>
+                        <div class="clearfix margin-top-10">
+                        </div>
                     </div>
-                    <p class="help-block">
-                        <span class="recaptcha_only_if_image"> Enter the words above </span><br>
-                        <span class="recaptcha_only_if_audio"> Enter the numbers you hear </span>
-                    </p>
-                    <!-- END REPCAPTCHA -->
-        <!--        </div>
+                </div>
+            </div>-->
+            <!--<div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <!-- BEGIN REPCAPTCHA -->
+                        <!--<div id="recaptcha_widget" class="form-recaptcha">
+                            <div class="form-recaptcha-img" style="width: 400px">
+                                <a id="recaptcha_image" href="javascript:;"> </a>
+                                <div class="recaptcha_only_if_incorrect_sol display-none" style="color:red"> Incorrect please try again </div>
+                            </div>
+                            <div class="input-group" style="width: 400px">
+                                <input type="text" class="form-control" id="recaptcha_response_field" ng-model="recaptcha_response_field">
+                                <div class="input-group-btn">
+                                    <a class="btn default" href="javascript:Recaptcha.reload()">
+                                        <i class="fa fa-refresh"></i>
+                                    </a>
+                                    <a class="btn default recaptcha_only_if_image" href="javascript:Recaptcha.switch_type('audio')">
+                                        <i title="Get an audio CAPTCHA" class="fa fa-headphones"></i>
+                                    </a>
+                                    <a class="btn default recaptcha_only_if_audio" href="javascript:Recaptcha.switch_type('image')">
+                                        <i title="Get an image CAPTCHA" class="fa fa-picture-o"></i>
+                                    </a>
+                                    <a class="btn default" href="javascript:Recaptcha.showhelp()">
+                                        <i class="fa fa-question-circle"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="help-block">
+                            <span class="recaptcha_only_if_image"> Enter the words above </span><br>
+                            <span class="recaptcha_only_if_audio"> Enter the numbers you hear </span>
+                        </p>
+                        <!-- END REPCAPTCHA -->
+            <!--        </div>
+                </div>
             </div>
-        </div>
-        <hr>-->
-        <!--<div class="form-actions">
-            <a href="" id="register-back-btn" class="btn btn-default pull" ng-click="btn_back()"><i class="m-icon-swapleft"></i> Back</a>
-            <button type="submit" id="register-submit-btn" class="btn green pull-right" ng-click="save(data)">Register <i class="m-icon-swapright m-icon-white"></i></button>
-        </div>
-    </div>-->
-</form>
-<style type="text/css">
-@media (min-width: 1368px) {
-    .login .content {
-        width: 25% !important;
-    }
-}
+            <hr>-->
+            <!--<div class="form-actions">
+                <a href="" id="register-back-btn" class="btn btn-default pull" ng-click="btn_back()"><i class="m-icon-swapleft"></i> Back</a>
+                <button type="submit" id="register-submit-btn" class="btn green pull-right" ng-click="save(data)">Register <i class="m-icon-swapright m-icon-white"></i></button>
+            </div>
+        </div>-->
+    </form>
+</div>
 
-@media (max-width: 1367px) {
-    .login .content {
-        width: 40% !important;
+<div class="copyright"> 2015 © Redimed. Admin Dashboard Template. </div>
+
+<style type="text/css">
+    @media (min-width: 1368px) {
+        .login .content {
+            width: 25% !important;
+        }
     }
-}
+
+    @media (max-width: 1367px) {
+        .login .content {
+            width: 40% !important;
+        }
+    }
 </style>
-<script>
-// Metronic.setAssetsPath('theme/assets/'); // Set the assets folder path
-// Login.init();
-</script>
-<script type="text/javascript">
-// Metronic.setAssetsPath('theme/assets/'); // Set the assets folder path	
-// FormWizard.init(); // form step
-</script>
+

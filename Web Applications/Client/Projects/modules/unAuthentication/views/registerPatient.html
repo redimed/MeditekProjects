@@ -1,0 +1,423 @@
+<div class="contentPatient">
+	<div class="row">
+		<div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+			<div class="portlet box blue">
+				<div class="portlet-title">
+					<div class="caption">
+						<span class="caption-subject">
+							<i class="glyphicon glyphicon-pencil"></i> Register With Us
+						</span>
+					</div>
+				</div>
+				<div class="portlet-body form">
+					<form name="step1" class="form-horizontal" novalidate ng-show="show">
+						<div class="form-body my-form-body-padding">
+							<div class="row marin-top-20">
+								<div class="col-md-4 col-sm-4">
+									<fieldset>
+										<legend class="bold">Basic Information</legend>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Title <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<select class="form-control">
+													<option value=""></option>
+													<option value="Mr">Mr</option>
+													<option value="Ms">Ms</option>
+													<option value="Dr">Dr</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Firstname <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Middlename <span class="required">&nbsp;</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Lastname <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Date of Birth <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control date-picker">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Gender <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<div class="radio-list">
+													<label class="radio-inline">
+														<input type="radio" name="gender" value="M"> Male
+													</label>
+													<label class="radio-inline">
+														<input type="radio" name="gender" value="F"> Female
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Occupation <span class="required">&nbsp;</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+									</fieldset>
+								</div>
+								<div class="col-md-8 col-sm-8">
+									<fieldset>
+										<legend class="bold">Contact Information</legend>
+										<div class="row">
+											<div class="col-md-6 col-sm-6">
+												<div class="form-group">
+													<label class="control-label col-md-4 col-sm-4">Email</label>
+													<div class="col-md-8 col-sm-8">
+														<input type="text" class="form-control">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="control-label col-md-4 col-sm-4">Homephone</label>
+													<div class="col-md-8 col-sm-8">
+														<input type="text" class="form-control">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="control-label col-md-4 col-sm-4">Mobile</label>
+													<div class="col-md-8 col-sm-8">
+														<input type="text" class="form-control">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="control-label col-md-4 col-sm-4">Workphone</label>
+													<div class="col-md-8 col-sm-8">
+														<input type="text" class="form-control">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="control-label col-md-4 col-sm-4">Address1 <span class="required">*</span></label>
+													<div class="col-md-8 col-sm-8">
+														<input type="text" class="form-control">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="control-label col-md-4 col-sm-4">Address2 <span class="required">*</span></label>
+													<div class="col-md-8 col-sm-8">
+														<input type="text" class="form-control">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6">
+												<div class="form-group">
+													<label class="control-label col-md-4 col-sm-4">Suburb <span class="required">*</span></label>
+													<div class="col-md-8 col-sm-8">
+														<input type="text" class="form-control">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="control-label col-md-4 col-sm-4">Postcode <span class="required">*</span></label>
+													<div class="col-md-8 col-sm-8">
+														<input type="text" class="form-control">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="control-label col-md-4 col-sm-4">State <span class="required">*</span></label>
+													<div class="col-md-8 col-sm-8">
+														<input type="text" class="form-control">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="control-label col-md-4 col-sm-4">Country <span class="required">*</span></label>
+													<div class="col-md-8 col-sm-8">
+														<input type="text" class="form-control">
+													</div>
+												</div>
+											</div>
+										</div>
+									</fieldset>
+								</div>
+							</div>
+						</div>
+						<div class="form-actions right">
+							<a href="javascript:;" class="btn btn-lg btn-default" ui-sref="unAuthentication.loginPatient">Cancel</a>
+							<button type="submit" class="btn btn-lg btn-primary" ng-click="Next()">Next</button>
+						</div>
+					</form>
+					<form name="step2" class="form-horizontal" novalidate ng-show="hide">
+						<div class="form-body my-form-body-padding">
+							<div class="row margin-top-20">
+								<div class="col-md-4 col-sm-4">
+									<fieldset>
+										<legend class="bold">Next of Kin</legend>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Firstname <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Middlename <span class="required">&nbsp;</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Lastname <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Homephone <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Mobilephone <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Address <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Suburb <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Postcode <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												State <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Country <span class="required">*</span>
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+									</fieldset>
+								</div>
+								<div class="col-md-4 col-sm-4">
+									<fieldset>
+										<legend class="bold">Medicare Information</legend>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Medicare No. 
+											</label>
+											<div class="col-md-5 col-sm-5">
+												<input type="text" class="form-control">
+											</div>
+											<label class="col-md-3 col-sm-3">Ref <input type="checkbox"></label>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Medicare Expiry 
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+									</fieldset>
+									<fieldset>
+										<legend class="bold">Fund Information</legend>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Private Fund 
+											</label>
+											<div class="col-md-5 col-sm-5">
+												<select class="form-control">
+	                                                <option value=''>Select Fund</option>
+	                                                <option value='ACA'>ACA Health Benefits Fund</option>
+	                                                <option value='AHM'>ahm Health Insurance</option>
+	                                                <option value='AUF'>Australian Unity Health Limited</option>
+	                                                <option value='BUP'>Bupa Australia Pty Ltd</option>
+	                                                <option value='CBH'>CBHS Health Fund Limited</option>
+	                                                <option value='CDH'>CDH Benefits Fund</option>
+	                                                <option value='CPS'>CUA Health Limited</option>
+	                                                <option value='AHB'>Defence Health Limited</option>
+	                                                <option value='AMA'>Doctors' Health Fund</option>
+	                                                <option value='GMF'>GMF Health</option>
+	                                                <option value='GMH'>GMHBA Limited</option>
+	                                                <option value='FAI'>Grand United Corporate Health</option>
+	                                                <option value='HBF'>HBF Health Limited</option>
+	                                                <option value='HCF'>HCF</option>
+	                                                <option value='HCI'>Health Care Insurance Limited</option>
+	                                                <option value='HIF'>Health Insurance Fund of Australia Limited</option>
+	                                                <option value='SPS'>Health Partners</option>
+	                                                <option value='HEA'>health.com.au</option>
+	                                                <option value='LHS'>Latrobe Health Services</option>
+	                                                <option value='MBP'>Medibank Private Limited</option>
+	                                                <option value='MDH'>Mildura Health Fund</option>
+	                                                <option value='OMF'>National Health Benefits Australia Pty Ltd (onemedifund)</option>
+	                                                <option value='NHB'>Navy Health Ltd</option>
+	                                                <option value='NIB'>NIB Health Funds Ltd.</option>
+	                                                <option value='LHM'>Peoplecare Health Insurance</option>
+	                                                <option value='PWA'>Phoenix Health Fund Limited</option>
+	                                                <option value='SPE'>Police Health</option>
+	                                                <option value='QCH'>Queensland Country Health Fund Ltd</option>
+	                                                <option value='RTE'>Railway and Transport Health Fund Limited</option>
+	                                                <option value='RBH'>Reserve Bank Health Society Ltd</option>
+	                                                <option value='SLM'>St.Lukes Health</option>
+	                                                <option value='NTF'>Teachers Health Fund</option>
+	                                                <option value='TFS'>Transport Health Pty Ltd</option>
+	                                                <option value='QTU'>TUH</option>
+	                                                <option value='WFD'>Westfund Limited</option>
+	                                            </select>
+											</div>
+											<label class="col-md-3 col-sm-3">UPI <input type="checkbox"></label>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-5 col-sm-5">
+												Membership No. 
+											</label>
+											<div class="col-md-7 col-sm-7">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+									</fieldset>
+									<fieldset>
+										<legend class="bold">DVA Information</legend>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												DVA No.
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												DVA Disability
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-5 col-sm-5">
+												DVA Card Colour:
+											</label>
+											<div class="col-md-7 col-sm-7">
+												<select class="bs-select form-control" data-show-subtext="true">
+													<option data-content="">Select color</option>
+													<option 
+                                                    	data-content="<div class='bg-blue'>&nbsp;</div>">
+													</option>
+                                                    <option 
+                                                    	data-content="<div class='bg-green-jungle'>&nbsp;</div>">
+													</option>
+													<option 
+                                                    	data-content="<div class='bg-yellow-lemon'>&nbsp;</div>">
+													</option>
+													<option 
+                                                    	data-content="<div class='bg-red'>&nbsp;</div>">
+													</option>
+													<option 
+                                                    	data-content="<div class='bg-purple-medium'>&nbsp;</div>">
+													</option>                                                        
+                                                </select>
+											</div>
+										</div>
+									</fieldset>
+								</div>
+								<div class="col-md-4 col-sm-4">
+									<fieldset>
+										<legend class="bold">Pension Information</legend>
+										<div class="form-group">
+											<label class="control-label col-md-5 col-sm-5">
+												HCC/Pension No
+											</label>
+											<div class="col-md-7 col-sm-7">
+												<select class="form-control">
+													<option></option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Expiry
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control">
+											</div>
+										</div>
+									</fieldset>
+								</div>
+							</div>
+						</div>
+						<div class="form-actions right">
+							<button type="reset" class="btn btn-lg btn-default" ng-click="Back()">Back</button>
+							<button type="submit" class="btn btn-lg btn-primary" ng-click="Submit()">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style type="text/css">
+	.contentPatient{
+		vertical-align: middle;
+		padding-top: 6em;
+	}
+	.my-form-body-padding{
+		padding-left: 2em !important; 
+		padding-right:2em !important;
+	}
+</style>

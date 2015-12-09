@@ -1,12 +1,30 @@
 <!-- BEGIN PAGE HEADER-->
-<h1 class="my-page-title">Create New Doctor</h1>
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:;" ui-sref="authentication.home.list">
+                Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <a href="javascript:;" ui-sref="authentication.doctor.list">
+                Doctor</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Create</b>
+        </li>
+    </ul>
+</div>
+<br>
 
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet light bordered" id="form_wizard_1">
 			<div class="portlet-title bold uppercase">
 				<div class="caption font-blue">
-					<i class="glyphicon glyphicon-plus font-blue"></i> Create New Doctor - <span class="step-title">Step 1 of 2 </span>
+					<i class="glyphicon glyphicon-plus font-blue"></i>{{$state.current.data.pageTitle}} - <span class="step-title">Step 1 of 2 </span>
 				</div>
 				<div class="tools hidden-xs">
 					<!-- <a href="javascript:;" class="collapse"></a> -->

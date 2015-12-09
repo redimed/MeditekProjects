@@ -1,16 +1,28 @@
-<h1 class="my-page-title">Consultation List</h1>
-
-<div class="portlet portlet-fit light bordered">
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="authentication.home.list">
+                Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Consultation</b>
+        </li>
+    </ul>
+</div>
+<br>
+<div class="portlet box green">
     <div class="portlet-title">
-        <div class="caption font-blue">
-            <i class="glyphicon glyphicon-list font-blue"></i>
+        <div class="caption">
+            <i class="glyphicon glyphicon-list"></i>
             <span class="caption-subject bold uppercase">Patient List</span>
             <!-- <span class="caption-helper">Patient List</span> -->
         </div>
         <div class="actions">
-            <button class="btn btn-circle blue" ng-click="Filter()"><i class="fa fa-filter"></i> Filter </button>
-            <button class="btn btn-circle red"><i class="fa fa-plus"></i> Create </button>
-            <button class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"> </button>
+            <button class="btn red" ng-click="Filter()"><i class="fa fa-filter"></i> Filter </button>
+            <button class="btn blue"><i class="fa fa-plus"></i> Create </button>
+            <!-- <button class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"> </button> -->
         </div>
         <!-- <div class="tools">
             <a href="javascript:;" class="collapse"> </a>
@@ -20,40 +32,70 @@
         </div> -->
     </div>
     <div class="portlet-body">
-        <div class="row">
-        	<p class="col-md-12 col-sm-12"><small>Current Patient Report: 20 Patient enrolled</small></p>
-            <div class="col-md-12 col-sm-12">
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr>
-                            <th width="1">#</th>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Date Enrolled</th>
-                            <th width="1"><img src="theme/assets/global/images/imgStatus/ReferralTracking.png"></th>
-                        </tr>
-                        <tr ng-hide="toggle">
-                            <td></td>
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
-                            <td class="form-inline">
-                                <input date-picker> to
-                                <input date-picker>
-                            </td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        	<td>{{$index+1}}</td>
-                        	<td>Mark</td>
-                        	<td>Otto</td>
-                        	<td>01/01/2014</td>
-                        	<td><img src="theme/assets/global/images/imgStatus/received.png"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="table-scrollable margin-top-10">
+            <table class="table table-hover table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th width="1">#</th>
+                        <th width="10%">Firstname</th>
+                        <th width="10%">Lastname</th>
+                        <th>Date Enrolled</th>
+                        <th width="1"><img src="theme/assets/global/images/imgStatus/ReferralTracking.png"></th>
+                    </tr>
+                    <tr ng-hide="toggle">
+                        <td></td>
+                        <td><input type="text" class="form-control"></td>
+                        <td><input type="text" class="form-control"></td>
+                        <td class="form-inline">
+                            <input date-picker> to
+                            <input date-picker>
+                        </td>
+                        <td>
+                            <select class="form-control">
+                                <option></option>
+                            </select>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-click="Detail()">
+                    	<td>{{$index+1}}</td>
+                    	<td>Mark</td>
+                    	<td>Otto</td>
+                    	<td>01/01/2014</td>
+                    	<td>
+                            <!-- <img src="theme/assets/global/images/imgStatus/received.png"> -->
+                            <div class="progress progress-sm progress-striped active">
+                                <div class="progress-bar progress-bar-info" style="width: 16.66%"></div>
+                                <div class="progress-bar progress-bar-primary" style="width: 16.66%"></div>
+                                <div class="progress-bar progress-bar-purple" style="width: 16.66%"></div>
+                                <div class="progress-bar progress-bar-danger" style="width: 16.66%"></div>
+                                <div class="progress-bar progress-bar-warning" style="width: 16.66%"></div>
+                                <div class="progress-bar progress-bar-success" style="width: 16.66%"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        <div class="row">
+            <div class="col-md-5 col-sm-5"><div class="dataTables_info">Total: ?? records</div></div>
+            <div class="col-md-7 col-md-7" style="text-align:right">
+                <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+                    <pagination 
+                        boundary-links="true" 
+                        total-items="200" 
+                        ng-model="1" 
+                        class="pagination-lg" 
+                        previous-text="&lsaquo;" 
+                        next-text="&rsaquo; " 
+                        first-text="&laquo; " 
+                        last-text="&raquo;" 
+                        items-per-page="5" 
+                        max-size="10" ng-change="reloadData()">
+                    </pagination>
+                </div>
+            </div>
+        </div>     
     </div>
 </div>

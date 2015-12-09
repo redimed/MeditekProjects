@@ -1,130 +1,133 @@
-<!-- BEGIN PAGE HEADER-->
-<h1 class="my-page-title">Western Australia Appointment</h1>
+<!--BEGIN PAGE HEADER-->
+    <div class="page-bar ">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="javascript:;" ui-sref="authentication.home.list">
+                    Home</a>
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+                <b>Western Australia Appointment</b>
+            </li>
+        </ul>
+    </div>
+    <br>
 <!-- END PAGE HEADER-->
 <!-- BEGIN BODY -->
-<div class="portlet light bordered">
+<div class="portlet box green portlet-datatable">
     <div class="portlet-title">
-        <div class="caption font-green">
-            <i class="icon-list font-green"></i>
-            <span class="caption-subject bold uppercase">Western Australia Appointment</span>
+        <div class="caption bold uppercase">
+            <i class="icon-list"></i>
+            <span class="caption-subject">{{$state.current.data.pageTitle}}</span>
+            <!-- <span class="caption-helper font-yellow-lemon"></span> -->
         </div>
         <div class="actions">
-            <a href="javascript:;" class="btn btn-circle red-thunderbird btn-sm" ng-click="toggleFilter()">
+            <a href="javascript:;" class="btn red-thunderbird btn-sm" ng-click="toggleFilter()">
                 <i class="fa fa-filter"></i> Filter
             </a>
-            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+            <!-- <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a> -->
         </div>
     </div>
     <div class="portlet-body">
-        <!-- begin table -->
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="table-scrollable">
-                    <table class="table table-striped table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th width="1">#</th>
-                                <th>Patient</th>
-                                <th>Treating Practitioner</th>
-                                <th>
-                                    Submit Date
-                                    <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('SubmitDate','ASC')" ng-show="typeSubmitDate == 'ASC'"></i>
-                                    <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('SubmitDate','DESC')" ng-show="typeSubmitDate == 'DESC'"></i>
-                                </th>
-                                <th width="500px" align="center">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Referral Tracking<br>
-                                <img src="./theme/assets/layouts/layout/imgStatus/ReferralTracking.png">
-                                </th>
-                                <th>
-                                    Appointment Date
-                                    <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('AppointmentDate','ASC')" ng-show="typeAppointmentDate == 'ASC'"></i>
-                                    <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('AppointmentDate','DESC')" ng-show="typeAppointmentDate == 'DESC'"></i>
-                                </th>
-                                <th width="1">Correspondence</th>
-                            </tr>
-                            <tr ng-hide="info.toggle">
-                                <td>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" ng-model="info.data.Search[0].PatientAppointment.FullName" ng-enter="reloadData()">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" ng-model="info.data.Search[1].Doctor.FullName" ng-enter="reloadData()">
-                                </td>
-                                <td>
-                                    <div class="input-group date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
-                                        <input type="text" class="form-control" name="from" ng-model="fromCreateDate" ng-change="reloadData()">
-                                        <span class="input-group-addon"> to </span>
-                                        <input type="text" class="form-control" name="to" ng-model="toCreateDate" ng-change="reloadData()">
-                                    </div>
-                                </td>
-                                <td width="131px">
-                                    {{info.data.Filter.Appointment.Status}}
-                                    <select class="form-control" ng-model="info.data.Filter[0].Appointment.Status" name="Status" ng-options="item.value as item.name for item in info.apptStatus" ng-change="reloadData()">
-                                        <option value="">All</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <div class="input-group date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
-                                        <input type="text" class="form-control" name="from" ng-model="starFromTime" ng-change="reloadData()">
-                                        <span class="input-group-addon"> to </span>
-                                        <input type="text" class="form-control" name="to" ng-model="endFromTime" ng-change="reloadData()">
-                                    </div>
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tbody>
-                                <tr ng-click="WAAppointmentDetail(appt.UID)" ng-repeat="appt in info.listWaapointment.rows">
-                                    <td>{{($index+1)+ 20*(info.paging.currentPage-1)}}</td>
-                                    <td>
-                                        <span ng-if="appt.Patients.length === 0">{{(appt.TelehealthAppointment.PatientAppointment.FirstName !== null)?appt.TelehealthAppointment.PatientAppointment.FirstName:""}} 
-                                    {{(appt.TelehealthAppointment.PatientAppointment.LastName !== null)?appt.TelehealthAppointment.PatientAppointment.LastName:""}}
-                                    </span>
-                                        <span ng-if="appt.Patients.length !== 0">
-                                        {{(appt.Patients[0].FirstName !== 0)?appt.Patients[0].FirstName:""}} {{(appt.Patients[0].LastName !== null)?appt.Patients[0].LastName:""}}
-                                    </span>
-                                    </td>
-                                    <td>{{((appt.Doctors[0].Title !=null)?appt.Doctors[0].Title:"")+" "+((appt.Doctors[0].FirstName != null)?appt.Doctors[0].FirstName:"") +" "+((appt.Doctors[0].LastName != null)?appt.Doctors[0].LastName:"")}}</td>
-                                    <td>{{appt.CreatedDate | date: 'dd/MM/yyyy':'UTC'}}</td>
-                                    <td>
-                                        <span ng-if="appt.Status === info.apptStatus[3].value" ><img src="./theme/assets/layouts/layout/imgStatus/attended.png" ></span>
-                                        <span ng-if="appt.Status === info.apptStatus[4].value" ><img src="./theme/assets/layouts/layout/imgStatus/waitlist.png" ></span>
-                                        <span ng-if="appt.Status === info.apptStatus[1].value" ><img src="./theme/assets/layouts/layout/imgStatus/pending.png" ></span>
-                                        <span ng-if="appt.Status === info.apptStatus[0].value" ><img src="./theme/assets/layouts/layout/imgStatus/received.png" ></span>
-                                        <span ng-if="appt.Status === info.apptStatus[6].value" class="label label-danger">Cancelled</span> 
-                                        <span ng-if="appt.Status === info.apptStatus[2].value" ><img src="./theme/assets/layouts/layout/imgStatus/time.png" ></span>
-                                        <span ng-if="appt.Status === info.apptStatus[5].value" ><img src="./theme/assets/layouts/layout/imgStatus/finish.png" ></span>
-                                    </td>
-                                    <!-- <td>{{appt.FromTime | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td> -->
-                                    <td>{{appt.FromTime | date: 'dd/MM/yyyy - HH:mm' : 'UTC'}}</td>
-                                    <td style="text-align:center">
-                                        <span ng-if="appt.TelehealthAppointment.Correspondence === 'Y'" class="text-success"><i class="fa fa-check"></i>
-                                        </span>
-                                        <span ng-if="appt.TelehealthAppointment.Correspondence !== 'Y'" class="text-danger"><i class="fa fa-remove"></i>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="table-scrollable margin-top-10">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th width="1">#</th>
+                        <th>Patient</th>
+                        <th>Treating Practitioner</th>
+                        <th>
+                            Submit Date
+                            <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('SubmitDate','ASC')" ng-show="typeSubmitDate == 'ASC'"></i>
+                            <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('SubmitDate','DESC')" ng-show="typeSubmitDate == 'DESC'"></i>
+                        </th>
+                        <th width="1" align="center" style="text-align:center">
+                            Referral Tracking<br>
+                            <img src="./theme/assets/layouts/layout/imgStatus/ReferralTracking.png">
+                        </th>
+                        <th>
+                            Appointment Date
+                            <i class="fa fa-sort-asc sortDataTable" ng-click="sortDataTable('AppointmentDate','ASC')" ng-show="typeAppointmentDate == 'ASC'"></i>
+                            <i class="fa fa-sort-desc sortDataTable" ng-click="sortDataTable('AppointmentDate','DESC')" ng-show="typeAppointmentDate == 'DESC'"></i>
+                        </th>
+                        <th width="1">Correspondence</th>
+                    </tr>
+                    <tr ng-hide="info.toggle">
+                        <td>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="info.data.Search[0].PatientAppointment.FullName" ng-enter="reloadData()">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="info.data.Search[1].Doctor.FullName" ng-enter="reloadData()">
+                        </td>
+                        <td>
+                            <div class="input-group date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
+                                <input type="text" class="form-control" name="from" ng-model="fromCreateDate" ng-change="reloadData()">
+                                <span class="input-group-addon"> to </span>
+                                <input type="text" class="form-control" name="to" ng-model="toCreateDate" ng-change="reloadData()">
+                            </div>
+                        </td>
+                        <td width="131px">
+                            {{info.data.Filter.Appointment.Status}}
+                            <select class="form-control" ng-model="info.data.Filter[0].Appointment.Status" name="Status" ng-options="item.value as item.name for item in info.apptStatus" ng-change="reloadData()">
+                                <option value="">All</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="input-group date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
+                                <input type="text" class="form-control" name="from" ng-model="starFromTime" ng-change="reloadData()">
+                                <span class="input-group-addon"> to </span>
+                                <input type="text" class="form-control" name="to" ng-model="endFromTime" ng-change="reloadData()">
+                            </div>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tbody>
+                        <tr ng-click="WAAppointmentDetail(appt.UID)" ng-repeat="appt in info.listWaapointment.rows">
+                            <td>{{($index+1)+ 2*(info.paging.currentPage-1)}}</td>
+                            <td>
+                                <span ng-if="appt.Patients.length === 0">{{(appt.TelehealthAppointment.PatientAppointment.FirstName !== null)?appt.TelehealthAppointment.PatientAppointment.FirstName:""}} 
+                            {{(appt.TelehealthAppointment.PatientAppointment.LastName !== null)?appt.TelehealthAppointment.PatientAppointment.LastName:""}}
+                            </span>
+                                <span ng-if="appt.Patients.length !== 0">
+                                {{(appt.Patients[0].FirstName !== 0)?appt.Patients[0].FirstName:""}} {{(appt.Patients[0].LastName !== null)?appt.Patients[0].LastName:""}}
+                            </span>
+                            </td>
+                            <td>{{((appt.Doctors[0].Title !=null)?appt.Doctors[0].Title:"")+" "+((appt.Doctors[0].FirstName != null)?appt.Doctors[0].FirstName:"") +" "+((appt.Doctors[0].LastName != null)?appt.Doctors[0].LastName:"")}}</td>
+                            <td>{{appt.CreatedDate | date: 'dd/MM/yyyy':'UTC'}}</td>
+                            <td>
+                                <span ng-if="appt.Status === info.apptStatus[3].value" ><img src="./theme/assets/layouts/layout/imgStatus/attended.png" ></span>
+                                <span ng-if="appt.Status === info.apptStatus[4].value" ><img src="./theme/assets/layouts/layout/imgStatus/waitlist.png" ></span>
+                                <span ng-if="appt.Status === info.apptStatus[1].value" ><img src="./theme/assets/layouts/layout/imgStatus/pending.png" ></span>
+                                <span ng-if="appt.Status === info.apptStatus[0].value" ><img src="./theme/assets/layouts/layout/imgStatus/received.png" ></span>
+                                <span ng-if="appt.Status === info.apptStatus[6].value" class="label label-danger">Cancelled</span> 
+                                <span ng-if="appt.Status === info.apptStatus[2].value" ><img src="./theme/assets/layouts/layout/imgStatus/time.png" ></span>
+                                <span ng-if="appt.Status === info.apptStatus[5].value" ><img src="./theme/assets/layouts/layout/imgStatus/finish.png" ></span>
+                            </td>
+                            <td>{{appt.FromTime | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td>
+                            <td style="text-align:center">
+                                <i class="glyphicon glyphicon-ok font-green-haze" 
+                                    ng-if="appt.TelehealthAppointment.Correspondence === 'Y'"></i>
+                                <i class="glyphicon glyphicon-remove font-red" 
+                                    ng-if="appt.TelehealthAppointment.Correspondence !== 'Y'"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+            </table>
         </div>
-        <!-- end table -->
-        <!-- begin pagination -->
         <div class="row">
-            <div class="col-md-5 col-sm-12">
-                {{info.listWaapointment.count}}
-            </div>
-            <div class="col-md-7 col-sm-12" style="text-align:right">
+            <div class="col-md-5 col-sm-5"><div class="dataTables_info">Total: {{info.listWaapointment.count}} records</div></div>
+            <div class="col-md-7 col-md-7" style="text-align:right">
                 <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-                    <pagination boundary-links="true" total-items="info.listWaapointment.count" ng-model="info.paging.currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo;" items-per-page="info.paging.itemsPerPage" max-size="info.paging.maxSize" ng-change="reloadData()"></pagination>
+                    <pagination boundary-links="true" total-items="info.listWaapointment.count" ng-model="info.paging.currentPage" class="pagination-lg" previous-text="&lsaquo;" next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo;" items-per-page="info.paging.itemsPerPage" max-size="info.paging.maxSize" ng-change="reloadData()"></pagination>
                 </div>
             </div>
-        </div>
-        <!-- end pagination -->
+        </div>         
     </div>
 </div>
-<!-- END BODY -->
+<!-- END BODY

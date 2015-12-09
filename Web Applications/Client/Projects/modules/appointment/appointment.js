@@ -10,19 +10,20 @@ app.config(function($stateProvider, $urlRouterProvider){
 		.state('authentication.appointment', {
 			abstract: true,
 			url:'/appointment',
+			data: {title: 'Telehealth Appointment', pageTitle: 'Telehealth Appointment'},
 			templateUrl: 'modules/appointment/views/appointment.html',
 			controller: 'appointmentCtrl'
 		})
 		.state('authentication.appointment.list', {
 			url: '/list',
 			templateUrl: 'modules/appointment/views/appointmentList.html',
-			data: {pageTitle: 'Appointment List'},
+			data: {title: 'Telehealth Appointment', pageTitle: 'Telehealth Appointment'},
 			controller: 'appointmentListCtrl',
 
 		})
 		.state('authentication.appointment.request', {
 			url: '/request',
-			data: {pageTitle: 'Appointment Send Request'},
+			data: {title: 'Telehealth Appointment', pageTitle: 'Telehealth Appointment Send Request'},
 			templateUrl: 'modules/appointment/views/appointmentRequest.html',
 			controller: 'appointmentRequestCtrl'
 		});

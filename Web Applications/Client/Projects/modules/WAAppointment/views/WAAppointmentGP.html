@@ -1,5 +1,23 @@
 <!-- BEGIN PAGE HEADER-->
-<h1 class="my-page-title">Western Australia Appointment</h1>
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:;" ui-sref="authentication.home.list">
+                Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <a href="javascript:;" ui-sref="authentication.WAAppointment.list">
+                Western Australia Appointment</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Western Australia Appointment Send Request</b>
+        </li>
+    </ul>
+</div>
+<br>
 <!-- END PAGE HEADER-->
 
 <!-- END PAGE HEADER-->
@@ -9,7 +27,7 @@
             <div class="portlet-title">
                 <div class="caption">
                     <i class=" icon-layers font-blue-steel"></i>
-                    <span class="caption-subject font-blue-steel bold uppercase"> Western Australia Appointment -
+                    <span class="caption-subject font-blue-steel bold uppercase"> {{$state.current.data.pageTitle}} -
                         <span class="step-title"> Step 1 of 4 </span>
                     </span>
                 </div>

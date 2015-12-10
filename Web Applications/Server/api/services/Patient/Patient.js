@@ -499,11 +499,20 @@ module.exports = {
 
 	/*
 		whereClause : function that create a where clause for query
-		input : information like 
+		input  : information like:
+					"data" :{
+						"Search":{
+							"FirstName":"asvasv",.....
+						}
+					}
+		output : if porperty has existed in table Patient, it will defined 
 	*/
 	whereClause : function(data) {
+		// define whereClause's data
 		var whereClause = {};
+		//create patient's object in whereClause's data that puts all information to filter in patient table
 		whereClause.Patient = {};
+		//create UserAccount's object in whereClause's data that puts all information to filter in useraccount table
 		whereClause.UserAccount ={};
 		if(check.checkData(data.Search)){
 			if(data.Search.FirstName){
@@ -956,6 +965,12 @@ module.exports = {
 		});
 	},
 
+	/*
+		CheckPatient : service check patient has created ?
+		input  : patient's PhoneNumber
+		output : return object that contain information patient 
+				 is created or not created
+	*/
 	CheckPatient : function(data, transaction) {
 		var info = {};
 		return Services.Patient.validation(data,false)
@@ -1010,6 +1025,16 @@ module.exports = {
 		})
 	},
 
+
+	/*
+		getfileUID : service get patient's fileUID
+		input  : data like 
+					"data": {
+						"UserAccountID":"000",
+						"FileType":"aaa"
+					}
+		output : return fileUID if where clause true
+	*/
 	getfileUID: function(data){
 		if(check.checkData(data.UserAccountID)){
 			return FileUpload.findAll({

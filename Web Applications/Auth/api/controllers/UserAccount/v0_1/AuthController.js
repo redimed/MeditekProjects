@@ -3,6 +3,51 @@
  * @description : Controller for authentication
  */
 
+/**
+ * @function test1
+ * @memberOf AuthController
+ */
+/**
+ * @function test11
+ * @memberOf AuthController
+ */
+
+/**
+ * @function test111
+ * @memberOf AuthController
+ */
+
+/**
+ * @function test122
+ * @memberOf AuthController
+ */
+
+/**
+ * @function test122
+ * @memberOf AuthController
+ */
+
+/**
+ * @function test133
+ * @memberOf AuthController
+ */
+
+/**
+ * @function test144
+ * @memberOf AuthController
+ */
+
+/**
+ * @function test155
+ * @memberOf AuthController
+ */
+
+/**
+ * @function test166
+ * @memberOf AuthController
+ */
+
+
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
@@ -165,7 +210,8 @@ module.exports = {
      * @property {string} status value: "success"
      */
     /**
-     * @function logout xử lý logout
+     * @function logout
+     * @description xử lý logout
      * @memberOf AuthController
      * @param {object} req request
      * @param {object} res response

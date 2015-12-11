@@ -19,6 +19,9 @@ module.exports={
 
   	'UserAccount/v0_1/AuthController':{
   		'login':true,
+      'forgot':true,
+      'check':true,
+      'changePassforgot':true,
   		'logout':'isAuthenticated',
   	},
 

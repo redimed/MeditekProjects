@@ -20,6 +20,7 @@
     <color name="colorLine">#4d000000</color>
     <color name="declineFone">#da0a15</color>
     <color name="answerFone">#58ed17</color>
+    <color name="foreignCallBtn">#1f78f3</color>
 
     <!-- Status Bar Color-->
     <color name="colorPrimaryDark">#1f78f3</color>

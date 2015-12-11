@@ -43,28 +43,26 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
                     android:gravity="center_horizontal">
-
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/btnAnswer"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="80dp"
-                        android:src="@drawable/phone_receiver_icon"
-                        app:backgroundTint="@color/answerFone"
-                        android:shadowColor="@android:color/transparent"/>
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/btnDecline"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/icon_end_call"
-                        app:backgroundTint="@color/declineFone"
-                        android:stateListAnimator="@null" />
+                        android:src="@drawable/call_end_icon"
+                        android:layout_marginRight="80dp"
+                        android:stateListAnimator="@null"
+                        app:backgroundTint="@color/declineFone" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/btnAnswer"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:shadowColor="@android:color/transparent"
+                        android:src="@drawable/call_receive_icon"
+                        app:backgroundTint="@color/answerFone" />
 
                 </LinearLayout>
 
@@ -131,38 +129,47 @@
                 <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="-30dp"
-                    android:padding="15dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="15dp">
 
                     <Button
                         android:id="@+id/fabHold"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/custom_circle_bg"
-                        android:drawableLeft="@drawable/icon_pause"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/custom_circle_call"
+                        android:drawableLeft="@drawable/call_pause_icon"
                         android:enabled="false"
-                        android:paddingLeft="12dp"/>
-
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/fabEndCall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_end_call"
-                        app:backgroundTint="@color/declineFone"
-                        android:layout_marginLeft="25dp"
-                        android:layout_marginRight="25dp"/>
+                        android:paddingLeft="7dp" />
 
                     <Button
-                        android:id="@+id/fabMute"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/custom_circle_bg"
-                        android:drawableLeft="@drawable/icon_unmute"
+                        android:id="@+id/btnMutePub"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/custom_circle_call"
+                        android:drawableLeft="@drawable/call_unmute_icon"
                         android:enabled="false"
-                        android:paddingLeft="13dp"/>
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:paddingLeft="8dp" />
+
+                    <Button
+                        android:id="@+id/btnMuteSub"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/custom_circle_call"
+                        android:drawableLeft="@drawable/call_speaker_icon"
+                        android:enabled="false"
+                        android:paddingLeft="8dp" />
 
                 </LinearLayout>
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fabEndCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="-25dp"
+                    android:src="@drawable/call_end_icon"
+                    app:backgroundTint="@color/declineFone" />
 
                 <ImageView
                     android:layout_width="50dp"
@@ -181,7 +188,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
                         android:padding="4dp"
-                        android:text="00:00"
+                        android:text="00:00:00"
                         android:textColor="@color/lightFont"
                         android:textSize="20dp" />
 

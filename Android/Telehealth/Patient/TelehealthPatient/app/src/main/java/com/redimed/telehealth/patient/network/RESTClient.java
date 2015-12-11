@@ -127,6 +127,7 @@ public class RESTClient {
         {
             Response response = super.execute(request);
             for (final Header header : response.getHeaders()) {
+                Log.d(TAG, header.getName() + " " +header.getValue());
                 if (null!= header.getName() && header.getName().equals("set-cookie")) {
                     editor = uidTelehealth.edit();
                     editor.putString("cookie", header.getValue());

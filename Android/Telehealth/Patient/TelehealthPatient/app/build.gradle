@@ -14,15 +14,19 @@ android {
         renderscriptTargetApi 21
         renderscriptSupportModeEnabled true
     }
-    dexOptions {
-        incremental true
-        javaMaxHeapSize "4g"
-        preDexLibraries = false
+    signingConfigs {
+        release {
+            storeFile file("Telehealth.keystore")
+            storePassword "redimed1234567"
+            keyAlias "REDIMED"
+            keyPassword "REDIMED"
+        }
     }
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     sourceSets {

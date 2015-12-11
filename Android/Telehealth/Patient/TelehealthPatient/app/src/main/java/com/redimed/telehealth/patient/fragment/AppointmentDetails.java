@@ -7,11 +7,13 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -48,8 +50,15 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,7 +71,7 @@ import retrofit.client.Response;
  */
 public class AppointmentDetails extends Fragment {
 
-    private String TAG = "DETAILS";
+    private static String TAG = "DETAILS";
     private static final int RESULT_PHOTO = 1;
     private static final int RESULT_CAMERA = 2;
     private static final int RESULT_RELOAD = 3;
@@ -76,6 +85,8 @@ public class AppointmentDetails extends Fragment {
     private SharedPreferences telehealthPatient;
     private LinearLayoutManager layoutManagerCategories;
     private String fromTime, status, firstDoctor, middleDoctor, lastDoctor, appointmentUID;
+    private Uri fileUri; // file url to store image
+    public static final int MEDIA_TYPE_IMAGE = 1;
 
     @Bind(R.id.lblDate)
     TextView lblDate;
@@ -117,6 +128,9 @@ public class AppointmentDetails extends Fragment {
         appointmentUID = this.getArguments().getString("appointmentUID", null);
         if (appointmentUID != null) {
             GetAppointmentDetails(appointmentUID);
+        }
+        if (savedInstanceState != null) {
+            fileUri = savedInstanceState.getParcelable("fileUri");
         }
 
         rvImageAppointment.setHasFixedSize(true);
@@ -258,10 +272,43 @@ public class AppointmentDetails extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
                 startActivityForResult(cameraIntent, RESULT_CAMERA);
             }
         });
         alertDialog.show();
+    }
+
+    public Uri getOutputMediaFileUri(int type) {
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    private static File getOutputMediaFile(int type) {
+        // External sdcard location
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Telehealth");
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d(TAG, "Oops! Failed create " + TAG + " directory");
+                return null;
+            }
+        }
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+        } else {
+            return null;
+        }
+        return mediaFile;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("fileUri", fileUri);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -289,20 +336,11 @@ public class AppointmentDetails extends Fragment {
                         break;
 
                     case RESULT_CAMERA:
-                        //Get bitmap data image
-                        image = (Bitmap) data.getExtras().get("data");
-                        //Get uri image
-                        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                        image.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-                        String pathImageUri = MediaStore.Images.Media.insertImage(v.getContext().getContentResolver(), image, "Title", null);
-                        //Get real path from uri image
-                        cursor = v.getContext().getContentResolver().query(Uri.parse(pathImageUri), null, null, null, null);
-                        cursor.moveToFirst();
-                        columnIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-                        picturePath = cursor.getString(columnIndex);
-                        cursor.close();
+                        // Downsizing image as it throws OutOfMemory Exception for larger images
+                        picturePath = fileUri.getPath();
                         flagLayout = true;
                         break;
+
                     case RESULT_RELOAD:
                         flagLayout = false;
                         GetAppointmentDetails(appointmentUID);

@@ -26,7 +26,7 @@ class Medi_Infomation: UIViewController {
             let tlLabel: String! = aLabel.text
             
             if tlLabel == "ExpiryDate" {
-             aLabel.text = formatString(patientAppointment[tlLabel].stringValue)
+             aLabel.text = FormatStrDate(patientAppointment[tlLabel].stringValue)
             } else {
                 aLabel.text = patientAppointment[tlLabel].stringValue
             }

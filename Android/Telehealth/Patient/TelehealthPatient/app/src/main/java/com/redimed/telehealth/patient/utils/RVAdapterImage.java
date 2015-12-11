@@ -75,7 +75,7 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
         picasso.load(fileUploads.get(position))
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
-                .error(R.drawable.error_image_icon)
+                .error(R.drawable.icon_error_image)
                 .fit().centerInside().into(holder.imgContains, new Callback() {
             @Override
             public void onSuccess() {

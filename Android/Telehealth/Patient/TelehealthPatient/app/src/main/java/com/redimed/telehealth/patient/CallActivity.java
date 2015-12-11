@@ -14,13 +14,12 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -29,6 +28,7 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.opentok.android.BaseVideoRenderer;
+import com.opentok.android.Connection;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
@@ -53,7 +53,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CallActivity extends AppCompatActivity implements View.OnClickListener, PublisherKit.PublisherListener, SubscriberKit.VideoListener, Session.SessionListener {
+public class CallActivity extends AppCompatActivity implements View.OnClickListener, PublisherKit.PublisherListener, SubscriberKit.VideoListener, Session.SessionListener, Session.SignalListener {
 
     private Intent i;
     private String TAG = "CALL";
@@ -69,6 +69,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     private SharedPreferences telehealthPatient;
     private Handler customHandler = new Handler();
     private static final String LOGTAG = "OpenTok";
+    private NotificationManager notificationManager;
     private String sessionId, token, apiKey, to, from;
     private LocalBroadcastManager localBroadcastManager;
     private static final boolean SUBSCRIBE_TO_SELF = false;
@@ -77,8 +78,10 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     Button fabHold;
     @Bind(R.id.fabEndCall)
     FloatingActionButton fabEndCall;
-    @Bind(R.id.fabMute)
-    Button fabMute;
+    @Bind(R.id.btnMutePub)
+    Button btnMutePub;
+    @Bind(R.id.btnMuteSub)
+    Button btnMuteSub;
     @Bind(R.id.publisherView)
     RelativeLayout publisherView;
     @Bind(R.id.subscriberView)
@@ -107,8 +110,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("call.action.cancel")) {
                 DeclineCommunication("cancel");
-            } else if (intent.getAction().equals("call.action.end")) {
-                EndCommunication();
             } else if (intent.getAction().equals("call.action.decline")) {
                 DeclineCommunication("decline");
             }
@@ -119,12 +120,16 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+//                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+//                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+//                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         ButterKnife.bind(this);
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("call.action.cancel");
-        intentFilter.addAction("call.action.end");
         intentFilter.addAction("call.action.decline");
         localBroadcastManager.registerReceiver(receiver, intentFilter);
 
@@ -135,10 +140,8 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         btnAnswer.setOnClickListener(this);
         fabEndCall.setOnClickListener(this);
         fabHold.setOnClickListener(this);
-        fabMute.setOnClickListener(this);
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(0);
+        btnMutePub.setOnClickListener(this);
+        btnMuteSub.setOnClickListener(this);
 
         Picasso.with(getApplicationContext()).load(R.drawable.logo_redimed).into(logo);
 
@@ -162,10 +165,10 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onStop() {
+        super.onStop();
         if (sessionOpenTok != null)
             sessionOpenTok.disconnect();
         this.finish();
-        super.onStop();
     }
 
     @Override
@@ -173,6 +176,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         localBroadcastManager.unregisterReceiver(receiver);
         timeSwapBuff += timeInMilliseconds;
         customHandler.removeCallbacks(updateTimerThread);
+        stopPlaying();
         super.onDestroy();
     }
 
@@ -244,7 +248,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }).build();
 
-        picasso.with(getApplicationContext()).load(url).transform(new BlurTransformation(getApplicationContext(), 15))
+        picasso.with(this).load(url).transform(new BlurTransformation(getApplicationContext(), 15))
                 .into(new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -282,8 +286,11 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.fabHold:
                 HoldCommunication();
                 break;
-            case R.id.fabMute:
-                MuteCommunication();
+            case R.id.btnMutePub:
+                MutePublisher();
+                break;
+            case R.id.btnMuteSub:
+                MuteSubscriber();
                 break;
             case R.id.fabEndCall:
                 EndCommunication();
@@ -304,23 +311,17 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
+        notificationManager.cancel(0);
     }
 
     private void EndCommunication() {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("from", from);
-        params.put("to", to);
-        params.put("message", "end");
-        try {
-            SocketService.sendData("socket/messageTransfer", params);
-            publisher = null;
-            subscriber = null;
-            streamOpenTok.clear();
-            sessionOpenTok.disconnect();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-        this.finish();
+        sessionOpenTok.sendSignal("endCall", "end");
+        publisher = null;
+        subscriber = null;
+        streamOpenTok.clear();
+        sessionOpenTok.disconnect();
+        notificationManager.cancel(0);
+        finish();
     }
 
     //    Refuse appointment
@@ -344,12 +345,13 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             subscriber = null;
             streamOpenTok.clear();
         }
-        this.finish();
+        notificationManager.cancel(0);
+        finish();
     }
 
     //Click button hold on a call
     private void HoldCommunication() {
-        if (publisher.getPublishVideo() == true) {
+        if (publisher.getPublishVideo()) {
             subscriber.setSubscribeToAudio(false);
             publisher.setPublishVideo(false);
         } else {
@@ -359,12 +361,21 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //Click button mute sound when call
-    private void MuteCommunication() {
+    private void MutePublisher() {
         publisher.setPublishAudio(!publisher.getPublishAudio());
-        if (publisher.getPublishAudio()){
-            fabMute.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_unmute, 0, 0, 0);
-        }else {
-            fabMute.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_mute, 0, 0, 0);
+        if (publisher.getPublishAudio()) {
+            btnMutePub.setCompoundDrawablesWithIntrinsicBounds(R.drawable.call_unmute_icon, 0, 0, 0);
+        } else {
+            btnMutePub.setCompoundDrawablesWithIntrinsicBounds(R.drawable.call_mute_icon, 0, 0, 0);
+        }
+    }
+
+    private void MuteSubscriber() {
+        subscriber.setSubscribeToAudio(!subscriber.getSubscribeToAudio());
+        if (subscriber.getSubscribeToAudio()) {
+            btnMuteSub.setCompoundDrawablesWithIntrinsicBounds(R.drawable.call_speaker_icon, 0, 0, 0);
+        } else {
+            btnMuteSub.setCompoundDrawablesWithIntrinsicBounds(R.drawable.call_unspeaker_icon, 0, 0, 0);
         }
     }
 
@@ -373,9 +384,26 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         if (sessionOpenTok == null) {
             sessionOpenTok = new Session(CallActivity.this, apiKey, sessionId);
             sessionOpenTok.setSessionListener(this);
+            sessionOpenTok.setSignalListener(this);
             sessionOpenTok.connect(token);
+
             startTime = SystemClock.uptimeMillis();
             customHandler.postDelayed(updateTimerThread, 0);
+        }
+    }
+
+    @Override
+    public void onSignalReceived(Session session, String type, String data, Connection connection) {
+        String myConnectionId = session.getConnection().getConnectionId();
+        String theirConnectionId = connection.getConnectionId();
+        if (!theirConnectionId.equals(myConnectionId)) {
+            if (type.equalsIgnoreCase("endCall") && data.equalsIgnoreCase("end")) {
+                publisher = null;
+                subscriber = null;
+                streamOpenTok.clear();
+                sessionOpenTok.disconnect();
+                finish();
+            }
         }
     }
 
@@ -389,8 +417,8 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             int hours = (int) ((updatedTime / (1000 * 60 * 60)) % 24);
             secs = secs % 60;
             lblTimer.setText(String.format("%02d", hours)
-                     + ":" + String.format("%02d", min)
-                     + ":" + String.format("%02d", secs));
+                    + ":" + String.format("%02d", min)
+                    + ":" + String.format("%02d", secs));
             customHandler.postDelayed(this, 0);
         }
     };
@@ -404,7 +432,8 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         layoutPublisher.topMargin = dpToPx(8);
         layoutPublisher.rightMargin = dpToPx(8);
         publisherView.addView(publisher.getView(), layoutPublisher);
-        fabMute.setEnabled(true);
+        btnMutePub.setEnabled(true);
+        btnMuteSub.setEnabled(true);
         fabHold.setEnabled(true);
     }
 
@@ -446,8 +475,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             publisher.setPublisherListener(this);
             AttachPublisherView(publisher);
             sessionOpenTok.publish(publisher);
-            fabMute.setVisibility(View.VISIBLE);
-            fabHold.setVisibility(View.VISIBLE);
         }
     }
 
@@ -530,11 +557,13 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         AttachSubscriberView(subscriber);
     }
 
+    //Subscriber's Video is Disabled
     @Override
     public void onVideoDisabled(SubscriberKit subscriberKit, String s) {
-
+        Log.d(TAG, subscriberKit.getView() + " ");
     }
 
+    //Subscriber's Video is Re-enabled
     @Override
     public void onVideoEnabled(SubscriberKit subscriberKit, String s) {
 

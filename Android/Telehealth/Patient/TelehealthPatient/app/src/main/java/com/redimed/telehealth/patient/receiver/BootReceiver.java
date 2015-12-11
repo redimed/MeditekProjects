@@ -63,7 +63,6 @@ public class BootReceiver extends BroadcastReceiver {
 
         for (ActivityManager.RunningTaskInfo task : tasks) {
             if (ctx.getPackageName().equalsIgnoreCase(task.baseActivity.getPackageName())){
-                Log.d("BOOT", ctx.getPackageName() + " ==== " + task.baseActivity.getPackageName());
                 return true;
             }
         }

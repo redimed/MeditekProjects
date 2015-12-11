@@ -27,7 +27,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:alpha="10"
-        android:background="@drawable/rotate_icon" />
+        android:background="@drawable/icon_rotate" />
 
     <ProgressBar
         android:id="@+id/progressBarUpload"

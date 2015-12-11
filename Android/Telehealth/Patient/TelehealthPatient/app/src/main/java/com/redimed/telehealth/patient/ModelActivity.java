@@ -108,7 +108,7 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
     private Bitmap getScaledBitmap(Bitmap bm) {
         int width = bm.getWidth();
         int height = bm.getHeight();
-        int newWidth = 1024, newHeight = 1024;
+        int newWidth = 1000, newHeight = 800;
         float scaleWidth = ((float) newWidth) / width;
         float scaleHeight = ((float) newHeight) / height;
         // CREATE A MATRIX FOR THE MANIPULATION

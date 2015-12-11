@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient.service;
 
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -159,7 +160,6 @@ public class SocketService extends Service {
             JSONObject data = (JSONObject) args[0];
             try {
                 String message = data.get("message").toString();
-                Log.d(TAG, message);
                 if (message.equalsIgnoreCase("call")) {
                     i = new Intent(getApplicationContext(), CallActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -175,10 +175,8 @@ public class SocketService extends Service {
                 if (message.equalsIgnoreCase("cancel")) {
                     localBroadcastManager = LocalBroadcastManager.getInstance(SocketService.this);
                     localBroadcastManager.sendBroadcast(new Intent("call.action.cancel"));
-                }
-                if (message.equalsIgnoreCase("end")) {
-                    localBroadcastManager = LocalBroadcastManager.getInstance(SocketService.this);
-                    localBroadcastManager.sendBroadcast(new Intent("call.action.end"));
+                    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    notificationManager.cancel(0);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

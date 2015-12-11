@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -118,22 +119,24 @@ public class RegistrationIntentService extends IntentService {
             contentView.setTextViewText(R.id.lblTitle, "REDIMED");
             contentView.setTextViewText(R.id.lblMessage, "This is a custom layout");
 
-            notification = new NotificationCompat.Builder(this)
+            NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(getResources().getString(R.string.not_title))
                     .setContentText("You have message")
                     .setPriority(NotificationCompat.PRIORITY_MAX) // On top task bar
                     .setVibrate(new long[]{500, 1000})
                     .setLights(Color.BLUE, 3000, 3000)
-                    .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-                    .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
+                    .setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.ringtone))
+                    .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE) // Defaults Light and Sound
 //                    .setOngoing(true) //Do not clear the notification
 //                    .setContent(contentView)
                     .setContentIntent(contentIntent)
                     .setWhen(System.currentTimeMillis())
-                    .setAutoCancel(true)
-                    .setDeleteIntent(deleteIntent(msg))
-                    .build();
+                    .setDeleteIntent(deleteIntent(msg));
+
+            notification = builder.build();
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+            notification.flags |= Notification.FLAG_INSISTENT;
 
             notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             notificationManager.notify(CALL_NOTIFICATION_ID, notification);

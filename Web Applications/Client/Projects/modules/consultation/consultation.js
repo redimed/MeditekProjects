@@ -47,5 +47,11 @@ app.config(function($stateProvider){
 			templateUrl: 'modules/consultation/views/drawing.html',
 			controller: 'drawingCtrl',
 		})
+		.state('authentication.consultation.call',{
+			url: '/call',
+			data: {title: 'Call', pageTitle: 'Call'},
+			templateUrl: 'modules/consultation/views/consultationCall.html',
+			controller: 'consultationCallCtrl',
+		})
 		;
 });

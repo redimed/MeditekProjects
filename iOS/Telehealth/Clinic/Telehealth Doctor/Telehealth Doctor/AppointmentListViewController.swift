@@ -115,8 +115,8 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         
         cell.patientName.text = singletonOnlineUser.fullNamePatient
         cell.doctorName.text = singletonOnlineUser.fullNameDoctor.characters.count > 2 ? singletonOnlineUser.fullNameDoctor : "Unlink Treating Practitioner"
-        cell.submitDate.text = formatforList(singletonOnlineUser.requestDateAppoinment)
-        cell.appoinmentDate.text = formatforList(singletonOnlineUser.appoinmentDate)
+        cell.submitDate.text = FormatStrDate(singletonOnlineUser.requestDateAppoinment)
+        cell.appoinmentDate.text = FormatStrDate(singletonOnlineUser.appoinmentDate)
         cell.callButton.enabled = true
         cell.statusApt.text = singletonOnlineUser.statusApt
         if let status = singletonOnlineUser.status {

@@ -76,6 +76,8 @@ app.directive('datePicker', function($timeout) {
             elem.attr('readonly',true);
             elem.attr('type','text');
             elem.attr('placeholder','dd/mm/yyyy');
+            // elem.attr('data-date-start-date',"20/11/2015");
+            // elem.attr('data-date-end-date',"0d" );
         },
     };
 });

@@ -47,7 +47,7 @@ class Appointment: UIViewController {
     func loadData() {
         for (key,_) in appointment {
             if key == "FromTime" {
-                appointTime = formatString(appointment["FromTime"].stringValue).componentsSeparatedByString("at")
+                appointTime = FormatStrDate(appointment["FromTime"].stringValue).componentsSeparatedByString(" ")
             }
         }
         
@@ -61,7 +61,7 @@ class Appointment: UIViewController {
                 case 11:
                     aLabel.text = appointment["TelehealthAppointment"]["Fund"].stringValue
                 case 12:
-                    aLabel.text = formatString(appointment[titleLabel].stringValue)
+                    aLabel.text = FormatStrDate(appointment[titleLabel].stringValue)
                 case 13:
                     aLabel.text = appointTime[0] as? String
                 case 14:

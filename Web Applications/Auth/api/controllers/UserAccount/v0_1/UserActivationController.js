@@ -1,33 +1,42 @@
+/**
+ * @namespace UserActivationController
+ * @description Document for UserActivationController
+ */
+
 module.exports = {
+	
 	/**
-	 * CreateUserActivation: Tạo UserActivation
-	 *	Đối với web system: mỗi user chỉ có 1 record
-	 *	Đối với mobile system: tương ứng với mỗi cặp {userId, deviceId, appid} có 1 record
-	 *	Nếu record activation của user đã tồn tại thì update, nếu chưa thì insert mới
-	 * 		+trường hợp update: các thông tin được update: 
-	 * 			VerificationCode,VerificationToken,TokenCreatedDate,TokenExpired,CodeExpired,
-	 * 			ModifiedBy,ModifiedDate
-	 * 		+trường hợp insert: các thông tin được insert:
-	 * 			UserAccountID,Type,VerificationCode,VerificationToken,CreatedBy,TokenCreatedDate,
-	 * 			TokenExpired,CodeExpired,CreatedDate
-	 *
-	 * Input: 
-	 * - req.body:{UserUID,Type,DeviceID, AppID(chỉ trong trường hợp Mobile System)}
-	 * output: 
-	 * 	nếu thành công trả status 200 cùng UserActivationInfo
-	 * 	nếu lỗi thì trả về status 500 cùng error, trong error có mảng errors
-	 * 		errors[0]:
-	 * 			+ UserUID.notProvided: UserUID chưa được cung cấp
-	 *			+ SystemType.notProvided: SystemType chưa được cung cấp
-	 *			+ DeviceID.notProvided: DeviceID chưa được cung cấp
-	 *			+ SystemType.unknown: SystemType không hợp lệ
-	 *			+ CreateUserActivation.paramsNotFound: chưa cung cấp tham số
-	 *			+ CreateUserActivation.updateActivationError: lỗi update activation
-	 *			+ CreateUserActivation.userActivationInsertError: lỗi insert activation
-	 *			+ CreateUserActivation.checkExistQueryError: lỗi truy vấn kiểm tra activation đã tồn tại
-	 *			+ CreateUserActivation.userNotFound: không tìm thấy user tương ứng UID
-	 *			+ CreateUserActivation.userQueryError: lỗi truy vấn thông tin user
-	 * 		
+	 * @typedef CreateUserActivationException
+	 * @memberOf UserActivationController
+	 * @property {string} ErrorType "CreateUserActivation.Error"
+	 * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
+	 * - CreateUserActivation.beginTransactionError</br>
+	 */
+	/**
+	 * @function CreateUserActivation
+	 * @memberOf UserActivationController
+	 * @description Tạo UserActivation</br>
+	 *	Đối với web system: mỗi user chỉ có 1 record</br>
+	 *	Đối với mobile system: tương ứng với mỗi cặp {userId, deviceId, appid} có 1 record</br>
+	 *	Nếu record activation của user đã tồn tại thì update, nếu chưa thì insert mới</br>
+	 * 	+trường hợp update: các thông tin được update:
+	 * 		VerificationCode,VerificationToken,TokenCreatedDate,TokenExpired,CodeExpired,
+	 * 		ModifiedBy,ModifiedDate
+	 * 	</br>
+	 * 	+trường hợp insert: các thông tin được insert:
+	 * 		UserAccountID,Type,VerificationCode,VerificationToken,CreatedBy,TokenCreatedDate,
+	 * 		TokenExpired,CodeExpired,CreatedDate
+	 * @param {object} req request
+	 * @param {object} req.body body
+	 * @param {string} req.body.UserUID
+	 * @param {string} req.body.Type
+	 * @param {string} req.body.DeviceID
+	 * @param {string} req.body.AppID
+	 * @param {object} res response
+	 * @return {object} UserActivation Info
+	 * @throws {UserActivationController.CreateUserActivationException}
+	 * @throws {UserActivationService.CreateUserActivationException}
+	 * 
 	 */
 	CreateUserActivation:function(req,res)
 	{

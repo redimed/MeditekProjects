@@ -1,0 +1,77 @@
+<div class="portlet box red-sunglo margin-top-20">
+    <div class="portlet-title">
+        <div class="caption bold uppercase ">
+            <span class="caption-subject"><i class="fa fa-list"></i> {{$state.current.data.pageTitle}}</span>
+        </div>
+        <div class="actions">
+            <a href="javascript:;" class="btn green-haze" ng-click="Filter()">Filter</a>
+			<a  href="javascript:;" class="btn blue-soft" ng-click="Create()">Create</a>
+        </div>
+    </div>
+    <div class="portlet-body form">
+    	<form>
+    		<div class="form-body">
+	    		<div class="table-scrollable">
+		            <table class="table table-bordered table-striped table-hover">
+		                <thead>
+		                    <tr>
+		                        <th width="1">#</th>
+		                        <th>First Name</th>
+		                        <th>Last Name</th>
+		                        <th width="1">Gender</th>
+		                        <th>Mobile</th>
+		                        <th>Email</th>
+		                        <th width="1">Enable</th>
+		                    </tr>
+		                    <tr ng-hide="toggle">
+		                        <td></td>
+		                        <td>
+		                        	<input type="text" class="form-control"
+		                        		ng-model="searchObject.Search"
+		                        		ng-enter="Init()">
+		                        </td>
+		                        <td><input type="text" class="form-control"></td>
+		                        <td>
+			                        <select class="form-control">
+			                        	<option value=""></option>
+			                        	<option value="">Male</option>
+			                        	<option value="">Female</option>
+			                        </select>
+		                        </td>
+		                        <td><input type="text" class="form-control"></td>
+		                        <td><input type="text" class="form-control"></td>
+		                        <td>
+		                        	<select class="form-control">
+			                        	<option value=""></option>
+			                        	<option value="">Enable</option>
+			                        	<option value="">Disable</option>
+			                        </select>
+		                        </td>
+		                    </tr>
+		                </thead>
+		                <tbody>
+		                    <tr ng-repeat="p in patients" ng-click="OpenModal(p.UID)">
+		                        <td>{{$index+1}}</td>
+		                        <td>{{p.FirstName}}</td>
+		                        <td>{{p.LastName}}</td>
+		                        <td>
+		                        	<i ng-class="{true:'icon-symbol-male bold font-blue',false:'icon-symbol-female bold font-red'}[p.Gender === 'Male']"></i>
+		                        </td>
+		                        <td>{{p.WorkPhoneNumber}}</td>
+		                        <td>{{p.Email1}}</td>
+		                        <td>
+		                        	<i class="glyphicon"
+		                        	ng-class="{true: 'glyphicon-ok font-green', false: 'glyphicon-remove font-red'}[p.Enable === 'Y']"></i>
+		                        </td>
+		                    </tr>
+		                </tbody>
+		            </table>
+		        </div>
+		    </div>
+		    <div class="form-actions right">
+	            <pagination class="pagination-lg" boundary-links="true" total-items="totalItem" ng-model="searchObject.currentPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="searchObject.Limit" max-size="searchObject.maxSize" ng-change="SetPage()">
+	            </pagination>
+		    </div>
+		</form>
+    </div>
+</div>

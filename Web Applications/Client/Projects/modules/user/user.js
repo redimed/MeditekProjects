@@ -25,5 +25,9 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'modules/user/views/userProfile.html',
 			controller: 'userProfileCtrl'
 		})
-		;
+		.state('authentication.user.changepass', {
+			url: '/changepass',
+			templateUrl: 'modules/user/views/changePass.html',
+			controller: 'changePassCtrl'
+		});
 });

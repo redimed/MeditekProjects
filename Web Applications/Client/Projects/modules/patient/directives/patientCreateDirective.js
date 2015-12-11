@@ -19,11 +19,12 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 
 		    // FILTERS
 		    uploader.filters.push({
-		        name: 'customFilter',
-		        fn: function (item /*{File|FileLikeObject}*/, options) {
-		            return this.queue.length < 10;
-		        }
-		    });
+	            name: 'imageFilter',
+	            fn: function(item /*{File|FileLikeObject}*/, options) {
+	                var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+	                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+	            }
+	        });
 		    uploader.onBeforeUploadItem = function(item) {
 		    	item.headers={
 		    		Authorization:'Bearer '+$cookies.get("token"),

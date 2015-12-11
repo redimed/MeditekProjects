@@ -2,6 +2,7 @@ var $q = require('q');
 var regexp = require('node-regexp');
 var generatePassword = require("password-generator");
 var o=require("../HelperService");
+var jwt = require('jsonwebtoken');
 module.exports = {
 
 
@@ -1020,6 +1021,35 @@ module.exports = {
 				UID: data.UID
 			}
 		});
+	},
+
+	sendMail:function(data,secret,functionA) 
+	{
+		var payload = {
+                UID : data.UID
+        };
+        var token = jwt.sign(
+                        payload,
+                        secret,
+                        {expiresIn:2*60*60}
+       	);
+        var emailInfo = {
+            from    : 'Redimed <giangvotest2511@gmail.com>',
+            email   : data.email,
+            subject : 'Forgot Password',
+            data    : token,
+            UID     : data.UID
+        };
+        UserForgot.create({
+        	UserAccountUID : data.UID,
+        	Token          : token
+        })
+        .then(function(success){
+        	return SendMailService.SendMail
+        		('demo', emailInfo, functionA);
+        },function(err){
+        	throw err;
+        });
 	}
 
 }

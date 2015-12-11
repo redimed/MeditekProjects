@@ -2,6 +2,7 @@
  * @namespace AuthController
  * @description : Controller for authentication
  */
+
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
@@ -14,7 +15,29 @@ module.exports = {
         shortcuts: false,// không sử dụng shortcuts route
         rest: false// không sử dụng rest route
     },
-
+    /**
+    * @typedef {Object} LoginReturn
+    * @memberOf AuthController
+    * @property {string} status 
+    * @property {string} message 
+    * @property {object} user user information
+    * @property {string} token 
+    * @property {string} refreshToken
+    */
+    /**
+     * @typedef {Object} LoginException
+     * @memberOf AuthController
+     * @property {string} ErrorType
+     *   - DeviceID.notProvided</br>
+     *   - AppID.notProvided</br>
+     *   - User.notFound</br>
+     *   - User.disabled</br>
+     *   - VerificationToken.invalid</br>
+     *   - Activation.expired</br>
+     *   - Activation.notFound</br>
+     *   - Password.Invalid</br>
+     *   - UserAccount.queryError</br>
+     */
     /**
      * @function login
      * @memberOf  AuthController
@@ -25,12 +48,14 @@ module.exports = {
      * @param {string} [req.UserUID] uid của user, nếu login bằng mobile
      * @param {string} [req.DeviceID] deviceid của mobile, nếu login bằng mobile
      * @param {string} [req.VerificationToken] nếu login bằng mobile
-     * @return {{status:string, message:string, user:object, token:string,refreshCode:string}}
+     * @param {Object} res response
+     * @return {AuthController.LoginReturn} return logged in info
+     * @throws {AuthController.LoginException} Nếu có lỗi throw error:
      */
     login: function(req, res) {
         console.log("============LOGIN===============");
 
-        var error=new ErrorWrap("login.Error");
+        var error=new Error("login.Error");
 
         passport.authenticate('local', function(err, user, info) 
         {
@@ -134,9 +159,18 @@ module.exports = {
     },
 
     /**
+     * @typedef LogoutReturn
+     * @memberOf AuthController
+     * @type {Object}
+     * @property {string} status value: "success"
+     */
+    /**
      * @function logout xử lý logout
      * @memberOf AuthController
-     * 
+     * @param {object} req request
+     * @param {object} res response
+     * @return {AuthController.LogoutReturn} 
+     * @throws { RefreshTokenService.MakeRefreshTokenException} If Error
      */
     logout: function(req, res) {
         var userAccess={
@@ -148,6 +182,8 @@ module.exports = {
         
         Services.RefreshToken.MakeRefreshToken(userAccess)
         .then(function(data){
+            var connectInfo=_.cloneDeep(userAccess);
+            connectInfo.sid=req.sessionID;
             req.logout();
             //------------------------------------------
             /*if(req.headers.systemtype==o.const.systemType.website)
@@ -155,9 +191,7 @@ module.exports = {
                 var connectInfo=_.cloneDeep(userAccess);
                 connectInfo.sid=req.sessionID;
                 RedisService.removeUserConnect(connectInfo);
-            }    */
-            var connectInfo=_.cloneDeep(userAccess);
-            connectInfo.sid=req.sessionID;
+            }  */  
             RedisService.removeUserConnect(connectInfo);        
             //------------------------------------------
             res.ok({status:'success'});

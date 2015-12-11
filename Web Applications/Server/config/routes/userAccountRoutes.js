@@ -84,6 +84,21 @@ module.exports={
     	action:'login'
 	},
 
+	'post /api/forgot':{
+		controller:'UserAccount/v0_1/AuthController',
+		action:'forgot'
+	},
+
+	'post /api/check-forgot-return':{
+		controller:'UserAccount/v0_1/AuthController',
+		action:'check'
+	},
+
+	'post /api/change-password-forgot':{
+		controller:'UserAccount/v0_1/AuthController',
+		action:'changePassforgot'
+	},
+
 	'get /api/logout':{
 		controller:'UserAccount/v0_1/AuthController',
 		action:'logout'

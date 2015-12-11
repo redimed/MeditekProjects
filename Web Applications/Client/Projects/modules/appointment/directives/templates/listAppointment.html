@@ -1,16 +1,29 @@
 <!-- BEGIN PAGE HEADER-->
-<h1 class="my-page-title">Telehealth Appointment</h1>
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:;" ui-sref="authentication.home.list">
+                Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Telehealth Appointment</b>
+        </li>
+    </ul>
+</div>
+<br>
 <!-- END PAGE HEADER-->
 <!-- BEGIN BODY -->
-<div class="portlet light bordered">
+<div class="portlet box green">
     <div class="portlet-title">
-        <div class="caption font-green">
-            <i class="icon-list font-green"></i>
-            <span class="caption-subject bold uppercase"> Telehealth Appointment</span>
+        <div class="caption bold uppercase">
+            <i class="icon-list"></i>
+            <span class="caption-subject ">{{$state.current.data.pageTitle}}</span>
         </div>
         <div class="actions">
-            <a href="javascript:;" class="btn btn-circle red-thunderbird btn-sm" ng-click="toggleFilter()">
-                <i class="fa fa-filter"></i> Filter
+            <a href="javascript:;" class="btn btn-circle red-thunderbird" ng-click="toggleFilter()">
+                <i class="glyphicon glyphicon-filter"></i> Filter
             </a>
             <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
         </div>
@@ -80,8 +93,8 @@
                             <i class="fa fa-sort-asc fa-lg sortDataTable" ng-click="sortData('CreatedDate','ASC')" ng-show="searchObjectMap.Order[0].Appointment.CreatedDate == 'DESC'" style="front-size:40"></i>
                             <i class="fa fa-sort-desc fa-lg sortDataTable" ng-click="sortData('CreatedDate','DESC')" ng-show="searchObjectMap.Order[0].Appointment.CreatedDate !== 'DESC'"></i>
                         </th>
-                        <th width="500px" align="center">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Referral Tracking
+                        <th width="500px" style="text-align:center">
+                            Referral Tracking
                             <br>
                             <img src="./theme/assets/layouts/layout/imgStatus/ReferralTracking.png">
                         </th>
@@ -90,7 +103,7 @@
                             <i class="fa fa-sort-asc fa-lg sortDataTable" ng-click="sortData('FromTime','ASC')" ng-show="searchObjectMap.Order[0].Appointment.FromTime == 'DESC'"></i>
                             <i class="fa fa-sort-desc fa-lg sortDataTable" ng-click="sortData('FromTime','DESC')" ng-show="searchObjectMap.Order[0].Appointment.FromTime !== 'DESC'"></i>
                         </th>
-                        <th>Correspondence</th>
+                        <th width="1">Correspondence</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -112,10 +125,10 @@
                             </td>
                             <td>{{p.FromTime | date: 'dd/MM/yyyy - hh:mm' : 'UTC'}}</td>
                             <td ng-show="p.TelehealthAppointment.Correspondence == 'Y'" style="text-align:center">
-                                <span class="text-success"><i class="fa fa-check"></i></span>
+                                <i class="glyphicon glyphicon-ok font-green-haze"></i>
                             </td>
                             <td ng-show="p.TelehealthAppointment.Correspondence !== 'Y'" style="text-align:center">
-                                <span class="text-danger"><i class="fa fa-remove"></i></span>
+                                <i class="glyphicon glyphicon-remove font-red"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -125,11 +138,11 @@
         <!-- begin pagination -->
         <div class="row">
             <div class="col-md-5 col-sm-12">
-                {{CountRow }}
+                Total {{CountRow }} records
             </div>
             <div class="col-md-7 col-sm-12" style="text-align:right">
                 <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-                    <pagination boundary-links="true " total-items="CountRow " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.Limit " max-size="searchObjectMap.maxSize " ng-change="SetPage() ">
+                    <pagination boundary-links="true " total-items="CountRow " ng-model="searchObjectMap.currentPage " class="pagination" previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.Limit " max-size="searchObjectMap.maxSize " ng-change="SetPage() ">
                     </pagination>
                 </div>
             </div>

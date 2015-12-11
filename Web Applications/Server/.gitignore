@@ -4,3 +4,4 @@ temp/*
 logs/*
 .tmp/*
 config/connections.js
+jsdocs/*

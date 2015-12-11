@@ -173,19 +173,16 @@
 	                                        </div>
 	                                    </div>
 	                                    <!-- Provider Number -->
-	                                    <!-- Type -->
-	                                    <div class="form-group">
-	                                        <label class="control-label col-md-3 col-sm-3">Type</label>
-	                                        <div class="col-md-6 col-sm-6">
-	                                        	<select class="form-control" ng-model="info.Type" ng-style="er.Type.css" ng-change="ermsg.Type='';checkDataNull('Type')">
-													<option value="">Type</option>
-													<option value="EXTERTAL_PRACTITIONER">External Practition</option>
-													<option value="INTERNAL_PRACTITIONER">Internal Practition</option>
-												</select>
-	                                            <span style="color:red;">{{er.Type.msg}}</span>
-	                                        </div>
-	                                    </div>
-	                                    <!-- End Type -->
+	                                    <!-- begin specialities -->
+										<div class="form-group">
+							            	<label class="control-label col-md-3 col-sm-3">Specialities</label>
+							            	<div class="col-md-6 col-sm-6">
+							            		<select id="Specialities" class="form-control select2-multiple" ng-model="info.Speciality"ng-style="er.Speciality" ng-change="ermsg.Speciality='';checkDataNull('Speciality')" ng-options="t.ID as t.Name for t in specialities" multiple>
+							            		</select>
+							            		<span style="color:red;">{{er.Speciality.msg}}</span>
+							            	</div>
+							        	</div>
+										<!-- end specialities -->
 	                                </div>
                                 </div>
                                 <div class="tab-pane" id="tab_Contact" ng-if="listShow.columm3==true">
@@ -368,7 +365,8 @@
             </div>
         </form>
     </div>
-</div>
+</div> 
+{{configpage()}}
 
 
 

@@ -15,6 +15,16 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
             $scope.ListContry = response.data;
         })
     }
+    $scope.ShowData = {
+        isLinkPatient: false,
+        patient: []
+    };
+    var checkDateUndefined = function(data) {
+        if (data == ' ' || data == '' || data == undefined) {
+            return false;
+        }
+        return true;
+    };
     $scope.loadListContry();
     $scope.submited = false;
     $scope.ViewDoc = function(Url, UID) {
@@ -26,16 +36,35 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
                 console.log(er);
             })
     }
-    $scope.wainformation = data;
+    $scope.wainformation = angular.copy(data);
+    $scope.FileUploadImage = []
+    $scope.FileUploads = function(){
+        for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
+            $scope.FileUploadImage = $scope.FileUploadImage.concat($scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads)
+        }
+    }
+    $scope.FileUploads()
+    console.log($scope.FileUploadImage)
     $scope.tab_body_part = 'all';
     $scope.checkRoleUpdate = true;
-    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
+    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' 
+        || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' 
+        || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
         $scope.checkRoleUpdate = false;
     };
     console.log('$scope.wainformation', $scope.wainformation);
     $scope.Temp = angular.copy(data)
     var ClinicalDetailsTemp = [];
     $scope.loadFuntion = function() {
+        if ($scope.wainformation.Patients.length != 0) {
+            $scope.ShowData.isLinkPatient = true;
+            if (checkDateUndefined($scope.wainformation.Patients[0])) {
+                $scope.ShowData.patient = angular.copy($scope.wainformation.Patients[0]);
+                $scope.ShowData.patient.PhoneNumber  = $scope.ShowData.patient.UserAccount.PhoneNumber;
+            };
+        } else {
+            $scope.ShowData.patient = $scope.wainformation.TelehealthAppointment.PatientAppointment;
+        }
         if ($scope.wainformation.TelehealthAppointment != null || $scope.wainformation.TelehealthAppointment != undefined) {
             $scope.wainformation.TelehealthAppointment.ClinicalDetails = {}
             $scope.Temp.TelehealthAppointment.ClinicalDetails.forEach(function(valueRes, indexRes) {
@@ -64,7 +93,7 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
         listDoctorTreatingPractitioner: null,
         patientInfomation: ($scope.wainformation.Patients.length != 0) ? $scope.wainformation.Patients : $scope.wainformation.TelehealthAppointment.PatientAppointment,
         appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('DD/MM/YYYY') : null,
-        appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('h:mm A') : null,
+        appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('HH:mm') : null,
         ExpiryDate: ($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate != null) ? moment($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate).format('DD/MM/YYYY') : null,
         listDoctorTreatingPractitioner: null,
         selectRadioGender: function() {
@@ -225,6 +254,19 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
     $scope.close = function() {
         $modalInstance.close();
     };
+     $scope.showImage = function(Link, UID) {
+        var LinkUID = UID;
+        $modal.open({
+            templateUrl: 'showImageTemplate',
+            controller: 'showImageController',
+            windowClass: 'app-modal-window-full',
+            resolve: {
+                LinkUID: function() {
+                    return LinkUID;
+                }
+            }
+        });
+    };
 
     $scope.selectPatient = function() {
         var modalInstance = $modal.open({
@@ -261,6 +303,9 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
                     if (data.message == 'success') {
                         console.log('patientInfomation', data.data);
                         console.log('$scope.wainformation.Patients', $scope.wainformation.Patients);
+                        $scope.ShowData.isLinkPatient = true;
+                        $scope.ShowData.patient = data.data[0];
+                        $scope.ShowData.patient.PhoneNumber = data.data[0].UserAccount.PhoneNumber;
                         $scope.wainformation.Patients = [];
                         $scope.wainformation.Patients.push({
                             UID: patientUid

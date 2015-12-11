@@ -62,7 +62,7 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
             
             view.showLoading()
             //Send request phone number to server
-            api.CheckVerifyPhoneNumber(textFieldVerifyCode.text!,deviceID: config.deviceID!,phoneNumber:phoneNumber){
+            api.CheckVerifyPhoneNumber(textFieldVerifyCode.text!,phoneNumber:phoneNumber){
                 response in
                 if response["status"] == "success"{
                     self.view.hideLoading()

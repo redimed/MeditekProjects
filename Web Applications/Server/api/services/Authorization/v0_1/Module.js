@@ -21,28 +21,28 @@ var modules=[
 			'ASSISTANT'
 		]
 	},
-	{
-		uid:'4',
-		state:'authentication.appointment.list',
-		name:'Telehealth Appointment List',
-		parent:'3',
-		order:'1',
-		roles:[
-			'ADMIN',
-			'EXTERTAL_PRACTITIONER',
-			'ASSISTANT'
-		]
-	},
-	{
-		uid:'5',
-		state:'authentication.appointment.request',
-		name:'Telehealth Send Request',
-		parent:'3',
-		order:'2',
-		roles:[
-			'EXTERTAL_PRACTITIONER',
-		]
-	},
+	// {
+	// 	uid:'4',
+	// 	state:'authentication.appointment.list',
+	// 	name:'Telehealth Appointment List',
+	// 	parent:'3',
+	// 	order:'1',
+	// 	roles:[
+	// 		'ADMIN',
+	// 		'EXTERTAL_PRACTITIONER',
+	// 		'ASSISTANT'
+	// 	]
+	// },
+	// {
+	// 	uid:'5',
+	// 	state:'authentication.appointment.request',
+	// 	name:'Telehealth Send Request',
+	// 	parent:'3',
+	// 	order:'2',
+	// 	roles:[
+	// 		'EXTERTAL_PRACTITIONER',
+	// 	]
+	// },
 	{
 		uid:'6',
 		state:'authentication.doctor.list',
@@ -67,7 +67,7 @@ var modules=[
 	{
 		uid:'8',
 		state:'authentication.WAAppointment.list',
-		name:'WA Appointment List',
+		name:'Telehealth Appointment List',
 		parent:'3',
 		order:'3',
 		roles:[
@@ -79,7 +79,7 @@ var modules=[
 	{
 		uid:'9',
 		state:'authentication.WAAppointment.GP',
-		name:'WA Appointment Send Request',
+		name:'Telehealth Send Request',
 		parent:'3',
 		order:'4',
 		roles:[

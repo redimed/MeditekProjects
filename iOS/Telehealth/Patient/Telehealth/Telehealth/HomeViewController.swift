@@ -27,13 +27,13 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         super.viewDidLoad()
         //Get uuid user in locacalstorage
         
-        if let token = defaults.valueForKey("token") as? String {tokens = token}
-        if let userUIDs = defaults.valueForKey("userUID") as? String{userUID = userUIDs}
-        if let cookie = defaults.valueForKey("Set-Cookie") as? String{cookies = cookie}
+        
         if let uuid = defaults.valueForKey("uid") as? String {
             uid = uuid
             api.updateTokenPush(uid)
         }
+
+        
         
         //check status notify and handle action
         switch statusCallingNotification {
@@ -112,8 +112,8 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     
     //page Controller
     func pagingImage(){
-        self.pageTitles = NSArray(objects: "Explore", "Today Widget")
-        self.pageImages = NSArray(objects: "Untitled-1_03", "Untitled-1_05")
+        self.pageTitles = NSArray(objects: "Explore", "Today Widget","Home3")
+        self.pageImages = NSArray(objects: "Home1", "Home2","Home3")
         pageControl.numberOfPages = pageImages.count
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         self.pageViewController.dataSource = self
@@ -295,6 +295,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
                 let dataCalling = JSON(data)
                 print("From name",dataCalling[0])
                 let message : String = data[0]["message"] as! String
+                print("message----",data)
                 if message == MessageString.Call {
                     //                    let apiKey : String = data[0]["apiKey"] as! String
                     //                    let fromName : String = data[0]["fromName"] as! String
@@ -306,9 +307,11 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
                     //                    self.playRingtone()
 //                    NSNotificationCenter.defaultCenter().postNotificationName("AnswerCall", object: self)
                 }else if message == MessageString.CallEndCall {
+//                    config.emitDataToServer(MessageString.CallEndCall, from: self.uid, to: savedData.from)
                     NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
                 }else if message == MessageString.Cancel {
                     NSNotificationCenter.defaultCenter().postNotificationName("cancelCall", object: self)
+                    NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
                 }
             }
         })
@@ -334,6 +337,19 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     @IBAction func callUsButton(sender: AnyObject) {
         UIApplication.sharedApplication().openURL(NSURL(string: "tel://\(phoneNumberCallUs)")!)
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+       
+
+        if segue.identifier == "FAQsegue" {
+             let FAQs = segue.destinationViewController as! FAQsViewController
+            FAQs.titleString = "FAQs"
+        }else if segue.identifier == "Aboutsegue"{
+             let FAQs = segue.destinationViewController as! FAQsViewController
+            FAQs.titleString = "ABOUT US"
+        }
+    }
+
     
 
 }

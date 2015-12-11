@@ -17,7 +17,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
-    <title ng-bind="$state.current.data.pageTitle">Loading...</title>
+    <title ng-bind="$state.current.data.title">Loading...</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -217,10 +217,15 @@ License: You must have a valid license purchased only from themeforest(the above
     		<script src="modules/unAuthentication/unAuthentication.js" ></script>
     		<script type="text/javascript" src="modules/unAuthentication/services/unAuthenticateService.js"></script>
     		<script src="modules/unAuthentication/controllers/unAuthenticationCtrl.js"></script>
+            <!-- Doctor -->
     		<script src="modules/unAuthentication/controllers/loginCtrl.js"></script>
     		<script src="modules/unAuthentication/controllers/registerCtrl.js"></script>
     		<script src="modules/unAuthentication/controllers/activationCtrl.js"></script>
             <script src="modules/unAuthentication/controllers/fotgotCtrl.js"></script>
+            <!-- Patient -->
+            <script src="modules/unAuthentication/controllers/loginPatientCtrl.js"></script>
+            <script src="modules/unAuthentication/controllers/registerPatientCtrl.js"></script>
+            <script src="modules/unAuthentication/controllers/searchPatientCtrl.js"></script>
 		<!-- END MODULE unAuthentication -->
 
         <!-- BEGIN MODULE authentication -->
@@ -231,10 +236,21 @@ License: You must have a valid license purchased only from themeforest(the above
 
         <!-- BEGIN MODULE home -->
             <script src="modules/home/home.js" ></script>
+            <script src="modules/home/services/homeService.js" ></script>
             <script src="modules/home/controllers/homeCtrl.js"></script>
             <script src="modules/home/controllers/homeListCtrl.js"></script>
             <script src="modules/home/controllers/homeListDetailCtrl.js"></script>
+            <script src="modules/home/controllers/modalCtrl.js"></script>
         <!-- END MODULE home -->
+        <!-- BEGIN MODULE study -->
+            <script src="modules/study/study.js" ></script>
+            <script src="modules/study/services/studyService.js"></script>
+            <script src="modules/study/directives/studyDirective.js"></script>
+            <script src="modules/study/directives/studyListDirective.js"></script>
+            <script src="modules/study/controllers/studyCtrl.js"></script>
+            <script src="modules/study/controllers/studyListCtrl.js"></script>
+            <script src="modules/study/controllers/studyDetailCtrl.js"></script>
+        <!-- END MODULE study -->
 
         <!-- BEGIN MODULE appointment -->
             <script src="modules/appointment/js/Appointment_helper.js" ></script>
@@ -309,7 +325,21 @@ License: You must have a valid license purchased only from themeforest(the above
             <script src="modules/consultation/controllers/consultationCtrl.js"></script>
             <script src="modules/consultation/controllers/consultationListCtrl.js"></script>
             <script src="modules/consultation/controllers/consultationDetailCtrl.js"></script>
+            <script src="modules/consultation/controllers/patientAdmissionCtrl.js"></script>
+            <script src="modules/consultation/controllers/consultNoteCtrl.js"></script>
+            <script src="modules/consultation/controllers/eFormsCtrl.js"></script>
+            <script src="modules/consultation/controllers/drawingCtrl.js"></script>
         <!-- END MODULE consultation -->
+
+        <!-- BEGIN MODULE eForms -->
+            <script src="modules/eForms/eForms.js" ></script>
+            <script src="modules/eForms/services/eFormsService.js" ></script>
+            <script src="modules/eForms/directives/eFormsDirective.js" ></script>
+            <script src="modules/eForms/directives/eFormsListDirective.js" ></script>
+            <script src="modules/eForms/controllers/eFormsCtrl.js"></script>
+            <script src="modules/eForms/controllers/eFormsListCtrl.js"></script>
+            <script src="modules/eForms/controllers/eFormsDetailCtrl.js"></script>
+        <!-- END MODULE eForms -->
 
         <!-- END CORE ANGULARJS PLUGINS -->
 

@@ -166,7 +166,7 @@ module.exports = {
 
 				// validate Email? hoi a Tan su dung exception
 				if(info.Email!=undefined && info.Email){
-					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
 					if(!EmailPattern.test(info.Email)){
 						error.push({field:"Email",message:"invalid value"});
 						err.pushErrors(error);
@@ -308,6 +308,7 @@ module.exports = {
 			}
 		}
 		else{
+
 			try {
 
 				//validate Title
@@ -449,7 +450,7 @@ module.exports = {
 				// validate Email? hoi a Tan su dung exception
 				if('Email' in info){
 					if(info.Email){
-						var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+						var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
 						if(!EmailPattern.test(info.Email)){
 							error.push({field:"Email",message:"invalid value"});
 							err.pushErrors(error);
@@ -709,7 +710,7 @@ module.exports = {
 			//validate Email
 			if('Email' in info){
 				if(info.Email){
-					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+					var EmailPattern=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/);
 					var Email=info.Email.replace('/[\(\)\s\-]/g','');
 					if(!EmailPattern.test(Email)){
 						error.push({field:"Email",message:"invalid email"});
@@ -775,6 +776,9 @@ module.exports = {
 				}
 			}
 			if(data.Search.UserAccount){
+				if(data.Search.UserAccount[0]=='0'){
+					data.Search.UserAccount = data.Search.UserAccount.substr(1,data.Search.UserAccount.length);
+				}
 				whereClause.UserAccount.PhoneNumber = {
 					like:'%'+data.Search.UserAccount+'%'
 				}
@@ -970,6 +974,11 @@ module.exports = {
 					model: Department,
 					attributes:['UID','DepartmentName'],
 					required: false
+				},
+				{
+					model:Speciality,
+					attributes:['Name','ID'],
+					required:false
 				}
 			],
 			attributes:defaultAtrributes,
@@ -992,6 +1001,7 @@ module.exports = {
 
 	UpdateDoctor: function(data, transaction) {
 		var isHaveRole = false;
+		var uid;
 		return sequelize.transaction()
 		.then(function(t){
 			console.log(data.info);
@@ -1005,15 +1015,15 @@ module.exports = {
 						transaction:t
 					})
 					.then(function(user){
-						var uid = data.info.UserAccount['UID'];
+						uid = data.info.UserAccount['UID'];
 						delete data.info.UserAccount['PhoneNumber'];
 						delete data.info.UserAccount['UserName'];
 						delete data.info.UserAccount['Email'];
 						delete data.info.UserAccount['UID'];
 						delete data.info.UserAccount['Password'];
-						return UserAccount.update(data.info.UserAccount,{
-							where : {
-								UID : uid
+						return Doctor.findOne({
+							where:{
+								UID : data.UID
 							},
 							transaction:t
 						});
@@ -1023,6 +1033,23 @@ module.exports = {
 					});
 				}
 			},function(err){
+				throw err;
+			})
+			.then(function(doctor){
+				return doctor.setSpecialities(data.info.Speciality,{transaction:t});
+			},function(err){
+				t.rollback();
+				throw err;
+			})
+			.then(function(updatedSpecial){
+				return UserAccount.update(data.info.UserAccount,{
+					where : {
+						UID : uid
+					},
+					transaction:t
+				});
+			},function(err){
+				t.rollback();
 				throw err;
 			})
 			.then(function(result){
@@ -1191,7 +1218,8 @@ module.exports = {
 	},
 
 	CreateDoctorByNewAccount : function(data, transaction) {
-		var userUID,DoctorUID;
+		var userUID,userID,Doctors,User;
+		var SpecialityList = [];
 		return sequelize.transaction()
 		.then(function(t){
 			return Services.Doctor.validation(data,true)
@@ -1211,7 +1239,9 @@ module.exports = {
 				throw err;
 			})
 			.then(function(user){
+				User = user;
 				userUID = user.UID;
+				userID = user.ID;
 				data.UserAccountID = user.ID;
 				data.HealthLink = data.HealthLinkID;
 				return Doctor.create(data,{transaction:t});
@@ -1219,26 +1249,32 @@ module.exports = {
 				t.rollback();
 				throw err;
 			})
-			.then(function(result){
-				DoctorUID = result.UID;
-				return RelUserRole.create({
-					UserAccountId : data.UserAccountID,
-					RoleId        : data.RoleId,
-					SiteId        : 1
-				},{transaction:t});
+			.then(function(doctorObj){
+				Doctors = doctorObj;
+				return Doctors.addSpeciality(data.Speciality,{transaction:t});
+			},function(err){
+				console.log(err);
+				t.rollback();
+				throw err;
+			})
+			.then(function(addSpecialitiesComplete){
+				return User.addRole(data.RoleId,{transaction:t});
 			},function(err){
 				t.rollback();
 				throw err;
 			})
 			.then(function(success){
-				success.dataValues.userUID = userUID;
-				success.dataValues.DoctorUID = DoctorUID;
+
 				t.commit();
-				return success;
+				var response = {
+					userID  : userID,
+					userUID : userUID
+				};
+				return response;
 			},function(err){
 				t.rollback();
 				throw err;
-			});
+			})
 		});
 	},
 
@@ -1249,14 +1285,15 @@ module.exports = {
 	},
 
 	UpdateSignature: function(data) {
-		if(data.DoctorUID!=null && data.DoctorUID!=""){
+		console.log(data);
+		if(data!=null && data!=""){
 			return sequelize.transaction()
 			.then(function(t){
 				return Doctor.findAll({
 					attributes:['ID','UserAccountID'],
 					transaction:t,
 					where:{
-						UID:data.DoctorUID
+						UserAccountID:data
 					}
 				})
 				.then(function(result){
@@ -1290,7 +1327,7 @@ module.exports = {
 							Signature: result[0].ID
 						},{
 							where:{
-								UID : data.DoctorUID
+								UserAccountID : data
 							},
 							transaction:t
 						});
@@ -1316,7 +1353,9 @@ module.exports = {
 			});
 		}
 		else{
-			return null;
+			var error = new Error("UpdateSignature.queryError");
+			error.pushError("userID.null");
+			return error;
 		}
 	},
 

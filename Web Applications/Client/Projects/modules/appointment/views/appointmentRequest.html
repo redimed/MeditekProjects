@@ -1,13 +1,30 @@
-<!-- BEGIN PAGE HEADER-->
-<h1 class="my-page-title">Telehealth Appointments Request</h1>
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:;" ui-sref="authentication.home.list">
+                Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <a href="javascript:;" ui-sref="authentication.appointment.list">
+                Telehealth Appointment</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Send Request</b>
+        </li>
+    </ul>
+</div>
+<br>
 
 <div class="row">
     <div class="col-md-12">
         <div class="portlet light bordered" id="form_wizard_1">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class=" icon-layers font-blue-dark"></i>
-                    <span class="caption-subject font-blue-dark bold uppercase"> Send Request -
+                    <i class=" icon-layers font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">{{$state.current.data.pageTitle}} -
                         <span class="step-title"> Step 1 of 2 </span>
                     </span>
                 </div>

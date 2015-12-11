@@ -1,18 +1,27 @@
 package com.redimed.telehealth.patient;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
-import android.os.PowerManager;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -30,8 +39,13 @@ import com.opentok.android.SubscriberKit;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
+import com.redimed.telehealth.patient.utils.Config;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+import com.squareup.picasso.UrlConnectionDownloader;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,41 +56,51 @@ import butterknife.ButterKnife;
 public class CallActivity extends AppCompatActivity implements View.OnClickListener, PublisherKit.PublisherListener, SubscriberKit.VideoListener, Session.SessionListener {
 
     private Intent i;
+    private String TAG = "CALL";
+    private long startTime = 0L;
     private Publisher publisher;
     private MediaPlayer ringtone;
     private Subscriber subscriber;
     private Session sessionOpenTok;
-    private String TAG = "CALL", nameCaller;
+    private long updatedTime = 0L;
+    private long timeSwapBuff = 0L;
+    private long timeInMilliseconds = 0L;
     private ArrayList<Stream> streamOpenTok;
+    private SharedPreferences telehealthPatient;
+    private Handler customHandler = new Handler();
     private static final String LOGTAG = "OpenTok";
     private String sessionId, token, apiKey, to, from;
     private LocalBroadcastManager localBroadcastManager;
     private static final boolean SUBSCRIBE_TO_SELF = false;
 
     @Bind(R.id.fabHold)
-    FloatingActionButton fabHold;
+    Button fabHold;
     @Bind(R.id.fabEndCall)
     FloatingActionButton fabEndCall;
     @Bind(R.id.fabMute)
-    FloatingActionButton fabMute;
+    Button fabMute;
     @Bind(R.id.publisherView)
     RelativeLayout publisherView;
     @Bind(R.id.subscriberView)
     RelativeLayout subscriberView;
     @Bind(R.id.loadingSpinner)
     ProgressBar loadingBar;
-    @Bind(R.id.imgLogoCall)
-    ImageView imgLogoCall;
     @Bind(R.id.btnDecline)
     FloatingActionButton btnDecline;
     @Bind(R.id.btnAnswer)
     FloatingActionButton btnAnswer;
     @Bind(R.id.vfCall)
     ViewFlipper vfCall;
-    @Bind(R.id.lblCaller)
-    TextView lblCaller;
-    @Bind(R.id.imgCaller)
-    ImageView imgCaller;
+    @Bind(R.id.lblNameCaller)
+    TextView lblNameCaller;
+    @Bind(R.id.waitCallLayout)
+    RelativeLayout waitCallLayout;
+    @Bind(R.id.logo)
+    ImageView logo;
+    @Bind(R.id.lblNameDoctor)
+    TextView lblNameDoctor;
+    @Bind(R.id.lblTimer)
+    TextView lblTimer;
 
     BootReceiver receiver = new BootReceiver() {
         @Override
@@ -101,13 +125,8 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         intentFilter.addAction("call.action.end");
         localBroadcastManager.registerReceiver(receiver, intentFilter);
 
+        telehealthPatient = getSharedPreferences("TelehealthUser", getApplicationContext().MODE_PRIVATE);
         streamOpenTok = new ArrayList<Stream>();
-        Picasso.with(getApplicationContext()).load(R.drawable.logo_bg_redimed)
-                .transform(new BlurTransformation(getApplicationContext(), 15))
-                .into(imgLogoCall);
-
-        Picasso.with(getApplicationContext()).load(R.drawable.img_avatar_caller)
-                .into(imgCaller);
 
         btnDecline.setOnClickListener(this);
         btnAnswer.setOnClickListener(this);
@@ -115,17 +134,61 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         fabHold.setOnClickListener(this);
         fabMute.setOnClickListener(this);
 
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancel(0);
+
+        Picasso.with(getApplicationContext()).load(R.drawable.logo_redimed).into(logo);
+
         ListenSocket();
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d(TAG, "CALL START");
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d(TAG, "CALL RESUME");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d(TAG, "CALL PAUSE");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d(TAG, "CALL STOP");
+        super.onStop();
+        this.finish();
+        if (sessionOpenTok != null)
+            sessionOpenTok.disconnect();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "CALL DESTROY");
+        super.onDestroy();
+        localBroadcastManager.unregisterReceiver(receiver);
+        customHandler.removeCallbacks(updateTimerThread);
+        startTime = 0L;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
+            Log.d("Test", "Back button pressed!");
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     private void stopPlaying() {
@@ -136,26 +199,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 ringtone = null;
             }
         }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        this.finish();
-        if (sessionOpenTok != null)
-            sessionOpenTok.disconnect();
-        localBroadcastManager.unregisterReceiver(receiver);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        localBroadcastManager.unregisterReceiver(receiver);
     }
 
     @Override
@@ -180,13 +223,60 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 apiKey = i.getExtras().getString("apiKey");
                 to = i.getExtras().getString("to");
                 from = i.getExtras().getString("from");
-                nameCaller = i.getExtras().getString("fromName");
-                lblCaller.setText(nameCaller == null ? "Calling...." : nameCaller + "calling....");
-                if (!MyApplication.getInstance().IsMyServiceRunning(SocketService.class)){
+                lblNameCaller.setText(i.getExtras().getString("fromName") == null ? " " : i.getExtras().getString("fromName"));
+                lblNameDoctor.setText(i.getExtras().getString("fromName") == null ? " " : i.getExtras().getString("fromName"));
+                LoadImageCaller(Config.apiURLDownload + "test");
+                if (!MyApplication.getInstance().IsMyServiceRunning(SocketService.class)) {
                     startService(new Intent(this, SocketService.class));
                 }
             }
         }
+    }
+
+    private void LoadImageCaller(String url) {
+        Picasso picasso = new Picasso.Builder(getApplicationContext())
+                .downloader(new UrlConnectionDownloader(getApplicationContext()) {
+                    @Override
+                    protected HttpURLConnection openConnection(Uri uri) throws IOException {
+                        HttpURLConnection connection = super.openConnection(uri);
+                        connection.addRequestProperty("Authorization", "Bearer " + telehealthPatient.getString("token", null));
+                        connection.addRequestProperty("DeviceID", telehealthPatient.getString("deviceID", null));
+                        connection.addRequestProperty("SystemType", "ARD");
+                        connection.addRequestProperty("Cookie", telehealthPatient.getString("cookie", null));
+                        connection.addRequestProperty("AppID", "com.redimed.telehealth.patient");
+                        return connection;
+                    }
+                })
+                .listener(new Picasso.Listener() {
+                    @Override
+                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+                        Log.d("ERROR PICASSO", exception.getLocalizedMessage());
+                    }
+                }).build();
+
+        picasso.with(getApplicationContext()).load(url).transform(new BlurTransformation(getApplicationContext(), 15))
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                            waitCallLayout.setBackgroundDrawable(new BitmapDrawable(getApplicationContext().getResources(), bitmap));
+                            waitCallLayout.invalidate();
+                        } else {
+                            waitCallLayout.setBackground(new BitmapDrawable(getApplicationContext().getResources(), bitmap));
+                            waitCallLayout.invalidate();
+                        }
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        waitCallLayout.setBackgroundResource(R.drawable.call_blank_avatar);
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                        Log.d(TAG, "Prepare Load");
+                    }
+                });
     }
 
     @Override
@@ -270,22 +360,24 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     //Click button hold on a call
     private void HoldCommunication() {
         if (publisher.getPublishVideo() == true) {
-            publisher.setPublishAudio(false);
+//            publisher.setPublishAudio(false);
             subscriber.setSubscribeToAudio(false);
             publisher.setPublishVideo(false);
-            fabMute.setImageResource(R.drawable.icon_mute);
         } else {
-            publisher.setPublishAudio(true);
+//            publisher.setPublishAudio(true);
             subscriber.setSubscribeToAudio(true);
             publisher.setPublishVideo(true);
-            fabMute.setImageResource(R.drawable.icon_unmute);
         }
     }
 
     //Click button mute sound when call
     private void MuteCommunication() {
         publisher.setPublishAudio(!publisher.getPublishAudio());
-        fabMute.setImageResource(publisher.getPublishAudio() ? R.drawable.icon_unmute : R.drawable.icon_mute);
+        if (publisher.getPublishAudio()){
+            fabMute.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_unmute, 0, 0, 0);
+        }else {
+            fabMute.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_mute, 0, 0, 0);
+        }
     }
 
     //Initialize session to make connect between application and Open Tok
@@ -294,8 +386,24 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             sessionOpenTok = new Session(CallActivity.this, apiKey, sessionId);
             sessionOpenTok.setSessionListener(this);
             sessionOpenTok.connect(token);
+            customHandler.postDelayed(updateTimerThread, 0);
         }
     }
+
+    private Runnable updateTimerThread = new Runnable() {
+        public void run() {
+            timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+            updatedTime = timeSwapBuff + timeInMilliseconds;
+            int secs = (int) (updatedTime / 1000) % 60;
+            int min = (int) ((updatedTime / (1000 * 60)) % 60);
+            int hours = (int) ((updatedTime / (1000 * 60 * 60)) % 24);
+            secs = secs % 60;
+            int milliseconds = (int) (updatedTime % 1000);
+            lblTimer.setText("" + min + ":" + String.format("%02d", secs));
+            customHandler.postDelayed(this, 0);
+        }
+    };
+
 
     //Initialize view Publisher (Patient)
     private void AttachPublisherView(Publisher paramPublisher) {
@@ -306,6 +414,8 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         layoutPublisher.topMargin = dpToPx(8);
         layoutPublisher.rightMargin = dpToPx(8);
         publisherView.addView(publisher.getView(), layoutPublisher);
+        fabMute.setEnabled(true);
+        fabHold.setEnabled(true);
     }
 
     //Initialize view Subscriber (Clinic)

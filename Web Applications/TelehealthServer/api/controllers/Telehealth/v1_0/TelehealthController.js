@@ -22,7 +22,7 @@ module.exports = {
         var uid = params.uid;
         var headers = req.headers;
         var deviceType = headers.systemtype;
-        if (!uid || !deviceType || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
+        if (!uid || !deviceType) {
             var err = new Error("Telehealth.GetPatientDetails.Error");
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
@@ -60,7 +60,7 @@ module.exports = {
         var uid = params.uid;
         var headers = req.headers;
         var deviceType = headers.systemtype;
-        if (!uid || !deviceType || HelperService.const.systemType[deviceType.toLowerCase()] == undefined) {
+        if (!uid || !deviceType) {
             var err = new Error("Telehealth.GetTelehealthUser.Error");
             err.pushError("Invalid Params");
             return res.serverError(ErrorWrap(err));
@@ -76,7 +76,7 @@ module.exports = {
                         UserAccountID: user.ID
                     },
                     defaults: {
-                        UID: UUIDService.GenerateUUID()
+                        UID: UUIDService.Create()
                     }
                 }).spread(function(teleUser, created) {
                     if (teleUser) return res.ok(teleUser);
@@ -167,16 +167,16 @@ module.exports = {
         var deviceType = req.headers.systemtype;
         var deviceToken = info.token;
         var uid = info.uid;
-        if (deviceToken && uid && deviceType && deviceId && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
+        if (deviceToken && uid && deviceType && deviceId) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 TelehealthDevice.findOrCreate({
                     where: {
                         TelehealthUserID: teleUser.ID,
                         DeviceID: deviceId,
-                        Type: HelperService.const.systemType[deviceType.toLowerCase()]
+                        Type: deviceType
                     },
                     defaults: {
-                        UID: UUIDService.GenerateUUID(),
+                        UID: UUIDService.Create(),
                         DeviceToken: deviceToken
                     }
                 }).spread(function(device, created) {
@@ -210,7 +210,7 @@ module.exports = {
         var deviceId = req.headers.deviceid;
         var deviceType = req.headers.systemtype;
         var phoneRegex = /^\+[0-9]{9,15}$/;
-        if (phoneNumber && phoneNumber.match(phoneRegex) && deviceId && deviceType && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
+        if (phoneNumber && phoneNumber.match(phoneRegex) && deviceId && deviceType) {
             UserAccount.find({
                 where: {
                     PhoneNumber: phoneNumber
@@ -223,13 +223,13 @@ module.exports = {
                         method: 'POST',
                         body: {
                             UserUID: user.UID,
-                            Type: HelperService.const.systemType[deviceType.toLowerCase()],
+                            Type: deviceType,
                             DeviceID: deviceId,
                             AppID: req.headers.appid
                         },
                         headers: {
                             'DeviceID': req.headers.deviceid,
-                            'SystemType': HelperService.const.systemType[deviceType.toLowerCase()],
+                            'SystemType': deviceType,
                             'AppID': req.headers.appid
                         }
                     }).then(function(response) {
@@ -272,7 +272,7 @@ module.exports = {
         var deviceId = req.headers.deviceid;
         var deviceType = req.headers.systemtype;
         var phoneRegex = /^\+[0-9]{9,15}$/;
-        if (phoneNumber && phoneNumber.match(phoneRegex) && verifyCode && deviceId && deviceType && HelperService.const.systemType[deviceType.toLowerCase()] != undefined) {
+        if (phoneNumber && phoneNumber.match(phoneRegex) && verifyCode && deviceId && deviceType) {
             UserAccount.find({
                 where: {
                     PhoneNumber: phoneNumber
@@ -287,14 +287,14 @@ module.exports = {
                                 method: 'GET',
                                 params: {
                                     UserUID: user.UID,
-                                    SystemType: HelperService.const.systemType[deviceType.toLowerCase()],
+                                    SystemType: deviceType,
                                     DeviceID: deviceId,
                                     AppID: req.headers.appid,
                                     VerificationCode: verifyCode
                                 },
                                 headers: {
                                     'DeviceID': req.headers.deviceid,
-                                    'SystemType': HelperService.const.systemType[deviceType.toLowerCase()],
+                                    'SystemType': deviceType,
                                     'AppID': req.headers.appid
                                 }
                             }).then(function(response) {
@@ -370,7 +370,7 @@ module.exports = {
                 body: title ? title : 'Notification From REDiMED'
             }
         };
-        TelehealthUser.FindByUID(uid).then(function(teleUser) {
+        TelehealthService.FindByUID(uid).then(function(teleUser) {
             if (teleUser) {
                 TelehealthDevice.findAll({
                     where: {

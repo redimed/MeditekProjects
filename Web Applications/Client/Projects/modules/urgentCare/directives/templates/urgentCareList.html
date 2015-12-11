@@ -1,30 +1,43 @@
 <!-- BEGIN PAGE HEADER-->
-<h1 class="my-page-title">Urgent Care</h1>
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:;" ui-sref="authentication.home.list">
+                Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Urgent Care</b>
+        </li>
+    </ul>
+</div>
+<br>
 <!-- END PAGE HEADER-->
 
-<div class="portlet light bordered">
+<div class="portlet box green">
     <div class="portlet-title">
-        <div class="caption font-green">
-            <i class="icon-list font-green"></i>
+        <div class="caption">
+            <i class="icon-list"></i>
             <span class="caption-subject bold uppercase">Urgent Care</span>
         </div>
         <div class="actions">
-            <a href="javascript:;" class="btn btn-circle red-thunderbird btn-sm" ng-click="toggleFilter()">
+            <a href="javascript:;" class="btn red-thunderbird btn-sm" ng-click="toggleFilter()">
                 <i class="fa fa-filter"></i> Filter
             </a>
-            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a>
+            <!-- <a class="btn btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a> -->
         </div>
     </div>
     <div class="portlet-body">
         <!-- begin table -->
-        <div class="row">
+        <div class="row margin-top-10">
             <div class="col-md-12 col-sm-12">
                 <div class="table-scrollable table-scrollable-borderless">
-                    <table class="table table-bordered table-striped table-condensed flip-content table-hover">
+                    <table class="table table-bordered table-striped table-hover">
                     <!-- <table class="table table-hover table-bordered flip-content"> -->
                         <thead class="flip-content">
                             <tr>
-                                <th>#</th>
+                                <th width="1">#</th>
                                 <th>
                                     Full Name
                                     <i class="fa fa-sort-asc"  ng-click="sort('FirstName','ASC')" ng-show="fieldSort.FirstName=='ASC'"></i>
@@ -113,7 +126,7 @@
                         boundary-links="true " 
                         total-items="count " 
                         ng-model="searchObjectMap.currentPage " 
-                        class="pagination-sm " 
+                        class="pagination-lg " 
                         previous-text="&lsaquo; " 
                         next-text="&rsaquo; " 
                         first-text="&laquo; " 

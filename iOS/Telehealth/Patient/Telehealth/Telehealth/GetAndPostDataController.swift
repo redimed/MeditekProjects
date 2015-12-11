@@ -14,15 +14,33 @@ import SwiftyJSON
 class GetAndPostDataController {
     
     
-    let headers = [
+    var headers = [
         "Authorization": "Bearer \(tokens)",
         "Version" : "1.0",
         "systemtype": "IOS",
-        "deviceId" : config.deviceID! as String,
+        "deviceId" : "",
         "useruid":"\(userUID ?? "")",
         "Cookie": cookies as String,
         "appid":UIApplication.sharedApplication().bundleID()
     ]
+    
+    func setHeader(){
+        if let token = defaults.valueForKey("token") as? String {
+            headers["Authorization"] =  "Bearer \(token)"
+        }
+        if let userUIDs = defaults.valueForKey("userUID") as? String{
+            headers["useruid"] = "\(userUIDs ?? "")"
+        }
+        if let cookie = defaults.valueForKey("Set-Cookie") as? String{
+            
+            headers["Cookie"] = cookie as String
+        }
+        if let deviceId = defaults.valueForKey("deviceID") as? String{
+            
+            headers["deviceId"] = deviceId as String
+        }
+
+    }
     
     func setNewToken(token:String,refreshCode:String){
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -34,14 +52,14 @@ class GetAndPostDataController {
         tokens = token
     }
     //Giap: Check phone number and send verify code
-    func SendVerifyPhoneNumber (deviceID:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
+    func SendVerifyPhoneNumber (var phoneNumber:String,completionHandler:(JSON) -> Void){
+        setHeader()
         //Split number 0
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         let parameters = [
             "data": [
 //                 "phone":"+61"+phoneNumber,
                 "phone":"+841654901590",
-                "deviceId":deviceID,
                 "deviceType": "ios"
             ]
         ]
@@ -54,8 +72,8 @@ class GetAndPostDataController {
             }
             switch result {
             case .Success(let JSONData):
-                    print(JSONData)
-                 completionHandler(JSON(JSONData))
+                print(JSONData)
+                completionHandler(JSON(JSONData))
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
                 completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
@@ -68,24 +86,24 @@ class GetAndPostDataController {
     }
     
     //Giap: Check verify code
-    func CheckVerifyPhoneNumber (verifyCode:String,deviceID:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
-        
+    func CheckVerifyPhoneNumber (verifyCode:String,var phoneNumber:String,completionHandler:(JSON) -> Void){
+        setHeader()
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         let parameters = [
             "data": [
                 "code":verifyCode,
-                "deviceId":deviceID,
                 "deviceType": "ios",
 //                 "Phone":"+61" + phoneNumber
                 "phone":"+841654901590"
             ]
         ]
+    
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.CheckVerifyCode ,headers:headers, parameters: parameters).responseJSON{
             request, response, result in
-            print("Reponse--",response)
+            
             switch result {
             case .Success(let JSONData):
-                print(JSON(JSONData))
+                
                 var data = JSON(JSONData)
                 if data["ErrorType"] == nil {
                     let verifyCode = data["verifyCode"].string! as String
@@ -95,12 +113,12 @@ class GetAndPostDataController {
                         dataResponse in
                         completionHandler(dataResponse)
                     }
-
+                    
                 }else {
                     completionHandler(data)
                 }
                 
-                case .Failure(let data, let error):
+            case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
                 completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
                 if let data = data {
@@ -111,26 +129,30 @@ class GetAndPostDataController {
     }
     
     func loginApi(userUID userUID:String,patientUID:String,verifyCode:String,completionHandler:(JSON) -> Void){
+        setHeader()
+         let deviceId = defaults.valueForKey("deviceID") as? String
+            
         let parameters = [
-                "UserName":"1",
-                "Password":"2",
-                "UserUID": userUID,
-                "DeviceID":config.deviceID! as String,
-                "VerificationToken":verifyCode,
-                "AppID":UIApplication.sharedApplication().bundleID()
+            "UserName":"1",
+            "Password":"2",
+            "UserUID": userUID,
+            "DeviceID":deviceId! as String,
+            "VerificationToken":verifyCode,
+            "AppID":UIApplication.sharedApplication().bundleID()
         ]
-        Alamofire.request(.POST, ConfigurationSystem.Http_3005 + UrlAPICheckPhoneNumber.apiLogin ,headers:headers, parameters: parameters).responseJSON{
+    
+        Alamofire.request(.POST, ConfigurationSystem.Http_3006 + UrlAPICheckPhoneNumber.apiLogin ,headers:headers, parameters: parameters).responseJSON{
             request, response, result in
-            print("Reponse--",response)
             if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
                 if requireupdatetoken as! String == "true" {
-                    print("Reponse",requireupdatetoken)
+                    print("Update token",requireupdatetoken)
                     self.getNewToken()
                 }
             }
             switch result {
             case .Success(let JSONData):
                 let data = JSON(JSONData)
+        
                 self.informationUser(data,patientUID: patientUID){
                     dataResponse in
                     completionHandler(dataResponse)
@@ -149,19 +171,23 @@ class GetAndPostDataController {
     
     
     func informationUser(data:JSON,patientUID:String ,completionHandler:(JSON) -> Void){
-        print("get uer------",data)
+        setHeader()
+        
+        
         let uid = data["user"]["UID"].string! as String
         let token = data["token"].string! as String
         let refreshCode = data["refreshCode"].string! as String
+        headers["Authorization"] = "Bearer \(token)"
+        
         Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getUserInfo + uid ,headers:headers).responseJSON{
             request, response, result in
             if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
                 if requireupdatetoken as! String == "true" {
-                    print("Reponse",requireupdatetoken)
+                    print("Update token",requireupdatetoken)
                     self.getNewToken()
                 }
             }
-
+            
             switch result {
             case .Success(let JSONData):
                 let data = JSON(JSONData)
@@ -174,8 +200,6 @@ class GetAndPostDataController {
                     "status":"success"
                 ]
                 completionHandler(JSON(userInfo))
-                
-                
             case .Failure(let data, let error):
                 completionHandler(JSON(data!))
                 print("Request failed with error: \(error)")
@@ -184,17 +208,19 @@ class GetAndPostDataController {
                 }
             }
         }
-
+        
     }
-
-
+    
+    
     
     //Giap: Get information Patient by UID
     func getInformationPatientByUUID(UUID:String,completionHandler:(JSON) -> Void){
+        setHeader()
         Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getInformationPatientByUID + UUID,headers:headers).responseJSON{
             request, response, result in
             if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
                 if requireupdatetoken as! String == "true" {
+                    print("Update token",requireupdatetoken)
                     self.getNewToken()
                 }
             }
@@ -203,9 +229,10 @@ class GetAndPostDataController {
                 
                 var data = JSON(JSONData)
                 
-                print(data)
+                
                 let jsonInformation = data["data"][0] != nil ? data["data"][0] : ""
                 if jsonInformation == "" {
+                    print("error--",data)
                     completionHandler(JSON(["message":"error","ErrorType":data["ErrorType"]]))
                     
                 }else {
@@ -237,31 +264,29 @@ class GetAndPostDataController {
                 }
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
-                
                 completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
-                
                 if let data = data {
                     print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
                 }
             }
-            
         }
-        
     }
     
     //Giap: Get List Appointment
     func getListAppointmentByUID(UID:String,Limit:String,completionHandler:(JSON) -> Void) {
+        
+        setHeader()
         Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentList + UID ,headers:headers).responseJSON{
             request, response, result in
-          
             if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
                 if requireupdatetoken as! String == "true" {
+                    print("Update token",requireupdatetoken)
                     self.getNewToken()
                 }
             }
             switch result {
             case .Success(let JSONData):
-                print(JSON(JSONData))
+                
                 completionHandler(JSON(JSONData))
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
@@ -278,6 +303,7 @@ class GetAndPostDataController {
     //GIap:Upload Image
     func uploadImage(image:UIImage,userUID:String,completionHandler:(JSON) -> Void)
     {
+        setHeader()
         let imageData = UIImagePNGRepresentation(image)
         let fileType = "MedicalImage"
         Alamofire.upload(
@@ -304,6 +330,12 @@ class GetAndPostDataController {
                 switch encodingResult {
                 case .Success(let upload, _, _):
                     upload.responseJSON { response in
+                        if let requireupdatetoken = response.1!.allHeaderFields["requireupdatetoken"] {
+                            if requireupdatetoken as! String == "true" {
+                                print("Update token",requireupdatetoken)
+                                self.getNewToken()
+                            }
+                        }
                         completionHandler(JSON(response.2.value!))
                     }
                 case .Failure(let encodingError):
@@ -316,6 +348,7 @@ class GetAndPostDataController {
     
     //update Image to Appointment
     func updateImageToAppointment(fileUID:String,apptID:String,completionHandler:(JSON) -> Void){
+        setHeader()
         let parameters = [
             "data": [
                 "fileUID" : fileUID,
@@ -324,10 +357,10 @@ class GetAndPostDataController {
         ]
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlInformationPatient.updateImageToAppointment,headers:headers, parameters: parameters).responseJSON{
             request, response, result in
-            print("reuturn response",response)
+            
             if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
                 if requireupdatetoken as! String == "true" {
-                    print("Reponse",requireupdatetoken)
+                    print("Update token",requireupdatetoken)
                     self.getNewToken()
                 }
             }
@@ -348,13 +381,14 @@ class GetAndPostDataController {
     }
     //Get appointment Details
     func getAppointmentDetails(appointmentUID:String,type:String,completionHandler:(JSON) -> Void){
+        setHeader()
         if type == "TEL"{
             Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentDetails + appointmentUID,headers:headers).responseJSON{
                 request, response, result in
                 if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
                     
                     if requireupdatetoken as! String == "true" {
-                        print("Reponse",requireupdatetoken)
+                        print("Update token",requireupdatetoken)
                         self.getNewToken()
                     }
                 }
@@ -362,10 +396,10 @@ class GetAndPostDataController {
                 switch result {
                 case .Success(let JSONData):
                     var data = JSON(JSONData)
-                    print("--------details:----",data)
+                    
                     let jsonImage = data["data"]["FileUploads"] != nil ? data["data"]["FileUploads"] : ""
                     if jsonImage == "" {
-                        completionHandler(JSON(["message":"error"]))
+                        completionHandler(JSON(["message":"NoImage"]))
                     }else {
                         completionHandler(jsonImage)
                     }
@@ -382,17 +416,17 @@ class GetAndPostDataController {
         }else{
             Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getWAADetails + appointmentUID,headers:headers).responseJSON{
                 request, response, result in
-                print("Reponse getAppointmentDetails WAA",response!.allHeaderFields)
+                print("Reponse getAppointmentDetails WAA",response)
                 if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
                     if requireupdatetoken as! String == "true" {
-                        print("Reponse",requireupdatetoken)
+                        print("Update Token",requireupdatetoken)
                         self.getNewToken()
                     }
                 }
                 switch result {
                 case .Success(let JSONData):
                     var data = JSON(JSONData)
-                    print("--------details:----",data)
+                    print("data---WA--",data)
                     let jsonImage = data["data"]["FileUploads"] != nil ? data["data"]["FileUploads"] : ""
                     if jsonImage == "" {
                         completionHandler(JSON(["message":"error"]))
@@ -413,11 +447,13 @@ class GetAndPostDataController {
     
     //get image by image UID
     func getImageAppointment(imageUID:String,completionHandler:(NSData) -> Void){
+        setHeader()
         Alamofire.request(.GET,  ConfigurationSystem.Http_3005 + UrlInformationPatient.downloadImage+"/\(imageUID)", headers:headers)
             .responseData { response in
                 if let requireupdatetoken = response.1?.allHeaderFields["requireupdatetoken"] {
                     
                     if requireupdatetoken as! String == "true" {
+                        print("Update token",requireupdatetoken)
                         self.getNewToken()
                     }
                 }
@@ -439,16 +475,23 @@ class GetAndPostDataController {
             let parameters = [
                 "refreshCode" : refreshCode
             ]
-            Alamofire.request(.POST,ConfigurationSystem.Http_3005 + UrlInformationPatient.getNewToken, headers:headers, parameters: parameters)
+            setHeader()
+            Alamofire.request(.POST,ConfigurationSystem.Http_3006 + UrlInformationPatient.getNewToken, headers:headers, parameters: parameters)
                 .responseJSON {
                     request, response, result in
                     switch result {
                     case .Success(let JSONData):
                         let data = JSON(JSONData)
                         
-                        if  data["refreshCode"].string! != refreshCode{
-                            self.setNewToken(data["token"].string!,refreshCode: data["refreshCode"].string!)
+                        if data["refreshCode"].string != nil{
+                            if  data["refreshCode"].string! != refreshCode{
+                                
+                                self.setNewToken(data["token"].string!,refreshCode: data["refreshCode"].string!)
+                            }
+                        }else {
+                            print("----------Error------",data)
                         }
+                        
                     case .Failure(let data, let error):
                         print("Request failed with error: \(error)")
                         if let data = data {
@@ -459,7 +502,6 @@ class GetAndPostDataController {
         }
     }
     func updateTokenPush(uuid:String){
-        print("aaaaaaaaa",defaults.valueForKey("deviceToken"))
         if let deviceToken = defaults.valueForKey("deviceToken"){
             let parameters = [
                 "data" : [
@@ -467,21 +509,14 @@ class GetAndPostDataController {
                     "token":deviceToken
                 ]
             ]
-             print(parameters)
-            let headersPush = [
-                "Authorization": "Bearer \(tokens)",
-                "Version" : "1.0",
-                "systemtype": "IOS",
-                "deviceId" : config.deviceID! as String,
-                "useruid":"\(userUID ?? "")",
-                "Cookie": cookies as String,
-                "appid":UIApplication.sharedApplication().bundleID()
-            ]
-            Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.updateTokenPush, headers:headersPush, parameters: parameters)
+            setHeader()
+            
+            Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.updateTokenPush, headers:headers, parameters: parameters)
                 .responseJSON {
                     request, response, result in
                     if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
                         if requireupdatetoken as! String == "true" {
+                            print("Update token",requireupdatetoken)
                             self.getNewToken()
                         }
                     }
@@ -489,7 +524,6 @@ class GetAndPostDataController {
                     case .Success(let JSONData):
                         let data = JSON(JSONData)
                         print("data---",data)
-                        
                     case .Failure(let data, let error):
                         print("Request failed with error: \(error)")
                         if let data = data {
@@ -498,7 +532,38 @@ class GetAndPostDataController {
                     }
             }
         }
-       
+    }
+    
+    func pushNotification(title:String,uid:String,category:String,data:String,completionHandler:(JSON) -> Void){
+        setHeader()
+        let parameters = [
+            "title":title,
+            "uid":uid,
+            "category":category,
+            "data":data
+        ]
+        Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.pushNotify, headers:headers, parameters: parameters)
+            .responseJSON {
+                request, response, result in
+                if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
+                    if requireupdatetoken as! String == "true" {
+                        print("Update token",requireupdatetoken)
+                        self.getNewToken()
+                    }
+                }
+                switch result {
+                case .Success(let JSONData):
+                    let data = JSON(JSONData)
+                    print("data---",data)
+                    
+                case .Failure(let data, let error):
+                    print("Request failed with error: \(error)")
+                    if let data = data {
+                        print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                    }
+                }
+        }
+        
     }
     
     

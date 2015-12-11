@@ -1,0 +1,21 @@
+{
+	"source": {
+	    "include": [ 
+	    	"./api",
+	    	"./config"
+    	],
+	    "includePattern": ".+\\.js(doc)?$",
+	    "excludePattern": "(^|\\/|\\\\)_"
+	},
+
+	"templates":{
+		"default":{
+			"useLongnameInNav":true
+		}
+	},
+	
+	"opts": {
+		"encoding": "utf8",
+		"destination": "./jsdocs/"
+	}
+}

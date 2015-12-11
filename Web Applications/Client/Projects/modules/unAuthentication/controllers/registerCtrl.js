@@ -2,7 +2,7 @@ var app = angular.module('app.unAuthentication.register.controller', [
 ]);
 
 app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $cookies, CommonService, doctorService, UnauthenticatedService){
-	
+	$scope.ermsg = {};
 	// List country
 	UnauthenticatedService.listCountry()
 	.then(function(result) {
@@ -15,59 +15,53 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
     	$state.go('unAuthentication.login', {
     		reload: true
     	});
-    }
+    };
 
-	// Check MobilePhone
+    $scope.checkDataNull = function(name){
+		    	if($scope.data[name].length==0)
+		    		$scope.data[name] = null;
+		    };
+
+	// Check User
 	$scope.checkUser = function(data) {
 		$scope.loadingpage = true;
 		$scope.validateCheck(data)
 		.then(function(success) {
-
-			UnauthenticatedService.checkUserNameAccount(data)
-			.then(function(result) {
-
-				if(result.length > 0) {
+			if(data.Password === data.RePassword){
+				UnauthenticatedService.checkUserStep1(data)
+				.then(function(result) {
+					$scope.step++;
 					$scope.loadingpage = false;
-					toastr.error('Username already exists');
-				} else {
-
-					UnauthenticatedService.checkPhoneUserAccount(data)
-					.then(function(result2) {
-
-						if(result2.length > 0) {
-							$scope.loadingpage = false;
-							toastr.error('MobilePhone already exists');
-						} else {
-							
-							UnauthenticatedService.checkEmailAccount(data)
-							.then(function(result3) {
-
-								if(result3.length > 0) {
-									$scope.loadingpage = false;
-									toastr.error('Email already exists');
-								} else {
-
-									$scope.step++;
-									$scope.loadingpage = false;
-									
-								} // end else
-							
-							}, function(err) {
-								$scope.loadingpage = false;
-							}) // end check email
-							
-						} // end else
-
-					}, function(err) {
-						$scope.loadingpage = false;
-					}) // end check Mobile
-
-				} // end else
-
-			}) // end check Username
-		
-		}, function(err) {
+				},function(err){
+					console.log(err);
+					$scope.loadingpage = false;
+					toastr.error("Please check data","Error");
+					for(var i = 0; i < err.data.ErrorsList.length; i++){
+						$scope.ermsg[err.data.ErrorsList[i].field] = {};
+						$scope.ermsg[err.data.ErrorsList[i].field].css = {'border': '2px solid #DCA7B0'};
+						$scope.ermsg[err.data.ErrorsList[i].field].msg = err.data.ErrorsList[i].message;
+					}
+				}); // end check
+			}
+			else {
+				toastr.error("Password and RePassword does not match", "Error");
+				$scope.loadingpage = false;
+				$scope.ermsg['Password'] = {};
+				$scope.ermsg['Password'].css = {'border': '2px solid #DCA7B0'};
+				$scope.ermsg['Password'].msg = "does not match";
+				$scope.ermsg['RePassword'] = {};
+				$scope.ermsg['RePassword'].css = {'border': '2px solid #DCA7B0'};
+				$scope.ermsg['RePassword'].msg = "does not match";
+			}
+		},function(err){
 			$scope.loadingpage = false;
+			console.log(err);
+			toastr.error("Please check data","Error");
+			for(var i = 0; i < err.length; i++) {
+				$scope.ermsg[err[i].field] = {};
+				$scope.ermsg[err[i].field].css = {'border': '2px solid #DCA7B0'};
+				$scope.ermsg[err[i].field].msg = err[i].message;
+			}
 		});
 			
 	}
@@ -95,10 +89,34 @@ app.controller('registerCtrl', function($scope, $state, FileUploader, toastr, $c
                         location: 'replace',
                         reload: true
                     });
-                }, function(err) {});
+                }, function(err) {
+                	console.log(err);
+                });
                         
-            }, function(err) {});
-        }, function(err) {});
+            }, function(err) {
+            	console.log(err);
+            	toastr.error("Please check data","Error");
+				for(var i = 0; i < err.data.ErrorsList.length; i++){
+					$scope.ermsg[err.data.ErrorsList[i].field] = {};
+					$scope.ermsg[err.data.ErrorsList[i].field].css = {'border': '2px solid #DCA7B0'};
+					$scope.ermsg[err.data.ErrorsList[i].field].msg = err.data.ErrorsList[i].message;
+					if(err.data.ErrorsList[i].field=="captcha"){
+						$('iframe').css("border","2px solid #DCA7B0");
+					}
+				}
+            });
+        }, function(err) {
+        	toastr.error("Please check data!","Error");
+        	console.log(err);
+        	for(var i = 0; i < err.length; i++) {
+				$scope.ermsg[err[i].field] = {};
+				$scope.ermsg[err[i].field].css = {'border': '2px solid #DCA7B0'};
+				$scope.ermsg[err[i].field].msg = err[i].message;
+				if(err[i].field=="captcha"){
+					$('iframe').css("border","2px solid #DCA7B0");
+				}
+			}
+        });
 
     }
 

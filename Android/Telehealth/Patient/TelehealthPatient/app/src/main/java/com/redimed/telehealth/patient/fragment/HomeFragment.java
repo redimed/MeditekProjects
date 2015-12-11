@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.redimed.telehealth.patient.MainActivity;
@@ -56,6 +57,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     ViewPager slider;
     @Bind(R.id.circleIndicator)
     PageIndicator circleIndicator;
+    @Bind(R.id.logo)
+    ImageView logo;
 
     public HomeFragment() {}
 
@@ -65,6 +68,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         v = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, v);
 
+        Picasso.with(v.getContext()).load(R.drawable.logo_redimed).into(logo);
         fragmentManager = getActivity().getSupportFragmentManager();
         sliderImageAdapter = new SliderImageAdapter(v.getContext());
         slider.setAdapter(sliderImageAdapter);

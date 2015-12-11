@@ -22,17 +22,34 @@ angular.module('app.authentication.doctor.directive.create', [])
 
 		    // FILTERS
 		    uploader.filters.push({
-		        name: 'customFilter',
-		        fn: function (item /*{File|FileLikeObject}*/, options) {
-		            return this.queue.length < 10;
-		        }
-		    });
+	            name: 'imageFilter',
+	            fn: function(item /*{File|FileLikeObject}*/, options) {
+	                var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+	                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+	            }
+	        });
 
 		    // CALLBACKS
 		    uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
 		        // console.info('onWhenAddingFileFailed', item, filter, options);
 		    };
 		    uploader.onAfterAddingFile = function (fileItem) {
+		    	for(var i = 0; i < uploader.queue.length; i++){
+		    		if(uploader.queue[i].formData.length!=0){
+		    			if(uploader.queue[i].formData[0].fileType==$scope.typeFile){
+		    				uploader.queue.splice(i,1);
+		    			}
+		    		}
+		    	}
+		    	fileItem.formData[0] = {};
+		    	fileItem.formData[0].fileType = $scope.typeFile;
+		    	if($scope.typeFile == "ProfileImage"){
+		    		$scope.isChoseAvatar = true;
+		    	}
+		    	if($scope.typeFile == "Signature"){
+		    		$scope.isChoseSignature = true;
+		    	}
+		    	console.log(uploader.queue);
 		    };
 
 		    uploader.onAfterAddingAll = function (addedFileItems) {
@@ -84,10 +101,17 @@ angular.module('app.authentication.doctor.directive.create', [])
 
 		},
 		link: function(scope, ele, attr) {
+			scope.canvas;
+			scope.ctx;
+			scope.canvas1;
+			scope.ctx1;
 			scope.value;
 			scope.isStep2 = false;
 			scope.er={};
+			scope.special = [];
 			scope.ermsg={};
+			scope.isChoseAvatar = false;
+			scope.isChoseSignature = false;
 			$timeout(function(){
 				scope.data ={};
 				App.initAjax();
@@ -109,6 +133,10 @@ angular.module('app.authentication.doctor.directive.create', [])
 
 			// Back
 			scope.back_1 = function() {
+				delete scope.data['DepartmentID'];
+				delete scope.data['ProviderNumber'];
+				delete scope.data['Speciality'];
+				scope.disableVerify = false;
 				$("#tab1 :input").removeAttr("disabled");
 				$("#RoleId span").removeAttr("class");
 				scope.ermsg = {};
@@ -121,7 +149,10 @@ angular.module('app.authentication.doctor.directive.create', [])
 			};
 
 			scope.back_2 = function() {
-				delete scope.data['DepartmentID','ProviderNumber'];
+				delete scope.data['DepartmentID'];
+				delete scope.data['ProviderNumber'];
+				delete scope.data['Speciality'];
+				scope.disableConfirm = false;
 				scope.ermsg ={};
 				$('#info2 :input').prop('disabled', false);
 				scope.isBlockStep1 =false;
@@ -171,6 +202,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 
 			// Check validate and Phone and Email
 			scope.checkUserExist = function(data){
+				scope.disableVerify = true;
 				doctorService.validateCheckPhone(data)
 				.then(function(result){
 					scope.er ={};
@@ -178,6 +210,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 					.then(function(result){
 						console.log(result.data);
 						if(result.data!="") {
+							scope.disableVerify = false;
 							toastr.error("Wrong data!","Error");
 							console.log(result.data[0]);
 							scope.er ={};
@@ -204,10 +237,19 @@ angular.module('app.authentication.doctor.directive.create', [])
 							scope.data.CountryID       = 14;
 						}
 					},function(err){
-						console.log(err);
+						scope.disableVerify = false;
+						toastr.error("Wrong data!","Error");
+						console.log(result.data[0]);
+						scope.er ={};
+						scope.ermsg ={};
+						for(var i = 0; i < err.data.message.ErrorsList.length; i++){
+							scope.er[err.data.message.ErrorsList[i].field] ={'border': '2px solid #DCA7B0'};
+							scope.ermsg[err.data.message.ErrorsList[i].field] = err.data.message.ErrorsList.message;
+						}
 					});
 				},function(err){
 					console.log(err);
+					scope.disableVerify = false;
 					toastr.error("Data error, check data again","Error!!!");
 		    		scope.er ={};
 					scope.ermsg ={};
@@ -225,6 +267,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 			};
 
 			scope.CheckInformation = function(data){
+				scope.disableConfirm = true;
 				doctorService.validate(data)
 				.then(function(success) {
 					doctorService.checkInfo(data)
@@ -236,7 +279,19 @@ angular.module('app.authentication.doctor.directive.create', [])
 						scope.isShowNext4=true;
 						data.DepartmentID = null;
 						data.ProviderNumber = null;
+						data.Speciality =[];
 						$('#info2 :input').prop('disabled', true);
+						doctorService.getSpecialities()
+						.then(function(result){
+							scope.special = angular.copy(result.data);
+							console.log(scope.special);
+							$timeout(function(){
+								$('.select2-multiple').select2();
+								$('.select2-container').removeAttr('style');
+							},10);
+						},function(err){
+							console.log(err);
+						});
 						if(scope.uploader.queue[0]!==undefined && scope.uploader.queue[0]!==null && 
 						 scope.uploader.queue[0]!=='' && scope.uploader.queue[0].length!==0){
 					    	scope.uploader.queue[0].formData[0]={};
@@ -244,6 +299,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 						
 						}
 					},function(err){
+						scope.disableConfirm = false;
 						scope.er ={};
 						scope.ermsg ={};
 						for(var i = 0; i < err.data.ErrorsList.length; i++){
@@ -252,6 +308,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 						}
 					});	
 				}, function(err) {
+					scope.disableConfirm = false;
 					toastr.error("Check data again!","Error");
 					console.log(err);
 					scope.er ={};
@@ -265,6 +322,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 			};
 
 			scope.create = function(data) {
+				scope.disableCreate = true;
 				// scope.uploader.uploadAll();
 				doctorService.validate(data)
 				.then(function(response) {
@@ -275,27 +333,21 @@ angular.module('app.authentication.doctor.directive.create', [])
 						toastr.success("Create Successfully","success");
 						if(scope.uploader.queue!==undefined && scope.uploader.queue!==null && 
 							scope.uploader.queue!=='' && scope.uploader.queue.length!==0){
+							console.log(success);
 							for(var i = 0; i < scope.uploader.queue.length; i++){
-								scope.uploader.queue[i].formData[0] ={};
-								scope.uploader.queue[i].formData[0].userUID = success.userUID;
-							}
-							if(scope.uploader.queue[1]!=undefined && scope.uploader.queue[1]!=null && 
-							scope.uploader.queue[1]!='' && scope.uploader.queue[1].length!=0){
-								scope.uploader.queue[1].formData[0].fileType = "Signature";
-							}
-							if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null && 
-							scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
-								scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
+								
+scope.uploader.queue[i].formData[0].userUID = success.userUID;
 							}
 							console.log(scope.uploader.queue);
 							scope.uploader.uploadAll();
-							scope.value = success;
+							scope.value = success.userID;
 							
 						}
 						$state.go('authentication.doctor.list',null, {
 			           		'reload': true
 			        	});
 					}, function(err){
+						scope.disableCreate = false;
 						console.log(err.data.ErrorsList);
 			    		scope.er ={};
 						scope.ermsg ={};
@@ -305,13 +357,20 @@ angular.module('app.authentication.doctor.directive.create', [])
 						}
 					});
 				}, function(err) {
+					scope.disableCreate = false;
 					toastr.error("Check data again!","Error");
 					console.log(err);
 					scope.er ={};
 					scope.ermsg ={};
 					for(var i = 0; i < err.length; i++){
-						scope.er[err[i].field] ={'border': '2px solid #DCA7B0'};
-						scope.ermsg[err[i].field] = err[i].message;
+						if(err[i].field=="Speciality"){
+							$('.select2-selection').css("border","2px solid #DCA7B0");
+							scope.ermsg[err[i].field] = err[i].message;
+						}
+						else {
+							scope.er[err[i].field] ={'border': '2px solid #DCA7B0'};
+							scope.ermsg[err[i].field] = err[i].message;
+						}
 					}
 				});
 				
@@ -332,7 +391,76 @@ angular.module('app.authentication.doctor.directive.create', [])
 					scope.isShowNext5=false;
 					scope.isShowCreate=true;
 				}, function(err) {});
-			};		
+			};
+
+			var imageAvatar = document.getElementById('imageAvatar');
+			    imageAvatar.addEventListener('change', handleImage, false);
+			var canvas = document.getElementById('imageAvatarCanvas');
+			var ctx = canvas.getContext('2d');
+
+			function handleImage(e){
+				document.body.onfocus = function () {
+			    	if(imageAvatar.value.length == 0)
+				    	alert("k chon file nao");
+				    else{
+					    var reader = new FileReader();
+					    reader.onload = function(event){
+					        var img = new Image();
+					        img.onload = function(){
+					            canvas.width = 350;
+					            canvas.height = 350;
+					            ctx.drawImage(img,0,0,350,350);
+					        }
+					        img.src = event.target.result;
+					    }
+					    reader.readAsDataURL(e.target.files[0]);
+				    }
+				    document.body.onfocus = null;
+				};     
+			}
+
+			var imageSignature = document.getElementById('imageSignature');
+			    imageSignature.addEventListener('change', handleImage2, false);
+			var canvas1 = document.getElementById('imageSignatureCanvas');
+			var ctx1 = canvas1.getContext('2d');
+			scope.typeFile;
+			scope.setType = function(value){
+				scope.typeFile=value;
+			};
+			function handleImage2(e){
+				document.body.onfocus = function () {
+			    	if(imageSignature.value.length == 0)
+				    	alert("k chon file nao");
+				    else{
+					    var reader = new FileReader();
+					    reader.onload = function(event){
+					        var img = new Image();
+					        img.onload = function(){
+					            canvas1.width = 350;
+					            canvas1.height = 350;
+					            ctx1.drawImage(img,0,0,350,350);
+					        }
+					        img.src = event.target.result;
+					    }
+					    reader.readAsDataURL(e.target.files[0]);
+				    }
+				    document.body.onfocus = null;
+				};     
+			}
+
+			scope.Remove = function(value) {
+				for(var i = 0; i < scope.uploader.queue.length;i++) {
+					if(scope.uploader.queue[i].formData[0].fileType==value){
+						scope.uploader.queue.splice(i,1);
+					}
+				}
+				if(value=="ProfileImage"){
+					scope.isChoseAvatar = false;
+				}
+				else if(value=="Signature"){
+					scope.isChoseSignature = false;
+				}
+			}
 
 		} // end link
 

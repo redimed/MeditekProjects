@@ -10,6 +10,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 		},
 		restrict: "EA",
 		link: function(scope, elem, attrs){
+			scope.fieldSort={};
 			scope.search  = {};
 			scope.checked = {};
 			scope.flag = 13;
@@ -37,6 +38,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			}
 
 			for(var i = 0; i < scope.items.length; i++){
+				scope.fieldSort[scope.items[i].field]='ASC';
 				if(scope.items[i].field=="Enable")
 					scope.items.splice(i,1);
 			}
@@ -112,6 +114,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			scope.Search = function(data,e){
 				if(e==13){
 					if(data.UserAccount || data.UserAccount==''){
+
 						data.PhoneNumber = data.UserAccount;
 					}
 					scope.searchObjectMap.Search = data;
@@ -120,16 +123,16 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 			};
 
 			scope.sort = function(field,sort) {
-				scope.isClickASC = false;
-				scope.isClickDESC = false;
-				scope.fieldSort = field;
+				if(sort==="ASC"){
+					scope.fieldSort[field] = "DESC";
+				}
+				else{
+					scope.fieldSort[field] = "ASC";
+				}
 				if(field=='UserAccount'){
 					field = 'PhoneNumber';
 				}
-				if(sort==="ASC")
-					scope.isClickASC = true;
-				else
-					scope.isClickDESC = true;
+
 				var data = field+" "+sort;
 				scope.searchObjectMap.order = data;
 				scope.loadList(scope.searchObjectMap);

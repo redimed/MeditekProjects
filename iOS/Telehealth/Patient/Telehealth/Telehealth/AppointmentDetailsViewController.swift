@@ -58,8 +58,8 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     func getListImage(UIDAppointment:String,_ Type:String){
         self.api.getAppointmentDetails(UIDAppointment,type:Type, completionHandler: {
             response in
-
-            if response["message"] == "error"{
+            print(response)
+            if response["message"] == "NoImage"{
 //                self.alertMessage("Error", message: ErrorMessage.NoData)
             }else {
                 let countImage = response.count
@@ -71,8 +71,6 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
                         self.downloadImage(imageUID)
                     }
                 }
-                //reload collection view
-                self.collectionView.reloadData()
             }
         })
     }
@@ -84,7 +82,7 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
                 print(image)
             }else {
                 self.ArrayImageUID.append(image!)
-                self.collectionView.reloadData()
+               self.insertDataToCollectionView()
             }
         })
     }
@@ -131,6 +129,14 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
         
         
     }
+    
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        cell.alpha = 0
+        UIView.animateWithDuration(0.5, animations: {
+            cell.alpha = 1
+        })
+    }
+    
     //send data view to view
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ImageDetailSegue" {
@@ -249,12 +255,15 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     func reloadCollectionView(controller: BodyUploadViewController, sender: UIImage) {
         
         ArrayImageUID.append(sender)
-        let newRowIndex = ArrayImageUID.count
-        let indexPath = NSIndexPath(forRow: newRowIndex - 1 , inSection: 0)
-        
-        collectionView.insertItemsAtIndexPaths([indexPath])
+        insertDataToCollectionView()
         savedImageAlert("Upload", message: "Upload Success")
         
+    }
+    
+    func insertDataToCollectionView(){
+        let newRowIndex = ArrayImageUID.count
+        let indexPath = NSIndexPath(forRow: newRowIndex - 1 , inSection: 0)
+        collectionView.insertItemsAtIndexPaths([indexPath])
     }
     
     

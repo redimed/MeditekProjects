@@ -7,21 +7,45 @@ app.config(function($stateProvider){
 		.state('authentication.consultation',{
 			abstract: true,
 			url: '/consultation',
-			data: {pageTitle: 'Consultation'},
+			data: {title: 'Consultation', pageTitle: 'Consultation'},
 			templateUrl: 'modules/consultation/views/consultation.html',
 			controller: 'consultationCtrl',
 		})
 		.state('authentication.consultation.list',{
 			url: '/list',
-			data: {pageTitle: 'Consultation List'},
+			data: {title: 'Consultation List', pageTitle: 'Consultation List'},
 			templateUrl: 'modules/consultation/views/consultationList.html',
 			controller: 'consultationListCtrl',
 		})
 		.state('authentication.consultation.detail',{
 			url: '/detail',
-			data: {pageTitle: 'Consultation Detail'},
+			data: {title: 'Consultation Detail', pageTitle: 'Consultation Detail'},
 			templateUrl: 'modules/consultation/views/consultationDetail.html',
 			controller: 'consultationDetailCtrl',
+		})
+		.state('authentication.consultation.detail.patientAdmission',{
+			url: '/patientAdmission',
+			data: {title: 'View Patient Admission', pageTitle: 'View Patient Admission'},
+			templateUrl: 'modules/consultation/views/patientAdmission.html',
+			controller: 'patientAdmissionCtrl',
+		})
+		.state('authentication.consultation.detail.consultNote',{
+			url: '/consultNote',
+			data: {title: 'Consult Note', pageTitle: 'Consult Note'},
+			templateUrl: 'modules/consultation/views/consultNote.html',
+			controller: 'consultNoteCtrl',
+		})
+		.state('authentication.consultation.detail.eForms',{
+			url: '/eForms',
+			data: {title: 'E-Forms', pageTitle: 'E-Forms'},
+			templateUrl: 'modules/consultation/views/eForms.html',
+			controller: 'eFormsCtrl',
+		})
+		.state('authentication.consultation.drawing',{
+			url: '/drawing',
+			data: {title: 'Add Drawing', pageTitle: 'Add Drawing'},
+			templateUrl: 'modules/consultation/views/drawing.html',
+			controller: 'drawingCtrl',
 		})
 		;
 });

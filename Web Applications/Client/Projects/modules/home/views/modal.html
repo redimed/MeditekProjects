@@ -1,0 +1,490 @@
+<form>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" 
+			aria-hidden="true" ng-click="cancel()"></button>
+		<h4 class="modal-title uppercase bold font-red">
+			<i class="icon-settings"></i> Telehealth Appointment Detail</h4>
+	</div>
+	<div class="modal-body">
+		<div class="form-body">
+			<div class="tabbable tabbable-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="index.html#tab_appointment" data-toggle="tab"> Appointment </a>
+                    </li>
+                    <li>
+                        <a href="index.html#tab_clinical" data-toggle="tab"> Clinical </a>
+                    </li>
+                    <li>
+                        <a href="index.html#tab_medical" data-toggle="tab"> Medical </a>
+                    </li>
+                    <li>
+                        <a href="index.html#tab_patient" data-toggle="tab"> Patient </a>
+                    </li>
+                    <li>
+                        <a href="index.html#tab_treating" data-toggle="tab"> Treating practitioner </a>
+                    </li>
+                    <li>
+                        <a href="index.html#tab_image" data-toggle="tab"> Medical image </a>
+                    </li>
+                    <li>
+                        <a href="index.html#tab_referring" data-toggle="tab"> Referring practitioner</a>
+                    </li>
+                    <li>
+                        <a href="index.html#tab_complain" data-toggle="tab"> Present complain & allergy</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_appointment">
+                    	<div class="row margin-top-20">
+							<div class="col-md-4 col-sm-4">
+								<div class="form-group">
+									<label class="control-label">Duration of referral</label>
+									<input type="text" class="form-control" readonly 
+										value="{{detail.TelehealthAppointment.RefDurationOfReferral}} months">
+								</div>
+							</div>
+							<div class="col-md-4 col-sm-4">
+								<div class="form-group">
+									<label class="control-label">Status</label>
+									<input type="text" class="form-control" readonly 
+										value="{{detail.Status}}">
+								</div>
+							</div>
+							<div class="col-md-4 col-sm-4">
+								<div class="form-group">
+									<label class="control-label">Create date</label>
+									<input type="text" class="form-control" readonly 
+										value="{{detail.CreatedDate}}">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 col-sm-4">
+								<div class="form-group">
+									<label class="control-label">Appointment Date</label>
+									<input type="text" class="form-control date-picker" readonly disabled 
+										data-date-format="dd/mm/yyyy" data-date-start-date="0d" 
+										ng-model="detail.appointmentDate">
+								</div>
+							</div>
+							<div class="col-md-4 col-sm-4">
+								<div class="form-group">
+									<label class="control-label">Appointment Time</label>
+									<input type="text" class="form-control timepicker timepicker-no-seconds" readonly disabled 
+										data-default-time="" data-format="hh:mm A"
+										data-date-format="dd/mm/yyyy" ng-model="detail.appointmentTime">
+								</div>
+							</div>
+							<div class="col-md-4 col-sm-4">
+								<div class="form-group">
+									<label>&nbsp;</label>
+									<div class="checkbox-list">
+										<label class="checkbox-inline">
+											<input type="checkbox" disabled 
+												ng-model="detail.TelehealthAppointment.Correspondence"
+												ng-checked="detail.TelehealthAppointment.Correspondence == 'Y'"
+												ng-true-value="'Y'" ng-false-value="'N'"> Correspondence
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 col-sm-6">
+								<div class="form-group">
+									<label class="control-label">Patient</label>
+									<input type="text" class="form-control" readonly 
+										ng-model="detail.TelehealthAppointment.PatientAppointment.FirstName">
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<div class="form-group">
+									<label class="control-label">Referring Practitioner</label>
+									<input type="text" class="form-control" readonly 
+										ng-model="detail.TelehealthAppointment.RefName">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 col-sm-12">
+								<div class="form-group">
+									<label class="control-label">Fund</label>
+									<input type="text" class="form-control" readonly 
+										ng-model="detail.TelehealthAppointment.Fund">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 col-sm-12">
+								<div class="form-group">
+									<label class="bold">Examination Required</label>
+									<div class="checkbox-list">
+										<label class="checkbox-inline">
+											<input type="checkbox" disabled 
+												ng-model="detail.TelehealthAppointment.ExaminationRequired.Private"
+												ng-checked="detail.TelehealthAppointment.ExaminationRequired.Private == 'Y'"
+												ng-true-value="'Y'" ng-false-value="'N'"> Private
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" disabled 
+												ng-model="detail.TelehealthAppointment.ExaminationRequired.Public"
+												ng-checked="detail.TelehealthAppointment.ExaminationRequired.Public == 'Y'"
+												ng-true-value="'Y'" ng-false-value="'N'"> Public
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" disabled 
+												ng-model="detail.TelehealthAppointment.ExaminationRequired.DVA"
+												ng-checked="detail.TelehealthAppointment.ExaminationRequired.DVA == 'Y'"
+												ng-true-value="'Y'" ng-false-value="'N'"> DVA
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" disabled 
+												ng-model="detail.TelehealthAppointment.ExaminationRequired.WorkersComp"
+												ng-checked="detail.TelehealthAppointment.ExaminationRequired.WorkersComp == 'Y'"
+												ng-true-value="'Y'" ng-false-value="'N'"> Workers Comp
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" disabled 
+												ng-model="detail.TelehealthAppointment.ExaminationRequired.MVIT"
+												ng-checked="detail.TelehealthAppointment.ExaminationRequired.MVIT == 'Y'"
+												ng-true-value="'Y'" ng-false-value="'N'"> MVIT
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 col-sm-12">
+								<div class="form-group">
+									<label class="control-label bold">Preferred Plastic Surgeon</label>
+									<div class="checkbox-list">
+										<label class="checkbox-inline">
+											<input type="checkbox" disabled 
+												ng-model="detail.PreferredPractitionersTemp[0].Value"
+												ng-checked="detail.PreferredPractitionersTemp[0].Value == 'Y'"
+												ng-true-value="'Y'" ng-false-value="'N'"> First Surgeon Available
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" disabled 
+												ng-model="detail.PreferredPractitionersTemp[1].Value"
+												ng-checked="detail.PreferredPractitionersTemp[1].Value == 'Y'"
+												ng-true-value="'Y'" ng-false-value="'N'"> Mr Hanh Nguyen
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" disabled 
+												ng-model="detail.PreferredPractitionersTemp[2].Value"
+												ng-checked="detail.PreferredPractitionersTemp[2].Value == 'Y'"
+												ng-true-value="'Y'" ng-false-value="'N'"> Mr Adrian Brooks
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" disabled 
+												ng-model="detail.PreferredPractitionersTemp[4].Value"
+												ng-checked="detail.PreferredPractitionersTemp[4].Value == 'Y'"
+												ng-true-value="'Y'" ng-false-value="'N'"> Mr Dan Luo
+										</label>
+										<label class="checkbox-inline">
+											<input type="checkbox" disabled 
+												ng-model="detail.PreferredPractitionersTemp[4].Value"
+												ng-checked="detail.PreferredPractitionersTemp[4].Value == 'Y'"
+												ng-true-value="'Y'" ng-false-value="'N'"> Ms Sharon Chu
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+                   	</div>
+                   	<div class="tab-pane" id="tab_clinical">
+                   		<div class="form-group margin-top-20">
+                   			<textarea class="form-control" rows="10"></textarea>
+                   		</div>
+                   		<div class="table-scrollable margin-top-20">
+               				<table class="table">
+               					<thead>
+               						<tr>
+               							<th>Document Name</th>
+               							<th>Date</th>
+               							<th>View</th>
+               						</tr>
+               					</thead>
+               					<tbody>
+               						<tr>
+               							<td></td>
+               							<td></td>
+               							<td></td>
+               						</tr>
+               					</tbody>
+               				</table>
+               			</div>
+                   	</div>
+                   	<div class="tab-pane" id="tab_medical">
+                   		<div class="row margin-top-20">
+                   			<div class="col-md-6 col-sm-6">
+                   				<fieldset>
+		                   			<legend>Trauma</legend>
+		                   			<div class="form-group">
+		                   				<div class="checkbox-list">
+		                   					<label class="checkbox-inline">
+		                   						<input type="checkbox"> Dislocation
+		                   					</label>
+		                   				</div>
+		                   			</div>
+		                   			<div class="form-group">
+		               					<label class="control-label">Fracture</label>
+		               					<input type="text" class="form-control">
+		                   			</div>
+		                   			<div class="form-group">
+		                   				<div class="checkbox-list">
+		                   					<label class="checkbox-inline">
+		                   						<input type="checkbox"> Open
+		                   					</label>
+		                   					<label class="checkbox-inline">
+		                   						<input type="checkbox"> Closed
+		                   					</label>
+		                   					<label class="checkbox-inline">
+		                   						<input type="checkbox"> Displaced
+		                   					</label>
+		                   				</div>
+		                   			</div>
+		                   			<div class="form-group">
+		                   				<label class="control-label bold">Lacerations</label>
+		                   				<div class="checkbox-list">
+		                   					<div class="row">
+		                   						<div class="col-md-5 col-sm-5">
+		                   							<label class="checkbox-inline">
+				                   						<input type="checkbox"> Hand
+				                   					</label>
+		                   						</div>
+		                   						<div class="col-md-7 col-sm-7">
+		                   							<label class="checkbox-inline">
+				                   						<input type="checkbox"> Nerve
+				                   					</label>
+		                   						</div>
+		                   					</div>
+		                   					<div class="row">
+		                   						<div class="col-md-5 col-sm-5">
+		                   							<label class="checkbox-inline">
+				                   						<input type="checkbox"> Tendon/muscle
+				                   					</label>
+		                   						</div>
+		                   						<div class="col-md-7 col-sm-7">
+		                   							<label class="checkbox-inline">
+				                   						<input type="checkbox"> Facial
+				                   					</label>
+		                   						</div>
+		                   					</div>
+		                   					<div class="row">
+		                   						<div class="col-md-5 col-sm-5">
+		                   							<label class="checkbox-inline">
+				                   						<input type="checkbox"> Skin loss
+				                   					</label>
+		                   						</div>
+		                   						<div class="col-md-7 col-sm-7">
+		                   							<label class="checkbox-inline">{{Lacerations.Other}}
+				                   						<input type="checkbox" 
+				                   							ng-model="Lacerations.Other" checked="true"> Others 
+				                   						<input type="text" size="10" 
+				                   							ng-disabled="!Lacerations.Other==true">
+				                   					</label>
+		                   						</div>
+		                   					</div>
+		                   				</div>
+		                   			</div>
+		                   		</fieldset>
+                   			</div>
+                   			<div class="col-md-6 col-sm-6">
+                   				<fieldset>
+                   					<legend>Elective</legend>
+                   					<div class="form-group">
+                   						<label class="control-label bold">Skin cancer</label>
+                   						<div class="checkbox-list">
+                   							<div class="row">
+                   								<div class="col-md-5 col-sm-5">
+                   									<label class="checkbox-inline">
+		                   								<input type="checkbox"> BCC/SCC
+		                   							</label>
+                   								</div>
+                   								<div class="col-md-7 col-sm-7">
+                   									<label class="checkbox-inline">
+		                   								<input type="checkbox"> Melanoma
+		                   							</label>
+                   								</div>
+                   							</div>
+                   							<div class="row">
+                   								<div class="col-md-12 col-sm-12">
+                   									<label class="checkbox-inline">
+		                   								<input type="checkbox"> Other
+		                   								<input type="text" size="10">
+		                   							</label>
+                   								</div>
+                   							</div>
+                   							
+                   							
+                   							
+                   						</div>
+                   					</div>
+                   					<div class="form-group">
+                   						<label class="control-label bold">Hand condition</label>
+                   						<div class="checkbox-list">
+                   							<div class="row">
+                   								<div class="col-md-5 col-sm-5">
+                   									<label class="checkbox-inline">
+		                   								<input type="checkbox"> Ganglion
+		                   							</label>
+                   								</div>
+                   								<div class="col-md-7 col-sm-7">
+                   									<label class="checkbox-inline">
+		                   								<input type="checkbox"> Arthritis
+		                   							</label>
+                   								</div>
+                   							</div>
+                   							<div class="row">
+                   								<div class="col-md-5 col-sm-5">
+                   									<label class="checkbox-inline">
+		                   								<input type="checkbox"> Contracture
+		                   							</label>
+                   								</div>
+                   								<div class="col-md-7 col-sm-7">
+                   									<label class="checkbox-inline">
+		                   								<input type="checkbox">  DeQuervains / Trigger
+		                   							</label>
+                   								</div>
+                   							</div>	
+                   						</div>
+                   					</div>
+                   					<div class="form-group">
+                   						<label class="control-label bold">PNS</label>
+                   						<div class="checkbox-list">
+                   							<div class="row">
+                   								<div class="col-md-5 col-sm-5">
+                   									<label class="checkbox-inline">
+		                   								<input type="checkbox"> Carpal Tunnel
+		                   							</label>
+                   								</div>
+                   								<div class="col-md-7 col-sm-7">
+                   									<label class="checkbox-inline">
+		                   								<input type="checkbox"> Cubital Tunnel
+		                   							</label>
+                   								</div>
+                   							</div>
+                   							<div class="row">
+                   								<div class="col-md-5 col-sm-5">
+                   									<label class="checkbox-inline">
+		                   								<input type="checkbox"> Tarsal Tunnel
+		                   							</label>
+                   								</div>
+                   								<div class="col-md-7 col-sm-7">
+                   									<label class="checkbox-inline">
+		                   								<input type="checkbox"> Other
+		                   								<input type="text" size="10">
+		                   							</label>
+                   								</div>
+                   							</div>
+                   							<div class="row">
+                   								<div class="col-md-12 col-sm-12">
+                   									<label class="checkbox-inline">
+		                   								<input type="checkbox"> Complex Reconstructive Case
+		                   							</label>
+                   								</div>
+                   							</div>
+                   						</div>
+                   					</div>
+                   				</fieldset>
+                   			</div>
+                   		</div>
+                   	</div>
+                   	<div class="tab-pane" id="tab_patient">
+                   		<div class="row margin-top-20">
+                   			<div class="col-md-4">
+                   				<div class="form-group">
+                   					<label class="control-label">First Name</label>
+                   					<input type="text" class="form-control">
+                   				</div>
+                   			</div>
+                   			<div class="col-md-4">
+                   				<div class="form-group">
+                   					<label class="control-label">Middle Name</label>
+                   					<input type="text" class="form-control">
+                   				</div>
+                   			</div>
+                   			<div class="col-md-4">
+                   				<div class="form-group">
+                   					<label class="control-label">Last Name</label>
+                   					<input type="text" class="form-control">
+                   				</div>
+                   			</div>
+                   		</div>
+                   		<div class="row">
+                   			<div class="col-md-4 col-sm-4">
+                   				<div class="form-group">
+                   					<label class="control-label">Date of birth</label>
+                   					<input type="text" class="form-control">
+                   				</div>
+                   			</div>
+                   			<div class="col-md-8 col-sm-8">
+                   				<div class="form-group">
+                   					<label class="control-label">Email</label>
+                   					<input type="text" class="form-control">
+                   				</div>
+                   			</div>
+                   		</div>
+                   		<div class="row">
+                   			<div class="col-md-6 col-sm-6">
+                   				<div class="form-group">
+                   					<label class="control-label">Contact number (M)</label>
+                   					<input type="text" class="form-control">
+                   				</div>
+                   			</div>
+                   			<div class="col-md-6 col-sm-6">
+                   				<div class="form-group">
+                   					<label class="control-label">Contact number (H)</label>
+                   					<input type="text" class="form-control">
+                   				</div>
+                   			</div>
+                   		</div>
+                   		<div class="row">
+                   			<div class="col-md-12 col-sm-12">
+                   				<div class="form-group">
+                   					<label class="control-label">Address1</label>
+                   					<input type="text" class="form-control">
+                   				</div>
+                   			</div>
+                   			<div class="col-md-12 col-sm-12">
+                   				<div class="form-group">
+                   					<label class="control-label">Address2</label>
+                   					<input type="text" class="form-control">
+                   				</div>
+                   			</div>
+                   		</div>
+                   		<div class="row">
+                   			<div class="col-md-8 col-sm-8">
+                   				<div class="form-group">
+                   					<label class="control-label">Suburb</label>
+                   					<input type="text" class="form-control">
+                   				</div>
+                   			</div>
+                   			<div class="col-md-4 col-sm-4">
+                   				<div class="form-group">
+                   					<label class="control-label">Postcode</label>
+                   					<input type="text" class="form-control">
+                   				</div>
+                   			</div>
+                   		</div>
+                   	</div>
+                   	<div class="tab-pane" id="tab_treating"></div>
+                   	<div class="tab-pane" id="tab_image"></div>
+                   	<div class="tab-pane" id="tab_referring"></div>
+                   	<div class="tab-pane" id="tab_complain"></div>
+                </div>
+            </div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="form-actions right">
+			<button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+				ng-click="cancel()">Close</button>
+			<button type="submit" class="btn btn-lg red"
+				ng-click="save()"><i class="glyphicon glyphicon-save"></i> Save</button>
+		</div>
+	</div>
+</form>

@@ -8,6 +8,7 @@ app.directive('urgentcareList', function(urgentCareService, $uibModal, toastr,$c
 		restrict: "EA",
 		templateUrl: 'modules/urgentCare/directives/templates/urgentCareList.html',
 		link: function(scope, elem, attrs){
+			console.log($state);
 			$timeout(function(){
 				App.initAjax();
     			ComponentsDateTimePickers.init(); // init todo page

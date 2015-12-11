@@ -42,6 +42,11 @@ angular.module('app.authentication.doctor.service', [])
 		return createDoctorByNewAccount.post({data:data});
 	}
 
+	services.getSpecialities = function(data) {
+		var getSpecialities = api.one('doctor/getlist-speciality');
+        return getSpecialities.get();
+	}
+
 	services.updateSignature = function(data) {
 		var updateSignature = api.all('doctor/update-sign');
 		return updateSignature.post({data:data});
@@ -403,26 +408,21 @@ angular.module('app.authentication.doctor.service', [])
 				}
 			}
 
-			// validate Type
-			if('Type' in info){
-				if(info.Type) {
-					if(info.Type.length < 0) {
-						error.push({field:"Type",message:"length"});
-					}
-				}
-				else {
-					error.push({field:"Type",message:"required"});
-				}
-			}
+			// // validate Type
+			// if('Type' in info){
+			// 	if(info.Type) {
+			// 		if(info.Type.length < 0) {
+			// 			error.push({field:"Type",message:"length"});
+			// 		}
+			// 	}
+			// 	else {
+			// 		error.push({field:"Type",message:"required"});
+			// 	}
+			// }
 
 			// validate Speciality
 			if('Speciality' in info){
-				if(info.Speciality) {
-					if(info.Speciality.length < 0) {
-						error.push({field:"Speciality",message:"length"});
-					}
-				}
-				else {
+				if(info.Speciality.length==0) {
 					error.push({field:"Speciality",message:"required"});
 				}
 			}

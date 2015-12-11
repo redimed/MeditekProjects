@@ -22,7 +22,7 @@
     <div class="portlet-title bold uppercase" style="padding:10px;">
         <div class="caption">
             <i class="glyphicon glyphicon-th-list"></i>
-            <span class="caption-subject">Western Australia Appointment</span>
+            <span class="caption-subject">Telehealth Appointment</span>
         </div>
         <div class="tools">
             <a class="remove" ng-click="close()"></a>
@@ -120,7 +120,7 @@
                                                     <div class="col-md-6 col-sm-6">
                                                         <div class="form-group form-md-line-input">
                                                             <div class="input-icon">
-                                                                <input type="text" class="form-control timepicker timepicker-no-seconds" ng-model="info.appointmentTime" data-default-time="" data-format="hh:mm A">
+                                                                <input type="text" class="form-control timepicker timepicker-24" ng-model="info.appointmentTime" data-default-time="" data-format="HH:mm">
                                                                 <label class="control-label">Appointment Time</label>
                                                                 <div class="form-control-focus"> </div>
                                                                 <i class="icon-clock"></i>
@@ -131,7 +131,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6 col-sm-6">
                                                         <div class="form-group form-md-line-input">
-                                                            <div class="form-control">{{wainformation.TelehealthAppointment.PatientAppointment.FirstName}} {{wainformation.TelehealthAppointment.PatientAppointment.MiddleName}} {{wainformation.TelehealthAppointment.PatientAppointment.LastName}}</div>
+                                                            <div class="form-control">{{ShowData.patient.FirstName}} {{ShowData.patient.LastName}}</div>
                                                             <label class="control-label">Patient</label>
                                                             <div class="form-control-focus"> </div>
                                                         </div>
@@ -247,7 +247,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-6 col-sm-6">
                                                                     <div class="form-group form-md-line-input">
-                                                                        <select class="form-control" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Title">
+                                                                        <select class="form-control" ng-model="ShowData.patient.Title" ng-disabled="ShowData.isLinkPatient">
                                                                             <option value="">Select Title</option>
                                                                             <option value="Mr">Mr</option>
                                                                             <option value="Mrs">Mrs</option>
@@ -260,7 +260,7 @@
                                                                 </div>
                                                                 <div class="col-md-6 col-sm-6">
                                                                     <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.FirstName.$invalid && submited} ">
-                                                                        <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.FirstName" name="FirstName" required>
+                                                                        <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.FirstName" name="FirstName" required ng-disabled="ShowData.isLinkPatient">
                                                                         <label class="control-label">First name
                                                                             <span class="required"> * </span>
                                                                         </label>
@@ -270,36 +270,38 @@
                                                                 </div>
                                                                 <div class="col-md-6 col-sm-6">
                                                                     <div class="form-group form-md-line-input">
-                                                                        <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MiddleName">
+                                                                        <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.MiddleName" ng-disabled="ShowData.isLinkPatient">
                                                                         <label class="control-label">Middle name</label>
                                                                         <div class="form-control-focus"> </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6 col-sm-6">
                                                                     <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.LastName.$invalid && submited} ">
-                                                                        <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.LastName" name="LastName" required>
-                                                                        <label class="control-label">Last name</label>
+                                                                        <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.LastName" name="LastName" required ng-disabled="ShowData.isLinkPatient">
+                                                                        <label class="control-label">Last name
+                                                                            <span class="required"> * </span>
+                                                                        </label>
                                                                         <p ng-show="userForm.LastName.$invalid && submited" class="help-block">Last name is required</p>
                                                                         <div class="form-control-focus"> </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6 col-sm-6">
                                                                     <div class="form-group form-md-line-input">
-                                                                        <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PreferredName">
+                                                                        <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PreferredName" ng-disabled="ShowData.isLinkPatient">
                                                                         <label class="control-label">Preferred name</label>
                                                                         <div class="form-control-focus"> </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6 col-sm-6">
                                                                     <div class="form-group form-md-line-input">
-                                                                        <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PreviousName">
+                                                                        <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.PreviousName" ng-disabled="ShowData.isLinkPatient">
                                                                         <label class="control-label">Previous name</label>
                                                                         <div class="form-control-focus"> </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6 col-sm-6">
                                                                     <div class="form-group form-md-line-input">
-                                                                        <select class="form-control" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MaritalStatus">
+                                                                        <select class="form-control" ng-model="ShowData.patient.MaritalStatus" ng-disabled="ShowData.isLinkPatient">
                                                                             <option value=""></option>
                                                                             <option value="Married">Married</option>
                                                                             <option value="Never married">Never married</option>
@@ -318,7 +320,7 @@
                                                                 <div class="col-md-6 col-sm-6">
                                                                     <div class="form-group form-md-line-input" >
                                                                         <div class="input-icon">
-                                                                            <select size="1" class="form-control" ng-model="wainformation.TelehealthAppointment.PatientAppointment.CountryOfBirth">
+                                                                            <select size="1" class="form-control" ng-model="ShowData.patient.CountryOfBirth" ng-disabled="ShowData.isLinkPatient">
                                                                                 <option ng-repeat="item in ListContry">{{item.ShortName}}</option>
                                                                             </select>
                                                                             <label class="control-label">Country of Birth</label>
@@ -330,8 +332,10 @@
                                                                 <div class="col-md-6 col-sm-6">
                                                                     <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.DOB.$invalid && submited} ">
                                                                         <div class="input-icon">
-                                                                            <input type="text" class="form-control date-picker edited" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="wainformation.TelehealthAppointment.PatientAppointment.DOB" data-date-end-date="0d" name="DOB" required>
-                                                                            <label class="control-label">Date of Birth</label>
+                                                                            <input type="text" class="form-control date-picker edited" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="ShowData.patient.DOB" data-date-end-date="0d" name="DOB" required ng-disabled="ShowData.isLinkPatient">
+                                                                            <label class="control-label">Date of Birth
+                                                                                <span class="required"> * </span>
+                                                                            </label>
                                                                              <p ng-show="userForm.DOB.$invalid && submited" class="help-block">Date of birth is required</p>
                                                                             <div class="form-control-focus"> </div>
                                                                             <i class="glyphicon glyphicon-calendar"></i>
@@ -345,15 +349,15 @@
                                                                     <div class="form-group">
                                                                         <div class="radio-list">
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="radioTest12" value="Male" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Gender"> Male
+                                                                                <input type="radio" name="radioTest12" value="Male" ng-model="ShowData.patient.Gender" ng-disabled="ShowData.isLinkPatient"> Male
                                                                             </label>
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="radioTest12" value="Female" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Gender"> Female
+                                                                                <input type="radio" name="radioTest12" value="Female" ng-model="ShowData.patient.Gender" ng-disabled="ShowData.isLinkPatient"> Female
                                                                             </label>
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" size="15" ng-click="info.selectRadioGender()" name="radioTest12" ng-checked="(wainformation.TelehealthAppointment.PatientAppointment.Gender != 'Male' && wainformation.TelehealthAppointment.PatientAppointment.Gender != 'Female' && wainformation.TelehealthAppointment.PatientAppointment.Gender != null)?true:false"> Other &nbsp;
-                                                                                <input type="text" size="10" ng-if="wainformation.TelehealthAppointment.PatientAppointment.Gender == 'Male' || wainformation.TelehealthAppointment.PatientAppointment.Gender == 'Female' || wainformation.TelehealthAppointment.PatientAppointment.Gender == null" disabled>
-                                                                                <input type="text" size="10" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Gender" ng-if="wainformation.TelehealthAppointment.PatientAppointment.Gender != 'Male' && wainformation.TelehealthAppointment.PatientAppointment.Gender != 'Female' && wainformation.TelehealthAppointment.PatientAppointment.Gender != null">
+                                                                                <input type="radio" size="15" ng-click="info.selectRadioGender()" name="radioTest12" ng-checked="(ShowData.patient.Gender != 'Male' && ShowData.patient.Gender != 'Female' && ShowData.patient.Gender != null)?true:false" ng-disabled="ShowData.isLinkPatient"> Other &nbsp;
+                                                                                <input type="text" size="10" ng-if="ShowData.patient.Gender == 'Male' || ShowData.patient.Gender == 'Female' || ShowData.patient.Gender == null" disabled>
+                                                                                <input type="text" size="10" ng-model="ShowData.patient.Gender" ng-if="ShowData.patient.Gender != 'Male' && ShowData.patient.Gender != 'Female' && ShowData.patient.Gender != null" ng-disabled="ShowData.isLinkPatient">
                                                                             </label>
                                                                         </div>
                                                                     </div>
@@ -363,13 +367,13 @@
                                                                     <div class="form-group">
                                                                         <div class="radio-list">
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="Indigenous" value="Aboriginal" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous"> Aboriginal
+                                                                                <input type="radio" name="Indigenous" value="Aboriginal" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> Aboriginal
                                                                             </label>
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="Indigenous" value="Torres Strait Islander" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous"> Torres Strait Islander
+                                                                                <input type="radio" name="Indigenous" value="Torres Strait Islander" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> Torres Strait Islander
                                                                             </label>
                                                                              <label class="radio-inline">
-                                                                                <input type="radio" name="Indigenous" value="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous"> None
+                                                                                <input type="radio" name="Indigenous" value="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> None
                                                                             </label>
                                                                         </div>
                                                                     </div>
@@ -381,10 +385,10 @@
                                                                     <div class="form-group">
                                                                         <div class="radio-list">
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="InterpreterRequired" id="Yes" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired"> Yes
+                                                                                <input type="radio" name="InterpreterRequired" id="Yes" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> Yes
                                                                             </label>
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="InterpreterRequired" id="No" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired"> No
+                                                                                <input type="radio" name="InterpreterRequired" id="No" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> No
                                                                             </label>
                                                                         </div>
                                                                     </div>
@@ -394,7 +398,7 @@
                                                                         <div class="form-group form-md-line-input" ng-show="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-class="{'has-error': userForm.InterpreterLanguage.$invalid && submited} ">
                                                                             <label class="control-label col-md-4 col-sm-4">If yes, language/dialect </label>
                                                                             <div class="col-md-6 col-sm-6" >
-                                                                                <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage" name="InterpreterLanguage" ng-required="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'">
+                                                                                <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage" name="InterpreterLanguage" ng-required="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-disabled="ShowData.isLinkPatient">
                                                                                 <p ng-show="userForm.InterpreterLanguage.$invalid && submited" class="help-block">Field is required</p>
                                                                                 <div class="form-control-focus"> </div>
                                                                             </div>
@@ -406,7 +410,7 @@
                                                                         <div class="form-group form-md-line-input">
                                                                             <label class="control-label col-md-4 col-sm-4">Other special needs ?</label>
                                                                             <div class="col-md-6 col-sm-6">
-                                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.OtherSpecialNeed">
+                                                                                <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.OtherSpecialNeed" ng-disabled="ShowData.isLinkPatient">
                                                                                 <div class="form-control-focus"> </div>
                                                                             </div>
                                                                         </div>
@@ -421,7 +425,7 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$invalid}">
                                                                 <div class="input-icon">
-                                                                    <input type="text" class="form-control edited" name="TelehealthAppointment_PatientAppointment_PhoneNumber" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" required>
+                                                                    <input type="text" class="form-control edited" name="TelehealthAppointment_PatientAppointment_PhoneNumber" placeholder="" ng-model="ShowData.patient.PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" required ng-disabled="ShowData.isLinkPatient">
                                                                     <label class="control-label">Contact number (M)</label>
                                                                     <div class="form-control-focus"> </div>
                                                                     <p ng-show="userForm.TelehealthAppointment_PatientAppointment_PhoneNumber.$error.required && submited" class="help-block">Contact Number (M) is required</p>
@@ -433,7 +437,7 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$invalid}">
                                                                 <div class="input-icon">
-                                                                    <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.HomePhoneNumber" name="TelehealthAppointment_PatientAppointment_HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/">
+                                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.HomePhoneNumber" name="TelehealthAppointment_PatientAppointment_HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/" ng-disabled="ShowData.isLinkPatient">
                                                                     <label class="control-label">Contact number (H)</label>
                                                                     <div class="form-control-focus"> </div>
                                                                     <p ng-show="userForm.TelehealthAppointment_PatientAppointment_HomePhoneNumber.$error.pattern" class="help-block">Home phone is a 4-10 digits number</p>
@@ -444,7 +448,7 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.TelehealthAppointment_PatientAppointment_Email1.$invalid}">
                                                                 <div class="input-icon">
-                                                                    <input type="email" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Email1" name="TelehealthAppointment_PatientAppointment_Email1" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/">
+                                                                    <input type="email" class="form-control edited" placeholder="" ng-model="ShowData.patient.Email1" name="TelehealthAppointment_PatientAppointment_Email1" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/" ng-disabled="ShowData.isLinkPatient">
                                                                     <label class="control-label">Email</label>
                                                                     <div class="form-control-focus"> </div>
                                                                     <p ng-show="userForm.TelehealthAppointment_PatientAppointment_Email1.$error.pattern" class="help-block">Please enter a valid email address.</p>
@@ -455,7 +459,7 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-group form-md-line-input">
                                                                 <div class="input-icon">
-                                                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.FaxNumber">
+                                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.FaxNumber" ng-disabled="ShowData.isLinkPatient">
                                                                     <label class="control-label">Fax number</label>
                                                                     <div class="form-control-focus"> </div>
                                                                     <i class="glyphicon glyphicon-print"></i>
@@ -465,7 +469,7 @@
                                                         <div class="col-md-12 col-sm-12">
                                                             <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.Address1.$invalid && submited} ">
                                                                 <div class="input-icon">
-                                                                    <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Address1" name="Address1" required>
+                                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Address1" name="Address1" required ng-disabled="ShowData.isLinkPatient">
                                                                     <label class="control-label">Address1
                                                                         <span class="required"> * </span>
                                                                     </label>
@@ -478,7 +482,7 @@
                                                         <div class="col-md-12 col-sm-12">
                                                             <div class="form-group form-md-line-input">
                                                                 <div class="input-icon">
-                                                                    <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Address2">
+                                                                    <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.Address2" ng-disabled="ShowData.isLinkPatient">
                                                                     <label class="control-label">Address2</label>
                                                                     <div class="form-control-focus"> </div>
                                                                     <i class="glyphicon glyphicon-road"></i>
@@ -488,7 +492,7 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.Suburb.$invalid && submited} ">
                                                                 <div class="input-icon">
-                                                                    <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Suburb" name="Suburb" required>
+                                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Suburb" name="Suburb" required ng-disabled="ShowData.isLinkPatient">
                                                                     <label class="control-label">Suburb
                                                                         <span class="required"> * </span>
                                                                     </label>
@@ -501,7 +505,7 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.Postcode.$invalid && submited} ">
                                                                 <div class="input-icon">
-                                                                    <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Postcode" name="Postcode" required>
+                                                                    <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Postcode" name="Postcode" required ng-disabled="ShowData.isLinkPatient">
                                                                     <label class="control-label">Postcode
                                                                         <span class="required"> * </span>
                                                                     </label>
@@ -514,7 +518,7 @@
                                                          <div class="col-md-6 col-sm-6">
                                                             <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.State.$invalid && submited} ">
                                                                 <div class="input-icon">
-                                                                    <select class="form-control edited" ng-model="wainformation.TelehealthAppointment.PatientAppointment.State" required name="State">
+                                                                    <select class="form-control edited" ng-model="ShowData.patient.State" required name="State" ng-disabled="ShowData.isLinkPatient">
                                                                             <option value=""></option>
                                                                             <option value="WA">Western Australia</option>
                                                                             <option value="VIC">Victoria</option>
@@ -881,8 +885,8 @@
                                                                     <tbody>
                                                                         <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.referralPresenting'].FileUploads">
                                                                             <td><strong>{{ item.FileName }}</strong></td>
-                                                                            <td ng-click="ViewDoc('1',item.UID)">
-                                                                                <button>View</button>
+                                                                            <td>
+                                                                                <span ng-click="ViewDoc('1',item.UID)" class="btn green">View</span>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -1020,8 +1024,8 @@
                                                                     <tbody>
                                                                         <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.cancersTreatmens'].FileUploads">
                                                                             <td><strong>{{ item.FileName }}</strong></td>
-                                                                            <td ng-click="ViewDoc('1',item.UID)">
-                                                                                <button>View</button>
+                                                                            <td>
+                                                                                <span ng-click="ViewDoc('1',item.UID)" class="btn green">View</span>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -1066,8 +1070,8 @@
                                                                     <tbody>
                                                                         <tr ng-repeat="item in wainformation.TelehealthAppointment.ClinicalDetails['Clinical__Details.Telehealth__WAAppointment.Notes.previousHandSurgery'].FileUploads">
                                                                             <td><strong>{{ item.FileName }}</strong></td>
-                                                                            <td ng-click="ViewDoc('1',item.UID)">
-                                                                                <button>View</button>
+                                                                            <td>
+                                                                                <span ng-click="ViewDoc('1',item.UID)" class="btn green">View</span>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -1114,3 +1118,16 @@
         </fieldset>
     </div>
 </div>
+
+<script type="text/ng-template" id="showImageTemplate">
+
+    <div class="modal-header my-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"></button>
+    </div>
+    <div class="modal-body" style="align:center">
+        <img class="img-responsive" dimage dimage-uid="LinkUID">
+    </div>
+    <div class="modal-footer">
+        <button class="btn green" ng-click="Vieww(LinkUID)">View Full</button>
+    </div>
+</script>

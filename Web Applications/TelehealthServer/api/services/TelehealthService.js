@@ -10,14 +10,10 @@ var gcm = require('node-gcm');
 var gcmSender = new gcm.Sender(config.GCMApiKey);
 var apn = require('apn');
 var options = {
-    //=======Dev======
-    // cert: rootPath + '/config/push_key/TelePushCert.pem',
-    // key: rootPath + '/config/push_key/TelePushKey.pem',
-    //=======Production=========
-    cert: rootPath + '/config/push_key/TelePushCert_Production.pem',
-    key: rootPath + '/config/push_key/TelePushKey_Production.pem',
+    cert: config.APNCert,
+    key: config.APNKey,
     passphrase: '1234',
-    production: true
+    production: config.APNIsProduction
 };
 var apnConnection = new apn.Connection(options);
 apnConnection.on("connected", function() {
@@ -236,8 +232,8 @@ module.exports = {
         request.on('error', function(err) {
             defer.reject(err);
         })
-        request.write(info.body ? JSON.stringify(info.body): '');
-        console.log("====Request====: ",request);
+        request.write(info.body ? JSON.stringify(info.body) : '');
+        console.log("====Request====: ", request);
         request.end();
         return defer.promise;
     },

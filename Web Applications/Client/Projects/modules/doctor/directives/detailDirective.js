@@ -7,6 +7,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		scope: {
 			uid: '=onUid',
 			info:'=onData',
+			specialities:'=onSpeciality',
             isShowFull:'=onShowfull',
             listShow:'=onListshow',
             onCancel: '='
@@ -22,11 +23,12 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    });
 		    // FILTERS
 		    uploader.filters.push({
-		        name: 'customFilter',
-		        fn: function (item /*{File|FileLikeObject}*/, options) {
-		            return this.queue.length < 10;
-		        }
-		    });
+	            name: 'imageFilter',
+	            fn: function(item /*{File|FileLikeObject}*/, options) {
+	                var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+	                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+	            }
+	        });
 
 		    // CALLBACKS
 		    uploader.onAfterAddingFile = function (fileItem) {
@@ -72,11 +74,12 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    });
 		    // FILTERS
 		    uploaders.filters.push({
-		        name: 'customFilter',
-		        fn: function (item /*{File|FileLikeObject}*/, options) {
-		            return this.queue.length < 10;
-		        }
-		    });
+	            name: 'imageFilter',
+	            fn: function(item /*{File|FileLikeObject}*/, options) {
+	                var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+	                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+	            }
+	        });
 
 		    // CALLBACKS
 		    uploaders.onAfterAddingFile = function (fileItem) {
@@ -120,7 +123,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		},
 		link: function(scope, ele, attrs) {
 			console.log(scope.info);
-			scope.doctorUID = {};
+			scope.doctorUID;
 			var data = {};
 			scope.state = [
 				{'code':'VIC', 'name':'Victoria'},
@@ -193,12 +196,17 @@ angular.module('app.authentication.doctor.directive.detail', [])
 					};
 				}
 		    },0);
-
+			scope.configpage = function() {
+				$('.select2-multiple').select2();
+				$('.select2-container').removeAttr('style');
+			};
 			$timeout(function(){
 				App.initAjax();
 				ComponentsDateTimePickers.init(); // init todo page
 				oriInfo = angular.copy(scope.info);
-			},50);
+				// $('.select2-multiple').select2();
+				// $('.select2-container').removeAttr('style');
+			},70);
 
 			scope.removeImg = function(value){
 				if(value=="ProfileImage"){
@@ -222,9 +230,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 					if(scope.info.UID!=undefined && scope.info.UID!=null && scope.info.UID!=''){
 						data.UID = scope.info.UID;
 						data.UserAccountID = scope.info.UserAccountID;
-						scope.doctorUID = {
-							DoctorUID : scope.info.UID
-						};
+						scope.doctorUID =  scope.info.UserAccountID;
 						delete scope.info['UID'];
 						data.info = scope.info;
 						data.RoleId = scope.info.UserAccount.RelUserRoles.length!=0?scope.info.UserAccount.RelUserRoles[0].RoleId:null;
@@ -307,6 +313,9 @@ angular.module('app.authentication.doctor.directive.detail', [])
 						scope.er[err[i].field] = {};
 						scope.er[err[i].field].css ={'border': '2px solid #DCA7B0'};
 						scope.er[err[i].field].msg = err[i].message;
+						if(err[i].field == "Speciality"){
+							$(".select2-selection").css("border","2px solid #DCA7B0");
+						}
 					}
 		    	});
 		    };

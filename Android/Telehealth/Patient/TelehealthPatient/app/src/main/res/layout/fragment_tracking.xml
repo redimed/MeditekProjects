@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/subTrackingLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sub_tracking_bg"
     tools:context="com.redimed.telehealth.patient.fragment.TrackingFragment">
 
     <RelativeLayout
@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/toolbar_back_icon"
             android:background="@android:color/transparent"
-            android:text="@string/home_title"
+            android:text="@string/back"
             android:textAllCaps="false"
             android:textColor="@color/lightFont"
             android:layout_marginLeft="18dp"
@@ -43,11 +43,11 @@
         android:id="@+id/layoutApptStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
-        android:gravity="center|right"
+        android:gravity="center|left"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -56,8 +56,8 @@
 
             <ImageView
                 android:id="@+id/imgCircleBlurReceived"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerInParent="true" />
 
             <ImageView
@@ -65,34 +65,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/sub_tracking_received" />
+                android:src="@drawable/sub_tracking_received"/>
 
             <com.redimed.telehealth.patient.font.RobotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/sub_tracking_received"
-                android:textSize="@dimen/tracking_text_size" />
+                android:textSize="@dimen/tracking_text_size"
+                android:textColor="@color/lightFont"/>
 
             <View
                 android:layout_width="10dp"
                 android:layout_height="8dp"
                 android:layout_alignBottom="@+id/imgReceived"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="-30dp"
+                android:layout_marginBottom="-21dp"
                 android:background="@drawable/sub_tracking_arrow_icon" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-25dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imgCircleBlurPending"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerInParent="true" />
 
             <ImageView
@@ -107,14 +107,15 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/sub_tracking_appt_pending"
-                android:textSize="@dimen/tracking_text_size" />
+                android:textSize="@dimen/tracking_text_size"
+                android:textColor="@color/lightFont"/>
 
             <View
                 android:layout_width="10dp"
                 android:layout_height="8dp"
                 android:layout_alignBottom="@+id/imgPending"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="-15dp"
+                android:layout_marginBottom="-21dp"
                 android:background="@drawable/sub_tracking_arrow_icon" />
 
         </RelativeLayout>
@@ -122,15 +123,57 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-25dp"
             android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imgCircleBlurTime"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true" />
+
+                <ImageView
+                    android:id="@+id/imgTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/sub_tracking_appt_time" />
+
+                <com.redimed.telehealth.patient.font.RobotoTextView
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/sub_tracking_appt_time"
+                    android:textSize="@dimen/tracking_text_size"
+                    android:textColor="@color/lightFont"/>
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="8dp"
+                    android:layout_alignBottom="@+id/imgTime"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="-21dp"
+                    android:background="@drawable/sub_tracking_arrow_icon" />
+
+            </RelativeLayout>
+
+            <View
+                android:visibility="gone"
+                android:id="@+id/lineApptTime"
+                android:layout_width="20dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="-10dp"
+                android:background="@color/line_color_time" />
 
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/layoutApptTime"
                 android:layout_width="wrap_content"
                 android:layout_height="65dp"
-                android:layout_alignParentRight="true"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:background="@drawable/custom_border_radius_view">
@@ -219,60 +262,16 @@
 
             </LinearLayout>
 
-            <View
-                android:visibility="gone"
-                android:id="@+id/lineApptTime"
-                android:layout_width="20dp"
-                android:layout_height="1dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="-20dp"
-                android:background="@color/line_color_time" />
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/imgCircleBlurTime"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerInParent="true" />
-
-                <ImageView
-                    android:id="@+id/imgTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/sub_tracking_appt_time" />
-
-                <com.redimed.telehealth.patient.font.RobotoTextView
-                    android:layout_width="25dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/sub_tracking_appt_time"
-                    android:textSize="@dimen/tracking_text_size" />
-
-                <View
-                    android:layout_width="10dp"
-                    android:layout_height="8dp"
-                    android:layout_alignBottom="@+id/imgTime"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="-15dp"
-                    android:background="@drawable/sub_tracking_arrow_icon" />
-
-            </RelativeLayout>
-
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-25dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imgCircleBlurAttended"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerInParent="true" />
 
             <ImageView
@@ -287,27 +286,27 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/sub_tracking_attend"
-                android:textSize="@dimen/tracking_text_size" />
+                android:textSize="@dimen/tracking_text_size"
+                android:textColor="@color/lightFont"/>
 
             <View
                 android:layout_width="10dp"
                 android:layout_height="8dp"
                 android:layout_alignBottom="@+id/imgAttended"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="-15dp"
+                android:layout_marginBottom="-21dp"
                 android:background="@drawable/sub_tracking_arrow_icon" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-25dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imgCircleBlurWait"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerInParent="true" />
 
             <ImageView
@@ -322,28 +321,27 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/sub_tracking_wait"
-                android:textSize="@dimen/tracking_text_size" />
+                android:textSize="@dimen/tracking_text_size"
+                android:textColor="@color/lightFont"/>
 
             <View
                 android:layout_width="10dp"
                 android:layout_height="8dp"
                 android:layout_alignBottom="@+id/imgWait"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="-15dp"
+                android:layout_marginBottom="-20dp"
                 android:background="@drawable/sub_tracking_arrow_icon" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="-5dp"
-            android:layout_marginTop="-30dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imgCircleBlurFinish"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerInParent="true" />
 
             <ImageView
@@ -358,7 +356,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/sub_tracking_finish"
-                android:textSize="@dimen/tracking_text_size" />
+                android:textSize="@dimen/tracking_text_size"
+                android:textColor="@color/lightFont"/>
 
         </RelativeLayout>
 
@@ -366,15 +365,16 @@
 
     <Button
         android:id="@+id/btnAppt"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/sub_tracking_appt_icon"
+        android:paddingLeft="2dp"
         android:text="@string/sub_appointment"
-        android:textColor="@android:color/holo_blue_dark" />
+        android:textColor="@color/lightFont" />
 
 </RelativeLayout>

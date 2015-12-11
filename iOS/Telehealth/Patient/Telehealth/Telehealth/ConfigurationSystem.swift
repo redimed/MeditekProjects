@@ -15,20 +15,20 @@ let config = ConfigurationSystem()
 var savedData  = saveData()
 let defaults = NSUserDefaults.standardUserDefaults()
 var tokens = String()
-var coreTokens = String()
 var userUID = String()
 var cookies = String()
 var PatientInfo : Patient!
 let phoneNumberCallUs = "0892300900"
 var statusCallingNotification = ""
+//var deviceID = String()
 struct ConfigurationSystem {
-    static let http = "http://192.168.1.130"
+    static let http = "http://testapp.redimed.com.au"
     
     
     static let Http_3009 = "\(http):3009"
     static let Http_3005 =  "\(http):3005"
-     static let Http_3006 =  "\(http):3006"
-    let deviceID = UIDevice.currentDevice().identifierForVendor?.UUIDString
+    static let Http_3006 =  "\(http):3006"
+    
     
 
     //change border color textfield
@@ -37,6 +37,9 @@ struct ConfigurationSystem {
         textField.layer.borderWidth = 1
         textField.cornerRadius = 4
     }
+    
+
+    
     //Giap: Check input only number
     func validateInputOnlyNumber(value: Int) -> Bool {
         switch value {

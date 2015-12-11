@@ -16,9 +16,22 @@
 
 package com.redimed.telehealth.patient.service;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+import android.widget.RemoteViews;
+
 import com.google.android.gms.gcm.GcmListenerService;
+import com.redimed.telehealth.patient.CallActivity;
+import com.redimed.telehealth.patient.MainActivity;
+import com.redimed.telehealth.patient.R;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -26,14 +39,37 @@ public class MyGcmListenerService extends GcmListenerService {
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        String message = data.getString("message");
-        if (message != null){
-            Log.d(TAG, message);
-            sendNotification(message);
+        if (data != null){
+            //sendNotification(data.getString("data"));
         }
     }
 
     private void sendNotification(String message) {
         Log.d(TAG, "Message: " + message);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, CallActivity.class), 0);
+
+        //         Remote view and intent for my button
+        RemoteViews contentView = new RemoteViews(this.getPackageName(), R.layout.custom_notification);
+        contentView.setImageViewResource(R.id.imgLogo, R.mipmap.ic_launcher);
+        contentView.setTextViewText(R.id.lblTitle, "REDIMED");
+        contentView.setTextViewText(R.id.lblMessage, "This is a custom layout");
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(getResources().getString(R.string.not_title))
+                .setPriority(NotificationCompat.PRIORITY_MAX) // On top bar
+                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
+                .setLights(Color.BLUE, 3000, 3000)
+                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
+                .setOngoing(true) //Do not clear the notification
+                .setContentIntent(contentIntent)
+                .setWhen(System.currentTimeMillis())
+                .setAutoCancel(true)
+//                .setContent(contentView)
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(0, notification);
     }
 }

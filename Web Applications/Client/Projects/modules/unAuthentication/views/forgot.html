@@ -15,12 +15,10 @@
     <form method="post" class="forget-form" novalidate name="forgetForm" style="display: block;">
         <h3 class="form-title font-green">Forget Password ?</h3>
         <p>Enter your e-mail address below to reset your password.</p>
-        <div class="form-group" ng-class="{'has-error':forgetForm.email.$invalid && showClickedValidation}">
-            <input class="form-control placeholder-no-fix" type="email" autocomplete="off" ng-model="email" placeholder="Email" name="email" required ng-model="email"/>
+        <div class="form-group">
+            <input class="form-control placeholder-no-fix" ng-model="email" placeholder="Email" name="email" ng-style="errors" ng-change="errors='';emailError='';checkDataNull()" />
             <!--validate-->
-            <span ng-show="forgetForm.email.$invalid && showClickedValidation">
-                <span for="email" class="help-block">Enter a valid Email.</span>
-            </span>
+            <span style="color:red;">{{emailError}}</span>
             <!--end validate-->
         </div>
         <div class="form-actions">

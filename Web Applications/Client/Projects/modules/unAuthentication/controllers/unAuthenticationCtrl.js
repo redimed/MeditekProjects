@@ -4,6 +4,7 @@ var app = angular.module('app.unAuthentication.controller', [
 	'app.unAuthentication.register.controller',
 	'app.unAuthentication.activation.controller',
 	'app.unAuthentication.forgot.controller',
+	'app.unAuthentication.changepass.controller',
 	// For Patient
 	'app.unAuthentication.loginPatient.controller',
 	'app.unAuthentication.registerPatient.controller',

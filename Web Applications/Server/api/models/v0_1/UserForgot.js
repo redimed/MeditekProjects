@@ -23,7 +23,7 @@ module.exports = {
                 }
             }
         },
-        TokenExpire: {
+        TokenExpired: {
             type: Sequelize.INTEGER(11),
             allowNull: true,
             validate: {

@@ -163,12 +163,12 @@ class JSSAlertView: UIViewController {
         self.viewHeight = size.height
         
         var yPos:CGFloat = 0.0
-        var contentWidth:CGFloat = self.alertWidth - (self.padding*2)
+        let contentWidth:CGFloat = self.alertWidth - (self.padding*2)
         
         // position the icon image view, if there is one
         if self.iconImageView != nil {
             yPos += iconImageView.frame.height
-            var centerX = (self.alertWidth-self.iconImageView.frame.width)/2
+            let centerX = (self.alertWidth-self.iconImageView.frame.width)/2
             self.iconImageView.frame.origin = CGPoint(x: centerX, y: self.padding)
             yPos += padding
         }
@@ -186,7 +186,7 @@ class JSSAlertView: UIViewController {
         // position text
         if self.textView != nil {
             let textString = textView.text! as NSString
-            let textAttr = [NSFontAttributeName:textView.font]
+            _ = [NSFontAttributeName:textView.font]
             let realSize = textView.sizeThatFits(CGSizeMake(contentWidth, CGFloat.max))
             let textSize = CGSize(width: contentWidth, height: CGFloat(fmaxf(Float(90.0), Float(realSize.height))))
             let textRect = textString.boundingRectWithSize(textSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: nil, context: nil)
@@ -206,7 +206,7 @@ class JSSAlertView: UIViewController {
             }
         }
         
-        var buttonX = buttonWidth == self.alertWidth ? 0 : buttonWidth
+        let buttonX = buttonWidth == self.alertWidth ? 0 : buttonWidth
         self.dismissButton.frame = CGRect(x: buttonX, y: yPos, width: buttonWidth, height: self.buttonHeight)
         if self.buttonLabel != nil {
             self.buttonLabel.frame = CGRect(x: self.padding, y: (self.buttonHeight/2) - 15, width: buttonWidth - (self.padding*2), height: 30)
@@ -265,7 +265,7 @@ class JSSAlertView: UIViewController {
         } else {
             baseColor = self.defaultColor
         }
-        var textColor = self.darkTextColor
+        let textColor = self.darkTextColor
         
         let sz = self.screenSize()
         self.viewWidth = sz.width
@@ -334,7 +334,7 @@ class JSSAlertView: UIViewController {
         dismissButton.addSubview(buttonLabel)
         
         // Second cancel button
-        if let btnText = cancelButtonText {
+        if let _ = cancelButtonText {
             self.cancelButton = UIButton()
             let buttonColor = UIImage.withColor(adjustBrightness(baseColor!, amount: 0.8))
             let buttonHighlightColor = UIImage.withColor(adjustBrightness(baseColor!, amount: 0.9))

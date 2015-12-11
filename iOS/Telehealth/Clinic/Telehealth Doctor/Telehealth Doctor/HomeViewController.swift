@@ -87,7 +87,13 @@ class HomeViewController: UIViewController {
             
             SingleTon.socket.on("receiveMessage") { data, ack in
                 let result = JSON(data[0])
-                NSNotificationCenter.defaultCenter().postNotificationName("handleCallNotification", object: nil, userInfo: ["message": result["message"].stringValue])
+                if let currCall = self.userDefaults.valueForKey("currentUserCall") {
+                    if currCall as! String == result["from"].stringValue {
+                        print("uid same go handleCallNotification")
+                        NSNotificationCenter.defaultCenter().postNotificationName("handleCallNotification", object: nil, userInfo: ["message": result["message"].stringValue])
+                    }
+                }
+                
             }
             
             SingleTon.socket.on("errorMsg") { data, ack in
@@ -97,12 +103,22 @@ class HomeViewController: UIViewController {
         })
         SingleTon.socket.connect()
         
+        /**
+        *  Send request generate info for Opentok calling
+        *
+        *  @param .GET              method .GET
+        *  @param GENERATESESSION   URL in global constranst file
+        *  @param SingleTon.headers class singleton
+        *
+        */
         request(.GET, GENERATESESSION, headers: SingleTon.headers)
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
             .responseJSONReToken() { response in
                 
                 guard response.2.error == nil else {
                     if let data = response.2.data {
-                        JSSAlertView().warning(self, title: "Error", text: resJSONError(data))
+                        _ = UIAlertView(title: "Error", message: resJSONError(data), delegate: self, cancelButtonTitle: "OK")
                     }
                     print("error calling GET", response.2.error!)
                     return
@@ -114,6 +130,17 @@ class HomeViewController: UIViewController {
                     }
                 }
         }
+        
+        // Send request send device token for push notification APNs
+        //        if let val = userDefaults.valueForKey("deviceToken") {
+        //            let param = ["data": ["uid": userUID, "token": val]]
+        //            request(.POST, UPDATE_TOKEN_PUSH, headers: SingleTon.headers, parameters: param)
+        //                .validate(statusCode: 200..<300)
+        //                .validate(contentType: ["application/json"])
+        //                .responseJSONReToken() { response in
+        //                    print(response)
+        //            }
+        //        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -150,7 +177,7 @@ class HomeViewController: UIViewController {
                     
                     guard response.2.error == nil else {
                         if let data = response.2.data {
-                            JSSAlertView().warning(self, title: "Error", text: resJSONError(data))
+                            _ = UIAlertView(title: "Error", message: resJSONError(data), delegate: self, cancelButtonTitle: "OK")
                         }
                         print("Error calling, server response -> ", response.2.error!)
                         return
@@ -202,51 +229,58 @@ extension Request {
                 return .Failure(data, error)
             }
             
-            if let valueHeader: AnyObject = resHeaderAll.allHeaderFields {
+            if let valueHeader: AnyObject = resHeaderAll.allHeaderFields, let jsonHeader: JSON = JSON(resHeaderAll.allHeaderFields) {
                 let readJSON = JSON(valueHeader)
-                if let newCookie: String! = readJSON["Set-Cookie"].stringValue {
+                if let newCookie: String! = readJSON["Set-Cookie"].stringValue, let requireToken: Bool = jsonHeader["requireupdatetoken"].boolValue {
                     if !newCookie.isEmpty && oldCookie != newCookie {
                         NSUserDefaults.standardUserDefaults().setValue(newCookie, forKey: "Cookie")
                     }
-                }
-            }
-            //  Logic reset token
-            if resHeaderAll.statusCode != 200 {
-                switch resHeaderAll.statusCode {
-                case 202:
-                    if let jsonHeader: JSON = JSON(resHeaderAll.allHeaderFields) {
-                        if let requireToken: Bool = jsonHeader["requireupdatetoken"].boolValue {
-                            if requireToken {
-                                NSNotificationCenter.defaultCenter().postNotificationName("expireToken", object: nil, userInfo: ["message": "RefreshLogin"])
-                            }
-                        }
-                    }
-                case 401:
-                    print("extension Request func ResponseJSONReToken --- \(resHeaderAll.statusCode)")
-                    do {
-                        let json = try NSJSONSerialization.JSONObjectWithData(validData, options: options)
-                        print("extension Request func ResponseJSONReToken --- \(json)")
-                        if let errList = json["ErrorsList"]!!.description {
-                            if errList.lowercaseString.rangeOfString("notauthenticated") != nil {
-                                NSNotificationCenter.defaultCenter().postNotificationName("expireToken", object: nil, userInfo: ["message": "LoginAgain"])
-                            } else {
-                                print("not exist notAuthenticated")
-                            }
-                        }
-                    } catch let error as NSError {
-                        print("Failed to load: \(error.localizedDescription)")
-                    }
-                default:
-                    print("extension Request func ResponseJSONReToken --- \(resHeaderAll.statusCode)")
-                    do {
-                        let json = try NSJSONSerialization.JSONObjectWithData(validData, options: options)
-                        print("extension Request func ResponseJSONReToken --- \(json)")
+                    if requireToken {
                         NSNotificationCenter.defaultCenter().postNotificationName("expireToken", object: nil, userInfo: ["message": "RefreshLogin"])
-                    } catch let error as NSError {
-                        print("Failed to load: \(error.localizedDescription)")
                     }
                 }
             }
+            
+//            if let jsonHeader: JSON = JSON(resHeaderAll.allHeaderFields) {
+//                if let requireToken: Bool = jsonHeader["requireupdatetoken"].boolValue {
+//                    if requireToken {
+//                        NSNotificationCenter.defaultCenter().postNotificationName("expireToken", object: nil, userInfo: ["message": "RefreshLogin"])
+//                    }
+//                }
+//            }
+            
+            //  Logic reset token
+            //            if resHeaderAll.statusCode != 200 {
+            //                switch resHeaderAll.statusCode {
+            //                case 202:
+            //                    print("extension Request func ResponseJSONReToken --- \(resHeaderAll.statusCode)")
+            //                case 401:
+            //                    print("extension Request func ResponseJSONReToken --- \(resHeaderAll.statusCode)")
+            //                    do {
+            //                        let json = try NSJSONSerialization.JSONObjectWithData(validData, options: options)
+            //                        print("extension Request func ResponseJSONReToken --- \(json)")
+            //                        if let errList = json["ErrorsList"]!!.description {
+            //                            if errList.lowercaseString.rangeOfString("notauthenticated") != nil {
+            //                                NSNotificationCenter.defaultCenter().postNotificationName("expireToken", object: nil, userInfo: ["message": "LoginAgain"])
+            //                            } else {
+            //                                print("not exist notAuthenticated")
+            //                                NSNotificationCenter.defaultCenter().postNotificationName("expireToken", object: nil, userInfo: ["message": "LoginAgain"])
+            //                            }
+            //                        }
+            //                    } catch let error as NSError {
+            //                        print("Failed to load: \(error.localizedDescription)")
+            //                    }
+            //                default:
+            //                    print("extension Request func ResponseJSONReToken --- \(resHeaderAll.statusCode)")
+            //                    do {
+            //                        let json = try NSJSONSerialization.JSONObjectWithData(validData, options: options)
+            //                        print("extension Request func ResponseJSONReToken --- \(json)")
+            //                        NSNotificationCenter.defaultCenter().postNotificationName("expireToken", object: nil, userInfo: ["message": "RefreshLogin"])
+            //                    } catch let error as NSError {
+            //                        print("Failed to load: \(error.localizedDescription)")
+            //                    }
+            //                }
+            //            }
             
             do {
                 let JSON = try NSJSONSerialization.JSONObjectWithData(validData, options: options)
@@ -266,7 +300,10 @@ extension Request {
 func resJSONError(debugDesc: AnyObject?) -> String {
     do {
         let json = try NSJSONSerialization.JSONObjectWithData(debugDesc as! NSData, options: []) as! [String: AnyObject]
-        return (json["ErrorType"]?.stringValue)!
+        if let err = json["ErrorType"] {
+            return err as! String
+        }
+        return "not catch json['ErrorType']"
     } catch let error as NSError {
         print("Failed to load: \(error.localizedDescription)")
         return "Failed to load data"

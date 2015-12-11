@@ -8,11 +8,24 @@
 
 import Foundation
 
-let URL_SERVER_3009 = "http://192.168.1.130:3009"
-let URL_SERVER_3005 = "http://192.168.1.130:3005"
-let URL_SERVER_3006 = "http://192.168.1.130:3006"
+/// ***declare server for all application***
 
-// request url
+/// Server Australia
+let URL_SERVER_3009 = "http://testapp.redimed.com.au:3009"
+let URL_SERVER_3005 = "http://testapp.redimed.com.au:3005"
+let URL_SERVER_3006 = "http://testapp.redimed.com.au:3006"
+
+/// Server Luân
+//let URL_SERVER_3009 = "http://192.168.1.130:3009"
+//let URL_SERVER_3005 = "http://192.168.1.130:3005"
+//let URL_SERVER_3006 = "http://192.168.1.130:3006"
+
+/// Server Việt Nam
+//let URL_SERVER_3009 = "http://telehealthvietnam.com.vn:3009"
+//let URL_SERVER_3005 = "http://telehealthvietnam.com.vn:3005"
+//let URL_SERVER_3006 = "http://telehealthvietnam.com.vn:3006"
+
+/// request url
 let AUTHORIZATION = URL_SERVER_3006 + "/api/login"
 
 let GET_TELEUSER = URL_SERVER_3009 + "/api/telehealth/user/"
@@ -31,8 +44,11 @@ let DOWNLOAD_IMAGE_APPOINTMENT = URL_SERVER_3005 + "/api/downloadFile/"
 
 let GET_NEW_TOKEN = URL_SERVER_3006 + "/api/refresh-token/GetNewToken"
 
+let UPDATE_TOKEN_PUSH = URL_SERVER_3009 + "/api/telehealth/user/updateToken"
 
-// socket emit url
+let PUSH_ACTION = URL_SERVER_3009 + "/api/telehealth/user/pushNotification"
+
+/// socket emit url
 let TRANSFER_IN_CALL = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
 
 let MAKE_CALL = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@&sessionId=%@&fromName=%@"
@@ -41,37 +57,13 @@ let JOIN_ROOM = "/api/telehealth/socket/joinRoom?uid=%@"
 
 var AUTHTOKEN = ""
 
-func formatString(dateString: String) -> String {
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.timeZone = NSTimeZone(name: "UTC")
-    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000Z"
-    if let datePublished = dateFormatter.dateFromString(dateString) {
-        dateFormatter.dateFormat = "MMM dd, yyyy 'at' h:mm a"
-        let dateFormated = dateFormatter.stringFromDate(datePublished)
-        return dateFormated
-    }
-    return ""
-}
-
-func formatforList(dateString: String) -> String {
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.timeZone = NSTimeZone(name: "UTC")
-    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000Z"
-    if let datePublished = dateFormatter.dateFromString(dateString) {
-        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
-        let dateFormated = dateFormatter.stringFromDate(datePublished)
-        return dateFormated
-    }
-    return ""
-}
-
-/**
-*  alert message for UIAlertController
-*/
+/// alert message for UIAlertController
 var err_Mess_Network = "The Internet connection appears to be offline"
 var err_Mess_sessionExpired = "Your session is expired. Please login again!"
 
-// check platform simulator or real device
+/**
+ *  check platform simulator or real device
+ */
 struct Platform {
     static let isSimulator: Bool = {
         var isSim = false
@@ -82,3 +74,22 @@ struct Platform {
     }()
 }
 
+/**
+ function for format string to date with a format
+ 
+ - parameter dateString: receive data from server
+ 
+ - returns: A NSDate with format self regulation
+ */
+public func FormatStrDate(dateString: String) -> String {
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.timeZone = NSTimeZone(name: "UTC")
+    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000Z"
+    if let datePublished = dateFormatter.dateFromString(dateString) {
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+        let dateFormated = dateFormatter.stringFromDate(datePublished)
+        dateFormatter.timeZone = NSTimeZone(name: "UTC")
+        return dateFormated
+    }
+    return ""
+}

@@ -12,10 +12,10 @@ import Spring
 import SwiftyJSON
 import ReachabilitySwift
 
-class LoginViewController: UIViewController,UITextFieldDelegate {
+class LoginViewController: UIViewController {
     
-    @IBOutlet weak var usernameTextField: DesignableTextField!
-    @IBOutlet weak var passwordTextField: DesignableTextField!
+    @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var buttonLogin: UIButton!
     @IBOutlet weak var viewModal: DesignableView!
     @IBOutlet weak var errorLoginLabel: UILabel!
@@ -31,9 +31,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.usernameTextField.delegate = self
-        self.passwordTextField.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -66,6 +63,29 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             } else {
                 NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "AlertWarningNetwork", userInfo: nil, repeats: false)
             }
+        }
+        
+        /**
+        *  Test first connection to server
+        *
+        *  @param .GET            .GET method
+        *  @param URL_SERVER_3006 server for authorization
+        *
+        */
+        request(.GET, URL_SERVER_3006)
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .responseJSON { response -> Void in
+                
+                if let headerRes = response.1?.allHeaderFields {
+                    let jsonRes: JSON = JSON(headerRes)
+                    if let cookies: String = jsonRes["Set-Cookie"].stringValue {
+                        if !cookies.isEmpty {
+                            self.userDefault.setValue(cookies, forKey: "Cookie")
+                            print("Successful connect to server")
+                        }
+                    }
+                }
         }
     }
     
@@ -122,6 +142,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         if let reachability = reachability {
             if reachability.isReachable() {
                 NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "LoginMain", userInfo: nil, repeats: false)
+                
             } else {
                 AlertWarningNetwork()
                 self.loading.stopActivity(true)
@@ -149,26 +170,17 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             .responseJSON { response -> Void in
                 switch response.2 {
                 case .Success:
+                    
                     let userJSON = JSON(response.2.value!["user"] as! NSDictionary)
                     
                     var user = [String: String]()
                     for (key, object) in userJSON {
                         user[key] = object.stringValue
                     }
-                    self.userDefault.setObject(user, forKey: "userInfo")
                     
+                    self.userDefault.setObject(user, forKey: "userInfo")
                     self.userDefault.setValue("Bearer \(response.2.value!["token"] as! String)", forKey: "authToken")
                     self.userDefault.setValue(response.2.value!["refreshCode"] as! String, forKey: "refCode")
-                    
-                    if let headerResponse = response.1?.allHeaderFields {
-                        if let jsonRes: JSON = JSON(headerResponse) {
-                            if let cookies: String = jsonRes["Set-Cookie"].stringValue {
-                                if !cookies.isEmpty {
-                                    self.userDefault.setValue(cookies, forKey: "Cookie")
-                                }
-                            }
-                        }
-                    }
                     
                     let headergetUser = [
                         "Cookie" : NSUserDefaults.standardUserDefaults().valueForKey("Cookie") as! String,
@@ -183,7 +195,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                         .validate(statusCode: 200..<300)
                         .validate(contentType: ["application/json"])
                         .responseJSON { response -> Void in
-                            print(response)
+                            
                             guard response.2.error == nil else {
                                 print("error get data tele user info", response.2.error!)
                                 return

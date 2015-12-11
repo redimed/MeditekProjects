@@ -10,6 +10,7 @@ import UIKit
 import UIView_draggable
 import ReachabilitySwift
 import Alamofire
+import SwiftyJSON
 
 let videoWidth : CGFloat = 200
 let videoHeight : CGFloat = 120
@@ -33,7 +34,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("teleUserInfo") as! NSDictionary
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var avAudioPlayer : AVAudioPlayer?
-    var soundFileURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("ringing", ofType: "wav")!)
+    var soundFileURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("ringtone", ofType: "wav")!)
     var loading: DTIActivityIndicatorView!
     var customUI: CustomViewController = CustomViewController()
     var isClickEnd = false
@@ -57,7 +58,6 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loading = DTIActivityIndicatorView(frame: CGRect(x:screenSize.size.width/2 - 30, y:screenSize.size.height/2, width:90.0, height:90.0))
         self.view.addSubview(self.loading)
         loading.indicatorColor = UIColor(hex: "34AADC")
@@ -66,7 +66,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         
         navigationController?.setNavigationBarHidden(true, animated: true)
         nameLabelCall.text = SingleTon.onlineUser_Singleton[idOnlineUser].fullNamePatient
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "handleCall", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "handleCallNotification", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleCall:", name: "handleCallNotification", object: nil)
         session = OTSession(apiKey: ApiKey, sessionId: SessionID, delegate: self)
         doConnect(Token)
@@ -85,7 +85,10 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         imgViewOffCamera = UIImageView(frame: CGRectMake((videoWidth / 2) - 16, (videoHeight / 2) - 16 , 32, 32))
         imgViewOffCamera.image = UIImage(named: "no-camera-100")
         
-        
+        /**
+        set to userDefault for when user terminate application
+        */
+        NSUserDefaults.standardUserDefaults().setValue(SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, forKey: "currentUserCall")
     }
     
     //    play sound when calling to patient
@@ -116,11 +119,11 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             case "decline":
                 receiveDeclineEvent()
                 break
-            case "end":
-                if isClickEnd != true {
-                    endCall()
-                }
-                break
+                //            case "end":
+                //                if isClickEnd != true {
+                //                    endCall()
+                //                }
+                //                break
             default:
                 break
             }
@@ -132,6 +135,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
      */
     func receiveAnswerEvent() {
         avAudioPlayer?.stop()
+        avAudioPlayer?.currentTime = 0
         titleLabelCall.text = "Connecting..."
         for button : UIButton in controllerButtonCall {
             if button.tag >= 0 && button.tag <= 2 {
@@ -142,6 +146,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     
     func receiveDeclineEvent() {
         avAudioPlayer?.stop()
+        avAudioPlayer?.currentTime = 0
         titleLabelCall.text = "Unavailable with"
         for button : UIButton in controllerButtonCall {
             if button.tag >= 0 && button.tag <= 2 {
@@ -163,7 +168,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             }
         }
         
-        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
+        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, JSON(NSUserDefaults.standardUserDefaults().valueForKey("userInfo")!)["UserName"].stringValue)])
     }
     
     func lostConnection() {
@@ -184,9 +189,10 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
      */
     func endCall() {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "handleCall", object: nil)
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("currentUserCall")
         sessionDidDisconnect(session!)
         doUnsubscribe()
-        self.navigationController!.popViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     /**
@@ -212,11 +218,25 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             }
             break
         case 1: // ---end call---
+            
+            let maybeErr:AutoreleasingUnsafeMutablePointer<OTError?> = nil
+            
             isClickEnd = true
             if isAnswer {
-                SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "end")])
+                session?.signalWithType("endCall", string: "end", connection: nil, error:maybeErr)
+                if (maybeErr != nil) {
+                    print("signal error \(maybeErr)")
+                }
             } else {
                 SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "cancel")])
+                
+                let param = ["data":["message": "end"], "title": "Message end call", "uid": SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "sound": "abc"]
+                request(.POST, PUSH_ACTION, headers: SingleTon.headers, parameters: param as? [String : AnyObject])
+                    .validate(statusCode: 200..<300)
+                    .validate(contentType: ["application/json"])
+                    .responseJSONReToken { response -> Void in
+                        print(response)
+                }
             }
             
             endCall()
@@ -280,8 +300,6 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         view.addSubview(publisher!.view)
         publisher!.view.frame = CGRect(x: 0.0, y: 0, width: screenSize.width, height: screenSize.height)
         
-        /// Emit call patient
-        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, SingleTon.onlineUser_Singleton[idOnlineUser].fullNameDoctor)])
         /**
         button controller call to publisherview
         */
@@ -300,6 +318,9 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         publisher!.view.addSubview(titleLabelCall)
         publisher!.view.addSubview(nameLabelCall)
         loading.stopActivity(true)
+        
+        /// Emit call patient
+        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, JSON(NSUserDefaults.standardUserDefaults().valueForKey("userInfo")!)["UserName"].stringValue)])
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -385,7 +406,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         NSLog("session streamDestroyed then streamCreated (\(stream.streamId))")
         
         if subscriber?.stream.streamId == stream.streamId {
-            lostConnection()
+//            lostConnection()
         }
     }
     
@@ -395,7 +416,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     
     func session(session: OTSession, connectionDestroyed connection : OTConnection) {
         NSLog("session connectionDestroyed (\(connection.connectionId))")
-        lostConnection()
+        //        lostConnection()
     }
     
     func session(session: OTSession, didFailWithError error: OTError) {
@@ -404,6 +425,16 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         alert.show()
         self.navigationController!.popViewControllerAnimated(true)
         loading.stopActivity(true)
+    }
+    
+    func session(session: OTSession!, receivedSignalType type: String!, fromConnection connection: OTConnection!, withString string: String!) {
+        if let typeReceive = type, let str = string {
+            if !typeReceive.isEmpty && !str.isEmpty {
+                if typeReceive == "endCall" && str == "end" {
+                    endCall()
+                }
+            }
+        }
     }
     
     // MARK: - OTSubscriber delegate callbacks
@@ -421,6 +452,13 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             }
             self.publisher!.view.enableDragging()
             nameLabelCall.frame = CGRectMake(353, 55, 319, 316)
+        }
+        
+        if ((avAudioPlayer?.playing) != nil) {
+            
+            avAudioPlayer?.stop()
+            avAudioPlayer?.currentTime = 0
+            
         }
     }
     
@@ -445,7 +483,6 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         imageNoCameraSubscriber.hidden = true
         screenCapture.removeFromSuperview()
     }
-    
     
     // MARK: - OTPublisher delegate callbacks
     

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0008595D1C0DA93B009686E9 /* ringing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0008595C1C0DA93B009686E9 /* ringing.wav */; };
 		001C6D041BF9BF5000877F4B /* Medi_Infomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001C6D021BF9BF5000877F4B /* Medi_Infomation.swift */; };
 		001C6D051BF9BF5000877F4B /* Medi_Infomation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 001C6D031BF9BF5000877F4B /* Medi_Infomation.xib */; };
 		002053431BBBBE2B00679E10 /* JSSAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002053421BBBBE2B00679E10 /* JSSAlertView.swift */; };
@@ -43,6 +42,7 @@
 		0045A2E41BCF8FB200AC4028 /* PresentComplain.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0045A2E31BCF8FB200AC4028 /* PresentComplain.xib */; };
 		0045A2E61BCF8FC900AC4028 /* MedicalImage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0045A2E51BCF8FC900AC4028 /* MedicalImage.xib */; };
 		0045A2E81BCF8FD100AC4028 /* PatientTabVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0045A2E71BCF8FD100AC4028 /* PatientTabVC.xib */; };
+		004CCA991C0FF5980079282D /* ringtone.wav in Resources */ = {isa = PBXBuildFile; fileRef = 004CCA981C0FF5980079282D /* ringtone.wav */; };
 		004F6D191BB9A02200242CE9 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004F6D181BB9A02200242CE9 /* CustomViewController.swift */; };
 		00525A661C05970C007A56D5 /* ModalFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00525A651C05970C007A56D5 /* ModalFilterVC.swift */; };
 		005BE58C1BF03DEA00134D84 /* HistorySkinHandVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005BE58A1BF03DEA00134D84 /* HistorySkinHandVC.swift */; };
@@ -110,7 +110,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0008595C1C0DA93B009686E9 /* ringing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringing.wav; sourceTree = "<group>"; };
 		001C6D021BF9BF5000877F4B /* Medi_Infomation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medi_Infomation.swift; sourceTree = "<group>"; };
 		001C6D031BF9BF5000877F4B /* Medi_Infomation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Medi_Infomation.xib; sourceTree = "<group>"; };
 		002053421BBBBE2B00679E10 /* JSSAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSSAlertView.swift; path = "Telehealth Doctor/JSSAlertView.swift"; sourceTree = "<group>"; };
@@ -147,6 +146,7 @@
 		0045A2E31BCF8FB200AC4028 /* PresentComplain.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresentComplain.xib; sourceTree = "<group>"; };
 		0045A2E51BCF8FC900AC4028 /* MedicalImage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MedicalImage.xib; sourceTree = "<group>"; };
 		0045A2E71BCF8FD100AC4028 /* PatientTabVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PatientTabVC.xib; sourceTree = "<group>"; };
+		004CCA981C0FF5980079282D /* ringtone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringtone.wav; sourceTree = "<group>"; };
 		004F6D181BB9A02200242CE9 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		00525A651C05970C007A56D5 /* ModalFilterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalFilterVC.swift; sourceTree = "<group>"; };
 		005BE58A1BF03DEA00134D84 /* HistorySkinHandVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistorySkinHandVC.swift; sourceTree = "<group>"; };
@@ -591,7 +591,7 @@
 		AFF10DF81BB27A39005E9838 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				0008595C1C0DA93B009686E9 /* ringing.wav */,
+				004CCA981C0FF5980079282D /* ringtone.wav */,
 			);
 			name = Resource;
 			path = ..;
@@ -736,6 +736,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 					AFF21D8F1BB12D8B006A190E = {
@@ -776,11 +779,11 @@
 				004565121BF03505005ABA28 /* ReasonforPresentingVC.xib in Resources */,
 				0045A2E21BCF8F9100AC4028 /* ClinicalMedical.xib in Resources */,
 				001C6D051BF9BF5000877F4B /* Medi_Infomation.xib in Resources */,
-				0008595D1C0DA93B009686E9 /* ringing.wav in Resources */,
 				AFF21D8A1BB12D8B006A190E /* LaunchScreen.storyboard in Resources */,
 				007AE7CF1C06AE17005364FE /* Assets.xcassets in Resources */,
 				004565071BF02EC9005ABA28 /* Kin_Guardian.xib in Resources */,
 				0045A2E41BCF8FB200AC4028 /* PresentComplain.xib in Resources */,
+				004CCA991C0FF5980079282D /* ringtone.wav in Resources */,
 				0045A2E61BCF8FC900AC4028 /* MedicalImage.xib in Resources */,
 				00B0AFAD1BDA2B5600871786 /* DetailImageVC.xib in Resources */,
 				005BE5931BF0426B00134D84 /* Relevant_Allergy_CurrentVC.xib in Resources */,

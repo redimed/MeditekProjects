@@ -10,6 +10,28 @@ angular.module('app.authentication.doctor.directive.create', [])
 		},
 		controller: function($scope, FileUploader, $state, toastr) {
 
+			$scope.buildImg = function(imageType,canvasimg,ctximg,e) {
+				document.body.onfocus = function () {
+			    	if(imageType.value.length == 0)
+				    	alert("k chon file nao");
+				    else{
+					    var reader = new FileReader();
+					    reader.onload = function(event){
+					        var img = new Image();
+					        img.onload = function(){
+					            canvasimg.width = 350;
+					            canvasimg.height = 350;
+					            ctximg.drawImage(img,0,0,350,350);
+					        };
+					        img.src = event.target.result;
+					    }
+					    console.log(e.target.files[0]);
+						reader.readAsDataURL(e.target.files[0]);
+				    }
+				    document.body.onfocus = null;
+				}; 
+			}
+
 			// Profile Image
 			//create reqeust uploader
 		    var uploader = $scope.uploader = new FileUploader({
@@ -404,24 +426,7 @@ scope.uploader.queue[i].formData[0].userUID = success.userUID;
 					var ctx = canvas.getContext('2d');
 
 					function handleImage(e){
-						document.body.onfocus = function () {
-					    	if(imageAvatar.value.length == 0)
-						    	alert("k chon file nao");
-						    else{
-							    var reader = new FileReader();
-							    reader.onload = function(event){
-							        var img = new Image();
-							        img.onload = function(){
-							            canvas.width = 350;
-							            canvas.height = 350;
-							            ctx.drawImage(img,0,0,350,350);
-							        }
-							        img.src = event.target.result;
-							    }
-							    reader.readAsDataURL(e.target.files[0]);
-						    }
-						    document.body.onfocus = null;
-						};     
+						scope.buildImg(imageAvatar, canvas, ctx,e);
 					}
 				}
 				else if(value =="Signature") {
@@ -430,24 +435,7 @@ scope.uploader.queue[i].formData[0].userUID = success.userUID;
 					var canvas1 = document.getElementById('imageSignatureCanvas');
 					var ctx1 = canvas1.getContext('2d');
 					function handleImage2(e){
-						document.body.onfocus = function () {
-					    	if(imageSignature.value.length == 0)
-						    	alert("k chon file nao");
-						    else{
-							    var reader = new FileReader();
-							    reader.onload = function(event){
-							        var img = new Image();
-							        img.onload = function(){
-							            canvas1.width = 350;
-							            canvas1.height = 350;
-							            ctx1.drawImage(img,0,0,350,350);
-							        }
-							        img.src = event.target.result;
-							    }
-							    reader.readAsDataURL(e.target.files[0]);
-						    }
-						    document.body.onfocus = null;
-						};     
+						scope.buildImg(imageSignature, canvas1, ctx1,e);    
 					}
 				}
 			};

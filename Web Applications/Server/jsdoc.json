@@ -1,7 +1,8 @@
 {
 	"source": {
 	    "include": [ 
-	    	"./api"
+	    	"./api",
+	    	"./config"
     	],
 	    "includePattern": ".+\\.js(doc)?$",
 	    "excludePattern": "(^|\\/|\\\\)_"

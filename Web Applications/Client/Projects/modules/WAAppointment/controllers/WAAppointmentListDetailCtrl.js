@@ -37,9 +37,19 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
             })
     }
     $scope.wainformation = angular.copy(data);
+    $scope.FileUploadImage = []
+    $scope.FileUploads = function(){
+        for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
+            $scope.FileUploadImage = $scope.FileUploadImage.concat($scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads)
+        }
+    }
+    $scope.FileUploads()
+    console.log($scope.FileUploadImage)
     $scope.tab_body_part = 'all';
     $scope.checkRoleUpdate = true;
-    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
+    if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' 
+        || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' 
+        || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
         $scope.checkRoleUpdate = false;
     };
     console.log('$scope.wainformation', $scope.wainformation);
@@ -83,7 +93,7 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
         listDoctorTreatingPractitioner: null,
         patientInfomation: ($scope.wainformation.Patients.length != 0) ? $scope.wainformation.Patients : $scope.wainformation.TelehealthAppointment.PatientAppointment,
         appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('DD/MM/YYYY') : null,
-        appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('h:mm A') : null,
+        appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('HH:mm') : null,
         ExpiryDate: ($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate != null) ? moment($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate).format('DD/MM/YYYY') : null,
         listDoctorTreatingPractitioner: null,
         selectRadioGender: function() {
@@ -243,6 +253,19 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
     }
     $scope.close = function() {
         $modalInstance.close();
+    };
+     $scope.showImage = function(Link, UID) {
+        var LinkUID = UID;
+        $modal.open({
+            templateUrl: 'showImageTemplate',
+            controller: 'showImageController',
+            windowClass: 'app-modal-window-full',
+            resolve: {
+                LinkUID: function() {
+                    return LinkUID;
+                }
+            }
+        });
     };
 
     $scope.selectPatient = function() {

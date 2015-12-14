@@ -776,6 +776,9 @@ module.exports = {
 				}
 			}
 			if(data.Search.UserAccount){
+				if(data.Search.UserAccount[0]=='0'){
+					data.Search.UserAccount = data.Search.UserAccount.substr(1,data.Search.UserAccount.length);
+				}
 				whereClause.UserAccount.PhoneNumber = {
 					like:'%'+data.Search.UserAccount+'%'
 				}

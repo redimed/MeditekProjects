@@ -8,24 +8,30 @@ app.config(function($stateProvider, $urlRouterProvider){
 		.state('authentication.WAAppointment', {
 			abstract: true,
 			url: '/WAAppointment',
+			data: {title: 'WAAppointment', pageTitle: 'Telehealth Appointment'},
 			templateUrl: 'modules/WAAppointment/views/WAAppointment.html',
 			controller: 'WAAppointmentCtrl',
-			data: {pageTitle: 'WAAppointment'},
 		})
 		.state('authentication.WAAppointment.list', {
 			url: '/list',
+			data: {title: 'WAAppointment', pageTitle: 'Telehealth Appointment'},
 			templateUrl: 'modules/WAAppointment/views/WAAppointmentList.html',
 			controller: 'WAAppointmentListCtrl',
-			data: {pageTitle: 'WAAppointment List'},
+			resolve: {
+				function(){
+					$('.input-daterange').datepicker({});
+				},
+			},
 		})
 		.state('authentication.WAAppointment.list.detail', {
 			url: '/detail',
+			data: {title: 'WAAppointment Detail', pageTitle: 'Telehealth Appointment Detail'},
 			templateUrl: 'modules/WAAppointment/views/WAAppointmentListDetail.html',
 			controller: 'WAAppointmentListDetailCtrl',
 		})
 		.state('authentication.WAAppointment.GP', {
-			url: '/Request',
-			data: {pageTitle: 'WAAppointment GP'},
+			url: '/request',
+			data: {title: 'WAAppointment Send Request', pageTitle: 'Telehealth Appointment Send Request'},
 			templateUrl: 'modules/WAAppointment/views/WAAppointmentGP.html',
 			controller: 'WAAppointmentGPCtrl',
 		})

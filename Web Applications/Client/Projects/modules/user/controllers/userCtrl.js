@@ -2,6 +2,7 @@ var app = angular.module('app.authentication.user.controller',[
 	'app.authentication.user.list.controller',
 	'app.authentication.user.detail.controller',
 	'app.authentication.user.profile.controller',
+	'app.authentication.user.changepass.controller'
 ]);
 
 app.controller('userCtrl', function(){

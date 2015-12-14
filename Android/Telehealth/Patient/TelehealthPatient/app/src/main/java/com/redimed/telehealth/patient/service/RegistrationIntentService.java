@@ -17,7 +17,6 @@
 package com.redimed.telehealth.patient.service;
 
 import android.app.IntentService;
-import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -25,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -36,12 +36,18 @@ import android.widget.RemoteViews;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.redimed.telehealth.patient.CallActivity;
-import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
+import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.receiver.GcmBroadcastReceiver;
 import com.redimed.telehealth.patient.utils.Config;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class RegistrationIntentService extends IntentService {
 
@@ -58,6 +64,7 @@ public class RegistrationIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
         editor = getSharedPreferences("DeviceInfo", MODE_PRIVATE).edit();
         try {
             InstanceID instanceID = InstanceID.getInstance(this);
@@ -71,18 +78,18 @@ public class RegistrationIntentService extends IntentService {
             editor.putString("gcmToken", token);
             editor.apply();
 
-        Bundle data = intent.getExtras();
-        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-        String messageType = gcm.getMessageType(intent);
-        if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-            Log.d("MESSAGE TYPE SEND ERROR", messageType);
-        } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
-            Log.d("MESSAGE TYPE DELETED", messageType);
-        } else {
-            if (data != null) {
-                SendNotification(data.getString("data"));
+            Bundle data = intent.getExtras();
+            GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
+            String messageType = gcm.getMessageType(intent);
+            if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
+                Log.d("MESSAGE TYPE SEND ERROR", messageType);
+            } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
+                Log.d("MESSAGE TYPE DELETED", messageType);
+            } else {
+                if (data != null) {
+                    SendNotification(data.getString("data"));
+                }
             }
-        }
 
         } catch (Exception e) {
             editor.putBoolean("sendToken", false);
@@ -92,8 +99,6 @@ public class RegistrationIntentService extends IntentService {
     }
 
     private void SendNotification(String message) {
-        Log.d(TAG, "Message: " + message);
-        uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
         try {
             JSONObject msg = new JSONObject(message);
             Intent intent = new Intent(this, CallActivity.class);
@@ -114,24 +119,26 @@ public class RegistrationIntentService extends IntentService {
             contentView.setTextViewText(R.id.lblTitle, "REDIMED");
             contentView.setTextViewText(R.id.lblMessage, "This is a custom layout");
 
-            notification = new NotificationCompat.Builder(this)
+            NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(getResources().getString(R.string.not_title))
                     .setContentText("You have message")
                     .setPriority(NotificationCompat.PRIORITY_MAX) // On top task bar
                     .setVibrate(new long[]{500, 1000})
                     .setLights(Color.BLUE, 3000, 3000)
-                    .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-                    .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
-                    .setOngoing(true) //Do not clear the notification
+                    .setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.ringtone))
+                    .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE) // Defaults Light and Sound
+//                    .setOngoing(true) //Do not clear the notification
 //                    .setContent(contentView)
                     .setContentIntent(contentIntent)
                     .setWhen(System.currentTimeMillis())
-                    .setAutoCancel(true)
-                    .build();
+                    .setDeleteIntent(deleteIntent(msg));
+
+            notification = builder.build();
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+            notification.flags |= Notification.FLAG_INSISTENT;
 
             notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            notificationManager.cancelAll();
             notificationManager.notify(CALL_NOTIFICATION_ID, notification);
 
             PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -142,4 +149,17 @@ public class RegistrationIntentService extends IntentService {
             Log.d(TAG, e.getLocalizedMessage());
         }
     }
+
+    private PendingIntent deleteIntent(JSONObject msg) {
+        Intent intent = new Intent(this, BootReceiver.class);
+        try {
+            intent.putExtra("from", uidTelehealth.getString("uid", null));
+            intent.putExtra("to", msg.get("from").toString());
+            intent.setAction("notification_cancelled");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+    }
 }
+

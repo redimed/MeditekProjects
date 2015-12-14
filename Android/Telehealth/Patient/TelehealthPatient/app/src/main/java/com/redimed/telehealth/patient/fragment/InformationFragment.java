@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -83,6 +84,8 @@ public class InformationFragment extends Fragment{
     ScrollView scrollViewInfo;
     @Bind(R.id.avatarPatient)
     ImageView avatarPatient;
+    @Bind(R.id.infoLayout)
+    RelativeLayout infoLayout;
 
     public InformationFragment() {}
 
@@ -119,11 +122,11 @@ public class InformationFragment extends Fragment{
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                            scrollViewInfo.setBackgroundDrawable(new BitmapDrawable(v.getContext().getResources(), bitmap));
-                            scrollViewInfo.invalidate();
+                            infoLayout.setBackgroundDrawable(new BitmapDrawable(v.getContext().getResources(), bitmap));
+                            infoLayout.invalidate();
                         } else {
-                            scrollViewInfo.setBackground(new BitmapDrawable(v.getContext().getResources(), bitmap));
-                            scrollViewInfo.invalidate();
+                            infoLayout.setBackground(new BitmapDrawable(v.getContext().getResources(), bitmap));
+                            infoLayout.invalidate();
                         }
                     }
 

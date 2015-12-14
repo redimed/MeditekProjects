@@ -1,3 +1,8 @@
+/**
+ * @namespace UserActivationService
+ * 
+ */
+
 var $q = require('q');
 var randomstring = require("randomstring");
 var o=require("../HelperService");
@@ -65,38 +70,49 @@ module.exports = {
 	},
 
 	/**
-	 * CreateUserActivation: Tạo UserActivation
-	 *	Đối với web system: mỗi user chỉ có 1 record
-	 *	Đối với mobile system: tương ứng với mỗi cặp {userId, deviceId} có 1 record
-	 *	Nếu record activation của user đã tồn tại thì update, nếu chưa thì insert mới
-	 * 		+trường hợp update: các thông tin được update: 
-	 * 			VerificationCode,VerificationToken,TokenCreatedDate,TokenExpired,CodeExpired,
-	 * 			ModifiedBy,ModifiedDate
-	 * 		+trường hợp insert: các thông tin được insert:
-	 * 			UserAccountID,Type,VerificationCode,VerificationToken,CreatedBy,TokenCreatedDate,
-	 * 			TokenExpired,CodeExpired,CreatedDate
-	 *
-	 * Input: 
-	 * - activationInfo:{UserUID,Type,CreatedBy}
-	 * output: 
-	 * 	nếu thành công trả về UserActivationInfo
-	 * 	nếu lỗi thì trả về error, trong error có mảng errors
-	 * 		errors[0]:
-	 * 			+ UserUID.notProvided: UserUID chưa được cung cấp
-	 *			+ SystemType.notProvided: SystemType chưa được cung cấp
-	 *			+ DeviceID.notProvided: DeviceID chưa được cung cấp
-	 *			+ SystemType.unknown: SystemType không hợp lệ
-	 *			+ CreateUserActivation.paramsNotFound: chưa cung cấp tham số
-	 *			+ CreateUserActivation.updateActivationError: lỗi update activation
-	 *			+ CreateUserActivation.userActivationInsertError: lỗi insert activation
-	 *			+ CreateUserActivation.checkExistQueryError: lỗi truy vấn kiểm tra activation đã tồn tại
-	 *			+ CreateUserActivation.userNotFound: không tìm thấy user tương ứng UID
-	 *			+ CreateUserActivation.userQueryError: lỗi truy vấn thông tin user
-	 * 		
+	 * @typedef {object} CreateUserActivationException
+	 * @memberOf UserActivationService
+	 * @property {string} ErrorType "CreateUserActivation.Error"
+	 * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
+	 * - UserUID.notProvided</br>
+	 * - SystemType.notProvided</br>
+	 * - DeviceID.notProvided</br>
+	 * - AppID.notProvided</br>
+	 * - SystemType.unknown</br>
+	 * - CreateUserActivation.paramsNotFound</br>
+	 * - CreateUserActivation.updateActivationError</br>
+	 * - CreateUserActivation.userActivationInsertError</br>
+	 * - CreateUserActivation.checkExistQueryError</br>
+	 * - CreateUserActivation.userNotFound</br>
+	 * - CreateUserActivation.userQueryError</br>
+	 */
+	/**
+	 * @function CreateUserActivation
+	 * @memberOf UserActivationService
+	 * @description Tạo UserActivation </br>
+	 *	Đối với web system: mỗi user chỉ có 1 record</br>
+	 *	Đối với mobile system: tương ứng với mỗi cặp {userId, deviceId,appId} có 1 record</br>
+	 *	Nếu record activation của user đã tồn tại thì update, nếu chưa thì insert mới</br>
+	 * 	+trường hợp update: các thông tin được update: 
+	 * 		VerificationCode,VerificationToken,TokenCreatedDate,TokenExpired,CodeExpired,
+	 * 		ModifiedBy,ModifiedDate</br>
+	 * 	+trường hợp insert: các thông tin được insert:
+	 * 		UserAccountID,Type,VerificationCode,VerificationToken,CreatedBy,TokenCreatedDate,
+	 * 		TokenExpired,CodeExpired,CreatedDate</br>
+	 * @param {object} activationInfo Thông tin dùng để tạo activation
+	 * @param {string} activationInfo.UserUID 
+	 * @param {string} activationInfo.Type System type
+	 * @param {string} [activationInfo.DeviceID] yêu cầu khi mobile
+	 * @param {string} [activationInfo.AppID] yêu cầu khi mobile
+	 * @param {objec} transaction DB transaction
+	 * @return {object} new UserActivation info
+	 * @throws {UserActivationService.CreateUserActivationException}
+	 * @throws {UserAccountService.GetUserAccountDetailsException}
 	 */
 	CreateUserActivation:function(activationInfo,transaction)
 	{
 		var err=new Error('CreateUserActivation.Error');
+		//Kiểm tra thông tin activationInfo có hợp lệ hay không
 		function Validation()
 		{
 			var q=$q.defer();
@@ -173,6 +189,7 @@ module.exports = {
 			.then(function(user){
 				if(o.checkData(user))
 				{
+					//Hàm truy vấn userActivation theo điều kiện
 					function CheckExist()
 					{
 						if(activationInfo.Type==HelperService.const.systemType.website)
@@ -201,6 +218,7 @@ module.exports = {
 					.then(function(activation){
 						if(o.checkData(activation))
 						{
+							//Nếu userActivationn đã tồn tại thì update
 							return activation.updateAttributes({
 								VerificationCode:activationInfo.VerificationCode,
 								VerificationToken:activationInfo.VerificationToken,
@@ -219,7 +237,7 @@ module.exports = {
 						}
 						else
 						{
-							//create moi
+							//Nếu userActivation chưa tồn tại thì tạo mới
 							var insertInfo={
 								UserAccountID:user.ID,
 								Type:activationInfo.Type,
@@ -267,34 +285,48 @@ module.exports = {
 			throw e;
 		})
 	},
-
+	
 	/**
-	 * Activation: Activation account
-	 * input:
-	 *  -ActivationInfo:
-	 *  	+Nếu là web system: UserUID, SystemType, VerificationToken
-	 *  	+Nếu là mobile system: UserUID, SytemType, DeviceID, VerificationCode
-	 *  -Transaction
-	 *  output:
-	 *  - Nếu thành công trả về {status:'success'}
-	 *  - Nếu lỗi ném về error: trong error sẽ có mảng errors, mã lỗi cụ thể nằm ở phần tử errors thứ 0
-	 *  	-errors[0]
-	 *  		+ Activation.userNotProvided: chưa cung cấp UserUID
-	 *  		+ Activation.systemTypeNotProvided: chưa cung cấp SystemType
-	 *  		+ Activation.verificationTokenNotProvided: chưa cung cấp VerificationToken
-	 *  		+ Activation.verificationCodeNotProvided: chưa cung cấp VerificataionCode
-	 *  		+ Activation.deviceIdNotProvided: chưa cung cấp DeviceID
-	 *  		+ Activation.systemTypeInvalid: SystemType không hợp lệ
-	 *  		+ Activation.tokenInvalid: token không khớp
-	 *  		+ Activation.tokenExpired: token đã hết hạn
-	 *  		+ Activation.userUpdateError: không thể update UserAccount (Update Activated='Y')
-	 *  		+ Activation.codeInvalid: code không khớp
-	 *  		+ Activation.codeExpiredUpdateError: Không thể cập nhật field CodeExpired
-	 *			+ Activation.codeExpired: đã nhập Code quá số lần cho phép
-	 *			+ Activation.activationNotFound: không tìm thấy thông tin activation
-	 *			+ Activation.getUserActivationQueryError: Lỗi truy vấn thông tin activation
-	 *			+ Activation.userNotFound: không tìm thấy user tương ướng UserUID
-	 *			+ Activation.userQueryError: lỗi khi truy vấn thông tin user
+	 * @typedef {object} ActivationException
+	 * @memberOf UserActivationService
+	 * @property {string} ErrorType "Activation.Error"
+	 * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
+	 * - Activation.userNotProvided</br>
+	 * - Activation.systemTypeNotProvided</br>
+	 * - Activation.methodInvalid</br>
+	 * - Activation.methodNotProvided</br>
+	 * - Activation.verificationCodeNotProvided</br>
+	 * - Activation.deviceIdNotProvided</br>
+	 * - Activation.appIdNotProvided</br>
+	 * - Activation.systemTypeInvalid</br>
+	 * - Activation.tokenInvalid</br>
+	 * - Activation.tokenExpired</br>
+	 * - Activation.userUpdateError</br>
+	 * - Activation.codeInvalid</br>
+	 * - Activation.codeExpiredUpdateError</br>
+	 * - Activation.codeExpired</br>
+	 * - Activation.activationNotFound</br>
+	 * - Activation.getUserActivationQueryError</br>
+	 * - Activation.userNotFound</br>
+	 * - Activation.userQueryError </br>
+	 */
+	/**
+	 * @function Activation
+	 * @memberOf UserActivationService
+	 * @description Activation một account
+	 * @param {object} activationInfo thông tin dùng để check activation
+	 * @param {string} activationInfo.UserUID
+	 * @param {string} activationInfo.SystemType
+	 * @param {string} [activationInfo.Method] token hay code. Chỉ sử dụng cho website.
+	 * Nếu method là token thì cần VerificationToken, nếu method là code thì cần VerificationCode
+	 * @param {string} [activationInfo.VerificationToken] Chỉ sử dụng cho website
+	 * @param {string} [activationInfo.VerificationCode] Sử dụng cho cả web và mobile
+	 * @param {string} [activationInfo.DeviceID] Chỉ sử dụng cho mobile
+	 * @param {string} [activationInfo.AppID] Chỉ sử dụng cho mobile
+	 * @param {object} transaction DB transaction
+	 * @return {object} obj.status='success'
+	 * @throws {UserActivationService.ActivationException}
+	 * @throws {UserAccountService.GetUserAccountDetailsException}
 	 */
 	Activation:function(activationInfo,transaction){
 		var UserUID=null;
@@ -305,6 +337,7 @@ module.exports = {
 		var DeviceID=null;
 		var AppID=null;
 		var error=new Error("Activation.Error");
+		//Hàm kiểm tra thông tin activationInfo có hợp lệ hay không
 		function Validation()
 		{
 			var q=$q.defer();
@@ -332,6 +365,9 @@ module.exports = {
 				
 				if(SystemType==o.const.systemType.website)
 				{
+					//Nếu system type là website thì kiểm tra method là token hay code
+					//Nếu là token thì kiểm tra xem có VerificationToken hay không
+					//Nếu là code thì kiểm tra xem có VerificationCode hay không
 					if(o.checkData(activationInfo.Method))
 					{
 						Method=activationInfo.Method;
@@ -357,6 +393,7 @@ module.exports = {
 				}
 				else if([o.const.systemType.ios,o.const.systemType.android].indexOf(SystemType)>=0)
 				{
+					//Nếu là mobile thì kiểm tra xem có VerificationCode hay không
 					if(o.checkData(activationInfo.VerificationCode))
 					{
 						VerificationCode=activationInfo.VerificationCode;
@@ -402,12 +439,10 @@ module.exports = {
 		return Validation()
 		.then(function(data){
 			return Services.UserAccount.GetUserAccountDetails({UID:UserUID},null,transaction)
-			// return UserAccount.findOne({
-			// 	where:{UID:UserUID}
-			// },{transaction:transaction})
 			.then(function(user){
 				if(o.checkData(user))
 				{
+					//hàm truy vấn lấy thông tin userActivation
 					function GetUserActivation()
 					{
 						if(SystemType==o.const.systemType.website)
@@ -436,6 +471,7 @@ module.exports = {
 					.then(function(activation){
 						if(o.checkData(activation))
 						{
+							//Hàm xử lý activation bằng token
 							function activationByToken()
 							{
 								var tokenCreatedDate=moment(activation.TokenCreatedDate);
@@ -461,6 +497,9 @@ module.exports = {
 									throw error;
 								}
 							}
+							//Hàm xử lý activation bằng code
+							//Code có codeExpired (số lần tối đa được phép nhập sai)
+							//Nếu user nhập sai quá số lần quy định thì throw về error
 							function activationByCode()
 							{
 								var codeExpired=activation.CodeExpired;
@@ -551,6 +590,7 @@ module.exports = {
 	 * 	if success return promise update UserAccount
 	 * 	if error throw err;
 	 */
+	
 	DeactivationUserAccount:function(criteria,transaction)
 	{
 		var whereClause={};

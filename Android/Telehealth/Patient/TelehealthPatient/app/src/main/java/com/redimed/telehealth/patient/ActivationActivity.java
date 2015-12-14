@@ -76,14 +76,14 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     @Bind(R.id.activationLayout)
     RelativeLayout activationLayout;
 
-    private String TAG = "ACTIVATION";
-    private CountryPicker countryPicker;
-    private String phoneCode;
-    private RegisterApi registerApi, registerApiLogin;
     private Gson gson;
-    private TelehealthUser telehealthUser;
+    private String phoneCode;
     private JsonObject patientJSON;
+    private String TAG = "ACTIVATION";
     private SharedPreferences spDevice;
+    private CountryPicker countryPicker;
+    private TelehealthUser telehealthUser;
+    private RegisterApi registerApi, registerApiLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

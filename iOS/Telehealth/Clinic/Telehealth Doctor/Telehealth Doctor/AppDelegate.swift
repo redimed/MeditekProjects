@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,19 +25,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = loginVC
         }
         
+//        print(UIDevice.currentDevice().debugDescription)
+        
+        // Register push notification for application
+//                if UIApplication.sharedApplication().respondsToSelector(Selector("registerUserNotificationSettings:")) {
+//                    if #available(iOS 8, *) {
+//                        let types:UIUserNotificationType = ([.Alert, .Sound, .Badge])
+//                        let settings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
+//                        application.registerUserNotificationSettings(settings)
+//                        application.registerForRemoteNotifications()
+//                    } else {
+//                        application.registerForRemoteNotificationTypes([.Alert, .Sound, .Badge])
+//                    }
+//                }
+//                else {
+//                    // Register for Push Notifications before iOS 8
+//                    application.registerForRemoteNotificationTypes([.Alert, .Sound, .Badge])
+//                }
         return true
     }
     
-    func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    }
+//    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+//        print("My token is: \(deviceToken)")
+//        let stringDeviceToken = deviceToken.description.stringByReplacingOccurrencesOfString("<", withString: "").stringByReplacingOccurrencesOfString(
+//            ">", withString: "").stringByReplacingOccurrencesOfString(" ", withString: "")
+//        userDefault.setValue(stringDeviceToken, forKey: "deviceToken")
+//    }
+//    
+//    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+//        print("Failed to get token, error: \(error)")
+//    }
     
     func applicationDidEnterBackground(application: UIApplication) {
+        print("Enter background")
         if let flagHeaderVal = SingleTon.headers {
             if let tokenEnterBG: String = flagHeaderVal["Authorization"]! as String {
                 userDefault.setValue(tokenEnterBG, forKey: "authToken")
-                print("Enter background")
             }
         }
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
@@ -48,11 +72,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
     
+    func applicationWillResignActive(application: UIApplication) {
+        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    }
+    
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
     
     func applicationWillTerminate(application: UIApplication) {
+        print("Quit all application")
+        
+        if let val = userDefault.valueForKey("currentUserCall") , let teleUserInfo = userDefault.valueForKey("teleUserInfo") {
+            
+            let dicParse = teleUserInfo as! NSDictionary
+            
+            SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", dicParse["UID"] as! String, val as! String, "end")])
+            
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("currentUserCall")
+        }
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()

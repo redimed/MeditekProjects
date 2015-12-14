@@ -315,6 +315,11 @@ module.exports = {
             })
     },
 
+    /*
+        GetListCountry : load list country
+        input  : (none)
+        output : list country default to use
+    */
     GetListCountry: function(req, res) {
         HelperService.getListCountry()
             .then(function(result) {
@@ -340,6 +345,11 @@ module.exports = {
             })
     },
 
+    /*
+        getfileUID : get patient's fileUID
+        input  : patient 's UserAccountID
+        output : return file UID if patient had, else return error no data result
+    */
     getfileUID: function(req, res) {
         var data = req.body.data;
         Services.Patient.getfileUID(data)

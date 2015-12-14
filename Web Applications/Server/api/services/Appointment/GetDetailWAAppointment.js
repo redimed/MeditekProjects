@@ -73,6 +73,9 @@ module.exports = function(appointmentUID, userInfo) {
                     include: [{
                         model: FileUpload,
                         required: false,
+                        where: {
+                            Enable: 'Y'
+                        },
                         include: [{
                             model: MedicalImage,
                             required: false
@@ -88,6 +91,9 @@ module.exports = function(appointmentUID, userInfo) {
                     include: [{
                         model: FileUpload,
                         required: false,
+                        where: {
+                            Enable: 'Y'
+                        },
                         attributes: Services.AttributesAppt.FileUpload(),
                     }, {
                         model: Country,
@@ -106,6 +112,9 @@ module.exports = function(appointmentUID, userInfo) {
                 }, {
                     model: FileUpload,
                     required: false,
+                    where: {
+                        Enable: 'Y'
+                    },
                     attributes: Services.AttributesAppt.FileUpload()
                 }],
                 where: filter.InternalPractitioner

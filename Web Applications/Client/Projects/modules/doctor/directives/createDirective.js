@@ -22,11 +22,12 @@ angular.module('app.authentication.doctor.directive.create', [])
 
 		    // FILTERS
 		    uploader.filters.push({
-		        name: 'customFilter',
-		        fn: function (item /*{File|FileLikeObject}*/, options) {
-		            return this.queue.length < 10;
-		        }
-		    });
+	            name: 'imageFilter',
+	            fn: function(item /*{File|FileLikeObject}*/, options) {
+	                var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+	                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+	            }
+	        });
 
 		    // CALLBACKS
 		    uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
@@ -392,60 +393,65 @@ scope.uploader.queue[i].formData[0].userUID = success.userUID;
 				}, function(err) {});
 			};
 
-			var imageAvatar = document.getElementById('imageAvatar');
-			    imageAvatar.addEventListener('change', handleImage, false);
-			var canvas = document.getElementById('imageAvatarCanvas');
-			var ctx = canvas.getContext('2d');
-
-			function handleImage(e){
-				document.body.onfocus = function () {
-			    	if(imageAvatar.value.length == 0)
-				    	alert("k chon file nao");
-				    else{
-					    var reader = new FileReader();
-					    reader.onload = function(event){
-					        var img = new Image();
-					        img.onload = function(){
-					            canvas.width = 350;
-					            canvas.height = 350;
-					            ctx.drawImage(img,0,0,350,350);
-					        }
-					        img.src = event.target.result;
-					    }
-					    reader.readAsDataURL(e.target.files[0]);
-				    }
-				    document.body.onfocus = null;
-				};     
-			}
-
-			var imageSignature = document.getElementById('imageSignature');
-			    imageSignature.addEventListener('change', handleImage2, false);
-			var canvas1 = document.getElementById('imageSignatureCanvas');
-			var ctx1 = canvas1.getContext('2d');
+			
 			scope.typeFile;
 			scope.setType = function(value){
 				scope.typeFile=value;
+				if(value=="ProfileImage"){
+					var imageAvatar = document.getElementById('imageAvatar');
+					    imageAvatar.addEventListener('change', handleImage, false);
+					var canvas = document.getElementById('imageAvatarCanvas');
+					var ctx = canvas.getContext('2d');
+
+					function handleImage(e){
+						document.body.onfocus = function () {
+					    	if(imageAvatar.value.length == 0)
+						    	alert("k chon file nao");
+						    else{
+							    var reader = new FileReader();
+							    reader.onload = function(event){
+							        var img = new Image();
+							        img.onload = function(){
+							            canvas.width = 350;
+							            canvas.height = 350;
+							            ctx.drawImage(img,0,0,350,350);
+							        }
+							        img.src = event.target.result;
+							    }
+							    reader.readAsDataURL(e.target.files[0]);
+						    }
+						    document.body.onfocus = null;
+						};     
+					}
+				}
+				else if(value =="Signature") {
+					var imageSignature = document.getElementById('imageSignature');
+			    		imageSignature.addEventListener('change', handleImage2, false);
+					var canvas1 = document.getElementById('imageSignatureCanvas');
+					var ctx1 = canvas1.getContext('2d');
+					function handleImage2(e){
+						document.body.onfocus = function () {
+					    	if(imageSignature.value.length == 0)
+						    	alert("k chon file nao");
+						    else{
+							    var reader = new FileReader();
+							    reader.onload = function(event){
+							        var img = new Image();
+							        img.onload = function(){
+							            canvas1.width = 350;
+							            canvas1.height = 350;
+							            ctx1.drawImage(img,0,0,350,350);
+							        }
+							        img.src = event.target.result;
+							    }
+							    reader.readAsDataURL(e.target.files[0]);
+						    }
+						    document.body.onfocus = null;
+						};     
+					}
+				}
 			};
-			function handleImage2(e){
-				document.body.onfocus = function () {
-			    	if(imageSignature.value.length == 0)
-				    	alert("k chon file nao");
-				    else{
-					    var reader = new FileReader();
-					    reader.onload = function(event){
-					        var img = new Image();
-					        img.onload = function(){
-					            canvas1.width = 350;
-					            canvas1.height = 350;
-					            ctx1.drawImage(img,0,0,350,350);
-					        }
-					        img.src = event.target.result;
-					    }
-					    reader.readAsDataURL(e.target.files[0]);
-				    }
-				    document.body.onfocus = null;
-				};     
-			}
+
 
 			scope.Remove = function(value) {
 				for(var i = 0; i < scope.uploader.queue.length;i++) {

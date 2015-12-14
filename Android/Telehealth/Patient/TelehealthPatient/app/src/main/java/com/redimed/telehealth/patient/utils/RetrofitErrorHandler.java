@@ -55,7 +55,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
                         JSONObject dataObject = new JSONObject(json);
                         String strError = dataObject.optString("ErrorsList");
                         Log.d(TAG, strError);
-                        if (strError.equalsIgnoreCase("[\"notAuthenticated\"]")){
+                        if (strError.equalsIgnoreCase("[\"isAuthenticated.notAuthenticated\"]")){
                             errorDescription = "Sorry for inconvenience, please activation application again!";
                             new Timer().schedule(new TimerTask() {
                                 @Override
@@ -64,6 +64,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
                                     Context context = MyApplication.getInstance().getApplicationContext();
                                     Intent i = new Intent(context, LauncherActivity.class);
                                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     context.startActivity(i);
                                 }
                             }, 2500);

@@ -32,6 +32,7 @@ module.exports = {
                 teleUser.getUserAccount().then(function(user) {
                     if (user) {
                         TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
+                            console.log("=====1=====",response.getHeaders());
                             if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
                             return res.ok(response.getBody());
                         }, function(err) {
@@ -339,6 +340,7 @@ module.exports = {
         }
         var info = HelperService.toJson(req.body);
         var data = info.data;
+        var sound = info.sound;
         var title = info.title;
         var category = info.category;
         var uid = info.uid;
@@ -353,6 +355,7 @@ module.exports = {
             payload: {
                 "data": data
             },
+            sound: sound ? sound : null,
             category: category ? category : null
         };
         var androidMess = {

@@ -28,214 +28,90 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="form-group">
-                    <label class="control-label">Username</label>
-                    <input class="form-control" ng-model="data.UserName" ng-style="ermsg.UserName.css" ng-change="ermsg.UserName='';checkDataNull('UserName')" />
-                    <span style="color:red;">{{ermsg.UserName.msg}}</span>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Username</label>
+                        <input class="form-control" ng-model="data.UserName" ng-style="ermsg.UserName.css" ng-change="ermsg.UserName='';checkDataNull('UserName')" />
+                        <span style="color:red;">{{ermsg.UserName.msg}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">Password</label>
+                        <input class="form-control" type="password" ng-model="data.Password" ng-style="ermsg.Password.css" ng-change="ermsg.Password='';checkDataNull('Password')" />
+                        <span style="color:red;">{{ermsg.Password.msg}}</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group ">
+                        <label class="control-label">Re-type Your Password</label>
+                        <input class="form-control" type="password" ng-model="data.RePassword" ng-style="ermsg.RePassword.css" ng-change="ermsg.RePassword='';checkDataNull('RePassword')"/>
+                        <span style="color:red;">{{ermsg.RePassword.msg}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">Mobile</label>
+                        <input type="input" class="form-control" ng-model="data.PhoneNumber" ng-style="ermsg.PhoneNumber.css" ng-change="ermsg.PhoneNumber='';checkDataNull('PhoneNumber')"/>
+                        <span style="color:red;">{{ermsg.PhoneNumber.msg}}</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">Email</label>
+                        <input class="form-control" type="text" ng-model="data.Email" ng-style="ermsg.Email.css" ng-change="ermsg.Email='';checkDataNull('Email')"/>
+                        <span style="color:red;">{{ermsg.Email.msg}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-actions">
+                        <a href="" id="register-back-btn" class="btn btn-default uppercase pull-left" ng-click="stepback_one()">
+                            <i class="glyphicon glyphicon-arrow-left"></i> Cancel 
+                        </a>
+                        <button ng-click="checkUser(data)" ladda-button="loadingpage" data-style="expand-right" class="btn green uppercase pull-right button-submit ladda-button">
+                            <span class="ladda-label"> Continue <i class="glyphicon glyphicon-arrow-right"></i></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label class="control-label">Password</label>
-                    <input class="form-control" type="password" ng-model="data.Password" ng-style="ermsg.Password.css" ng-change="ermsg.Password='';checkDataNull('Password')" />
-                    <span style="color:red;">{{ermsg.Password.msg}}</span>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group ">
-                    <label class="control-label">Re-type Your Password</label>
-                    <input class="form-control" type="password" ng-model="data.RePassword" ng-style="ermsg.RePassword.css" ng-change="ermsg.RePassword='';checkDataNull('RePassword')"/>
-                    <span style="color:red;">{{ermsg.RePassword.msg}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="row margin-bottom-20">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label class="control-label">Mobile</label>
-                    <input type="input" class="form-control" ng-model="data.PhoneNumber" ng-style="ermsg.PhoneNumber.css" ng-change="ermsg.PhoneNumber='';checkDataNull('PhoneNumber')"/>
-                    <span style="color:red;">{{ermsg.PhoneNumber.msg}}</span>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label class="control-label">Email</label>
-                    <input class="form-control" type="text" ng-model="data.Email" ng-style="ermsg.Email.css" ng-change="ermsg.Email='';checkDataNull('Email')"/>
-                    <span style="color:red;">{{ermsg.Email.msg}}</span>
-                </div>
-            </div>
-            <div class="form-actions">
-                <a href="" id="register-back-btn" class="btn btn-default uppercase pull-left" ng-click="stepback_one()">
-                    <i class="glyphicon glyphicon-arrow-left"></i> Cancel 
-                </a>
-                <button ng-click="checkUser(data)" ladda-button="loadingpage" data-style="expand-right" class="btn green uppercase pull-right button-submit ladda-button">
-                    <span class="ladda-label"> Continue <i class="glyphicon glyphicon-arrow-right"></i></span>
-                </button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-sm-4">
-                <div class="form-group ">
-                    <label for="Firstname">FirstName</label>
-                    <input type="input" class="form-control" id="txtFirstName" ng-model="data.FirstName" ng-style="ermsg.FirstName.css" ng-change="ermsg.FirstName='';checkDataNull('FirstName')" />
-                    <span style="color:red;">{{ermsg.FirstName.msg}}</span>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <div class="form-group">
-                    <label for="Middlename">MiddleName</label>
-                    <input type="input" class="form-control" id="txtMiddlename" ng-model="data.MiddleName" ng-style="ermsg.MiddleName.css" ng-change="ermsg.MiddleName='';checkDataNull('MiddleName')"/>
-                    <span style="color:red;">{{ermsg.MiddleName.msg}}</span>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <div class="form-group ">
-                    <label for="Lastname">LastName</label>
-                    <input type="input" class="form-control" id="txtLastName" ng-model="data.LastName" ng-style="ermsg.LastName.css" ng-change="ermsg.LastName='';checkDataNull('LastName')" />
-                    <span style="color:red;">{{ermsg.LastName.msg}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8 col-sm-8">
-                <div class="form-group ">
-                    <label for="HealthlinkID">Healthlink ID</label>
-                    <input id="txtHealthlinkID" class="form-control" type="text" ng-model="data.HealthLinkID" ng-style="ermsg.HealthLinkID.css" ng-change="ermsg.HealthLinkID='';checkDataNull('HealthLinkID')" />
-                    <span style="color:red;">{{ermsg.HealthLinkID.msg}}</span>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <div class="form-group ">
-                    <label for="Providernumber">Provider No.</label>
-                    <input type="input" class="form-control" id="txtProviderNumber" ng-model="data.ProviderNumber" ng-style="ermsg.ProviderNumber.css" ng-change="ermsg.ProviderNumber='';checkDataNull('ProviderNumber')"/>
-                    <span style="color:red;">{{ermsg.ProviderNumber.msg}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group ">
-                    <label for="Workphone">WorkPhone</label>
-                    <input type="input" maxlength="10" class="form-control" id="txtWorkphone" ng-model="data.WorkPhoneNumber" ng-style="ermsg.WorkPhoneNumber.css" ng-change="ermsg.WorkPhoneNumber='';checkDataNull('WorkPhoneNumber')"/>
-                    <span style="color:red;">{{ermsg.WorkPhoneNumber.msg}}</span>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group ">
-                    <label for="Homephone">HomePhone</label>
-                    <input type="input" maxlength="10" class="form-control" id="txtHomephone" ng-model="data.HomePhoneNumber" ng-style="ermsg.HomePhoneNumber.css" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')"/>
-                    <span style="color:red;">{{ermsg.HomePhoneNumber.msg}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="form-group">
-                    <label for="Address1">Address1</label>
-                    <input class="form-control" type="text" ng-model="data.Address1" ng-style="ermsg.Address1.css" ng-change="ermsg.Address1='';checkDataNull('Address1')"/>
-                    <span style="color:red;">{{ermsg.Address1.msg}}</span>
-                </div>
-            </div>
-            <div class="col-md-12 col-sm-12">
-                <div class="form-group">
-                    <label for="Address2">Address2</label>
-                    <input class="form-control" type="text" ng-model="data.Address2"ng-style="ermsg.Address2.css" ng-change="ermsg.Address2='';checkDataNull('Address2')"/>
-                    <span style="color:red;">{{ermsg.Address2.msg}}</span>
-                </div>
-            </div>
-        </div> 
-        <div class="row">
-            <div class="col-md-4 col-sm-4">
-                <div class="form-group">
-                    <label for="Postcode">Postcode</label>
-                    <input id="txtPostcode" class="form-control" type="text" ng-model="data.Postcode"ng-style="ermsg.Postcode.css" ng-change="ermsg.Postcode='';checkDataNull('Postcode')"/>
-                    <span style="color:red;">{{ermsg.Postcode.msg}}</span>
-                </div>
-            </div>
-            <div class="col-md-8 col-sm-8">
-                <div class="form-group">
-                    <label for="Suburb">Suburb</label>
-                    <input id="txtSuburb" class="form-control" type="text" ng-model="data.Suburb" ng-style="ermsg.Suburb.css" ng-change="ermsg.Suburb='';checkDataNull('Suburb')"/>
-                    <span style="color:red;">{{ermsg.Suburb.msg}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label for="State">States</label>
-                    <select ng-model="data.State" id="States" class="form-control" ng-style="ermsg.State.css" ng-change="ermsg.State='';checkDataNull('State')">
-                        <option value=""></option>
-                        <option value="Victoria">Victoria</option>
-                        <option value="New_South_Wales">New South Wales</option>
-                        <option value="Queensland">Queensland</option>
-                        <option value="Austria_Capital_Territory">Austria Capital Territory</option>
-                        <option value="Northern_Territory">Northern Territory</option>
-                        <option value="Western_Australia">Western Australia</option>
-                        <option value="Tasmania">Tasmania</option>
-                    </select>
-                    <span style="color:red;">{{ermsg.State.msg}}</span>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label for="Country">Country</label>
-                    <select ng-model="data.CountryID" ng-options="c.ID as c.ShortName for c in country" id="Country" class="form-control edited" ng-style="ermsg.CountryID.css" ng-change="ermsg.CountryID='';checkDataNull('CountryID')">
-                        <option value=""></option>
-                    </select>
-                    <span style="color:red;">{{ermsg.CountryID.msg}}</span>
-                    
-                </div>
-            </div>
-        </div>
-         <div class="row margin-top-10 margin-bottom-20">
-            <div class="col-md-12">
-                <div vc-recaptcha theme="light" key="'6LcDaxATAAAAANkBcFO0-jBGQzwIzX4-n9hlYs0v'" ng-model="data.captcha"></div>
-                <span style="color:red;">{{ermsg.captcha.msg}}</span>
-            </div>
-        </div>
-        <div class="form-actions">
-            <a href="" id="register-back-btn" class="btn btn-default uppercase pull-left" ng-click="btn_back()"><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
-            <button type="submit" id="register-submit-btn" class="btn green uppercase pull-right" ng-click="save(data)">Register <i class="glyphicon glyphicon-arrow-right"></i></button>
-        </div>
-    </div>
-    <!--<div ng-show="step==3">
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="progress progress-sm progress-striped active">
-                    <div class="progress-bar progress-bar-danger" style="width: 30%">
-                        <span class="sr-only">35% Complete (success) </span>
-=======
+        
         <div ng-show="step==2">
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="progress progress-sm progress-striped active">
-                        <div class="progress-bar progress-bar-danger" style="width: 100%"></div>
+                        <div class="progress-bar progress-bar-danger" style="width: 100%">
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group ">
-                        <label for="Firstname">Firstname</label>
-                        <input type="input" class="form-control" id="txtFirstName" ng-model="data.FirstName">
+                        <label for="Firstname">FirstName</label>
+                        <input type="input" class="form-control" id="txtFirstName" ng-model="data.FirstName" ng-style="ermsg.FirstName.css" ng-change="ermsg.FirstName='';checkDataNull('FirstName')" />
+                        <span style="color:red;">{{ermsg.FirstName.msg}}</span>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
-                        <label for="Middlename">Middlename</label>
-                        <input type="input" class="form-control" id="txtMiddlename" ng-model="data.MiddleName">
+                        <label for="Middlename">MiddleName</label>
+                        <input type="input" class="form-control" id="txtMiddlename" ng-model="data.MiddleName" ng-style="ermsg.MiddleName.css" ng-change="ermsg.MiddleName='';checkDataNull('MiddleName')"/>
+                        <span style="color:red;">{{ermsg.MiddleName.msg}}</span>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group ">
-                        <label for="Lastname">Lastname</label>
-                        <input type="input" class="form-control" id="txtLastName" ng-model="data.LastName">
+                        <label for="Lastname">LastName</label>
+                        <input type="input" class="form-control" id="txtLastName" ng-model="data.LastName" ng-style="ermsg.LastName.css" ng-change="ermsg.LastName='';checkDataNull('LastName')" />
+                        <span style="color:red;">{{ermsg.LastName.msg}}</span>
                     </div>
                 </div>
             </div>
@@ -243,27 +119,31 @@
                 <div class="col-md-8 col-sm-8">
                     <div class="form-group ">
                         <label for="HealthlinkID">Healthlink ID</label>
-                        <input id="txtHealthlinkID" class="form-control" type="text" ng-model="data.HealthLinkID">
+                        <input id="txtHealthlinkID" class="form-control" type="text" ng-model="data.HealthLinkID" ng-style="ermsg.HealthLinkID.css" ng-change="ermsg.HealthLinkID='';checkDataNull('HealthLinkID')" />
+                        <span style="color:red;">{{ermsg.HealthLinkID.msg}}</span>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group ">
                         <label for="Providernumber">Provider No.</label>
-                        <input type="input" class="form-control" id="txtProviderNumber" ng-model="data.ProviderNumber">
+                        <input type="input" class="form-control" id="txtProviderNumber" ng-model="data.ProviderNumber" ng-style="ermsg.ProviderNumber.css" ng-change="ermsg.ProviderNumber='';checkDataNull('ProviderNumber')"/>
+                        <span style="color:red;">{{ermsg.ProviderNumber.msg}}</span>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group ">
-                        <label for="Workphone">Workphone</label>
-                        <input type="input" maxlength="10" class="form-control" id="txtWorkphone" ng-model="data.WorkPhoneNumber">
+                        <label for="Workphone">WorkPhone</label>
+                        <input type="input" maxlength="10" class="form-control" id="txtWorkphone" ng-model="data.WorkPhoneNumber" ng-style="ermsg.WorkPhoneNumber.css" ng-change="ermsg.WorkPhoneNumber='';checkDataNull('WorkPhoneNumber')"/>
+                        <span style="color:red;">{{ermsg.WorkPhoneNumber.msg}}</span>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group ">
-                        <label for="Homephone">Homephone</label>
-                        <input type="input" maxlength="10" class="form-control" id="txtWorkphone" ng-model="data.HomePhoneNumber">
+                        <label for="Homephone">HomePhone</label>
+                        <input type="input" maxlength="10" class="form-control" id="txtHomephone" ng-model="data.HomePhoneNumber" ng-style="ermsg.HomePhoneNumber.css" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')"/>
+                        <span style="color:red;">{{ermsg.HomePhoneNumber.msg}}</span>
                     </div>
                 </div>
             </div>
@@ -271,13 +151,15 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="form-group">
                         <label for="Address1">Address1</label>
-                        <input class="form-control" type="text" ng-model="data.Address1">
+                        <input class="form-control" type="text" ng-model="data.Address1" ng-style="ermsg.Address1.css" ng-change="ermsg.Address1='';checkDataNull('Address1')"/>
+                        <span style="color:red;">{{ermsg.Address1.msg}}</span>
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12">
                     <div class="form-group">
                         <label for="Address2">Address2</label>
-                        <input class="form-control" type="text" ng-model="data.Address2">
+                        <input class="form-control" type="text" ng-model="data.Address2"ng-style="ermsg.Address2.css" ng-change="ermsg.Address2='';checkDataNull('Address2')"/>
+                        <span style="color:red;">{{ermsg.Address2.msg}}</span>
                     </div>
                 </div>
             </div> 
@@ -285,13 +167,15 @@
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <label for="Postcode">Postcode</label>
-                        <input id="txtPostcode" maxlength="4" class="form-control" type="text" ng-model="data.Postcode">
+                        <input id="txtPostcode" class="form-control" type="text" ng-model="data.Postcode"ng-style="ermsg.Postcode.css" ng-change="ermsg.Postcode='';checkDataNull('Postcode')"/>
+                        <span style="color:red;">{{ermsg.Postcode.msg}}</span>
                     </div>
                 </div>
                 <div class="col-md-8 col-sm-8">
                     <div class="form-group">
                         <label for="Suburb">Suburb</label>
-                        <input id="txtSuburb" class="form-control" type="text" ng-model="data.Suburb">
+                        <input id="txtSuburb" class="form-control" type="text" ng-model="data.Suburb" ng-style="ermsg.Suburb.css" ng-change="ermsg.Suburb='';checkDataNull('Suburb')"/>
+                        <span style="color:red;">{{ermsg.Suburb.msg}}</span>
                     </div>
                 </div>
             </div>
@@ -299,7 +183,7 @@
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group">
                         <label for="State">States</label>
-                        <select ng-model="data.State" id="States" class="form-control">
+                        <select ng-model="data.State" id="States" class="form-control" ng-style="ermsg.State.css" ng-change="ermsg.State='';checkDataNull('State')">
                             <option value=""></option>
                             <option value="Victoria">Victoria</option>
                             <option value="New_South_Wales">New South Wales</option>
@@ -309,109 +193,35 @@
                             <option value="Western_Australia">Western Australia</option>
                             <option value="Tasmania">Tasmania</option>
                         </select>
->>>>>>> update giao dien, add module consultation
+                        <span style="color:red;">{{ermsg.State.msg}}</span>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group">
                         <label for="Country">Country</label>
-                        <select ng-model="data.CountryID" ng-options="c.ID as c.ShortName for c in country" id="Country" class="form-control edited" >
+                        <select ng-model="data.CountryID" ng-options="c.ID as c.ShortName for c in country" id="Country" class="form-control edited" ng-style="ermsg.CountryID.css" ng-change="ermsg.CountryID='';checkDataNull('CountryID')">
                             <option value=""></option>
                         </select>
+                        <span style="color:red;">{{ermsg.CountryID.msg}}</span>
                         
                     </div>
                 </div>
             </div>
-             <div class="row margin-top-10 margin-bottom-20">
-                <div class="col-md-12"><div vc-recaptcha theme="light" key="'6LcDaxATAAAAANkBcFO0-jBGQzwIzX4-n9hlYs0v'" ng-model="data.captcha"></div></div>
+            <div class="row margin-top-10 margin-bottom-20">
+                <div class="col-md-12">
+                    <div vc-recaptcha theme="light" key="'6LcDaxATAAAAANkBcFO0-jBGQzwIzX4-n9hlYs0v'" ng-model="data.captcha"></div>
+                    <span style="color:red;">{{ermsg.captcha.msg}}</span>
+                </div>
             </div>
-            <div class="form-actions">
-                <a href="" id="register-back-btn" class="btn btn-default uppercase pull-left" ng-click="btn_back()"><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
-                <button type="submit" id="register-submit-btn" class="btn green uppercase pull-right" ng-click="save(data)">Register <i class="glyphicon glyphicon-arrow-right"></i></button>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-actions">
+                        <a href="" id="register-back-btn" class="btn btn-default uppercase pull-left" ng-click="btn_back()"><i class="glyphicon glyphicon-arrow-left"></i> Back</a>
+                        <button type="submit" id="register-submit-btn" class="btn green uppercase pull-right" ng-click="save(data)">Register <i class="glyphicon glyphicon-arrow-right"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
-        <!--<div ng-show="step==3">
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="progress progress-sm progress-striped active">
-                        <div class="progress-bar progress-bar-danger" style="width: 30%">
-                            <span class="sr-only">35% Complete (success) </span>
-                        </div>
-                        <div class="progress-bar progress-bar-warning" style="width: 50%">
-                            <span class="sr-only">20% Complete (warning) </span>
-                        </div>
-                        <div class="progress-bar progress-bar-success" style="width: 20%">
-                            <span class="sr-only">10% Complete (danger) </span>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-            <!--<div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group ">
-                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                            <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 400px; height: 150px;">
-                               <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
-                            </div>
-                            <br>
-                            <div style="text-align:right;">
-                                <span class="btn green btn-file">
-                                <span class="fileinput-new">
-                                Signature </span>
-                                <span class="fileinput-exists">
-                                Change </span>
-                                <input type="file" nv-file-select uploader="uploader">
-                                </span>
-                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-                                Remove </a>
-                            </div>
-                        </div>
-                        <div class="clearfix margin-top-10">
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-            <!--<div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <div class="form-group">
-                        <!-- BEGIN REPCAPTCHA -->
-                        <!--<div id="recaptcha_widget" class="form-recaptcha">
-                            <div class="form-recaptcha-img" style="width: 400px">
-                                <a id="recaptcha_image" href="javascript:;"> </a>
-                                <div class="recaptcha_only_if_incorrect_sol display-none" style="color:red"> Incorrect please try again </div>
-                            </div>
-                            <div class="input-group" style="width: 400px">
-                                <input type="text" class="form-control" id="recaptcha_response_field" ng-model="recaptcha_response_field">
-                                <div class="input-group-btn">
-                                    <a class="btn default" href="javascript:Recaptcha.reload()">
-                                        <i class="fa fa-refresh"></i>
-                                    </a>
-                                    <a class="btn default recaptcha_only_if_image" href="javascript:Recaptcha.switch_type('audio')">
-                                        <i title="Get an audio CAPTCHA" class="fa fa-headphones"></i>
-                                    </a>
-                                    <a class="btn default recaptcha_only_if_audio" href="javascript:Recaptcha.switch_type('image')">
-                                        <i title="Get an image CAPTCHA" class="fa fa-picture-o"></i>
-                                    </a>
-                                    <a class="btn default" href="javascript:Recaptcha.showhelp()">
-                                        <i class="fa fa-question-circle"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="help-block">
-                            <span class="recaptcha_only_if_image"> Enter the words above </span><br>
-                            <span class="recaptcha_only_if_audio"> Enter the numbers you hear </span>
-                        </p>
-                        <!-- END REPCAPTCHA -->
-            <!--        </div>
-                </div>
-            </div>
-            <hr>-->
-            <!--<div class="form-actions">
-                <a href="" id="register-back-btn" class="btn btn-default pull" ng-click="btn_back()"><i class="m-icon-swapleft"></i> Back</a>
-                <button type="submit" id="register-submit-btn" class="btn green pull-right" ng-click="save(data)">Register <i class="m-icon-swapright m-icon-white"></i></button>
-            </div>
-        </div>-->
     </form>
 </div>
 

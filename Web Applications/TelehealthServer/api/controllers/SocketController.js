@@ -56,6 +56,7 @@ module.exports = {
                     sails.sockets.join(req.socket, uid);
                     sails.sockets.leave(req.socket, req.socket.id);
                     sails.sockets.blast('onlineUser');
+                    console.log("====",sails.sockets.rooms());
                 } else error = "User Is Not Exist";
             }).catch(function(err) {
                 error = err;
@@ -70,6 +71,7 @@ module.exports = {
             return res.serverError(ErrorWrap(err));
         }
         console.log("====Params====: ", req.params.all());
+        sails.log.debug("Socket MessageTransfer: "+ JSON.stringify(req.params.all()));
         var from = req.param('from');
         var to = req.param('to');
         var message = req.param('message');
@@ -114,6 +116,7 @@ module.exports = {
                                 if (devices[i].Type == 'IOS') iosDevices.push(devices[i].DeviceToken);
                                 else androidDevices.push(devices[i].DeviceToken);
                             }
+                            console.log("===iosDevices===: ",iosDevices);
                             if (androidDevices.length > 0) pushGCMNotification(pushInfo, androidDevices);
                             if (iosDevices.length > 0) pushAPNNotification(pushInfo, iosDevices);
                         }

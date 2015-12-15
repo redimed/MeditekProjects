@@ -21,6 +21,7 @@ module.exports = function(request) {
         sails.log.info('-------------Start Logging-------------');
         sails.log.info('Receive request from client:', new Date());
         sails.log.info('IP address client request:', IP);
+        sails.log.info('API request:', request.url);
         sails.log.info('Method request:', request.method);
         sails.log.info('Action request:', request.options.action);
         sails.log.info('Data request:', data);

@@ -17,6 +17,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 	var characterRegex = /^[a-zA-Z0-9\s]{0,255}$/;
 	var addressRegex = /^[a-zA-Z0-9\s,'-\/]{0,255}$/;
 	var postcodeRegex = /^[0-9]{4}$/;
+	var usercodeRegex = /^[a-z0-9_]{0,255}$/;
 	$scope.validateCheck = function(info) {
 		var error = [];
 		var q = $q.defer();
@@ -26,6 +27,9 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 				if(info.UserName.length < 0 || info.UserName.length > 50){
 					error.push({field:"UserName",message:"length"});
 					// toastr.error('UserName is too long or too short');
+				}
+				if(!usercodeRegex.test(info.UserName)){
+					error.push({field:"UserName",message:"invalid value"});
 				}
 			}
 			else {
@@ -39,6 +43,9 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 					error.push({field:"Password",message:"length"});
 					// toastr.error('Password is required');
 				}
+				if(!characterRegex.test(info.Password)){
+					error.push({field:"Password",message:"invalid value"});
+				}
 			}
 			else {
 				error.push({field:"Password",message:"required"});
@@ -50,6 +57,9 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 				if(info.RePassword.length < 6 || info.RePassword.length > 256){
 					error.push({field:"RePassword",message:"length"});
 					// toastr.error('RePassword is required');
+				}
+				if(!characterRegex.test(info.RePassword)){
+					error.push({field:"RePassword",message:"invalid value"});
 				}
 			}
 			else {
@@ -177,7 +187,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			//validate WorkPhoneNumber
 			if(info.WorkPhoneNumber){
 				if(info.WorkPhoneNumber.length > 0){
-					var auPhoneNumberPattern=new RegExp(/^[1-9]{6,10}$/);
+					var auPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var PhoneNumber=info.WorkPhoneNumber.replace('/[\(\)\s\-]/g','');
 					if(!auPhoneNumberPattern.test(PhoneNumber)){
 						error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -189,7 +199,7 @@ app.controller('unAuthenticationCtrl', function($scope, $q, toastr){
 			//validate Homephone
 			if(info.HomePhoneNumber){
 				if(info.HomePhoneNumber.length > 0) {
-					var auPhoneNumberPattern=new RegExp(/^[1-9]{6,10}$/);
+					var auPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 					var PhoneNumber=info.HomePhoneNumber.replace('/[\(\)\s\-]/g','');
 					if(!auPhoneNumberPattern.test(PhoneNumber)){
 						error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});

@@ -6,6 +6,8 @@ module.exports = {
                 - fail: send status error for patient
     */
     ReceiveRequest: function(req, res) {
+        //logging req
+        LoggingService(req);
         var data = req.body.data;
         if (!_.isObject(data)) {
             try {
@@ -233,6 +235,8 @@ module.exports = {
     output: status confirmed
     */
     ConfirmRequest: function(req, res) {
+        //logging req
+        LoggingService(req);
         require('getmac').getMac(function(err, macaddr) {
             UrgentRequest.update({
                     status: 'pending',
@@ -273,6 +277,8 @@ module.exports = {
     output: list post code with  received condition
      */
     GetPostCode: function(req, res) {
+        //logging req
+        LoggingService(req);
         var latitude = req.params.lat;
         var longitude = req.params.long;
         var radius = 5;

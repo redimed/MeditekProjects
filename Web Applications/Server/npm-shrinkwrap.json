@@ -2252,9 +2252,9 @@
       }
     },
     "meditek_library": {
-      "version": "0.0.2",
+      "version": "0.0.3",
       "from": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#master",
-      "resolved": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#fe5806f0c68dc49787d7c2399adc27b46b4f7877"
+      "resolved": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#8f55e38ac9adbfa61e3f8b7a8890fbd9154f700c"
     },
     "mkdirp": {
       "version": "0.3.5",

@@ -4,7 +4,8 @@ var app = angular.module('app.authentication.urgentCare.detail.directive',[
 app.directive('urgentcareDetail', function($timeout){
 	return {
 		scope:{
-			info:'=onData'
+			info:'=onData',
+			close:'=onCancel'
 		},
 		restrict: 'E',
 		templateUrl: 'modules/urgentCare/directives/templates/urgentCareDetail.html',

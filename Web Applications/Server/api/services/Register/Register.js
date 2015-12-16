@@ -366,7 +366,7 @@ module.exports = {
 		return Services.Register.validate(data,true)
 		.then(function(success){
 			if(data.PhoneNumber[0]=="0"){
-				data.PhoneNumber.replace('0','+61');
+				data.PhoneNumber = data.PhoneNumber.replace("0","+61");
 			}
 			return UserAccount.findAll({
 				attributes:['ID','UserName','Email','PhoneNumber'],

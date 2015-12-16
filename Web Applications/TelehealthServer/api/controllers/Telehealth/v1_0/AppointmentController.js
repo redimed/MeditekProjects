@@ -68,11 +68,13 @@ module.exports = {
                             }
                         }
                     }
-                    return res.ok(TelehealthService.CheckOnlineUser(appts));
+
+
+                    return res.ok({count: data.count, data: TelehealthService.CheckOnlineUser(appts)});
                 }).catch(function(err) {
                     res.serverError(ErrorWrap(err));
                 })
-            } else return res.ok(TelehealthService.CheckOnlineUser(appts));
+            } else return res.ok({count: data.count, data: TelehealthService.CheckOnlineUser(appts)});
         }, function(err) {
             res.serverError(err.getBody());
         });

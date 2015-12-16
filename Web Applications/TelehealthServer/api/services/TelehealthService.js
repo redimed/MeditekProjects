@@ -57,7 +57,6 @@ module.exports = {
         return appts;
     },
     GetAppointmentsByPatient: function(patientUID, limit, type, headers) {
-        delete headers['if-none-match'];
         var typeArr = ['WAA', 'TEL'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
@@ -90,7 +89,6 @@ module.exports = {
         })
     },
     GetPatientDetails: function(patientUID, headers) {
-        delete headers['if-none-match'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/patient/get-patient',
@@ -104,7 +102,6 @@ module.exports = {
         });
     },
     GetWAAppointmentDetails: function(apptUID, headers) {
-        delete headers['if-none-match'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-wa-detail/' + apptUID,
@@ -113,7 +110,6 @@ module.exports = {
         })
     },
     GetTelehealthAppointmentDetails: function(apptUID, headers) {
-        delete headers['if-none-match'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-detail/' + apptUID,
@@ -121,32 +117,14 @@ module.exports = {
             headers: headers
         })
     },
-    GetAppointmentList: function(headers, type, query) {
-        delete headers['if-none-match'];
+    GetAppointmentList: function(headers, body) {
+        headers['content-type'] = "application/json";
         var typeArr = ['WAA', 'TEL'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-list',
             method: 'POST',
-            body: {
-                data: {
-                    Order: [{
-                        Appointment: {
-                            FromTime: 'DESC'
-                        }
-                    }],
-                    Filter: [{
-                        Appointment: {
-                            FromTime: sails.moment().format('YYYY-MM-DD ZZ'),
-                            Enable: "Y"
-                        }
-                    }, {
-                        TelehealthAppointment: {
-                            Type: type && _.contains(typeArr, type) ? type : null
-                        }
-                    }]
-                }
-            },
+            body: body,
             headers: headers
         });
     },
@@ -183,6 +161,8 @@ module.exports = {
         return defer.promise;
     },
     MakeRequest: function(info) {
+        delete info.headers['if-none-match'];
+        delete info.headers['content-length'];
         return requestify.request((info.host ? info.host : config.CoreAPI) + info.path, {
             method: info.method,
             body: !info.body ? null : info.body,
@@ -191,51 +171,6 @@ module.exports = {
             dataType: 'json',
             withCredentials: true
         })
-    },
-    TestMakeRequest: function(info) {
-        var defer = $q.defer();
-        var urlParts = url.parse(config.CoreAPI);
-        if (urlParts.host === null) defer.reject({
-            message: 'Url is invalid'
-        });
-        var options = {
-            host: urlParts.hostname,
-            port: !urlParts.port ? (urlParts.protocol === 'https:' ? 443 : 80) : urlParts.port,
-            path: info.path,
-            method: info.method,
-            params: !info.params ? null : info.params,
-            headers: !info.headers ? null : info.headers,
-            withCredentials: true
-        };
-        var result = {};
-        var request = http.request(options, function(res) {
-            var bodyData = '';
-            res.setEncoding('utf8');
-            res.on('data', function(chunk) {
-                bodyData += chunk;
-                result.headers = res.headers;
-                result.code = res.statusCode;
-            })
-            res.on('end', function() {
-                try {
-                    result.body = JSON.parse(bodyData);
-                } catch (e) {
-                    result.body = bodyData;
-                }
-                if (result.code >= 200 && result.code <= 300) {
-                    defer.resolve(result);
-                    return;
-                }
-                defer.reject(result.body);
-            })
-        })
-        request.on('error', function(err) {
-            defer.reject(err);
-        })
-        request.write(info.body ? JSON.stringify(info.body) : '');
-        console.log("====Request====: ", request);
-        request.end();
-        return defer.promise;
     },
     SendGCMPush: function(opts, tokens) {
         var defer = $q.defer();

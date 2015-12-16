@@ -55,8 +55,7 @@ module.exports = {
                 if (teleUser) {
                     sails.sockets.join(req.socket, uid);
                     sails.sockets.leave(req.socket, req.socket.id);
-                    sails.sockets.blast('onlineUser');
-                    console.log("====",sails.sockets.rooms());
+                    // sails.sockets.blast('onlineUser',{msg:'join'});
                 } else error = "User Is Not Exist";
             }).catch(function(err) {
                 error = err;
@@ -116,7 +115,6 @@ module.exports = {
                                 if (devices[i].Type == 'IOS') iosDevices.push(devices[i].DeviceToken);
                                 else androidDevices.push(devices[i].DeviceToken);
                             }
-                            console.log("===iosDevices===: ",iosDevices);
                             if (androidDevices.length > 0) pushGCMNotification(pushInfo, androidDevices);
                             if (iosDevices.length > 0) pushAPNNotification(pushInfo, iosDevices);
                         }

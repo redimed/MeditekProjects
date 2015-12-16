@@ -51,10 +51,8 @@ module.exports = {
     ListAppointment: function(req, res) {
         var appts = [];
         var headers = req.headers;
-        var params = req.params.all();
-        var type = params.type;
-        var query = req.query;
-        TelehealthService.GetAppointmentList(headers, type, query).then(function(response) {
+        var body = req.body;
+        TelehealthService.GetAppointmentList(headers, body).then(function(response) {
             var data = response.getBody();
             if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
             if (data.count > 0) {

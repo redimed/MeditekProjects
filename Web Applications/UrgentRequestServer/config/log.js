@@ -56,7 +56,7 @@ customLogger.add(Mail, {
     ssl: true,
     username: 'meditek.manage.system@gmail.com',
     password: 'meditek123456',
-    subject: 'Debug Production',
+    subject: 'Debug Production 3001',
     from: 'Meditek Production <meditek.manage.system@gmail.com>',
     to: 'ThanhDev <thanh.dev.meditek@gmail.com>, Khuong PM <thekhuong@gmail.com>',
     level: 'error'

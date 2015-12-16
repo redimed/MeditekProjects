@@ -11,6 +11,7 @@ var app = angular.module('app.authentication', [
 	'app.authentication.WAAppointment',
 	'app.authentication.consultation',
 	'app.authentication.eForms',
+	'app.authentication.sandbox',
 ]);
 
 app.config(function($stateProvider){

@@ -1,0 +1,443 @@
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="authentication.home.list">Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <label class="text-primary">Workers Comp</label>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<!-- BEGIN PAGE TITLE-->
+<h3 class="page-title">&nbsp;</h3>
+<!-- END PAGE TITLE-->
+<div class="portlet box red">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="glyphicon glyphicon-pencil"></i>
+            <span class="caption-subject bold uppercase">Workers Comp</span>
+            <!-- <span class="caption-helper"></span> -->
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+            <a href="javascript:;" class="fullscreen"> </a>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <form name="form" novalidate class="">
+            <div class="form-body">
+                <!-- <div class="row margin-top-20">
+                    <div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-1">
+                        <img src="theme/assets/global/images/logoWorksComp.png" width="100%">
+                    </div>
+                    <div class="col-md-6 col-sm-6 text-center">
+                        <h5 class="bold">PATIENT INFORMATION FORM AND FINANCIAL CONSENT</h5>
+                        <p>Welcome to REDiMED Total Injury Management</p>
+                        <p><i>Please take your time to answer the following questions as accurately as possible:</i></p>
+                    </div>
+                </div> -->
+
+                <h4 class="form-section uppercase bold">Patient Details</h4>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Please tick</label>
+                                    <div class="radio-list">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="title" value="Mr"> Mr</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="title" value="Mrs"> Mrs</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="title" value="Ms"> Ms</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="title" value="Miss"> Miss</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="title" value="Master"> Master</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="title" value="Dr"> Dr</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Family Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label ">Given Name(s)</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">DOB</label>
+                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label ">Age</label>
+                                    <input type="number" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label ">Address</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8">
+                                <div class="form-group">
+                                    <label class="control-label ">Suburb</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label ">Postcode</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label ">Homephone</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Mobile</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Workphone</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8">
+                                <div class="form-group">
+                                    <label class="control-label">Next of Kin</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Telephone</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Email 
+                                        <small><i>(REDiMED will provide copies of your medical certificates via email)</i></small>
+                                    </label>
+                                    <input type="email" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                                <div class="form-group">
+                                    <label class="control-label">Medicare number</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Reference number</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Expiry</label>
+                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="form-section uppercase bold margin-top-40">INJURY DETAILS</h4>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label ">Date of Injury</label>
+                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-9 col-sm-9">
+                                <div class="form-group">
+                                    <label class="control-label">What’s Injured (Eg: Wrist/Leg)</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Description of Injury (Eg: Fracture/Laceration)</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">How Injury Occurred</label>
+                                    <textarea rows="3" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Location where Injury occurred</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="form-section margin-top-40">
+                    <span class="uppercase bold">WORKERS CLAIM OR MOTOR VEHICLE ACCIDENT CLAIM DETAILS</span><br>
+                    <small><i>(Not all injuries sustained at work will result in the lodgement of an insurance claim)</i></small>
+                </h4>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                        <div class="row">
+                            <div class="col-md-5 col-sm-5">
+                                <div class="form-group">
+                                    <label class="control-label">Company name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Site</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Occupation</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Address of the company you work for</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8">
+                                <div class="form-group">
+                                    <label class="control-label">Contact Person/Supervisor name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Phone</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8">
+                                <div class="form-group">
+                                    <label class="control-label">Insurance company that your employer uses</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Claim number</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="form-section bold uppercase margin-top-40">PLEASE NOTE</h4>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                        <p>It is your responsibility to ensure that your workers’ compensation claim forms and your first medical certificate have been completed and submitted to your employer so your claim can be processed. <i class="font-red">It is routine in this surgery for the surgeon to take photos for research and educational purposes. Should your surgeon wish to use your information, he will discuss this with you during consultation.</i></p>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <div class="form-group">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" style="width: 100%; height: 150px;">
+                                            <img src="theme/assets/global/images/no_signature.jpg" alt="" />
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100%; max-height: 150px;"> 
+                                        </div>
+                                        <div>
+                                            <span class="btn default btn-file">
+                                                <span class="fileinput-new">Sinature</span>
+                                                <span class="fileinput-exists"> Change </span>
+                                                <input type="file" name="..."> 
+                                            </span>
+                                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Date</label>
+                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <p><i>This signature confirms your consent for us to collect this information from you. The information will be used for administrative, billing and debt collection purposes, and for referrals and requests regarding your healthcare.</i></p>
+
+                        <div style="padding: 10px; border: 1px solid #CCC;" class="margin-top-40">
+                            <h4 class="bold">REFERRING DOCTOR’S DETAILS</h4>
+                            <p>Please be advised if you <u>do not bring a valid GP referral</u> and your workers compensation claim is declined, (or your employer does not settle your accounts) you will be unable to claim medical expenses from Medicare. Please ask at reception if you require a GP referral to be done by one of our GPs at Redimed.<br>
+                            <u>Please note:</u> Some of our doctors at Redimed are not Medicare providers, therefore their accounts are not claimable from Medicare, please ask at reception for further details.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="form-section bold uppercase margin-top-40">BILLING INFORMATION</h4>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                        <p>In order for you to receive treatment at REDiMED you must sign below. If your claim is <u>NOT ACCEPTED</u> by the insurance company, or your accounts are not settled by your employer, you will be liable for any invoices issued during the course of your treatment. If this occurs you may not be able to claim from Medicare.</p>
+                        <p>If your account is forwarded to the debt collector, you will be liable for all fees associated.</p>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <div class="form-group">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" style="width: 100%; height: 150px;">
+                                            <img src="theme/assets/global/images/no_signature.jpg" alt="" />
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100%; max-height: 150px;"> 
+                                        </div>
+                                        <div>
+                                            <span class="btn default btn-file">
+                                                <span class="fileinput-new">Sinature</span>
+                                                <span class="fileinput-exists"> Change </span>
+                                                <input type="file" name="..."> 
+                                            </span>
+                                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Date</label>
+                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <p><small><i class="font-red">This signature confirms that I have read the above statement and that I understand and agree with it.</i></small></p>
+                    </div>
+                </div>
+
+                <h4 class="form-section bold uppercase margin-top-40">MOTOR VEHICLE CLAIMS</h4>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                        <p>Your consults at Redimed need to be paid on the day unless you can provide written acceptance of liability by Insurance Commission of WA (ICWA).</p>
+                    </div>
+                </div>
+
+                <h4 class="form-section bold uppercase margin-top-40">AUTHORITY FOR THE RELEASE OF INFORMATION</h4>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                        <div class="form-inline">
+                            I <input type="text" class="form-control"> (name) give permission for you to forward confidential information regarding my injury, the treatment I have received and guidelines for return to work to my employer, insurance company and rehabilitation provider.
+                        </div>
+                        <div class="row margin-top-20">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <div class="form-group">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" style="width: 100%; height: 150px;">
+                                            <img src="theme/assets/global/images/no_signature.jpg" alt="" />
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100%; max-height: 150px;"> 
+                                        </div>
+                                        <div>
+                                            <span class="btn default btn-file">
+                                                <span class="fileinput-new">Sinature</span>
+                                                <span class="fileinput-exists"> Change </span>
+                                                <input type="file" name="..."> 
+                                            </span>
+                                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Date</label>
+                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <p><small><i class="font-red">This signature confirms that I have read the above statement and that I understand and agree with it.</i></small></p>
+                    </div>
+                </div>
+                
+
+                
+                
+            </div>
+            <div class="form-actions right">
+                <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

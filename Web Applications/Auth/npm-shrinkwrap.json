@@ -1897,11 +1897,6 @@
           "from": "https://registry.npmjs.org/combined-stream/-/combined-stream-0.0.7.tgz",
           "resolved": "https://registry.npmjs.org/combined-stream/-/combined-stream-0.0.7.tgz"
         },
-        "delayed-stream": {
-          "version": "0.0.5",
-          "from": "https://registry.npmjs.org/delayed-stream/-/delayed-stream-0.0.5.tgz",
-          "resolved": "https://registry.npmjs.org/delayed-stream/-/delayed-stream-0.0.5.tgz"
-        },
         "commander": {
           "version": "2.2.0",
           "from": "https://registry.npmjs.org/commander/-/commander-2.2.0.tgz",
@@ -1911,6 +1906,11 @@
           "version": "0.2.2",
           "from": "https://registry.npmjs.org/cryptiles/-/cryptiles-0.2.2.tgz",
           "resolved": "https://registry.npmjs.org/cryptiles/-/cryptiles-0.2.2.tgz"
+        },
+        "delayed-stream": {
+          "version": "0.0.5",
+          "from": "https://registry.npmjs.org/delayed-stream/-/delayed-stream-0.0.5.tgz",
+          "resolved": "https://registry.npmjs.org/delayed-stream/-/delayed-stream-0.0.5.tgz"
         },
         "forever-agent": {
           "version": "0.5.2",
@@ -1932,15 +1932,15 @@
           "from": "https://registry.npmjs.org/hoek/-/hoek-0.9.1.tgz",
           "resolved": "https://registry.npmjs.org/hoek/-/hoek-0.9.1.tgz"
         },
-        "http-signature": {
-          "version": "0.10.1",
-          "from": "https://registry.npmjs.org/http-signature/-/http-signature-0.10.1.tgz",
-          "resolved": "https://registry.npmjs.org/http-signature/-/http-signature-0.10.1.tgz"
-        },
         "mime-types": {
           "version": "1.0.2",
           "from": "https://registry.npmjs.org/mime-types/-/mime-types-1.0.2.tgz",
           "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-1.0.2.tgz"
+        },
+        "http-signature": {
+          "version": "0.10.1",
+          "from": "https://registry.npmjs.org/http-signature/-/http-signature-0.10.1.tgz",
+          "resolved": "https://registry.npmjs.org/http-signature/-/http-signature-0.10.1.tgz"
         },
         "oauth-sign": {
           "version": "0.3.0",
@@ -2073,9 +2073,9 @@
       "resolved": "https://registry.npmjs.org/media-typer/-/media-typer-0.2.0.tgz"
     },
     "meditek_library": {
-      "version": "0.0.1",
-      "from": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#6c89dc621e8b0d68847b2c6e16d9824942b7f151",
-      "resolved": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#6c89dc621e8b0d68847b2c6e16d9824942b7f151"
+      "version": "0.0.3",
+      "from": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#master",
+      "resolved": "git+https://8611cb50ab6a3c7a7eab4fdd65aa98f74aa45955:x-oauth-basic@github.com/redimed/MeditekLibrary.git#8f55e38ac9adbfa61e3f8b7a8890fbd9154f700c"
     },
     "memoizee": {
       "version": "0.3.9",
@@ -2939,15 +2939,15 @@
           "from": "https://registry.npmjs.org/bluebird/-/bluebird-1.0.8.tgz",
           "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-1.0.8.tgz"
         },
-        "dottie": {
-          "version": "0.1.0",
-          "from": "https://registry.npmjs.org/dottie/-/dottie-0.1.0.tgz",
-          "resolved": "https://registry.npmjs.org/dottie/-/dottie-0.1.0.tgz"
-        },
         "commander": {
           "version": "2.1.0",
           "from": "https://registry.npmjs.org/commander/-/commander-2.1.0.tgz",
           "resolved": "https://registry.npmjs.org/commander/-/commander-2.1.0.tgz"
+        },
+        "dottie": {
+          "version": "0.1.0",
+          "from": "https://registry.npmjs.org/dottie/-/dottie-0.1.0.tgz",
+          "resolved": "https://registry.npmjs.org/dottie/-/dottie-0.1.0.tgz"
         },
         "generic-pool": {
           "version": "2.0.4",

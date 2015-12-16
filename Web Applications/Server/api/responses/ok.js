@@ -25,10 +25,18 @@ module.exports = function sendOK (data, options) {
   {
     //trả về 202 nếu có reset token
     res.status(202);
+     //meditek  modified
+    req.typeResponse = 'sendOK: 202';
+    LoggingService(req);
+    //end meditek
   }
   else
   {
     res.status(200);
+     //meditek  modified
+    req.typeResponse = 'sendOK: 200';
+    LoggingService(req);
+    //end meditek
   }
   
 

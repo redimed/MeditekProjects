@@ -26,7 +26,10 @@ module.exports = function notFound (data, options) {
 
   // Set status code
   res.status(404);
-
+ //meditek  modified
+    req.typeResponse = 'notFound: 404';
+    LoggingService(req);
+    //end meditek
   // Log error to console
   if (data !== undefined) {
     sails.log.verbose('Sending 404 ("Not Found") response: \n',data);

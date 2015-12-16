@@ -7,4 +7,8 @@ module.exports = function invalidVersion(data, options) {
 	  var sails = req._sails;
 
 	  res.json(301,data);
+	   //meditek  modified
+    req.typeResponse = 'invalidVersion: 301';
+    LoggingService(req);
+    //end meditek
 }

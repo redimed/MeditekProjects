@@ -32,7 +32,9 @@ var config = {
 var customLogger = new winston.Logger({
     transports: [
         //log information server
-        new winston.transports.Console({}),
+        new winston.transports.Console({
+            level: 'debug'
+        }),
         //transports history server via day
         new winston.transports.DailyRotateFile({
             silent: false,
@@ -54,7 +56,7 @@ customLogger.add(Mail, {
     ssl: true,
     username: 'meditek.manage.system@gmail.com',
     password: 'meditek123456',
-    subject: 'Debug Production',
+    subject: 'Debug Production 3005',
     from: 'Meditek Production <meditek.manage.system@gmail.com>',
     to: 'ThanhDev <thanh.dev.meditek@gmail.com>, Khuong PM <thekhuong@gmail.com>, GiangDev <thanh.dev.meditek@gmail.com>',
     level: 'error'

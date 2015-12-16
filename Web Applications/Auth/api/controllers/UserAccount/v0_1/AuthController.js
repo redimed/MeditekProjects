@@ -1,7 +1,8 @@
-/**
+﻿/**
  * @namespace AuthController
  * @description : Controller for authentication
  */
+
 
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
@@ -165,7 +166,8 @@ module.exports = {
      * @property {string} status value: "success"
      */
     /**
-     * @function logout xử lý logout
+     * @function logout
+     * @description xử lý logout
      * @memberOf AuthController
      * @param {object} req request
      * @param {object} res response

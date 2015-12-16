@@ -1,3 +1,7 @@
+/**
+ * @namespace UserAccount
+ * @memberOf Controller
+ */
 var regexp = require('node-regexp');
 var underscore=require('underscore');
 var moment=require('moment');
@@ -5,10 +9,8 @@ var o=require("../../../services/HelperService");
 module.exports = {
 	Test:function(req,res)
 	{
-		// console.log(req.headers.cookie);
 		var maxRole=o.getMaxRole(req.user.roles);
 		res.ok({status:'success',user:req.user,maxRole:maxRole,newtoken:res.get('newtoken')});
-
 	},
 
 	TestURL:function(req,res)
@@ -21,33 +23,29 @@ module.exports = {
 		var modifiedDateStr=req.body.modifiedDate;
 		var modifiedDate=moment(modifiedDateStr,"YYYY-MM-DD HH:mm:ss Z");
 		var addDate=modifiedDate.clone().add(1,'day');
-		// console.log(modifiedDate);
-		// console.log(addDate);
-		// console.log(modifiedDate.format('YYYY-MM-DD HH:mm:ss'))
-		// console.log(addDate.format('YYYY-MM-DD HH:mm:ss'))
 		UserAccount.findAll({
 			limit:1,
-			// where:{
-			// 	ModifiedDate:{
-			// 		// $gte:modifiedDate.zone('0000').format("YYYY-MM-DD HH:mm:ss"),
-			// 		// $lt:addDate.zone('0000').format("YYYY-MM-DD HH:mm:ss")
-			// 		$gte:modifiedDate.toDate(),
-			// 		$lt:addDate.toDate()
-			// 	}
-			// }
 		})
 		.then(function(data){
 			res.ok(data);
 		},function(err){
 			res.serverError(err);
 		})
-		// res.ok(HelperService.checkListData({b:'a'},1,{a:'b'},'1'));
 	},
 	
 	/**
-	 * Create Uses Account Controller
-	 * Input: req.body: UserName, Email, PhoneNumber,Password
-	 * Output: new User Info
+	 * @function CreateUserAccount
+	 * @memberOf Controller.UserAccount
+	 * @param {object} req resquest
+	 * @param {object} req.body 
+	 * @param {string} [req.body.UserName] 
+	 * @param {string} [req.body.Email] 
+	 * @param {string} [req.body.PhoneNumber] 
+	 * @param {string} req.body.Password
+	 * @param {object} res response
+	 * @return {object} New UserAccount
+	 * @throws {Service.UserAccount.CreateUserAccountException}
+	 * @summary Một trong req.body.UserName, req.body.Email, req.body.PhoneNumber cần có giá trị
 	 */
 	CreateUserAccount:function(req,res){
 		var userInfo={
@@ -60,18 +58,6 @@ module.exports = {
 			CreatedBy:req.user?req.user.ID:null,
 		}
 		
-		//Cách 1: Managed transaction (auto-callback)
-		/*sequelize.transaction(function (t) {
-			return UserAccountService.CreateUserAccount(userInfo)
-		})
-		.then(function(success){
-			res.ok(success);
-		})
-		.catch(function(err){
-			res.serverError({message:err.message});
-		})*/
-
-		//cách 2: Unmanaged transaction (then-callback)
 		sequelize.transaction().then(function(t){
 			return Services.UserAccount.CreateUserAccount(userInfo,t)
 			.then(function (data) {
@@ -87,9 +73,14 @@ module.exports = {
 	},
 
 	/**
-	 * FindByPhoneNumber: Search user by Phone number
-	 * Input: req.query.PhoneNumber
-	 * Output: user info folowing phone number
+	 * @function FindByPhoneNumber
+	 * @memberOf Controller.UserAccount
+	 * @summary Tìm User bằng PhoneNumber
+	 * @param {object} req request
+	 * @param {object} req.query
+	 * @param {string} req.query.PhoneNumber
+	 * @return {obj} userAccount
+	 * @throws {Service.UserAccount.FindByPhoneNumberException}
 	 */
 	FindByPhoneNumber:function(req,res)
 	{
@@ -103,12 +94,13 @@ module.exports = {
 	},
 
 	/**
-	 * UpdateUserAccount: Handle request update user account
-	 * Input:
-	 * 	res.body: user info
-	 * 	output:
-	 * 		if success return updated user info
-	 * 		if fail return error + status 400 (not found)
+	 * @function UpdateUserAccount
+	 * @memberOf Controller.UserAccount
+	 * @param {object} req request
+	 * @param {object} req.body Thông tin của user cần cập nhật
+	 * @param {object} res response
+	 * @return {object} updated userAccount info
+	 * @throws {Service.UserAccount.UpdateUserAccountException}
 	 */
 	UpdateUserAccount:function(req,res)
 	{
@@ -129,14 +121,30 @@ module.exports = {
 			})
 		});	
 	},
-
+	
 	/**
-	 * DisableUserAccount: handle request disable user account
-	 * Input: 
-	 * 	req.body: criteria to disable. 	include: req.body.ID or req.body.UserName or req.body.Email or req.body.PhoneNumber
-	 * Output:
-	 * 	if success return interger>0
-	 * 	if error return error details
+	 * @typedef {object} DisableUserAccountException
+	 * @memberOf Controller.UserAccount
+	 * @property {string} ErrorType "DisableUserAccount.Error"
+	 * @property {Array.<string|object>} ErrorsList Chỉ xét phần tử ErrorsList[0]</br>
+	 * - Request.missingParams</br>
+	 * - User.notFound</br>
+	 */
+	/**
+	 * @function DisableUserAccount
+	 * @memberOf Controller.UserAccount
+	 * @summary Disable UserAccount.
+	 * Cần cung cấp 1 trong 4 tiêu chí UID, UserName, Email, Phone
+	 * @param {object} req request
+	 * @param {object} req.body
+	 * @param {string} [req.body.UID] uid của user
+	 * @param {string} [req.body.UserName] 
+	 * @param {string} [req.body.Email]
+	 * @param {string} [req.body.Phone]
+	 * @param {object} res response
+	 * @return {Number} trả về số 1 nếu thành công
+	 * @throws {Controller.UserAccount.DisableUserAccountException}
+	 * @throws {Service.UserAccount.DisableUserAccountException}
 	 */
 	DisableUserAccount:function(req,res)
 	{
@@ -165,14 +173,29 @@ module.exports = {
 			});
 		});
 	},
-
+	
 	/**
-	 * EnableUserAccount: handle request enable user account
-	 * Input: 
-	 * 	req.body: criteria to enable. include: req.body.ID or req.body.UserName or req.body.Email or req.body.PhoneNumber
-	 * Output:
-	 * 	if success return interger>0
-	 * 	if error return error details
+	 * @typedef {object} EnableUserAccountException
+	 * @memberOf Controller.UserAccount
+	 * @property {string} ErrorType EnableUserAccount.Error
+	 * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
+	 * - Request.missingParams</br>
+	 * - User.notFound</br>
+	 */
+	/**
+	 * @function EnableUserAccount
+	 * @memberOf Controller.UserAccount
+	 * @summary Enable UserAccount.
+	 * Cần cung cấp 1 trong 4 tiêu chí UID, UserName, Email, Phone
+	 * @param {object} req request
+	 * @param {object} req.body
+	 * @param {string} [req.body.UID] UID của user
+	 * @param {string} [req.body.UserName] 
+	 * @param {string} [req.body.Email] 
+	 * @param {string} [req.body.Phone] 
+	 * @return {Number} trả về 1 nếu thành công
+	 * @throws {Controller.UserAccount.EnableUserAccountException} 
+	 * @throws {Service.UserAccount.EnableUserAccountException}
 	 */
 	EnableUserAccount:function(req,res)
 	{
@@ -203,12 +226,27 @@ module.exports = {
 	},
 
 	/**
-	 * GetUserAccountDetails: handle request get user account details
-	 * Input: 
-	 * 	req.body: criteria to get. include: req.query.UID or req.query.UserName or req.query.Email or req.query.PhoneNumber
-	 * Output:
-	 * 	if success return user account info
-	 * 	if error return error details
+	 * @typedef {object} GetUserAccountDetailsException
+	 * @memberOf Controller.UserAccount
+	 * @property {string} ErrorType "GetUserAccountDetails.Error"
+	 * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
+	 * - Request.missingParams</br>
+	 * - User.notFound</br>
+	 */
+	/**
+	 * @function GetUserAccountDetails
+	 * @memberOf Controller.UserAccount
+	 * @summary Lấy thông tin chi tiết của user.
+	 * Cần cung cấp 1 trong 4 tiêu chí UID, UserName, Email, Phone
+	 * @param {object} req request
+	 * @param {object} req.query 
+	 * @param {object} [req.query.UID] UID của user
+	 * @param {string} [req.query.UserName] 
+	 * @param {string} [req.query.Email] 
+	 * @param {string} [req.query.PhoneNumber] 
+	 * @return {object} userInfo
+	 * @throws {Controller.UserAccount.GetUserAccountDetailsException}
+	 * @throws {Service.UserAccount.GetUserAccountDetailsException}
 	 */
 	GetUserAccountDetails:function(req,res)
 	{
@@ -252,22 +290,38 @@ module.exports = {
 		});
 	},
 
-
 	/**
-	 * GetListUsers
-	 * 	Lấy danh sách user thông qua các tiêu chí
-	 * Input:
-	 * 	req.body:
-	 * 		-criteria: là một json chứa các field điều kiện, ví dụ: {"UserName":"ta","Email":"tan@gmail.com"}
-	 * 		-attributes: là một mảng chứa các field thông tin trả về, ví dụ: ["ID","UserName"]
-	 * 		-order: là một json chứa tên field cần sắp xếp và kiểu sắp xếp, ví dụ:{"UserName":"ASC"}
-	 * 		-limit: trả về bao nhiêu dòng dữ liệu trong tổng kết quả (totalRows)
-	 * 		-offset: bỏ qua bao nhiêu dòng dữ liệu đầu tiên(hoặc có thể hiểu là thứ tự dòng bắt đầu được lấy, số dòng đánh dấu bắt đầu từ 0)
-	 * Output:
-	 * 	Nếu thành công trả về json gồm: 
-	 * 		-totalRows: tổng số kết quả thỏa mãn criteria
-	 * 		-rows: là mảng chứa các dòng dữ liệu của 1 trang (pagging)
-	 * 	Nếu thất bại trả về error
+	 * @typedef {object} GetListUsersException
+	 * @memberOf Controller.UserAccount
+	 * @property {string} ErrorType "GetListUsers.Error"
+	 * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
+	 * - Request.missingParams
+	 */
+	/**
+	 * @typedef {object} GetListUsersReturn
+	 * @memberOf Controller.UserAccount
+	 * @property {Number} totalRows Tổng số kết quả thỏa mãn điều kiện
+	 * @property {Array.<object>} rows Mảng chứ dữ liệu của 1 page
+	 */
+	/**
+	 * @function GetListUsers
+	 * @memberOf Controller.UserAccount
+	 * @summary Lấy danh sách UserAccount (Chức năng chỉ dành cho admin)
+	 * @param {object} req request
+	 * @param {object} req.body 
+	 * @param {object} req.body.criteria 
+	 *        Là một json chứa các field điều kiện, ví dụ: {"UserName":"ta","Email":"tan@gmail.com"}
+	 * @param {object} req.body.attributes 
+	 *        Là một mảng chứa các field thông tin trả về, ví dụ: ["ID","UserName"]
+	 * @param {object} req.body.order
+	 *        Là một json chứa tên field cần sắp xếp và kiểu sắp xếp, ví dụ:{"UserName":"ASC"}
+	 * @param {Number} req.body.limit Trả về bao nhiêu dòng dữ liệu trong tổng số kết quả
+	 * @param {Number} req.body.offset 
+	 *        Bỏ qua bao nhiêu dòng dữ liệu đầu tiên(hoặc có thể hiểu là thứ tự dòng bắt đầu được lấy, số dòng đánh dấu bắt đầu từ 0)
+	 * @param {object} res response
+	 * @return {Controller.UserAccount.GetListUsersReturn} 
+	 * @throws {Controller.UserAccount.GetListUsersException}
+	 * @throws {Service.UserAccount.GetListUsersException}
 	 */
 	GetListUsers:function(req,res)
 	{
@@ -287,25 +341,28 @@ module.exports = {
 		});
 	},
 
-
 	/**
-	 * RemoveIdentifierImage: dùng để xóa profile image và signature image của user
-	 * input:
-	 * - req.body: {UserUID|UserName|Email|PhoneNumber, Type}
-	 * 		+Type: HelperService.const.fileType.avatar, HelperService.const.fileType.signature
-	 * output
-	 * - Nếu thành công trả về {status:'success'}
-	 * - Nếu thất bại quăng về error:
-	 * 		error.errors[0]:
-	 *			+ RemoveIdentifierImage.emailInvalid
-	 *			+ RemoveIdentifierImage.phoneNumberInvalid
-	 *			+ RemoveIdentifierImage.userInfoNotProvided
-	 *			+ RemoveIdentifierImage.typeInvalid
-	 *			+ RemoveIdentifierImage.typeNotProvided
-	 *			+ RemoveIdentifierImage.imageNotFound
-	 *			+ RemoveIdentifierImage.fileUploadUpdateError
-	 *			+ RemoveIdentifierImage.userNotFound
-	 *			+ RemoveIdentifierImage.userQueryError
+	 * @typedef {RemoveIdentifierImageException}
+	 * @memberOf Controller.UserAccount
+	 * @property {string} ErrorType "RemoveIdentifierImage.Error"
+	 * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]
+	 * - RemoveIdentifierImage.transactionBeginError
+	 */
+	/**
+	 * @function RemoveIdentifierImage
+	 * @memberOf Controller.UserAccount
+	 * @summary xóa thông tin file hồ sơ của user
+	 * @param {object} req request
+	 * @param {object} req.body 
+	 * Cần cung cấp 1 trong các tham số UserUID, UserName, Email, PhoneNumber
+	 * @param {string} [req.body.UserUID]
+	 * @param {string} [req.body.UserName]
+	 * @param {string} [req.body.Email]
+	 * @param {string} [req.body.PhoneNumber]
+	 * @param {string} req.body.Type (ProfileImage hoặc Signature)
+	 * @return {{status:"success"}}
+	 * @throws {Controller.UserAccount.RemoveIdentifierImageException}
+	 * @throws {Service.UserAccount.RemoveIdentifierImageException}
 	 */
 	RemoveIdentifierImage:function(req,res){
 		var criteria=req.body;
@@ -325,24 +382,21 @@ module.exports = {
 		})
 		
 	},
-
+	
 	/**
-	 * GetIdentifierImageInfo: dùng để lấy thông tin profile image và signature image của user
-	 * input:
-	 * - req.query: {UserUID|UserName|Email|PhoneNumber, Type}
-	 * 			+Type: HelperService.const.fileType.avatar, HelperService.const.fileType.signature
-	 * output
-	 * - Nếu thành công trả thông tin file, thông tin file có thể null nếu không tìm thấy trong database
-	 * - Nếu thất bại quăng về error:
-	 * 		error.errors[0]:
-	 *			+ GetIdentifierImageInfo.emailInvalid
-	 *			+ GetIdentifierImageInfo.phoneNumberInvalid
-	 *			+ GetIdentifierImageInfo.userInfoNotProvided
-	 *			+ GetIdentifierImageInfo.typeInvalid
-	 *			+ GetIdentifierImageInfo.typeNotProvided
-	 *			+ GetIdentifierImageInfo.fileUploadQueryError
-	 *			+ GetIdentifierImageInfo.userNotFound
-	 *			+ GetIdentifierImageInfo.userQueryError
+	 * @function GetIdentifierImageInfo
+	 * @memberOf Controller.UserAccount
+	 * @summary Lấy thông tin file hồ sơ của user
+	 * @param {object} req request
+	 * @param {object} req.body 
+	 * Cần cung cấp 1 trong các tham số UserUID, UserName, Email, PhoneNumber
+	 * @param {string} [req.body.UserUID]
+	 * @param {string} [req.body.UserName]
+	 * @param {string} [req.body.Email]
+	 * @param {string} [req.body.PhoneNumber]
+	 * @param {string} req.body.Type (ProfileImage hoặc Signature)
+	 * @return {object} File Info
+	 * @throws {Service.UserAccount.GetIdentifierImageInfoException}
 	 */
 	GetIdentifierImageInfo:function(req,res){
 		var criteria=req.query;

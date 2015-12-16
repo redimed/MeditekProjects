@@ -1,9 +1,3 @@
-/**
- * AuthController
- *
- * @description : Controller for authentication
- */
-
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
@@ -17,9 +11,6 @@ module.exports = {
         rest: false// không sử dụng rest route
     },
 
-    /**
-     * login: function xử lý login
-     */
     login: function(req, res) {
         console.log("============LOGIN===============");
 
@@ -122,10 +113,7 @@ module.exports = {
             })
         })(req, res);
     },
-
-    /**
-     * logout: xử lý logout
-     */
+    
     logout: function(req, res) {
         var userAccess={
             UserUID:req.user.UID,

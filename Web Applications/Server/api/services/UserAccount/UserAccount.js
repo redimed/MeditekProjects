@@ -1,3 +1,8 @@
+/**
+ * @namespace UserAccount
+ * @memberOf Service
+ */
+
 var $q = require('q');
 var regexp = require('node-regexp');
 var generatePassword = require("password-generator");
@@ -5,14 +10,24 @@ var o=require("../HelperService");
 var jwt = require('jsonwebtoken');
 module.exports = {
 
-
 	/**
-	 * FindByPhoneNumber: tìm kiếm user thông qua PhoneNumber
-	 * Input: 
-	 * 	PhoneNumber
-	 * 	attributes: các field thông tin muốn lấy
-	 * Output:
-	 * 	
+	 * @typedef {object} FindByPhoneNumberException
+	 * @memberOf Service.UserAccount
+	 * @property {string} ErrorType "FindByPhoneNumber.Error"
+	 * @property {Array<string|object} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
+	 * - PhoneNumber.invalid</br>
+	 * - PhoneNumber.notProvided</br>
+	 * - UserAccount.queryError</br>
+	 */
+	
+	/**
+	 * @function FindByPhoneNumber
+	 * @memberOf Service.UserAccount
+	 * @summary Tìm thông tin user bằng số điện thoại
+	 * @param {string} PhoneNumber
+	 * @param {Array.<string>} attributes
+	 * @return {object} user info
+	 * @throws {Service.UserAccount.FindByPhoneNumberException}
 	 */
 	FindByPhoneNumber:function(PhoneNumber,attributes)
 	{
@@ -69,26 +84,37 @@ module.exports = {
 			throw e;
 		})
 	},
-
+	
 	/**
-	 * CreateUserAccount: create user account
-	 * Input:
-	 * 		userInfo:{UserName, Password, Email, PhoneNumber}
-	 * 		transaction(optiont):nếu có transaction sẽ áp dụng transaction vào các câu truy vấn
-	 * 	Output:
-	 * 		if success return promise UserAccount.create
-	 * 		if error throw error:
-	 * 			error.errors[] có thể bao gồm:
-	 * 				-Password.notFound: không tìm thấy passoword
-	 * 				-Password.min6chars: password phải ít nhất 6 kí tự
-	 * 				-Email.invalid: lỗi định dạng email
-	 * 				-PhoneNumber.invalid: lỗi định dạng phone number
-	 * 				-UserNameOrEmailOrPhoneNumber.need: cần phải có thông tin UserName, Email hoặc PhoneNumber (chỉ cần 1 trong 3)
-	 * 				-UserName.duplicate: UserName bị trùng
-	 * 				-Email.duplicate: Email bị trùng
-	 * 				-PhoneNumber.duplicate: PhoneNumber bị trùng
-	 * 				
-	 * 				
+	 * @typedef {object} CreateUserAccountException
+	 * @memberOf Service.UserAccount
+	 * @property {string} ErrorType "CreateUserAccount.Error"
+	 * @property {Array.<string|object>} ErrorsList</br>
+	 * - UserNameOrEmailOrPhoneNumber.need</br>
+	 * - Password.notFound</br>
+	 * - Password.min6chars</br>
+	 * - Email.invalid</br>
+	 * - PhoneNumber.invalid</br>
+	 * - UserName.duplicate</br>
+	 * - UserName.queryError</br>
+	 * - Email.duplicate</br>
+	 * - Email.queryError</br>
+	 * - PhoneNumber.duplicate</br>
+	 * - PhoneNumber.queryError</br>
+	 * - UserName.createError</br>
+	 */
+	/**
+	 * @function CreateUserAccount
+	 * @memberOf Service.UserAccount
+	 * @summary Tạo UserAccount mới
+	 * @param {object} userInfo 
+	 *        Cần cung cấp UserName hoặc Email hoặc PhoneNumber
+	 * @param {string} userInfo.UserName 
+	 * @param {string} userInfo.Email 
+	 * @param {string} userInfo.PhoneNumber
+	 * @param {object} transaction DB transaction
+	 * @return {object} new userAccount
+	 * @throws {Service.UserAccount.CreateUserAccountException}
 	 */
 	CreateUserAccount:function(userInfo,transaction)
 	{
@@ -295,15 +321,29 @@ module.exports = {
 			throw e;
 		})
 	},
-
+	
 	/**
-	 * UpdateUserAccount
-	 * Input:
-	 * 	userInfo: json chứ thông tin user từ client gửi lên
-	 * 	transaction: nếu được cung cấp thì áp dụng transaction vào các câu truy vấn
-	 * 	output:
-	 * 	Nếu success trả về promise update userAccount attribute
-	 * 	Nếu fail throw về error
+	 * @typedef {object} UpdateUserAccountException
+	 * @memberOf Service.UserAccount
+	 * @property {string} ErrorType "UpdateUser.Error"
+	 * @property {Array.<string|object>} ErrorsList </br>
+	 * - UserName.cannotBeNull</br>
+	 * - Email.invalid</br>
+	 * - PhoneNumber.invalid</br>
+	 * - UserAccount.notFound</br>
+	 */
+	/**
+	 * @function UpdateUserAccount
+	 * @memberOf Service.UserAccount
+	 * @summary Update UserAccount Info
+	 * @param {object} userInfo 
+	 * @param {string} userInfo.ID 
+	 * @param {string} userInfo.UserName 
+	 * @param {string} userInfo.Email
+	 * @param {string} userInfo.PhoneNumber
+	 * @param {object} transaction DB transaction
+	 * @return { object} updated userAccount info
+	 * @throws { Service.UserAccount.UpdateUserAccountException}
 	 */
 	UpdateUserAccount:function(userInfo,transaction)
 	{
@@ -405,6 +445,22 @@ module.exports = {
 	 * 	if success return promise update UserAccount
 	 * 	if error throw err;
 	 */
+	
+	/**
+	 * @function DisableUserAccount
+	 * @memberOf Service.UserAccount
+	 * @summary Disable userAccount
+	 * @param {object} criteria 
+	 *        Điều kiện để query thông tin user.
+	 *        Cần cung cấp một trong các tham số ID,UID,UserName,Email,Phone
+	 * @param {string} criteria.ID 
+	 * @param {string} criteria.UID
+	 * @param {string} criteria.UserName 
+	 * @param {string} criteria.Email 
+	 * @param {string} criteria.PhoneNumber 
+	 * @param {object} transaction DB transaction
+	 * @return {Array.<number>}
+	 */
 	DisableUserAccount:function(criteria,transaction)
 	{
 		var whereClause={};
@@ -468,19 +524,27 @@ module.exports = {
 	},
 
 	/**
-	 * GetUserAccountDetails: 
-	 * Trả về thông tin user thông qua các tiêu chí UID , UserName, Email, Phone,
-	 * chỉ cần 1 trong 4 tiêu chí được cung cấp thì user tương ứng sẽ được trả về
-	 * Input:
-	 * 	criteria: là json chứa 1 trong các thuộc tính [UID, UserName, Email, Phone]
-	 * 	attributes: chứa các field muốn trả về
-	 * 	transaction: nếu được cung cấp thì sẽ áp dụng transaction vào các câu truy vấn
-	 * Output:
-	 * 	if success return promise getOne UserAccount
-	 * 	if error throw err;
-	 * 	NOTES:
-	 * 		CHÚ Ý, KHÔNG LẤY USER ACCOUNT THÔNG QUA ID VÌ ID THEO CƠ CHẾ TỰ TĂNG, NHƯ THẾ
-	 * 	 	SẼ KHÔNG AN TOÀN VÌ NGƯỜI DÙNG CÓ THỂ DÙNG TOOL ĐỂ TỰ ĐỘNG ĐIỀN ID
+	 * @typedef {object} GetUserAccountDetailsException
+	 * @memberOf UserAccountService
+	 * @property {string} ErrorType "GetUserAccountDetails.Error"
+	 * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
+	 * GetUserAccountDetails.emailInvalid</br>
+	 * GetUserAccountDetails.phoneNumberInvalid</br>
+	 * GetUserAccountDetails.criteriaNotFound</br>
+	 * GetUserAccountDetails.queryError</br>
+	 */
+	/**
+	 * @function GetUserAccountDetails
+	 * @memberOf UserAccountService
+	 * @param {object} criteria điều kiện truy vấn user
+	 * @param {string} [criteria.UID]
+	 * @param {string} [criteria.UserName]
+	 * @param {string} [criteria.Email]
+	 * @param {string} [criteria.PhoneNumber]
+	 * @param {Array.<string>} attributes Các field dữ liệu muốn trả về
+	 * @param {object} transaction DB transaction
+	 * @return {object} user info
+	 * @throws {UserAccountService.GetUserAccountDetailsException}
 	 */
 	GetUserAccountDetails:function(criteria,attributes,transaction)
 	{

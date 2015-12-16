@@ -120,16 +120,6 @@ module.exports={
     	action:'Activation'
 	},
 
-	'post /api/user-token/MakeUserToken':{
-		controller:'UserAccount/v0_1/UserTokenController',
-    	action:'MakeUserToken'
-	},
-
-	'post /api/user-token/GetSecretKey':{
-		controller:'UserAccount/v0_1/UserTokenController',
-    	action:'GetSecretKey'
-	},
-
 	'post /api/refresh-token/GetNewToken':{
 		controller:'UserAccount/v0_1/RefreshTokenController',
 		action:'GetNewToken'
@@ -144,11 +134,4 @@ module.exports={
 		controller:'UserAccount/v0_1/UserAccountController',
     	action:'forceChangePass'
 	},
-
-	'get /test':'TestController.test',
-    'get /testAdmin':'TestController.testAdmin',
-    'get /testAssistant':'TestController.testAssistant',
-    'get /testGp':'TestController.testGp',
-    'get /testDoctor':'TestController.testDoctor',
-    'get /testPatient':'TestController.testPatient',
 };

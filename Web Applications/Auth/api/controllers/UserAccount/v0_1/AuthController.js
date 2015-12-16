@@ -1,50 +1,6 @@
-/**
+﻿/**
  * @namespace AuthController
  * @description : Controller for authentication
- */
-
-/**
- * @function test1
- * @memberOf AuthController
- */
-/**
- * @function test11
- * @memberOf AuthController
- */
-
-/**
- * @function test111
- * @memberOf AuthController
- */
-
-/**
- * @function test122
- * @memberOf AuthController
- */
-
-/**
- * @function test122
- * @memberOf AuthController
- */
-
-/**
- * @function test133
- * @memberOf AuthController
- */
-
-/**
- * @function test144
- * @memberOf AuthController
- */
-
-/**
- * @function test155
- * @memberOf AuthController
- */
-
-/**
- * @function test166
- * @memberOf AuthController
  */
 
 

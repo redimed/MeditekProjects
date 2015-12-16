@@ -1,3 +1,6 @@
+/**
+ * @namespace Service
+ */
 module.exports = {
     UserAccount: require('./UserAccount/UserAccount'),
     Patient: require('./Patient/Patient'),

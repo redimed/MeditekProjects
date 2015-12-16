@@ -6,4 +6,8 @@ module.exports = function notActivated(data, options) {
 	  // Set status code
 	  // Non-Authoritative Information:203
 	  res.json(203,data);
+	   //meditek  modified
+    req.typeResponse = 'notActivated: 203';
+    LoggingService(req);
+    //end meditek
 }

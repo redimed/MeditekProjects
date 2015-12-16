@@ -5,4 +5,8 @@ module.exports = function unauthor(data, options) {
 
 	  // Set status code
 	  res.json(401,data);
+	   //meditek  modified
+    req.typeResponse = 'unauthor: 401';
+    LoggingService(req);
+    //end meditek
 }

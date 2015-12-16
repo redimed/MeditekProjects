@@ -21,7 +21,10 @@ module.exports = function serverError (data, options) {
 
   // Set status code
   res.status(500);
-
+ //meditek  modified
+    req.typeResponse = 'serverError: 500';
+    LoggingService(req);
+    //end meditek
   // Log error to console
   if (data !== undefined) {
     sails.log.error('Sending 500 ("Server Error") response: \n',data);

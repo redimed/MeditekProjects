@@ -32,7 +32,9 @@ var config = {
 var customLogger = new winston.Logger({
     transports: [
         //log information server
-        new winston.transports.Console({}),
+        new winston.transports.Console({
+            level: 'debug'
+        }),
         //transports history server via day
         new winston.transports.DailyRotateFile({
             silent: false,

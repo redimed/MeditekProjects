@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		001C6D041BF9BF5000877F4B /* Medi_Infomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001C6D021BF9BF5000877F4B /* Medi_Infomation.swift */; };
 		001C6D051BF9BF5000877F4B /* Medi_Infomation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 001C6D031BF9BF5000877F4B /* Medi_Infomation.xib */; };
-		002053431BBBBE2B00679E10 /* JSSAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002053421BBBBE2B00679E10 /* JSSAlertView.swift */; };
 		002908231BC228B700FED16E /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002908221BC228B700FED16E /* OpenTok.framework */; };
 		0029086E1BC2552A00FED16E /* CALayer+DTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908611BC2552A00FED16E /* CALayer+DTI.swift */; };
 		0029086F1BC2552A00FED16E /* DTIActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908631BC2552A00FED16E /* DTIActivityIndicatorView.swift */; };
@@ -112,7 +111,6 @@
 /* Begin PBXFileReference section */
 		001C6D021BF9BF5000877F4B /* Medi_Infomation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medi_Infomation.swift; sourceTree = "<group>"; };
 		001C6D031BF9BF5000877F4B /* Medi_Infomation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Medi_Infomation.xib; sourceTree = "<group>"; };
-		002053421BBBBE2B00679E10 /* JSSAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSSAlertView.swift; path = "Telehealth Doctor/JSSAlertView.swift"; sourceTree = "<group>"; };
 		002908221BC228B700FED16E /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = Pods/OpenTok/OpenTok.framework; sourceTree = "<group>"; };
 		002908611BC2552A00FED16E /* CALayer+DTI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+DTI.swift"; sourceTree = "<group>"; };
 		002908621BC2552A00FED16E /* DTIActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTIActivityIndicator.h; sourceTree = "<group>"; };
@@ -247,14 +245,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0020533F1BBBBDEC00679E10 /* JSSAlertView */ = {
-			isa = PBXGroup;
-			children = (
-				002053421BBBBE2B00679E10 /* JSSAlertView.swift */,
-			);
-			name = JSSAlertView;
-			sourceTree = "<group>";
-		};
 		002908601BC2552A00FED16E /* DTIActivityIndicator */ = {
 			isa = PBXGroup;
 			children = (
@@ -552,7 +542,6 @@
 			isa = PBXGroup;
 			children = (
 				002908601BC2552A00FED16E /* DTIActivityIndicator */,
-				0020533F1BBBBDEC00679E10 /* JSSAlertView */,
 				002908221BC228B700FED16E /* OpenTok.framework */,
 				008FB2521BB9401900684968 /* VideoToolbox.framework */,
 				008FB2501BB9401000684968 /* UIKit.framework */,
@@ -869,7 +858,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				002908731BC2552A00FED16E /* DTIAnimPulse.swift in Sources */,
-				002053431BBBBE2B00679E10 /* JSSAlertView.swift in Sources */,
 				00F56F9F1BECBA670052F201 /* BasicInfoWAPatient.swift in Sources */,
 				AFF21DEA1BB145B1006A190E /* AppointmentListViewController.swift in Sources */,
 				0061A4441BD7773100617B25 /* MedicalImageCVC.swift in Sources */,

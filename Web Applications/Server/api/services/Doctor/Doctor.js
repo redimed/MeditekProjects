@@ -1123,11 +1123,28 @@ module.exports = {
 					transaction:transaction,
 					// attributes:attributes,
 					include: [
-						 {
+						{
 			            	model: UserAccount,
 			            	attributes: ['PhoneNumber'],
-			            	required: true
-			            }
+			            	required: true,
+			            	include:[
+			            		{
+						  			model:RelUserRole,
+						  			attributes:['RoleId'],
+						  			required: false
+						  		}
+			            	]
+			            },
+			            {
+							model: Department,
+							attributes:['UID','DepartmentName'],
+							required: false
+						},
+						{
+							model:Speciality,
+							attributes:['Name','ID'],
+							required:false
+						}
 					]
 				});
 			}

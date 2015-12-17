@@ -39,6 +39,17 @@ app.controller('userProfileCtrl', function($scope, PatientService, doctorService
 	if(userprofile.doctor!=null){
 		doctorService.getDoctor(data).then(function(response){
 			$scope.data = response.data;
+			response.data.Speciality = [];
+			for(var i = 0; i < response.data.Specialities.length; i++){
+				response.data.Speciality.push(response.data.Specialities[i].ID);
+			}
+			delete response.data['Specialities'];
+			doctorService.getSpecialities()
+			.then(function(result){
+				$scope.special = angular.copy(result.data);
+			},function(err){
+				console.log(err);
+			});
 		},function(err){
 			console.log(err);
 		});

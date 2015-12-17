@@ -3,23 +3,17 @@ package com.redimed.telehealth.patient.utils;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.redimed.telehealth.patient.MainActivity;
-import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
-import com.redimed.telehealth.patient.fragment.AppointmentDetails;
 import com.redimed.telehealth.patient.fragment.TrackingFragment;
 import com.redimed.telehealth.patient.models.Appointment;
 import com.redimed.telehealth.patient.models.Category;
@@ -36,14 +30,13 @@ import butterknife.ButterKnife;
  */
 public class RVAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-    private String TAG = "RVAdapter";
-    private static final int TYPE_CATEGORY = 0;
-    private static final int TYPE_APPOINTMENT = 1;
-    private int TYPE;
     private Context context;
+    private int TYPE, lastPosition;
     private List<Category> categories;
     private List<Appointment> listAppointment;
-    private static String firstName, lastName, dateTime, status;
+    private static final int TYPE_CATEGORY = 0;
+    private static final int TYPE_APPOINTMENT = 1;
+    private static String firstName, lastName, TAG = "RVAdapter";
 
     public RVAdapter(Context context, int type) {
         this.context = context;
@@ -163,8 +156,6 @@ public class RVAdapter extends RecyclerView.Adapter<ViewHolder> {
             case TYPE_APPOINTMENT:
                 AppointmentViewHolder appointmentViewHolder = (AppointmentViewHolder) viewHolder;
                 Doctor[] doctors = listAppointment.get(position).getDoctor();
-                dateTime = listAppointment.get(position).getFromTime();
-                status = listAppointment.get(position).getStatus();
                 for (Doctor doctor : doctors) {
                     firstName = doctor.getFirstName() == null ? " " : doctor.getFirstName();
                     lastName = doctor.getLastName() == null ? " " : doctor.getLastName();
@@ -179,6 +170,11 @@ public class RVAdapter extends RecyclerView.Adapter<ViewHolder> {
                 appointmentViewHolder.lblNo.setText(ref);
                 appointmentViewHolder.lblDoctorRef.setText(listAppointment.get(position).getTelehealthAppointment().getRefName());
                 appointmentViewHolder.lblDoctorPre.setText(firstName + lastName);
+
+                Animation animation = AnimationUtils.loadAnimation(context,
+                        (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+                appointmentViewHolder.itemView.startAnimation(animation);
+                lastPosition = position;
                 break;
         }
     }

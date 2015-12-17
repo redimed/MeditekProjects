@@ -14,7 +14,7 @@
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/toolbar_back_icon"
+            android:drawableLeft="@drawable/icon_toolbar_back"
             android:background="@android:color/transparent"
             android:text="@string/back"
             android:textAllCaps="false"

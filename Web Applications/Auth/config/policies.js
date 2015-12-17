@@ -28,11 +28,6 @@ var userAccountPolicies = require('./policies/userAccountPolicies');
 _.extend(policies, userAccountPolicies);
 //End module UserAccount
 
-//Begin module Test
-var testPolicies = require('./policies/testPolicies');
-_.extend(policies, testPolicies);
-//End module Test
-
 //Begin module Authorization
 var authorizationPolicies = require('./policies/authorizationPolicies');
 _.extend(policies, authorizationPolicies);

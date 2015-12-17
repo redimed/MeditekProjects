@@ -1,0 +1,634 @@
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="authentication.home.list">Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <label class="text-primary">private form</label>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<!-- BEGIN PAGE TITLE-->
+<h3 class="page-title">&nbsp;</h3>
+<!-- END PAGE TITLE-->
+<div class="portlet box red">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="glyphicon glyphicon-pencil"></i>
+            <span class="caption-subject bold uppercase">PATIENT INFORMATION FORM AND FINANCIAL CONSENT</span>
+            <!-- <span class="caption-helper"></span> -->
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+            <a href="javascript:;" class="fullscreen"> </a>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <form name="form" novalidate class="">
+            <div class="form-body">
+                <h4 class="form-section uppercase bold">Patient Details</h4>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Please tick</label>
+                                    <div class="radio-list">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="title" value="Mr"> Mr</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="title" value="Mrs"> Mrs</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="title" value="Ms"> Ms</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="title" value="Miss"> Miss</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="title" value="Master"> Master</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="title" value="Dr"> Dr</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Family Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label ">Given Name(s)</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">DOB</label>
+                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label ">Age</label>
+                                    <input type="number" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label ">Address</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8">
+                                <div class="form-group">
+                                    <label class="control-label ">Suburb</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label ">Postcode</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label ">Homephone</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Mobile</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Workphone</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8">
+                                <div class="form-group">
+                                    <label class="control-label">Next of Kin</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Telephone</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Location of injury: (please tick)</label>
+                                    <div class="checkbox-list">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox"> Hand / Upper limb
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox"> Lower limb
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox"> Back limb
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox"> Other
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="form-section font-red uppercase bold margin-top-40">Referring Doctor's Details</h4>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8">
+                                <div class="form-group">
+                                    <label class="control-label ">Referring Doctor</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Clinic Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="form-section font-red margin-top-40"><span class="bold">GP DETAILS</span> (If not the referring doctor)</h4>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8">
+                                <div class="form-group">
+                                    <label class="control-label">Doctor</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Telephone</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="form-section uppercase bold margin-top-40">HEALTH INSURANCE DETAILS</h4>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                        <div class="form-group">
+                            <div class="radio-list">
+                                <label class="control-label radio-inline">
+                                    Do you have Private Health Insurance? YES / NO <i>(Please circle)</i>  
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="PrivateHealthInsurance" value="YES"> YES
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="PrivateHealthInsurance" value="NO"> NO
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="radio-list">
+                                <label class="control-label radio-inline">
+                                    Do you have Hospital Cover? YES / NO <i>(Please circle)</i>  
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="HospitalCover" value="YES"> YES
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="HospitalCover" value="NO"> NO
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="radio-list">
+                                <label class="control-label radio-inline">
+                                    Do you have cover for Occupational Therapy/Hand Therapy? YES / NO  <i>(Please circle)</i>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="OcupationalTherapy_HandTherapy" value="YES"> YES
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="OcupationalTherapy_HandTherapy" value="NO"> NO
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Health Fund</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Membership No</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Medicare Number</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Position Number</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Expiry</label>
+                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Veteran Affairs No</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Gold or White Card Holder <i>(Please circle)</i></label>
+                                    <div class="radio-list">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="CardHolder" value="Gold"> Gold
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="CardHolder" value="White"> White
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Pension Card No</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-inline">
+                            <small>Please note that Occupational Therapy/Hand Therapy may be an integral part of your treatment and effective    recovery so consultations fees or out of pocket expenses may be payable. 
+                            Initials <input type="text" class="form-control"></small>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="form-section uppercase bold margin-top-40">PHOTOGRAPHY</h4>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                        <p>I acknowledge that photographs may be taken of my injury for training and injury management purposes, 
+                        and that this is in my best interest.</p>
+
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1 col-sm-6 col-sm-offset-1">
+                                <div class="form-group">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" style="width: 100%; height: 150px;">
+                                            <img src="theme/assets/global/images/no_signature.jpg" alt="" />
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100%; max-height: 150px;"> 
+                                        </div>
+                                        <div>
+                                            <span class="btn default btn-file">
+                                                <span class="fileinput-new">Sinature</span>
+                                                <span class="fileinput-exists"> Change </span>
+                                                <input type="file" name="..."> 
+                                            </span>
+                                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Date</label>
+                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="font-red"><i><small>This signature confirms your consent for us to collect this information from you. The information will be used for administrative, billing and debt collection purposes, and for referrals and requests regarding your healthcare. </small></i></p>
+                        <p class="font-red"><i><small>It is routine in this surgery for the surgeon to take photos for research and educational purposes. Should your surgeon wish to use your information, they will discuss this with you during your consultation.</small></i></p>
+                        <p><b>Explanation of Billing - Informed Financial Consent we request that fees be paid at the time of consultation</b></p>
+
+                        <h5 class="bold text-center">SPECIALIST CONSULTATION FEES</h5>
+                        <div style="padding: 10px; border: 1px solid #CCC;">
+                            <div class="row" >
+                                <div class="col-md-2 col-sm-2">Initial Consult</div>
+                                <div class="col-md-5 col-sm-5">$ 200.00 (Private Fee)</div>
+                                <div class="col-md-5 col-sm-5">Medicare Rebate: $ 72.75</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2"></div>
+                                <div class="col-md-5 col-sm-5">$ 100.00 (Presentation of Pensioner Concession Card)</div>
+                                <div class="col-md-5 col-sm-5"><small class="font-red">Medicare rebate not claimable without valid referral</small></div>
+                            </div>
+                            
+                            <div class="row" >
+                                <div class="col-md-2 col-sm-2">Subsequent Consult</div>
+                                <div class="col-md-5 col-sm-5">$ 100.00 (Private Fee)</div>
+                                <div class="col-md-5 col-sm-5">Medicare Rebate: $ 36.55</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2"></div>
+                                <div class="col-md-5 col-sm-5">$ 50.00 (Presentation of Pensioner Concession Card)</div>
+                                <div class="col-md-5 col-sm-5"><small class="font-red">Medicare rebate not claimable without valid referral</small></div>
+                            </div>
+                        </div>
+
+                        <h5 class="bold text-center">SURGICAL FEES</h5>
+                        <h5 class="bold">OUT-PATIENT PROCEDURE</h5>
+                        <p>If your procedure is performed in our Redimed theatre, you will be required to pay a <b><u>minimum</u></b> of $500.00 out of pocket expense the day of surgery. This fee is <b><u>NOT</u></b> claimable from Medicare or your Private Health Fund. You will also be required to pay the full amount for your surgical item numbers, which are raised depending on the complexity of your surgery. You will then be able to claim the FULL amount of this portion of your invoicing if you are eligible to claim with Medicare <br>
+                        <b>Overseas Patients</b> are required to pay in full all costs before their surgery.</p>
+
+                        <h5 class="bold text-center">PUBLIC LIABILITY</h5>
+                        <p>All consults at Redimed and 2Hands need to be paid on the day of the consult. It is your responsibility to seek reimbursement from the company or insurer.</p>
+
+                        <h5 class="bold text-center">GP CONSULTATION FEES</h5>
+                        <div style="padding: 10px; border: 1px solid #CCC;">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2">Subsequent Consult:</div>
+                                <div class="col-md-5 col-sm-5">$66.00 (Private Fee)</div>
+                                <div class="col-md-5 col-sm-5">Medicare Rebate: $36.30</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2">Extended Consult:  </div>
+                                <div class="col-md-5 col-sm-5">$122.00 (Private Fee)</div>
+                                <div class="col-md-5 col-sm-5">Medicare Rebate: $70.30</div>
+                            </div>
+                        </div>
+
+                        <h5 class="bold text-center margin-top-20">NURSE PRACTITIONER CONSULTATION FEES</h5>
+                        <div style="padding: 10px; border: 1px solid #CCC;">
+                            <div class="row margin-bottom-20">
+                                <div class="col-md-2 col-sm-2">Initial Consult:</div>
+                                <div class="col-md-5 col-sm-5">$50.00 (Private Fee)  </div>
+                                <div class="col-md-5 col-sm-5">Medicare Rebate: $33.80</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2">Subsequent Consult:</div>
+                                <div class="col-md-5 col-sm-5">$25.00 (Private Fee)</div>
+                                <div class="col-md-5 col-sm-5">Medicare Rebate: $17.85</div>
+                            </div>
+                        </div>
+
+                        <div style="padding: 10px; border: 1px solid #CCC;" class="margin-top-20">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <h5 class="bold">HAND THERAPY CONSULTATION FEES</h5>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">Initial Consult:</div>
+                                        <div class="col-md-6 col-sm-6">$80.00 (Private Fee)</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">Subsequent Consult:</div>
+                                        <div class="col-md-6 col-sm-6">$65.00 (Private Fee)</div>
+                                    </div>
+
+                                    <h5 class="bold margin-top-20">PHYSIO THERAPY CONSULTATION FEES</h5>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">Initial Consult:</div>
+                                        <div class="col-md-6 col-sm-6">$85.00 (Private Fee)</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">Subsequent Consult:</div>
+                                        <div class="col-md-6 col-sm-6">$70.00 (Private Fee)</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <h5 class="bold">NEURO-MUSCULAR CONSULTATION FEES</h5>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">Initial Consult:</div>
+                                        <div class="col-md-6 col-sm-6">$90.00 (Private Fee)</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">Subsequent Consult:</div>
+                                        <div class="col-md-6 col-sm-6">$70.00 (Private Fee)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="margin-top-20"><i>These fees will be covered through private health insurance and dependent on your level of ancillary cover. It will NOT be covered through Medicare. Please advise your therapist if you are uninsured.</i></p>
+                        </div>
+
+                        <p><u>Please Note:</u> If for any reason your invoice is forwarded to the debt collector, you will be liable for all associated collection fees.</p>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" style="width: 100%; height: 150px;">
+                                            <img src="theme/assets/global/images/no_signature.jpg" alt="" />
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100%; max-height: 150px;"> 
+                                        </div>
+                                        <div>
+                                            <span class="btn default btn-file">
+                                                <span class="fileinput-new">Sinature</span>
+                                                <span class="fileinput-exists"> Change </span>
+                                                <input type="file" name="..."> 
+                                            </span>
+                                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                                <label class="control-label">Date</label>
+                                <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy">
+                            </div>
+                        </div>
+                        <p class="font-red"><i>This signature confirms that I have read the above statement and that I understand and agree with it. The fees have also been explained to me and I have also had the opportunity to ask any questions regarding the fee structure.</i></p>
+
+                        <h5 class="bold text-center">PATIENT INFORMATION FOR PRIVATE PATIENTS</h5>
+                        <p>You are being seen at Redimed as a private patient and accordingly any information held by Redimed will be treated as private and confidential. No information will be released by Redimed to any person without your expressed consent. Redimed would routinely want to convey the results of any examination, investigations and treatment to your own personal General Practitioner and accordingly we request your permission to contact your general practitioner. Should you wish Redimed to release information to any other person/organisation please state this to the doctor at the time of the consultation and sign the appropriate consent section. </p>
+
+                        <p>I have read and understand the information on my rights as a private patient.</p>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" style="width: 100%; height: 150px;">
+                                            <img src="theme/assets/global/images/no_signature.jpg" alt="" />
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100%; max-height: 150px;"> 
+                                        </div>
+                                        <div>
+                                            <span class="btn default btn-file">
+                                                <span class="fileinput-new">Sinature</span>
+                                                <span class="fileinput-exists"> Change </span>
+                                                <input type="file" name="..."> 
+                                            </span>
+                                            <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Date</label>
+                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy">
+                                </div>
+                            </div>
+                        </div>
+                        <p class="font-red"><i>This signature confirms that I have read the above statement and that I understand and agree with it. </i></p>
+
+                        <ul>
+                            <li>
+                                <p>I consent / do not consent to the release of medical information and notes to my general practitioner.</p>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-offset-md-1 col-sm-offset-1">
+                                        <div class="form-group">
+                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                <div class="fileinput-new thumbnail" style="width: 100%; height: 150px;">
+                                                    <img src="theme/assets/global/images/no_signature.jpg" alt="" />
+                                                </div>
+                                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100%; max-height: 150px;"> 
+                                                </div>
+                                                <div>
+                                                    <span class="btn default btn-file">
+                                                        <span class="fileinput-new">Sinature</span>
+                                                        <span class="fileinput-exists"> Change </span>
+                                                        <input type="file" name="..."> 
+                                                    </span>
+                                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Date</label>
+                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group">
+                                    <div class="radio-list">
+                                        <label class="radio-inline">I consent / do not consent to the release of medical information and notes to my employer.</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="release_note" value="YES"> Consent
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="release_note" value="YES"> Do not consent
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-offset-md-1 col-sm-offset-1">
+                                        <div class="form-group">
+                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                <div class="fileinput-new thumbnail" style="width: 100%; height: 150px;">
+                                                    <img src="theme/assets/global/images/no_signature.jpg" alt="" />
+                                                </div>
+                                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100%; max-height: 150px;"> 
+                                                </div>
+                                                <div>
+                                                    <span class="btn default btn-file">
+                                                        <span class="fileinput-new">Sinature</span>
+                                                        <span class="fileinput-exists"> Change </span>
+                                                        <input type="file" name="..."> 
+                                                    </span>
+                                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Date</label>
+                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <p>I would request and consent for Redimed to release information to my medical condition to:
+                        <br><b>Medical Practice Information:</b></p>
+
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Doctor</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Practice Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Ph</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Fax</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions right">
+                <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

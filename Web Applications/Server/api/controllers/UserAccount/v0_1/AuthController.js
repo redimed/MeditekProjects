@@ -1,9 +1,3 @@
-/**
- * AuthController
- *
- * @description : Controller for authentication
- */
-
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
@@ -17,9 +11,6 @@ module.exports = {
         rest: false// không sử dụng rest route
     },
 
-    /**
-     * login: function xử lý login
-     */
     login: function(req, res) {
         console.log("============LOGIN===============");
 
@@ -122,10 +113,7 @@ module.exports = {
             })
         })(req, res);
     },
-
-    /**
-     * logout: xử lý logout
-     */
+    
     logout: function(req, res) {
         var userAccess={
             UserUID:req.user.UID,
@@ -151,6 +139,151 @@ module.exports = {
         })
         
     },
-    
+
+    forgot: function(req, res) {
+        var data = req.body.data;
+        return UserAccount.findOne({
+            where : {
+                Email : data.email
+            }
+        })
+        .then(function(result){
+            if(result!=null && result!=""){
+                data.UID = result.UID;
+                Services.UserAccount.sendMail(data,secret,function(err, responseStatus, html, text){
+                    if(err)
+                        res.serverError(ErrorWrap(err));
+                    else{
+                        res.ok({message:"success"});
+                    }
+                });
+            }
+            else {
+                var error = new Error("ForgotError");
+                error.pushError("EmailNotExist");
+                res.serverError(ErrorWrap(error));
+            }
+        },function(err){
+            res.serverError(ErrorWrap(err));
+        });
+    },
+
+    check: function(req, res) {
+        var data = req.body.data;
+        return UserForgot.findOne({
+            where:{
+                Token : data.token
+            }
+        })
+        .then(function(result){
+            if(result!=null && result!=""){
+                jwt.verify(data.token,secret,function(err, decoded) {
+                    if(err){
+                        if(err.name=="TokenExpiredError"){
+                            return sequelize.transaction()
+                            .then(function(t){
+                                UserAccount.findOne({
+                                    where:{
+                                        UID : data.UID
+                                    },
+                                    transaction:t
+                                })
+                                .then(function(result){
+                                    if(result!=null && result!=""){
+                                        data.email = result.Email;
+                                        UserForgot.destroy({
+                                            where:{
+                                                UserAccountUID: data.UID
+                                            },
+                                            transaction:t
+                                        })
+                                        .then(function(success){
+                                            t.commit();
+                                            Services.UserAccount.sendMail(data,secret,function(err, responseStatus, html, text){
+                                                if(err){
+                                                    res.serverError(ErrorWrap(err));
+                                                }
+                                                else{
+                                                    var error = new Error("serverError");
+                                                    error.pushError("TokenExpiredError");
+                                                    res.serverError(ErrorWrap(error));
+                                                }
+                                            });
+                                        },function(err){
+                                            t.rollback();
+                                            res.serverError(ErrorWrap(err));
+                                        })
+                                    }
+                                    else{
+                                        var error = new Error("serverError");
+                                        error.pushError("findOneError");
+                                        res.serverError(ErrorWrap(error));
+                                    }
+                                },function(err){
+                                    t.rollback();
+                                    res.serverError(ErrorWrap(err));
+                                });
+                            },function(err){
+                                res.serverError(ErrorWrap(err));
+                            });
+                        }
+                        else if(err.name=="JsonWebTokenError"){
+                            res.serverError(ErrorWrap(err));
+                        }
+                        else{
+                            var error = new Error("serverError");
+                            error.pushError("UnknownError");
+                            res.serverError(ErrorWrap(error));
+                        }
+                    }
+                    else{
+                        return UserForgot.destroy({
+                           where:{
+                                UserAccountUID: data.UID
+                            },
+                        })
+                        .then(function(success){
+                            res.ok({message:"success"});
+                        },function(err){
+                            res.serverError(ErrorWrap(err));
+                        });
+                    }
+                });
+            }
+            else {
+                var error = new Error("serverError");
+                error.pushError("TokennotActivated");
+                res.serverError(ErrorWrap(error));
+            }
+        },function(err){
+            res.serverError(ErrorWrap(err));
+        });
+    },
+
+    changePassforgot: function(req, res) {
+        var data = req.body.data;
+        if(data.newpass==null || data.newpass=="" ||
+            data.UID==null || data.UID==""){
+            var error = new Error("serverError");
+            error.pushError("invalidParams");
+            res.serverError(ErrorWrap(error));
+        }
+        else {
+            return UserAccount.update({
+                Password : data.newpass
+            },{
+                where:{
+                    UID : data.UID
+                }
+            })
+            .then(function(success){
+                console.log(success);
+                if(success!=null && success!="")
+                    res.ok({message:"success"});
+            },function(err){
+                res.serverError(ErrorWrap(err)); 
+            });
+        }
+    }
 };
 

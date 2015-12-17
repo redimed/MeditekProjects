@@ -41,6 +41,18 @@ angular.module('app.unAuthentication.service', [])
     services.checkUserStep1 = function(data) {
         var instanceApi = api.all('check-user-step1');
         return instanceApi.post({data:data});
+    },
+    services.GetPassword = function(data) {
+        var instanceApi = api.all('forgot');
+        return instanceApi.post({data:data});
+    },
+    services.ConfirmToken = function(data) {
+        var instanceApi = api.all('check-forgot-return');
+        return instanceApi.post({data:data});
+    },
+    services.changePass = function(data) {
+        var instanceApi = api.all('change-password-forgot');
+        return instanceApi.post({data:data});
     }
     
     return services;

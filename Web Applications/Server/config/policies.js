@@ -28,11 +28,6 @@ var userAccountPolicies = require('./policies/userAccountPolicies');
 _.extend(policies, userAccountPolicies);
 //End module UserAccount
 
-//Begin module Test
-var testPolicies = require('./policies/testPolicies');
-_.extend(policies, testPolicies);
-//End module Test
-
 //Begin module Authorization
 var authorizationPolicies = require('./policies/authorizationPolicies');
 _.extend(policies, authorizationPolicies);
@@ -57,8 +52,12 @@ var registerPolicies = require('./policies/RegisterPolicies');
 _.extend(policies, registerPolicies);
 //End module Register
 //Begin module Doctor
-var registerPolicies = require('./policies/doctorPolicies');
-_.extend(policies, registerPolicies);
+var doctorPolicies = require('./policies/doctorPolicies');
+_.extend(policies, doctorPolicies);
 // End module Doctor
+//Begin module Patient
+var patientPolicies = require('./policies/patientPolicies');
+_.extend(policies, patientPolicies);
+// End module Patient
 module.exports.policies = policies;
 

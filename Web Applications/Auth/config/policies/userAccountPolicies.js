@@ -28,8 +28,4 @@ module.exports={
   		'DeactivationUserAccount':['isAuthenticated','isAdmin'],
   		'ActivationUserAccount':['isAuthenticated','isAdmin']
   	},
-
-    'UserAccount/v0_1/UserTokenController':{
-      '*':true,
-    },
 }

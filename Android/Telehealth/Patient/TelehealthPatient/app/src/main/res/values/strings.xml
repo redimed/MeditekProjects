@@ -1,8 +1,9 @@
 <resources>
+    <string name="app_name">Telehealth Patient</string>
+
     <!-- Launcher-->
     <string name="welcome">Welcome to REDiMED</string>
     <string name="title_activity_launcher">Telehealth Patient</string>
-    <string name="app_name">TelehealthPatient</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="confirm_exit">Press Back button again to exit</string>
     <string name="title_activity_call">CallActivity</string>
@@ -148,7 +149,6 @@
     <string name="back">Back</string>
 
     <!-- Notification-->
-    <string name="server_client_id">24396950171-ivlcf1cilo4vbt2c69opb1vcamb3hmur.apps.googleusercontent.com</string>
-    <!--sEXR3SDcuGQ5TtUbqx33lsfR-->
+    <string name="api_key">24396950171</string>
     <string name="not_title">Telehealth</string>
 </resources>

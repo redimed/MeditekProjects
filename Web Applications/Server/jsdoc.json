@@ -1,20 +1,30 @@
 {
 	"source": {
 	    "include": [ 
-	    	"./api",
-	    	"./config"
+	    	"./api"
     	],
 	    "includePattern": ".+\\.js(doc)?$",
 	    "excludePattern": "(^|\\/|\\\\)_"
 	},
 
-	"templates":{
-		"default":{
-			"useLongnameInNav":true
-		}
-	},
+	"templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "default": {
+            "outputSourceFiles": true
+        },
+        "systemName"      : "REDIMED",
+        "footer"          : "",
+        "copyright"       : "DocStrap Copyright © 2012-2013 The contributors to the JSDoc3 and DocStrap projects.",
+        "navType"         : "vertical",
+        "theme"           : "cerulean",
+        "linenums"        : true,
+        "collapseSymbols" : false,
+        "inverseNav"      : true
+    },
 	
 	"opts": {
+        "template": "./node_modules/ink-docstrap/template",
 		"encoding": "utf8",
 		"destination": "./jsdocs/"
 	}

@@ -6,6 +6,7 @@ module.exports = {
 		var characterRegex = new RegExp(check.regexPattern.character);
 		var addressRegex   = new RegExp(check.regexPattern.address);
 		var postcodeRegex  = new RegExp(check.regexPattern.postcode);
+		var usercodeRegex  = /^[a-z0-9_]{0,255}$/;
 		var isStep = step==true?true:false;
 		var error = [];
 		//create a error with contain a list errors input
@@ -20,7 +21,7 @@ module.exports = {
 							error.push({field:"UserName",message:"max length"});
 							err.pushErrors(error);
 						}
-						if(!characterRegex.test(info.UserName)){
+						if(!usercodeRegex.test(info.UserName)){
 							error.push({field:"UserName",message:"invalid value"});
 							err.pushErrors(error);
 						}
@@ -202,7 +203,7 @@ module.exports = {
 					//validate WorkPhoneNumber
 					if(info.WorkPhoneNumber){
 						if(info.WorkPhoneNumber.length > 0){
-							var auPhoneNumberPattern=new RegExp(/^[1-9]{6,10}$/);
+							var auPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 							var PhoneNumber=info.WorkPhoneNumber.replace('/[\(\)\s\-]/g','');
 							if(!auPhoneNumberPattern.test(PhoneNumber)){
 								error.push({field:"WorkPhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -215,7 +216,7 @@ module.exports = {
 					//validate Homephone
 					if(info.HomePhoneNumber){
 						if(info.HomePhoneNumber.length > 0) {
-							var auPhoneNumberPattern=new RegExp(/^[1-9]{6,10}$/);
+							var auPhoneNumberPattern=new RegExp(/^[0-9]{6,10}$/);
 							var PhoneNumber=info.HomePhoneNumber.replace('/[\(\)\s\-]/g','');
 							if(!auPhoneNumberPattern.test(PhoneNumber)){
 								error.push({field:"HomePhoneNumber",message:"Phone Number is invalid. The number is a 6-10 digits number"});
@@ -364,10 +365,46 @@ module.exports = {
 	CheckUserStep1: function(data) {
 		return Services.Register.validate(data,true)
 		.then(function(success){
-			return success;
+			if(data.PhoneNumber[0]=="0"){
+				data.PhoneNumber = data.PhoneNumber.replace("0","+61");
+			}
+			return UserAccount.findAll({
+				attributes:['ID','UserName','Email','PhoneNumber'],
+				where :{
+					$or:[
+							{UserName :data.UserName},
+							{Email :data.Email},
+							{PhoneNumber :data.PhoneNumber}
+					]
+				}
+			});
 		},function(err){
 			throw err;
 		})
+		.then(function(result){
+			if(result!=null && result!="" && result.length!=0){
+				var error = [];
+				for(var i = 0; i < result.length; i++){
+					if(result[i].UserName == data.UserName){
+						error.push({field:"UserName",message:"UserName already exists"});
+					}
+					if(result[i].Email == data.Email){
+						error.push({field:"Email",message:"Email already exists"});
+					}
+					if(result[i].PhoneNumber == data.PhoneNumber){
+						error.push({field:"PhoneNumber",message:"PhoneNumber already exists"});
+					}
+				}
+				var err = new Error("Error.existedUser");
+				err.pushErrors(error);
+				throw err;
+			}
+			else{
+				return result;
+			}
+		},function(err){
+			throw err;
+		});
 	}
 
 }

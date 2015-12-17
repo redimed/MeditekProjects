@@ -19,6 +19,9 @@ module.exports={
 
   	'UserAccount/v0_1/AuthController':{
   		'login':true,
+      'forgot':true,
+      'check':true,
+      'changePassforgot':true,
   		'logout':'isAuthenticated',
   	},
 
@@ -28,8 +31,4 @@ module.exports={
   		'DeactivationUserAccount':['isAuthenticated','isAdmin'],
   		'ActivationUserAccount':['isAuthenticated','isAdmin']
   	},
-
-    'UserAccount/v0_1/UserTokenController':{
-      '*':true,
-    },
 }

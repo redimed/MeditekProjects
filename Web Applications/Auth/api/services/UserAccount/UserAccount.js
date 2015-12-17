@@ -1,6 +1,7 @@
 /**
  * @namespace UserAccountService
  */
+
 var $q = require('q');
 var regexp = require('node-regexp');
 var generatePassword = require("password-generator");

@@ -53,6 +53,15 @@ app.config(function($stateProvider,$urlRouterProvider){
 				}
 			}
 		})
+		.state('unAuthentication.changepass', {
+			url: '/changepass/:uid/:token',
+			views: {
+				'main-content': {
+					templateUrl: 'modules/unAuthentication/views/changepass.html',
+					controller: 'changepassCtrl'
+				}
+			}
+		})
 		// ======================================================================
 		// patient
 		.state('unAuthentication.loginPatient', {

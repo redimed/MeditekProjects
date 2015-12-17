@@ -51,10 +51,8 @@ module.exports = {
     ListAppointment: function(req, res) {
         var appts = [];
         var headers = req.headers;
-        var params = req.params.all();
-        var type = params.type;
-        var query = req.query;
-        TelehealthService.GetAppointmentList(headers, type, query).then(function(response) {
+        var body = req.body;
+        TelehealthService.GetAppointmentList(headers, body).then(function(response) {
             var data = response.getBody();
             if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
             if (data.count > 0) {
@@ -70,11 +68,13 @@ module.exports = {
                             }
                         }
                     }
-                    return res.ok(TelehealthService.CheckOnlineUser(appts));
+
+
+                    return res.ok({count: data.count, data: TelehealthService.CheckOnlineUser(appts)});
                 }).catch(function(err) {
                     res.serverError(ErrorWrap(err));
                 })
-            } else return res.ok(TelehealthService.CheckOnlineUser(appts));
+            } else return res.ok({count: data.count, data: TelehealthService.CheckOnlineUser(appts)});
         }, function(err) {
             res.serverError(err.getBody());
         });

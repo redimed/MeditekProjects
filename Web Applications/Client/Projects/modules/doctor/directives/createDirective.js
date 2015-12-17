@@ -11,25 +11,18 @@ angular.module('app.authentication.doctor.directive.create', [])
 		controller: function($scope, FileUploader, $state, toastr) {
 
 			$scope.buildImg = function(imageType,canvasimg,ctximg,e) {
-				document.body.onfocus = function () {
-			    	if(imageType.value.length == 0)
-				    	alert("k chon file nao");
-				    else{
-					    var reader = new FileReader();
-					    reader.onload = function(event){
-					        var img = new Image();
-					        img.onload = function(){
-					            canvasimg.width = 350;
-					            canvasimg.height = 350;
-					            ctximg.drawImage(img,0,0,350,350);
-					        };
-					        img.src = event.target.result;
-					    }
-					    console.log(e.target.files[0]);
-						reader.readAsDataURL(e.target.files[0]);
-				    }
-				    document.body.onfocus = null;
-				}; 
+				var reader = new FileReader();
+				reader.onload = function(event){
+					var img = new Image();
+					img.onload = function(){
+					    canvasimg.width = 350;
+				        canvasimg.height = 350;
+					    ctximg.drawImage(img,0,0,350,350);
+					};
+					img.src = event.target.result;
+				}
+				console.log(e.target.files[0]);
+				reader.readAsDataURL(e.target.files[0]);
 			}
 
 			// Profile Image

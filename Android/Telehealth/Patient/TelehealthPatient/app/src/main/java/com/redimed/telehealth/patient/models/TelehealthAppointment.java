@@ -18,3 +18,4 @@ public class TelehealthAppointment {
         RefName = refName;
     }
 }
+

@@ -77,7 +77,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.fabHold)
     Button fabHold;
     @Bind(R.id.fabEndCall)
-    FloatingActionButton fabEndCall;
+    Button fabEndCall;
     @Bind(R.id.btnMutePub)
     Button btnMutePub;
     @Bind(R.id.btnMuteSub)
@@ -435,6 +435,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         btnMutePub.setEnabled(true);
         btnMuteSub.setEnabled(true);
         fabHold.setEnabled(true);
+        fabEndCall.setEnabled(true);
     }
 
     //Initialize view Subscriber (Clinic)

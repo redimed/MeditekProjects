@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 /// ***declare server for all application***
 
@@ -36,7 +37,7 @@ let TELEAPPOINTMENT_DETAIL = URL_SERVER_3009 + "/api/telehealth/user/telehealthA
 
 let WAAPPOINTMENT_DETAIL = URL_SERVER_3009 + "/api/telehealth/user/WAAppointmentDetails/"
 
-let APPOINTMENTLIST_WA = URL_SERVER_3009 + "/api/telehealth/appointment/list/WAA"
+let APPOINTMENTLIST = URL_SERVER_3009 + "/api/telehealth/appointment/list"
 
 let APPOINTMENTLIST_TeleHealth = URL_SERVER_3009 + "/api/telehealth/appointment/list/TEL"
 
@@ -58,7 +59,10 @@ let JOIN_ROOM = "/api/telehealth/socket/joinRoom?uid=%@"
 var AUTHTOKEN = ""
 
 /// alert message for UIAlertController
+var err_Title_Network = "REDiMED Clinic Unavailable"
 var err_Mess_Network = "The Internet connection appears to be offline"
+var err_Mess_Connect = "Could not connect to server, please try again"
+
 var err_Mess_sessionExpired = "Your session is expired. Please login again!"
 
 /**
@@ -93,3 +97,42 @@ public func FormatStrDate(dateString: String) -> String {
     }
     return ""
 }
+
+func getReFormat() -> (timeZone: String, filterFormat: String) {
+    let date = NSDate()
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd ZZZ"
+    let reFormatDate = dateFormatter.stringFromDate(date)
+    let arrReFormatDate = reFormatDate.componentsSeparatedByString(" ")
+    return (timeZone: arrReFormatDate[1], filterFormat: reFormatDate)
+}
+
+func paramFilter(offset: Int, aptFrom: String, aptTo: String) {
+    SingleTon.filterParam = [ "data":
+        [
+            "Limit": 20,
+            "Offset": offset,
+            "Order": ["Appointment": ["FromTime": "DESC"]],
+            "Filter": [
+                [
+                    "Appointment":
+                        [
+                            "Enable": "Y"
+                    ]
+                ],
+                [
+                    "TelehealthAppointment": ["Type": "WAA"]
+                ]
+            ],
+            "Range" : [
+                [
+                    "Appointment": [
+                        "FromTime": [ aptFrom, aptTo ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+}
+
+

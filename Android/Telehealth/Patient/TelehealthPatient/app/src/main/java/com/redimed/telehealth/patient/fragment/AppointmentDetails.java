@@ -14,8 +14,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -35,25 +37,34 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.redimed.telehealth.patient.MainActivity;
 import com.redimed.telehealth.patient.ModelActivity;
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
+import com.redimed.telehealth.patient.models.Appointment;
 import com.redimed.telehealth.patient.models.Doctor;
 import com.redimed.telehealth.patient.models.FileUpload;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
 import com.redimed.telehealth.patient.utils.Config;
 import com.redimed.telehealth.patient.utils.RVAdapterImage;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+import com.squareup.picasso.UrlConnectionDownloader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -81,6 +92,7 @@ public class AppointmentDetails extends Fragment {
     private RegisterApi registerApi;
     private List<String> urlPicasso;
     private boolean flagLayout = false;
+    private List<FileUpload> fileUploads;
     private RVAdapterImage rvAdapterImage;
     private SharedPreferences telehealthPatient;
     private LinearLayoutManager layoutManagerCategories;
@@ -149,6 +161,7 @@ public class AppointmentDetails extends Fragment {
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
         appCompatActivity.setSupportActionBar(toolBar);
 
+        //Load background image with blur transform
         Picasso.with(v.getContext()).load(R.drawable.slider2).transform(new BlurTransformation(v.getContext(), 20)).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -234,7 +247,11 @@ public class AppointmentDetails extends Fragment {
                     }
 
                     String fileUpload = jsonObject.get("data").getAsJsonObject().get("FileUploads").toString();
-                    FileUpload[] fileUploads = gson.fromJson(fileUpload, FileUpload[].class);
+                    if (fileUploads != null) {
+                        fileUploads.clear();
+                    }
+                    fileUploads = gson.fromJson(fileUpload, new TypeToken<List<FileUpload>>() {
+                    }.getType());
                     GetFileUpload(fileUploads);
                 } else {
                     Log.d(TAG, "No Result");
@@ -248,13 +265,38 @@ public class AppointmentDetails extends Fragment {
         });
     }
 
-    private void GetFileUpload(FileUpload[] fileUploads) {
-        for (int i = 0; i < fileUploads.length; i++) {
-            urlPicasso.add(Config.apiURLDownload + fileUploads[i].getUID());
+    private void GetFileUpload(final List<FileUpload> fileUploads) {
+        int i;
+        for (i = 0; i < fileUploads.size(); i++) {
+            if (GetResponseCode(Config.apiURLDownload + fileUploads.get(i).getUID()) == 200){
+                urlPicasso.add(Config.apiURLDownload + fileUploads.get(i).getUID());
+            }
         }
         rvAdapterImage.swapData(urlPicasso, telehealthPatient);
     }
 
+    //Check url available
+    public int GetResponseCode(String urlString) {
+        int res = 0;
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            URL url = new URL(urlString);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestProperty("Authorization", "Bearer " + telehealthPatient.getString("token", null));
+            urlConnection.setRequestProperty("DeviceID", telehealthPatient.getString("deviceID", null));
+            urlConnection.setRequestProperty("SystemType", "ARD");
+            urlConnection.setRequestProperty("Cookie", telehealthPatient.getString("cookie", null));
+            urlConnection.setRequestProperty("AppID", "com.redimed.telehealth.patient");
+            urlConnection.connect();
+            res = urlConnection.getResponseCode();
+        } catch (Exception e) {
+            Log.d(TAG, e.getLocalizedMessage() + " ");
+        }
+        return res;
+    }
+
+    //Display dialog choose camera or gallery to upload image
     private void DialogUploadImage() {
         AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
         alertDialog.setTitle("Choose an action");
@@ -317,7 +359,6 @@ public class AppointmentDetails extends Fragment {
         String picturePath = null;
         int columnIndex;
         Cursor cursor;
-        Bitmap image = null;
         try {
             if (resultCode == getActivity().RESULT_OK) {
                 switch (requestCode) {
@@ -343,7 +384,8 @@ public class AppointmentDetails extends Fragment {
 
                     case RESULT_RELOAD:
                         flagLayout = false;
-                        GetAppointmentDetails(appointmentUID);
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.detach(this).attach(this).commit();
                         break;
                 }
                 if (flagLayout) {

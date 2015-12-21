@@ -7,6 +7,21 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		},
 		restrict: "EA",
 		controller:function($scope, FileUploader) {
+			$scope.buildImg = function(imageType,canvasimg,ctximg,e, width, height) {
+				var reader = new FileReader();
+				reader.onload = function(event){
+					var img = new Image();
+					img.onload = function(){
+					    canvasimg.width = width;
+				        canvasimg.height = height;
+					    ctximg.drawImage(img,0,0,width,height);
+					};
+					img.src = event.target.result;
+				}
+				console.log(e.target.files[0]);
+				reader.readAsDataURL(e.target.files[0]);
+			}
+
 			// Profile Image
 			//create reqeust uploader
 		    var uploader = $scope.uploader = new FileUploader({
@@ -25,6 +40,21 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 	                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
 	            }
 	        });
+	        uploader.onAfterAddingFile = function (fileItem) {
+		    	for(var i = 0; i < uploader.queue.length; i++){
+		    		if(uploader.queue[i].formData.length!=0){
+		    			if(uploader.queue[i].formData[0].fileType==$scope.typeFile){
+		    				uploader.queue.splice(i,1);
+		    			}
+		    		}
+		    	}
+		    	fileItem.formData[0] = {};
+		    	fileItem.formData[0].fileType = $scope.typeFile;
+		    	if($scope.typeFile == "ProfileImage"){
+		    		$scope.isChoseAvatar = true;
+		    	}
+		    	console.log(uploader.queue);
+		    };
 		    uploader.onBeforeUploadItem = function(item) {
 		    	item.headers={
 		    		Authorization:'Bearer '+$cookies.get("token"),
@@ -49,6 +79,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 
 		},
 		link: function(scope, elem, attrs){
+			scope.isChoseAvatar = false;
 			// State
 			scope.state = [
 				{'code':'VIC', 'name':'Victoria'},
@@ -220,8 +251,6 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 						//check if patient has avatar, upload avatar
 						if(scope.uploader.queue[0]!==undefined && scope.uploader.queue[0]!==null && 
 							scope.uploader.queue[0]!=='' && scope.uploader.queue[0].length!==0){
-				            scope.uploader.queue[0].formData[0]={};
-							scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
 							scope.uploader.queue[0].formData[0].userUID = success.data.UserAccountUID;
 							scope.uploader.uploadAll();
 						}
@@ -271,6 +300,34 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 		    	if(scope.data[name].length==0)
 		    		scope.data[name] = null;
 		    };
+
+		    scope.typeFile;
+			scope.setType = function(value){
+				scope.typeFile=value;
+				if(value=="ProfileImage"){
+					var imageAvatar = document.getElementById('imageAvatar');
+					    imageAvatar.addEventListener('change', handleImage, false);
+					var canvas = document.getElementById('imageAvatarCanvas');
+					var ctx = canvas.getContext('2d');
+
+					function handleImage(e){
+						scope.buildImg(imageAvatar, canvas, ctx,e,350,350);
+					}
+				}
+			};
+
+
+			scope.Remove = function(value) {
+				delete scope.info['changeimg'];
+				for(var i = 0; i < scope.uploader.queue.length;i++) {
+					if(scope.uploader.queue[i].formData[0].fileType==value){
+						scope.uploader.queue.splice(i,1);
+					}
+				}
+				if(value=="ProfileImage"){
+					scope.isChoseAvatar = false;
+				}
+			}
 
 		},
 		templateUrl:"modules/patient/directives/template/patientCreate.html"

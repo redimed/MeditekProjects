@@ -61,11 +61,7 @@ class HomeViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
             SingleTon.socket.onAny {
-                if let event: String! = $0.event {
-                    if event != "onlineUser" {
-                        print("on any events: \($0.event) with items \($0.items)")
-                    }
-                }
+                print("on any events: \($0.event) with items \($0.items)")
             }
             
             SingleTon.socket.on("connect") { data, ack in
@@ -78,12 +74,6 @@ class HomeViewController: UIViewController {
                 
                 SingleTon.socket.emit("get", ["url": NSString(format: JOIN_ROOM, self.userUID!)])
             }
-            
-            SingleTon.socket.on("onlineUser") { data, ack in
-                SingleTon.onlineUser_Singleton.removeAll()
-                NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTable", object: self)
-            }
-            
             
             SingleTon.socket.on("receiveMessage") { data, ack in
                 let result = JSON(data[0])
@@ -241,13 +231,13 @@ extension Request {
                 }
             }
             
-//            if let jsonHeader: JSON = JSON(resHeaderAll.allHeaderFields) {
-//                if let requireToken: Bool = jsonHeader["requireupdatetoken"].boolValue {
-//                    if requireToken {
-//                        NSNotificationCenter.defaultCenter().postNotificationName("expireToken", object: nil, userInfo: ["message": "RefreshLogin"])
-//                    }
-//                }
-//            }
+            //            if let jsonHeader: JSON = JSON(resHeaderAll.allHeaderFields) {
+            //                if let requireToken: Bool = jsonHeader["requireupdatetoken"].boolValue {
+            //                    if requireToken {
+            //                        NSNotificationCenter.defaultCenter().postNotificationName("expireToken", object: nil, userInfo: ["message": "RefreshLogin"])
+            //                    }
+            //                }
+            //            }
             
             //  Logic reset token
             //            if resHeaderAll.statusCode != 200 {

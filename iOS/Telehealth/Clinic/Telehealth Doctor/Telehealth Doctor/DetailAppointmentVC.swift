@@ -85,35 +85,51 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
                 
                 guard response.2.error == nil else {
                     if let data = response.2.data {
-                        JSSAlertView().warning(self, title: "Error", text: resJSONError(data))
+                        print("Error calling server response ->", resJSONError(data))
                     }
-                    print("Error calling server response ->", response.2.error!)
                     return
                 }
                 if let value: AnyObject = response.2.value {
                     let readableJSON = JSON(value)
                     SingleTon.detailAppointMentObj = readableJSON["data"]
-                    if let fileUp: JSON = readableJSON["FileUploads"] {
-                        SingleTon.imgDataMedical = []
-                        for var i = 0; i < fileUp.count; ++i {
-                            let uid = fileUp[i]["UID"].stringValue
-                            let url = NSURL(string: "\(DOWNLOAD_IMAGE_APPOINTMENT)\(uid)")
-                            request(.GET, url!, headers: SingleTon.headers)
-                                .validate(statusCode: 200..<300)
-                                .responseJSONReToken() { response in
-                                    if let res = response.1 {
-                                        if res.statusCode == 200 {
-                                            if let data: NSData? = response.2.data {
-                                                if data != nil {
-                                                    SingleTon.imgDataMedical.append(data!)
-                                                }
+                    if let clinicCal: JSON = readableJSON["data"]["TelehealthAppointment"]["ClinicalDetails"] {
+                        
+                        for var i = 0; i < clinicCal.count; ++i {
+                            if let fileUpload: JSON = clinicCal[i]["FileUploads"] {
+                                if fileUpload.count > 0 {
+                                    for var i = 0; i < fileUpload.count; ++i {
+
+                                        if fileUpload[i]["FileType"].isEmpty && fileUpload[i]["FileType"].stringValue.lowercaseString == "medicalimage" {
+                                            
+                                            SingleTon.imgDataMedical.removeAll()
+                                            let uid = fileUpload[i]["UID"].stringValue
+                                            let url = NSURL(string: "\(DOWNLOAD_IMAGE_APPOINTMENT)\(uid)")
+                                            
+                                            request(.GET, url!, headers: SingleTon.headers)
+                                                .validate(statusCode: 200..<300)
+                                                .responseJSONReToken() { response in
+                                                    
+                                                    guard response.2.value == nil else {
+                                                        print("error download file: ", response)
+                                                        return
+                                                    }
+                                                    
+                                                    if let data: NSData? = response.2.data {
+                                                        if data != nil {
+                                                            SingleTon.imgDataMedical.append(data!)
+                                                        }
+                                                    }
+                                                    
+                                                    
+                                                    
                                             }
+                                            
                                         }
                                     }
+                                }
                             }
                         }
                     }
-                    
                     NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "loadXibView", userInfo: nil, repeats: false)
                 }
         }
@@ -235,7 +251,7 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
                 (finished: Bool) -> Void in
                 
                 UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-
+                    
                     UIGraphicsBeginImageContext(self.view.frame.size)
                     UIImage(named: "main-menu-choose")?.drawInRect(CGRect(x: 0,y: (view.frame.size.height / 6) + 5, width: view.frame.size.width + 3, height: view.frame.size.height / 2))
                     let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -363,16 +379,15 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
             cell.textLabel?.text = content.objectAtIndex(indexPath.row) as? String
             cell.backgroundColor = UIColor(hex: "1ac6ff")
             
-            UIGraphicsBeginImageContext(cell.frame.size)
-            UIImage(named: "main-menu-choose")?.drawInRect(CGRect(x: 0, y: (cell.frame.size.height / 6) - 10, width: cell.frame.size.width, height: (cell.frame.size.height / 2) - 10))
+            //            UIGraphicsBeginImageContext(cell.frame.size)
+            //            UIImage(named: "main-menu-choose")?.drawInRect(CGRect(x: 0, y: (cell.frame.size.height / 6) - 10, width: cell.frame.size.width, height: (cell.frame.size.height / 2) - 10))
             
-            let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-            
-            UIGraphicsEndImageContext()
-            
+            //            let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+            //
+            //            UIGraphicsEndImageContext()
+            //
             let bgColorView = UIView()
-            
-            bgColorView.backgroundColor = UIColor(patternImage: image)
+            bgColorView.backgroundColor = UIColor(hex: "34AADC")
             cell.selectedBackgroundView = bgColorView
         }
         return cell

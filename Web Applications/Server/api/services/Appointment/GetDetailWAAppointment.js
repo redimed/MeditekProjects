@@ -128,6 +128,12 @@ module.exports = function(appointmentUID, userInfo) {
                     required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
                     where: filter.UserAccount
                 }]
+            }, {
+                model: FileUpload,
+                required: false,
+                where: {
+                    Enable: 'Y'
+                }
             }],
             where: filter.Appointment
         })

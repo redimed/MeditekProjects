@@ -13,6 +13,22 @@ angular.module('app.authentication.doctor.directive.detail', [])
             onCancel: '='
 		},
 		controller:function($scope, FileUploader) {
+
+			$scope.buildImg = function(imageType,canvasimg,ctximg,e, width, height) {
+				var reader = new FileReader();
+				reader.onload = function(event){
+					var img = new Image();
+					img.onload = function(){
+					    canvasimg.width = width;
+				        canvasimg.height = height;
+					    ctximg.drawImage(img,0,0,width,height);
+					};
+					img.src = event.target.result;
+				}
+				console.log(e.target.files[0]);
+				reader.readAsDataURL(e.target.files[0]);
+			}
+
 			// Profile Image
 		    var uploader = $scope.uploader = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
@@ -32,13 +48,26 @@ angular.module('app.authentication.doctor.directive.detail', [])
 
 		    // CALLBACKS
 		    uploader.onAfterAddingFile = function (fileItem) {
-		    	var box = document.getElementById('viewIMG');
-		    	box.removeAttribute("class");
-		    	if($scope.info.FileUID_img!=undefined && $scope.info.FileUID_img!=null &&
-		    		$scope.info.FileUID_img!="")
-		    		$scope.info.ischangeimg = true;
-		    	else
-		    		$scope.info.ischangeimg = false;
+		    	// var box = document.getElementById('viewIMG');
+		    	// box.removeAttribute("class");
+		    	for(var i = 0; i < uploader.queue.length; i++){
+		    		if(uploader.queue[i].formData.length!=0){
+		    			if(uploader.queue[i].formData[0].fileType==$scope.typeFile){
+		    				uploader.queue.splice(i,1);
+		    			}
+		    		}
+		    	}
+		    	fileItem.formData[0] = {};
+		    	fileItem.formData[0].fileType = $scope.typeFile;
+		    	if($scope.typeFile == "ProfileImage"){
+		    		$scope.isChoseAvatar = true;
+		    		$scope.info.changeimg = 1;
+		    	}
+		    	if($scope.typeFile == "Signature"){
+		    		$scope.isChoseSignature = true;
+		    		$scope.info.changeimg = 1;
+		    	}
+		    	console.log(uploader.queue);
 		    };
 		    uploader.onSuccessItem = function (fileItem, response, status, headers) {
 		        // console.info('onSuccessItem', fileItem, response, status, headers);
@@ -65,64 +94,11 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		        }
 		    };
 
-		    var uploaders = $scope.uploaders = new FileUploader({
-		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
-		    	url: o.const.uploadFileUrl,
-
-		    	withCredentials:true,
-		    	alias : 'uploadFile'
-		    });
-		    // FILTERS
-		    uploaders.filters.push({
-	            name: 'imageFilter',
-	            fn: function(item /*{File|FileLikeObject}*/, options) {
-	                var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-	                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
-	            }
-	        });
-
-		    // CALLBACKS
-		    uploaders.onAfterAddingFile = function (fileItem) {
-		    	if($scope.info.FileUID_sign!=undefined && $scope.info.FileUID_sign!=null && $scope.info.FileUID_sign!="")
-		    		$scope.info.ischangesign = true;
-		    	else
-		    		$scope.info.ischangesign = false;
-		    };
-		    uploaders.onBeforeUploadItem = function(item) {
-		    	item.headers={
-		    		Authorization:'Bearer '+$cookies.get("token"),
-		    		systemtype:'WEB',
-		    	},
-		        console.info('onBeforeUploadItem', item);
-		    };
-		    uploaders.onSuccessItem = function (fileItem, response, status, headers) {
-		        // console.info('onSuccessItem', fileItem, response, status, headers);
-		    };
-		    uploaders.onCompleteItem = function (fileItem, response, status, headers) {
-		        console.info('onCompleteItem', fileItem, response, status, headers);
-		        if(Boolean(headers.requireupdatetoken)===true)
-		        {
-		            $rootScope.getNewToken();
-		        }
-				console.log($scope.doctorUID);
-		        doctorService.updateSignature($scope.doctorUID)
-				.then(function(result){
-					console.log(result);
-				},function(err){
-					console.log(err);
-				});
-		    };
-		    uploaders.onErrorItem = function(fileItem, response, status, headers) {
-		        console.info('onErrorItem', fileItem, response, status, headers);
-		        if(Boolean(headers.requireupdatetoken)===true)
-		        {
-		            $rootScope.getNewToken();
-		        }
-		    };
-
 		},
 		link: function(scope, ele, attrs) {
 			console.log(scope.info);
+			scope.isChoseAvatar = false;
+			scope.isChoseSignature = false;
 			scope.doctorUID;
 			var data = {};
 			scope.state = [
@@ -244,52 +220,34 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    			if(response.message=="success"){
 		    				if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
 							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
-							   	if(scope.info.ischangeimg==true){
+							   	if(scope.typeFile=="imageAvatar"){
 								   	$http({
 									  method: 'GET',
 									  url: o.const.fileBaseUrl+'/api/enableFile/false/'+scope.info.FileUID_img
 									}).then(function (response) {
-										scope.uploader.queue[0].formData[0]={};
-										scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
-										scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
-										scope.uploader.uploadAll();
+										// scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
 									},function (err) {
 										console.log(err);
 									});
 								}
-								else{
-									scope.uploader.queue[0].formData[0]={};
-									scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
-									scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
-									scope.uploader.uploadAll();
-								}
-							}
-							if(scope.uploaders.queue[0]!=undefined && scope.uploaders.queue[0]!=null &&
-							   scope.uploaders.queue[0]!='' && scope.uploaders.queue[0].length!=0){
-							   	console.log(scope.info.ischangesign);
-							   	if(scope.info.ischangesign==true){
+							   	if(scope.typeFile=="Signature"){
 								   	$http({
 									  method: 'GET',
 									  url: o.const.fileBaseUrl+'/api/enableFile/false/'+scope.info.FileUID_sign
 									}).then(function (response) {
-										scope.uploaders.queue[0].formData[0]={};
-										scope.uploaders.queue[0].formData[0].fileType = "Signature";
-										scope.uploaders.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
-										scope.uploaders.uploadAll();
+										// scope.uploaders.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
 									},function (err) {
 										console.log(err);
 									});
 								}
-								else{
-									scope.uploaders.queue[0].formData[0]={};
-									scope.uploaders.queue[0].formData[0].fileType = "Signature";
-									scope.uploaders.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
-									scope.uploaders.uploadAll();
+								for(var i = 0; i < scope.uploader.queue.length; i++) {
+									scope.uploader.queue[i].formData[0].userUID = scope.info.UserAccount.UID;
 								}
+								scope.uploader.uploadAll();
 							}
 		    				toastr.success("Update Successfully!","Success!!");
 		    				console.log(scope.uploader.queue);
-		    				console.log(scope.uploaders.queue);
+		    				console.log(scope.onCancel);
 		    				scope.onCancel();
 		    			}
 		    		},function(err){
@@ -319,6 +277,46 @@ angular.module('app.authentication.doctor.directive.detail', [])
 					}
 		    	});
 		    };
+
+		    scope.typeFile;
+			scope.setType = function(value){
+				scope.typeFile=value;
+				if(value=="ProfileImage"){
+					var imageAvatar = document.getElementById('imageAvatar');
+					    imageAvatar.addEventListener('change', handleImage, false);
+					var canvas = document.getElementById('imageAvatarCanvas');
+					var ctx = canvas.getContext('2d');
+
+					function handleImage(e){
+						scope.buildImg(imageAvatar, canvas, ctx,e,275,300);
+					}
+				}
+				else if(value =="Signature") {
+					var imageSignature = document.getElementById('imageSignature');
+			    		imageSignature.addEventListener('change', handleImage2, false);
+					var canvas1 = document.getElementById('imageSignatureCanvas');
+					var ctx1 = canvas1.getContext('2d');
+					function handleImage2(e){
+						scope.buildImg(imageSignature, canvas1, ctx1,e,550,280);    
+					}
+				}
+			};
+
+
+			scope.Remove = function(value) {
+				delete scope.info['changeimg'];
+				for(var i = 0; i < scope.uploader.queue.length;i++) {
+					if(scope.uploader.queue[i].formData[0].fileType==value){
+						scope.uploader.queue.splice(i,1);
+					}
+				}
+				if(value=="ProfileImage"){
+					scope.isChoseAvatar = false;
+				}
+				else if(value=="Signature"){
+					scope.isChoseSignature = false;
+				}
+			}
 
 		}
 

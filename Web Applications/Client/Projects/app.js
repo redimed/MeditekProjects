@@ -15,6 +15,7 @@ var app = angular.module('app', [
     'app.common.CommonService',
     "app.unAuthentication",
     "app.authentication",
+    "app.blank",
     "angularFileUpload",
     "vcRecaptcha"
 
@@ -193,7 +194,8 @@ app
 
         $rootScope.$on('$stateChangeSuccess', function(e, toState, toParams, fromState, fromParams) {
             if (!$cookies.get("userInfo")) {
-                if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register" && toState.name !== "unAuthentication.activation" && toState.name !== "unAuthentication.forgot" && toState.name !== "unAuthentication.changepass" && toState.name !== "unAuthentication.loginPatient" && toState.name !== "unAuthentication.registerPatient" && toState.name !== "unAuthentication.searchPatient") {
+                // if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register" && toState.name !== "unAuthentication.activation" && toState.name !== "unAuthentication.forgot" && toState.name !== "unAuthentication.changepass" && toState.name !== "unAuthentication.loginPatient" && toState.name !== "unAuthentication.registerPatient" && toState.name !== "unAuthentication.searchPatient" && && toState.name !== "blank") {
+                if(o.const.configStateBlank.indexOf(toState.name) == -1){
                     e.preventDefault();
                     $state.go("unAuthentication.login", null, {
                         location: "replace",

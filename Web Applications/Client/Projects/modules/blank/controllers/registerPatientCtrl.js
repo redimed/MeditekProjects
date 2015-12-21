@@ -1,4 +1,4 @@
-var app = angular.module('app.unAuthentication.registerPatient.controller', []);
+var app = angular.module('app.blank.registerPatient.controller', []);
 app.controller('registerPatientCtrl', function($scope) {
 	ComponentsDropdowns.init();
 	$scope.show = true;

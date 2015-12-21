@@ -41,7 +41,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     var isAnswer = false
     var screenCapture: UIView!
     var screenCaptureForPublisher: UIView!
-    //    var timer: NSTimer!
+    var timer: NSTimer?
     
     /// declare uiview for off mic screen
     var offMicView: UIView! = UIView(frame: CGRectMake(0, 0, videoWidth, videoHeight))
@@ -58,6 +58,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         loading = DTIActivityIndicatorView(frame: CGRect(x:screenSize.size.width/2 - 30, y:screenSize.size.height/2, width:90.0, height:90.0))
         self.view.addSubview(self.loading)
         loading.indicatorColor = UIColor(hex: "34AADC")
@@ -113,17 +114,19 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             let message : String! = userInfo["message"]
             switch message {
             case "answer":
+                timer?.invalidate()
+                timer = nil
                 isAnswer = true
                 receiveAnswerEvent()
                 break
             case "decline":
+                timer?.invalidate()
+                timer = nil
                 receiveDeclineEvent()
                 break
-                //            case "end":
-                //                if isClickEnd != true {
-                //                    endCall()
-                //                }
-                //                break
+            case "end":
+                endCall()
+                break
             default:
                 break
             }
@@ -157,6 +160,20 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         }
     }
     
+    func timeOutOffCall() {
+        avAudioPlayer?.stop()
+        avAudioPlayer?.currentTime = 0
+        titleLabelCall.text = "Unavailable with"
+        for button : UIButton in controllerButtonCall {
+            if button.tag >= 0 && button.tag <= 2 {
+                button.hidden = true
+            } else {
+                button.hidden = false
+            }
+        }
+        sendMessEnd()
+    }
+    
     func tryAgainCall() {
         playSoundCall()
         titleLabelCall.text = "Calling to..."
@@ -169,12 +186,14 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         }
         
         SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, JSON(NSUserDefaults.standardUserDefaults().valueForKey("userInfo")!)["UserName"].stringValue)])
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "timeOutOffCall", userInfo: nil, repeats: false)
     }
     
     func lostConnection() {
         publisher!.view.frame = CGRect(x: 0.0, y: 0, width: screenSize.width, height: screenSize.height)
         titleLabelCall.hidden = false
-        titleLabelCall.text = "Lost Connection wih..."
+        titleLabelCall.text = "Lost Connection with..."
         for button : UIButton in controllerButtonCall {
             if button.tag >= 0 && button.tag <= 2 {
                 button.hidden = true
@@ -191,6 +210,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "handleCall", object: nil)
         NSUserDefaults.standardUserDefaults().removeObjectForKey("currentUserCall")
         sessionDidDisconnect(session!)
+        session?.disconnect()
         doUnsubscribe()
         self.navigationController?.popViewControllerAnimated(true)
     }
@@ -221,6 +241,13 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             
             let maybeErr:AutoreleasingUnsafeMutablePointer<OTError?> = nil
             
+            if ((avAudioPlayer?.playing) != nil) {
+                
+                avAudioPlayer?.stop()
+                avAudioPlayer?.currentTime = 0
+                
+            }
+            
             isClickEnd = true
             if isAnswer {
                 session?.signalWithType("endCall", string: "end", connection: nil, error:maybeErr)
@@ -228,15 +255,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
                     print("signal error \(maybeErr)")
                 }
             } else {
-                SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "cancel")])
-                
-                let param = ["data":["message": "end"], "title": "Message end call", "uid": SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "sound": "abc"]
-                request(.POST, PUSH_ACTION, headers: SingleTon.headers, parameters: param as? [String : AnyObject])
-                    .validate(statusCode: 200..<300)
-                    .validate(contentType: ["application/json"])
-                    .responseJSONReToken { response -> Void in
-                        print(response)
-                }
+                sendMessEnd()
             }
             
             endCall()
@@ -267,6 +286,18 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             break
         default:
             break
+        }
+    }
+    
+    func sendMessEnd() {
+        SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "cancel")])
+        
+        let param = ["data":["message": "end"], "title": "Message end call", "uid": SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "sound": "abc"]
+        request(.POST, PUSH_ACTION, headers: SingleTon.headers, parameters: param as? [String : AnyObject])
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .responseJSONReToken { response -> Void in
+                print(response)
         }
     }
     
@@ -406,7 +437,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         NSLog("session streamDestroyed then streamCreated (\(stream.streamId))")
         
         if subscriber?.stream.streamId == stream.streamId {
-//            lostConnection()
+            endCall()
         }
     }
     
@@ -416,7 +447,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     
     func session(session: OTSession, connectionDestroyed connection : OTConnection) {
         NSLog("session connectionDestroyed (\(connection.connectionId))")
-        //        lostConnection()
+        endCall()
     }
     
     func session(session: OTSession, didFailWithError error: OTError) {
@@ -428,9 +459,10 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     }
     
     func session(session: OTSession!, receivedSignalType type: String!, fromConnection connection: OTConnection!, withString string: String!) {
+        print("receivedSignalType \(type.lowercaseString) - withString \(string.lowercaseString)")
         if let typeReceive = type, let str = string {
             if !typeReceive.isEmpty && !str.isEmpty {
-                if typeReceive == "endCall" && str == "end" {
+                if typeReceive.lowercaseString == "endcall" && str.lowercaseString == "end" {
                     endCall()
                 }
             }
@@ -489,6 +521,8 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     func publisher(publisher: OTPublisherKit, streamCreated stream: OTStream) {
         NSLog("publisher streamCreated %@", stream)
         playSoundCall()
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "timeOutOffCall", userInfo: nil, repeats: false)
         // Step 3b: (if YES == subscribeToSelf): Our own publisher is now visible to
         // all participants in the OpenTok session. We will attempt to subscribe to
         // our own stream. Expect to see a slight delay in the subscriber video and

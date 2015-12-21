@@ -47,7 +47,6 @@ class LoginViewController: UIViewController {
         
         versionLabel.text = UIApplication.versionBuild()
         self.userDefault.setValue(deviceId, forKey: "deviceId")
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -61,7 +60,7 @@ class LoginViewController: UIViewController {
                     print("Reachable via Celluar")
                 }
             } else {
-                NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "AlertWarningNetwork", userInfo: nil, repeats: false)
+                NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "showAlert", userInfo: nil, repeats: false)
             }
         }
         
@@ -76,7 +75,6 @@ class LoginViewController: UIViewController {
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .responseJSON { response -> Void in
-                
                 if let headerRes = response.1?.allHeaderFields {
                     let jsonRes: JSON = JSON(headerRes)
                     if let cookies: String = jsonRes["Set-Cookie"].stringValue {
@@ -89,8 +87,8 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func reachabilityChanged(note: NSNotification) {
-        let reachability = note.object as! Reachability
+    func reachabilityChanged(notification: NSNotification) {
+        let reachability = notification.object as! Reachability
         
         if reachability.isReachable() {
             if reachability.isReachableViaWiFi() {
@@ -129,6 +127,11 @@ class LoginViewController: UIViewController {
         }
     }
     
+    /**
+     Action for button
+     
+     - parameter sender: <#sender description#>
+     */
     @IBAction func LoginButtonAction(sender: UIButton) {
         self.buttonLogin.enabled = false
         self.buttonLogin.backgroundColor = UIColor(hex: "FF1300").colorWithAlphaComponent(0.6)
@@ -141,16 +144,24 @@ class LoginViewController: UIViewController {
         
         if let reachability = reachability {
             if reachability.isReachable() {
-                NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "LoginMain", userInfo: nil, repeats: false)
-                
+                if let _ = self.userDefault.valueForKey("Cookie") {
+                    NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "LoginMain", userInfo: nil, repeats: false)
+                } else {
+                    errorLogin(err_Mess_Connect)
+                    self.loading.stopActivity(true)
+                    self.buttonLogin.enabled = true
+                }
             } else {
-                AlertWarningNetwork()
+                showAlert(err_Title_Network, mess: err_Mess_Network)
                 self.loading.stopActivity(true)
                 self.buttonLogin.enabled = true
             }
         }
     }
     
+    /**
+     - Tranfer data parameters "Username|Password" to server. Set a few parameters default for tranfer to server "3006"
+     */
     func LoginMain() {
         
         let username : String = usernameTextField.text!
@@ -183,7 +194,7 @@ class LoginViewController: UIViewController {
                     self.userDefault.setValue(response.2.value!["refreshCode"] as! String, forKey: "refCode")
                     
                     let headergetUser = [
-                        "Cookie" : NSUserDefaults.standardUserDefaults().valueForKey("Cookie") as! String,
+                        "Cookie": NSUserDefaults.standardUserDefaults().valueForKey("Cookie") as! String,
                         "Authorization": NSUserDefaults.standardUserDefaults().valueForKey("authToken") as! String,
                         "systemtype": "IOS",
                         "deviceId": self.userDefault.valueForKey("deviceId") as! String,
@@ -251,8 +262,15 @@ class LoginViewController: UIViewController {
         self.buttonLogin.backgroundColor = UIColor(hex: "FF1300").colorWithAlphaComponent(0.6)
     }
     
-    func AlertWarningNetwork() {
-        JSSAlertView().show(self, title: err_Mess_Network)
+    func showAlert(title: String, mess: String) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: mess, preferredStyle: .Alert)
+            
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     override func didReceiveMemoryWarning() {

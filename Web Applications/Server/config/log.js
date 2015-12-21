@@ -58,7 +58,7 @@ customLogger.add(Mail, {
     password: 'meditek123456',
     subject: 'Debug Production 3005',
     from: 'Meditek Production <meditek.manage.system@gmail.com>',
-    to: 'ThanhDev <thanh.dev.meditek@gmail.com>, Khuong PM <thekhuong@gmail.com>, Minh DevOps <minhnguyen@telehealthvietnam.com.vn>',
+    to: 'ThanhDev <thanh.dev.meditek@gmail.com>, Khuong PM <thekhuong@gmail.com>, MinhDevOps <minhnguyen@telehealthvietnam.com.vn>',
     level: 'error'
 });
 /*customLogger.on('logging', function(transport, level, msg, meta) {

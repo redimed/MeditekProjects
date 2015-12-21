@@ -1,17 +1,4 @@
-<!-- BEGIN LOGO -->
-<div class="logo">
-    <a href="">
-    <!-- <img src="assets/metronic/assets/admin/layout/img/logo-big.png" alt=""/> -->
-    <img src="/{{settings.globalPath}}/images/logoRedimed.png" alt="" style="width:15%"/>
-    </a>
-</div>
-<!-- END LOGO -->
-<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-<div class="menu-toggler sidebar-toggler">
-</div>
-<!-- END SIDEBAR TOGGLER BUTTON -->
-
-<div class="content" ng-if="isCheck==true">
+<div ng-if="isCheck==true">
     <form method="post" class="forget-form" novalidate name="changepassForm" style="display: block;">
         <h3 class="form-title font-green">Change Password </h3>
         <p>Enter your new password to reset your password.</p>
@@ -36,5 +23,3 @@
         </div>
     </form>
 </div>
-
-<div class="copyright"> 2015 © Redimed. Admin Dashboard Template. </div>

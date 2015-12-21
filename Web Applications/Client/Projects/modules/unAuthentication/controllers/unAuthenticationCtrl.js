@@ -5,10 +5,6 @@ var app = angular.module('app.unAuthentication.controller', [
 	'app.unAuthentication.activation.controller',
 	'app.unAuthentication.forgot.controller',
 	'app.unAuthentication.changepass.controller',
-	// For Patient
-	'app.unAuthentication.loginPatient.controller',
-	'app.unAuthentication.registerPatient.controller',
-	'app.unAuthentication.searchPatient.controller',
 ]);
 
 app.controller('unAuthenticationCtrl', function($scope, $q, toastr){

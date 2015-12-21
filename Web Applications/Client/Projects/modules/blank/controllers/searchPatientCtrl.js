@@ -1,4 +1,4 @@
-var app = angular.module('app.unAuthentication.searchPatient.controller', []);
+var app = angular.module('app.blank.searchPatient.controller', []);
 app.controller('searchPatientCtrl', function($scope) {
 	$scope.step1 = true;
 	$scope.step2 = false;

@@ -278,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void SendToken(){
+    private void SendToken() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("token", spDevice.getString("gcmToken", null));
         jsonObject.addProperty("uid", uidTelehealth.getString("uid", null));

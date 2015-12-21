@@ -29,18 +29,11 @@
                 android:background="@drawable/profile_bg"
                 android:gravity="center_vertical">
 
-                <RelativeLayout
+                <ImageView
+                    android:id="@+id/avatarPatient"
                     android:layout_width="97dp"
                     android:layout_height="109dp"
-                    android:layout_marginLeft="20dp"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/avatarPatient"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"/>
-
-                </RelativeLayout>
+                    android:layout_marginLeft="20dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -63,9 +56,9 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginBottom="5dp"
                         android:layout_marginTop="15dp"
-                        android:layout_marginBottom="5dp">
+                        android:orientation="horizontal">
 
                         <com.redimed.telehealth.patient.font.RobotoTextView
                             android:layout_width="wrap_content"
@@ -73,16 +66,16 @@
                             android:inputType="text"
                             android:text="@string/profile_dob"
                             android:textColor="@color/lightFont"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
                         <com.redimed.telehealth.patient.font.RobotoTextView
                             android:id="@+id/lblDOB"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:inputType="text"
                             android:text="@string/none"
-                            android:textColor="@color/lightFont"
-                            android:layout_marginLeft="10dp"/>
+                            android:textColor="@color/lightFont" />
 
                     </LinearLayout>
 
@@ -97,16 +90,16 @@
                             android:inputType="text"
                             android:text="@string/profile_email"
                             android:textColor="@color/lightFont"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
                         <com.redimed.telehealth.patient.font.RobotoTextView
                             android:id="@+id/lblEmail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
                             android:inputType="text"
                             android:text="@string/none"
-                            android:textColor="@color/lightFont"
-                            android:layout_marginLeft="5dp"/>
+                            android:textColor="@color/lightFont" />
 
                     </LinearLayout>
 

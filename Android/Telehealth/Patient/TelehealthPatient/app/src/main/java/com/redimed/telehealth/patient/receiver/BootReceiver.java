@@ -41,6 +41,9 @@ public class BootReceiver extends BroadcastReceiver {
             context.startService(new Intent(context, SocketService.class));
         }
         if (action.equalsIgnoreCase("notification_cancelled")) {
+            if (!MyApplication.getInstance().IsMyServiceRunning(SocketService.class)) {
+                context.startService(new Intent(context, SocketService.class));
+            }
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("from", intent.getExtras().getString("from"));
             params.put("to", intent.getExtras().getString("to"));

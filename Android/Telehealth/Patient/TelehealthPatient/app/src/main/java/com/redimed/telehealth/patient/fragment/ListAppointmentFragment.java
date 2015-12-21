@@ -1,6 +1,5 @@
 package com.redimed.telehealth.patient.fragment;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -19,24 +18,19 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.redimed.telehealth.patient.LauncherActivity;
 import com.redimed.telehealth.patient.MainActivity;
-import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.models.Appointment;
-import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
-import com.redimed.telehealth.patient.utils.CustomAlertDialog;
+import com.redimed.telehealth.patient.utils.DialogAlert;
 import com.redimed.telehealth.patient.utils.DialogConnection;
 import com.redimed.telehealth.patient.utils.RVAdapter;
 import com.squareup.picasso.Picasso;
@@ -44,8 +38,6 @@ import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -191,7 +183,7 @@ public class ListAppointmentFragment extends Fragment {
                 if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
                     new DialogConnection(v.getContext()).show();
                 } else {
-                    new CustomAlertDialog(v.getContext(), CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                    new DialogAlert(v.getContext(), DialogAlert.State.Error, error.getLocalizedMessage()).show();
                 }
                 swipeInfo.setRefreshing(false);
             }

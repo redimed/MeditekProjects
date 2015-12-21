@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Fox on 9/25/2015.
  */
-public class CustomAlertDialog extends Dialog {
+public class DialogAlert extends Dialog {
 
     @Bind(R.id.dialogBackground)
     CardView dialogBackground;
@@ -40,7 +40,7 @@ public class CustomAlertDialog extends Dialog {
         Warning
     }
 
-    public CustomAlertDialog(Context c, State s, String m) {
+    public DialogAlert(Context c, State s, String m) {
         super(c);
         this.context = c;
         this.state = s;

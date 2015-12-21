@@ -9,6 +9,7 @@
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="?android:actionBarSize"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
 
     <ViewFlipper

@@ -10,6 +10,10 @@
     <string name="title_activity_contact">ContactActivity</string>
     <string name="btn_submit">Submit</string>
 
+    <!-- Main-->
+    <string name="unregistered">Unregistered</string>
+    <string name="un_title">Are you sure you want to unregister? This will delete your user account on this device.</string>
+
     <!-- Activation-->
     <string name="text_contains">Enter your phone number and click continue</string>
     <string name="hint_phone">Phone Number</string>
@@ -92,7 +96,7 @@
     <string name="red_btn">Call Us 8AM-5PM</string>
     <string name="phone_call">0892300900</string>
     <string name="orange_btn">FAQs</string>
-    <string name="urgent_btn">URGENT CARE</string>
+    <string name="urgent_btn">ABOUT US</string>
     <string name="contain_bottom1">Personalised + Customised,</string>
     <string name="contain_HEALTH">HEALTH</string>
     <string name="contain_CARE">CARE</string>

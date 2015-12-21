@@ -64,7 +64,6 @@ public class RetrofitErrorHandler implements ErrorHandler {
                                     Context context = MyApplication.getInstance().getApplicationContext();
                                     Intent i = new Intent(context, LauncherActivity.class);
                                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     context.startActivity(i);
                                 }
                             }, 2500);

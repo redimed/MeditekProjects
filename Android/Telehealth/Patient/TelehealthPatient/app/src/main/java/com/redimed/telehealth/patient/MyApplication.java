@@ -84,7 +84,6 @@ public class MyApplication extends Application {
             for (String s : children) {
                 if (!s.equals("lib")) {
                     deleteDir(new File(appDir, s));
-                    RemoveShortcut();
                     SocketService.closeSockets();
                 }
             }

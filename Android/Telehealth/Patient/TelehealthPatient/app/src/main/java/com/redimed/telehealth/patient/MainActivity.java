@@ -37,6 +37,8 @@ import com.redimed.telehealth.patient.utils.Config;
 import com.redimed.telehealth.patient.utils.DialogAlert;
 import com.redimed.telehealth.patient.utils.DialogConnection;
 import com.redimed.telehealth.patient.utils.RVAdapter;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.UrlConnectionDownloader;
 
@@ -164,8 +166,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).build();
 
-        picasso.with(this).load(url)
+        picasso.load(url)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .transform(new CircleTransform())
+                .error(R.drawable.icon_error_image)
                 .into(avatarPatient);
     }
 

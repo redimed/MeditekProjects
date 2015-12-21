@@ -114,6 +114,29 @@ module.exports = function(data, userInfo) {
                         });
                     })
                     .then(function(telehealthPatientAppointmentUpdated) {
+                        if (HelperService.CheckExistData(data.FileUploads) &&
+                            _.isArray(data.FileUploads) &&
+                            HelperService.CheckExistData(appointmentObject)) {
+                            var arrayFileUploadsUnique = _.map(_.groupBy(data.FileUploads, function(FU) {
+                                return FU.UID;
+                            }), function(subGrouped) {
+                                return subGrouped[0].UID;
+                            });
+                            var objectRelAppointmentFileUpload = {
+                                where: arrayFileUploadsUnique,
+                                transaction: t,
+                                appointmentObject: appointmentObject
+                            };
+                            //update RelAppointmentFileUpload
+                            return Services.RelAppointmentFileUpload(objectRelAppointmentFileUpload);
+                        }
+                    }, function(err) {
+                        defer.reject({
+                            transaction: t,
+                            error: err
+                        });
+                    })
+                    .then(function(relAppointmentFileUploadUpdated) {
                         var telehealthAppointment = data.TelehealthAppointment;
                         if (HelperService.CheckExistData(telehealthAppointment) &&
                             HelperService.CheckExistData(preferringPractitionerObject)) {

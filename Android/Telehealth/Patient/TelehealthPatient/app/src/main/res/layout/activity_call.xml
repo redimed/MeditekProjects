@@ -163,13 +163,16 @@
 
                 </LinearLayout>
 
-                <android.support.design.widget.FloatingActionButton
+
+                <Button
                     android:id="@+id/fabEndCall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_marginBottom="-25dp"
-                    android:src="@drawable/call_end_icon"
-                    app:backgroundTint="@color/declineFone" />
+                    android:background="@drawable/custom_circle_end_call"
+                    android:drawableLeft="@drawable/call_end_icon"
+                    android:paddingLeft="11dp"
+                    android:enabled="false"/>
 
                 <ImageView
                     android:layout_width="50dp"

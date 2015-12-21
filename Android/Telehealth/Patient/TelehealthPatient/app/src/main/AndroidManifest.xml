@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -67,11 +68,12 @@
             android:label="@string/title_activity_call"
             android:launchMode="singleTask"
             android:screenOrientation="sensorPortrait"
+            android:alwaysRetainTaskState="true"
             android:showOnLockScreen="true" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ModelActivity"
@@ -105,17 +107,23 @@
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
-                <!-- Receives the actual messages. -->
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <!-- Receives the registration id. -->
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
                 <category android:name="com.redimed.telehealth.patient" />
             </intent-filter>
         </receiver>
 
+
         <service
             android:name=".service.SocketService"
             android:enabled="true" />
+        <service
+            android:name=".service.MyGcmListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
         <service
             android:name=".service.MyInstanceIDListenerService"
             android:exported="false">
@@ -125,12 +133,7 @@
         </service>
         <service
             android:name=".service.RegistrationIntentService"
-            android:enabled="true"
             android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
         </service>
 
     </application>

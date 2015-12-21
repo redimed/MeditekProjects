@@ -1,15 +1,12 @@
 package com.redimed.telehealth.patient;
 
-import android.content.Context;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.media.Image;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,20 +16,14 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import com.redimed.telehealth.patient.api.RegisterApi;
-import com.redimed.telehealth.patient.fragment.AppointmentDetails;
 import com.redimed.telehealth.patient.fragment.FAQsFragment;
 import com.redimed.telehealth.patient.fragment.HomeFragment;
 import com.redimed.telehealth.patient.fragment.InformationFragment;
@@ -43,17 +34,18 @@ import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.CircleTransform;
 import com.redimed.telehealth.patient.utils.Config;
-import com.redimed.telehealth.patient.utils.CustomAlertDialog;
+import com.redimed.telehealth.patient.utils.DialogAlert;
 import com.redimed.telehealth.patient.utils.DialogConnection;
 import com.redimed.telehealth.patient.utils.RVAdapter;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.UrlConnectionDownloader;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -72,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences uidTelehealth, spDevice;
     private ActionBarDrawerToggle actionDrawerToggle;
     private LinearLayoutManager layoutManagerCategories;
-    private String TAG = "MAIN", firstName, lastName;
+    private String TAG = "MAIN", firstName, lastName, url;
+
 
     @Bind(R.id.frame_container)
     FrameLayout main_contain;
@@ -117,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         categories.add(new Category(R.drawable.person_icon, "Information"));
         categories.add(new Category(R.drawable.person_icon, "Telehealth"));
         categories.add(new Category(R.drawable.person_icon, "FAQs"));
-        categories.add(new Category(R.drawable.person_icon, "LogOut"));
+        categories.add(new Category(R.drawable.person_icon, getApplicationContext().getResources().getString(R.string.unregistered)));
     }
 
     private void GetDetailsPatient() {
@@ -138,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
                     new DialogConnection(MainActivity.this).show();
                 } else {
-                    new CustomAlertDialog(MainActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                    new DialogAlert(MainActivity.this, DialogAlert.State.Error, error.getLocalizedMessage()).show();
                 }
             }
         });
@@ -149,21 +142,36 @@ public class MainActivity extends AppCompatActivity {
         for (Patient patient : patients) {
             firstName = patient.getFirstName() == null ? " " : patient.getFirstName();
             lastName = patient.getLastName() == null ? " " : patient.getLastName();
+            url = Config.apiURLDownload + patient.getFileUID() == null ? " " : Config.apiURLDownload + patient.getFileUID();
         }
         lblNamePatient.setText(firstName + " " + lastName);
 
-//        Picasso.with(this).load(R.drawable.blank_avatar)
-//                .transform(new CircleTransform())
-//                .resize(200, 200)
-//                .centerCrop()
-//                .into(avatarPatient);
+        Picasso picasso = new Picasso.Builder(this)
+                .downloader(new UrlConnectionDownloader(this) {
+                    @Override
+                    protected HttpURLConnection openConnection(Uri uri) throws IOException {
+                        HttpURLConnection connection = super.openConnection(uri);
+                        connection.addRequestProperty("Authorization", "Bearer " + uidTelehealth.getString("token", null));
+                        connection.addRequestProperty("DeviceID", uidTelehealth.getString("deviceID", null));
+                        connection.addRequestProperty("SystemType", "ARD");
+                        connection.addRequestProperty("Cookie", uidTelehealth.getString("cookie", null));
+                        connection.addRequestProperty("AppID", "com.redimed.telehealth.patient");
+                        return connection;
+                    }
+                })
+                .listener(new Picasso.Listener() {
+                    @Override
+                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+                        Log.d("ERROR PICASSO", exception.getLocalizedMessage());
+                    }
+                }).build();
 
-        avatarPatient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: 10/28/2015  update avatar
-            }
-        });
+        picasso.load(url)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .transform(new CircleTransform())
+                .error(R.drawable.icon_error_image)
+                .into(avatarPatient);
     }
 
     //Initialize Drawer
@@ -209,9 +217,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new FAQsFragment();
                 break;
             case 4:
-                MyApplication.getInstance().clearApplication();
-                finish();
-                startActivity(new Intent(getApplicationContext(), LauncherActivity.class));
+                DialogConfirm();
                 break;
             default:
                 break;
@@ -222,6 +228,30 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.e("MainActivity", "Error in creating fragment");
         }
+    }
+
+    //Display dialog choose camera or gallery to upload image
+    private void DialogConfirm() {
+        final android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(this).create();
+        alertDialog.setTitle(getApplicationContext().getResources().getString(R.string.unregistered));
+        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.un_title));
+
+        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Unregistered", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MyApplication.getInstance().clearApplication();
+                finish();
+                startActivity(new Intent(getApplicationContext(), LauncherActivity.class));
+            }
+        });
+
+        alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.cancel();
+            }
+        });
+        alertDialog.show();
     }
 
     public void PerformNoBackStackTransaction(Fragment fragment) {
@@ -248,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void SendToken(){
+    private void SendToken() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("token", spDevice.getString("gcmToken", null));
         jsonObject.addProperty("uid", uidTelehealth.getString("uid", null));

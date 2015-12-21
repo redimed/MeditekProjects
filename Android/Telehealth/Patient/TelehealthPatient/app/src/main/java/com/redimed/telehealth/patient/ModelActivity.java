@@ -1,19 +1,14 @@
 package com.redimed.telehealth.patient;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.RectF;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,11 +18,10 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.api.RegisterApi;
-import com.redimed.telehealth.patient.fragment.AppointmentDetails;
 import com.redimed.telehealth.patient.models.FileUpload;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.CountingTypedFile;
-import com.redimed.telehealth.patient.utils.CustomAlertDialog;
+import com.redimed.telehealth.patient.utils.DialogAlert;
 import com.redimed.telehealth.patient.utils.DialogConnection;
 import com.squareup.picasso.Picasso;
 
@@ -196,7 +190,7 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
                                 if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
                                     new DialogConnection(ModelActivity.this).show();
                                 } else {
-                                    new CustomAlertDialog(ModelActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                                    new DialogAlert(ModelActivity.this, DialogAlert.State.Error, error.getLocalizedMessage()).show();
                                 }
                             }
                         });
@@ -208,7 +202,7 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
                     if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
                         new DialogConnection(ModelActivity.this).show();
                     } else {
-                        new CustomAlertDialog(ModelActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                        new DialogAlert(ModelActivity.this, DialogAlert.State.Error, error.getLocalizedMessage()).show();
                     }
                 }
             });

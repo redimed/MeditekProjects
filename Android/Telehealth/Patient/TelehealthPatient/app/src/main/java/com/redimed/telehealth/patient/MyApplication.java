@@ -22,6 +22,7 @@ import com.google.android.gms.iid.InstanceID;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
+import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.Config;
 
 import java.io.File;
@@ -80,11 +81,11 @@ public class MyApplication extends Application {
 
         if (appDir.exists()) {
             String[] children = appDir.list();
-
             for (String s : children) {
                 if (!s.equals("lib")) {
                     deleteDir(new File(appDir, s));
                     RemoveShortcut();
+                    SocketService.closeSockets();
                 }
             }
         }

@@ -3,37 +3,46 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:orientation="vertical"
-    android:background="#cdfffefe">
+    android:background="#cdfffefe"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.redimed.telehealth.patient.font.RobotoTextView
-        android:id="@+id/lblNo"
-        android:layout_width="95dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:gravity="center" />
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:id="@+id/lblNo"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:gravity="center" />
 
-    <com.redimed.telehealth.patient.font.RobotoTextView
-        android:id="@+id/lblDoctorRef"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:gravity="center" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <com.redimed.telehealth.patient.font.RobotoTextView
-        android:id="@+id/lblDoctorPre"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:gravity="center" />
+            <com.redimed.telehealth.patient.font.RobotoTextView
+                android:id="@+id/lblDoctorRef"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:gravity="center" />
 
-    </LinearLayout>
+        </LinearLayout>
+
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:id="@+id/lblDoctorPre"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center" />
+
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

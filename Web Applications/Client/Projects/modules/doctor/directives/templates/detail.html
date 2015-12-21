@@ -14,20 +14,21 @@
                 <div class="row profile">
                     <div class="col-md-3 col-sm-3" style="padding:2em;">
 						<!-- ProfileImage -->
-						<div class="form-group">
-							<div class="fileinput fileinput-new" data-provides="fileinput">
-								<div class="fileinput-preview fileinput-exists thumbnail" id="ProfileImage" style="max-width:350px;" ng-show="uploader.queue.length!=0" >
+						<div ng-form name="checkInForm" novalidate>
+							<div class="form-group">
+								<div id="viewIMG">
+									<canvas id="imageAvatarCanvas" class="thumbnail" ng-show="isChoseAvatar==true" ></canvas>
+									<img dimage dimage-uid="info.FileUID_img" class="thumbnail" dimage-size="'320'" ng-show="(info.FileUID_img!=null && info.FileUID_img!=undefined) && isChoseAvatar==false">
+									<img src="theme/assets/global/images/no_person.jpg" class="thumbnail" ng-show="(info.FileUID_img==null || info.FileUID_img==undefined) && isChoseAvatar==false" style="width:275px; height:300px; ">
 								</div>
-								<div class="thumbnail" id="viewIMG">
-									<img dimage dimage-uid="info.FileUID_img" dimage-size="'300'" ng-show="(info.FileUID_img!=null && info.FileUID_img!=undefined) && uploader.queue.length==0">
-									<img src="theme/assets/global/images/no_person.jpg" width="100%" ng-show="(info.FileUID_img==null || info.FileUID_img==undefined) && uploader.queue.length==0">
+								<div class="container">
+									<label for="imageAvatar" style="float:left; padding-right: 1%;"> 
+										<span class="btn green" ng-if="isChoseAvatar==false" style="width: 120px;">Select Image</span>
+										<span class="btn green" ng-if="isChoseAvatar==true" style="width: 120px;">Change</span>
+									</label> 
+									<span class="btn red" ng-if="isChoseAvatar==true"style="width: 120px; float:left" ng-click="Remove('ProfileImage')">Remove</span>
+									<input type="file" id="imageAvatar" ng-click="setType('ProfileImage')" ng-model="aaa" name="imageAvatar" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
 								</div>
-								<span class="btn green btn-file" ng-if="isShowFull!=false">
-									<span class="fileinput" ng-click="changeimg()"ng-show="uploader.queue.length==0 && !info.FileUID_img">Select Image </span>
-									<span class="fileinput"ng-show="uploader.queue.length!=0||info.FileUID_img">Change </span>
-									<input type="file" nv-file-select="" uploader="uploader" />
-								</span>
-								<a href="javascript:;" class="btn red fileinput" data-dismiss="fileinput-exists" ng-click="removeImg('ProfileImage')"ng-if="uploader.queue.length!=0">Remove </a>
 							</div>
 						</div>
 						<!-- end ProfileImage -->
@@ -328,20 +329,21 @@
 									<div class="row">
 										<div class="col-md-6 col-sm-6 col-offset-3 col-sm-offset-3">
 											<div class="form-group">
-												<div class="fileinput fileinput-new" data-provides="fileinput">
-													<div class="fileinput-preview fileinput-exists thumbnail" id="Signature" style="max-width:350px;" ng-show="uploaders.queue.length!=0" >
-													</div>
-													<div class="thumbnail">
-														<img dimage dimage-uid="info.FileUID_sign" dimage-size="'300'" ng-show="(info.FileUID_sign!=null && info.FileUID_sign!=undefined) && uploaders.queue.length==0">
-														<img src="theme/assets/global/images/signature.jpg" width="100%" ng-show="(info.FileUID_sign==null || info.FileUID_sign==undefined) && uploaders.queue.length==0">
-													</div>
-													<div>
-														<span class="btn green btn-file" ng-if="isShowFull!=false">
-															<span class="fileinput" ng-click="changeimg()"ng-show="uploaders.queue.length==0 && !info.FileUID_sign">Signature</span>
-															<span class="fileinput"ng-show="uploaders.queue.length!=0||info.FileUID_sign">Change </span>
-															<input type="file" nv-file-select="" uploader="uploaders" />
-														</span>
-														<a href="javascript:;" class="btn red fileinput" data-dismiss="fileinput-exists" ng-click="removeImg('Signature')"ng-if="uploaders.queue.length!=0">Remove </a>
+												<div ng-form name="checkInForm" novalidate>
+													<div class="form-group">
+														<div>
+															<canvas id="imageSignatureCanvas" class="thumbnail" ng-show="isChoseSignature==true" ></canvas>
+															<img dimage dimage-uid="info.FileUID_sign" class="thumbnail" dimage-size="'300'" ng-show="(info.FileUID_sign!=null && info.FileUID_sign!=undefined) && isChoseSignature==false">
+															<img src="theme/assets/global/images/signature.jpg" class="thumbnail" ng-show="(info.FileUID_sign==null || info.FileUID_sign==undefined) && isChoseSignature==false" style="width:550px; height:280px; ">
+														</div>
+														<div class="container">
+															<label for="imageAvatar" style="float:left; padding-right: 1%;"> 
+																<span class="btn green" ng-if="isChoseSignature==false" style="width: 120px;">Select Image</span>
+																<span class="btn green" ng-if="isChoseSignature==true" style="width: 120px;">Change</span>
+															</label> 
+															<span class="btn red" ng-if="isChoseSignature==true"style="width: 120px; float:left" ng-click="Remove('Signature')">Remove</span>
+															<input type="file" id="imageSignature" ng-click="setType('Signature')" name="imageSignature" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
+														</div>
 													</div>
 												</div>
 											</div>

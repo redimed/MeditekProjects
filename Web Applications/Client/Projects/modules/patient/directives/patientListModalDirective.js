@@ -21,6 +21,21 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
             activeUser: '=onActive'
         },
         controller:function($scope, FileUploader) {
+        	$scope.buildImg = function(imageType,canvasimg,ctximg,e, width, height) {
+				var reader = new FileReader();
+				reader.onload = function(event){
+					var img = new Image();
+					img.onload = function(){
+					    canvasimg.width = width;
+				        canvasimg.height = height;
+					    ctximg.drawImage(img,0,0,width,height);
+					};
+					img.src = event.target.result;
+				}
+				console.log(e.target.files[0]);
+				reader.readAsDataURL(e.target.files[0]);
+			}
+
 			// Profile Image
 		    var uploader = $scope.uploader = new FileUploader({
 		    	// url: 'http://192.168.1.2:3005/api/uploadFile',
@@ -40,16 +55,20 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 
 		    // CALLBACKS
 		    uploader.onAfterAddingFile = function (fileItem) {
-		    	if($scope.info.img){
-		    		$scope.info.FileType = 'ProfileImage';
-		    		PatientService.getfileUID($scope.info).then(function(response){
-		    			$scope.info.img_change = true;
-		    			$scope.imgDelete = response.data[0].UID;		    		
-		    		});
+		    	for(var i = 0; i < uploader.queue.length; i++){
+		    		if(uploader.queue[i].formData.length!=0){
+		    			if(uploader.queue[i].formData[0].fileType==$scope.typeFile){
+		    				uploader.queue.splice(i,1);
+		    			}
+		    		}
 		    	}
-		    	else{
-		    		$scope.info.img_change = false;
+		    	fileItem.formData[0] = {};
+		    	fileItem.formData[0].fileType = $scope.typeFile;
+		    	if($scope.typeFile == "ProfileImage"){
+		    		$scope.isChoseAvatar = true;
+		    		$scope.info.changeimg = 1;
 		    	}
+		    	console.log(uploader.queue);
 		    };
 		    uploader.onBeforeUploadItem = function(item) {
 		    	item.headers={
@@ -78,6 +97,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		},
 		link: function(scope, elem, attrs){
 			console.log(scope.activeUser);
+			scope.isChoseAvatar = false;
 			var data = {};
         	scope.info = {};
 			data.UID = scope.uid;
@@ -182,26 +202,20 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						PatientService.updatePatient(scope.info).then(function(response){
 							if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
 							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
-							   	if(scope.info.img){
+							   	if(scope.typeFile=="imageAvatar"){
 								   	$http({
 									  method: 'GET',
 									  url: o.const.fileBaseUrl+'/api/enableFile/false/'+scope.imgDelete
 									}).then(function (response) {
-										scope.uploader.queue[0].formData[0]={};
-										scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
-										scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
-										scope.uploader.uploadAll();
+										// scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+										// scope.uploader.uploadAll();
 									},function (err) {
 										console.log(err);
 									});
 								}
-								else{
-									scope.uploader.queue[0].formData[0]={};
-									scope.uploader.queue[0].formData[0].fileType = "ProfileImage";
-									scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
-									scope.uploader.uploadAll();
-								}
 							}
+							scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+							scope.uploader.uploadAll();
 							toastr.success("update success!!!","SUCCESS");
 							scope.onCancel();
 						},function(err){
@@ -219,6 +233,34 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					}
 				})
 			},
+
+			scope.typeFile;
+			scope.setType = function(value){
+				scope.typeFile=value;
+				if(value=="ProfileImage"){
+					var imageAvatar = document.getElementById('imageAvatar');
+					    imageAvatar.addEventListener('change', handleImage, false);
+					var canvas = document.getElementById('imageAvatarCanvas');
+					var ctx = canvas.getContext('2d');
+
+					function handleImage(e){
+						scope.buildImg(imageAvatar, canvas, ctx,e,350,350);
+					}
+				}
+			};
+
+
+			scope.Remove = function(value) {
+				delete scope.info['changeimg'];
+				for(var i = 0; i < scope.uploader.queue.length;i++) {
+					if(scope.uploader.queue[i].formData[0].fileType==value){
+						scope.uploader.queue.splice(i,1);
+					}
+				}
+				if(value=="ProfileImage"){
+					scope.isChoseAvatar = false;
+				}
+			}
 
 			
 

@@ -8,8 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -33,8 +31,11 @@ import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
 import com.redimed.telehealth.patient.utils.CircleTransform;
-import com.redimed.telehealth.patient.utils.CustomAlertDialog;
+import com.redimed.telehealth.patient.utils.Config;
+import com.redimed.telehealth.patient.utils.DialogAlert;
 import com.redimed.telehealth.patient.utils.DialogConnection;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.squareup.picasso.UrlConnectionDownloader;
@@ -51,7 +52,7 @@ import retrofit.client.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InformationFragment extends Fragment{
+public class InformationFragment extends Fragment {
 
     private View v;
     private Gson gson;
@@ -87,7 +88,8 @@ public class InformationFragment extends Fragment{
     @Bind(R.id.infoLayout)
     RelativeLayout infoLayout;
 
-    public InformationFragment() {}
+    public InformationFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,7 +104,7 @@ public class InformationFragment extends Fragment{
         telehealthPatient = v.getContext().getSharedPreferences("TelehealthUser", v.getContext().MODE_PRIVATE);
 
         patients = gson.fromJson(sharedPreferences.getString("info", null), Patient[].class);
-        if (patients != null){
+        if (patients != null) {
             DisplayInfo(patients);
         } else {
             GetInfoPatient();
@@ -161,9 +163,9 @@ public class InformationFragment extends Fragment{
                     new DialogConnection(v.getContext()).show();
                 } else {
                     if (error.getLocalizedMessage().equalsIgnoreCase("TokenExpiredError")) {
-                        new CustomAlertDialog(v.getContext(), CustomAlertDialog.State.Warning, "Sorry for inconvenience, please refresh application").show();
+                        new DialogAlert(v.getContext(), DialogAlert.State.Warning, "Sorry for inconvenience, please refresh application").show();
                     } else {
-                        new CustomAlertDialog(v.getContext(), CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                        new DialogAlert(v.getContext(), DialogAlert.State.Error, error.getLocalizedMessage()).show();
                     }
                 }
                 swipeInfo.setRefreshing(false);
@@ -173,7 +175,7 @@ public class InformationFragment extends Fragment{
 
     //Show data information in layout
     private void DisplayInfo(Patient[] patients) {
-        if (patients != null){
+        if (patients != null) {
             for (Patient patient : patients) {
                 lblNamePatient.setText(patient.getFirstName() == null ? "NONE" : patient.getFirstName());
                 lblHomePhone.setText(patient.getHomePhoneNumber() == null ? "NONE" : patient.getHomePhoneNumber());
@@ -183,11 +185,13 @@ public class InformationFragment extends Fragment{
                 lblSuburb.setText(patient.getSuburb() == null ? "NONE" : patient.getSuburb());
                 lblPostCode.setText(patient.getPostCode() == null ? "NONE" : patient.getPostCode());
                 lblCountry.setText(patient.getCountryName() == null ? "NONE" : patient.getCountryName());
+                LoadAvatar(Config.apiURLDownload + patient.getFileUID() == null ? " " : Config.apiURLDownload + patient.getFileUID());
             }
         }
     }
 
-    private void LoadImageCaller(String url) {
+    private void LoadAvatar(String url) {
+        Log.d(TAG, url);
         Picasso picasso = new Picasso.Builder(v.getContext())
                 .downloader(new UrlConnectionDownloader(v.getContext()) {
                     @Override
@@ -208,29 +212,12 @@ public class InformationFragment extends Fragment{
                     }
                 }).build();
 
-        picasso.with(v.getContext()).load(url).transform(new CircleTransform())
-                .into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                            avatarPatient.setBackgroundDrawable(new BitmapDrawable(v.getContext().getResources(), bitmap));
-                            avatarPatient.invalidate();
-                        } else {
-                            avatarPatient.setBackground(new BitmapDrawable(v.getContext().getResources(), bitmap));
-                            avatarPatient.invalidate();
-                        }
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-                        avatarPatient.setBackgroundResource(R.drawable.call_blank_avatar);
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-                        Log.d(TAG, "Prepare Load");
-                    }
-                });
+        picasso.load(url)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .transform(new CircleTransform())
+                .error(R.drawable.icon_error_image)
+                .into(avatarPatient);
     }
 
     //Refresh information patient

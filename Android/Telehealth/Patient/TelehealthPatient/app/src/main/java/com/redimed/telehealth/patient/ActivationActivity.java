@@ -32,7 +32,7 @@ import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.picker.CountryPicker;
 import com.redimed.telehealth.patient.picker.CountryPickerListener;
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
-import com.redimed.telehealth.patient.utils.CustomAlertDialog;
+import com.redimed.telehealth.patient.utils.DialogAlert;
 import com.redimed.telehealth.patient.utils.DialogConnection;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -256,7 +256,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                     if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
                         new DialogConnection(ActivationActivity.this).show();
                     } else {
-                        new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                        new DialogAlert(ActivationActivity.this, DialogAlert.State.Error, error.getLocalizedMessage()).show();
                     }
                 }
             });
@@ -268,6 +268,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
     //Compare code input with code receive from server
     private void LoginByVerifyCode() {
+        btnSubmitCode.setEnabled(false);
         String verifyCode = txtVerifyCode.getText().toString();
         if (spDevice != null) {
             Boolean sendToken = spDevice.getBoolean("sendToken", false);
@@ -295,11 +296,9 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                             jsonLogin.addProperty("VerificationToken", jsonObject.get("verifyCode").isJsonNull() ?
                                     " " : jsonObject.get("verifyCode").getAsString());
                             jsonLogin.addProperty("AppID", "com.redimed.telehealth.patient");
-                            Log.d(TAG, jsonLogin + " ");
                             registerApiLogin.login(jsonLogin, new Callback<JsonObject>() {
                                 @Override
                                 public void success(JsonObject jsonObject, Response response) {
-                                    Log.d(TAG, jsonObject + " ");
                                     String status = jsonObject.get("status").isJsonNull() ?
                                             " " : jsonObject.get("status").getAsString();
                                     if (status.equalsIgnoreCase("success")) {
@@ -316,7 +315,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                                         registerApi.getTelehealthUID(userUID, new Callback<JsonObject>() {
                                             @Override
                                             public void success(JsonObject jsonObject, Response response) {
-                                                Log.d(TAG, jsonObject + " ");
                                                 uidTelehealth.putString("uid", jsonObject.get("UID").isJsonNull() ?
                                                         " " : jsonObject.get("UID").getAsString());
                                                 uidTelehealth.commit();
@@ -329,7 +327,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                                                 if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
                                                     new DialogConnection(ActivationActivity.this).show();
                                                 } else {
-                                                    new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                                                    new DialogAlert(ActivationActivity.this, DialogAlert.State.Error, error.getLocalizedMessage()).show();
                                                 }
                                             }
                                         });
@@ -341,7 +339,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                                     if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
                                         new DialogConnection(ActivationActivity.this).show();
                                     } else {
-                                        new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                                        new DialogAlert(ActivationActivity.this, DialogAlert.State.Error, error.getLocalizedMessage()).show();
                                     }
                                 }
                             });
@@ -350,10 +348,11 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
 
                     @Override
                     public void failure(RetrofitError error) {
+                        btnSubmitCode.setEnabled(true);
                         if (error.getLocalizedMessage().equalsIgnoreCase("Network Error")) {
                             new DialogConnection(ActivationActivity.this).show();
                         } else {
-                            new CustomAlertDialog(ActivationActivity.this, CustomAlertDialog.State.Error, error.getLocalizedMessage()).show();
+                            new DialogAlert(ActivationActivity.this, DialogAlert.State.Error, error.getLocalizedMessage()).show();
                         }
                     }
                 });

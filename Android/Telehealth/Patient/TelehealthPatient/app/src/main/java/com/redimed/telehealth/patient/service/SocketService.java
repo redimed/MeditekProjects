@@ -77,8 +77,7 @@ public class SocketService extends Service {
         socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
         socket.on("receiveMessage", onReceiveMessage);
         socket.on("errorMsg", onReceiveError);
-//        return START_STICKY;
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     public static void sendData(String url, Map<String, Object> params) throws Throwable {
@@ -154,6 +153,7 @@ public class SocketService extends Service {
         }
     };
 
+    //Receive Socket Message
     private Emitter.Listener onReceiveMessage = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
@@ -162,7 +162,7 @@ public class SocketService extends Service {
                 String message = data.get("message").toString();
                 if (message.equalsIgnoreCase("call")) {
                     i = new Intent(getApplicationContext(), CallActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtra("apiKey", data.get("apiKey").toString());
                     i.putExtra("sessionId", data.get("sessionId").toString());
                     i.putExtra("token", data.get("token").toString());
@@ -184,10 +184,11 @@ public class SocketService extends Service {
         }
     };
 
-    public void closeSockets() {
+    public static void closeSockets() {
         if (socket != null) {
             try {
                 socket.close();
+                socket.disconnect();
             } catch (Exception e) {
                 e.printStackTrace();
             }

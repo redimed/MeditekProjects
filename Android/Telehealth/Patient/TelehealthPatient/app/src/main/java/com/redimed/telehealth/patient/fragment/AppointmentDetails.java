@@ -44,8 +44,10 @@ import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.models.Appointment;
+import com.redimed.telehealth.patient.models.ClinicalDetails;
 import com.redimed.telehealth.patient.models.Doctor;
 import com.redimed.telehealth.patient.models.FileUpload;
+import com.redimed.telehealth.patient.models.TelehealthAppointment;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
 import com.redimed.telehealth.patient.utils.Config;
@@ -93,6 +95,7 @@ public class AppointmentDetails extends Fragment {
     private List<String> urlPicasso;
     private boolean flagLayout = false;
     private List<FileUpload> fileUploads;
+    private List<String> urlImg;
     private RVAdapterImage rvAdapterImage;
     private SharedPreferences telehealthPatient;
     private LinearLayoutManager layoutManagerCategories;
@@ -134,6 +137,7 @@ public class AppointmentDetails extends Fragment {
 
         telehealthPatient = v.getContext().getSharedPreferences("TelehealthUser", v.getContext().MODE_PRIVATE);
         urlPicasso = new ArrayList<String>();
+        urlImg = new ArrayList<String>();
         gson = new Gson();
         registerApi = RESTClient.getRegisterApi();
 
@@ -198,6 +202,7 @@ public class AppointmentDetails extends Fragment {
 
     //    Get Detail Appointment with param UID Appointment
     private void GetAppointmentDetails(String appointmentUID) {
+
         registerApi.getAppointmentDetails(appointmentUID, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
@@ -246,13 +251,30 @@ public class AppointmentDetails extends Fragment {
                         lblDoctorName.setText(firstDoctor + middleDoctor + lastDoctor);
                     }
 
-                    String fileUpload = jsonObject.get("data").getAsJsonObject().get("FileUploads").toString();
-                    if (fileUploads != null) {
-                        fileUploads.clear();
+                    if (urlImg != null) {
+                        urlImg.clear();
                     }
+
+                    //Get image from ClinicalDetails
+                    String clinicDetails = jsonObject.get("data").getAsJsonObject().get("TelehealthAppointment").getAsJsonObject().get("ClinicalDetails").toString();
+                    ClinicalDetails[] clinicalDetails = gson.fromJson(clinicDetails, ClinicalDetails[].class);
+                    for (ClinicalDetails clinical : clinicalDetails) {
+                        FileUpload[] files = clinical.getFileUpload();
+                        for (FileUpload file : files) {
+                            if (file != null) {
+                                urlImg.add(file.getUID());
+                            }
+                        }
+                    }
+
+                    //Get image from Appointment
+                    String fileUpload = jsonObject.get("data").getAsJsonObject().get("FileUploads").toString();
                     fileUploads = gson.fromJson(fileUpload, new TypeToken<List<FileUpload>>() {
                     }.getType());
-                    GetFileUpload(fileUploads);
+                    for (int i = 0; i < fileUploads.size(); i++) {
+                        urlImg.add(fileUploads.get(i).getUID());
+                    }
+                    GetFileUpload(urlImg);
                 } else {
                     Log.d(TAG, "No Result");
                 }
@@ -265,11 +287,10 @@ public class AppointmentDetails extends Fragment {
         });
     }
 
-    private void GetFileUpload(final List<FileUpload> fileUploads) {
-        int i;
-        for (i = 0; i < fileUploads.size(); i++) {
-            if (GetResponseCode(Config.apiURLDownload + fileUploads.get(i).getUID()) == 200){
-                urlPicasso.add(Config.apiURLDownload + fileUploads.get(i).getUID());
+    private void GetFileUpload(List<String> fileUploads) {
+        for (int i = 0; i < fileUploads.size(); i++) {
+            if (GetResponseCode(Config.apiURLDownload + fileUploads.get(i)) == 200) {
+                urlPicasso.add(Config.apiURLDownload + fileUploads.get(i));
             }
         }
         rvAdapterImage.swapData(urlPicasso, telehealthPatient);

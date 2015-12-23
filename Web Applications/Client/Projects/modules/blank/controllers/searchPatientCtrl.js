@@ -10,9 +10,9 @@ app.controller('searchPatientCtrl', function($scope) {
 		}
 	};
 	$scope.Back = function(){
+		$scope.submitted = true;
 		if($scope.step2.$valid){
 			$scope.number--;
-			$scope.submitted = false;
 		}
 	};
 	$scope.submit = function(){

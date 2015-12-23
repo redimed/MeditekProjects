@@ -10,7 +10,6 @@
 					</div>
 				</div>
 				<div class="portlet-body form">
-					<pre>{{data}}</pre>
 					<form name="step1" class="form-horizontal" role="form" novalidate ng-show="number == 1" ng-submit="Next(1)">
 						<div class="form-body my-form-body-padding">
 							<div class="row marin-top-20">
@@ -201,7 +200,7 @@
 											</label>
 											<div class="col-md-8 col-sm-8">
 												<input type="text" class="form-control" name="NOKfirstname" ng-model="data.NOKfirstname" required>
-												<p class="help-block" ng-if="submitted && step1.NOKfirstname.$error.required">Required</p>
+												<p class="help-block" ng-if="submitted && step2.NOKfirstname.$error.required">Required</p>
 											</div>
 										</div>
 										<div class="form-group">
@@ -218,7 +217,7 @@
 											</label>
 											<div class="col-md-8 col-sm-8">
 												<input type="text" class="form-control" name="NOKlastname" ng-model="data.NOKlastname" required>
-												<p class="help-block" ng-if="submitted && step1.NOKlastname.$error.required">Required</p>
+												<p class="help-block" ng-if="submitted && step2.NOKlastname.$error.required">Required</p>
 											</div>
 										</div>
 										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKhomePhone.$invalid]">
@@ -227,7 +226,7 @@
 											</label>
 											<div class="col-md-8 col-sm-8">
 												<input type="text" class="form-control" name="NOKhomePhone" ng-model="data.NOKhomePhone" required>
-												<p class="help-block" ng-if="submitted && step1.NOKhomePhone.$error.required">Required</p>
+												<p class="help-block" ng-if="submitted && step2.NOKhomePhone.$error.required">Required</p>
 											</div>
 										</div>
 										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKmobile.$invalid]">
@@ -236,7 +235,7 @@
 											</label>
 											<div class="col-md-8 col-sm-8">
 												<input type="text" class="form-control" name="NOKmobile" ng-model="data.NOKmobile" required>
-												<p class="help-block" ng-if="submitted && step1.NOKmobile.$error.required">Required</p>
+												<p class="help-block" ng-if="submitted && step2.NOKmobile.$error.required">Required</p>
 											</div>
 										</div>
 										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKaddress.$invalid]">
@@ -245,7 +244,7 @@
 											</label>
 											<div class="col-md-8 col-sm-8">
 												<input type="text" class="form-control" name="NOKaddress" ng-model="data.NOKaddress" required>
-												<p class="help-block" ng-if="submitted && step1.NOKaddress.$error.required">Required</p>
+												<p class="help-block" ng-if="submitted && step2.NOKaddress.$error.required">Required</p>
 											</div>
 										</div>
 										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKsuburb.$invalid]">
@@ -254,7 +253,7 @@
 											</label>
 											<div class="col-md-8 col-sm-8">
 												<input type="text" class="form-control" name="NOKsuburb" ng-model="data.NOKsuburb" required>
-												<p class="help-block" ng-if="submitted && step1.NOKsuburb.$error.required">Required</p>
+												<p class="help-block" ng-if="submitted && step2.NOKsuburb.$error.required">Required</p>
 											</div>
 										</div>
 										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKpostcode.$invalid]">
@@ -263,7 +262,7 @@
 											</label>
 											<div class="col-md-8 col-sm-8">
 												<input type="text" class="form-control" name="NOKpostcode" ng-model="data.NOKpostcode" required>
-												<p class="help-block" ng-if="submitted && step1.NOKpostcode.$error.required">Required</p>
+												<p class="help-block" ng-if="submitted && step2.NOKpostcode.$error.required">Required</p>
 											</div>
 										</div>
 										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKstate.$invalid]">
@@ -272,7 +271,7 @@
 											</label>
 											<div class="col-md-8 col-sm-8">
 												<input type="text" class="form-control" name="NOKstate" ng-model="data.NOKstate" required>
-												<p class="help-block" ng-if="submitted && step1.NOKstate.$error.required">Required</p>
+												<p class="help-block" ng-if="submitted && step2.NOKstate.$error.required">Required</p>
 											</div>
 										</div>
 										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKcountry.$invalid]">
@@ -281,7 +280,7 @@
 											</label>
 											<div class="col-md-8 col-sm-8">
 												<input type="text" class="form-control" name="NOKcountry" ng-model="data.NOKcountry" required>
-												<p class="help-block" ng-if="submitted && step1.NOKcountry.$error.required">Required</p>
+												<p class="help-block" ng-if="submitted && step2.NOKcountry.$error.required">Required</p>
 											</div>
 										</div>
 									</fieldset>
@@ -435,7 +434,7 @@
 							</div>
 						</div>
 						<div class="form-actions right">
-							<button type="reset" class="btn btn-lg btn-default" ng-click="Back()">
+							<button type="button" class="btn btn-lg btn-default" ng-click="Back()">
 								<i class="glyphicon glyphicon-arrow-left"></i> Back</button>
 							<button type="submit" class="btn btn-lg btn-primary" ng-click="Next(2)">
 								Next <i class="glyphicon glyphicon-arrow-right"></i></button>
@@ -454,7 +453,7 @@
 							</div>
 						</div>
 						<div class="form-actions right">
-							<button type="reset" class="btn btn-lg btn-default" ng-click="Back()">
+							<button type="button" class="btn btn-lg btn-default" ng-click="Back()">
 								<i class="glyphicon glyphicon-arrow-left"></i> Back</button>
 							<button type="submit" class="btn btn-lg btn-primary" ng-click="Submit()">
 								Submit <i class="glyphicon glyphicon-save"></i></button>

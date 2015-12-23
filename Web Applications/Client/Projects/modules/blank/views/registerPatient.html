@@ -10,31 +10,38 @@
 					</div>
 				</div>
 				<div class="portlet-body form">
-					<form name="step1" class="form-horizontal" novalidate ng-show="show">
+					<pre>{{data}}</pre>
+					<form name="step1" class="form-horizontal" role="form" novalidate ng-show="number == 1" ng-submit="Next(1)">
 						<div class="form-body my-form-body-padding">
 							<div class="row marin-top-20">
 								<div class="col-md-4 col-sm-4">
 									<fieldset>
 										<legend class="bold">Basic Information</legend>
-										<div class="form-group">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.title.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Title <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<select class="form-control">
+												<select class="form-control" name="title" 
+													ng-model="data.title" required>
 													<option value=""></option>
 													<option value="Mr">Mr</option>
 													<option value="Ms">Ms</option>
 													<option value="Dr">Dr</option>
 												</select>
+												<p class="help-block" ng-if="submitted && step1.title.$error.required">
+													Required</p>
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.firstname.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Firstname <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="firstname" 
+												ng-model="data.firstname" required>
+												<p class="help-block" ng-if="submitted && step1.firstname.$error.required">
+													Required</p>
 											</div>
 										</div>
 										<div class="form-group">
@@ -45,35 +52,45 @@
 												<input type="text" class="form-control">
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.lastname.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Lastname <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" name="lastname" class="form-control" 
+												ng-model="data.lastname" required>
+												<p class="help-block" ng-if="submitted && step1.lastname.$error.required">
+													Required</p>
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.dob.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Date of Birth <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control date-picker">
+												<input type="text" class="form-control date-picker" name="dob" data-date-format="dd/mm/yyyy"
+												ng-model="data.dob" required>
+												<p class="help-block" ng-if="submitted && step1.dob.$error.required">
+													Required</p>
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.gender.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Gender <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
 												<div class="radio-list">
 													<label class="radio-inline">
-														<input type="radio" name="gender" value="M"> Male
+														<input type="radio" name="gender" value="M" 
+														ng-model="data.Gender" required> Male
 													</label>
 													<label class="radio-inline">
-														<input type="radio" name="gender" value="F"> Female
+														<input type="radio" name="gender" value="F" 
+														ng-model="data.Gender" required> Female
 													</label>
 												</div>
+												<p class="help-block" ng-if="submitted && step1.gender.$error.required">
+													Required</p>
 											</div>
 										</div>
 										<div class="form-group">
@@ -115,42 +132,48 @@
 														<input type="text" class="form-control">
 													</div>
 												</div>
-												<div class="form-group">
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.address1.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">Address1 <span class="required">*</span></label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" name="address1" ng-model="data.address1" required>
+														<p class="help-block" ng-if="submitted && step1.address1.$error.required">Required</p>
 													</div>
 												</div>
-												<div class="form-group">
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.address2.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">Address2 <span class="required">*</span></label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" name="address2" ng-model="data.address2" required>
+														<p class="help-block" ng-if="submitted && step1.address2.$error.required">Required</p>
 													</div>
 												</div>
 											</div>
 											<div class="col-md-6 col-sm-6">
-												<div class="form-group">
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.suburb.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">Suburb <span class="required">*</span></label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" name="suburb" ng-model="data.suburb" required>
+														<p class="help-block" ng-if="submitted && step1.suburb.$error.required">Required</p>
 													</div>
 												</div>
-												<div class="form-group">
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.postcode.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">Postcode <span class="required">*</span></label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" name="postcode" ng-model="data.postcode" required>
+														<p class="help-block" ng-if="submitted && step1.postcode.$error.required">Required</p>
 													</div>
 												</div>
-												<div class="form-group">
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.state.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">State <span class="required">*</span></label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" name="state" ng-model="data.state" required>
+														<p class="help-block" ng-if="submitted && step1.state.$error.required">Required</p>
 													</div>
 												</div>
-												<div class="form-group">
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.country.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">Country <span class="required">*</span></label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" name="country" ng-model="data.country" required>
+														<p class="help-block" ng-if="submitted && step1.country.$error.required">Required</p>
 													</div>
 												</div>
 											</div>
@@ -160,22 +183,25 @@
 							</div>
 						</div>
 						<div class="form-actions right">
-							<a href="javascript:;" class="btn btn-lg btn-default" ui-sref="unAuthentication.loginPatient">Cancel</a>
-							<button type="submit" class="btn btn-lg btn-primary" ng-click="Next()">Next</button>
+							<a href="javascript:;" class="btn btn-lg btn-default" ui-sref="blank.welcome">
+								<i class="glyphicon glyphicon-arrow-left"></i> Cancel</a>
+							<button type="submit" class="btn btn-lg btn-primary">
+								Next <i class="glyphicon glyphicon-arrow-right"></i></button>
 						</div>
 					</form>
-					<form name="step2" class="form-horizontal" novalidate ng-show="hide">
+					<form name="step2" class="form-horizontal" novalidate ng-show="number == 2">
 						<div class="form-body my-form-body-padding">
 							<div class="row margin-top-20">
 								<div class="col-md-4 col-sm-4">
 									<fieldset>
 										<legend class="bold">Next of Kin</legend>
-										<div class="form-group">
+										<div class="form-group"  ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKfirstname.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Firstname <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="NOKfirstname" ng-model="data.NOKfirstname" required>
+												<p class="help-block" ng-if="submitted && step1.NOKfirstname.$error.required">Required</p>
 											</div>
 										</div>
 										<div class="form-group">
@@ -186,68 +212,76 @@
 												<input type="text" class="form-control">
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKlastname.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Lastname <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="NOKlastname" ng-model="data.NOKlastname" required>
+												<p class="help-block" ng-if="submitted && step1.NOKlastname.$error.required">Required</p>
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKhomePhone.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Homephone <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="NOKhomePhone" ng-model="data.NOKhomePhone" required>
+												<p class="help-block" ng-if="submitted && step1.NOKhomePhone.$error.required">Required</p>
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKmobile.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Mobilephone <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="NOKmobile" ng-model="data.NOKmobile" required>
+												<p class="help-block" ng-if="submitted && step1.NOKmobile.$error.required">Required</p>
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKaddress.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Address <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="NOKaddress" ng-model="data.NOKaddress" required>
+												<p class="help-block" ng-if="submitted && step1.NOKaddress.$error.required">Required</p>
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKsuburb.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Suburb <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="NOKsuburb" ng-model="data.NOKsuburb" required>
+												<p class="help-block" ng-if="submitted && step1.NOKsuburb.$error.required">Required</p>
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKpostcode.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Postcode <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="NOKpostcode" ng-model="data.NOKpostcode" required>
+												<p class="help-block" ng-if="submitted && step1.NOKpostcode.$error.required">Required</p>
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKstate.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												State <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="NOKstate" ng-model="data.NOKstate" required>
+												<p class="help-block" ng-if="submitted && step1.NOKstate.$error.required">Required</p>
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKcountry.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Country <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="NOKcountry" ng-model="data.NOKcountry" required>
+												<p class="help-block" ng-if="submitted && step1.NOKcountry.$error.required">Required</p>
 											</div>
 										</div>
 									</fieldset>
@@ -401,8 +435,29 @@
 							</div>
 						</div>
 						<div class="form-actions right">
-							<button type="reset" class="btn btn-lg btn-default" ng-click="Back()">Back</button>
-							<button type="submit" class="btn btn-lg btn-primary" ng-click="Submit()">Submit</button>
+							<button type="reset" class="btn btn-lg btn-default" ng-click="Back()">
+								<i class="glyphicon glyphicon-arrow-left"></i> Back</button>
+							<button type="submit" class="btn btn-lg btn-primary" ng-click="Next(2)">
+								Next <i class="glyphicon glyphicon-arrow-right"></i></button>
+						</div>
+					</form>
+					<form name="step3" class="form-horizontal" novalidate ng-show="number == 3">
+						<div class="form-body my-form-body-padding">
+							<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step3.PINnumber.$invalid]">
+								<label class="control-label col-md-3 col-sm-3">
+									PIN number <span class="required">*</span>
+								</label>
+								<div class="col-md-4 col-sm-4">
+									<input type="text" class="form-control" name="PINnumber" ng-model="data.PINnumber" required>
+									<p class="help-block" ng-if="submitted && step3.PINnumber.$error.required">Required</p>
+								</div>
+							</div>
+						</div>
+						<div class="form-actions right">
+							<button type="reset" class="btn btn-lg btn-default" ng-click="Back()">
+								<i class="glyphicon glyphicon-arrow-left"></i> Back</button>
+							<button type="submit" class="btn btn-lg btn-primary" ng-click="Submit()">
+								Submit <i class="glyphicon glyphicon-save"></i></button>
 						</div>
 					</form>
 				</div>

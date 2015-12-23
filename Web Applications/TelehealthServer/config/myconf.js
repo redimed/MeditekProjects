@@ -10,13 +10,13 @@ module.exports.myconf = {
     //============ GCM Push Notification =============
     GCMApiKey: 'AIzaSyDz2pMblr_p6HwWqCeBNUoxuat1rcOQwdk',
     //============ APN Push Notification DEV=============
-    // APNCert: rootPath + '/config/push_key/TelePushCert.pem',
-    // APNKey: rootPath + '/config/push_key/TelePushKey.pem',
-    // APNIsProduction: false,
+    APNCert: rootPath + '/config/push_key/TelePushCert.pem',
+    APNKey: rootPath + '/config/push_key/TelePushKey.pem',
+    APNIsProduction: false,
     //============ APN Push Notification PRODUCTION=============
-    APNCert: rootPath + '/config/push_key/TelePushCert_Production.pem',
-    APNKey: rootPath + '/config/push_key/TelePushKey_Production.pem',
-    APNIsProduction: true,
+    // APNCert: rootPath + '/config/push_key/TelePushCert_Production.pem',
+    // APNKey: rootPath + '/config/push_key/TelePushKey_Production.pem',
+    // APNIsProduction: true,
     //============ URL ===============================
     // CoreAPI: 'http://testapp.redimed.com.au:3005',
     // AuthAPI: 'http://testapp.redimed.com.au:3006',

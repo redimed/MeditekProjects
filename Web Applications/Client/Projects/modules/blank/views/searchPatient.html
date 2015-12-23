@@ -1,6 +1,6 @@
 <div class="contentPatient">
 	<div class="row">
-		<div class="col-md-6 col-sm-6 col-md-offset-3 col-sm-offset-3">
+		<div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
 			<div class="portlet box blue">
 				<div class="portlet-title">
 					<div class="caption">
@@ -10,57 +10,73 @@
 					</div>
 				</div>
 				<div class="portlet-body form" >
-					<form name="search" class="form-horizontal " novalidate ng-submit="SubmitSearch()" ng-show="step1">
+					<form name="step1" class="form-horizontal " novalidate ng-submit="next()" ng-show="number == 1">
 						<div class="form-body my-form-body-padding">
 							<div class="row margin-top-20">
 								<div class="col-md-6 col-sm-6">
-									<div class="form-group">
+									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.firstname.$invalid]">
 										<label class="control-label col-md-4 col-sm-4">
 											Firstname <span class="required">*</span>
 										</label>
 										<div class="col-md-8 col-sm-8">
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" name="firstname" 
+												ng-model="data.firstname" required>
+											<p class="help-block" ng-if="submitted && step1.firstname.$error.required">
+													Required</p>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.lastname.$invalid]">
 										<label class="control-label col-md-4 col-sm-4">
 											Lastname <span class="required">*</span>
 										</label>
 										<div class="col-md-8 col-sm-8">
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" name="lastname" 
+												ng-model="data.lastname" required>
+											<p class="help-block" ng-if="submitted && step1.lastname.$error.required">
+													Required</p>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.dob.$invalid]">
 										<label class="control-label col-md-4 col-sm-4">
 											Date of Birth <span class="required">*</span>
 										</label>
 										<div class="col-md-8 col-sm-8">
-											<input type="text" class="form-control date-picker">
+											<input type="text" class="form-control date-picker" name="dob"
+												data-date-format="dd/mm/yyyy" ng-model="data.dob" required>
+											<p class="help-block" ng-if="submitted && step1.dob.$error.required">
+													Required</p>
 										</div>
 									</div>
 								</div>
 								<div class="col-md-6 col-sm-6">
-									<div class="form-group">
+									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.gender.$invalid]">
 										<label class="control-label col-md-4 col-sm-4">
 											Gender <span class="required">*</span>
 										</label>
 										<div class="col-md-8 col-sm-8">
 											<div class="radio-list">
 												<label class="radio-inline">
-													<input type="radio" name="gender" value="M"> Male
+													<input type="radio" name="gender" value="M" name="gender" 
+												ng-model="data.gender" required> Male
 												</label>
 												<label class="radio-inline">
-													<input type="radio" name="gender" value="F"> Female
+													<input type="radio" name="gender" value="F" name="gender" 
+												ng-model="data.gender" required> Female
 												</label>
 											</div>
+											<p class="help-block" ng-if="submitted && step1.gender.$error.required">
+													Required</p>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.mobile.$invalid]">
 										<label class="control-label col-md-4 col-sm-4">
 											Mobile <span class="required">*</span>
 										</label>
 										<div class="col-md-8 col-sm-8">
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" name="mobile" 
+												ng-model="data.mobile" required>
+											<p class="help-block" ng-if="submitted && step1.mobile.$error.required">
+													Required</p>
 										</div>
 									</div>
 									<div class="form-group">
@@ -75,23 +91,31 @@
 							</div>
 						</div>
 						<div class="form-actions right">
-							<a href="javascript:;" class="btn btn-lg btn-default" ui-sref="unAuthentication.loginPatient">Cancel</a>
-							<button type="reset" class="btn btn-lg yellow">Reset</button>
-							<button type="submit" class="btn btn-lg blue">Search</button>
+							<a href="javascript:;" class="btn btn-lg btn-default" ui-sref="blank.welcome">
+								<i class="glyphicon glyphicon-arrow-left"></i> Cancel</a>
+							<button type="reset" class="btn btn-lg yellow">
+								<i class="glyphicon glyphicon-refresh"></i> Reset</button>
+							<button type="submit" class="btn btn-lg blue">
+								Search <i class="glyphicon glyphicon-arrow-right"></i></button>
 						</div>
 					</form>
-					<form name="activation" class="form-horizontal " novalidate ng-submit="SubmitActivation()" ng-show="step2">
+					<form name="step2" class="form-horizontal " novalidate ng-submit="submit()" ng-show="number == 2">
 						<div class="form-body">
-							<div class="form-group margin-top-20">
+							<div class="form-group margin-top-20" ng-class="{true: 'has-error', false: ''}[submitted && step2.activation_code.$invalid]">
 								<label class="control-label col-md-4 col-sm-4">Activation code <span class="required">*</span></label>
 								<div class="col-md-4 col-sm-4">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" name="activation_code" 
+												ng-model="data.activation_code" required>
+									<p class="help-block" ng-if="submitted && step2.activation_code.$error.required">
+													Required</p>
 								</div>
 							</div>
 						</div>
 						<div class="form-actions right">
-							<button type="button" class="btn btn-lg btn-default" ng-click="Cancel()">Cancel</button>
-							<button type="submit" class="btn btn-lg blue">Submit</button>
+							<button type="button" class="btn btn-lg btn-default" ng-click="Back()">
+								<i class="glyphicon glyphicon-arrow-left"></i> Back</button>
+							<button type="submit" class="btn btn-lg blue">
+								Submit <i class="glyphicon glyphicon-save"></i></button>
 						</div>
 					</form>
 				</div>

@@ -1,0 +1,684 @@
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:;" ui-sref="authentication.home.list">
+                    Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <a href="javascript:;" ui-sref="authentication.admission.detail">
+                    Admission</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Detail</b>
+        </li>
+    </ul>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-9 col-sm-9">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="glyphicon glyphicon-pencil font-red"></i>
+                    <span class="caption-subject bold uppercase font-red">Admission</span>
+                    <!-- <span class="caption-helper"></span> -->
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                    <a href="javascript:;" class="fullscreen"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form name="form" class="" novalidate ng-submit="submit()">
+                    <div class="form-body">
+                        <div class="panel-group accordion" id="admission">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title bold">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" 
+                                        data-toggle="collapse" data-parent="#admission" 
+                                        href="index.html#admission_1" aria-expanded="false">
+                                            PREVIOUS SURGERY/PROCEDURES (e.g.joint replacement, transplants, implants, colonoscopy)
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="admission_1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                    <div class="panel-body">
+                                        <div class="table-scrollable">
+                                            <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Operation</th>
+                                                        <th>Appros.Year</th>
+                                                        <th>Surgeon</th>
+                                                        <th>Notes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title bold">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" 
+                                            data-toggle="collapse" data-parent="2#admission" 
+                                            href="index.html#admission_2" aria-expanded="false">
+                                            MEDICATIONS (including puffers, eye drops etc.)</a>
+                                    </h4>
+                                </div>
+                                <div id="admission_2" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                    <div class="panel-body">
+                                        <div class="table-scrollable">
+                                            <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th width="1">Yes</th>
+                                                        <th width="1">No</th>
+                                                        <th width="30%">Comments</th>
+                                                        <th width="20%">Notes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Do you take anti-coagulant or blood thinning therapy 
+                                                        (Warfarin, Coumadin, Plavix, Iscover, Aspirin)?
+                                                        </td>
+                                                        <td><label><input type="radio" name="dedication1" value="Yes"></label></td>
+                                                        <td><label><input type="radio" name="dedication1" value="No"></label></td>
+                                                        <td class="form-inline">
+                                                            <div class="form-group margin-bottom-10">
+                                                                <div class="radio-list">
+                                                                    <label class="radio-inline">Still to take?</label>
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio" name="Still_to_take" value="Yes"> Yes
+                                                                    </label>
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio" name="Still_to_take" value="No"> No
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label">Date to cease:</label>
+                                                                <input type="text" class="form-control date-picker">
+                                                            </div>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Do you take steroids, anti-inflammatory drugs,
+                                                        cortisone tablets/injections?</td>
+                                                        <td><label><input type="radio" name="dedication2" value="Yes"></label></td>
+                                                        <td><label><input type="radio" name="dedication2" value="No"></label></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Do you take herbal supplements or complementary 
+                                                        therapies e.g. fish oil</td>
+                                                        <td><label><input type="radio" name="dedication3" value="Yes"></label></td>
+                                                        <td><label><input type="radio" name="dedication3" value="No"></label></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="table-scrollable margin-top-20">
+                                            <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Medication</th>
+                                                        <th>Frequency</th>
+                                                        <th>Daily Dose</th>
+                                                        <th>Cessation Instruction</th>
+                                                        <th>Date Ceased</th>
+                                                        <th>Nursing Notes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control date-picker"
+                                                        data-date-format="dd/mm/yyyy"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control date-picker"
+                                                        data-date-format="dd/mm/yyyy"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control date-picker"
+                                                        data-date-format="dd/mm/yyyy"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control date-picker"
+                                                        data-date-format="dd/mm/yyyy"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                        <td><input type="text" class="form-control date-picker"
+                                                        data-date-format="dd/mm/yyyy"></td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title bold">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" 
+                                        data-toggle="collapse" data-parent="#admission" 
+                                        href="index.html#admission_3" aria-expanded="false"> 
+                                            ALLERGIES/ALERTS
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="admission_3" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <div class="radio-list">
+                                                <label class="radio-inline">Do you have adverse reactions to anaesthetic e.g. malignant hyperthermia?</label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="adverse_reactions" value="Yes"> Yes
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="adverse_reactions" value="No"> No
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Details/Reaction</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="radio-list">
+                                                <label class="radio-inline">Do you have allergies to medications, food, sticking plaster, latex/rubber (e.g. balloons, gloves) or other substances?</label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="allergies" value="Yes"> Yes
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="allergies" value="No"> No
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">If yes, please list details</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title bold">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#admission" href="index.html#admission_4" aria-expanded="false">
+                                            LIFESTYLE
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="admission_4" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                    <div class="panel-body">
+                                        <div class="table-scrollable">
+                                            <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th width="1">Yes</th>
+                                                        <th width="1">No</th>
+                                                        <th width="30%">Comments</th>
+                                                        <th width="20%">Nurse Notes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Have you ever smoked?
+                                                        </td>
+                                                        <td><label><input type="radio" name="dedication1" value="Yes"></label></td>
+                                                        <td><label><input type="radio" name="dedication1" value="No"></label></td>
+                                                        <td>
+                                                            Daily Amount? Ceased?
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Do you drink alcohol?</td>
+                                                        <td><label><input type="radio" name="dedication2" value="Yes"></label></td>
+                                                        <td><label><input type="radio" name="dedication2" value="No"></label></td>
+                                                        <td>Daily Amount?</td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Do you use recreational drugs?</td>
+                                                        <td><label><input type="radio" name="dedication3" value="Yes"></label></td>
+                                                        <td><label><input type="radio" name="dedication3" value="No"></label></td>
+                                                        <td>Daily Amount? Type?</td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title bold">
+                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#admission" href="index.html#admission_5" aria-expanded="false">
+                                            DO YOU OR HAVE YOU HAD ANY OF THE FOLLOWING CONDITIONS?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="admission_5" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                    <div class="panel-body">
+                                        <div class="table-scrollable">
+                                            <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
+                                                <thead>
+                                                    <th width="60%"></th>
+                                                    <th width="1">Yes</th>
+                                                    <th width="1">No</th>
+                                                    <th>Comments</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr><td colspan="4" class="bold">Cardiovascular</td></tr>
+                                                    <tr>
+                                                        <td>Elevated cholesterol, triglycerides</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular1" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular1" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Blood pressure problems e.g. low, hypertension</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular2" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular2" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Cardiac conditions e.g. heart attack, congestive heart failure, rheumatic fever, valve disease, chest pain, angina</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular3" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular3" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Cardiac irregularities e.g. palpitations, irregular heart beat, heart murmur, Atrial Fibrillation</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular4" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular4" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Cardiac surgery e.g. pacemaker, implants/devices, prosthetic heart valve, grafts, stents, angioplasty, bypass or any other heart condition</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular5" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular5" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Vascular disease e.g. carotid disease, aortic aneurysm, peripheral vascular disease</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular6" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular6" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Family history of cardiac disease</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular7" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Cardiovascular7" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr><td colspan="4" class="bold">Endocrinology</td></tr>
+                                                    <tr>
+                                                        <td>Diabetes (incl. Type and method of control)</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Endocrinology1" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Endocrinology1" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Blood glucose levels normally greater than 10 mmol/L</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Endocrinology2" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Endocrinology2" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Thyroid problems, hypothyroidism, goitre</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Endocrinology3" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Endocrinology3" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr><td colspan="4" class="bold">Gastrointestinal</td></tr>
+                                                    <tr>
+                                                        <td>Hiatus hernia, gastrointestinal ulcers, reflux</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Gastrointestinal1" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Gastrointestinal1" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Liver disease, hepatitis (e.g. A, B, C), jaundice</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Gastrointestinal2" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Gastrointestinal2" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Bowel problems/habits, stoma or bowel disease e.g. Crohns, IBS</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Gastrointestinal3" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Gastrointestinal3" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr><td colspan="4" class="bold">Bleeding Disorders</td></tr>
+                                                    <tr>
+                                                        <td>Blood clot in lungs / legs (DVT / PE)</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Bleeding_Disorders1" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Bleeding_Disorders1" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Blood disorders e.g. anaemia</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Bleeding_Disorders2" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Bleeding_Disorders2" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Bleeding disorders or problems</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Bleeding_Disorders3" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Bleeding_Disorders3" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr><td colspan="4" class="bold">Musculoskeletal</td></tr>
+                                                    <tr>
+                                                        <td>Arthritis e.g. rheumatoid arthritis, osteoarthritis</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Musculoskeletal1" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Musculoskeletal1" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Back or neck injury or problems</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Musculoskeletal2" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Musculoskeletal2" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr><td colspan="4" class="bold">Neurology</td></tr>
+                                                    <tr>
+                                                        <td>Neuromuscular diseases e.g. MS, myasthenia, dystrophies, Parkinson’s</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Neurology1" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Neurology1" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Stroke, mini stroke, TIA</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Neurology2" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Neurology2" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Limb paralysis or weakness</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Neurology3" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Neurology3" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Epilepsy, fits, blackouts, funny turns</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Neurology4" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Neurology4" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr><td colspan="4" class="bold">Respiratory</td></tr>
+                                                    <tr>
+                                                        <td>Asthma, Pneumonia, Hay Fever, Asbestosis, Chronic Obstructive Pulmonary disease (COPD) e.g. bronchitis Emphysema</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Respiratory1" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Respiratory1" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Shortness of breath e.g. walking more than 50m, climbing stairs / inclines</td>
+                                                        <td>
+                                                            <label><input type="radio" name="Respiratory2" value="Yes"></label>
+                                                        </td>
+                                                        <td>
+                                                            <label><input type="radio" name="Respiratory2" value="No"></label>
+                                                        </td>
+                                                        <td><input type="text" class="form-control"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions right">
+                        <a class="btn btn-lg dark">
+                            <i class="glyphicon glyphicon-arrow-left"></i> Cancel</a>
+                        <button type="submit" class="btn btn-lg red">
+                            <i class="glyphicon glyphicon-save"></i> Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-3">
+        <div class="portlet portlet-fit box red">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject ">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-6">
+                                    <div class="thumbnail" style="margin-bottom:3px; border-radius: 50% !important">
+                                        <img src="theme/assets/global/images/no_person.jpg" class="profile-imge" width="100%" style="border-radius: 50% !important" />
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-md-4 col-xs-6">
+                                    <h3 class="bold">Elizabeth Memdel</h3>
+                                    <h5 class="bold uppercase">Patient</h5>
+                                </div>
+                            </div>
+                        </span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-hover">
+                        <tr>
+                            <td>DOB</td>
+                            <td>02:09.1970</td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td>Male</td>
+                        </tr>
+                        <tr>
+                            <td>Medicare Eligible</td>
+                            <td><i class="glyphicon glyphicon-ok font-green"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Medicare Number</td>
+                            <td>123456</td>
+                        </tr>
+                        <tr>
+                            <td>Medicare Reference Number</td>
+                            <td>.....</td>
+                        </tr>
+                        <tr>
+                            <td>Expiry Date</td>
+                            <td>12/12/2014</td>
+                        </tr>
+                        <tr>
+                            <td>DVA Number</td>
+                            <td>.....</td>
+                        </tr>
+                        <tr>
+                            <td>Motor Vehicle Accident</td>
+                            <td><i class="glyphicon glyphicon-ok font-green"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Work Injury</td>
+                            <td><i class="glyphicon glyphicon-remove font-red"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Next of Kin/Guardian</td>
+                            <td>.....</td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>.....</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship</td>
+                            <td>.....</td>
+                        </tr>
+                        <tr>
+                            <td>Contact Number</td>
+                            <td>.....</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -450,6 +450,12 @@ img.profile-imge{
         background-position: 15px 10px;
         background-size: 40px;        
     }
+    .welcome .content .my-button-group .my-button.registration a{
+        color: white;
+    }
+    .welcome .content .my-button-group .my-button.registration a:hover{
+        text-decoration: none;
+    }
     .welcome .content .my-button-group .my-button.registration:before{
         /*content: "\270E"; */  
     }
@@ -464,6 +470,12 @@ img.profile-imge{
         background-repeat: no-repeat;
         background-position: 15px 10px;
         background-size: 40px;
+    }
+    .welcome .content .my-button-group .my-button.existing-patient a{
+        color: white;
+    }
+    .welcome .content .my-button-group .my-button.existing-patient a:hover{
+        text-decoration: none;
     }
     .welcome .content .my-button-group .my-button.existing-patient:before{
         /*content: "\270E";   */

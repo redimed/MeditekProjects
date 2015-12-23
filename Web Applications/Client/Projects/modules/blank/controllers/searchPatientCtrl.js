@@ -1,19 +1,23 @@
 var app = angular.module('app.blank.searchPatient.controller', []);
 app.controller('searchPatientCtrl', function($scope) {
-	$scope.step1 = true;
-	$scope.step2 = false;
-	$scope.SubmitSearch = function(){
-		if($scope.search.$valid){
-			$scope.step1 = false;
-			$scope.step2 = true;
+	$scope.number = 1;
+	$scope.submitted = false;
+	$scope.next = function(){
+		$scope.submitted = true;
+		if($scope.step1.$valid){
+			$scope.number++;
+			$scope.submitted = false;
 		}
 	};
-	$scope.Cancel = function(){
-		$scope.step1 = true;
-		$scope.step2 = false;
+	$scope.Back = function(){
+		if($scope.step2.$valid){
+			$scope.number--;
+			$scope.submitted = false;
+		}
 	};
-	$scope.SubmitActivation = function(){
-		if($scope.activation.$valid)
+	$scope.submit = function(){
+		$scope.submitted = true;
+		if($scope.step2.$valid)
 			alert('success');
 	};
 });

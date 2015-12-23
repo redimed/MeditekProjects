@@ -31,6 +31,7 @@ function pushGCMNotification(info, devices) {
     })
 };
 
+
 function pushAPNNotification(info, devices) {
     var iosMess = {
         badge: 1,
@@ -40,7 +41,6 @@ function pushAPNNotification(info, devices) {
     };
     TelehealthService.SendAPNPush(iosMess, devices);
 };
-
 module.exports = {
     JoinConferenceRoom: function(req, res) {
         if (!req.isSocket) {
@@ -52,7 +52,7 @@ module.exports = {
         var error = null;
         if (uid) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
-                if (teleUser) {
+                if (teleUser) { 
                     sails.sockets.join(req.socket, uid);
                     sails.sockets.leave(req.socket, req.socket.id);
                     // sails.sockets.blast('onlineUser',{msg:'join'});
@@ -69,8 +69,7 @@ module.exports = {
             err.pushError("Socket Request Only!");
             return res.serverError(ErrorWrap(err));
         }
-        console.log("====Params====: ", req.params.all());
-        sails.log.debug("Socket MessageTransfer: "+ JSON.stringify(req.params.all()));
+        sails.log.debug("Socket MessageTransfer: " + JSON.stringify(req.params.all()));
         var from = req.param('from');
         var to = req.param('to');
         var message = req.param('message');
@@ -87,6 +86,10 @@ module.exports = {
             sessionId = req.param('sessionId');
             if (!sessionId) return;
             token = opentok.generateToken(sessionId, tokenOptions);
+            data.apiKey = config.OpentokAPIKey;
+            data.sessionId = sessionId;
+            data.token = token;
+            data.fromName = !fromName ? 'Unknown' : fromName;
             var pushInfo = {
                 data: {
                     "data": {
@@ -123,18 +126,15 @@ module.exports = {
             })
         }
         if (roomList.length > 0) {
-            for (var i = 0; i < roomList.length; i++) {
-                if (roomList[i] == to) {
-                    data.from = from;
-                    data.message = message;
-                    if (message.toLowerCase() == 'call') {
-                        data.apiKey = config.OpentokAPIKey;
-                        data.sessionId = sessionId;
-                        data.token = token;
-                        data.fromName = !fromName ? 'Unknown' : fromName;
-                    }
-                    sails.sockets.broadcast(roomList[i], 'receiveMessage', data);
-                }
+            if (_.contains(roomList, to)) {
+                data.from = from;
+                data.message = message;
+                sails.sockets.broadcast(to, 'receiveMessage', data);
+            }
+            if (sails.sockets.subscribers(from).length > 1 && message.toLowerCase() != 'call') {
+                data.from = from;
+                data.message = message.toLowerCase() == 'answer' ? 'decline' : message;
+                sails.sockets.broadcast(from, 'receiveMessage', data, req.socket);
             }
         }
     },

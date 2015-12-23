@@ -39,12 +39,12 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
     $scope.wainformation = angular.copy(data);
     $scope.FileUploadImage = []
     $scope.FileUploads = function(){
+        $scope.FileUploadImage = angular.copy($scope.wainformation.FileUploads)
         for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
             $scope.FileUploadImage = $scope.FileUploadImage.concat($scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads)
         }
     }
     $scope.FileUploads()
-    console.log($scope.FileUploadImage)
     $scope.tab_body_part = 'all';
     $scope.checkRoleUpdate = true;
     if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' 
@@ -52,7 +52,6 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
         || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
         $scope.checkRoleUpdate = false;
     };
-    console.log('$scope.wainformation', $scope.wainformation);
     $scope.Temp = angular.copy(data)
     var ClinicalDetailsTemp = [];
     $scope.loadFuntion = function() {

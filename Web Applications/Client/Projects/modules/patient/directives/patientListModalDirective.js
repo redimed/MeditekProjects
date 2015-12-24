@@ -202,7 +202,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						PatientService.updatePatient(scope.info).then(function(response){
 							if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
 							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
-							   	if(scope.typeFile=="imageAvatar"){
+							   	// if(scope.typeFile=="imageAvatar"){
+							   		scope.imgDelete = scope.info.FileUID;
 								   	$http({
 									  method: 'GET',
 									  url: o.const.fileBaseUrl+'/api/enableFile/false/'+scope.imgDelete
@@ -212,7 +213,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 									},function (err) {
 										console.log(err);
 									});
-								}
+								// }
 							}
 							scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
 							scope.uploader.uploadAll();

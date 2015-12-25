@@ -112,3 +112,31 @@ app.directive('autoComplete', function($timeout){
         iElement.attr('type','text');
     };
 });
+
+app.directive('patientDetailDirective',function(){
+    return {
+        restrict: 'E',
+        templateUrl: 'common/views/patientDetailDirective.html',
+        link: function(scope, $state){
+
+        },
+    };
+});
+app.directive('medicareDirective',function(){
+    return {
+        restrict: 'E',
+        templateUrl: 'common/views/medicareDirective.html',
+        link: function(scope, $state){
+            
+        },
+    };
+});
+app.directive('appointmentDetailDirective',function(){
+    return {
+        restrict: 'E',
+        templateUrl: 'common/views/appointmentDetailDirective.html',
+        link: function(scope, $state){
+            
+        },
+    };
+});

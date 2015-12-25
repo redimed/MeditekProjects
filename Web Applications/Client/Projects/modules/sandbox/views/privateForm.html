@@ -13,7 +13,7 @@
 </div>
 <!-- END PAGE BAR -->
 <!-- BEGIN PAGE TITLE-->
-<h3 class="page-title">&nbsp;</h3>
+<br>
 <!-- END PAGE TITLE-->
 <div class="portlet box red">
     <div class="portlet-title">
@@ -36,7 +36,7 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <div class="form-group">
-                                    <label class="control-label">Please tick</label>
+                                    <label class="control-label">Title</label>
                                     <div class="radio-list">
                                         <label class="radio-inline">
                                             <input type="radio" name="title" value="Mr"> Mr</label>
@@ -58,6 +58,12 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <label class="control-label">Family Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Middle Name</label>
                                     <input type="text" class="form-control">
                                 </div>
                             </div>
@@ -85,7 +91,13 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <div class="form-group">
-                                    <label class="control-label ">Address</label>
+                                    <label class="control-label ">Address1</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label ">Address2</label>
                                     <input type="text" class="form-control">
                                 </div>
                             </div>
@@ -141,7 +153,7 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <div class="form-group">
-                                    <label class="control-label">Location of injury: (please tick)</label>
+                                    <label class="control-label">Location of injury</label>
                                     <div class="checkbox-list">
                                         <label class="checkbox-inline">
                                             <input type="checkbox"> Hand / Upper limb
@@ -205,7 +217,7 @@
                         <div class="form-group">
                             <div class="radio-list">
                                 <label class="control-label radio-inline">
-                                    Do you have Private Health Insurance? YES / NO <i>(Please circle)</i>  
+                                    Do you have Private Health Insurance? YES / NO 
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" name="PrivateHealthInsurance" value="YES"> YES
@@ -218,7 +230,7 @@
                         <div class="form-group">
                             <div class="radio-list">
                                 <label class="control-label radio-inline">
-                                    Do you have Hospital Cover? YES / NO <i>(Please circle)</i>  
+                                    Do you have Hospital Cover? YES / NO 
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" name="HospitalCover" value="YES"> YES
@@ -231,7 +243,7 @@
                         <div class="form-group">
                             <div class="radio-list">
                                 <label class="control-label radio-inline">
-                                    Do you have cover for Occupational Therapy/Hand Therapy? YES / NO  <i>(Please circle)</i>
+                                    Do you have cover for Occupational Therapy/Hand Therapy? YES / NO 
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" name="OcupationalTherapy_HandTherapy" value="YES"> YES
@@ -284,7 +296,7 @@
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group">
-                                    <label class="control-label">Gold or White Card Holder <i>(Please circle)</i></label>
+                                    <label class="control-label">Gold or White Card Holder </label>
                                     <div class="radio-list">
                                         <label class="radio-inline">
                                             <input type="radio" name="CardHolder" value="Gold"> Gold
@@ -522,7 +534,17 @@
 
                         <ul>
                             <li>
-                                <p>I consent / do not consent to the release of medical information and notes to my general practitioner.</p>
+                                <div class="form-group">
+                                    <label class="control-lable">I consent / do not consent to the release of medical information and notes to my general practitioner.</label>
+                                    <div class="radio-list">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="release_note1" value="YES"> Consent
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="release_note1" value="NO"> Do not consent
+                                        </label>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6 col-offset-md-1 col-sm-offset-1">
                                         <div class="form-group">
@@ -553,13 +575,18 @@
                             </li>
                             <li>
                                 <div class="form-group">
+                                    <label class="control-label">
+                                        <div class="form-inline">
+                                            I consent / do not consent to the release of medical information and notes to my employer.
+                                            <input type="text" class="form-control">
+                                            </div>
+                                    </label>
                                     <div class="radio-list">
-                                        <label class="radio-inline">I consent / do not consent to the release of medical information and notes to my employer.</label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="release_note" value="YES"> Consent
+                                            <input type="radio" name="release_note2" value="YES"> Consent
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="release_note" value="YES"> Do not consent
+                                            <input type="radio" name="release_note2" value="NO"> Do not consent
                                         </label>
                                     </div>
                                 </div>
@@ -627,7 +654,8 @@
                 </div>
             </div>
             <div class="form-actions right">
-                <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+                <button type="submit" class="btn btn-lg red">
+                    <i class="glyphicon glyphicon-save"></i> Submit</button>
             </div>
         </form>
     </div>

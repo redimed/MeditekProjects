@@ -7,5 +7,10 @@ var app = angular.module("app.authentication.consultation.detail.controller",[
 
 app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices) {
     $scope.userInfo = $cookies.getObject('userInfo');
-
+    $scope.Call = function(){
+		window.open('/#/blank/call');
+	};
+	$scope.eForms = function(){
+		$state.go("authentication.eForms.list");
+	};
 });

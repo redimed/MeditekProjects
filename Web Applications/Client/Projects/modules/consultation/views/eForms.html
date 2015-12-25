@@ -1,188 +1,42 @@
-<div class="page-bar ">
-    <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="authentication.home.list">
-                Home</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <a ui-sref="authentication.consultation.list">
-                Consultation</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <a ui-sref="authentication.consultation.detail">Treating Doctor</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <b>E-Forms</b>
-        </li>
-    </ul>
-</div>
-<br>
-<div class="row">
-    <div class="col-md-9 col-sm-9">
-        <div class="portlet light bordered">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="glyphicon glyphicon-th-list font-purple"></i>
-                    <span class="caption-subject bold uppercase font-purple">E-Forms</span>
-                    <!-- <span class="caption-helper"></span> -->
-                </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse"> </a>
-                    <a href="javascript:;" class="fullscreen"> </a>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <div class="dashboard-stat blue">
-                            <div class="visual">
-                                <i class="glyphicon glyphicon-user"></i>
-                            </div>
-                            <div class="details">
-                                <div class="number">Medical History</div>
-                            </div>
-                            <a class="more" href="javascript:;" ui-sref="authentication.consultation.detail.patientAdmission">
-                                View  <i class="m-icon-swapright m-icon-white"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <div class="dashboard-stat yellow">
-                            <div class="visual">
-                                <i class="icon-user-follow"></i>
-                            </div>
-                            <div class="details">
-                                <div class="number">Consent Form</div>
-                            </div>
-                            <a class="more" href="javascript:;" ui-sref="authentication.consultation.detail.consultNote">
-                                Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="glyphicon glyphicon-th-list font-blue"></i>
+            <span class="caption-subject bold uppercase font-blue">Consultation > E-Forms</span>
+            <!-- <span class="caption-helper"></span> -->
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+            <a href="javascript:;" class="fullscreen"> </a>
         </div>
     </div>
-    <div class="col-md-3 col-sm-3">
-        <div class="portlet portlet-fit box green-haze">
-            <div class="portlet-title">
-                <div class="caption">
-                    <span class="caption-subject ">
-                        <div class="row">
-                            <div class="col-md-4 col-sm-8">
-                                <div class="thumbnail" style="margin-bottom:3px; border-radius: 50% !important">
-                                    <img src="theme/assets/global/images/no_person.jpg" class="profile-imge" width="100%" style="border-radius: 50% !important" />
-                                </div>
-                            </div>
-                            <div class="col-md-8 col-md-8">
-                                <h3 class="bold">Marcus Doe &nbsp;&nbsp;<i class="icon-symbol-male"></i></h3>
-                                <h5 class="bold uppercase">Patient</h5>
-                            </div>
-                        </div>
-                    </span>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <table class="table">
-                    <tr>
-                        <td><i class="fa fa-gift"></i> DOB</td>
-                        <td>02:09.1970</td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-paw"></i> Allergy</td>
-                        <td>No Allergy</td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-clock-o"></i> Time</td>
-                        <td>07.10.2015 09:90 AM</td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-calendar-o"></i> New Appt</td>
-                        <td>
-                            <a href="" class="btn green">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <i class="fa fa-calendar-plus-o"></i>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="dashboard-stat blue">
+                    <div class="visual">
+                        <i class="glyphicon glyphicon-user"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">Medical History</div>
+                    </div>
+                    <a class="more" href="javascript:;" ui-sref="authentication.consultation.detail.patientAdmission">
+                                View  <i class="m-icon-swapright m-icon-white"></i>
                             </a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div class="portlet portlet-fit box yellow-soft">
-            <div class="portlet-title">
-                <div class="caption">
-                    <span class="caption-subject bold uppercase"><i class="glyphicon glyphicon-user"></i> Contact</span>
-                </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse"> </a>
                 </div>
             </div>
-            <div class="portlet-body">
-                <table class="table">
-                    <tr>
-                        <td><i class="fa fa-building-o"></i> Company Name</td>
-                        <td>
-                            <label>
-                                <input type="checkbox"> N&N Building</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-gear"></i> NOK Contact</td>
-                        <td>
-                            <label>
-                                <input type="checkbox"> N/A</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-phone"></i> NOK Phone</td>
-                        <td>
-                            <label>
-                                <input type="checkbox"> N/A</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-heart"></i> Insurer</td>
-                        <td>
-                            <label>
-                                <input type="checkbox"> N/A</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-medkit"></i> Treating Doctor</td>
-                        <td>
-                            <label>
-                                <input type="checkbox"> 1111</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-check-circle"></i> Online Users</td>
-                        <td>
-                            <a class="btn btn-sm btn-info">Call &nbsp;&nbsp;<i class="glyphicon glyphicon-earphone"></i></a>
-                            <a class="btn btn-sm btn-danger">Chat &nbsp;&nbsp;<i class="glyphicon glyphicon-comment"></i></a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div class="portlet portlet-fit box grey-mint">
-            <div class="portlet-title">
-                <div class="caption">
-                    <span class="caption-subject bold uppercase">
-                        <i class="glyphicon glyphicon-bell"></i> Notification List
-                    </span>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="dashboard-stat yellow">
+                    <div class="visual">
+                        <i class="icon-user-follow"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">Consent Form</div>
+                    </div>
+                    <a class="more" href="javascript:;" ui-sref="authentication.consultation.detail.consultNote">
+                                Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
+                            </a>
                 </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse"> </a>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <p>1) Reuse of syringes to access medication vials used for > 1 patient</p>
-                <p>2) Failure to property reprocess reusable medical equipment</p>
             </div>
         </div>
     </div>

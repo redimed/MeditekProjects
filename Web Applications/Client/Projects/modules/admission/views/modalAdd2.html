@@ -1,0 +1,56 @@
+<form name="form" class="form-horizontal" novalidate ng-submit="save()">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" 
+			aria-hidden="true" ng-click="cancel()"></button>
+		<h4 class="modal-title uppercase bold font-red">
+			<i class="icon-settings"></i> {{title}}</h4>
+	</div>
+	<div class="modal-body">
+		<div class="form-body">
+			<div class="form-group">
+				<label class="control-label col-md-3 col-sm-3">Medication</label>
+				<div class="col-md-8 col-sm-8">
+					<input type="text" class="form-control" ng-model="data.medication">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-3 col-sm-3">Frequency</label>
+				<div class="col-md-8 col-sm-8">
+					<input type="text" class="form-control" ng-model="data.frequency">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-3 col-sm-3">Daily Dose</label>
+				<div class="col-md-8 col-sm-8">
+					<input type="text" class="form-control" ng-model="data.daily_dose">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-3 col-sm-3">Cessation Intruction</label>
+				<div class="col-md-8 col-sm-8">
+					<input type="text" class="form-control" rows="3" ng-model="data.cessation_intruction">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-3 col-sm-3">Date Ceased</label>
+				<div class="col-md-8 col-sm-8">
+					<input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" rows="3" ng-model="data.date_ceased" readonly>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-3 col-sm-3">Nursing Notes</label>
+				<div class="col-md-8 col-sm-8">
+					<textarea class="form-control" rows="3" ng-model="data.nursing_notes"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="form-actions right">
+			<button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+				ng-click="cancel()">Cancel</button>
+			<button type="submit" class="btn btn-lg red">
+				<i class="glyphicon glyphicon-save"></i> Save</button>
+		</div>
+	</div>
+</form>

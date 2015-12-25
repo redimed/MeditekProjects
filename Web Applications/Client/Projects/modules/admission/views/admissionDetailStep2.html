@@ -1,0 +1,84 @@
+<form name="form" novalidate role="form" ng-submit="submit()">
+    <div class="form-body">
+        <h4 class="form-section bold">ALLERGIES/ALERTS</h4>
+        <div class="form-group">
+            <div class="radio-list">
+                <label class="radio-inline">Do you have adverse reactions to anaesthetic e.g. malignant hyperthermia?</label>
+                <label class="radio-inline">
+                    <input type="radio" name="adverse_reactions" value="Yes"> Yes
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="adverse_reactions" value="No"> No
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Details/Reaction</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <div class="radio-list">
+                <label class="radio-inline">Do you have allergies to medications, food, sticking plaster, latex/rubber (e.g. balloons, gloves) or other substances?</label>
+                <label class="radio-inline">
+                    <input type="radio" name="allergies" value="Yes"> Yes
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="allergies" value="No"> No
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">If yes, please list details</label>
+            <input type="text" class="form-control">
+        </div>
+
+        <h4 class="form-section bold margin-top-20">LIFESTYLE</h4>
+        <div class="table-scrollable">
+            <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th width="1">Yes</th>
+                        <th width="1">No</th>
+                        <th width="30%">Comments</th>
+                        <th width="20%">Nurse Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Have you ever smoked?
+                        </td>
+                        <td><label><input type="radio" name="dedication1" value="Yes"></label></td>
+                        <td><label><input type="radio" name="dedication1" value="No"></label></td>
+                        <td>
+                            Daily Amount? Ceased?
+                        </td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Do you drink alcohol?</td>
+                        <td><label><input type="radio" name="dedication2" value="Yes"></label></td>
+                        <td><label><input type="radio" name="dedication2" value="No"></label></td>
+                        <td>Daily Amount?</td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Do you use recreational drugs?</td>
+                        <td><label><input type="radio" name="dedication3" value="Yes"></label></td>
+                        <td><label><input type="radio" name="dedication3" value="No"></label></td>
+                        <td>Daily Amount? Type?</td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="form-actions margin-top-40" style="text-align:right">
+        <a ui-sref="authentication.admission.detail.step1" class="btn btn-lg dark">
+            <span class="glyphicon glyphicon-arrow-left"></span> Back
+        </a>
+        <button type="submit" class="btn btn-lg btn-danger">
+            Next Section <span class="glyphicon glyphicon-arrow-right"></span>
+        </button>
+    </div>
+</form>

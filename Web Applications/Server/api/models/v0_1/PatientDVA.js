@@ -18,15 +18,11 @@ module.exports = {
                 isInt: {
                     msg: 'Must be an integer!'
                 }
-            },
-            references: {
-                model: 'Patient',
-                key: 'ID'
             }
         },
         UID: {
             type: Sequelize.STRING(255),
-            allowNull: true,
+            allowNull: false,
             validate: {
                 isUUID: {
                     args: 4,
@@ -34,18 +30,7 @@ module.exports = {
                 }
             }
         },
-        MedicareEligible: {
-            type: Sequelize.STRING(1),
-            allowNull: true,
-            comment: 'Y/N',
-            validate: {
-                len: {
-                    args: [0, 1],
-                    msg: 'Too long!'
-                }
-            }
-        },
-        MedicareNumber: {
+        DVANumber: {
             type: Sequelize.STRING(45),
             allowNull: true,
             validate: {
@@ -55,7 +40,7 @@ module.exports = {
                 }
             }
         },
-        MedicareReferenceNumber: {
+        DVADisability: {
             type: Sequelize.STRING(45),
             allowNull: true,
             validate: {
@@ -65,23 +50,12 @@ module.exports = {
                 }
             }
         },
-        ExpiryDate: {
-            type: Sequelize.DATE,
+        DVACardColour: {
+            type: Sequelize.STRING(45),
             allowNull: true,
-            validate: {
-                isDate: {
-                    msg: 'Invalid!'
-                }
-            }
-        },
-
-        InjuryType: {
-            type: Sequelize.STRING(3),
-            allowNull: true,
-            comment: 'MVA: Motor vehicle accident\nWIY: Work injury',
             validate: {
                 len: {
-                    args: [0, 3],
+                    args: [0, 45],
                     msg: 'Too long!'
                 }
             }
@@ -89,8 +63,24 @@ module.exports = {
     },
     associations: function() {},
     options: {
-        tableName: 'PatientMedicare',
+        tableName: 'PatientDVA',
         timestamps: false,
-        hooks: {}
+        hooks: {
+            // beforeCreate: function(module, options, callback) {
+            //     module.CreatedDate = new Date();
+            //     callback();
+            // },
+            // beforeBulkCreate: function(modules, options, callback) {
+            //     modules.forEach(function(module, index) {
+            //         modules[index].CreatedDate = new Date();
+            //     });
+            //     callback();
+            // },
+            // beforeBulkUpdate: function(module, callback) {
+            //     module.fields.push('ModifiedDate');
+            //     module.attributes.ModifiedDate = new Date();
+            //     callback();
+            // }
+        }
     }
 };

@@ -43,6 +43,7 @@ function pushAPNNotification(info, devices) {
 };
 module.exports = {
     JoinConferenceRoom: function(req, res) {
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
         if (!req.isSocket) {
             var err = new Error("Socket.JoinConferenceRoom.Error");
             err.pushError("Socket Request Only!");

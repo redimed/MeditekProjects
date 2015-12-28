@@ -1,7 +1,7 @@
 <!-- <div class="portlet portlet-sortable light bg-inverse">
 	<div class="portlet-body"> -->
 		<div class="my-skype">
-			<div class="thumbnail">
+			<div class="thumbnail" id="subscriber">
 				<!-- <img src="theme/assets/global/images/patient01.jpg" width="100%" class="img"> -->
 			</div>
 			<div class="row">
@@ -26,8 +26,7 @@
 			<div class="row calling">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<h3 class="text-center page-title">
-						Calling...
-						<br><span>30:05</span>
+						<span>{{counter|formatTimer}}</span>
 					</h3>
 				</div>
 			</div>
@@ -39,7 +38,7 @@
 					<img src="theme/assets/global/images/E-call_13.png" width="100%" class="my-button">
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<img src="theme/assets/global/images/E-call_06.png" width="100%" class="my-button">
+					<img src="theme/assets/global/images/E-call_06.png" width="100%" class="my-button" ng-click="aaa()">
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1 call-plus">
 					<img src="theme/assets/global/images/E-call_22.png" width="100%" class="my-button" ng-click="listUser()">
@@ -99,7 +98,7 @@
 					</div>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<img src="theme/assets/global/images/E-call_18.png" width="100%" class="my-button">
+					<img src="theme/assets/global/images/E-call_18.png" width="100%" class="my-button" ng-click="bbb()">
 				</div>
 
 				<div class="col-md-1 col-sm-1 col-xs-1 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">

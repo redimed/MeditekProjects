@@ -39,18 +39,18 @@ app
         });
         //END TOASTR CONFIG
         // JWT SIGN
-        $httpProvider.interceptors.push(function($q, $location, $cookies,$rootScope) {
+        $httpProvider.interceptors.push(function($q, $location, $cookies, $rootScope) {
             return {
                 'request': function(config) {
                     config.headers = config.headers || {};
-                    config.headers.systemtype="WEB";
+                    config.headers.systemtype = "WEB";
                     if ($cookies.get('token')) {
                         config.headers.Authorization = 'Bearer ' + $cookies.get('token');
                     }
                     return config;
                 },
                 'responseError': function(response) {
-                    var message={
+                    var message = {
                         "isAuthenticated.sessionUserMismatchedUserAccess": "401:001: Access agent is invalid.",
                         "isAuthenticated.secretExpiredPlusAt": "401:002: Session has expired (plus).",
                         "isAuthenticated.oldRefreshCodeExpired": "401:003: Refresh code expired.",
@@ -64,40 +64,32 @@ app
                         "isAuthenticated.notAuthenticated": "401:011: You are not logged in.",
                     };
                     if (response.status === 401 || response.status === 403) {
-                        if(response.data.ErrorsList && response.data.ErrorsList[0])
-                        {
-                            if(message[response.data.ErrorsList[0]])
-                            {
+                        if (response.data.ErrorsList && response.data.ErrorsList[0]) {
+                            if (message[response.data.ErrorsList[0]]) {
                                 alert(message[response.data.ErrorsList[0]]);
-                            }
-                            else
-                            {
+                            } else {
                                 alert("401:0xx : Error");
                             }
                         }
                         $location.path('/login');
-                    }
-                    else
-                    {
-                        if(Boolean(response.headers().requireupdatetoken)===true)
-                        {
+                    } else {
+                        if (Boolean(response.headers().requireupdatetoken) === true) {
                             $rootScope.getNewToken();
                         }
                     }
-                    
+
                     return $q.reject(response);
                 },
 
-                'response':function(response){
+                'response': function(response) {
                     /*if(response.status===202)
                     {
                         $rootScope.getNewToken();
                     }*/
-                    if(Boolean(response.headers().requireupdatetoken)===true)
-                    {
+                    if (Boolean(response.headers().requireupdatetoken) === true) {
                         $rootScope.getNewToken();
                     }
-                    
+
                     return response;
                 },
             };
@@ -108,8 +100,8 @@ app
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
         // END CORS PROXY
         //RESTANGULAR DEFAULT
-    	//CONFIG Access-Control-Allow-Credentials=TRUE
-    	//Mục đích: request có thể send cookies để authentication với passport
+        //CONFIG Access-Control-Allow-Credentials=TRUE
+        //Mục đích: request có thể send cookies để authentication với passport
         RestangularProvider.setBaseUrl(o.const.restBaseUrl);
         RestangularProvider.setDefaultHttpFields({
             'withCredentials': true
@@ -145,7 +137,7 @@ app
             assetsPath: './theme/assets',
             globalPath: './theme/assets/global',
             layoutPath: './theme/assets/layouts/layout',
-            pagesPath  : './theme/assets/pages',
+            pagesPath: './theme/assets/pages',
         };
 
         $rootScope.settings = settings;
@@ -153,16 +145,22 @@ app
         return settings;
     }])
     //SETTING RESTANGULAR WITH FULL RESPONSE FOR FILES SYSTEM (data, status, headers, config)
-    .factory('FileRestangular',function(Restangular){
+    .factory('FileRestangular', function(Restangular) {
         return Restangular.withConfig(function(RestangularConfigurer) {
             RestangularConfigurer.setFullResponse(true);
             RestangularConfigurer.setBaseUrl(o.const.fileBaseUrl);
         });
     })
     //SETTING RESTANGULAR FOR AUTHENTICATION
-    .factory('AuthRestangular',function(Restangular){
+    .factory('AuthRestangular', function(Restangular) {
         return Restangular.withConfig(function(RestangularConfigurer) {
             RestangularConfigurer.setBaseUrl(o.const.authBaseUrl);
+        });
+    })
+    //SETTING RESTANGULAR FOR AUTHENTICATION
+    .factory('TelehealthRestangular', function(Restangular) {
+        return Restangular.withConfig(function(RestangularConfigurer) {
+            RestangularConfigurer.setBaseUrl("http://testapp.redimed.com.au:3009");
         });
     })
     .run(function($rootScope, $cookies, $window, $state, Restangular, toastr, settings) {
@@ -197,14 +195,14 @@ app
         $rootScope.$on('$stateChangeSuccess', function(e, toState, toParams, fromState, fromParams) {
             if (!$cookies.get("userInfo")) {
                 // if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register" && toState.name !== "unAuthentication.activation" && toState.name !== "unAuthentication.forgot" && toState.name !== "unAuthentication.changepass" && toState.name !== "unAuthentication.loginPatient" && toState.name !== "unAuthentication.registerPatient" && toState.name !== "unAuthentication.searchPatient" && && toState.name !== "blank") {
-                if(o.const.configStateBlank.indexOf(toState.name) == -1){
+                if (o.const.configStateBlank.indexOf(toState.name) == -1) {
                     e.preventDefault();
                     $state.go("unAuthentication.login", null, {
                         location: "replace",
                         reload: true
                     });
                 }
-            } else if($cookies.get("userInfo") && $cookies.get("userInfo").Activated == 'Y'){
+            } else if ($cookies.get("userInfo") && $cookies.get("userInfo").Activated == 'Y') {
                 if (toState.name == "unAuthentication.login" || toState.name == "unAuthentication.register") {
                     e.preventDefault();
                     $state.go("authentication.home.list", null, {
@@ -232,20 +230,21 @@ app
         });
 
         //Get New Token
-        $rootScope.getNewToken=function()
-        {
+        $rootScope.getNewToken = function() {
             $.ajax({
                 type: "POST",
                 xhrFields: {
                     withCredentials: true
                 },
-                headers:{
-                    Authorization:'Bearer '+$cookies.get('token'),
-                    systemtype:'WEB'
+                headers: {
+                    Authorization: 'Bearer ' + $cookies.get('token'),
+                    systemtype: 'WEB'
                 },
-                url: o.const.authBaseUrl+'/api/refresh-token/GetNewToken',
-                data: {refreshCode:$rootScope.refreshCode},
-                success: function(data){
+                url: o.const.authBaseUrl + '/api/refresh-token/GetNewToken',
+                data: {
+                    refreshCode: $rootScope.refreshCode
+                },
+                success: function(data) {
                     //STANDARD
                     /*if(data && data.status=='hasToken')
                     {
@@ -256,16 +255,13 @@ app
                     {
                         alert(JSON.stringify(data));
                     }*/
-                    if(data)
-                    {
-                        if(data.refreshCode!=$rootScope.refreshCode)
-                        {
+                    if (data) {
+                        if (data.refreshCode != $rootScope.refreshCode) {
                             $cookies.put("token", data.token);
-                            $rootScope.refreshCode=data.refreshCode;
+                            $rootScope.refreshCode = data.refreshCode;
                         }
                     }
                 },
             });
         }
     })
-    

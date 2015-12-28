@@ -30,14 +30,12 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
-
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE" />
 
     <permission
         android:name="com.redimed.telehealth.patient.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-
 
     <application
         android:name=".MyApplication"
@@ -46,14 +44,15 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/MyTheme">
-
         <activity
             android:name=".LauncherActivity"
             android:label="@string/title_activity_launcher"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -63,12 +62,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".CallActivity"
+            android:alwaysRetainTaskState="true"
             android:clearTaskOnLaunch="true"
             android:keepScreenOn="true"
             android:label="@string/title_activity_call"
             android:launchMode="singleTask"
             android:screenOrientation="sensorPortrait"
-            android:alwaysRetainTaskState="true"
             android:showOnLockScreen="true" />
         <activity
             android:name=".MainActivity"
@@ -79,14 +78,17 @@
             android:name=".ModelActivity"
             android:label="@string/title_activity_model"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".WaitingActivity"
+            android:launchMode="singleTask" />
+
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/api_key"/>
+            android:value="@string/api_key" />
 
         <receiver android:name=".receiver.BootReceiver">
             <intent-filter>
@@ -97,8 +99,10 @@
             android:name=".receiver.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
+
                 <!-- Receives the actual messages. -->
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.redimed.telehealth.patient" />
             </intent-filter>
         </receiver>
@@ -107,19 +111,20 @@
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
+
                 <!-- Receives the registration id. -->
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
                 <category android:name="com.redimed.telehealth.patient" />
             </intent-filter>
         </receiver>
-
 
         <service
             android:name=".service.SocketService"
             android:enabled="true" />
         <service
             android:name=".service.MyGcmListenerService"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
@@ -133,8 +138,7 @@
         </service>
         <service
             android:name=".service.RegistrationIntentService"
-            android:exported="false">
-        </service>
+            android:exported="false"></service>
 
     </application>
 

@@ -3,7 +3,8 @@ module.exports={
 
 		// 'ListCountry': true,
 		'LoadListPatient':['isAuthenticated','isAdmin'],
-		'PatientController': ['isAuthenticated','isAdmin']
+		'PatientController': ['isAuthenticated','isAdmin'],
+		'CheckPatient': true
 		
 	}
 }

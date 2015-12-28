@@ -36,7 +36,9 @@ import android.widget.RemoteViews;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.redimed.telehealth.patient.CallActivity;
+import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
+import com.redimed.telehealth.patient.WaitingActivity;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.receiver.GcmBroadcastReceiver;
 import com.redimed.telehealth.patient.utils.Config;
@@ -90,7 +92,6 @@ public class RegistrationIntentService extends IntentService {
             } else {
                 if (data != null) {
                     SendNotification(data.getString("data"));
-                    Log.d(TAG, data.getString("data") + "");
                 }
             }
 
@@ -106,8 +107,7 @@ public class RegistrationIntentService extends IntentService {
         try {
             JSONObject msg = new JSONObject(message);
             if (msg.get("message").toString().equalsIgnoreCase("call")) {
-                intent = new Intent(this, CallActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent = new Intent(this, WaitingActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);   // To open only one activity on launch
                 intent.putExtra("apiKey", msg.get("apiKey").toString());
                 intent.putExtra("sessionId", msg.get("sessionId").toString());
@@ -140,9 +140,14 @@ public class RegistrationIntentService extends IntentService {
                 notificationManager.notify(CALL_NOTIFICATION_ID, notification);
 
                 PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-                PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP
-                        | PowerManager.ON_AFTER_RELEASE | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "INFO");
+                PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK
+                        | PowerManager.ACQUIRE_CAUSES_WAKEUP
+                        | PowerManager.ON_AFTER_RELEASE
+                        | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "INFO");
                 wakeLock.acquire();
+                if (!MyApplication.getInstance().IsMyServiceRunning(SocketService.class)) {
+                    startService(new Intent(this, SocketService.class));
+                }
             }
         } catch (Exception e) {
             Log.d(TAG + " Error ", e.getLocalizedMessage());

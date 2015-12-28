@@ -1,0 +1,158 @@
+<form name="form" novalidate role="form" ng-submit="submit()">
+    <div class="form-body">
+        <h4 class="form-section bold">PREVIOUS SURGERY/PROCEDURES (e.g.joint replacement, transplants, implants, colonoscopy)</h4>
+    	<div class="table-scrollable">
+            <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
+                <thead>
+                    <tr>
+                        <th width="1">#</th>
+                        <th>Operation</th>
+                        <th>Appros.Year</th>
+                        <th>Surgeon</th>
+                        <th>Notes</th>
+                        <th width="1"></th>
+                        <th width="1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="psp in admissionDetail.step1.PREVIOUS_SURGERY_PROCEDURES">
+                        <td>{{$index+1}}</td>
+                        <td>{{psp.operation}}</td>
+                        <td>{{psp.appros_year}}</td>
+                        <td>{{psp.surgeon}}</td>
+                        <td>{{psp.notes}}</td>
+                        <td>
+                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only blue" 
+                                ng-click="openModaUpdate1($index)">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only red"
+                                ng-click="openModalDelete1($index)">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12" style="text-align:right">
+                <a href="javascript:;" class="btn green" ng-click="openModalAdd1()">
+                    <i class="glyphicon glyphicon-plus"></i> Add
+                </a>
+            </div>
+        </div>
+
+        <h4 class="form-section bold margin-top-40" class="margin-top-20">MEDICATIONS (including puffers, eye drops etc.)</h4>
+        <div class="table-scrollable">
+            <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th width="1">Yes</th>
+                        <th width="1">No</th>
+                        <th width="30%">Comments</th>
+                        <th width="20%">Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Do you take anti-coagulant or blood thinning therapy 
+                        (Warfarin, Coumadin, Plavix, Iscover, Aspirin)?
+                        </td>
+                        <td><label><input type="radio" name="dedication1" value="Yes"></label></td>
+                        <td><label><input type="radio" name="dedication1" value="No"></label></td>
+                        <td class="form-inline">
+                            <div class="form-group margin-bottom-10">
+                                <div class="radio-list">
+                                    <label class="radio-inline">Still to take?</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="Still_to_take" value="Yes" ng-model="admissionDetail.step1.Still_to_take"> Yes
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="Still_to_take" value="No" ng-model="admissionDetail.step1.Still_to_take"> No
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Date to cease:</label>
+                                <input type="text" class="form-control date-picker">
+                            </div>
+                        </td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Do you take steroids, anti-inflammatory drugs,
+                        cortisone tablets/injections?</td>
+                        <td><label><input type="radio" name="dedication2" value="Yes"></label></td>
+                        <td><label><input type="radio" name="dedication2" value="No"></label></td>
+                        <td><input type="text" class="form-control"></td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Do you take herbal supplements or complementary 
+                        therapies e.g. fish oil</td>
+                        <td><label><input type="radio" name="dedication3" value="Yes"></label></td>
+                        <td><label><input type="radio" name="dedication3" value="No"></label></td>
+                        <td><input type="text" class="form-control"></td>
+                        <td><input type="text" class="form-control"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-scrollable margin-top-20">
+            <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
+                <thead>
+                    <tr>
+                        <th width="1">#</th>
+                        <th>Medication</th>
+                        <th>Frequency</th>
+                        <th>Daily Dose</th>
+                        <th>Cessation Instruction</th>
+                        <th>Date Ceased</th>
+                        <th>Nursing Notes</th>
+                        <th width="1"></th>
+                        <th width="1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="m in admissionDetail.step1.MEDICATIONS">
+                        <td>{{$index+1}}</td>
+                        <td>{{m.medication}}</td>
+                        <td>{{m.frequency}}</td>
+                        <td>{{m.daily_dose}}</td>
+                        <td>{{m.cessation_intruction}}</td>
+                        <td>{{m.date_ceased}}</td>
+                        <td>{{m.nursing_notes}}</td>
+                        <td>
+                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only blue" 
+                                ng-click="openModaUpdate2($index)">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only red"
+                                ng-click="openModalDelete2($index)">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12" style="text-align:right">
+                <a href="javascript:;" class="btn green" ng-click="openModalAdd2()">
+                    <i class="glyphicon glyphicon-plus"></i> Add
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions margin-top-40" style="text-align:right">
+	   <button type="submit" class="btn btn-lg btn-danger">
+	    	Next Section <span class="glyphicon glyphicon-arrow-right"></span>
+	    </button>
+    </div>
+</form>

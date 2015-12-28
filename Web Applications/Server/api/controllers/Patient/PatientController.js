@@ -6,7 +6,12 @@ module.exports = {
     */
     CreatePatient: function(req, res) {
         var data = req.body.data;
-        Services.Patient.CreatePatient(data)
+        var otherData = req.body.otherData?req.body.otherData:null;
+        // var PatientPensionData = req.body.PatientPension?req.body.PatientPension:{};
+        // var PatientDVA = req.body.PatientDVA?req.body.PatientDVA:{};
+        // var PatientKin = req.body.PatientKin?req.body.PatientKin:{};
+        // var PatientMedicare = req.body.PatientMedicare?req.body.PatientMedicare:{};
+        Services.Patient.CreatePatient(data, otherData)
             .then(function(patient) {
                 console.log(patient);
                 if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {
@@ -90,9 +95,11 @@ module.exports = {
     */
     UpdatePatient: function(req, res) {
         var data = req.body.data;
-        Services.Patient.UpdatePatient(data)
+        var otherData = req.body.otherData?req.body.otherData:null;
+        Services.Patient.UpdatePatient(data, otherData)
             .then(function(result) {
-                if (result!=undefined && result!=null && result!="" && result[0]==1)
+                console.log(result);
+                if (result!=undefined && result!=null && result!="" && result=="success")
                     res.ok({
                         status: 200,
                         message: "success"

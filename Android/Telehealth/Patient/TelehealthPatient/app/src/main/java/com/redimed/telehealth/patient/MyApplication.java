@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.BroadcastReceiver;
@@ -35,10 +36,15 @@ import java.util.Date;
  */
 public class MyApplication extends Application {
 
+    private int resumed = 0;
+    private int paused = 0;
+    private boolean inForeground = true;
+
     private BroadcastReceiver receiver;
     private String TAG = "MyApplication";
     private static MyApplication myApplication;
     private static SharedPreferences appPreferences;
+
 
     public static MyApplication getInstance() {
         return myApplication;

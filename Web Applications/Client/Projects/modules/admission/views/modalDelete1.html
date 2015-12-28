@@ -1,0 +1,19 @@
+<form name="form" ng-submit="save()">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" 
+			aria-hidden="true" ng-click="Cancel()"></button>
+		<h4 class="modal-title uppercase bold font-red">
+			<i class="icon-trash"></i> {{title}}</h4>
+	</div>
+	<div class="modal-body">
+		<p>Are you sure delete this record ?</p>
+	</div>
+	<div class="modal-footer">
+		<div class="form-actions right">
+			<button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+				ng-click="Cancel()">Cancel</button>
+			<button type="submit" class="btn btn-lg red">
+				<i class="glyphicon glyphicon-save"></i> Submit</button>
+		</div>
+	</div>
+</form>

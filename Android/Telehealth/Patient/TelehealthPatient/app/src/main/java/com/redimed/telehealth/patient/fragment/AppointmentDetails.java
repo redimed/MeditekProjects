@@ -268,11 +268,15 @@ public class AppointmentDetails extends Fragment {
                     }
 
                     //Get image from Appointment
-                    String fileUpload = jsonObject.get("data").getAsJsonObject().get("FileUploads").toString();
-                    fileUploads = gson.fromJson(fileUpload, new TypeToken<List<FileUpload>>() {
-                    }.getType());
-                    for (int i = 0; i < fileUploads.size(); i++) {
-                        urlImg.add(fileUploads.get(i).getUID());
+                    try {
+                        String fileUpload = jsonObject.get("data").getAsJsonObject().get("FileUploads").toString();
+                        fileUploads = gson.fromJson(fileUpload, new TypeToken<List<FileUpload>>() {
+                        }.getType());
+                        for (int i = 0; i < fileUploads.size(); i++) {
+                            urlImg.add(fileUploads.get(i).getUID());
+                        }
+                    } catch (Exception ex) {
+                        Log.d(TAG, ex.getLocalizedMessage());
                     }
                     GetFileUpload(urlImg);
                 } else {
@@ -348,18 +352,22 @@ public class AppointmentDetails extends Fragment {
     }
 
     private static File getOutputMediaFile(int type) {
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        File mediaFile = null;
+
         // External sdcard location
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Telehealth");
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "Telehealth");
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                Log.d(TAG, "Oops! Failed create " + TAG + " directory");
-                return null;
+                mediaStorageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+                mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+                return mediaFile;
             }
         }
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        File mediaFile;
+
         if (type == MEDIA_TYPE_IMAGE) {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
         } else {

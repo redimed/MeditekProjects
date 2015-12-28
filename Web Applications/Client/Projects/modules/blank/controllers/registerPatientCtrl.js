@@ -17,9 +17,8 @@ app.controller('registerPatientCtrl', function($scope) {
 	};
 	$scope.Back = function(){
 		$scope.submitted = true;
-		if($scope.step1.$valid || $scope.step2.$valid){
+		if(($scope.step2.$valid && number == 2) || ($scope.step3.$valid && number == 3)){
 			$scope.number--;
-			
 		}
 	};
 	$scope.Submit = function(){

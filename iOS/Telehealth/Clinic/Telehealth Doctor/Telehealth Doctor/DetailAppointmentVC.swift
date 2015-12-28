@@ -98,34 +98,19 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
                             if let fileUpload: JSON = clinicCal[i]["FileUploads"] {
                                 if fileUpload.count > 0 {
                                     for var i = 0; i < fileUpload.count; ++i {
-
                                         if fileUpload[i]["FileType"].isEmpty && fileUpload[i]["FileType"].stringValue.lowercaseString == "medicalimage" {
-                                            
-                                            SingleTon.imgDataMedical.removeAll()
-                                            let uid = fileUpload[i]["UID"].stringValue
-                                            let url = NSURL(string: "\(DOWNLOAD_IMAGE_APPOINTMENT)\(uid)")
-                                            
-                                            request(.GET, url!, headers: SingleTon.headers)
-                                                .validate(statusCode: 200..<300)
-                                                .responseJSONReToken() { response in
-                                                    
-                                                    guard response.2.value == nil else {
-                                                        print("error download file: ", response)
-                                                        return
-                                                    }
-                                                    
-                                                    if let data: NSData? = response.2.data {
-                                                        if data != nil {
-                                                            SingleTon.imgDataMedical.append(data!)
-                                                        }
-                                                    }
-                                                    
-                                                    
-                                                    
-                                            }
-                                            
+                                            self.getImageFromUID(fileUpload[i]["UID"].stringValue)
                                         }
                                     }
+                                }
+                            }
+                        }
+                    }
+                    if let fileUpload: JSON = readableJSON["data"]["FileUploads"] {
+                        for var i = 0; i < fileUpload.count; i++ {
+                            if fileUpload.count > 0 {
+                                if fileUpload[i]["FileType"].isEmpty && fileUpload[i]["FileType"].stringValue.lowercaseString == "medicalimage" {
+                                    self.getImageFromUID(fileUpload[i]["UID"].stringValue)
                                 }
                             }
                         }
@@ -145,6 +130,26 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
                 button.setTitle(SingleTon.onlineUser_Singleton[uidUser!].fullNamePatient == nil ? "Detail Appointment" : SingleTon.onlineUser_Singleton[uidUser!].fullNamePatient, forState: UIControlState.Normal)
                 break;
             }
+        }
+    }
+    
+    func getImageFromUID(uid: String!) {
+        SingleTon.imgDataMedical.removeAll()
+        let url = NSURL(string: "\(DOWNLOAD_IMAGE)\(uid)")
+        request(.GET, url!, headers: SingleTon.headers)
+            .validate(statusCode: 200..<300)
+            .responseJSONReToken() { response in
+                
+                guard response.2.value == nil else {
+                    print("error download file: ", response)
+                    return
+                }
+                
+                if let data: NSData? = response.2.data {
+                    if data != nil {
+                        SingleTon.imgDataMedical.append(data!)
+                    }
+                }
         }
     }
     
@@ -377,6 +382,7 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
         if manyCells {
             let content = contentDict.valueForKey(mainDetail.objectAtIndex(indexPath.section) as! String) as! NSArray
             cell.textLabel?.text = content.objectAtIndex(indexPath.row) as? String
+            cell.textLabel?.textColor = UIColor.whiteColor()
             cell.backgroundColor = UIColor(hex: "1ac6ff")
             
             //            UIGraphicsBeginImageContext(cell.frame.size)

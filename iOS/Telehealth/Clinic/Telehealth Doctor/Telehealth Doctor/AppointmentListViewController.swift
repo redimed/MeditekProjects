@@ -19,7 +19,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     
     var aptFrom: String!
     var aptTo: String!
-    var totalCountData: Int!
+    var totalCountData: Int?
     
     var titleView2: String!
     
@@ -31,14 +31,16 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadTable:", name: "reloadDataTable", object: nil)
         
         SingleTon.onlineUser_Singleton.removeAll()
-        paramFilter(0, aptFrom: getReFormat().filterFormat, aptTo: getReFormat().filterFormat)
+        paramFilter(0, aptFrom: getReFormat().filterFormat, aptTo: "")
         titleView2 = "Telehealth Appointment"
-        getAppointmentList(APPOINTMENTLIST)
+        
+        // add refresh control for appointment list
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Refresh Appointment List")
         self.refreshControl.addTarget(self, action: "refreshList:", forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(refreshControl)
         
+        getAppointmentList(APPOINTMENTLIST)
         tableView.estimatedRowHeight = 90.0
         tableView.rowHeight = UITableViewAutomaticDimension
     }
@@ -59,12 +61,15 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
         tableView.reloadData()
+        
     }
     
     func reloadTable(notification: NSNotification) {
         if notification.name == "reloadDataTable" {
             SingleTon.onlineUser_Singleton.removeAll()
+            SingleTon.onlineUser_Singleton = []
             let data: JSON = JSON(notification.userInfo!)
             aptFrom = data["data"]["aptFrom"].stringValue
             aptTo = data["data"]["aptTo"].stringValue
@@ -75,8 +80,16 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     
     func refreshList(sender: AnyObject) {
         if let offset = SingleTon.filterParam["data"]!.valueForKey("Offset") as? Int {
-            if offset <= totalCountData && offset != 0 {
+            print(SingleTon.onlineUser_Singleton.count, offset, totalCountData)
+            if offset != 0 && offset <= totalCountData && SingleTon.onlineUser_Singleton.count == totalCountData {
+                if SingleTon.onlineUser_Singleton.count != totalCountData {
+                    SingleTon.onlineUser_Singleton.removeAll()
+                    SingleTon.onlineUser_Singleton = []
+                    getAppointmentList(APPOINTMENTLIST)
+                }
+            } else if offset == 0 {
                 SingleTon.onlineUser_Singleton.removeAll()
+                SingleTon.onlineUser_Singleton = []
                 getAppointmentList(APPOINTMENTLIST)
             }
         }
@@ -116,9 +129,9 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         cell.statusApt.text = singletonOnlineUser.statusApt
         if let status = singletonOnlineUser.status {
             if status != 0 {
-                //                cell.statusImageView.hidden = false
+                // cell.statusImageView.hidden = false
             } else {
-                //                cell.statusImageView.hidden = true
+                // cell.statusImageView.hidden = true
             }
         }
         return cell
@@ -203,9 +216,9 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
                             )
                             
                             SingleTon.onlineUser_Singleton.append(onlineObj)
-                            self.tableView.reloadData()
-                            self.tableView.tableFooterView = UIView(frame: CGRect.zero)
                         }
+                        self.tableView.reloadData()
+                        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
                     }
                 }
         }

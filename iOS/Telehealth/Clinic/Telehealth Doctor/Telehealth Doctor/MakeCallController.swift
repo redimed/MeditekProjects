@@ -33,8 +33,10 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     var idOnlineUser : Int!
     let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("teleUserInfo") as! NSDictionary
     let screenSize: CGRect = UIScreen.mainScreen().bounds
+    
     var avAudioPlayer : AVAudioPlayer?
     var soundFileURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("ringtone", ofType: "wav")!)
+    
     var loading: DTIActivityIndicatorView!
     var customUI: CustomViewController = CustomViewController()
     var isClickEnd = false
@@ -92,6 +94,15 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         NSUserDefaults.standardUserDefaults().setValue(SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, forKey: "currentUserCall")
     }
     
+    /**
+     Hidden all controler button
+     */
+    override func viewWillAppear(animated: Bool) {
+        for button : UIButton in controllerButtonCall {
+            button.hidden = true
+        }
+    }
+    
     //    play sound when calling to patient
     func playSoundCall() {
         do {
@@ -117,7 +128,6 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
                 timer?.invalidate()
                 timer = nil
                 isAnswer = true
-                receiveAnswerEvent()
                 break
             case "decline":
                 timer?.invalidate()
@@ -185,7 +195,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
             }
         }
         
-        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, JSON(NSUserDefaults.standardUserDefaults().valueForKey("userInfo")!)["UserName"].stringValue)])
+        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, SingleTon.nameLogin!)])
         
         timer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "timeOutOffCall", userInfo: nil, repeats: false)
     }
@@ -292,7 +302,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     func sendMessEnd() {
         SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "cancel")])
         
-        let param = ["data":["message": "end"], "title": "Message end call", "uid": SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "sound": "abc"]
+        let param = ["data":["message": "end"], "title": "Missed call from", "uid": SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "sound": "abc", "badge": 0, "category": "end"]
         request(.POST, PUSH_ACTION, headers: SingleTon.headers, parameters: param as? [String : AnyObject])
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
@@ -351,7 +361,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
         loading.stopActivity(true)
         
         /// Emit call patient
-        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, JSON(NSUserDefaults.standardUserDefaults().valueForKey("userInfo")!)["UserName"].stringValue)])
+        SingleTon.socket.emit("get", ["url": NSString(format: MAKE_CALL, userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "call", SessionID, SingleTon.nameLogin!)])
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -443,6 +453,16 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     
     func session(session: OTSession, connectionCreated connection : OTConnection) {
         NSLog("session connectionCreated (\(connection.connectionId))")
+        if connection.connectionId.characters.count > 0 {
+            receiveAnswerEvent()
+            for button : UIButton in controllerButtonCall {
+                if button.tag >= 0 && button.tag <= 2 {
+                    button.hidden = false
+                } else {
+                    button.hidden = true
+                }
+            }
+        }
     }
     
     func session(session: OTSession, connectionDestroyed connection : OTConnection) {

@@ -21,5 +21,6 @@ class Singleton {
     var detailAppointMentObj: JSON!
     var flagSegue = Bool() // true ? TeleAppointment : WAAppointment
     var filterParam = [String: AnyObject]()
+    var nameLogin: String?
 }
 let SingleTon = Singleton()

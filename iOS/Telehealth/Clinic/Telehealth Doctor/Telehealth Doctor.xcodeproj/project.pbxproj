@@ -571,7 +571,6 @@
 				0045A2DA1BCF884900AC4028 /* Make Call */,
 				0045A2D91BCF883700AC4028 /* Login */,
 				004F6D171BB99FE300242CE9 /* CustomUI */,
-				00D5127F1BB4E8150068942D /* Constants */,
 				0045A2D81BCF881200AC4028 /* Appointment List */,
 			);
 			name = Controllers;
@@ -622,6 +621,7 @@
 			children = (
 				00D5127E1BB4E7810068942D /* Delegate */,
 				AFF10DF81BB27A39005E9838 /* Resource */,
+				00D5127F1BB4E8150068942D /* Constants */,
 				AFF10DF51BB279FE005E9838 /* Controllers */,
 				AFF10E011BB286E1005E9838 /* Model */,
 				AFF21D801BB12D8B006A190E /* Main.storyboard */,
@@ -726,7 +726,7 @@
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};

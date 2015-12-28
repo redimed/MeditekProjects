@@ -202,6 +202,28 @@ class LoginViewController: UIViewController {
                         "appid": NSBundle.mainBundle().bundleIdentifier! as String
                     ]
                     
+                    let param = ["data": ["UID": userJSON["UID"].stringValue]]
+                    request(.POST, GET_INFO, headers: headergetUser, parameters: param)
+                        .validate(statusCode: 200..<300)
+                        .validate(contentType: ["application/json"])
+                        .responseJSON { response -> Void in
+                            print(response)
+                            guard response.2.error == nil else {
+                                print("error get data doctor user info", response.2.error!)
+                                return
+                            }
+                            
+                            if let value: AnyObject = response.2.value {
+                                let readableJSON = JSON(value)["data"]
+                                var user = [String: String]()
+                                for (key, object) in readableJSON {
+                                    user[key] = object.stringValue
+                                }
+                                
+                                self.userDefault.setObject(user, forKey: "doctorInfo")
+                            }
+                    }
+                    
                     request(.GET, GET_TELEUSER+userJSON["UID"].stringValue, headers: headergetUser)
                         .validate(statusCode: 200..<300)
                         .validate(contentType: ["application/json"])
@@ -214,7 +236,6 @@ class LoginViewController: UIViewController {
                             
                             if let value: AnyObject = response.2.value {
                                 let readableJSON = JSON(value)
-                                
                                 var user = [String: String]()
                                 for (key, object) in readableJSON {
                                     user[key] = object.stringValue

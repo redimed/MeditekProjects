@@ -63,27 +63,29 @@ public class RESTClient {
                 .setErrorHandler(new RetrofitErrorHandler())
                 .build();
 
+        //SessionRequestInterceptorCore
         restAdapterCore = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(Config.apiURLCore)
                 .setClient(new InterceptingOkClient(okHttpClient))
-                .setRequestInterceptor(new SessionRequestInterceptorCore())
+                .setRequestInterceptor(new SessionRequestInterceptor())
                 .setErrorHandler(new RetrofitErrorHandler())
                 .build();
 
+        //SessionRequestInterceptorCore
         restAdapterLogin = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(Config.apiURLLogin)
                 .setClient(new InterceptingOkClient(okHttpClient))
-                .setRequestInterceptor(new SessionRequestInterceptorCore())
+                .setRequestInterceptor(new SessionRequestInterceptor())
                 .setErrorHandler(new RetrofitErrorHandler())
                 .build();
     }
 
-    private static class SessionRequestInterceptor implements RequestInterceptor {
+    public static class SessionRequestInterceptor implements RequestInterceptor {
         public void intercept(RequestInterceptor.RequestFacade paramRequestFacade) {
-            paramRequestFacade.addHeader("Accept", "application/json");
-            paramRequestFacade.addHeader("Content-Type", "application/json");
+//            paramRequestFacade.addHeader("Accept", "application/json");
+//            paramRequestFacade.addHeader("Content-Type", "application/json");
             paramRequestFacade.addHeader("SystemType", "ARD");
             paramRequestFacade.addHeader("DeviceID", spDevice.getString("deviceID", null));
             paramRequestFacade.addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", null));
@@ -93,16 +95,16 @@ public class RESTClient {
         }
     }
 
-    private static class SessionRequestInterceptorCore implements RequestInterceptor {
-        public void intercept(RequestInterceptor.RequestFacade paramRequestFacade) {
-            paramRequestFacade.addHeader("SystemType", "ARD");
-            paramRequestFacade.addHeader("DeviceID", spDevice.getString("deviceID", null));
-            paramRequestFacade.addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", null));
-            paramRequestFacade.addHeader("Cookie", uidTelehealth.getString("cookie", null));
-            paramRequestFacade.addHeader("UserUID", uidTelehealth.getString("userUID", null));
-            paramRequestFacade.addHeader("AppID", "com.redimed.telehealth.patient");
-        }
-    }
+//    private static class SessionRequestInterceptorCore implements RequestInterceptor {
+//        public void intercept(RequestInterceptor.RequestFacade paramRequestFacade) {
+//            paramRequestFacade.addHeader("SystemType", "ARD");
+//            paramRequestFacade.addHeader("DeviceID", spDevice.getString("deviceID", null));
+//            paramRequestFacade.addHeader("Authorization", "Bearer " + uidTelehealth.getString("token", null));
+//            paramRequestFacade.addHeader("Cookie", uidTelehealth.getString("cookie", null));
+//            paramRequestFacade.addHeader("UserUID", uidTelehealth.getString("userUID", null));
+//            paramRequestFacade.addHeader("AppID", "com.redimed.telehealth.patient");
+//        }
+//    }
 
     public static RegisterApi getRegisterApi() {
         return restAdapter.create(RegisterApi.class);

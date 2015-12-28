@@ -155,4 +155,7 @@
     <!-- Notification-->
     <string name="api_key">24396950171</string>
     <string name="not_title">Telehealth</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

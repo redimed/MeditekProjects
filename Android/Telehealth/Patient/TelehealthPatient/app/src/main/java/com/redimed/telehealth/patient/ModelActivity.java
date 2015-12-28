@@ -9,6 +9,7 @@ import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -74,6 +75,7 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
         LoadImageUpload();
 
         btnUpload.setOnClickListener(this);
+
     }
 
     private void LoadImageUpload() {

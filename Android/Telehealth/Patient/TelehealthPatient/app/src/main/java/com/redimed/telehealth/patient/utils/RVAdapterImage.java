@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import com.redimed.telehealth.patient.R;
+import com.redimed.telehealth.patient.network.RESTClient;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.UrlConnectionDownloader;
 import java.io.IOException;
@@ -75,7 +77,8 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .error(R.drawable.icon_error_image)
-                .fit().centerInside().into(holder.imgContains, new Callback() {
+                .fit().centerInside()
+                .into(holder.imgContains, new Callback() {
             @Override
             public void onSuccess() {
                 if (holder.progressBar != null) {
@@ -90,6 +93,8 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
                 }
             }
         });
+
+
     }
 
     @Override

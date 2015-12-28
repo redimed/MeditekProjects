@@ -1,5 +1,6 @@
 package com.redimed.telehealth.patient.utils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
@@ -10,14 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-
 import com.redimed.telehealth.patient.R;
+import com.redimed.telehealth.patient.network.RESTClient;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.UrlConnectionDownloader;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -76,7 +77,8 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .error(R.drawable.icon_error_image)
-                .fit().centerInside().into(holder.imgContains, new Callback() {
+                .fit().centerInside()
+                .into(holder.imgContains, new Callback() {
             @Override
             public void onSuccess() {
                 if (holder.progressBar != null) {
@@ -86,8 +88,13 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
 
             @Override
             public void onError() {
+                if (holder.progressBar != null) {
+                    holder.progressBar.setVisibility(View.GONE);
+                }
             }
         });
+
+
     }
 
     @Override
@@ -95,7 +102,7 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
         return fileUploads.size();
     }
 
-    public static class ImageListViewHolder extends RecyclerView.ViewHolder {
+    public class ImageListViewHolder extends RecyclerView.ViewHolder {
         ImageView imgContains;
         RecyclerView rvImageAppointment;
         CardView cardViewImageApp;
@@ -107,6 +114,17 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
             rvImageAppointment = (RecyclerView) itemView.findViewById(R.id.rvImageAppointment);
             cardViewImageApp = (CardView) itemView.findViewById(R.id.cardViewImageApp);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
+            itemView.setClickable(true);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DialogViewImage(v.getContext(), getAdapterPosition());
+                }
+            });
         }
+    }
+
+    public void DialogViewImage(Context context, int position){
+        new DialogViewImage(context, fileUploads.get(position)).show();
     }
 }

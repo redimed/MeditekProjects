@@ -10,9 +10,6 @@ public class Patient {
     @SerializedName("UID")
     private String UID;
 
-    @SerializedName("UserAccountID")
-    private int UserAccountID;
-
     @SerializedName("FirstName")
     private String FirstName;
 
@@ -49,16 +46,15 @@ public class Patient {
     @SerializedName("HomePhoneNumber")
     private String HomePhoneNumber;
 
-    @SerializedName("Enable")
-    private String Enable;
-
     @SerializedName("CountryName")
     private String CountryName;
 
     @SerializedName("UserAccount")
     private UserAccount userAccount;
 
-    private String Limit;
+    @SerializedName("FileUID")
+    private String FileUID;
+
 
     public String getUID() {
         return UID;
@@ -66,14 +62,6 @@ public class Patient {
 
     public void setUID(String UID) {
         this.UID = UID;
-    }
-
-    public int getUserAccountID() {
-        return UserAccountID;
-    }
-
-    public void setUserAccountID(int userAccountID) {
-        UserAccountID = userAccountID;
     }
 
     public String getFirstName() {
@@ -172,14 +160,6 @@ public class Patient {
         HomePhoneNumber = homePhoneNumber;
     }
 
-    public String getEnable() {
-        return Enable;
-    }
-
-    public void setEnable(String enable) {
-        Enable = enable;
-    }
-
     public String getCountryName() {
         return CountryName;
     }
@@ -196,11 +176,11 @@ public class Patient {
         this.userAccount = userAccount;
     }
 
-    public String getLimit() {
-        return Limit;
+    public String getFileUID() {
+        return FileUID;
     }
 
-    public void setLimit(String limit) {
-        Limit = limit;
+    public void setFileUID(String fileUID) {
+        FileUID = fileUID;
     }
 }

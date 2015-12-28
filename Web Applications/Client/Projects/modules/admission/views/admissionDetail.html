@@ -1,0 +1,151 @@
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:;" ui-sref="authentication.home.list">
+                    Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <a href="javascript:;" ui-sref="authentication.admission.detail">
+                    Admission</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Detail</b>
+        </li>
+    </ul>
+</div>
+<br>
+<pre>{{admissionDetail}}</pre>
+<div class="row">
+    <div class="col-md-9 col-sm-9">
+        <div class="portlet portlet-fit light bordered">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="fa fa-graduation-cap font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase">Admission Detail</span>
+                    <span class="caption-helper">Step {{$state.current.data.step}} of 3</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                    <a href="javascript:;" class="reload"> </a>
+                    <a href="javascript:;" class="fullscreen"> </a>
+                    <!-- <a href="javascript:;" class="remove"> </a> -->
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="form-wizard">
+                    <ul class="nav nav-pills nav-justified steps">
+                        <li ui-sref-active="active" ng-class="{'done' : ['/step3','/step2'].indexOf($state.current.url) != -1}">
+                            <a ui-sref="authentication.admission.detail.step1" class="step">
+                                <span class="number">1</span>
+                                <span class="desc"><i class="fa fa-check"></i> Step 1 </span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" ng-class="{'done' : ['/step3'].indexOf($state.current.url) != -1}">
+                            <!-- <a href="#tab2" data-toggle="tab" class="step"> -->
+                            <a ui-sref="authentication.admission.detail.step2" class="step">
+                                <span class="number">2</span>
+                                <span class="desc"><i class="fa fa-check"></i> Step 2 </span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" id="li-step3">
+                            <!-- <a href="#tab3" data-toggle="tab" class="step active"> -->
+                            <a ui-sref="authentication.admission.detail.step3" class="step">
+                                <span class="number">3</span>
+                                <span class="desc"><i class="fa fa-check"></i> Step 3 </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div id="bar" class="progress progress-sm progress-striped active" role="progressbar">
+                        <a class="progress-bar progress-bar-danger"></a>
+                    </div>
+                    <div id="signup-form">
+                        <div id="form-views" ui-view></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-3">
+        <div class="portlet portlet-fit box red">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject ">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-6">
+                                    <div class="thumbnail" style="margin-bottom:3px; border-radius: 50% !important">
+                                        <img src="theme/assets/global/images/no_person.jpg" class="profile-imge" width="100%" style="border-radius: 50% !important" />
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-md-4 col-xs-6">
+                                    <h3 class="bold">Elizabeth Memdel</h3>
+                                    <h5 class="bold uppercase">Patient</h5>
+                                </div>
+                            </div>
+                        </span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-hover">
+                        <tr>
+                            <td>DOB</td>
+                            <td>02:09.1970</td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td>Male</td>
+                        </tr>
+                        <tr>
+                            <td>Medicare Eligible</td>
+                            <td><i class="glyphicon glyphicon-ok font-green"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Medicare Number</td>
+                            <td>123456</td>
+                        </tr>
+                        <tr>
+                            <td>Medicare Reference Number</td>
+                            <td>.....</td>
+                        </tr>
+                        <tr>
+                            <td>Expiry Date</td>
+                            <td>12/12/2014</td>
+                        </tr>
+                        <tr>
+                            <td>DVA Number</td>
+                            <td>.....</td>
+                        </tr>
+                        <tr>
+                            <td>Motor Vehicle Accident</td>
+                            <td><i class="glyphicon glyphicon-ok font-green"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Work Injury</td>
+                            <td><i class="glyphicon glyphicon-remove font-red"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Next of Kin/Guardian</td>
+                            <td>.....</td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>.....</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship</td>
+                            <td>.....</td>
+                        </tr>
+                        <tr>
+                            <td>Contact Number</td>
+                            <td>.....</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

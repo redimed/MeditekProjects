@@ -18,9 +18,6 @@ public class FileUpload {
     @SerializedName("UID")
     private String UID;
 
-    @SerializedName("Description")
-    private String Description;
-
     private String apptUID;
 
     public FileUpload(String uid) {
@@ -52,14 +49,6 @@ public class FileUpload {
 
     public void setFileUID(String fileUID) {
         this.fileUID = fileUID;
-    }
-
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String description) {
-        Description = description;
     }
 
     public String getApptUID() {

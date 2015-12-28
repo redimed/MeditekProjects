@@ -36,7 +36,9 @@ import android.widget.RemoteViews;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.redimed.telehealth.patient.CallActivity;
+import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
+import com.redimed.telehealth.patient.WaitingActivity;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.receiver.GcmBroadcastReceiver;
 import com.redimed.telehealth.patient.utils.Config;
@@ -52,7 +54,9 @@ import java.util.TimerTask;
 public class RegistrationIntentService extends IntentService {
 
     private Notification notification;
+    private PendingIntent contentIntent;
     private SharedPreferences uidTelehealth;
+    private NotificationCompat.Builder builder;
     private static int CALL_NOTIFICATION_ID = 0;
     private static SharedPreferences.Editor editor;
     private static String TAG = "RegIntentService";
@@ -99,54 +103,54 @@ public class RegistrationIntentService extends IntentService {
     }
 
     private void SendNotification(String message) {
+        Intent intent;
         try {
             JSONObject msg = new JSONObject(message);
-            Intent intent = new Intent(this, CallActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("apiKey", msg.get("apiKey").toString());
-            intent.putExtra("sessionId", msg.get("sessionId").toString());
-            intent.putExtra("token", msg.get("token").toString());
-            intent.putExtra("to", msg.get("from").toString());
-            intent.putExtra("from", uidTelehealth.getString("uid", null));
-            intent.putExtra("message", msg.get("message").toString());
-            intent.putExtra("fromName", msg.get("fromName").toString());
+            if (msg.get("message").toString().equalsIgnoreCase("call")) {
+                intent = new Intent(this, WaitingActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);   // To open only one activity on launch
+                intent.putExtra("apiKey", msg.get("apiKey").toString());
+                intent.putExtra("sessionId", msg.get("sessionId").toString());
+                intent.putExtra("token", msg.get("token").toString());
+                intent.putExtra("to", msg.get("from").toString());
+                intent.putExtra("from", uidTelehealth.getString("uid", null));
+                intent.putExtra("message", msg.get("message").toString());
+                intent.putExtra("fromName", msg.get("fromName").toString());
 
-            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            //         Remote view and intent for my button
-            RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.custom_notification);
-            contentView.setImageViewResource(R.id.imgLogo, R.mipmap.ic_launcher);
-            contentView.setTextViewText(R.id.lblTitle, "REDIMED");
-            contentView.setTextViewText(R.id.lblMessage, "This is a custom layout");
+                builder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(getResources().getString(R.string.not_title))
+                        .setContentText("You have message")
+                        .setPriority(NotificationCompat.PRIORITY_MAX) // On top task bar
+                        .setVibrate(new long[]{500, 1000})
+                        .setLights(Color.BLUE, 3000, 3000)
+//                        .setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.ringtone))
+                        .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE) // Defaults Light and Sound
+                        .setContentIntent(contentIntent)
+                        .setWhen(System.currentTimeMillis())
+                        .setDeleteIntent(deleteIntent(msg));
 
-            NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle(getResources().getString(R.string.not_title))
-                    .setContentText("You have message")
-                    .setPriority(NotificationCompat.PRIORITY_MAX) // On top task bar
-                    .setVibrate(new long[]{500, 1000})
-                    .setLights(Color.BLUE, 3000, 3000)
-                    .setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.ringtone))
-                    .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE) // Defaults Light and Sound
-//                    .setOngoing(true) //Do not clear the notification
-//                    .setContent(contentView)
-                    .setContentIntent(contentIntent)
-                    .setWhen(System.currentTimeMillis())
-                    .setDeleteIntent(deleteIntent(msg));
+                notification = builder.build();
+                notification.flags |= Notification.FLAG_AUTO_CANCEL;
+                notification.flags |= Notification.FLAG_INSISTENT;
 
-            notification = builder.build();
-            notification.flags |= Notification.FLAG_AUTO_CANCEL;
-            notification.flags |= Notification.FLAG_INSISTENT;
+                notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.notify(CALL_NOTIFICATION_ID, notification);
 
-            notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            notificationManager.notify(CALL_NOTIFICATION_ID, notification);
-
-            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP
-                    | PowerManager.ON_AFTER_RELEASE | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "INFO");
-            wakeLock.acquire();
+                PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK
+                        | PowerManager.ACQUIRE_CAUSES_WAKEUP
+                        | PowerManager.ON_AFTER_RELEASE
+                        | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "INFO");
+                wakeLock.acquire();
+                if (!MyApplication.getInstance().IsMyServiceRunning(SocketService.class)) {
+                    startService(new Intent(this, SocketService.class));
+                }
+            }
         } catch (Exception e) {
-            Log.d(TAG, e.getLocalizedMessage());
+            Log.d(TAG + " Error ", e.getLocalizedMessage());
         }
     }
 

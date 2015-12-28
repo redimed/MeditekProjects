@@ -4,26 +4,18 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.*;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-
-import com.redimed.telehealth.patient.CallActivity;
-import com.redimed.telehealth.patient.MainActivity;
-import com.redimed.telehealth.patient.ModelActivity;
+import com.redimed.telehealth.patient.WaitingActivity;
 import com.redimed.telehealth.patient.utils.Config;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
-
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -77,8 +69,7 @@ public class SocketService extends Service {
         socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
         socket.on("receiveMessage", onReceiveMessage);
         socket.on("errorMsg", onReceiveError);
-//        return START_STICKY;
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     public static void sendData(String url, Map<String, Object> params) throws Throwable {
@@ -154,15 +145,17 @@ public class SocketService extends Service {
         }
     };
 
+    //Receive Socket Message
     private Emitter.Listener onReceiveMessage = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             JSONObject data = (JSONObject) args[0];
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             try {
                 String message = data.get("message").toString();
                 if (message.equalsIgnoreCase("call")) {
-                    i = new Intent(getApplicationContext(), CallActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i = new Intent(getApplicationContext(), WaitingActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtra("apiKey", data.get("apiKey").toString());
                     i.putExtra("sessionId", data.get("sessionId").toString());
                     i.putExtra("token", data.get("token").toString());
@@ -172,22 +165,23 @@ public class SocketService extends Service {
                     i.putExtra("fromName", data.get("fromName").toString());
                     startActivity(i);
                 }
-                if (message.equalsIgnoreCase("cancel")) {
+                if (message.equalsIgnoreCase("cancel") || message.equalsIgnoreCase("decline")) {
                     localBroadcastManager = LocalBroadcastManager.getInstance(SocketService.this);
-                    localBroadcastManager.sendBroadcast(new Intent("call.action.cancel"));
-                    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    localBroadcastManager.sendBroadcast(new Intent("call.action.finish"));
                     notificationManager.cancel(0);
                 }
+                Log.d(TAG, message);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     };
 
-    public void closeSockets() {
+    public static void closeSockets() {
         if (socket != null) {
             try {
                 socket.close();
+                socket.disconnect();
             } catch (Exception e) {
                 e.printStackTrace();
             }

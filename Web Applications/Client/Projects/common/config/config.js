@@ -35,6 +35,8 @@ var o = {
         uploadFileUrl: _uploadURL,
 
         authBaseUrl:_authBaseURL,
+
+        configStateBlank:_configStateBlank
     },
 
     checkData: function(value) {

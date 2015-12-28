@@ -32,7 +32,6 @@ module.exports = {
                 teleUser.getUserAccount().then(function(user) {
                     if (user) {
                         TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
-                            console.log("=====1=====",response.getHeaders());
                             if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
                             return res.ok(response.getBody());
                         }, function(err) {

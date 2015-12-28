@@ -49,3 +49,16 @@ else if(env =='app')
 	var _authBaseURL=configAuthBaseUrl.app;
 }
 
+
+var _configStateBlank = [
+	 "unAuthentication.login"
+	,"unAuthentication.register"
+	,"unAuthentication.activation"
+	,"unAuthentication.forgot"
+	,"unAuthentication.changepass"
+	,"unAuthentication.loginPatient"
+	,"unAuthentication.registerPatient"
+	,"unAuthentication.searchPatient"
+	,"blank.call"
+	,"blank.welcome"
+];

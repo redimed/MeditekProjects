@@ -74,16 +74,7 @@ module.exports = {
                 }
             }
         },
-        DVANumber: {
-            type: Sequelize.STRING(45),
-            allowNull: true,
-            validate: {
-                len: {
-                    args: [0, 45],
-                    msg: 'Too long!'
-                }
-            }
-        },
+
         InjuryType: {
             type: Sequelize.STRING(3),
             allowNull: true,

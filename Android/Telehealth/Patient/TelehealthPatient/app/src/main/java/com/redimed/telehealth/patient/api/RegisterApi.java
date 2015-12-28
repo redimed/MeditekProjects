@@ -33,7 +33,7 @@ public interface RegisterApi {
     void getAppointmentPatients(@Path("patientUID") String patientUID,
                                 Callback<JsonObject> callback);
 
-    @GET("/api/telehealth/user/telehealthAppointmentDetails/{apptUID}")
+    @GET("/api/telehealth/user/WAAppointmentDetails/{apptUID}")
     void getAppointmentDetails(@Path("apptUID") String apptUID, Callback<JsonObject> callback);
 
     //3005

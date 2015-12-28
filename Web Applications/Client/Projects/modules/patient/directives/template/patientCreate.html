@@ -86,28 +86,22 @@
 											<div class="col-md-3">
 												<!-- avatar -->
 												<div ng-form name="checkInForm" novalidate>
-													
 													<div class="form-group">
-														<div class="fileinput fileinput-new" data-provides="fileinput">
-															<div class="fileinput-new thumbnail" style="width: 300px; height: 300px;">
-																
-															</div>
-															<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 300px; max-height: 300px;">
-															</div>
-															<div>
-																<span class="btn green btn-file">
-																	<span class="fileinput-new">
-																	Select Image </span>
-																	<span class="fileinput-exists">
-																	Change </span>
-																	 <input type="file" nv-file-select="" uploader="uploader" />
-																</span>
-																<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">Remove </a>
-															</div>
+														<div id="viewIMG">
+															<canvas id="imageAvatarCanvas" class="thumbnail" ng-show="isChoseAvatar==true" ></canvas>
+															<img src="theme/assets/global/images/no_person.jpg" class="thumbnail" ng-show=" isChoseAvatar==false" style="width:275px; height:300px; ">
+														</div>
+														<div class="container">
+															<label for="imageAvatar" style="float:left; padding-right: 1%;"> 
+																<span class="btn green" ng-if="isChoseAvatar==false" style="width: 120px;">Select Image</span>
+																<span class="btn green" ng-if="isChoseAvatar==true" style="width: 120px;">Change</span>
+															</label> 
+															<span class="btn red" ng-if="isChoseAvatar==true"style="width: 120px; float:left" ng-click="Remove('ProfileImage')">Remove</span>
+															<input type="file" id="imageAvatar" ng-click="setType('ProfileImage')" ng-model="aaa" name="imageAvatar" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
 														</div>
 													</div>
 												</div>
-												
+												<!-- end avatar -->
 											</div>
 											<!-- end avatar -->
 											<!-- begin basic -->

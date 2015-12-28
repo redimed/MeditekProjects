@@ -30,6 +30,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="./theme/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="./theme/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
         <link href="./theme/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/jquery-ui/jquery-ui.min.js">
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS -->
@@ -122,6 +123,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="common/config/env.js"></script>
         <script src="common/config/config.js"></script>
         <script src="./theme/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+        <script src="theme/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
         <script src="./theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="./theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
         <script src="./theme/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
@@ -223,9 +225,6 @@ License: You must have a valid license purchased only from themeforest(the above
     		<script src="modules/unAuthentication/controllers/activationCtrl.js"></script>
             <script src="modules/unAuthentication/controllers/fotgotCtrl.js"></script>
             <!-- Patient -->
-            <script src="modules/unAuthentication/controllers/loginPatientCtrl.js"></script>
-            <script src="modules/unAuthentication/controllers/registerPatientCtrl.js"></script>
-            <script src="modules/unAuthentication/controllers/searchPatientCtrl.js"></script>
             <script src="modules/unAuthentication/controllers/changepassCtrl.js"></script>
 		<!-- END MODULE unAuthentication -->
 
@@ -234,6 +233,14 @@ License: You must have a valid license purchased only from themeforest(the above
             <script type="text/javascript" src="modules/authentication/services/AuthenticationService.js"></script>
             <script src="modules/authentication/controllers/authenticationCtrl.js"></script>
         <!-- END MODULE authentication -->
+
+        <!-- BEGIN MODULE blank -->
+            <script src="modules/blank/blank.js"></script>
+            <script src="modules/blank/controllers/blankCtrl.js"></script>
+            <script src="modules/blank/controllers/callCtrl.js"></script>
+            <script src="modules/blank/controllers/registerPatientCtrl.js"></script>
+            <script src="modules/blank/controllers/searchPatientCtrl.js"></script>
+        <!-- END MODULE blank -->
 
         <!-- BEGIN MODULE home -->
             <script src="modules/home/home.js" ></script>
@@ -331,7 +338,6 @@ License: You must have a valid license purchased only from themeforest(the above
             <script src="modules/consultation/controllers/consultNoteCtrl.js"></script>
             <script src="modules/consultation/controllers/eFormsCtrl.js"></script>
             <script src="modules/consultation/controllers/drawingCtrl.js"></script>
-            <script src="modules/consultation/controllers/consultationCallCtrl.js"></script>
         <!-- END MODULE consultation -->
 
         <!-- BEGIN MODULE eForms -->
@@ -350,6 +356,23 @@ License: You must have a valid license purchased only from themeforest(the above
             <script src="modules/sandbox/controllers/privateFormCtrl.js"></script>
             <script src="modules/sandbox/controllers/workersCompCtrl.js"></script>
         <!-- END MODULE sandbox -->
+
+        <!-- begin module admission -->
+        <script src="modules/admission/admission.js"></script>
+        <script src="modules/admission/controllers/admissionCtrl.js"></script>
+        <script src="modules/admission/controllers/admissionDetailCtrl.js"></script>
+        <script src="modules/admission/controllers/admissionDetailStep1Ctrl.js"></script>
+        <script src="modules/admission/controllers/admissionDetailStep2Ctrl.js"></script>
+        <script src="modules/admission/controllers/admissionDetailStep3Ctrl.js"></script>
+
+        <script src="modules/admission/controllers/modalAdd1Ctrl.js"></script>
+        <script src="modules/admission/controllers/modalDelete1Ctrl.js"></script>
+        <script src="modules/admission/controllers/modalUpdate1Ctrl.js"></script>
+
+        <script src="modules/admission/controllers/modalAdd2Ctrl.js"></script>
+        <script src="modules/admission/controllers/modalDelete2Ctrl.js"></script>
+        <script src="modules/admission/controllers/modalUpdate2Ctrl.js"></script>
+        <!-- end module admission -->
 
         <!-- END CORE ANGULARJS PLUGINS -->
 

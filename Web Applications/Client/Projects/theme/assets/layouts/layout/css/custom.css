@@ -1,36 +1,5 @@
 /* here you can put your own css to customize and override the theme */
 
-
-.content-patient{
-    background-color: blue;
-    background-image: url('../../../global/images/bkloginPatient.jpg');  
-    background-repeat: no-repeat;
-    position: relative;
-    margin: 3% auto;
-    width: 1054px;
-    height:818px;
-}
-.content-patient .content-button{
-    position: fixed;
-    position: absolute;
-    width: 44%;
-    height: 462px;
-    left: 0;
-    bottom: 0;
-    margin-bottom: 34px;
-    margin-left: 35px;
-
-}
-.content-patient .content-button .my-btn-group{
-    margin-top: 217px;
-    margin-left: 10px;
-}
-
-.content-patient .content-button .my-btn-group a{
-    padding: 16px 23px;
-    margin-bottom: 13px;
-}
-
 .login {
     background-color: #ccc !important;
 }
@@ -293,179 +262,321 @@ img.profile-imge{
 }
 
 
-/*consultation==================================*/
-    .my-call {
-        width: 900px;
+/*consultation>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+    .my-skype{
         position: relative;
-        border: 10px solid #3598DC;
-        margin: 2em auto;
+        min-width: 900px;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: 0 auto;
+        overflow: hidden;
     }
-    .my-call .name-call{
-        /*background-image: url('../../../global/images/E-call_03.png');*/
-        background-color: rgba(213, 201, 201, 0.26);
-        border-top-left-radius: 20% !important;
-        border-bottom-right-radius: 100% !important;
-        background-repeat: no-repeat;
-        background-size: 100%;
-        position: absolute;
-        top: 1.5em;
-        left: 1.5em;
-        width: 225px;
-        height: 225px;
-        padding: 1em 0 0 1em;
+
+    .my-skype .thumbnail{
+        height:78vh;
     }
-    .my-call .name-call h2{
+    .my-skype .img{
+        max-width: 100%;
+        max-height: 100%;
+        height: inherit !important;
+        position: relative;
+    }
+    .my-skype .my-button{
+        opacity: .75;
+        width: 70px;
+        height: 70px;
+    }
+    .my-skype .my-button:hover{
         opacity: 1;
     }
-    .my-call .video-call{
+    .my-skype .left-info{
         position: absolute;
-        top: 1.5em;
-        right: 1.5em;
-        width: 175px;
-
+        top: 2%;
+        left: 2%;
+        width: 25%;
+        height: 40%;
+        padding: 4% 2%;
+        background-color: rgba(196, 213, 213, 0.45);
+        border-top-left-radius: 25% !important;
+        border-bottom-right-radius: 100% !important;
     }
-    .my-call .video-call img{
-        display: block;
-        text-align: right;
-    }
-    .my-call .video-call img#zoom{
-        width: 50px;
-        height: 50px;
-        margin-bottom: 1em;
-        float: right;
-    }
-    .my-call .video-call img#video{
-        width: 175px;
-        height: 175px;
-    }
-
-    .my-call .calling{
+    .my-skype .right-info{
         position: absolute;
-        bottom: 6em;
-        left: 1.5em;
-        width: 900px;
-        display: block;
-        text-align: center;
-        font-size: 20px;
-
+        top: 2%;
+        right: 2%; 
     }
-    .my-call .my-button-group{
+    .my-skype .right-info #publisher{
+        width: 300px;
+        height: 300px;
+        background-color: rgba(125,125,125,.25);
+    }
+    .my-skype .actions{
+        width: 100%;
+        margin-top: 1%;
+        margin-bottom: 1%;
+        bottom: -3%;
+    }
+    .my-skype .calling{
+        width: 100%;
         position: absolute;
-        bottom: 1.5em;
-        left: 3em;
-        width: 810px;
+        bottom: 20%;
+    }
+    .my-skype .calling span{
+        font-size: 18px;
     }
 
-    .my-call img#call-list:hover,
-    .my-call img#call-on:hover,
-    .my-call img#call-misc:hover,
-    .my-call img#call-plus1:hover,
-    .my-call img#call-off:hover,
-    .my-call img#call-signal:hover,
-    .my-call img#call-message:hover{
-        opacity: .75;
-    }
-    .my-call .my-button-group .group-left{
-        float: left;
-    }
-
-    .my-call .my-button-group .group-left #call-plus{
+    .my-skype .actions .call-plus{
         position: relative;
     }
-    .my-call .my-button-group .group-left #call-plus .call-skype{
+    .my-skype .actions .call-plus .skype-listUser{
         position: absolute;
-        bottom: 4em;
-        left: -6em;
-        background-color: rgba(36, 59, 85, 0.57);
         width: 400px;
-        height: auto;
-        border: 1px solid white;
+        left: 0;
+        bottom: 200%;
+        color: white;
+        background-color: rgba(52, 73, 94, 0.75);
+        border: 1px solid #eee;
     }
-    .call-skype ul{
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-    .call-skype ul >li{
-        display: block;
-        padding: 10px;
-    }
-    .call-skype .header{
+    .my-skype .actions .call-plus .skype-listUser .header{
         border-bottom: 1px solid white;
-        font-size: 20px;
-        padding: 1em;
+        padding-bottom: 5px;
+        margin-bottom: 1.5em;
     }
-    .call-skype .header > form {
-        float: right;
-        margin-right: 10px;
+    .my-skype .actions .call-plus .skype-listUser .header form.horizontal{
+        font-size: 2em;
     }
-    .call-skype .header > form > input[type='text'] {
-        background-image: url('../../../global/images/toolbar_find.png');
-        background-position: 130px 6px;
-        background-size: 15px;
-        background-repeat: no-repeat;
-        font-size: 14px;
-        padding: 3px 5px;
+    .my-skype .actions .call-plus .skype-listUser .header form.horizontal .form-group .control-label{
+        font-family: fantasy;
     }
-    .call-skype ul > li.title{
-        font-size: 16px;
+    .my-skype .actions .call-plus .skype-listUser .header form.horizontal .form-group input{
+        background-color: transparent;
         color: white;
-        padding-left: 22px;
     }
-    .call-skype .footer{
-        border-top: 1px solid white;
-        text-align: center;
-        padding: 1em;
+    .my-skype .actions .call-plus .skype-listUser .content{
     }
-    .call-skype ul > li > a{
-        color: white;
-        text-decoration: none;
-    }
-    .call-skype ul > li:hover{
-        display: block;
-        background: rgba(125,125,125,.5);
-    }
-    .call-skype ul > li > a > img{
+    .my-skype .actions .call-plus .skype-listUser .content .avatar{
         border-radius: 50% !important;
         border: 2px solid white;
-        width: 50px !important;
-        height: 50px !important;
+        width: 60px;
+        height: 60px;
     }
-    .call-skype ul > li > a > i{
-        border-radius: 50px;
+    .my-skype .actions .call-plus .skype-listUser .content .icon{
+        position: relative;
+        border-radius: 50% !important;
         border: 2px solid white;
-        position: relative;
-        top: 1em;
-        left: -2em;
-
+        left: 45px;
+        bottom: 25px;
+        height: 20px;
+        width: 20px;
     }
-    .call-skype .arrow-down {
-        position: relative;
-        left: 29%;
-        top: 10px;
+    .my-skype .actions .call-plus .skype-listUser .arrow-down {
+        position: absolute;
+        left: 2%;
+        bottom: -19%;
         width: 0;
         height: 0;
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
         border-top: 10px solid rgba(52, 73, 94, 0.5);
     }
-    .call-skype ul > li > a > i.online{
-        background-color: #26C281;
-    }
-    .call-skype ul > li > a > i.away{
-        background-color: #F7CA18;
+
+    .my-skype .actions .call-plus .skype-listUser .content .title{
+        margin-left: 1.25em;
+        font-size: 20px;
+        font-family: sans-serif;
     }
 
-    .my-call .my-button-group .group-right{
-        float: right;
-        text-align: right;
+    .my-skype .actions .call-plus .skype-listUser .content .name{
+        position: relative;
+        top: 15px;
+        color: white;
     }
-    .my-call .my-button-group img{
-        width: 60px;
-        height: 60px;
-        margin: 0 1em;
+    .my-skype .actions .call-plus .skype-listUser .content .name:hover{
+        color: #32C5D2;
     }
-/*end consultation==================================*/
+    .my-skype .actions .call-plus .skype-listUser .footer{
+        border-top: 1px solid white;
+        text-align: center;
+        padding: 10px 0;
+    }
+/*end consultation<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+.welcome{
+    position: relative;
+    margin: 0 auto;
+}
+.welcome .logo{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 40%
+}
+/*Big Monitor*/
+@media (min-width: 1367px) {
+
+    .welcome .content{
+        position: absolute;
+        bottom: 5%;
+        left: 5%;
+        width: 35%;
+        height: 53%;
+        background-color: rgba(84, 167, 250, 0.5);
+        border-top-right-radius: 100% !important;
+        border-bottom-left-radius: 30% !important;
+    }
+    .welcome .content .my-button-group{
+        position: absolute;
+        bottom: 15%;
+        left: 12%;
+        width: 60%;
+    }
+    .welcome .content .my-button-group h1{
+        color: white;
+        font-family: sans-serif;
+        margin-bottom: 75px;
+    }
+    .welcome .content .my-button-group .my-button{
+        display: block;
+        color: white;
+        text-transform: uppercase;
+        font-size: 1.5em;
+        font-weight: bold;
+        padding: 15px 0px 15px 3.2em;
+        margin: 2em 0;
+        opacity: .75;
+        outline:15px solid rgba(114, 159, 191, 0.26);
+    }
+    .welcome .content .my-button-group .my-button:hover{
+        opacity: 1;
+        cursor: pointer;
+    }
+    .welcome .content .my-button-group .my-button.registration{
+        background: #f37b21;
+        border-top: 2px solid #f19b5b;
+        border-left: 3px solid #f19b5b;
+        border-bottom: 3px solid #b46940;
+        border-right: 1px solid #b46940;
+
+        background-image: url('../../../global/images/icon-edit.png');
+        background-repeat: no-repeat;
+        background-position: 15px 10px;
+        background-size: 40px;        
+    }
+    .welcome .content .my-button-group .my-button.registration a{
+        color: white;
+    }
+    .welcome .content .my-button-group .my-button.registration a:hover{
+        text-decoration: none;
+    }
+    .welcome .content .my-button-group .my-button.registration:before{
+        /*content: "\270E"; */  
+    }
+    .welcome .content .my-button-group .my-button.existing-patient{
+        background-color: #288e44;
+        border-top: 2px solid #4d9752;
+        border-left: 3px solid #4d9752;
+        border-bottom: 3px solid #055d29;
+        border-right: 1px solid #055d29;
+
+        background-image: url('../../../global/images/icon-patient.png');
+        background-repeat: no-repeat;
+        background-position: 15px 10px;
+        background-size: 40px;
+    }
+    .welcome .content .my-button-group .my-button.existing-patient a{
+        color: white;
+    }
+    .welcome .content .my-button-group .my-button.existing-patient a:hover{
+        text-decoration: none;
+    }
+    .welcome .content .my-button-group .my-button.existing-patient:before{
+        /*content: "\270E";   */
+    }
+}
+
+/*Small Monitor*/
+@media (max-width: 1366px) {
+    .welcome .content{
+        position: absolute;
+        bottom: 5%;
+        left: 5%;
+        width: 40%;
+        height: 60%;
+        background-color: rgba(84, 167, 250, 0.5);
+        border-top-right-radius: 100% !important;
+        border-bottom-left-radius: 30% !important;
+    }
+    .welcome .content .my-button-group{
+        position: absolute;
+        bottom: 15%;
+        left: 12%;
+        width: 60%;
+    }
+    .welcome .content .my-button-group h1{
+        color: white;
+        font-family: sans-serif;
+        font-size: 25px;
+        margin-bottom: 45px;
+    }
+    .welcome .content .my-button-group .my-button{
+        display: block;
+        color: white;
+        text-transform: uppercase;
+        font-size: 1.5em;
+        font-weight: bold;
+        padding: 10px 0px 10px 3.2em;
+        margin: 1.75em 0;
+        opacity: .75;
+        outline:10px solid rgba(114, 159, 191, 0.26);
+    }
+    .welcome .content .my-button-group .my-button:hover{
+        opacity: 1;
+    }
+    .welcome .content .my-button-group .my-button.registration{
+        background: #f37b21;
+        border-top: 2px solid #f19b5b;
+        border-left: 3px solid #f19b5b;
+        border-bottom: 3px solid #b46940;
+        border-right: 2px solid #b46940;
+
+        background-image: url('../../../global/images/icon-edit.png');
+        background-repeat: no-repeat;
+        background-position: 15px 10px;
+        background-size: 35px;        
+    }
+    .welcome .content .my-button-group .my-button.registration i{
+    }
+    .welcome .content .my-button-group .my-button.registration:before{
+        /*content: "\270E"; */  
+    }
+    .welcome .content .my-button-group .my-button.existing-patient{
+        background-color: #288e44;
+        border-top: 2px solid #4d9752;
+        border-left: 2px solid #4d9752;
+        border-bottom: 3px solid #055d29;
+        border-right: 2px solid #055d29;
+
+        background-image: url('../../../global/images/icon-patient.png');
+        background-repeat: no-repeat;
+        background-position: 15px 10px;
+        background-size: 35px;
+    }
+    .welcome .content .my-button-group .my-button.existing-patient:before{
+        /*content: "\270E";   */
+    }
+}
+.welcome .content .footer{
+        position: absolute;
+        bottom: -4%;
+        right: 0;
+    }
+
+
+
+
+
+
 
 /*phan quoc chien*/
 

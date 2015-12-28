@@ -114,6 +114,29 @@ module.exports = function(data, userInfo) {
                         });
                     })
                     .then(function(telehealthPatientAppointmentUpdated) {
+                        if (HelperService.CheckExistData(data.FileUploads) &&
+                            _.isArray(data.FileUploads) &&
+                            HelperService.CheckExistData(appointmentObject)) {
+                            var arrayFileUploadsUnique = _.map(_.groupBy(data.FileUploads, function(FU) {
+                                return FU.UID;
+                            }), function(subGrouped) {
+                                return subGrouped[0].UID;
+                            });
+                            var objectRelAppointmentFileUpload = {
+                                where: arrayFileUploadsUnique,
+                                transaction: t,
+                                appointmentObject: appointmentObject
+                            };
+                            //update RelAppointmentFileUpload
+                            return Services.RelAppointmentFileUpload(objectRelAppointmentFileUpload);
+                        }
+                    }, function(err) {
+                        defer.reject({
+                            transaction: t,
+                            error: err
+                        });
+                    })
+                    .then(function(relAppointmentFileUploadUpdated) {
                         var telehealthAppointment = data.TelehealthAppointment;
                         if (HelperService.CheckExistData(telehealthAppointment) &&
                             HelperService.CheckExistData(preferringPractitionerObject)) {
@@ -135,12 +158,31 @@ module.exports = function(data, userInfo) {
                         });
                     })
                     .then(function(telehealthAppointmentUpdated) {
+                        if (HelperService.CheckExistData(appointmentObject) &&
+                            HelperService.CheckExistData(appointmentObject.TelehealthAppointment) &&
+                            HelperService.CheckExistData(appointmentObject.TelehealthAppointment.ID)) {
+                            var objectGetWAAppointment = {
+                                where: appointmentObject.TelehealthAppointment.ID,
+                                transaction: t
+                            };
+                            return Services.GetWAAppointmentObject(objectGetWAAppointment);
+                        }
+                    }, function(err) {
+                        defer.reject({
+                            transaction: t,
+                            error: err
+                        });
+                    })
+                    .then(function(WAAppointmentObject) {
                         var WAAppointment = data.TelehealthAppointment.WAAppointment;
                         if (HelperService.CheckExistData(WAAppointment) &&
                             HelperService.CheckExistData(preferringPractitionerObject) &&
                             HelperService.CheckExistData(appointmentObject)) {
                             var dataWAAppointment =
                                 Services.GetDataAppointment.WAAppointment(WAAppointment);
+                            if (HelperService.CheckExistData(WAAppointmentObject)) {
+                                dataWAAppointment.ID = WAAppointmentObject.ID;
+                            }
                             dataWAAppointment.CreatedBy = preferringPractitionerObject.ID;
                             dataWAAppointment.UID = dataWAAppointment.UID || UUIDService.Create();
                             dataWAAppointment.TelehealthAppointmentID = appointmentObject.TelehealthAppointment.ID;

@@ -6,73 +6,123 @@
     android:keepScreenOn="true"
     tools:context="com.redimed.telehealth.patient.CallActivity">
 
-    <ViewFlipper
-        android:id="@+id/vfCall"
+    <RelativeLayout
+        android:id="@+id/callLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/spendingLayout"
+        <RelativeLayout
+            android:id="@+id/publisherView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:keepScreenOn="true" />
+
+        <RelativeLayout
+            android:id="@+id/subscriberView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:keepScreenOn="true">
+
+            <ProgressBar
+                android:id="@+id/loadingSpinner"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:indeterminate="false"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:id="@+id/lblNameDoctor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Doctor Name"
+            android:textColor="@color/lightFont"
+            android:textSize="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <Button
+                    android:id="@+id/btnHold"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/custom_circle_call"
+                    android:drawableLeft="@drawable/call_pause_icon"
+                    android:enabled="false"
+                    android:paddingLeft="7dp" />
+
+                <Button
+                    android:id="@+id/btnMutePub"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/custom_circle_call"
+                    android:drawableLeft="@drawable/call_unmute_icon"
+                    android:enabled="false"
+                    android:paddingLeft="8dp" />
+
+                <Button
+                    android:id="@+id/btnMuteSub"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/custom_circle_call"
+                    android:drawableLeft="@drawable/call_speaker_icon"
+                    android:enabled="false"
+                    android:paddingLeft="8dp" />
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btnEndCall"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="-25dp"
+                android:background="@drawable/custom_circle_end_call"
+                android:drawableLeft="@drawable/call_end_icon"
+                android:enabled="false"
+                android:paddingLeft="11dp" />
+
             <ImageView
-                android:id="@+id/logo"
-                android:layout_width="match_parent"
-                android:layout_height="?android:actionBarSize"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_triangle_call" />
 
             <RelativeLayout
-                android:id="@+id/waitCallLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#5a000000">
 
                 <com.redimed.telehealth.patient.font.RobotoTextView
-                    android:id="@+id/lblNameCaller"
-                    android:layout_width="match_parent"
+                    android:id="@+id/lblTimer"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
-                    android:gravity="center"
-                    android:text="Doctor Name"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:padding="4dp"
+                    android:text="00:00:00"
                     android:textColor="@color/lightFont"
-                    android:textSize="30dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center_horizontal">
-
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/btnDecline"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/call_end_icon"
-                        android:layout_marginRight="80dp"
-                        android:stateListAnimator="@null"
-                        app:backgroundTint="@color/declineFone" />
-
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/btnAnswer"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:shadowColor="@android:color/transparent"
-                        android:src="@drawable/call_receive_icon"
-                        app:backgroundTint="@color/answerFone" />
-
-                </LinearLayout>
+                    android:textSize="20dp" />
 
                 <com.redimed.telehealth.patient.font.RobotoTextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/lblCaller"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="#5a000000"
-                    android:gravity="center"
                     android:padding="4dp"
                     android:text="Calling..."
                     android:textColor="@color/lightFont"
@@ -82,131 +132,6 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/callLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <RelativeLayout
-                android:id="@+id/publisherView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:keepScreenOn="true" />
-
-            <RelativeLayout
-                android:id="@+id/subscriberView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:keepScreenOn="true">
-
-                <ProgressBar
-                    android:id="@+id/loadingSpinner"
-                    style="?android:attr/progressBarStyleLarge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:indeterminate="false"
-                    android:visibility="gone" />
-            </RelativeLayout>
-
-            <com.redimed.telehealth.patient.font.RobotoTextView
-                android:id="@+id/lblNameDoctor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Doctor Name"
-                android:textColor="@color/lightFont"
-                android:textSize="20dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <Button
-                        android:id="@+id/fabHold"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/custom_circle_call"
-                        android:drawableLeft="@drawable/call_pause_icon"
-                        android:enabled="false"
-                        android:paddingLeft="7dp" />
-
-                    <Button
-                        android:id="@+id/btnMutePub"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/custom_circle_call"
-                        android:drawableLeft="@drawable/call_unmute_icon"
-                        android:enabled="false"
-                        android:layout_marginLeft="25dp"
-                        android:layout_marginRight="25dp"
-                        android:paddingLeft="8dp" />
-
-                    <Button
-                        android:id="@+id/btnMuteSub"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/custom_circle_call"
-                        android:drawableLeft="@drawable/call_speaker_icon"
-                        android:enabled="false"
-                        android:paddingLeft="8dp" />
-
-                </LinearLayout>
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabEndCall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="-25dp"
-                    android:src="@drawable/call_end_icon"
-                    app:backgroundTint="@color/declineFone" />
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/custom_triangle_call" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#5a000000">
-
-                    <com.redimed.telehealth.patient.font.RobotoTextView
-                        android:id="@+id/lblTimer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
-                        android:padding="4dp"
-                        android:text="00:00:00"
-                        android:textColor="@color/lightFont"
-                        android:textSize="20dp" />
-
-                    <com.redimed.telehealth.patient.font.RobotoTextView
-                        android:id="@+id/lblCaller"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="4dp"
-                        android:text="Calling..."
-                        android:textColor="@color/lightFont"
-                        android:textSize="20dp" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </ViewFlipper>
+    </RelativeLayout>
 
 </RelativeLayout>

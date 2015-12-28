@@ -36,6 +36,10 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'PushNotification'
     },
+    'GET /api/telehealth/user/logout/:uid': {
+        controller: 'Telehealth/v1_0/TelehealthController',
+        action: 'Logout'
+    },
     //================Telehealth Socket Routes==========================
     '/api/telehealth/socket/joinRoom': {
         controller: 'SocketController',
@@ -59,7 +63,7 @@ module.exports.routes = {
         action: 'ListAppointment'
     },
     //=================Test Push Notification=============================
-    'GET /api/testPushAPN':{
+    'GET /api/testPushAPN/:badge':{
         controller: 'Telehealth/v1_0/TelehealthController',
         action:'TestPushAPN'
     },

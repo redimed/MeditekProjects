@@ -1,20 +1,19 @@
 /**
- * @namespace UserActivationController
- * @description Document for UserActivationController
+ * @namespace UserActivation
+ * @memberOf Controller
  */
-
 module.exports = {
 	
 	/**
 	 * @typedef CreateUserActivationException
-	 * @memberOf UserActivationController
+	 * @memberOf Controller.UserActivation
 	 * @property {string} ErrorType "CreateUserActivation.Error"
 	 * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
 	 * - CreateUserActivation.beginTransactionError</br>
 	 */
 	/**
 	 * @function CreateUserActivation
-	 * @memberOf UserActivationController
+	 * @memberOf Controller.UserActivation
 	 * @description Tạo UserActivation</br>
 	 *	Đối với web system: mỗi user chỉ có 1 record</br>
 	 *	Đối với mobile system: tương ứng với mỗi cặp {userId, deviceId, appid} có 1 record</br>
@@ -34,8 +33,8 @@ module.exports = {
 	 * @param {string} req.body.AppID
 	 * @param {object} res response
 	 * @return {object} UserActivation Info
-	 * @throws {UserActivationController.CreateUserActivationException}
-	 * @throws {UserActivationService.CreateUserActivationException}
+	 * @throws {Controller.UserActivation.CreateUserActivationException}
+	 * @throws {Service.UserActivation.CreateUserActivationException}
 	 * 
 	 */
 	CreateUserActivation:function(req,res)

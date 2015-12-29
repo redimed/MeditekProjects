@@ -610,7 +610,9 @@ img.profile-imge{
     background: url(../img/big-f0f0f0.gif) center no-repeat;
     display: none;
 }
-
+.required-text {
+    font-size: 12px
+}
 
 /*giang*/
 

@@ -1,19 +1,5 @@
 var app = angular.module('app.authentication.appointment.list.modal.controller', []);
-app.controller('showImageController', function($scope, $modalInstance, toastr, LinkUID, CommonService) {
-    $scope.LinkUID = LinkUID;
-    $scope.cancel = function() {
-        $modalInstance.dismiss('cancel');
-    };
 
-    $scope.Vieww = function(LinkUID) {
-        CommonService.openImageInNewTab(LinkUID)
-            .then(function(data) {
-                console.log(data);
-            }, function(er) {
-                console.log(er);
-            });
-    };
-});
 app.controller('appointmentListModalCtrl', function($scope, $modal, $modalInstance, getid, AppointmentService, CommonService, $cookies, toastr, PatientService ,AuthenticationService) {
 
     $modalInstance.rendered.then(function() {

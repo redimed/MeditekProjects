@@ -294,8 +294,9 @@ angular.module("app.common.CommonService", [])
                     var blob = new Blob([res.data],options);
                     return {blob:blob,filename:res.headers().filename||''};
                 },function(err){
-                    error.pushError("GetFile.getFileError");
-                    throw error;
+                    // error.pushError("GetFile.getFileError");
+                    // throw error;
+                    throw err
                 })
             }
             else

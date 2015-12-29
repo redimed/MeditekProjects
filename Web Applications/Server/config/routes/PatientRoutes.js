@@ -11,7 +11,14 @@ module.exports={
 	    action :'CreatePatient'
 	},
 
+	'post /api/patient/register-patient' : {
+		policy: "noAuthen",
+	    controller: 'Patient/PatientController',
+	    action :'CreatePatient'
+	},
+
 	'post /api/patient/search-patient' : {
+		policy: "noAuthen",
 	    controller: 'Patient/PatientController',
 	    action :'SearchPatient'
 	},

@@ -13,7 +13,7 @@ module.exports = {
         // var PatientMedicare = req.body.PatientMedicare?req.body.PatientMedicare:{};
         Services.Patient.CreatePatient(data, otherData)
             .then(function(patient) {
-                console.log(patient);
+                console.log(patient," >>>>>>>>>>>>>>>>.phai day k");
                 if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {
                     var info = {
                         UID: patient.result.UID,
@@ -53,7 +53,28 @@ module.exports = {
     */
     SearchPatient: function(req, res) {
         var data = req.body.data;
-        Services.Patient.SearchPatient(data)
+        var count = 0;
+        var array = ['FirstName' , 'LastName' , 'DOB' , 'Gender' , 'PhoneNumber' , 'Email1'];
+        if(typeof data =='object'){
+            for(var i = 0; i < array.length; i++) {
+                for(var key in data) {
+                    if(key == array[i])
+                        count++;
+                }
+            }
+        }
+        else {
+            var err = new Error("Search.ERROR");
+            err.pushError("invalid.Data");
+            res.serverError(ErrorWrap(err));
+        }
+        if(count == 0) {
+            var err = new Error("Search.ERROR");
+            err.pushError("notFound.attribute");
+            res.serverError(ErrorWrap(err));
+        }
+        else {
+            Services.Patient.SearchPatient(data)
             .then(function(info) {
                 if (info !== undefined) {
                     if (info === null)
@@ -85,6 +106,7 @@ module.exports = {
                     message: ErrorWrap(err)
                 });
             });
+        }
     },
 
 

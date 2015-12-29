@@ -596,7 +596,7 @@ module.exports = {
             return Services.Patient.validation(data,true)
             .then(function(success){
                 if(data.PhoneNumber){
-                    return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,t);
+                    return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,null,t);
                 }
                 else{
                     if(data.Email){
@@ -1097,9 +1097,10 @@ module.exports = {
                  is created or not created
     */
     CheckPatient : function(data, transaction) {
+        console.log(data, "------------------------------ data ne");
         var info = {};
-        return Services.Patient.validation(data,false)
-        .then(function(success){
+        // return Services.Patient.validation(data,false)
+        // .then(function(success){
             if(check.checkData(data.PhoneNumber)){
                 // data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
                 return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction)
@@ -1145,9 +1146,9 @@ module.exports = {
                 error.pushErrors("invalid.PhoneNumber");
                 throw error;
             }
-        },function(err){
-            throw err;
-        })
+        // },function(err){
+            // throw err;
+        // })
     },
 
 
@@ -1174,12 +1175,36 @@ module.exports = {
     },
 
 
-	// DeletePatient : function(patientID) {
-	// 	return Patient.destroy({
-	// 		where : {
-	// 			ID : patientID
-	// 		}
-	// 	});
-	// }
+    SearchPatient : function(whereClause, transaction) {
+        var UserAccountWhereClause = {};
+        if('PhoneNumber' in whereClause) {
+            UserAccountWhereClause.PhoneNumber = data.PhoneNumber;
+        }
+        return Patient.findAndCountAll({
+            include:[
+                {
+                    model:UserAccount,
+                    attributes:['PhoneNumber'],
+                    required: false,
+                    where : UserAccountWhereClause
+                }
+            ],
+            where : whereClause
+        })
+        .then(function(result) {
+            return result;
+        },function(err){
+            throw err;
+        })
+    }
+
+
+    // DeletePatient : function(patientID) {
+    //  return Patient.destroy({
+    //      where : {
+    //          ID : patientID
+    //      }
+    //  });
+    // }
 
 };

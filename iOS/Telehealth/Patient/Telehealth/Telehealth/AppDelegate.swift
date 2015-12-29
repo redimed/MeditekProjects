@@ -12,12 +12,17 @@ import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+    var dUserInfo = NSDictionary()
     var window: UIWindow?
-    var config = ConfigurationSystem()
-    let ServerApi = GetAndPostDataController()
+    var config : ConfigurationSystem = ConfigurationSystem()
+    let ServerApi : GetAndPostDataController = GetAndPostDataController()
+
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let defaults = NSUserDefaults.standardUserDefaults()
+
+
+        
+        //check device ID in localstorage
+        let defaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
         if  defaults.valueForKey("deviceID") as? String == nil {
             let deviceID = UIDevice.currentDevice().identifierForVendor!.UUIDString
             defaults.setValue(deviceID, forKey: "deviceID")
@@ -26,11 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("data device-------",defaults.valueForKey("deviceID") as? String)
         }
         
-        
-
-        
-        
-        
         // Override point for customization after application launch.
         UINavigationBar.appearance().barTintColor = UIColor(red: 51.0/255.0, green: 65.0/255.0, blue: 105.0/255.0, alpha: 1.0)
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
@@ -38,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //check verified in localstorege
         
+       
         if let stringOne = defaults.valueForKey("verifyUser") as? String {
             if stringOne == "Verified" {
                 
@@ -68,51 +69,77 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         notificationCategory.identifier = "CALLING_MESSAGE"
         notificationCategory .setActions([notificationActionOk,notificationActionCancel], forContext: UIUserNotificationActionContext.Default)
         
-        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound ,UIUserNotificationType.Alert,UIUserNotificationType.Badge],categories:NSSet(array:[notificationCategory]) as? Set<UIUserNotificationCategory>))
-        application.registerForRemoteNotifications()
+        let notificationCategory1:UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
+        notificationCategory1.identifier = "end"
+        notificationCategory1 .setActions([], forContext: UIUserNotificationActionContext.Default)
+        
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound ,UIUserNotificationType.Alert,UIUserNotificationType.Badge],categories:NSSet(array:[notificationCategory,notificationCategory1]) as? Set<UIUserNotificationCategory>))
+        
+     
         
         return true
     }
+
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        application.registerForRemoteNotifications()
+    }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        setDataCalling(userInfo)
-        statusCallingNotification = notifyMessage.ClickNotify
-         NSNotificationCenter.defaultCenter().postNotificationName("openPopUpCalling", object: self)
-         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+    
+                //check message push
+                print("user info---",userInfo)
+                var data = JSON(userInfo)
+                if data["data"]["message"].string == "end" {
+                    NSNotificationCenter.defaultCenter().postNotificationName("cancelCall", object: self)
+                }else{
+                    setDataCalling(userInfo)
+                    statusCallingNotification = notifyMessage.ClickNotify
+                    
+                    NSNotificationCenter.defaultCenter().postNotificationName("openPopUpCalling", object: self)
+                }
+                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+      
         completionHandler(.NoData)
     }
     
     func setDataCalling(userInfo: [NSObject : AnyObject]){
         let userInfo = JSON(userInfo)
-        let apiKey  =  userInfo["data"]["apiKey"].string! as String
-        let message = userInfo["data"]["message"].string! as String
-        let from = userInfo["data"]["from"].string! as String
-        let sessionId  =  userInfo["data"]["sessionId"].string! as String
-        let token  = userInfo["data"]["token"].string! as String
-        let fromName  = userInfo["data"]["fromName"].string! as String
+        let apiKey  =  userInfo["data"]["apiKey"].string! as String ?? ""
+        let message = userInfo["data"]["message"].string! as String ?? ""
+        let from = userInfo["data"]["from"].string! as String ?? ""
+        let sessionId  =  userInfo["data"]["sessionId"].string! as String ?? ""
+        let token  = userInfo["data"]["token"].string! as String ?? ""
+        let fromName  = userInfo["data"]["fromName"].string! as String ?? ""
         savedData = saveData(apiKey: apiKey, message: message, fromName: fromName, sessionId: sessionId, token: token, from: from)
 
     }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-            switch (identifier!) {
-                case "Answer":
-                   setDataCalling(userInfo)
-                   statusCallingNotification = notifyMessage.ClickAnswer
-                    NSNotificationCenter.defaultCenter().postNotificationName("openScreenCall", object: self)
-                    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-                     completionHandler()
-                case "Desline":
-                    completionHandler()
-                    
-                     setDataCalling(userInfo)
-                    ServerApi.pushNotification("Doctor cancel call", uid: savedData.from, category: "", data: "aaa",completionHandler: {
-                        respone in
-                        
-                    })
-                 UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-                default: break
-                }
+//            switch (identifier!) {
+//                case "Answer":
+//                    var data = JSON(userInfo)
+//                    if data["data"]["message"].string == "end" {
+//                        
+//                    }else{
+//                        setDataCalling(userInfo)
+//                        statusCallingNotification = notifyMessage.ClickAnswer
+//                        NSNotificationCenter.defaultCenter().postNotificationName("openScreenCall", object: self)
+//                    }
+//                  
+//                    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+//                     completionHandler()
+//                case "Desline":
+//                    completionHandler()
+//                    
+//                    ServerApi.pushNotification("Doctor cancel call", uid: savedData.from, category: "", data: "aaa",completionHandler: {
+//                        respone in
+//                        
+//                    })
+//                 UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+//                
+//                default: break
+//                }
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData)
@@ -124,6 +151,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaults.setValue(deviceTokenString, forKey: "deviceToken")
         defaults.synchronize()
     }
+    
+    
     
     private func convertDeviceTokenToString(deviceToken:NSData) -> String {
         //  Convert binary Device Token to a String (and remove the <,> and white space charaters).
@@ -137,6 +166,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         print("Couldn't register: \(error)")
+        let alert = UIAlertView()
+        alert.title = "Alert"
+        alert.message = "\(error)"
+        alert.addButtonWithTitle("Understod")
+        alert.show()
+        
     }
     
     func applicationWillResignActive(application: UIApplication) {
@@ -147,21 +182,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        EnterBackground = true
+        
+        if let _ = savedData.fromName {
+            NSNotificationCenter.defaultCenter().postNotificationName("cancelCall", object: self)
+        }
         print("applicationDidEnterBackground")
         
         
     }
     
     
-    
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-        print("applicationWillEnterForeground")
+        EnterBackground = false
+        print("applicationWillEnterForeground",application)
+        
+        
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+                
+               print("applicationDidBecomeActive")
+        
+
     }
     
     func applicationWillTerminate(application: UIApplication) {
@@ -169,7 +216,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
         print("applicationWillTerminate")
+        if let uuid = defaults.valueForKey("uid") as? String {
+            if let from  = savedData.from {
+                print("UUID:\(uuid)------from:\(from)")
+                config.emitDataToServer(MessageString.CallEndCall, uidFrom: uuid, uuidTo: from)
+            }
+        }
+
+        
     }
+
     
     // MARK: - Core Data stack
     

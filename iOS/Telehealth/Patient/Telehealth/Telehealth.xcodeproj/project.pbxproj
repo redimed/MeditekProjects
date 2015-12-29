@@ -13,10 +13,6 @@
 		AF00C3FB1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */; };
 		AF00C3FD1BD9F1DE0001A7F4 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */; };
 		AF00C3FF1BDA13A20001A7F4 /* BodyUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3FE1BDA13A20001A7F4 /* BodyUploadViewController.swift */; };
-		AF00C4041BDA16150001A7F4 /* backBody.png in Resources */ = {isa = PBXBuildFile; fileRef = AF00C4001BDA16150001A7F4 /* backBody.png */; };
-		AF00C4051BDA16150001A7F4 /* frontBody.png in Resources */ = {isa = PBXBuildFile; fileRef = AF00C4011BDA16150001A7F4 /* frontBody.png */; };
-		AF00C4061BDA16150001A7F4 /* leftBody.png in Resources */ = {isa = PBXBuildFile; fileRef = AF00C4021BDA16150001A7F4 /* leftBody.png */; };
-		AF00C4071BDA16150001A7F4 /* rightBody.png in Resources */ = {isa = PBXBuildFile; fileRef = AF00C4031BDA16150001A7F4 /* rightBody.png */; };
 		AF0A3E9B1BE70799007F0C67 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */; };
 		AF1FF8F41BF09AAA000BB306 /* TrackingRefferalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */; };
 		AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */ = {isa = PBXBuildFile; fileRef = AF3902F51BCDE8DD00173A58 /* FAQs.html */; };
@@ -28,6 +24,7 @@
 		AF5AD22E1BCB97290054B4C3 /* ExtensionHandleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */; };
 		AF7B5F441BE74D6D0043B14D /* AppointmentListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7B5F431BE74D6D0043B14D /* AppointmentListsViewController.swift */; };
 		AF840FF11BCCA39900F69EF8 /* FAQsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */; };
+		AF899DF41C1838BD00C85186 /* ringtone.wav in Resources */ = {isa = PBXBuildFile; fileRef = AF899DF31C1838BD00C85186 /* ringtone.wav */; };
 		AF943FF11BBA6221003F3B07 /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FF01BBA6221003F3B07 /* OpenTok.framework */; };
 		AF943FF31BBA6376003F3B07 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FF21BBA6376003F3B07 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		AF943FF51BBA637F003F3B07 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF943FF41BBA637F003F3B07 /* AVFoundation.framework */; };
@@ -48,7 +45,6 @@
 		AF9F48FC1BB509220044D72F /* GetAndPostDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FB1BB509220044D72F /* GetAndPostDataController.swift */; };
 		AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */; };
 		AFA6F6FE1C0FF52F007737DF /* ABOUT US.html in Resources */ = {isa = PBXBuildFile; fileRef = AFA6F6FD1C0FF52F007737DF /* ABOUT US.html */; };
-		AFE52D631BFAEBC90051B52D /* ringtone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AFE52D621BFAEBC90051B52D /* ringtone.mp3 */; };
 		AFEBD1DD1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEBD1DC1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift */; };
 		AFEBD1E11BD5E112005FE581 /* MyPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEBD1DF1BD5E112005FE581 /* MyPopupViewController.swift */; };
 		AFEBD1E21BD5E112005FE581 /* MyPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFEBD1E01BD5E112005FE581 /* MyPopupViewController.xib */; };
@@ -128,10 +124,6 @@
 		AF00C3FA1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentDetailsViewController.swift; sourceTree = "<group>"; };
 		AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		AF00C3FE1BDA13A20001A7F4 /* BodyUploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BodyUploadViewController.swift; sourceTree = "<group>"; };
-		AF00C4001BDA16150001A7F4 /* backBody.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backBody.png; sourceTree = "<group>"; };
-		AF00C4011BDA16150001A7F4 /* frontBody.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frontBody.png; sourceTree = "<group>"; };
-		AF00C4021BDA16150001A7F4 /* leftBody.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftBody.png; sourceTree = "<group>"; };
-		AF00C4031BDA16150001A7F4 /* rightBody.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightBody.png; sourceTree = "<group>"; };
 		AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingRefferalViewController.swift; sourceTree = "<group>"; };
 		AF3902F51BCDE8DD00173A58 /* FAQs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = FAQs.html; sourceTree = "<group>"; };
@@ -143,6 +135,7 @@
 		AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionHandleData.swift; sourceTree = "<group>"; };
 		AF7B5F431BE74D6D0043B14D /* AppointmentListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListsViewController.swift; sourceTree = "<group>"; };
 		AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQsViewController.swift; sourceTree = "<group>"; };
+		AF899DF31C1838BD00C85186 /* ringtone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringtone.wav; sourceTree = "<group>"; };
 		AF943FF01BBA6221003F3B07 /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = "../../../../../OpenTok-iOS-2.6.0/OpenTok.framework"; sourceTree = "<group>"; };
 		AF943FF21BBA6376003F3B07 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		AF943FF41BBA637F003F3B07 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -165,7 +158,6 @@
 		AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationAPI.swift; sourceTree = "<group>"; };
 		AFA6F6FD1C0FF52F007737DF /* ABOUT US.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "ABOUT US.html"; sourceTree = "<group>"; };
 		AFA6F6FF1C0FFFC9007737DF /* UTM Avo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UTM Avo.ttf"; sourceTree = "<group>"; };
-		AFE52D621BFAEBC90051B52D /* ringtone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ringtone.mp3; sourceTree = "<group>"; };
 		AFEBD1DC1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIVViewController-SLPopup.swift"; path = "../UIVViewController-SLPopup.swift"; sourceTree = "<group>"; };
 		AFEBD1DF1BD5E112005FE581 /* MyPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPopupViewController.swift; sourceTree = "<group>"; };
 		AFEBD1E01BD5E112005FE581 /* MyPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPopupViewController.xib; sourceTree = "<group>"; };
@@ -340,12 +332,11 @@
 		AF78A2F61BC36807003E4E98 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				AFE52D621BFAEBC90051B52D /* ringtone.mp3 */,
-				AFFDC22B1BD7780800DA3236 /* Image */,
 				AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */,
 				AFA6F6FF1C0FFFC9007737DF /* UTM Avo.ttf */,
 				AFA6F6FD1C0FF52F007737DF /* ABOUT US.html */,
 				AF3902F51BCDE8DD00173A58 /* FAQs.html */,
+				AF899DF31C1838BD00C85186 /* ringtone.wav */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -543,17 +534,6 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
-		AFFDC22B1BD7780800DA3236 /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				AF00C4001BDA16150001A7F4 /* backBody.png */,
-				AF00C4011BDA16150001A7F4 /* frontBody.png */,
-				AF00C4021BDA16150001A7F4 /* leftBody.png */,
-				AF00C4031BDA16150001A7F4 /* rightBody.png */,
-			);
-			name = Image;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -669,20 +649,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AFE52D631BFAEBC90051B52D /* ringtone.mp3 in Resources */,
 				AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */,
 				AFA6F6FE1C0FF52F007737DF /* ABOUT US.html in Resources */,
 				AFEE35321BB0415D00471592 /* Info.plist in Resources */,
-				AF00C4061BDA16150001A7F4 /* leftBody.png in Resources */,
 				AFEE34E41BB0413600471592 /* LaunchScreen.storyboard in Resources */,
+				AF899DF41C1838BD00C85186 /* ringtone.wav in Resources */,
 				AFEBD1E21BD5E112005FE581 /* MyPopupViewController.xib in Resources */,
 				AFEE34E11BB0413600471592 /* Assets.xcassets in Resources */,
 				AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */,
 				AFEE34DC1BB0413600471592 /* Main.storyboard in Resources */,
-				AF00C4071BDA16150001A7F4 /* rightBody.png in Resources */,
-				AF00C4041BDA16150001A7F4 /* backBody.png in Resources */,
 				AFEE35351BB0415D00471592 /* LoadingView.xib in Resources */,
-				AF00C4051BDA16150001A7F4 /* frontBody.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -982,7 +958,7 @@
 			baseConfigurationReference = C8FFC31A755811601F972F1F /* Pods-Telehealth.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

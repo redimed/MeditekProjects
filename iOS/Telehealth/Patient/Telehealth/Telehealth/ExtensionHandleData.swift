@@ -28,12 +28,8 @@ extension String
         }else {
             return String(self)
         }
-        
-       
         //Return Parsed Date
-        
     }
-
     //Change format Male or Female
     func toGender() -> String
     {
@@ -45,9 +41,6 @@ extension String
         }
         return gender
     }
-    
-    
-  
 }
 
 extension UIApplication {
@@ -66,7 +59,6 @@ extension UIApplication {
         
         let version = self.applicationVersion()
         let build = self.applicationBuild()
-        
         return "v\(version)(\(build))"
     }
     func bundleID() -> String{
@@ -90,4 +82,6 @@ extension UIApplication {
         let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
         return (isReachable && !needsConnection)
     }
+    
+
 }

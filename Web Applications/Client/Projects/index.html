@@ -41,6 +41,8 @@ License: You must have a valid license purchased only from themeforest(the above
             <link href="theme/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- calendar -->
             <link href="theme/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+        <!-- tree -->
+        <link href="theme/assets/global/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" type="text/css" />
 
     <!-- END PAGE LEVEL PLUGINS -->
 
@@ -175,6 +177,8 @@ License: You must have a valid license purchased only from themeforest(the above
                 <script src="theme/assets/global/plugins/moment.min.js" type="text/javascript"></script>
                 <script src="theme/assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
                 <script src="theme/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+            <!-- tree -->
+            <script src="theme/assets/global/plugins/jstree/dist/jstree.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
        
 
@@ -410,6 +414,12 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="modules/admission/controllers/modalUpdate2Ctrl.js"></script>
         <!-- end module admission -->
 
+        <!-- BEGIN MODULE drawing -->
+            <script src="modules/drawing/drawing.js"></script>
+            <script src="modules/drawing/controllers/drawingCtrl.js"></script>
+            <script src="modules/drawing/controllers/drawingHomeCtrl.js"></script>
+        <!-- END MODULE drawing -->
+
         <!-- END CORE ANGULARJS PLUGINS -->
 
         <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
@@ -479,6 +489,9 @@ License: You must have a valid license purchased only from themeforest(the above
 
             <!-- calendar -->
             <script src="theme/assets/apps/scripts/calendar.min.js" type="text/javascript"></script>
+
+            <!-- tree -->
+            <script src="theme/assets/pages/scripts/ui-tree.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
 
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
@@ -492,7 +505,8 @@ License: You must have a valid license purchased only from themeforest(the above
                 $(document).ready(function()
                 {
                     App.initAjax();
-                    App.setAssetsPath('theme/assets/'); // Set the assets folder path  
+                    App.setAssetsPath('theme/assets/'); // Set the assets folder path 
+                    UITree.init(); // cay thu muc
                 });
             </script>
         <!-- END JAVASCRIPTS -->

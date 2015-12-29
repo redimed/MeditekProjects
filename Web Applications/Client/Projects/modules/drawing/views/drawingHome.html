@@ -1,0 +1,55 @@
+<div class="row margin-top-40">
+    <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
+        <div class="portlet box dark">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>
+                    <span class="caption-subject bold uppercase">Select Image</span>
+                    <span class="caption-helper"></span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                    <a href="javascript:;" class="fullscreen"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div id="my-tree_3" class="tree-demo"> </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7 col-sm-7">
+        <div class="portlet portlet-fit light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="glyphicon glyphicon-pencil font-dark"></i>
+                    <span class="caption-subject bold uppercase">Drawing</span>
+                    <span class="caption-helper"></span>
+                </div>
+                 <div class="actions">
+                    <input type="range"  min="1" max="50" ng-model="lineWidth">
+                    <input type="color"  ng-model="color" ng-change="convertHex(color,50)"/>{{color}}
+                    <a href="javascript:;" class="btn dark" ng-click="save()">Save</a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="text-center">
+                    <canvas width="800" height="600" id="canvas" drawing-directive color="convertHex(color,50)" line-width="lineWidth"></canvas>{{aaaa}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+#canvas {
+    /*border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0 9px 20px -5px rgba(0,0,0,0.8);*/
+    background-color: #FFF;
+    border: 1px solid #ccc;
+}
+</style>
+
+
+
+
+

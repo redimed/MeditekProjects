@@ -52,6 +52,7 @@ module.exports = {
 			UserName:req.body.UserName,
 			Email:req.body.Email,
 			PhoneNumber:req.body.PhoneNumber,
+			PinNumber:req.body.PinNumber,
 			Password:req.body.Password,
 			Activated:'Y',
 			Enable:'Y',

@@ -11,23 +11,24 @@ import SwiftyJSON
 import Alamofire
 
 
-let config = ConfigurationSystem()
+let config  = ConfigurationSystem()
 var savedData  = saveData()
 let defaults = NSUserDefaults.standardUserDefaults()
-var tokens = String()
-var userUID = String()
-var cookies = String()
+var tokens :String = String()
+var userUID :String = String()
+var cookies :String = String()
 var PatientInfo : Patient!
-let phoneNumberCallUs = "0892300900"
-var statusCallingNotification = ""
+let phoneNumberCallUs : String = "0892300900"
+var statusCallingNotification : String = String()
+var EnterBackground : Bool = false
+
 //var deviceID = String()
 struct ConfigurationSystem {
-    static let http = "http://testapp.redimed.com.au"
+    static let http :String = "http://telehealthvietnam.com.vn"
     
-    
-    static let Http_3009 = "\(http):3009"
-    static let Http_3005 =  "\(http):3005"
-    static let Http_3006 =  "\(http):3006"
+    static let Http_3009 :String = "\(http):3009"
+    static let Http_3005 :String =  "\(http):3005"
+    static let Http_3006 :String =  "\(http):3006"
     
     
 
@@ -38,7 +39,11 @@ struct ConfigurationSystem {
         textField.cornerRadius = 4
     }
     
-
+    func emitDataToServer(message:String,uidFrom:String,uuidTo:String){
+        let modifieldURLString = NSString(format: UrlAPISocket.emitAnswer,uidFrom,uuidTo,message) as String
+        let dictionNary : NSDictionary = ["url": modifieldURLString]
+        sharedSocket.socket.emit("get", dictionNary)
+    }
     
     //Giap: Check input only number
     func validateInputOnlyNumber(value: Int) -> Bool {

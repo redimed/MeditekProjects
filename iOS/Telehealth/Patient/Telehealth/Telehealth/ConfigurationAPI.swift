@@ -11,89 +11,90 @@ import UIKit
 
 //Giap: API verify phone number and send verifycode
 struct UrlAPICheckPhoneNumber  {
-    static let apiLogin = "/api/login"
-    static let SendVerifyCodePhoneNumber = "/api/telehealth/user/requestActivationCode"
-    static let CheckVerifyCode = "/api/telehealth/user/verifyActivationCode"
+    static let apiLogin : String = "/api/login"
+    static let SendVerifyCodePhoneNumber : String = "/api/telehealth/user/requestActivationCode"
+    static let CheckVerifyCode : String = "/api/telehealth/user/verifyActivationCode"
     
 }
 struct UrlInformationPatient  {
-    static let getUserInfo = "/api/telehealth/user/"
-    static let getInformationPatientByUID = "/api/telehealth/user/details/"
-    static let getAppointmentList = "/api/telehealth/user/appointments/"
-    static let getAppointmentDetails = "/api/telehealth/user/telehealthAppointmentDetails/"
-    static let getWAADetails = "/api/telehealth/user/WAAppointmentDetails/"
-    static let uploadImage =  "/api/uploadFile"
-    static let updateImageToAppointment = "/api/telehealth/appointment/updateFile"
-    static let downloadImage = "/api/downloadFile/400"
-    static let getNewToken = "/api/refresh-token/GetNewToken"
-    static let updateTokenPush = "/api/telehealth/user/updateToken"
-    static let pushNotify = "/api/telehealth/user/pushNotification"
+    static let getUserInfo : String = "/api/telehealth/user/"
+    static let getInformationPatientByUID : String = "/api/telehealth/user/details/"
+    static let getAppointmentList : String = "/api/telehealth/user/appointments/"
+    static let getAppointmentDetails : String = "/api/telehealth/user/telehealthAppointmentDetails/"
+    static let getWAADetails : String = "/api/telehealth/user/WAAppointmentDetails/"
+    static let uploadImage : String =  "/api/uploadFile"
+    static let updateImageToAppointment : String = "/api/telehealth/appointment/updateFile"
+    static let downloadImage : String = "/api/downloadFile/400"
+    static let getNewToken : String = "/api/refresh-token/GetNewToken"
+    static let updateTokenPush : String = "/api/telehealth/user/updateToken"
+    static let pushNotify : String = "/api/telehealth/user/pushNotification"
+    static let logOut : String = "/api/logout"
 }
 
 //Giap: API Socket
 struct UrlAPISocket  {
-    static let joinRoom = "/api/telehealth/socket/joinRoom?uid=%@"
-    static let emitAnswer = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
+    static let joinRoom : String = "/api/telehealth/socket/joinRoom?uid=%@"
+    static let emitAnswer : String = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
 }
 
 //Giap: Group Message in system
 struct MessageString  {
-    static let CallAnswer = "answer"
-    static let CallEndCall = "end"
-    static let Decline = "decline"
-    static let Call = "call"
-    static let Cancel = "cancel"
-    static let VersionAndBuild = "© REDIMED 2015 \(UIApplication.sharedApplication().versionBuild()) – App Design by Meditek"
-    static let QuestionCallPhone = "You want to contact us?"
+    static let CallAnswer : String = "answer"
+    static let CallEndCall : String = "end"
+    static let Decline : String = "decline"
+    static let Call : String = "call"
+    static let Cancel : String = "cancel"
+    static let VersionAndBuild : String = "© REDIMED 2015 \(UIApplication.sharedApplication().versionBuild()) – App Design by Meditek"
+    static let QuestionCallPhone : String = "You want to contact us?"
 }
 
 struct ErrorMessage {
-    static let NoData = "No appointment details!"
-    static let TimeOut = "Request Time Out"
-    static let TimeOutToken = "jwt expired"
+    static let NoData : String = "No appointment details!"
+    static let TimeOut: String  = "Request Time Out"
+    static let TimeOutToken : String = "jwt expired"
 }
 
 //Giap: Group Hash Value Number 0 - 9 and delete
 struct numberHashValue  {
-    static let number0 = 915
-    static let number1 = 918
-    static let number2 = 921
-    static let number3 = 924
-    static let number4 = 927
-    static let number5 = 930
-    static let number6 = 933
-    static let number7 = 936
-    static let number8 = 939
-    static let number9 = 942
-    static let delete = 0
+    static let number0 : Int = 915
+    static let number1 : Int = 918
+    static let number2 : Int = 921
+    static let number3 : Int = 924
+    static let number4 : Int = 927
+    static let number5 : Int = 930
+    static let number6 : Int = 933
+    static let number7 : Int = 936
+    static let number8 : Int = 939
+    static let number9 : Int = 942
+    static let delete : Int = 0
 }
 //Giap: Icon FontAwsome
 struct FAIcon {
-    static let volume_off = "\u{f026}"
-    static let volume_up = "\u{f028}"
-    static let pause = "\u{f04c}"
-    static let play = "\u{f04b}"
-    static let fa_close = "\u{f00d}"
-    static let microphone_on = "\u{f130}"
-    static let microphone_off = "\u{f131}"
+    static let volume_off : String = "\u{f026}"
+    static let volume_up : String = "\u{f028}"
+    static let pause : String = "\u{f04c}"
+    static let play : String = "\u{f04b}"
+    static let fa_close : String = "\u{f00d}"
+    static let microphone_on : String = "\u{f130}"
+    static let microphone_off : String = "\u{f131}"
 
 }
 struct formatTime {
-    static let dateTime = "yyyy-MM-dd HH:mm:ss"
-    static let dateTimeZone = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-    static let formatDate = "dd/MM/yyyy"
-    static let formatDateTime = "dd/MM/yyyy HH:mm"
-    static let formatTime = "HH:mm"
+    static let dateTime : String = "yyyy-MM-dd HH:mm:ss"
+    static let dateTimeZone : String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    static let formatDate : String = "dd/MM/yyyy"
+    static let formatDateTime : String = "dd/MM/yyyy HH:mm"
+    static let formatTime : String = "HH:mm"
 }
 
 struct statusAppointment {
-    static let Attended = "Attended"
-    static let Waitlist = "Waitlist"
-    static let Pending = "Pending"
-    static let Received = "Received"
-    static let Cancelled = "Cancelled"
-    static let Approved = "Approved"
-    static let Finished = "Finished"
+    static let Attended : String = "Attended"
+    static let Waitlist : String = "Waitlist"
+    static let Pending : String = "Pending"
+    static let Received : String = "Received"
+    static let Cancelled : String = "Cancelled"
+    static let Approved : String = "Approved"
+    static let Finished : String = "Finished"
 }
 struct colorStatusAppointment{
     static let colorAttended = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
@@ -104,9 +105,9 @@ struct colorStatusAppointment{
     static let colorFinished = "Finished"
 }
 struct notifyMessage {
-    static let ClickNotify = "ClickNotify"
-    static let ClickAnswer = "ClickAnswer"
-    static let ClickDesline = "ClickDesline"
+    static let ClickNotify : String = "ClickNotify"
+    static let ClickAnswer : String = "ClickAnswer"
+    static let ClickDesline : String = "ClickDesline"
 }
 
 

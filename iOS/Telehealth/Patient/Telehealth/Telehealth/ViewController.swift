@@ -69,7 +69,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     let message : String = String(response["ErrorsList"][0])
                     self.alertMessage("Error", message: message)
                 }
-                
             }
         }
     }

@@ -12,7 +12,7 @@ protocol AppointmentListTableViewCellDelegate : class{
 }
 
 class AppointmentListTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var appointmentDate: UILabel!
     @IBOutlet weak var doctorName: UILabel!
     @IBOutlet weak var status: UILabel!
@@ -20,19 +20,18 @@ class AppointmentListTableViewCell: UITableViewCell {
  
     weak var delegate : AppointmentListTableViewCellDelegate?
     
-    func configAppointment(Appointment:AppointmentList){
-        if Appointment.FromTime == "" {
-            appointmentDate.text = ""
-        }else {
-            appointmentDate.text = Appointment.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDateTime)
-            
-        }
-        doctorName.text = Appointment.NameDoctor
-        status.text = Appointment.Status
+    func configAppointment(Appointment:AppointmentList,indexPath:Int){
+//        if Appointment.FromTime == "" {
+//            appointmentDate.text = ""
+//        }else {
+//            appointmentDate.text = Appointment.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDateTime)
+//            
+//        }
+        
+        appointmentDate.text = "Ref\(indexPath)"
+        doctorName.text = Appointment.refName
+        status.text =  Appointment.NameDoctor
         UIDAppointment = Appointment.UIDApointment
-
-       
-      
 
     }
    

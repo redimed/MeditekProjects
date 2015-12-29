@@ -33,7 +33,8 @@ class Patient{
     var DOB : String!
     var Suburb : String!
     var HomePhoneNumber : String!
-    init(MiddleName:String,Address2:String,Title:String,WorkPhoneNumber:String,Enable:String,PhoneNumber:String,Occupation:String,LastName:String,Postcode:String,UID:String,UserAccountID:String,Gender:String,FirstName:String,State:String,ModifiedDate:String,Email1:String,Country:String,ID:String,Address1:String,CountryID:String,DOB:String,Suburb:String,HomePhoneNumber:String){
+    var Image : UIImage!
+    init(MiddleName:String,Address2:String,Title:String,WorkPhoneNumber:String,Enable:String,PhoneNumber:String,Occupation:String,LastName:String,Postcode:String,UID:String,UserAccountID:String,Gender:String,FirstName:String,State:String,ModifiedDate:String,Email1:String,Country:String,ID:String,Address1:String,CountryID:String,DOB:String,Suburb:String,HomePhoneNumber:String,Image:UIImage){
         
         self.MiddleName = MiddleName
         self.Address2 = Address2
@@ -56,6 +57,11 @@ class Patient{
         self.Suburb = Suburb
         self.HomePhoneNumber = HomePhoneNumber
         self.Address1 = Address1
+        self.Image = Image
+        
+    }
+    
+    func getAPI(){
         
     }
 

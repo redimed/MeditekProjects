@@ -77,6 +77,7 @@ class BodyUploadViewController: UIViewController {
         }
     }
     
+  
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return [UIInterfaceOrientationMask.Portrait ,UIInterfaceOrientationMask.PortraitUpsideDown]
     }

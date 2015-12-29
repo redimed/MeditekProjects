@@ -10,7 +10,9 @@ import Foundation
 import SwiftyJSON
 
 //class handle get and set data calling
+
 class saveData {
+    
     var data: JSON = ""
     var apiKey : String!
     var message : String!
@@ -18,8 +20,6 @@ class saveData {
     var sessionId : String!
     var token : String!
     var from : String!
-    
-    
     init(){}
     init(apiKey:String,message:String,fromName:String,sessionId:String,token:String,from:String){
         self.apiKey = apiKey
@@ -29,5 +29,7 @@ class saveData {
         self.token = token
         self.from = from
     }
+    
+
 }
 

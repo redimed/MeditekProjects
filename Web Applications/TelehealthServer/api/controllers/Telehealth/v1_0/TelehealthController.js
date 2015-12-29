@@ -14,11 +14,7 @@ function sendSMS(toNumber, content) {
 module.exports = {
     Logout: function(req,res){
         var params = req.params.all();
-        if (!params.uid) {
-            var err = new Error("Telehealth.GetPatientDetails.Error");
-            err.pushError("Invalid Params");
-            return res.serverError(ErrorWrap(err));
-        }
+        sails.sockets.leave(req.socket,uid);
     },
     GetPatientDetails: function(req, res) {
         var params = req.params.all();

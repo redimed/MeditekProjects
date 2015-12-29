@@ -128,6 +128,7 @@ module.exports = {
             res.set('filename',fileName);
             // res.set('testtesttesttest',true);
             res.header('Access-Control-Expose-Headers', HelperService.const.exposeHeaders);
+            console.log("====Response====: ",res);
             if (err) return res.serverError(ErrorWrap(err));
             res.attachment(fileName);
             var file = fs.createReadStream(output);

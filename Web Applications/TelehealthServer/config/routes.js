@@ -36,7 +36,7 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'PushNotification'
     },
-    'GET /api/telehealth/user/logout/:uid': {
+    '/api/telehealth/user/logout/:uid': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'Logout'
     },

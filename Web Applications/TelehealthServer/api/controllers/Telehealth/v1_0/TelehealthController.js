@@ -12,6 +12,10 @@ function sendSMS(toNumber, content) {
     });
 };
 module.exports = {
+    Logout: function(req,res){
+        var params = req.params.all();
+        sails.sockets.leave(req.socket,uid);
+    },
     GetPatientDetails: function(req, res) {
         var params = req.params.all();
         if (!params.uid) {
@@ -342,6 +346,7 @@ module.exports = {
         var sound = info.sound;
         var title = info.title;
         var category = info.category;
+        var badge = info.badge;
         var uid = info.uid;
         if (!uid || !data) {
             var err = new Error("Telehealth.PushNotification.Error");
@@ -349,7 +354,7 @@ module.exports = {
             return res.serverError(ErrorWrap(err));
         }
         var iosMess = {
-            badge: 1,
+            badge: badge || 0,
             alert: title ? title : 'Notification From REDiMED',
             payload: {
                 "data": data
@@ -357,6 +362,7 @@ module.exports = {
             sound: sound ? sound : null,
             category: category ? category : null
         };
+        console.log("====iosMess====: ",iosMess);
         var androidMess = {
             collapseKey: 'REDiMED',
             priority: 'high',
@@ -412,6 +418,7 @@ module.exports = {
     },
     TestPushAPN: function(req, res) {
         var tokens = [];
+        var params = req.params.all();
         TelehealthDevice.findAll({
             where: {
                 Type: 'IOS'
@@ -422,7 +429,7 @@ module.exports = {
                     tokens.push(devices[i].DeviceToken);
                 }
                 var opts = {
-                    badge: 2,
+                    badge: params.badge,
                     alert: 'Test Push Notification',
                     payload: {
                         "data": {

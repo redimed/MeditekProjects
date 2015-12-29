@@ -82,6 +82,8 @@ module.exports = {
         };
         var token = null;
         var roomList = sails.sockets.rooms();
+        console.log("===From===: ",from);
+        console.log("===Message===: ",message);
         if (message.toLowerCase() == 'call') {
             sessionId = req.param('sessionId');
             if (!sessionId) return;
@@ -133,7 +135,7 @@ module.exports = {
             }
             if (sails.sockets.subscribers(from).length > 1 && message.toLowerCase() != 'call') {
                 data.from = from;
-                data.message = message.toLowerCase() == 'answer' ? 'decline' : message;
+                data.message = 'decline';
                 sails.sockets.broadcast(from, 'receiveMessage', data, req.socket);
             }
         }

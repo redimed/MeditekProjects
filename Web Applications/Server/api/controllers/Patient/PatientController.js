@@ -46,6 +46,48 @@ module.exports = {
             });
     },
 
+    RegisterPatient: function(req, res) {
+        var data = req.body.data;
+        var otherData = req.body.otherData?req.body.otherData:null;
+        // var PatientPensionData = req.body.PatientPension?req.body.PatientPension:{};
+        // var PatientDVA = req.body.PatientDVA?req.body.PatientDVA:{};
+        // var PatientKin = req.body.PatientKin?req.body.PatientKin:{};
+        // var PatientMedicare = req.body.PatientMedicare?req.body.PatientMedicare:{};
+        Services.Patient.CreatePatient(data, otherData)
+            .then(function(patient) {
+                console.log(patient," >>>>>>>>>>>>>>>>.phai day k");
+                if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {
+                    var info = {
+                        UID: patient.result.UID,
+                        FirstName: patient.result.FirstName,
+                        LastName: patient.result.LastName,
+                        DOB: patient.result.DOB,
+                        Address1: patient.result.Address1,
+                        Address2: patient.result.Address2,
+                        UserAccountUID: patient.UserAccountUID
+                    };
+                    res.ok({
+                        status: 200,
+                        message: "success",
+                        data: info
+                    });
+                } else {
+                    var err = new Error("SERVER ERROR");
+                    err.pushError("No data result");
+                    res.notFound({
+                        status: 200,
+                        message: ErrorWrap(err)
+                    });
+                }
+            })
+            .catch(function(err) {
+                res.serverError({
+                    status: 500,
+                    message: ErrorWrap(err)
+                });
+            });
+    },
+
     /*
     	SearchPatient : find patient with condition
     	input: Patient's name or PhoneNumber

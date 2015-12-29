@@ -1,5 +1,6 @@
 var app = angular.module('app.authentication.WAAppointment.GP.controller', []);
 app.controller('showSkinCancerController', function($scope, $modalInstance, toastr, TypeClinical, CommonService, ClinicalDetails) {
+
     $modalInstance.rendered.then(function() {
         App.initAjax();
     });

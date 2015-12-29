@@ -1178,7 +1178,9 @@ module.exports = {
     SearchPatient : function(whereClause, transaction) {
         var UserAccountWhereClause = {};
         if('PhoneNumber' in whereClause) {
-            UserAccountWhereClause.PhoneNumber = data.PhoneNumber;
+            var PhoneNumber = whereClause.PhoneNumber[0] == '0' ? '+61'+ whereClause.PhoneNumber.substr(1,whereClause.PhoneNumber.length) : whereClause.PhoneNumber;
+            UserAccountWhereClause.PhoneNumber = PhoneNumber;
+            delete whereClause['PhoneNumber'];
         }
         return Patient.findAndCountAll({
             include:[

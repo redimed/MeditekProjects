@@ -36,10 +36,6 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'PushNotification'
     },
-    '/api/telehealth/user/logout/:uid': {
-        controller: 'Telehealth/v1_0/TelehealthController',
-        action: 'Logout'
-    },
     //================Telehealth Socket Routes==========================
     '/api/telehealth/socket/joinRoom': {
         controller: 'SocketController',

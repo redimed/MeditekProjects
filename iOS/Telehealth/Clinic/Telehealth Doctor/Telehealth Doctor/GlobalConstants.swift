@@ -8,6 +8,8 @@
 
 import Foundation
 import Alamofire
+import UIKit
+import SwiftyJSON
 
 /// ***declare server for all application***
 
@@ -29,6 +31,8 @@ let URL_SERVER_3006 = "http://testapp.redimed.com.au:3006"
 /// request url
 let AUTHORIZATION = URL_SERVER_3006 + "/api/login"
 
+let GET_INFO = URL_SERVER_3005 + "/api/doctor/get-doctor"
+
 let GET_TELEUSER = URL_SERVER_3009 + "/api/telehealth/user/"
 
 let GENERATESESSION = URL_SERVER_3009 + "/api/telehealth/socket/generateSession"
@@ -41,7 +45,7 @@ let APPOINTMENTLIST = URL_SERVER_3009 + "/api/telehealth/appointment/list"
 
 let APPOINTMENTLIST_TeleHealth = URL_SERVER_3009 + "/api/telehealth/appointment/list/TEL"
 
-let DOWNLOAD_IMAGE_APPOINTMENT = URL_SERVER_3005 + "/api/downloadFile/"
+let DOWNLOAD_IMAGE = URL_SERVER_3005 + "/api/downloadFile/"
 
 let GET_NEW_TOKEN = URL_SERVER_3006 + "/api/refresh-token/GetNewToken"
 
@@ -85,7 +89,7 @@ struct Platform {
  
  - returns: A NSDate with format self regulation
  */
-public func FormatStrDate(dateString: String) -> String {
+func FormatStrDate(dateString: String) -> String {
     let dateFormatter = NSDateFormatter()
     dateFormatter.timeZone = NSTimeZone(name: "UTC")
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000Z"
@@ -134,5 +138,18 @@ func paramFilter(offset: Int, aptFrom: String, aptTo: String) {
         ]
     ]
 }
+
+func get_full_name() -> String {
+    if let teleDef = NSUserDefaults.standardUserDefaults().valueForKey("doctorInfo") {
+        let parseJson = JSON(teleDef)
+        if parseJson["FirstName"].stringValue.isEmpty && parseJson["LastName"].stringValue.isEmpty {
+            SingleTon.nameLogin = "Doctor"
+        } else {
+            SingleTon.nameLogin = "\(parseJson["FirstName"].stringValue) \(parseJson["LastName"].stringValue)"
+        }
+    }
+    return SingleTon.nameLogin!
+}
+
 
 

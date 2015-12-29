@@ -15,8 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     let userDefault = NSUserDefaults.standardUserDefaults()
+    var state = false
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
         if let _: NSDictionary = userDefault.valueForKey("teleUserInfo") as? NSDictionary {
             let homeviewVC: UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("navigation") as UIViewController
             self.window?.rootViewController = homeviewVC
@@ -25,36 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = loginVC
         }
         
-//        print(UIDevice.currentDevice().debugDescription)
-        
-        // Register push notification for application
-//                if UIApplication.sharedApplication().respondsToSelector(Selector("registerUserNotificationSettings:")) {
-//                    if #available(iOS 8, *) {
-//                        let types:UIUserNotificationType = ([.Alert, .Sound, .Badge])
-//                        let settings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
-//                        application.registerUserNotificationSettings(settings)
-//                        application.registerForRemoteNotifications()
-//                    } else {
-//                        application.registerForRemoteNotificationTypes([.Alert, .Sound, .Badge])
-//                    }
-//                }
-//                else {
-//                    // Register for Push Notifications before iOS 8
-//                    application.registerForRemoteNotificationTypes([.Alert, .Sound, .Badge])
-//                }
         return true
     }
-    
-//    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-//        print("My token is: \(deviceToken)")
-//        let stringDeviceToken = deviceToken.description.stringByReplacingOccurrencesOfString("<", withString: "").stringByReplacingOccurrencesOfString(
-//            ">", withString: "").stringByReplacingOccurrencesOfString(" ", withString: "")
-//        userDefault.setValue(stringDeviceToken, forKey: "deviceToken")
-//    }
-//    
-//    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-//        print("Failed to get token, error: \(error)")
-//    }
     
     func applicationDidEnterBackground(application: UIApplication) {
         print("Enter background")
@@ -63,12 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 userDefault.setValue(tokenEnterBG, forKey: "authToken")
             }
         }
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
-        print("Enter from foreground")
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
     
@@ -88,12 +59,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let dicParse = teleUserInfo as! NSDictionary
             
-            SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", dicParse["UID"] as! String, val as! String, "end")])
+            SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", dicParse["UID"] as! String, val as! String, "cancel")])
             
             NSUserDefaults.standardUserDefaults().removeObjectForKey("currentUserCall")
         }
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
     

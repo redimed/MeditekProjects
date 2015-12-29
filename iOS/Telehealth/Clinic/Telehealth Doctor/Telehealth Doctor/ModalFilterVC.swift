@@ -32,6 +32,13 @@ class ModalFilterVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
         pickerView.delegate = self
         pickerView.dataSource = self
         self.statusAptTextField.inputView = pickerView
+        
+        let dismissKeyboardGes: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: "dismissKeyboard")
+        self.view.addGestureRecognizer(dismissKeyboardGes)
+    }
+    
+    func dismissKeyboard() {
+        statusAptTextField.resignFirstResponder()
     }
     
     func dismissTextField() {
@@ -52,7 +59,10 @@ class ModalFilterVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
         datePickerView.datePickerMode = UIDatePickerMode.Date
         sender.inputView = datePickerView
         datePickerView.addTarget(self, action: Selector("datePickerValueChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+        datePickerView.addTarget(self, action: Selector("datePickerValueChanged:"), forControlEvents: UIControlEvents.AllTouchEvents)
     }
+    
+    override func selectAll(sender: AnyObject?) {}
     
     func datePickerValueChanged(datePicker: UIDatePicker) {
         let dateFormatter = NSDateFormatter()
@@ -68,7 +78,7 @@ class ModalFilterVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
     func paramFilter(dataFilter:[String: String], completion: ((result: [String: String]) -> Void)?) {
         let fromtime = dataFilter["aptFrom"] == "" ? "" : "\(dataFilter["aptFrom"]! as String) \(getReFormat().timeZone)"
         let totime = dataFilter["aptTo"] == "" ? "" : "\(dataFilter["aptTo"]! as String) \(getReFormat().timeZone)"
-        let data = ["aptFrom": fromtime, "aptTo": totime]
+        let data = ["aptFrom": fromtime, "aptTo": totime, "status": statusAptTextField.text!]
         completion!(result: data)
     }
     
@@ -76,7 +86,7 @@ class ModalFilterVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
         let txtData = ["aptFrom": aptFrom.text!, "aptTo": aptTo.text!]
         paramFilter(txtData) { (res) -> Void in
             
-            if res["aptFrom"]?.characters.count > 0 || res["aptTo"]?.characters.count > 0 {
+            if res["aptFrom"]?.characters.count > 0 || res["aptTo"]?.characters.count > 0 || res["status"]?.characters.count > 0 {
                 NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTable", object: self, userInfo: ["data": res])
             }
             
@@ -94,5 +104,9 @@ class ModalFilterVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerData[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        statusAptTextField.text = pickerData[row]
     }
 }

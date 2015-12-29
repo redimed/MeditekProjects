@@ -1,6 +1,6 @@
 /**
- * @namespace UserActivationService
- * 
+ * @namespace UserActivation
+ * @memberOf Service
  */
 
 var $q = require('q');
@@ -71,7 +71,7 @@ module.exports = {
 
 	/**
 	 * @typedef {object} CreateUserActivationException
-	 * @memberOf UserActivationService
+	 * @memberOf Service.UserActivation
 	 * @property {string} ErrorType "CreateUserActivation.Error"
 	 * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
 	 * - UserUID.notProvided</br>
@@ -88,7 +88,7 @@ module.exports = {
 	 */
 	/**
 	 * @function CreateUserActivation
-	 * @memberOf UserActivationService
+	 * @memberOf Service.UserActivation
 	 * @description Tạo UserActivation </br>
 	 *	Đối với web system: mỗi user chỉ có 1 record</br>
 	 *	Đối với mobile system: tương ứng với mỗi cặp {userId, deviceId,appId} có 1 record</br>
@@ -106,7 +106,7 @@ module.exports = {
 	 * @param {string} [activationInfo.AppID] yêu cầu khi mobile
 	 * @param {objec} transaction DB transaction
 	 * @return {object} new UserActivation info
-	 * @throws {UserActivationService.CreateUserActivationException}
+	 * @throws {Service.UserActivation.CreateUserActivationException}
 	 * @throws {UserAccountService.GetUserAccountDetailsException}
 	 */
 	CreateUserActivation:function(activationInfo,transaction)
@@ -288,7 +288,7 @@ module.exports = {
 	
 	/**
 	 * @typedef {object} ActivationException
-	 * @memberOf UserActivationService
+	 * @memberOf Service.UserActivation
 	 * @property {string} ErrorType "Activation.Error"
 	 * @property {Array.<string|object>} ErrorsList Chỉ sử dụng ErrorsList[0]</br>
 	 * - Activation.userNotProvided</br>
@@ -312,7 +312,7 @@ module.exports = {
 	 */
 	/**
 	 * @function Activation
-	 * @memberOf UserActivationService
+	 * @memberOf Service.UserActivation
 	 * @description Activation một account
 	 * @param {object} activationInfo thông tin dùng để check activation
 	 * @param {string} activationInfo.UserUID
@@ -325,7 +325,7 @@ module.exports = {
 	 * @param {string} [activationInfo.AppID] Chỉ sử dụng cho mobile
 	 * @param {object} transaction DB transaction
 	 * @return {object} obj.status='success'
-	 * @throws {UserActivationService.ActivationException}
+	 * @throws {Service.UserActivation.ActivationException}
 	 * @throws {UserAccountService.GetUserAccountDetailsException}
 	 */
 	Activation:function(activationInfo,transaction){

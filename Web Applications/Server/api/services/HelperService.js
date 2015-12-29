@@ -1,6 +1,6 @@
 var helper=require("meditek_library").HelperService;
 //OVERIDE BEGIN
 //EXAMPLE
-//helper.const.abc={"aa":"bb"};
+helper.const.ExpiryPin=5;
 //OVERIDE END
 module.exports=helper;

@@ -12,10 +12,6 @@ function sendSMS(toNumber, content) {
     });
 };
 module.exports = {
-    Logout: function(req,res){
-        var params = req.params.all();
-        sails.sockets.leave(req.socket,uid);
-    },
     GetPatientDetails: function(req, res) {
         var params = req.params.all();
         if (!params.uid) {
@@ -169,9 +165,9 @@ module.exports = {
         var info = HelperService.toJson(req.body.data);
         var deviceId = req.headers.deviceid;
         var deviceType = req.headers.systemtype;
-        var deviceToken = info.token;
+        var deviceToken = info.token || null;
         var uid = info.uid;
-        if (deviceToken && uid && deviceType && deviceId) {
+        if (uid && deviceType && deviceId) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 TelehealthDevice.findOrCreate({
                     where: {

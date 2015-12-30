@@ -123,7 +123,7 @@ module.exports = {
                         res.ok({
                             status: 200,
                             message: "success",
-                            data: '',
+                            data: [],
                             count: 0
                         });
                     else

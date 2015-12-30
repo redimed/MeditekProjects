@@ -1,5 +1,5 @@
 var app = angular.module('app.blank.registerPatient.controller', []);
-app.controller('registerPatientCtrl', function($scope, blankServices, AuthenticationService, toastr) {
+app.controller('registerPatientCtrl', function($scope, blankServices, AuthenticationService, toastr,$state) {
     ComponentsDropdowns.init();
     $scope.number = 1;
     $scope.submitted = false;
@@ -7,7 +7,7 @@ app.controller('registerPatientCtrl', function($scope, blankServices, Authentica
     // $scope.postData = {
     //     "data": {
     //         "Title": "Ms",
-    //         "FirstName": "tsubasa",
+    //         "FirstName": "test1",
     //         "MiddleName": "anime",
     //         "LastName": "123123",
     //         "DOB": "23/12/2015",
@@ -26,35 +26,35 @@ app.controller('registerPatientCtrl', function($scope, blankServices, Authentica
     //     },
     //     "otherData": {
     //         "PatientKin": {
-    //             // "FirstName": "maria",
-    //             // "MiddleName": "ama",
-    //             // "LastName": "ozawa",
-    //             // "HomePhoneNumber": "0411223344",
-    //             // "MobilePhoneNumber": "0411111111",
-    //             // "Address1": "Address",
-    //             // "Suburb": "Suburb",
-    //             // "Postcode": "1234",
-    //             // "State": "WA",
-    //             // "CountryID": "1"
+    //             "FirstName": "maria",
+    //             "MiddleName": "ama",
+    //             "LastName": "ozawa",
+    //             "HomePhoneNumber": "0411223344",
+    //             "MobilePhoneNumber": "0411111111",
+    //             "Address1": "Address",
+    //             "Suburb": "Suburb",
+    //             "Postcode": "1234",
+    //             "State": "WA",
+    //             "CountryID": "1"
     //         },
-    //         // "PatientMedicare": {
-    //         //     "MedicareNumber": "1",
-    //         //     "MedicareReferenceNumber": "1",
-    //         //     "ExpiryDate": "01/12/2015"
-    //         // },
-    //         // "Fund": {
-    //         //     "MembershipNumber": "1",
-    //         //     "UPI": "1",
-    //         //     "PrivateFund": "ACA"
-    //         // },
-    //         // "PatientDVA": {
-    //         //     "DVANumber": "1",
-    //         //     "DVADisability": "1"
-    //         // },
-    //         // "PatientPension": {
-    //         //     "ExpiryDate": "01/12/2015",
-    //         //     "HCCPensionNumber": "HCC/Pension No"
-    //         // }
+    //         "PatientMedicare": {
+    //             "MedicareNumber": "1",
+    //             "MedicareReferenceNumber": "1",
+    //             "ExpiryDate": "01/12/2015"
+    //         },
+    //         "Fund": {
+    //             "MembershipNumber": "1",
+    //             "UPI": "1",
+    //             "PrivateFund": "ACA"
+    //         },
+    //         "PatientDVA": {
+    //             "DVANumber": "1",
+    //             "DVADisability": "1"
+    //         },
+    //         "PatientPension": {
+    //             "ExpiryDate": "01/12/2015",
+    //             "HCCPensionNumber": "HCC/Pension No"
+    //         }
     //     }
     // }
     $scope.loadListContry = function() {
@@ -101,6 +101,7 @@ app.controller('registerPatientCtrl', function($scope, blankServices, Authentica
             blankServices.registerPatient($scope.postData).then(function(response) {
             	if (response.data.status = 200) {
             		toastr.success('create Patient success');
+                    $state.go('blank.welcome')
             	};
             },function(err){
             	toastr.error('create Patient fail');
@@ -108,4 +109,3 @@ app.controller('registerPatientCtrl', function($scope, blankServices, Authentica
         }
     };
 });
->>>>>>> fix appointment image registerPatient searchPatient

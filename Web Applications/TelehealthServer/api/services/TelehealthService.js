@@ -197,7 +197,6 @@ module.exports = {
         note.category = opts.category ? opts.category : null;
         note.payload = opts.payload ? opts.payload : {};
         note['content-available'] = 1;
-        console.log("===Notification===: ",note);
         apnConnection.pushNotification(note, regTokens);
     }
 }

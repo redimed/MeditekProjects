@@ -1188,8 +1188,8 @@ module.exports = {
             include:[
                 {
                     model:UserAccount,
-                    attributes:['PhoneNumber'],
-                    required: false,
+                    attributes:['PhoneNumber','UID'],
+                    required: true,
                     where : UserAccountWhereClause
                 }
             ],

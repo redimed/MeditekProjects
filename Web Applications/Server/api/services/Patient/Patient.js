@@ -1182,7 +1182,7 @@ module.exports = {
             UserAccountWhereClause.PhoneNumber = PhoneNumber;
             delete whereClause['PhoneNumber'];
         }
-        return Patient.findAndCountAll({
+        return Patient.findOne({
             include:[
                 {
                     model:UserAccount,

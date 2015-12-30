@@ -637,6 +637,8 @@ module.exports = {
                             Password    : data.password
                         };
                         userInfo.UID = UUIDService.Create();
+                        if(data.hasOwnProperty('PinNumber')== true)
+                            userInfo.PinNumber = data.PinNumber;
                         //create UserAccount
                         return Services.UserAccount.CreateUserAccount(userInfo,t)
                         .then(function(user){

@@ -30,10 +30,10 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
         super.viewDidLoad()
         picker?.delegate = self
         dateLabel.text = appointmentDetails.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatDate)
-                                //Check To time
+        //Check To time
         if appointmentDetails.ToTime == "" {
             timeLabel.text = "\(appointmentDetails.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime))"
-
+            
         }else{
             timeLabel.text = "\(appointmentDetails.FromTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime)) - \(appointmentDetails.ToTime.toDateTimeZone(formatTime.dateTimeZone, format: formatTime.formatTime))"
         }
@@ -42,8 +42,8 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
         
         print("-------",appointmentDetails.Type)
         self.getListImage(appointmentDetails.UIDApointment,appointmentDetails.Type)
-    
-       
+        
+        
         
     }
     
@@ -58,18 +58,14 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     func getListImage(UIDAppointment:String,_ Type:String){
         self.api.getAppointmentDetails(UIDAppointment,type:Type, completionHandler: {
             response in
-            print(response)
             if response["message"] == "NoImage"{
-//                self.alertMessage("Error", message: ErrorMessage.NoData)
+                // self.alertMessage("Error", message: ErrorMessage.NoData)
             }else {
                 let countImage = response.count
                 
                 for var i = 0 ; i < countImage ; i++ {
-                    let imageUID : String = response[i]["UID"].string ?? ""
-                    let FileType  = response[i]["FileType"].string ?? ""
-                    if FileType == "MedicalImage"{
-                        self.downloadImage(imageUID)
-                    }
+                        let imageUID = response[i].string
+                        self.downloadImage(imageUID!)
                 }
             }
         })
@@ -82,7 +78,7 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
                 print(image)
             }else {
                 self.ArrayImageUID.append(image!)
-               self.insertDataToCollectionView()
+                self.insertDataToCollectionView()
             }
         })
     }
@@ -122,14 +118,11 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     }
     //select 1 item in collection view
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
         performSegueWithIdentifier("ImageDetailSegue", sender: indexPath)
-        //        var cell = collectionView.cellForItemAtIndexPath(indexPath)
-        
-        
-        
     }
     
+    
+    //animation collection view cell scrolling
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         cell.alpha = 0
         UIView.animateWithDuration(0.5, animations: {
@@ -140,6 +133,7 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     //send data view to view
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ImageDetailSegue" {
+            //get index path selected image in collection view
             if let indexPath = sender as? NSIndexPath {
                 let destVC = segue.destinationViewController as! ImageDetailViewController
                 destVC.imageDetail = ArrayImageUID[indexPath.row]
@@ -195,10 +189,10 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     
     func openCamera()
     {
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
+        if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
         {
             picker!.sourceType = UIImagePickerControllerSourceType.Camera
-            self .presentViewController(picker!, animated: true, completion: nil)
+            self.presentViewController(picker!, animated: true, completion: nil)
         }
         else
         {
@@ -209,15 +203,8 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
     func openGallery()
     {
         picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone
-        {
-            self.presentViewController(picker!, animated: true, completion: nil)
-        }
-        else
-        {
-            popover=UIPopoverController(contentViewController: picker!)
-            popover!.presentPopoverFromRect(selectOptionImage.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
-        }
+        self.presentViewController(picker!, animated: true, completion: nil)
+
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
@@ -259,7 +246,7 @@ class AppointmentDetailsViewController: UIViewController,UICollectionViewDataSou
         savedImageAlert("Upload", message: "Upload Success")
         
     }
-    
+    //add an image to collection view
     func insertDataToCollectionView(){
         let newRowIndex = ArrayImageUID.count
         let indexPath = NSIndexPath(forRow: newRowIndex - 1 , inSection: 0)

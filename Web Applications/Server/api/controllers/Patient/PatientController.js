@@ -123,15 +123,14 @@ module.exports = {
                         res.ok({
                             status: 200,
                             message: "success",
-                            data: '',
+                            data: [],
                             count: 0
                         });
                     else
                         res.ok({
                             status: 200,
                             message: "success",
-                            data: info.rows,
-                            count: info.count
+                            data: info,
                         });
                 } else {
                     var err = new Error("SERVER ERROR");

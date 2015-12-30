@@ -10,81 +10,75 @@
 					</div>
 				</div>
 				<div class="portlet-body form" >
+					<!-- {{postData}} -->
 					<form name="step1" class="form-horizontal " novalidate ng-submit="next()" ng-show="number == 1">
 						<div class="form-body my-form-body-padding">
 							<div class="row margin-top-20">
 								<div class="col-md-6 col-sm-6">
-									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.firstname.$invalid]">
+									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.FirstName.$invalid]">
 										<label class="control-label col-md-4 col-sm-4">
-											Firstname <span class="required">*</span>
+											First Name <span class="required">*</span>
 										</label>
 										<div class="col-md-8 col-sm-8">
-											<input type="text" class="form-control" name="firstname" 
-												ng-model="data.firstname" required>
-											<p class="help-block" ng-if="submitted && step1.firstname.$error.required">
-													Required</p>
+											<input type="text" class="form-control" name="FirstName" 
+												ng-model="postData.data.FirstName" required>
+											<p class="help-block" ng-if="submitted && step1.FirstName.$error.required">This field is required.</p>
 										</div>
 									</div>
-									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.lastname.$invalid]">
+									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.LastName.$invalid]">
 										<label class="control-label col-md-4 col-sm-4">
-											Lastname <span class="required">*</span>
+											Last Name <span class="required">*</span>
 										</label>
 										<div class="col-md-8 col-sm-8">
-											<input type="text" class="form-control" name="lastname" 
-												ng-model="data.lastname" required>
-											<p class="help-block" ng-if="submitted && step1.lastname.$error.required">
-													Required</p>
+											<input type="text" class="form-control" name="LastName" 
+												ng-model="postData.data.LastName" required>
+											<p class="help-block" ng-if="submitted && step1.LastName.$error.required">This field is required.</p>
 										</div>
 									</div>
-									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.dob.$invalid]">
+									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.DOB.$invalid]">
 										<label class="control-label col-md-4 col-sm-4">
 											Date of Birth <span class="required">*</span>
 										</label>
 										<div class="col-md-8 col-sm-8">
-											<input type="text" class="form-control date-picker" name="dob"
-												data-date-format="dd/mm/yyyy" ng-model="data.dob" required>
-											<p class="help-block" ng-if="submitted && step1.dob.$error.required">
-													Required</p>
+											<input type="text" class="form-control date-picker" name="DOB" postData.data-date-format="dd/mm/yyyy" ng-model="postData.data.DOB" data-date-end-date="0d" required>
+											<p class="help-block" ng-if="submitted && step1.DOB.$error.required">This field is required.</p>
 										</div>
 									</div>
 								</div>
 								<div class="col-md-6 col-sm-6">
-									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.gender.$invalid]">
+									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.Gender.$invalid]">
 										<label class="control-label col-md-4 col-sm-4">
 											Gender <span class="required">*</span>
 										</label>
 										<div class="col-md-8 col-sm-8">
 											<div class="radio-list">
 												<label class="radio-inline">
-													<input type="radio" name="gender" value="M" name="gender" 
-												ng-model="data.gender" required> Male
+													<input type="radio" value="Male" name="Gender" ng-model="postData.data.Gender" required> Male
 												</label>
 												<label class="radio-inline">
-													<input type="radio" name="gender" value="F" name="gender" 
-												ng-model="data.gender" required> Female
+													<input type="radio" value="Female" name="Gender" ng-model="postData.data.Gender" required> Female
 												</label>
 											</div>
-											<p class="help-block" ng-if="submitted && step1.gender.$error.required">
-													Required</p>
+											<p class="help-block" ng-if="submitted && step1.Gender.$error.required">This field is required.</p>
 										</div>
 									</div>
-									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.mobile.$invalid]">
+									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.PhoneNumber.$invalid]">
 										<label class="control-label col-md-4 col-sm-4">
-											Mobile <span class="required">*</span>
+											Phone Number <span class="required">*</span>
 										</label>
 										<div class="col-md-8 col-sm-8">
-											<input type="text" class="form-control" name="mobile" 
-												ng-model="data.mobile" required>
-											<p class="help-block" ng-if="submitted && step1.mobile.$error.required">
-													Required</p>
+											<input type="text" class="form-control" name="PhoneNumber" ng-model="postData.data.PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" required>
+											<p class="help-block" ng-if="submitted && step1.PhoneNumber.$error.required">This field is required.</p>
+											<p ng-show="submitted && step1.PhoneNumber.$error.pattern" class="help-block">This is not a mobile phone number</p>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.Email1.$invalid]">
 										<label class="control-label col-md-4 col-sm-4">
 											Email <span class="required">&nbsp;</span>
 										</label>
 										<div class="col-md-8 col-sm-8">
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="postData.data.Email1" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/" name="Email1">
+											<p ng-show="submitted && step1.Email1.$error.pattern" class="help-block">Please enter a valid email address.</p>
 										</div>
 									</div>
 								</div>
@@ -93,7 +87,7 @@
 						<div class="form-actions right">
 							<a href="javascript:;" class="btn btn-lg btn-default" ui-sref="blank.welcome">
 								<i class="glyphicon glyphicon-arrow-left"></i> Cancel</a>
-							<button type="reset" class="btn btn-lg yellow">
+							<button type="button" class="btn btn-lg yellow" ng-click="Reset()">
 								<i class="glyphicon glyphicon-refresh"></i> Reset</button>
 							<button type="submit" class="btn btn-lg blue">
 								Search <i class="glyphicon glyphicon-arrow-right"></i></button>
@@ -101,13 +95,12 @@
 					</form>
 					<form name="step2" class="form-horizontal " novalidate ng-submit="submit()" ng-show="number == 2">
 						<div class="form-body">
-							<div class="form-group margin-top-20" ng-class="{true: 'has-error', false: ''}[submitted && step2.activation_code.$invalid]">
+							<div class="form-group margin-top-20" ng-class="{true: 'has-error', false: ''}[submitted && step2.PinNumber.$invalid]">
 								<label class="control-label col-md-4 col-sm-4">Activation code <span class="required">*</span></label>
 								<div class="col-md-4 col-sm-4">
-									<input type="text" class="form-control" name="activation_code" 
-												ng-model="data.activation_code" required>
-									<p class="help-block" ng-if="submitted && step2.activation_code.$error.required">
-													Required</p>
+									<input type="text" class="form-control" name="PinNumber" 
+												ng-model="postData.data.PinNumber" required>
+									<p class="help-block" ng-if="submitted && step2.PinNumber.$error.required">This field is required.</p>
 								</div>
 							</div>
 						</div>

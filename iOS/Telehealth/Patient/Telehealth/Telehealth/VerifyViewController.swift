@@ -74,8 +74,6 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
                     let userUID = response["userUID"].string! as String
                     let refreshCode = response["refreshCode"].string! as String
                  
-                
-                    
                     //Save activated in localstorage
                     defaults.setValue("Verified", forKey: "verifyUser")
                     defaults.setValue(uid, forKey: "uid")
@@ -126,10 +124,6 @@ class VerifyViewController: UIViewController,UITextFieldDelegate {
         self.presentViewController(alertController, animated: true) {
             
         }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-       
     }
     
     

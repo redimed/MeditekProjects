@@ -52,4 +52,7 @@ module.exports = {
     Doctor: require('./Doctor/Doctor'),
     FileUpload: require('./FileUpload/FileUpload'),
     Register: require('./Register/Register'),
+    //begin Consultation
+    GetListConsultation: require('./Consultation/GetListConsultation')
+    //end Consultation
 };

@@ -11,6 +11,7 @@ angular.module('app.common.dimage',[])
 		scope:{
 			dimageUid:"=",
 			dimageSize:"=",
+			dimageStatus:"=",
 			// dimageLoad:"&"
 		},
 		link:function(scope,element,attrs)
@@ -20,10 +21,13 @@ angular.module('app.common.dimage',[])
 				{
 					if(scope.dimageUid)
 					{
+						scope.dimageStatus = 'loading';
 						CommonService.getFileURL(scope.dimageUid,scope.dimageSize)
 						.then(function(url){
+							scope.dimageStatus = 'finished';
 							element.attr('src',url);
 						},function(err){
+							scope.dimageStatus = err.status;
 							throw err;
 						})
 					}

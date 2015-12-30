@@ -46,4 +46,10 @@ _.extend(routes, RegisterRoutes);
     ------------------ End Register -------------------
     -------------------------------------------------
 */
+
+//begin module Consultation
+var ConsultationRoutes = require('./routes/ConsultationRoutes');
+_.extend(routes, ConsultationRoutes);
+//end module Consultation
+
 module.exports.routes = routes;

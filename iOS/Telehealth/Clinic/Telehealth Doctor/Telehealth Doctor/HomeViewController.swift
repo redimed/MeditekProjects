@@ -120,17 +120,6 @@ class HomeViewController: UIViewController {
                     }
                 }
         }
-        
-        // Send request send device token for push notification APNs
-        //        if let val = userDefaults.valueForKey("deviceToken") {
-        //            let param = ["data": ["uid": userUID, "token": val]]
-        //            request(.POST, UPDATE_TOKEN_PUSH, headers: SingleTon.headers, parameters: param)
-        //                .validate(statusCode: 200..<300)
-        //                .validate(contentType: ["application/json"])
-        //                .responseJSONReToken() { response in
-        //                    print(response)
-        //            }
-        //        }
     }
     
     override func didReceiveMemoryWarning() {

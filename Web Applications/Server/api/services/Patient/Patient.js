@@ -637,6 +637,8 @@ module.exports = {
                             Password    : data.password
                         };
                         userInfo.UID = UUIDService.Create();
+                        if(data.hasOwnProperty('PinNumber')== true)
+                            userInfo.PinNumber = data.PinNumber;
                         //create UserAccount
                         return Services.UserAccount.CreateUserAccount(userInfo,t)
                         .then(function(user){
@@ -1182,12 +1184,12 @@ module.exports = {
             UserAccountWhereClause.PhoneNumber = PhoneNumber;
             delete whereClause['PhoneNumber'];
         }
-        return Patient.findAndCountAll({
+        return Patient.findOne({
             include:[
                 {
                     model:UserAccount,
-                    attributes:['PhoneNumber'],
-                    required: false,
+                    attributes:['PhoneNumber','UID'],
+                    required: true,
                     where : UserAccountWhereClause
                 }
             ],

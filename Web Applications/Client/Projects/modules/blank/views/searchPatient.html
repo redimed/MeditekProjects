@@ -53,12 +53,10 @@
 										<div class="col-md-8 col-sm-8">
 											<div class="radio-list">
 												<label class="radio-inline">
-													<input type="radio" name="Gender" value="Male" name="Gender" 
-												ng-model="postData.data.Gender" required> Male
+													<input type="radio" value="Male" name="Gender" ng-model="postData.data.Gender" required> Male
 												</label>
 												<label class="radio-inline">
-													<input type="radio" name="Gender" value="Female" name="Gender" 
-												ng-model="postData.data.Gender" required> Female
+													<input type="radio" value="Female" name="Gender" ng-model="postData.data.Gender" required> Female
 												</label>
 											</div>
 											<p class="help-block" ng-if="submitted && step1.Gender.$error.required">This field is required.</p>
@@ -97,12 +95,12 @@
 					</form>
 					<form name="step2" class="form-horizontal " novalidate ng-submit="submit()" ng-show="number == 2">
 						<div class="form-body">
-							<div class="form-group margin-top-20" ng-class="{true: 'has-error', false: ''}[submitted && step2.activation_code.$invalid]">
+							<div class="form-group margin-top-20" ng-class="{true: 'has-error', false: ''}[submitted && step2.PinNumber.$invalid]">
 								<label class="control-label col-md-4 col-sm-4">Activation code <span class="required">*</span></label>
 								<div class="col-md-4 col-sm-4">
-									<input type="text" class="form-control" name="activation_code" 
-												ng-model="postData.data.activation_code" required>
-									<p class="help-block" ng-if="submitted && step2.activation_code.$error.required">This field is required.</p>
+									<input type="text" class="form-control" name="PinNumber" 
+												ng-model="postData.data.PinNumber" required>
+									<p class="help-block" ng-if="submitted && step2.PinNumber.$error.required">This field is required.</p>
 								</div>
 							</div>
 						</div>

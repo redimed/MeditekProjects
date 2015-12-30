@@ -358,7 +358,6 @@ module.exports = {
             sound: sound ? sound : null,
             category: category ? category : null
         };
-        console.log("====iosMess====: ",iosMess);
         var androidMess = {
             collapseKey: 'REDiMED',
             priority: 'high',

@@ -18,5 +18,9 @@ module.exports = {
     'get /api/consultation/destroy/:UID': {
         controller: 'Consultation/ConsultationController',
         action: 'DestroyConsultation'
+    },
+    'get /api/consultation/drawing/list':{
+        controller:'Consultation/DrawingController',
+        action:'GetDrawingTemplates'
     }
 };

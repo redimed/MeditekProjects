@@ -9,7 +9,7 @@ module.exports = {
     },
     'get /api/consultation/detail/:UID': {
         controller: 'Consultation/ConsultationController',
-        action: 'DetailConsultation'
+        action: 'GetDetailConsultation'
     },
     'post /api/consultation/update': {
         controller: 'Consultation/ConsultationController',

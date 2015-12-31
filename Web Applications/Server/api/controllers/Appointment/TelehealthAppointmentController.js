@@ -70,7 +70,7 @@ module.exports = {
             -error: [transaction] information details Telehealth Appointment, error message
     */
     GetDetailTelehealthAppointment: function(req, res) {
-        var UID = req.params.UID;
+        var UID = req.param('UID');
         Services.GetDetailTelehealthAppointment(UID, req.user)
             .then(function(success) {
                 res.ok(success);

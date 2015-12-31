@@ -121,7 +121,7 @@ module.exports = function(appointmentUID, userInfo) {
             }, {
                 model: Patient,
                 attributes: Services.AttributesAppt.Patient(),
-                required: false,
+                required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
                 include: [{
                     model: UserAccount,
                     attributes: Services.AttributesAppt.UserAccount(),

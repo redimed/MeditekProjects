@@ -40,7 +40,8 @@ module.exports = function(data, userInfo) {
                                     '$gte': dateActual,
                                     '$lt': dateAdded
                                 };
-                            } else {
+                            } else if (HelperService.CheckExistData(filter[keyModel][keyFilter]) &&
+                                filter[keyModel][keyFilter].length !== 0) {
                                 tempFilter[keyFilter] = filter[keyModel][keyFilter];
                             }
                             //data invalid date

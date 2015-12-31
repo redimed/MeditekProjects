@@ -14,16 +14,17 @@
 	                        transaction: t
 	                    })
 	                    .then(function(objAppt) {
-	                        if (HelperService.CheckExistData(objAppt)) {
+	                        if (HelperService.CheckExistData(objAppt) &&
+	                            HelperService.CheckExistData(data.Consultations) &&
+	                            !_.isEmpty(data.Consultations) &&
+	                            _.isArray(data.Consultations)) {
 	                            appointmentObject = objAppt;
-	                            var objectCreateConsultNote = {
-	                                data: {
-	                                    UID: UUIDService.Create(),
-	                                    CreatedBy: userInfo.ID
-	                                },
+	                            var consultNotes = Services.GetDataConsultation.ConsultNote(data.Consultations, userInfo.ID);
+	                            var objectCreateConsultNotes = {
+	                                data: consultNotes,
 	                                transaction: t
 	                            };
-	                            return Services.CreateConsultNote(objectCreateConsultNote);
+	                            return Services.BulkCreateConsultNote(objectCreateConsultNotes);
 	                        } else {
 	                            defer.reject({
 	                                error: new Error('CreateConsultation.Appointment.not.found'),
@@ -59,46 +60,8 @@
 	                            transaction: t
 	                        });
 	                    })
-	                    .then(function(relAppointmentConsultNoteCreate) {
-	                        if (HelperService.CheckExistData(data.Consultations)) {
-	                            var consultationData =
-	                                Services.GetDataConsultation.ConsultationData(data.Consultations, userInfo.ID);
-	                            var objectCreateConsultationData = {
-	                                data: consultationData,
-	                                transaction: t
-	                            };
-	                            return Services.BulkCreateConsultationData(objectCreateConsultationData);
-	                        }
-	                    }, function(err) {
-	                        defer.reject({
-	                            error: err,
-	                            transaction: t
-	                        });
-	                    })
-	                    .then(function(consultationDataCreated) {
-	                        var consultationDataCreated =
-	                            JSON.parse(JSON.stringify(consultationDataCreated));
-	                        var arrayConsultDataUnique = _.map(_.groupBy(consultationDataCreated, function(CD) {
-	                            return CD.ID;
-	                        }), function(subGrouped) {
-	                            return subGrouped[0].ID;
-	                        });
-	                        var objRelConsultData = {
-	                            data: arrayConsultDataUnique,
-	                            transaction: t,
-	                            consultNoteObject: consultNoteObject
-	                        };
-	                        return Services.RelConsultationData(objRelConsultData);
-	                    }, function(err) {
-	                        defer.reject({
-	                            error: err,
-	                            transaction: t
-	                        });
-	                    })
-	                    .then(function(relConsultDataCreated) {
-	                        defer.resolve({
-	                            transaction: t
-	                        });
+	                    .then(function(relAppointmentConsultNoteCreated) {
+	                        console.log('relAppointmentConsultNoteCreated', relAppointmentConsultNoteCreated);
 	                    }, function(err) {
 	                        defer.reject({
 	                            error: err,

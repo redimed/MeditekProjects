@@ -55,7 +55,7 @@ module.exports = {
     //begin Consultation
     GetListConsultation: require('./Consultation/GetListConsultation'),
     CreateConsultation: require('./Consultation/CreateConsultation'),
-    CreateConsultNote: require('./Consultation/CreateConsultNote'),
+    BulkCreateConsultNote: require('./Consultation/BulkCreateConsultNote'),
     RelAppointmentConsultNote: require('./Consultation/RelAppointmentConsultNote'),
     BulkCreateConsultationData: require('./Consultation/BulkCreateConsultationData'),
     GetDataConsultation: require('./Consultation/GetDataConsultation'),
@@ -63,5 +63,6 @@ module.exports = {
     RelConsultationData: require('./Consultation/RelConsultationData'),
     GetDetailConsultation: require('./Consultation/GetDetailConsultation'),
     AttributesConsult: require('./Consultation/AttributesConsult'),
+    UpdateConsultation: require('./Consultation/UpdateConsultation'),
     //end Consultation
 };

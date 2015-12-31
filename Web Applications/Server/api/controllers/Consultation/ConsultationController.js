@@ -46,6 +46,26 @@ module.exports = {
                 res.serverError(ErrorWrap(err));
             });
     },
-    UpdateConsultation: function(req, res) {},
+    UpdateConsultation: function(req, res) {
+        var data = HelperService.CheckPostRequest(req);
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            Services.UpdateConsultation(data, req.user)
+                .then(function(consultationUpdated) {
+                    if (HelperService.CheckExistData(success) &&
+                        HelperService.CheckExistData(success.transaction)) {
+                        success.transaction.commit();
+                    }
+                    res.ok('success');
+                }, function(err) {
+                    if (HelperService.CheckExistData(err) &&
+                        HelperService.CheckExistData(err.transaction)) {
+                        err.transaction.rollback();
+                    }
+                    res.serverError(ErrorWrap(err.error || err));
+                });
+        }
+    },
     DestroyConsultation: function(req, res) {}
 };

@@ -810,8 +810,8 @@ module.exports = {
                     throw err;
                 })//update 4 bang patient tai day
                 .then(function(result){
-                    if(other!=null){
-                        if(other.PatientPension!=null) {
+                    if(other!=null && other != ""){
+                        if(other.hasOwnProperty('PatientPension')==true) {
                             return PatientPension.update(other.PatientPension,{
                                 where:{
                                     PatientID : patientInfo.ID
@@ -825,7 +825,7 @@ module.exports = {
                     throw err;
                 })
                 .then(function(PatientPension){
-                    if(other.PatientMedicare!=null) {
+                    if(other.hasOwnProperty('PatientMedicare')==true) {
                         return PatientMedicare.update(other.PatientMedicare,{
                             where:{
                                 PatientID : patientInfo.ID
@@ -838,7 +838,7 @@ module.exports = {
                     throw err;
                 })
                 .then(function(PatientMedicare){
-                    if(other.PatientDVA!=null) {
+                    if(other.hasOwnProperty('PatientDVA')==true) {
                         return PatientDVA.update(other.PatientDVA,{
                             where:{
                                 PatientID : patientInfo.ID
@@ -851,7 +851,7 @@ module.exports = {
                     throw err;
                 })
                 .then(function(PatientDVA){
-                    if(other.PatientKin!=null) {
+                    if(other.hasOwnProperty('PatientKin')==true) {
                         return PatientKin.update(other.PatientKin,{
                             where:{
                                 PatientID : patientInfo.ID

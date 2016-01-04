@@ -33,7 +33,6 @@ module.exports = {
                         HelperService.CheckExistData(err.transaction)) {
                         err.transaction.rollback();
                     }
-                    console.log(err);
                     res.serverError(ErrorWrap(err.error || err));
                 });
         }

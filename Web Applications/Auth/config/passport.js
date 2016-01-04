@@ -83,7 +83,7 @@ passport.use(new LocalStrategy({
         where: whereClause,
         include: {
             model: RelUserRole,
-            attributes: ['ID', 'UserAccountId', 'RoleId'],
+            attributes: ['ID', 'UserAccountId', 'RoleId', 'SiteId'],
             include: {
                 model: Role,
                 attributes: ['ID', 'UID', 'RoleCode', 'RoleName']
@@ -102,6 +102,12 @@ passport.use(new LocalStrategy({
         //Chuẩn bị thông tin trả về
         var listRoles = [];
         _.each(user.RelUserRoles, function(item) {
+            if(HelperService.CheckExistData(item) &&
+                HelperService.CheckExistData(item.dataValues) &&
+                HelperService.CheckExistData(item.Role) &&
+                HelperService.CheckExistData(item.Role.dataValues)){
+                item.Role.dataValues.SiteId = item.dataValues.SiteId;
+            }
             listRoles.push(item.Role);
         });
         var returnUser = {

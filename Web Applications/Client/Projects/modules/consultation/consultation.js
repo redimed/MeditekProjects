@@ -1,5 +1,6 @@
 var app = angular.module('app.authentication.consultation',[
 	'app.authentication.consultation.controller',
+	'app.authentication.consultation.services'
 ]);
 
 app.config(function($stateProvider){

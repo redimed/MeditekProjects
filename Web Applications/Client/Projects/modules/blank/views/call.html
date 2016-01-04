@@ -1,128 +1,122 @@
-<!-- <div class="portlet portlet-sortable light bg-inverse">
-	<div class="portlet-body"> -->
-		<div class="my-skype">
-			<div class="thumbnail">
-				<!-- <img src="theme/assets/global/images/patient01.jpg" width="100%" class="img"> -->
-			</div>
-			<div class="row">
-				<div class="col-md-6 col-sm-6 col-xs-6 left-info ">
-					<h1 class="page-title">Marcus Doe</h1>
-					<h2 class="page-title">11:25</h2>
-				</div>
-				<div class="col-md-6 col-sm-6 col-xs-6 right-info">
-					<div class="row">
-						<div class="col-md-2 col-sm-2 col-xs-2 pull-right">
-							<img src="theme/assets/global/images/{{src}}" 
-								width="100%" class="my-button" ng-click="ZoomScreen(size,zoom)">
-						</div>
-					</div>
-					<div class="row margin-top-10">
-						<div class="col-md-5 col-sm-5 col-xs-5 pull-right">
-							<div id="publisher"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row calling">
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<h3 class="text-center page-title">
-						Calling...
-						<br><span>30:05</span>
+<div class="my-skype" id="subscriber">
+    <div class="my-header">
+        <div class="row margin-left-right-0 padding-10">
+            <div class="col-md-3 col-sm-3 col-xs-3 pull-left">
+                <h1 class="page-title">Marcus Doe</h1>
+                <h2 class="page-title">11:25</h2>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6 pull-right padding-0">
+                <div class="row margin-left-right-0">
+                    <div class="pull-right">
+                        <img src="theme/assets/global/images/{{src}}" width="100%" class="my-button" ng-click="ZoomScreen(size,zoom)">
+                    </div>
+                </div>
+                <div class="row margin-left-right-0 padding-10">
+                    <div class="pull-right">
+                        <div id="publisher"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="calling">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h3 class="text-center page-title">
+						<span>{{counter|formatTimer}}</span>
 					</h3>
-				</div>
-			</div>
-			<div class="row actions">
-				<div class="col-md-1 col-sm-1 col-xs-1 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
-					<img src="theme/assets/global/images/E-call_17.png" width="100%" class="my-button">
-				</div>
-				<div class="col-md-1 col-sm-1 col-xs-1">
-					<img src="theme/assets/global/images/E-call_13.png" width="100%" class="my-button">
-				</div>
-				<div class="col-md-1 col-sm-1 col-xs-1">
-					<img src="theme/assets/global/images/E-call_06.png" width="100%" class="my-button">
-				</div>
-				<div class="col-md-1 col-sm-1 col-xs-1 call-plus">
-					<img src="theme/assets/global/images/E-call_22.png" width="100%" class="my-button" ng-click="listUser()">
-					<div class="skype-listUser" ng-if="toggle">
-						<div class="header">
-							<div class="row">
-								<div class="col-md-12 col-sm-12">
-									<form class="horizontal">
-										<div class="form-group">
-											<label class="control-label col-md-6 col-sm-6 font-green-haze">Address Book</label>
-											<div class="col-md-6 col-sm-6">
-												<div class="input-icon">
-													<i class="glyphicon glyphicon-search"></i>
-													<input type="text" class="form-control">
-												</div>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-						<div class="content scroller" style="height: 450px;">
-							<h4 class="title">Redimed</h4>
-							<div class="row">
-								<div class="col-md-2 col-sm-2 col-xs-2 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
-									<img src="theme/assets/global/images/jaimie-3.jpg" class="avatar">
-									<img src="theme/assets/global/images/online1.png" class="icon">
-								</div>
-								<div class="col-md-8 col-sm-8 col-xs-8">
-									<a href="javascript:;" class="name">Marcus Doe</a>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-2 col-sm-2 col-xs-2 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
-									<img src="theme/assets/global/images/jaimie-3.jpg" class="avatar">
-									<img src="theme/assets/global/images/online2.png" class="icon">
-								</div>
-								<div class="col-md-8 col-sm-8 col-xs-8">
-									<span class="name">Yashiro Shermie</span>
-								</div>
-							</div>
-							<h4 class="title">Reception</h4>
-							<div class="row">
-								<div class="col-md-2 col-sm-2 col-xs-2 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
-									<img src="theme/assets/global/images/jaimie-3.jpg" class="avatar">
-									<img src="theme/assets/global/images/online3.png" class="icon">
-								</div>
-								<div class="col-md-8 col-sm-8 col-xs-8">
-									<span class="name">Marcus Doe</span>
-								</div>
-							</div>
-						</div>
-						<div class="footer">
-							<a href="javascript:;" class="btn btn-lg btn-circle blue-dark">
-								<i class="fa fa-phone"></i> More to call</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-1 col-sm-1 col-xs-1">
-					<img src="theme/assets/global/images/E-call_18.png" width="100%" class="my-button">
-				</div>
-
-				<div class="col-md-1 col-sm-1 col-xs-1 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
-					<img src="theme/assets/global/images/E-call_23.png" width="100%" class="my-button">
-				</div>
-				<div class="col-md-1 col-sm-1 col-xs-1">
-					<img src="theme/assets/global/images/E-call_14.png" width="100%" class="my-button">
-				</div>
-			</div>
-		</div>
-	<!-- </div>
-</div> -->
-
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="row">
+            <div class="col-md-1 col-sm-1 col-xs-1 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
+                <img src="theme/assets/global/images/E-call_17.png" class="my-button">
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <img src="theme/assets/global/images/E-call_13.png" class="my-button">
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <img src="theme/assets/global/images/E-call_06.png" class="my-button" ng-click="aaa()">
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1 call-plus">
+                <img src="theme/assets/global/images/E-call_22.png" class="my-button" ng-click="listUser()">
+                <div class="skype-listUser" ng-if="toggle">
+                    <div class="header">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <form class="horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-6 col-sm-6 font-green-haze">Address Book</label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="input-icon">
+                                                <i class="glyphicon glyphicon-search"></i>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content scroller" style="height: 450px;">
+                        <h4 class="title">Redimed</h4>
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-2 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                                <img src="theme/assets/global/images/jaimie-3.jpg" class="avatar">
+                                <img src="theme/assets/global/images/online1.png" class="icon">
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <a href="javascript:;" class="name">Marcus Doe</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-2 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                                <img src="theme/assets/global/images/jaimie-3.jpg" class="avatar">
+                                <img src="theme/assets/global/images/online2.png" class="icon">
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <span class="name">Yashiro Shermie</span>
+                            </div>
+                        </div>
+                        <h4 class="title">Reception</h4>
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-2 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                                <img src="theme/assets/global/images/jaimie-3.jpg" class="avatar">
+                                <img src="theme/assets/global/images/online3.png" class="icon">
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <span class="name">Marcus Doe</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <a href="javascript:;" class="btn btn-lg btn-circle blue-dark">
+                            <i class="fa fa-phone"></i> More to call</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <img src="theme/assets/global/images/E-call_18.png" class="my-button" ng-click="bbb()">
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
+                <img src="theme/assets/global/images/E-call_23.png" class="my-button">
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <img src="theme/assets/global/images/E-call_14.png" class="my-button">
+            </div>
+        </div>
+    </div>
+</div>
 <style>
-	#draggable {
-	    width: 100%;
-	    height: 100%;
-	    z-index: 1;
-	}
+#draggable {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
 </style>
 <script>
-	$(function() {
-	    $("#publisher").draggable();
-	});
+$(function() {
+    $("#publisher").draggable();
+});
 </script>
-

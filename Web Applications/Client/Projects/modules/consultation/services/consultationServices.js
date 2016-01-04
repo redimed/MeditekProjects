@@ -1,36 +1,40 @@
 angular.module("app.authentication.consultation.services", [])
-    .factory("consultationServices", function(Restangular,FileRestangular) {
+    .factory("consultationServices", function(Restangular, FileRestangular) {
         var services = {};
         var api = Restangular.all("api");
         var apiFile = FileRestangular.all("api");
 
         services.listConsultation = function(data) {
-            return api.all('consultation/list').post({data:data});
+            return api.all('consultation/list').post({
+                data: data
+            });
         }
-        services.GetDrawingTemplates=function(data){
-        	return api.one('consultation/drawing/list').get();
+        services.GetDrawingTemplates = function(data) {
+            return api.one('consultation/drawing/list').get();
         }
-        services.GetDrawingFileUrl=function(id)
-        {
-            var result=apiFile.all('consultation/drawing/getfile');
-            result=result.one(id);
+        services.GetDrawingFileUrl = function(id) {
+            var result = apiFile.all('consultation/drawing/getfile');
+            result = result.one(id);
             result.withHttpConfig({
-                responseType:'arraybuffer',
+                responseType: 'arraybuffer',
                 // headers: {'Authorization': 'Bearer '+$cookies.get('token')}
             })
             return result.get()
-            .then(function(res){
-                // var blob = new Blob([res], {type: 'image/jpg'});
-                var options={
-                    type:'image/jpg'
-                };
-                var blob = new Blob([res.data],options);
-                return {blob:blob,filename:res.headers().filename||''};
-            },function(err){
-                // error.pushError("GetFile.getFileError");
-                // throw error;
-                throw err;
-            })
+                .then(function(res) {
+                    // var blob = new Blob([res], {type: 'image/jpg'});
+                    var options = {
+                        type: 'image/jpg'
+                    };
+                    var blob = new Blob([res.data], options);
+                    return {
+                        blob: blob,
+                        filename: res.headers().filename || ''
+                    };
+                }, function(err) {
+                    // error.pushError("GetFile.getFileError");
+                    // throw error;
+                    throw err;
+                })
         }
         return services;
     });

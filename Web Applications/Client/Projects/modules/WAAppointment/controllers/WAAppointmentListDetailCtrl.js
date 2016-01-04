@@ -35,7 +35,7 @@ app.controller('showImageController', function($scope, $modalInstance, toastr, L
             });
     };
 });
-app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $cookies, $scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService, CommonService) {
+app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $state, $cookies, $scope, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService, CommonService) {
     $modalInstance.rendered.then(function() {
         App.initComponents(); // init core components
         App.initAjax();
@@ -384,4 +384,62 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $c
             toastr.error("Please check input data");
         }
     };
+
+
+    /*=========opentok begin=========*/
+    $scope.userInfo = $cookies.getObject('userInfo');
+    console.log(" $scope.userInfo", $scope.userInfo);
+    var apiKey = null;
+    var sessionId = null;
+    var token = null;
+    var userCall = ($scope.wainformation.Patients[0]) ? $scope.wainformation.Patients[0].UserAccount.UID : null;
+
+    function OpenTokJoinRoom() {
+        io.socket.get('/api/telehealth/socket/joinRoom', {
+            uid: "a0becdf0-cc7d-44a2-b4c4-37614a004ffc"
+        }, function(data) {
+            console.log("JoinRoom", data);
+        });
+    }
+
+    OpenTokJoinRoom();
+
+    function OpentokCreateSession() {
+        WAAppointmentService.getDetailOpentok().then(function(data) {
+            console.log(data.data);
+            apiKey = data.data.apiKey;
+            sessionId = data.data.sessionId;
+            token = data.data.token;
+        })
+    }
+
+    OpentokCreateSession();
+
+    function OpentokSendCall() {
+        io.socket.get('/api/telehealth/socket/messageTransfer', {
+            from: $scope.userInfo.UID,
+            to: "714c45cc-6b58-4e9d-829f-8275b2891ec0",
+            message: "call",
+            sessionId: sessionId,
+            fromName: $scope.userInfo.UserName
+        }, function(data) {
+            console.log("send call", data);
+        });
+    }
+
+    $scope.opentokCall = function() {
+        if (userCall != null) {
+            OpentokSendCall();
+            window.open($state.href("blank.call", {
+                apiKey: apiKey,
+                sessionId: sessionId,
+                token: token
+            }));
+        }else{
+            toastr.error('Patient ');
+        };
+
+    }
+    /*=========opentok end=========*/
+
 });

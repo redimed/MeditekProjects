@@ -15,7 +15,7 @@ module.exports = {
         controller: 'Consultation/ConsultationController',
         action: 'UpdateConsultation'
     },
-    'post /api/consultation/destroy/:UID': {
+    'get /api/consultation/destroy/:UID': {
         controller: 'Consultation/ConsultationController',
         action: 'DestroyConsultation'
     }

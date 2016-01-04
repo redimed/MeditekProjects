@@ -153,8 +153,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(consultationdata, options, callback) {
-                consultationdata.ModifiedDate = new Date();
+            beforeBulkUpdate: function(consultationdata, callback) {
+                consultationdata.fields.push('ModifiedDate');
+                consultationdata.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

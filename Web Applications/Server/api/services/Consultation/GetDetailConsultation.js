@@ -1,10 +1,10 @@
-module.exports = function(appointmentUID, userInfo) {
+module.exports = function(consultationUID, userInfo) {
     //add roles
     var filter = {
         InternalPractitioner: [],
-        Appointment: [{
+        Consultation: [{
             '$and': {
-                UID: appointmentUID
+                UID: consultationUID
             }
         }],
         UserAccount: []
@@ -38,40 +38,40 @@ module.exports = function(appointmentUID, userInfo) {
                 UID: null
             }
         };
-        filter.Appointment.push(filterRoleTemp);
+        filter.Consultation.push(filterRoleTemp);
     }
-    return Appointment.findOne({
-        attributes: Services.AttributesAppt.Appointment(),
+    return Consultation.findOne({
+        attributes: Services.AttributesConsult.Consultation(),
         include: [{
-            attributes: Services.AttributesConsult.Consultation(),
-            model: Consultation,
-            required: true,
+            attributes: Services.AttributesAppt.Appointment(),
+            model: Appointment,
+            required: false,
             include: [{
-                attributes: Services.AttributesConsult.ConsultationData(),
-                model: ConsultationData,
-                required: true,
+                attributes: ['UID'],
+                required: (HelperService.CheckExistData(filter.InternalPractitioner) && !_.isEmpty(filter.InternalPractitioner)),
+                model: Doctor,
+                where: filter.InternalPractitioner
+            }, {
+                attributes: ['UID'],
+                required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
+                model: Patient,
                 include: [{
-                    attributes: Services.AttributesAppt.FileUpload(),
-                    model: FileUpload,
-                    required: false
+                    attributes: ['UID'],
+                    model: UserAccount,
+                    required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
+                    where: filter.UserAccount
                 }]
             }]
         }, {
-            attributes: ['UID'],
-            required: (HelperService.CheckExistData(filter.InternalPractitioner) && !_.isEmpty(filter.InternalPractitioner)),
-            model: Doctor,
-            where: filter.InternalPractitioner
-        }, {
-            attributes: ['UID'],
-            required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
-            model: Patient,
+            attributes: Services.AttributesConsult.ConsultationData(),
+            model: ConsultationData,
+            required: true,
             include: [{
-                attributes: ['UID'],
-                model: UserAccount,
-                required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
-                where: filter.UserAccount
+                attributes: Services.AttributesAppt.FileUpload(),
+                model: FileUpload,
+                required: false
             }]
         }],
-        where: filter.Appointment
+        where: filter.Consultation
     });
 };

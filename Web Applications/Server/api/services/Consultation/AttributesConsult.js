@@ -1,6 +1,6 @@
 module.exports = {
     Consultation: function() {
-        return ['UID'];
+        return ['UID', 'CreatedBy', 'CreatedDate', 'ModifiedBy', 'ModifiedDate'];
     },
     ConsultationData: function() {
         return ['UID', 'Module', 'Section', 'Category',

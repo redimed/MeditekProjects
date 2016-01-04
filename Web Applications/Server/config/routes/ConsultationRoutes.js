@@ -1,11 +1,15 @@
 module.exports = {
-    'post /api/consultation/list': {
+    'post /api/appointment/list': {
         controller: 'Consultation/ConsultationController',
-        action: 'GetListConsultation'
+        action: 'GetListAppointmentConsult'
     },
     'post /api/consultation/create': {
         controller: 'Consultation/ConsultationController',
         action: 'CreateConsultation'
+    },
+    'post /api/consultation/list': {
+        controller: 'Consultation/ConsultationController',
+        action: 'GetListConsultation'
     },
     'get /api/consultation/detail/:UID': {
         controller: 'Consultation/ConsultationController',

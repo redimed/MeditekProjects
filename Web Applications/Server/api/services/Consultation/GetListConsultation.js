@@ -1,28 +1,25 @@
-var $q = require('q');
 module.exports = function(data, userInfo) {
-    var defer = $q.defer();
     var pagination = Services.GetPaginationAppointment(data, userInfo);
-    Appointment.findAndCountAll({
-            attributes: Services.AttributesAppt.Appointment(),
-            include: [{
-                attributes: Services.AttributesAppt.Patient(),
-                model: Patient,
-                required: true
-            }, {
-                attributes: Services.AttributesAppt.Doctor(),
-                model: Doctor,
-                required: true
-            }],
+    return Consultation.findAndCountAll({
+        attributes: Services.AttributesConsult.Consultation(),
+        include: [{
+            attributes: ['UID'],
+            model: Appointment,
+            required: (HelperService.CheckExistData(pagination.filterAppointment) && !_.isEmpty(pagination.filterAppointment)),
             where: pagination.filterAppointment,
-            order: pagination.order,
-            limit: pagination.limit,
-            offset: pagination.offset,
-            subQuery: false
-        })
-        .then(function(consultationList) {
-            defer.resolve(consultationList);
-        }, function(err) {
-            defer.reject(err);
-        });
-    return defer.promise;
+            include: [{
+                attributes: ['UID'],
+                required: (HelperService.CheckExistData(pagination.filterDoctor) && !_.isEmpty(pagination.filterDoctor)),
+                model: Doctor,
+                where: pagination.filterDoctor
+            }, {
+                attributes: ['UID'],
+                required: (HelperService.CheckExistData(pagination.filterPatient) && !_.isEmpty(pagination.filterPatient)),
+                model: Patient,
+                where: pagination.filterPatient
+            }]
+        }],
+        limit: pagination.limit,
+        offset: pagination.offset
+    });
 };

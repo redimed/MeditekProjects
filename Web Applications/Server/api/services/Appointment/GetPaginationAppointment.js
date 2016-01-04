@@ -12,6 +12,7 @@ module.exports = function(data, userInfo) {
         filterPatientAppointment: [],
         filterPatient: [],
         filterWAAppointment: [],
+        filterConsultation: [],
         order: [],
         limit: data.Limit,
         offset: data.Offset
@@ -63,6 +64,9 @@ module.exports = function(data, userInfo) {
                                     break;
                                 case 'Patient':
                                     pagination.filterPatient.push(tempFilter);
+                                    break;
+                                case 'Consultation':
+                                    pagination.filterConsultation.push(tempFilter);
                                     break;
                                 default:
                                     break;
@@ -134,6 +138,9 @@ module.exports = function(data, userInfo) {
                                 case 'Patient':
                                     pagination.filterPatient.push(tempSearch);
                                     break;
+                                case 'Consultation':
+                                    pagination.filterConsultation.push(tempSearch);
+                                    break;
                                 default:
                                     break;
                             }
@@ -176,6 +183,10 @@ module.exports = function(data, userInfo) {
                                     break;
                                 case 'Patient':
                                     tempOrder = [Patient, keyOrder, order[keyModel][keyOrder]];
+                                    pagination.order.push(tempOrder);
+                                    break;
+                                case 'Consultation':
+                                    tempOrder = [Consultation, keyOrder, order[keyModel][keyOrder]];
                                     pagination.order.push(tempOrder);
                                     break;
                                 default:
@@ -247,6 +258,9 @@ module.exports = function(data, userInfo) {
                                         break;
                                     case 'Patient':
                                         pagination.filterPatient.push(tempRange);
+                                        break;
+                                    case 'Consultation':
+                                        pagination.filterConsultation.push(tempRange);
                                         break;
                                     default:
                                         break;

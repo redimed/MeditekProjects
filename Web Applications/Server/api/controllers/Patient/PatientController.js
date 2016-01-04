@@ -158,7 +158,7 @@ module.exports = {
     */
     UpdatePatient: function(req, res) {
         var data = req.body.data;
-        var otherData = req.body.otherData?req.body.otherData:null;
+        var otherData = req.body.otherData?req.body.otherData:{};
         Services.Patient.UpdatePatient(data, otherData)
             .then(function(result) {
                 console.log(result);

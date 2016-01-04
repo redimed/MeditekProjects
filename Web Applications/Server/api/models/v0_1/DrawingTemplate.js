@@ -41,7 +41,17 @@ module.exports={
 					msg:'Must be an integer'
 				}
 			}
-		}
+		},
+
+		fileUrl:{
+			type: Sequelize.TEXT,
+            validate: {
+                len: {
+                    args: [0, 2048],
+                    msg: 'Too long!'
+                }
+            }
+		},
 	},
 
 	options:{

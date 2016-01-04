@@ -22,5 +22,14 @@ module.exports = {
     'get /api/consultation/drawing/list':{
         controller:'Consultation/DrawingController',
         action:'GetDrawingTemplates'
-    }
+    },
+    'get /api/consultation/drawing/getbase64/:id':{
+        controller:'Consultation/DrawingController',
+        action:'GetDrawingTemplateBase64'
+    },
+    'get /api/consultation/drawing/getfile/:id':{
+        controller:'Consultation/DrawingController',
+        action:'GetDrawingTemplateFile',
+    },
+
 };

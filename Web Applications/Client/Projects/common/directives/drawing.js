@@ -1,5 +1,5 @@
 angular.module("app.common.drawing",[])
-.directive('drawing', function ($window,Restangular, $timeout, toastr) {
+.directive('drawing', function ($window,Restangular, $timeout, toastr,consultationServices) {
     return {
         restrict: 'E',
         scope: {
@@ -29,8 +29,23 @@ angular.module("app.common.drawing",[])
             canvas.width = attrs.width || element.width();
             canvas.height = attrs.height || element.height();
             
-
-            Restangular.one('api/consultation/draw/templates').get().then(function(rs){
+            consultationServices.GetDrawingTemplates()
+            .then(function(data){
+                // alert(JSON.stringify(data));
+                for(var i=0; i<data.length;i++)
+                {
+                    var node = data[i];
+                    scope.treeArr.push({
+                                "id": node.id,
+                                "parent": node.parent == null ? '#' : node.parent,
+                                "text": node.fileName,
+                                "icon": node.isFolder == 1 ? 'fa fa-folder icon-state-warning' : 'fa fa-file icon-state-success'
+                            })
+                }
+            },function(err){
+                console.log(err);
+            })
+            /*Restangular.one('api/consultation/draw/templates').get().then(function(rs){
             	if(rs.status == 'success')
             	{
             		for(var i=0; i<rs.data.length;i++)
@@ -44,11 +59,11 @@ angular.module("app.common.drawing",[])
 		            			})
             		}
             	}
-            })
+            })*/
             
             var clearCanvas = function () {
                 ctx.save();
-                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.setTransform(1, 0, 0, 1, 0, 0);//không scale, không làm lệch
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.restore();
             };
@@ -65,23 +80,42 @@ angular.module("app.common.drawing",[])
                 reader.readAsDataURL(image);
             }
 
-            scope.selectNodeCB = function(e){
+            /*scope.selectNodeCB = function(e){
             	var idArr = String(e.target.id).split('_');
             	var id = idArr[0];
             	if(id != null && typeof id !== 'undefined' && id != '')
             	{
-            		Restangular.one('api/consultation/draw/template',id).get().then(function(rs){
-	            		if(rs.status == 'success')
-	            		{
-	            			var img = new Image;
-							img.onload = function() {
-							    ctx.drawImage(img, (canvas.width - img.width) / 2, (canvas.height - img.height) / 2);
-							}
-							img.src = rs.data;
-	            		}
+            		Restangular.one('api/consultation/drawing/getbase64/'+id).get().then(function(rs){
+                        var img = new Image;
+                        img.onload = function() {
+                            ctx.drawImage(img, (canvas.width - img.width) / 2, (canvas.height - img.height) / 2);
+                        }
+                        img.src = rs.database64;
 	            	})
             	}
+            }*/
+
+            scope.selectNodeCB = function(e){
+                var idArr = String(e.target.id).split('_');
+                var id = idArr[0];
+                if(id != null && typeof id !== 'undefined' && id != '')
+                {
+                    consultationServices.GetDrawingFileUrl(id)
+                    .then(function(data){
+                        var objectUrl = URL.createObjectURL(data.blob);
+                        var img = new Image;
+                        img.onload = function() {
+                            ctx.drawImage(img, (canvas.width - img.width) / 2, (canvas.height - img.height) / 2);
+                        }
+                        img.src = objectUrl;
+                    },function(err){
+                        console.log(err);
+                    })
+                }
             }
+
+
+
       
             scope.changeColor = function (c) {
             	if(c == 'blue-ebonyclay')

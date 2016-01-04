@@ -1,7 +1,8 @@
 angular.module("app.authentication.WAAppointment.services",[])
-	.factory("WAAppointmentService",function(Restangular){
+	.factory("WAAppointmentService",function(Restangular,TelehealthRestangular){
 		var services = {};
 		var api = Restangular.all("api");
+		var apiTelehealth = TelehealthRestangular.all("api");
 		services.RequestWAApointment = function(requestInfo){
 			return api.all('appointment-wa-request').post({data:requestInfo});
 		}
@@ -25,6 +26,9 @@ angular.module("app.authentication.WAAppointment.services",[])
 		};
 		services.GetDetailPatientByUid = function(data){
 			return api.all('patient/detail-patient').post({data:data});
+		};
+		services.getDetailOpentok = function(){
+			return apiTelehealth.one('telehealth/socket/generateSession').get();
 		};
 		return services;
 	});

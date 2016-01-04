@@ -9,6 +9,14 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
     console.log(sessionId);
     console.log(token);
 
+    console.log("socket", io.socket);
+
+    // io.socket.on('receiveMessage', function onServerSentEvent(msg) {
+    //     console.log("=====================", msg);
+
+    // });
+
+
     //Connect to the session
     $scope.session.connect(token, function(error) {
         // If the connection is successful, initialize a publisher and publish to the session
@@ -58,8 +66,15 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
 
     $scope.session.on('streamDestroyed', function() {
         console.log("streamDestroyed");
-        // window.close();
+        window.close();
     })
+
+    $scope.session.on("signal:endCall", function(event) {
+        console.log("Signal sent from connection ", event);
+         window.close();
+        // Process the event.data property, if there is any data.
+    });
+
 
     $scope.counter = 0;
 
@@ -72,6 +87,18 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
         $scope.subscriber.subscribeToAudio(false)
     }
     $scope.bbb = function() {
+        $scope.session.signal({
+                data: "end",
+                type: "endCall"
+            },
+            function(error) {
+                if (error) {
+                    console.log("signal error (" + error.code + "): " + error.message);
+                } else {
+                    console.log("signal sent.");
+                }
+            }
+        );
         $scope.session.disconnect();
     }
 

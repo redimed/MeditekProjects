@@ -220,7 +220,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		    			if(response.message=="success"){
 		    				if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
 							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
-							   	if(scope.typeFile=="imageAvatar"){
+							   	if(scope.typeFile=="imageAvatar" && 'FileUID_img' in scope.info){
 								   	$http({
 									  method: 'GET',
 									  url: o.const.fileBaseUrl+'/api/enableFile/false/'+scope.info.FileUID_img
@@ -230,7 +230,7 @@ angular.module('app.authentication.doctor.directive.detail', [])
 										console.log(err);
 									});
 								}
-							   	if(scope.typeFile=="Signature"){
+							   	if(scope.typeFile=="Signature" && 'FileUID_sign' in scope.info){
 								   	$http({
 									  method: 'GET',
 									  url: o.const.fileBaseUrl+'/api/enableFile/false/'+scope.info.FileUID_sign

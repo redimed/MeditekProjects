@@ -203,16 +203,18 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 							if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
 							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
 							   	// if(scope.typeFile=="imageAvatar"){
-							   		scope.imgDelete = scope.info.FileUID;
-								   	$http({
-									  method: 'GET',
-									  url: o.const.fileBaseUrl+'/api/enableFile/false/'+scope.imgDelete
-									}).then(function (response) {
-										// scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
-										// scope.uploader.uploadAll();
-									},function (err) {
-										console.log(err);
-									});
+							   		scope.imgDelete = scope.info.FileUID?scope.info.FileUID:null;
+							   		if(scope.imgDelete != null){
+									   	$http({
+										  method: 'GET',
+										  url: o.const.fileBaseUrl+'/api/enableFile/false/'+scope.imgDelete
+										}).then(function (response) {
+											// scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+											// scope.uploader.uploadAll();
+										},function (err) {
+											console.log(err);
+										});
+									}
 								// }
 							}
 							scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;

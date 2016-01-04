@@ -2,6 +2,7 @@ var $q = require('q');
 module.exports = function(objCreate) {
     var defer = $q.defer();
     var userID = null;
+    var consultNoteObject = null;
     if (HelperService.CheckExistData(objCreate) &&
         HelperService.CheckExistData(objCreate.data)) {
         sequelize.Promise.each(objCreate.data, function(consultNote, index) {
@@ -12,6 +13,7 @@ module.exports = function(objCreate) {
                     .then(function(consultNoteCreated) {
                         if (HelperService.CheckExistData(consultNote.ConsultationData) &&
                             !_.isEmpty(consultNote.ConsultationData)) {
+                            consultNoteObject = consultNoteCreated;
                             var consultData =
                                 Services.GetDataConsultation.ConsultationData(consultNote.ConsultationData, userID);
                             var objectCreateConsultationData = {
@@ -22,10 +24,30 @@ module.exports = function(objCreate) {
                         }
                     }, function(err) {
                         defer.reject(err);
+                    })
+                    .then(function(consultDataCreated) {
+                        if (HelperService.CheckExistData(consultDataCreated) &&
+                            !_.isEmpty(consultDataCreated)) {
+                            var consultationDataCreated =
+                                JSON.parse(JSON.stringify(consultDataCreated));
+                            var arrayConsultDataUnique = _.map(_.groupBy(consultationDataCreated, function(CD) {
+                                return CD.ID;
+                            }), function(subGrouped) {
+                                return subGrouped[0].ID;
+                            });
+                            var objRelConsultData = {
+                                data: arrayConsultDataUnique,
+                                transaction: objCreate.transaction,
+                                consultNoteObject: consultNoteObject
+                            };
+                            return Services.RelConsultationData(objRelConsultData);
+                        }
+                    }, function(err) {
+                        defer.reject(err);
                     });
             })
             .then(function(consultNotesCreated) {
-                console.log('consultNotesCreated', consultNotesCreated);
+                defer.resolve(consultNotesCreated);
             }, function(err) {
                 defer.reject(err);
             });

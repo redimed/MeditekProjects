@@ -64,5 +64,7 @@ module.exports = {
     GetDetailConsultation: require('./Consultation/GetDetailConsultation'),
     AttributesConsult: require('./Consultation/AttributesConsult'),
     UpdateConsultation: require('./Consultation/UpdateConsultation'),
+    BulkUpdateConsultNote: require('./Consultation/BulkUpdateConsultNote'),
+    DestroyConsultation: require('./Consultation/DestroyConsultation'),
     //end Consultation
 };

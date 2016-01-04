@@ -33,6 +33,7 @@ module.exports = {
                         HelperService.CheckExistData(err.transaction)) {
                         err.transaction.rollback();
                     }
+                    console.log(err);
                     res.serverError(ErrorWrap(err.error || err));
                 });
         }
@@ -52,7 +53,7 @@ module.exports = {
             res.serverError('data failed');
         } else {
             Services.UpdateConsultation(data, req.user)
-                .then(function(consultationUpdated) {
+                .then(function(success) {
                     if (HelperService.CheckExistData(success) &&
                         HelperService.CheckExistData(success.transaction)) {
                         success.transaction.commit();
@@ -67,5 +68,21 @@ module.exports = {
                 });
         }
     },
-    DestroyConsultation: function(req, res) {}
+    DestroyConsultation: function(req, res) {
+        var UID = req.param('UID');
+        Services.DestroyConsultation(UID, req.user)
+            .then(function(success) {
+                if (HelperService.CheckExistData(success) &&
+                    HelperService.CheckExistData(success.transaction)) {
+                    success.transaction.commit();
+                }
+                res.ok('success');
+            }, function(err) {
+                if (HelperService.CheckExistData(err) &&
+                    HelperService.CheckExistData(err.transaction)) {
+                    err.transaction.rollback();
+                }
+                res.serverError(ErrorWrap(err.error || err));
+            });
+    }
 };

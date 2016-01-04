@@ -1,4 +1,5 @@
 	var $q = require('q');
+	var moment = require('moment');
 	module.exports = function(data, userInfo) {
 	    var defer = $q.defer();
 	    var appointmentObject = null;
@@ -7,10 +8,22 @@
 	        .then(function(t) {
 	            if (HelperService.CheckExistData(data) &&
 	                HelperService.CheckExistData(userInfo)) {
-	                var AppointmentUID = data.UID;
+	                var whereClause = {};
+	                _.forEach(data, function(valueData, indexData) {
+	                    if (HelperService.CheckExistData(valueData) &&
+	                        !_.isObject(valueData) &&
+	                        !_.isArray(valueData)) {
+	                        if (moment(valueData, 'YYYY-MM-DD Z', true).isValid() ||
+	                            moment(valueData, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+	                            whereClause[indexData] = moment(valueData, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+	                        } else {
+	                            whereClause[indexData] = valueData;
+	                        }
+	                    }
+	                });
 	                Appointment.findOne({
 	                        attrbutes: ['ID'],
-	                        where: data.Appointment,
+	                        where: whereClause,
 	                        transaction: t
 	                    })
 	                    .then(function(objAppt) {
@@ -61,7 +74,10 @@
 	                        });
 	                    })
 	                    .then(function(relAppointmentConsultNoteCreated) {
-	                        console.log('relAppointmentConsultNoteCreated', relAppointmentConsultNoteCreated);
+	                        defer.resolve({
+	                            transaction: t,
+	                            status: 'success'
+	                        });
 	                    }, function(err) {
 	                        defer.reject({
 	                            error: err,

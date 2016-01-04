@@ -68,5 +68,5 @@ module.exports = {
     DestroyConsultation: require('./Consultation/DestroyConsultation'),
     Drawing:require('./Consultation/Drawing'),
     GetDetailConsultation: require('./Consultation/GetDetailConsultation'),
-    //end Consultation
+    //end Consultation//
 };

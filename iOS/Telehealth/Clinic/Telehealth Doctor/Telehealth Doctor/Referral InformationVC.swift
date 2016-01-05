@@ -13,12 +13,13 @@ class Referral_InformationVC: UIViewController {
     
     @IBOutlet var labelOut: [UILabel]!
     var WAApt: JSON!
+    var TELEApt: JSON!
     
     @IBOutlet var chkOutlet: [UIButton]!
     override func viewDidLoad() {
         super.viewDidLoad()
         WAApt = SingleTon.detailAppointMentObj["TelehealthAppointment"]["WAAppointment"]
-        
+        TELEApt = SingleTon.detailAppointMentObj["TelehealthAppointment"]
         loadData()
     }
     
@@ -46,13 +47,18 @@ class Referral_InformationVC: UIViewController {
                 print("Not read data InjuryType")
                 return
             }
+            
             injuryType == btnTitle ? button.setImage(UIImage(named: "checked"), forState: .Normal) : button.setImage(UIImage(named: "check"), forState: .Normal)
             
-            if let yesNo: String = WAApt[btnTitle!].stringValue {
-                if yesNo == "Y" && button.tag >= 50 {
+            if let resultJson: String = WAApt[btnTitle!].stringValue {
+                if resultJson == "Y" && button.tag >= 50 {
                     button.setImage(UIImage(named: "checked"), forState: .Normal)
-                } else if yesNo == "N" && button.tag <= 30 {
-                    button.setImage(UIImage(named: "check"), forState: .Normal)
+                } else if resultJson == "N" && button.tag <= 30 {
+                    button.setImage(UIImage(named: "checked"), forState: .Normal)
+                } else if button.tag >= 60 {
+                    if button.titleLabel?.text == TELEApt["RefDurationOfReferral"].stringValue {
+                        button.setImage(UIImage(named: "checked"), forState: .Normal)
+                    }
                 }
             }
         }

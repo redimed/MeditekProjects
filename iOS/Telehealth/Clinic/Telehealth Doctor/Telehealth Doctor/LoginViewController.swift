@@ -207,7 +207,6 @@ class LoginViewController: UIViewController {
                         .validate(statusCode: 200..<300)
                         .validate(contentType: ["application/json"])
                         .responseJSON { response -> Void in
-                            print(response)
                             guard response.2.error == nil else {
                                 print("error get data doctor user info", response.2.error!)
                                 return

@@ -48,8 +48,8 @@ class BasicInfoWAPatient: UIViewController {
                 }
             }
             
-            for var i = 0; i < patientAppointment.count; ++i {
-                aLabel.text = patientAppointment[titleLabel].stringValue
+            for var i = 0; i < patient.count; ++i {
+                aLabel.text = patient[titleLabel].stringValue
             }
             
             if aLabel.tag == 100 {

@@ -19,8 +19,8 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     
     var aptFrom: String!
     var aptTo: String!
+    var status: String!
     var totalCountData: Int?
-    
     var titleView2: String!
     
     override func viewDidLoad() {
@@ -31,7 +31,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadTable:", name: "reloadDataTable", object: nil)
         
         SingleTon.onlineUser_Singleton.removeAll()
-        paramFilter(0, aptFrom: getReFormat().filterFormat, aptTo: "")
+        paramFilter(0, aptFrom: getReFormat().filterFormat, aptTo: "", status: "")
         titleView2 = "Telehealth Appointment"
         
         // add refresh control for appointment list
@@ -70,16 +70,19 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
         if notification.name == "reloadDataTable" {
             SingleTon.onlineUser_Singleton.removeAll()
             SingleTon.onlineUser_Singleton = []
+            
             let data: JSON = JSON(notification.userInfo!)
             aptFrom = data["data"]["aptFrom"].stringValue
             aptTo = data["data"]["aptTo"].stringValue
-            paramFilter(0, aptFrom: aptFrom, aptTo: aptTo)
+            status = data["data"]["status"].stringValue
+            paramFilter(0, aptFrom: aptFrom, aptTo: aptTo, status: status)
+            
             getAppointmentList(APPOINTMENTLIST)
         }
     }
     
     func refreshList(sender: AnyObject) {
-        if let offset = SingleTon.filterParam["data"]!.valueForKey("Offset") as? Int {
+        if let offset = SingleTon.filterParam["data"]?.valueForKey("Offset") as? Int {
             print(SingleTon.onlineUser_Singleton.count, offset, totalCountData)
             if offset != 0 && offset <= totalCountData && SingleTon.onlineUser_Singleton.count == totalCountData {
                 if SingleTon.onlineUser_Singleton.count != totalCountData {
@@ -139,13 +142,13 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        if let offSet = SingleTon.filterParam["data"]!.valueForKey("Offset") as? Int {
+        if let offSet = SingleTon.filterParam["data"]?.valueForKey("Offset") as? Int {
             if offSet == 0 && indexPath.row == 15 {
-                paramFilter(offSet + 20, aptFrom: aptFrom, aptTo: aptTo)
+                paramFilter(offSet + 20, aptFrom: aptFrom, aptTo: aptTo, status: status)
                 getAppointmentList(APPOINTMENTLIST)
             }
             if offSet != 0 && indexPath.row == offSet - 5 {
-                paramFilter(offSet + 20, aptFrom: aptFrom, aptTo: aptTo)
+                paramFilter(offSet + 20, aptFrom: aptFrom, aptTo: aptTo, status: status)
                 getAppointmentList(APPOINTMENTLIST)
             }
         }
@@ -185,6 +188,7 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func getAppointmentList(url: String) {
+        print(SingleTon.filterParam)
         request(.POST, url, headers: SingleTon.headers, parameters: SingleTon.filterParam)
             .responseJSONReToken { response in
                 guard response.2.error == nil else {
@@ -217,6 +221,9 @@ class AppointmentListViewController: UIViewController, UITableViewDataSource, UI
                             
                             SingleTon.onlineUser_Singleton.append(onlineObj)
                         }
+                        self.tableView.reloadData()
+                        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+                    } else {
                         self.tableView.reloadData()
                         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
                     }

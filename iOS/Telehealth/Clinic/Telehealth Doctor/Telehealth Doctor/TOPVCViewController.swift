@@ -39,24 +39,30 @@ class TOPVCViewController: UINavigationController, UIPopoverPresentationControll
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self, action: "viewDetailDoctor", forControlEvents: UIControlEvents.TouchDown)
         navigation.addSubview(button)
+        
+        let imgViewicon = UIImageView(frame: CGRectMake(self.button.frame.origin.x + 50, 5, 30, 30))
+        imgViewicon.contentMode = UIViewContentMode.ScaleAspectFit
+        self.navigation.addSubview(imgViewicon)
+        
         if let teleDef = NSUserDefaults.standardUserDefaults().valueForKey("doctorInfo") {
             let parseJson = JSON(teleDef)
             let url = NSURL(string: "\(DOWNLOAD_IMAGE)\(parseJson["FileUID_img"])")
             request(.GET, url!, headers: SingleTon.headers)
                 .validate(statusCode: 200..<300)
                 .responseJSON() { response in
-                    
                     guard response.2.value == nil else {
                         print("error download file: ", response)
                         return
                     }
                     
+                    if (response.1?.statusCode)! as Int == 500 {
+                        imgViewicon.image = UIImage(named: "Doctor-100")
+                        return
+                    }
+                    
                     if let data: NSData! = response.2.data {
                         if data != nil {
-                            let imgViewicon = UIImageView(frame: CGRectMake(self.button.frame.origin.x + 50, 5, 30, 30))
                             imgViewicon.image = UIImage(data: data!)
-                            imgViewicon.contentMode = UIViewContentMode.ScaleAspectFit
-                            self.navigation.addSubview(imgViewicon)
                         }
                     }
             }

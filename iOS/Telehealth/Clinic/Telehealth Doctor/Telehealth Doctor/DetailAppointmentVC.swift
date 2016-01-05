@@ -35,6 +35,7 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        SingleTon.imgDataMedical.removeAll()
         self.self.loading.frame = CGRectMake((self.view.frame.width/4) - 60 , (self.view.frame.height/2) - 60, 80, 80)
         self.containerView.addSubview(self.loading)
         self.loading.indicatorColor = UIColor.cyanColor()
@@ -66,7 +67,7 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
             
             let patient: NSArray = ["Basic Information", "Contact Information", "Kin/Guardian", "Medicare Information"]
             
-            let referral: NSArray = ["Referral Information", "Reason for referral/Presenting Problem", "History of Previous Skin cancers/ hand surgery"]
+            let referral: NSArray = ["Referral Information", "Reason for referral/Presenting Problem", "History of Previous Skin cancers/hand surgery"]
             
             var strParse = mainDetail.objectAtIndex(4) as? String
             contentDict.setValue(patient, forKey: strParse!)
@@ -78,6 +79,13 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
             contentDict.setValue(clinic, forKey: strParse!)
         }
         
+        getDataDetailApt { () -> Void in
+            self.loadXibView()
+        }
+        
+    }
+    
+    func getDataDetailApt(completion:(() -> Void)) {
         request(.GET, URL!, headers: SingleTon.headers)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
@@ -89,33 +97,11 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
                     }
                     return
                 }
+                
                 if let value: AnyObject = response.2.value {
                     let readableJSON = JSON(value)
                     SingleTon.detailAppointMentObj = readableJSON["data"]
-                    if let clinicCal: JSON = readableJSON["data"]["TelehealthAppointment"]["ClinicalDetails"] {
-                        
-                        for var i = 0; i < clinicCal.count; ++i {
-                            if let fileUpload: JSON = clinicCal[i]["FileUploads"] {
-                                if fileUpload.count > 0 {
-                                    for var i = 0; i < fileUpload.count; ++i {
-                                        if fileUpload[i]["FileType"].isEmpty && fileUpload[i]["FileType"].stringValue.lowercaseString == "medicalimage" {
-                                            self.getImageFromUID(fileUpload[i]["UID"].stringValue)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if let fileUpload: JSON = readableJSON["data"]["FileUploads"] {
-                        for var i = 0; i < fileUpload.count; i++ {
-                            if fileUpload.count > 0 {
-                                if fileUpload[i]["FileType"].isEmpty && fileUpload[i]["FileType"].stringValue.lowercaseString == "medicalimage" {
-                                    self.getImageFromUID(fileUpload[i]["UID"].stringValue)
-                                }
-                            }
-                        }
-                    }
-                    NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "loadXibView", userInfo: nil, repeats: false)
+                    completion()
                 }
         }
     }
@@ -130,26 +116,6 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
                 button.setTitle(SingleTon.onlineUser_Singleton[uidUser!].fullNamePatient == nil ? "Detail Appointment" : SingleTon.onlineUser_Singleton[uidUser!].fullNamePatient, forState: UIControlState.Normal)
                 break;
             }
-        }
-    }
-    
-    func getImageFromUID(uid: String!) {
-        SingleTon.imgDataMedical.removeAll()
-        let url = NSURL(string: "\(DOWNLOAD_IMAGE)\(uid)")
-        request(.GET, url!, headers: SingleTon.headers)
-            .validate(statusCode: 200..<300)
-            .responseJSONReToken() { response in
-                
-                guard response.2.value == nil else {
-                    print("error download file: ", response)
-                    return
-                }
-                
-                if let data: NSData? = response.2.data {
-                    if data != nil {
-                        SingleTon.imgDataMedical.append(data!)
-                    }
-                }
         }
     }
     
@@ -247,10 +213,10 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
-    func animateUIViewSelect(view: UIView) {
+    func animateUIViewSelect(view: UIView?) {
         UIView.animateWithDuration(0.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
-            view.alpha = 0.0
+            view!.alpha = 0.0
             
             }, completion: {
                 (finished: Bool) -> Void in
@@ -258,11 +224,11 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
                 UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
                     
                     UIGraphicsBeginImageContext(self.view.frame.size)
-                    UIImage(named: "main-menu-choose")?.drawInRect(CGRect(x: 0,y: (view.frame.size.height / 6) + 5, width: view.frame.size.width + 3, height: view.frame.size.height / 2))
+                    UIImage(named: "main-menu-choose")?.drawInRect(CGRect(x: 0,y: (view!.frame.size.height / 6) + 5, width: view!.frame.size.width + 3, height: view!.frame.size.height / 2))
                     let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
                     UIGraphicsEndImageContext()
-                    view.backgroundColor = UIColor(patternImage: image)
-                    view.alpha = 0.8
+                    view!.backgroundColor = UIColor(patternImage: image)
+                    view!.alpha = 0.8
                     
                     }, completion: nil)
         })
@@ -325,7 +291,7 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
         let indexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: (recognizer.view?.tag)! as Int)
         if indexPath.row == 0 {
             var collapsed = arrayForMainDetail.objectAtIndex(indexPath.row).boolValue
-            collapsed = !collapsed
+            collapsed = true
             
             for var i = 0; i < arrayForMainDetail.count; ++i {
                 arrayForMainDetail.replaceObjectAtIndex(i, withObject: false)
@@ -341,36 +307,39 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
             self.tableView.reloadSections(sectionToReload, withRowAnimation: .Fade)
             
             xibVC.view.removeFromSuperview()
-            switch indexPath.section {
-            case 0: // Appointment
-                animateUIViewSelect(headerView2)
-                xibVC = Appointment(nibName: "Appointment", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            case 1: // Clinical Details & Relevant Medical History
-                animateUIViewSelect(headerView2)
-                xibVC = Relevant_Allergy_CurrentVC(nibName: "Relevant_Allergy_CurrentVC", bundle: nil)
-                xibVC.title = "Relevant Past Medical History"
-                containerView.addSubview(xibVC.view)
-            case 2: // Present Complain & Allergy
-                animateUIViewSelect(headerView2)
-                xibVC = PresentComplain(nibName: "PresentComplain", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            case 3: // Medical Images
-                animateUIViewSelect(headerView2)
-                xibVC = MedicalImage(nibName: "MedicalImage", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            case 4: // Patient
-                animateUIViewSelect(headerView2)
-                xibVC = BasicInfoWAPatient(nibName: "BasicInfoWAPatient", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            case 5: // Referral
-                animateUIViewSelect(headerView2)
-                xibVC = Referral_InformationVC(nibName: "Referral InformationVC", bundle: nil)
-                containerView.addSubview(xibVC.view)
-            default:
-                break;
-            }
-            
+            activeUIView(indexPath.section)
+        }
+    }
+    
+    func activeUIView(index: Int!) {
+        switch index {
+        case 0: // Appointment
+            animateUIViewSelect(headerView2)
+            xibVC = Appointment(nibName: "Appointment", bundle: nil)
+            containerView.addSubview(xibVC.view)
+        case 1: // Clinical Details & Relevant Medical History
+            animateUIViewSelect(headerView2)
+            xibVC = Relevant_Allergy_CurrentVC(nibName: "Relevant_Allergy_CurrentVC", bundle: nil)
+            xibVC.title = "Relevant Past Medical History"
+            containerView.addSubview(xibVC.view)
+        case 2: // Present Complain & Allergy
+            animateUIViewSelect(headerView2)
+            xibVC = PresentComplain(nibName: "PresentComplain", bundle: nil)
+            containerView.addSubview(xibVC.view)
+        case 3: // Medical Images
+            animateUIViewSelect(headerView2)
+            xibVC = MedicalImage(nibName: "MedicalImage", bundle: nil)
+            containerView.addSubview(xibVC.view)
+        case 4: // Patient
+            animateUIViewSelect(headerView2)
+            xibVC = BasicInfoWAPatient(nibName: "BasicInfoWAPatient", bundle: nil)
+            containerView.addSubview(xibVC.view)
+        case 5: // Referral
+            animateUIViewSelect(headerView2)
+            xibVC = Referral_InformationVC(nibName: "Referral InformationVC", bundle: nil)
+            containerView.addSubview(xibVC.view)
+        default:
+            break;
         }
     }
     
@@ -383,15 +352,9 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
             let content = contentDict.valueForKey(mainDetail.objectAtIndex(indexPath.section) as! String) as! NSArray
             cell.textLabel?.text = content.objectAtIndex(indexPath.row) as? String
             cell.textLabel?.textColor = UIColor.whiteColor()
+            cell.textLabel?.font = UIFont(name: "System", size: 8)
             cell.backgroundColor = UIColor(hex: "1ac6ff")
             
-            //            UIGraphicsBeginImageContext(cell.frame.size)
-            //            UIImage(named: "main-menu-choose")?.drawInRect(CGRect(x: 0, y: (cell.frame.size.height / 6) - 10, width: cell.frame.size.width, height: (cell.frame.size.height / 2) - 10))
-            
-            //            let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-            //
-            //            UIGraphicsEndImageContext()
-            //
             let bgColorView = UIView()
             bgColorView.backgroundColor = UIColor(hex: "34AADC")
             cell.selectedBackgroundView = bgColorView

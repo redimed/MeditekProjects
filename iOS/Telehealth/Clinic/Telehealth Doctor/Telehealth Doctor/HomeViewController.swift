@@ -54,9 +54,6 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: true)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             
@@ -66,6 +63,10 @@ class HomeViewController: UIViewController {
             
             SingleTon.socket.on("connect") { data, ack in
                 print("SOCKET CONNECTED")
+                
+                get_info_Opentok { () -> Void in
+                    print("Save info Opentok successful")
+                }
                 
                 guard self.userUID != nil && !self.userUID.isEmpty else {
                     print("Error JOINROOM Socket")
@@ -93,33 +94,6 @@ class HomeViewController: UIViewController {
         })
         SingleTon.socket.connect()
         
-        /**
-        *  Send request generate info for Opentok calling
-        *
-        *  @param .GET              method .GET
-        *  @param GENERATESESSION   URL in global constranst file
-        *  @param SingleTon.headers class singleton
-        *
-        */
-        request(.GET, GENERATESESSION, headers: SingleTon.headers)
-            .validate(statusCode: 200..<300)
-            .validate(contentType: ["application/json"])
-            .responseJSONReToken() { response in
-                
-                guard response.2.error == nil else {
-                    if let data = response.2.data {
-                        _ = UIAlertView(title: "Error", message: resJSONError(data), delegate: self, cancelButtonTitle: "OK")
-                    }
-                    print("error calling GET", response.2.error!)
-                    return
-                }
-                
-                if let data = response.2.value {
-                    if let readableJSON: NSDictionary = data["data"] as? NSDictionary {
-                        SingleTon.infoOpentok = JSON(readableJSON)
-                    }
-                }
-        }
     }
     
     override func didReceiveMemoryWarning() {

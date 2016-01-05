@@ -18,11 +18,6 @@ let URL_SERVER_3009 = "http://testapp.redimed.com.au:3009"
 let URL_SERVER_3005 = "http://testapp.redimed.com.au:3005"
 let URL_SERVER_3006 = "http://testapp.redimed.com.au:3006"
 
-/// Server Luân
-//let URL_SERVER_3009 = "http://192.168.1.130:3009"
-//let URL_SERVER_3005 = "http://192.168.1.130:3005"
-//let URL_SERVER_3006 = "http://192.168.1.130:3006"
-
 /// Server Việt Nam
 //let URL_SERVER_3009 = "http://telehealthvietnam.com.vn:3009"
 //let URL_SERVER_3005 = "http://telehealthvietnam.com.vn:3005"
@@ -111,7 +106,7 @@ func getReFormat() -> (timeZone: String, filterFormat: String) {
     return (timeZone: arrReFormatDate[1], filterFormat: reFormatDate)
 }
 
-func paramFilter(offset: Int, aptFrom: String, aptTo: String) {
+func paramFilter(offset: Int, aptFrom: String, aptTo: String, status: String) {
     SingleTon.filterParam = [ "data":
         [
             "Limit": 20,
@@ -121,7 +116,9 @@ func paramFilter(offset: Int, aptFrom: String, aptTo: String) {
                 [
                     "Appointment":
                         [
+                            "Status": status,
                             "Enable": "Y"
+                            
                     ]
                 ],
                 [
@@ -142,14 +139,118 @@ func paramFilter(offset: Int, aptFrom: String, aptTo: String) {
 func get_full_name() -> String {
     if let teleDef = NSUserDefaults.standardUserDefaults().valueForKey("doctorInfo") {
         let parseJson = JSON(teleDef)
-        if parseJson["FirstName"].stringValue.isEmpty && parseJson["LastName"].stringValue.isEmpty {
-            SingleTon.nameLogin = "Doctor"
-        } else {
-            SingleTon.nameLogin = "\(parseJson["FirstName"].stringValue) \(parseJson["LastName"].stringValue)"
-        }
+        SingleTon.nameLogin = "\(parseJson["FirstName"].stringValue) \(parseJson["LastName"].stringValue)"
     }
-    return SingleTon.nameLogin!
+    return SingleTon.nameLogin! ?? ""
 }
+
+
+
+func get_value_Fund(fundKey: String!) -> String? {
+    
+    var reDataFund: String!
+    
+    switch fundKey {
+    case "ACA": reDataFund = "ACA Health Benefits Fund"
+    case "AHM": reDataFund = "ahm Health Insurance"
+    case "AUF": reDataFund = "Australian Unity Health Limited"
+    case "BUP": reDataFund = "Bupa Australia Pty Ltd"
+    case "CBH": reDataFund = "CBHS Health Fund Limited"
+    case "CDH": reDataFund = "CDH Benefits Fund"
+    case "CPS": reDataFund = "CUA Health Limited"
+    case "AHB": reDataFund = "Defence Health Limited"
+    case "AMA": reDataFund = "Doctors' Health Fund"
+    case "GMF": reDataFund = "GMF Health"
+    case "GMH": reDataFund = "GMHBA Limited"
+    case "FAI": reDataFund = "Grand United Corporate Health"
+    case "HBF": reDataFund = "HBF Health Limited"
+    case "HCF": reDataFund = "HCF"
+    case "HCI": reDataFund = "Health Care Insurance Limited"
+    case "HIF": reDataFund = "Health Insurance Fund of Australia Limited"
+    case "SPS": reDataFund = "Health Partners"
+    case "HEA": reDataFund = "health.com.au"
+    case "LHS": reDataFund = "Latrobe Health Services"
+    case "MBP": reDataFund = "Medibank Private Limited"
+    case "MDH": reDataFund = "Mildura Health Fund"
+    case "OMF": reDataFund = "National Health Benefits Australia Pty Ltd (onemedifund)"
+    case "NHB": reDataFund = "Navy Health Ltd"
+    case "NIB": reDataFund = "NIB Health Funds Ltd"
+    case "LHM": reDataFund = "Peoplecare Health Insurance"
+    case "PWA": reDataFund = "Phoenix Health Fund Limited"
+    case "SPE": reDataFund = "Police Health"
+    case "QCH": reDataFund = "Queensland Country Health Fund Ltd"
+    case "RTE": reDataFund = "Railway and Transport Health Fund Limited"
+    case "RBH": reDataFund = "Reserve Bank Health Society Ltd"
+    case "SLM": reDataFund = "St.Lukes Health"
+    case "NTF": reDataFund = "Teachers Health Fund"
+    case "TFS": reDataFund = "Transport Health Pty Ltd"
+    case "QTU": reDataFund = "TUH"
+    case "WFD": reDataFund = "Westfund Limited"
+    default: break
+    }
+    
+    return reDataFund ?? ""
+}
+
+func get_value_DoR(param: Int!) -> String {
+    var result: String!
+    switch param {
+    case 03:
+        result = "3 months"
+    case 00:
+        result = "Indefinite"
+    default:
+        result = "12 months"
+    }
+    
+    return result ?? ""
+}
+
+func get_val_State(param: String!) -> String {
+    var result: String!
+    switch param {
+    case "WA":  result = "Western Australia"
+    case "VIC": result = "Victoria"
+    case "TAS": result = "Tasmania"
+    case "QLD": result = "Queensland"
+    case "NSW": result = "New South Wales"
+    case "NT":  result = "Northern Territory"
+    case "ACT": result = "Australian Capital Territory"
+    default:
+        break
+    }
+    return result ?? ""
+}
+
+/**
+ *  Send request generate info for Opentok calling
+ *
+ *  @param .GET              method .GET
+ *  @param GENERATESESSION   URL in global constranst file
+ *  @param SingleTon.headers class singleton
+ *
+ */
+func get_info_Opentok(completion:(() -> Void)) {
+    request(.GET, GENERATESESSION, headers: SingleTon.headers)
+        .validate(statusCode: 200..<300)
+        .validate(contentType: ["application/json"])
+        .responseJSONReToken() { response in
+            guard response.2.error == nil else {
+                print("error calling GET", response.2.error!)
+                return
+            }
+            
+            if let data = response.2.value {
+                if let readableJSON: NSDictionary = data["data"] as? NSDictionary {
+                    SingleTon.infoOpentok = JSON(readableJSON)
+                    completion()
+                }
+            }
+    }
+}
+
+
+
 
 
 

@@ -10,21 +10,29 @@ import UIKit
 import SwiftyJSON
 
 class ContactInfoWAPatient: UIViewController {
-
+    
     @IBOutlet var labelOutlet: [UILabel]!
-    var patientAppointment: JSON!
+    var patient: JSON!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        patientAppointment = SingleTon.detailAppointMentObj["TelehealthAppointment"]["PatientAppointment"]
+        patient = SingleTon.detailAppointMentObj["Patients"][0]
         loadData()
     }
     
     func loadData() {
         for aLabel in labelOutlet {
-           let tlLabel: String! = aLabel.text
+            let tlLabel: String! = aLabel.text
             
-            aLabel.text = patientAppointment[tlLabel].stringValue
+            switch aLabel.tag {
+                
+            case 10:
+                aLabel.text = patient["UserAccount"]["PhoneNumber"].stringValue
+            case 11:
+                aLabel.text = get_val_State(patient[tlLabel].stringValue)
+            default:
+                aLabel.text = patient[tlLabel].stringValue
+            }
             
             if aLabel.text != nil && !aLabel.text!.isEmpty {
                 let border = CALayer()
@@ -37,7 +45,7 @@ class ContactInfoWAPatient: UIViewController {
             }
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

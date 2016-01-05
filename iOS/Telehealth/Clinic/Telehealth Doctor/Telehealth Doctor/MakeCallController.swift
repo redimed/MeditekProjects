@@ -15,22 +15,19 @@ import SwiftyJSON
 let videoWidth : CGFloat = 200
 let videoHeight : CGFloat = 120
 
-// Replace with your OpenTok API key
-let ApiKey = SingleTon.infoOpentok["apiKey"].stringValue
-// Replace with your generated session ID
-let SessionID = SingleTon.infoOpentok["sessionId"].stringValue
-// Replace with your generated token
-let Token = SingleTon.infoOpentok["token"].stringValue
+var ApiKey = SingleTon.infoOpentok["apiKey"].stringValue
+var SessionID = SingleTon.infoOpentok["sessionId"].stringValue
+var Token = SingleTon.infoOpentok["token"].stringValue
 
 // Change to YES to subscribe to your own stream.
 let SubscribeToSelf = false
 
 class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberKitDelegate, OTPublisherDelegate {
     
-    var session : OTSession?
-    var publisher : OTPublisher?
-    var subscriber : OTSubscriber?
-    var idOnlineUser : Int!
+    var session: OTSession?
+    var publisher: OTPublisher?
+    var subscriber: OTSubscriber?
+    var idOnlineUser: Int!
     let userDefaults = NSUserDefaults.standardUserDefaults().valueForKey("teleUserInfo") as! NSDictionary
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     
@@ -302,7 +299,7 @@ class MakeCallViewController: UIViewController, OTSessionDelegate, OTSubscriberK
     func sendMessEnd() {
         SingleTon.socket.emit("get", ["url": NSString(format: "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@", userDefaults["UID"] as! String, SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "cancel")])
         
-        let param = ["data":["message": "end"], "title": "Missed call from", "uid": SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "sound": "abc", "badge": 0, "category": "end"]
+        let param = ["data":["message": "end"], "title": "Missed call from", "uid": SingleTon.onlineUser_Singleton[idOnlineUser].TeleUID, "sound": "abc", "badge": 0, "category": "CALLING_MESSAGE"]
         request(.POST, PUSH_ACTION, headers: SingleTon.headers, parameters: param as? [String : AnyObject])
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])

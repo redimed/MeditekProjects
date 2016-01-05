@@ -17,9 +17,13 @@ class ModalFilterVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
     
     var tagTxtField: Int!
     let datePickerView:UIDatePicker = UIDatePicker()
+    var strStatusApt: String?
     
-    let pickerData = ["Received", "Appointment Pending", "Appointment Time", "Attended",
-        "Wait List Surgery", "Finish"]
+    let textLabel = ["Received", "Appointment Pending", "Appointment Time", "Attended",
+        "Wait List Surgery", "Finished", "Cancelled"]
+    
+    let valueFilter = ["Received", "Pending", "Approved", "Attended",
+        "Waitlist", "Finished", "Cancelled"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,9 +80,10 @@ class ModalFilterVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
     }
     
     func paramFilter(dataFilter:[String: String], completion: ((result: [String: String]) -> Void)?) {
+        print(strStatusApt)
         let fromtime = dataFilter["aptFrom"] == "" ? "" : "\(dataFilter["aptFrom"]! as String) \(getReFormat().timeZone)"
         let totime = dataFilter["aptTo"] == "" ? "" : "\(dataFilter["aptTo"]! as String) \(getReFormat().timeZone)"
-        let data = ["aptFrom": fromtime, "aptTo": totime, "status": statusAptTextField.text!]
+        let data = ["aptFrom": fromtime, "aptTo": totime, "status": strStatusApt == nil ? "" : strStatusApt! ]
         completion!(result: data)
     }
     
@@ -99,14 +104,24 @@ class ModalFilterVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
+        return textLabel.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row]
+        return valueFilter[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
+        let label: UILabel = UILabel()
+        label.backgroundColor = UIColor.clearColor()
+        label.textAlignment = NSTextAlignment.Center
+        label.text = self.textLabel[row]
+        return label
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        statusAptTextField.text = pickerData[row]
+        statusAptTextField.text = textLabel[row]
+        strStatusApt = valueFilter[row]
+        
     }
 }

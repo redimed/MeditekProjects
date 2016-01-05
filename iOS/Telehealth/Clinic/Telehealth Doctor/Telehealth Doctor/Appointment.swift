@@ -59,7 +59,7 @@ class Appointment: UIViewController {
                 case 10:
                     aLabel.text = fullName
                 case 11:
-                    aLabel.text = appointment["TelehealthAppointment"]["Fund"].stringValue
+                    aLabel.text = get_value_Fund(appointment["TelehealthAppointment"]["Fund"].stringValue)
                 case 12:
                     aLabel.text = FormatStrDate(appointment[titleLabel].stringValue)
                 case 13:
@@ -67,7 +67,7 @@ class Appointment: UIViewController {
                 case 14:
                     aLabel.text = appointTime[1] as? String
                 case 15:
-                    aLabel.text = teleAppoint[titleLabel].stringValue
+                    aLabel.text = get_value_DoR(teleAppoint[titleLabel].intValue)
                 case 16:
                     let refName = teleAppoint[titleLabel].stringValue.isEmpty ? teleAppoint["RefName"].stringValue : teleAppoint[titleLabel].stringValue
                     aLabel.text =  refName
@@ -91,7 +91,7 @@ class Appointment: UIViewController {
                 if aLabel.text != nil && !aLabel.text!.isEmpty {
                     let border = CALayer()
                     let width = CGFloat(1.0)
-                    border.borderColor = UIColor.lightGrayColor().CGColor
+                    border.borderColor = UIColor.blackColor().CGColor
                     border.frame = CGRect(x: 0, y: aLabel.frame.size.height - width, width:  aLabel.frame.size.width, height: width)
                     border.borderWidth = 0.5
                     aLabel.layer.addSublayer(border)

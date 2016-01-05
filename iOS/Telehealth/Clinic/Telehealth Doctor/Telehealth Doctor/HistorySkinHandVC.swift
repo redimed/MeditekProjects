@@ -55,7 +55,7 @@ class HistorySkinHandVC: UIViewController, UITableViewDelegate, UITableViewDataS
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell.init(style: .Default, reuseIdentifier: "cell")
-        cell.textLabel?.text = fileUpload[0]["FileName"].stringValue
+        cell.textLabel?.text = fileUpload[indexPath.row]["FileName"].stringValue
         return cell
     }
     

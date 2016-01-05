@@ -31,7 +31,7 @@ class ReasonforPresentingVC: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         for var i = 0; i < cliniCalDetails.count; ++i {
-            if cliniCalDetails[i]["Name"].stringValue == "referralPresenting" {
+            if cliniCalDetails[i]["Name"].stringValue.lowercaseString == "referralpresenting" {
                 if let dataTable: JSON = cliniCalDetails[i]["FileUploads"] {
                     if dataTable.count > 0 {
                         fileUpload = dataTable
@@ -44,9 +44,9 @@ class ReasonforPresentingVC: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell.init(style: .Default, reuseIdentifier: "cell")
-        cell.textLabel?.text = fileUpload[0]["FileName"].stringValue
-        return cell
+        let cell: UITableViewCell? = UITableViewCell.init(style: .Default, reuseIdentifier: "cell")
+        cell!.textLabel?.text = fileUpload[indexPath.row]["FileName"].stringValue
+        return cell!
     }
     
     func loadData() {

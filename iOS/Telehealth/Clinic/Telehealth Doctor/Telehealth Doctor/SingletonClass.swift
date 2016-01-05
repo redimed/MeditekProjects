@@ -22,5 +22,6 @@ class Singleton {
     var flagSegue = Bool() // true ? TeleAppointment : WAAppointment
     var filterParam = [String: AnyObject]()
     var nameLogin: String?
+    var avatarImg: NSData?
 }
 let SingleTon = Singleton()

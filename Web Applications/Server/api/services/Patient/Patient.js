@@ -996,12 +996,13 @@ module.exports = {
         input: Patient's UID
         output: get patient's detail
     */
-    DetailPatient : function(data, transaction) {
+    DetailPatient : function(data) {
+        var returnData;
         return Patient.findAll({
             where:{
                 UID : data.UID
             },
-            transaction:transaction,
+
             include:[
                 {
                     model: UserAccount,
@@ -1023,7 +1024,19 @@ module.exports = {
             ]
         })
         .then(function(result){
-            return result;
+            returnData = result;
+            return TelehealthUser.findAll({
+                where:{
+                    UserAccountID : result[0].UserAccountID
+                }
+            });
+            // return result;
+        },function(err){
+            throw err;
+        })
+        .then(function(success){
+            returnData[0].dataValues.TeleUID = success?success[0].UID:null;
+            return returnData;
         },function(err){
             throw err;
         });

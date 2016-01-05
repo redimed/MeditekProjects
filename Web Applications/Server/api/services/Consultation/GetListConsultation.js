@@ -19,6 +19,7 @@ module.exports = function(data, userInfo) {
                 where: pagination.filterPatient
             }]
         }],
+        subQuery: false,
         limit: pagination.limit,
         offset: pagination.offset
     });

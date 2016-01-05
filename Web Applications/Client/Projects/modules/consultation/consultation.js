@@ -19,7 +19,7 @@ app.config(function($stateProvider){
 			controller: 'consultationListCtrl',
 		})
 		.state('authentication.consultation.detail',{
-			url: '/detail',
+			url: '/detail/:UID',
 			data: {title: 'Consultation Detail', pageTitle: 'Consultation Detail'},
 			templateUrl: 'modules/consultation/views/consultationDetail.html',
 			controller: 'consultationDetailCtrl',

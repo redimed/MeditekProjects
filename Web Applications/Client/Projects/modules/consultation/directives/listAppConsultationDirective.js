@@ -1,13 +1,16 @@
-var app = angular.module('app.authentication.consultation.directives.listConsultation', []);
-app.directive('listConsultation', function(consultationServices, $modal, $cookies,$state) {
+var app = angular.module('app.authentication.consultation.directives.listAppConsultation', []);
+app.directive('listappConsultation', function(consultationServices, $modal, $cookies,$state,$stateParams) {
     return {
+        scope:{
+            uid:"="
+        },
         restrict: 'E',
-        templateUrl: "modules/consultation/directives/templates/listConsultation.html",
-        link: function(scope, ele, attr) {
+        templateUrl: "modules/consultation/directives/templates/listAppConsultationDirective.html",
+         link: function(scope, ele, attr) {
 
             var Init = function() {
                 scope.searchObject = {
-                    Limit: 20,
+                    Limit: 10,
                     Offset: 0,
                     currentPage: 1,
                     maxSize: 5,
@@ -58,15 +61,15 @@ app.directive('listConsultation', function(consultationServices, $modal, $cookie
                 scope.searchObjectMapTemp = angular.copy(scope.searchObjectMap);
                 consultationServices.listConsultation(scope.searchObjectMapTemp).then(function(response) {
                     o.loadingPage(false);
+                    console.log(response);
                     scope.consultation = response.rows;
-                    console.log(scope.consultation)
                     scope.CountRow = response.count;
                 });
             }
             Init();
             scope.toggle = true;
-            scope.Detail = function(id) {
-                $state.go("authentication.consultation.detail");
+            scope.Detail = function(uid) {
+                $state.go("authentication.consultation.detail",{UID:uid});
             };
             scope.toggleFilter = function() {
                 scope.toggle = scope.toggle === false ? true : false;

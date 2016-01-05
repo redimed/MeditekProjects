@@ -1035,7 +1035,8 @@ module.exports = {
             throw err;
         })
         .then(function(success){
-            returnData[0].dataValues.TeleUID = success?success[0].UID:null;
+            if(success!= null && success != "" && success.length != 0)
+                returnData[0].dataValues.TeleUID = success?success[0].UID:null;
             return returnData;
         },function(err){
             throw err;

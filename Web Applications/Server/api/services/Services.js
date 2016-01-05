@@ -53,7 +53,6 @@ module.exports = {
     FileUpload: require('./FileUpload/FileUpload'),
     Register: require('./Register/Register'),
     //begin Consultation
-    GetListAppointmentConsult: require('./Consultation/GetListAppointmentConsult'),
     CreateConsultation: require('./Consultation/CreateConsultation'),
     BulkCreateConsultNote: require('./Consultation/BulkCreateConsultNote'),
     RelAppointmentConsultNote: require('./Consultation/RelAppointmentConsultNote'),

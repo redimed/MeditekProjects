@@ -191,12 +191,12 @@ module.exports = {
     SendAPNPush: function(opts, tokens) {
         var regTokens = tokens;
         var note = new apn.Notification();
-        note.expiry = Math.floor(Date.now() / 1000) + 3600;
-        note.badge = opts.badge ? opts.badge : 1;
+        note.badge = parseInt(opts.badge);
         note.sound = opts.sound || "ringtone.wav";
         note.alert = opts.alert ? opts.alert : 'You have a new message!';
         note.category = opts.category ? opts.category : null;
         note.payload = opts.payload ? opts.payload : {};
+        note['content-available'] = 1;
         apnConnection.pushNotification(note, regTokens);
     }
 }

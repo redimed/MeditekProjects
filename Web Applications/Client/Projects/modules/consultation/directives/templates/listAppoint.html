@@ -1,0 +1,85 @@
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="authentication.home.list">
+                Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Consultation</b>
+        </li>
+    </ul>
+</div>
+<br>
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="glyphicon glyphicon-list"></i>
+            <span class="caption-subject bold uppercase">Patient List</span>
+        </div>
+        <div class="actions">
+            <button class="btn red" ng-click="Filter()"><i class="fa fa-filter"></i> Filter </button>
+            <button class="btn blue"><i class="fa fa-plus"></i> Create </button>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-scrollable margin-top-10">
+            <table class="table table-hover table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th width="1">#</th>
+                        <th width="10%">Firstname</th>
+                        <th width="10%">Lastname</th>
+                        <th>Date Enrolled</th>
+                        <th width="1"><img src="theme/assets/global/images/imgStatus/ReferralTracking.png"></th>
+                    </tr>
+                    <tr ng-hide="toggle">
+                        <td></td>
+                        <td><input type="text" class="form-control"></td>
+                        <td><input type="text" class="form-control"></td>
+                        <td class="form-inline">
+                            <input date-picker> to
+                            <input date-picker>
+                        </td>
+                        <td>
+                            <select class="form-control">
+                                <option></option>
+                            </select>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="p in consultation" ng-click="Detail(p.UID)">
+                    	<td>{{(searchObjectMap.currentPage-1)*searchObjectMap.Limit +$index +1}}</td>
+                        <td>{{p.Patients[0].FirstName}}</td>
+                        <td>{{p.Patients[0].LastName}}</td>
+                        <!--  <td ng-show="p.Patients.length === 0">{{p.TelehealthAppointment.PatientAppointment.FirstName}} {{p.TelehealthAppointment.PatientAppointment.LastName}}</td>
+                        <td ng-show="p.Patients.length !== 0">{{p.Patients[0].FirstName}} {{p.Patients[0].LastName}}</td> -->
+                    	<td>01/01/2014</td>
+                    	<td>
+                            <span ng-if="p.Status === Status.apptStatus[3].value"><img src="./theme/assets/layouts/layout/imgStatus/attended.png" ></span>
+                            <span ng-if="p.Status === Status.apptStatus[4].value"><img src="./theme/assets/layouts/layout/imgStatus/waitlist.png" ></span>
+                            <span ng-if="p.Status === Status.apptStatus[1].value"><img src="./theme/assets/layouts/layout/imgStatus/pending.png" ></span>
+                            <span ng-if="p.Status === Status.apptStatus[0].value"><img src="./theme/assets/layouts/layout/imgStatus/received.png" ></span>
+                            <span ng-if="p.Status === Status.apptStatus[6].value" class="label label-danger">Cancelled</span>
+                            <span ng-if="p.Status === Status.apptStatus[2].value"><img src="./theme/assets/layouts/layout/imgStatus/time.png" ></span>
+                            <span ng-if="p.Status === Status.apptStatus[5].value"><img src="./theme/assets/layouts/layout/imgStatus/finish.png" ></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-sm-12">
+                Total {{CountRow }} records
+            </div>
+            <div class="col-md-7 col-sm-12" style="text-align:right">
+                <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+                    <pagination boundary-links="true " total-items="CountRow " ng-model="searchObjectMap.currentPage " class="pagination" previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.Limit " max-size="searchObjectMap.maxSize " ng-change="SetPage() ">
+                    </pagination>
+                </div>
+            </div>
+        </div>  
+    </div>
+</div>

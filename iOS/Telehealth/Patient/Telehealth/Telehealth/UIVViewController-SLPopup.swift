@@ -222,16 +222,21 @@ extension UIViewController {
     }
     func dismissPopupViewController(animationType: SLpopupViewAnimationType) {
         let sourceView:UIView = self.getTopView()
-        let popupView:UIView = sourceView.viewWithTag(kpopupViewTag)!
-        let overlayView:UIView = sourceView.viewWithTag(kOverlayViewTag)!
-        switch animationType {
-        case .BottomTop, .BottomBottom, .TopTop, .TopBottom, .LeftLeft, .LeftRight, .RightLeft, .RightRight:
-            self.slideViewOut(popupView, sourceView: sourceView, overlayView: overlayView, animationType: animationType)
-        default:
-            fadeViewOut(popupView, sourceView: sourceView, overlayView: overlayView)
-            
-            
+        
+        if let popupView:UIView = sourceView.viewWithTag(kpopupViewTag) {
+            let overlayView:UIView = sourceView.viewWithTag(kOverlayViewTag)!
+            switch animationType {
+            case .BottomTop, .BottomBottom, .TopTop, .TopBottom, .LeftLeft, .LeftRight, .RightLeft, .RightRight:
+                self.slideViewOut(popupView, sourceView: sourceView, overlayView: overlayView, animationType: animationType)
+            default:
+                fadeViewOut(popupView, sourceView: sourceView, overlayView: overlayView)
+                
+                
+            }
+        }else{
+            print("close popup")
         }
+    
        
     }
 }

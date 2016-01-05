@@ -39,9 +39,9 @@ class GetAndPostDataController {
             
             headers["deviceId"] = deviceId as String
         }
-
+        
     }
-    
+    //set new token to local
     func setNewToken(token:String,refreshCode:String){
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.removeObjectForKey("token")
@@ -58,8 +58,8 @@ class GetAndPostDataController {
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         let parameters = [
             "data": [
-//                 "phone":"+61"+phoneNumber,
-                "phone":"+841654901590",
+//                              "phone":"+61"+phoneNumber,
+                "phone":"+84908618694",
                 "deviceType": "ios"
             ]
         ]
@@ -77,7 +77,7 @@ class GetAndPostDataController {
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
                 completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
-                if let data = data {
+                if let  data = data {
                     print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
                 }
             }
@@ -94,10 +94,10 @@ class GetAndPostDataController {
                 "code":verifyCode,
                 "deviceType": "ios",
 //                 "Phone":"+61" + phoneNumber
-                "phone":"+841654901590"
+                "phone":"+84908618694"
             ]
         ]
-    
+        
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.CheckVerifyCode ,headers:headers, parameters: parameters).responseJSON{
             request, response, result in
             
@@ -130,8 +130,8 @@ class GetAndPostDataController {
     
     func loginApi(userUID userUID:String,patientUID:String,verifyCode:String,completionHandler:(JSON) -> Void){
         setHeader()
-         let deviceId = defaults.valueForKey("deviceID") as? String
-            
+        let deviceId = defaults.valueForKey("deviceID") as? String
+        
         let parameters = [
             "UserName":"1",
             "Password":"2",
@@ -140,7 +140,7 @@ class GetAndPostDataController {
             "VerificationToken":verifyCode,
             "AppID":UIApplication.sharedApplication().bundleID()
         ]
-    
+        
         Alamofire.request(.POST, ConfigurationSystem.Http_3006 + UrlAPICheckPhoneNumber.apiLogin ,headers:headers, parameters: parameters).responseJSON{
             request, response, result in
             if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
@@ -152,7 +152,7 @@ class GetAndPostDataController {
             switch result {
             case .Success(let JSONData):
                 let data = JSON(JSONData)
-        
+                print(data)
                 self.informationUser(data,patientUID: patientUID){
                     dataResponse in
                     completionHandler(dataResponse)
@@ -168,12 +168,34 @@ class GetAndPostDataController {
         
     }
     
+    func logOut(completionHandler:(JSON)-> Void){
+         setHeader()
+        Alamofire.request(.GET, ConfigurationSystem.Http_3006 + UrlInformationPatient.logOut ,headers:headers).responseJSON{
+            request, response, result in
+            if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
+                if requireupdatetoken as! String == "true" {
+                    print("Update token",requireupdatetoken)
+                    self.getNewToken()
+                }
+            }
+            switch result {
+            case .Success(let JSONData):
+                let data = JSON(JSONData)
+                completionHandler(data)
+            case .Failure(let data, let error):
+                completionHandler(JSON(data!))
+                print("Request failed with error: \(error)")
+                if let data = data {
+                    print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                }
+            }
+        }
+    }
+    
     
     
     func informationUser(data:JSON,patientUID:String ,completionHandler:(JSON) -> Void){
         setHeader()
-        
-        
         let uid = data["user"]["UID"].string! as String
         let token = data["token"].string! as String
         let refreshCode = data["refreshCode"].string! as String
@@ -228,8 +250,7 @@ class GetAndPostDataController {
             case .Success(let JSONData):
                 
                 var data = JSON(JSONData)
-                
-                
+                print("---data",data)
                 let jsonInformation = data["data"][0] != nil ? data["data"][0] : ""
                 if jsonInformation == "" {
                     print("error--",data)
@@ -252,15 +273,29 @@ class GetAndPostDataController {
                     let State = jsonInformation["State"].string ?? ""
                     let ModifiedDate = jsonInformation["ModifiedDate"].string ?? ""
                     let Email1 = jsonInformation["Email1"].string ?? ""
-                    let Country = jsonInformation["Country"]["ShortName"].string ?? ""
+                    let Country = jsonInformation["CountryName"].string ?? ""
                     let ID = jsonInformation["ID"].string ?? ""
                     let Address1 = jsonInformation["Address1"].string ?? ""
                     let CountryID = jsonInformation["CountryID"].string ?? ""
                     let DOB = jsonInformation["DOB"].string ?? ""
                     let Suburb = jsonInformation["Suburb"].string ?? ""
                     let HomePhoneNumber = jsonInformation["HomePhoneNumber"].string ?? ""
-                    PatientInfo = Patient(MiddleName: MiddleName, Address2: Address2, Title: Title, WorkPhoneNumber: WorkPhoneNumber, Enable: Enable, PhoneNumber: PhoneNumber, Occupation: Occupation, LastName: LastName, Postcode: Postcode, UID: UID, UserAccountID: UserAccountID, Gender: Gender  , FirstName: FirstName, State: State, ModifiedDate: ModifiedDate, Email1: Email1, Country: Country, ID: ID, Address1: Address1, CountryID: CountryID, DOB: DOB, Suburb: Suburb, HomePhoneNumber: HomePhoneNumber)
-                    completionHandler(JSON(["message":"success"]))
+                    let ImageUID = jsonInformation["FileUID"].string ?? ""
+                    
+                    self.getImageAppointment(ImageUID, completionHandler: {
+                        image in
+                        var imageView = UIImage()
+                        if  let images = UIImage(data: image) {
+                            imageView = images
+                        }else {
+                            imageView = UIImage(named: "A1a Copy 2.png")!
+                        }
+                        PatientInfo = Patient(MiddleName: MiddleName, Address2: Address2, Title: Title, WorkPhoneNumber: WorkPhoneNumber, Enable: Enable, PhoneNumber: PhoneNumber, Occupation: Occupation, LastName: LastName, Postcode: Postcode, UID: UID, UserAccountID: UserAccountID, Gender: Gender  , FirstName: FirstName, State: State, ModifiedDate: ModifiedDate, Email1: Email1, Country: Country, ID: ID, Address1: Address1, CountryID: CountryID, DOB: DOB, Suburb: Suburb, HomePhoneNumber: HomePhoneNumber,Image:imageView)
+                        completionHandler(JSON(["message":"success"]))
+                        
+                    })
+                    
+                    
                 }
             case .Failure(let data, let error):
                 print("Request failed with error: \(error)")
@@ -382,66 +417,61 @@ class GetAndPostDataController {
     //Get appointment Details
     func getAppointmentDetails(appointmentUID:String,type:String,completionHandler:(JSON) -> Void){
         setHeader()
-        if type == "TEL"{
-            Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getAppointmentDetails + appointmentUID,headers:headers).responseJSON{
-                request, response, result in
-                if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
-                    
-                    if requireupdatetoken as! String == "true" {
-                        print("Update token",requireupdatetoken)
-                        self.getNewToken()
+        Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getWAADetails + appointmentUID,headers:headers).responseJSON{
+            request, response, result in
+            print("Reponse getAppointmentDetails WAA",response)
+            if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
+                if requireupdatetoken as! String == "true" {
+                    print("Update Token",requireupdatetoken)
+                    self.getNewToken()
+                }
+            }
+            switch result {
+            case .Success(let JSONData):
+                var data : JSON = JSON(JSONData)
+                var ArrayImageUID : [String] = []
+                let jsonImage : JSON = data["data"]["FileUploads"] != nil ? data["data"]["FileUploads"] : ""
+                let clinicalDetailImage : JSON = data["data"]["TelehealthAppointment"]["ClinicalDetails"]
+                let clinicalCount : Int = clinicalDetailImage.count
+                let appointmentImageCount : Int = jsonImage.count
+                
+                //Get uid Image in Clinical
+                for var i = 0 ; i < clinicalCount ; ++i{
+                    if data["data"]["TelehealthAppointment"]["ClinicalDetails"][i]["FileUploads"].count != 0 {
+                        let fileUploadCount = data["data"]["TelehealthAppointment"]["ClinicalDetails"][i]["FileUploads"].count
+                        for var j = 0 ; j < fileUploadCount ; ++j{
+                            //check Filetype
+                            if data["data"]["TelehealthAppointment"]["ClinicalDetails"][i]["FileUploads"][j]["FileType"] == "MedicalImage" {
+                                let imageUID = data["data"]["TelehealthAppointment"]["ClinicalDetails"][i]["FileUploads"][j]["UID"].string
+                                ArrayImageUID.append(imageUID!)
+                            }
+                        }
                     }
                 }
                 
-                switch result {
-                case .Success(let JSONData):
-                    var data = JSON(JSONData)
-                    
-                    let jsonImage = data["data"]["FileUploads"] != nil ? data["data"]["FileUploads"] : ""
-                    if jsonImage == "" {
-                        completionHandler(JSON(["message":"NoImage"]))
-                    }else {
-                        completionHandler(jsonImage)
-                    }
-                case .Failure(let data, let error):
-                    print("Request failed with error: \(error)")
-                    completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
-                    
-                    if let data = data {
-                        print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                for var i = 0 ; i < appointmentImageCount ; ++i {
+                    if jsonImage[i]["FileType"] == "MedicalImage" {
+                        let appointmentImage = jsonImage[i]["UID"].string
+                        ArrayImageUID.append(appointmentImage!)
                     }
                 }
                 
-            }
-        }else{
-            Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getWAADetails + appointmentUID,headers:headers).responseJSON{
-                request, response, result in
-                print("Reponse getAppointmentDetails WAA",response)
-                if let requireupdatetoken = response?.allHeaderFields["requireupdatetoken"] {
-                    if requireupdatetoken as! String == "true" {
-                        print("Update Token",requireupdatetoken)
-                        self.getNewToken()
-                    }
+                
+                if jsonImage == "" {
+                    completionHandler(JSON(["message":"error"]))
+                }else {
+                    let parseJSON = JSON(ArrayImageUID)
+                    completionHandler(parseJSON)
                 }
-                switch result {
-                case .Success(let JSONData):
-                    var data = JSON(JSONData)
-                    print("data---WA--",data)
-                    let jsonImage = data["data"]["FileUploads"] != nil ? data["data"]["FileUploads"] : ""
-                    if jsonImage == "" {
-                        completionHandler(JSON(["message":"error"]))
-                    }else {
-                        completionHandler(jsonImage)
-                    }
-                case .Failure(let data, let error):
-                    print("Request failed with error: \(error)")
-                    completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
-                    
-                    if let data = data {
-                        print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
-                    }
+            case .Failure(let data, let error):
+                print("Request failed with error: \(error)")
+                completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
+                
+                if let data = data {
+                    print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
                 }
             }
+            
         }
     }
     
@@ -501,8 +531,8 @@ class GetAndPostDataController {
             }
         }
     }
-    func updateTokenPush(uuid:String){
-        if let deviceToken = defaults.valueForKey("deviceToken"){
+    func updateTokenPush(uuid:String,deviceToken:String){
+//        if let deviceToken = defaults.valueForKey("deviceToken"){
             let parameters = [
                 "data" : [
                     "uid":uuid,
@@ -531,7 +561,7 @@ class GetAndPostDataController {
                         }
                     }
             }
-        }
+//        }
     }
     
     func pushNotification(title:String,uid:String,category:String,data:String,completionHandler:(JSON) -> Void){
@@ -563,10 +593,7 @@ class GetAndPostDataController {
                     }
                 }
         }
-        
     }
-    
-    
 }
 
 

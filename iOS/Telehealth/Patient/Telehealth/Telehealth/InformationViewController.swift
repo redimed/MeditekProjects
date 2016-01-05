@@ -21,6 +21,7 @@ class InformationViewController: UIViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var homePhoneLabel: UILabel!
+    @IBOutlet weak var avarta: UIImageView!
     
     
     override func viewDidLoad() {
@@ -42,6 +43,7 @@ class InformationViewController: UIViewController {
                 
                 if response["message"] == "success" {
                     self.view.hideLoading()
+                    self.avarta.image = PatientInfo.Image
                     self.fullName.text = PatientInfo.FirstName + " " + PatientInfo.MiddleName + " " + PatientInfo.LastName
                     self.dobLabel.text = (PatientInfo.DOB).toDateTimeZone(formatTime.dateTime, format: formatTime.formatDate)
                     self.suburbLabel.text = PatientInfo.Suburb
@@ -88,19 +90,34 @@ class InformationViewController: UIViewController {
     //handle logout
     @IBAction func LogoutAction(sender: AnyObject) {
         
-        
-        let alertController = UIAlertController(title: "Logout", message: "Are you sure?", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Unregistered", message: "Are you sure you want to unregister? This will delete your user account on this device.", preferredStyle: .Alert)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
         }
         alertController.addAction(cancelAction)
         
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.removeObjectForKey("verifyUser")
-            defaults.synchronize()
+           
+            if let uuid = defaults.valueForKey("uid") as? String {
+                self.api.updateTokenPush(uuid,deviceToken:"")
+            }
             
-            self.performSegueWithIdentifier("logoutSegue", sender: self)
+            self.api.logOut({
+            response in
+                print(response)
+                if response["status"] == "success"{
+                    statusCallingNotification = ""
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    defaults.removeObjectForKey("verifyUser")
+                    defaults.synchronize()
+                    sharedSocket.socket.disconnect()
+                  
+
+                    self.performSegueWithIdentifier("logoutSegue", sender: self)
+                }
+                
+            })
+            
         }
         alertController.addAction(OKAction)
         

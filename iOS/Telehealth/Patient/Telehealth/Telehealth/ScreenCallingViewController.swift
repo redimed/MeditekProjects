@@ -30,6 +30,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     var subscriber : OTSubscriber?
     var uuidFrom = String()
     var uuidTo = String()
+
     @IBOutlet weak var displayTimeLabel: UILabel!
     @IBOutlet weak var buttonHoldCall: DesignableButton!
     @IBOutlet weak var buttonEndCall: DesignableButton!
@@ -43,7 +44,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+         
         let apiKey = savedData.apiKey != nil ? savedData.apiKey : ""
         let sessionId = savedData.sessionId != nil ? savedData.sessionId : ""
         let token = savedData.token != nil ? savedData.token : ""
@@ -59,9 +60,12 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         if let uuid = defaults.valueForKey("uid") as? String {
             uuidFrom = uuid
         }
+        config.emitDataToServer(MessageString.CallAnswer, uidFrom: uuidFrom, uuidTo: uuidTo)
+        
         NSNotificationCenter.defaultCenter().removeObserver(self,name:"endCallAnswer",object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "endCallAnswer", name: "endCallAnswer", object: nil)
-        
+        //Remove data in savedData 
+        savedData = saveData()
     }
     //start count timer call
     func start() {
@@ -122,10 +126,10 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
    
         if publisher?.publishAudio.boolValue == true {
             publisher?.publishAudio = false
-            sender.setTitle(FAIcon.volume_up, forState: .Normal)
+            sender.setTitle(FAIcon.volume_off, forState: .Normal)
         }else {
             publisher?.publishAudio = true
-            sender.setTitle(FAIcon.volume_off, forState: .Normal)
+            sender.setTitle(FAIcon.volume_up, forState: .Normal)
         }
 
     }
@@ -133,19 +137,28 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     @IBAction func buttonOnOffMic(sender: AnyObject) {
         if subscriber?.subscribeToAudio == true{
             subscriber?.subscribeToAudio = false
-            sender.setTitle(FAIcon.microphone_on, forState: .Normal)
+            sender.setTitle(FAIcon.microphone_off, forState: .Normal)
         }else {
             subscriber?.subscribeToAudio = true
-            sender.setTitle(FAIcon.microphone_off, forState: .Normal)
+            sender.setTitle(FAIcon.microphone_on, forState: .Normal)
             
         }
         
     }
     
     @IBAction func buttonEndCallAction(sender: DesignableButton) {
-        emitDataToServer(MessageString.CallEndCall)
-        
+//        emitDataToServer(MessageString.CallEndCall)
+        session?.signalWithType("endCall", string: MessageString.CallEndCall, connection: nil, error: nil)
         endCallAnswer()
+    }
+    
+    func session(session: OTSession!, receivedSignalType type: String!, fromConnection connection: OTConnection!, withString string: String!) {        
+        if type == "endCall"{
+            if string == "end"{
+//                endCallAnswer()
+            }
+        }
+        
     }
     
     //Giap: Func handle emit socket to server 2 message : Answer or EndCall
@@ -177,6 +190,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     override func viewWillAppear(animated: Bool) {
         // Step 2: As the view comes into the foreground, begin the connection process.
         session = OTSession(apiKey: ApiKey, sessionId: SessionID, delegate: self)
+        print("daadadad------\(session?.sessionConnectionStatus)")
         doConnect()
         view.showLoading()
     }
@@ -184,19 +198,22 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-    
+
     
     /**
      * Asynchronously begins the session connect process. Some time later, we will
      * expect a delegate method to call us back with the results of this action.
      */
     func doConnect() {
+        
         if let session = self.session {
             var maybeError : OTError?
             session.connectWithToken(Token, error: &maybeError)
             if let error = maybeError {
                 showAlert(error.localizedDescription)
+                print("----error---calling---",error)
             }
+            
         }
     }
     
@@ -215,9 +232,11 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
             showAlert(error.localizedDescription)
         }
         view.addSubview((publisher?.view)!)
-//                view.addSubview(buttonEndCall)
-//                view.addSubview(buttonHoldCall)
-//                view.addSubview(buttonMuteCall)
+        view.addSubview(buttonEndCall)
+        view.addSubview(buttonHoldCall)
+        view.addSubview(buttonMuteCall)
+        view.addSubview(buttonOffMic)
+       
         panRec.addTarget(self, action: "draggedView:")
         publisher!.view.frame = CGRect(x: 0.0, y: 0, width: videoWidthSub, height: videoHeightSub)
         publisher?.view.userInteractionEnabled = true
@@ -270,6 +289,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     func sessionDidConnect(session: OTSession) {
         NSLog("sessionDidConnect (\(session.sessionId))")
         
+        print("----ssss---",session.sessionConnectionStatus.rawValue)
         // Step 2: We have successfully connected, now instantiate a publisher and
         // begin pushing A/V streams into OpenTok.
         doPublish()
@@ -278,6 +298,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     func sessionDidDisconnect(session : OTSession) {
         NSLog("Session disconnected (\( session.sessionId))")
         
+        
     }
     
     func session(session: OTSession, streamCreated stream: OTStream) {
@@ -285,6 +306,8 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         
         // Step 3a: (if NO == subscribeToSelf): Begin subscribing to a stream we
         // have seen on the OpenTok session.
+     
+        
         if subscriber == nil && !SubscribeToSelf {
             doSubscribe(stream)
         }
@@ -300,15 +323,18 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     
     func session(session: OTSession, connectionCreated connection : OTConnection) {
         NSLog("session connectionCreated (\(connection.connectionId))")
+        
     }
     
     func session(session: OTSession, connectionDestroyed connection : OTConnection) {
         NSLog("session connectionDestroyed (\(connection.connectionId))")
-//        endCallAnswer()
+        
+        endCallAnswer()
     }
     
     func session(session: OTSession, didFailWithError error: OTError) {
         NSLog("session didFailWithError (%@)", error)
+       
     }
     
     // MARK: - OTSubscriber delegate callbacks
@@ -329,20 +355,22 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         subscriber?.view.addSubview(buttonMuteCall)
         subscriber?.view.addSubview(buttonOffMic)
         subscriber?.view.addSubview(timeEffect)
+        buttonEndCall.enabled = true
         start()
         view.hideLoading()
+        
         
     }
     
     func subscriber(subscriber: OTSubscriberKit, didFailWithError error : OTError) {
         NSLog("subscriber %@ didFailWithError %@", subscriber.stream.streamId, error)
+        
     }
     
     // MARK: - OTPublisher delegate callbacks
     
     func publisher(publisher: OTPublisherKit, streamCreated stream: OTStream) {
         NSLog("publisher streamCreated %@", stream)
-        
         // Step 3b: (if YES == subscribeToSelf): Our own publisher is now visible to
         // all participants in the OpenTok session. We will attempt to subscribe to
         // our own stream. Expect to see a slight delay in the subscriber video and
@@ -350,6 +378,11 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         if subscriber == nil && SubscribeToSelf {
             doSubscribe(stream)
         }
+        if subscriber == nil {
+            endCallAnswer()
+        }
+            
+        
     }
     
     func publisher(publisher: OTPublisherKit, streamDestroyed stream: OTStream) {
@@ -362,6 +395,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     
     func publisher(publisher: OTPublisherKit, didFailWithError error: OTError) {
         NSLog("publisher didFailWithError %@", error)
+        
     }
     
     // MARK: - Helpers
@@ -376,6 +410,7 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     func changeIconCallingView(button:DesignableButton,nameImg:String){
         button.setImage(UIImage(named: nameImg), forState: UIControlState.Normal)
     }
+    
     
     
     func endCallAnswer() {
@@ -400,6 +435,8 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         return [UIInterfaceOrientationMask.Portrait ,UIInterfaceOrientationMask.PortraitUpsideDown]
     }
     
+    
+
     
     
 }

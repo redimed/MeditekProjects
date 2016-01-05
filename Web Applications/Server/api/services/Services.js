@@ -52,4 +52,20 @@ module.exports = {
     Doctor: require('./Doctor/Doctor'),
     FileUpload: require('./FileUpload/FileUpload'),
     Register: require('./Register/Register'),
+    //begin Consultation
+    CreateConsultation: require('./Consultation/CreateConsultation'),
+    BulkCreateConsultNote: require('./Consultation/BulkCreateConsultNote'),
+    RelAppointmentConsultNote: require('./Consultation/RelAppointmentConsultNote'),
+    BulkCreateConsultationData: require('./Consultation/BulkCreateConsultationData'),
+    GetDataConsultation: require('./Consultation/GetDataConsultation'),
+    RelConsultationDataFileUpload: require('./Consultation/RelConsultationDataFileUpload'),
+    RelConsultationData: require('./Consultation/RelConsultationData'),
+    GetListConsultation: require('./Consultation/GetListConsultation'),
+    AttributesConsult: require('./Consultation/AttributesConsult'),
+    UpdateConsultation: require('./Consultation/UpdateConsultation'),
+    BulkUpdateConsultNote: require('./Consultation/BulkUpdateConsultNote'),
+    DestroyConsultation: require('./Consultation/DestroyConsultation'),
+    Drawing:require('./Consultation/Drawing'),
+    GetDetailConsultation: require('./Consultation/GetDetailConsultation'),
+    //end Consultation//
 };

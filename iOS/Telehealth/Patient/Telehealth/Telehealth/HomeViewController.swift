@@ -12,47 +12,54 @@ import SwiftyJSON
 import AVFoundation
 
 class HomeViewController: UIViewController,UIPopoverPresentationControllerDelegate,MyPopupViewControllerDelegate,UIPageViewControllerDataSource,ContentViewDelegate,AVAudioPlayerDelegate{
-     let api = GetAndPostDataController()
+    let api = GetAndPostDataController()
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var pageView: UIView!
     var uid = String()
     var pageViewController: UIPageViewController!
     var pageTitles: NSArray!
     var pageImages: NSArray!
-     weak var timer: NSTimer?
+    weak var timer: NSTimer?
     var page = 0
     var backMusic: AVAudioPlayer!
-       override func viewDidLoad() {
+    
+  
+    override func viewDidLoad() {
         
         super.viewDidLoad()
         //Get uuid user in locacalstorage
         
-        
         if let uuid = defaults.valueForKey("uid") as? String {
             uid = uuid
-            api.updateTokenPush(uid)
+            if let deviceToken = defaults.valueForKey("deviceToken") as? String{
+                
+                api.updateTokenPush(uid,deviceToken:deviceToken)
+            }
+            
         }
-
-        
         
         //check status notify and handle action
         switch statusCallingNotification {
-            case notifyMessage.ClickNotify :
-                openPopUpCalling()
-                statusCallingNotification = ""
-                break
-            case notifyMessage.ClickAnswer :
-                openScreenCall()
-                statusCallingNotification = ""
-                break
-            case notifyMessage.ClickDesline :
-                if let from  = savedData.from {
-                    emitDataToServer(MessageString.Decline, uidFrom: uid, uuidTo: from)
-                }
-                statusCallingNotification = ""
-                break
-            default: break
+        case notifyMessage.ClickNotify :
+            openPopUpCalling()
+            statusCallingNotification = ""
+            break
+        case notifyMessage.ClickAnswer :
+            openScreenCall()
+            statusCallingNotification = ""
+            break
+        case notifyMessage.ClickDesline :
+            if let from  = savedData.from {
+                emitDataToServer(MessageString.Decline, uidFrom: uid, uuidTo: from)
+            }
+            statusCallingNotification = ""
+            break
+        default: break
+            
+            
         }
+      
+   
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "openPopUpCalling", name: "openPopUpCalling", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "openScreenCall", name: "openScreenCall", object: nil)
         
@@ -62,17 +69,18 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         resetTimer()
     }
     override func viewWillAppear(animated: Bool) {
-           }
+    }
     //Play ringtone while have calling
     func playRingtone() {
-        backMusic = setupAudioPlayerWithFile("ringtone", type: "mp3")
+        backMusic = setupAudioPlayerWithFile("ringtone", type: "wav")
         backMusic?.delegate = self
         backMusic.numberOfLoops = -1
         backMusic.prepareToPlay()
         backMusic.play()
-
+        
     }
-
+    
+    //handle music
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer  {
         let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
         let url = NSURL.fileURLWithPath(path!)
@@ -92,7 +100,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         let nextTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "handleIdleEventAutoSlide:", userInfo: nil, repeats: true)
         timer = nextTimer
     }
-    
+    // handle slide image
     func handleIdleEventAutoSlide(timer: NSTimer) {
         let numberofPage = pageImages.count
         if page + 1 == numberofPage  {
@@ -117,7 +125,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         pageControl.numberOfPages = pageImages.count
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         self.pageViewController.dataSource = self
-        
+
         let startVC = self.viewControllerAtIndex(0) as ContentViewController
         let viewControllers = NSArray(object: startVC)
         
@@ -129,13 +137,13 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         self.pageView.addSubview(self.pageViewController.view)
         self.pageViewController.didMoveToParentViewController(self)
     }
-    //changeView 
+    //changeView
     func autoSlide(index:Int){
         let startVC = self.viewControllerAtIndex(index) as ContentViewController
         let viewControllers = NSArray(object: startVC)
         
         self.pageViewController.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: true, completion: nil)
-
+        
     }
     
     func viewControllerAtIndex(index: Int) -> ContentViewController
@@ -171,24 +179,18 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-        
         let vc = viewController as! ContentViewController
         var index = vc.pageIndex as Int
-        
         if (index == NSNotFound)
         {
             return nil
         }
-        
         index++
-     
         if (index == self.pageTitles.count)
         {
             return nil
         }
-        
         return self.viewControllerAtIndex(index)
-        
     }
     
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int
@@ -204,7 +206,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     func changePageImage(controller: ContentViewController, index: Int) {
         pageControl.currentPage = index
         page = index
-       
+        
     }
     //Giap: Change view AnswerCall by StoryboardID
     func AnswerCall(){
@@ -246,9 +248,9 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     func pressOK(sender: MyPopupViewController) {
         backMusic.stop()
         self.dismissPopupViewController(.Fade)
-        if let from  = savedData.from {
-            emitDataToServer(MessageString.CallAnswer, uidFrom: uid, uuidTo: from)
-        }
+//        if let from  = savedData.from {
+//            emitDataToServer(MessageString.CallAnswer, uidFrom: uid, uuidTo: from)
+//        }
         openScreenCall()
         
     }
@@ -259,14 +261,15 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             emitDataToServer(MessageString.Decline, uidFrom: uid, uuidTo: from)
         }
         self.dismissPopupViewController(.Fade)
+        savedData = saveData()
     }
     
-    //open screen calling 
+    //open screen calling
     func openScreenCall(){
         let homeMain = self.storyboard?.instantiateViewControllerWithIdentifier("ScreenCallingStoryboard") as! ScreenCallingViewController
         self.presentViewController(homeMain, animated: true, completion: nil)
     }
-    
+    //Socket emit
     func emitDataToServer(message:String,uidFrom:String,uuidTo:String){
         let modifieldURLString = NSString(format: UrlAPISocket.emitAnswer,uidFrom,uuidTo,message) as String
         let dictionNary : NSDictionary = ["url": modifieldURLString]
@@ -296,22 +299,23 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
                 print("From name",dataCalling[0])
                 let message : String = data[0]["message"] as! String
                 print("message----",data)
-                if message == MessageString.Call {
-                    //                    let apiKey : String = data[0]["apiKey"] as! String
-                    //                    let fromName : String = data[0]["fromName"] as! String
-                    //                    let sessionId : String = data[0]["sessionId"] as! String
-                    //                    let token : String = data[0]["token"] as! String
-                    //                    let from : String = data[0]["from"] as! String
-                    //                    savedData = saveData(apiKey: apiKey, message: message, fromName: fromName, sessionId: sessionId, token: token, from: from)
-                    //                    self.displayViewController(.TopBottom)
-                    //                    self.playRingtone()
-//                    NSNotificationCenter.defaultCenter().postNotificationName("AnswerCall", object: self)
-                }else if message == MessageString.CallEndCall {
-//                    config.emitDataToServer(MessageString.CallEndCall, from: self.uid, to: savedData.from)
+                switch message {
+//                case MessageString.Call : 
+                    //                    self.setDataCalling(data)
+                    //NSNotificationCenter.defaultCenter().postNotificationName("openPopUpCalling", object: self)
+                case  MessageString.CallEndCall:
                     NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
-                }else if message == MessageString.Cancel {
+                    break
+                case MessageString.Cancel:
                     NSNotificationCenter.defaultCenter().postNotificationName("cancelCall", object: self)
                     NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
+                    break
+                case  MessageString.Decline:
+                    self.dismissPopupViewController(.Fade)
+                    self.backMusic.stop()
+                    break
+                default :
+                    break
                 }
             }
         })
@@ -319,6 +323,19 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         sharedSocket.socket.connect()
         
     }
+    
+    func setDataCalling(userInfo:  AnyObject){
+        let userInfo = JSON(userInfo)
+        let apiKey  =  userInfo[0]["apiKey"].string! as String ?? ""
+        let message = userInfo[0]["message"].string! as String ?? ""
+        let from = userInfo[0]["from"].string! as String ?? ""
+        let sessionId  =  userInfo[0]["sessionId"].string! as String ?? ""
+        let token  = userInfo[0]["token"].string! as String ?? ""
+        let fromName  = userInfo[0]["fromName"].string! as String ?? ""
+        savedData = saveData(apiKey: apiKey, message: message, fromName: fromName, sessionId: sessionId, token: token, from: from)
+        
+    }
+    
     
     func openPopUpCalling(){
         self.displayViewController(.TopBottom)
@@ -339,19 +356,17 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-       
-
         if segue.identifier == "FAQsegue" {
-             let FAQs = segue.destinationViewController as! FAQsViewController
+            let FAQs = segue.destinationViewController as! FAQsViewController
             FAQs.titleString = "FAQs"
         }else if segue.identifier == "Aboutsegue"{
-             let FAQs = segue.destinationViewController as! FAQsViewController
+            let FAQs = segue.destinationViewController as! FAQsViewController
             FAQs.titleString = "ABOUT US"
         }
     }
-
     
-
+    
+    
 }
 
 

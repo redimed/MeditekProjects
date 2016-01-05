@@ -35,24 +35,34 @@ class TrackingRefferalViewController: UIViewController {
         }
     }
     
+    
+    //check status appointment and change animate
     func checkStatus(){
         switch appointmentDetails.Status {
         case statusAppointment.Approved:
             boxShadowButton(AppTimeButton,colorStatusAppointment.colorReceived)
+            break
         case statusAppointment.Attended:
             boxShadowButton(AttendedButton,colorStatusAppointment.colorReceived)
+            break
         case statusAppointment.Finished:
             boxShadowButton(FinishButton,colorStatusAppointment.colorReceived)
+            break
         case statusAppointment.Pending:
             boxShadowButton(ApptPendingButton,colorStatusAppointment.colorReceived)
+            break
         case statusAppointment.Received:
             boxShadowButton(ReceiveButton,colorStatusAppointment.colorReceived)
+            break
         case statusAppointment.Waitlist:
             boxShadowButton(WaitListButton,colorStatusAppointment.colorReceived)
+            break
         default:
             break
         }
     }
+    
+    //Animate
     func boxShadowButton(button:UIButton,_ color:UIColor){
         button.layer.shadowOpacity = 8
         button.layer.shadowColor  = UIColor.whiteColor().CGColor

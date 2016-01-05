@@ -40,20 +40,25 @@ passport.use(new LocalStrategy({
     passReqToCallback: true
 }, function(req, u, p, done) { //req: ..., UserUID, DeviceID, VerificationToken
     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>Passport authentication");
-    //Kiểm tra user đang login bằng email hay phoneNumber hay username
+    //Kiểm tra user đang login bằng phương thức nào
+    //Password hay activation token hay PinNumber
     var whereClause = {};
     var loginInfo = req.body;
     if (o.checkData(loginInfo.UserUID)) {
-        //Trường hợp login bằng mobile (UserUID, DeviceID, VerificationToken)
+        //Trường hợp login bằng activation token hoặc PinNumber
         whereClause.UID = loginInfo.UserUID;
-        if (!o.checkData(loginInfo.DeviceID)) {
-            var err = new Error("DeviceID.notProvided");
-            return done(null, false, err);
-        }
-        if (!o.checkData(loginInfo.AppID)) {
-            var err = new Error("AppID.notProvided");
-            return done(null, false, err);
-        }
+        if(!loginInfo.PinNumber)
+        {
+            //Trường hợp login bằng activation token
+            if (!o.checkData(loginInfo.DeviceID)) {
+                var err = new Error("DeviceID.notProvided");
+                return done(null, false, err);
+            }
+            if (!o.checkData(loginInfo.AppID)) {
+                var err = new Error("AppID.notProvided");
+                return done(null, false, err);
+            }
+        }        
     } else {
         //Trường hợp login bằng phương pháp userName, password thông thường
         if (o.isValidEmail(u)) {
@@ -78,7 +83,7 @@ passport.use(new LocalStrategy({
         where: whereClause,
         include: {
             model: RelUserRole,
-            attributes: ['ID', 'UserAccountId', 'RoleId'],
+            attributes: ['ID', 'UserAccountId', 'RoleId', 'SiteId'],
             include: {
                 model: Role,
                 attributes: ['ID', 'UID', 'RoleCode', 'RoleName']
@@ -97,6 +102,12 @@ passport.use(new LocalStrategy({
         //Chuẩn bị thông tin trả về
         var listRoles = [];
         _.each(user.RelUserRoles, function(item) {
+            if(HelperService.CheckExistData(item) &&
+                HelperService.CheckExistData(item.dataValues) &&
+                HelperService.CheckExistData(item.Role) &&
+                HelperService.CheckExistData(item.Role.dataValues)){
+                item.Role.dataValues.SiteId = item.dataValues.SiteId;
+            }
             listRoles.push(item.Role);
         });
         var returnUser = {
@@ -107,38 +118,84 @@ passport.use(new LocalStrategy({
             roles: listRoles
         };
         //----------------------------
-        //Kiểm tra user login bằng mobile hay web
+        //Kiểm tra user login bằng phương pháp thường (password)
+        //hay login bằng activation token (mobile)
+        //hay login bằng PinNumber
         if (loginInfo.UserUID) {
-            //Nếu bằng mobile thì kiểm tra token activation
-            UserActivation.findOne({
-                where: {
-                    UserAccountID: user.ID,
-                    DeviceID: loginInfo.DeviceID,
-                    AppID:loginInfo.AppID,
+            //Nếu login bằng UserUID thì có thể là login bằng activation token
+            //hoặc bằng PinNumber
+            if(loginInfo.PinNumber)
+            {
+                //Login bằng pin number
+                //Kiểm tra Pin có expired hay chưa
+                if(user.ExpiryPin>0)
+                {
+                    //Pin chưa expired
+                    if(user.PinNumber==loginInfo.PinNumber)
+                    {
+                        //Pin hợp lệ
+                        console.log("Login via PinNumber success");
+                        return done(null, returnUser, {
+                            message: 'Logged In via PinNumber Successfully'
+                        });
+                    }
+                    else
+                    {
+                        //Pin không hợp lệ
+                        //Cập nhật lại Pin Expiry
+                        var currentExpiryPin=user.ExpiryPin;
+                        user.updateAttributes({ExpiryPin:currentExpiryPin-1})
+                        .then(function(userUpdated){
+                            var err = new Error("PinNumber.Invalid");
+                            return done(null, false, err);
+                        },function(err){
+                            return done(err);
+                        })                        
+                    }
                 }
-            }).then(function(activation) {
-                if (activation) {
-                    if (activation.CodeExpired > 0) {
-                        if (loginInfo.VerificationToken == activation.VerificationToken) {
-                            console.log("Login via mobile success");
-                            return done(null, returnUser, {
-                                message: 'Logged In via Mobile Successfully'
-                            });
+                else
+                {
+                    if(isNaN(user.ExpiryPin))
+                        var err = new Error("ExpiryPin.unknown");
+                    else
+                        var err = new Error("PinNumber.Expired");
+                    return done(null, false, err);
+                }
+            }
+            else
+            {
+                //Nếu login bằng token activation
+                UserActivation.findOne({
+                    where: {
+                        UserAccountID: user.ID,
+                        DeviceID: loginInfo.DeviceID,
+                        AppID:loginInfo.AppID,
+                    }
+                }).then(function(activation) {
+                    if (activation) {
+                        if (activation.CodeExpired > 0) {
+                            if (loginInfo.VerificationToken == activation.VerificationToken) {
+                                console.log("Login via mobile success");
+                                return done(null, returnUser, {
+                                    message: 'Logged In via Mobile Successfully'
+                                });
+                            } else {
+                                var err = new Error("VerificationToken.invalid");
+                                return done(null, false, err);
+                            }
                         } else {
-                            var err = new Error("VerificationToken.invalid");
+                            var err = new Error("Activation.expired");
                             return done(null, false, err);
                         }
                     } else {
-                        var err = new Error("Activation.expired");
+                        var err = new Error("Activation.notFound");
                         return done(null, false, err);
                     }
-                } else {
-                    var err = new Error("Activation.notFound");
-                    return done(null, false, err);
-                }
-            }, function(err) {
-                return done(err);
-            })
+                }, function(err) {
+                    return done(err);
+                })
+            }
+            
         } else {
             bcrypt.compare(p, user.Password, function(err, res) {
                 if (!res) {

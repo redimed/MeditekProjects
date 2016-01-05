@@ -13,7 +13,49 @@ module.exports = {
         // var PatientMedicare = req.body.PatientMedicare?req.body.PatientMedicare:{};
         Services.Patient.CreatePatient(data, otherData)
             .then(function(patient) {
-                console.log(patient);
+                console.log(patient," >>>>>>>>>>>>>>>>.phai day k");
+                if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {
+                    var info = {
+                        UID: patient.result.UID,
+                        FirstName: patient.result.FirstName,
+                        LastName: patient.result.LastName,
+                        DOB: patient.result.DOB,
+                        Address1: patient.result.Address1,
+                        Address2: patient.result.Address2,
+                        UserAccountUID: patient.UserAccountUID
+                    };
+                    res.ok({
+                        status: 200,
+                        message: "success",
+                        data: info
+                    });
+                } else {
+                    var err = new Error("SERVER ERROR");
+                    err.pushError("No data result");
+                    res.notFound({
+                        status: 200,
+                        message: ErrorWrap(err)
+                    });
+                }
+            })
+            .catch(function(err) {
+                res.serverError({
+                    status: 500,
+                    message: ErrorWrap(err)
+                });
+            });
+    },
+
+    RegisterPatient: function(req, res) {
+        var data = req.body.data;
+        var otherData = req.body.otherData?req.body.otherData:null;
+        // var PatientPensionData = req.body.PatientPension?req.body.PatientPension:{};
+        // var PatientDVA = req.body.PatientDVA?req.body.PatientDVA:{};
+        // var PatientKin = req.body.PatientKin?req.body.PatientKin:{};
+        // var PatientMedicare = req.body.PatientMedicare?req.body.PatientMedicare:{};
+        Services.Patient.CreatePatient(data, otherData)
+            .then(function(patient) {
+                console.log(patient," >>>>>>>>>>>>>>>>.phai day k");
                 if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {
                     var info = {
                         UID: patient.result.UID,
@@ -53,22 +95,42 @@ module.exports = {
     */
     SearchPatient: function(req, res) {
         var data = req.body.data;
-        Services.Patient.SearchPatient(data)
+        var count = 0;
+        var array = ['FirstName' , 'LastName' , 'DOB' , 'Gender' , 'PhoneNumber' , 'Email1'];
+        if(typeof data =='object'){
+            for(var i = 0; i < array.length; i++) {
+                for(var key in data) {
+                    if(key == array[i])
+                        count++;
+                }
+            }
+        }
+        else {
+            var err = new Error("Search.ERROR");
+            err.pushError("invalid.Data");
+            res.serverError(ErrorWrap(err));
+        }
+        if(count == 0) {
+            var err = new Error("Search.ERROR");
+            err.pushError("notFound.attribute");
+            res.serverError(ErrorWrap(err));
+        }
+        else {
+            Services.Patient.SearchPatient(data)
             .then(function(info) {
                 if (info !== undefined) {
                     if (info === null)
                         res.ok({
                             status: 200,
                             message: "success",
-                            data: '',
+                            data: [],
                             count: 0
                         });
                     else
                         res.ok({
                             status: 200,
                             message: "success",
-                            data: info.rows,
-                            count: info.count
+                            data: info,
                         });
                 } else {
                     var err = new Error("SERVER ERROR");
@@ -85,6 +147,7 @@ module.exports = {
                     message: ErrorWrap(err)
                 });
             });
+        }
     },
 
 
@@ -95,7 +158,7 @@ module.exports = {
     */
     UpdatePatient: function(req, res) {
         var data = req.body.data;
-        var otherData = req.body.otherData?req.body.otherData:null;
+        var otherData = req.body.otherData?req.body.otherData:{};
         Services.Patient.UpdatePatient(data, otherData)
             .then(function(result) {
                 console.log(result);
@@ -170,7 +233,7 @@ module.exports = {
         Services.Patient.DetailPatient(data)
             .then(function(info) {
                 if (info != null && info != undefined && info != '' && info.length != 0) {
-                    FileUpload.findAll({
+                    return FileUpload.findAll({
                             where: {
                                 UserAccountID: info[0].UserAccountID,
                                 FileType: 'ProfileImage',
@@ -182,14 +245,14 @@ module.exports = {
                                 info[0].dataValues.FileUID = success[0].UID ? success[0].UID : null;
                                 info[0].dataValues.CountryName = info[0].dataValues.Country.ShortName;
                                 delete info[0].dataValues['Country'];
-                                res.ok({
+                                return res.ok({
                                     status: 200,
                                     message: "success",
                                     data: info
                                 });
                             } else {
                                 info[0].dataValues.FileUID = null;
-                                res.ok({
+                                return res.ok({
                                     status: 200,
                                     message: "success",
                                     data: info

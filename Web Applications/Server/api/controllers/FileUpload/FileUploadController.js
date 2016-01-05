@@ -128,6 +128,7 @@ module.exports = {
             res.set('filename',fileName);
             // res.set('testtesttesttest',true);
             res.header('Access-Control-Expose-Headers', HelperService.const.exposeHeaders);
+            console.log("====Response====: ",res);
             if (err) return res.serverError(ErrorWrap(err));
             res.attachment(fileName);
             var file = fs.createReadStream(output);
@@ -166,5 +167,19 @@ module.exports = {
         }).catch(function(err) {
             return res.serverError(ErrorWrap(err));
         })
+    },
+    DisableAllFile: function(req, res) {
+        var data = req.body.data;
+        Services.FileUpload.DisableAllFile(data)
+        .then(function(result) {
+            if(result != null && result != "" && result.length != 0)
+                res.ok({mesage:"success"});
+            else
+                res.ok({mesage:"DisableAllFile.Error.NotFoundUserAccountID"});
+        })
+        .catch(function(err) {
+            // console.log(err);
+            res.serverError(ErrorWrap(err));
+        });
     }
 }

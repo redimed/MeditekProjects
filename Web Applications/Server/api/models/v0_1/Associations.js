@@ -230,6 +230,34 @@ module.exports = {
             foreignKey: 'DoctorID'
         })
 
+        //association Appointment - Consultation
+        Appointment.belongsToMany(Consultation, {
+            through: 'RelAppointmentConsultation',
+            foreignKey: 'AppointmentID'
+        });
+        Consultation.belongsToMany(Appointment, {
+            through: 'RelAppointmentConsultation',
+            foreignKey: 'ConsultationID'
+        });
 
+        //association Consultation - ConsultationData
+        Consultation.belongsToMany(ConsultationData, {
+            through: 'RelConsultationData',
+            foreignKey: 'ConsultationID'
+        });
+        ConsultationData.belongsToMany(Consultation, {
+            through: 'RelConsultationData',
+            foreignKey: 'ConsultationDataID'
+        });
+
+        //association ConsultationData - FileUpload
+        FileUpload.belongsToMany(ConsultationData, {
+            through: 'RelConsultationDataFileUpload',
+            foreignKey: 'FileUploadID'
+        });
+        ConsultationData.belongsToMany(FileUpload, {
+            through: 'RelConsultationDataFileUpload',
+            foreignKey: 'ConsultationDataID'
+        });
     }
 };

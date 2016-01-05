@@ -1,5 +1,6 @@
 var app = angular.module('app.blank',[
 	'app.blank.controller',
+	'app.blank.services'
 ]);
 
 app.config(function($stateProvider){
@@ -16,7 +17,7 @@ app.config(function($stateProvider){
 		})
 		.state('blank.call',{
 			data: {pageTitle: 'Call'},
-			url: '/call',
+			url: '/call/:apiKey/:sessionId/:token/:userName',
 			views:{
 				'blank':{
 					templateUrl: 'modules/blank/views/call.html',

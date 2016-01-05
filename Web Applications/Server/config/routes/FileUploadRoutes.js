@@ -10,5 +10,9 @@ module.exports = {
 	'GET /api/enableFile/:isEnable/:fileUID': {
 		controller: 'FileUpload/FileUploadController',
 		action: 'EnableFile'
+	},
+	'POST /api/change-status-file': {
+		controller: 'FileUpload/FileUploadController',
+		action: 'DisableAllFile'
 	}
 }

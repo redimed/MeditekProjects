@@ -525,7 +525,12 @@ angular.module('app.authentication.patient.services',[])
 	PatientService.getPatient = function(data){
 		var getPatient = api.all("patient/get-patient");
 		return getPatient.post({data:data});
-	}
+	};
+
+	PatientService.changeStatusFile = function(data) {
+		var changeStatusFile = api.all('change-status-file');
+		return changeStatusFile.post({data:data});
+	};
 
 	return PatientService;
 })

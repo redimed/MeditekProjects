@@ -44,18 +44,18 @@ class MyPopupViewController: UIViewController , MAActivityIndicatorViewDelegate 
         }
         declineBtn.layer.cornerRadius = 25
         answerBtn.layer.cornerRadius = 25
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            
-            self.indicatorView1 = MAActivityIndicatorView(frame: self.viewForActivity1.frame)
-            self.indicatorView1.defaultColor = UIColor.redColor()
-            self.indicatorView1.animationDuration    = 1
-            self.indicatorView1.numberOfCircles      = 4
-            self.indicatorView1.maxRadius            = 4
-            self.indicatorView1.delegate = self
-            self.indicatorView1.startAnimating()
-            self.view.addSubview(self.indicatorView1)
-            
-        })
+//        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//            
+//            self.indicatorView1 = MAActivityIndicatorView(frame: self.viewForActivity1.frame)
+//            self.indicatorView1.defaultColor = UIColor.redColor()
+//            self.indicatorView1.animationDuration    = 1
+//            self.indicatorView1.numberOfCircles      = 4
+//            self.indicatorView1.maxRadius            = 4
+//            self.indicatorView1.delegate = self
+//            self.indicatorView1.startAnimating()
+//            self.view.addSubview(self.indicatorView1)
+//            
+//        })
         
         userCallingLabel.text = savedData.fromName
         NSNotificationCenter.defaultCenter().removeObserver(self,name:"endCallAnswer",object: nil)

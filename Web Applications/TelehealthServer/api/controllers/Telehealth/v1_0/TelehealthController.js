@@ -165,9 +165,9 @@ module.exports = {
         var info = HelperService.toJson(req.body.data);
         var deviceId = req.headers.deviceid;
         var deviceType = req.headers.systemtype;
-        var deviceToken = info.token;
+        var deviceToken = info.token || null;
         var uid = info.uid;
-        if (deviceToken && uid && deviceType && deviceId) {
+        if (uid && deviceType && deviceId) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
                 TelehealthDevice.findOrCreate({
                     where: {
@@ -342,6 +342,7 @@ module.exports = {
         var sound = info.sound;
         var title = info.title;
         var category = info.category;
+        var badge = info.badge;
         var uid = info.uid;
         if (!uid || !data) {
             var err = new Error("Telehealth.PushNotification.Error");
@@ -349,7 +350,7 @@ module.exports = {
             return res.serverError(ErrorWrap(err));
         }
         var iosMess = {
-            badge: 1,
+            badge: badge || 0,
             alert: title ? title : 'Notification From REDiMED',
             payload: {
                 "data": data
@@ -412,6 +413,7 @@ module.exports = {
     },
     TestPushAPN: function(req, res) {
         var tokens = [];
+        var params = req.params.all();
         TelehealthDevice.findAll({
             where: {
                 Type: 'IOS'
@@ -422,7 +424,7 @@ module.exports = {
                     tokens.push(devices[i].DeviceToken);
                 }
                 var opts = {
-                    badge: 2,
+                    badge: params.badge,
                     alert: 'Test Push Notification',
                     payload: {
                         "data": {

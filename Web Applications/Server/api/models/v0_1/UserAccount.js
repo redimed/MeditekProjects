@@ -170,6 +170,25 @@ module.exports = {
                     msg: 'Must be an integer!'
                 }
             }
+        },
+        PinNumber:{
+            type:Sequelize.STRING(45),
+            allowNull:true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        ExpiryPin:{
+            type: Sequelize.INTEGER(11),
+            allowNull: true,
+            validate: {
+                isInt: {
+                    msg: 'Must be an integer!'
+                }
+            }
         }
     },
     associations: function() {},

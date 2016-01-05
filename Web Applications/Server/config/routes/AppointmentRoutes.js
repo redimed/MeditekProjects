@@ -42,5 +42,9 @@ module.exports = {
     'post /api/appointment-wa-disable': {
         controller: 'Appointment/WAAppointmentController',
         action: 'DisableWAAppointment'
-    }
+    },
+    'post /api/appointment/list': {
+        controller: 'Appointment/AppointmentController',
+        action: 'GetListAppointment'
+    },
 };

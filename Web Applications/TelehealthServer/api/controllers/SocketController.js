@@ -3,6 +3,7 @@ var config = sails.config.myconf;
 var $q = require('q');
 var OpenTok = require('opentok'),
     opentok = new OpenTok(config.OpentokAPIKey, config.OpentokAPISecret);
+var arrTemp = [];
 
 function emitError(socket, msg) {
     var err = new Error("Socket.Error");
@@ -31,7 +32,6 @@ function pushGCMNotification(info, devices) {
     })
 };
 
-
 function pushAPNNotification(info, devices) {
     var iosMess = {
         badge: 1,
@@ -43,6 +43,7 @@ function pushAPNNotification(info, devices) {
 };
 module.exports = {
     JoinConferenceRoom: function(req, res) {
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
         if (!req.isSocket) {
             var err = new Error("Socket.JoinConferenceRoom.Error");
             err.pushError("Socket Request Only!");
@@ -52,10 +53,18 @@ module.exports = {
         var error = null;
         if (uid) {
             TelehealthService.FindByUID(uid).then(function(teleUser) {
-                if (teleUser) { 
+                if (teleUser) {
                     sails.sockets.join(req.socket, uid);
                     sails.sockets.leave(req.socket, req.socket.id);
-                    // sails.sockets.blast('onlineUser',{msg:'join'});
+                    if (_.some(arrTemp, {
+                            to: uid
+                        })) {
+                        var index = _.findIndex(arrTemp, {
+                            to: uid,
+                            message: 'call'
+                        });
+                        sails.sockets.emit(req.socket.id, 'receiveMessage', arrTemp[index]);
+                    }
                 } else error = "User Is Not Exist";
             }).catch(function(err) {
                 error = err;
@@ -126,14 +135,20 @@ module.exports = {
             })
         }
         if (roomList.length > 0) {
+            data.from = from;
+            data.message = message;
+            data.to = to;
+            var index = _.findIndex(arrTemp, {
+                to: to
+            });
+            if (message.toLowerCase() == 'call' && index == -1) arrTemp.push(data);
+            else arrTemp.splice(index, 1);
             if (_.contains(roomList, to)) {
-                data.from = from;
-                data.message = message;
                 sails.sockets.broadcast(to, 'receiveMessage', data);
             }
             if (sails.sockets.subscribers(from).length > 1 && message.toLowerCase() != 'call') {
-                data.from = from;
-                data.message = message.toLowerCase() == 'answer' ? 'decline' : message;
+                data.message = 'decline';
+                data.to = from;
                 sails.sockets.broadcast(from, 'receiveMessage', data, req.socket);
             }
         }

@@ -102,6 +102,7 @@ module.exports = {
 	 * - PhoneNumber.duplicate</br>
 	 * - PhoneNumber.queryError</br>
 	 * - UserName.createError</br>
+	 * - PinNumber.max6chars</br>
 	 */
 	/**
 	 * @function CreateUserAccount
@@ -163,6 +164,10 @@ module.exports = {
 					{
 						err.pushError('PhoneNumber.invalid');
 					}
+				}
+				if(userInfo.PinNumber && userInfo.PinNumber.length>6)
+				{
+					err.pushError('PinNumber.max6chars');
 				}
 				
 				if(err.getErrors().length>0)
@@ -297,6 +302,7 @@ module.exports = {
 			//Kiểm tra nếu Email và PhoneNumber là chuỗi rỗng thì không được đưa vào database
 			if(!userInfo.Email) delete userInfo.Email;
 			if(!userInfo.PhoneNumber) delete userInfo.PhoneNumber;
+			if(!userInfo.PinNumber) delete userInfo.PinNumber;
 			//-----
 			return checkUserName(userInfo.UserName);
 		})
@@ -309,6 +315,8 @@ module.exports = {
 		})
 		.then(function(user){
 			userInfo.Enable='Y';
+			if(userInfo.PinNumber)
+				userInfo.ExpiryPin=o.const.ExpiryPin;
 			return UserAccount.create(userInfo,{transaction:transaction})
 			.then(function(data){
 				return data;

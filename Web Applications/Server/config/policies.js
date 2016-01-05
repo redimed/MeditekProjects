@@ -18,7 +18,7 @@
 
 var _ = require('lodash');
 var policies = {
-    '*': 'isAuthenticated',//bật lên khi ở chế độ develop không cần login phân quyền
+    '*': 'isAuthenticated', //bật lên khi ở chế độ develop không cần login phân quyền
     // '*': true, //bật lên khi ở chế độ develop không cần login phân quyền
     // '*': "hasToken", //bật lên khi relase, hầu hết tất cả api đều phải có token
 };
@@ -59,5 +59,8 @@ _.extend(policies, doctorPolicies);
 var patientPolicies = require('./policies/patientPolicies');
 _.extend(policies, patientPolicies);
 // End module Patient
+//Begin module Consultation
+var consultationPolicies = require('./policies/consultationPolicies');
+_.extend(policies, consultationPolicies);
+//End module Consultation
 module.exports.policies = policies;
-

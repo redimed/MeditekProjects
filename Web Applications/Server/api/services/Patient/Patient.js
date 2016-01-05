@@ -596,7 +596,7 @@ module.exports = {
             return Services.Patient.validation(data,true)
             .then(function(success){
                 if(data.PhoneNumber){
-                    return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,t);
+                    return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,null,t);
                 }
                 else{
                     if(data.Email){
@@ -637,6 +637,8 @@ module.exports = {
                             Password    : data.password
                         };
                         userInfo.UID = UUIDService.Create();
+                        if(data.hasOwnProperty('PinNumber')== true)
+                            userInfo.PinNumber = data.PinNumber;
                         //create UserAccount
                         return Services.UserAccount.CreateUserAccount(userInfo,t)
                         .then(function(user){
@@ -808,8 +810,8 @@ module.exports = {
                     throw err;
                 })//update 4 bang patient tai day
                 .then(function(result){
-                    if(other!=null){
-                        if(other.PatientPension!=null) {
+                    if(other!=null && other != ""){
+                        if(other.hasOwnProperty('PatientPension')==true) {
                             return PatientPension.update(other.PatientPension,{
                                 where:{
                                     PatientID : patientInfo.ID
@@ -823,7 +825,7 @@ module.exports = {
                     throw err;
                 })
                 .then(function(PatientPension){
-                    if(other.PatientMedicare!=null) {
+                    if(other.hasOwnProperty('PatientMedicare')==true) {
                         return PatientMedicare.update(other.PatientMedicare,{
                             where:{
                                 PatientID : patientInfo.ID
@@ -836,7 +838,7 @@ module.exports = {
                     throw err;
                 })
                 .then(function(PatientMedicare){
-                    if(other.PatientDVA!=null) {
+                    if(other.hasOwnProperty('PatientDVA')==true) {
                         return PatientDVA.update(other.PatientDVA,{
                             where:{
                                 PatientID : patientInfo.ID
@@ -849,7 +851,7 @@ module.exports = {
                     throw err;
                 })
                 .then(function(PatientDVA){
-                    if(other.PatientKin!=null) {
+                    if(other.hasOwnProperty('PatientKin')==true) {
                         return PatientKin.update(other.PatientKin,{
                             where:{
                                 PatientID : patientInfo.ID
@@ -994,12 +996,13 @@ module.exports = {
         input: Patient's UID
         output: get patient's detail
     */
-    DetailPatient : function(data, transaction) {
+    DetailPatient : function(data) {
+        var returnData;
         return Patient.findAll({
             where:{
                 UID : data.UID
             },
-            transaction:transaction,
+
             include:[
                 {
                     model: UserAccount,
@@ -1021,7 +1024,20 @@ module.exports = {
             ]
         })
         .then(function(result){
-            return result;
+            returnData = result;
+            return TelehealthUser.findAll({
+                where:{
+                    UserAccountID : result[0].UserAccountID
+                }
+            });
+            // return result;
+        },function(err){
+            throw err;
+        })
+        .then(function(success){
+            if(success!= null && success != "" && success.length != 0)
+                returnData[0].dataValues.TeleUID = success?success[0].UID:null;
+            return returnData;
         },function(err){
             throw err;
         });
@@ -1085,6 +1101,7 @@ module.exports = {
         })
         .then(function(result){
             return result;
+            
         },function(err){
             throw err;
         });
@@ -1097,9 +1114,10 @@ module.exports = {
                  is created or not created
     */
     CheckPatient : function(data, transaction) {
+        console.log(data, "------------------------------ data ne");
         var info = {};
-        return Services.Patient.validation(data,false)
-        .then(function(success){
+        // return Services.Patient.validation(data,false)
+        // .then(function(success){
             if(check.checkData(data.PhoneNumber)){
                 // data.PhoneNumber = data.PhoneNumber.substr(0,3)=="+61"?data.PhoneNumber:"+61"+data.PhoneNumber;
                 return Services.UserAccount.FindByPhoneNumber(data.PhoneNumber,transaction)
@@ -1145,9 +1163,9 @@ module.exports = {
                 error.pushErrors("invalid.PhoneNumber");
                 throw error;
             }
-        },function(err){
-            throw err;
-        })
+        // },function(err){
+            // throw err;
+        // })
     },
 
 
@@ -1174,12 +1192,38 @@ module.exports = {
     },
 
 
-	// DeletePatient : function(patientID) {
-	// 	return Patient.destroy({
-	// 		where : {
-	// 			ID : patientID
-	// 		}
-	// 	});
-	// }
+    SearchPatient : function(whereClause, transaction) {
+        var UserAccountWhereClause = {};
+        if('PhoneNumber' in whereClause) {
+            var PhoneNumber = whereClause.PhoneNumber[0] == '0' ? '+61'+ whereClause.PhoneNumber.substr(1,whereClause.PhoneNumber.length) : whereClause.PhoneNumber;
+            UserAccountWhereClause.PhoneNumber = PhoneNumber;
+            delete whereClause['PhoneNumber'];
+        }
+        return Patient.findOne({
+            include:[
+                {
+                    model:UserAccount,
+                    attributes:['PhoneNumber','UID'],
+                    required: true,
+                    where : UserAccountWhereClause
+                }
+            ],
+            where : whereClause
+        })
+        .then(function(result) {
+            return result;
+        },function(err){
+            throw err;
+        })
+    }
+
+
+    // DeletePatient : function(patientID) {
+    //  return Patient.destroy({
+    //      where : {
+    //          ID : patientID
+    //      }
+    //  });
+    // }
 
 };

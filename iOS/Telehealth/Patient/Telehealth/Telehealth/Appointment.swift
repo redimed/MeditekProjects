@@ -9,14 +9,15 @@
 import Foundation
 
 class AppointmentList {
-    var UIDApointment,ToTime,Status,FromTime,NameDoctor: String!,Type:String!
-    init(UIDApointment:String,ToTime:String,Status:String,FromTime:String,NameDoctor:String,Type:String){
+    var UIDApointment,ToTime,Status,FromTime,NameDoctor: String!,Type:String!,refName:String!
+    init(UIDApointment:String,ToTime:String,Status:String,FromTime:String,NameDoctor:String,Type:String,refName:String){
         self.UIDApointment = UIDApointment
         self.ToTime = ToTime
         self.Status = Status
         self.FromTime = FromTime
         self.NameDoctor = NameDoctor
         self.Type = Type
+        self.refName = refName
     }
 }
 

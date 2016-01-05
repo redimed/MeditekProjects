@@ -1,6 +1,6 @@
 <div class="contentPatient">
 	<div class="row">
-		<div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+		<div class="col-md-10 col-sm- col-md-offset-1 col-sm-offset-1">
 			<div class="portlet box blue">
 				<div class="portlet-title">
 					<div class="caption">
@@ -16,80 +16,74 @@
 								<div class="col-md-4 col-sm-4">
 									<fieldset>
 										<legend class="bold">Basic Information</legend>
-										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.title.$invalid]">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.Title.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Title <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<select class="form-control" name="title" 
-													ng-model="data.title" required>
+												<select class="form-control" name="Title" ng-model="postData.data.Title" required>
 													<option value=""></option>
 													<option value="Mr">Mr</option>
 													<option value="Ms">Ms</option>
 													<option value="Dr">Dr</option>
 												</select>
-												<p class="help-block" ng-if="submitted && step1.title.$error.required">
-													Required</p>
+												<p class="help-block required-text" ng-if="submitted && step1.Title.$error.required">
+													This field is required.</p>
 											</div>
 										</div>
-										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.firstname.$invalid]">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.FirstName.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
-												Firstname <span class="required">*</span>
+												First Name <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control" name="firstname" 
-												ng-model="data.firstname" required>
-												<p class="help-block" ng-if="submitted && step1.firstname.$error.required">
-													Required</p>
+												<input type="text" class="form-control" name="FirstName" ng-model="postData.data.FirstName" required>
+												<p class="help-block required-text" ng-if="submitted && step1.FirstName.$error.required">
+													This field is required.</p>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-4 col-sm-4">
-												Middlename <span class="required">&nbsp;</span>
+												Middle Name
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="MiddleName" ng-model="postData.data.MiddleName">
 											</div>
 										</div>
-										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.lastname.$invalid]">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.LastName.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
-												Lastname <span class="required">*</span>
+												Last Name <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" name="lastname" class="form-control" 
-												ng-model="data.lastname" required>
-												<p class="help-block" ng-if="submitted && step1.lastname.$error.required">
-													Required</p>
+												<input type="text" name="LastName" class="form-control" ng-model="postData.data.LastName" required>
+												<p class="help-block required-text" ng-if="submitted && step1.LastName.$error.required">
+													This field is required.</p>
 											</div>
 										</div>
-										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.dob.$invalid]">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.DOB.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Date of Birth <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control date-picker" name="dob" data-date-format="dd/mm/yyyy"
-												ng-model="data.dob" required>
-												<p class="help-block" ng-if="submitted && step1.dob.$error.required">
-													Required</p>
+												<input type="text" class="form-control date-picker" name="DOB" data-date-end-date="0d" placeholder="dd/mm/yyyy" data-date-format="dd/mm/yyyy"ng-model="postData.data.DOB" required>
+												<p class="help-block required-text" ng-if="submitted && step1.DOB.$error.required">
+													This field is required.</p>
 											</div>
 										</div>
-										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.gender.$invalid]">
+										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.Gender.$invalid]">
 											<label class="control-label col-md-4 col-sm-4">
 												Gender <span class="required">*</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
 												<div class="radio-list">
 													<label class="radio-inline">
-														<input type="radio" name="gender" value="M" 
-														ng-model="data.Gender" required> Male
+														<input type="radio" name="Gender" value="Male" ng-model="postData.data.Gender" required> Male
 													</label>
 													<label class="radio-inline">
-														<input type="radio" name="gender" value="F" 
-														ng-model="data.Gender" required> Female
+														<input type="radio" name="Gender" value="Female" ng-model="postData.data.Gender" required> Female
 													</label>
 												</div>
-												<p class="help-block" ng-if="submitted && step1.gender.$error.required">
-													Required</p>
+												<p class="help-block required-text" ng-if="submitted && step1.Gender.$error.required">
+													This field is required.</p>
 											</div>
 										</div>
 										<div class="form-group">
@@ -97,7 +91,7 @@
 												Occupation <span class="required">&nbsp;</span>
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" ng-model="postData.data.Occupation">
 											</div>
 										</div>
 									</fieldset>
@@ -107,72 +101,92 @@
 										<legend class="bold">Contact Information</legend>
 										<div class="row">
 											<div class="col-md-6 col-sm-6">
-												<div class="form-group">
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.Email.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">Email</label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" ng-model="postData.data.Email1" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/" name="Email">
+														<p ng-show="submitted && step1.Email.$error.pattern" class="help-block required-text">Please enter a valid email address.</p>
 													</div>
 												</div>
-												<div class="form-group">
-													<label class="control-label col-md-4 col-sm-4">Homephone</label>
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.HomePhoneNumber.$invalid]">
+													<label class="control-label col-md-4 col-sm-4">Home Phone</label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" ng-model="postData.data.HomePhoneNumber" name="HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/">
+														<p ng-show="submitted && step1.HomePhoneNumber.$error.pattern" class="help-block required-text">This is not a home phone number</p>
 													</div>
 												</div>
-												<div class="form-group">
-													<label class="control-label col-md-4 col-sm-4">Mobile</label>
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.PhoneNumber.$invalid]">
+													<label class="control-label col-md-4 col-sm-4">Mobile
+														<span class="required">*</span>
+													</label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" ng-model="postData.data.PhoneNumber" name="PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" required>
+														<p class="help-block required-text" ng-if="submitted && step1.PhoneNumber.$error.required">
+														This field is required.</p>
+														<p ng-show="submitted && step1.PhoneNumber.$error.pattern" class="help-block required-text">This is not a mobile phone number</p>
 													</div>
 												</div>
-												<div class="form-group">
-													<label class="control-label col-md-4 col-sm-4">Workphone</label>
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.WorkPhoneNumber.$invalid]">
+													<label class="control-label col-md-4 col-sm-4">Work Phone</label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" ng-model="postData.data.WorkPhoneNumber" name="WorkPhoneNumber" ng-pattern="/^[0-9]{6,10}$/">
+														<p ng-show="submitted && step1.WorkPhoneNumber.$error.pattern" class="help-block required-text">This is not a work phone number</p>
 													</div>
 												</div>
-												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.address1.$invalid]">
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.Address1.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">Address1 <span class="required">*</span></label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control" name="address1" ng-model="data.address1" required>
-														<p class="help-block" ng-if="submitted && step1.address1.$error.required">Required</p>
+														<input type="text" class="form-control" name="Address1" ng-model="postData.data.Address1" required>
+														<p class="help-block required-text" ng-if="submitted && step1.Address1.$error.required">This field is required.</p>
 													</div>
 												</div>
-												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.address2.$invalid]">
-													<label class="control-label col-md-4 col-sm-4">Address2 <span class="required">*</span></label>
+												<div class="form-group">
+													<label class="control-label col-md-4 col-sm-4">Address2</label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control" name="address2" ng-model="data.address2" required>
-														<p class="help-block" ng-if="submitted && step1.address2.$error.required">Required</p>
+														<input type="text" class="form-control" name="Address2" ng-model="postData.data.Address2">
 													</div>
 												</div>
 											</div>
 											<div class="col-md-6 col-sm-6">
-												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.suburb.$invalid]">
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.Suburb.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">Suburb <span class="required">*</span></label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control" name="suburb" ng-model="data.suburb" required>
-														<p class="help-block" ng-if="submitted && step1.suburb.$error.required">Required</p>
+														<input type="text" class="form-control" name="Suburb" ng-model="postData.data.Suburb" required>
+														<p class="help-block required-text" ng-if="submitted && step1.Suburb.$error.required">This field is required.</p>
 													</div>
 												</div>
-												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.postcode.$invalid]">
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.Postcode.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">Postcode <span class="required">*</span></label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control" name="postcode" ng-model="data.postcode" required>
-														<p class="help-block" ng-if="submitted && step1.postcode.$error.required">Required</p>
+														<input type="text" class="form-control" name="Postcode" ng-model="postData.data.Postcode" ng-pattern="/^[0-9]{4,10}$/" required>
+														<p class="help-block required-text" ng-if="submitted && step1.Postcode.$error.required">This field is required.</p>
+														<p ng-show="submitted && step1.Postcode.$error.pattern" class="help-block required-text">Postcode must be at least 4 no more than 10 character</p>
 													</div>
 												</div>
-												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.state.$invalid]">
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.State.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">State <span class="required">*</span></label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control" name="state" ng-model="data.state" required>
-														<p class="help-block" ng-if="submitted && step1.state.$error.required">Required</p>
+														<select class="form-control" ng-model="postData.data.State" required name="State" required>
+                                                            <option value=""></option>
+                                                            <option value="WA">Western Australia</option>
+                                                            <option value="VIC">Victoria</option>
+                                                            <option value="TAS">Tasmania</option>
+                                                            <option value="QLD">Queensland</option>
+                                                            <option value="NSW">New South Wales</option>
+                                                            <option value="NT">Northern Territory</option>
+                                                            <option value="ACT">Australian Capital Territory</option>
+                                                        </select>
+														<p class="help-block required-text" ng-if="submitted && step1.State.$error.required">This field is required.</p>
 													</div>
+
 												</div>
-												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.country.$invalid]">
+												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.CountryID1.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">Country <span class="required">*</span></label>
 													<div class="col-md-8 col-sm-8">
-														<input type="text" class="form-control" name="country" ng-model="data.country" required>
-														<p class="help-block" ng-if="submitted && step1.country.$error.required">Required</p>
+														<select size="1" class="form-control" ng-model="postData.data.CountryID1" name="CountryID1" required ng-options="item.ID as item.ShortName for item in ListContry">
+                                                            <option>{{item.ShortName}}</option>
+                                                        </select>
+														<p class="help-block required-text" ng-if="submitted && step1.CountryID1.$error.required">This field is required.</p>
 													</div>
 												</div>
 											</div>
@@ -194,93 +208,124 @@
 								<div class="col-md-4 col-sm-4">
 									<fieldset>
 										<legend class="bold">Next of Kin</legend>
-										<div class="form-group"  ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKfirstname.$invalid]">
-											<label class="control-label col-md-4 col-sm-4">
-												Firstname <span class="required">*</span>
-											</label>
-											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control" name="NOKfirstname" ng-model="data.NOKfirstname" required>
-												<p class="help-block" ng-if="submitted && step2.NOKfirstname.$error.required">Required</p>
-											</div>
-										</div>
 										<div class="form-group">
 											<label class="control-label col-md-4 col-sm-4">
-												Middlename <span class="required">&nbsp;</span>
+												Next of kin available?
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<div class="radio-list">
+													<label class="radio-inline">
+														<input type="radio" ng-model="NextOfKin" value="Y" name="NextOfKin" checked> Yes
+													</label>
+													<label class="radio-inline">
+														<input type="radio" ng-model="NextOfKin" value="N" name="NextOfKin"> No
+													</label>
+												</div>
 											</div>
 										</div>
-										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKlastname.$invalid]">
-											<label class="control-label col-md-4 col-sm-4">
-												Lastname <span class="required">*</span>
-											</label>
-											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control" name="NOKlastname" ng-model="data.NOKlastname" required>
-												<p class="help-block" ng-if="submitted && step2.NOKlastname.$error.required">Required</p>
+										<div ng-if="NextOfKin !=='N'">
+											<div class="form-group"  ng-class="{true: 'has-error', false: ''}[submitted && step2.FirstName.$invalid]">
+												<label class="control-label col-md-4 col-sm-4">
+													First Name <span class="required">*</span>
+												</label>
+												<div class="col-md-8 col-sm-8">
+													<input type="text" class="form-control" name="FirstName" ng-model="postData.otherData.PatientKin.FirstName" ng-required="NextOfKin !=='N'">
+													<p class="help-block required-text" ng-if="submitted && step2.FirstName.$error.required">This field is required.</p>
+												</div>
 											</div>
-										</div>
-										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKhomePhone.$invalid]">
-											<label class="control-label col-md-4 col-sm-4">
-												Homephone <span class="required">*</span>
-											</label>
-											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control" name="NOKhomePhone" ng-model="data.NOKhomePhone" required>
-												<p class="help-block" ng-if="submitted && step2.NOKhomePhone.$error.required">Required</p>
+											<div class="form-group">
+												<label class="control-label col-md-4 col-sm-4">
+													Middle Name <span class="required">&nbsp;</span>
+												</label>
+												<div class="col-md-8 col-sm-8">
+													<input type="text" class="form-control" ng-model="postData.otherData.PatientKin.MiddleName">
+												</div>
 											</div>
-										</div>
-										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKmobile.$invalid]">
-											<label class="control-label col-md-4 col-sm-4">
-												Mobilephone <span class="required">*</span>
-											</label>
-											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control" name="NOKmobile" ng-model="data.NOKmobile" required>
-												<p class="help-block" ng-if="submitted && step2.NOKmobile.$error.required">Required</p>
+											<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.LastName.$invalid]">
+												<label class="control-label col-md-4 col-sm-4">
+													Last Name <span class="required">*</span>
+												</label>
+												<div class="col-md-8 col-sm-8">
+													<input type="text" class="form-control" name="LastName" ng-model="postData.otherData.PatientKin.LastName" ng-required="NextOfKin !=='N'">
+													<p class="help-block required-text" ng-if="submitted && step2.LastName.$error.required">This field is required.</p>
+												</div>
 											</div>
-										</div>
-										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKaddress.$invalid]">
-											<label class="control-label col-md-4 col-sm-4">
-												Address <span class="required">*</span>
-											</label>
-											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control" name="NOKaddress" ng-model="data.NOKaddress" required>
-												<p class="help-block" ng-if="submitted && step2.NOKaddress.$error.required">Required</p>
+											<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.HomePhoneNumber.$invalid]">
+												<label class="control-label col-md-4 col-sm-4">
+													Home Phone <span class="required">*</span>
+												</label>
+												<div class="col-md-8 col-sm-8">
+													<input type="text" class="form-control" name="HomePhoneNumber" ng-model="postData.otherData.PatientKin.HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/" ng-required="NextOfKin !=='N'">
+													<p class="help-block required-text" ng-if="submitted && step2.HomePhoneNumber.$error.required">This field is required.</p>
+													<p ng-show="submitted && step2.HomePhoneNumber.$error.pattern" class="help-block required-text">This is not a home phone number</p>
+												</div>
 											</div>
-										</div>
-										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKsuburb.$invalid]">
-											<label class="control-label col-md-4 col-sm-4">
-												Suburb <span class="required">*</span>
-											</label>
-											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control" name="NOKsuburb" ng-model="data.NOKsuburb" required>
-												<p class="help-block" ng-if="submitted && step2.NOKsuburb.$error.required">Required</p>
+											<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.MobilePhoneNumber.$invalid]">
+												<label class="control-label col-md-4 col-sm-4">
+													Mobile Phone <span class="required">*</span>
+												</label>
+												<div class="col-md-8 col-sm-8">
+													<input type="text" class="form-control" name="MobilePhoneNumber" ng-model="postData.otherData.PatientKin.MobilePhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" ng-required="NextOfKin !=='N'">
+													<p class="help-block required-text" ng-if="submitted && step2.MobilePhoneNumber.$error.required">This field is required.</p>
+													<p ng-show="submitted && step2.MobilePhoneNumber.$error.pattern" class="help-block required-text">This is not a mobile phone number</p>
+												</div>
 											</div>
-										</div>
-										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKpostcode.$invalid]">
-											<label class="control-label col-md-4 col-sm-4">
-												Postcode <span class="required">*</span>
-											</label>
-											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control" name="NOKpostcode" ng-model="data.NOKpostcode" required>
-												<p class="help-block" ng-if="submitted && step2.NOKpostcode.$error.required">Required</p>
+											<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.Address1.$invalid]">
+												<label class="control-label col-md-4 col-sm-4">
+													Address <span class="required">*</span>
+												</label>
+												<div class="col-md-8 col-sm-8">
+													<input type="text" class="form-control" name="Address1" ng-model="postData.otherData.PatientKin.Address1" ng-required="NextOfKin !=='N'">
+													<p class="help-block required-text" ng-if="submitted && step2.Address1.$error.required">This field is required.</p>
+												</div>
 											</div>
-										</div>
-										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKstate.$invalid]">
-											<label class="control-label col-md-4 col-sm-4">
-												State <span class="required">*</span>
-											</label>
-											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control" name="NOKstate" ng-model="data.NOKstate" required>
-												<p class="help-block" ng-if="submitted && step2.NOKstate.$error.required">Required</p>
+											<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.Suburb.$invalid]">
+												<label class="control-label col-md-4 col-sm-4">
+													Suburb <span class="required">*</span>
+												</label>
+												<div class="col-md-8 col-sm-8">
+													<input type="text" class="form-control" name="Suburb" ng-model="postData.otherData.PatientKin.Suburb" ng-required="NextOfKin !=='N'">
+													<p class="help-block required-text" ng-if="submitted && step2.Suburb.$error.required">This field is required.</p>
+												</div>
 											</div>
-										</div>
-										<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.NOKcountry.$invalid]">
-											<label class="control-label col-md-4 col-sm-4">
-												Country <span class="required">*</span>
-											</label>
-											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control" name="NOKcountry" ng-model="data.NOKcountry" required>
-												<p class="help-block" ng-if="submitted && step2.NOKcountry.$error.required">Required</p>
+											<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.Postcode.$invalid]">
+												<label class="control-label col-md-4 col-sm-4">
+													Postcode <span class="required">*</span>
+												</label>
+												<div class="col-md-8 col-sm-8">
+													<input type="text" class="form-control" name="Postcode" ng-model="postData.otherData.PatientKin.Postcode" ng-pattern="/^[0-9]{4,10}$/" ng-required="NextOfKin !=='N'">
+													<p class="help-block required-text" ng-if="submitted && step2.Postcode.$error.required">This field is required.</p>
+													<p ng-show="submitted && step2.Postcode.$error.pattern" class="help-block required-text">Postcode must be at least 4 no more than 10 character</p>
+												</div>
+											</div>
+											<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.State.$invalid]">
+												<label class="control-label col-md-4 col-sm-4">
+													State <span class="required">*</span>
+												</label>
+												<div class="col-md-8 col-sm-8">
+														<select class="form-control" ng-model="postData.otherData.PatientKin.State" name="State" ng-required="NextOfKin !=='N'">
+                                                            <option value=""></option>
+                                                            <option value="WA">Western Australia</option>
+                                                            <option value="VIC">Victoria</option>
+                                                            <option value="TAS">Tasmania</option>
+                                                            <option value="QLD">Queensland</option>
+                                                            <option value="NSW">New South Wales</option>
+                                                            <option value="NT">Northern Territory</option>
+                                                            <option value="ACT">Australian Capital Territory</option>
+                                                        </select>
+														<p class="help-block required-text" ng-if="submitted && step2.State.$error.required">This field is required.</p>
+												</div>
+											</div>
+											<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.CountryID.$invalid]">
+												<label class="control-label col-md-4 col-sm-4">
+													Country <span class="required">*</span>
+												</label>
+												<div class="col-md-8 col-sm-8">
+													<select size="1" class="form-control" ng-model="postData.otherData.PatientKin.CountryID" name="CountryID" ng-options="item.ID as item.ShortName for item in ListContry" ng-required="NextOfKin !=='N'">
+                                                        <option>{{item.ShortName}}</option>
+                                                    </select>
+													<p class="help-block required-text" ng-if="submitted && step2.CountryID.$error.required">This field is required.</p>
+												</div>
 											</div>
 										</div>
 									</fieldset>
@@ -292,17 +337,24 @@
 											<label class="control-label col-md-4 col-sm-4">
 												Medicare No. 
 											</label>
-											<div class="col-md-5 col-sm-5">
-												<input type="text" class="form-control">
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control" ng-model="postData.otherData.PatientMedicare.MedicareNumber">
 											</div>
-											<label class="col-md-3 col-sm-3">Ref <input type="checkbox"></label>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												Medicare Ref
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control" ng-model="postData.otherData.PatientMedicare.MedicareReferenceNumber">
+											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-4 col-sm-4">
 												Medicare Expiry 
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="postData.otherData.PatientMedicare.ExpiryDate">
 											</div>
 										</div>
 									</fieldset>
@@ -310,10 +362,26 @@
 										<legend class="bold">Fund Information</legend>
 										<div class="form-group">
 											<label class="control-label col-md-4 col-sm-4">
+												Membership No. 
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control" ng-model="postData.otherData.Fund.MembershipNumber">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
+												UPI
+											</label>
+											<div class="col-md-8 col-sm-8">
+												<input type="text" class="form-control" ng-model="postData.otherData.Fund.UPI">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4">
 												Private Fund 
 											</label>
-											<div class="col-md-5 col-sm-5">
-												<select class="form-control">
+											<div class="col-md-8 col-sm-8">
+												<select class="form-control" ng-model="postData.otherData.Fund.PrivateFund">
 	                                                <option value=''>Select Fund</option>
 	                                                <option value='ACA'>ACA Health Benefits Fund</option>
 	                                                <option value='AHM'>ahm Health Insurance</option>
@@ -352,15 +420,6 @@
 	                                                <option value='WFD'>Westfund Limited</option>
 	                                            </select>
 											</div>
-											<label class="col-md-3 col-sm-3">UPI <input type="checkbox"></label>
-										</div>
-										<div class="form-group">
-											<label class="control-label col-md-5 col-sm-5">
-												Membership No. 
-											</label>
-											<div class="col-md-7 col-sm-7">
-												<input type="text" class="form-control">
-											</div>
 										</div>
 									</fieldset>
 									<fieldset>
@@ -370,7 +429,7 @@
 												DVA No.
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" ng-model="postData.otherData.PatientDVA.DVANumber">
 											</div>
 										</div>
 										<div class="form-group">
@@ -378,31 +437,21 @@
 												DVA Disability
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" ng-model="postData.otherData.PatientDVA.DVADisability">
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="control-label col-md-5 col-sm-5">
+											<label class="control-label col-md-4 col-sm-4">
 												DVA Card Colour:
 											</label>
-											<div class="col-md-7 col-sm-7">
-												<select class="bs-select form-control" data-show-subtext="true">
+											<div class="col-md-8 col-sm-8">
+												<select class="bs-select form-control" data-show-subtext="true" ng-model="postData.otherData.PatientDVA.DVACardColour">
 													<option data-content="">Select color</option>
-													<option 
-                                                    	data-content="<div class='bg-blue'>&nbsp;</div>">
-													</option>
-                                                    <option 
-                                                    	data-content="<div class='bg-green-jungle'>&nbsp;</div>">
-													</option>
-													<option 
-                                                    	data-content="<div class='bg-yellow-lemon'>&nbsp;</div>">
-													</option>
-													<option 
-                                                    	data-content="<div class='bg-red'>&nbsp;</div>">
-													</option>
-													<option 
-                                                    	data-content="<div class='bg-purple-medium'>&nbsp;</div>">
-													</option>                                                        
+													<option value="blue" data-content="<div class='bg-blue'>&nbsp;</div>"></option>
+                                                    <option value="green" data-content="<div class='bg-green-jungle'>&nbsp;</div>"></option>
+													<option value="yellow" data-content="<div class='bg-yellow-lemon'>&nbsp;</div>" ></option>
+													<option value="red" data-content="<div class='bg-red'>&nbsp;</div>"></option>
+													<option value="purple" data-content="<div class='bg-purple-medium'>&nbsp;</div>"></option>          
                                                 </select>
 											</div>
 										</div>
@@ -412,12 +461,12 @@
 									<fieldset>
 										<legend class="bold">Pension Information</legend>
 										<div class="form-group">
-											<label class="control-label col-md-5 col-sm-5">
+											<label class="control-label col-md-4 col-sm-4">
 												HCC/Pension No
 											</label>
-											<div class="col-md-7 col-sm-7">
-												<select class="form-control">
-													<option></option>
+											<div class="col-md-8 col-sm-8">
+												<select class="form-control" ng-model="postData.otherData.PatientPension.HCCPensionNumber">
+													<option value="HCC/Pension No">HCC/Pension No 1</option>
 												</select>
 											</div>
 										</div>
@@ -426,7 +475,7 @@
 												Expiry
 											</label>
 											<div class="col-md-8 col-sm-8">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="postData.otherData.PatientPension.ExpiryDate">
 											</div>
 										</div>
 									</fieldset>
@@ -434,7 +483,7 @@
 							</div>
 						</div>
 						<div class="form-actions right">
-							<button type="button" class="btn btn-lg btn-default" ng-click="Back()">
+							<button class="btn btn-lg btn-default" ng-click="Back()">
 								<i class="glyphicon glyphicon-arrow-left"></i> Back</button>
 							<button type="submit" class="btn btn-lg btn-primary" ng-click="Next(2)">
 								Next <i class="glyphicon glyphicon-arrow-right"></i></button>
@@ -447,13 +496,14 @@
 									PIN number <span class="required">*</span>
 								</label>
 								<div class="col-md-4 col-sm-4">
-									<input type="text" class="form-control" name="PINnumber" ng-model="data.PINnumber" required>
-									<p class="help-block" ng-if="submitted && step3.PINnumber.$error.required">Required</p>
+									<input type="text" class="form-control" name="PINnumber" ng-model="data.PINnumber" ng-pattern="/^[0-9]{4,6}$/" required>
+									<p class="help-block required-text" ng-if="submitted && step3.PINnumber.$error.required">This field is required.</p>
+									<p ng-show="submitted && step3.PINnumber.$error.pattern" class="help-block required-text">PIN Number must be at least 4 no more than 6 character</p>
 								</div>
 							</div>
 						</div>
 						<div class="form-actions right">
-							<button type="button" class="btn btn-lg btn-default" ng-click="Back()">
+							<button class="btn btn-lg btn-default" ng-click="Back()">
 								<i class="glyphicon glyphicon-arrow-left"></i> Back</button>
 							<button type="submit" class="btn btn-lg btn-primary" ng-click="Submit()">
 								Submit <i class="glyphicon glyphicon-save"></i></button>

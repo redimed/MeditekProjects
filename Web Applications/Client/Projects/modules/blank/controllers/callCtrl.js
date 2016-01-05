@@ -4,6 +4,8 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
     var apiKey = $stateParams.apiKey;
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;
+    $scope.userName = $stateParams.userName;
+    OT.registerScreenSharingExtension('chrome', 'pkakgggplhfilfbailbaibljfpalofjn');
     $scope.session = OT.initSession(apiKey, sessionId);
     console.log(apiKey);
     console.log(sessionId);

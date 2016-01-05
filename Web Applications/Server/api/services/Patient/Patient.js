@@ -1101,6 +1101,7 @@ module.exports = {
         })
         .then(function(result){
             return result;
+            
         },function(err){
             throw err;
         });

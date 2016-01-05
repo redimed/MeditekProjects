@@ -1,8 +1,8 @@
-var app = angular.module('app.authentication.consultation.directives.listConsultation', []);
-app.directive('listConsultation', function(consultationServices, $modal, $cookies,$state,$stateParams) {
+var app = angular.module('app.authentication.consultation.directives.listAppoint', []);
+app.directive('listAppoint', function(consultationServices, $modal, $cookies,$state,$stateParams) {
     return {
         restrict: 'E',
-        templateUrl: "modules/consultation/directives/templates/listConsultation.html",
+        templateUrl: "modules/consultation/directives/templates/listAppoint.html",
         link: function(scope, ele, attr) {
 
             var Init = function() {
@@ -56,7 +56,7 @@ app.directive('listConsultation', function(consultationServices, $modal, $cookie
             scope.load = function() {
                 o.loadingPage(true);
                 scope.searchObjectMapTemp = angular.copy(scope.searchObjectMap);
-                consultationServices.listConsultation(scope.searchObjectMapTemp).then(function(response) {
+                consultationServices.listAppointment(scope.searchObjectMapTemp).then(function(response) {
                     o.loadingPage(false);
                     scope.consultation = response.rows;
                     console.log(scope.consultation)

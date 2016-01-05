@@ -4,8 +4,11 @@ angular.module("app.authentication.consultation.services", [])
         var api = Restangular.all("api");
         var apiFile = FileRestangular.all("api");
 
-        services.listConsultation = function(data) {
+        services.listAppointment = function(data) {
             return api.all('appointment/list').post({data:data});
+        }
+         services.listConsultation = function(data) {
+            return api.all('consultation/list').post({data:data});
         }
         services.GetDrawingTemplates = function(data) {
             return api.one('consultation/drawing/list').get();
@@ -39,7 +42,7 @@ angular.module("app.authentication.consultation.services", [])
             return api.all('consultation/create').post({data:data});
         }
         services.detailConsultation = function(UID) {
-            return api.one('consultation/detail/' + UID).get();
+            return api.one('consultation/detail/424f7e25-1cd1-4d9e-9201-f634d84b1908').get();
         }
         return services;
     });

@@ -20,14 +20,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="p in consultation" ng-click="Detail(p.UID)">
+                <tr ng-repeat="p in consultation" ng-click="uid.show(p.UID)">
                     <td>{{(searchObjectMap.currentPage-1)*searchObjectMap.Limit +$index +1}}</td>
                     <td>{{p.Patients[0].FirstName}}</td>
                     <td>{{p.Patients[0].LastName}}</td>
                     <td>01/01/2014</td>
-                    <td>
-                        cancel
-                    </td>
                 </tr>
             </tbody>
         </table>

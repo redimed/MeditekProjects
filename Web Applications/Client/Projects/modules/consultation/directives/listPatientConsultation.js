@@ -10,7 +10,6 @@ app.directive('listpatientConsultation', function(consultationServices, $modal, 
             };
             scope.load = function() {
             }
-            Init();
             scope.toggle = true;
             scope.toggleFilter = function() {
                 scope.toggle = scope.toggle === false ? true : false;

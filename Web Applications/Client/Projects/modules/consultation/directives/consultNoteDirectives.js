@@ -1,15 +1,22 @@
 var app = angular.module('app.authentication.consultation.directives.consultNoteDirectives', []);
-app.directive('consultNote', function(consultationServices, $modal, $cookies, $state, $stateParams,consultationServices,toastr) {
+app.directive('consultNote', function(consultationServices, $modal, $cookies, $state, $stateParams, toastr) {
     return {
         restrict: 'E',
         scope: {
-			consultationuid:'='
-		},
+            consultationuid: '='
+        },
         templateUrl: "modules/consultation/directives/templates/consultNoteDirectives.html",
         link: function(scope, ele, attr) {
-        	consultationServices.detailConsultation($stateParams.UID).then(function(response) {
-               console.log(response)  
+            scope.$watch('consultationuid', function(newValue, oldValue) {
+                if (newValue !== undefined) {
+                    scope.requestInfo.UID = newValue;
+                    consultationServices.detailConsultation(newValue).then(function(response) {
+                       console.log(response)
+                    });
+                };
+                
             });
+           
             scope.consultNote = {
                 OTHER: false,
                 OTHER_TEXTBOX: null,
@@ -53,23 +60,25 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 },
             };
             scope.requestInfo = {
-            	UID:$stateParams.UID,
-            	Consultations:[]
+                UID: $stateParams.UID,
+                Consultations: []
             }
             scope.Submit = function() {
                 scope.ConsultationData();
                 o.loadingPage(true);
                 consultationServices.createConsultation(scope.requestInfo).then(function(response) {
-                   if (response == 'success') {
-                   	o.loadingPage(false);
-                   	$state.go("authentication.consultation.detail",{UID:$stateParams.UID});
-                   toastr.success("Success");
-                   };
-                   
+                    if (response == 'success') {
+                        o.loadingPage(false);
+                        $state.go("authentication.consultation.detail", {
+                            UID: $stateParams.UID
+                        });
+                        toastr.success("Success");
+                    };
+
                 });
             }
             scope.ConsultationData = function() {
-            	var ConsultationDataTemp = [];
+                var ConsultationDataTemp = [];
                 for (var key in scope.requestInfo.Consultations[0].ConsultationData) {
                     var newkey = key.split("__").join(" ");
                     var res = newkey.split(".");

@@ -21,7 +21,7 @@ module.exports = {
         }
     },
     GetListConsultation: function(req, res) {
-        var data = HelperService.CheckExistData(req);
+        var data = HelperService.CheckPostRequest(req);
         if (data == false) {
             res.serverError('data failed');
         } else {

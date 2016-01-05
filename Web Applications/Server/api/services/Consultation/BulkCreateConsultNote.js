@@ -3,6 +3,7 @@ module.exports = function(objCreate) {
     var defer = $q.defer();
     var userID = null;
     var consultNoteObject = null;
+    var arrConsultNoteCreated = [];
     if (HelperService.CheckExistData(objCreate) &&
         HelperService.CheckExistData(objCreate.data)) {
         sequelize.Promise.each(objCreate.data, function(consultNote, index) {
@@ -11,6 +12,7 @@ module.exports = function(objCreate) {
                         transaction: objCreate.transaction
                     })
                     .then(function(consultNoteCreated) {
+                        arrConsultNoteCreated.push(consultNoteCreated);
                         if (HelperService.CheckExistData(consultNote.ConsultationData) &&
                             !_.isEmpty(consultNote.ConsultationData)) {
                             consultNoteObject = consultNoteCreated;
@@ -47,7 +49,7 @@ module.exports = function(objCreate) {
                     });
             })
             .then(function(consultNotesCreated) {
-                defer.resolve(consultNotesCreated);
+                defer.resolve(arrConsultNoteCreated);
             }, function(err) {
                 defer.reject(err);
             });

@@ -50,13 +50,19 @@
 	                            transaction: t
 	                        });
 	                    })
-	                    .then(function(consultNoteCreated) {
-	                        if (HelperService.CheckExistData(consultNoteCreated) &&
+	                    .then(function(consultNoteCreatedRes) {
+	                        if (HelperService.CheckExistData(consultNoteCreatedRes) &&
 	                            HelperService.CheckExistData(appointmentObject)) {
-	                            consultNoteObject = consultNoteCreated;
-	                            var consultNoteID = JSON.parse(JSON.stringify(consultNoteCreated)).ID;
+	                            consultNoteObject = consultNoteCreatedRes;
+	                            var consultNoteCreated =
+	                                JSON.parse(JSON.stringify(consultNoteCreatedRes));
+	                            var arrayConsultNoteIDUnique = _.map(_.groupBy(consultNoteCreated, function(CN) {
+	                                return CN.ID;
+	                            }), function(subGrouped) {
+	                                return subGrouped[0].ID;
+	                            });
 	                            var objectRelApptConsultNote = {
-	                                data: [consultNoteID],
+	                                data: arrayConsultNoteIDUnique,
 	                                transaction: t,
 	                                appointmentObject: appointmentObject
 	                            };

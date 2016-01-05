@@ -1,4 +1,6 @@
+var $q = require('q');
 module.exports = function(consultationUID, userInfo) {
+    var defer = $q.defer();
     //add roles
     var filter = {
         InternalPractitioner: [],
@@ -40,38 +42,44 @@ module.exports = function(consultationUID, userInfo) {
         };
         filter.Consultation.push(filterRoleTemp);
     }
-    return Consultation.findOne({
-        attributes: Services.AttributesConsult.Consultation(),
-        include: [{
-            attributes: Services.AttributesAppt.Appointment(),
-            model: Appointment,
-            required: false,
+    Consultation.findOne({
+            attributes: Services.AttributesConsult.Consultation(),
             include: [{
-                attributes: ['UID'],
-                required: (HelperService.CheckExistData(filter.InternalPractitioner) && !_.isEmpty(filter.InternalPractitioner)),
-                model: Doctor,
-                where: filter.InternalPractitioner
-            }, {
-                attributes: ['UID'],
-                required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
-                model: Patient,
+                attributes: Services.AttributesAppt.Appointment(),
+                model: Appointment,
+                required: false,
                 include: [{
                     attributes: ['UID'],
-                    model: UserAccount,
+                    required: (HelperService.CheckExistData(filter.InternalPractitioner) && !_.isEmpty(filter.InternalPractitioner)),
+                    model: Doctor,
+                    where: filter.InternalPractitioner
+                }, {
+                    attributes: ['UID'],
                     required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
-                    where: filter.UserAccount
+                    model: Patient,
+                    include: [{
+                        attributes: ['UID'],
+                        model: UserAccount,
+                        required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
+                        where: filter.UserAccount
+                    }]
                 }]
-            }]
-        }, {
-            attributes: Services.AttributesConsult.ConsultationData(),
-            model: ConsultationData,
-            required: true,
-            include: [{
-                attributes: Services.AttributesAppt.FileUpload(),
-                model: FileUpload,
-                required: false
-            }]
-        }],
-        where: filter.Consultation
-    });
+            }, {
+                attributes: Services.AttributesConsult.ConsultationData(),
+                model: ConsultationData,
+                required: true,
+                include: [{
+                    attributes: Services.AttributesAppt.FileUpload(),
+                    model: FileUpload,
+                    required: false
+                }]
+            }],
+            where: filter.Consultation
+        })
+        .then(function(consultationRes) {
+            defer.resolve({data: consultationRes});
+        }, function(err) {
+            defer.reject(err);
+        });
+    return defer.promise;
 };

@@ -49,5 +49,43 @@ module.exports = {
                 return callback(err,undefined,undefined);
             })
         })
+    },
+
+    DisableAllFile: function(data) {
+        if(data.FileType == null || data.FileType == "" || data.FileType.length == 0) {
+            var err = new Error("DisableAllFile.Error");
+            err.pushError("FileType.Null");
+            throw err;
+        }
+        else {
+            var whereClause = [];
+            for(var i = 0; i < data.FileType.length; i++) {
+                whereClause.push({FileType : data.FileType[i]});
+            }
+            return sequelize.transaction()
+            .then(function(t) {
+                return FileUpload.update({
+                    Enable : data.Enable
+                },{
+                    where:{
+                        $and:{
+                            UserAccountID : data.UserAccountID,
+                            $or: whereClause
+                        }
+                        
+                    },
+                    transaction: t
+                })
+                .then(function(result){
+                    t.commit();
+                    return result;
+                },function(err){
+                    t.rollback();
+                    throw err;
+                })
+            },function(err){
+                throw err;
+            });
+        }
     }
 }

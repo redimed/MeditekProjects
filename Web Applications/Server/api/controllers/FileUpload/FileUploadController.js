@@ -167,5 +167,19 @@ module.exports = {
         }).catch(function(err) {
             return res.serverError(ErrorWrap(err));
         })
+    },
+    DisableAllFile: function(req, res) {
+        var data = req.body.data;
+        Services.FileUpload.DisableAllFile(data)
+        .then(function(result) {
+            if(result != null && result != "" && result.length != 0)
+                res.ok({mesage:"success"});
+            else
+                res.ok({mesage:"DisableAllFile.Error.NotFoundUserAccountID"});
+        })
+        .catch(function(err) {
+            // console.log(err);
+            res.serverError(ErrorWrap(err));
+        });
     }
 }

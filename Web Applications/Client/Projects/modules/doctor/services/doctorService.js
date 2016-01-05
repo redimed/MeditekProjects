@@ -52,6 +52,11 @@ angular.module('app.authentication.doctor.service', [])
 		return updateSignature.post({data:data});
 	}
 
+	services.changeStatusFile = function(data) {
+		var changeStatusFile = api.all('change-status-file');
+		return changeStatusFile.post({data:data});
+	}
+
 	services.checkphoneUserAccount = function(data) {
 		var instanceApi = api.all('checkphoneUserAccount');
 		return instanceApi.post({data: data});

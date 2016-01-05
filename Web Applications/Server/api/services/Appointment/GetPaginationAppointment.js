@@ -289,6 +289,13 @@ module.exports = function(data, userInfo) {
             }
         };
         pagination.filterAppointment.push(filterRoleTemp);
+    } else if (role.isPatient) {
+        var filterRoleTemp = {
+            '$and': {
+                UserAccountID: userInfo.ID
+            }
+        };
+        pagination.filterPatient.push(filterRoleTemp);
     } else if (!role.isAdmin &&
         !role.isAssistant) {
         pagination.limit = 0;

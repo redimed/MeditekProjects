@@ -17,7 +17,7 @@ app.config(function($stateProvider){
 		})
 		.state('blank.call',{
 			data: {pageTitle: 'Call'},
-			url: '/call/:apiKey/:sessionId/:token',
+			url: '/call/:apiKey/:sessionId/:token/:userName',
 			views:{
 				'blank':{
 					templateUrl: 'modules/blank/views/call.html',

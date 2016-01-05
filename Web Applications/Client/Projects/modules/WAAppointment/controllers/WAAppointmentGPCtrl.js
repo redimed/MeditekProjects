@@ -17,15 +17,14 @@ app.controller('showSkinCancerController', function($scope, $modalInstance, toas
     $scope.requestInfo.TelehealthAppointment.ClinicalDetails = angular.copy(ClinicalDetails);
     for (var keyRequestInfo in $scope.requestInfo.TelehealthAppointment.ClinicalDetails) {
         var res = keyRequestInfo.split(".");
-        if ($scope.requestInfo.TelehealthAppointment.ClinicalDetails[keyRequestInfo].Value != null 
-            && $scope.requestInfo.TelehealthAppointment.ClinicalDetails[keyRequestInfo].Value != '') {
+        if ($scope.requestInfo.TelehealthAppointment.ClinicalDetails[keyRequestInfo].Value != null && $scope.requestInfo.TelehealthAppointment.ClinicalDetails[keyRequestInfo].Value != '') {
             $scope[res[3]] = true;
             $scope[res[2] + res[3]] = true;
         };
     }
-    $scope.ChangeCheckSkinCancer = function(type,name,value) {
+    $scope.ChangeCheckSkinCancer = function(type, name, value) {
         if (!value) {
-            var key = 'Clinical__Details.Telehealth__WAAppointment.'+type+'.'+name;
+            var key = 'Clinical__Details.Telehealth__WAAppointment.' + type + '.' + name;
             if (!$scope.requestInfo.TelehealthAppointment.ClinicalDetails) {
                 $scope.requestInfo.TelehealthAppointment.ClinicalDetails = [];
             };
@@ -46,7 +45,7 @@ app.controller('showSkinCancerController', function($scope, $modalInstance, toas
     };
 });
 
-app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $rootScope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval, AuthenticationService,toastr) {
+app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $rootScope, $cookies, AppointmentService, $state, FileUploader, $modal, $interval, AuthenticationService, toastr) {
     $scope.ListContry = [];
     $scope.State = WAConstant.State;
     $scope.loadListContry = function() {
@@ -83,8 +82,8 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
     $scope.InterpreterRequiredNo = function() {
         $scope.requestInfo.TelehealthAppointment.PatientAppointment.InterpreterLanguage = null;
     };
-    $scope.ClinicalDetails = function(){
-         for (var key in $scope.requestInfo.TelehealthAppointment.ClinicalDetails) {
+    $scope.ClinicalDetails = function() {
+        for (var key in $scope.requestInfo.TelehealthAppointment.ClinicalDetails) {
             var newkey = key.split("__").join(" ");
             var res = newkey.split(".");
             var object = {
@@ -111,9 +110,9 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
         };
         var countCliniDetail = 0;
         ClinicalDetailsTemp.forEach(function(value, key) {
-            if (value.Value != 'N' && value.Value != null ) {
+            if (value.Value != 'N' && value.Value != null) {
                 countCliniDetail++;
-            }else{
+            } else {
                 if (value.FileUploads.length > 0) {
                     countCliniDetail++;
                 };
@@ -130,7 +129,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
         }
         $scope.ClinicalDetails();
         $scope.requestInfo.RequestDate = moment().format('YYYY-MM-DD HH:mm:ss Z');
-        console.log('$scope.requestInfo',$scope.requestInfo);
+        console.log('$scope.requestInfo', $scope.requestInfo);
         WAAppointmentService.RequestWAApointment($scope.requestInfo).then(function(response) {
             if (response == 'success') {
                 swal({
@@ -152,7 +151,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
             }
         });
     };
-   
+
     $scope.SendRequestUploadFile = function() {
         for (var i = 0; i < uploader.queue.length; i++) {
             var item = uploader.queue[i];
@@ -174,16 +173,16 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
         name: 'customImage',
         fn: function(item /*{File|FileLikeObject}*/ , options) {
             var type = item.name.split('.');
-             console.log('customImage',type[type.length-1]);
-             if(!('|txt|docx|doc|xls|xlsx|jpg|png|jpeg|bmp|gif|pdf|'.indexOf(type[type.length-1]) !== -1)){
+            console.log('customImage', type[type.length - 1]);
+            if (!('|txt|docx|doc|xls|xlsx|jpg|png|jpeg|bmp|gif|pdf|'.indexOf(type[type.length - 1]) !== -1)) {
                 return false
-             }
-             if (item.size > 1024*1024*15) {
+            }
+            if (item.size > 1024 * 1024 * 15) {
                 return false
-             }else{
+            } else {
                 return true
-             };
-             
+            };
+
         }
     });
     $scope.ClickUploader = function(Type) {
@@ -207,11 +206,11 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
     };
     uploader.onBeforeUploadItem = function(item) {
         //item.headers.Authorization = ('Bearer ' + $cookies.get("token"));
-        item.headers={
-            Authorization:'Bearer '+$cookies.get("token"),
-            systemtype:'WEB',
-        },
-        console.info('onBeforeUploadItem', item.headers);
+        item.headers = {
+                Authorization: 'Bearer ' + $cookies.get("token"),
+                systemtype: 'WEB',
+            },
+            console.info('onBeforeUploadItem', item.headers);
     };
     uploader.onProgressItem = function(fileItem, progress) {
         console.info('onProgressItem', fileItem, progress);
@@ -224,8 +223,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
     };
     uploader.onErrorItem = function(fileItem, response, status, headers) {
         console.info('onErrorItem', fileItem, response, status, headers);
-        if(Boolean(headers.requireupdatetoken)===true)
-        {
+        if (Boolean(headers.requireupdatetoken) === true) {
             $rootScope.getNewToken();
         }
     };
@@ -243,8 +241,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
 
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
         console.info('onCompleteItem', fileItem, response, status, headers);
-        if(Boolean(headers.requireupdatetoken)===true)
-        {
+        if (Boolean(headers.requireupdatetoken) === true) {
             $rootScope.getNewToken();
         }
         if (response.status == 'success') {
@@ -262,10 +259,10 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
                 UID: response.fileUID
             })
             console.log($scope.requestInfo.TelehealthAppointment.ClinicalDetails);
-        }else{
+        } else {
             toastr.error("Upload Image error");
             swal.close();
-            
+
         };
     };
     uploader.onCompleteAll = function() {
@@ -279,8 +276,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
         };
     };
     $scope.ShowDialog = function(TypeClinical) {
-        if ($scope.requestInfo.TelehealthAppointment.ClinicalDetails == undefined 
-            || $scope.requestInfo.TelehealthAppointment.ClinicalDetails == null) {
+        if ($scope.requestInfo.TelehealthAppointment.ClinicalDetails == undefined || $scope.requestInfo.TelehealthAppointment.ClinicalDetails == null) {
             $scope.requestInfo.TelehealthAppointment.ClinicalDetails = {};
         };
         var TypeClinical = TypeClinical;
@@ -319,7 +315,7 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
             };
         });
     };
-    $scope.Speciality = function(){
+    $scope.Speciality = function() {
         $scope.requestInfo.TelehealthAppointment.PreferredPractitioner[0].Name = '';
     }
     $scope.Submit = function() {

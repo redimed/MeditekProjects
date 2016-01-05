@@ -5,9 +5,7 @@ angular.module("app.authentication.consultation.services", [])
         var apiFile = FileRestangular.all("api");
 
         services.listConsultation = function(data) {
-            return api.all('consultation/list').post({
-                data: data
-            });
+            return api.all('appointment/list').post({data:data});
         }
         services.GetDrawingTemplates = function(data) {
             return api.one('consultation/drawing/list').get();
@@ -35,6 +33,13 @@ angular.module("app.authentication.consultation.services", [])
                     // throw error;
                     throw err;
                 })
+            
+        }
+        services.createConsultation = function(data) {
+            return api.all('consultation/create').post({data:data});
+        }
+        services.detailConsultation = function(UID) {
+            return api.one('consultation/detail/' + UID).get();
         }
         return services;
     });

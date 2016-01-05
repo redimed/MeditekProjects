@@ -1,0 +1,35 @@
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="glyphicon glyphicon-pencil"></i>
+            <span class="caption-subject bold uppercase">App Consultation</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+            <a href="javascript:;" class="fullscreen"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <table class="table table-hover table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th width="1">#</th>
+                    <th>abc</th>
+                    <th>def</th>
+                    <th>ghi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="p in consultation" ng-click="Detail(p.UID)">
+                    <td>{{(searchObjectMap.currentPage-1)*searchObjectMap.Limit +$index +1}}</td>
+                    <td>{{p.Patients[0].FirstName}}</td>
+                    <td>{{p.Patients[0].LastName}}</td>
+                    <td>01/01/2014</td>
+                    <td>
+                        cancel
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

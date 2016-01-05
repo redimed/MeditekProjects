@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.consultation.directives.consultNoteDirectives', []);
-app.directive('consultNote', function(consultationServices, $modal, $cookies, $state, $stateParams, toastr) {
+app.directive('consultNote', function(consultationServices, $modal, $cookies, $state, $stateParams, toastr, $timeout) {
     return {
         restrict: 'E',
         scope: {
@@ -7,16 +7,43 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
         },
         templateUrl: "modules/consultation/directives/templates/consultNoteDirectives.html",
         link: function(scope, ele, attr) {
+            $timeout(function() {
+                App.initAjax();
+            })
             scope.$watch('consultationuid', function(newValue, oldValue) {
                 if (newValue !== undefined) {
-                    scope.requestInfo.UID = newValue;
                     consultationServices.detailConsultation(newValue).then(function(response) {
-                       console.log(response)
+                        $timeout(function() {
+                            App.initAjax();
+                        })
+                        scope.loadData(response.data);
                     });
                 };
-                
             });
-           
+            scope.loadData = function(data){
+                scope.requestInfo = {
+                    UID: $stateParams.UID,
+                    Consultations : [
+                        {
+                            ConsultationData : []
+                        }
+                    ]
+                }
+                scope.Temp = angular.copy(data.ConsultationData);
+                scope.Temp.forEach(function(valueRes, indexRes) {
+                    if (valueRes != null && valueRes != undefined) {
+                        var keyClinicalDetail = valueRes.Section + '.' + valueRes.Category + '.' + valueRes.Type + '.' + valueRes.Name;
+                        keyClinicalDetail = keyClinicalDetail.split(" ").join("__");
+                        var keyOther = valueRes.Type + valueRes.Name;
+                        if (keyOther != 0) {
+                            keyOther = keyOther.split(" ").join("");
+                        }
+                        scope.requestInfo.Consultations[0].ConsultationData[keyClinicalDetail] = {};
+                        scope.requestInfo.Consultations[0].ConsultationData[keyClinicalDetail].Value = valueRes.Value;
+                        scope.requestInfo.Consultations[0].ConsultationData[keyClinicalDetail].FileUploads = valueRes.FileUploads;
+                    }
+                })
+            }
             scope.consultNote = {
                 OTHER: false,
                 OTHER_TEXTBOX: null,
@@ -65,6 +92,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             }
             scope.Submit = function() {
                 scope.ConsultationData();
+                console.log(scope.requestInfo)
                 o.loadingPage(true);
                 consultationServices.createConsultation(scope.requestInfo).then(function(response) {
                     if (response == 'success') {
@@ -117,7 +145,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 if (countCliniDetail == 0) {
                     ConsultationDataTemp = [];
                 };
-                scope.requestInfo.Consultations = ConsultationDataTemp;
+                scope.requestInfo.Consultations[0].ConsultationData = ConsultationDataTemp;
             }
             scope.OtherCheckbox = function(name, value) {
                 if (name == 'OTHER' && value == false)

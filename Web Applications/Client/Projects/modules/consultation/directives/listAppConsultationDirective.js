@@ -10,7 +10,7 @@ app.directive('listappConsultation', function(consultationServices, $modal, $coo
 
             var Init = function() {
                 scope.searchObject = {
-                    Limit: 2,
+                    Limit: 10,
                     Offset: 0,
                     currentPage: 1,
                     maxSize: 5,
@@ -61,8 +61,8 @@ app.directive('listappConsultation', function(consultationServices, $modal, $coo
                 scope.searchObjectMapTemp = angular.copy(scope.searchObjectMap);
                 consultationServices.listConsultation(scope.searchObjectMapTemp).then(function(response) {
                     o.loadingPage(false);
+                    console.log(response);
                     scope.consultation = response.rows;
-                    console.log(scope.consultation)
                     scope.CountRow = response.count;
                 });
             }

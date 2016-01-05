@@ -42,7 +42,7 @@ angular.module("app.authentication.consultation.services", [])
             return api.all('consultation/create').post({data:data});
         }
         services.detailConsultation = function(UID) {
-            return api.one('consultation/detail/424f7e25-1cd1-4d9e-9201-f634d84b1908').get();
+            return api.one('consultation/detail/'+UID).get();
         }
         return services;
     });

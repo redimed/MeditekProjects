@@ -3,5 +3,6 @@ module.exports={
 		'UploadFile':'isAuthenticated',
 		'DownloadFile':'isAuthenticated',
 		'EnableFile':true,
+		'DisableAllFile':true
 	}
 }//test

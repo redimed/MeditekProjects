@@ -202,20 +202,27 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 						PatientService.updatePatient(scope.info).then(function(response){
 							if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
 							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
-							   	// if(scope.typeFile=="imageAvatar"){
-							   		scope.imgDelete = scope.info.FileUID?scope.info.FileUID:null;
-							   		if(scope.imgDelete != null){
-									   	$http({
-										  method: 'GET',
-										  url: o.const.fileBaseUrl+'/api/enableFile/false/'+scope.imgDelete
-										}).then(function (response) {
-											// scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
-											// scope.uploader.uploadAll();
-										},function (err) {
-											console.log(err);
-										});
-									}
-								// }
+								//viet lai phan disable file
+								var postData = {};
+								postData.UserAccountID = scope.info.UserAccountID;
+								postData.Enable="N";
+								postData.FileType = [];
+							   	for(var i = 0; i < scope.uploader.queue.length; i++) {
+							   		scope.uploader.queue[i].formData[0].userUID = scope.info.UserAccount.UID;
+							   		postData.FileType.push(scope.uploader.queue[i].formData[0].fileType);
+							   	}
+							   	PatientService.changeStatusFile(postData)
+							   	.then(function(result){
+							   		console.log(result);
+							   		scope.uploader.uploadAll();
+							   	},function(err){
+							   		console.log(err);
+							   		if(err.data.errors[0] == "FileType.Null"){
+							   			// console.log("FileType.Null");
+							   			scope.uploader.uploadAll();
+							   		}
+							   	});
+							   //end
 							}
 							scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
 							scope.uploader.uploadAll();

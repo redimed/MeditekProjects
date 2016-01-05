@@ -160,7 +160,7 @@ app
     //SETTING RESTANGULAR FOR AUTHENTICATION
     .factory('TelehealthRestangular', function(Restangular) {
         return Restangular.withConfig(function(RestangularConfigurer) {
-            RestangularConfigurer.setBaseUrl("http://telehealthvietnam.com.vn:3009");
+            RestangularConfigurer.setBaseUrl(o.const.telehealthBaseURL);
         });
     })
     .run(function($rootScope, $cookies, $window, $state, Restangular, toastr, settings) {

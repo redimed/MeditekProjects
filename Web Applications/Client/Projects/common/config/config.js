@@ -35,6 +35,8 @@ var o = {
         uploadFileUrl: _uploadURL,
 
         authBaseUrl:_authBaseURL,
+        
+        telehealthBaseURL:_telehealthBaseURL,
 
         configStateBlank:_configStateBlank
     },

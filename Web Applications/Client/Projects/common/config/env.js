@@ -1,4 +1,5 @@
-var env='meditekServer'; //local,meditekServer,testApp,app
+var env='testApp'; //local,meditekServer,testApp,app
+
 
 var configRestBaseUrl={
 	// 'local':'http://192.168.1.97:3000',
@@ -57,7 +58,6 @@ else if(env =='app')
 	var _restBaseURL=configRestBaseUrl.app;
 	var _fileBaseURL=configRestBaseUrl.app;
 	var _authBaseURL=configAuthBaseUrl.app;
-<<<<<<< 4dc440a6968d9808d4bdd3e0fa107da0af974119
 	var _telehealthBaseURL=configTelehealthBaseUrl.app;
 }
 
@@ -76,6 +76,3 @@ var _configStateBlank = [
 	,"blank.registerPatient"
 	,"blank.searchPatient"
 ];
-=======
-}
->>>>>>> git add

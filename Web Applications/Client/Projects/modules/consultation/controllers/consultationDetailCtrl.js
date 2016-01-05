@@ -4,11 +4,11 @@ var app = angular.module("app.authentication.consultation.detail.controller", [
     'app.authentication.consultation.detail.eForms.controller',
 ]);
 
-app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, ConsultationService) {
+app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices) {
     $scope.userInfo = $cookies.getObject('userInfo');
 
 
-    var socket = io.connect('http://localhost:3009');
+    var socket = io.connect('http://telehealthvietnam.com.vn:3009');
 
     console.log(socket);
 

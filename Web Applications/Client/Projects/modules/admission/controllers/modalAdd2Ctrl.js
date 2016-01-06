@@ -1,4 +1,4 @@
-var app = angular.module('app.authentication.admission.detail.step1.modalAdd2.controller',[]);
+var app = angular.module('app.authentication.admission.request.step1.modalAdd2.controller',[]);
 
 app.controller('modalAdd2Ctrl', function($scope, $state, $uibModal, $modalInstance, titleModal, MEDICATIONS){
 	$modalInstance.rendered.then(function(){

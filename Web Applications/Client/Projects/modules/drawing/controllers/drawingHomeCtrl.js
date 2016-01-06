@@ -1,7 +1,14 @@
 var app = angular.module('app.blank.drawing.home.controller', []);
 
 app.controller('drawingHomeCtrl', function($scope) {
+    // ComponentsColorPickers.init();
+
     var image_path = './theme/assets/global/images/';
+    $scope.color="#000000";
+    $scope.lineWidth = 1;
+    var src;
+    var x = 0;
+    var y = 0;
     // data tree source
     $scope.tree_data = [
         {
@@ -75,32 +82,39 @@ app.controller('drawingHomeCtrl', function($scope) {
         "plugins" : [ "contextmenu", "dnd", "state", "types" ]
     });
 
+    // get name of node tree
     angular.element('#my-tree_3').on('select_node.jstree', function(e, data){
         console.log('data source json', data.node.original);
         if(data.node.children == '' &&  data.node.type == 'file'){
-            var src = image_path+data.node.text;
-            $scope.loadImage(src, 0, 0, 800, 600);
+            src = image_path+data.node.text;
+            $scope.loadImage(src, x, y);
         }
     });
   
-    $scope.loadImage = function(src, x, y, w, h){
+    
+    
+    $scope.loadImage = function(src, x, y){
         var canvas = document.getElementById('canvas');
         var context = canvas.getContext('2d');
+        canvas.width = $(".text-center").width();
+        canvas.height = $(".text-center").height();     
         var imageObj = new Image();
         imageObj.src = src;
         imageObj.onload = function(){
-            context.drawImage(imageObj, x, y, w, h);
+            context.drawImage(imageObj, x, y, canvas.width, canvas.height);
         };
     };
-    $scope.color="#000000";
 
+    $scope.clear = function(){
+        $scope.loadImage(src, x, y);
+    };
+    
+    // convert color from hex to rgba
     $scope.convertHex = function(hex, opacity){
-        console.log(hex);
         hex = hex.replace('#','');
         r = parseInt(hex.substring(0,2), 16);
         g = parseInt(hex.substring(2,4), 16);
         b = parseInt(hex.substring(4,6), 16);
-        console.log(r," ",g," ",b," ");
         result = 'rgba('+r+','+g+','+b+','+opacity/100+')';
         return result;
     };

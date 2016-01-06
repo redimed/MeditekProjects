@@ -108,6 +108,9 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $s
 
 
 
+
+app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $cookies, $scope, $uibModal, $modalInstance, data, WAAppointmentService, toastr, $modal, PatientService, CommonService) {
+
     $modalInstance.rendered.then(function() {
         App.initComponents(); // init core components
         App.initAjax();
@@ -423,6 +426,23 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $s
                 })
             };
         });
+    };
+
+    $scope.callPatient = function(){
+        var modalInstance = $uibModal.open({
+            animation: true,
+            size: 'lg',
+            templateUrl: 'modules/WAAppointment/views/callPatient.html',
+            // controller: 'callPatientCtrl',
+            resolve: {
+            },
+        });
+        modalInstance.result
+            .then(function(result) {
+                $scope.Init();
+            }, function(result) {
+                // dismiss
+            });
     };
     $scope.submitUpdate = function() {
         $scope.submited = true

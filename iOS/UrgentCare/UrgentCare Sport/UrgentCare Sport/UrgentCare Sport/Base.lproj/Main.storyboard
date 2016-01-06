@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ONU-AD-vfL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ONU-AD-vfL">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -312,7 +312,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="879" y="245"/>
+            <point key="canvasLocation" x="1093" y="181"/>
         </scene>
         <!--Qs View Controller-->
         <scene sceneID="Hdy-Jc-AXY">
@@ -643,10 +643,10 @@
                                                 <rect key="frame" x="0.0" y="28" width="304" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vTw-er-fmH" id="O8h-2x-Ag8">
-                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oTC-Pi-yEx">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oTC-Pi-yEx">
                                                             <rect key="frame" x="20" y="0.0" width="284" height="44"/>
                                                             <animations/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -827,7 +827,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wmo-Ln-50q" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="0UU-CM-qtR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1338" y="1038"/>
+            <point key="canvasLocation" x="1314" y="1002"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="KaX-7b-s5w">
@@ -835,7 +835,7 @@
                 <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" wantsFullScreenLayout="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="KZ5-38-xCH" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3LE-5u-i7N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1785" y="245"/>
+            <point key="canvasLocation" x="1687" y="197"/>
         </scene>
         <!--Content View Controller-->
         <scene sceneID="ews-E6-TBn">
@@ -886,7 +886,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zfl-0L-UkE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1863" y="994"/>
+            <point key="canvasLocation" x="1785" y="952"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3ja-Sk-FuQ">
@@ -1159,10 +1159,10 @@
                                                 <rect key="frame" x="0.0" y="28" width="304" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ayq-1b-PII" id="5Vk-aC-OPg">
-                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="304" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yO7-8A-pmA">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yO7-8A-pmA">
                                                             <rect key="frame" x="20" y="0.0" width="284" height="44"/>
                                                             <animations/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1343,7 +1343,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="His-4E-V5F" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ic1-r2-KMQ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="972" y="1072"/>
+            <point key="canvasLocation" x="950" y="1002"/>
         </scene>
     </scenes>
     <resources>

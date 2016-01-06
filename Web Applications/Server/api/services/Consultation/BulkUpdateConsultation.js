@@ -1,19 +1,19 @@
 var $q = require('q');
 module.exports = function(objUpdate) {
     var defer = $q.defer();
-    var consultNoteObject = null;
+    var consultationObject = null;
     if (HelperService.CheckExistData(objUpdate) &&
         HelperService.CheckExistData(objUpdate.data) &&
         !_.isEmpty(objUpdate.data) &&
         _.isArray(objUpdate.data)) {
-        sequelize.Promise.each(objUpdate.data, function(valueConsultNote, indexConsultNote) {
-                if (HelperService.CheckExistData(valueConsultNote) &&
-                    HelperService.CheckExistData(valueConsultNote.UID)) {
+        sequelize.Promise.each(objUpdate.data, function(valueConsultation, indexConsultation) {
+                if (HelperService.CheckExistData(valueConsultation) &&
+                    HelperService.CheckExistData(valueConsultation.UID)) {
                     return Consultation.update({
                             ModifiedBy: objUpdate.userInfo.ID
                         }, {
                             where: {
-                                UID: valueConsultNote.UID
+                                UID: valueConsultation.UID
                             },
                             transaction: objUpdate.transaction,
                             individualHooks: true
@@ -26,7 +26,7 @@ module.exports = function(objUpdate) {
                                 return sequelize.Promise.each(consultationObject, function(valueConsultObj, indexConsultObj) {
                                     if (HelperService.CheckExistData(valueConsultObj) &&
                                         !_.isEmpty(valueConsultObj)) {
-                                        consultNoteObject = valueConsultObj;
+                                        consultationObject = valueConsultObj;
                                         return valueConsultObj.setConsultationData([], {
                                                 transaction: objUpdate.transaction
                                             })
@@ -59,11 +59,11 @@ module.exports = function(objUpdate) {
                             defer.reject(err);
                         })
                         .then(function(consultationDataRes) {
-                            if (HelperService.CheckExistData(valueConsultNote) &&
-                                HelperService.CheckExistData(valueConsultNote.ConsultationData) &&
-                                !_.isEmpty(valueConsultNote.ConsultationData)) {
+                            if (HelperService.CheckExistData(valueConsultation) &&
+                                HelperService.CheckExistData(valueConsultation.ConsultationData) &&
+                                !_.isEmpty(valueConsultation.ConsultationData)) {
                                 var objectCreateConsultationData = {
-                                    data: valueConsultNote.ConsultationData,
+                                    data: valueConsultation.ConsultationData,
                                     transaction: objUpdate.transaction
                                 };
                                 return Services.BulkCreateConsultationData(objectCreateConsultationData);
@@ -84,7 +84,7 @@ module.exports = function(objUpdate) {
                                 var objRelConsultData = {
                                     data: arrayConsultDataUnique,
                                     transaction: objUpdate.transaction,
-                                    consultNoteObject: consultNoteObject
+                                    consultationObject: consultationObject
                                 };
                                 return Services.RelConsultationData(objRelConsultData);
                             }
@@ -93,13 +93,13 @@ module.exports = function(objUpdate) {
                         });
                 }
             })
-            .then(function(consultNoteUpdated) {
-                defer.resolve(consultNoteUpdated);
+            .then(function(consultationUpdated) {
+                defer.resolve(consultationUpdated);
             }, function(err) {
                 defer.reject(err);
             });
     } else {
-        defer.reject('objUpdate.data.BulkUpdateConsultNote.failed');
+        defer.reject('objUpdate.data.BulkUpdateConsultation.failed');
     }
     return defer.promise;
 };

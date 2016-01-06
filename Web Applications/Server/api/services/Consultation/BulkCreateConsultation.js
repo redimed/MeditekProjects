@@ -2,22 +2,22 @@ var $q = require('q');
 module.exports = function(objCreate) {
     var defer = $q.defer();
     var userID = null;
-    var consultNoteObject = null;
-    var arrConsultNoteCreated = [];
+    var consultationObject = null;
+    var arrConsultationCreated = [];
     if (HelperService.CheckExistData(objCreate) &&
         HelperService.CheckExistData(objCreate.data)) {
-        sequelize.Promise.each(objCreate.data, function(consultNote, index) {
-                userID = consultNote.CreatedBy;
-                return Consultation.create(consultNote, {
+        sequelize.Promise.each(objCreate.data, function(consultation, index) {
+                userID = consultation.CreatedBy;
+                return Consultation.create(consultation, {
                         transaction: objCreate.transaction
                     })
-                    .then(function(consultNoteCreated) {
-                        arrConsultNoteCreated.push(consultNoteCreated);
-                        if (HelperService.CheckExistData(consultNote.ConsultationData) &&
-                            !_.isEmpty(consultNote.ConsultationData)) {
-                            consultNoteObject = consultNoteCreated;
+                    .then(function(consultationCreated) {
+                        arrConsultationCreated.push(consultationCreated);
+                        if (HelperService.CheckExistData(consultation.ConsultationData) &&
+                            !_.isEmpty(consultation.ConsultationData)) {
+                            consultationObject = consultationCreated;
                             var consultData =
-                                Services.GetDataConsultation.ConsultationData(consultNote.ConsultationData, userID);
+                                Services.GetDataConsultation.ConsultationData(consultation.ConsultationData, userID);
                             var objectCreateConsultationData = {
                                 data: consultData,
                                 transaction: objCreate.transaction
@@ -40,7 +40,7 @@ module.exports = function(objCreate) {
                             var objRelConsultData = {
                                 data: arrayConsultDataUnique,
                                 transaction: objCreate.transaction,
-                                consultNoteObject: consultNoteObject
+                                consultationObject: consultationObject
                             };
                             return Services.RelConsultationData(objRelConsultData);
                         }
@@ -48,13 +48,13 @@ module.exports = function(objCreate) {
                         defer.reject(err);
                     });
             })
-            .then(function(consultNotesCreated) {
-                defer.resolve(arrConsultNoteCreated);
+            .then(function(consultationsCreated) {
+                defer.resolve(arrConsultationCreated);
             }, function(err) {
                 defer.reject(err);
             });
     } else {
-        defer.reject('objCreate.data.ConsultNote.failed');
+        defer.reject('objCreate.data.Consultation.failed');
     }
     return defer.promise;
 };

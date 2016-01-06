@@ -3,7 +3,7 @@
 	module.exports = function(data, userInfo) {
 	    var defer = $q.defer();
 	    var appointmentObject = null;
-	    var consultationObject = null;
+	    var admissionObject = null;
 	    return sequelize.transaction()
 	        .then(function(t) {
 	            if (HelperService.CheckExistData(data) &&
@@ -28,19 +28,19 @@
 	                    })
 	                    .then(function(objAppt) {
 	                        if (HelperService.CheckExistData(objAppt) &&
-	                            HelperService.CheckExistData(data.Consultations) &&
-	                            !_.isEmpty(data.Consultations) &&
-	                            _.isArray(data.Consultations)) {
+	                            HelperService.CheckExistData(data.Admissions) &&
+	                            !_.isEmpty(data.Admissions) &&
+	                            _.isArray(data.Admissions)) {
 	                            appointmentObject = objAppt;
-	                            var consultations = Services.GetDataConsultation.Consultation(data.Consultations, userInfo.ID);
-	                            var objectCreateConsultations = {
-	                                data: consultations,
+	                            var admissions = Services.GetDataAdmission.Admission(data.Admissions, userInfo.ID);
+	                            var objectAdmission = {
+	                                data: admissions,
 	                                transaction: t
 	                            };
-	                            return Services.BulkCreateConsultation(objectCreateConsultations);
+	                            return Services.BulkCreateAdmission(objectAdmission);
 	                        } else {
 	                            defer.reject({
-	                                error: new Error('CreateConsultation.Appointment(Consultations).not.found'),
+	                                error: new Error('CreateConsultation.Appointment(Admissions).not.found'),
 	                                transaction: t
 	                            });
 	                        }
@@ -50,26 +50,26 @@
 	                            transaction: t
 	                        });
 	                    })
-	                    .then(function(consultationCreatedRes) {
-	                        if (HelperService.CheckExistData(consultationCreatedRes) &&
+	                    .then(function(admissionCreatedRes) {
+	                        if (HelperService.CheckExistData(admissionCreatedRes) &&
 	                            HelperService.CheckExistData(appointmentObject)) {
-	                            consultationObject = consultationCreatedRes;
-	                            var consultationCreated =
-	                                JSON.parse(JSON.stringify(consultationCreatedRes));
-	                            var arrayConsultationIDUnique = _.map(_.groupBy(consultationCreated, function(CN) {
-	                                return CN.ID;
+	                            admissionObject = admissionCreatedRes;
+	                            var admissionCreated =
+	                                JSON.parse(JSON.stringify(admissionCreatedRes));
+	                            var arrayAdmissionIDUnique = _.map(_.groupBy(admissionCreated, function(PA) {
+	                                return PA.ID;
 	                            }), function(subGrouped) {
 	                                return subGrouped[0].ID;
 	                            });
-	                            var objectRelApptConsultation = {
-	                                data: arrayConsultationIDUnique,
+	                            var objectRelAdmission = {
+	                                data: arrayAdmissionIDUnique,
 	                                transaction: t,
 	                                appointmentObject: appointmentObject
 	                            };
-	                            return Services.RelAppointmentConsultation(objectRelApptConsultation);
+	                            return Services.RelAppointmentAdmission(objectRelAdmission);
 	                        } else {
 	                            defer.reject({
-	                                error: new Error('CreateConsultation.failed'),
+	                                error: new Error('BulkCreateAdmission.failed'),
 	                                transaction: t
 	                            });
 	                        }
@@ -79,7 +79,7 @@
 	                            transaction: t
 	                        });
 	                    })
-	                    .then(function(relAppointmentConsultationCreated) {
+	                    .then(function(relAppointmentAdmissionCreated) {
 	                        defer.resolve({
 	                            transaction: t,
 	                            status: 'success'
@@ -92,7 +92,7 @@
 	                    });
 	            } else {
 	                defer.reject({
-	                    error: new Error('RequestConsultation.data.failed'),
+	                    error: new Error('CreateAdmission.data.failed'),
 	                    transaction: t
 	                });
 	            }

@@ -62,10 +62,25 @@ module.exports = {
     RelConsultationData: require('./Consultation/RelConsultationData'),
     GetListConsultation: require('./Consultation/GetListConsultation'),
     AttributesConsult: require('./Consultation/AttributesConsult'),
-    UpdateConsultation: require('./Consultation/UpdateConsultation'),
+    UpdateRequestConsultation: require('./Consultation/UpdateRequestConsultation'),
     BulkUpdateConsultation: require('./Consultation/BulkUpdateConsultation'),
     DestroyConsultation: require('./Consultation/DestroyConsultation'),
-    Drawing:require('./Consultation/Drawing'),
+    Drawing: require('./Consultation/Drawing'),
     GetDetailConsultation: require('./Consultation/GetDetailConsultation'),
-    //end Consultation//
-};
+    //end Consultation
+    //begin Admission
+    RequestAdmission: require('./Admission/RequestAdmission'),
+    BulkCreateAdmission: require('./Admission/BulkCreateAdmission'),
+    RelAppointmentAdmission: require('./Admission/RelAppointmentAdmission'),
+    BulkCreateAdmissionData: require('./Admission/BulkCreateAdmissionData'),
+    GetDataAdmission: require('./Admission/GetDataAdmission'),
+    RelAdmissionDataFileUpload: require('./Admission/RelAdmissionDataFileUpload'),
+    RelAdmissionData: require('./Admission/RelAdmissionData'),
+    GetListAdmission: require('./Admission/GetListAdmission'),
+    AttributesAdmission: require('./Admission/AttributesAdmission'),
+    UpdateRequestAdmission: require('./Admission/UpdateRequestAdmission'),
+    BulkUpdateAdmission: require('./Admission/BulkUpdateAdmission'),
+    DestroyAdmission: require('./Admission/DestroyAdmission'),
+    GetDetailAdmission: require('./Admission/GetDetailAdmission'),
+    //end Admission
+}; 

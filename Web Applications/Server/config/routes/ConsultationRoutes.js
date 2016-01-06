@@ -13,7 +13,7 @@ module.exports = {
     },
     'post /api/consultation/update': {
         controller: 'Consultation/ConsultationController',
-        action: 'UpdateConsultation'
+        action: 'UpdateRequestConsultation'
     },
     'get /api/consultation/destroy/:UID': {
         controller: 'Consultation/ConsultationController',

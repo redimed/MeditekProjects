@@ -1,0 +1,20 @@
+<!-- BEGIN PAGE SPINNER -->
+<div ng-spinner-bar class="page-spinner-bar">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+</div>
+<!-- END PAGE SPINNER -->
+
+<div ui-view="blank"> </div>
+
+<style type="text/css">
+	.my-body{ 
+		background-image: url('theme/assets/global/images/patient.jpg');
+		/*background-repeat: no-repeat;*/
+		background-size: 100%;
+	}
+</style>
+<script type="text/javascript">
+    document.body.className = "my-body";
+</script>

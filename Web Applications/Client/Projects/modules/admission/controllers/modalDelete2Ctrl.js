@@ -1,4 +1,4 @@
-var app = angular.module('app.authentication.admission.detail.step1.modalDelete2.controller',[]);
+var app = angular.module('app.authentication.admission.request.step1.modalDelete2.controller',[]);
 
 app.controller('modalDelete2Ctrl', function($scope, $modalInstance, titleModal, index){
 	$scope.title = titleModal;

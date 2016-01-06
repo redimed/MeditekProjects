@@ -19,8 +19,8 @@ var app = angular.module('app', [
     "app.authentication",
     "app.blank",
     "angularFileUpload",
-    "vcRecaptcha"
-
+    "vcRecaptcha",
+    'jsTree.directive',
 ]);
 
 app
@@ -163,7 +163,7 @@ app
             RestangularConfigurer.setBaseUrl(o.const.telehealthBaseURL);
         });
     })
-    .run(function($rootScope, $cookies, $window, $state, Restangular, toastr, settings) {
+    .run(function($rootScope, $cookies, $window, $timeout, $state, Restangular, toastr, settings) {
         // RESTANGULAR ERROR HANDLING
         // Restangular.setErrorInterceptor(function (response) {
         //     if (response.status == 401) {
@@ -218,12 +218,12 @@ app
             App.initAjax();
             FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page
+            
 
             //ComponentsSelect2.init(); // init todo page
             //ComponentsBootstrapSelect.init(); // init todo page
         });
         $rootScope.$on('$includeContentLoaded', function() {
-            // App.initAjax();
             App.initAjax();
             FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page

@@ -1,19 +1,23 @@
-var app = angular.module('app.authentication.admission.detail.step1.controller',[
-	'app.authentication.admission.detail.step1.modalAdd1.controller',
-	'app.authentication.admission.detail.step1.modalDelete1.controller',
-	'app.authentication.admission.detail.step1.modalUpdate1.controller',
+var app = angular.module('app.authentication.admission.request.step1.controller',[
+	'app.authentication.admission.request.step1.modalAdd1.controller',
+	'app.authentication.admission.request.step1.modalDelete1.controller',
+	'app.authentication.admission.request.step1.modalUpdate1.controller',
 
-    'app.authentication.admission.detail.step1.modalAdd2.controller',
-    'app.authentication.admission.detail.step1.modalDelete2.controller',
-    'app.authentication.admission.detail.step1.modalUpdate2.controller',
+    'app.authentication.admission.request.step1.modalAdd2.controller',
+    'app.authentication.admission.request.step1.modalDelete2.controller',
+    'app.authentication.admission.request.step1.modalUpdate2.controller',
 ]);
 
-app.controller('admissionDetailStep1Ctrl', function($scope, $state, $uibModal){
+app.controller('admissionRequestStep1Ctrl', function($scope, $state, $uibModal, $timeout){
+    $timeout(function(){
+        App.initAjax();
+    },0);
+
     angular.element(".progress-bar").attr("style","width:30%");
 	$scope.submit = function(){
 		$scope.submitted = true;
 		if($scope.form.$valid){
-			$state.go("authentication.admission.detail.step2");
+			$state.go("authentication.admission.request.step2");
 		}
 	};	
 
@@ -28,7 +32,7 @@ app.controller('admissionDetailStep1Ctrl', function($scope, $state, $uibModal){
                     return 'Add data';
                 },
     			PREVIOUS_SURGERY_PROCEDURES: function(){
-    				return $scope.admissionDetail.step1.PREVIOUS_SURGERY_PROCEDURES;
+    				return $scope.admissionRequest.step1.PREVIOUS_SURGERY_PROCEDURES;
     			},
     		},
     	});
@@ -40,7 +44,7 @@ app.controller('admissionDetailStep1Ctrl', function($scope, $state, $uibModal){
 			});
     };
     $scope.openModaUpdate1 = function(index){
-        var data = $scope.admissionDetail.step1.PREVIOUS_SURGERY_PROCEDURES[index];
+        var data = $scope.admissionRequest.step1.PREVIOUS_SURGERY_PROCEDURES[index];
     	var modalInstance = $uibModal.open({
     		animation: true,
     		size: 'md',
@@ -60,7 +64,7 @@ app.controller('admissionDetailStep1Ctrl', function($scope, $state, $uibModal){
     	});
     	modalInstance.result
 	        .then(function(result) {
-                $scope.admissionDetail.step1.PREVIOUS_SURGERY_PROCEDURES[result.index] = result.data;
+                $scope.admissionRequest.step1.PREVIOUS_SURGERY_PROCEDURES[result.index] = result.data;
 			}, function(result) {
 				// dismiss
 			});
@@ -82,7 +86,7 @@ app.controller('admissionDetailStep1Ctrl', function($scope, $state, $uibModal){
     	});
     	modalInstance.result
 	        .then(function(result) {
-			    $scope.admissionDetail.step1.PREVIOUS_SURGERY_PROCEDURES.splice(result.index, 1);
+			    $scope.admissionRequest.step1.PREVIOUS_SURGERY_PROCEDURES.splice(result.index, 1);
 			}, function(result) {
 				// dismiss
 			});
@@ -99,7 +103,7 @@ app.controller('admissionDetailStep1Ctrl', function($scope, $state, $uibModal){
                     return 'Add data';
                 },
                 MEDICATIONS: function(){
-                    return $scope.admissionDetail.step1.MEDICATIONS;
+                    return $scope.admissionRequest.step1.MEDICATIONS;
                 },
             },
         });
@@ -111,7 +115,7 @@ app.controller('admissionDetailStep1Ctrl', function($scope, $state, $uibModal){
             });
     };
     $scope.openModaUpdate2 = function(index){
-        var data = $scope.admissionDetail.step1.MEDICATIONS[index];
+        var data = $scope.admissionRequest.step1.MEDICATIONS[index];
         var modalInstance = $uibModal.open({
             animation: true,
             size: 'md',
@@ -131,7 +135,7 @@ app.controller('admissionDetailStep1Ctrl', function($scope, $state, $uibModal){
         });
         modalInstance.result
             .then(function(result) {
-                $scope.admissionDetail.step1.MEDICATIONS[result.index] = result.data;
+                $scope.admissionRequest.step1.MEDICATIONS[result.index] = result.data;
             }, function(result) {
                 // dismiss
             });
@@ -153,7 +157,7 @@ app.controller('admissionDetailStep1Ctrl', function($scope, $state, $uibModal){
         });
         modalInstance.result
             .then(function(result) {
-                $scope.admissionDetail.step1.MEDICATIONS.splice(result.index, 1);
+                $scope.admissionRequest.step1.MEDICATIONS.splice(result.index, 1);
             }, function(result) {
                 // dismiss
             });

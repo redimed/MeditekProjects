@@ -24,32 +24,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-import android.widget.RemoteViews;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
-import com.redimed.telehealth.patient.CallActivity;
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.WaitingActivity;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.receiver.GcmBroadcastReceiver;
-import com.redimed.telehealth.patient.utils.Config;
+import com.redimed.telehealth.patient.network.Config;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class RegistrationIntentService extends IntentService {
 
@@ -82,14 +74,15 @@ public class RegistrationIntentService extends IntentService {
             editor.putString("gcmToken", token);
             editor.apply();
 
-            Bundle data = intent.getExtras();
             GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
+            gcm.register(Config.GCMSenderID);
             String messageType = gcm.getMessageType(intent);
             if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
                 Log.d("MESSAGE TYPE SEND ERROR", messageType);
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
                 Log.d("MESSAGE TYPE DELETED", messageType);
             } else {
+                Bundle data = intent.getExtras();
                 if (data != null) {
                     SendNotification(data.getString("data"));
                 }
@@ -104,11 +97,12 @@ public class RegistrationIntentService extends IntentService {
 
     private void SendNotification(String message) {
         Intent intent;
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         try {
             JSONObject msg = new JSONObject(message);
             if (msg.get("message").toString().equalsIgnoreCase("call")) {
                 intent = new Intent(this, WaitingActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);   // To open only one activity on launch
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("apiKey", msg.get("apiKey").toString());
                 intent.putExtra("sessionId", msg.get("sessionId").toString());
                 intent.putExtra("token", msg.get("token").toString());
@@ -136,7 +130,6 @@ public class RegistrationIntentService extends IntentService {
                 notification.flags |= Notification.FLAG_AUTO_CANCEL;
                 notification.flags |= Notification.FLAG_INSISTENT;
 
-                notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 notificationManager.notify(CALL_NOTIFICATION_ID, notification);
 
                 PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -148,6 +141,9 @@ public class RegistrationIntentService extends IntentService {
                 if (!MyApplication.getInstance().IsMyServiceRunning(SocketService.class)) {
                     startService(new Intent(this, SocketService.class));
                 }
+            }
+            if (msg.get("message").toString().equalsIgnoreCase("cancel")){
+                notificationManager.cancel(0);
             }
         } catch (Exception e) {
             Log.d(TAG + " Error ", e.getLocalizedMessage());

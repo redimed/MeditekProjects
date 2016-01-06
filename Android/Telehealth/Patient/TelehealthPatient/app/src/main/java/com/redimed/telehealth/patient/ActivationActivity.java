@@ -296,6 +296,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                             jsonLogin.addProperty("VerificationToken", jsonObject.get("verifyCode").isJsonNull() ?
                                     " " : jsonObject.get("verifyCode").getAsString());
                             jsonLogin.addProperty("AppID", "com.redimed.telehealth.patient");
+
                             registerApiLogin.login(jsonLogin, new Callback<JsonObject>() {
                                 @Override
                                 public void success(JsonObject jsonObject, Response response) {

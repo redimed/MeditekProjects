@@ -127,6 +127,7 @@
 
     <!-- Profile Layout-->
     <string name="profile_title">PROFILE</string>
+    <string name="profile_logout">Unregistered</string>
     <string name="profile_dob">DOB:</string>
     <string name="profile_email">Email:</string>
     <string name="profile_home_phone">Home Phone</string>

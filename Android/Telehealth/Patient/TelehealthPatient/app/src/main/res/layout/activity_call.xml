@@ -57,22 +57,22 @@
                 android:padding="15dp">
 
                 <Button
-                    android:id="@+id/btnHold"
+                    android:id="@+id/btnMutePub"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="@drawable/custom_circle_call"
-                    android:drawableLeft="@drawable/call_pause_icon"
+                    android:drawableLeft="@drawable/call_unmute_icon"
                     android:enabled="false"
-                    android:paddingLeft="7dp" />
+                    android:paddingLeft="8dp" />
 
                 <Button
-                    android:id="@+id/btnMutePub"
+                    android:id="@+id/btnHold"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
                     android:background="@drawable/custom_circle_call"
-                    android:drawableLeft="@drawable/call_unmute_icon"
+                    android:drawableLeft="@drawable/call_pause_icon"
                     android:enabled="false"
                     android:paddingLeft="8dp" />
 
@@ -86,7 +86,6 @@
                     android:paddingLeft="8dp" />
 
             </LinearLayout>
-
 
             <Button
                 android:id="@+id/btnEndCall"

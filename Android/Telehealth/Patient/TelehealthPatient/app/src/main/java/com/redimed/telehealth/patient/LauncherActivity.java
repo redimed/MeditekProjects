@@ -48,7 +48,6 @@ public class LauncherActivity extends AppCompatActivity {
         AnimationLogo();
         AnimationWelcome();
         overridePendingTransition(0, 0);
-
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {

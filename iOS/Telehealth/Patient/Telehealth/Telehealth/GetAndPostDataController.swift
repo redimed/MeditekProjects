@@ -55,11 +55,12 @@ class GetAndPostDataController {
     func SendVerifyPhoneNumber (var phoneNumber:String,completionHandler:(JSON) -> Void){
         setHeader()
         //Split number 0
+        
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         let parameters = [
             "data": [
-//                              "phone":"+61"+phoneNumber,
-                "phone":"+84908618694",
+              "phone":"+61"+phoneNumber,
+//                "phone":"+84908618694",
                 "deviceType": "ios"
             ]
         ]
@@ -93,8 +94,8 @@ class GetAndPostDataController {
             "data": [
                 "code":verifyCode,
                 "deviceType": "ios",
-//                 "Phone":"+61" + phoneNumber
-                "phone":"+84908618694"
+                 "Phone":"+61" + phoneNumber
+//                "phone":"+84908618694"
             ]
         ]
         
@@ -103,7 +104,6 @@ class GetAndPostDataController {
             
             switch result {
             case .Success(let JSONData):
-                
                 var data = JSON(JSONData)
                 if data["ErrorType"] == nil {
                     let verifyCode = data["verifyCode"].string! as String
@@ -448,15 +448,12 @@ class GetAndPostDataController {
                         }
                     }
                 }
-                
                 for var i = 0 ; i < appointmentImageCount ; ++i {
                     if jsonImage[i]["FileType"] == "MedicalImage" {
                         let appointmentImage = jsonImage[i]["UID"].string
                         ArrayImageUID.append(appointmentImage!)
                     }
                 }
-                
-                
                 if jsonImage == "" {
                     completionHandler(JSON(["message":"error"]))
                 }else {
@@ -471,7 +468,6 @@ class GetAndPostDataController {
                     print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
                 }
             }
-            
         }
     }
     
@@ -496,7 +492,6 @@ class GetAndPostDataController {
                         print("Response data: \(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
                     }
                 }
-                
         }
         
     }
@@ -512,7 +507,6 @@ class GetAndPostDataController {
                     switch result {
                     case .Success(let JSONData):
                         let data = JSON(JSONData)
-                        
                         if data["refreshCode"].string != nil{
                             if  data["refreshCode"].string! != refreshCode{
                                 
@@ -521,7 +515,6 @@ class GetAndPostDataController {
                         }else {
                             print("----------Error------",data)
                         }
-                        
                     case .Failure(let data, let error):
                         print("Request failed with error: \(error)")
                         if let data = data {
@@ -532,7 +525,6 @@ class GetAndPostDataController {
         }
     }
     func updateTokenPush(uuid:String,deviceToken:String){
-//        if let deviceToken = defaults.valueForKey("deviceToken"){
             let parameters = [
                 "data" : [
                     "uid":uuid,
@@ -540,7 +532,6 @@ class GetAndPostDataController {
                 ]
             ]
             setHeader()
-            
             Alamofire.request(.POST,ConfigurationSystem.Http_3009 + UrlInformationPatient.updateTokenPush, headers:headers, parameters: parameters)
                 .responseJSON {
                     request, response, result in
@@ -561,7 +552,6 @@ class GetAndPostDataController {
                         }
                     }
             }
-//        }
     }
     
     func pushNotification(title:String,uid:String,category:String,data:String,completionHandler:(JSON) -> Void){

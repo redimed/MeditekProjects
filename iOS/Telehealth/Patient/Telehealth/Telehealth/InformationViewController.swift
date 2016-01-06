@@ -40,7 +40,6 @@ class InformationViewController: UIViewController {
             
             api.getInformationPatientByUUID(uuid){
                 response in
-                
                 if response["message"] == "success" {
                     self.view.hideLoading()
                     self.avarta.image = PatientInfo.Image
@@ -67,7 +66,6 @@ class InformationViewController: UIViewController {
                 }
             }
         }
-
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

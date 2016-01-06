@@ -12,7 +12,6 @@ var app = angular.module('app', [
     'app.common.msgDialog',
     'app.common.menuBar',
     'app.common.dimage',
-    'jsTree.directive',
     'app.common.drawing',
     'app.common.CommonService',
     "app.unAuthentication",
@@ -163,7 +162,7 @@ app
             RestangularConfigurer.setBaseUrl(o.const.telehealthBaseURL);
         });
     })
-    .run(function($rootScope, $cookies, $window, $timeout, $state, Restangular, toastr, settings) {
+    .run(function($rootScope, $cookies, $window, $state, Restangular, toastr, settings) {
         // RESTANGULAR ERROR HANDLING
         // Restangular.setErrorInterceptor(function (response) {
         //     if (response.status == 401) {
@@ -192,6 +191,7 @@ app
         $rootScope.$state = $state; // state to be accessed from view
         $rootScope.$settings = settings; // state to be accessed from view
 
+
         $rootScope.$on('$stateChangeSuccess', function(e, toState, toParams, fromState, fromParams) {
             if (!$cookies.get("userInfo")) {
                 // if (toState.name !== "unAuthentication.login" && toState.name !== "unAuthentication.register" && toState.name !== "unAuthentication.activation" && toState.name !== "unAuthentication.forgot" && toState.name !== "unAuthentication.changepass" && toState.name !== "unAuthentication.loginPatient" && toState.name !== "unAuthentication.registerPatient" && toState.name !== "unAuthentication.searchPatient" && && toState.name !== "blank") {
@@ -215,18 +215,21 @@ app
         })
 
         $rootScope.$on('$viewContentLoaded', function() {
-            App.initAjax();
-            FormWizard.init(); // form step
-            ComponentsDateTimePickers.init(); // init todo page
+            // App.initAjax();
+            // FormWizard.init(); // form step
+            // ComponentsDateTimePickers.init(); // init todo page
             
 
             //ComponentsSelect2.init(); // init todo page
             //ComponentsBootstrapSelect.init(); // init todo page
         });
         $rootScope.$on('$includeContentLoaded', function() {
-            App.initAjax();
-            FormWizard.init(); // form step
-            ComponentsDateTimePickers.init(); // init todo page
+            // App.initAjax();
+
+            // FormWizard.init(); // form step
+            // ComponentsDateTimePickers.init(); // init todo page
+        });
+        $rootScope.$on("$stateChangeStart", function(){
         });
 
         //Get New Token

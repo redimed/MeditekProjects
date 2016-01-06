@@ -389,6 +389,7 @@ License: You must have a valid license purchased only from themeforest(the above
             <script src="modules/sandbox/controllers/sandboxCtrl.js"></script>
             <script src="modules/sandbox/controllers/privateFormCtrl.js"></script>
             <script src="modules/sandbox/controllers/workersCompCtrl.js"></script>
+            <script src="modules/sandbox/controllers/dragTableCtrl.js"></script>
         <!-- END MODULE sandbox -->
 
         <!-- begin module admission -->
@@ -504,7 +505,8 @@ License: You must have a valid license purchased only from themeforest(the above
             <script type="text/javascript">
                 $(document).ready(function()
                 {
-                    App.initAjax();
+                    App.init(); 
+                    App.initComponents(); // init core components
                     App.setAssetsPath('theme/assets/'); // Set the assets folder path 
                     
                 });

@@ -36,7 +36,7 @@ module.exports = {
                     if (data) {
                         var fileUID = UUIDService.Create();
                         var fileName = decodeURIComponent(uploadedFiles[0].filename);
-                        var fileExt = uploadedFiles[0].filename.split('.')[1];
+                        var fileExt = uploadedFiles[0].filename.split('.')[1].toLowerCase();
                         var fileType = params.fileType;
                         if (!_.contains(constImgExt, fileExt)) fileType = constFileType.document;
                         if (_.contains(constImgExt, fileExt) && fileType == constFileType.document) fileType = constFileType.image;

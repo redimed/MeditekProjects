@@ -30,20 +30,40 @@
 	</div>
 	<div class="col-md-9 col-sm-9">
 		<div>
+	        Size:<select ng-options="z as z.desc for z in sizes " ng-model="size" ng-change="changeSize()"></select>
+
 			<a ng-click="changeColor(c.color)" href="javascript:;" class="btn btn-icon-only btn-circle" ng-class="c.color" ng-repeat="c in colors" >
 		    </a>
+
+		    <a class="btn btn-icon-only btn-circle btn-default" ng-click="cUndo()" href="javascript:;"> 
+		    	<i class="fa fa-undo"></i>
+		    </a>
+		    <a class="btn btn-icon-only btn-circle btn-default" ng-click="cRedo()" href="javascript:;"> 
+		    	<i class="fa fa-repeat"></i>
+		    </a>
+
 		    <a class="btn btn-icon-only btn-circle btn-default" ng-click="erase()" href="javascript:;"> 
 		    	<i class="fa fa-eraser"></i>
 		    </a>
 		    <a class="btn btn-icon-only btn-circle btn-default" ng-click="clear()" href="javascript:;"> 
 		    	<i class="fa fa-trash-o"></i>
 		    </a>
-		    <a class="btn btn-icon-only btn-circle btn-default" ng-click="capture()" href="javascript:;"> 
+
+		    <!-- <a class="btn btn-icon-only btn-circle btn-default" ng-click="capture()" href="javascript:;"> 
 		    	<i class="fa fa-save"></i>
+		    </a> -->
+		    <a class="btn btn-icon-only btn-circle btn-default" ng-click="capture()" href="javascript:;"> 
+		    	<i class="fa fa-camera"></i>
 		    </a>
+
 		    <span class="btn btn-default btn-file">
 			    Load Picture<input type="file" id="imageLoader" accept="image/*">
 			</span>
+
+			<a class="btn btn-success" ng-click="uploadDrawing()" href="javascript:;"> 
+		    	<i class="fa fa-floppy-o"></i> Save
+		    </a>
+
 		</div>
 		<br/>
 		<canvas id="myCanvas"></canvas> 

@@ -33,12 +33,12 @@ module.exports = {
                 });
         }
     },
-    UpdateConsultation: function(req, res) {
+    UpdateRequestConsultation: function(req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.UpdateConsultation(data, req.user)
+            Services.UpdateRequestConsultation(data, req.user)
                 .then(function(success) {
                     if (HelperService.CheckExistData(success) &&
                         HelperService.CheckExistData(success.transaction)) {

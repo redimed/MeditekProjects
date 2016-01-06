@@ -22,8 +22,8 @@ module.exports = function(objUpdate) {
                             if (HelperService.CheckExistData(admissionUpdated) &&
                                 HelperService.CheckExistData(admissionUpdated[1]) &&
                                 !_.isEmpty(admissionUpdated[1])) {
-                                var admissionObject = admissionUpdated[1];
-                                return sequelize.Promise.each(admissionObject, function(valueAdmissionObj, indexConsultObj) {
+                                var arrAdmissionObject = admissionUpdated[1];
+                                return sequelize.Promise.each(arrAdmissionObject, function(valueAdmissionObj, indexConsultObj) {
                                     if (HelperService.CheckExistData(valueAdmissionObj) &&
                                         !_.isEmpty(valueAdmissionObj)) {
                                         admissionObject = valueAdmissionObj;

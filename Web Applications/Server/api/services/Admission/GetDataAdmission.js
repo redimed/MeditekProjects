@@ -1,31 +1,31 @@
 module.exports = {
-    PatientAdmission: function(data, userID) {
+    Admission: function(data, userID) {
         if (HelperService.CheckExistData(data) &&
             !_.isEmpty(data)) {
-            _.forEach(data, function(valueAdmission, indexPatientAdmission) {
-                if (HelperService.CheckExistData(valuePatientAdmission) &&
-                    HelperService.CheckExistData(valuePatientAdmission.UID)) {
-                    data[indexPatientAdmission].CreatedBy = userID;
-                } else if (HelperService.CheckExistData(valuePatientAdmission) &&
-                    !HelperService.CheckExistData(valuePatientAdmission.UID)) {
-                    data[indexPatientAdmission].CreatedBy = userID;
-                    data[indexPatientAdmission].UID = UUIDService.Create();
+            _.forEach(data, function(valueAdmission, indexAdmission) {
+                if (HelperService.CheckExistData(valueAdmission) &&
+                    HelperService.CheckExistData(valueAdmission.UID)) {
+                    data[indexAdmission].CreatedBy = userID;
+                } else if (HelperService.CheckExistData(valueAdmission) &&
+                    !HelperService.CheckExistData(valueAdmission.UID)) {
+                    data[indexAdmission].CreatedBy = userID;
+                    data[indexAdmission].UID = UUIDService.Create();
                 }
             });
         }
         return data;
     },
-    PatientAdmissionData: function(data, userID) {
+    AdmissionData: function(data, userID) {
         if (HelperService.CheckExistData(data) &&
             !_.isEmpty(data)) {
-            _.forEach(data, function(valuePatientAdmissionData, indexPatientAdmissionData) {
-                if (HelperService.CheckExistData(valuePatientAdmissionData) &&
-                    HelperService.CheckExistData(valuePatientAdmissionData.UID)) {
-                    data[indexPatientAdmissionData].CreatedBy = userID;
-                } else if (HelperService.CheckExistData(valuePatientAdmissionData) &&
-                    !HelperService.CheckExistData(valuePatientAdmissionData.UID)) {
-                    data[indexPatientAdmissionData].CreatedBy = userID;
-                    data[indexPatientAdmissionData].UID = UUIDService.Create();
+            _.forEach(data, function(valueAdmissionData, indexAdmissionData) {
+                if (HelperService.CheckExistData(valueAdmissionData) &&
+                    HelperService.CheckExistData(valueAdmissionData.UID)) {
+                    data[indexAdmissionData].CreatedBy = userID;
+                } else if (HelperService.CheckExistData(valueAdmissionData) &&
+                    !HelperService.CheckExistData(valueAdmissionData.UID)) {
+                    data[indexAdmissionData].CreatedBy = userID;
+                    data[indexAdmissionData].UID = UUIDService.Create();
                 }
             });
         }

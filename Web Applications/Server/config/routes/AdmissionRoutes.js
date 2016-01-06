@@ -1,7 +1,7 @@
 module.exports = {
     'post /api/admission/create': {
         controller: 'Admission/AdmissionController',
-        action: 'CreateAdmission'
+        action: 'RequestAdmission'
     },
     'post /api/admission/list': {
         controller: 'Admission/AdmissionController',
@@ -13,7 +13,7 @@ module.exports = {
     },
     'post /api/admission/update': {
         controller: 'Admission/AdmissionController',
-        action: 'UpdateAdmission'
+        action: 'UpdateRequestAdmission'
     },
     'get /api/admission/destroy/:UID': {
         controller: 'Admission/AdmissionController',

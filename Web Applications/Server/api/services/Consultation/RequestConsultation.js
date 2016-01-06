@@ -40,7 +40,7 @@
 	                            return Services.BulkCreateConsultation(objectCreateConsultations);
 	                        } else {
 	                            defer.reject({
-	                                error: new Error('CreateConsultation.Appointment.not.found'),
+	                                error: new Error('CreateConsultation.Appointment(Consultations).not.found'),
 	                                transaction: t
 	                            });
 	                        }

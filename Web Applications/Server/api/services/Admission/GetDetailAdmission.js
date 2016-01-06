@@ -43,7 +43,7 @@ module.exports = function(admissionUID, userInfo) {
         filter.Admission.push(filterRoleTemp);
     }
     Admission.findOne({
-            attributes: Services.AttributesAdmission.PatientAdmission(),
+            attributes: Services.AttributesAdmission.Admission(),
             include: [{
                 attributes: Services.AttributesAppt.Appointment(),
                 model: Appointment,
@@ -65,7 +65,7 @@ module.exports = function(admissionUID, userInfo) {
                     }]
                 }]
             }, {
-                attributes: Services.AttributesAdmission.PatientAdmissionData(),
+                attributes: Services.AttributesAdmission.AdmissionData(),
                 model: AdmissionData,
                 required: true,
                 include: [{

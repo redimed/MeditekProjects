@@ -3,7 +3,7 @@
 	module.exports = function(data, userInfo) {
 	    var defer = $q.defer();
 	    var appointmentObject = null;
-	    var patientAdmissionObject = null;
+	    var admissionObject = null;
 	    return sequelize.transaction()
 	        .then(function(t) {
 	            if (HelperService.CheckExistData(data) &&
@@ -32,15 +32,15 @@
 	                            !_.isEmpty(data.Admissions) &&
 	                            _.isArray(data.Admissions)) {
 	                            appointmentObject = objAppt;
-	                            var patientAdmissions = Services.GetDataConsultation.PatienAdmission(data.Admissions, userInfo.ID);
-	                            var objectPatientAdmission = {
-	                                data: consultNotes,
+	                            var admissions = Services.GetDataAdmission.Admission(data.Admissions, userInfo.ID);
+	                            var objectAdmission = {
+	                                data: admissions,
 	                                transaction: t
 	                            };
-	                            return Services.BulkCreatePatientAdmission(objectPatientAdmission);
+	                            return Services.BulkCreateAdmission(objectAdmission);
 	                        } else {
 	                            defer.reject({
-	                                error: new Error('CreateConsultation.Appointment.not.found'),
+	                                error: new Error('CreateConsultation.Appointment(Admissions).not.found'),
 	                                transaction: t
 	                            });
 	                        }
@@ -50,26 +50,26 @@
 	                            transaction: t
 	                        });
 	                    })
-	                    .then(function(patientAdmissionCreatedRes) {
-	                        if (HelperService.CheckExistData(patientAdmissionCreatedRes) &&
+	                    .then(function(admissionCreatedRes) {
+	                        if (HelperService.CheckExistData(admissionCreatedRes) &&
 	                            HelperService.CheckExistData(appointmentObject)) {
-	                            patientAdmissionObject = patientAdmissionCreatedRes;
-	                            var patientAdmissionCreated =
-	                                JSON.parse(JSON.stringify(patientAdmissionCreatedRes));
-	                            var arrayPatientAdmissionIDUnique = _.map(_.groupBy(patientAdmissionCreated, function(PA) {
+	                            admissionObject = admissionCreatedRes;
+	                            var admissionCreated =
+	                                JSON.parse(JSON.stringify(admissionCreatedRes));
+	                            var arrayAdmissionIDUnique = _.map(_.groupBy(admissionCreated, function(PA) {
 	                                return PA.ID;
 	                            }), function(subGrouped) {
 	                                return subGrouped[0].ID;
 	                            });
-	                            var objectRelPatientAdmission = {
-	                                data: arrayPatientAdmissionIDUnique,
+	                            var objectRelAdmission = {
+	                                data: arrayAdmissionIDUnique,
 	                                transaction: t,
 	                                appointmentObject: appointmentObject
 	                            };
-	                            return Services.RelAppointmentPatientAdmission(objectRelPatientAdmission);
+	                            return Services.RelAppointmentAdmission(objectRelAdmission);
 	                        } else {
 	                            defer.reject({
-	                                error: new Error('BulkCreatePatientAdmission.failed'),
+	                                error: new Error('BulkCreateAdmission.failed'),
 	                                transaction: t
 	                            });
 	                        }
@@ -79,7 +79,7 @@
 	                            transaction: t
 	                        });
 	                    })
-	                    .then(function(relAppointmentPatientAdmissionCreated) {
+	                    .then(function(relAppointmentAdmissionCreated) {
 	                        defer.resolve({
 	                            transaction: t,
 	                            status: 'success'

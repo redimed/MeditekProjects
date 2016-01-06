@@ -1,37 +1,37 @@
 var $q = require('q');
 module.exports = function(objUpdate) {
     var defer = $q.defer();
-    var patientAdmissionObject = null;
+    var admissionObject = null;
     if (HelperService.CheckExistData(objUpdate) &&
         HelperService.CheckExistData(objUpdate.data) &&
         !_.isEmpty(objUpdate.data) &&
         _.isArray(objUpdate.data)) {
-        sequelize.Promise.each(objUpdate.data, function(valuePatientAdmission, indexPatientAdmission) {
-                if (HelperService.CheckExistData(valuePatientAdmission) &&
-                    HelperService.CheckExistData(valuePatientAdmission.UID)) {
+        sequelize.Promise.each(objUpdate.data, function(valueAdmission, indexAdmission) {
+                if (HelperService.CheckExistData(valueAdmission) &&
+                    HelperService.CheckExistData(valueAdmission.UID)) {
                     return Admission.update({
                             ModifiedBy: objUpdate.userInfo.ID
                         }, {
                             where: {
-                                UID: valuePatientAdmission.UID
+                                UID: valueAdmission.UID
                             },
                             transaction: objUpdate.transaction,
                             individualHooks: true
                         })
-                        .then(function(patientAdmissionUpdated) {
-                            if (HelperService.CheckExistData(patientAdmissionUpdated) &&
-                                HelperService.CheckExistData(patientAdmissionUpdated[1]) &&
-                                !_.isEmpty(patientAdmissionUpdated[1])) {
-                                var patientAdmissionObject = patientAdmissionUpdated[1];
-                                return sequelize.Promise.each(patientAdmissionObject, function(valuePatientAdmissionObj, indexConsultObj) {
-                                    if (HelperService.CheckExistData(valuePatientAdmissionObj) &&
-                                        !_.isEmpty(valuePatientAdmissionObj)) {
-                                        patientAdmissionObject = valuePatientAdmissionObj;
-                                        return valuePatientAdmissionObj.setAdmissionData([], {
+                        .then(function(admissionUpdated) {
+                            if (HelperService.CheckExistData(admissionUpdated) &&
+                                HelperService.CheckExistData(admissionUpdated[1]) &&
+                                !_.isEmpty(admissionUpdated[1])) {
+                                var admissionObject = admissionUpdated[1];
+                                return sequelize.Promise.each(admissionObject, function(valueAdmissionObj, indexConsultObj) {
+                                    if (HelperService.CheckExistData(valueAdmissionObj) &&
+                                        !_.isEmpty(valueAdmissionObj)) {
+                                        admissionObject = valueAdmissionObj;
+                                        return valueAdmissionObj.setAdmissionData([], {
                                                 transaction: objUpdate.transaction
                                             })
                                             .then(function(relConsultationDataDeleted) {
-                                                return valuePatientAdmissionObj.getConsultationData({
+                                                return valueAdmissionObj.getConsultationData({
                                                     attributes: ['ID'],
                                                     transaction: objUpdate.transaction,
                                                     raw: true
@@ -59,32 +59,32 @@ module.exports = function(objUpdate) {
                             defer.reject(err);
                         })
                         .then(function(admissionDataRes) {
-                            if (HelperService.CheckExistData(valuePatientAdmission) &&
-                                HelperService.CheckExistData(valuePatientAdmission.AdmissionData) &&
-                                !_.isEmpty(valuePatientAdmission.AdmissionData)) {
-                                var objectCreatePatientAdmissionData = {
-                                    data: valuePatientAdmission.AdmissionData,
+                            if (HelperService.CheckExistData(valueAdmission) &&
+                                HelperService.CheckExistData(valueAdmission.AdmissionData) &&
+                                !_.isEmpty(valueAdmission.AdmissionData)) {
+                                var objectCreateAdmissionData = {
+                                    data: valueAdmission.AdmissionData,
                                     transaction: objUpdate.transaction
                                 };
-                                return Services.BulkCreatePatientAdmissionData(objectCreatePatientAdmissionData);
+                                return Services.BulkCreateAdmissionData(objectCreateAdmissionData);
                             }
                         }, function(err) {
                             defer.reject(err);
                         })
-                        .then(function(patientAdmissinDataCreatedRes) {
-                            if (HelperService.CheckExistData(patientAdmissinDataCreatedRes) &&
-                                !_.isEmpty(patientAdmissinDataCreatedRes)) {
-                                var patientAdmissinDataCreated =
-                                    JSON.parse(JSON.stringify(patientAdmissinDataCreatedRes));
-                                var arrayPatientAdmissionDataUnique = _.map(_.groupBy(patientAdmissinDataCreated, function(CD) {
+                        .then(function(admissinDataCreatedRes) {
+                            if (HelperService.CheckExistData(admissinDataCreatedRes) &&
+                                !_.isEmpty(admissinDataCreatedRes)) {
+                                var admissionDataCreated =
+                                    JSON.parse(JSON.stringify(admissinDataCreatedRes));
+                                var arrayAdmissionDataUnique = _.map(_.groupBy(admissionDataCreated, function(CD) {
                                     return CD.ID;
                                 }), function(subGrouped) {
                                     return subGrouped[0].ID;
                                 });
                                 var objRelAdmissionData = {
-                                    data: arrayPatientAdmissionDataUnique,
+                                    data: arrayAdmissionDataUnique,
                                     transaction: objUpdate.transaction,
-                                    patientAdmissionObject: patientAdmissionObject
+                                    admissionObject: admissionObject
                                 };
                                 return Services.RelAdmissionData(objRelAdmissionData);
                             }
@@ -93,13 +93,13 @@ module.exports = function(objUpdate) {
                         });
                 }
             })
-            .then(function(patientAdmissionUpdated) {
-                defer.resolve(patientAdmissionUpdated);
+            .then(function(admissionUpdated) {
+                defer.resolve(admissionUpdated);
             }, function(err) {
                 defer.reject(err);
             });
     } else {
-        defer.reject('objUpdate.data.BulkUpdatePatientAdmission.failed');
+        defer.reject('objUpdate.data.BulkUpdateAdmission.failed');
     }
     return defer.promise;
 };

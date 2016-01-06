@@ -4,7 +4,7 @@ module.exports = function(data, userInfo) {
     var defer = $q.defer();
     return sequelize.transaction()
         .then(function(t) {
-            var Consultations = data.Consultations;
+            var admissions = data.Admissions;
             var whereClause = {};
             _.forEach(data, function(valueData, indexData) {
                 if (HelperService.CheckExistData(valueData) &&
@@ -19,25 +19,25 @@ module.exports = function(data, userInfo) {
                 }
             });
             if (HelperService.CheckExistData(whereClause) &&
-                HelperService.CheckExistData(Consultations) &&
+                HelperService.CheckExistData(admissions) &&
                 !_.isEmpty(whereClause) &&
-                !_.isEmpty(Consultations)) {
+                !_.isEmpty(admissions)) {
                 Appointment.findOne({
                         attributes: ['ID'],
                         where: whereClause,
                         transaction: t
                     })
                     .then(function(objAppt) {
-                        var objectUpdatePatientAdmission = {
-                            data: Consultations,
+                        var objectUpdateAdmission = {
+                            data: admissions,
                             transaction: t,
                             userInfo: userInfo
                         };
-                        return Services.BulkUpdatePatientAdmission(objectUpdatePatientAdmission);
+                        return Services.BulkUpdateAdmission(objectUpdateAdmission);
                     }, function(err) {
                         defer.reject(err);
                     })
-                    .then(function(patientAdmissionUpdated) {
+                    .then(function(admissionUpdated) {
                         defer.resolve({
                             transaction: t,
                             status: 'success'
@@ -46,7 +46,7 @@ module.exports = function(data, userInfo) {
                         defer.reject(err);
                     });
             } else {
-                defer.reject('UpdateAdmission.data.failed')
+                defer.reject('UpdateRequestAdmission.data.failed')
             }
             return defer.promise;
         });

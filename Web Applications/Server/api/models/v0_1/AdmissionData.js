@@ -154,7 +154,8 @@ module.exports = {
                 callback();
             },
             beforeUpdate: function(admissiondata, options, callback) {
-                admissiondata.ModifiedDate = new Date();
+                admissiondata.fields.push('ModifiedDate');
+                admissiondata.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

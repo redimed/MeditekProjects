@@ -1,10 +1,10 @@
 module.exports = {
-    CreateAdmission: function(req, res) {
+    RequestAdmission: function(req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.CreateAdmission(data, req.user)
+            Services.RequestAdmission(data, req.user)
                 .then(function(success) {
                     if (HelperService.CheckExistData(success) &&
                         HelperService.CheckExistData(success.transaction)) {
@@ -33,12 +33,12 @@ module.exports = {
                 });
         }
     },
-    UpdateAdmission: function(req, res) {
+    UpdateRequestAdmission: function(req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.UpdateAdmission(data, req.user)
+            Services.UpdateRequestAdmission(data, req.user)
                 .then(function(success) {
                     if (HelperService.CheckExistData(success) &&
                         HelperService.CheckExistData(success.transaction)) {

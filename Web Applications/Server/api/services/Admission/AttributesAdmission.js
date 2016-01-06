@@ -1,8 +1,8 @@
 module.exports = {
-    PatientAdmission: function() {
+    Admission: function() {
         return ['UID', 'CreatedBy', 'CreatedDate', 'ModifiedBy', 'ModifiedDate'];
     },
-    PatientAdmissionData: function() {
+    AdmissionData: function() {
         return ['UID', 'Module', 'Section', 'Category',
             'Type', 'Name', 'Value', 'ClinicalNote', 'Description'
         ];

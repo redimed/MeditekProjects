@@ -8,12 +8,12 @@ module.exports = function(objRel) {
                 transaction: objRel.transaction
             });
         } else {
-            return RelAppointmentPatientAdmission.create(objRel.data, {
+            return RelAppointmentAdmission.create(objRel.data, {
                 transaction: objRel.transaction
             });
         }
     } else {
-        defer.reject('objRel.RelAppointmentPatientAdmission.data.failed');
+        defer.reject('objRel.RelAppointmentAdmission.data.failed');
     }
     return defer.promise;
 };

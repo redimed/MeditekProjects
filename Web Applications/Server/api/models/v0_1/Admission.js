@@ -73,8 +73,9 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(admission, options, callback) {
-                admission.ModifiedDate = new Date();
+            beforeBulkUpdate: function(admission, options, callback) {
+                admission.fields.push('ModifiedDate');
+                admission.attributes.ModifiedDate = new Date();
                 callback();
             }
         }

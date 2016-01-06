@@ -1,7 +1,7 @@
 module.exports = {
     'post /api/consultation/create': {
         controller: 'Consultation/ConsultationController',
-        action: 'CreateConsultation'
+        action: 'RequestConsultation'
     },
     'post /api/consultation/list': {
         controller: 'Consultation/ConsultationController',

@@ -1,10 +1,10 @@
 module.exports = {
-    CreateConsultation: function(req, res) {
+    RequestConsultation: function(req, res) {
         var data = HelperService.CheckPostRequest(req);
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.CreateConsultation(data, req.user)
+            Services.RequestConsultation(data, req.user)
                 .then(function(success) {
                     if (HelperService.CheckExistData(success) &&
                         HelperService.CheckExistData(success.transaction)) {

@@ -3,7 +3,7 @@
 	module.exports = function(data, userInfo) {
 	    var defer = $q.defer();
 	    var appointmentObject = null;
-	    var consultNoteObject = null;
+	    var consultationObject = null;
 	    return sequelize.transaction()
 	        .then(function(t) {
 	            if (HelperService.CheckExistData(data) &&
@@ -32,12 +32,12 @@
 	                            !_.isEmpty(data.Consultations) &&
 	                            _.isArray(data.Consultations)) {
 	                            appointmentObject = objAppt;
-	                            var consultNotes = Services.GetDataConsultation.ConsultNote(data.Consultations, userInfo.ID);
-	                            var objectCreateConsultNotes = {
-	                                data: consultNotes,
+	                            var consultations = Services.GetDataConsultation.Consultation(data.Consultations, userInfo.ID);
+	                            var objectCreateConsultations = {
+	                                data: consultations,
 	                                transaction: t
 	                            };
-	                            return Services.BulkCreateConsultNote(objectCreateConsultNotes);
+	                            return Services.BulkCreateConsultation(objectCreateConsultations);
 	                        } else {
 	                            defer.reject({
 	                                error: new Error('CreateConsultation.Appointment.not.found'),
@@ -50,26 +50,26 @@
 	                            transaction: t
 	                        });
 	                    })
-	                    .then(function(consultNoteCreatedRes) {
-	                        if (HelperService.CheckExistData(consultNoteCreatedRes) &&
+	                    .then(function(consultationCreatedRes) {
+	                        if (HelperService.CheckExistData(consultationCreatedRes) &&
 	                            HelperService.CheckExistData(appointmentObject)) {
-	                            consultNoteObject = consultNoteCreatedRes;
-	                            var consultNoteCreated =
-	                                JSON.parse(JSON.stringify(consultNoteCreatedRes));
-	                            var arrayConsultNoteIDUnique = _.map(_.groupBy(consultNoteCreated, function(CN) {
+	                            consultationObject = consultationCreatedRes;
+	                            var consultationCreated =
+	                                JSON.parse(JSON.stringify(consultationCreatedRes));
+	                            var arrayConsultationIDUnique = _.map(_.groupBy(consultationCreated, function(CN) {
 	                                return CN.ID;
 	                            }), function(subGrouped) {
 	                                return subGrouped[0].ID;
 	                            });
-	                            var objectRelApptConsultNote = {
-	                                data: arrayConsultNoteIDUnique,
+	                            var objectRelApptConsultation = {
+	                                data: arrayConsultationIDUnique,
 	                                transaction: t,
 	                                appointmentObject: appointmentObject
 	                            };
-	                            return Services.RelAppointmentConsultNote(objectRelApptConsultNote);
+	                            return Services.RelAppointmentConsultation(objectRelApptConsultation);
 	                        } else {
 	                            defer.reject({
-	                                error: new Error('CreateConsultNote.failed'),
+	                                error: new Error('CreateConsultation.failed'),
 	                                transaction: t
 	                            });
 	                        }
@@ -79,7 +79,7 @@
 	                            transaction: t
 	                        });
 	                    })
-	                    .then(function(relAppointmentConsultNoteCreated) {
+	                    .then(function(relAppointmentConsultationCreated) {
 	                        defer.resolve({
 	                            transaction: t,
 	                            status: 'success'
@@ -92,7 +92,7 @@
 	                    });
 	            } else {
 	                defer.reject({
-	                    error: new Error('CreateConsultation.data.failed'),
+	                    error: new Error('RequestConsultation.data.failed'),
 	                    transaction: t
 	                });
 	            }

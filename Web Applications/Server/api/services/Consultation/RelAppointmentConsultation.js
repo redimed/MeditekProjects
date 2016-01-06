@@ -8,12 +8,12 @@ module.exports = function(objRel) {
                 transaction: objRel.transaction
             });
         } else {
-            return RelAppointmentConsultNote.create(objRel.data, {
+            return RelAppointmentConsultation.create(objRel.data, {
                 transaction: objRel.transaction
             });
         }
     } else {
-        defer.reject('objRel.RelAppointmentConsultNote.data.failed');
+        defer.reject('objRel.RelAppointmentConsultation.data.failed');
     }
     return defer.promise;
 };

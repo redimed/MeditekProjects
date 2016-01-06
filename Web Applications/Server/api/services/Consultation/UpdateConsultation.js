@@ -28,16 +28,16 @@ module.exports = function(data, userInfo) {
                         transaction: t
                     })
                     .then(function(objAppt) {
-                        var objectUpdateConsultNote = {
+                        var objectUpdateConsultation = {
                             data: Consultations,
                             transaction: t,
                             userInfo: userInfo
                         };
-                        return Services.BulkUpdateConsultNote(objectUpdateConsultNote);
+                        return Services.BulkUpdateConsultation(objectUpdateConsultation);
                     }, function(err) {
                         defer.reject(err);
                     })
-                    .then(function(consultNoteUpdated) {
+                    .then(function(consultationUpdated) {
                         defer.resolve({
                             transaction: t,
                             status: 'success'

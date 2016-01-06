@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import com.redimed.telehealth.patient.WaitingActivity;
-import com.redimed.telehealth.patient.utils.Config;
+import com.redimed.telehealth.patient.network.Config;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.net.URISyntaxException;
@@ -96,7 +96,6 @@ public class SocketService extends Service {
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("uid", uidTelehealth.getString("uid", null));
             SocketService.sendData("socket/joinRoom", params);
-            Log.d(TAG, params.toString());
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -155,7 +154,7 @@ public class SocketService extends Service {
                 String message = data.get("message").toString();
                 if (message.equalsIgnoreCase("call")) {
                     i = new Intent(getApplicationContext(), WaitingActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     i.putExtra("apiKey", data.get("apiKey").toString());
                     i.putExtra("sessionId", data.get("sessionId").toString());
                     i.putExtra("token", data.get("token").toString());

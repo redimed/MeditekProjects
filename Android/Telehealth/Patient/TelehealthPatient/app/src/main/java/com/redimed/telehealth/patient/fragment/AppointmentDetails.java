@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -43,29 +42,20 @@ import com.redimed.telehealth.patient.ModelActivity;
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
-import com.redimed.telehealth.patient.models.Appointment;
 import com.redimed.telehealth.patient.models.ClinicalDetails;
 import com.redimed.telehealth.patient.models.Doctor;
 import com.redimed.telehealth.patient.models.FileUpload;
-import com.redimed.telehealth.patient.models.TelehealthAppointment;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
-import com.redimed.telehealth.patient.utils.Config;
+import com.redimed.telehealth.patient.network.Config;
+import com.redimed.telehealth.patient.utils.DeviceUtils;
+import com.redimed.telehealth.patient.utils.PreCachingLayoutManager;
 import com.redimed.telehealth.patient.utils.RVAdapterImage;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-import com.squareup.picasso.UrlConnectionDownloader;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -96,9 +86,7 @@ public class AppointmentDetails extends Fragment {
     private boolean flagLayout = false;
     private List<FileUpload> fileUploads;
     private List<String> urlImg;
-    private RVAdapterImage rvAdapterImage;
     private SharedPreferences telehealthPatient;
-    private LinearLayoutManager layoutManagerCategories;
     private String fromTime, status, firstDoctor, middleDoctor, lastDoctor, appointmentUID;
     private Uri fileUri; // file url to store image
     public static final int MEDIA_TYPE_IMAGE = 1;
@@ -149,12 +137,6 @@ public class AppointmentDetails extends Fragment {
             fileUri = savedInstanceState.getParcelable("fileUri");
         }
 
-        rvImageAppointment.setHasFixedSize(true);
-        layoutManagerCategories = new LinearLayoutManager(v.getContext(), LinearLayout.HORIZONTAL, false);
-        rvImageAppointment.setLayoutManager(layoutManagerCategories);
-        rvAdapterImage = new RVAdapterImage();
-        rvImageAppointment.setAdapter(rvAdapterImage);
-
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,7 +184,6 @@ public class AppointmentDetails extends Fragment {
 
     //    Get Detail Appointment with param UID Appointment
     private void GetAppointmentDetails(String appointmentUID) {
-
         registerApi.getAppointmentDetails(appointmentUID, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
@@ -251,10 +232,6 @@ public class AppointmentDetails extends Fragment {
                         lblDoctorName.setText(firstDoctor + middleDoctor + lastDoctor);
                     }
 
-                    if (urlImg != null) {
-                        urlImg.clear();
-                    }
-
                     //Get image from ClinicalDetails
                     String clinicDetails = jsonObject.get("data").getAsJsonObject().get("TelehealthAppointment").getAsJsonObject().get("ClinicalDetails").toString();
                     ClinicalDetails[] clinicalDetails = gson.fromJson(clinicDetails, ClinicalDetails[].class);
@@ -293,11 +270,18 @@ public class AppointmentDetails extends Fragment {
 
     private void GetFileUpload(List<String> fileUploads) {
         for (int i = 0; i < fileUploads.size(); i++) {
-            if (GetResponseCode(Config.apiURLDownload + fileUploads.get(i)) == 200) {
-                urlPicasso.add(Config.apiURLDownload + fileUploads.get(i));
+            if (GetResponseCode(Config.apiURLImageResize + fileUploads.get(i)) == 200) {
+                urlPicasso.add(Config.apiURLImageResize + fileUploads.get(i));
             }
         }
-        rvAdapterImage.swapData(urlPicasso, telehealthPatient);
+        RVAdapterImage rvAdapterImage  = new RVAdapterImage(v.getContext(), urlPicasso, telehealthPatient);
+
+        PreCachingLayoutManager layoutManagerCategories = new PreCachingLayoutManager(v.getContext());
+        layoutManagerCategories.setOrientation(LinearLayoutManager.HORIZONTAL);
+        layoutManagerCategories.setExtraLayoutSpace(DeviceUtils.getScreenWidth(v.getContext()));
+
+        rvImageAppointment.setLayoutManager(layoutManagerCategories);
+        rvImageAppointment.setAdapter(rvAdapterImage);
     }
 
     //Check url available

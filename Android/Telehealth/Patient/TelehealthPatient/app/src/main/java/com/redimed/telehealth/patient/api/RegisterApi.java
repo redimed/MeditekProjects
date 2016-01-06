@@ -59,4 +59,7 @@ public interface RegisterApi {
 
     @GET("/api/telehealth/user/{uid}")
     void getTelehealthUID (@Path("uid") String userID, Callback<JsonObject> callback);
+
+    @GET("/api/logout")
+    void logout(Callback<JsonObject> callback);
 }

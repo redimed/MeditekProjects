@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardViewImageApp"
     android:layout_width="wrap_content"
@@ -24,6 +25,15 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:visibility="visible" />
+
+    <!--<com.android.volley.toolbox.NetworkImageView-->
+        <!--android:id="@+id/imgContains"-->
+        <!--android:layout_width="140dp"-->
+        <!--android:layout_height="150dp"-->
+        <!--android:layout_gravity="center_horizontal|top"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:scaleType="centerCrop" />-->
 
     <ImageView
         android:id="@+id/imgContains"

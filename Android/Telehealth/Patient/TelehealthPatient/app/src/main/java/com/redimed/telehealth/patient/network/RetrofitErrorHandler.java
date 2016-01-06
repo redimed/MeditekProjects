@@ -1,23 +1,13 @@
-package com.redimed.telehealth.patient.utils;
+package com.redimed.telehealth.patient.network;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
-
-import com.redimed.telehealth.patient.LauncherActivity;
-import com.redimed.telehealth.patient.MainActivity;
-import com.redimed.telehealth.patient.MyApplication;
-import com.redimed.telehealth.patient.R;
 
 import org.json.JSONObject;
 
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;
@@ -28,7 +18,12 @@ import retrofit.mime.TypedByteArray;
  */
 public class RetrofitErrorHandler implements ErrorHandler {
 
+    private Context context;
     private String TAG = "RETROFIT_ERROR";
+
+    public RetrofitErrorHandler(Context ctx) {
+        context = ctx;
+    }
 
     @Override
     public Throwable handleError(RetrofitError cause) {
@@ -57,16 +52,9 @@ public class RetrofitErrorHandler implements ErrorHandler {
                         Log.d(TAG, strError);
                         if (strError.equalsIgnoreCase("[\"isAuthenticated.notAuthenticated\"]")){
                             errorDescription = "Sorry for inconvenience, please activation application again!";
-                            new Timer().schedule(new TimerTask() {
-                                @Override
-                                public void run() {
-                                    MyApplication.getInstance().clearApplication();
-                                    Context context = MyApplication.getInstance().getApplicationContext();
-                                    Intent i = new Intent(context, LauncherActivity.class);
-                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    context.startActivity(i);
-                                }
-                            }, 2500);
+                        }
+                        else if (strError.equalsIgnoreCase("[\"isAuthenticated.sessionUserMismatchedUserAccess\"]")){
+                            errorDescription = "Session Mismatched, please refresh again!";
                         }
                         else {
                             errorDescription = strError;
@@ -79,10 +67,6 @@ public class RetrofitErrorHandler implements ErrorHandler {
             }
         }
         return new Exception(errorDescription);
-    }
-
-    private void Reconnect(){
-
     }
 }
 

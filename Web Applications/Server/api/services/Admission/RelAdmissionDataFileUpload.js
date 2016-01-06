@@ -18,7 +18,7 @@ module.exports = function(objRel) {
                 }), function(subGrouped) {
                     return subGrouped[0].UID;
                 });
-                return objRel.consultationDataObject.addFileUploads(arrayFileUploadsUnique, {
+                return objRel.admissionObject.addFileUploads(arrayFileUploadsUnique, {
                     transaction: objRel.transaction,
                     raw: true
                 });
@@ -31,7 +31,7 @@ module.exports = function(objRel) {
                 defer.reject(err);
             });
     } else {
-        defer.reject('objRel.RelConsultationDataFileUpload.failed');
+        defer.reject('objRel.RelAdmissionDataFileUpload.failed');
     }
     return defer.promise;
 };

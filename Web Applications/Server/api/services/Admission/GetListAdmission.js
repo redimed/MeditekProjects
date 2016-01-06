@@ -1,7 +1,7 @@
 module.exports = function(data, userInfo) {
     var pagination = Services.GetPaginationAppointment(data, userInfo);
-    return Consultation.findAndCountAll({
-        attributes: Services.AttributesConsult.Consultation(),
+    return Admission.findAndCountAll({
+        attributes: Services.AttributesConsult.PatientAdmission(),
         include: [{
             attributes: ['UID'],
             model: Appointment,

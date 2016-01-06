@@ -4,16 +4,16 @@ module.exports = function(objRel) {
     if (HelperService.CheckExistData(objRel) &&
         HelperService.CheckExistData(objRel.data)) {
         if (HelperService.CheckExistData(objRel.appointmentObject)) {
-            return objRel.appointmentObject.addConsultations(objRel.data, {
+            return objRel.appointmentObject.addAdmission(objRel.data, {
                 transaction: objRel.transaction
             });
         } else {
-            return RelAppointmentConsultNote.create(objRel.data, {
+            return RelAppointmentPatientAdmission.create(objRel.data, {
                 transaction: objRel.transaction
             });
         }
     } else {
-        defer.reject('objRel.RelAppointmentConsultNote.data.failed');
+        defer.reject('objRel.RelAppointmentPatientAdmission.data.failed');
     }
     return defer.promise;
 };

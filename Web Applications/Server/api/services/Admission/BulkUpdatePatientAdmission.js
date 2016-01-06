@@ -27,7 +27,7 @@ module.exports = function(objUpdate) {
                                     if (HelperService.CheckExistData(valuePatientAdmissionObj) &&
                                         !_.isEmpty(valuePatientAdmissionObj)) {
                                         patientAdmissionObject = valuePatientAdmissionObj;
-                                        return valuePatientAdmissionObj.setConsultationData([], {
+                                        return valuePatientAdmissionObj.setAdmissionData([], {
                                                 transaction: objUpdate.transaction
                                             })
                                             .then(function(relConsultationDataDeleted) {
@@ -39,12 +39,12 @@ module.exports = function(objUpdate) {
                                             }, function(err) {
                                                 defer.reject(err);
                                             })
-                                            .then(function(consultDataRes) {
-                                                var arrConsultData = _.map(consultDataRes, 'ID');
-                                                return ConsultationData.destroy({
+                                            .then(function(admissionDataRes) {
+                                                var arrAdmissionData = _.map(admissionDataRes, 'ID');
+                                                return AdmissionData.destroy({
                                                     where: {
                                                         ID: {
-                                                            $in: arrConsultData
+                                                            $in: arrAdmissionData
                                                         }
                                                     },
                                                     transaction: objUpdate.transaction,
@@ -58,48 +58,48 @@ module.exports = function(objUpdate) {
                         }, function(err) {
                             defer.reject(err);
                         })
-                        .then(function(consultationDataRes) {
+                        .then(function(admissionDataRes) {
                             if (HelperService.CheckExistData(valuePatientAdmission) &&
-                                HelperService.CheckExistData(valuePatientAdmission.ConsultationData) &&
-                                !_.isEmpty(valuePatientAdmission.ConsultationData)) {
-                                var objectCreateConsultationData = {
-                                    data: valuePatientAdmission.ConsultationData,
+                                HelperService.CheckExistData(valuePatientAdmission.AdmissionData) &&
+                                !_.isEmpty(valuePatientAdmission.AdmissionData)) {
+                                var objectCreatePatientAdmissionData = {
+                                    data: valuePatientAdmission.AdmissionData,
                                     transaction: objUpdate.transaction
                                 };
-                                return Services.BulkCreateConsultationData(objectCreateConsultationData);
+                                return Services.BulkCreatePatientAdmissionData(objectCreatePatientAdmissionData);
                             }
                         }, function(err) {
                             defer.reject(err);
                         })
-                        .then(function(consultDataCreated) {
-                            if (HelperService.CheckExistData(consultDataCreated) &&
-                                !_.isEmpty(consultDataCreated)) {
-                                var consultationDataCreated =
-                                    JSON.parse(JSON.stringify(consultDataCreated));
-                                var arrayConsultDataUnique = _.map(_.groupBy(consultationDataCreated, function(CD) {
+                        .then(function(patientAdmissinDataCreatedRes) {
+                            if (HelperService.CheckExistData(patientAdmissinDataCreatedRes) &&
+                                !_.isEmpty(patientAdmissinDataCreatedRes)) {
+                                var patientAdmissinDataCreated =
+                                    JSON.parse(JSON.stringify(patientAdmissinDataCreatedRes));
+                                var arrayPatientAdmissionDataUnique = _.map(_.groupBy(patientAdmissinDataCreated, function(CD) {
                                     return CD.ID;
                                 }), function(subGrouped) {
                                     return subGrouped[0].ID;
                                 });
-                                var objRelConsultData = {
-                                    data: arrayConsultDataUnique,
+                                var objRelAdmissionData = {
+                                    data: arrayPatientAdmissionDataUnique,
                                     transaction: objUpdate.transaction,
                                     patientAdmissionObject: patientAdmissionObject
                                 };
-                                return Services.RelConsultationData(objRelConsultData);
+                                return Services.RelAdmissionData(objRelAdmissionData);
                             }
                         }, function(err) {
                             defer.reject(err);
                         });
                 }
             })
-            .then(function(consultNoteUpdated) {
-                defer.resolve(consultNoteUpdated);
+            .then(function(patientAdmissionUpdated) {
+                defer.resolve(patientAdmissionUpdated);
             }, function(err) {
                 defer.reject(err);
             });
     } else {
-        defer.reject('objUpdate.data.BulkUpdateConsultNote.failed');
+        defer.reject('objUpdate.data.BulkUpdatePatientAdmission.failed');
     }
     return defer.promise;
 };

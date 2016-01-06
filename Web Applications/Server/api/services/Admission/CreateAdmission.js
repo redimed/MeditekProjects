@@ -3,7 +3,7 @@
 	module.exports = function(data, userInfo) {
 	    var defer = $q.defer();
 	    var appointmentObject = null;
-	    var consultNoteObject = null;
+	    var patientAdmissionObject = null;
 	    return sequelize.transaction()
 	        .then(function(t) {
 	            if (HelperService.CheckExistData(data) &&
@@ -28,16 +28,16 @@
 	                    })
 	                    .then(function(objAppt) {
 	                        if (HelperService.CheckExistData(objAppt) &&
-	                            HelperService.CheckExistData(data.Consultations) &&
-	                            !_.isEmpty(data.Consultations) &&
-	                            _.isArray(data.Consultations)) {
+	                            HelperService.CheckExistData(data.Admissions) &&
+	                            !_.isEmpty(data.Admissions) &&
+	                            _.isArray(data.Admissions)) {
 	                            appointmentObject = objAppt;
-	                            var consultNotes = Services.GetDataConsultation.ConsultNote(data.Consultations, userInfo.ID);
-	                            var objectCreateConsultNotes = {
+	                            var patientAdmissions = Services.GetDataConsultation.PatienAdmission(data.Admissions, userInfo.ID);
+	                            var objectPatientAdmission = {
 	                                data: consultNotes,
 	                                transaction: t
 	                            };
-	                            return Services.BulkCreateConsultNote(objectCreateConsultNotes);
+	                            return Services.BulkCreatePatientAdmission(objectPatientAdmission);
 	                        } else {
 	                            defer.reject({
 	                                error: new Error('CreateConsultation.Appointment.not.found'),
@@ -50,20 +50,26 @@
 	                            transaction: t
 	                        });
 	                    })
-	                    .then(function(consultNoteCreated) {
-	                        if (HelperService.CheckExistData(consultNoteCreated) &&
+	                    .then(function(patientAdmissionCreatedRes) {
+	                        if (HelperService.CheckExistData(patientAdmissionCreatedRes) &&
 	                            HelperService.CheckExistData(appointmentObject)) {
-	                            consultNoteObject = consultNoteCreated;
-	                            var consultNoteID = JSON.parse(JSON.stringify(consultNoteCreated)).ID;
-	                            var objectRelApptConsultNote = {
-	                                data: [consultNoteID],
+	                            patientAdmissionObject = patientAdmissionCreatedRes;
+	                            var patientAdmissionCreated =
+	                                JSON.parse(JSON.stringify(patientAdmissionCreatedRes));
+	                            var arrayPatientAdmissionIDUnique = _.map(_.groupBy(patientAdmissionCreated, function(PA) {
+	                                return PA.ID;
+	                            }), function(subGrouped) {
+	                                return subGrouped[0].ID;
+	                            });
+	                            var objectRelPatientAdmission = {
+	                                data: arrayPatientAdmissionIDUnique,
 	                                transaction: t,
 	                                appointmentObject: appointmentObject
 	                            };
-	                            return Services.RelAppointmentConsultNote(objectRelApptConsultNote);
+	                            return Services.RelAppointmentPatientAdmission(objectRelPatientAdmission);
 	                        } else {
 	                            defer.reject({
-	                                error: new Error('CreateConsultNote.failed'),
+	                                error: new Error('BulkCreatePatientAdmission.failed'),
 	                                transaction: t
 	                            });
 	                        }
@@ -73,7 +79,7 @@
 	                            transaction: t
 	                        });
 	                    })
-	                    .then(function(relAppointmentConsultNoteCreated) {
+	                    .then(function(relAppointmentPatientAdmissionCreated) {
 	                        defer.resolve({
 	                            transaction: t,
 	                            status: 'success'
@@ -86,7 +92,7 @@
 	                    });
 	            } else {
 	                defer.reject({
-	                    error: new Error('CreateConsultation.data.failed'),
+	                    error: new Error('CreateAdmission.data.failed'),
 	                    transaction: t
 	                });
 	            }

@@ -3,8 +3,8 @@ module.exports = function(objRel) {
     var defer = $q.defer();
     if (HelperService.CheckExistData(objRel) &&
         HelperService.CheckExistData(objRel.data)) {
-        if (HelperService.CheckExistData(objRel.consultNoteObject)) {
-            return objRel.consultNoteObject.addConsultationData(objRel.data, {
+        if (HelperService.CheckExistData(objRel.patientAdmissionObject)) {
+            return objRel.patientAdmissionObject.addConsultationData(objRel.data, {
                 transaction: objRel.transaction
             });
         } else {

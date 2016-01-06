@@ -1,38 +1,38 @@
 var $q = require('q');
-module.exports = function(consultationUID, userInfo) {
+module.exports = function(admissionUID, userInfo) {
     return sequelize.transaction()
         .then(function(t) {
             var defer = $q.defer();
-            var consultationObject = null;
-            if (HelperService.CheckExistData(consultationUID)) {
-                Consultation.findOne({
+            var admissionObject = null;
+            if (HelperService.CheckExistData(admissionUID)) {
+                Admission.findOne({
                         where: {
-                            UID: consultationUID
+                            UID: admissionUID
                         },
                         transaction: t
                     })
-                    .then(function(consultRes) {
-                        if (HelperService.CheckExistData(consultRes) &&
-                            !_.isEmpty(consultRes)) {
-                            consultationObject = consultRes;
-                            return consultationObject.setConsultationData([], {
+                    .then(function(admissionRes) {
+                        if (HelperService.CheckExistData(admissionRes) &&
+                            !_.isEmpty(admissionRes)) {
+                            admissionObject = admissionRes;
+                            return admissionObject.setAdmissionData([], {
                                 transaction: t,
                             });
                         } else {
-                            defer.reject('find.consultation.not.found');
+                            defer.reject('find.admission.not.found');
                         }
                     }, function(err) {
                         defer.reject(err);
                     })
-                    .then(function(relConsultationDataDeleted) {
-                        return consultationObject.setAppointments([], {
+                    .then(function(relAdmissionDataDeleted) {
+                        return admissionObject.setAppointments([], {
                             transaction: t
                         });
                     }, function(err) {
                         defer.reject(err);
                     })
-                    .then(function(relConsultationDataDeleted) {
-                        return consultationObject.getConsultationData({
+                    .then(function(relAdmissionDeleted) {
+                        return admissionObject.getAdmissionData({
                             attributes: ['ID'],
                             transaction: t,
                             raw: true
@@ -40,12 +40,12 @@ module.exports = function(consultationUID, userInfo) {
                     }, function(err) {
                         defer.reject(err);
                     })
-                    .then(function(consultationData) {
-                        var arrConsultationDataUID = _.map(consultationData, 'ID');
+                    .then(function(admissionData) {
+                        var arrAdmissionUID = _.map(admissionData, 'ID');
                         return ConsultationData.destroy({
                             where: {
                                 UID: {
-                                    $in: arrConsultationDataUID
+                                    $in: arrAdmissionUID
                                 }
                             },
                             transaction: t
@@ -53,17 +53,17 @@ module.exports = function(consultationUID, userInfo) {
                     }, function(err) {
                         defer.reject(err);
                     })
-                    .then(function(consultationDataDeleted) {
-                        return Consultation.destroy({
+                    .then(function(admissionDataDeleted) {
+                        return Admission.destroy({
                             where: {
-                                UID: consultationUID
+                                UID: admissionUID
                             },
                             transaction: t
                         });
                     }, function(err) {
                         defer.reject(err);
                     })
-                    .then(function(consultationDeleted) {
+                    .then(function(admissionDeleted) {
                         defer.resolve({
                             transaction: t,
                             status: 'success'
@@ -72,7 +72,7 @@ module.exports = function(consultationUID, userInfo) {
                         defer.reject(err);
                     });
             } else {
-                defer.reject('param.consultation.UID.not.found');
+                defer.reject('param.admission.UID.not.found');
             }
             return defer.promise;
         });

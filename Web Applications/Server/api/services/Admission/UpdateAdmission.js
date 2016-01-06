@@ -28,16 +28,16 @@ module.exports = function(data, userInfo) {
                         transaction: t
                     })
                     .then(function(objAppt) {
-                        var objectUpdateConsultNote = {
+                        var objectUpdatePatientAdmission = {
                             data: Consultations,
                             transaction: t,
                             userInfo: userInfo
                         };
-                        return Services.BulkUpdateConsultNote(objectUpdateConsultNote);
+                        return Services.BulkUpdatePatientAdmission(objectUpdatePatientAdmission);
                     }, function(err) {
                         defer.reject(err);
                     })
-                    .then(function(consultNoteUpdated) {
+                    .then(function(patientAdmissionUpdated) {
                         defer.resolve({
                             transaction: t,
                             status: 'success'
@@ -46,7 +46,7 @@ module.exports = function(data, userInfo) {
                         defer.reject(err);
                     });
             } else {
-                defer.reject('UpdateConsultation.data.failed')
+                defer.reject('UpdateAdmission.data.failed')
             }
             return defer.promise;
         });

@@ -1,6 +1,5 @@
 package com.redimed.telehealth.patient.utils;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -12,35 +11,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.Volley;
-import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.UrlConnectionDownloader;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -74,10 +62,10 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
                     @Override
                     protected HttpURLConnection openConnection(Uri uri) throws IOException {
                         HttpURLConnection connection = super.openConnection(uri);
-                        connection.addRequestProperty("Authorization", "Bearer " + telehealthPatient.getString("token", null));
-                        connection.addRequestProperty("DeviceID", telehealthPatient.getString("deviceID", null));
+                        connection.addRequestProperty("Authorization", "Bearer " + telehealthPatient.getString("token", ""));
+                        connection.addRequestProperty("DeviceID", telehealthPatient.getString("deviceID", ""));
                         connection.addRequestProperty("SystemType", "ARD");
-                        connection.addRequestProperty("Cookie", telehealthPatient.getString("cookie", null));
+                        connection.addRequestProperty("Cookie", telehealthPatient.getString("cookie", ""));
                         connection.addRequestProperty("AppID", "com.redimed.telehealth.patient");
                         return connection;
                     }

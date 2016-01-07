@@ -62,8 +62,10 @@ module.exports = function(objUpdate) {
                             if (HelperService.CheckExistData(valueConsultation) &&
                                 HelperService.CheckExistData(valueConsultation.ConsultationData) &&
                                 !_.isEmpty(valueConsultation.ConsultationData)) {
+                                var consultationDatas =
+                                    Services.GetDataConsultation.ConsultationData(valueConsultation.ConsultationData, objUpdate.userInfo.ID);
                                 var objectCreateConsultationData = {
-                                    data: valueConsultation.ConsultationData,
+                                    data: consultationDatas,
                                     transaction: objUpdate.transaction
                                 };
                                 return Services.BulkCreateConsultationData(objectCreateConsultationData);

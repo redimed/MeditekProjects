@@ -35,7 +35,10 @@ module.exports = function(data, userInfo) {
                         };
                         return Services.BulkUpdateConsultation(objectUpdateConsultation);
                     }, function(err) {
-                        defer.reject(err);
+                        defer.reject({
+                            error: err,
+                            transaction: t
+                        });
                     })
                     .then(function(consultationUpdated) {
                         defer.resolve({
@@ -43,10 +46,16 @@ module.exports = function(data, userInfo) {
                             status: 'success'
                         });
                     }, function(err) {
-                        defer.reject(err);
+                        defer.reject({
+                            transaction: t,
+                            error: err
+                        });
                     });
             } else {
-                defer.reject('UpdateConsultation.data.failed')
+                defer.reject({
+                    transaction: t,
+                    error: new Error('UpdateConsultation.data.failed')
+                });
             }
             return defer.promise;
         });

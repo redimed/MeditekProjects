@@ -5,19 +5,20 @@ angular.module("app.common.drawing",[])
         scope: {
             data:'=',
             action:'=',
-        	// patient: '=',
-        	// calendar: '=',
-        	// actionCenterDrawing:'=',
-        	// consultid: '='
         },
         templateUrl: "common/directives/drawing.html",
         link: function (scope, element, attrs) {
             var canvas = element.context.querySelector("canvas");
             var imageLoader = element.context.querySelector("#imageLoader");
             var ctx = canvas.getContext("2d");
+
             var drawing = false;
             var lastX;
       		var lastY;
+
+            scope.typing=false;
+            var textMove=false;
+            var typingState;
 
             scope.colors = [{'color': 'blue-ebonyclay'},
             				{'color': 'green'},
@@ -26,11 +27,20 @@ angular.module("app.common.drawing",[])
             scope.color = 'black';
 
             scope.sizes=[
-                {'width':550,'height':500,desc:'550x500'},
-                {'width':650,'height':600,desc:'650x600'},
-                {'width':750,'height':650,desc:'750x650'},
-            ]
+                {'width':550,'height':500,desc:'Canvas 550x500'},
+                {'width':650,'height':600,desc:'Canvas 650x600'},
+                {'width':750,'height':650,desc:'Canvas 750x650'},
+            ];
             scope.size=scope.sizes[1];
+
+            scope.fontSizes=[
+                {size:12,desc:'Font 12px'},
+                {size:15,desc:'Font 15px'},
+                {size:20,desc:'Font 20px'},
+                {size:25,desc:'Font 25px'},
+                {size:30,desc:'Font 30px'},
+            ]
+            scope.fontSize=scope.fontSizes[2];
 
             scope.lineWidth = attrs.linewidth;
             scope.treeArr = [];
@@ -39,13 +49,18 @@ angular.module("app.common.drawing",[])
             canvas.height = attrs.height || element.height();
                 
             //-------------<tannv.dts---------------
+
+            //canvas size functions begin
             scope.changeSize=changeSize=function()
             {
                 canvas.width=scope.size.width;
                 canvas.height=scope.size.height;
             }
             changeSize();
+            //canvas size functions end
 
+
+            //canvas undo functions begin
             var cPushArray=new Array();
             var cStep=-1;
 
@@ -174,24 +189,52 @@ angular.module("app.common.drawing",[])
                     img.src=cPushArray[cStep];
                 }
             }
+            //canvas undo functions end
+
+            //typing function begin
+            scope.cGetText=cGetText=function()
+            {
+                scope.typing=true;
+                textMove=true;
+                cSaveTypingState();
+            }
+
+            scope.cSaveTypingState=cSaveTypingState=function()
+            {
+                if(canvas.toBlob)
+                {
+
+                    canvas.toBlob(function(blob){
+                        var objectUrl = URL.createObjectURL(blob);
+                        typingState=objectUrl;
+                    })
+                }
+            }
+
+            scope.cApplyText=cApplyText=function()
+            {
+                scope.typing=false;
+                textMove=false;
+                cPush();
+            }
+
+            scope.cClearTyping=function()
+            {
+                scope.typing=false;
+                textMove=false;
+                typingState=null;
+                // alert(scope.typing);
+            }
+            scope.drawText=drawText=function(currentX,currentY)
+            {
+                ctx.fillStyle=scope.color;
+                ctx.font = scope.fontSize.size+"px Arial";
+                ctx.fillText(scope.cText,currentX,currentY);
+            }
+            //typing function end
 
             //-------------tannv.dts>---------------
 
-            /*Restangular.one('api/consultation/draw/templates').get().then(function(rs){
-                if(rs.status == 'success')
-                {
-                    for(var i=0; i<rs.data.length;i++)
-                    {
-                        var node = rs.data[i];
-                        scope.treeArr.push({
-                                    "id": node.id,
-                                    "parent": node.parent == null ? '#' : node.parent,
-                                    "text": node.fileName,
-                                    "icon": node.isFolder == 1 ? 'fa fa-folder icon-state-warning' : 'fa fa-file icon-state-success'
-                                })
-                    }
-                }
-            })*/
             consultationServices.GetDrawingTemplates()
             .then(function(data){
                 // alert(JSON.stringify(data));
@@ -209,21 +252,8 @@ angular.module("app.common.drawing",[])
                 console.log(err);
             })
             
-            /*scope.selectNodeCB = function(e){
-            	var idArr = String(e.target.id).split('_');
-            	var id = idArr[0];
-            	if(id != null && typeof id !== 'undefined' && id != '')
-            	{
-            		Restangular.one('api/consultation/drawing/getbase64/'+id).get().then(function(rs){
-                        var img = new Image;
-                        img.onload = function() {
-                            ctx.drawImage(img, (canvas.width - img.width) / 2, (canvas.height - img.height) / 2);
-                        }
-                        img.src = rs.database64;
-	            	})
-            	}
-            }*/
             scope.selectNodeCB = function(e){
+                scope.cClearTyping();
                 var idArr = String(e.target.id).split('_');
                 var id = idArr[0];
                 if(id != null && typeof id !== 'undefined' && id != '')
@@ -273,24 +303,6 @@ angular.module("app.common.drawing",[])
                 scope.erasing = true;
             };
             
-            /*scope.capture = function () {
-                var imgData = canvas.toDataURL('image/png');
-                
-                Restangular.all('api/consultation/draw/saveImage').post({patient_id: scope.patient, cal_id: scope.calendar, imgData: imgData, consult_id: scope.consultid}).then(function(rs){
-                	if(rs.status == 'success')
-                	{
-                		toastr.success("Image Saved!");
-                		 //phanquocchien save img success
-	                    if(scope.actionCenterDrawing && scope.actionCenterDrawing.runWhenFinish)
-						{
-							scope.actionCenterDrawing.runWhenFinish();
-						}
-						//end
-                	}
-                	else
-                		toastr.error("Error!");
-                })
-            };*/
 
             var draw = function(lX, lY, cX, cY)
             {
@@ -303,31 +315,11 @@ angular.module("app.common.drawing",[])
 		        ctx.stroke();
             }
 
-            //Hàm load hình ảnh từ file input nhưng chưa sử dụng
-            /*var loadImage = function(image){
-                var reader = new FileReader();
-                reader.onload = function(event){
-                    var img = new Image();
-                    img.onload = function(){
-                        ctx.drawImage(img,0,0);
-                    }
-                    img.src = event.target.result;
-                }
-                reader.readAsDataURL(image);
-            }*/
-
             //Đọc hình ảnh từ file input gán vào canvas
-            /*angular.element(imageLoader).on('change',function(e){
-            	var reader = new FileReader();
-			    reader.onload = function(event){
-			        var img = new Image();
-			        img.onload = function(){
-			            ctx.drawImage(img, (canvas.width - img.width) / 2, (canvas.height - img.height) / 2);
-			        }
-			        img.src = event.target.result;
-			    }
-			    reader.readAsDataURL(e.target.files[0]); 
-            });*/
+            scope.imageLoaderClick=function()
+            {
+                scope.cClearTyping();
+            }
             angular.element(imageLoader).on('change',function(e){
                 var objectUrl = URL.createObjectURL(e.target.files[0]);
                 var img = new Image;
@@ -342,7 +334,8 @@ angular.module("app.common.drawing",[])
 
             angular.element(canvas).on('mousedown mousemove mouseup mouseout touchstart touchmove touchend', 
               function (event) {
-                if (event.type === 'mousemove' && !drawing) {
+                //Nếu di chuyển chuột nhưng không ở chế độ vẽ hay chữ thì return
+                if (event.type === 'mousemove' && !drawing && !scope.typing) {
                     // Ignore mouse move Events if we're not dragging
                     return;
                 }
@@ -357,42 +350,57 @@ angular.module("app.common.drawing",[])
 			        } else {
 			        	lastX = event.pageX-angular.element(canvas).offset().left;
 			        	lastY = event.pageY-angular.element(canvas).offset().top;
-
 			        }
-			        
 			        ctx.beginPath();
-			        
-			        drawing = true;
-
+			        if(!scope.typing)
+                    {
+                        drawing = true;
+                    }
                     break;
                 case 'mousemove':
                 case 'touchmove':
+                    if(scope.typing || drawing)
+                    {
+                        if(event.offsetX!==undefined){
+                            currentX = event.offsetX;
+                            currentY = event.offsetY;
+                        } else {
+                            currentX = event.pageX-angular.element(canvas).offset().left;
+                            currentY = event.pageY-angular.element(canvas).offset().top;
+                        }
+                    }
 
                     if(drawing){
-			          // get current mouse position
-			          if(event.offsetX!==undefined){
-			            currentX = event.offsetX;
-			            currentY = event.offsetY;
-			          } else {
-			          	currentX = event.pageX-angular.element(canvas).offset().left;
-			        	currentY = event.pageY-angular.element(canvas).offset().top;
-
-			          }
-
-			          draw(lastX, lastY, currentX, currentY);
-			          
-			          // set current coordinates to last one
-			          lastX = currentX;
-			          lastY = currentY;
+                        draw(lastX, lastY, currentX, currentY);
+                        // set current coordinates to last one
+                        lastX = currentX;
+                        lastY = currentY;
 			        }
 
+                    if(scope.typing && textMove)
+                    {
+                        var img=new Image;
+                        img.onload=function()
+                        {
+                            clearCanvas();
+                            ctx.drawImage(img, 0,0);
+                            drawText(currentX,currentY);
+                        }
+                        img.src=typingState;
+                    }
                     break;
                 case 'mouseup':
                 case 'touchend':
-                    cPush();
+                    if(scope.typing)
+                    {
+                        textMove=!textMove;
+                    }
+                    else
+                    {
+                        cPush();
+                    }
                 case 'mouseout':
                     drawing = false;
-                    
                 }
             });
             

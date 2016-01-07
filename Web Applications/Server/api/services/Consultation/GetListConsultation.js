@@ -8,7 +8,7 @@ module.exports = function(data, userInfo) {
             required: (HelperService.CheckExistData(pagination.filterAppointment) && !_.isEmpty(pagination.filterAppointment)),
             where: pagination.filterAppointment,
             include: [{
-                attributes: Services.AttributesAppt.Appointment(),
+                attributes: Services.AttributesAppt.Doctor(),
                 required: (HelperService.CheckExistData(pagination.filterDoctor) && !_.isEmpty(pagination.filterDoctor)),
                 model: Doctor,
                 where: pagination.filterDoctor

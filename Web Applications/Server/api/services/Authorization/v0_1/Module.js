@@ -9,6 +9,7 @@ var modules=[
 			'ADMIN',
 		]
 	},
+
 	{
 		uid:'3',
 		state:'',
@@ -17,8 +18,49 @@ var modules=[
 		order:'3',
 		roles:[
 			'ADMIN',
-			'EXTERTAL_PRACTITIONER',
 			'ASSISTANT'
+		]
+	},
+	{
+		uid:'8',
+		state:'authentication.WAAppointment.list',
+		name:'Telehealth Appointment List',
+		parent:'3',
+		order:'3',
+		roles:[
+			'ADMIN',
+			'ASSISTANT',
+		]
+	},
+
+	{
+		uid:'11',
+		state:'authentication.WAAppointment.list',
+		name:'Referral History',
+		parent:'root',
+		order:'4',
+		roles:[
+			'EXTERTAL_PRACTITIONER'
+		]
+	},
+	{
+		uid:'12',
+		state:'authentication.WAAppointment.GP',
+		name:'Telehealth Referral',
+		parent:'root',
+		order:'5',
+		roles:[
+			'EXTERTAL_PRACTITIONER'
+		]
+	},
+	{
+		uid:'13',
+		state:'authentication.consultation.list',
+		name:'Consultation',
+		parent:'root',
+		order:'6',
+		roles:[
+			'ADMIN','INTERNAL_PRACTITIONER'
 		]
 	},
 	// {
@@ -48,7 +90,7 @@ var modules=[
 		state:'authentication.doctor.list',
 		name:'Doctor',
 		parent:'root',
-		order:'4',
+		order:'7',
 		roles:[
 			'ADMIN',
 		]
@@ -58,34 +100,13 @@ var modules=[
 		state:'authentication.patient.list',
 		name:'Patient',
 		parent:'root',
-		order:'5',
+		order:'8',
 		roles:[
 			'ADMIN',
 			'ASSISTANT'
 		]
 	},
-	{
-		uid:'8',
-		state:'authentication.WAAppointment.list',
-		name:'Telehealth Appointment List',
-		parent:'3',
-		order:'3',
-		roles:[
-			'ADMIN',
-			'ASSISTANT',
-			'EXTERTAL_PRACTITIONER'
-		]
-	},
-	{
-		uid:'9',
-		state:'authentication.WAAppointment.GP',
-		name:'Telehealth Send Request',
-		parent:'3',
-		order:'4',
-		roles:[
-			'EXTERTAL_PRACTITIONER'
-		]
-	},
+	
 
 ]
 module.exports={

@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.consultation.directives.listAppConsultation', []);
-app.directive('listappConsultation', function(consultationServices, $modal, $cookies,$state,$stateParams) {
+app.directive('listappConsultation', function(consultationServices, $modal, $cookies,$state,$stateParams,toastr) {
     return {
         scope:{
             uid:"="
@@ -10,39 +10,13 @@ app.directive('listappConsultation', function(consultationServices, $modal, $coo
 
             var Init = function() {
                 scope.searchObject = {
-                    Limit: 10,
+                    Limit: 7,
                     Offset: 0,
                     currentPage: 1,
                     maxSize: 5,
                     Filter: [{
                         Appointment: {
-                            Enable: 'Y'
-                        }
-                    }, {
-                        TelehealthAppointment: {
-                            Type: 'TEL'
-                        }
-
-                    }],
-                    Order: [{
-                        Appointment: {
-                            CreatedDate: 'DESC',
-                            FromTime: null
-                        }
-                    }],
-                    Search: [{
-                        PatientAppointment: {
-                            FullName: null
-                        }
-                    }, {
-                        Doctor: {
-                            FullName: null
-                        }
-                    }],
-                    Range: [{
-                        Appointment: {
-                            CreatedDate: [null, null],
-                            FromTime: [null, null]
+                            UID:$stateParams.data.UID
                         }
                     }]
                 };
@@ -61,9 +35,12 @@ app.directive('listappConsultation', function(consultationServices, $modal, $coo
                 scope.searchObjectMapTemp = angular.copy(scope.searchObjectMap);
                 consultationServices.listConsultation(scope.searchObjectMapTemp).then(function(response) {
                     o.loadingPage(false);
-                    console.log(response);
+                    console.log("response",response)
                     scope.consultation = response.rows;
                     scope.CountRow = response.count;
+                },function(err){
+                    o.loadingPage(false);
+                    toastr.error('fail');
                 });
             }
             Init();

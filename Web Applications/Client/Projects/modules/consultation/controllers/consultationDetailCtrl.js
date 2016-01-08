@@ -5,7 +5,7 @@ var app = angular.module("app.authentication.consultation.detail.controller",[
 	'app.authentication.consultation.directives.consultNoteDirectives'
 ]);
 
-app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices) {
+app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices,$stateParams) {
     $scope.userInfo = $cookies.getObject('userInfo');
     $scope.Call = function(){
 		window.open('/#/blank/call');

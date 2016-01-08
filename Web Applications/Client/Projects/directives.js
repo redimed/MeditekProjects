@@ -116,9 +116,12 @@ app.directive('autoComplete', function($timeout){
 app.directive('patientDetailDirective',function(){
     return {
         restrict: 'E',
+        scope:{
+            patientInfo: "="
+        },
         templateUrl: 'common/views/patientDetailDirective.html',
-        link: function(scope, $state){
-
+        controller: function($scope){
+            // console.log("patientDetailDirective",$scope.patientInfo);
         },
     };
 });

@@ -302,7 +302,7 @@
                                                         <div class="col-md-6 col-sm-6 col-md-offset-1 col-sm-offset-1">
                                                             <div class="row">
                                                                 <div class="col-md-6 col-sm-6">
-                                                                    <div class="form-group form-md-line-input" >
+                                                                    <div class="form-group form-md-line-input">
                                                                         <div class="input-icon">
                                                                             <select size="1" class="form-control" ng-model="ShowData.patient.CountryOfBirth" ng-disabled="ShowData.isLinkPatient">
                                                                                 <option ng-repeat="item in ListContry">{{item.ShortName}}</option>
@@ -320,7 +320,7 @@
                                                                             <label class="control-label">Date of Birth
                                                                                 <span class="required"> * </span>
                                                                             </label>
-                                                                             <p ng-show="userForm.DOB.$invalid && submited" class="help-block">Date of birth is required</p>
+                                                                            <p ng-show="userForm.DOB.$invalid && submited" class="help-block">Date of birth is required</p>
                                                                             <div class="form-control-focus"> </div>
                                                                             <i class="glyphicon glyphicon-calendar"></i>
                                                                         </div>
@@ -356,7 +356,7 @@
                                                                             <label class="radio-inline">
                                                                                 <input type="radio" name="Indigenous" value="Torres Strait Islander" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> Torres Strait Islander
                                                                             </label>
-                                                                             <label class="radio-inline">
+                                                                            <label class="radio-inline">
                                                                                 <input type="radio" name="Indigenous" value="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> None
                                                                             </label>
                                                                         </div>
@@ -381,7 +381,7 @@
                                                                     <div class="form-horizontal">
                                                                         <div class="form-group form-md-line-input" ng-show="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-class="{'has-error': userForm.InterpreterLanguage.$invalid && submited} ">
                                                                             <label class="control-label col-md-4 col-sm-4">If yes, language/dialect </label>
-                                                                            <div class="col-md-6 col-sm-6" >
+                                                                            <div class="col-md-6 col-sm-6">
                                                                                 <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage" name="InterpreterLanguage" ng-required="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-disabled="ShowData.isLinkPatient">
                                                                                 <p ng-show="userForm.InterpreterLanguage.$invalid && submited" class="help-block">Field is required</p>
                                                                                 <div class="form-control-focus"> </div>
@@ -499,18 +499,18 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                         <div class="col-md-6 col-sm-6">
+                                                        <div class="col-md-6 col-sm-6">
                                                             <div class="form-group form-md-line-input" ng-class="{'has-error': userForm.State.$invalid && submited} ">
                                                                 <div class="input-icon">
                                                                     <select class="form-control edited" ng-model="ShowData.patient.State" required name="State" ng-disabled="ShowData.isLinkPatient">
-                                                                            <option value=""></option>
-                                                                            <option value="WA">Western Australia</option>
-                                                                            <option value="VIC">Victoria</option>
-                                                                            <option value="TAS">Tasmania</option>
-                                                                            <option value="QLD">Queensland</option>
-                                                                            <option value="NSW">New South Wales</option>
-                                                                            <option value="NT">Northern Territory</option>
-                                                                            <option value="ACT">Australian Capital Territory</option>
+                                                                        <option value=""></option>
+                                                                        <option value="WA">Western Australia</option>
+                                                                        <option value="VIC">Victoria</option>
+                                                                        <option value="TAS">Tasmania</option>
+                                                                        <option value="QLD">Queensland</option>
+                                                                        <option value="NSW">New South Wales</option>
+                                                                        <option value="NT">Northern Territory</option>
+                                                                        <option value="ACT">Australian Capital Territory</option>
                                                                     </select>
                                                                     <label class="control-label">State
                                                                         <span class="required"> * </span>
@@ -1093,8 +1093,8 @@
                 <div class="form-actions">
                     <div class="row pull-right">
                         <div class="col-md-12">
-                            <button class="btn default" ng-click="close()">
-                                <i class="icon-action-undo"></i> Close</button>
+                            <!-- <button class="btn default" ng-click="close()">
+                                <i class="icon-action-undo"></i> Close</button> -->
                             <button type="submit" class="btn green" ng-click="submitUpdate()">
                                 <i class="glyphicon glyphicon-save"></i> Save change
                             </button>
@@ -1105,15 +1105,3 @@
         </fieldset>
     </div>
 </div>
-
-<script type="text/ng-template" id="showImageTemplate">
-    <div class="modal-header my-modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"></button>
-    </div>
-    <div class="modal-body" style="align:center">
-        <img class="img-responsive" dimage dimage-uid="LinkUID" dimage-status="dimageStatus">
-    </div>
-    <div class="modal-footer">
-        <button class="btn green" ng-click="Vieww(LinkUID)">View Full</button>
-    </div>
-</script>

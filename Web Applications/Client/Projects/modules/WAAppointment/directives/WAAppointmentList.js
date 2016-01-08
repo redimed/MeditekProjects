@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.WAAppointment.directives.listWAAppoint', []);
-app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookies,toastr) {
+app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookies, toastr) {
     return {
         restrict: 'E',
         templateUrl: "modules/WAAppointment/directives/templates/listWAApointment.html",
@@ -17,8 +17,9 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                     Filter: [{
                         Appointment: {
                             Status: null,
-                            Enable:'Y'
-                        }},{
+                            Enable: 'Y'
+                        }
+                    }, {
                         TelehealthAppointment: {
                             Type: 'WAA'
                         }
@@ -38,9 +39,9 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                             FromTime: [null, null]
                         }
                     }],
-                    Order:[{
-                        Appointment:{
-                            CreatedDate:'DESC'
+                    Order: [{
+                        Appointment: {
+                            CreatedDate: 'DESC'
                         }
                     }]
                 },
@@ -53,24 +54,24 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
             scope.WAAppointmentDetail = function(UID) {
                 o.loadingPage(true);
                 WAAppointmentService.getDetailWAAppointmentByUid(UID).then(function(data) {
-                    console.log('responseData',data);
+                    console.log('responseData', data);
                     o.loadingPage(false);
                     $modal.open({
-                        templateUrl: 'modules/WAAppointment/views/WAAppointmentListDetail.html',
-                        controller: 'WAAppointmentListDetailCtrl',
-                        windowClass: 'app-modal-window',
-                        resolve: {
-                            data: function() {
-                                return data.data;
+                            templateUrl: 'modules/WAAppointment/views/WAAppointmentListDetail.html',
+                            controller: 'WAAppointmentListDetailCtrl',
+                            windowClass: 'app-modal-window',
+                            resolve: {
+                                data: function() {
+                                    return data.data;
+                                }
                             }
-                        }
-                    })
-                    .result.then(function(responseData) {
-                        if (responseData == 'success') {
-                            scope.LoadData();
-                        };
-                    }, function(data) {})
-                },function (error) {
+                        })
+                        .result.then(function(responseData) {
+                            if (responseData == 'success') {
+                                scope.LoadData();
+                            };
+                        }, function(data) {})
+                }, function(error) {
                     o.loadingPage(false);
                     toastr.error("Select error!", "error");
                 })

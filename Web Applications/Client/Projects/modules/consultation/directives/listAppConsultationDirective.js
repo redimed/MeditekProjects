@@ -16,7 +16,7 @@ app.directive('listappConsultation', function(consultationServices, $modal, $coo
                     maxSize: 5,
                     Filter: [{
                         Appointment: {
-                            UID:$stateParams.data.UID
+                            UID:$stateParams.UID
                         }
                     }]
                 };
@@ -45,9 +45,6 @@ app.directive('listappConsultation', function(consultationServices, $modal, $coo
             }
             Init();
             scope.toggle = true;
-            scope.Detail = function(uid) {
-                $state.go("authentication.consultation.detail",{UID:uid});
-            };
             scope.toggleFilter = function() {
                 scope.toggle = scope.toggle === false ? true : false;
             };

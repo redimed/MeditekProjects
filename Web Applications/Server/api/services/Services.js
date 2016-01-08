@@ -67,6 +67,7 @@ module.exports = {
     DestroyConsultation: require('./Consultation/DestroyConsultation'),
     Drawing: require('./Consultation/Drawing'),
     GetDetailConsultation: require('./Consultation/GetDetailConsultation'),
+    RelConsultationFileUpload: require('./Consultation/RelConsultationFileUpload'),
     //end Consultation
     //begin Admission
     RequestAdmission: require('./Admission/RequestAdmission'),
@@ -82,5 +83,6 @@ module.exports = {
     BulkUpdateAdmission: require('./Admission/BulkUpdateAdmission'),
     DestroyAdmission: require('./Admission/DestroyAdmission'),
     GetDetailAdmission: require('./Admission/GetDetailAdmission'),
+    RelAdmissionFileUpload: require('./Admission/RelAdmissionFileUpload'),
     //end Admission
 }; 

@@ -7,7 +7,7 @@ output: -success: list appointment with condition received
 module.exports = function(data, userInfo) {
     var $q = require('q');
     var defer = $q.defer();
-    var pagination = Services.GetPaginationAppointment(data, userInfo);
+    var pagination = Services.GetPaginationAppointment(data, userInfo, Appointment);
     //get limit, offset
     Appointment.findAndCountAll({
             attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate', 'ApprovalDate', 'Status', 'Enable', 'CreatedDate'],

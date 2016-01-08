@@ -27,8 +27,28 @@ module.exports = function(objUpdate) {
                                     if (HelperService.CheckExistData(valueConsultObj) &&
                                         !_.isEmpty(valueConsultObj)) {
                                         consultationObject = valueConsultObj;
-                                        return valueConsultObj.setConsultationData([], {
+                                        return valueConsultObj.setFileUploads([], {
                                                 transaction: objUpdate.transaction
+                                            })
+                                            .then(function(relConsultationFileuploadDeleted) {
+                                                if (HelperService.CheckExistData(valueConsultation.FileUploads)) {
+                                                    var FileUploads = valueConsultation.FileUploads;
+                                                    var objRelConsultationFileUpload = {
+                                                        data: FileUploads,
+                                                        transaction: objUpdate.transaction,
+                                                        consultationObject: consultationObject
+                                                    };
+                                                    return Services.RelConsultationFileUpload(objRelConsultationFileUpload);
+                                                }
+                                            }, function(err) {
+                                                defer.reject(err);
+                                            })
+                                            .then(function(relConsultationFileuploadUpdated) {
+                                                return valueConsultObj.setConsultationData([], {
+                                                    transaction: objUpdate.transaction
+                                                });
+                                            }, function(err) {
+                                                defer.reject(err);
                                             })
                                             .then(function(relConsultationDataDeleted) {
                                                 return valueConsultObj.getConsultationData({

@@ -259,7 +259,7 @@ module.exports = {
             through: 'RelConsultationDataFileUpload',
             foreignKey: 'ConsultationDataID'
         });
-         //association Appointment - Admission
+        //association Appointment - Admission
         Appointment.belongsToMany(Admission, {
             through: 'RelAppointmentAdmission',
             foreignKey: 'AppointmentID'
@@ -287,6 +287,26 @@ module.exports = {
         AdmissionData.belongsToMany(FileUpload, {
             through: 'RelAdmissionDataFileUpload',
             foreignKey: 'AdmissionDataID'
+        });
+
+        //association Consultation - FileUpload
+        Consultation.belongsToMany(FileUpload, {
+            through: 'RelConsultationFileUpload',
+            foreignKey: 'ConsultationID'
+        });
+        FileUpload.belongsToMany(Consultation, {
+            through: 'RelConsultationFileUpload',
+            foreignKey: 'FileUploadID'
+        });
+
+        //association Admission - FileUpload
+        Admission.belongsToMany(FileUpload, {
+            through: 'RelAdmissionFileUpload',
+            foreignKey: 'AdmissionID'
+        });
+        FileUpload.belongsToMany(Admission, {
+            through: 'RelAdmissionFileUpload',
+            foreignKey: 'FileUploadID'
         });
     }
 };

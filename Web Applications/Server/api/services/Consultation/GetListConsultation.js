@@ -1,5 +1,5 @@
 module.exports = function(data, userInfo) {
-    var pagination = Services.GetPaginationAppointment(data, userInfo);
+    var pagination = Services.GetPaginationAppointment(data, userInfo, Consultation);
     return Consultation.findAndCountAll({
         attributes: Services.AttributesConsult.Consultation(),
         include: [{
@@ -20,6 +20,7 @@ module.exports = function(data, userInfo) {
             }]
         }],
         subQuery: false,
+        order: pagination.order,
         limit: pagination.limit,
         offset: pagination.offset
     });

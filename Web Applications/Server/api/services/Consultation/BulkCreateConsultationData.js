@@ -16,12 +16,12 @@
                                     HelperService.CheckExistData(consultation.FileUploads) &&
                                     !_.isEmpty(consultation.FileUploads)) {
                                     var FileUploads = consultation.FileUploads;
-                                    var objCreateConsultationData = {
+                                    var objRelConsultationDataFileUpload = {
                                         data: FileUploads,
                                         transaction: objCreate.transaction,
                                         consultationDataObject: consultationDataCreated
                                     };
-                                    return Services.RelConsultationDataFileUpload(objCreateConsultationData);
+                                    return Services.RelConsultationDataFileUpload(objRelConsultationDataFileUpload);
                                 }
                             }, function(err) {
                                 defer.reject(err);

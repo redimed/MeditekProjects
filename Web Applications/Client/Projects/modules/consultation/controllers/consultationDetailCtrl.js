@@ -5,7 +5,7 @@ var app = angular.module("app.authentication.consultation.detail.controller", [
     'app.authentication.consultation.directives.consultNoteDirectives'
 ]);
 
-app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams) {
+app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams,toastr) {
     console.log($stateParams.UID);
     $scope.getTelehealthDetail = function(UID) {
         WAAppointmentService.getDetailWAAppointmentByUid(UID).then(function(data) {

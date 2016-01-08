@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.consultation.directives.consultNoteDirectives', []);
-app.directive('consultNote', function(consultationServices, $modal, $cookies, $state, $stateParams, toastr, $timeout, FileUploader) {
+app.directive('consultNote', function(consultationServices, $modal, $cookies, $state, $stateParams, toastr, $timeout, FileUploader,$rootScope) {
     return {
         restrict: 'E',
         scope: {
@@ -7,6 +7,14 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
         },
         templateUrl: "modules/consultation/directives/templates/consultNoteDirectives.html",
         controller:function($scope){
+            $scope.requestInfo = {
+                UID: $stateParams.UID,
+                Consultations: [{
+                        FileUploads:[],
+                        ConsultationData: []
+                    }],
+               
+            }
             // $timeout(function() {
             //     App.initAjax();
             // })
@@ -15,7 +23,10 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 withCredentials: true,
                 alias: 'uploadFile'
             });
-
+            $scope.SendRequestUploadFile = function() {
+                console.log('uploader',uploader);
+                uploader.uploadAll();
+            }
             uploader.filters.push({
                 name: 'customFilter',
                 fn: function(item /*{File|FileLikeObject}*/ , options) {
@@ -25,13 +36,13 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
 
             console.log("FileUploader",FileUploader);
             uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
-                console.info('onWhenAddingFileFailed', item, filter, options);
+                //console.info('onWhenAddingFileFailed', item, filter, options);
             };
             uploader.onAfterAddingFile = function(fileItem) {
-                console.info('onAfterAddingFile', fileItem);
+                //console.info('onAfterAddingFile', fileItem);
             };
             uploader.onAfterAddingAll = function(addedFileItems) {
-                console.info('onAfterAddingAll', addedFileItems);
+                //console.info('onAfterAddingAll', addedFileItems);
             };
             uploader.onBeforeUploadItem = function(item) {
                 item.headers = {
@@ -44,22 +55,22 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 console.info('onBeforeUploadItem', item);
             };
             uploader.onProgressItem = function(fileItem, progress) {
-                console.info('onProgressItem', fileItem, progress);
+                //console.info('onProgressItem', fileItem, progress);
             };
             uploader.onProgressAll = function(progress) {
-                console.info('onProgressAll', progress);
+                //console.info('onProgressAll', progress);
             };
             uploader.onSuccessItem = function(fileItem, response, status, headers) {
                 console.info('onSuccessItem', fileItem, response, status, headers);
             };
             uploader.onErrorItem = function(fileItem, response, status, headers) {
-                console.info('onErrorItem', fileItem, response, status, headers);
+               // console.info('onErrorItem', fileItem, response, status, headers);
                 if (Boolean(headers.requireupdatetoken) === true) {
                     $rootScope.getNewToken();
                 }
             };
             uploader.onCancelItem = function(fileItem, response, status, headers) {
-                console.info('onCancelItem', fileItem, response, status, headers);
+                //console.info('onCancelItem', fileItem, response, status, headers);
             };
             uploader.onCompleteItem = function(fileItem, response, status, headers) {
                 console.info('onCompleteItem', fileItem, response, status, headers);
@@ -67,12 +78,14 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     $rootScope.getNewToken();
                 }
                 if (response.status == 'success') {
-                    $scope.requestInfo.FileUploads.push({
+                    console.log(response.fileUID)
+                    $scope.requestInfo.Consultations[0].FileUploads.push({
                         UID: response.fileUID
                     });
                 };
             };
             uploader.onCompleteAll = function() {
+                $scope.createConsultation();
             };
         },
         link: function(scope, ele, attr) {
@@ -84,7 +97,6 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 if (newValue !== undefined) {
                     consultationServices.detailConsultation(newValue).then(function(response) {
                         scope.loadData(response.data);
-                        scope.CheckUpdateCreate();
                     });
                 };
             });
@@ -93,6 +105,9 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 scope.requestInfo = null;
             }
             scope.loadData = function(data) {
+                console.log(data);
+                scope.CheckUpdate = false;
+                scope.FileUploads = angular.copy(data.FileUploads);
                 scope.requestInfo = {
                     UID: $stateParams.UID,
                     Consultations: [{
@@ -169,12 +184,15 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     PET_scan_OtherTextbox: null,
                 },
             };
-            scope.requestInfo = {
-                UID: $stateParams.UID,
-                Consultations: []
+            
+            scope.Create = function(){
+               ((scope.uploader.queue.length > 0) ? scope.SendRequestUploadFile() : scope.createConsultation());
             }
-            scope.Create = function() {
-                scope.ConsultationData();
+            scope.Update = function(){
+                ((scope.uploader.queue.length > 0) ? scope.SendRequestUploadFile() : scope.updateConsultation());
+            }
+            scope.createConsultation = function() {
+                scope.ConsultationDataCreate();
                 console.log(scope.requestInfo)
                 o.loadingPage(true);
                 consultationServices.createConsultation(scope.requestInfo).then(function(response) {
@@ -186,7 +204,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
 
                 });
             }
-            scope.Update = function() {
+            scope.updateConsultation = function() {
                 scope.ConsultationUpdate();
                 console.log(scope.requestInfo.Consultations);
                 o.loadingPage(true);
@@ -197,7 +215,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     };
                 });
             }
-            scope.ConsultationData = function() {
+            scope.ConsultationDataCreate = function() {
                 var ConsultationDataTemp = [];
                 for (var key in scope.requestInfo.Consultations[0].ConsultationData) {
                     var newkey = key.split("__").join(" ");
@@ -266,12 +284,6 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 };
                 scope.requestInfo.Consultations[0].ConsultationData = ConsultationDataTemp;
             }
-            scope.CheckUpdateCreate = function() {
-                if (scope.requestInfo.Consultations.length !== 0) {
-                    scope.CheckUpdate = false;
-                }
-            }
-            scope.CheckUpdateCreate();
         }
     };
 })

@@ -155,6 +155,24 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="thumbnail" ng-show ="CheckUpdate !== true">
+                            <div class="table-scrollable table-scrollable-borderless">
+                                <table class="table table-hover table-light">
+                                    <thead>
+                                        <tr class="uppercase">
+                                            <th width="30%">File Name</th>
+                                            <th >File Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in FileUploads">
+                                            <td><strong>{{ item.FileName }}</strong></td>
+                                            <td >{{ item.FileType}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

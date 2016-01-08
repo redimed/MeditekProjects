@@ -26,7 +26,7 @@ app.config(function($stateProvider) {
             controller: 'consultationListCtrl',
         })
         .state('authentication.consultation.detail', {
-            url: '/detail/:UID',
+            url: '/detail/:UID/:UIDPatient',
             data: {
                 title: 'Consultation Detail',
                 pageTitle: 'Consultation Detail'

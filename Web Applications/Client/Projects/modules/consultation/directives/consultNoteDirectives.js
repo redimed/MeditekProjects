@@ -7,7 +7,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
         },
         templateUrl: "modules/consultation/directives/templates/consultNoteDirectives.html",
         controller:function($scope){
-            //  $timeout(function() {
+            // $timeout(function() {
             //     App.initAjax();
             // })
             var uploader = $scope.uploader = new FileUploader({
@@ -15,7 +15,6 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 withCredentials: true,
                 alias: 'uploadFile'
             });
-
 
             uploader.filters.push({
                 name: 'customFilter',
@@ -77,10 +76,9 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             };
         },
         link: function(scope, ele, attr) {
-
+            console.log('$stateParams',$stateParams);
             scope.CheckUpdate = true;
             scope.ConsultationData;
-           
 
             scope.$watch('consultationuid', function(newValue, oldValue) {
                 if (newValue !== undefined) {
@@ -96,7 +94,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             }
             scope.loadData = function(data) {
                 scope.requestInfo = {
-                    UID: $stateParams.data.UID,
+                    UID: $stateParams.UID,
                     Consultations: [{
                         UID: data.UID,
                         ConsultationData: []
@@ -172,7 +170,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 },
             };
             scope.requestInfo = {
-                UID: $stateParams.data.UID,
+                UID: $stateParams.UID,
                 Consultations: []
             }
             scope.Create = function() {
@@ -182,9 +180,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 consultationServices.createConsultation(scope.requestInfo).then(function(response) {
                     if (response == 'success') {
                         o.loadingPage(false);
-                        $state.go("authentication.consultation.detail", {
-                            data: $stateParams.data
-                        });
+                        $state.go("authentication.consultation.detail",{UID:$stateParams.UID,UIDPatient:$stateParams.UIDPatient});
                         toastr.success("Success");
                     };
 

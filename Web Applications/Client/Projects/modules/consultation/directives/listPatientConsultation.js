@@ -12,7 +12,7 @@ app.directive('listpatientConsultation', function(consultationServices, $modal, 
                     maxSize: 5,
                     Filter: [{
                         Patient: {
-                            UID:$stateParams.data.UIDPatient
+                            UID:$stateParams.UIDPatient
                         }
                     }]
                 };
@@ -30,7 +30,6 @@ app.directive('listpatientConsultation', function(consultationServices, $modal, 
                 o.loadingPage(true);
                 scope.searchObjectMapTemp = angular.copy(scope.searchObjectMap);
                 consultationServices.listConsultation(scope.searchObjectMapTemp).then(function(response) {
-                    console.log('$stateParams.data.UIDPatient',$stateParams.data.UIDPatient)
                     o.loadingPage(false);
                     console.log(response)
                     scope.consultation = response.rows;

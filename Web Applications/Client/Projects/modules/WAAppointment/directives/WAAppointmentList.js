@@ -25,8 +25,8 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                         }
                     }],
                     Search: [{
-                        PatientAppointment: {
-                            FullName: null
+                        Patient: {
+                            FirstName: null
                         }
                     }, {
                         Doctor: {

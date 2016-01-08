@@ -215,7 +215,7 @@ app
         })
 
         $rootScope.$on('$viewContentLoaded', function() {
-            App.initAjax();
+            //App.initAjax();
             FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page
             
@@ -224,7 +224,7 @@ app
             //ComponentsBootstrapSelect.init(); // init todo page
         });
         $rootScope.$on('$includeContentLoaded', function() {
-            App.initAjax();
+            //App.initAjax();
             FormWizard.init(); // form step
             ComponentsDateTimePickers.init(); // init todo page
         });

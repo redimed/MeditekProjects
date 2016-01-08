@@ -13,9 +13,23 @@ module.exports = function(objCreate) {
                     })
                     .then(function(consultationCreated) {
                         arrConsultationCreated.push(consultationCreated);
+                        consultationObject = consultationCreated;
+                        if (HelperService.CheckExistData(consultation) &&
+                            HelperService.CheckExistData(consultation.FileUploads)) {
+                            var FileUploads = consultation.FileUploads;
+                            var objRelConsultationFileUpload = {
+                                data: FileUploads,
+                                transaction: objCreate.transaction,
+                                consultationObject: consultationObject
+                            };
+                            return Services.RelConsultationFileUpload(objRelConsultationFileUpload);
+                        }
+                    }, function(err) {
+                        defer.reject(err);
+                    })
+                    .then(function(relConsultationFileUploadCreated) {
                         if (HelperService.CheckExistData(consultation.ConsultationData) &&
                             !_.isEmpty(consultation.ConsultationData)) {
-                            consultationObject = consultationCreated;
                             var consultData =
                                 Services.GetDataConsultation.ConsultationData(consultation.ConsultationData, userID);
                             var objectCreateConsultationData = {

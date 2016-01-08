@@ -34,7 +34,7 @@
                 </div>
                 <div class="portlet-body">
                     <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30">
                             <div class="dashboard-stat purple" ng-click="eForms()">
                                 <div class="visual">
                                     <i class="fa fa-file-text-o"></i>
@@ -47,7 +47,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30">
                             <div class="dashboard-stat green">
                                 <div class="visual">
                                     <i class="glyphicon glyphicon-user"></i>
@@ -60,7 +60,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30">
                             <div class="dashboard-stat red">
                                 <div class="visual">
                                     <i class="fa fa-gear"></i>
@@ -68,8 +68,21 @@
                                 <div class="details">
                                     <div class="number">Consult Note</div>
                                 </div>
-                                <a class="more" href="javascript:;" ui-sref="authentication.consultation.detail.consultNote">
+                                <a class="more" href="javascript:;" ui-sref="authentication.consultation.detail.telehealth">
                                     Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30">
+                            <div class="dashboard-stat blue-soft">
+                                <div class="visual">
+                                    <i class="fa fa-gear"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="number">Telehealth Detail</div>
+                                </div>
+                                <a class="more" href="javascript:;" ui-sref="authentication.consultation.detail.telehealth">
+                                    View  <i class="m-icon-swapright m-icon-white"></i>
                                 </a>
                             </div>
                         </div>
@@ -78,7 +91,7 @@
             </div>
         </div>
         <div class="col-md-3 col-sm-3">
-            <patient-detail-directive></patient-detail-directive>
+            <patient-detail-directive patient-info=""></patient-detail-directive>
             <appointment-detail-directive></appointment-detail-directive>
             <medicare-directive></medicare-directive>
             <div class="portlet portlet-fit box grey-mint">

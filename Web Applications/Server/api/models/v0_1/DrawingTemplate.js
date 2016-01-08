@@ -1,6 +1,6 @@
 module.exports={
 	attributes:{
-		id:{
+		ID:{
 			type:Sequelize.INTEGER(11),
 			primaryKey:true,
 			autoIncrement:true,
@@ -12,7 +12,7 @@ module.exports={
             }
 		},
 
-		fileName:{
+		FileName:{
 			type:Sequelize.STRING(200),
 			allowNull:false,
 			validate:{
@@ -23,7 +23,7 @@ module.exports={
 			}
 		},
 
-		isFolder:{
+		IsFolder:{
 			type:Sequelize.INTEGER(11),
 			allowNull:false,
 			validate:{
@@ -33,7 +33,7 @@ module.exports={
 			}
 		},
 
-		parent:{
+		Parent:{
 			type:Sequelize.INTEGER(11),
 			allowNull:false,
 			validate:{
@@ -43,7 +43,7 @@ module.exports={
 			}
 		},
 
-		fileUrl:{
+		FileUrl:{
 			type: Sequelize.TEXT,
             validate: {
                 len: {
@@ -55,7 +55,7 @@ module.exports={
 	},
 
 	options:{
-		tableName:'drawing_template',
+		tableName:'DrawingTemplate',
 		timestamps:false,
 	}
 }

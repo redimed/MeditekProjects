@@ -46,7 +46,7 @@ module.exports={
 		var error=new Error("GetDrawingTemplate.Error");
 		return DrawingTemplate.findOne({
 			where:{
-				id:id
+				ID:id
 			}
 		})
 		.then(function(data){

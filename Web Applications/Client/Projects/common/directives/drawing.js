@@ -242,10 +242,10 @@ angular.module("app.common.drawing",[])
                 {
                     var node = data[i];
                     scope.treeArr.push({
-                                "id": node.id,
-                                "parent": node.parent == null ? '#' : node.parent,
-                                "text": node.fileName,
-                                "icon": node.isFolder == 1 ? 'fa fa-folder icon-state-warning' : 'fa fa-file icon-state-success'
+                                "id": node.ID,
+                                "parent": node.Parent == null ? '#' : node.Parent,
+                                "text": node.FileName,
+                                "icon": node.IsFolder == 1 ? 'fa fa-folder icon-state-warning' : 'fa fa-file icon-state-success'
                             })
                 }
             },function(err){

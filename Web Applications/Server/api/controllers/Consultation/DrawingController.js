@@ -13,7 +13,7 @@ module.exports={
 		var id=req.params.id;
 		Services.Drawing.GetDrawingTemplate(id)
 		.then(function(data){
-			res.ok({database64:Services.Drawing.base64Image(data.fileUrl)})
+			res.ok({database64:Services.Drawing.base64Image(data.FileUrl)})
 		},function(err){
 			res.serverError(err);
 		})
@@ -25,11 +25,11 @@ module.exports={
 		Services.Drawing.GetDrawingTemplate(id)
 		.then(function(data){
 			// console.log(data);
-			res.set('filename',data.fileName);
+			res.set('filename',data.FileName);
             // res.set('testtesttesttest',true);
             res.header('Access-Control-Expose-Headers', HelperService.const.exposeHeaders);
             var fileAdapter = SkipperDisk(/* optional opts */);
-			fileAdapter.read(data.fileUrl)
+			fileAdapter.read(data.FileUrl)
 		    .on('error', function (err){
 		      return res.serverError(err);
 		    })

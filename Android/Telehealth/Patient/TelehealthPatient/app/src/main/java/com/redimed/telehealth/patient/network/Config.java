@@ -19,6 +19,6 @@ public class Config {
 //    public static final String apiURLCore = "http://testapp.redimed.com.au:3005";
 //    public static final String apiURLLogin = "http://testapp.redimed.com.au:3006";
 //    public static final String apiURLDownload = "http://testapp.redimed.com.au:3005/api/downloadFile/";
+//    public static final String apiURLImageResize = "http://testapp.redimed.com.au:3005/api/downloadFile/400/";
 //    public static final String socketURL = "http://testapp.redimed.com.au:3009";
-
 }

@@ -24,7 +24,33 @@
             android:id="@+id/imgView"
             android:layout_width="500dp"
             android:layout_height="500dp"
-            android:background="@null"/>
+            android:scaleType="matrix"/>
+
+        <!--<com.redimed.telehealth.patient.utils.TouchImageView-->
+            <!--android:id="@+id/imgView"-->
+            <!--android:layout_width="500dp"-->
+            <!--android:layout_height="500dp"-->
+            <!--android:scaleType="center"/>-->
+
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:id="@+id/txtAlert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Please load again!"
+            android:textColor="@color/lightFont"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btnRotate"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:alpha="1"
+            android:background="@drawable/icon_rotate" />
 
         <Button
             android:id="@+id/btnClose"

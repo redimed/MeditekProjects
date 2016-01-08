@@ -64,8 +64,8 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
         ButterKnife.bind(this);
         Picasso.with(this).load(R.drawable.logo_redimed).into(logo);
 
-        registerApiCore = RESTClient.getRegisterApiCore();
         registerApi = RESTClient.getRegisterApi();
+        registerApiCore = RESTClient.getRegisterApiCore();
         gson = new Gson();
 
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
@@ -75,7 +75,6 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
         LoadImageUpload();
 
         btnUpload.setOnClickListener(this);
-
     }
 
     private void LoadImageUpload() {

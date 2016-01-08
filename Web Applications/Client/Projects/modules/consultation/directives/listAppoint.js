@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.consultation.directives.listAppoint', []);
-app.directive('listAppoint', function(consultationServices, $modal, $cookies,$state,$stateParams) {
+app.directive('listAppoint', function(consultationServices, $modal, $cookies, $state, $stateParams) {
     return {
         restrict: 'E',
         templateUrl: "modules/consultation/directives/templates/listAppoint.html",
@@ -65,8 +65,16 @@ app.directive('listAppoint', function(consultationServices, $modal, $cookies,$st
             }
             Init();
             scope.toggle = true;
-            scope.Detail = function(uid) {
-                $state.go("authentication.consultation.detail",{UID:uid});
+
+            scope.Detail = function(data) {
+                console.log('data',data)
+                var data = {
+                    UID: data.UID,
+                    UIDPatient: (data.Patients.length == 0) ? 'e.x.ex':data.Patients[0].UID
+                };
+                $state.go("authentication.consultation.detail", {
+                    data: data
+                });
             };
             scope.toggleFilter = function() {
                 scope.toggle = scope.toggle === false ? true : false;

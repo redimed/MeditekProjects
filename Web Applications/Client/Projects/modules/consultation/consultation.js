@@ -19,10 +19,13 @@ app.config(function($stateProvider){
 			controller: 'consultationListCtrl',
 		})
 		.state('authentication.consultation.detail',{
-			url: '/detail/:UID',
+			url: '/detail',
 			data: {title: 'Consultation Detail', pageTitle: 'Consultation Detail'},
 			templateUrl: 'modules/consultation/views/consultationDetail.html',
 			controller: 'consultationDetailCtrl',
+			params:{
+				data:null
+			}
 		})
 		.state('authentication.consultation.detail.patientAdmission',{
 			url: '/patientAdmission',

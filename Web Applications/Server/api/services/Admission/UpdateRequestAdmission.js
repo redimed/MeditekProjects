@@ -35,7 +35,10 @@ module.exports = function(data, userInfo) {
                         };
                         return Services.BulkUpdateAdmission(objectUpdateAdmission);
                     }, function(err) {
-                        defer.reject(err);
+                        defer.reject({
+                            error: err,
+                            transaction: t
+                        });
                     })
                     .then(function(admissionUpdated) {
                         defer.resolve({
@@ -43,10 +46,16 @@ module.exports = function(data, userInfo) {
                             status: 'success'
                         });
                     }, function(err) {
-                        defer.reject(err);
+                        defer.reject({
+                            error: err,
+                            transaction: t
+                        });
                     });
             } else {
-                defer.reject('UpdateRequestAdmission.data.failed')
+                console.log('whereClause', whereClause);
+                console.log('admissions', admissions);
+                var error = new Error('UpdateRequestAdmission.data.failed')
+                defer.reject(error);
             }
             return defer.promise;
         });

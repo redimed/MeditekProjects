@@ -121,7 +121,8 @@ module.exports = function(objUpdate) {
                 defer.reject(err);
             });
     } else {
-        defer.reject('objUpdate.data.BulkUpdateConsultation.failed');
+        var error = new Error('objUpdate.data.BulkUpdateConsultation.failed');
+        defer.reject(error);
     }
     return defer.promise;
 };

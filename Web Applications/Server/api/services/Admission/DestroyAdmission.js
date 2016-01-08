@@ -19,7 +19,8 @@ module.exports = function(admissionUID, userInfo) {
                                 transaction: t,
                             });
                         } else {
-                            defer.reject('find.admission.not.found');
+                            var error = new Error('find.admission.not.found');
+                            defer.reject(error);
                         }
                     }, function(err) {
                         defer.reject(err);
@@ -72,7 +73,8 @@ module.exports = function(admissionUID, userInfo) {
                         defer.reject(err);
                     });
             } else {
-                defer.reject('param.admission.UID.not.found');
+                var error = new Error('param.admission.UID.not.found');
+                defer.reject(error);
             }
             return defer.promise;
         });

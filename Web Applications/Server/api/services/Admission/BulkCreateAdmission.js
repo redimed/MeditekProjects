@@ -13,9 +13,23 @@ module.exports = function(objCreate) {
                     })
                     .then(function(admissionCreated) {
                         arrAdmissionCreated.push(admissionCreated);
+                        admissionObject = admissionCreated;
+                        if (HelperService.CheckExistData(admission) &&
+                            HelperService.CheckExistData(admission.FileUploads)) {
+                            var FileUploads = admission.FileUploads;
+                            var objRelAdmissionFileUpload = {
+                                data: FileUploads,
+                                transaction: objCreate.transaction,
+                                admissionObject: admissionObject
+                            };
+                            return Services.RelAdmissionFileUpload(objRelAdmissionFileUpload);
+                        }
+                    }, function(err) {
+                        defer.reject(err);
+                    })
+                    .then(function(relAdmissionFileUploadCreated) {
                         if (HelperService.CheckExistData(admission.AdmissionData) &&
                             !_.isEmpty(admission.AdmissionData)) {
-                            admissionObject = admissionCreated;
                             var admissionData =
                                 Services.GetDataAdmission.AdmissionData(admission.AdmissionData, userID);
                             var objectCreateAdmissionData = {
@@ -54,7 +68,8 @@ module.exports = function(objCreate) {
                 defer.reject(err);
             });
     } else {
-        defer.reject('objCreate.data.BulkCreateAdmission.failed');
+        var error = new Error('objCreate.data.BulkCreateAdmission.failed');
+        defer.reject(error);
     }
     return defer.promise;
 };

@@ -27,11 +27,31 @@ module.exports = function(objUpdate) {
                                     if (HelperService.CheckExistData(valueAdmissionObj) &&
                                         !_.isEmpty(valueAdmissionObj)) {
                                         admissionObject = valueAdmissionObj;
-                                        return valueAdmissionObj.setAdmissionData([], {
-                                                transaction: objUpdate.transaction
+                                        return valueAdmissionObj.setFileUploads([], {
+                                            transaction: objUpdate.transaction
+                                        }).
+                                        then(function(relAdmissionFileUploadDeleted) {
+                                                if (HelperService.CheckExistData(valueAdmission.FileUploads)) {
+                                                    var FileUploads = valueAdmission.FileUploads;
+                                                    var objRelAdmissionFileUpload = {
+                                                        data: FileUploads,
+                                                        transaction: objUpdate.transaction,
+                                                        admissionObject: admissionObject
+                                                    };
+                                                    return Services.RelAdmissionFileUpload(objRelAdmissionFileUpload);
+                                                }
+                                            }, function(err) {
+                                                defer.reject(err);
                                             })
-                                            .then(function(relConsultationDataDeleted) {
-                                                return valueAdmissionObj.getConsultationData({
+                                            .then(function(relAdmissionDataUpdated) {
+                                                return valueAdmissionObj.setAdmissionData([], {
+                                                    transaction: objUpdate.transaction
+                                                })
+                                            }, function(err) {
+                                                defer.reject(err);
+                                            })
+                                            .then(function(relAdmissionDataDeleted) {
+                                                return valueAdmissionObj.getAdmissionData({
                                                     attributes: ['ID'],
                                                     transaction: objUpdate.transaction,
                                                     raw: true
@@ -99,7 +119,8 @@ module.exports = function(objUpdate) {
                 defer.reject(err);
             });
     } else {
-        defer.reject('objUpdate.data.BulkUpdateAdmission.failed');
+        var error = new Error('objUpdate.data.BulkUpdateAdmission.failed');
+        defer.reject(error);
     }
     return defer.promise;
 };

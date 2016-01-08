@@ -34,7 +34,8 @@
                     defer.reject(err);
                 });
         } else {
-            defer.reject('objCreate.BulkCreateAdmissionData.failed');
+            var error = new Error('objCreate.BulkCreateAdmissionData.failed');
+            defer.reject(error);
         }
         return defer.promise;
     };

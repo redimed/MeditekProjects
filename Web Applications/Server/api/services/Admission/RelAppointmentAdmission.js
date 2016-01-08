@@ -13,7 +13,8 @@ module.exports = function(objRel) {
             });
         }
     } else {
-        defer.reject('objRel.RelAppointmentAdmission.data.failed');
+        var error = new Error('objRel.RelAppointmentAdmission.data.failed');
+        defer.reject(error);
     }
     return defer.promise;
 };

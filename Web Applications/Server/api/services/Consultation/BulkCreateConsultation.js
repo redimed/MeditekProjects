@@ -68,7 +68,8 @@ module.exports = function(objCreate) {
                 defer.reject(err);
             });
     } else {
-        defer.reject('objCreate.data.Consultation.failed');
+        var error = new Error('objCreate.data.Consultation.failed');
+        defer.reject(error);
     }
     return defer.promise;
 };

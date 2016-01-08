@@ -34,7 +34,8 @@
                     defer.reject(err);
                 });
         } else {
-            defer.reject('objCreate.BulkCreateConsultationData.failed');
+            var error = new Error('objCreate.BulkCreateConsultationData.failed');
+            defer.reject(error);
         }
         return defer.promise;
     };

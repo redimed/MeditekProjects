@@ -28,7 +28,7 @@ app.controller('homeListCtrl', function($scope, MovieRetriever, $state){
 	//Test Drawing Begin
 	$scope.drawingData={
 		userUID:'6a316ebf-0ea8-4365-ac95-8b9ab340f2cf',
-		fileType:'MedicalImage'
+		fileType:'MedicalDrawing'
 	};
 	$scope.drawingAction=function(fileUID)
 	{

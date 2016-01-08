@@ -32,7 +32,8 @@ module.exports = function(objRel) {
                 }), function(subGrouped) {
                     return subGrouped[0].ID;
                 });
-                if (HelperService.CheckExistData(arrayFileUploadsUnique)) {
+                if (HelperService.CheckExistData(arrayFileUploadsUnique) &&
+                    !_.isEmpty(arrayFileUploadsUnique)) {
                     return objRel.consultationDataObject.setFileUploads(arrayFileUploadsUnique, {
                         transaction: objRel.transaction,
                         raw: true
@@ -47,7 +48,8 @@ module.exports = function(objRel) {
                 defer.reject(err);
             });
     } else {
-        defer.reject('objRel.RelConsultationDataFileUpload.failed');
+        var error = new Error('objRel.RelConsultationDataFileUpload.failed');
+        defer.reject(error);
     }
     return defer.promise;
 };

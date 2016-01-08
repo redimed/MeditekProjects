@@ -153,7 +153,7 @@ module.exports = {
                 });
                 callback();
             },
-            beforeUpdate: function(admissiondata, options, callback) {
+            beforeUpdate: function(admissiondata, callback) {
                 admissiondata.fields.push('ModifiedDate');
                 admissiondata.attributes.ModifiedDate = new Date();
                 callback();

@@ -73,6 +73,10 @@ module.exports = function(admissionUID, userInfo) {
                     model: FileUpload,
                     required: false
                 }]
+            }, {
+                attributes: Services.AttributesAppt.FileUpload(),
+                model: FileUpload,
+                required: false
             }],
             where: filter.Admission
         })

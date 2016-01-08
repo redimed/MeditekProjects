@@ -4,17 +4,18 @@ module.exports = function(objRel) {
     if (HelperService.CheckExistData(objRel) &&
         HelperService.CheckExistData(objRel.data) &&
         !_.isEmpty(objRel.data)) {
-         var whereClause = {};
+        var whereClause = objRel.data;
         _.forEach(objRel.data, function(valueData, indexData) {
             if (HelperService.CheckExistData(valueData) &&
-                !_.isObject(valueData) &&
-                !_.isArray(valueData)) {
-                if (moment(valueData, 'YYYY-MM-DD Z', true).isValid() ||
-                    moment(valueData, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                    whereClause[indexData] = moment(valueData, 'YYYY-MM-DD HH:mm:ss Z').toDate();
-                } else {
-                    whereClause[indexData] = valueData;
-                }
+                !_.isObject(valueData)) {
+                _.forEach(valueData, function(valueKey, indexKey) {
+                    if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                        moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                        whereClause[indexData][indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                    } else {
+                        whereClause[indexData][indexKey] = valueKey;
+                    }
+                })
             }
         });
         FileUpload.findAll({
@@ -27,14 +28,17 @@ module.exports = function(objRel) {
             })
             .then(function(fileUploadIDRes) {
                 var arrayFileUploadsUnique = _.map(_.groupBy(fileUploadIDRes, function(FU) {
-                    return FU.UID;
+                    return FU.ID;
                 }), function(subGrouped) {
-                    return subGrouped[0].UID;
+                    return subGrouped[0].ID;
                 });
-                return objRel.admissionDataObject.addFileUploads(arrayFileUploadsUnique, {
-                    transaction: objRel.transaction,
-                    raw: true
-                });
+                if (HelperService.CheckExistData(arrayFileUploadsUnique) &&
+                    !_.isEmpty(arrayFileUploadsUnique)) {
+                    return objRel.admissionDataObject.setFileUploads(arrayFileUploadsUnique, {
+                        transaction: objRel.transaction,
+                        raw: true
+                    });
+                }
             }, function(err) {
                 defer.reject(err);
             })
@@ -44,7 +48,8 @@ module.exports = function(objRel) {
                 defer.reject(err);
             });
     } else {
-        defer.reject('objRel.RelAdmissionDataFileUpload.failed');
+        var error = new Error('objRel.RelAdmissionDataFileUpload.failed');
+        defer.reject(error);
     }
     return defer.promise;
 };

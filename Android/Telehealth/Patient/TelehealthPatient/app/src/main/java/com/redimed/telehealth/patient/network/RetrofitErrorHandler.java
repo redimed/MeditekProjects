@@ -50,7 +50,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
                         JSONObject dataObject = new JSONObject(json);
                         String strError = dataObject.optString("ErrorsList");
                         Log.d(TAG, strError);
-                        if (strError.equalsIgnoreCase("[\"isAuthenticated.notAuthenticated\"]")){
+                        if (strError.equalsIgnoreCase("[\"isAuthenticated.notAuthenticated\"]") || strError.equalsIgnoreCase("[\"isAuthenticated.oldRefreshCodeExpired\"]")){
                             errorDescription = "Sorry for inconvenience, please activation application again!";
                         }
                         else if (strError.equalsIgnoreCase("[\"isAuthenticated.sessionUserMismatchedUserAccess\"]")){

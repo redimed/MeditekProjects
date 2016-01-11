@@ -15,7 +15,8 @@ module.exports = function(objCreate) {
                         arrConsultationCreated.push(consultationCreated);
                         consultationObject = consultationCreated;
                         if (HelperService.CheckExistData(consultation) &&
-                            HelperService.CheckExistData(consultation.FileUploads)) {
+                            HelperService.CheckExistData(consultation.FileUploads) &&
+                            !_.isEmpty(consultation.FileUploads)) {
                             var FileUploads = consultation.FileUploads;
                             var objRelConsultationFileUpload = {
                                 data: FileUploads,

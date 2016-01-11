@@ -4,7 +4,7 @@ module.exports = function(objRel) {
     if (HelperService.CheckExistData(objRel) &&
         HelperService.CheckExistData(objRel.data)) {
         if (HelperService.CheckExistData(objRel.consultationObject)) {
-            return objRel.consultationObject.addConsultationData(objRel.data, {
+            return objRel.consultationObject.setConsultationData(objRel.data, {
                 transaction: objRel.transaction
             });
         } else {

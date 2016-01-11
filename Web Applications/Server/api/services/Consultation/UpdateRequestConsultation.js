@@ -28,12 +28,18 @@ module.exports = function(data, userInfo) {
                         transaction: t
                     })
                     .then(function(objAppt) {
-                        var objectUpdateConsultation = {
-                            data: Consultations,
-                            transaction: t,
-                            userInfo: userInfo
-                        };
-                        return Services.BulkUpdateConsultation(objectUpdateConsultation);
+                        if (HelperService.CheckExistData(objAppt) &&
+                            !_.isEmpty(objAppt)) {
+                            var objectUpdateConsultation = {
+                                data: Consultations,
+                                transaction: t,
+                                userInfo: userInfo
+                            };
+                            return Services.BulkUpdateConsultation(objectUpdateConsultation);
+                        } else {
+                            var error = new Error('UpdateRequestConsultation.Appointment.not.exist');
+                            defer.reject(error);
+                        }
                     }, function(err) {
                         defer.reject({
                             error: err,

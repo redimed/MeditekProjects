@@ -64,9 +64,9 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
         ButterKnife.bind(this);
         Picasso.with(this).load(R.drawable.logo_redimed).into(logo);
 
+        gson = new Gson();
         registerApi = RESTClient.getRegisterApi();
         registerApiCore = RESTClient.getRegisterApiCore();
-        gson = new Gson();
 
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
         if (savedInstanceState != null) {
@@ -174,7 +174,7 @@ public class ModelActivity extends AppCompatActivity implements View.OnClickList
 
                         JsonObject fileJson = new JsonObject();
                         fileJson.addProperty("data", gson.toJson(fileUpload));
-
+                        Log.d(TAG, fileJson + "");
                         registerApi.addAppointmentFile(fileJson, new Callback<JsonObject>() {
                             @Override
                             public void success(JsonObject jsonObject, Response response) {

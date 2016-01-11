@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 /**
  * Created by LamNguyen on 12/17/2015.
  */
-public class DialogViewImage extends Dialog implements View.OnClickListener, View.OnTouchListener {
+public class DialogViewImage extends Dialog implements View.OnClickListener{
 
     private int rotation, index = 0;
     private String imgUrl;
@@ -64,8 +64,8 @@ public class DialogViewImage extends Dialog implements View.OnClickListener, Vie
     private PointF mid = new PointF();
     private PointF start = new PointF();
 
-    //    @Bind(R.id.imgView)
-//    TouchImageView imgView;
+    @Bind(R.id.imgView)
+    TouchImageView imgView;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
     @Bind(R.id.btnClose)
@@ -74,9 +74,6 @@ public class DialogViewImage extends Dialog implements View.OnClickListener, Vie
     Button btnRotate;
     @Bind(R.id.txtAlert)
     TextView txtAlert;
-
-    @Bind(R.id.imgView)
-    ImageView imgView;
 
     public DialogViewImage(Context ctx, String url) {
         super(ctx);
@@ -94,8 +91,6 @@ public class DialogViewImage extends Dialog implements View.OnClickListener, Vie
 
         btnClose.setOnClickListener(this);
         btnRotate.setOnClickListener(this);
-//        imgView.setOnTouchListener(this);
-
     }
 
     private void DisplayImage() {
@@ -120,60 +115,33 @@ public class DialogViewImage extends Dialog implements View.OnClickListener, Vie
                     public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
                         progressBar.setVisibility(View.GONE);
                         btnClose.setVisibility(View.VISIBLE);
+                        txtAlert.setVisibility(View.VISIBLE);
                         Log.d("ERROR PICASSO", exception.getLocalizedMessage());
                     }
                 }).build();
 
         picasso.load(imgUrl)
                 .error(R.drawable.icon_error_image)
-                .fit().into(imgView, new Callback() {
-            @Override
-            public void onSuccess() {
-                progressBar.setVisibility(View.GONE);
-                btnClose.setVisibility(View.VISIBLE);
-            }
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        progressBar.setVisibility(View.GONE);
+                        btnClose.setVisibility(View.VISIBLE);
 
-            @Override
-            public void onError() {
-                progressBar.setVisibility(View.GONE);
-                btnRotate.setVisibility(View.GONE);
-                txtAlert.setVisibility(View.VISIBLE);
-                btnClose.setVisibility(View.VISIBLE);
-            }
-        });
+                        imgView.setImageBitmap(bitmap);
+                        ImageView.ScaleType currentScaleType = ImageView.ScaleType.FIT_XY;
+                        imgView.setScaleType(currentScaleType);
+                    }
 
-//        picasso.load(imgUrl)
-//                .error(R.drawable.icon_error_image)
-//                .into(new Target() {
-//                    @Override
-//                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//                        progressBar.setVisibility(View.GONE);
-//                        btnClose.setVisibility(View.VISIBLE);
-//                        LoadImage(bitmap);
-//                    }
-//
-//                    @Override
-//                    public void onBitmapFailed(Drawable errorDrawable) {
-//                    }
-//
-//                    @Override
-//                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-//                    }
-//                });
-    }
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        progressBar.setVisibility(View.GONE);
+                        txtAlert.setVisibility(View.VISIBLE);
+                    }
 
-    private void LoadImage(Bitmap bitmap) {
-        if (imgBitmap != null) {
-            imgView.setImageBitmap(bitmap);
-            imgView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    index = ++index % scaleTypes.length;
-                    ImageView.ScaleType currentScaleType = scaleTypes[index];
-                    imgView.setScaleType(currentScaleType);
-                }
-            });
-        }
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {}
+                });
     }
 
     @Override
@@ -187,87 +155,6 @@ public class DialogViewImage extends Dialog implements View.OnClickListener, Vie
                 rotation %= 360;
                 break;
         }
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        // handle touch events here
-        ImageView view = (ImageView) v;
-        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_DOWN:
-                savedMatrix.set(matrix);
-                start.set(event.getX(), event.getY());
-                mode = DRAG;
-                lastEvent = null;
-                break;
-            case MotionEvent.ACTION_POINTER_DOWN:
-                oldDist = spacing(event);
-                if (oldDist > 10f) {
-                    savedMatrix.set(matrix);
-                    midPoint(mid, event);
-                    mode = ZOOM;
-                }
-                lastEvent = new float[4];
-                lastEvent[0] = event.getX(0);
-                lastEvent[1] = event.getX(1);
-                lastEvent[2] = event.getY(0);
-                lastEvent[3] = event.getY(1);
-                d = rotation(event);
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_POINTER_UP:
-                mode = NONE;
-                lastEvent = null;
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (mode == DRAG) {
-                    matrix.set(savedMatrix);
-                    float dx = event.getX() - start.x;
-                    float dy = event.getY() - start.y;
-                    matrix.postTranslate(dx, dy);
-                } else if (mode == ZOOM) {
-                    float newDist = spacing(event);
-                    if (newDist > 10f) {
-                        matrix.set(savedMatrix);
-                        float scale = (newDist / oldDist);
-                        matrix.postScale(scale, scale, mid.x, mid.y);
-                    }
-                    if (lastEvent != null && event.getPointerCount() == 3) {
-                        newRot = rotation(event);
-                        float r = newRot - d;
-                        float[] values = new float[9];
-                        matrix.getValues(values);
-                        float tx = values[2];
-                        float ty = values[5];
-                        float sx = values[0];
-                        float xc = (view.getWidth() / 2) * sx;
-                        float yc = (view.getHeight() / 2) * sx;
-                        matrix.postRotate(r, tx + xc, ty + yc);
-                    }
-                }
-                break;
-        }
-        view.setImageMatrix(matrix);
-        return true;
-    }
-
-    private float spacing(MotionEvent event) {
-        float x = event.getX(0) - event.getX(1);
-        float y = event.getY(0) - event.getY(1);
-        return (float) Math.sqrt(x * x + y * y);
-    }
-
-    private void midPoint(PointF point, MotionEvent event) {
-        float x = event.getX(0) + event.getX(1);
-        float y = event.getY(0) + event.getY(1);
-        point.set(x / 2, y / 2);
-    }
-
-    private float rotation(MotionEvent event) {
-        double delta_x = (event.getX(0) - event.getX(1));
-        double delta_y = (event.getY(0) - event.getY(1));
-        double radians = Math.atan2(delta_y, delta_x);
-        return (float) Math.toDegrees(radians);
     }
 }
 

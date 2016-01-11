@@ -74,6 +74,9 @@ module.exports = function(objUpdate) {
                                             });
                                     }
                                 });
+                            } else {
+                                var error = new Error('BulkUpdateConsultation.Consultation.not.exist');
+                                defer.reject(error);
                             }
                         }, function(err) {
                             defer.reject(err);

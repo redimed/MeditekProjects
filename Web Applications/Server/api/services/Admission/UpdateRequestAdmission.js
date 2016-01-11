@@ -28,12 +28,18 @@ module.exports = function(data, userInfo) {
                         transaction: t
                     })
                     .then(function(objAppt) {
-                        var objectUpdateAdmission = {
-                            data: admissions,
-                            transaction: t,
-                            userInfo: userInfo
-                        };
-                        return Services.BulkUpdateAdmission(objectUpdateAdmission);
+                        if (HelperService.CheckExistData(objAppt) &&
+                            !_.isEmpty(objAppt)) {
+                            var objectUpdateAdmission = {
+                                data: admissions,
+                                transaction: t,
+                                userInfo: userInfo
+                            };
+                            return Services.BulkUpdateAdmission(objectUpdateAdmission);
+                        } else {
+                            var error = new Error('UpdateRequestConsultation.Appointment.not.exist');
+                            defer.reject(error);
+                        }
                     }, function(err) {
                         defer.reject({
                             error: err,
@@ -52,8 +58,6 @@ module.exports = function(data, userInfo) {
                         });
                     });
             } else {
-                console.log('whereClause', whereClause);
-                console.log('admissions', admissions);
                 var error = new Error('UpdateRequestAdmission.data.failed')
                 defer.reject(error);
             }

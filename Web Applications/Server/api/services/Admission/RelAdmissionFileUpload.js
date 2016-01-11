@@ -7,15 +7,18 @@ module.exports = function(objRel) {
         var whereClause = objRel.data;
         _.forEach(objRel.data, function(valueData, indexData) {
             if (HelperService.CheckExistData(valueData) &&
-                !_.isObject(valueData)) {
+                _.isObject(valueData)) {
                 _.forEach(valueData, function(valueKey, indexKey) {
                     if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
                         moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
                         whereClause[indexData][indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
-                    } else {
+                    } else if (!_.isArray(valueKey) &&
+                        !_.isObject(valueKey)) {
                         whereClause[indexData][indexKey] = valueKey;
+                    } else {
+                        delete whereClause[indexData][indexKey];
                     }
-                })
+                });
             }
         });
         FileUpload.findAll({

@@ -15,7 +15,8 @@ module.exports = function(objCreate) {
                         arrAdmissionCreated.push(admissionCreated);
                         admissionObject = admissionCreated;
                         if (HelperService.CheckExistData(admission) &&
-                            HelperService.CheckExistData(admission.FileUploads)) {
+                            HelperService.CheckExistData(admission.FileUploads) &&
+                            !_.isEmpty(admission.FileUploads)) {
                             var FileUploads = admission.FileUploads;
                             var objRelAdmissionFileUpload = {
                                 data: FileUploads,

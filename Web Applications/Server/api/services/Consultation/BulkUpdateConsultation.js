@@ -31,7 +31,8 @@ module.exports = function(objUpdate) {
                                                 transaction: objUpdate.transaction
                                             })
                                             .then(function(relConsultationFileuploadDeleted) {
-                                                if (HelperService.CheckExistData(valueConsultation.FileUploads)) {
+                                                if (HelperService.CheckExistData(valueConsultation.FileUploads) &&
+                                                    !_.isEmpty(valueConsultation.FileUploads)) {
                                                     var FileUploads = valueConsultation.FileUploads;
                                                     var objRelConsultationFileUpload = {
                                                         data: FileUploads,

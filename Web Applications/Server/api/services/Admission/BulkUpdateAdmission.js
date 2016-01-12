@@ -31,7 +31,8 @@ module.exports = function(objUpdate) {
                                             transaction: objUpdate.transaction
                                         }).
                                         then(function(relAdmissionFileUploadDeleted) {
-                                                if (HelperService.CheckExistData(valueAdmission.FileUploads)) {
+                                                if (HelperService.CheckExistData(valueAdmission.FileUploads) &&
+                                                    !_.isEmpty(valueAdmission.FileUploads)) {
                                                     var FileUploads = valueAdmission.FileUploads;
                                                     var objRelAdmissionFileUpload = {
                                                         data: FileUploads,

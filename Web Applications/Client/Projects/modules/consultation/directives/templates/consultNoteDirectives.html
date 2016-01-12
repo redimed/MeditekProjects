@@ -4,12 +4,14 @@
             <i class="glyphicon glyphicon-pencil"></i>
             <span class="caption-subject bold uppercase">Consult Notess</span>
         </div>
-        <div class="tools">
-            <!-- <button type="button" class="btn btn-lg blue" ng-click="Reset()">
-                        <i class="glyphicon glyphicon-save"></i> Add Consult Note</button> -->
+        <div class="actions">
+            <button type="button" class="btn btn-lg blue-soft uppercase bold" ng-click="Reset()" ng-show="CheckUpdate == false">
+                        <i class="glyphicon glyphicon-plus"></i> Add Consult Note</button>
+        </div>
+       <!--  <div class="tools">
             <a href="javascript:;" class="collapse"> </a>
             <a href="javascript:;" class="fullscreen"> </a>
-        </div>
+        </div> -->
     </div>
     <div class="portlet-body form">
         <form name="form" class="form-horizontal" novalidate ng-submit="submit()">
@@ -165,7 +167,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="item in FileUploads">
+                                        <tr ng-repeat="item in FileUploads track by $id($index)">
                                             <td><strong>{{ item.FileName }}</strong></td>
                                             <td >{{ item.FileType}}</td>
                                         </tr>
@@ -181,27 +183,27 @@
                         <div class="checkbox-list">
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <label class="checkbox-inline bold">
+                                    <label class="checkbox-inline">
                                         <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.BCC'].Value"> BCC
                                     </label>
                                 </div>
                                 <div class="col-md-2 col-sm-2">
-                                    <label class="checkbox-inline bold">
+                                    <label class="checkbox-inline">
                                         <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.SCC'].Value"> SCC
                                     </label>
                                 </div>
                                 <div class="col-md-2 col-sm-2">
-                                    <label class="checkbox-inline bold">
+                                    <label class="checkbox-inline">
                                         <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Melanonia'].Value"> Melanonia
                                     </label>
                                 </div>
                                 <div class="col-md-2 col-sm-2">
-                                    <label class="checkbox-inline bold">
+                                    <label class="checkbox-inline">
                                         <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Merkel'].Value"> Merkel
                                     </label>
                                 </div>
-                                <div class="col-md-2 col-sm-2">
-                                    <label class="checkbox-inline bold">
+                                <div class="col-md-2 col-sm-2" align="right">
+                                    <label class="checkbox-inline">
                                         <input type="checkbox" ng-model="DDXOther"> Other
                                     </label>
                                 </div>
@@ -336,40 +338,40 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2 col-sm-2">
-                                        <label class="radio-inline">
+                                        <label class="radio-inline bold">
                                             <input type="checkbox" ng-model="RECOMMENDATIONSUS"> US
                                         </label>
                                     </div>
                                     <div ng-show="RECOMMENDATIONSUS == true">
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
                                                     <input type="radio" name="US" value="WD" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.US'].Value"> WD
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
                                                     <input type="radio" name="US" value="ENVISION" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.US'].Value"> ENVISION
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
                                                     <input type="radio" name="US" value="INSIGHT" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.US'].Value"> INSIGHT
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
                                                     <input type="radio" name="US" value="OtherProvider" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.US'].Value"> Other Provider
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.US'].Value == 'OtherProvider'">
                                             <input type="text" class="form-control" placeholder="Enter Other" ng-model="RECOMMENDATIONSUSOther">
                                         </div>
                                     </div>
@@ -380,40 +382,40 @@
                             <div class="checkbox-list">
                                 <div class="row">
                                     <div class="col-md-2 col-sm-2">
-                                        <label class="radio-inline">
+                                        <label class="radio-inline bold">
                                             <input type="checkbox" ng-model="RECOMMENDATIONSMRI"> MRI
                                         </label>
                                     </div>
                                     <div ng-show="RECOMMENDATIONSMRI == true">
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
                                                     <input type="radio" name="MRI" value="WD" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.MRI'].Value"> WD
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
                                                     <input type="radio" name="MRI" value="ENVISION" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.MRI'].Value"> ENVISION
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
                                                     <input type="radio" name="MRI" value="INSIGHT" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.MRI'].Value"> INSIGHT
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
                                                     <input type="radio" name="MRI" value="OtherProvider" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.MRI'].Value"> Other Provider
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.MRI'].Value == 'OtherProvider'">
                                             <input type="text" class="form-control" placeholder="Enter Other" ng-model="RECOMMENDATIONSMRIOther">
                                         </div>
                                     </div>
@@ -424,40 +426,40 @@
                             <div class="checkbox-list">
                                 <div class="row">
                                     <div class="col-md-2 col-sm-2">
-                                        <label class="radio-inline">
+                                        <label class="radio-inline bold">
                                             <input type="checkbox" ng-model="RECOMMENDATIONSPetScan"> Pet Scan
                                         </label>
                                     </div>
                                     <div ng-show="RECOMMENDATIONSPetScan == true">
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
                                                     <input type="radio" name="PetScan" value="WD" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.PetScan'].Value"> WD
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
                                                     <input type="radio" name="PetScan" value="ENVISION" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.PetScan'].Value"> ENVISION
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
                                                     <input type="radio" name="PetScan" value="INSIGHT" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.PetScan'].Value"> INSIGHT
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
                                                     <input type="radio" name="PetScan" value="OtherProvider" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.PetScan'].Value"> Other Provider
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.PetScan'].Value == 'OtherProvider'">
                                             <input type="text" class="form-control" placeholder="Enter Other" ng-model="RECOMMENDATIONSPetScanOther">
                                         </div>
                                     </div>

@@ -6,13 +6,18 @@ app.directive('listpatientConsultation', function(consultationServices, $modal, 
         link: function(scope, ele, attr) {
             var Init = function() {
                 scope.searchObject = {
-                    Limit: 7,
+                    Limit: 10,
                     Offset: 0,
                     currentPage: 1,
                     maxSize: 5,
                     Filter: [{
                         Patient: {
                             UID:$stateParams.UIDPatient
+                        }
+                    }],
+                    Order: [{
+                        Consultation: {
+                            CreatedDate: 'DESC'
                         }
                     }]
                 };

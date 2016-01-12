@@ -10,13 +10,18 @@ app.directive('listappConsultation', function(consultationServices, $modal, $coo
 
             var Init = function() {
                 scope.searchObject = {
-                    Limit: 7,
+                    Limit: 10,
                     Offset: 0,
                     currentPage: 1,
                     maxSize: 5,
                     Filter: [{
                         Appointment: {
                             UID:$stateParams.UID
+                        }
+                    }],
+                    Order: [{
+                        Consultation: {
+                            CreatedDate: 'DESC'
                         }
                     }]
                 };

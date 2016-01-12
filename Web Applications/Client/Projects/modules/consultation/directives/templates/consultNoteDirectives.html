@@ -148,26 +148,31 @@
                                 <div class="input-icon">
                                     <span class="btn green btn-file">
                                         <i class="fa fa-file-image-o"></i>
-                                    <span class="fileinput-new">Select Document</span>
+                                    <span class="fileinput-new">Select Image</span>
                                         <input type="file" nv-file-select="" uploader="uploader" multiple/>
                                     </span>
                                     <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
                                         <span class="glyphicon glyphicon-trash"></span> Remove all
                                     </button>
+                                     <button type="button" class="btn btn-default" ng-click="AddDrawing('data')">
+                                        <span class="glyphicon glyphicon-plus"></span> Add Drawing
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <div class="thumbnail" ng-show ="CheckUpdate !== true">
+                        <div class="thumbnail">
                             <div class="table-scrollable table-scrollable-borderless">
                                 <table class="table table-hover table-light">
                                     <thead>
                                         <tr class="uppercase">
+                                            <th>#</th>
                                             <th width="30%">File Name</th>
                                             <th >File Type</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="item in FileUploads track by $id($index)">
+                                            <td>{{$index+1}}</td>
                                             <td><strong>{{ item.FileName }}</strong></td>
                                             <td >{{ item.FileType}}</td>
                                         </tr>
@@ -609,3 +614,12 @@
         </form>
     </div>
 </div>
+
+<script type="text/ng-template" id="showDrawingTemplate">
+    <div class="modal-header my-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"></button>
+    </div>
+    <div class="modal-body" style="align:center">
+        <drawing data="drawingData" action="drawingAction"></drawing>
+    </div>
+</script>

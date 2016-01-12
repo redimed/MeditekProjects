@@ -2,7 +2,7 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="glyphicon glyphicon-pencil"></i>
-            <span class="caption-subject bold uppercase">Consult Notess</span>
+            <span class="caption-subject bold uppercase">Consult Note</span>
         </div>
         <div class="actions">
             <button type="button" class="btn btn-lg blue-soft uppercase bold" ng-click="Reset()" ng-show="CheckUpdate == false">
@@ -114,10 +114,10 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-4 col-sm-4">
-                                <input type="checkbox" ng-model="RelevantOthers"> OTHER
+                                <input type="checkbox" ng-model="requestOther.RelevantOthers" ng-click="CheckBox('Consultation__Details.Appointment.Relevant.Others')"> OTHER
                             </label>
-                            <div class="col-md-8 col-sm-8" ng-show="RelevantOthers == true">
-                                <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Others'].Value" ng-show="RelevantOthers == true">
+                            <div class="col-md-8 col-sm-8" ng-show="requestOther.RelevantOthers == true">
+                                <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.Relevant.Others'].Value" ng-show="requestOther.RelevantOthers == true">
                             </div>
                         </div>
                     </div>
@@ -183,32 +183,32 @@
                         <div class="checkbox-list">
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <label class="checkbox-inline">
+                                    <label class="checkbox-inline bold">
                                         <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.BCC'].Value"> BCC
                                     </label>
                                 </div>
                                 <div class="col-md-2 col-sm-2">
-                                    <label class="checkbox-inline">
+                                    <label class="checkbox-inline bold">
                                         <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.SCC'].Value"> SCC
                                     </label>
                                 </div>
                                 <div class="col-md-2 col-sm-2">
-                                    <label class="checkbox-inline">
+                                    <label class="checkbox-inline bold">
                                         <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Melanonia'].Value"> Melanonia
                                     </label>
                                 </div>
                                 <div class="col-md-2 col-sm-2">
-                                    <label class="checkbox-inline">
+                                    <label class="checkbox-inline bold">
                                         <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Merkel'].Value"> Merkel
                                     </label>
                                 </div>
                                 <div class="col-md-2 col-sm-2" align="right">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" ng-model="DDXOther"> Other
+                                    <label class="checkbox-inline bold">
+                                        <input type="checkbox" ng-model="requestOther.DDXOther" ng-click="CheckBox('Consultation__Details.Appointment.DDX.Other')"> Other
                                     </label>
                                 </div>
                                 <div class="col-md-2 col-sm-2">
-                                    <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Other'].Value" ng-show="DDXOther == true">
+                                    <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.DDX.Other'].Value" ng-show="requestOther.DDXOther == true">
                                 </div>
                             </div>
                         </div>
@@ -339,10 +339,10 @@
                                 <div class="row">
                                     <div class="col-md-2 col-sm-2">
                                         <label class="radio-inline bold">
-                                            <input type="checkbox" ng-model="RECOMMENDATIONSUS"> US
+                                            <input type="checkbox" ng-model="requestOther.RECOMMENDATIONSUS" ng-click="CheckBox('Consultation__Details.Appointment.RECOMMENDATIONS.US')"> US
                                         </label>
                                     </div>
-                                    <div ng-show="RECOMMENDATIONSUS == true">
+                                    <div ng-show="requestOther.RECOMMENDATIONSUS == true">
                                         <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
@@ -372,7 +372,51 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-2" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.US'].Value == 'OtherProvider'">
-                                            <input type="text" class="form-control" placeholder="Enter Other" ng-model="RECOMMENDATIONSUSOther">
+                                            <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestOther.RECOMMENDATIONSUSOther">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       <div class="form-group">
+                            <div class="checkbox-list">
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-2">
+                                        <label class="radio-inline bold">
+                                            <input type="checkbox" ng-model="requestOther.RECOMMENDATIONSCT"> CT
+                                        </label>
+                                    </div>
+                                    <div ng-show="requestOther.RECOMMENDATIONSCT == true">
+                                        <div class="col-md-2 col-sm-2" align="right">
+                                            <div class="radio-list">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="CT" value="WD" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.CT'].Value"> WD
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2" align="right">
+                                            <div class="radio-list">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="CT" value="ENVISION" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.CT'].Value"> ENVISION
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2" align="right">
+                                            <div class="radio-list">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="CT" value="INSIGHT" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.CT'].Value"> INSIGHT
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2" align="right">
+                                            <div class="radio-list">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="CT" value="OtherProvider" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.CT'].Value"> Other Provider
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.CT'].Value == 'OtherProvider'">
+                                            <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestOther.RECOMMENDATIONSCTOther">
                                         </div>
                                     </div>
                                 </div>
@@ -383,10 +427,10 @@
                                 <div class="row">
                                     <div class="col-md-2 col-sm-2">
                                         <label class="radio-inline bold">
-                                            <input type="checkbox" ng-model="RECOMMENDATIONSMRI"> MRI
+                                            <input type="checkbox" ng-model="requestOther.RECOMMENDATIONSMRI"> MRI
                                         </label>
                                     </div>
-                                    <div ng-show="RECOMMENDATIONSMRI == true">
+                                    <div ng-show="requestOther.RECOMMENDATIONSMRI == true">
                                         <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
@@ -416,7 +460,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-2" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.MRI'].Value == 'OtherProvider'">
-                                            <input type="text" class="form-control" placeholder="Enter Other" ng-model="RECOMMENDATIONSMRIOther">
+                                            <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestOther.RECOMMENDATIONSMRIOther">
                                         </div>
                                     </div>
                                 </div>
@@ -427,10 +471,10 @@
                                 <div class="row">
                                     <div class="col-md-2 col-sm-2">
                                         <label class="radio-inline bold">
-                                            <input type="checkbox" ng-model="RECOMMENDATIONSPetScan"> Pet Scan
+                                            <input type="checkbox" ng-model="requestOther.RECOMMENDATIONSPetScan"> Pet Scan
                                         </label>
                                     </div>
-                                    <div ng-show="RECOMMENDATIONSPetScan == true">
+                                    <div ng-show="requestOther.RECOMMENDATIONSPetScan == true">
                                         <div class="col-md-2 col-sm-2" align="right">
                                             <div class="radio-list">
                                                 <label class="radio-inline">
@@ -460,7 +504,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-2" ng-show="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.PetScan'].Value == 'OtherProvider'">
-                                            <input type="text" class="form-control" placeholder="Enter Other" ng-model="RECOMMENDATIONSPetScanOther">
+                                            <input type="text" class="form-control" placeholder="Enter Other" ng-model="requestOther.RECOMMENDATIONSPetScanOther">
                                         </div>
                                     </div>
                                 </div>
@@ -523,7 +567,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-2 col-sm-2 bold">Suithble for</label>
+                    <label class="control-label col-md-2 col-sm-2 bold">Suitable for</label>
                     <div class="col-md-7 col-sm-7">
                         <div class="checkbox-list">
                             <div class="row">

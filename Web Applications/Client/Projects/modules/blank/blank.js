@@ -1,13 +1,14 @@
 var app = angular.module('app.blank',[
 	'app.blank.controller',
-	'app.blank.services'
+	'app.blank.services',
+	'app.blank.drawing',
 ]);
 
 app.config(function($stateProvider){
 	$stateProvider
 		.state('blank',{
 			abstract: true,
-			url: '/blank',
+			// url: '/blank',
 			views:{
 				'root':{
 					templateUrl: 'modules/blank/views/blank.html',

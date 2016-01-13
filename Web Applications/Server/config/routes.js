@@ -52,4 +52,9 @@ var ConsultationRoutes = require('./routes/ConsultationRoutes');
 _.extend(routes, ConsultationRoutes);
 //end module Consultation
 
+//begin module Admission
+var AdmissionRoutes = require('./routes/AdmissionRoutes');
+_.extend(routes, AdmissionRoutes);
+//end module Admission
+
 module.exports.routes = routes;

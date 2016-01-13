@@ -1,6 +1,5 @@
 package com.redimed.telehealth.patient;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.BroadcastReceiver;
@@ -8,43 +7,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
-import android.os.Build;
-import android.os.PowerManager;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.util.Log;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.service.RegistrationIntentService;
 import com.redimed.telehealth.patient.service.SocketService;
-import com.redimed.telehealth.patient.utils.Config;
-
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by luann on 9/23/2015.
  */
 public class MyApplication extends Application {
 
-    private int resumed = 0;
-    private int paused = 0;
-    private boolean inForeground = true;
-
     private BroadcastReceiver receiver;
-    private String TAG = "MyApplication";
     private static MyApplication myApplication;
-    private static SharedPreferences appPreferences;
-
+    private String TAG = "MyApplication", result;
+    private static SharedPreferences.Editor editor;
+    private static SharedPreferences appPreferences, callPreferences, uidTelehealth;
 
     public static MyApplication getInstance() {
         return myApplication;
@@ -64,11 +52,18 @@ public class MyApplication extends Application {
 
         startService(new Intent(getApplicationContext(), RegistrationIntentService.class));
 
+        uidTelehealth = this.getSharedPreferences("TelehealthUser", MODE_PRIVATE);
+
         // Preferences to store all ready created or not finding purpose.
         appPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (!(appPreferences.getBoolean("isShortcutCreated", false))) {
             AddShortcut();
         }
+
+        callPreferences = this.getSharedPreferences("FlagCall", MODE_PRIVATE);
+        editor = callPreferences.edit();
+        editor.putBoolean("isBackground", true);
+        editor.commit();
     }
 
     @Override
@@ -107,6 +102,47 @@ public class MyApplication extends Application {
             }
         }
         return dir.delete();
+    }
+
+    public String Logout() {
+        Gson gson = new Gson();
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("token", "null");
+        jsonObject.addProperty("uid", uidTelehealth.getString("uid", null));
+
+        JsonObject dataJson = new JsonObject();
+        dataJson.addProperty("data", gson.toJson(jsonObject));
+
+        RESTClient.getRegisterApi().updateToken(dataJson, new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                String message = jsonObject.get("status").getAsString();
+                if (message.equalsIgnoreCase("success")) {
+                    RESTClient.getRegisterApiLogin().logout(new Callback<JsonObject>() {
+                        @Override
+                        public void success(JsonObject jsonObject, Response response) {
+                            String message = jsonObject.get("status").getAsString();
+                            if (message.equals("success")) {
+                                clearApplication();
+                                result = message;
+                            }
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            result = error.getLocalizedMessage();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+            }
+        });
+        clearApplication();
+        return result = "success";
     }
 
     @NonNull
@@ -163,7 +199,7 @@ public class MyApplication extends Application {
         getApplicationContext().sendBroadcast(addIntent);
 
         SharedPreferences.Editor editor = appPreferences.edit();
-        editor.putBoolean("isShortcutCreated", true); //false - Deleting shortcut on Home screen
+        editor.putBoolean("isShortcutCreated", true);
         editor.commit();
     }
 

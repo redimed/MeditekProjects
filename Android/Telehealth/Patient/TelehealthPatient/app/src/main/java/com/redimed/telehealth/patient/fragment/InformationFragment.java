@@ -1,5 +1,8 @@
 package com.redimed.telehealth.patient.fragment;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -24,21 +27,25 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.redimed.telehealth.patient.LauncherActivity;
 import com.redimed.telehealth.patient.MainActivity;
+import com.redimed.telehealth.patient.MapsActivity;
+import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
+import com.redimed.telehealth.patient.service.GPSTrackerService;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
 import com.redimed.telehealth.patient.utils.CircleTransform;
-import com.redimed.telehealth.patient.utils.Config;
+import com.redimed.telehealth.patient.network.Config;
 import com.redimed.telehealth.patient.utils.DialogAlert;
 import com.redimed.telehealth.patient.utils.DialogConnection;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.squareup.picasso.UrlConnectionDownloader;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -55,6 +62,7 @@ import retrofit.client.Response;
 public class InformationFragment extends Fragment {
 
     private View v;
+    private Intent i;
     private Gson gson;
     private Patient[] patients;
     private RegisterApi restClient;
@@ -87,9 +95,10 @@ public class InformationFragment extends Fragment {
     ImageView avatarPatient;
     @Bind(R.id.infoLayout)
     RelativeLayout infoLayout;
+    @Bind(R.id.btnLogout)
+    TextView btnLogout;
 
-    public InformationFragment() {
-    }
+    public InformationFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -109,13 +118,28 @@ public class InformationFragment extends Fragment {
         } else {
             GetInfoPatient();
         }
-
         SwipeRefresh();
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) v.getContext()).Display(0);
+            }
+        });
+
+        btnSubmit.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                GPSTrackerService gps = new GPSTrackerService(v.getContext());
+                i = new Intent(v.getContext(), MapsActivity.class);
+                if (gps.canGetLocation()){
+                    i.putExtra("lat", gps.getLatitude());
+                    i.putExtra("long", gps.getLongitude());
+                } else {
+                    gps.showSettingsAlert();
+                }
+                startActivity(i);
+                return true;
             }
         });
 
@@ -142,7 +166,44 @@ public class InformationFragment extends Fragment {
                         Log.d(TAG, "Prepare Load");
                     }
                 });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogConfirm();
+            }
+        });
         return v;
+    }
+
+    //Display dialog choose camera or gallery to upload image
+    private void DialogConfirm() {
+        final android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(v.getContext()).create();
+        alertDialog.setTitle(v.getContext().getResources().getString(R.string.unregistered));
+        alertDialog.setMessage(v.getContext().getResources().getString(R.string.un_title));
+
+        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Unregistered", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String result = MyApplication.getInstance().Logout();
+                if (result.equalsIgnoreCase("success")) {
+                    ((MainActivity)v.getContext()).Display(0);
+                    startActivity(new Intent(v.getContext(), LauncherActivity.class));
+                } else if (result.equalsIgnoreCase("Network Error")) {
+                    new DialogConnection(v.getContext()).show();
+                } else if (!result.equalsIgnoreCase(" ")) {
+                    new DialogAlert(v.getContext(), DialogAlert.State.Error, result).show();
+                }
+            }
+        });
+
+        alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.cancel();
+            }
+        });
+        alertDialog.show();
     }
 
     //Call api to get data information patient from server
@@ -175,9 +236,12 @@ public class InformationFragment extends Fragment {
 
     //Show data information in layout
     private void DisplayInfo(Patient[] patients) {
+        String firstName, lastName;
         if (patients != null) {
             for (Patient patient : patients) {
-                lblNamePatient.setText(patient.getFirstName() == null ? "NONE" : patient.getFirstName());
+                firstName = patient.getFirstName() == null ? "NONE" : patient.getFirstName();
+                lastName = patient.getLastName() == null ? " " : patient.getLastName();
+                lblNamePatient.setText(firstName + " " + lastName);
                 lblHomePhone.setText(patient.getHomePhoneNumber() == null ? "NONE" : patient.getHomePhoneNumber());
                 lblEmail.setText(patient.getEmail() == null ? "NONE" : patient.getEmail());
                 lblDOB.setText(patient.getDOB() == null ? "NONE" : patient.getDOB());
@@ -191,7 +255,6 @@ public class InformationFragment extends Fragment {
     }
 
     private void LoadAvatar(String url) {
-        Log.d(TAG, url);
         Picasso picasso = new Picasso.Builder(v.getContext())
                 .downloader(new UrlConnectionDownloader(v.getContext()) {
                     @Override
@@ -208,13 +271,11 @@ public class InformationFragment extends Fragment {
                 .listener(new Picasso.Listener() {
                     @Override
                     public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                        Log.d("ERROR PICASSO", exception.getLocalizedMessage());
+                        Log.d("ERROR PICASSO", exception.getLocalizedMessage() + "");
                     }
                 }).build();
 
         picasso.load(url)
-                .memoryPolicy(MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .transform(new CircleTransform())
                 .error(R.drawable.icon_error_image)
                 .into(avatarPatient);

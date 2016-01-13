@@ -152,7 +152,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void Contact() {
-        Log.d(TAG, "CALL");
         Uri call = Uri.parse("tel:" + getResources().getString(R.string.phone_call));
         Intent phoneCallIntent = new Intent(Intent.ACTION_CALL, call);
         startActivity(phoneCallIntent);

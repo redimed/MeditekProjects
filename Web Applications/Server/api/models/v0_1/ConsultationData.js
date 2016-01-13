@@ -52,11 +52,11 @@ module.exports = {
             }
         },
         Type: {
-            type: Sequelize.STRING(45),
+            type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
                 len: {
-                    args: [0, 45],
+                    args: [0, 255],
                     msg: 'Too long!'
                 }
             }
@@ -72,11 +72,11 @@ module.exports = {
             }
         },
         Value: {
-            type: Sequelize.STRING(45),
+            type: Sequelize.STRING(255),
             allowNull: true,
             validate: {
                 len: {
-                    args: [0, 45],
+                    args: [0, 255],
                     msg: 'Too long!'
                 }
             }

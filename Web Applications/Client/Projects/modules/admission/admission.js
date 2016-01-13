@@ -11,29 +11,39 @@ app.config(function($stateProvider){
 			templateUrl: 'modules/admission/views/admission.html',
 			controller: 'admissionCtrl',
 		})
+
+		// request
+		.state('authentication.admission.request',{
+			data: {title: 'Admission Requests', pageTitle: 'Admission Requests'},
+			url: '/request',
+			templateUrl: 'modules/admission/views/admissionRequest.html',
+			controller: 'admissionRequestCtrl',
+		})
+		.state('authentication.admission.request.step1',{
+			url: '/step1',
+			data: {step: 1, title: 'Admission Request step1', pageTitle: 'Admission Request step1'},
+			templateUrl: 'modules/admission/views/admissionRequestStep1.html',
+			controller: 'admissionRequestStep1Ctrl',
+		})
+		.state('authentication.admission.request.step2',{
+			url: '/step2',
+			data: {step: 2, title: 'Admission Request step2', pageTitle: 'Admission Request step2'},
+			templateUrl: 'modules/admission/views/admissionRequestStep2.html',
+			controller: 'admissionRequestStep2Ctrl',
+		})
+		.state('authentication.admission.request.step3',{
+			url: '/step3',
+			data: {step: 3, title: 'Admission Request step3', pageTitle: 'Admission Request step3'},
+			templateUrl: 'modules/admission/views/admissionRequestStep3.html',
+			controller: 'admissionRequestStep3Ctrl',
+		})
+
+		// detail
 		.state('authentication.admission.detail',{
 			data: {title: 'Admission details', pageTitle: 'Admission details'},
 			url: '/detail',
 			templateUrl: 'modules/admission/views/admissionDetail.html',
 			controller: 'admissionDetailCtrl',
-		})
-		.state('authentication.admission.detail.step1',{
-			url: '/step1',
-			data: {step: 1, title: 'Admission detail step1', pageTitle: 'Admission detail step1'},
-			templateUrl: 'modules/admission/views/admissionDetailStep1.html',
-			controller: 'admissionDetailStep1Ctrl',
-		})
-		.state('authentication.admission.detail.step2',{
-			url: '/step2',
-			data: {step: 2, title: 'Admission detail step2', pageTitle: 'Admission detail step2'},
-			templateUrl: 'modules/admission/views/admissionDetailStep2.html',
-			controller: 'admissionDetailStep2Ctrl',
-		})
-		.state('authentication.admission.detail.step3',{
-			url: '/step3',
-			data: {step: 3, title: 'Admission detail step3', pageTitle: 'Admission detail step3'},
-			templateUrl: 'modules/admission/views/admissionDetailStep3.html',
-			controller: 'admissionDetailStep3Ctrl',
 		})
 		;
 });

@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.consultation.directives.listAppConsultation', []);
-app.directive('listappConsultation', function(consultationServices, $modal, $cookies,$state,$stateParams) {
+app.directive('listappConsultation', function(consultationServices, $modal, $cookies,$state,$stateParams,toastr) {
     return {
         scope:{
             uid:"="
@@ -16,33 +16,12 @@ app.directive('listappConsultation', function(consultationServices, $modal, $coo
                     maxSize: 5,
                     Filter: [{
                         Appointment: {
-                            Enable: 'Y'
+                            UID:$stateParams.UID
                         }
-                    }, {
-                        TelehealthAppointment: {
-                            Type: 'TEL'
-                        }
-
                     }],
                     Order: [{
-                        Appointment: {
-                            CreatedDate: 'DESC',
-                            FromTime: null
-                        }
-                    }],
-                    Search: [{
-                        PatientAppointment: {
-                            FullName: null
-                        }
-                    }, {
-                        Doctor: {
-                            FullName: null
-                        }
-                    }],
-                    Range: [{
-                        Appointment: {
-                            CreatedDate: [null, null],
-                            FromTime: [null, null]
+                        Consultation: {
+                            CreatedDate: 'DESC'
                         }
                     }]
                 };
@@ -61,16 +40,16 @@ app.directive('listappConsultation', function(consultationServices, $modal, $coo
                 scope.searchObjectMapTemp = angular.copy(scope.searchObjectMap);
                 consultationServices.listConsultation(scope.searchObjectMapTemp).then(function(response) {
                     o.loadingPage(false);
-                    console.log(response);
+                    console.log("response",response)
                     scope.consultation = response.rows;
                     scope.CountRow = response.count;
+                },function(err){
+                    o.loadingPage(false);
+                    toastr.error('fail');
                 });
             }
             Init();
             scope.toggle = true;
-            scope.Detail = function(uid) {
-                $state.go("authentication.consultation.detail",{UID:uid});
-            };
             scope.toggleFilter = function() {
                 scope.toggle = scope.toggle === false ? true : false;
             };

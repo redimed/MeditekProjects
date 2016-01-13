@@ -186,7 +186,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:fontFamily="sans-serif-light"
-                    android:text="Verify Code"
+                    android:text="Verify"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="17sp"

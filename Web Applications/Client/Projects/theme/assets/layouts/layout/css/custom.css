@@ -13,13 +13,14 @@
     display: block !important;
 }
 
-.contentPatient{
+.contentPatient {
     vertical-align: middle;
     padding-top: 6em;
 }
-.my-form-body-padding{
-    padding-left: 2em !important; 
-    padding-right:2em !important;
+
+.my-form-body-padding {
+    padding-left: 2em !important;
+    padding-right: 2em !important;
 }
 
 .page-header {
@@ -28,11 +29,11 @@
 
 .page-header.navbar {
     background-color: white;
-    box-shadow: 0px 0px 30px 0px #ddd; 
+    box-shadow: 0px 0px 30px 0px #ddd;
     height: 60px;
 }
 
-.page-header.navbar .search-form{
+.page-header.navbar .search-form {
     background-color: #f1f4f7 !important;
     border-radius: 20px;
     margin: 7px 0px;
@@ -55,7 +56,7 @@
     background-color: #f1f4f7;
 }
 
-.my-page-title{
+.my-page-title {
     background-color: #454d58;
     color: white;
     display: block;
@@ -65,7 +66,8 @@
     font-family: sans-serif;
 }
 
-.page-container-bg-solid .page-bar, .page-content-white .page-bar {
+.page-container-bg-solid .page-bar,
+.page-content-white .page-bar {
     margin: 0px -20px 0 !important;
 }
 
@@ -73,24 +75,31 @@
     padding: 0em 2em 2em 2em;
 }
 
-.page-sidebar .page-sidebar-menu, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu {
+.page-sidebar .page-sidebar-menu,
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu {
     margin-top: 77px;
 }
 
 .progress-bar-purple {
     background-color: purple;
 }
+
+
 /*fix sitebar*/
-@media (min-width: 992px){}
+
+@media (min-width: 992px) {}
+
 .page-sidebar {
     width: 300px;
 }
 
-@media (min-width: 992px){}
+@media (min-width: 992px) {}
+
 .page-content-wrapper .page-content {
-    margin-left: 300px; 
+    margin-left: 300px;
     margin-top: -10px;
 }
+
 
 /*fix label input_md*/
 
@@ -111,9 +120,10 @@
     height: 46px;
 }
 
-table:hover{
+table:hover {
     cursor: pointer;
 }
+
 @media (min-width: 1368px) {
     .app-modal-window .modal-dialog {
         width: 75%;
@@ -275,17 +285,67 @@ img.profile-imge {
     margin: 0 auto;
 }
 
-.margin-left-right-0 {
-    margin-right: 0px;
-    margin-left: 0px;
+.my-skype .thumbnail {
+    height: 78vh;
+    border: none;
 }
 
-.padding-10 {
-    padding: 10px;
+.my-skype .img {
+    max-width: 100%;
+    max-height: 100%;
+    height: inherit !important;
+    position: relative;
 }
 
-.padding-0 {
-    padding: 0px;
+.my-skype .my-button {
+    opacity: .75;
+    width: 70px;
+    height: 70px;
+}
+
+.my-skype .my-button:hover {
+    opacity: 1;
+}
+
+.my-skype .left-info {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    width: 25%;
+    height: 40%;
+    padding: 4% 2%;
+    background-color: rgba(196, 213, 213, 0.45);
+    border-top-left-radius: 25% !important;
+    border-bottom-right-radius: 100% !important;
+}
+
+.my-skype .right-info {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+.my-skype .right-info #publisher {
+    width: 300px;
+    height: 300px;
+    background-color: rgba(125, 125, 125, .25);
+}
+
+.my-skype .actions {
+    width: 100%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    bottom: -3%;
+}
+
+.my-skype .calling {
+    width: 100%;
+    position: absolute;
+    bottom: 20%;
+}
+
+.my-skype .calling span {
+    font-size: 18px;
 }
 
 .my-skype .my-header {
@@ -447,20 +507,24 @@ img.profile-imge {
 
 
 /*end consultation<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-.welcome{
+
+.welcome {
     position: relative;
     margin: 0 auto;
 }
-.welcome .logo{
+
+.welcome .logo {
     position: absolute;
     top: 5%;
     left: 5%;
     width: 40%
 }
-/*Big Monitor*/
-@media (min-width: 1367px) {
 
-    .welcome .content{
+
+/*Big Monitor*/
+
+@media (min-width: 1367px) {
+    .welcome .content {
         position: absolute;
         bottom: 5%;
         left: 5%;
@@ -470,18 +534,18 @@ img.profile-imge {
         border-top-right-radius: 100% !important;
         border-bottom-left-radius: 30% !important;
     }
-    .welcome .content .my-button-group{
+    .welcome .content .my-button-group {
         position: absolute;
         bottom: 15%;
         left: 12%;
         width: 60%;
     }
-    .welcome .content .my-button-group h1{
+    .welcome .content .my-button-group h1 {
         color: white;
         font-family: sans-serif;
         margin-bottom: 75px;
     }
-    .welcome .content .my-button-group .my-button{
+    .welcome .content .my-button-group .my-button {
         display: block;
         color: white;
         text-transform: uppercase;
@@ -490,59 +554,59 @@ img.profile-imge {
         padding: 15px 0px 15px 3.2em;
         margin: 2em 0;
         opacity: .75;
-        outline:15px solid rgba(114, 159, 191, 0.26);
+        outline: 15px solid rgba(114, 159, 191, 0.26);
     }
-    .welcome .content .my-button-group .my-button:hover{
+    .welcome .content .my-button-group .my-button:hover {
         opacity: 1;
         cursor: pointer;
     }
-    .welcome .content .my-button-group .my-button.registration{
+    .welcome .content .my-button-group .my-button.registration {
         background: #f37b21;
         border-top: 2px solid #f19b5b;
         border-left: 3px solid #f19b5b;
         border-bottom: 3px solid #b46940;
         border-right: 1px solid #b46940;
-
         background-image: url('../../../global/images/icon-edit.png');
         background-repeat: no-repeat;
         background-position: 15px 10px;
-        background-size: 40px;        
+        background-size: 40px;
     }
-    .welcome .content .my-button-group .my-button.registration a{
+    .welcome .content .my-button-group .my-button.registration a {
         color: white;
     }
-    .welcome .content .my-button-group .my-button.registration a:hover{
+    .welcome .content .my-button-group .my-button.registration a:hover {
         text-decoration: none;
     }
-    .welcome .content .my-button-group .my-button.registration:before{
-        /*content: "\270E"; */  
+    .welcome .content .my-button-group .my-button.registration:before {
+        /*content: "\270E"; */
     }
-    .welcome .content .my-button-group .my-button.existing-patient{
+    .welcome .content .my-button-group .my-button.existing-patient {
         background-color: #288e44;
         border-top: 2px solid #4d9752;
         border-left: 3px solid #4d9752;
         border-bottom: 3px solid #055d29;
         border-right: 1px solid #055d29;
-
         background-image: url('../../../global/images/icon-patient.png');
         background-repeat: no-repeat;
         background-position: 15px 10px;
         background-size: 40px;
     }
-    .welcome .content .my-button-group .my-button.existing-patient a{
+    .welcome .content .my-button-group .my-button.existing-patient a {
         color: white;
     }
-    .welcome .content .my-button-group .my-button.existing-patient a:hover{
+    .welcome .content .my-button-group .my-button.existing-patient a:hover {
         text-decoration: none;
     }
-    .welcome .content .my-button-group .my-button.existing-patient:before{
+    .welcome .content .my-button-group .my-button.existing-patient:before {
         /*content: "\270E";   */
     }
 }
 
+
 /*Small Monitor*/
+
 @media (max-width: 1366px) {
-    .welcome .content{
+    .welcome .content {
         position: absolute;
         bottom: 5%;
         left: 5%;
@@ -552,19 +616,19 @@ img.profile-imge {
         border-top-right-radius: 100% !important;
         border-bottom-left-radius: 30% !important;
     }
-    .welcome .content .my-button-group{
+    .welcome .content .my-button-group {
         position: absolute;
         bottom: 15%;
         left: 12%;
         width: 60%;
     }
-    .welcome .content .my-button-group h1{
+    .welcome .content .my-button-group h1 {
         color: white;
         font-family: sans-serif;
         font-size: 25px;
         margin-bottom: 45px;
     }
-    .welcome .content .my-button-group .my-button{
+    .welcome .content .my-button-group .my-button {
         display: block;
         color: white;
         text-transform: uppercase;
@@ -573,57 +637,67 @@ img.profile-imge {
         padding: 10px 0px 10px 3.2em;
         margin: 1.75em 0;
         opacity: .75;
-        outline:10px solid rgba(114, 159, 191, 0.26);
+        outline: 10px solid rgba(114, 159, 191, 0.26);
     }
-    .welcome .content .my-button-group .my-button:hover{
+    .welcome .content .my-button-group .my-button:hover {
         opacity: 1;
     }
-    .welcome .content .my-button-group .my-button.registration{
+    .welcome .content .my-button-group .my-button.registration {
         background: #f37b21;
         border-top: 2px solid #f19b5b;
         border-left: 3px solid #f19b5b;
         border-bottom: 3px solid #b46940;
         border-right: 2px solid #b46940;
-
         background-image: url('../../../global/images/icon-edit.png');
         background-repeat: no-repeat;
         background-position: 15px 10px;
-        background-size: 35px;        
+        background-size: 35px;
     }
-    .welcome .content .my-button-group .my-button.registration i{
+    .welcome .content .my-button-group .my-button.registration i {}
+    .welcome .content .my-button-group .my-button.registration:before {
+        /*content: "\270E"; */
     }
-    .welcome .content .my-button-group .my-button.registration:before{
-        /*content: "\270E"; */  
-    }
-    .welcome .content .my-button-group .my-button.existing-patient{
+    .welcome .content .my-button-group .my-button.existing-patient {
         background-color: #288e44;
         border-top: 2px solid #4d9752;
         border-left: 2px solid #4d9752;
         border-bottom: 3px solid #055d29;
         border-right: 2px solid #055d29;
-
         background-image: url('../../../global/images/icon-patient.png');
         background-repeat: no-repeat;
         background-position: 15px 10px;
         background-size: 35px;
     }
-    .welcome .content .my-button-group .my-button.existing-patient:before{
+    .welcome .content .my-button-group .my-button.existing-patient:before {
         /*content: "\270E";   */
     }
 }
-.welcome .content .footer{
-        position: absolute;
-        bottom: -4%;
-        right: 0;
-    }
 
-
-
-
-
+.welcome .content .footer {
+    position: absolute;
+    bottom: -4%;
+    right: 0;
+}
 
 
 /*phan quoc chien*/
+
+.margin-left-right-0 {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.padding-10 {
+    padding: 10px;
+}
+
+.padding-0 {
+    padding: 0px;
+}
+
+.padding-buttom-30{
+    padding-bottom: 30px;
+}
 
 .btn-call {
     width: 100px;
@@ -660,9 +734,11 @@ img.profile-imge {
     background: url(../img/big-f0f0f0.gif) center no-repeat;
     display: none;
 }
+
 .required-text {
     font-size: 12px
 }
+
 
 /*giang*/
 

@@ -4,24 +4,44 @@ module.exports = function(objRel) {
     if (HelperService.CheckExistData(objRel) &&
         HelperService.CheckExistData(objRel.data) &&
         !_.isEmpty(objRel.data)) {
+        var whereClause = objRel.data;
+        _.forEach(objRel.data, function(valueData, indexData) {
+            if (HelperService.CheckExistData(valueData) &&
+                _.isObject(valueData)) {
+                _.forEach(valueData, function(valueKey, indexKey) {
+                    if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                        moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                        whereClause[indexData][indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                    } else if (!_.isArray(valueKey) &&
+                        !_.isObject(valueKey)) {
+                        whereClause[indexData][indexKey] = valueKey;
+                    } else {
+                        delete whereClause[indexData][indexKey];
+                    }
+                });
+            }
+        });
         FileUpload.findAll({
                 attributes: ['ID'],
                 where: {
-                    $or: objRel.data
+                    $or: whereClause
                 },
                 transaction: objRel.transaction,
                 raw: true
             })
             .then(function(fileUploadIDRes) {
                 var arrayFileUploadsUnique = _.map(_.groupBy(fileUploadIDRes, function(FU) {
-                    return FU.UID;
+                    return FU.ID;
                 }), function(subGrouped) {
-                    return subGrouped[0].UID;
+                    return subGrouped[0].ID;
                 });
-                return objRel.consultationDataObject.addFileUploads(arrayFileUploadsUnique, {
-                    transaction: objRel.transaction,
-                    raw: true
-                });
+                if (HelperService.CheckExistData(arrayFileUploadsUnique) &&
+                    !_.isEmpty(arrayFileUploadsUnique)) {
+                    return objRel.consultationDataObject.setFileUploads(arrayFileUploadsUnique, {
+                        transaction: objRel.transaction,
+                        raw: true
+                    });
+                }
             }, function(err) {
                 defer.reject(err);
             })
@@ -31,7 +51,8 @@ module.exports = function(objRel) {
                 defer.reject(err);
             });
     } else {
-        defer.reject('objRel.RelConsultationDataFileUpload.failed');
+        var error = new Error('objRel.RelConsultationDataFileUpload.failed');
+        defer.reject(error);
     }
     return defer.promise;
 };

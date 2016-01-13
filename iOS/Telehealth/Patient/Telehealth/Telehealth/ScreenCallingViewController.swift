@@ -110,28 +110,30 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
     //Giap: Open or close publisher video
     @IBAction func buttonHoldCallAction(sender: DesignableButton) {
         
-        if publisher?.publishVideo.boolValue == true {
-            publisher?.publishVideo = false
-            publisher?.view.hidden = true
+   
+        
+        if publisher?.publishAudio.boolValue == true {
+            publisher?.publishAudio = false
             sender.setTitle(FAIcon.play, forState: .Normal)
-            
-        } else {
-            publisher?.publishVideo = true
+        }else {
+            publisher?.publishAudio = true
             sender.setTitle(FAIcon.pause, forState: .Normal)
-            publisher?.view.hidden = false
         }
+
     }
     //Giap: On or Off speaker
     @IBAction func buttonMuteAudioAction(sender: DesignableButton) {
    
-        if publisher?.publishAudio.boolValue == true {
-            publisher?.publishAudio = false
+        if publisher?.publishVideo.boolValue == true {
+            publisher?.publishVideo = false
+            publisher?.view.hidden = true
+            
             sender.setTitle(FAIcon.volume_off, forState: .Normal)
-        }else {
-            publisher?.publishAudio = true
+        } else {
+            publisher?.publishVideo = true
             sender.setTitle(FAIcon.volume_up, forState: .Normal)
+            publisher?.view.hidden = false
         }
-
     }
     
     @IBAction func buttonOnOffMic(sender: AnyObject) {
@@ -141,7 +143,6 @@ class ScreenCallingViewController: UIViewController,OTSessionDelegate, OTSubscri
         }else {
             subscriber?.subscribeToAudio = true
             sender.setTitle(FAIcon.microphone_on, forState: .Normal)
-            
         }
         
     }

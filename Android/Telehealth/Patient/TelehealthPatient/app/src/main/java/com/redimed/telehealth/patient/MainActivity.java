@@ -33,7 +33,7 @@ import com.redimed.telehealth.patient.models.Patient;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.CircleTransform;
-import com.redimed.telehealth.patient.utils.Config;
+import com.redimed.telehealth.patient.network.Config;
 import com.redimed.telehealth.patient.utils.DialogAlert;
 import com.redimed.telehealth.patient.utils.DialogConnection;
 import com.redimed.telehealth.patient.utils.RVAdapter;
@@ -59,13 +59,13 @@ public class MainActivity extends AppCompatActivity {
     private Gson gson;
     private Fragment fragment;
     private RVAdapter rvAdapter;
-    private RegisterApi restClient;
     private List<Category> categories;
-    private SharedPreferences uidTelehealth, spDevice;
+    private SharedPreferences.Editor editor;
+    private RegisterApi restClient;
     private ActionBarDrawerToggle actionDrawerToggle;
     private LinearLayoutManager layoutManagerCategories;
     private String TAG = "MAIN", firstName, lastName, url;
-
+    private SharedPreferences uidTelehealth, spDevice, callPreferences;
 
     @Bind(R.id.frame_container)
     FrameLayout main_contain;
@@ -85,20 +85,19 @@ public class MainActivity extends AppCompatActivity {
         startService(new Intent(getApplicationContext(), SocketService.class));
         ButterKnife.bind(this);
 
+        callPreferences = this.getSharedPreferences("FlagCall", MODE_PRIVATE);
+        editor = callPreferences.edit();
+        editor.putBoolean("isBackground", false);
+        editor.commit();
+
         gson = new Gson();
         restClient = RESTClient.getRegisterApi();
         spDevice = this.getSharedPreferences("DeviceInfo", MODE_PRIVATE);
         uidTelehealth = this.getSharedPreferences("TelehealthUser", MODE_PRIVATE);
 
         initializeData();
-        rvCategories.setHasFixedSize(true);
-        layoutManagerCategories = new LinearLayoutManager(getApplicationContext());
-        rvCategories.setLayoutManager(layoutManagerCategories);
-        rvAdapter = new RVAdapter(getApplicationContext(), 0);
-        rvAdapter.swapDataCategory(categories);
-        rvCategories.setAdapter(rvAdapter);
 
-        DisplayDrawer();
+//        DisplayDrawer();
         GetDetailsPatient();
         SendToken();
         Display(0);
@@ -111,6 +110,16 @@ public class MainActivity extends AppCompatActivity {
         categories.add(new Category(R.drawable.person_icon, "Telehealth"));
         categories.add(new Category(R.drawable.person_icon, "FAQs"));
         categories.add(new Category(R.drawable.person_icon, getApplicationContext().getResources().getString(R.string.unregistered)));
+
+        layoutManagerCategories = new LinearLayoutManager(getApplicationContext());
+
+        rvCategories.setHasFixedSize(true);
+        rvCategories.setLayoutManager(layoutManagerCategories);
+
+        rvAdapter = new RVAdapter(getApplicationContext(), 0);
+        rvAdapter.swapDataCategory(categories);
+
+        rvCategories.setAdapter(rvAdapter);
     }
 
     private void GetDetailsPatient() {
@@ -121,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
                 if (message.equalsIgnoreCase("success")) {
                     SharedPreferences.Editor patientInfo = getSharedPreferences("PatientInfo", MODE_PRIVATE).edit();
                     patientInfo.putString("info", jsonObject.get("data").toString());
-                    patientInfo.commit();
-                    DisplaySoftInfoPatient(jsonObject.get("data").toString());
+                    patientInfo.apply();
+//                    DisplaySoftInfoPatient(jsonObject.get("data").toString());
                 }
             }
 
@@ -217,43 +226,19 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new FAQsFragment();
                 break;
             case 4:
-                DialogConfirm();
                 break;
             default:
                 break;
         }
         if (fragment != null) {
             PerformNoBackStackTransaction(fragment);
-            drawerCategories.closeDrawer(Gravity.LEFT);
+//            drawerCategories.closeDrawer(Gravity.LEFT);
         } else {
             Log.e("MainActivity", "Error in creating fragment");
         }
     }
 
-    //Display dialog choose camera or gallery to upload image
-    private void DialogConfirm() {
-        final android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getApplicationContext().getResources().getString(R.string.unregistered));
-        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.un_title));
-
-        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Unregistered", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                MyApplication.getInstance().clearApplication();
-                finish();
-                startActivity(new Intent(getApplicationContext(), LauncherActivity.class));
-            }
-        });
-
-        alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                alertDialog.cancel();
-            }
-        });
-        alertDialog.show();
-    }
-
+    //Change fragment layout
     public void PerformNoBackStackTransaction(Fragment fragment) {
         final FragmentManager fragmentManager = getSupportFragmentManager();
         final int newBackStackLength = fragmentManager.getBackStackEntryCount() + 1;
@@ -278,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void SendToken() {
+    public void SendToken() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("token", spDevice.getString("gcmToken", null));
         jsonObject.addProperty("uid", uidTelehealth.getString("uid", null));
@@ -286,14 +271,15 @@ public class MainActivity extends AppCompatActivity {
         dataJson.addProperty("data", gson.toJson(jsonObject));
         restClient.updateToken(dataJson, new Callback<JsonObject>() {
             @Override
-            public void success(JsonObject jsonObject, Response response) {
-//                Log.d(TAG, jsonObject.toString());
-            }
+            public void success(JsonObject jsonObject, Response response) {}
 
             @Override
-            public void failure(RetrofitError error) {
-                Log.d(TAG, error.getLocalizedMessage());
-            }
+            public void failure(RetrofitError error) {}
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

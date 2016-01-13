@@ -1,7 +1,7 @@
 module.exports = {
     'post /api/consultation/create': {
         controller: 'Consultation/ConsultationController',
-        action: 'CreateConsultation'
+        action: 'RequestConsultation'
     },
     'post /api/consultation/list': {
         controller: 'Consultation/ConsultationController',
@@ -13,7 +13,7 @@ module.exports = {
     },
     'post /api/consultation/update': {
         controller: 'Consultation/ConsultationController',
-        action: 'UpdateConsultation'
+        action: 'UpdateRequestConsultation'
     },
     'get /api/consultation/destroy/:UID': {
         controller: 'Consultation/ConsultationController',

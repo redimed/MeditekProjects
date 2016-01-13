@@ -1,4 +1,4 @@
-var app = angular.module('app.authentication.admission.detail.step1.modalAdd1.controller',[]);
+var app = angular.module('app.authentication.admission.request.step1.modalAdd1.controller',[]);
 
 app.controller('modalAdd1Ctrl', function($scope, $state, $uibModal, $modalInstance, titleModal, PREVIOUS_SURGERY_PROCEDURES){
 	$scope.title = titleModal;

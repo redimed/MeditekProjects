@@ -3,7 +3,7 @@ GetPaginationAppointment: get information pagination list [WA, Telehealth] Appoi
 input: information WA Appointment
 output: object pagination with condition received
  */
-module.exports = function(data, userInfo) {
+module.exports = function(data, userInfo, primaryKeyModel) {
     var moment = require('moment');
     var pagination = {
         filterAppointment: [],
@@ -13,6 +13,7 @@ module.exports = function(data, userInfo) {
         filterPatient: [],
         filterWAAppointment: [],
         filterConsultation: [],
+        filterAdmission: [],
         order: [],
         limit: data.Limit,
         offset: data.Offset
@@ -67,6 +68,9 @@ module.exports = function(data, userInfo) {
                                     break;
                                 case 'Consultation':
                                     pagination.filterConsultation.push(tempFilter);
+                                    break;
+                                case 'Admission':
+                                    pagination.filterAdmission.push(tempFilter);
                                     break;
                                 default:
                                     break;
@@ -141,6 +145,9 @@ module.exports = function(data, userInfo) {
                                 case 'Consultation':
                                     pagination.filterConsultation.push(tempSearch);
                                     break;
+                                case 'Admission':
+                                    pagination.filterAdmission.push(tempSearch);
+                                    break;
                                 default:
                                     break;
                             }
@@ -164,34 +171,13 @@ module.exports = function(data, userInfo) {
                         if (HelperService.CheckExistData(keyOrder) &&
                             HelperService.CheckExistData(order[keyModel][keyOrder])) {
                             var tempOrder = [];
-                            switch (keyModel) {
-                                case 'Appointment':
-                                    tempOrder = [keyOrder, order[keyModel][keyOrder]];
-                                    pagination.order.push(tempOrder);
-                                    break;
-                                case 'Doctor':
-                                    tempOrder = [Doctor, keyOrder, order[keyModel][keyOrder]];
-                                    pagination.order.push(tempOrder);
-                                    break;
-                                case 'TelehealthAppointment':
-                                    tempOrder = [TelehealthAppointment, keyOrder, order[keyModel][keyOrder]];
-                                    pagination.order.push(tempOrder);
-                                    break;
-                                case 'WAAppointment':
-                                    tempOrder = [WAAppointment, keyOrder, order[keyModel][keyOrder]];
-                                    pagination.order.push(tempOrder);
-                                    break;
-                                case 'Patient':
-                                    tempOrder = [Patient, keyOrder, order[keyModel][keyOrder]];
-                                    pagination.order.push(tempOrder);
-                                    break;
-                                case 'Consultation':
-                                    tempOrder = [Consultation, keyOrder, order[keyModel][keyOrder]];
-                                    pagination.order.push(tempOrder);
-                                    break;
-                                default:
-                                    break;
+                            if (HelperService.CheckExistData(primaryKeyModel) &&
+                                primaryKeyModel.name === keyModel) {
+                                tempOrder = [keyOrder, order[keyModel][keyOrder]];
+                            } else {
+                                tempOrder = [primaryKeyModel, keyOrder, order[keyModel][keyOrder]];
                             }
+                            pagination.order.push(tempOrder);
                         }
                     }
                 }
@@ -261,6 +247,9 @@ module.exports = function(data, userInfo) {
                                         break;
                                     case 'Consultation':
                                         pagination.filterConsultation.push(tempRange);
+                                        break;
+                                    case 'Admission':
+                                        pagination.filterAdmission.push(tempRange);
                                         break;
                                     default:
                                         break;

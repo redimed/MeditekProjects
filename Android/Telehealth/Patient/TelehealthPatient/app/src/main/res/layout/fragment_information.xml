@@ -25,22 +25,24 @@
             <RelativeLayout
                 android:id="@+id/layoutProfile"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="170dp"
                 android:background="@drawable/profile_bg"
                 android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/avatarPatient"
-                    android:layout_width="97dp"
-                    android:layout_height="109dp"
-                    android:layout_marginLeft="20dp" />
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="50dp"
+                    android:layout_marginRight="30dp"
                     android:orientation="vertical">
 
                     <com.redimed.telehealth.patient.font.RobotoTextView
@@ -102,6 +104,16 @@
                             android:textColor="@color/lightFont" />
 
                     </LinearLayout>
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/btnLogout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_alignParentTop="true"
+                        android:text="@string/profile_logout"
+                        android:textColor="@color/lightFont"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 

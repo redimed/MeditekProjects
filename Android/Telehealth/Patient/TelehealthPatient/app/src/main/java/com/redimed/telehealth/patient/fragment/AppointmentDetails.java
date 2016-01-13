@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -35,6 +34,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -43,29 +45,21 @@ import com.redimed.telehealth.patient.ModelActivity;
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
 import com.redimed.telehealth.patient.api.RegisterApi;
-import com.redimed.telehealth.patient.models.Appointment;
 import com.redimed.telehealth.patient.models.ClinicalDetails;
 import com.redimed.telehealth.patient.models.Doctor;
 import com.redimed.telehealth.patient.models.FileUpload;
-import com.redimed.telehealth.patient.models.TelehealthAppointment;
 import com.redimed.telehealth.patient.network.RESTClient;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
-import com.redimed.telehealth.patient.utils.Config;
+import com.redimed.telehealth.patient.network.Config;
+import com.redimed.telehealth.patient.utils.DeviceUtils;
+import com.redimed.telehealth.patient.utils.PreCachingLayoutManager;
 import com.redimed.telehealth.patient.utils.RVAdapterImage;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
+import com.redimed.telehealth.patient.utils.VolleySingleton;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-import com.squareup.picasso.UrlConnectionDownloader;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,7 +76,7 @@ import retrofit.client.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AppointmentDetails extends Fragment {
+public class AppointmentDetails extends Fragment implements View.OnClickListener {
 
     private static String TAG = "DETAILS";
     private static final int RESULT_PHOTO = 1;
@@ -96,9 +90,7 @@ public class AppointmentDetails extends Fragment {
     private boolean flagLayout = false;
     private List<FileUpload> fileUploads;
     private List<String> urlImg;
-    private RVAdapterImage rvAdapterImage;
     private SharedPreferences telehealthPatient;
-    private LinearLayoutManager layoutManagerCategories;
     private String fromTime, status, firstDoctor, middleDoctor, lastDoctor, appointmentUID;
     private Uri fileUri; // file url to store image
     public static final int MEDIA_TYPE_IMAGE = 1;
@@ -126,8 +118,7 @@ public class AppointmentDetails extends Fragment {
     @Bind(R.id.imgTitle)
     ImageView imgTitle;
 
-    public AppointmentDetails() {
-    }
+    public AppointmentDetails() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -135,35 +126,53 @@ public class AppointmentDetails extends Fragment {
         v = inflater.inflate(R.layout.fragment_appointment_details, container, false);
         ButterKnife.bind(this, v);
 
-        telehealthPatient = v.getContext().getSharedPreferences("TelehealthUser", v.getContext().MODE_PRIVATE);
-        urlPicasso = new ArrayList<String>();
-        urlImg = new ArrayList<String>();
-        gson = new Gson();
-        registerApi = RESTClient.getRegisterApi();
-
-        appointmentUID = this.getArguments().getString("appointmentUID", null);
-        if (appointmentUID != null) {
-            GetAppointmentDetails(appointmentUID);
-        }
         if (savedInstanceState != null) {
             fileUri = savedInstanceState.getParcelable("fileUri");
         }
 
-        rvImageAppointment.setHasFixedSize(true);
-        layoutManagerCategories = new LinearLayoutManager(v.getContext(), LinearLayout.HORIZONTAL, false);
-        rvImageAppointment.setLayoutManager(layoutManagerCategories);
-        rvAdapterImage = new RVAdapterImage();
-        rvImageAppointment.setAdapter(rvAdapterImage);
+        init();
+        DisplayTitleBackGround();
 
-        btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnHome.setText(getResources().getString(R.string.back));
+        btnHome.setOnClickListener(this);
+        btnUpload.setOnClickListener(this);
+
+        return v;
+    }
+
+    private void init() {
+        gson = new Gson();
+        urlImg = new ArrayList<String>();
+        urlPicasso = new ArrayList<String>();
+        registerApi = RESTClient.getRegisterApi();
+        telehealthPatient = v.getContext().getSharedPreferences("TelehealthUser", v.getContext().MODE_PRIVATE);
+
+        appointmentUID = this.getArguments().getString("appointmentUID", "");
+        GetAppointmentDetails(appointmentUID);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnUpload:
                 DialogUploadImage();
-            }
-        });
+                break;
+            case R.id.lblHome:
+                ((MainActivity) v.getContext()).Display(2);
+                break;
+        }
+    }
 
+    private void DisplayTitleBackGround() {
+
+        //init toolbar
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
         appCompatActivity.setSupportActionBar(toolBar);
+
+        //Set text  and icon title appointment details
+        lblTitle.setText(getResources().getString(R.string.appt_title));
+        Picasso.with(v.getContext()).load(R.drawable.detail_appt_icon).into(imgTitle);
 
         //Load background image with blur transform
         Picasso.with(v.getContext()).load(R.drawable.slider2).transform(new BlurTransformation(v.getContext(), 20)).into(new Target() {
@@ -188,21 +197,10 @@ public class AppointmentDetails extends Fragment {
                 Log.d(TAG, "Prepare Load " + placeHolderDrawable);
             }
         });
-        lblTitle.setText(getResources().getString(R.string.appt_title));
-        Picasso.with(v.getContext()).load(R.drawable.detail_appt_icon).into(imgTitle);
-        btnHome.setText(getResources().getString(R.string.back));
-        btnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) v.getContext()).Display(2);
-            }
-        });
-        return v;
     }
 
     //    Get Detail Appointment with param UID Appointment
     private void GetAppointmentDetails(String appointmentUID) {
-
         registerApi.getAppointmentDetails(appointmentUID, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
@@ -251,10 +249,6 @@ public class AppointmentDetails extends Fragment {
                         lblDoctorName.setText(firstDoctor + middleDoctor + lastDoctor);
                     }
 
-                    if (urlImg != null) {
-                        urlImg.clear();
-                    }
-
                     //Get image from ClinicalDetails
                     String clinicDetails = jsonObject.get("data").getAsJsonObject().get("TelehealthAppointment").getAsJsonObject().get("ClinicalDetails").toString();
                     ClinicalDetails[] clinicalDetails = gson.fromJson(clinicDetails, ClinicalDetails[].class);
@@ -293,11 +287,18 @@ public class AppointmentDetails extends Fragment {
 
     private void GetFileUpload(List<String> fileUploads) {
         for (int i = 0; i < fileUploads.size(); i++) {
-            if (GetResponseCode(Config.apiURLDownload + fileUploads.get(i)) == 200) {
-                urlPicasso.add(Config.apiURLDownload + fileUploads.get(i));
+            if (GetResponseCode(Config.apiURLImageResize + fileUploads.get(i)) == 200) {
+                urlPicasso.add(Config.apiURLImageResize + fileUploads.get(i));
             }
         }
-        rvAdapterImage.swapData(urlPicasso, telehealthPatient);
+        RVAdapterImage rvAdapterImage = new RVAdapterImage(v.getContext(), urlPicasso, telehealthPatient);
+
+        PreCachingLayoutManager layoutManagerCategories = new PreCachingLayoutManager(v.getContext());
+        layoutManagerCategories.setOrientation(LinearLayoutManager.HORIZONTAL);
+        layoutManagerCategories.setExtraLayoutSpace(DeviceUtils.getScreenWidth(v.getContext()));
+
+        rvImageAppointment.setLayoutManager(layoutManagerCategories);
+        rvImageAppointment.setAdapter(rvAdapterImage);
     }
 
     //Check url available

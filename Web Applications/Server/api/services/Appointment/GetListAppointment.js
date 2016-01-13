@@ -8,7 +8,7 @@ module.exports = function(data, userInfo) {
     var $q = require('q');
     var defer = $q.defer();
     //get pagination  with condition received
-    var pagination = Services.GetPaginationAppointment(data, userInfo);
+    var pagination = Services.GetPaginationAppointment(data, userInfo, Appointment);
     Appointment.findAndCountAll({
             attributes: Services.AttributesAppt.Appointment(),
             include: [{

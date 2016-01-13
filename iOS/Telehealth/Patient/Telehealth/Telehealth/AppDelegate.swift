@@ -18,9 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let ServerApi : GetAndPostDataController = GetAndPostDataController()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
-
         
+        if let info = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
+            dUserInfo = info
+            
+        
+        }
         //check device ID in localstorage
         let defaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
         if  defaults.valueForKey("deviceID") as? String == nil {
@@ -50,32 +53,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
         //create setting push notification
-        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound, UIUserNotificationType.Alert, UIUserNotificationType.Badge], categories: nil))
-        let notificationActionOk :UIMutableUserNotificationAction = UIMutableUserNotificationAction()
-        notificationActionOk.identifier = "Answer"
-        notificationActionOk.title = "Ok"
-        notificationActionOk.destructive = false
-        notificationActionOk.authenticationRequired = false
-        notificationActionOk.activationMode = UIUserNotificationActivationMode.Foreground
-        
-        let notificationActionCancel :UIMutableUserNotificationAction = UIMutableUserNotificationAction()
-        notificationActionCancel.identifier = "Desline"
-        notificationActionCancel.title = "Not Now"
-        notificationActionCancel.destructive = true
-        notificationActionCancel.authenticationRequired = false
-        notificationActionCancel.activationMode = UIUserNotificationActivationMode.Background
-        
         let notificationCategory:UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
         notificationCategory.identifier = "CALLING_MESSAGE"
-        notificationCategory .setActions([notificationActionOk,notificationActionCancel], forContext: UIUserNotificationActionContext.Default)
-        
-        let notificationCategory1:UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
-        notificationCategory1.identifier = "end"
-        notificationCategory1 .setActions([], forContext: UIUserNotificationActionContext.Default)
-        
-        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound ,UIUserNotificationType.Alert,UIUserNotificationType.Badge],categories:NSSet(array:[notificationCategory,notificationCategory1]) as? Set<UIUserNotificationCategory>))
-        
-     
+        notificationCategory .setActions([], forContext: UIUserNotificationActionContext.Default)
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound ,UIUserNotificationType.Alert,UIUserNotificationType.Badge],categories:NSSet(array:[notificationCategory]) as? Set<UIUserNotificationCategory>))
         
         return true
     }
@@ -87,59 +68,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         UIApplication.sharedApplication().cancelAllLocalNotifications()
     
-                //check message push
-                print("user info---",userInfo)
-                var data = JSON(userInfo)
-                if data["data"]["message"].string == "end" {
-                    NSNotificationCenter.defaultCenter().postNotificationName("cancelCall", object: self)
-                }else{
-                    setDataCalling(userInfo)
-                    statusCallingNotification = notifyMessage.ClickNotify
-                    
-                    NSNotificationCenter.defaultCenter().postNotificationName("openPopUpCalling", object: self)
-                }
-                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+
       
         completionHandler(.NoData)
     }
     
-    func setDataCalling(userInfo: [NSObject : AnyObject]){
-        let userInfo = JSON(userInfo)
-        let apiKey  =  userInfo["data"]["apiKey"].string! as String ?? ""
-        let message = userInfo["data"]["message"].string! as String ?? ""
-        let from = userInfo["data"]["from"].string! as String ?? ""
-        let sessionId  =  userInfo["data"]["sessionId"].string! as String ?? ""
-        let token  = userInfo["data"]["token"].string! as String ?? ""
-        let fromName  = userInfo["data"]["fromName"].string! as String ?? ""
-        savedData = saveData(apiKey: apiKey, message: message, fromName: fromName, sessionId: sessionId, token: token, from: from)
 
-    }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-//            switch (identifier!) {
-//                case "Answer":
-//                    var data = JSON(userInfo)
-//                    if data["data"]["message"].string == "end" {
-//                        
-//                    }else{
-//                        setDataCalling(userInfo)
-//                        statusCallingNotification = notifyMessage.ClickAnswer
-//                        NSNotificationCenter.defaultCenter().postNotificationName("openScreenCall", object: self)
-//                    }
-//                  
-//                    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-//                     completionHandler()
-//                case "Desline":
-//                    completionHandler()
-//                    
-//                    ServerApi.pushNotification("Doctor cancel call", uid: savedData.from, category: "", data: "aaa",completionHandler: {
-//                        respone in
-//                        
-//                    })
-//                 UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-//                
-//                default: break
-//                }
+
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData)

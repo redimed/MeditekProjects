@@ -73,11 +73,17 @@ module.exports = function(consultationUID, userInfo) {
                     model: FileUpload,
                     required: false
                 }]
+            }, {
+                attributes: Services.AttributesAppt.FileUpload(),
+                model: FileUpload,
+                required: false
             }],
             where: filter.Consultation
         })
         .then(function(consultationRes) {
-            defer.resolve({data: consultationRes});
+            defer.resolve({
+                data: consultationRes
+            });
         }, function(err) {
             defer.reject(err);
         });

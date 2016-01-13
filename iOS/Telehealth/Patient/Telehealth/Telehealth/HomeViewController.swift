@@ -38,31 +38,6 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             
         }
         
-        //check status notify and handle action
-        switch statusCallingNotification {
-        case notifyMessage.ClickNotify :
-            openPopUpCalling()
-            statusCallingNotification = ""
-            break
-        case notifyMessage.ClickAnswer :
-            openScreenCall()
-            statusCallingNotification = ""
-            break
-        case notifyMessage.ClickDesline :
-            if let from  = savedData.from {
-                emitDataToServer(MessageString.Decline, uidFrom: uid, uuidTo: from)
-            }
-            statusCallingNotification = ""
-            break
-        default: break
-            
-            
-        }
-      
-   
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "openPopUpCalling", name: "openPopUpCalling", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "openScreenCall", name: "openScreenCall", object: nil)
-        
         //Connect Socket
         openSocket()
         pagingImage()
@@ -248,9 +223,6 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     func pressOK(sender: MyPopupViewController) {
         backMusic.stop()
         self.dismissPopupViewController(.Fade)
-//        if let from  = savedData.from {
-//            emitDataToServer(MessageString.CallAnswer, uidFrom: uid, uuidTo: from)
-//        }
         openScreenCall()
         
     }
@@ -300,9 +272,9 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
                 let message : String = data[0]["message"] as! String
                 print("message----",data)
                 switch message {
-//                case MessageString.Call : 
-                    //                    self.setDataCalling(data)
-                    //NSNotificationCenter.defaultCenter().postNotificationName("openPopUpCalling", object: self)
+                case MessageString.Call : 
+                    self.setDataCalling(data)
+                    self.openPopUpCalling()
                 case  MessageString.CallEndCall:
                     NSNotificationCenter.defaultCenter().postNotificationName("endCallAnswer", object: self)
                     break
@@ -323,7 +295,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         sharedSocket.socket.connect()
         
     }
-    
+
     func setDataCalling(userInfo:  AnyObject){
         let userInfo = JSON(userInfo)
         let apiKey  =  userInfo[0]["apiKey"].string! as String ?? ""

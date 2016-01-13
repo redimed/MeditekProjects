@@ -19,7 +19,8 @@ module.exports = function(consultationUID, userInfo) {
                                 transaction: t,
                             });
                         } else {
-                            defer.reject('find.consultation.not.found');
+                            var error = new Error('find.consultation.not.found');
+                            defer.reject(error);
                         }
                     }, function(err) {
                         defer.reject(err);

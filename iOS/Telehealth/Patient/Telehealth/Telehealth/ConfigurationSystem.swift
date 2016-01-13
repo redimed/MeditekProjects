@@ -24,7 +24,7 @@ var EnterBackground : Bool = false
 
 //var deviceID = String()
 struct ConfigurationSystem {
-    static let http :String = "http://telehealthvietnam.com.vn"
+    static let http :String = "http://testapp.redimed.com.au"
     
     static let Http_3009 :String = "\(http):3009"
     static let Http_3005 :String =  "\(http):3005"

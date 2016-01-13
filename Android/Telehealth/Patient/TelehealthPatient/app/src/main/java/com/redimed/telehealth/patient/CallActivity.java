@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -90,6 +91,10 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         ButterKnife.bind(this);
         streamOpenTok = new ArrayList<Stream>();
 
@@ -248,7 +253,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onSignalReceived(Session session, String type, String data, Connection connection) {
-        Log.d(TAG, "onSignalReceived. Type: "+ type + " data: "+data);
+        Log.d(TAG, "onSignalReceived. Type: "+ type + " Data: "+ data);
         String myConnectionId = session.getConnection().getConnectionId();
         String theirConnectionId = connection.getConnectionId();
         if (!theirConnectionId.equals(myConnectionId)) {

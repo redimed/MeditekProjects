@@ -2,7 +2,7 @@ var app = angular.module("app.authentication.consultation.detail.consultNote.con
 ]);
 
 app.controller('consultNoteCtrl', function($scope){
-	// alert($scope.uid)
+	
 	$scope.uid = {
 		show:function(uid){
 			$scope.consultationuid = uid;

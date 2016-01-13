@@ -44,5 +44,8 @@ angular.module("app.authentication.consultation.services", [])
         services.detailConsultation = function(UID) {
             return api.one('consultation/detail/'+UID).get();
         }
+        services.updateConsultation = function(data){
+            return api.all('consultation/update').post({data:data});
+        }
         return services;
     });

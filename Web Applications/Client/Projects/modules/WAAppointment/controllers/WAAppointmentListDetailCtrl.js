@@ -1,4 +1,4 @@
-var app = angular.module('app.authentication.WAAppointment.list.detail.controller', []);
+var app = angular.module('app.authentication.WAAppointment.detail.controller', []);
 app.controller('showImageController', function($scope, $modalInstance, toastr, LinkUID, CommonService) {
 
     $scope.$watch('dimageStatus', function(newValue, oldValue) {
@@ -40,7 +40,6 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $s
 
     /*=========opentok begin=========*/
     $scope.userInfo = $cookies.getObject('userInfo');
-    console.log($scope.wainformation);
     console.log(" $scope.userInfo", $scope.userInfo);
     var apiKey = null;
     var sessionId = null;
@@ -69,9 +68,9 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $s
 
     OpentokCreateSession();
 
-    function OpentokSendCall(uidCall,uidUser) {
-        console.log("uidCall",uidCall);
-        console.log("uidUser",uidUser);
+    function OpentokSendCall(uidCall, uidUser) {
+        console.log("uidCall", uidCall);
+        console.log("uidUser", uidUser);
         io.socket.get('/api/telehealth/socket/messageTransfer', {
             from: uidUser,
             to: uidCall,
@@ -92,21 +91,19 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $s
                 userCall = data.data[0].TeleUID;
                 userName = data.data[0].FirstName + " " + data.data[0].LastName;
                 console.log()
-                OpentokSendCall(userCall,$scope.userInfo.UID);
+                OpentokSendCall(userCall, $scope.userInfo.UID);
                 window.open($state.href("blank.call", {
                     apiKey: apiKey,
                     sessionId: sessionId,
                     token: token,
                     userName: userName
                 }));
-            }else{
+            } else {
 
             };
         });
     };
-        /*=========opentok end=========*/
-
-
+    /*=========opentok end=========*/
 
     $modalInstance.rendered.then(function() {
         App.initComponents(); // init core components

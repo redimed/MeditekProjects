@@ -1,5 +1,5 @@
 module.exports = {
-    ConsultNote: function(data, userID) {
+    Consultation: function(data, userID) {
         if (HelperService.CheckExistData(data) &&
             !_.isEmpty(data)) {
             _.forEach(data, function(valueConsultation, indexConsultation) {

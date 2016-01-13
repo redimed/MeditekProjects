@@ -16,12 +16,12 @@
                                     HelperService.CheckExistData(consultation.FileUploads) &&
                                     !_.isEmpty(consultation.FileUploads)) {
                                     var FileUploads = consultation.FileUploads;
-                                    var objCreateConsultationData = {
+                                    var objRelConsultationDataFileUpload = {
                                         data: FileUploads,
                                         transaction: objCreate.transaction,
                                         consultationDataObject: consultationDataCreated
                                     };
-                                    return Services.RelConsultationDataFileUpload(objCreateConsultationData);
+                                    return Services.RelConsultationDataFileUpload(objRelConsultationDataFileUpload);
                                 }
                             }, function(err) {
                                 defer.reject(err);
@@ -34,7 +34,8 @@
                     defer.reject(err);
                 });
         } else {
-            defer.reject('objCreate.BulkCreateConsultationData.failed');
+            var error = new Error('objCreate.BulkCreateConsultationData.failed');
+            defer.reject(error);
         }
         return defer.promise;
     };

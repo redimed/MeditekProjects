@@ -1,6 +1,5 @@
 package com.redimed.telehealth.patient;
 
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -23,17 +22,20 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.service.SocketService;
 import com.redimed.telehealth.patient.utils.BlurTransformation;
-import com.redimed.telehealth.patient.utils.Config;
+import com.redimed.telehealth.patient.network.Config;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.squareup.picasso.UrlConnectionDownloader;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -48,6 +50,8 @@ public class WaitingActivity extends AppCompatActivity implements View.OnClickLi
     private NotificationManager notificationManager;
     private LocalBroadcastManager localBroadcastManager;
     private String sessionId, token, apiKey, to, from, fromName;
+
+    private SharedPreferences callPreferences;
 
     @Bind(R.id.lblNameCaller)
     TextView lblNameCaller;
@@ -79,7 +83,7 @@ public class WaitingActivity extends AppCompatActivity implements View.OnClickLi
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        telehealthPatient = getSharedPreferences("TelehealthUser", getApplicationContext().MODE_PRIVATE);
+        telehealthPatient = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
         ButterKnife.bind(this);
         Picasso.with(getApplicationContext()).load(R.drawable.logo_redimed).into(logo);
 
@@ -90,7 +94,7 @@ public class WaitingActivity extends AppCompatActivity implements View.OnClickLi
 
         btnDecline.setOnClickListener(this);
         btnAnswer.setOnClickListener(this);
-
+        callPreferences = getSharedPreferences("FlagCall", MODE_PRIVATE);
         PlayingSound();
         ListenSocket();
     }
@@ -178,7 +182,6 @@ public class WaitingActivity extends AppCompatActivity implements View.OnClickLi
     //Accept appointment
     private void AnswerCommunication() {
         Intent i = new Intent(this, CallActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.putExtra("apiKey", apiKey);
         i.putExtra("sessionId", sessionId);
         i.putExtra("token", token);
@@ -232,16 +235,11 @@ public class WaitingActivity extends AppCompatActivity implements View.OnClickLi
     protected void onResume() {
         super.onResume();
         PlayingSound();
-
-        WaitingActivity.onResumeAppTracking(this);
-        WaitingActivity.setAppInBackgroundFalse();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
-        WaitingActivity.setAppInBackgroundTrue();
     }
 
     @Override
@@ -261,33 +259,16 @@ public class WaitingActivity extends AppCompatActivity implements View.OnClickLi
                 throwable.printStackTrace();
             }
         }
+        if (callPreferences.getBoolean("isBackground", false)){
+            i = new Intent(context, MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+            startActivity(i);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         StopPlaying();
-
-        WaitingActivity.setAppInBackgroundFalse();
-    }
-
-    private static boolean IS_APP_IN_BACKGROUND = false;
-
-    protected static void onResumeAppTracking(Activity activity) {
-        if (WaitingActivity.isAppInBackground()) {
-            // do requirements for returning app to foreground
-        }
-    }
-
-    protected static void setAppInBackgroundFalse() {
-        IS_APP_IN_BACKGROUND = false;
-    }
-
-    protected static void setAppInBackgroundTrue() {
-        IS_APP_IN_BACKGROUND = true;
-    }
-
-    protected static boolean isAppInBackground() {
-        return IS_APP_IN_BACKGROUND;
     }
 }

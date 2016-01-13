@@ -314,7 +314,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mDZ-lc-Knh" customClass="DesignableTextField" customModule="Spring">
-                                <rect key="frame" x="181" y="188" width="299" height="40"/>
+                                <rect key="frame" x="133" y="188" width="347" height="40"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="0.41150323275862066" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -804,12 +804,12 @@
                         <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ye-98-Yfs">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ye-98-Yfs">
                                 <rect key="frame" x="290" y="20" width="734" height="684"/>
                                 <animations/>
                             </containerView>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="114" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iR8-dy-GSC">
-                                <rect key="frame" x="0.0" y="20" width="290" height="692"/>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="114" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iR8-dy-GSC">
+                                <rect key="frame" x="0.0" y="20" width="290" height="684"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -829,7 +829,7 @@
                                     <outlet property="delegate" destination="WJh-Re-2WR" id="0mQ-tN-kWP"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="78n-Ue-50c" userLabel="Navigation Button">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="78n-Ue-50c" userLabel="Navigation Button">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="20"/>
                                 <subviews>
                                     <button opaque="NO" tag="50" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bcd-PN-uf9" userLabel="view1">
@@ -854,8 +854,11 @@
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.85882352941176465" green="0.85882352941176465" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Djy-nH-ito"/>
+                                </constraints>
                             </view>
-                            <view hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jOB-iL-ctH" userLabel="View Button">
+                            <view hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="jOB-iL-ctH" userLabel="View Button">
                                 <rect key="frame" x="0.0" y="20" width="290" height="684"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="BG-DetailApt" translatesAutoresizingMaskIntoConstraints="NO" id="ZiX-tS-7K3">
@@ -958,6 +961,23 @@
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="78n-Ue-50c" firstAttribute="trailing" secondItem="3ye-98-Yfs" secondAttribute="trailing" id="1jO-EZ-ZOo"/>
+                            <constraint firstItem="78n-Ue-50c" firstAttribute="leading" secondItem="iR8-dy-GSC" secondAttribute="leading" id="88e-oX-QTc"/>
+                            <constraint firstItem="78n-Ue-50c" firstAttribute="top" secondItem="DWZ-DT-jod" secondAttribute="bottom" id="AKg-WX-6Jx"/>
+                            <constraint firstItem="iR8-dy-GSC" firstAttribute="trailing" secondItem="jOB-iL-ctH" secondAttribute="trailing" id="AYx-VF-Tef"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="top" secondItem="jOB-iL-ctH" secondAttribute="top" id="Bvo-um-jOH"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="bottom" secondItem="jOB-iL-ctH" secondAttribute="bottom" id="GH8-8H-AWw"/>
+                            <constraint firstItem="jOB-iL-ctH" firstAttribute="top" secondItem="78n-Ue-50c" secondAttribute="bottom" id="LbR-Kt-LYJ"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="bottom" secondItem="CKi-gO-CIQ" secondAttribute="top" id="W7V-yn-yz6"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="leading" secondItem="f1q-6i-50p" secondAttribute="leading" constant="290" id="YO1-9o-yfP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="78n-Ue-50c" secondAttribute="trailing" constant="-20" id="ZuN-ON-TC4"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="top" secondItem="iR8-dy-GSC" secondAttribute="top" id="bXy-10-uwL"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="leading" secondItem="jOB-iL-ctH" secondAttribute="trailing" id="fcS-qb-Rq8"/>
+                            <constraint firstItem="78n-Ue-50c" firstAttribute="leading" secondItem="f1q-6i-50p" secondAttribute="leadingMargin" constant="-20" id="opt-iG-CrJ"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="bottom" secondItem="iR8-dy-GSC" secondAttribute="bottom" id="rpX-ot-PsQ"/>
+                            <constraint firstItem="78n-Ue-50c" firstAttribute="leading" secondItem="jOB-iL-ctH" secondAttribute="leading" id="yFM-qU-uQK"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YJ0-la-XK9"/>
                     <connections>

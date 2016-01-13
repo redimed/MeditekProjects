@@ -563,7 +563,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		AFF10DF51BB279FE005E9838 /* Controllers */ = {
+		AFF10DF51BB279FE005E9838 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				0045A2DC1BCF887C00AC4028 /* Detail Appointment */,
@@ -573,7 +573,7 @@
 				004F6D171BB99FE300242CE9 /* CustomUI */,
 				0045A2D81BCF881200AC4028 /* Appointment List */,
 			);
-			name = Controllers;
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		AFF10DF81BB27A39005E9838 /* Resource */ = {
@@ -622,7 +622,7 @@
 				00D5127E1BB4E7810068942D /* Delegate */,
 				AFF10DF81BB27A39005E9838 /* Resource */,
 				00D5127F1BB4E8150068942D /* Constants */,
-				AFF10DF51BB279FE005E9838 /* Controllers */,
+				AFF10DF51BB279FE005E9838 /* View Controllers */,
 				AFF10E011BB286E1005E9838 /* Model */,
 				AFF21D801BB12D8B006A190E /* Main.storyboard */,
 				007AE7CE1C06AE17005364FE /* Assets.xcassets */,

@@ -39,7 +39,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
     @IBAction func btnCheckPhoneAction(sender: DesignableButton)  {
          view.endEditing(true)
         //Check email if email is valid return message
-        if (phoneTextField.text == "" || validatePhoneNumber(phoneTextField.text!) == false){
+//         || validatePhoneNumber(phoneTextField.text!) == false
+        if (phoneTextField.text == ""){
             animationView(viewPhoneNumber)
             config.borderTextFieldValid(phoneTextField, color: colorCustom)
         }

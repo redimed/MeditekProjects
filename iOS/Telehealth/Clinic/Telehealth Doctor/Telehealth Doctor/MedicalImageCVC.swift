@@ -11,6 +11,7 @@ import UIKit
 class MedicalImageCVC: UICollectionViewCell {
 
     @IBOutlet var mediImage: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import Alamofire
 import UIKit
+import Alamofire
 import SwiftyJSON
 
 /// ***declare server for all application***
@@ -106,7 +106,19 @@ func getReFormat() -> (timeZone: String, filterFormat: String) {
     return (timeZone: arrReFormatDate[1], filterFormat: reFormatDate)
 }
 
-func paramFilter(offset: Int, aptFrom: String, aptTo: String, status: String) {
+/**
+ <#Description#>
+ 
+ - parameter offset:      param for load more
+ - parameter valueFilter: array string filter for JSON
+ 
+ * valueFilter[0]: appointment 'from' date
+ 
+ * valueFilter[1]: appointment 'to' date
+ 
+ * valueFilter[2]: status a appointment
+ */
+func paramFilter(offset: Int, valueFilter: String...) {
     SingleTon.filterParam = [ "data":
         [
             "Limit": 20,
@@ -116,7 +128,7 @@ func paramFilter(offset: Int, aptFrom: String, aptTo: String, status: String) {
                 [
                     "Appointment":
                         [
-                            "Status": status,
+                            "Status": valueFilter[2],
                             "Enable": "Y"
                             
                     ]
@@ -128,7 +140,7 @@ func paramFilter(offset: Int, aptFrom: String, aptTo: String, status: String) {
             "Range" : [
                 [
                     "Appointment": [
-                        "FromTime": [ aptFrom, aptTo ]
+                        "FromTime": [ valueFilter[0], valueFilter[1] ]
                     ]
                 ]
             ]

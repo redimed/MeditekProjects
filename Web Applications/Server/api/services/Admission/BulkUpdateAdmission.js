@@ -86,8 +86,10 @@ module.exports = function(objUpdate) {
                             if (HelperService.CheckExistData(valueAdmission) &&
                                 HelperService.CheckExistData(valueAdmission.AdmissionData) &&
                                 !_.isEmpty(valueAdmission.AdmissionData)) {
+                                var admissionDatas = 
+                            Services.GetDataAdmission.AdmissionData(valueAdmission.AdmissionData, objUpdate.userInfo.ID);
                                 var objectCreateAdmissionData = {
-                                    data: valueAdmission.AdmissionData,
+                                    data: admissionDatas,
                                     transaction: objUpdate.transaction
                                 };
                                 return Services.BulkCreateAdmissionData(objectCreateAdmissionData);

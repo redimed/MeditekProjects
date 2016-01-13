@@ -47,7 +47,7 @@ module.exports = function(data, userInfo) {
                         });
                     })
                     .then(function(admissionUpdated) {
-                        defer.resolve({
+                         defer.resolve({
                             transaction: t,
                             status: 'success'
                         });

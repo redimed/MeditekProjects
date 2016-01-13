@@ -67,7 +67,7 @@ module.exports = {
                                         transaction: t
                                     })
                                 }
-
+                                var fileInfo=null;
                                 function startTransaction() {
                                     return FileUpload.create({
                                         UID: fileUID,
@@ -81,6 +81,7 @@ module.exports = {
                                     }, {
                                         transaction: t
                                     }).then(function(file) {
+                                        fileInfo=file;
                                         if (fileType == constFileType.image) return medicalImageCheck(!params.bodyPart ? null : params.bodyPart, file.ID);
                                         else if (fileType == constFileType.document) return documentCheck(!params.docType ? null : params.docType, file.ID);
                                     })
@@ -89,7 +90,8 @@ module.exports = {
                                     t.commit();
                                     return res.ok({
                                         status: 'success',
-                                        fileUID: fileUID
+                                        fileUID: fileUID,
+                                        fileInfo: fileInfo,
                                     })
                                 }).catch(function(err) {
                                     t.rollback();

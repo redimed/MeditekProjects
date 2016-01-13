@@ -31,7 +31,8 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
     var mainDetail : NSMutableArray = NSMutableArray()
     var contentDict : NSMutableDictionary = NSMutableDictionary()
     var mainImageMenu : NSMutableArray = NSMutableArray()
-    
+    var headerView2 = UIView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -262,8 +263,6 @@ class DetailAppointmentVC: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 1
     }
-    
-    var headerView2 = UIView()
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 113.5))

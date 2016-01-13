@@ -328,11 +328,12 @@
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8PD-0y-xWT">
+                <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8PD-0y-xWT">
                     <rect key="frame" x="532" y="206" width="25" height="25"/>
                     <animations/>
-                    <color key="tintColor" red="0.30980392159999998" green="0.84705882349999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" title="Correspondence" image="check"/>
+                    <state key="normal" title="Correspondence" image="check">
+                        <color key="titleColor" red="0.43921568630000002" green="0.87843137250000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Correspondence" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ok7-gn-MrA">
                     <rect key="frame" x="565" y="208" width="124" height="21"/>

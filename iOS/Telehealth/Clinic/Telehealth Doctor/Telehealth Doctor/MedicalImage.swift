@@ -36,6 +36,7 @@ class MedicalImage: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     
     func download_image() {
         if let clinicCal: JSON = SingleTon.detailAppointMentObj["TelehealthAppointment"]["ClinicalDetails"], fileUpload: JSON = SingleTon.detailAppointMentObj["FileUploads"] {
+            
             if fileUpload.count > 0 || clinicCal.count > 0 {
                 for var i = 0; i < fileUpload.count; i++ {
                     if fileUpload.count > 0 {
@@ -61,7 +62,6 @@ class MedicalImage: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func getImageFromUID(parUID: [String!]) {
-        print(parUID.count)
         guard parUID.count != 0 else {
             return
         }
@@ -105,7 +105,6 @@ class MedicalImage: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let detailImgVC = DetailImageVC(nibName: "DetailImageVC", bundle: nil)
         detailImgVC.indexSelect = indexPath.row
-        detailImgVC.modalPresentationStyle  = UIModalPresentationStyle.FormSheet
         self.presentViewController(detailImgVC, animated: true, completion: nil)
     }
     

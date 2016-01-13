@@ -23,10 +23,10 @@
             </view>
             <animations/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="GSs-tI-yau" secondAttribute="trailing" id="8eE-gH-tYb"/>
-                <constraint firstItem="GSs-tI-yau" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="E6Z-Kx-eoe"/>
-                <constraint firstAttribute="bottom" secondItem="GSs-tI-yau" secondAttribute="bottom" id="nOl-wk-bpg"/>
-                <constraint firstItem="GSs-tI-yau" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="roc-tN-C8h"/>
+                <constraint firstItem="GSs-tI-yau" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="1Qx-JW-hDg"/>
+                <constraint firstItem="GSs-tI-yau" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="F4g-jv-1jp"/>
+                <constraint firstItem="GSs-tI-yau" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="nDI-6B-X9X"/>
+                <constraint firstItem="GSs-tI-yau" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="oYb-JO-keB"/>
             </constraints>
             <size key="customSize" width="216" height="181"/>
             <connections>

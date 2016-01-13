@@ -165,11 +165,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void AnimationContainer() {
-        layoutContainer.animate()
-                .setStartDelay(1700)
-                .setDuration(500)
-                .alpha(1.0f);
-
+        layoutContainer.animate().setStartDelay(1700).setDuration(500).alpha(1.0f);
     }
 
     private void switchView(int inAnimation, int outAnimation, View v) {
@@ -240,7 +236,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         patientJSON = new JsonObject();
         patientJSON.addProperty("data", gson.toJson(telehealthUser));
 
-        if (sendToken == true) {
+        if (sendToken) {
             registerApi.activation(patientJSON, new Callback<JsonObject>() {
                 @Override
                 public void success(JsonObject jsonObject, Response response) {
@@ -275,7 +271,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
             telehealthUser.setCode(verifyCode);
             patientJSON.addProperty("data", gson.toJson(telehealthUser));
 
-            if (sendToken == true) {
+            if (sendToken) {
                 registerApi.verify(patientJSON, new Callback<JsonObject>() {
                     @Override
                     public void success(JsonObject jsonObject, Response response) {
@@ -292,7 +288,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                             jsonLogin.addProperty("Password", "android");
                             jsonLogin.addProperty("UserUID", jsonObject.get("userUID").isJsonNull() ?
                                     " " : jsonObject.get("userUID").getAsString());
-                            jsonLogin.addProperty("DeviceID", spDevice.getString("deviceID", null));
+                            jsonLogin.addProperty("DeviceID", spDevice.getString("deviceID", ""));
                             jsonLogin.addProperty("VerificationToken", jsonObject.get("verifyCode").isJsonNull() ?
                                     " " : jsonObject.get("verifyCode").getAsString());
                             jsonLogin.addProperty("AppID", "com.redimed.telehealth.patient");
@@ -307,10 +303,10 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                                         uidTelehealth.putString("token", jsonObject.get("token").isJsonNull() ?
                                                 " " : jsonObject.get("token").getAsString());
 
-                                        uidTelehealth.putString("deviceID", spDevice.getString("deviceID", null));
+                                        uidTelehealth.putString("deviceID", spDevice.getString("deviceID", ""));
                                         uidTelehealth.putString("refreshCode", jsonObject.get("refreshCode").isJsonNull() ?
                                                 " " : jsonObject.get("refreshCode").getAsString());
-                                        uidTelehealth.commit();
+                                        uidTelehealth.apply();
 
                                         String userUID = userJson.get("UID").isJsonNull() ? " " : userJson.get("UID").getAsString();
                                         registerApi.getTelehealthUID(userUID, new Callback<JsonObject>() {
@@ -318,7 +314,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                                             public void success(JsonObject jsonObject, Response response) {
                                                 uidTelehealth.putString("uid", jsonObject.get("UID").isJsonNull() ?
                                                         " " : jsonObject.get("UID").getAsString());
-                                                uidTelehealth.commit();
+                                                uidTelehealth.apply();
                                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                                 finish();
                                             }
@@ -381,9 +377,6 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
     }
 
     public static void hideKeyboard(AppCompatActivity activity) {
-        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-        }
+
     }
 }

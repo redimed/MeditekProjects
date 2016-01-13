@@ -11,7 +11,7 @@ public class PreCachingLayoutManager extends LinearLayoutManager {
 
     private Context context;
     private int extraLayoutSpace = -1;
-    private static final int DEFAULT_EXTRA_LAYOUT_SPACE = 300;
+    private static final int DEFAULT_EXTRA_LAYOUT_SPACE = 600;
 
     public PreCachingLayoutManager(Context context) {
         super(context);

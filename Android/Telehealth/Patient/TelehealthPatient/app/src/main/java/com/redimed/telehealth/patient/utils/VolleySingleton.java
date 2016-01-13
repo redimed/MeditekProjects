@@ -2,7 +2,6 @@ package com.redimed.telehealth.patient.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v4.util.LruCache;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -12,7 +11,6 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.redimed.telehealth.patient.MyApplication;
 
 /**
  * Created by LamNguyen on 1/4/2016.
@@ -30,7 +28,7 @@ public class VolleySingleton {
         requestQueue = Volley.newRequestQueue(context);
 
         imageLoader = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {
-            private final LruBitmapCache cache = new LruBitmapCache(10000);
+            private final LruBitmapCache cache = new LruBitmapCache(20);
 
             @Override
             public Bitmap getBitmap(String url) {

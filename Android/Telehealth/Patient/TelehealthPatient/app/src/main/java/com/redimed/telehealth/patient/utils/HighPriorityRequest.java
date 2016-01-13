@@ -2,14 +2,9 @@ package com.redimed.telehealth.patient.utils;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +15,8 @@ public class HighPriorityRequest extends ImageRequest {
 
     private SharedPreferences telehealthPatient;
 
-    public HighPriorityRequest(String url, Response.Listener<Bitmap> listener, int maxWidth, int maxHeight, Bitmap.Config decodeConfig,
+    public HighPriorityRequest(String url,
+                               Response.Listener<Bitmap> listener, int maxWidth, int maxHeight, Bitmap.Config decodeConfig,
                                Response.ErrorListener errorListener, SharedPreferences telehealthPatient) {
         super(url, listener, maxWidth, maxHeight, decodeConfig, errorListener);
         this.telehealthPatient = telehealthPatient;

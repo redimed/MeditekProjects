@@ -1,7 +1,7 @@
 module.exports = function(data, userInfo) {
     var pagination = Services.GetPaginationAppointment(data, userInfo, Admission);
     return Admission.findAndCountAll({
-        attributes: Services.AttributesConsult.Admission(),
+        attributes: Services.AttributesAdmission.Admission(),
         include: [{
             attributes: ['UID'],
             model: Appointment,
@@ -18,6 +18,11 @@ module.exports = function(data, userInfo) {
                 model: Patient,
                 where: pagination.filterPatient
             }]
+        },{
+            attributes: Services.AttributesAdmission.AdmissionData(),
+            required: true,
+            model: AdmissionData,
+            where: pagination.filterAdmission
         }],
         subQuery: false,
         order: pagination.order,

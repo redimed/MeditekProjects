@@ -72,11 +72,11 @@ module.exports = {
             }
         },
         Value: {
-            type: Sequelize.STRING(255),
+            type: Sequelize.TEXT,
             allowNull: true,
             validate: {
                 len: {
-                    args: [0, 255],
+                    args: [0, 2048],
                     msg: 'Too long!'
                 }
             }

@@ -18,8 +18,8 @@ class PatientService{
         patientAPI.getInformationPatientByUUID(UUID){
             response in
             let jsonInformation = response["data"][0] != nil ? response["data"][0] : ""
-            if jsonInformation == "" {
-                let errorJSON = JSON(["message":"error","ErrorType":response["ErrorType"]])
+            if response["TimeOut"] == "Request Time Out" {
+                let errorJSON = JSON(["message":"error","ErrorType":response["TimeOut"]])
                 completionHandler(errorJSON,PatientContainer.init())
             }else {
                 let MiddleName = jsonInformation["MiddleName"].string ?? ""

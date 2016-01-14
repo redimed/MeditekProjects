@@ -49,12 +49,9 @@ class AppointmentListsViewController: UIViewController {
     func getAppointmentList(patientUID:String){
         appointmentService.getAppointmentByID(patientUID, Limit: "100", completionHandler: {
             message , appointmentList in
-            
-            if message["ErrorsList"] != nil {
-                self.alertView.alertMessage("Error", message: message["ErrorsList"][0].string!)
-                self.refreshControl.endRefreshing()
-            }else if message["TimeOut"].string ==  ErrorMessage.TimeOut  {
-                self.alertView.alertMessage("Error", message: ErrorMessage.TimeOut)
+            print(message)
+            if message["message"] == "error" {
+                self.alertView.alertMessage("Error", message: message["ErrorType"].string!)
                 self.refreshControl.endRefreshing()
             }
             else {

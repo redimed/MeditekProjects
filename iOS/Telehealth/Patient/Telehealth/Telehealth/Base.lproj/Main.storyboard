@@ -598,7 +598,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfS-oV-ps6">
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfS-oV-ps6">
                                             <rect key="frame" x="0.0" y="0.0" width="48" height="27"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
@@ -607,7 +607,7 @@
                                                 <segue destination="7F2-sS-loc" kind="unwind" unwindAction="unwindToViewController:" id="Hmu-l6-8py"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nkj-4k-y18">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nkj-4k-y18">
                                             <rect key="frame" x="24" y="47" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
@@ -617,7 +617,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="Received" backgroundImage="Icon 1"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="lmc-VS-8YS">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="lmc-VS-8YS">
                                             <rect key="frame" x="24" y="193" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
@@ -627,7 +627,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="Appt Time" backgroundImage="Icon 3"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="V8g-Sy-Iub">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="V8g-Sy-Iub">
                                             <rect key="frame" x="24" y="339" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
@@ -637,7 +637,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="Wait List Surgery" backgroundImage="Icon 5"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tls-jC-OOr">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tls-jC-OOr">
                                             <rect key="frame" x="24" y="412" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
@@ -647,7 +647,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="Finish" backgroundImage="Icon 6"/>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Qbf-Zf-6jR">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Qbf-Zf-6jR">
                                             <rect key="frame" x="24" y="120" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
@@ -721,7 +721,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JrL-jE-bkh">
+                                        <button opaque="NO" contentMode="scaleAspectFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JrL-jE-bkh">
                                             <rect key="frame" x="24" y="266" width="60" height="63"/>
                                             <animations/>
                                             <constraints>
@@ -755,7 +755,7 @@
                                 <animations/>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6gk-vP-Iza">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6gk-vP-Iza">
                                 <rect key="frame" x="167" y="525" width="143" height="33"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="21"/>
@@ -2271,6 +2271,17 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGl-4f-jcd">
+                                        <rect key="frame" x="118" y="298" width="74" height="21"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="ND1-o4-fJy"/>
+                                            <constraint firstAttribute="width" constant="74" id="yh8-P4-aFq"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2314,6 +2325,7 @@
                                     <constraint firstItem="soj-Uz-snu" firstAttribute="trailing" secondItem="JSM-kl-pd9" secondAttribute="trailing" id="ZDk-DJ-twz"/>
                                     <constraint firstItem="9Hc-F8-VHV" firstAttribute="top" secondItem="WPE-Nu-6fa" secondAttribute="top" id="ZG8-zs-sBo"/>
                                     <constraint firstItem="soj-Uz-snu" firstAttribute="top" secondItem="JSM-kl-pd9" secondAttribute="bottom" constant="8" symbolic="YES" id="ZPE-ZW-VEc"/>
+                                    <constraint firstItem="tGl-4f-jcd" firstAttribute="top" secondItem="FSd-hZ-sVu" secondAttribute="bottom" constant="8" id="bqu-v4-L8F"/>
                                     <constraint firstItem="dpS-sG-ogL" firstAttribute="top" secondItem="7LH-cv-oCB" secondAttribute="bottom" constant="8" symbolic="YES" id="cVt-6R-99F"/>
                                     <constraint firstItem="soj-Uz-snu" firstAttribute="leading" secondItem="fcA-3T-4Xz" secondAttribute="leading" id="cl2-Ey-zwq"/>
                                     <constraint firstItem="7LH-cv-oCB" firstAttribute="top" secondItem="Qps-iU-Ljw" secondAttribute="bottom" constant="8" symbolic="YES" id="coR-M6-bYa"/>
@@ -2322,6 +2334,7 @@
                                     <constraint firstItem="ve7-pJ-rQa" firstAttribute="leading" secondItem="e3z-Rv-1nl" secondAttribute="leading" id="dnv-Wp-XMc"/>
                                     <constraint firstItem="lXY-33-2UJ" firstAttribute="top" secondItem="dpS-sG-ogL" secondAttribute="bottom" constant="8" symbolic="YES" id="dtT-Ub-Zgw"/>
                                     <constraint firstItem="JSM-kl-pd9" firstAttribute="trailing" secondItem="dJG-ae-Yyb" secondAttribute="trailing" id="f0R-iP-kGe"/>
+                                    <constraint firstItem="tGl-4f-jcd" firstAttribute="centerX" secondItem="BNB-IO-eSs" secondAttribute="centerX" id="hCy-of-tce"/>
                                     <constraint firstItem="e3z-Rv-1nl" firstAttribute="leading" secondItem="9Hc-F8-VHV" secondAttribute="leading" id="hRS-Ha-QpP"/>
                                     <constraint firstItem="YcE-46-ZS3" firstAttribute="trailing" secondItem="7LH-cv-oCB" secondAttribute="trailing" id="hUJ-y7-Bz9"/>
                                     <constraint firstItem="FSd-hZ-sVu" firstAttribute="leading" secondItem="fcA-3T-4Xz" secondAttribute="leading" id="ibA-GZ-dvL"/>
@@ -2396,6 +2409,7 @@
                         <outlet property="collectionView" destination="VYb-Fq-1io" id="kbG-b4-RY2"/>
                         <outlet property="dateLabel" destination="YcE-46-ZS3" id="4KW-yO-Ojz"/>
                         <outlet property="doctorName" destination="uBx-AF-5DQ" id="ZLi-HD-lD5"/>
+                        <outlet property="messageImageLabel" destination="tGl-4f-jcd" id="y6O-yK-VCG"/>
                         <outlet property="selectOptionImage" destination="vqN-nZ-txj" id="esc-e0-xGb"/>
                         <outlet property="status" destination="JSM-kl-pd9" id="q55-5Z-8OJ"/>
                         <outlet property="timeLabel" destination="IfV-XG-kun" id="rnb-FE-KLN"/>

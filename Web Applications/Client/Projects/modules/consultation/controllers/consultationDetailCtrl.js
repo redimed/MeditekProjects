@@ -4,48 +4,30 @@ var app = angular.module("app.authentication.consultation.detail.controller", [
     'app.authentication.consultation.detail.eForms.controller',
     'app.authentication.consultation.directives.consultNoteDirectives'
 ]);
-
-app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams,toastr) {
-    console.log($stateParams.UID);
+app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams, AdmissionService) {
+    console.log($stateParams);
+    console.log($scope.Opentok);
+    if ($stateParams.data == null) {
+        $state.go("authentication.consultation.list");
+    };
+    $scope.Params = $stateParams.data;
+    console.log("$scope.Params",$scope.Params);
     $scope.getTelehealthDetail = function(UID) {
         WAAppointmentService.getDetailWAAppointmentByUid(UID).then(function(data) {
-            console.log('responseData', data);
             $scope.wainformation = data.data;
-        }, function(error) {
-            toastr.error("Select error!", "error");
-        });
+            console.log("$scope.wainformation", $scope.wainformation);
+        }, function(error) {});
     };
-    $scope.getTelehealthDetail($stateParams.UID);
+    $scope.getTelehealthDetail($scope.Params.UID);
 
     /*=========opentok begin=========*/
     $scope.userInfo = $cookies.getObject('userInfo');
     console.log(" $scope.userInfo", $scope.userInfo);
-    var apiKey = null;
-    var sessionId = null;
-    var token = null;
+    var apiKey = $scope.Opentok.apiKey;
+    var sessionId = $scope.Opentok.sessionId;
+    var token = $scope.Opentok.token;
     var userName = null;
     var userCall = null;
-
-    function OpenTokJoinRoom() {
-        io.socket.get('/api/telehealth/socket/joinRoom', {
-            uid: $scope.userInfo.UID
-        }, function(data) {
-            console.log("JoinRoom", data);
-        });
-    };
-
-    OpenTokJoinRoom();
-
-    function OpentokCreateSession() {
-        WAAppointmentService.getDetailOpentok().then(function(data) {
-            console.log(data.data);
-            apiKey = data.data.apiKey;
-            sessionId = data.data.sessionId;
-            token = data.data.token;
-        });
-    };
-
-    OpentokCreateSession();
 
     function OpentokSendCall(uidCall, uidUser) {
         console.log("uidCall", uidCall);
@@ -82,5 +64,34 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         });
     };
     /*=========opentok end=========*/
+    $scope.admissionDetail = {};
+    var data = {
+        Filter: [{
+            Appointment: {
+                UID: $scope.Params.UID
+            }
+        }],
+        Order: [{
+            Admission: {
+                ID: 'DESC'
+            }
+        }]
+    };
+    AdmissionService.GetListAdmission(data).then(function(data) {
+        console.log('GetDetailAdmission', data);
+        if (data.count > 0) {
+            $scope.admissionUID = data.rows[0].UID;
+            _.forEach(data.rows[0].AdmissionData, function(value, name) {
+                var itemData = null;
+                if (value.Name == "PREVIOUS_SURGERY_PROCEDURES" || value.Name == "MEDICATIONS") {
+                    itemData = JSON.parse(value.Value);
+                } else {
+                    itemData = value.Value;
+                };
+                $scope.admissionDetail[value.Name] = itemData;
+            });
+            console.log('$scope.admissionDetail', $scope.admissionDetail);
+        };
 
+    });
 });

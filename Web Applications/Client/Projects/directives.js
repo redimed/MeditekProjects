@@ -68,14 +68,14 @@ app.directive('dropdownMenuHover', function() {
 app.directive('datePicker', function($timeout) {
     return {
         link: function(scope, elem, attrs) {
-            $timeout(function () {
+            $timeout(function() {
                 ComponentsDateTimePickers.init();
             });
             elem.addClass('form-control date-picker');
-            elem.attr('data-date-format','dd/mm/yyyy');
-            elem.attr('readonly',true);
-            elem.attr('type','text');
-            elem.attr('placeholder','dd/mm/yyyy');
+            elem.attr('data-date-format', 'dd/mm/yyyy');
+            elem.attr('readonly', true);
+            elem.attr('type', 'text');
+            elem.attr('placeholder', 'dd/mm/yyyy');
             // elem.attr('data-date-start-date',"20/11/2015");
             // elem.attr('data-date-end-date',"0d" );
         },
@@ -85,61 +85,71 @@ app.directive('datePicker', function($timeout) {
 app.directive('timePickerNoSeconds', function($timeout) {
     return {
         link: function(scope, elem, attrs) {
-            $timeout(function () {
+            $timeout(function() {
                 ComponentsDateTimePickers.init();
             });
             elem.addClass('form-control timepicker timepicker-no-seconds');
-            elem.attr('data-format','hh:mm A');
-            elem.attr('data-default-time','');
-            elem.attr('readonly',true);
-            elem.attr('type','text');
-            elem.attr('placeholder','hh:mm');
+            elem.attr('data-format', 'hh:mm A');
+            elem.attr('data-default-time', '');
+            elem.attr('readonly', true);
+            elem.attr('type', 'text');
+            elem.attr('placeholder', 'hh:mm');
         },
     };
 });
 
-app.directive('autoComplete', function($timeout){
+app.directive('autoComplete', function($timeout) {
     return function(scope, iElement, iAttrs) {
         iElement.autocomplete({
             source: scope[iAttrs.uiItems],
             select: function() {
                 $timeout(function() {
-                  iElement.trigger('input');
+                    iElement.trigger('input');
                 }, 0);
             }
         });
         iElement.addClass('form-control');
-        iElement.attr('type','text');
+        iElement.attr('type', 'text');
     };
 });
 
-app.directive('patientDetailDirective',function(){
+app.directive('patientDetailDirective', function() {
     return {
         restrict: 'E',
-        scope:{
-            patientInfo: "="
+        scope: {
+            apptuid: "="
         },
         templateUrl: 'common/views/patientDetailDirective.html',
-        controller: function($scope){
-            // console.log("patientDetailDirective",$scope.patientInfo);
+        controller: function($scope, WAAppointmentService) {
+            WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
+                $scope.patientInfo = data.data.Patients[0];
+            }, function(error) {});
+
         },
     };
 });
-app.directive('medicareDirective',function(){
+app.directive('medicareDirective', function() {
     return {
         restrict: 'E',
         templateUrl: 'common/views/medicareDirective.html',
-        link: function(scope, $state){
-            
+        link: function(scope) {
+
         },
     };
 });
-app.directive('appointmentDetailDirective',function(){
+app.directive('appointmentDetailDirective', function() {
     return {
         restrict: 'E',
+        scope: {
+            apptuid: "="
+        },
         templateUrl: 'common/views/appointmentDetailDirective.html',
-        link: function(scope, $state){
-            
+        controller: function($scope, WAAppointmentService) {
+            WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
+                $scope.appointmentInfo = data.data;
+                $scope.apptDate = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).utc().format('DD/MM/YYYY') : 'N/A';
+                $scope.apptTime = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).utc().format('HH:mm') : 'N/A';
+            }, function(error) {});
         },
     };
 });

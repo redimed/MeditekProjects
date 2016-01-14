@@ -9,7 +9,7 @@
                             </div>
                         </div>
                         <div class="col-md-8 col-md-4 col-xs-6">
-                            <h3 class="bold">Elizabeth Memdel</h3>
+                            <h3 class="bold">{{patientInfo.FirstName +" "+ patientInfo.LastName}}</h3>
                             <h5 class="bold uppercase">Patient</h5>
                         </div>
                     </div>
@@ -21,23 +21,37 @@
             <table class="table table-hover">
                 <tr>
                     <td>DOB</td>
-                    <td>02/09/1970</td>
+                    <td>
+                        <span ng-if="patientInfo.DOB">{{patientInfo.DOB}}</span>
+                        <span ng-if="!patientInfo.DOB">N/A</span>
+                    </td>
                 </tr>
                 <tr>
                     <td>Gender</td>
-                    <td>Male</td>
+                    <td>
+                        <span ng-if="patientInfo.Gender">{{patientInfo.Gender}}</span>
+                        <span ng-if="!patientInfo.Gender">N/A</span>
+                    </td>
                 </tr>
                 <tr>
-                	<td>Workphone</td>
-                	<td>.....</td>
+                    <td>Workphone</td>
+                    <td>
+                        <span ng-if="patientInfo.WorkPhoneNumber && patientInfo.WorkPhoneNumber != null">{{patientInfo.WorkPhoneNumber}}</span>
+                        <span ng-if="!patientInfo.WorkPhoneNumber || patientInfo.WorkPhoneNumber == null">N/A</span>
+                    </td>
                 </tr>
                 <tr>
-                	<td>Homephone</td>
-                	<td>.....</td>
+                    <td>Homephone</td>
+                    <td>
+                        <span ng-if="patientInfo.HomePhoneNumber && patientInfo.HomePhoneNumber != null">{{patientInfo.HomePhoneNumber}}</span>
+                        <span ng-if="!patientInfo.HomePhoneNumber || patientInfo.HomePhoneNumber == null">N/A</span>
+                    </td>
                 </tr>
                 <tr>
-                	<td>Mobile</td>
-                	<td>.....</td>
+                    <td>Mobile</td>
+                    <td>
+                        N/A
+                    </td>
                 </tr>
                 <tr>
                     <td></td>

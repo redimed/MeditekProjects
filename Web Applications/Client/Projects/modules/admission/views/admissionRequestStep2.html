@@ -5,33 +5,32 @@
             <div class="radio-list">
                 <label class="radio-inline">Do you have adverse reactions to anaesthetic e.g. malignant hyperthermia?</label>
                 <label class="radio-inline">
-                    <input type="radio" name="adverse_reactions" value="Yes"> Yes
+                    <input type="radio" name="adverse_reactions" value="Y" ng-model="admissionRequest.allergies_alerts_hyperthermia"> Yes
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="adverse_reactions" value="No"> No
+                    <input type="radio" name="adverse_reactions" value="N" ng-model="admissionRequest.allergies_alerts_hyperthermia"> No
                 </label>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Details/Reaction</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" ng-model="admissionRequest.allergies_alerts_details_reaction">
         </div>
         <div class="form-group">
             <div class="radio-list">
                 <label class="radio-inline">Do you have allergies to medications, food, sticking plaster, latex/rubber (e.g. balloons, gloves) or other substances?</label>
                 <label class="radio-inline">
-                    <input type="radio" name="allergies" value="Yes"> Yes
+                    <input type="radio" name="allergies" value="Y" ng-model="admissionRequest.allergies_alerts_substances"> Yes
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="allergies" value="No"> No
+                    <input type="radio" name="allergies" value="N" ng-model="admissionRequest.allergies_alerts_substances" ng-click="resertSubstancesData()"> No
                 </label>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-if="admissionRequest.allergies_alerts_substances == 'Y' ">
             <label class="control-label">If yes, please list details</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" ng-model="admissionRequest.allergies_alerts_substances_list">
         </div>
-
         <h4 class="form-section bold margin-top-20">LIFESTYLE</h4>
         <div class="table-scrollable">
             <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
@@ -48,26 +47,56 @@
                     <tr>
                         <td>Have you ever smoked?
                         </td>
-                        <td><label><input type="radio" name="dedication1" value="Yes"></label></td>
-                        <td><label><input type="radio" name="dedication1" value="No"></label></td>
+                        <td>
+                            <label>
+                                <input type="radio" name="dedication1" value="Y" ng-model="admissionRequest.lifestyle_smoked">
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input type="radio" name="dedication1" value="N" ng-model="admissionRequest.lifestyle_smoked">
+                            </label>
+                        </td>
                         <td>
                             Daily Amount? Ceased?
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.lifestyle_smoked_nurse_notes">
+                        </td>
                     </tr>
                     <tr>
                         <td>Do you drink alcohol?</td>
-                        <td><label><input type="radio" name="dedication2" value="Yes"></label></td>
-                        <td><label><input type="radio" name="dedication2" value="No"></label></td>
+                        <td>
+                            <label>
+                                <input type="radio" name="dedication2" value="Y" ng-model="admissionRequest.lifestyle_alcohol">
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input type="radio" name="dedication2" value="N" ng-model="admissionRequest.lifestyle_alcohol">
+                            </label>
+                        </td>
                         <td>Daily Amount?</td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.lifestyle_alcohol_nurse_notes">
+                        </td>
                     </tr>
                     <tr>
                         <td>Do you use recreational drugs?</td>
-                        <td><label><input type="radio" name="dedication3" value="Yes"></label></td>
-                        <td><label><input type="radio" name="dedication3" value="No"></label></td>
+                        <td>
+                            <label>
+                                <input type="radio" name="dedication3" value="Y" ng-model="admissionRequest.lifestyle_drugs">
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input type="radio" name="dedication3" value="N" ng-model="admissionRequest.lifestyle_drugs">
+                            </label>
+                        </td>
                         <td>Daily Amount? Type?</td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.lifestyle_drugs_nurse_notes">
+                        </td>
                     </tr>
                 </tbody>
             </table>

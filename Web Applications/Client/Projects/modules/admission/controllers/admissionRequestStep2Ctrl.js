@@ -11,9 +11,12 @@ app.controller('admissionRequestStep2Ctrl', function($scope, $state, $timeout){
 		$scope.submitted = true;
 		console.log($scope.form.$valid);
 		if($scope.form.$valid){
-			$state.go("authentication.admission.request.step3");
+			$state.go("authentication.consultation.detail.admission.request.step3");
 		}
 		// else
 		// 	$scope.submitted = false;
 	};
+	$scope.resertSubstancesData = function(){
+        $scope.admissionRequest.allergies_alerts_substances_list = "";
+    }
 });

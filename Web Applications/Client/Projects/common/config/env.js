@@ -3,8 +3,8 @@ var env='meditekServer'; //local,meditekServer,testApp,app
 
 var configRestBaseUrl={
 	// 'local':'http://192.168.1.97:3000',
-	//'local':'http://192.168.1.235:3005',
-	'local':'http://localhost:3005',
+	'local':'http://192.168.1.235:3005',
+	// 'local':'http://localhost:3005',
 	'meditekServer':'http://telehealthvietnam.com.vn:3005',
 	'testApp':'http://testapp.redimed.com.au:3005',
 	'app':'http://apps.redimed.com.au:3005',
@@ -19,7 +19,7 @@ var configAuthBaseUrl={
 };
 
 var configTelehealthBaseUrl = {
-	'local':'http://localhost:3009',
+	'local':'http://192.168.1.235:3009',
 	'meditekServer':'http://telehealthvietnam.com.vn:3009',
 	'testApp':'http://testapp.redimed.com.au:3009',
 	'app':'http://apps.redimed.com.au:3009',
@@ -31,7 +31,7 @@ if(env == "local")
 	var _restBaseURL=configRestBaseUrl.local;
 	var _fileBaseURL=configRestBaseUrl.local;
 	var _authBaseURL=configAuthBaseUrl.local;
-	var _TelehealthBaseURL=configTelehealthBaseUrl.local;
+	var _telehealthBaseURL=configTelehealthBaseUrl.local;
 }
 else if(env == 'meditekServer')
 {

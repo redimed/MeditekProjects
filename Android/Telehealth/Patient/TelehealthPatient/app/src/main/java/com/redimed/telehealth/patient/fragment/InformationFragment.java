@@ -59,7 +59,7 @@ import retrofit.client.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InformationFragment extends Fragment {
+public class InformationFragment extends Fragment implements View.OnClickListener {
 
     private View v;
     private Intent i;
@@ -105,34 +105,19 @@ public class InformationFragment extends Fragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         v = inflater.inflate(R.layout.fragment_information, container, false);
         ButterKnife.bind(this, v);
-        gson = new Gson();
-        restClient = RESTClient.getRegisterApi();
-        uid = getArguments().getString("telehealthUID");
 
-        sharedPreferences = v.getContext().getSharedPreferences("PatientInfo", v.getContext().MODE_PRIVATE);
-        telehealthPatient = v.getContext().getSharedPreferences("TelehealthUser", v.getContext().MODE_PRIVATE);
-
-        patients = gson.fromJson(sharedPreferences.getString("info", null), Patient[].class);
-        if (patients != null) {
-            DisplayInfo(patients);
-        } else {
-            GetInfoPatient();
-        }
+        init();
         SwipeRefresh();
+        BlurBackground();
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) v.getContext()).Display(0);
-            }
-        });
-
+        btnSubmit.setOnClickListener(this);
+        btnLogout.setOnClickListener(this);
         btnSubmit.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 GPSTrackerService gps = new GPSTrackerService(v.getContext());
                 i = new Intent(v.getContext(), MapsActivity.class);
-                if (gps.canGetLocation()){
+                if (gps.canGetLocation()) {
                     i.putExtra("lat", gps.getLatitude());
                     i.putExtra("long", gps.getLongitude());
                 } else {
@@ -143,6 +128,41 @@ public class InformationFragment extends Fragment {
             }
         });
 
+        return v;
+    }
+
+    //initialization variable
+    private void init() {
+        gson = new Gson();
+        restClient = RESTClient.getRegisterApi();
+        uid = getArguments().getString("telehealthUID", "");
+
+        sharedPreferences = v.getContext().getSharedPreferences("PatientInfo", v.getContext().MODE_PRIVATE);
+        telehealthPatient = v.getContext().getSharedPreferences("TelehealthUser", v.getContext().MODE_PRIVATE);
+
+        patients = gson.fromJson(sharedPreferences.getString("info", null), Patient[].class);
+        if (patients != null) {
+            DisplayInfo(patients);
+        } else {
+            GetInfoPatient();
+        }
+    }
+
+    //Handler action click
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnSubmit:
+                ((MainActivity) v.getContext()).Display(0);
+                break;
+            case R.id.btnLogout:
+                DialogConfirm();
+                break;
+        }
+    }
+
+    //Make Background and add blur animation
+    private void BlurBackground() {
         Picasso.with(v.getContext()).load(R.drawable.slider2).transform(new BlurTransformation(v.getContext(), 20))
                 .into(new Target() {
                     @Override
@@ -166,14 +186,6 @@ public class InformationFragment extends Fragment {
                         Log.d(TAG, "Prepare Load");
                     }
                 });
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogConfirm();
-            }
-        });
-        return v;
     }
 
     //Display dialog choose camera or gallery to upload image
@@ -187,7 +199,7 @@ public class InformationFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 String result = MyApplication.getInstance().Logout();
                 if (result.equalsIgnoreCase("success")) {
-                    ((MainActivity)v.getContext()).Display(0);
+                    ((MainActivity) v.getContext()).Display(0);
                     startActivity(new Intent(v.getContext(), LauncherActivity.class));
                 } else if (result.equalsIgnoreCase("Network Error")) {
                     new DialogConnection(v.getContext()).show();
@@ -254,6 +266,7 @@ public class InformationFragment extends Fragment {
         }
     }
 
+    //Down load and show image avatar
     private void LoadAvatar(String url) {
         Picasso picasso = new Picasso.Builder(v.getContext())
                 .downloader(new UrlConnectionDownloader(v.getContext()) {
@@ -314,6 +327,7 @@ public class InformationFragment extends Fragment {
         });
     }
 
+    //Handler back button
     @Override
     public void onResume() {
         super.onResume();

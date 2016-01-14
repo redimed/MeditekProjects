@@ -12,7 +12,8 @@
     android:gravity="center_horizontal"
     card_view:cardBackgroundColor="@android:color/transparent"
     card_view:cardCornerRadius="2dp"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardUseCompatPadding="true"
+    android:layout_marginLeft="17dp">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -25,15 +26,6 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:visibility="visible" />
-
-    <!--<com.android.volley.toolbox.NetworkImageView-->
-        <!--android:id="@+id/imgContains"-->
-        <!--android:layout_width="140dp"-->
-        <!--android:layout_height="150dp"-->
-        <!--android:layout_gravity="center_horizontal|top"-->
-        <!--android:adjustViewBounds="true"-->
-        <!--android:background="@android:color/transparent"-->
-        <!--android:scaleType="centerCrop" />-->
 
     <ImageView
         android:id="@+id/imgContains"

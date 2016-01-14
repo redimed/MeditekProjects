@@ -33,10 +33,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -54,7 +50,6 @@ import com.redimed.telehealth.patient.network.Config;
 import com.redimed.telehealth.patient.utils.DeviceUtils;
 import com.redimed.telehealth.patient.utils.PreCachingLayoutManager;
 import com.redimed.telehealth.patient.utils.RVAdapterImage;
-import com.redimed.telehealth.patient.utils.VolleySingleton;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -199,7 +194,7 @@ public class AppointmentDetails extends Fragment implements View.OnClickListener
         });
     }
 
-    //    Get Detail Appointment with param UID Appointment
+    //Get Detail Appointment with param UID Appointment
     private void GetAppointmentDetails(String appointmentUID) {
         registerApi.getAppointmentDetails(appointmentUID, new Callback<JsonObject>() {
             @Override
@@ -285,6 +280,7 @@ public class AppointmentDetails extends Fragment implements View.OnClickListener
         });
     }
 
+    //Add data url to list
     private void GetFileUpload(List<String> fileUploads) {
         for (int i = 0; i < fileUploads.size(); i++) {
             if (GetResponseCode(Config.apiURLImageResize + fileUploads.get(i)) == 200) {

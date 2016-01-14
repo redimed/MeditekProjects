@@ -37,32 +37,18 @@ import butterknife.ButterKnife;
 /**
  * Created by LamNguyen on 12/17/2015.
  */
-public class DialogViewImage extends Dialog implements View.OnClickListener{
+public class DialogViewImage extends Dialog implements View.OnClickListener {
 
-    private int rotation, index = 0;
+    private int rotation;
     private String imgUrl;
     private Context context;
-    private Bitmap imgBitmap;
     private SharedPreferences telehealthPatient;
-    private static final ImageView.ScaleType[] scaleTypes = {ImageView.ScaleType.CENTER, ImageView.ScaleType.CENTER_CROP, ImageView.ScaleType.CENTER_INSIDE, ImageView.ScaleType.FIT_XY, ImageView.ScaleType.FIT_CENTER};
-
-    // these matrices will be used to move and zoom image
-    private Matrix matrix = new Matrix();
-    private Matrix savedMatrix = new Matrix();
-
-    // we can be in one of these 3 states
-    private int mode = NONE;
-    private static final int NONE = 0;
-    private static final int DRAG = 1;
-    private static final int ZOOM = 2;
-
-    // remember some things for zooming
-    private float d = 0f;
-    private float newRot = 0f;
-    private float oldDist = 1f;
-    private float[] lastEvent = null;
-    private PointF mid = new PointF();
-    private PointF start = new PointF();
+    private static final ImageView.ScaleType[] scaleTypes = {
+            ImageView.ScaleType.CENTER,
+            ImageView.ScaleType.CENTER_CROP,
+            ImageView.ScaleType.CENTER_INSIDE,
+            ImageView.ScaleType.FIT_XY,
+            ImageView.ScaleType.FIT_CENTER};
 
     @Bind(R.id.imgView)
     TouchImageView imgView;
@@ -90,7 +76,6 @@ public class DialogViewImage extends Dialog implements View.OnClickListener{
         DisplayImage();
 
         btnClose.setOnClickListener(this);
-        btnRotate.setOnClickListener(this);
     }
 
     private void DisplayImage() {
@@ -124,13 +109,22 @@ public class DialogViewImage extends Dialog implements View.OnClickListener{
                 .error(R.drawable.icon_error_image)
                 .into(new Target() {
                     @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
                         progressBar.setVisibility(View.GONE);
                         btnClose.setVisibility(View.VISIBLE);
 
                         imgView.setImageBitmap(bitmap);
                         ImageView.ScaleType currentScaleType = ImageView.ScaleType.FIT_XY;
                         imgView.setScaleType(currentScaleType);
+
+                        btnRotate.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                rotation += 90;
+                                rotation %= 360;
+                                imgView.setImageBitmap(getScaledBitmap(bitmap));
+                            }
+                        });
                     }
 
                     @Override
@@ -144,6 +138,26 @@ public class DialogViewImage extends Dialog implements View.OnClickListener{
                 });
     }
 
+    private Bitmap getScaledBitmap(Bitmap bm) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        int newWidth = 1000, newHeight = 800;
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BITMAP
+        matrix.postScale(scaleWidth, scaleHeight);
+        if (rotation % 360 == 0) {
+            return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        }
+        else {
+            // ROTATE THE BITMAP
+            matrix.postRotate(rotation);
+            return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -151,10 +165,7 @@ public class DialogViewImage extends Dialog implements View.OnClickListener{
                 dismiss();
                 break;
             case R.id.btnRotate:
-                rotation += 90;
-                rotation %= 360;
                 break;
         }
     }
 }
-

@@ -3,39 +3,28 @@ package com.redimed.telehealth.patient.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.NetworkImageView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.redimed.telehealth.patient.R;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.LruCache;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.OkHttpDownloader;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.UrlConnectionDownloader;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,7 +33,6 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
 
     private final Context context;
     private List<String> fileUploads;
-    private RequestQueue requestQueue;
     private final LayoutInflater inflater;
     private SharedPreferences telehealthPatient;
 
@@ -65,67 +53,50 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
     public void onBindViewHolder(final ImageListViewHolder holder, final int position) {
         holder.progressBar.setVisibility(View.VISIBLE);
 
-//        Picasso picasso = new Picasso.Builder(context)
-//                .downloader(new UrlConnectionDownloader(context) {
+//        RequestQueue requestQueue = VolleySingleton.getInstance(context).getRequestQueue();
+//        HighPriorityRequest highPriorityRequest = new HighPriorityRequest(
+//                fileUploads.get(position),
+//                new Response.Listener<Bitmap>() {
 //                    @Override
-//                    protected HttpURLConnection openConnection(Uri uri) throws IOException {
-//                        HttpURLConnection connection = super.openConnection(uri);
-//                        connection.addRequestProperty("Authorization", "Bearer " + telehealthPatient.getString("token", ""));
-//                        connection.addRequestProperty("DeviceID", telehealthPatient.getString("deviceID", ""));
-//                        connection.addRequestProperty("SystemType", "ARD");
-//                        connection.addRequestProperty("Cookie", telehealthPatient.getString("cookie", ""));
-//                        connection.addRequestProperty("AppID", "com.redimed.telehealth.patient");
-//                        return connection;
-//                    }
-//                })
-//                .listener(new Picasso.Listener() {
-//                    @Override
-//                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+//                    public void onResponse(Bitmap response) {
 //                        holder.progressBar.setVisibility(View.GONE);
-//                        Log.d("ERROR PICASSO", exception.getLocalizedMessage());
+//                        holder.imgContains.setImageBitmap(response);
 //                    }
-//                })
-//                .memoryCache(new LruCache(24000))
-//                .build();
-//
-//        picasso.setIndicatorsEnabled(true);
-//        picasso.load(fileUploads.get(position))
-//                .error(R.drawable.icon_error_image)
-//                .fit().centerInside()
-//                .into(holder.imgContains, new Callback() {
+//                }, 300, 300, null,
+//                new Response.ErrorListener() {
 //                    @Override
-//                    public void onSuccess() {
-//                        if (holder.progressBar != null) {
-//                            holder.progressBar.setVisibility(View.GONE);
-//                        }
+//                    public void onErrorResponse(VolleyError error) {
+//                        Log.d("ADAPTER", error.toString());
 //                    }
-//
-//                    @Override
-//                    public void onError() {
-//                        if (holder.progressBar != null) {
-//                            holder.progressBar.setVisibility(View.GONE);
-//                        }
-//                    }
-//                });
+//                }, telehealthPatient) {
+//        };
+//        requestQueue.add(highPriorityRequest);
 
-        requestQueue = VolleySingleton.getInstance(context).getRequestQueue();
-        HighPriorityRequest highPriorityRequest = new HighPriorityRequest(
-                fileUploads.get(position),
-                new Response.Listener<Bitmap>() {
+        GlideUrl glideUrl = new GlideUrl(fileUploads.get(position), new LazyHeaders.Builder()
+                .addHeader("AppID", "com.redimed.telehealth.patient")
+                .addHeader("Authorization", "Bearer " + telehealthPatient.getString("token", ""))
+                .addHeader("Content-Type", "application/json; charset=utf-8")
+                .addHeader("Cookie", telehealthPatient.getString("cookie", ""))
+                .addHeader("DeviceID", telehealthPatient.getString("deviceID", ""))
+                .addHeader("SystemType", "ARD")
+                .build());
+
+        int myWidth = 300;
+        int myHeight = 300;
+        Glide.with(context).load(glideUrl)
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>(myWidth, myHeight) {
                     @Override
-                    public void onResponse(Bitmap response) {
+                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
                         holder.progressBar.setVisibility(View.GONE);
-                        holder.imgContains.setImageBitmap(response);
+                        holder.imgContains.setImageBitmap(resource);
                     }
-                }, 300, 300, null,
-                new Response.ErrorListener() {
+
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("ADAPTER", error.toString());
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        Log.d("ADAPTER", e.toString());
                     }
-                }, telehealthPatient) {
-        };
-        requestQueue.add(highPriorityRequest);
+                });
     }
 
     @Override
@@ -140,9 +111,6 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
         @Bind(R.id.progressBar)
         ProgressBar progressBar;
 
-//        @Bind(R.id.imgContains)
-//        NetworkImageView networkImageView;
-
         public ImageListViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -155,7 +123,6 @@ public class RVAdapterImage extends RecyclerView.Adapter<RVAdapterImage.ImageLis
                 }
             });
         }
-
     }
 
     public void DialogViewImage(Context context, int position) {

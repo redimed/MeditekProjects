@@ -54,7 +54,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
     func requestPhoneNumberToServer(){
         verifyService.checkPhoneNumber(phoneTextField.text!, compailer: {
             response in
-            if(response["status"] == "success"){
+            print("---",response)
+            if(response["message"] == "success"){
                 self.view.hideLoading()
                 self.performSegueWithIdentifier("phoneRegisterSegue", sender: self)
             }else {

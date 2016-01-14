@@ -21,6 +21,7 @@ class AppointmentDetailsViewController: UIViewController, UIViewControllerTransi
     @IBOutlet weak var selectOptionImage: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var messageImageLabel: UILabel!
     var UIDApointment = String()
     var imageDetails : UIImage!
     var picker:UIImagePickerController?=UIImagePickerController()
@@ -33,9 +34,9 @@ class AppointmentDetailsViewController: UIViewController, UIViewControllerTransi
     override func viewDidLoad() {
         super.viewDidLoad()
         picker?.delegate = self
-        
+       
         setDataInit()
-        getDetailsAppointment(appointmentDetails.UIDApointment, Type: appointmentDetails.Type)
+        
         
         
     }
@@ -56,7 +57,7 @@ class AppointmentDetailsViewController: UIViewController, UIViewControllerTransi
         }
         doctorName.text = appointmentDetails.NameDoctor
         status.text = appointmentDetails.Status
-        
+        getDetailsAppointment(appointmentDetails.UIDApointment, Type: appointmentDetails.Type)
     }
     
     //get details appointment
@@ -76,6 +77,9 @@ class AppointmentDetailsViewController: UIViewController, UIViewControllerTransi
         appointmentService.getAllImageInAppointmentDetails(AppointmentDetails,compailer: {
             arrImage in
             let countImage = arrImage.count
+            if countImage == 0{
+                self.messageImageLabel.hidden = false
+            }
             for var i = 0 ; i < countImage ; i++ {
                 let imageUID = arrImage[i]
                 self.downloadImage(imageUID)

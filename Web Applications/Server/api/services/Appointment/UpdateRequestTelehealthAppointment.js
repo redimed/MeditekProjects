@@ -4,9 +4,9 @@ module.exports = function(data, userInfo) {
     var appointmentObject;
     var dataPreferredPractitioners;
     var dataClinicalDetails;
+    var defer = $q.defer();
     sequelize.transaction()
         .then(function(t) {
-            var defer = $q.defer();
             if (HelperService.CheckExistData(userInfo) &&
                 HelperService.CheckExistData(userInfo.UID)) {
                 var objectFindPreferringPractitioner = {

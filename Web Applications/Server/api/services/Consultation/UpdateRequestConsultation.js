@@ -2,7 +2,7 @@ var $q = require('q');
 var moment = require('moment');
 module.exports = function(data, userInfo) {
     var defer = $q.defer();
-    return sequelize.transaction()
+    sequelize.transaction()
         .then(function(t) {
             var Consultations = data.Consultations;
             var whereClause = {};
@@ -22,7 +22,7 @@ module.exports = function(data, userInfo) {
                 HelperService.CheckExistData(Consultations) &&
                 !_.isEmpty(whereClause) &&
                 !_.isEmpty(Consultations)) {
-                Appointment.findOne({
+                return Appointment.findOne({
                         attributes: ['ID'],
                         where: whereClause,
                         transaction: t
@@ -63,6 +63,8 @@ module.exports = function(data, userInfo) {
                     error: new Error('UpdateConsultation.data.failed')
                 });
             }
-            return defer.promise;
+        }, function(err) {
+            defer.reject(err);
         });
+    return defer.promise;
 };

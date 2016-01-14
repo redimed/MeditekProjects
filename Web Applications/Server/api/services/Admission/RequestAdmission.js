@@ -4,7 +4,7 @@
 	    var defer = $q.defer();
 	    var appointmentObject = null;
 	    var admissionObject = null;
-	    return sequelize.transaction()
+	    sequelize.transaction()
 	        .then(function(t) {
 	            if (HelperService.CheckExistData(data) &&
 	                HelperService.CheckExistData(userInfo)) {
@@ -21,7 +21,7 @@
 	                        }
 	                    }
 	                });
-	                Appointment.findOne({
+	                return Appointment.findOne({
 	                        attrbutes: ['ID'],
 	                        where: whereClause,
 	                        transaction: t
@@ -96,6 +96,8 @@
 	                    transaction: t
 	                });
 	            }
-	            return defer.promise;
+	        }, function(err) {
+	            defer.reject(err);
 	        });
+	    return defer.promise;
 	};

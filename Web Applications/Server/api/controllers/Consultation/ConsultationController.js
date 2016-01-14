@@ -38,20 +38,27 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.UpdateRequestConsultation(data, req.user)
-                .then(function(success) {
-                    if (HelperService.CheckExistData(success) &&
-                        HelperService.CheckExistData(success.transaction)) {
-                        success.transaction.commit();
-                    }
-                    res.ok('success');
-                }, function(err) {
-                    if (HelperService.CheckExistData(err) &&
-                        HelperService.CheckExistData(err.transaction)) {
-                        err.transaction.rollback();
-                    }
-                    res.serverError(ErrorWrap(err.error || err));
-                });
+            var role = HelperService.GetRole(req.user.roles);
+            if (role.isAdmin ||
+                role.isAssistant ||
+                role.isInternalPractitioner) {
+                Services.UpdateRequestConsultation(data, req.user)
+                    .then(function(success) {
+                        if (HelperService.CheckExistData(success) &&
+                            HelperService.CheckExistData(success.transaction)) {
+                            success.transaction.commit();
+                        }
+                        res.ok('success');
+                    }, function(err) {
+                        if (HelperService.CheckExistData(err) &&
+                            HelperService.CheckExistData(err.transaction)) {
+                            err.transaction.rollback();
+                        }
+                        res.serverError(ErrorWrap(err.error || err));
+                    });
+            } else {
+                res.serverError('failed');
+            }
         }
     },
     DestroyConsultation: function(req, res) {

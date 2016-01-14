@@ -10,252 +10,410 @@
                     <th>Comments</th>
                 </thead>
                 <tbody>
-                    <tr><td colspan="4" class="bold">Cardiovascular</td></tr>
+                    <tr>
+                        <td colspan="4" class="bold">Cardiovascular</td>
+                    </tr>
                     <tr>
                         <td>Elevated cholesterol, triglycerides</td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular1" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular1" value="Y" ng-model="admissionRequest.cardiovascular_triglycerides">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular1" value="No"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular1" value="N" ng-model="admissionRequest.cardiovascular_triglycerides">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.cardiovascular_triglycerides_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Blood pressure problems e.g. low, hypertension</td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular2" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular2" value="Y" ng-model="admissionRequest.cardiovascular_hypertension">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular2" value="No"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular2" value="N" ng-model="admissionRequest.cardiovascular_hypertension">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.cardiovascular_hypertension_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Cardiac conditions e.g. heart attack, congestive heart failure, rheumatic fever, valve disease, chest pain, angina</td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular3" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular3" value="Y" ng-model="admissionRequest.cardiovascular_angina">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular3" value="No"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular3" value="N" ng-model="admissionRequest.cardiovascular_angina">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.cardiovascular_angina_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Cardiac irregularities e.g. palpitations, irregular heart beat, heart murmur, Atrial Fibrillation</td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular4" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular4" value="Y" ng-model="admissionRequest.cardiovascular_fibrillation">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular4" value="No"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular4" value="N" ng-model="admissionRequest.cardiovascular_fibrillation">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.cardiovascular_fibrillation_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Cardiac surgery e.g. pacemaker, implants/devices, prosthetic heart valve, grafts, stents, angioplasty, bypass or any other heart condition</td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular5" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular5" value="Y" ng-model="admissionRequest.cardiovascular_condition">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular5" value="No"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular5" value="N" ng-model="admissionRequest.cardiovascular_condition">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.cardiovascular_condition_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Vascular disease e.g. carotid disease, aortic aneurysm, peripheral vascular disease</td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular6" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular6" value="Y" ng-model="admissionRequest.cardiovascular_disease">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular6" value="No"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular6" value="N" ng-model="admissionRequest.cardiovascular_disease">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.cardiovascular_disease_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Family history of cardiac disease</td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular7" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular7" value="Y" ng-model="admissionRequest.cardiovascular_cardiac_disease">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Cardiovascular7" value="No"></label>
+                            <label>
+                                <input type="radio" name="Cardiovascular7" value="N" ng-model="admissionRequest.cardiovascular_cardiac_disease">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.cardiovascular_cardiac_disease_comment">
+                        </td>
                     </tr>
-                    <tr><td colspan="4" class="bold">Endocrinology</td></tr>
+                    <tr>
+                        <td colspan="4" class="bold">Endocrinology</td>
+                    </tr>
                     <tr>
                         <td>Diabetes (incl. Type and method of control)</td>
                         <td>
-                            <label><input type="radio" name="Endocrinology1" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Endocrinology1" value="Y" ng-model="admissionRequest.endocrinology_diabetes">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Endocrinology1" value="No"></label>
+                            <label>
+                                <input type="radio" name="Endocrinology1" value="N" ng-model="admissionRequest.endocrinology_diabetes">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.endocrinology_diabetes_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Blood glucose levels normally greater than 10 mmol/L</td>
                         <td>
-                            <label><input type="radio" name="Endocrinology2" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Endocrinology2" value="Y" ng-model="admissionRequest.endocrinology_blood_glucose">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Endocrinology2" value="No"></label>
+                            <label>
+                                <input type="radio" name="Endocrinology2" value="N" ng-model="admissionRequest.endocrinology_blood_glucose">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.endocrinology_blood_glucose_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Thyroid problems, hypothyroidism, goitre</td>
                         <td>
-                            <label><input type="radio" name="Endocrinology3" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Endocrinology3" value="Y" ng-model="admissionRequest.endocrinology_goitre">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Endocrinology3" value="No"></label>
+                            <label>
+                                <input type="radio" name="Endocrinology3" value="N" ng-model="admissionRequest.endocrinology_goitre">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.endocrinology_goitre_comment">
+                        </td>
                     </tr>
-                    <tr><td colspan="4" class="bold">Gastrointestinal</td></tr>
+                    <tr>
+                        <td colspan="4" class="bold">Gastrointestinal</td>
+                    </tr>
                     <tr>
                         <td>Hiatus hernia, gastrointestinal ulcers, reflux</td>
                         <td>
-                            <label><input type="radio" name="Gastrointestinal1" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Gastrointestinal1" value="Y" ng-model="admissionRequest.gastrointestinal_reflux">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Gastrointestinal1" value="No"></label>
+                            <label>
+                                <input type="radio" name="Gastrointestinal1" value="N" ng-model="admissionRequest.gastrointestinal_reflux">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.gastrointestinal_reflux_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Liver disease, hepatitis (e.g. A, B, C), jaundice</td>
                         <td>
-                            <label><input type="radio" name="Gastrointestinal2" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Gastrointestinal2" value="Y" ng-model="admissionRequest.gastrointestinal_jaundice">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Gastrointestinal2" value="No"></label>
+                            <label>
+                                <input type="radio" name="Gastrointestinal2" value="N" ng-model="admissionRequest.gastrointestinal_jaundice">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.gastrointestinal_jaundice_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Bowel problems/habits, stoma or bowel disease e.g. Crohns, IBS</td>
                         <td>
-                            <label><input type="radio" name="Gastrointestinal3" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Gastrointestinal3" value="Y" ng-model="admissionRequest.gastrointestinal_ibs">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Gastrointestinal3" value="No"></label>
+                            <label>
+                                <input type="radio" name="Gastrointestinal3" value="N" ng-model="admissionRequest.gastrointestinal_ibs">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.gastrointestinal_ibs_comment">
+                        </td>
                     </tr>
-                    <tr><td colspan="4" class="bold">Bleeding Disorders</td></tr>
+                    <tr>
+                        <td colspan="4" class="bold">Bleeding Disorders</td>
+                    </tr>
                     <tr>
                         <td>Blood clot in lungs / legs (DVT / PE)</td>
                         <td>
-                            <label><input type="radio" name="Bleeding_Disorders1" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Bleeding_Disorders1" value="Y" ng-model="admissionRequest.bleeding_disorders_lungs">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Bleeding_Disorders1" value="No"></label>
+                            <label>
+                                <input type="radio" name="Bleeding_Disorders1" value="N" ng-model="admissionRequest.bleeding_disorders_lungs">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.bleeding_disorders_lungs_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Blood disorders e.g. anaemia</td>
                         <td>
-                            <label><input type="radio" name="Bleeding_Disorders2" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Bleeding_Disorders2" value="Y" ng-model="admissionRequest.bleeding_disorders_anaemia">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Bleeding_Disorders2" value="No"></label>
+                            <label>
+                                <input type="radio" name="Bleeding_Disorders2" value="N" ng-model="admissionRequest.bleeding_disorders_anaemia">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.bleeding_disorders_anaemia_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Bleeding disorders or problems</td>
                         <td>
-                            <label><input type="radio" name="Bleeding_Disorders3" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Bleeding_Disorders3" value="Y" ng-model="admissionRequest.bleeding_disorders_problems">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Bleeding_Disorders3" value="No"></label>
+                            <label>
+                                <input type="radio" name="Bleeding_Disorders3" value="N" ng-model="admissionRequest.bleeding_disorders_problems">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.bleeding_disorders_problems_comment">
+                        </td>
                     </tr>
-                    <tr><td colspan="4" class="bold">Musculoskeletal</td></tr>
+                    <tr>
+                        <td colspan="4" class="bold">Musculoskeletal</td>
+                    </tr>
                     <tr>
                         <td>Arthritis e.g. rheumatoid arthritis, osteoarthritis</td>
                         <td>
-                            <label><input type="radio" name="Musculoskeletal1" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Musculoskeletal1" value="Y" ng-model="admissionRequest.musculoskeletal_osteoarthritis">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Musculoskeletal1" value="No"></label>
+                            <label>
+                                <input type="radio" name="Musculoskeletal1" value="N" ng-model="admissionRequest.musculoskeletal_osteoarthritis">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.musculoskeletal_osteoarthritis_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Back or neck injury or problems</td>
                         <td>
-                            <label><input type="radio" name="Musculoskeletal2" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Musculoskeletal2" value="Y" ng-model="admissionRequest.musculoskeletal_problems">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Musculoskeletal2" value="No"></label>
+                            <label>
+                                <input type="radio" name="Musculoskeletal2" value="N" ng-model="admissionRequest.musculoskeletal_problems">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.musculoskeletal_problems_comment">
+                        </td>
                     </tr>
-                    <tr><td colspan="4" class="bold">Neurology</td></tr>
+                    <tr>
+                        <td colspan="4" class="bold">Neurology</td>
+                    </tr>
                     <tr>
                         <td>Neuromuscular diseases e.g. MS, myasthenia, dystrophies, Parkinson’s</td>
                         <td>
-                            <label><input type="radio" name="Neurology1" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Neurology1" value="Y" ng-model="admissionRequest.neurology_dystrophies">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Neurology1" value="No"></label>
+                            <label>
+                                <input type="radio" name="Neurology1" value="N" ng-model="admissionRequest.neurology_dystrophies">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.neurology_dystrophies_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Stroke, mini stroke, TIA</td>
                         <td>
-                            <label><input type="radio" name="Neurology2" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Neurology2" value="Y" ng-model="admissionRequest.neurology_tia">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Neurology2" value="No"></label>
+                            <label>
+                                <input type="radio" name="Neurology2" value="N" ng-model="admissionRequest.neurology_tia">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.neurology_tia_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Limb paralysis or weakness</td>
                         <td>
-                            <label><input type="radio" name="Neurology3" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Neurology3" value="Y" ng-model="admissionRequest.neurology_weakness">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Neurology3" value="No"></label>
+                            <label>
+                                <input type="radio" name="Neurology3" value="N" ng-model="admissionRequest.neurology_weakness">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.neurology_weakness_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Epilepsy, fits, blackouts, funny turns</td>
                         <td>
-                            <label><input type="radio" name="Neurology4" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Neurology4" value="Y" ng-model="admissionRequest.neurology_turns">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Neurology4" value="No"></label>
+                            <label>
+                                <input type="radio" name="Neurology4" value="N" ng-model="admissionRequest.neurology_turns">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.neurology_turns_comment">
+                        </td>
                     </tr>
-                    <tr><td colspan="4" class="bold">Respiratory</td></tr>
+                    <tr>
+                        <td colspan="4" class="bold">Respiratory</td>
+                    </tr>
                     <tr>
                         <td>Asthma, Pneumonia, Hay Fever, Asbestosis, Chronic Obstructive Pulmonary disease (COPD) e.g. bronchitis Emphysema</td>
                         <td>
-                            <label><input type="radio" name="Respiratory1" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Respiratory1" value="Y" ng-model="admissionRequest.respiratory_emphysema">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Respiratory1" value="No"></label>
+                            <label>
+                                <input type="radio" name="Respiratory1" value="N" ng-model="admissionRequest.respiratory_emphysema">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.respiratory_emphysema_comment">
+                        </td>
                     </tr>
                     <tr>
                         <td>Shortness of breath e.g. walking more than 50m, climbing stairs / inclines</td>
                         <td>
-                            <label><input type="radio" name="Respiratory2" value="Yes"></label>
+                            <label>
+                                <input type="radio" name="Respiratory2" value="Y" ng-model="admissionRequest.respiratory_inclines">
+                            </label>
                         </td>
                         <td>
-                            <label><input type="radio" name="Respiratory2" value="No"></label>
+                            <label>
+                                <input type="radio" name="Respiratory2" value="N" ng-model="admissionRequest.respiratory_inclines">
+                            </label>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.respiratory_inclines_comment">
+                        </td>
                     </tr>
                 </tbody>
             </table>

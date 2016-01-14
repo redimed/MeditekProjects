@@ -1,7 +1,7 @@
 <form name="form" novalidate role="form" ng-submit="submit()">
     <div class="form-body">
         <h4 class="form-section bold">PREVIOUS SURGERY/PROCEDURES (e.g.joint replacement, transplants, implants, colonoscopy)</h4>
-    	<div class="table-scrollable">
+        <div class="table-scrollable">
             <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
                 <thead>
                     <tr>
@@ -15,21 +15,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="psp in admissionRequest.step1.PREVIOUS_SURGERY_PROCEDURES">
+                    <tr ng-repeat="psp in admissionRequest.PREVIOUS_SURGERY_PROCEDURES">
                         <td>{{$index+1}}</td>
                         <td>{{psp.operation}}</td>
                         <td>{{psp.appros_year}}</td>
                         <td>{{psp.surgeon}}</td>
                         <td>{{psp.notes}}</td>
                         <td>
-                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only blue" 
-                                ng-click="openModaUpdate1($index)">
+                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only blue" ng-click="openModaUpdate1($index)">
                                 <i class="glyphicon glyphicon-search"></i>
                             </a>
                         </td>
                         <td>
-                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only red"
-                                ng-click="openModalDelete1($index)">
+                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only red" ng-click="openModalDelete1($index)">
                                 <i class="glyphicon glyphicon-remove"></i>
                             </a>
                         </td>
@@ -44,7 +42,6 @@
                 </a>
             </div>
         </div>
-
         <h4 class="form-section bold margin-top-40" class="margin-top-20">MEDICATIONS (including puffers, eye drops etc.)</h4>
         <div class="table-scrollable">
             <table class="table table-bordered table-hover dt-responsive dataTable no-footer dtr-inline">
@@ -59,45 +56,76 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Do you take anti-coagulant or blood thinning therapy 
-                        (Warfarin, Coumadin, Plavix, Iscover, Aspirin)?
+                        <td>Do you take anti-coagulant or blood thinning therapy (Warfarin, Coumadin, Plavix, Iscover, Aspirin)?
                         </td>
-                        <td><label><input type="radio" name="dedication1" value="Yes"></label></td>
-                        <td><label><input type="radio" name="dedication1" value="No"></label></td>
+                        <td>
+                            <label>
+                                <input type="radio" name="dedication1" value="Y" ng-model="admissionRequest.anti_coagulant">
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input type="radio" name="dedication1" value="N" ng-model="admissionRequest.anti_coagulant">
+                            </label>
+                        </td>
                         <td class="form-inline">
                             <div class="form-group margin-bottom-10">
                                 <div class="radio-list">
                                     <label class="radio-inline">Still to take?</label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="Still_to_take" value="Yes" ng-model="admissionRequest.step1.Still_to_take"> Yes
+                                        <input type="radio" name="Still_to_take" value="Y" ng-model="admissionRequest.anti_coagulant_still_to_take"> Yes
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="Still_to_take" value="No" ng-model="admissionRequest.step1.Still_to_take"> No
+                                        <input type="radio" name="Still_to_take" value="N" ng-model="admissionRequest.anti_coagulant_still_to_take"> No
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Date to cease:</label>
-                                <input type="text" class="form-control date-picker">
+                                <input type="text" class="form-control date-picker" ng-model="admissionRequest.anti_coagulant_date_to_cease">
                             </div>
                         </td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.anti_coagulant_note">
+                        </td>
                     </tr>
                     <tr>
-                        <td>Do you take steroids, anti-inflammatory drugs,
-                        cortisone tablets/injections?</td>
-                        <td><label><input type="radio" name="dedication2" value="Yes"></label></td>
-                        <td><label><input type="radio" name="dedication2" value="No"></label></td>
-                        <td><input type="text" class="form-control"></td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>Do you take steroids, anti-inflammatory drugs, cortisone tablets/injections?</td>
+                        <td>
+                            <label>
+                                <input type="radio" name="dedication2" value="Y" ng-model="admissionRequest.anti_inflammatory">
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input type="radio" name="dedication2" value="N" ng-model="admissionRequest.anti_inflammatory">
+                            </label>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.anti_inflammatory_comment">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.anti_inflammatory_note">
+                        </td>
                     </tr>
                     <tr>
-                        <td>Do you take herbal supplements or complementary 
-                        therapies e.g. fish oil</td>
-                        <td><label><input type="radio" name="dedication3" value="Yes"></label></td>
-                        <td><label><input type="radio" name="dedication3" value="No"></label></td>
-                        <td><input type="text" class="form-control"></td>
-                        <td><input type="text" class="form-control"></td>
+                        <td>Do you take herbal supplements or complementary therapies e.g. fish oil</td>
+                        <td>
+                            <label>
+                                <input type="radio" name="dedication3" value="Y" ng-model="admissionRequest.herbal_supplements">
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input type="radio" name="dedication3" value="N" ng-model="admissionRequest.herbal_supplements">
+                            </label>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.herbal_supplements_comment">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" ng-model="admissionRequest.herbal_supplements_note">
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -118,7 +146,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="m in admissionRequest.step1.MEDICATIONS">
+                    <tr ng-repeat="m in admissionRequest.MEDICATIONS">
                         <td>{{$index+1}}</td>
                         <td>{{m.medication}}</td>
                         <td>{{m.frequency}}</td>
@@ -127,14 +155,12 @@
                         <td>{{m.date_ceased}}</td>
                         <td>{{m.nursing_notes}}</td>
                         <td>
-                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only blue" 
-                                ng-click="openModaUpdate2($index)">
+                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only blue" ng-click="openModaUpdate2($index)">
                                 <i class="glyphicon glyphicon-search"></i>
                             </a>
                         </td>
                         <td>
-                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only red"
-                                ng-click="openModalDelete2($index)">
+                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only red" ng-click="openModalDelete2($index)">
                                 <i class="glyphicon glyphicon-remove"></i>
                             </a>
                         </td>
@@ -151,8 +177,8 @@
         </div>
     </div>
     <div class="form-actions margin-top-40" style="text-align:right">
-	   <button type="submit" class="btn btn-lg btn-danger">
-	    	Next Section <span class="glyphicon glyphicon-arrow-right"></span>
-	    </button>
+        <button type="submit" class="btn btn-lg btn-danger">
+            Next Section <span class="glyphicon glyphicon-arrow-right"></span>
+        </button>
     </div>
 </form>

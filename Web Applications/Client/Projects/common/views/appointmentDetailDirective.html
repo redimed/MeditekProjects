@@ -13,15 +13,21 @@
             <table class="table table-hover">
                 <tr>
                     <td>Date</td>
-                    <td>.....</td>
+                    <td>
+                        {{apptDate}}
+                    </td>
                 </tr>
                 <tr>
                     <td>Time</td>
-                    <td>.....</td>
+                    <td>
+                        {{apptTime}}
+                    </td>
                 </tr>
                 <tr>
                     <td>Status</td>
-                    <td>Received</td>
+                    <td>
+                        {{appointmentInfo.Status}}
+                    </td>
                 </tr>
                 <tr>
                     <td>Insurer</td>
@@ -29,7 +35,9 @@
                 </tr>
                 <tr>
                     <td>Treating Practitioner</td>
-                    <td>N/A</td>
+                    <td>
+                        {{appointmentInfo.Doctors[0].FirstName +" "+ appointmentInfo.Doctors[0].LastName}}
+                    </td>
                 </tr>
                 <tr>
                     <td>Online Users</td>

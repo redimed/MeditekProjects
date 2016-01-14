@@ -7,12 +7,16 @@
         </li>
         <li>
             <i class="fa fa-angle-right"></i>
-            <a href="javascript:;" ui-sref="authentication.admission.detail">
-                    Admission</a>
+            <a href="javascript:;" ui-sref="authentication.consultation.list">
+                    Consultation</a>
         </li>
         <li>
             <i class="fa fa-angle-right"></i>
-            <b>Detail</b>
+            <b>Treating Doctor</b>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Admission Request</b>
         </li>
     </ul>
 </div>
@@ -38,21 +42,21 @@
                 <div class="form-wizard">
                     <ul class="nav nav-pills nav-justified steps">
                         <li ui-sref-active="active" ng-class="{'done' : ['/step3','/step2'].indexOf($state.current.url) != -1}">
-                            <a ui-sref="authentication.admission.request.step1" class="step">
+                            <a ui-sref="authentication.consultation.detail.admission.request.step1" class="step">
                                 <span class="number">1</span>
                                 <span class="desc"><i class="fa fa-check"></i> Step 1 </span>
                             </a>
                         </li>
                         <li ui-sref-active="active" ng-class="{'done' : ['/step3'].indexOf($state.current.url) != -1}">
                             <!-- <a href="#tab2" data-toggle="tab" class="step"> -->
-                            <a ui-sref="authentication.admission.request.step2" class="step">
+                            <a ui-sref="authentication.consultation.detail.admission.request.step2" class="step">
                                 <span class="number">2</span>
                                 <span class="desc"><i class="fa fa-check"></i> Step 2 </span>
                             </a>
                         </li>
                         <li ui-sref-active="active" id="li-step3">
                             <!-- <a href="#tab3" data-toggle="tab" class="step active"> -->
-                            <a ui-sref="authentication.admission.request.step3" class="step">
+                            <a ui-sref="authentication.consultation.detail.admission.request.step3" class="step">
                                 <span class="number">3</span>
                                 <span class="desc"><i class="fa fa-check"></i> Step 3 </span>
                             </a>
@@ -148,4 +152,3 @@
         </div>
     </div>
 </div>
-

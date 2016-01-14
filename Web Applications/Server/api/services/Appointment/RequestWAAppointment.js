@@ -4,9 +4,9 @@ module.exports = function(data, userInfo) {
     var preferringPractitioner;
     var appointmentObject;
     var teleApptID;
-    return sequelize.transaction()
+    var defer = $q.defer();
+    sequelize.transaction()
         .then(function(t) {
-            var defer = $q.defer();
             if (HelperService.CheckExistData(userInfo) &&
                 HelperService.CheckExistData(userInfo.UID)) {
                 var objectFindPreferringPractitioner = {
@@ -14,7 +14,7 @@ module.exports = function(data, userInfo) {
                     transaction: t
                 };
                 //find information PreferringPractitioner
-                Services.GetPreferringPractictioner(objectFindPreferringPractitioner)
+                return Services.GetPreferringPractictioner(objectFindPreferringPractitioner)
                     .then(function(infoPreferringPractitioner) {
                         if (HelperService.CheckExistData(infoPreferringPractitioner) &&
                             HelperService.CheckExistData(infoPreferringPractitioner.Doctor)) {
@@ -194,6 +194,8 @@ module.exports = function(data, userInfo) {
                     error: err
                 });
             }
-            return defer.promise;
+        }, function(err) {
+            defer.reject(err);
         });
+    return defer.promise;
 };

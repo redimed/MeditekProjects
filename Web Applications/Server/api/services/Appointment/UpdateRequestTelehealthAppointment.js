@@ -4,16 +4,16 @@ module.exports = function(data, userInfo) {
     var appointmentObject;
     var dataPreferredPractitioners;
     var dataClinicalDetails;
-    return sequelize.transaction()
+    var defer = $q.defer();
+    sequelize.transaction()
         .then(function(t) {
-            var defer = $q.defer();
             if (HelperService.CheckExistData(userInfo) &&
                 HelperService.CheckExistData(userInfo.UID)) {
                 var objectFindPreferringPractitioner = {
                     data: userInfo.UID,
                     transaction: t
                 };
-                Services.GetPreferringPractictioner(objectFindPreferringPractitioner)
+                return Services.GetPreferringPractictioner(objectFindPreferringPractitioner)
                     .then(function(infoPreferringPractitioner) {
                             if (HelperService.CheckExistData(infoPreferringPractitioner)) {
                                 preferringPractitionerObject = infoPreferringPractitioner;
@@ -235,6 +235,8 @@ module.exports = function(data, userInfo) {
                         });
                     });
             }
-            return defer.promise;
+        }, function(err) {
+            defer.reject(err);
         });
+    return defer.promise;
 };

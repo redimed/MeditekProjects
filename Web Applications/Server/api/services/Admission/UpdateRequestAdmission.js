@@ -2,7 +2,7 @@ var $q = require('q');
 var moment = require('moment');
 module.exports = function(data, userInfo) {
     var defer = $q.defer();
-    return sequelize.transaction()
+    sequelize.transaction()
         .then(function(t) {
             var admissions = data.Admissions;
             var whereClause = {};
@@ -22,7 +22,7 @@ module.exports = function(data, userInfo) {
                 HelperService.CheckExistData(admissions) &&
                 !_.isEmpty(whereClause) &&
                 !_.isEmpty(admissions)) {
-                Appointment.findOne({
+                return Appointment.findOne({
                         attributes: ['ID'],
                         where: whereClause,
                         transaction: t
@@ -47,7 +47,7 @@ module.exports = function(data, userInfo) {
                         });
                     })
                     .then(function(admissionUpdated) {
-                         defer.resolve({
+                        defer.resolve({
                             transaction: t,
                             status: 'success'
                         });
@@ -61,6 +61,8 @@ module.exports = function(data, userInfo) {
                 var error = new Error('UpdateRequestAdmission.data.failed')
                 defer.reject(error);
             }
-            return defer.promise;
+        }, function(err) {
+            defer.reject(err);
         });
+    return defer.promise;
 };

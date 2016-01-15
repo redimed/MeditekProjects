@@ -53,7 +53,7 @@ module.exports = function(appointmentUID, userInfo) {
             include: [{
                 model: TelehealthAppointment,
                 attributes: Services.AttributesAppt.TelehealthAppointment(),
-                required: false,
+                required: true,
                 include: [{
                     model: WAAppointment,
                     attributes: Services.AttributesAppt.WAAppointment(),
@@ -61,7 +61,7 @@ module.exports = function(appointmentUID, userInfo) {
                 }, {
                     model: PatientAppointment,
                     attributes: Services.AttributesAppt.PatientAppointment(),
-                    required: false,
+                    required: true,
                 }, {
                     model: PreferredPractitioner,
                     attributes: Services.AttributesAppt.PreferredPractitioner(),
@@ -104,7 +104,7 @@ module.exports = function(appointmentUID, userInfo) {
             }, {
                 model: Doctor,
                 attributes: Services.AttributesAppt.Doctor(),
-                required: (HelperService.CheckExistData(filter.InternalPractitioner) && !_.isEmpty(filter.InternalPractitioner)),
+                required: !_.isEmpty(filter.InternalPractitioner),
                 include: [{
                     model: Department,
                     attributes: Services.AttributesAppt.Department(),
@@ -121,11 +121,11 @@ module.exports = function(appointmentUID, userInfo) {
             }, {
                 model: Patient,
                 attributes: Services.AttributesAppt.Patient(),
-                required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
+                required: !_.isEmpty(filter.UserAccount),
                 include: [{
                     model: UserAccount,
                     attributes: Services.AttributesAppt.UserAccount(),
-                    required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
+                    required: !_.isEmpty(filter.UserAccount),
                     where: filter.UserAccount
                 }]
             }, {

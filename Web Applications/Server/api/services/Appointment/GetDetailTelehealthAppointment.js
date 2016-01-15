@@ -9,7 +9,7 @@ module.exports = function(appointmentUID, userInfo) {
     var defer = $q.defer();
     //add roles
     var filter = {
-        InternalPractitioner: [],
+        Doctor: [],
         Appointment: [{
             '$and': {
                 UID: appointmentUID
@@ -24,7 +24,7 @@ module.exports = function(appointmentUID, userInfo) {
                 ID: userInfo.ID
             }
         };
-        filter.InternalPractitioner.push(filterRoleTemp);
+        filter.Doctor.push(filterRoleTemp);
     } else if (role.isExternalPractitioner) {
         var filterRoleTemp = {
             '$and': {
@@ -53,11 +53,11 @@ module.exports = function(appointmentUID, userInfo) {
             include: [{
                 model: TelehealthAppointment,
                 attributes: Services.AttributesAppt.TelehealthAppointment(),
-                required: false,
+                required: true,
                 include: [{
                     model: PatientAppointment,
                     attributes: Services.AttributesAppt.PatientAppointment(),
-                    required: false,
+                    required: true,
                 }, {
                     model: ExaminationRequired,
                     attributes: Services.AttributesAppt.ExaminationRequired(),
@@ -90,7 +90,7 @@ module.exports = function(appointmentUID, userInfo) {
             }, {
                 model: Doctor,
                 attributes: Services.AttributesAppt.Doctor(),
-                required: (HelperService.CheckExistData(filter.InternalPractitioner) && !_.isEmpty(filter.InternalPractitioner)),
+                required: !_.isEmpty(filter.Doctor),
                 include: [{
                     model: Department,
                     attributes: Services.AttributesAppt.Department(),
@@ -103,15 +103,15 @@ module.exports = function(appointmentUID, userInfo) {
                     required: false,
                     attributes: Services.AttributesAppt.FileUpload()
                 }],
-                where: filter.InternalPractitioner
+                where: filter.Doctor
             }, {
                 model: Patient,
                 attributes: Services.AttributesAppt.Patient(),
-                required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
+                required: !_.isEmpty(filter.UserAccount),
                 include: [{
                     model: UserAccount,
                     attributes: Services.AttributesAppt.UserAccount(),
-                    required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
+                    required: !_.isEmpty(filter.UserAccount),
                     where: filter.UserAccount
                 }]
             }, {

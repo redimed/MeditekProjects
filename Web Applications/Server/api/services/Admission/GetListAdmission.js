@@ -1,28 +1,64 @@
 module.exports = function(data, userInfo) {
-    var pagination = Services.GetPaginationAppointment(data, userInfo, Admission);
+    var pagination = PaginationService(data, Admission);
+    //add roles
+    var role = HelperService.GetRole(userInfo.roles);
+    if (role.isInternalPractitioner) {
+        var filterRoleTemp = {
+            '$and': {
+                ID: userInfo.ID
+            }
+        };
+        if (!HelperService.CheckExistData(pagination.Doctor)) {
+            pagination.Doctor = [];
+        }
+        pagination.Doctor.push(filterRoleTemp);
+    } else if (role.isExternalPractitioner) {
+        var filterRoleTemp = {
+            '$and': {
+                CreatedBy: userInfo.ID
+            }
+        };
+        if (!HelperService.CheckExistData(pagination.Appointment)) {
+            pagination.Appointment = [];
+        }
+        pagination.Appointment.push(filterRoleTemp);
+    } else if (role.isPatient) {
+        var filterRoleTemp = {
+            '$and': {
+                UserAccountID: userInfo.ID
+            }
+        };
+        if (!HelperService.CheckExistData(pagination.Patient)) {
+            pagination.Patient = [];
+        }
+        pagination.Patient.push(filterRoleTemp);
+    } else if (!role.isAdmin &&
+        !role.isAssistant) {
+        pagination.limit = 0;
+    }
     return Admission.findAndCountAll({
         attributes: Services.AttributesAdmission.Admission(),
         include: [{
             attributes: ['UID'],
             model: Appointment,
-            required: (HelperService.CheckExistData(pagination.filterAppointment) && !_.isEmpty(pagination.filterAppointment)),
-            where: pagination.filterAppointment,
+            required: !_.isEmpty(pagination.Appointment),
+            where: pagination.Appointment,
             include: [{
                 attributes: ['UID'],
-                required: (HelperService.CheckExistData(pagination.filterDoctor) && !_.isEmpty(pagination.filterDoctor)),
+                required: !_.isEmpty(pagination.Doctor),
                 model: Doctor,
-                where: pagination.filterDoctor
+                where: pagination.Doctor
             }, {
                 attributes: ['UID'],
-                required: (HelperService.CheckExistData(pagination.filterPatient) && !_.isEmpty(pagination.filterPatient)),
+                required: !_.isEmpty(pagination.Patient),
                 model: Patient,
-                where: pagination.filterPatient
+                where: pagination.Patient
             }]
-        },{
+        }, {
             attributes: Services.AttributesAdmission.AdmissionData(),
             required: true,
             model: AdmissionData,
-            where: pagination.filterAdmission
+            where: pagination.Admission
         }],
         subQuery: false,
         order: pagination.order,

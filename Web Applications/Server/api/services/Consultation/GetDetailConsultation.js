@@ -3,7 +3,7 @@ module.exports = function(consultationUID, userInfo) {
     var defer = $q.defer();
     //add roles
     var filter = {
-        InternalPractitioner: [],
+        Doctor: [],
         Consultation: [{
             '$and': {
                 UID: consultationUID
@@ -18,13 +18,16 @@ module.exports = function(consultationUID, userInfo) {
                 ID: userInfo.ID
             }
         };
-        filter.InternalPractitioner.push(filterRoleTemp);
+        filter.Doctor.push(filterRoleTemp);
     } else if (role.isExternalPractitioner) {
         var filterRoleTemp = {
             '$and': {
                 CreatedBy: userInfo.ID
             }
         };
+        if (!HelperService.CheckExistData(filter.Appointment)) {
+            filter.Appointment = [];
+        }
         filter.Appointment.push(filterRoleTemp);
     } else if (role.isPatient) {
         filter.UserAccount.push({
@@ -50,17 +53,17 @@ module.exports = function(consultationUID, userInfo) {
                 required: false,
                 include: [{
                     attributes: ['UID'],
-                    required: (HelperService.CheckExistData(filter.InternalPractitioner) && !_.isEmpty(filter.InternalPractitioner)),
+                    required: !_.isEmpty(filter.Doctor),
                     model: Doctor,
-                    where: filter.InternalPractitioner
+                    where: filter.Doctor
                 }, {
                     attributes: ['UID'],
-                    required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
+                    required: !_.isEmpty(filter.UserAccount),
                     model: Patient,
                     include: [{
                         attributes: ['UID'],
                         model: UserAccount,
-                        required: (HelperService.CheckExistData(filter.UserAccount) && !_.isEmpty(filter.UserAccount)),
+                        required: !_.isEmpty(filter.UserAccount),
                         where: filter.UserAccount
                     }]
                 }]

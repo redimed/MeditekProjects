@@ -7,7 +7,7 @@ app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, Admi
     var PREVIOUS_SURGERY_PROCEDURES = ($scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES) ? $scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES : $scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES = [];
     var MEDICATIONS = ($scope.admissionDetail.MEDICATIONS) ? $scope.admissionDetail.MEDICATIONS : $scope.admissionDetail.MEDICATIONS = [];
     $scope.admission = {
-        UID: $stateParams.data.UID,
+        UID: $stateParams.UID,
         Admissions: [{
             AdmissionData: [],
             UID: $scope.admissionUID

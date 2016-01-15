@@ -95,12 +95,13 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
             $scope.Opentok = {
                 apiKey: data.data.apiKey,
                 sessionId: data.data.sessionId,
-                token: data.data.token,
+                token: data.data.token
             }
         });
     };
 
     OpentokCreateSession();
+    
     //phan quoc chien join room
     function OpenTokJoinRoom() {
         io.socket.get('/api/telehealth/socket/joinRoom', {

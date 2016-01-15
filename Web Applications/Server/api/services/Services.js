@@ -11,7 +11,6 @@ module.exports = {
     CreateTelehealthAppointment: require('./Appointment/CreateTelehealthAppointment'),
     GetDataAppointment: require('./Appointment/GetDataAppointment'),
     GetListAppointment: require('./Appointment/GetListAppointment'),
-    GetPaginationAppointment: require('./Appointment/GetPaginationAppointment'),
     GetDetailTelehealthAppointment: require('./Appointment/GetDetailTelehealthAppointment'),
     UpdateTelehealthAppointment: require('./Appointment/UpdateTelehealthAppointment'),
     UrgentCare: require('./UrgentCare/UrgentCare'),

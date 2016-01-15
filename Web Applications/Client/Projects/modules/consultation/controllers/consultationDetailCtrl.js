@@ -7,9 +7,9 @@ var app = angular.module("app.authentication.consultation.detail.controller", [
 app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams, AdmissionService) {
     console.log($stateParams);
     console.log($scope.Opentok);
-    if ($stateParams.data == null) {
-        $state.go("authentication.consultation.list");
-    };
+    // if ($stateParams.data == null) {
+    //     $state.go("authentication.consultation.list");
+    // };
     $scope.Params = $stateParams.data;
     console.log("$scope.Params",$scope.Params);
     $scope.getTelehealthDetail = function(UID) {
@@ -18,7 +18,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
             console.log("$scope.wainformation", $scope.wainformation);
         }, function(error) {});
     };
-    $scope.getTelehealthDetail($scope.Params.UID);
+   // $scope.getTelehealthDetail($scope.Params.UID);
 
     /*=========opentok begin=========*/
     $scope.userInfo = $cookies.getObject('userInfo');
@@ -65,33 +65,33 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     };
     /*=========opentok end=========*/
     $scope.admissionDetail = {};
-    var data = {
-        Filter: [{
-            Appointment: {
-                UID: $scope.Params.UID
-            }
-        }],
-        Order: [{
-            Admission: {
-                ID: 'DESC'
-            }
-        }]
-    };
-    AdmissionService.GetListAdmission(data).then(function(data) {
-        console.log('GetDetailAdmission', data);
-        if (data.count > 0) {
-            $scope.admissionUID = data.rows[0].UID;
-            _.forEach(data.rows[0].AdmissionData, function(value, name) {
-                var itemData = null;
-                if (value.Name == "PREVIOUS_SURGERY_PROCEDURES" || value.Name == "MEDICATIONS") {
-                    itemData = JSON.parse(value.Value);
-                } else {
-                    itemData = value.Value;
-                };
-                $scope.admissionDetail[value.Name] = itemData;
-            });
-            console.log('$scope.admissionDetail', $scope.admissionDetail);
-        };
+    // var data = {
+    //     Filter: [{
+    //         Appointment: {
+    //             UID: $scope.Params.UID
+    //         }
+    //     }],
+    //     Order: [{
+    //         Admission: {
+    //             ID: 'DESC'
+    //         }
+    //     }]
+    // };
+    // AdmissionService.GetListAdmission(data).then(function(data) {
+    //     console.log('GetDetailAdmission', data);
+    //     if (data.count > 0) {
+    //         $scope.admissionUID = data.rows[0].UID;
+    //         _.forEach(data.rows[0].AdmissionData, function(value, name) {
+    //             var itemData = null;
+    //             if (value.Name == "PREVIOUS_SURGERY_PROCEDURES" || value.Name == "MEDICATIONS") {
+    //                 itemData = JSON.parse(value.Value);
+    //             } else {
+    //                 itemData = value.Value;
+    //             };
+    //             $scope.admissionDetail[value.Name] = itemData;
+    //         });
+    //         console.log('$scope.admissionDetail', $scope.admissionDetail);
+    //     };
 
-    });
+    // });
 });

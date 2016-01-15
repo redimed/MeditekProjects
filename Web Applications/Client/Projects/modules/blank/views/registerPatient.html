@@ -491,14 +491,14 @@
 					</form>
 					<form name="step3" class="form-horizontal" novalidate ng-show="number == 3">
 						<div class="form-body my-form-body-padding">
-							<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step3.PINnumber.$invalid]">
+							<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step3.PinNumber.$invalid]">
 								<label class="control-label col-md-3 col-sm-3">
 									PIN number <span class="required">*</span>
 								</label>
 								<div class="col-md-4 col-sm-4">
-									<input type="text" class="form-control" name="PINnumber" ng-model="data.PINnumber" ng-pattern="/^[0-9]{4,6}$/" required>
-									<p class="help-block required-text" ng-if="submitted && step3.PINnumber.$error.required">This field is required.</p>
-									<p ng-show="submitted && step3.PINnumber.$error.pattern" class="help-block required-text">PIN Number must be at least 4 no more than 6 character</p>
+									<input type="text" class="form-control" name="PinNumber" ng-model="postData.data.PinNumber" ng-pattern="/^[0-9]{4,6}$/" required>
+									<p class="help-block required-text" ng-if="submitted && step3.PinNumber.$error.required">This field is required.</p>
+									<p ng-show="submitted && step3.PinNumber.$error.pattern" class="help-block required-text">PIN Number must be at least 4 no more than 6 character</p>
 								</div>
 							</div>
 						</div>

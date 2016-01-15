@@ -171,7 +171,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="item in FileUploads track by $id($index)">
+                                        <tr ng-repeat="item in FileUploads track by $id($index)" ng-click="showImage(item.UID)">
                                             <td>{{$index+1}}</td>
                                             <td><strong>{{ item.FileName }}</strong></td>
                                             <td >{{ item.FileType}}</td>
@@ -621,5 +621,14 @@
     </div>
     <div class="modal-body" style="align:center">
         <drawing data="drawingData" action="drawingAction"></drawing>
+    </div>
+</script>
+
+<script type="text/ng-template" id="showImageTemplate">
+    <div class="modal-header my-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"></button>
+    </div>
+    <div class="modal-body" style="align:center">
+        <img class="img-responsive" dimage dimage-uid="LinkUID" dimage-status="dimageStatus">
     </div>
 </script>

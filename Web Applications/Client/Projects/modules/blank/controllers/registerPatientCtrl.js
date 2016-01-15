@@ -99,6 +99,7 @@ app.controller('registerPatientCtrl', function($scope, blankServices, Authentica
         if ($scope.step3.$valid) {
             console.log('data register Patient', $scope.postData)
             blankServices.registerPatient($scope.postData).then(function(response) {
+                console.log('1',response);
             	if (response.data.status = 200) {
             		toastr.success('create Patient success');
                     $state.go('blank.welcome')

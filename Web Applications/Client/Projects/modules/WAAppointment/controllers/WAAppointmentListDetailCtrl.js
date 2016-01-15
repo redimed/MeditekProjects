@@ -66,7 +66,7 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $s
         })
     }
 
-    OpentokCreateSession();
+    //OpentokCreateSession();
 
     function OpentokSendCall(uidCall, uidUser) {
         console.log("uidCall", uidCall);
@@ -355,8 +355,7 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $s
     $scope.close = function() {
         $modalInstance.close();
     };
-    $scope.showImage = function(Link, UID) {
-        o.loadingPage(true);
+    $scope.showImage = function(UID) {
         var LinkUID = UID;
         var modalInstance = $modal.open({
             templateUrl: 'showImageTemplate',

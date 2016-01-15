@@ -32,10 +32,7 @@ app.config(function($stateProvider) {
                 pageTitle: 'Consultation Detail'
             },
             templateUrl: 'modules/consultation/views/consultationDetail.html',
-            controller: 'consultationDetailCtrl',
-            params:{
-                data:null
-            }
+            controller: 'consultationDetailCtrl'
         })
         .state('authentication.consultation.detail.patientAdmission', {
             url: '/patientAdmission',

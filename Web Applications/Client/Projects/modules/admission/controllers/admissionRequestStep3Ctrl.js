@@ -1,13 +1,13 @@
 var app = angular.module('app.authentication.admission.request.step3.controller', []);
 
 app.controller('admissionRequestStep3Ctrl', function($scope, $timeout, AdmissionService, $stateParams) {
-    console.log("$stateParams", $stateParams.data.UID);
+    console.log("$stateParams", $stateParams.UID);
     $timeout(function() {
         App.initAjax();
     }, 0);
     angular.element(".progress-bar").attr("style", "width:100%");
     $scope.admission = {
-        UID: $stateParams.data.UID,
+        UID: $stateParams.UID,
         Admissions: [{
             AdmissionData: []
         }]

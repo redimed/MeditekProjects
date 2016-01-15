@@ -113,9 +113,10 @@ angular.module("app.common.drawing",[])
                             console.log(respond);
                             if(respond.status=='success')
                             {
+                                // console.log('respond',respond);
                                 // CommonService.downloadFile(respond.fileUID);
                                 toastr.success("Save drawing successfully", "success");
-                                scope.action(respond.fileUID);
+                                scope.action(respond.fileInfo);
                             }
                         });
                     })

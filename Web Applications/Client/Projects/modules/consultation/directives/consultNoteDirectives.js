@@ -7,6 +7,12 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
         },
         templateUrl: "modules/consultation/directives/templates/consultNoteDirectives.html",
         controller: function($scope) {
+            $scope.checkRoleUpdate = true;
+            if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' 
+                || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' 
+                || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
+                $scope.checkRoleUpdate = false;
+            };
             $scope.requestInfo = {
                 UID: $stateParams.UID,
                 Consultations: [{
@@ -101,11 +107,13 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             $scope.$watch('consultationuid', function(newValue, oldValue) {
                 if (newValue !== undefined) {
                     consultationServices.detailConsultation(newValue).then(function(response) {
-                        console.log(response.data)
+                        $scope.requestInfo = null;
+                        $scope.requestOther = {};
                         if (response.data !== null) {
-                            $scope.requestInfo = null;
-                            $scope.requestOther = {};
                             $scope.loadData(response.data);
+                        }else{
+                            toastr.error("data error");
+                             $state.go("authentication.consultation.detail.consultNote", {}, {reload: true});
                         };
                     });
                 };
@@ -189,8 +197,9 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     if (response == 'success') {
                         o.loadingPage(false);
                         toastr.success("Update Success");
-                        $state.go("authentication.consultation.detail.consultNote", {}, {
-                            reload: true
+                        $state.go("authentication.consultation.detail", {
+                            UID: $stateParams.UID,
+                            UIDPatient: $stateParams.UIDPatient
                         });
                     };
                 });
@@ -272,6 +281,12 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 });
                 $scope.requestInfo.Consultations[0].ConsultationData = ConsultationDataTempFinal;
             }
+            $scope.cancel = function(){
+                 $state.go("authentication.consultation.detail", {
+                    UID: $stateParams.UID,
+                    UIDPatient: $stateParams.UIDPatient
+                });
+            }
             $scope.CheckBox = function(data) {
                 if ($scope.requestInfo.Consultations[0].ConsultationData[data] !== undefined) {
                     $scope.requestInfo.Consultations[0].ConsultationData[data].Value = null;
@@ -280,7 +295,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             $scope.showImage = function(UID) {
                 var LinkUID = UID;
                 var modalInstance = $modal.open({
-                    templateUrl:'showImageTemplate',
+                    templateUrl: 'showImageTemplate',
                     controller: 'showImageController',
                     windowClass: 'app-modal-window-full',
                     resolve: {
@@ -298,35 +313,33 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     templateUrl: 'showDrawingTemplate',
                     controller: 'showDrawingController',
                     windowClass: 'app-modal-window',
-                    backdrop : 'static',
+                    backdrop: 'static',
                     resolve: {
                         data: function() {
                             return data;
                         }
                     }
                 });
-                modalInstance.result.then(function(fileUID) {
-                    $scope.FileUploads.push({
-                        UID: fileUID
-                    });
+                modalInstance.result.then(function(fileInfo) {
+                    console.log('fileInfo',fileInfo)
+                    $scope.FileUploads.push(fileInfo);
                 });
             }
         }
     };
 });
 
-app.controller('showDrawingController', function($scope, $modalInstance, toastr, data, CommonService,$cookies) {
+app.controller('showDrawingController', function($scope, $modalInstance, toastr, data, CommonService, $cookies) {
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
     };
 
-    $scope.drawingData={
-        userUID:$cookies.getObject('userInfo').UID,
-        fileType:'MedicalDrawing'
+    $scope.drawingData = {
+        userUID: $cookies.getObject('userInfo').UID,
+        fileType: 'MedicalDrawing'
     };
 
-    $scope.drawingAction=function(fileUID)
-    {
-        $modalInstance.close(fileUID);
+    $scope.drawingAction = function(fileInfo) {
+        $modalInstance.close(fileInfo);
     }
 });

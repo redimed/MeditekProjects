@@ -277,6 +277,22 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     $scope.requestInfo.Consultations[0].ConsultationData[data].Value = null;
                 };
             }
+            $scope.showImage = function(UID) {
+                var LinkUID = UID;
+                var modalInstance = $modal.open({
+                    templateUrl:'showImageTemplate',
+                    controller: 'showImageController',
+                    windowClass: 'app-modal-window-full',
+                    resolve: {
+                        LinkUID: function() {
+                            return LinkUID;
+                        }
+                    }
+                });
+                modalInstance.result.then(function(data) {
+                    $modalInstance.close('err');
+                });
+            };
             $scope.AddDrawing = function(data) {
                 var modalInstance = $modal.open({
                     templateUrl: 'showDrawingTemplate',

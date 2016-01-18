@@ -12,7 +12,7 @@ class InformationViewController: UIViewController {
     
     let patientService = PatientService()
     let alertView = UIAlertView()
-
+    var patientInformation : PatientContainer!
    
     @IBOutlet weak var fullName: UILabel!
     @IBOutlet weak var dobLabel: UILabel!
@@ -28,9 +28,7 @@ class InformationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         avarta.layer.cornerRadius = CGRectGetWidth(avarta.frame) / 4.0
-        avarta.clipsToBounds = true
-        
-        
+        avarta.clipsToBounds = true  
       
     }
     override func viewWillAppear(animated: Bool) {
@@ -39,42 +37,21 @@ class InformationViewController: UIViewController {
     
     //get information patient
     func getInformationPatient(){
-        if let uuid = defaults.valueForKey("uid") as? String {
         
-            patientService.getInformationPatientByUUID(uuid){
-                message , data in
-              
-                if message["message"] == "success" {
-                    self.view.hideLoading()
-                    
                     self.avarta.image = UIImage(named: "A1a Copy 2.png")!
-                    self.fullName.text = data!.FirstName + " " + data!.MiddleName + " " + data!.LastName
-                    self.dobLabel.text = (data!.DOB).toDateTimeZone(formatTime.dateTime, format: formatTime.formatDate)
-                    self.suburbLabel.text = data!.Suburb
-                    self.postCodeLabel.text = data!.Postcode
-                    self.countryLabel.text = data!.Country
-                    self.addressLabel.text = data!.Address1
-                    self.emailLabel.text = data!.Email1
-                    self.homePhoneLabel.text = data!.HomePhoneNumber
-                    self.patientService.getImage((data?.ImageUID)!, completionHandler: { image in
+                    self.fullName.text = patientInformation!.FirstName + " " + patientInformation!.MiddleName + " " + patientInformation!.LastName
+                    self.dobLabel.text = (patientInformation!.DOB).toDateTimeZone(formatTime.dateTime, format: formatTime.formatDate)
+                    self.suburbLabel.text = patientInformation!.Suburb
+                    self.postCodeLabel.text = patientInformation!.Postcode
+                    self.countryLabel.text = patientInformation!.Country
+                    self.addressLabel.text = patientInformation!.Address1
+                    self.emailLabel.text = patientInformation!.Email1
+                    self.homePhoneLabel.text = patientInformation!.HomePhoneNumber
+                    self.patientService.getImage((patientInformation?.ImageUID)!, completionHandler: { image in
                         self.avarta.image = image
                     })
-        
-                } else if message["message"] == "error"{
-                    self.alertView.alertMessage("Error", message: message["ErrorType"].string!)
-                }else {
-                    self.view.hideLoading()
-                    if message["TimeOut"].string ==  ErrorMessage.TimeOut {
-                        self.alertView.alertMessage("Error", message: ErrorMessage.TimeOut)
-                    }else if message["message"].string == ErrorMessage.TimeOutToken {
-                         
-                    }else {
-                        let message : String = String(message["ErrorsList"][0])
-                        self.alertView.alertMessage("Error", message: message)
-                    }
-                }
-            }
-        }
+                    
+    
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

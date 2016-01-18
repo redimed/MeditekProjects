@@ -68,10 +68,10 @@ class AppointmentListsViewController: UIViewController {
     
     //sending data by segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "TrackingRefferalSegue" {
-            let Tracking = segue.destinationViewController as! TrackingRefferalViewController
+        if segue.identifier == "appointmentDetailsSegue" {
+            let appointmentDedtails = segue.destinationViewController as! AppointmentDetailsViewController
             if let indexPath = tableView.indexPathForSelectedRow {
-                Tracking.appointmentDetails = Appointment[indexPath.row]
+                appointmentDedtails.appointmentDetails = Appointment[indexPath.row]
             }
         }
     }
@@ -95,13 +95,13 @@ extension AppointmentListsViewController:UITableViewDataSource,UITableViewDelega
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("TrackingRefferalSegue", sender: self)
+        performSegueWithIdentifier("appointmentDetailsSegue", sender: self)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
+        cell.alpha = 0
         UIView.animateWithDuration(0.25, animations: {
-            cell.layer.transform = CATransform3DMakeScale(1, 1, 1)
+            cell.alpha = 1
         })
     }
     

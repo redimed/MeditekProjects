@@ -113,6 +113,9 @@ class AppointmentDetailsViewController: UIViewController, UIViewControllerTransi
             body.imageSelect = imageDetails
             body.appointmentID = appointmentDetails.UIDApointment
             body.delegate = self
+        } else if segue.identifier == "TrackingSegue" {
+            let Tracking = segue.destinationViewController as! TrackingRefferalViewController
+            Tracking.appointmentDetails = appointmentDetails
         }
     }
     
@@ -213,6 +216,8 @@ class AppointmentDetailsViewController: UIViewController, UIViewControllerTransi
         let indexPath = NSIndexPath(forRow: newRowIndex - 1 , inSection: 0)
         collectionView.insertItemsAtIndexPaths([indexPath])
     }
+    
+    
     
 }
 

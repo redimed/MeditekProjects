@@ -7,48 +7,73 @@ app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, Admi
     var PREVIOUS_SURGERY_PROCEDURES = ($scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES) ? $scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES : $scope.admissionDetail.PREVIOUS_SURGERY_PROCEDURES = [];
     var MEDICATIONS = ($scope.admissionDetail.MEDICATIONS) ? $scope.admissionDetail.MEDICATIONS : $scope.admissionDetail.MEDICATIONS = [];
     $scope.admission = {
-        UID: $stateParams.UID,
-        Admissions: [{
-            AdmissionData: [],
-            UID: $scope.admissionUID
-        }]
-    }
-    $scope.UpdateAdmission = function() {
-        if ($scope.admissionUID) {
-            swal({
-                title: "Are you sure?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#2196F3",
-                confirmButtonText: "OK",
-                closeOnConfirm: false
-            }, function() {
-                _.forEach($scope.admissionDetail, function(value, name) {
-                    if (value.length > 0) {
-                        // console.log(name, value);
-                        var data = {
-                            Section: "Admission Details",
-                            Category: "Admission",
-                            Type: "Admission",
-                            Name: name,
-                            Value: null
-                        }
-                        if (name == "PREVIOUS_SURGERY_PROCEDURES" || name == "MEDICATIONS") {
-                            data.Value = JSON.stringify(value);
-                        } else {
-                            data.Value = value;
-                        };
-                        $scope.admission.Admissions[0].AdmissionData.push(data);
+        create: {
+            UID: $stateParams.UID,
+            Admissions: [{
+                AdmissionData: []
+            }]
+        },
+        update: {
+            UID: $stateParams.UID,
+            Admissions: [{
+                AdmissionData: [],
+                UID: $scope.admissionUID
+            }]
+        }
+    };
+
+    function saveAddmission(input) {
+        swal({
+            title: "Are you sure?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#2196F3",
+            confirmButtonText: "OK",
+            closeOnConfirm: false
+        }, function() {
+            _.forEach($scope.admissionDetail, function(value, name) {
+                if (value.length > 0) {
+                    // console.log(name, value);
+                    var data = {
+                        Section: "Admission Details",
+                        Category: "Admission",
+                        Type: "Admission",
+                        Name: name,
+                        Value: null
                     }
-                });
-                AdmissionService.UpdateAdmission($scope.admission).then(function(data) {
+                    if (name == "PREVIOUS_SURGERY_PROCEDURES" || name == "MEDICATIONS") {
+                        data.Value = JSON.stringify(value);
+                    } else {
+                        data.Value = value;
+                    };
+                    input.Admissions[0].AdmissionData.push(data);
+                }
+            });
+            // console.log(input);
+            if (input == $scope.admission.update) {
+                // console.log('update');
+                AdmissionService.UpdateAdmission(input).then(function(data) {
                     swal("Update success!", "", "success");
                 }, function(error) {
                     swal("Update error!", "", "error");
                 });
-            });
+            } else {
+                // console.log('create');
+                AdmissionService.CreateAdmission($scope.admission.create).then(function(data) {
+                    swal("Create success!", "", "success");
+                }, function(error) {
+                    swal("Create error!", "", "error");
+                });
+            };
+
+        });
+    };
+
+    $scope.UpdateAdmission = function() {
+        if ($scope.admissionUID) {
+            saveAddmission($scope.admission.update);
         } else {
-            swal("Admission not exist!", "", "error");
+            saveAddmission($scope.admission.create);
         };
     };
 
@@ -193,7 +218,7 @@ app.controller('admissionDetailCtrl', function($scope, $timeout, $uibModal, Admi
                 // dismiss
             });
     };
-    $scope.resertSubstancesData = function(){
+    $scope.resertSubstancesData = function() {
         $scope.admissionDetail.allergies_alerts_substances_list = "";
     }
 });

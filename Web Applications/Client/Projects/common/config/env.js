@@ -1,4 +1,4 @@
-var env='meditekServer'; //local,meditekServer,testApp,app
+var env='local'; //local,meditekServer,testApp,app
 
 
 var configRestBaseUrl={
@@ -11,8 +11,8 @@ var configRestBaseUrl={
 };
 
 var configAuthBaseUrl={
-	//'local':'http://192.168.1.235:3005',
-	'local':'http://localhost:3006',
+	'local':'http://192.168.1.235:3006',
+	// 'local':'http://localhost:3006',
 	'meditekServer':'http://telehealthvietnam.com.vn:3006',
 	'testApp':'http://testapp.redimed.com.au:3006',
 	'app':'http://apps.redimed.com.au:3006',

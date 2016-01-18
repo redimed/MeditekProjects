@@ -24,6 +24,7 @@ app.controller('userProfileCtrl', function($scope, PatientService, doctorService
 	};
 	
 	var userprofile = $cookies.getObject("userprofile");
+	$scope.user = $cookies.getObject("userprofile");
 
 	if(userprofile.patient!=null){
 		PatientService.getPatient(data).then(function(response){

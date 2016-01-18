@@ -18,9 +18,11 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
             isShowFull:'=onShowfull',
             listShow:'=onListshow',
             onCancel: '=',
+            disable :'=onDisabled',
             activeUser: '=onActive'
         },
         controller:function($scope, FileUploader) {
+        	$scope.disable == true?true:false;
         	$scope.buildImg = function(imageType,canvasimg,ctximg,e, width, height) {
 				var reader = new FileReader();
 				reader.onload = function(event){
@@ -131,6 +133,9 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    	scope.uploader.queue.length = 0;
 		    };
 		    $timeout(function(){
+		    	if(scope.disable == true) {
+		    		$('#modalBody :input').attr('disabled', true);
+		    	}
 		    	scope.checkcolumm =[];
 				if(scope.listShow!= undefined && scope.listShow!=null && scope.listShow!='' && scope.listShow.length!=0){
 					if(scope.listShow.columm1==true){

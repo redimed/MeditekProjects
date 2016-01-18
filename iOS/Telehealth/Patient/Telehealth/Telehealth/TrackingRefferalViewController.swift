@@ -74,12 +74,12 @@ class TrackingRefferalViewController: UIViewController {
         button.layer.shadowRadius = 6
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "appointmentDetailsSegue"{
-            let appointmentDetail = segue.destinationViewController as! AppointmentDetailsViewController
-            appointmentDetail.appointmentDetails = appointmentDetails
-        }
-    }
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.identifier == "appointmentDetailsSegue"{
+//            let appointmentDetail = segue.destinationViewController as! AppointmentDetailsViewController
+//            appointmentDetail.appointmentDetails = appointmentDetails
+//        }
+//    }
 
 
 }

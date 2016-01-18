@@ -42,26 +42,7 @@ struct UrlAPISocket  {
     static let emitAnswer : String = "/api/telehealth/socket/messageTransfer?from=%@&to=%@&message=%@"
 }
 
-//Giap: Group Message in system
-struct MessageString  {
-    static let CallAnswer : String = "answer"
-    static let CallEndCall : String = "end"
-    static let Decline : String = "decline"
-    static let Call : String = "call"
-    static let Cancel : String = "cancel"
-    static let VersionAndBuild : String = "© REDIMED 2015 \(UIApplication.sharedApplication().versionBuild()) – App Design by Meditek"
-    static let QuestionCallPhone : String = "You want to contact us?"
-    static let MessageLogout : String = "Are you sure you want to unregister? This will delete your user account on this device."
-    static let StringHealthCare:String = "Personalised + Customised, HEALTHCARE anywhere"
-    static let phoneNumberCallUs : String = "tel://0892300900"
-    static let savedPictureMessage : String = "Your picture was saved to Camera Roll"
-}
 
-struct ErrorMessage {
-    static let NoData : String = "No appointment details!"
-    static let TimeOut: String  = "Request Time Out"
-    static let TimeOutToken : String = "jwt expired"
-}
 
 //Giap: Group Hash Value Number 0 - 9 and delete
 struct numberHashValue  {
@@ -96,15 +77,7 @@ struct formatTime {
     static let formatTime : String = "HH:mm"
 }
 
-struct statusAppointment {
-    static let Attended : String = "Attended"
-    static let Waitlist : String = "Waitlist"
-    static let Pending : String = "Pending"
-    static let Received : String = "Received"
-    static let Cancelled : String = "Cancelled"
-    static let Approved : String = "Approved"
-    static let Finished : String = "Finished"
-}
+
 struct colorStatusAppointment{
     static let colorAttended = UIColor(red: 232/255, green: 145/255, blue: 147/255, alpha: 1.0)
     static let colorWaitlist = "Waitlist"

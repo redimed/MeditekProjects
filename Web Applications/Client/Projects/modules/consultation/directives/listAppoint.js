@@ -74,7 +74,6 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
 
             };
             scope.Detail = function(data) {
-                console.log('data', data)
                 var data = {
                     UID: data.UID,
                     UIDPatient: (data.Patients.length == 0) ? 'e.x.ex' : data.Patients[0].UID
@@ -83,7 +82,6 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
             };
 
             scope.LoadData = function() {
-                console.log('----------------------load data');
                 WAAppointmentService.loadListWAAppointment(scope.info.data).then(function(data) {
                     console.log(data);
                     scope.info.listWaapointment = data;

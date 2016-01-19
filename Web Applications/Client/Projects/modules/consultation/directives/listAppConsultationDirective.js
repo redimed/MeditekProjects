@@ -40,7 +40,6 @@ app.directive('listappConsultation', function(consultationServices, $modal, $coo
                 scope.searchObjectMapTemp = angular.copy(scope.searchObjectMap);
                 consultationServices.listConsultation(scope.searchObjectMapTemp).then(function(response) {
                     o.loadingPage(false);
-                    console.log("response",response)
                     scope.consultation = response.rows;
                     scope.CountRow = response.count;
                 },function(err){

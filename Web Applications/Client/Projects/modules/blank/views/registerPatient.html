@@ -166,7 +166,7 @@
 												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.State.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">State <span class="required">*</span></label>
 													<div class="col-md-8 col-sm-8">
-														<select class="form-control" ng-model="postData.data.State" required name="State" required>
+														<select class="form-control" ng-model="postData.data.State" ng-init="postData.data.State = 'WA'" required name="State" required>
                                                             <option value=""></option>
                                                             <option value="WA">Western Australia</option>
                                                             <option value="VIC">Victoria</option>
@@ -183,7 +183,7 @@
 												<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step1.CountryID1.$invalid]">
 													<label class="control-label col-md-4 col-sm-4">Country <span class="required">*</span></label>
 													<div class="col-md-8 col-sm-8">
-														<select size="1" class="form-control" ng-model="postData.data.CountryID1" name="CountryID1" required ng-options="item.ID as item.ShortName for item in ListContry">
+														<select size="1" class="form-control" ng-model="postData.data.CountryID1" ng-init="postData.data.CountryID1 = 14" name="CountryID1" required ng-options="item.ID as item.ShortName for item in ListContry">
                                                             <option>{{item.ShortName}}</option>
                                                         </select>
 														<p class="help-block required-text" ng-if="submitted && step1.CountryID1.$error.required">This field is required.</p>
@@ -252,10 +252,10 @@
 											</div>
 											<div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && step2.HomePhoneNumber.$invalid]">
 												<label class="control-label col-md-4 col-sm-4">
-													Home Phone <span class="required">*</span>
+													Home Phone
 												</label>
 												<div class="col-md-8 col-sm-8">
-													<input type="text" class="form-control" name="HomePhoneNumber" ng-model="postData.otherData.PatientKin.HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/" ng-required="NextOfKin !=='N'">
+													<input type="text" class="form-control" name="HomePhoneNumber" ng-model="postData.otherData.PatientKin.HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/">
 													<p class="help-block required-text" ng-if="submitted && step2.HomePhoneNumber.$error.required">This field is required.</p>
 													<p ng-show="submitted && step2.HomePhoneNumber.$error.pattern" class="help-block required-text">This is not a home phone number</p>
 												</div>
@@ -303,7 +303,7 @@
 													State <span class="required">*</span>
 												</label>
 												<div class="col-md-8 col-sm-8">
-														<select class="form-control" ng-model="postData.otherData.PatientKin.State" name="State" ng-required="NextOfKin !=='N'">
+														<select class="form-control" ng-model="postData.otherData.PatientKin.State" ng-init="postData.otherData.PatientKin.State = 'WA'" name="State" ng-required="NextOfKin !=='N'">
                                                             <option value=""></option>
                                                             <option value="WA">Western Australia</option>
                                                             <option value="VIC">Victoria</option>
@@ -321,7 +321,7 @@
 													Country <span class="required">*</span>
 												</label>
 												<div class="col-md-8 col-sm-8">
-													<select size="1" class="form-control" ng-model="postData.otherData.PatientKin.CountryID" name="CountryID" ng-options="item.ID as item.ShortName for item in ListContry" ng-required="NextOfKin !=='N'">
+													<select size="1" class="form-control" ng-model="postData.otherData.PatientKin.CountryID" ng-init="postData.otherData.PatientKin.CountryID = 14" name="CountryID" ng-options="item.ID as item.ShortName for item in ListContry" ng-required="NextOfKin !=='N'">
                                                         <option>{{item.ShortName}}</option>
                                                     </select>
 													<p class="help-block required-text" ng-if="submitted && step2.CountryID.$error.required">This field is required.</p>

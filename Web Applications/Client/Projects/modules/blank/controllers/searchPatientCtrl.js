@@ -3,21 +3,11 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
     $scope.number = 1;
     $scope.submitted = false;
     $scope.logInData = {
-            UserName: 'emty',
-            Password: 'emty',
-            UserUID: "",
-            PinNumber: ""
-        }
-    // $scope.postData = {
-    //     "data": {
-    //         "FirstName": "aaa",
-    //         "LastName": "123123",
-    //         "DOB": "23/12/2015",
-    //         "Gender": "Female",
-    //         "PhoneNumber": "0401101101",
-    //         "Email1": "test@yahoo.com",
-    //     }
-    // }
+        UserName: 'emty',
+        Password: 'emty',
+        UserUID: "",
+        PinNumber: ""
+    }
     $scope.Reset = function() {
         $scope.postData.data = {}
         $scope.submitted = false;
@@ -26,21 +16,16 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
         if ($scope.step1.$valid) {
             $scope.submitted = true;
             blankServices.searchPatient($scope.postData.data).then(function(response) {
-                console.log(response)
-                if (response.data.status = 200) {
-                    if (response.data.length !=0) {
-                        $scope.logInData.UserUID = response.data.UserAccount.UID;
-                        toastr.success('success');
-                        $scope.number++;
-                        $scope.submitted = false;
-                    } else {
-                        toastr.error('Not found Patient');
-                    };
+                if (response.data.length != 0) {
+                    toastr.success('success');
+                    $scope.logInData.UserUID = response.data.UserAccount.UID;
+                    $scope.number++;
+                    $scope.submitted = false;
                 } else {
-                    toastr.error('fail');
+                    toastr.error('Not found Patient');
                 };
             }, function(err) {
-                toastr.error('fail');
+                toastr.error('Search Patient Fail');
             })
         }
     };
@@ -53,7 +38,6 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
     $scope.submit = function() {
         $scope.submitted = true;
         if ($scope.step2.$valid) {
-            
             $scope.logInData.PinNumber = $scope.postData.data.PinNumber
             console.log($scope.logInData)
             blankServices.login($scope.logInData).then(function(response) {
@@ -62,7 +46,7 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
                 $rootScope.refreshCode = response.refreshCode;
                 $state.go("authentication.patient.home")
             }, function(err) {
-                toastr.error('fail');
+                toastr.error('Patient Login Fail');
             })
         }
     };

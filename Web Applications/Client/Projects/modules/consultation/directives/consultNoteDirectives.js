@@ -40,8 +40,6 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     return this.queue.length < 10;
                 }
             });
-
-            console.log("FileUploader", FileUploader);
             uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
                 //console.info('onWhenAddingFileFailed', item, filter, options);
             };
@@ -110,11 +108,12 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         if (response.data !== null) {
                             $scope.loadData(response.data);
                         } else {
-                            toastr.error("data error");
-                            $state.go("authentication.consultation.detail.consultNote", {}, {
-                                reload: true
-                            });
+                            toastr.error("Detail Empty");
+                            $scope.Reset();
                         };
+                    }, function(err) {
+                        o.loadingPage(false);
+                        toastr.error('Detail Consultation Fail');
                     });
                 };
             });
@@ -162,7 +161,6 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         $scope.requestOther[keyOther] = true;
                     }
                 })
-                console.log('other', $scope.requestOther)
                 $scope.ConsultationData = data.ConsultationData;
                 $scope.requestInfo.Consultations[0].FileUploads = $scope.FileUploads;
             }
@@ -186,7 +184,9 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         });
                         toastr.success("Success");
                     };
-
+                }, function(err) {
+                    o.loadingPage(false);
+                    toastr.error('Create Consultation Fail');
                 });
             }
             $scope.updateConsultation = function() {
@@ -197,7 +197,6 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     if (response == 'success') {
                         o.loadingPage(false);
                         consultationServices.detailConsultation(UID).then(function(response) {
-                            console.log('$scope.requestInfo.UID',response.data);
                             $scope.uploader.clearQueue();
                             $scope.requestInfo = null;
                             $scope.requestOther = {};
@@ -209,6 +208,9 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                             };
                         });
                     };
+                }, function(err) {
+                    o.loadingPage(false);
+                    toastr.error('update Consultation Fail');
                 });
             }
             $scope.ConsultationDataCreate = function() {
@@ -328,7 +330,6 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     }
                 });
                 modalInstance.result.then(function(fileInfo) {
-                    console.log('fileInfo', fileInfo)
                     $scope.FileUploads.push(fileInfo);
                 });
             }

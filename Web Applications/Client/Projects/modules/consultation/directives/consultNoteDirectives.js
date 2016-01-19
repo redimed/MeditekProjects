@@ -8,9 +8,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
         templateUrl: "modules/consultation/directives/templates/consultNoteDirectives.html",
         controller: function($scope) {
             $scope.checkRoleUpdate = true;
-            if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' 
-                || $cookies.getObject('userInfo').roles[0].RoleCode == 'ASSISTANT' 
-                || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
+            if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
                 $scope.checkRoleUpdate = false;
             };
             $scope.requestInfo = {
@@ -111,9 +109,11 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         $scope.requestOther = {};
                         if (response.data !== null) {
                             $scope.loadData(response.data);
-                        }else{
+                        } else {
                             toastr.error("data error");
-                             $state.go("authentication.consultation.detail.consultNote", {}, {reload: true});
+                            $state.go("authentication.consultation.detail.consultNote", {}, {
+                                reload: true
+                            });
                         };
                     });
                 };
@@ -147,7 +147,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                             keyOther = keyOther.split(" ").join("");
                         }
                         $scope.requestInfo.Consultations[0].ConsultationData[keyClinicalDetail] = {};
-                        if (valueRes.Name == 'US' || valueRes.Name == 'MRI' || valueRes.Name == 'PetScan') {
+                        if (valueRes.Name == 'US' || valueRes.Name == 'MRI' || valueRes.Name == 'PetScan' || valueRes.Name == 'CT') {
                             if (valueRes.Value !== 'WD' && valueRes.Value !== 'ENVISION' && valueRes.Value !== 'INSIGHT') {
                                 $scope.requestInfo.Consultations[0].ConsultationData[keyClinicalDetail].Value = 'OtherProvider';
                                 $scope.requestOther[keyOther + 'Other'] = valueRes.Value;
@@ -191,15 +191,22 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             }
             $scope.updateConsultation = function() {
                 $scope.ConsultationUpdate();
-                console.log($scope.requestInfo)
+                var UID = angular.copy($scope.requestInfo.Consultations[0].UID);
                 o.loadingPage(true);
                 consultationServices.updateConsultation($scope.requestInfo).then(function(response) {
                     if (response == 'success') {
                         o.loadingPage(false);
-                        toastr.success("Update Success");
-                        $state.go("authentication.consultation.detail", {
-                            UID: $stateParams.UID,
-                            UIDPatient: $stateParams.UIDPatient
+                        consultationServices.detailConsultation(UID).then(function(response) {
+                            console.log('$scope.requestInfo.UID',response.data);
+                            $scope.uploader.clearQueue();
+                            $scope.requestInfo = null;
+                            $scope.requestOther = {};
+                            if (response.data !== null) {
+                                toastr.success('Update Success');
+                                $scope.loadData(response.data);
+                            } else {
+                                toastr.error("data error");
+                            };
                         });
                     };
                 });
@@ -281,8 +288,8 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 });
                 $scope.requestInfo.Consultations[0].ConsultationData = ConsultationDataTempFinal;
             }
-            $scope.cancel = function(){
-                 $state.go("authentication.consultation.detail", {
+            $scope.cancel = function() {
+                $state.go("authentication.consultation.detail", {
                     UID: $stateParams.UID,
                     UIDPatient: $stateParams.UIDPatient
                 });
@@ -321,7 +328,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     }
                 });
                 modalInstance.result.then(function(fileInfo) {
-                    console.log('fileInfo',fileInfo)
+                    console.log('fileInfo', fileInfo)
                     $scope.FileUploads.push(fileInfo);
                 });
             }

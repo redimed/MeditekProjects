@@ -5,7 +5,7 @@
             <span class="caption-subject bold uppercase">Consult Note</span>
         </div>
         <div class="actions">
-            <button type="button" class="btn btn-lg blue-soft uppercase bold" ng-click="Reset()" ng-show="CheckUpdate == false">
+            <button type="button" class="btn btn-lg blue-soft uppercase bold" ng-click="Reset()" ng-show="!checkRoleUpdate && CheckUpdate == false">
                         <i class="glyphicon glyphicon-plus"></i> Add Consult Note</button>
         </div>
        <!--  <div class="tools">
@@ -15,7 +15,7 @@
     </div>
     <div class="portlet-body form">
         <form name="form" class="form-horizontal" novalidate ng-submit="submit()">
-            <fieldset ng-disabled="checkRoleUpdate && !CheckUpdate">
+            <fieldset ng-disabled="checkRoleUpdate">
                 <div class="form-body">
                     <br/>
                     <div class="form-group">

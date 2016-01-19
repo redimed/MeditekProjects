@@ -1,0 +1,69 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <b>
+                Home</b>
+        </li>
+    </ul>
+</div>
+<br>
+<!-- END PAGE HEADER-->
+
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-bubbles font-blue"></i>
+            <span class="caption-subject bold uppercase font-blue">Patient Home</span>
+            <span class="caption-helper"></span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+            <a href="javascript:;" class="fullscreen"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30">
+                <div class="dashboard-stat purple" ng-click="eForms()">
+                    <div class="visual">
+                        <i class="fa fa-file-text-o"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">E-Forms</div>
+                    </div>
+                    <a class="more" href="javascript:;" ui-sref="authentication.eForms.list">
+                        View  <i class="m-icon-swapright m-icon-white"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30">
+                <div class="dashboard-stat green">
+                    <div class="visual">
+                        <i class="glyphicon glyphicon-user"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">Patient Admission</div>
+                    </div>
+                    <a class="more" href="javascript:;" ui-sref="authentication.consultation.detail.admission.detail">
+                        View  <i class="m-icon-swapright m-icon-white"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30">
+                <div class="dashboard-stat red">
+                    <div class="visual">
+                        <i class="fa fa-gear"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">Consult List</div>
+                    </div>
+                    <a class="more" href="javascript:;" ui-sref="authentication.consultation.list">
+                        Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

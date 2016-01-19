@@ -19,6 +19,9 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                             Status: null,
                             Enable: 'Y',
                             CreatedDate: null
+                        }},{
+                        Patient: {
+                            UID:null
                         }
                     }],
                     Search: [{
@@ -80,7 +83,9 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
             };
 
             scope.LoadData = function() {
+                console.log('----------------------load data');
                 WAAppointmentService.loadListWAAppointment(scope.info.data).then(function(data) {
+                    console.log(data);
                     scope.info.listWaapointment = data;
                 });
             };

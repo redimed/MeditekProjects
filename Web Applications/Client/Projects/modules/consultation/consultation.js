@@ -1,7 +1,7 @@
 var app = angular.module('app.authentication.consultation', [
     'app.authentication.consultation.controller',
     'app.authentication.consultation.services',
-    'app.authentication.consultation.directives.TelehealthDetail',
+    'app.authentication.consultation.directives.TelehealthDetail'
 ]);
 
 app.config(function($stateProvider) {
@@ -78,5 +78,5 @@ app.config(function($stateProvider) {
             },
             templateUrl: 'modules/consultation/views/drawing.html',
             controller: 'drawingCtrl',
-        });
+        })
 });

@@ -6,6 +6,7 @@ var app = angular.module("app.authentication.consultation.controller",[
 	'app.authentication.consultation.directives.listAppConsultation',
 	'app.authentication.consultation.directives.listPatientConsultation',
 	'app.authentication.consultation.detail.telehealth.controller',
+	'app.authentication.consultation.listPatient.controller'
 ]);
 
 app.controller('consultationCtrl', function(){

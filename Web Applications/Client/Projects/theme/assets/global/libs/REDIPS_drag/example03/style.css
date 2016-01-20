@@ -6,16 +6,10 @@ Mar, 2011.
 
 */
 
-body{
-	font-family: arial;
-	margin: 0px; /* for IE6 / IE7 */
-}
-
-
 /* drag container */
 #main_container {
 	margin: auto;
-	width: 730px;
+	width: 100%;/*width: 730px;*/
 }
 		/* container for the left table */
 		#main_container #left {
@@ -30,7 +24,7 @@ body{
 			padding-left: auto;
 			padding-right: 0px;
 			/* align div to the right */
-			margin-left: auto;
+			/*margin-left: auto;*/
 		}
 
 
@@ -46,8 +40,8 @@ body{
 	filter: alpha(opacity=70);
 	/* without width, IE6/7 will not apply filter/opacity to the element ?! */
 	/* IE needs element layout */
-	width: 87px;
-	height: 20px;
+	/*width: 87px;*/
+	height: 40px;
 	line-height: 20px;
 	/* border */
 	border: 1px solid #555;
@@ -79,28 +73,29 @@ div#redips-drag td {
 	font-size: 10pt;
 	padding: 2px;
 }
-		/* overwrite border settings for left tables */
-		/* set all borders to 0px except border-bottom */
-		div#redips-drag #table1 td {
-			border-width: 0px 0px 1px 0px;
-		}
-			/* styles for clone DIV elements in left table */
-			div#redips-drag #table1 div {
-				margin-left: 5px;
-				float: left;
-			}
-			/* define styles for buttons */
-			div#redips-drag #table1 input {
-				float: right;
-				width: 15px;
-				height: 23px;
-				margin-right: 5px;
-				border-width: 1px;
-				/* round corners */
-				border-radius: 3px;
-				/* default visibility is hidden */
-				visibility: hidden;
-			}
+/* overwrite border settings for left tables */
+/* set all borders to 0px except border-bottom */
+div#redips-drag #table1 td {
+	border-width: 0px 0px 1px 0px;
+}
+	/* styles for clone DIV elements in left table */
+	div#redips-drag #table1 div {
+		margin-left: 5px;
+		float: left;
+		width: 100%;
+	}
+	/* define styles for buttons */
+	div#redips-drag #table1 input {
+		float: right;
+		width: 15px;
+		height: 23px;
+		margin-right: 5px;
+		border-width: 1px;
+		/* round corners */
+		border-radius: 3px;
+		/* default visibility is hidden */
+		visibility: hidden;
+	}
 
 
 /* subject colors */
@@ -173,11 +168,11 @@ div#redips-drag td {
 	text-align: right;
 }
 
-		/* "Save" button */
-		.button_container input{
-			background-color: #6A93D4;
-			color: white; 
-			border-width: 1px;
-			width: 40px;
-			padding: 0px;
-		}
+/* "Save" button */
+.button_container input{
+	background-color: #6A93D4;
+	color: white; 
+	border-width: 1px;
+	width: 40px;
+	padding: 0px;
+}

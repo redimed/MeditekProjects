@@ -13,6 +13,7 @@ var app = angular.module('app.authentication', [
 	'app.authentication.eForms',
 	'app.authentication.sandbox',
 	'app.authentication.admission',
+	'app.authentication.roster',
 ]);
 
 app.config(function($stateProvider){

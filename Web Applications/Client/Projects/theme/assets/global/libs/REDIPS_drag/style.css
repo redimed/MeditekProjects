@@ -16,7 +16,7 @@ body {
 /* drag container (contains two tables) */
 #redips-drag {
 	margin: auto;
-	width: 730px;
+	width: 100%;/*width: 730px;*/
 }
 
 /* drag objects (DIV inside table cells) */

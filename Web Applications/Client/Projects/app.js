@@ -20,6 +20,7 @@ var app = angular.module('app', [
     "angularFileUpload",
     "vcRecaptcha",
     'jsTree.directive',
+    "ui.calendar",
 ]);
 
 app
@@ -32,7 +33,7 @@ app
             newestOnTop: true,
             positionClass: 'toast-top-right',
             preventDuplicates: false,
-            preventOpenDuplicates: true,
+            preventOpenDuplicates: false,
             target: 'body',
             tapToDismiss: true
         });

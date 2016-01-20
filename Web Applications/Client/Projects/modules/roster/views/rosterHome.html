@@ -1,0 +1,104 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:;" ui-sref="authentication.home.list">
+                Home</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Doctor</b>
+        </li>
+    </ul>
+</div>
+<br>
+
+<!-- END PAGE HEADER-->
+
+<!-- content page -->
+<div class="portlet box green">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="icon-list"></i>
+			<span class="caption-subject bold uppercase"> {{$state.current.data.pageTitle}}</span>
+		</div>
+		<div class="actions">
+			<a href="javascript:;" class="btn red btn-sm" ng-click="toggleFilter()">
+				<i class="fa fa-filter"></i> Filter
+			</a>
+			<a href="javascript:;" class="btn blue btn-sm" ng-click="createDoctor()">
+				<i class="glyphicon glyphicon-plus"></i> Create
+			</a>
+			<!-- <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""></a> -->
+		</div>
+	</div>
+	<div class="portlet-body">		
+		<!-- begin table -->
+		<div class="table-scrollable">
+			<table class="table table-bordered table-hover table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th ng-repeat="i in items">
+						{{i.name}}
+						<i class="fa fa-sort-asc"  ng-click="sort(i.field,'ASC')" ng-show="fieldSort[i.field]=='ASC'" ng-if="i.field!='Enable'" ></i>
+                        <i class="fa fa-sort-desc" ng-click="sort(i.field,'DESC')"ng-show="fieldSort[i.field]=='DESC'"ng-if="i.field!='Enable'"></i>
+					</th>
+					<th>
+						Type
+						<i class="fa fa-sort-asc"  ng-click="sort('RoleName','ASC')" ng-show="fieldSort.RoleName=='ASC'"></i>
+                        <i class="fa fa-sort-desc" ng-click="sort('RoleName','DESC')"ng-show="fieldSort.RoleName=='DESC'"></i>
+					</th>
+					<th>
+						Enable
+					</th>
+				</tr>
+				<tr ng-hide="toggle">
+					<td>#</td>
+					<td ng-repeat="i in items">
+						<input ng-model="search[i.field]" ng-keypress="Search(search,$event.which)" class="form-control" placeholder="{{i.field}}" />
+					</td>
+					<td><select class="form-control" ng-change="Search(search,'13')" ng-model="search.RoleName" ng-options="r.id as r.name for r in typeDoctor"></select></td>
+					<td><select class="form-control" ng-change="Search(search,'13')" ng-model="search.Enable" ng-options="e.id as e.name for e in EnableChoose"></select></td>
+				</tr>
+			</thead>
+			<tbody>
+			<tbody>
+				<tr ng-repeat="d in doctors" ng-click="clickOpen(d.UID,d.UserAccount.RelUserRoles[0].RoleId)">
+					<td>{{d.stt}}</td>
+					<td ng-repeat="i in items" >{{i.field=='UserAccount'?d[i.field]['PhoneNumber']:d[i.field]}}</td>
+					<td>{{ d.UserAccount.RelUserRoles[0].Role.RoleName}}</td>
+					<td>
+						<span ng-if="d.UserAccount.Enable != 'N'">
+							<i class="fa fa-check"></i>
+						</span>
+					</td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+		<div class="row">
+			<div class="col-md-5 col-sm-5">
+				&nbsp;
+			</div>
+			<div class="col-md-7 col-sm-7" style="text-align:right">
+				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+					<uib-pagination 
+					boundary-links="true" 
+					total-items="count" 
+					ng-model="searchObjectMap.currentPage" 
+					class="pagination-lg " 
+					previous-text="&lsaquo; " 
+					next-text="&rsaquo; " 
+					first-text="&laquo; " 
+					last-text="&raquo; " 
+					items-per-page="searchObjectMap.limit" 
+					max-size="searchObjectMap.maxSize"
+					ng-change="setPage()"></uib-pagination>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end content page -->

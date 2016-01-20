@@ -113,7 +113,7 @@ module.exports = {
                         }
                     });
             } else {
-                res.serverError('failed');
+                res.serverError('user.not(interalPractitioner,admin,assistant)');
             }
 
         }

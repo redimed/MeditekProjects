@@ -42,32 +42,21 @@ module.exports = function(objCheck) {
                 });
             } else {
                 var error = new Error('DestroyRoster.not.exist');
-                defer.reject({
-                    error: error,
-                    transaction: objCheck.transaction
-                });
+                defer.reject(error);
             }
         }, function(err) {
-            defer.reject({
-                error: err,
-                transaction: objCheck.transaction
-            });
+            defer.reject(err);
         })
         .then(function(apptRes) {
             if (!_.isEmpty(apptRes)) {
                 var error = new Error('existAppointment');
-                defer.reject({
-                    error: error,
-                    data: apptRes
-                });
+                error.data = apptRes;
+                defer.reject(error);
             } else {
                 defer.resolve('notExistAppointment');
             }
         }, function(err) {
-            defer.reject({
-                error: err,
-                transaction: objCheck.transaction
-            });
+            defer.reject(err);
         });
     return defer.promise;
 };

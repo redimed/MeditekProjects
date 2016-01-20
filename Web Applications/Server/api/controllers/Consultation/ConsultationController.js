@@ -21,7 +21,7 @@ module.exports = {
                         res.serverError(ErrorWrap(err.error || err));
                     });
             } else {
-                res.serverError('failed');
+                res.serverError('user.not.internalPractitioner');
             }
         }
     },
@@ -62,7 +62,7 @@ module.exports = {
                         res.serverError(ErrorWrap(err.error || err));
                     });
             } else {
-                res.serverError('failed');
+                res.serverError('user.not(admin,assistant,internalPractitioner)');
             }
         }
     },

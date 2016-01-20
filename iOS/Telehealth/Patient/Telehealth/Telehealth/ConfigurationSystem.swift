@@ -19,7 +19,7 @@ var userUID :String = String()
 var cookies :String = String()
 
 struct ConfigurationSystem {
-    static let http :String = httpUrl.httpTelehealth
+    static let http :String = httpUrl.httpTestApp
     static let Http_3009 :String = "\(http):3009"
     static let Http_3005 :String =  "\(http):3005"
     static let Http_3006 :String =  "\(http):3006"

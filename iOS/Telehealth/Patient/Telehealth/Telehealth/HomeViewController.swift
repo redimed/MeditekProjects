@@ -15,11 +15,17 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     let api = TokenAPI()
     let socketService = SocketService()
     let callService = CallService()
+    let requestTelehealthService = RequestTelehealthService()
     
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var pageView: UIView!
     @IBOutlet weak var labelHealthCare: UILabel!
-    
+    @IBOutlet weak var serviceNotLogin: UIView!
+    @IBOutlet weak var requestTelehealNotLogin: UIView!
+    @IBOutlet weak var otherServiceLogin: UIView!
+    @IBOutlet weak var requestTelehealthLogin: UIView!
+    @IBOutlet weak var trackingReferral: UIView!
+    @IBOutlet weak var settingView: UIView!
     weak var timer: NSTimer?
     
     var pageViewController: UIPageViewController!
@@ -30,6 +36,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     var backMusic: AVAudioPlayer!
     var uid = String()
     
+    var typeTelehelth = [String]()
    
   
     override func viewDidLoad() {
@@ -42,7 +49,21 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
             if let deviceToken = defaults.valueForKey("deviceToken") as? String{
                 api.updateTokenPush(uid,deviceToken:deviceToken)
             }
+            serviceNotLogin.hidden = true
+            requestTelehealNotLogin.hidden = true
+            otherServiceLogin.hidden = false
+            requestTelehealthLogin.hidden = false
+            trackingReferral.hidden = false
+            settingView.hidden = false
+        }else {
+            serviceNotLogin.hidden = false
+            requestTelehealNotLogin.hidden = false
+            otherServiceLogin.hidden = true
+            requestTelehealthLogin.hidden = true
+            trackingReferral.hidden = true
+            settingView.hidden = true
         }
+        typeTelehelth = requestTelehealthService.loadDataJson()
         
         //Connect Socket
         socketService.delegate = self
@@ -291,6 +312,11 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         UIApplication.sharedApplication().openURL(NSURL(string: MessageString.phoneNumberCallUs)!)
     }
     
+    @IBAction func requestTelehealthAction(sender: AnyObject) {
+        performSegueWithIdentifier("RequestTelehealthSegue", sender: self)
+    }
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "FAQsegue" {
             let FAQs = segue.destinationViewController as! FAQsViewController
@@ -298,6 +324,9 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         }else if segue.identifier == "Aboutsegue"{
             let FAQs = segue.destinationViewController as! FAQsViewController
             FAQs.titleString = "ABOUT US"
+        }else if segue.identifier == "RequestTelehealthSegue" {
+            let RQ  = segue.destinationViewController as! RequestTelehealthViewController
+            RQ.autocompleteUrls = typeTelehelth
         }
     }
     

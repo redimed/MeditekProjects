@@ -1,0 +1,38 @@
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-calendar-check-o"></i>
+            <a ui-sref="authentication.appointment.list">Appointment</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <label class="text-primary">Scheduler</label>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<!-- BEGIN PAGE TITLE-->
+<br>
+<!-- END PAGE TITLE-->
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet portlet-fit light bordered">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="fa fa-calendar-plus-o font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase">Scheduler</span>
+                    <span class="caption-helper"></span>
+                </div>
+                <div class="actions">
+                    <a href="javascript:;" class="btn red" ng-click="addResource()">Add resource</a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div id='calendar'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

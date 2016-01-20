@@ -1,0 +1,56 @@
+<form name="form" ng-submit="submit()">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" 
+			aria-hidden="true" ng-click="cancel()"></button>
+		<h4 class="modal-title uppercase bold font-red">
+			<i class="glyphicon glyphicon-calendar"></i> {{selectedDate}}</h4>
+	</div>
+	<div class="modal-body">
+		<div class="form-group">
+			<label class="control-label">Service</label>
+			<select class="form-control" ng-model="formData.service">
+				<option value=""></option>
+				<option value="kham">kham</option>
+				<option value="chua">chua</option>
+				<option value="benh">benh</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<!-- <label>Is Reoccurance</label> -->
+			<div class="radio-list">
+				<label>
+					<input type="checkbox" 
+					name="isReoccurance"
+					ng-model="formData.isReoccurance"
+					ng-true-value="'Y'"
+					ng-false-value="'N'"
+					ng-change="checkReoccurance(formData.isReoccurance)"> Is Reoccurance
+				</label>
+			</div>
+		</div>
+		<div class="form-group" ng-show="formData.isReoccurance == 'Y'">
+			<label class="control-label">Reoccurance Type</label>
+			<select class="form-control" ng-model="formData.reoccuranceType">
+				<option value=""></option>
+				<option value="daily">Daily</Dailyn>
+				<option value="weekly">Weekly</option>
+			</select>
+		</div>
+		<div class="form-group" ng-show="formData.isReoccurance == 'Y'">
+			<label class="control-label">End Reoccurance</label>
+			<input type="text" class="form-control date-picker" readonly 
+				data-date-format="dd/mm/yyyy"
+				data-date-start-date="{{selectedDate}}" 
+				
+				ng-model="formData.endReoccurance">
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="form-actions right">
+			<button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+				ng-click="cancel()">Cancel</button>
+			<button type="submit" class="btn btn-lg red">
+				<i class="glyphicon glyphicon-save"></i> Submit</button>
+		</div>
+	</div>
+</form>

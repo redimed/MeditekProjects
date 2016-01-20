@@ -4,20 +4,25 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.RequestConsultation(data, req.user)
-                .then(function(success) {
-                    if (HelperService.CheckExistData(success) &&
-                        HelperService.CheckExistData(success.transaction)) {
-                        success.transaction.commit();
-                    }
-                    res.ok('success');
-                }, function(err) {
-                    if (HelperService.CheckExistData(err) &&
-                        HelperService.CheckExistData(err.transaction)) {
-                        err.transaction.rollback();
-                    }
-                    res.serverError(ErrorWrap(err.error || err));
-                });
+            var role = HelperService.GetRole(req.user.roles);
+            if (role.isInternalPractitioner) {
+                Services.RequestConsultation(data, req.user)
+                    .then(function(success) {
+                        if (HelperService.CheckExistData(success) &&
+                            HelperService.CheckExistData(success.transaction)) {
+                            success.transaction.commit();
+                        }
+                        res.ok('success');
+                    }, function(err) {
+                        if (HelperService.CheckExistData(err) &&
+                            HelperService.CheckExistData(err.transaction)) {
+                            err.transaction.rollback();
+                        }
+                        res.serverError(ErrorWrap(err.error || err));
+                    });
+            } else {
+                res.serverError('failed');
+            }
         }
     },
     GetListConsultation: function(req, res) {

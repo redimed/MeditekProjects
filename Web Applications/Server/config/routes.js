@@ -57,4 +57,8 @@ var AdmissionRoutes = require('./routes/AdmissionRoutes');
 _.extend(routes, AdmissionRoutes);
 //end module Admission
 
+//begin module Roster
+var RosterRoutes = require('./routes/RosterRoutes');
+_.extend(routes, RosterRoutes);
+//end module Roster
 module.exports.routes = routes;

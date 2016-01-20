@@ -17,24 +17,16 @@ module.exports = function(objRel) {
                     transaction: objRel.transaction
                 });
             } else {
-                defer.reject({
-                    transaction: objRel.transaction,
-                    error: err
-                });
+                var error = new Error('relDoctorAppointment.objDoctor.not.exist');
+                defer.reject(error);
             }
         }, function(err) {
-            defer.reject({
-                transaction: objRel.transaction,
-                error: err
-            });
+            defer.reject(err);
         })
         .then(function(relDoctorAppointmentCreated) {
             defer.resolve(relDoctorAppointmentCreated);
         }, function(err) {
-            defer.reject({
-                transaction: objRel.transaction,
-                error: err
-            });
+            defer.reject(err);
         });
     return defer.promise;
 };

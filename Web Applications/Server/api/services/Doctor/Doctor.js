@@ -927,7 +927,7 @@ module.exports = {
 				    	},
 					],
 		       		model: UserAccount,
-		      		attributes: ['PhoneNumber','Enable'],
+		      		attributes: ['PhoneNumber','Enable', 'UID'],
 			  		where:{
 			   			$or: whereClause.UserAccount
 			   		},

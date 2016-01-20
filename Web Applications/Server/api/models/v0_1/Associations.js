@@ -308,5 +308,25 @@ module.exports = {
             through: 'RelAdmissionFileUpload',
             foreignKey: 'FileUploadID'
         });
+
+        //association Roster - UserAccount
+        Roster.belongsToMany(UserAccount, {
+            through: 'RelRosterUserAccount',
+            foreignKey: 'RosterID'
+        });
+        UserAccount.belongsToMany(Roster, {
+            through: 'RelRosterUserAccount',
+            foreignKey: 'UserAccountID'
+        });
+
+        //association Roster - Service
+        Roster.belongsToMany(Service, {
+            through: 'RelRosterService',
+            foreignKey: 'RosterID'
+        });
+        Service.belongsToMany(Roster, {
+            through: 'RelRosterService',
+            foreignKey: 'ServiceID'
+        });
     }
 };

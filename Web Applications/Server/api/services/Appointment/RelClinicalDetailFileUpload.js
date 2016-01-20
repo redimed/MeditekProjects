@@ -7,7 +7,8 @@ module.exports = function(objRel) {
                 UID: {
                     $in: objRel.where
                 }
-            }
+            },
+            transaction: objRel.transaction
         })
         .then(function(arrIDFileUpload) {
             if (HelperService.CheckExistData(arrIDFileUpload) &&
@@ -18,18 +19,12 @@ module.exports = function(objRel) {
                 });
             }
         }, function(err) {
-            defer.reject({
-                transaction: objRel.transaction,
-                error: err
-            });
+            defer.reject(err);
         })
         .then(function(relClinicalDetailFileUploadCreated) {
             defer.resolve(relClinicalDetailFileUploadCreated);
         }, function(err) {
-            defer.reject({
-                transaction: objRel.transaction,
-                error: err
-            });
+            defer.reject(err);
         });
     return defer.promise;
 };

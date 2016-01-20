@@ -7,8 +7,7 @@ module.exports = {
             Services.GetListAppointment(data, req.user)
                 .then(function(success) {
                     res.ok(success.data);
-                })
-                .catch(function(err) {
+                }, function(err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
                         HelperService.CheckExistData(err.error)) {

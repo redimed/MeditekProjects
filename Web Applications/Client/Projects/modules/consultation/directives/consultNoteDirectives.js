@@ -328,7 +328,6 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                 } else {
                     Window.focus();
                 }
-               
             }
         }
     };

@@ -10,18 +10,12 @@ module.exports = function(objUpdate) {
         .then(function(preferredPractitionerDeleted) {
             return Services.BulkCreatePreferredPractitioner(objUpdate);
         }, function(err) {
-            defer.reject({
-                transaction: objUpdate.transaction,
-                error: err
-            });
+            defer.reject(err);
         })
         .then(function(preferredPractitionerUpdated) {
             defer.resolve(preferredPractitionerUpdated);
         }, function(err) {
-            defer.reject({
-                transaction: objUpdate.transaction,
-                error: err
-            });
+            defer.reject(err);
         });
     return defer.promise;
 };

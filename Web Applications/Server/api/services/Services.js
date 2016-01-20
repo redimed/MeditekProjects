@@ -84,4 +84,17 @@ module.exports = {
     GetDetailAdmission: require('./Admission/GetDetailAdmission'),
     RelAdmissionFileUpload: require('./Admission/RelAdmissionFileUpload'),
     //end Admission
-}; 
+    RequestRoster: require('./Roster/RequestRoster'),
+    UpdateRequestRoster: require('./Roster/UpdateRequestRoster'),
+    GetDetailRoster: require('./Roster/GetDetailRoster'),
+    DestroyRoster: require('./Roster/DestroyRoster'),
+    CheckOverlab: require('./Roster/CheckOverlab'),
+    BulkCreateRoster: require('./Roster/BulkCreateRoster'),
+    CreateRoster: require('./Roster/CreateRoster'),
+    GetDataRoster: require('./Roster/GetDataRoster'),
+    AttributesRoster: require('./Roster/AttributesRoster'),
+    CheckRosterExistAppointment: require('./Roster/CheckRosterExistAppointment'),
+    GetListRoster: require('./Roster/GetListRoster'),
+    GetListService: require('./Roster/GetListService'),
+    //begin Roster
+};

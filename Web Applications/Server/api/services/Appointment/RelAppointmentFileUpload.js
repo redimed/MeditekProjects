@@ -19,18 +19,12 @@ module.exports = function(objRel) {
                 });
             }
         }, function(err) {
-            defer.reject({
-                transaction: objRel.transaction,
-                error: err
-            });
+            defer.reject(err);
         })
         .then(function(relFileUploadAppointmentCreated) {
             defer.resolve(relFileUploadAppointmentCreated);
         }, function(err) {
-            defer.reject({
-                transaction: objRel.transaction,
-                error: err
-            });
+            defer.reject(err);
         })
     return defer.promise;
 };

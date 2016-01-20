@@ -14,8 +14,7 @@ module.exports = {
                 .then(function(success) {
                     success.transaction.commit();
                     res.ok('success');
-                })
-                .catch(function(err) {
+                }, function(err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
                         HelperService.CheckExistData(err.error)) {
@@ -50,8 +49,7 @@ module.exports = {
             Services.GetListAppointment(data, req.user)
                 .then(function(success) {
                     res.ok(success.data);
-                })
-                .catch(function(err) {
+                }, function(err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
                         HelperService.CheckExistData(err.error)) {
@@ -74,8 +72,7 @@ module.exports = {
         Services.GetDetailTelehealthAppointment(UID, req.user)
             .then(function(success) {
                 res.ok(success);
-            })
-            .catch(function(err) {
+            }, function(err) {
                 if (HelperService.CheckExistData(err) &&
                     HelperService.CheckExistData(err.transaction) &&
                     HelperService.CheckExistData(err.error)) {
@@ -104,8 +101,7 @@ module.exports = {
                     .then(function(success) {
                         success.transaction.commit();
                         res.ok('success');
-                    })
-                    .catch(function(err) {
+                    }, function(err) {
                         if (HelperService.CheckExistData(err) &&
                             HelperService.CheckExistData(err.transaction) &&
                             HelperService.CheckExistData(err.error)) {
@@ -136,8 +132,7 @@ module.exports = {
                 .then(function(success) {
                     success.transaction.commit();
                     res.ok('success');
-                })
-                .catch(function(err) {
+                }, function(err) {
                     if (HelperService.CheckExistData(err) &&
                         HelperService.CheckExistData(err.transaction) &&
                         HelperService.CheckExistData(err.error)) {

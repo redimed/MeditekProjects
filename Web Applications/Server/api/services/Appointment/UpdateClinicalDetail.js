@@ -10,18 +10,12 @@ module.exports = function(objUpdate) {
         .then(function(clinicalDetailDeleted) {
             return Services.BulkCreateClinicalDetail(objUpdate);
         }, function(err) {
-            defer.reject({
-                transaction: objUpdate.transaction,
-                error: err
-            });
+            defer.reject(err);
         })
         .then(function(clinicalDetailUpdated) {
             defer.resolve(clinicalDetailUpdated);
         }, function(err) {
-            defer.reject({
-                transaction: objUpdate.transaction,
-                error: err
-            });
+            defer.reject(err);
         });
     return defer.promise;
 };

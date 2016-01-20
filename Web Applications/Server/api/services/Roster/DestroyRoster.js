@@ -4,26 +4,42 @@ module.exports = function(data, userInfo) {
     var moment = require('moment');
     sequelize.transaction()
         .then(function(t) {
-
             if (!_.isEmpty(data) &&
                 HelperService.CheckExistData(data.UID) &&
                 HelperService.CheckExistData(data.IsRecurrence)) {
                 if (data.IsRecurrence == 'Y') {
-
+                    return Roster.findAll({
+                            attributes: Services.AttributesRoster.Roster(),
+                            where: {
+                                Enable: 'Y',
+                                UID: data.UID
+                            },
+                            transaction: t
+                        })
+                        .then(function(rosterRes) {
+                            rosterRes = JSON.parse(JSON.stringify(rosterRes));
+                            console.log('rosterRes', rosterRes);
+                        }, function(err) {
+                            defer.reject({
+                                error: err,
+                                transaction: t
+                            });
+                        });
                 } else {
                     var objCheckExistAppointment = {
                         data: data.UID,
                         transaction: t
                     };
-                    Services.CheckRosterExistAppointment(objCheckExistAppointment)
+                    return Services.CheckRosterExistAppointment(objCheckExistAppointment)
                         .then(function(responseCheckOk) {
                             //destoy Roster
                             return Roster.update({
                                 Enable: 'N'
                             }, {
                                 where: {
-                                    UID: rosterUID
-                                }
+                                    UID: data.UID
+                                },
+                                transaction: t
                             });
                         }, function(err) {
                             if (!_.isEmpty(err) &&

@@ -9,10 +9,15 @@ module.exports = function(data, userInfo) {
                 model: UserAccount,
                 required: true,
                 where: pagination.UserAccount
+            }, {
+                attributes: Services.AttributesRoster.Service(),
+                model: Service,
+                required: true
             }],
             order: pagination.order,
             limit: pagination.limit,
             offset: pagination.offset,
+            where: pagination.Roster,
             subQuery: false
         })
         .then(function(listRosterRes) {

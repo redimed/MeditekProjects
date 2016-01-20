@@ -112,7 +112,7 @@ module.exports = {
                         }
                     });
             } else {
-                res.serverError('failed');
+                res.serverError('user.not(admin,assistant');
             }
 
         }

@@ -98,7 +98,7 @@
 							<div class="form-group margin-top-20" ng-class="{true: 'has-error', false: ''}[submitted && step2.PinNumber.$invalid]">
 								<label class="control-label col-md-4 col-sm-4">Pin Number <span class="required">*</span></label>
 								<div class="col-md-4 col-sm-4">
-									<input type="text" class="form-control" name="PinNumber" 
+									<input type="password" class="form-control" name="PinNumber" 
 												ng-model="postData.data.PinNumber" required>
 									<p class="help-block" ng-if="submitted && step2.PinNumber.$error.required">This field is required.</p>
 								</div>

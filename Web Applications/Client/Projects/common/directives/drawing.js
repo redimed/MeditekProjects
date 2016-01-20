@@ -28,8 +28,9 @@ angular.module("app.common.drawing",[])
 
             scope.sizes=[
                 {'width':550,'height':500,desc:'Canvas 550x500'},
-                {'width':650,'height':600,desc:'Canvas 650x600'},
+                {'width':1000,'height':900,desc:'Canvas 1100x900'},
                 {'width':750,'height':650,desc:'Canvas 750x650'},
+                 {'width':900,'height':750,desc:'Canvas 900x750'},
             ];
             scope.size=scope.sizes[1];
 

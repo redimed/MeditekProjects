@@ -8,6 +8,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
         templateUrl: "modules/consultation/directives/templates/consultNoteDirectives.html",
         controller: function($scope) {
             $scope.checkRoleUpdate = true;
+            var Window;
             if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
                 $scope.checkRoleUpdate = false;
             };
@@ -40,8 +41,6 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     return this.queue.length < 10;
                 }
             });
-
-            console.log("FileUploader", FileUploader);
             uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
                 //console.info('onWhenAddingFileFailed', item, filter, options);
             };
@@ -110,11 +109,12 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         if (response.data !== null) {
                             $scope.loadData(response.data);
                         } else {
-                            toastr.error("data error");
-                            $state.go("authentication.consultation.detail.consultNote", {}, {
-                                reload: true
-                            });
+                            toastr.error("Detail Empty");
+                            $scope.Reset();
                         };
+                    }, function(err) {
+                        o.loadingPage(false);
+                        toastr.error('Detail Consultation Fail');
                     });
                 };
             });
@@ -162,7 +162,6 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         $scope.requestOther[keyOther] = true;
                     }
                 })
-                console.log('other', $scope.requestOther)
                 $scope.ConsultationData = data.ConsultationData;
                 $scope.requestInfo.Consultations[0].FileUploads = $scope.FileUploads;
             }
@@ -186,7 +185,9 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                         });
                         toastr.success("Success");
                     };
-
+                }, function(err) {
+                    o.loadingPage(false);
+                    toastr.error('Create Consultation Fail');
                 });
             }
             $scope.updateConsultation = function() {
@@ -197,7 +198,6 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     if (response == 'success') {
                         o.loadingPage(false);
                         consultationServices.detailConsultation(UID).then(function(response) {
-                            console.log('$scope.requestInfo.UID',response.data);
                             $scope.uploader.clearQueue();
                             $scope.requestInfo = null;
                             $scope.requestOther = {};
@@ -209,6 +209,9 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                             };
                         });
                     };
+                }, function(err) {
+                    o.loadingPage(false);
+                    toastr.error('update Consultation Fail');
                 });
             }
             $scope.ConsultationDataCreate = function() {
@@ -315,22 +318,16 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     $modalInstance.close('err');
                 });
             };
+            $scope.closeWindow = function(fileInfo) {
+                Window.close();
+            }
             $scope.AddDrawing = function(data) {
-                var modalInstance = $modal.open({
-                    templateUrl: 'showDrawingTemplate',
-                    controller: 'showDrawingController',
-                    windowClass: 'app-modal-window',
-                    backdrop: 'static',
-                    resolve: {
-                        data: function() {
-                            return data;
-                        }
-                    }
-                });
-                modalInstance.result.then(function(fileInfo) {
-                    console.log('fileInfo', fileInfo)
-                    $scope.FileUploads.push(fileInfo);
-                });
+                if (typeof(Window) == 'undefined' || Window.closed) {
+                    window.refreshCode = $rootScope.refreshCode;
+                    Window = window.open($state.href("blank.drawing.home"), "", "fullscreen=0");
+                } else {
+                    Window.focus();
+                }
             }
         }
     };
@@ -345,7 +342,6 @@ app.controller('showDrawingController', function($scope, $modalInstance, toastr,
         userUID: $cookies.getObject('userInfo').UID,
         fileType: 'MedicalDrawing'
     };
-
     $scope.drawingAction = function(fileInfo) {
         $modalInstance.close(fileInfo);
     }

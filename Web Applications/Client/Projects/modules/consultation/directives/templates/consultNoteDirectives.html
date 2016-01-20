@@ -13,7 +13,7 @@
             <a href="javascript:;" class="fullscreen"> </a>
         </div> -->
     </div>
-    <div class="portlet-body form">
+    <div class="portlet-body form" id="ctrl">
         <form name="form" class="form-horizontal" novalidate ng-submit="submit()">
             <fieldset ng-disabled="checkRoleUpdate">
                 <div class="form-body">
@@ -632,5 +632,8 @@
     </div>
     <div class="modal-body" style="align:center">
         <img class="img-responsive" dimage dimage-uid="LinkUID" dimage-status="dimageStatus">
+    </div>
+    <div class="modal-footer">
+        <button class="btn green" ng-click="Vieww(LinkUID)">View Full</button>
     </div>
 </script>

@@ -141,10 +141,16 @@ app.directive('appointmentDetailDirective', function() {
     return {
         restrict: 'E',
         scope: {
-            apptuid: "="
+            apptuid: "=",
+            opentok: "="
         },
         templateUrl: 'common/views/appointmentDetailDirective.html',
         controller: function($scope, WAAppointmentService) {
+            $scope.onclick = function (){
+                if ($scope.opentok) {
+                    $scope.opentok.call();
+                };
+            }
             WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
                 $scope.appointmentInfo = data.data;
                 $scope.apptDate = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).utc().format('DD/MM/YYYY') : 'N/A';

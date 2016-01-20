@@ -23,5 +23,11 @@ app.config(function($stateProvider){
 			templateUrl: 'modules/sandbox/views/workersComp.html',
 			controller: 'workersCompCtrl',
 		})
+		.state('authentication.sandbox.dragTable',{
+			data: {title: 'dragTable', pageTitle: 'dragTable'},
+			url: '/dragTable',
+			templateUrl: 'modules/sandbox/views/dragTable.html',
+			controller: 'dragTableCtrl',
+		})
 		;
 });

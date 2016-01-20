@@ -1,0 +1,114 @@
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="authentication.appointment.list">Appointment</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <label class="text-primary">Appointment</label>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+<!-- BEGIN PAGE TITLE-->
+<h3 class="page-title">Appointment <small>calendar</small></h3>
+<!-- END PAGE TITLE-->
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet box dark">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-calendar"></i>
+                    <span class="caption-subject bold uppercase">Calendar</span>
+                    <span class="caption-helper"></span>
+                </div>
+                <!-- <div class="actions">
+                    <a href="javascript:;" class="btn blue-soft">
+                        <i class="glyphicon glyphicon-plus"></i> Add Event</a>
+                </div> -->
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                    <a href="javascript:;" class="fullscreen"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <br>
+                <div ui-calendar="calendarConfig.calendar" ng-model="eventSources" id="calendar"></div>
+            </div>
+        </div>
+    </div>
+   <!--  <div class="col-md-3 col-sm-3">
+        <div class="portlet box red-thunderbird">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-info"></i>
+                    <span class="caption-subject bold uppercase">Detail Event</span>
+                    <span class="caption-helper"></span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                    <a href="javascript:;" class="fullscreen"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form name="form" class="form-horizontal" novalidate ng-submit="changeEvent(data)">
+                    <div class="form-body">
+                        <div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && form.title.$invalid]">
+                            <label class="control-label col-md-4 col-sm-4">Title</label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" name="title" class="form-control" required
+                                    ng-model="data.title">
+                                <p class="help-block" ng-if="submitted && form.title.$error.required">Required</p>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && form.startDate.$invalid]">
+                            <label class="control-label col-md-4 col-sm-4">Start date</label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" name="startDate" class="form-control date-picker" 
+                                    data-date-format="dd/mm/yyyy" required
+                                    ng-model="data.startDate">
+                                <p class="help-block" ng-if="submitted && form.startDate.$error.required">Required</p>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && form.startTime.$invalid]">
+                            <label class="control-label col-md-4 col-sm-4">Start time</label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" name="startTime" class="form-control timepicker timepicker-24" 
+                                    data-default-time="" required
+                                    ng-model="data.startTime">
+                                <p class="help-block" ng-if="submitted && form.startTime.$error.required">Required</p>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && form.endDate.$invalid]">
+                            <label class="control-label col-md-4 col-sm-4">End date</label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" name="endDate" class="form-control date-picker" 
+                                    data-date-format="dd/mm/yyyy"
+                                    ng-model="data.endDate">
+                                <p class="help-block" ng-if="submitted && form.endDate.$error.required">Required</p>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{true: 'has-error', false: ''}[submitted && form.endTime.$invalid]">
+                            <label class="control-label col-md-4 col-sm-4">End time</label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" name="endTime" class="form-control timepicker timepicker-24" 
+                                    data-default-time=""
+                                    ng-model="data.endTime">
+                                <p class="help-block" ng-if="submitted && form.endDate.$error.required">Required</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions right">
+                        <button class="btn btn-lg dark" ng-click="removeEvent(data)">
+                            <i class="glyphicon glyphicon-remove"></i> Delete</button>
+                        <button class="btn btn-lg red-thunderbird">
+                            <i class="glyphicon glyphicon-save"></i> Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> -->
+</div>

@@ -1,0 +1,29 @@
+<form name="form" ng-submit="submit()">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" 
+			aria-hidden="true" ng-click="cancel()"></button>
+		<h4 class="modal-title uppercase bold font-red">
+			<i class="glyphicon glyphicon-calendar"></i> Delete</h4>
+	</div>
+	<div class="modal-body">
+		<p>Do you want to delete this roster ?</p>
+		<div class="form-group">
+			<div class="radio-list" style="margin-left:2em;">
+				<label class="radio-inline">
+					<input type="radio" name="group1" value="one" checked ng-model="isReoccurance"> One Reoccurance
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="group1" value="all" ng-model="isReoccurance"> All Reoccurance
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="form-actions right">
+			<button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+				ng-click="cancel()">No</button>
+			<button type="submit" class="btn btn-lg red">
+				<i class="glyphicon glyphicon-save"></i> Yes</button>
+		</div>
+	</div>
+</form>

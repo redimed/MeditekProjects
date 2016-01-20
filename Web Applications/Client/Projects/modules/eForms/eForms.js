@@ -10,6 +10,12 @@ app.config(function($stateProvider){
 			templateUrl: 'modules/eForms/views/eForms.html',
 			controller: 'eFormsCtrl',
 		})
+		.state('authentication.eForms.home',{
+			url: '/home',
+			data: {pageTitle: 'E-Forms'},
+			templateUrl: 'modules/eForms/views/eFormsHome.html',
+			controller: 'eFormsHomeCtrl',
+		})
 		.state('authentication.eForms.list',{
 			url: '/list',
 			data: {pageTitle: 'E-Forms'},
@@ -21,6 +27,12 @@ app.config(function($stateProvider){
 			data: {pageTitle: 'E-Forms Create'},
 			templateUrl: 'modules/eForms/views/eFormsCreate.html',
 			controller: 'eFormsCreateCtrl',
+		})
+		.state('authentication.eForms.appointment',{
+			url: '/appointment',
+			data: {pageTitle: 'E-Forms Appointment'},
+			templateUrl: 'modules/eForms/views/eFormsAppointment.html',
+			controller: 'eFormsAppoitmentCtrl',
 		})
 		;
 });

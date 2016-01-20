@@ -137,4 +137,16 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
             };
         });
     /*==addmission end==*/
+    $scope.eForms = function(){
+        $state.go("authentication.eForms.appointment");
+    };
+    $scope.admission = function(){
+        $state.go("authentication.consultation.detail.admission.detail");
+    };
+    $scope.consultNote = function(){
+        $state.go("authentication.consultation.detail.consultNote");
+    };
+    $scope.telehealthDetail = function(){
+        $state.go("authentication.consultation.detail.telehealth");
+    };
 });

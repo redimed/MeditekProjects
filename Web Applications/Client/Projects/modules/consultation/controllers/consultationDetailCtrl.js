@@ -4,8 +4,35 @@ var app = angular.module("app.authentication.consultation.detail.controller", [
     'app.authentication.consultation.detail.eForms.controller',
     'app.authentication.consultation.directives.consultNoteDirectives'
 ]);
-app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams, AdmissionService, $q) {
-    console.log($scope.Opentok);
+app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams, AdmissionService, $q, toastr) {
+    navigator.getUserMedia = (navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia);
+    if (navigator.getUserMedia) {
+        // Request the camera.
+        navigator.getUserMedia(
+            // Constraints
+            {
+                video: true
+            },
+
+            // Success Callback
+            function(localMediaStream) {
+                console.log("camera support");
+            },
+
+            // Error Callback
+            function(err) {
+                // Log the error to the console.
+                console.log('The following error occurred when trying to use getUserMedia: ' + err);
+            }
+        );
+
+    } else {
+        console.log("Aaaaaaaaaaaaaaaa");
+        alert('Sorry, your browser does not support getUserMedia');
+    }
     $scope.Params = $stateParams;
     console.log("$scope.Params", $scope.Params.UID);
     $scope.getTelehealthDetail = function(UID) {
@@ -18,9 +45,8 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
 
     /*=========opentok begin=========*/
     $scope.userInfo = $cookies.getObject('userInfo');
+    var audio = new Audio('theme/assets/global/audio/ringtone.mp3');
     console.log(" $scope.userInfo", $scope.userInfo);
-    var userName = null;
-    var userCall = null;
 
     function OpentokSendCall(uidCall, uidUser) {
         console.log("uidCall", uidCall);
@@ -29,34 +55,63 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
             from: uidUser,
             to: uidCall,
             message: "call",
-            sessionId: sessionId,
+            sessionId: $scope.Opentok.sessionId,
             fromName: $scope.userInfo.UserName
         }, function(data) {
             console.log("send call", data);
         });
     };
 
-    $scope.opentokCall = function() {
-        WAAppointmentService.GetDetailPatientByUid({
-            UID: $scope.wainformation.Patients[0].UID
-        }).then(function(data) {
-            console.log(data);
-            if (data.data[0].TeleUID != null) {
-                userCall = data.data[0].TeleUID;
-                userName = data.data[0].FirstName + " " + data.data[0].LastName;
-                OpentokSendCall(userCall, $scope.userInfo.UID);
-                window.open($state.href("blank.call", {
-                    apiKey: $scope.Opentok.apiKey,
-                    sessionId: $scope.Opentok.sessionId,
-                    token: $scope.Opentok.token,
-                    userName: userName
-                }));
-            } else {
+    $scope.opentokData = {
+            userName: null,
+            userCall: null,
+            call: function() {
+                console.log("Opentok", $scope.Opentok);
+                WAAppointmentService.GetDetailPatientByUid({
+                    UID: $scope.wainformation.Patients[0].UID
+                }).then(function(data) {
+                    console.log(data);
+                    if (data.data[0].TeleUID != null) {
+                        $scope.opentokData.userCall = data.data[0].TeleUID;
+                        $scope.opentokData.userName = data.data[0].FirstName + " " + data.data[0].LastName;
+                        // swal({
+                        //     title: $scope.opentokData.userName,
+                        //     imageUrl: "theme/assets/global/images/E-call_33.png",
+                        //     timer: 10000,
+                        //     showConfirmButton: false,
 
-            };
-        });
-    };
-    /*=========opentok end=========*/
+                        // }, function(isConfirm) {
+                        //     if (isConfirm) {
+                                
+                        //     } else {
+                        //         audio.pause();
+                        //         swal.close();
+                        //         console.log("1111111111111");
+                        //     };
+                        // });
+                        // audio.loop = true;
+                        // audio.play();
+                        
+                        // return
+
+                        // console.log(audio);
+
+                        OpentokSendCall($scope.opentokData.userCall, $scope.userInfo.UID);
+                        window.open($state.href("blank.call", {
+                            apiKey: $scope.Opentok.apiKey,
+                            sessionId: $scope.Opentok.sessionId,
+                            token: $scope.Opentok.token,
+                            userName: $scope.opentokData.userName
+                        }));
+                        console.log($scope.opentokData.userName);
+                        console.log($scope.opentokData.userCall);
+                    } else {
+
+                    };
+                });
+            }
+        }
+        /*=========opentok end=========*/
 
     /*==addmission star==*/
     $scope.admissionDetail = {};

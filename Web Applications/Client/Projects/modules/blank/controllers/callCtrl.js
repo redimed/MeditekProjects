@@ -1,6 +1,35 @@
 var app = angular.module('app.blank.call.controller', []);
 
 app.controller('callCtrl', function($scope, $stateParams, $timeout) {
+    navigator.getUserMedia = (navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia);
+    if (navigator.getUserMedia) {
+        // Request the camera.
+        navigator.getUserMedia(
+            // Constraints
+            {
+                video: true,
+                audio:true
+            },
+
+            // Success Callback
+            function(localMediaStream) {
+                console.log("camera support");
+            },
+
+            // Error Callback
+            function(err) {
+                // Log the error to the console.
+                console.log('The following error occurred when trying to use getUserMedia: ' + err);
+            }
+        );
+
+    } else {
+        console.log("Aaaaaaaaaaaaaaaa");
+        alert('Sorry, your browser does not support getUserMedia');
+    }
     var apiKey = $stateParams.apiKey;
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;
@@ -73,7 +102,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
 
     $scope.session.on("signal:endCall", function(event) {
         console.log("Signal sent from connection ", event);
-         window.close();
+        window.close();
         // Process the event.data property, if there is any data.
     });
 

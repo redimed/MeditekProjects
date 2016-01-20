@@ -14,6 +14,8 @@
 		AF00C3FD1BD9F1DE0001A7F4 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */; };
 		AF00C3FF1BDA13A20001A7F4 /* BodyUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00C3FE1BDA13A20001A7F4 /* BodyUploadViewController.swift */; };
 		AF0A3E9B1BE70799007F0C67 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */; };
+		AF1BCE4C1C4DCD06002CA9A5 /* RequestTelehealthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BCE4B1C4DCD06002CA9A5 /* RequestTelehealthService.swift */; };
+		AF1BCE4E1C4E16DC002CA9A5 /* Suburb.json in Resources */ = {isa = PBXBuildFile; fileRef = AF1BCE4D1C4E16DC002CA9A5 /* Suburb.json */; };
 		AF1FF8F41BF09AAA000BB306 /* TrackingRefferalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */; };
 		AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */ = {isa = PBXBuildFile; fileRef = AF3902F51BCDE8DD00173A58 /* FAQs.html */; };
 		AF3DA2FF1BD8C738006C1071 /* MAActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3DA2FE1BD8C738006C1071 /* MAActivityIndicatorView.swift */; };
@@ -46,7 +48,10 @@
 		AF99A5C51C4C7B83006DA3E2 /* SettingNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF99A5C41C4C7B83006DA3E2 /* SettingNavigationViewController.swift */; };
 		AF99A5C71C4C82C2006DA3E2 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF99A5C61C4C82C2006DA3E2 /* SettingTableViewController.swift */; };
 		AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */; };
+		AFA33C971C4CD4C6001E2F7E /* RequestTelehealthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA33C961C4CD4C6001E2F7E /* RequestTelehealthViewController.swift */; };
 		AFA6F6FE1C0FF52F007737DF /* ABOUT US.html in Resources */ = {isa = PBXBuildFile; fileRef = AFA6F6FD1C0FF52F007737DF /* ABOUT US.html */; };
+		AFB2FEEB1C4F2E1200B41BDA /* TelehealthContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB2FEEA1C4F2E1200B41BDA /* TelehealthContainer.swift */; };
+		AFB2FEED1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB2FEEC1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift */; };
 		AFE642291C463EB9001F0524 /* PatientContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE642281C463EB9001F0524 /* PatientContainer.swift */; };
 		AFE6422B1C46444E001F0524 /* PatientAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6422A1C46444E001F0524 /* PatientAPI.swift */; };
 		AFE6422D1C46467F001F0524 /* TokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6422C1C46467F001F0524 /* TokenAPI.swift */; };
@@ -136,6 +141,8 @@
 		AF00C3FC1BD9F1DE0001A7F4 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		AF00C3FE1BDA13A20001A7F4 /* BodyUploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BodyUploadViewController.swift; sourceTree = "<group>"; };
 		AF0A3E9A1BE70799007F0C67 /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		AF1BCE4B1C4DCD06002CA9A5 /* RequestTelehealthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTelehealthService.swift; sourceTree = "<group>"; };
+		AF1BCE4D1C4E16DC002CA9A5 /* Suburb.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Suburb.json; sourceTree = "<group>"; };
 		AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingRefferalViewController.swift; sourceTree = "<group>"; };
 		AF3902F51BCDE8DD00173A58 /* FAQs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = FAQs.html; sourceTree = "<group>"; };
 		AF3DA2FE1BD8C738006C1071 /* MAActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAActivityIndicatorView.swift; sourceTree = "<group>"; };
@@ -169,8 +176,11 @@
 		AF99A5C41C4C7B83006DA3E2 /* SettingNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingNavigationViewController.swift; sourceTree = "<group>"; };
 		AF99A5C61C4C82C2006DA3E2 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		AF9F48FD1BB509850044D72F /* ConfigurationAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationAPI.swift; sourceTree = "<group>"; };
+		AFA33C961C4CD4C6001E2F7E /* RequestTelehealthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTelehealthViewController.swift; sourceTree = "<group>"; };
 		AFA6F6FD1C0FF52F007737DF /* ABOUT US.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "ABOUT US.html"; sourceTree = "<group>"; };
 		AFA6F6FF1C0FFFC9007737DF /* UTM Avo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UTM Avo.ttf"; sourceTree = "<group>"; };
+		AFB2FEEA1C4F2E1200B41BDA /* TelehealthContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelehealthContainer.swift; sourceTree = "<group>"; };
+		AFB2FEEC1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmRequestTelehealthViewController.swift; sourceTree = "<group>"; };
 		AFE642281C463EB9001F0524 /* PatientContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientContainer.swift; sourceTree = "<group>"; };
 		AFE6422A1C46444E001F0524 /* PatientAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientAPI.swift; sourceTree = "<group>"; };
 		AFE6422C1C46467F001F0524 /* TokenAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenAPI.swift; sourceTree = "<group>"; };
@@ -357,6 +367,7 @@
 		AF78A2F61BC36807003E4E98 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AF1BCE4D1C4E16DC002CA9A5 /* Suburb.json */,
 				AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */,
 				AFA6F6FF1C0FFFC9007737DF /* UTM Avo.ttf */,
 				AFA6F6FD1C0FF52F007737DF /* ABOUT US.html */,
@@ -382,6 +393,7 @@
 				AF4498AD1BDF1238005A905E /* CallContainer.swift */,
 				AFE642281C463EB9001F0524 /* PatientContainer.swift */,
 				AFE642321C465700001F0524 /* AppointmentContainer.swift */,
+				AFB2FEEA1C4F2E1200B41BDA /* TelehealthContainer.swift */,
 			);
 			name = Container;
 			sourceTree = "<group>";
@@ -538,6 +550,8 @@
 				AF1FF8F31BF09AAA000BB306 /* TrackingRefferalViewController.swift */,
 				AF99A5C41C4C7B83006DA3E2 /* SettingNavigationViewController.swift */,
 				AF99A5C61C4C82C2006DA3E2 /* SettingTableViewController.swift */,
+				AFA33C961C4CD4C6001E2F7E /* RequestTelehealthViewController.swift */,
+				AFB2FEEC1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -550,6 +564,7 @@
 				AFE642341C473305001F0524 /* CallService.swift */,
 				AFE642361C4733FC001F0524 /* VerifyService.swift */,
 				AFE642381C474113001F0524 /* SocketService.swift */,
+				AF1BCE4B1C4DCD06002CA9A5 /* RequestTelehealthService.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -692,6 +707,7 @@
 			files = (
 				AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */,
 				AFA6F6FE1C0FF52F007737DF /* ABOUT US.html in Resources */,
+				AF1BCE4E1C4E16DC002CA9A5 /* Suburb.json in Resources */,
 				AFEE35321BB0415D00471592 /* Info.plist in Resources */,
 				AFEE34E41BB0413600471592 /* LaunchScreen.storyboard in Resources */,
 				AF899DF41C1838BD00C85186 /* ringtone.wav in Resources */,
@@ -813,6 +829,7 @@
 				AFEE35441BB0577A00471592 /* VerifyViewController.swift in Sources */,
 				AF7B5F441BE74D6D0043B14D /* AppointmentListsViewController.swift in Sources */,
 				AFEE35271BB0415D00471592 /* AsyncImageView.swift in Sources */,
+				AF1BCE4C1C4DCD06002CA9A5 /* RequestTelehealthService.swift in Sources */,
 				AF840FF11BCCA39900F69EF8 /* FAQsViewController.swift in Sources */,
 				AF4498AE1BDF1238005A905E /* CallContainer.swift in Sources */,
 				AFEDCB201BBA392C007D584D /* NavigationLoginViewController.swift in Sources */,
@@ -827,6 +844,7 @@
 				AFE642371C4733FC001F0524 /* VerifyService.swift in Sources */,
 				AFEE35331BB0415D00471592 /* KeyboardLayoutConstraint.swift in Sources */,
 				AF00C3FF1BDA13A20001A7F4 /* BodyUploadViewController.swift in Sources */,
+				AFB2FEED1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift in Sources */,
 				AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */,
 				AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */,
 				AFEE353A1BB0415D00471592 /* SpringButton.swift in Sources */,
@@ -836,6 +854,8 @@
 				AFE6422F1C4650EC001F0524 /* VerifyPhoneAPI.swift in Sources */,
 				AFED98241BBE71400042B613 /* Singleton_SocketManager.swift in Sources */,
 				AFE642391C474113001F0524 /* SocketService.swift in Sources */,
+				AFB2FEEB1C4F2E1200B41BDA /* TelehealthContainer.swift in Sources */,
+				AFA33C971C4CD4C6001E2F7E /* RequestTelehealthViewController.swift in Sources */,
 				AFEE352B1BB0415D00471592 /* DesignableImageView.swift in Sources */,
 				AFF10DF21BB24414005E9838 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				AFEE34D71BB0413600471592 /* AppDelegate.swift in Sources */,

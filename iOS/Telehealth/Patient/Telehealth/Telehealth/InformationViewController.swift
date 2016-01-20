@@ -37,20 +37,23 @@ class InformationViewController: UIViewController {
     
     //get information patient
     func getInformationPatient(){
+                
+        if patientInformation != nil {
+            self.avarta.image = UIImage(named: "A1a Copy 2.png")!
+            self.fullName.text = patientInformation!.FirstName + " " + patientInformation!.MiddleName + " " + patientInformation!.LastName
+            self.dobLabel.text = (patientInformation!.DOB).toDateTimeZone(formatTime.dateTime, format: formatTime.formatDate)
+            self.suburbLabel.text = patientInformation!.Suburb
+            self.postCodeLabel.text = patientInformation!.Postcode
+            self.countryLabel.text = patientInformation!.Country
+            self.addressLabel.text = patientInformation!.Address1
+            self.emailLabel.text = patientInformation!.Email1
+            self.homePhoneLabel.text = patientInformation!.HomePhoneNumber
+            self.patientService.getImage((patientInformation?.ImageUID)!, completionHandler: { image in
+                self.avarta.image = image
+            })
+        }
         
-                    self.avarta.image = UIImage(named: "A1a Copy 2.png")!
-                    self.fullName.text = patientInformation!.FirstName + " " + patientInformation!.MiddleName + " " + patientInformation!.LastName
-                    self.dobLabel.text = (patientInformation!.DOB).toDateTimeZone(formatTime.dateTime, format: formatTime.formatDate)
-                    self.suburbLabel.text = patientInformation!.Suburb
-                    self.postCodeLabel.text = patientInformation!.Postcode
-                    self.countryLabel.text = patientInformation!.Country
-                    self.addressLabel.text = patientInformation!.Address1
-                    self.emailLabel.text = patientInformation!.Email1
-                    self.homePhoneLabel.text = patientInformation!.HomePhoneNumber
-                    self.patientService.getImage((patientInformation?.ImageUID)!, completionHandler: { image in
-                        self.avarta.image = image
-                    })
-                    
+        
     
     }
     

@@ -27,6 +27,7 @@ struct ErrorMessage {
     static let NoData : String = "No appointment details!"
     static let TimeOut: String  = "Request Time Out"
     static let TimeOutToken : String = "jwt expired"
+    static let CheckField : String = "Please check field"
 }
 
 

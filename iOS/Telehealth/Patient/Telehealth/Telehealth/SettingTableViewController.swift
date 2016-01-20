@@ -12,6 +12,10 @@ class SettingTableViewController: UITableViewController {
     let patientService = PatientService()
     let alertView = UIAlertView()
     var patientInformation : PatientContainer!
+    
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var userNameLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,7 +47,7 @@ class SettingTableViewController: UITableViewController {
                 if message["message"] == "success" {
                     self.view.hideLoading()
                     self.patientInformation = data!
-                    
+                    self.setDataToForm()
                 } else if message["message"] == "error"{
                     self.alertView.alertMessage("Error", message: message["ErrorType"].string!)
                 }else {
@@ -59,6 +63,11 @@ class SettingTableViewController: UITableViewController {
                 }
             }
         }
+    }
+    
+    func setDataToForm(){
+        emailLabel.text = patientInformation.Email1
+        userNameLabel.text = "\(patientInformation.FirstName ) \(patientInformation.LastName)"
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

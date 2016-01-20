@@ -268,4 +268,8 @@ app
                 },
             });
         }
+        if($cookies.get('token'))
+        {
+            $rootScope.getNewToken();
+        }
     })

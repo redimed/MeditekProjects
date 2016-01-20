@@ -76,4 +76,5 @@ var _configStateBlank = [
 	,"blank.welcome"
 	,"blank.registerPatient"
 	,"blank.searchPatient"
+	,"blank.drawing.home"
 ];

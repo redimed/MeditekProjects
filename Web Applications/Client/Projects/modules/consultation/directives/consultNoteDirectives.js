@@ -8,6 +8,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
         templateUrl: "modules/consultation/directives/templates/consultNoteDirectives.html",
         controller: function($scope) {
             $scope.checkRoleUpdate = true;
+            var Window;
             if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
                 $scope.checkRoleUpdate = false;
             };
@@ -317,21 +318,17 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
                     $modalInstance.close('err');
                 });
             };
+            $scope.closeWindow = function(fileInfo) {
+                Window.close();
+            }
             $scope.AddDrawing = function(data) {
-                var modalInstance = $modal.open({
-                    templateUrl: 'showDrawingTemplate',
-                    controller: 'showDrawingController',
-                    windowClass: 'app-modal-window',
-                    backdrop: 'static',
-                    resolve: {
-                        data: function() {
-                            return data;
-                        }
-                    }
-                });
-                modalInstance.result.then(function(fileInfo) {
-                    $scope.FileUploads.push(fileInfo);
-                });
+                if (typeof(Window) == 'undefined' || Window.closed) {
+                    window.refreshCode = $rootScope.refreshCode;
+                    Window = window.open($state.href("blank.drawing.home"), "", "fullscreen=0");
+                } else {
+                    Window.focus();
+                }
+               
             }
         }
     };
@@ -346,7 +343,6 @@ app.controller('showDrawingController', function($scope, $modalInstance, toastr,
         userUID: $cookies.getObject('userInfo').UID,
         fileType: 'MedicalDrawing'
     };
-
     $scope.drawingAction = function(fileInfo) {
         $modalInstance.close(fileInfo);
     }

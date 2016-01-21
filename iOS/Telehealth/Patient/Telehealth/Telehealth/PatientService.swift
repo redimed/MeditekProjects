@@ -12,7 +12,7 @@ import SwiftyJSON
 class PatientService{
     let patientAPI = PatientAPI()
     let appointmentAPI = AppointmentAPI()
-
+    
     func getInformationPatientByUUID(UUID:String,completionHandler:(JSON,PatientContainer?) -> Void){
         
         patientAPI.getInformationPatientByUUID(UUID){
@@ -66,6 +66,18 @@ class PatientService{
             }
         })
         
+    }
+    
+    func logOut(){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey("verifyUser")
+        defaults.removeObjectForKey("uid")
+        defaults.removeObjectForKey("token")
+        defaults.removeObjectForKey("patientUID")
+        defaults.removeObjectForKey("userUID")
+        defaults.removeObjectForKey("refreshCode")
+        defaults.synchronize()
+        sharedSocket.socket.disconnect()
     }
     
     

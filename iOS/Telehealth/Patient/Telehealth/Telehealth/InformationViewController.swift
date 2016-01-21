@@ -65,41 +65,7 @@ class InformationViewController: UIViewController {
     
     //handle logout
     @IBAction func LogoutAction(sender: AnyObject) {
-        
-        let alertController = UIAlertController(title: "Unregistered", message: MessageString.MessageLogout, preferredStyle: .Alert)
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-        }
-        alertController.addAction(cancelAction)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-           
-//            if let uuid = defaults.valueForKey("uid") as? String {
-//                self.api.updateTokenPush(uuid,deviceToken:"")
-//            }
-//            
-//            self.api.logOut({
-//            response in
-//                print(response)
-//                if response["status"] == "success"{
-//                    let defaults = NSUserDefaults.standardUserDefaults()
-//                    defaults.removeObjectForKey("verifyUser")
-//                    defaults.synchronize()
-//                    sharedSocket.socket.disconnect()
-//                  
-//
-//                    self.performSegueWithIdentifier("logoutSegue", sender: self)
-//                }
-//                
-//            })
-            
-        }
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            // ...
-        }
-        
+               
     }
     
     

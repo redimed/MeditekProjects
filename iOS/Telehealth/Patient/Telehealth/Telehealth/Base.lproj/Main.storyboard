@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="V2j-tZ-hHw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="NY9-hg-Fsp">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -576,7 +576,7 @@
                 </searchDisplayController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nHD-hL-Nm4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-218" y="319"/>
+            <point key="canvasLocation" x="-234" y="325"/>
         </scene>
         <!--Tracking Refferal View Controller-->
         <scene sceneID="oHc-LU-HE1">
@@ -1213,12 +1213,28 @@
                                             <rect key="frame" x="139" y="1" width="291" height="57"/>
                                         </variation>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRQ-qy-RiH">
+                                        <rect key="frame" x="274" y="45" width="46" height="30"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="46" id="4se-IS-xAp"/>
+                                            <constraint firstAttribute="height" constant="30" id="lzT-gL-kii"/>
+                                        </constraints>
+                                        <state key="normal" title="Login">
+                                            <color key="titleColor" red="1" green="0.14314537402762439" blue="0.091734860626513703" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loginAction:" destination="jnA-7d-oUT" eventType="touchUpInside" id="aDB-Xg-UX9"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="e9h-p5-Fdy" firstAttribute="centerX" secondItem="Mkx-Ao-elj" secondAttribute="centerX" id="eBP-MD-Srd"/>
+                                    <constraint firstAttribute="trailing" secondItem="LRQ-qy-RiH" secondAttribute="trailing" id="jLw-f3-Ugl"/>
                                     <constraint firstAttribute="height" constant="75" id="jQd-bE-erO"/>
+                                    <constraint firstAttribute="bottom" secondItem="LRQ-qy-RiH" secondAttribute="bottom" id="rRg-ig-zEE"/>
                                     <constraint firstItem="e9h-p5-Fdy" firstAttribute="centerY" secondItem="Mkx-Ao-elj" secondAttribute="centerY" id="whf-r8-GZp"/>
                                 </constraints>
                             </view>
@@ -1602,6 +1618,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="labelHealthCare" destination="q7C-cE-xru" id="sn7-Lc-oJd"/>
+                        <outlet property="loginButton" destination="LRQ-qy-RiH" id="HNS-rE-HkD"/>
                         <outlet property="otherServiceLogin" destination="Xnz-U7-tvO" id="59h-0m-0aB"/>
                         <outlet property="pageControl" destination="yOz-an-IWT" id="XHZ-hN-OO9"/>
                         <outlet property="pageView" destination="Y0C-5v-AAN" id="Rpd-yr-Sat"/>
@@ -1611,6 +1628,7 @@
                         <outlet property="settingView" destination="J9Z-HK-fp3" id="8Et-FT-fds"/>
                         <outlet property="trackingReferral" destination="heW-aT-Zmm" id="HSS-LJ-xgO"/>
                         <segue destination="dHj-On-rsv" kind="push" identifier="RequestTelehealthSegue" id="ecI-H7-sOd"/>
+                        <segue destination="V2j-tZ-hHw" kind="modal" identifier="LoginSegue" id="hOk-7e-enQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Aj-ws-ccg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2206,6 +2224,7 @@
                         <outlet property="fullNameLabel" destination="C8L-s1-58t" id="EAO-EG-1zb"/>
                         <outlet property="phoneNumberLabel" destination="WaU-00-8X8" id="fZX-Rn-RBG"/>
                         <outlet property="surburbLabel" destination="oZV-vd-tW2" id="PxC-e8-Sy8"/>
+                        <segue destination="v7i-hX-ryo" kind="unwind" identifier="unwindToHomeSegue" unwindAction="unwindToHome:" id="UfL-BX-gmC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k1r-P4-29T" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2299,6 +2318,9 @@
                                                     <state key="normal" title="Logout">
                                                         <color key="titleColor" red="0.43529411759999997" green="0.71764705880000002" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="logoutButton:" destination="sOo-HJ-Guu" eventType="touchUpInside" id="1Jm-r7-dRu"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <animations/>
@@ -2422,9 +2444,11 @@
                     <connections>
                         <outlet property="emailLabel" destination="ZTz-ZK-7yf" id="42s-ii-NlP"/>
                         <outlet property="userNameLabel" destination="JqO-68-iHu" id="gnt-Dc-XZE"/>
+                        <segue destination="OHt-fU-nXk" kind="unwind" identifier="logOutUnwind" unwindAction="unwindToHome:" id="c7B-6K-m3g"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="awJ-Z5-OEu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="OHt-fU-nXk" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-379" y="1341"/>
         </scene>
@@ -3577,7 +3601,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n2P-z6-tGB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="278" y="337"/>
+            <point key="canvasLocation" x="498" y="359"/>
         </scene>
     </scenes>
     <resources>

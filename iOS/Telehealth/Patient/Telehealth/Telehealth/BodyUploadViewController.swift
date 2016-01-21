@@ -44,10 +44,8 @@ class BodyUploadViewController: UIViewController {
     @IBAction func UploadImageButton(sender: AnyObject) {
         view.showLoading()
         if let userUID = defaults.valueForKey("userUID") as? String {
-            let ima = UIImage(data: (image.image?.lowestQualityJPEGNSData)!)
-            let data = UIImageJPEGRepresentation(ima!, 1)
-            _ = data?.length
-            uploadImage(ima!, userUID: userUID)
+          
+            uploadImage(image.image!, userUID: userUID)
         }
     }
     

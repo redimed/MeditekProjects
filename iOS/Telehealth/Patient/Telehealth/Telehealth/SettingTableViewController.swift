@@ -12,7 +12,8 @@ class SettingTableViewController: UITableViewController {
     let patientService = PatientService()
     let alertView = UIAlertView()
     var patientInformation : PatientContainer!
-    
+    let api = TokenAPI()
+    let verifyPhoneAPI = VerifyPhoneAPI()
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var userNameLabel: UILabel!
     
@@ -21,13 +22,13 @@ class SettingTableViewController: UITableViewController {
         
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         let leftButton =  UIBarButtonItem(title: "Back", style:  UIBarButtonItemStyle.Plain, target: self, action: "backButtonAction")
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         self.navigationItem.leftBarButtonItem = leftButton
+        self.navigationItem.leftBarButtonItem = leftButton
         self.navigationItem.title = "Setting"
     }
     
-  
+    
     
     func backButtonAction(){
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -70,6 +71,36 @@ class SettingTableViewController: UITableViewController {
         userNameLabel.text = "\(patientInformation.FirstName ) \(patientInformation.LastName)"
     }
     
+    @IBAction func logoutButton(sender: AnyObject) {
+        print("logout")
+        
+        let alertController = UIAlertController(title: "Unregistered", message: MessageString.MessageLogout, preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        }
+        alertController.addAction(cancelAction)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            if let uuid = defaults.valueForKey("uid") as? String {
+                self.api.updateTokenPush(uuid,deviceToken:"")
+            }
+            self.verifyPhoneAPI.logOut({
+                response in
+                print(response)
+                if response["status"] == "success"{
+                    self.patientService.logOut()
+                    self.performSegueWithIdentifier("logOutUnwind", sender: self)
+                }
+                
+            })
+        }
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            // ...
+        }
+        
+    }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "informationSegue" {
             let info = segue.destinationViewController as! InformationViewController
@@ -77,5 +108,5 @@ class SettingTableViewController: UITableViewController {
         }
     }
     
-
+    
 }

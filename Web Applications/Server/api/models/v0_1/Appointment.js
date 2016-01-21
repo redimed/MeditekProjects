@@ -70,6 +70,16 @@ module.exports = {
                 }
             }
         },
+        Type: {
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
+                }
+            }
+        },
         Status: {
             type: Sequelize.STRING(45),
             allowNull: true,

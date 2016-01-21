@@ -48,7 +48,6 @@ module.exports = function(objUpdate) {
             defer.reject(err);
         })
         .then(function(telehealthAppointmentObject) {
-            console.log('telehealthAppointmentObject', telehealthAppointmentObject);
             var dataClinicalDetails = Services.GetDataAppointment.ClinicalDetails(objUpdate.where, objUpdate.createdBy, objUpdate.data);
             var objCreateClinicalDetail = {
                 data: dataClinicalDetails,

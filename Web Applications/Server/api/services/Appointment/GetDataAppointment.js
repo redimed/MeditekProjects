@@ -10,6 +10,7 @@ module.exports = {
             SiteID: data.SiteID,
             RequestDate: data.RequestDate,
             Status: 'Received',
+            Type: data.Type,
             Enable: 'Y'
         };
     },

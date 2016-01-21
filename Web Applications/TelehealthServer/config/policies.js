@@ -31,5 +31,9 @@ _.extend(policies, telehealthPolicies);
 var socketPolicies = require('./policies/SocketPolicies');
 _.extend(policies, socketPolicies);
 // End module Socket
+//Begin module Appointment
+var appointmentPolicies = require('./policies/AppointmentPolicies');
+_.extend(policies, appointmentPolicies);
+//End module Appointment
 module.exports.policies = policies;
 //

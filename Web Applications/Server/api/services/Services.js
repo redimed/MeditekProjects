@@ -44,6 +44,8 @@ module.exports = {
     UpdateClinicalDetailWAAppointment: require('./Appointment/UpdateClinicalDetailWAAppointment'),
     AttributesAppt: require('./Appointment/AttributesAppt'),
     GetWAAppointmentObject: require('./Appointment/GetWAAppointmentObject'),
+    RequestWAAppointmentPatient: require('./Appointment/RequestWAAppointmentPatient'),
+    CreateOnsiteAppointment: require('./Appointment/CreateOnsiteAppointment'),
     //end Appointment
     Module: require('./Authorization/v0_1/Module'),
     Role: require('./Authorization/v0_1/Role'),

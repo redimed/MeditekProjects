@@ -216,19 +216,19 @@ app
         })
 
         $rootScope.$on('$viewContentLoaded', function() {
-            // App.initAjax();
-            // FormWizard.init(); // form step
-            // ComponentsDateTimePickers.init(); // init todo page
+            App.initAjax();
+            FormWizard.init(); // form step
+            ComponentsDateTimePickers.init(); // init todo page
             
 
             //ComponentsSelect2.init(); // init todo page
             //ComponentsBootstrapSelect.init(); // init todo page
         });
         $rootScope.$on('$includeContentLoaded', function() {
-            // App.initAjax();
+            App.initAjax();
 
-            // FormWizard.init(); // form step
-            // ComponentsDateTimePickers.init(); // init todo page
+            FormWizard.init(); // form step
+            ComponentsDateTimePickers.init(); // init todo page
         });
         $rootScope.$on("$stateChangeStart", function(){
         });

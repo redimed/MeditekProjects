@@ -8,6 +8,16 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
         UserUID: "",
         PinNumber: ""
     }
+    // $scope.postData = {
+    //     "data": {
+    //         "FirstName": "aaa",
+    //         "LastName": "123123",
+    //         "DOB": "23/12/2015",
+    //         "Gender": "Female",
+    //         "PhoneNumber": "0401101101",
+    //         "Email1": "test@yahoo.com",
+    //     }
+    // }
     $scope.Reset = function() {
         $scope.postData.data = {}
         $scope.submitted = false;

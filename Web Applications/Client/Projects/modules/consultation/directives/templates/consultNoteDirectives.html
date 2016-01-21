@@ -551,20 +551,20 @@
                     <div class="form-group">
                         <label class="control-label col-md-2 col-sm-2 bold">Urgency</label>
                         <div class="col-md-7 col-sm-7">
-                            <div class="checkbox-list">
+                            <div class="radio-list">
                                 <div class="row">
                                     <div class="col-md-4 col-sm-4">
-                                        <label class="checkbox-inline">
+                                        <label class="radio-inline">
                                             <input type="radio" value="Category 1 (within 30 days)" name="Urgency" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Urgency'].Value"> Category 1 (within 30 days)
                                         </label>
                                     </div>
                                     <div class="col-md-4 col-sm-4">
-                                        <label class="checkbox-inline">
+                                        <label class="radio-inline">
                                             <input type="radio" value="Category 2 (31 -90 days)" name="Urgency" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Urgency'].Value"> Category 2 (31 -90 days)
                                         </label>
                                     </div>
                                     <div class="col-md-4 col-sm-4">
-                                        <label class="checkbox-inline">
+                                        <label class="radio-inline">
                                             <input type="radio" value="Category 3 (90 days to 1 year)" name="Urgency" ng-model="requestInfo.Consultations[0].ConsultationData['Consultation__Details.Appointment.RECOMMENDATIONS.Urgency'].Value"> Category 3 (90 days to 1 year)
                                         </label>
                                     </div>
@@ -608,7 +608,7 @@
             <div class="form-actions right">
                 <a class="btn btn-lg dark" ng-click="cancel()">
                     <i class="glyphicon glyphicon-arrow-left"></i> Cancel</a>
-                <button type="button" class="btn btn-lg red" ng-click="Create()" ng-show="CheckUpdate !== false">
+                <button type="button" class="btn btn-lg red" ng-click="Create()" ng-show="CheckUpdate !== false" ng-disabled="checkRoleUpdate">
                     <i class="glyphicon glyphicon-save"></i> Create</button>
                 <button type="button" class="btn btn-lg red" ng-click="Update()" ng-show="CheckUpdate == false" ng-disabled="checkRoleUpdate">
                     <i class="glyphicon glyphicon-save"></i> Update</button>

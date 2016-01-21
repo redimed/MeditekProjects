@@ -96,6 +96,9 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		            $rootScope.getNewToken();
 		        }
 		    };
+		    uploader.onSuccessItem = function(item, response, status, headers) {
+		    	console.log(response);
+		    }
 		},
 		link: function(scope, elem, attrs){
 			console.log(scope.activeUser);
@@ -229,8 +232,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 							   	});
 							   //end
 							}
-							scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
-							scope.uploader.uploadAll();
+							// scope.uploader.queue[0].formData[0].userUID = scope.info.UserAccount.UID;
+							// scope.uploader.uploadAll();
 							toastr.success("update success!!!","SUCCESS");
 							scope.onCancel();
 						},function(err){

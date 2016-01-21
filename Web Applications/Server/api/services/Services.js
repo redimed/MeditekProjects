@@ -98,5 +98,8 @@ module.exports = {
     CheckRosterExistAppointment: require('./Roster/CheckRosterExistAppointment'),
     GetListRoster: require('./Roster/GetListRoster'),
     GetListService: require('./Roster/GetListService'),
+    BulkUpdateRoster: require('./Roster/BulkUpdateRoster'),
+    UpdateRoster: require('./Roster/UpdateRoster'),
+    UpdateRelRosterService: require('./Roster/UpdateRelRosterService'),
     //begin Roster
 };

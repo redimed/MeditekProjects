@@ -130,6 +130,18 @@ module.exports = {
     },
     RequestAppointmentPatient: function(headers, body) {
         headers['content-type'] = 'application/json';
+        if(!_.isEmpty(body) &&
+            !_.isEmpty(body.data) &&
+            !_.isEmpty(body.data.FileUploads) &&
+            _.isArray(body.data.FileUploads)) {
+            var arrTemp = [];
+        _.forEach(body.data.FileUploads, function(valueFileUpload, indexFileUpload){
+            if(HelperService.CheckExistData(valueFileUpload)) {
+                arrTemp.push({UID: valueFileUpload});
+            }
+        });
+        body.data.FileUploads = arrTemp;
+        }
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-wa-request/patient',

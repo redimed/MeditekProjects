@@ -13,7 +13,7 @@ module.exports = function(data, userInfo) {
     if (role.isInternalPractitioner) {
         var filterRoleTemp = {
             '$and': {
-                ID: userInfo.ID
+                UserAccountID: userInfo.ID
             }
         };
         if (!HelperService.CheckExistData(pagination.Doctor)) {

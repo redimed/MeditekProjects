@@ -3,6 +3,11 @@ module.exports = function(rosterUID) {
     var defer = $q.defer();
     Roster.findOne({
             attributes: Services.AttributesRoster.Roster(),
+            include: [{
+                attributes: Services.AttributesRoster.Service(),
+                model: Service,
+                required: true
+            }],
             where: {
                 UID: rosterUID,
                 Enable: 'Y'

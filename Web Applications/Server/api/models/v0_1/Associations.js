@@ -328,5 +328,13 @@ module.exports = {
             through: 'RelRosterService',
             foreignKey: 'ServiceID'
         });
+
+        //association Appointment - OnsiteAppointment
+        Appointment.hasMany(OnsiteAppointment, {
+            foreignKey: 'AppointmentID'
+        });
+        OnsiteAppointment.belongsTo(Appointment, {
+            foreignKey: 'AppointmentID'
+        });
     }
 };

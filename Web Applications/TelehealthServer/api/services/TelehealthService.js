@@ -128,6 +128,16 @@ module.exports = {
             headers: headers
         });
     },
+    RequestAppointmentPatient: function(headers, body) {
+        headers['content-type'] = 'application/json';
+        if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
+        return TelehealthService.MakeRequest({
+            path: '/api/appointment-wa-request/patient',
+            method: 'POST',
+            body: body,
+            headers: headers
+        });
+    },
     CheckToken: function(info) {
         var defer = $q.defer();
         if (!info.authorization || !info.deviceid || !info.systemtype || (info.systemtype && HelperService.const.systemType[info.systemtype.toLowerCase()] == undefined)) {
@@ -163,6 +173,7 @@ module.exports = {
     MakeRequest: function(info) {
         delete info.headers['if-none-match'];
         delete info.headers['content-length'];
+        // info.headers['content-length'] = Buffer.byteLength(info.body);
         return requestify.request((info.host ? info.host : config.CoreAPI) + info.path, {
             method: info.method,
             body: !info.body ? null : info.body,

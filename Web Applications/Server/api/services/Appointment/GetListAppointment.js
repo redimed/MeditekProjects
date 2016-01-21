@@ -4,7 +4,7 @@ input: information filter Telehealth Appointment
 output: -success: list appointment with condition received
         -failed: error message
 */
-module.exports = function(data, userInfo) {
+module.exports = function(data, userInfo, objRequired) {
     var $q = require('q');
     var defer = $q.defer();
     //get pagination  with condition received
@@ -14,7 +14,7 @@ module.exports = function(data, userInfo) {
     if (role.isInternalPractitioner) {
         var filterRoleTemp = {
             '$and': {
-                ID: userInfo.ID
+                UserAccountID: userInfo.ID
             }
         };
         if (!HelperService.CheckExistData(pagination.Doctor)) {
@@ -66,7 +66,8 @@ module.exports = function(data, userInfo) {
             }, {
                 model: Patient,
                 attributes: Services.AttributesAppt.Patient(),
-                required: !_.isEmpty(pagination.Patient),
+                required: !_.isEmpty(pagination.Patient) ||
+                    (!_.isEmpty(objRequired) ? objRequired.Patient : false),
                 where: pagination.Patient,
                 include: [{
                     model: UserAccount,

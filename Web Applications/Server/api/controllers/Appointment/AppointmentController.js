@@ -4,7 +4,9 @@ module.exports = {
         if (data === false) {
             res.serverError('data failed');
         } else {
-            Services.GetListAppointment(data, req.user)
+            Services.GetListAppointment(data, req.user, {
+                    Patient: true
+                })
                 .then(function(success) {
                     res.ok(success.data);
                 }, function(err) {

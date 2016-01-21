@@ -1,5 +1,5 @@
-var $q = require('q');
 module.exports = function(objRel) {
+    var $q = require('q');
     var defer = $q.defer();
     FileUpload.findAll({
             attributes: ['ID'],

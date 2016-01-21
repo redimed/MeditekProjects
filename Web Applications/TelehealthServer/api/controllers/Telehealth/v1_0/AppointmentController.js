@@ -79,4 +79,17 @@ module.exports = {
             res.serverError(err.getBody());
         });
     },
+    RequestAppointmentPatient: function(req, res) {
+        var headers = req.headers;
+        var body = req.body;
+        TelehealthService.RequestAppointmentPatient(headers, body)
+        .then(function(response){
+            if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+            res.ok({
+                status: 'success'
+            });
+        }, function(err){
+            res.serverError(ErrorWrap(err.error || err));
+        });
+    }
 }

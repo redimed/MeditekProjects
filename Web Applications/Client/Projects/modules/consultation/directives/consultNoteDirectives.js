@@ -9,7 +9,7 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
         controller: function($scope) {
             $scope.checkRoleUpdate = true;
             var Window;
-            if ($cookies.getObject('userInfo').roles[0].RoleCode == 'ADMIN' || $cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
+            if ($cookies.getObject('userInfo').roles[0].RoleCode == 'INTERNAL_PRACTITIONER') {
                 $scope.checkRoleUpdate = false;
             };
             $scope.requestInfo = {

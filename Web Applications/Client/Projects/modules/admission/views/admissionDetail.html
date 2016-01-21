@@ -1,3 +1,5 @@
+
+
 <div class="page-bar ">
     <ul class="page-breadcrumb">
         <li>
@@ -24,6 +26,8 @@
 <br>
 <div class="row">
     <div class="col-md-9 col-sm-9">
+        
+
         <div class="portlet portlet-fit light bordered">
             <div class="portlet-title">
                 <div class="caption font-red-sunglo">
@@ -255,7 +259,7 @@
                                         <th></th>
                                         <th width="1">Yes</th>
                                         <th width="1">No</th>
-                                        <th width="30%">Comments</th>
+                                        <th width="40%">Comments</th>
                                         <th width="20%">Nurse Notes</th>
                                     </tr>
                                 </thead>
@@ -273,8 +277,9 @@
                                                 <input type="radio" name="dedication1" value="N" ng-model="admissionDetail.lifestyle_smoked">
                                             </label>
                                         </td>
-                                        <td>
-                                            Daily Amount? Ceased?
+                                        <td class="form-inline">
+                                            <label>Daily Amount?</label> <input type="text" class="form-control" size="15"> 
+                                            <label style="margin-left:15px;">Ceased? <input type="checkbox"></label> 
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" ng-model="admissionDetail.lifestyle_smoked_nurse_notes">
@@ -292,7 +297,10 @@
                                                 <input type="radio" name="dedication2" value="N" ng-model="admissionDetail.lifestyle_alcohol">
                                             </label>
                                         </td>
-                                        <td>Daily Amount?</td>
+                                        <td class="form-inline">
+                                            <label>Daily Amount?</label>
+                                            <input type="text" class="form-control" size="15">
+                                        </td>
                                         <td>
                                             <input type="text" class="form-control" ng-model="admissionDetail.lifestyle_alcohol_nurse_notes">
                                         </td>
@@ -309,7 +317,12 @@
                                                 <input type="radio" name="dedication3" value="N" ng-model="admissionDetail.lifestyle_drugs">
                                             </label>
                                         </td>
-                                        <td>Daily Amount? Type?</td>
+                                        <td class="form-inline">
+                                            <label>Daily Amount?</label>
+                                            <input type="text" class="form-control" size="15">
+                                            <label style="margin-left:15px;">Type ?</label>
+                                            <input type="text" class="form-control" size="10">
+                                        </td>
                                         <td>
                                             <input type="text" class="form-control" ng-model="admissionDetail.lifestyle_drugs_nurse_notes">
                                         </td>

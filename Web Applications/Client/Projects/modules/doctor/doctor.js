@@ -15,6 +15,12 @@ angular.module('app.authentication.doctor',[
 			templateUrl: 'modules/doctor/views/doctor.html',
 			controller: 'doctorCtrl'
 		})
+		.state('authentication.doctor.home', {
+			url:'/home',
+			data: {title: 'Doctor Home', pageTitle: 'Doctor Home'},
+			templateUrl: 'modules/doctor/views/doctorHome.html',
+			controller: 'doctorHomeCtrl'
+		})
 		.state('authentication.doctor.list', {
 			url:'/list',
 			data: {title: 'Doctor', pageTitle: 'Doctor'},

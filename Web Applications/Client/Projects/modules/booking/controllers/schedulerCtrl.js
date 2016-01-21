@@ -1,5 +1,7 @@
 var app = angular.module('app.authentication.booking.scheduler.controller',[
     'app.authentication.booking.scheduler.create.controller',
+    'app.authentication.booking.scheduler.edit.controller',
+    'app.authentication.booking.scheduler.delete.controller',
 ]);
 
 app.controller('schedulerCtrl', function($scope,$timeout, $uibModal){
@@ -85,7 +87,35 @@ app.controller('schedulerCtrl', function($scope,$timeout, $uibModal){
                 edit: {
                     name: 'Edit', 
                     callback: function(key,opt){
-                        alert('edit');
+                        var modalInstance = $uibModal.open({
+                            animation: true,
+                            size: 'md',
+                            templateUrl: 'modules/booking/views/schedulerEdit.html',
+                            controller: 'schedulerEditCtrl',
+                            resolve: {
+                                event: function(){
+                                    return event;
+                                }
+                            },
+                        });
+                        modalInstance.result
+                            .then(function(result) {
+                                var dataEvent = {
+                                    resourceId: resource.id,
+                                    title: result.service,
+                                    start: start,
+                                    end: end,
+                                    allDay: allDay,
+                                    isReoccurance: result.isReoccurance,
+                                    reoccuranceType: result.reoccuranceType,
+                                    endReoccurance: result.endReoccurance,
+                                };
+                                $scope.events.push(result);
+                                $scope.scheduler.fullCalendar('renderEvent', dataEvent, true);
+                                $scope.scheduler.fullCalendar('unselect');
+                            }, function(result) {
+                                // dismiss
+                            });
                     },
                     icon: function(opt, $itemElement, itemKey, item){
                         // Set the content to the menu trigger selector and add an bootstrap icon to the item.
@@ -97,7 +127,35 @@ app.controller('schedulerCtrl', function($scope,$timeout, $uibModal){
                 delete: {
                     name: 'Delete',
                     callback: function(key, opt){
-                        alert('Delete');
+                        var modalInstance = $uibModal.open({
+                            animation: true,
+                            size: 'md',
+                            templateUrl: 'modules/booking/views/schedulerDelete.html',
+                            controller: 'schedulerDeleteCtrl',
+                            resolve: {
+                                event: function(){
+                                    return event;
+                                }
+                            },
+                        });
+                        modalInstance.result
+                            .then(function(result) {
+                                var dataEvent = {
+                                    resourceId: resource.id,
+                                    title: result.service,
+                                    start: start,
+                                    end: end,
+                                    allDay: allDay,
+                                    isReoccurance: result.isReoccurance,
+                                    reoccuranceType: result.reoccuranceType,
+                                    endReoccurance: result.endReoccurance,
+                                };
+                                $scope.events.push(result);
+                                $scope.scheduler.fullCalendar('renderEvent', dataEvent, true);
+                                $scope.scheduler.fullCalendar('unselect');
+                            }, function(result) {
+                                // dismiss
+                            });
                     },
                     icon: function(opt, $itemElement, itemKey, item){
                         // Set the content to the menu trigger selector and add an bootstrap icon to the item.
@@ -156,8 +214,10 @@ app.controller('schedulerCtrl', function($scope,$timeout, $uibModal){
                     start: start,
                     end: end,
                     allDay: allDay,
+                    isReoccurance: result.isReoccurance,
+                    reoccuranceType: result.reoccuranceType,
+                    endReoccurance: result.endReoccurance,
                 };
-
                 $scope.events.push(result);
                 $scope.scheduler.fullCalendar('renderEvent', dataEvent, true);
 	        	$scope.scheduler.fullCalendar('unselect');

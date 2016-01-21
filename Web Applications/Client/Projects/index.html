@@ -110,7 +110,11 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="./theme/assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
         <link href="./theme/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
     <!-- END THEME LAYOUT STYLES -->
+    <!-- myCheckbox myRadio -->
+    <link rel="stylesheet" type="text/css" href="theme/assets/global/libs/my_Checkbox_Radio/style.css">
+    
     <link href="./theme/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
+    
     <link rel="shortcut icon" href="favicon.ico" /> 
 </head>
 <!-- END HEAD -->
@@ -310,6 +314,7 @@ License: You must have a valid license purchased only from themeforest(the above
             <script src="modules/doctor/doctor.js" ></script>
             <script src="modules/doctor/services/doctorService.js"></script>
             <script src="modules/doctor/controllers/doctorCtrl.js"></script>
+            <script src="modules/doctor/controllers/doctorHomeCtrl.js"></script>
             <script src="modules/doctor/controllers/doctorListCtrl.js"></script>
             <script src="modules/doctor/controllers/doctorCreateCtrl.js"></script>
             <script src="modules/doctor/controllers/doctorProfileCtrl.js"></script>
@@ -544,8 +549,8 @@ License: You must have a valid license purchased only from themeforest(the above
             <script type="text/javascript">
                 $(document).ready(function()
                 {
-                    App.init(); 
-                    App.initComponents(); // init core components
+                    // App.init(); 
+                    // App.initComponents(); // init core components
                     App.setAssetsPath('theme/assets/'); // Set the assets folder path 
                     
                 });

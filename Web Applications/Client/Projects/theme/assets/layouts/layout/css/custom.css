@@ -509,28 +509,47 @@ img.profile-imge {
 /*end consultation<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
 .welcome {
-    position: relative;
-    margin: 0 auto;
+/*    position: relative;
+    margin: 0 auto;*/
+
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-image: url(../../../global/images/patient.jpg);
+    background-size: 100%;
+
+}
+.welcome > img{
+
 }
 
-.welcome .logo {
-    position: absolute;
-    top: 5%;
-    left: 5%;
-    width: 40%
-}
+
 
 
 /*Big Monitor*/
 
 @media (min-width: 1367px) {
+    .welcome .logo {
+        position: absolute;
+        top: 5%;
+        left: 5%;
+        width: 20%;
+    }
     .welcome .content {
         position: absolute;
         bottom: 5%;
         left: 5%;
         width: 35%;
-        height: 53%;
-        background-color: rgba(84, 167, 250, 0.5);
+        height: 65%;
+        background-color: rgba(84, 167, 250, 0.25);
         border-top-right-radius: 100% !important;
         border-bottom-left-radius: 30% !important;
     }
@@ -606,21 +625,27 @@ img.profile-imge {
 /*Small Monitor*/
 
 @media (max-width: 1366px) {
+    .welcome .logo {
+        position: absolute;
+        top: 5%;
+        left: 5%;
+        width: 20%;
+    }
     .welcome .content {
         position: absolute;
         bottom: 5%;
         left: 5%;
         width: 40%;
-        height: 60%;
-        background-color: rgba(84, 167, 250, 0.5);
+        height: 70%;
+        background-color: rgba(84, 167, 250, 0.25);
         border-top-right-radius: 100% !important;
         border-bottom-left-radius: 30% !important;
     }
     .welcome .content .my-button-group {
         position: absolute;
-        bottom: 15%;
-        left: 12%;
-        width: 60%;
+        bottom: 10%;
+        left: 15%;
+        width: 50%;
     }
     .welcome .content .my-button-group h1 {
         color: white;
@@ -653,9 +678,21 @@ img.profile-imge {
         background-position: 15px 10px;
         background-size: 35px;
     }
+    .welcome .content .my-button-group .my-button.registration a {
+        color: white;
+    }
+    .welcome .content .my-button-group .my-button.registration a:hover {
+        text-decoration: none;
+    }
     .welcome .content .my-button-group .my-button.registration i {}
     .welcome .content .my-button-group .my-button.registration:before {
         /*content: "\270E"; */
+    }
+    .welcome .content .my-button-group .my-button.existing-patient a {
+        color: white;
+    }
+    .welcome .content .my-button-group .my-button.existing-patient a:hover {
+        text-decoration: none;
     }
     .welcome .content .my-button-group .my-button.existing-patient {
         background-color: #288e44;
@@ -679,8 +716,10 @@ img.profile-imge {
     right: 0;
 }
 
-
-/*phan quoc chien*/
+.dashboard-stat:hover{
+    cursor: pointer;
+}
+/*phan quoc chien================================================================================*/
 
 .margin-left-right-0 {
     margin-right: 0px;
@@ -740,7 +779,7 @@ img.profile-imge {
 }
 
 
-/*giang*/
+/*giang===========================================================================================*/
 
 .is-Choose {
     background-color: #CCFFFF !important;

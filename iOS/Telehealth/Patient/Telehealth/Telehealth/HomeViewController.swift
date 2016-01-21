@@ -17,6 +17,8 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
     let callService = CallService()
     let requestTelehealthService = RequestTelehealthService()
     
+    
+    @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var pageView: UIView!
     @IBOutlet weak var labelHealthCare: UILabel!
@@ -44,26 +46,7 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
        super.viewDidLoad()
        
        labelHealthCare.attributedText = config.setLabelAttribute(MessageString.StringHealthCare)
-        if let uuid = defaults.valueForKey("uid") as? String {
-            uid = uuid
-            if let deviceToken = defaults.valueForKey("deviceToken") as? String{
-                api.updateTokenPush(uid,deviceToken:deviceToken)
-            }
-            serviceNotLogin.hidden = true
-            requestTelehealNotLogin.hidden = true
-            otherServiceLogin.hidden = false
-            requestTelehealthLogin.hidden = false
-            trackingReferral.hidden = false
-            settingView.hidden = false
-        }else {
-            serviceNotLogin.hidden = false
-            requestTelehealNotLogin.hidden = false
-            otherServiceLogin.hidden = true
-            requestTelehealthLogin.hidden = true
-            trackingReferral.hidden = true
-            settingView.hidden = true
-        }
-        typeTelehelth = requestTelehealthService.loadDataJson()
+                typeTelehelth = requestTelehealthService.loadDataJson()
         
         //Connect Socket
         socketService.delegate = self
@@ -71,6 +54,35 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         
         pagingImage()
         resetTimer()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        checkLogin()
+    }
+    
+    func checkLogin(){
+        if let uuid = defaults.valueForKey("uid") as? String {
+            uid = uuid
+            if let deviceToken = defaults.valueForKey("deviceToken") as? String{
+                api.updateTokenPush(uid,deviceToken:deviceToken)
+            }
+            loginButton.hidden = true
+            serviceNotLogin.hidden = true
+            requestTelehealNotLogin.hidden = true
+            otherServiceLogin.hidden = false
+            requestTelehealthLogin.hidden = false
+            trackingReferral.hidden = false
+            settingView.hidden = false
+        }else {
+            loginButton.hidden = false
+            serviceNotLogin.hidden = false
+            requestTelehealNotLogin.hidden = false
+            otherServiceLogin.hidden = true
+            requestTelehealthLogin.hidden = true
+            trackingReferral.hidden = true
+            settingView.hidden = true
+        }
+
     }
     
     
@@ -316,6 +328,9 @@ class HomeViewController: UIViewController,UIPopoverPresentationControllerDelega
         performSegueWithIdentifier("RequestTelehealthSegue", sender: self)
     }
     
+    @IBAction func loginAction(sender: AnyObject) {
+        performSegueWithIdentifier("LoginSegue", sender: self)
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "FAQsegue" {

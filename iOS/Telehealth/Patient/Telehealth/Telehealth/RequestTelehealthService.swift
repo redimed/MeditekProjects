@@ -9,6 +9,7 @@
 import Foundation
 import SwiftyJSON
 class RequestTelehealthService {
+    let telehealthAPI = TelehealthAPI()
     func checkMaxLength(data:String,length:Int)->Bool{
         if data.characters.count > length {
             return false
@@ -77,5 +78,13 @@ class RequestTelehealthService {
             print("Invalid filename/path.")
         }
         return pastUrls
+    }
+    
+    
+    func requestTelehealth(RequestDate:String,Type:String,Description:String,FirstName:String,LastName:String,PhoneNumber:String,HomePhoneNumber:String,Suburd:String,DOB:String,Email:String,FileUploads:[String],handler:(JSON) -> Void){
+        telehealthAPI.requestTelehealth(RequestDate, Type: Type, Description: Description, FirstName: FirstName, LastName: LastName, PhoneNumber: PhoneNumber, HomePhoneNumber: HomePhoneNumber, Suburd: Suburd, DOB: DOB, Email: Email ,FileUploads:FileUploads, compailer: {
+            response in
+            handler(response)
+        })
     }
 }

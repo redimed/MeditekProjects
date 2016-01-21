@@ -42,16 +42,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //check verified in localstorege
         
        
-        if let stringOne = defaults.valueForKey("verifyUser") as? String {
-            if stringOne == "Verified" {
-                
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let initialViewController = storyboard.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
-                self.window?.rootViewController = initialViewController
-                self.window?.makeKeyAndVisible()
-            }
-            
-        }
+//        if let stringOne = defaults.valueForKey("verifyUser") as? String {
+//            if stringOne == "Verified" {
+//                
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                let initialViewController = storyboard.instantiateViewControllerWithIdentifier("NavigationHomeStoryboard") as! NavigationHomeViewController
+//                self.window?.rootViewController = initialViewController
+//                self.window?.makeKeyAndVisible()
+//            }
+//            
+//        }
         //create setting push notification
         let notificationCategory:UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
         notificationCategory.identifier = "CALLING_MESSAGE"

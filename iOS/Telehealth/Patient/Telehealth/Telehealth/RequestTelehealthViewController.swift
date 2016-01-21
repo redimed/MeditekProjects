@@ -43,13 +43,20 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
     var autocompleteUrls = [String]()
     var pastUrls : [String] = []
     var pickerView = UIPickerView()
-    var pickOption = ["Telehealth", "On Site"]
-    
+    var pickOption = ["Telehealth", "Onsite"]
+    var userUID : String!
     let alertView = UIAlertView()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let uid = defaults.valueForKey("userUID") as? String {
+            userUID = uid
+            selectOptionImage.hidden = false
+        }else {
+            selectOptionImage.hidden = true
+        }
+        
         pickerView.delegate = self
-//        autocompleteUrls = requestTelehealthService.loadDataJson()
         pastUrls = autocompleteUrls
         textView.text = "Description"
         textView.textColor = UIColor.lightGrayColor()

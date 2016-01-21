@@ -104,7 +104,10 @@ class AppointmentService {
     
     
     func uploadImage(image:UIImage,userUID:String,compailer:(JSON) -> Void){
-        api.uploadImage(image,userUID: userUID){
+        let ima = UIImage(data: (image.lowestQualityJPEGNSData))
+        let data = UIImageJPEGRepresentation(ima!, 1)
+        _ = data?.length
+        api.uploadImage(ima!,userUID: userUID){
             response in
             let fileUID =   response["fileUID"].string!
             if response["status"] == "success"{

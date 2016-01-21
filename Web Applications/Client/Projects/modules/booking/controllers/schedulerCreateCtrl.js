@@ -1,14 +1,5 @@
 var app = angular.module('app.authentication.booking.scheduler.create.controller',[]);
 
-/*
-output variables
-	selectedDate
-	formData: {
-		fromTime
-		toTime
-	}
-*/
-
 app.controller('schedulerCreateCtrl', function($scope, event, $timeout, $modalInstance, toastr){
 
 	$modalInstance.rendered.then(function(){

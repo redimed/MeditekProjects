@@ -1,0 +1,94 @@
+/* 
+===========================================================================================================
+title: myCheckbox, myRadio 
+edit by : DQT
+date: 2016/01/21
+===========================================================================================================
+*/
+.myCheckbox label,
+.myRadio label{
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 10px;
+    margin-right: 10px;
+    font-size: 15px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.myCheckbox label:before,
+.myRadio label:before{
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background-color: white;
+    border: 2px solid gray;
+    box-shadow: inset 0px 2px 3px 0px rgba(125, 125, 125, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    vertical-align: middle;
+    text-align: center;
+}
+
+.myCheckbox input[type=checkbox],
+.myRadio input[type=radio] {
+    display: none;
+}
+
+.myCheckbox label:before {
+}
+.myRadio label:before {
+    border-radius: 50%;
+}
+
+.myCheckbox input[type=checkbox]:checked + label,
+.myRadio input[type=radio]:checked + label{
+    color: #22313F;
+    font-weight: bold;
+}
+
+
+.myCheckbox input[type=checkbox]:checked + label:before {
+    content: "\2713";
+    text-align: center;
+    vertical-align: middle;
+    color: #22313F;
+    /*text-shadow: 1px 1px 1px rgba(0, 0, 0, .5);*/
+    border: 2px solid #22313F;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 17px;
+}
+.myRadio input[type=radio]:checked + label:before {
+    content: "\2022";
+    text-align: center;
+    vertical-align: middle;
+    color: #22313F;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+    border: 2px solid #22313F;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 17px;
+}
+
+.myCheckbox input[type=checkbox]:disabled + label,
+.myRadio input[type=radio]:disabled + label {
+    color: #aaa;
+}
+
+.myCheckbox input[type=checkbox]:disabled + label:before,
+.myRadio input[type=radio]:disabled + label:before {
+    background-color: #ddd;
+}
+
+/*validate*/
+.has-error .myCheckbox label,
+.has-error .myRadio label{
+    color: #D91E18 !important;
+}
+
+.has-error .myCheckbox label:before,
+.has-error .myRadio label:before{
+    border: 2px solid #D91E18;
+}

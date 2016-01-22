@@ -90,7 +90,7 @@ module.exports = {
     UpdateRequestRoster: require('./Roster/UpdateRequestRoster'),
     GetDetailRoster: require('./Roster/GetDetailRoster'),
     DestroyRoster: require('./Roster/DestroyRoster'),
-    CheckOverlab: require('./Roster/CheckOverlab'),
+    CheckOverlap: require('./Roster/CheckOverlap'),
     BulkCreateRoster: require('./Roster/BulkCreateRoster'),
     CreateRoster: require('./Roster/CreateRoster'),
     GetDataRoster: require('./Roster/GetDataRoster'),
@@ -101,5 +101,6 @@ module.exports = {
     BulkUpdateRoster: require('./Roster/BulkUpdateRoster'),
     UpdateRoster: require('./Roster/UpdateRoster'),
     UpdateRelRosterService: require('./Roster/UpdateRelRosterService'),
+    GetListSite: require('./Roster/GetListSite'),
     //begin Roster
 };

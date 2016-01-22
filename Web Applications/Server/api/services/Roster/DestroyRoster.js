@@ -18,7 +18,6 @@ module.exports = function(data, userInfo) {
                         })
                         .then(function(rosterRes) {
                             rosterRes = JSON.parse(JSON.stringify(rosterRes));
-                            console.log('rosterRes', rosterRes);
                         }, function(err) {
                             defer.reject({
                                 error: err,

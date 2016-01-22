@@ -130,9 +130,57 @@ module.exports = function(data, userInfo) {
                                     });
                                 })
                                 .then(function(relRosterServiceCreated) {
+                                    if (!_.isEmpty(data.Site)) {
+                                        var whereClause = {};
+                                        _.forEach(data.Site, function(valueKey, indexKey) {
+                                            if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                                                moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                                whereClause[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                            } else if (!_.isArray(valueKey) &&
+                                                !_.isObject(valueKey)) {
+                                                whereClause[indexKey] = valueKey;
+                                            }
+                                        });
+                                        return Site.findOne({
+                                            attributes: ['ID'],
+                                            where: whereClause,
+                                            transaction: t
+                                        });
+                                    } else {
+                                        var error = new Error('Site.not.exist');
+                                        defer.reject({
+                                            error: error,
+                                            transaction: t
+                                        });
+                                    }
+                                }, function(err) {
+                                    defer.reject({
+                                        error: err,
+                                        transaction: t
+                                    });
+                                })
+                                .then(function(siteRes) {
+                                    if (!_.isEmpty(siteRes)) {
+                                        return siteRes.addRosters(arrayRosterID, {
+                                            transaction: t
+                                        });
+                                    } else {
+                                        var error = new Error('service.not.exist');
+                                        defer.reject({
+                                            error: error,
+                                            transaction: t
+                                        });
+                                    }
+                                }, function(err) {
+                                    defer.reject({
+                                        error: err,
+                                        transaction: t
+                                    });
+                                })
+                                .then(function(relRosterSiteCreated) {
                                     defer.resolve({
-                                        transaction: t,
-                                        status: 'success'
+                                        status: 'success',
+                                        transaction: t
                                     });
                                 }, function(err) {
                                     defer.reject({

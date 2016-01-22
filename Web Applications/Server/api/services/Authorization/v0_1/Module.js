@@ -24,7 +24,7 @@ var modules=[
 	{
 		uid:'8',
 		state:'authentication.WAAppointment.list',
-		name:'Telehealth Appointment List',
+		name:'Appointment List',
 		parent:'3',
 		order:'3',
 		roles:[

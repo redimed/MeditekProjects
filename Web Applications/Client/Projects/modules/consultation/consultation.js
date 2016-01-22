@@ -17,7 +17,7 @@ app.config(function($stateProvider) {
             controller: 'consultationCtrl',
         })
         .state('authentication.consultation.list', {
-            url: '/list',
+            url: '/list/:roleid',
             data: {
                 title: 'Consultation List',
                 pageTitle: 'Consultation List'

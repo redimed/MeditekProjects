@@ -9,6 +9,7 @@ module.exports = function(data, userInfo) {
         HelperService.CheckExistData(data.Roster.FromTime) &&
         HelperService.CheckExistData(data.Roster.ToTime)) {
         var arrObjectRosterUpdated = null;
+        var arrayRosterID = null;
         sequelize.transaction()
             .then(function(t) {
                     var objectCheckExistAppt = {
@@ -16,7 +17,7 @@ module.exports = function(data, userInfo) {
                         transaction: t,
                         userAccount: data.UserAccount
                     };
-                    return Service.CheckRosterExistAppointment(objectCheckExistAppt)
+                    return Services.CheckRosterExistAppointment(objectCheckExistAppt)
                         .then(function(checkExistApptOk) {
                             var objectUpdateRoster = {
                                 data: [data.Roster],
@@ -42,6 +43,12 @@ module.exports = function(data, userInfo) {
                                             transaction: t,
                                             raw: true
                                         });
+                                    } else {
+                                        var error = new Error('service.not.exist');
+                                        defer.reject({
+                                            error: error,
+                                            transaction: t
+                                        });
                                     }
                                 }, function(err) {
                                     defer.reject({
@@ -57,6 +64,12 @@ module.exports = function(data, userInfo) {
                                             transaction: t
                                         };
                                         return Services.UpdateRelRosterService(objectUpdateRelRosterService);
+                                    } else {
+                                        var error = new Error('service.not.exist');
+                                        defer.reject({
+                                            error: error,
+                                            transaction: t
+                                        });
                                     }
                                 }, function(err) {
                                     defer.reject({
@@ -65,6 +78,58 @@ module.exports = function(data, userInfo) {
                                     });
                                 })
                                 .then(function(relRosterServiceUpdated) {
+                                    if (!_.isEmpty(data.Site)) {
+                                        var whereClause = {};
+                                        _.forEach(data.Site, function(valueKey, indexKey) {
+                                            if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                                                moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                                whereClause[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                            } else if (!_.isArray(valueKey) &&
+                                                !_.isObject(valueKey)) {
+                                                whereClause[indexKey] = valueKey;
+                                            }
+                                        });
+                                        return Site.findOne({
+                                            attributes: ['ID'],
+                                            where: whereClause,
+                                            transaction: t,
+                                            raw: true
+                                        });
+                                    } else {
+                                        var error = new Error('service.not.exist');
+                                        defer.reject({
+                                            error: error,
+                                            transaction: t
+                                        });
+                                    }
+                                }, function(err) {
+                                    defer.reject({
+                                        error: err,
+                                        transaction: t
+                                    });
+                                })
+                                .then(function(siteRes) {
+                                    if (!_.isEmpty(siteRes)) {
+                                        var objectUpdateRelRosterSite = {
+                                            data: arrObjectRosterUpdated,
+                                            site: siteRes.ID,
+                                            transaction: t
+                                        };
+                                        return Services.UpdateRelRosterSite(objectUpdateRelRosterSite);
+                                    } else {
+                                        var error = new Error('site.not.exist');
+                                        defer.reject({
+                                            error: error,
+                                            transaction: t
+                                        });
+                                    }
+                                }, function(err) {
+                                    defer.reject({
+                                        error: err,
+                                        transaction: t
+                                    });
+                                })
+                                .then(function(relRosterSiteUpdated) {
                                     if (data.Roster.IsRecurrence === 'Y' &&
                                         HelperService.CheckExistData(data.Roster.EndRecurrence) &&
                                         (moment(data.Roster.EndRecurrence, 'YYYY-MM-DD Z', true).isValid() ||
@@ -89,35 +154,37 @@ module.exports = function(data, userInfo) {
                                     });
                                 })
                                 .then(function(rosterCreated) {
-                                    var rosterCreated =
-                                        JSON.parse(JSON.stringify(rosterCreated));
-                                    arrayRosterID = _.map(_.groupBy(rosterCreated, function(R) {
-                                        return R.ID;
-                                    }), function(subGrouped) {
-                                        return subGrouped[0].ID;
-                                    });
-                                    if (!_.isEmpty(data.UserAccount)) {
-                                        var whereClause = {};
-                                        _.forEach(data.UserAccount, function(valueKey, indexKey) {
-                                            if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
-                                                moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                                                whereClause[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
-                                            } else if (!_.isArray(valueKey) &&
-                                                !_.isObject(valueKey)) {
-                                                whereClause[indexKey] = valueKey;
-                                            }
+                                    if (!_.isEmpty(rosterCreated)) {
+                                        var rosterCreated =
+                                            JSON.parse(JSON.stringify(rosterCreated));
+                                        arrayRosterID = _.map(_.groupBy(rosterCreated, function(R) {
+                                            return R.ID;
+                                        }), function(subGrouped) {
+                                            return subGrouped[0].ID;
                                         });
-                                        return UserAccount.findOne({
-                                            attributes: ['ID'],
-                                            where: whereClause,
-                                            transaction: t
-                                        });
-                                    } else {
-                                        var error = new Error('userAccount.not.exist');
-                                        defer.reject({
-                                            error: error,
-                                            transaction: t
-                                        });
+                                        if (!_.isEmpty(data.UserAccount)) {
+                                            var whereClause = {};
+                                            _.forEach(data.UserAccount, function(valueKey, indexKey) {
+                                                if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                                                    moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                                    whereClause[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                                                } else if (!_.isArray(valueKey) &&
+                                                    !_.isObject(valueKey)) {
+                                                    whereClause[indexKey] = valueKey;
+                                                }
+                                            });
+                                            return UserAccount.findOne({
+                                                attributes: ['ID'],
+                                                where: whereClause,
+                                                transaction: t
+                                            });
+                                        } else {
+                                            var error = new Error('userAccount.not.exist');
+                                            defer.reject({
+                                                error: error,
+                                                transaction: t
+                                            });
+                                        }
                                     }
                                 }, function(err) {
                                     defer.reject({
@@ -130,7 +197,7 @@ module.exports = function(data, userInfo) {
                                         return userAccountRes.addRosters(arrayRosterID, {
                                             transaction: t
                                         });
-                                    } else {
+                                    } else if (HelperService.CheckExistData(arrayRosterID)) {
                                         var error = new Error('userAccount.not.exist');
                                         defer.reject({
                                             error: error,
@@ -144,7 +211,8 @@ module.exports = function(data, userInfo) {
                                     });
                                 })
                                 .then(function(relUserAccountRosterCreated) {
-                                    if (!_.isEmpty(data.Service)) {
+                                    if (!_.isEmpty(data.Service) &&
+                                        !_.isEmpty(arrayRosterID)) {
                                         var whereClause = {};
                                         _.forEach(data.Service, function(valueKey, indexKey) {
                                             if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
@@ -160,7 +228,7 @@ module.exports = function(data, userInfo) {
                                             where: whereClause,
                                             transaction: t
                                         });
-                                    } else {
+                                    } else if (HelperService.CheckExistData(arrayRosterID)) {
                                         var error = new Error('service.not.exist');
                                         defer.reject({
                                             error: error,
@@ -174,11 +242,12 @@ module.exports = function(data, userInfo) {
                                     });
                                 })
                                 .then(function(serviceRes) {
-                                    if (!_.isEmpty(serviceRes)) {
+                                    if (!_.isEmpty(serviceRes) &&
+                                        !_.isEmpty(arrayRosterID)) {
                                         return serviceRes.addRosters(arrayRosterID, {
                                             transaction: t
                                         });
-                                    } else {
+                                    } else if (HelperService.CheckExistData(arrayRosterID)) {
                                         var error = new Error('service.not.exist');
                                         defer.reject({
                                             error: error,

@@ -2,9 +2,7 @@ module.exports = function() {
     var $q = require('q');
     var defer = $q.defer();
     Site.findAll({
-            attributes: ['UID', 'SiteName', 'Address', 'PhoneNumber',
-                'FaxNumber', 'Email', 'Location', 'Description'
-            ],
+            attributes: Services.AttributesRoster.Site(),
             where: {
                 Enable: 'Y'
             }

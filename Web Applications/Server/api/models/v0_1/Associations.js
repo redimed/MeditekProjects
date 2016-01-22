@@ -336,5 +336,14 @@ module.exports = {
         OnsiteAppointment.belongsTo(Appointment, {
             foreignKey: 'AppointmentID'
         });
+        //association Roster - Site
+        Roster.belongsToMany(Site, {
+            through: 'RelRosterSite',
+            foreignKey: 'RosterID'
+        });
+        Site.belongsToMany(Roster, {
+            through: 'RelRosterSite',
+            foreignKey: 'SiteID'
+        });
     }
 };

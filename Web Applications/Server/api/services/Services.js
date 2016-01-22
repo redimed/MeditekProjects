@@ -102,5 +102,6 @@ module.exports = {
     UpdateRoster: require('./Roster/UpdateRoster'),
     UpdateRelRosterService: require('./Roster/UpdateRelRosterService'),
     GetListSite: require('./Roster/GetListSite'),
+    UpdateRelRosterSite: require('./Roster/UpdateRelRosterSite'),
     //begin Roster
 };

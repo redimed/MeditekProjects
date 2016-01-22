@@ -15,7 +15,7 @@ module.exports = function(consultationUID, userInfo) {
     if (role.isInternalPractitioner) {
         var filterRoleTemp = {
             '$and': {
-                ID: userInfo.ID
+                UserAccountID: userInfo.ID
             }
         };
         filter.Doctor.push(filterRoleTemp);

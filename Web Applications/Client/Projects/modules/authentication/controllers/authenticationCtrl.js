@@ -21,7 +21,8 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     AuthenticationService.getListCountry().then(function(result) {
         $rootScope.countries = result.data;
     }, function(err) {
-        toastr.error("error data country", "ERROR");
+        // toastr.error("error data country", "ERROR");
+        console.log(err);
     });
     var data = {
         UID: $cookies.getObject('userInfo').UID

@@ -16,7 +16,15 @@ module.exports = {
                         HelperService.CheckExistData(err.transaction)) {
                         err.transaction.rollback();
                     }
-                    res.serverError(ErrorWrap(err.error || err));
+                    if (!_.isEmpty(err) &&
+                        !_.isEmpty(err.data)) {
+                        res.serverError({
+                            error: 'overlaps',
+                            data: err.data
+                        });
+                    } else {
+                        res.serverError(ErrorWrap(err.error || err));
+                    }
                 });
         }
     },
@@ -99,6 +107,18 @@ module.exports = {
         Services.GetListService()
             .then(function(listServiceRes) {
                 res.ok(listServiceRes);
+            }, function(err) {
+                if (HelperService.CheckExistData(err) &&
+                    HelperService.CheckExistData(err.transaction)) {
+                    err.transaction.rollback();
+                }
+                res.serverError(ErrorWrap(err.error || err));
+            });
+    },
+    GetListSite: function(req, res) {
+        Services.GetListSite()
+            .then(function(listSites) {
+                res.ok(listSites);
             }, function(err) {
                 if (HelperService.CheckExistData(err) &&
                     HelperService.CheckExistData(err.transaction)) {

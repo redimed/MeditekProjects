@@ -22,5 +22,9 @@ module.exports = {
     'get /api/service/list': {
         controller: 'Roster/RosterController',
         action: 'GetListService'
+    },
+    'get /api/site/list': {
+        controller: 'Roster/RosterController',
+        action: 'GetListSite'
     }
 };

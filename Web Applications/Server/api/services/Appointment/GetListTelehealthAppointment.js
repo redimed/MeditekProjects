@@ -9,41 +9,41 @@ module.exports = function(data, userInfo) {
     var defer = $q.defer();
     var pagination = PaginationService(data, Appointment);
     //add roles
-    // var role = HelperService.GetRole(userInfo.roles);
-    // if (role.isInternalPractitioner) {
-    //     var filterRoleTemp = {
-    //         '$and': {
-    //             UserAccountID: userInfo.ID
-    //         }
-    //     };
-    //     if (!HelperService.CheckExistData(pagination.Doctor)) {
-    //         pagination.Doctor = [];
-    //     }
-    //     pagination.Doctor.push(filterRoleTemp);
-    // } else if (role.isExternalPractitioner) {
-    //     var filterRoleTemp = {
-    //         '$and': {
-    //             CreatedBy: userInfo.ID
-    //         }
-    //     };
-    //     if (!HelperService.CheckExistData(pagination.Appointment)) {
-    //         pagination.Appointment = [];
-    //     }
-    //     pagination.Appointment.push(filterRoleTemp);
-    // } else if (role.isPatient) {
-    //     var filterRoleTemp = {
-    //         '$and': {
-    //             UserAccountID: userInfo.ID
-    //         }
-    //     };
-    //     if (!HelperService.CheckExistData(pagination.Patient)) {
-    //         pagination.Patient = [];
-    //     }
-    //     pagination.Patient.push(filterRoleTemp);
-    // } else if (!role.isAdmin &&
-    //     !role.isAssistant) {
-    //     pagination.limit = 0;
-    // }
+    var role = HelperService.GetRole(userInfo.roles);
+    if (role.isInternalPractitioner) {
+        var filterRoleTemp = {
+            '$and': {
+                UserAccountID: userInfo.ID
+            }
+        };
+        if (!HelperService.CheckExistData(pagination.Doctor)) {
+            pagination.Doctor = [];
+        }
+        pagination.Doctor.push(filterRoleTemp);
+    } else if (role.isExternalPractitioner) {
+        var filterRoleTemp = {
+            '$and': {
+                CreatedBy: userInfo.ID
+            }
+        };
+        if (!HelperService.CheckExistData(pagination.Appointment)) {
+            pagination.Appointment = [];
+        }
+        pagination.Appointment.push(filterRoleTemp);
+    } else if (role.isPatient) {
+        var filterRoleTemp = {
+            '$and': {
+                UserAccountID: userInfo.ID
+            }
+        };
+        if (!HelperService.CheckExistData(pagination.Patient)) {
+            pagination.Patient = [];
+        }
+        pagination.Patient.push(filterRoleTemp);
+    } else if (!role.isAdmin &&
+        !role.isAssistant) {
+        pagination.limit = 0;
+    }
     //get limit, offset
     Appointment.findAndCountAll({
             attributes: ['UID', 'FromTime', 'ToTime', 'RequestDate',

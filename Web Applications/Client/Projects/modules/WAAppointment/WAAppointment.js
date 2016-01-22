@@ -7,10 +7,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('authentication.WAAppointment', {
             abstract: true,
-            url: '/WAAppointment',
+            url: '/Appointment',
             data: {
-                title: 'WAAppointment',
-                pageTitle: 'Telehealth Appointment'
+                title: 'Appointment',
+                pageTitle: 'Appointment'
             },
             templateUrl: 'modules/WAAppointment/views/WAAppointment.html',
             controller: 'WAAppointmentCtrl',
@@ -18,8 +18,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('authentication.WAAppointment.list', {
             url: '/list',
             data: {
-                title: 'WAAppointment',
-                pageTitle: 'Telehealth Appointment'
+                title: 'Appointment',
+                pageTitle: 'Appointment'
             },
             templateUrl: 'modules/WAAppointment/views/WAAppointmentList.html',
             controller: 'WAAppointmentListCtrl',
@@ -32,8 +32,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('authentication.WAAppointment.detail', {
             url: '/detail',
             data: {
-                title: 'WAAppointment Detail',
-                pageTitle: 'Telehealth Appointment Detail'
+                title: 'Appointment Detail',
+                pageTitle: 'Appointment Detail'
             },
             templateUrl: 'modules/WAAppointment/views/WAAppointmentListDetail.html',
             controller: 'WAAppointmentListDetailCtrl',
@@ -41,8 +41,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('authentication.WAAppointment.GP', {
             url: '/request',
             data: {
-                title: 'WAAppointment Send Request',
-                pageTitle: 'Telehealth Appointment Send Request'
+                title: 'Appointment Send Request',
+                pageTitle: 'Appointment Send Request'
             },
             templateUrl: 'modules/WAAppointment/views/WAAppointmentGP.html',
             controller: 'WAAppointmentGPCtrl',

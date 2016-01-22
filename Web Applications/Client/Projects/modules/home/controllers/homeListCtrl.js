@@ -1,50 +1,14 @@
 var app = angular.module('app.authentication.home.list.controller',[]);
 
-app.controller('homeListCtrl', function($scope, MovieRetriever, $state){
-	$scope.movies = MovieRetriever.getmovies("...");
-	$scope.movies.then(function(data){
-		$scope.movies = data;
-	});
-
-	$scope.getmovies = function(){
-		return $scope.movies;
+app.controller('homeListCtrl', function($scope,$cookies, $state){
+	console.log($cookies.getObject('userInfo').UID);
+	$scope.UserRole = $cookies.getObject('userInfo').roles[0].RoleCode;
+	$scope.ListTodayConsultation = function(){
+		 var data = {
+            UID: 'roleid'
+        };
+		$state.go("authentication.consultation.list",{roleid:data.UID});
 	}
-
-	$scope.doSomething = function(typedthings){
-		console.log("Do something like reload data with this: " + typedthings );
-		$scope.newmovies = MovieRetriever.getmovies(typedthings);
-		$scope.newmovies.then(function(data){
-			$scope.movies = data;
-		});
-	}
-
-	$scope.doSomethingElse = function(suggestion){
-		console.log("Suggestion selected: " + suggestion );
-	}
-
-	$scope.movies=[];
-
-
-	//Test Drawing Begin
-	$scope.drawingData={
-		userUID:'6a316ebf-0ea8-4365-ac95-8b9ab340f2cf',
-		fileType:'MedicalDrawing'
-	};
-	$scope.drawingAction=function(fileUID)
-	{
-		alert("file "+fileUID);
-	}
-	//Test Drawing End
-
-    // gives another movie array on change
-    // $scope.updateMovies = function(typed){
-    //     // MovieRetriever could be some service returning a promise
-    //     $scope.newmovies = MovieRetriever.getmovies(typed);
-    //     $scope.newmovies.then(function(data){
-    //       $scope.movies = data;
-    //     });
-    // };
-
 });
 
 

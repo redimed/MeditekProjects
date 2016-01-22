@@ -13,15 +13,15 @@ app.controller('registerPatientCtrl', function($scope, blankServices, Authentica
     // $scope.postData = {
     //     "data": {
     //         "Title": "Ms",
-    //         "FirstName": "aaa",
+    //         "FirstName": "maria",
     //         "MiddleName": "aaa",
-    //         "LastName": "123123",
+    //         "LastName": "ozawa",
     //         "DOB": "23/12/2015",
     //         "Gender": "Female",
     //         "Occupation": "Occupation",
     //         "Address1": "Occupation",
     //         "HomePhoneNumber": "0411223344",
-    //         "PhoneNumber": "04011011010",
+    //         "PhoneNumber": "0401101109",
     //         "WorkPhoneNumber": "0411223344",
     //         "Suburb": "123123",
     //         "Postcode": "1233",

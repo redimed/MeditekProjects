@@ -19,14 +19,10 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                             Status: null,
                             Enable: 'Y'
                         }
-                    }, {
-                        TelehealthAppointment: {
-                            Type: 'WAA'
-                        }
                     }],
                     Search: [{
-                        Patient: {
-                            FirstName: null
+                        PatientAppointment: {
+                            FullName: null
                         }
                     }, {
                         Doctor: {
@@ -85,8 +81,8 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
             scope.LoadData();
             scope.reloadData = function() {
                 scope.info.data.Offset = (scope.info.paging.currentPage - 1) * scope.info.paging.itemsPerPage;
-                (scope.info.data.Search[0].PatientAppointment.FullName !== "") ? scope.info.data.Search[0].PatientAppointment.FullName: scope.info.data.Search[0].PatientAppointment.FullName = null;
-                (scope.info.data.Search[1].Doctor.FullName !== "") ? scope.info.data.Search[1].Doctor.FullName: scope.info.data.Search[1].Doctor.FullName = null;
+                (scope.info.data.Search[0].PatientAppointment.FullName !== null && scope.info.data.Search[0].PatientAppointment.FullName !== undefined) ? scope.info.data.Search[0].PatientAppointment.FullName: scope.info.data.Search[0].PatientAppointment.FullName = null;
+                (scope.info.data.Search[1].Doctor.FullName !== "" && scope.info.data.Search[1].Doctor.FullName !== undefined) ? scope.info.data.Search[1].Doctor.FullName: scope.info.data.Search[1].Doctor.FullName = null;
                 (scope.fromCreateDate && scope.fromCreateDate !== null) ? scope.info.data.Range[0].Appointment.CreatedDate[0] = moment(scope.fromCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD Z'): scope.info.data.Range[0].Appointment.CreatedDate[0] = null;
                 (scope.toCreateDate && scope.toCreateDate !== null) ? scope.info.data.Range[0].Appointment.CreatedDate[1] = moment(scope.toCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD Z'): scope.info.data.Range[0].Appointment.CreatedDate[1] = null;
                 (scope.starFromTime && scope.starFromTime !== null) ? scope.info.data.Range[0].Appointment.FromTime[0] = moment(scope.starFromTime, 'DD/MM/YYYY').format('YYYY-MM-DD Z'): scope.info.data.Range[0].Appointment.FromTime[1] = null;

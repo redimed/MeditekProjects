@@ -1,9 +1,11 @@
 var app = angular.module('app.authentication.consultation.directives.listAppoint', []);
-app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, toastr,$state) {
+app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, toastr,$state,$stateParams) {
     return {
         restrict: 'E',
         templateUrl: "modules/consultation/directives/templates/listAppoint.html",
         link: function(scope) {
+
+            
             scope.info = {
                 apptStatus: WAConstant.apptStatus,
                 paging: {
@@ -44,6 +46,14 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                 listWaapointment: null,
                 toggle: true
             };
+            if($stateParams.roleid =='roleid'){
+                if($cookies.getObject('userInfo').roles[0].RoleCode =='INTERNAL_PRACTITIONER'|| 
+                    $cookies.getObject('userInfo').roles[0].RoleCode =='EXTERTAL_PRACTITIONER'){
+                     var today = new Date();
+                     scope.info.data.Filter[0].Appointment.CreatedDate = moment(today).format('YYYY-MM-DD Z');
+                }
+               
+            }
             scope.toggleFilter = function() {
                 scope.info.toggle = scope.info.toggle === false ? true : false;
             };
@@ -53,9 +63,9 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                     console.log('responseData', data);
                     o.loadingPage(false);
                     $modal.open({
-                            templateUrl: 'modules/WAAppointment/views/WAAppointmentListDetail.html',
+                            templateUrl:'modules/WAAppointment/views/WAAppointmentListDetail.html',
                             controller: 'WAAppointmentListDetailCtrl',
-                            windowClass: 'app-modal-window',
+                            windowClass:'app-modal-window',
                             resolve: {
                                 data: function() {
                                     return data.data;
@@ -74,11 +84,17 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
 
             };
             scope.Detail = function(data) {
-                var data = {
+                var dataPost = {
                     UID: data.UID,
                     UIDPatient: (data.Patients.length == 0) ? 'e.x.ex' : data.Patients[0].UID
                 };
-                $state.go("authentication.consultation.detail",{UID:data.UID,UIDPatient:data.UIDPatient});
+                if (data.Patients.length !==0) {
+                    $state.go("authentication.consultation.detail",{UID:dataPost.UID,UIDPatient:dataPost.UIDPatient});
+                }else{
+                   toastr.error('Please link Patients') ;
+                };
+                
+               
             };
 
             scope.LoadData = function() {

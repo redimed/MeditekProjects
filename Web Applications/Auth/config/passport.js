@@ -81,14 +81,20 @@ passport.use(new LocalStrategy({
     console.log(whereClause);
     UserAccount.findOne({
         where: whereClause,
-        include: {
-            model: RelUserRole,
-            attributes: ['ID', 'UserAccountId', 'RoleId', 'SiteId'],
-            include: {
-                model: Role,
-                attributes: ['ID', 'UID', 'RoleCode', 'RoleName']
+        include: [
+            {
+                model: RelUserRole,
+                attributes: ['ID', 'UserAccountId', 'RoleId', 'SiteId'],
+                include: {
+                    model: Role,
+                    attributes: ['ID', 'UID', 'RoleCode', 'RoleName']
+                }
+            },
+            {
+                model:TelehealthUser,
+                attributes:['ID','UID'],
             }
-        }
+        ]
     }).then(function(user) {
         if (!user) {
             var err = new Error("User.notFound");
@@ -115,7 +121,8 @@ passport.use(new LocalStrategy({
             UID: user.UID,
             UserName: user.UserName,
             Activated: user.Activated,
-            roles: listRoles
+            roles: listRoles,
+            TelehealthUser:user.TelehealthUser,
         };
         //----------------------------
         //Kiểm tra user login bằng phương pháp thường (password)

@@ -1,5 +1,5 @@
 var app = angular.module('app.authentication.consultation.directives.listPatientConsultation', []);
-app.directive('listpatientConsultation', function(consultationServices, $modal, $cookies,$state,$stateParams,toastr,FileUploader) {
+app.directive('listpatientConsultation', function(consultationServices, $modal, $cookies, $state, $stateParams, toastr, FileUploader) {
     return {
         restrict: 'E',
         templateUrl: "modules/consultation/directives/templates/listPatientConsultation.html",
@@ -12,7 +12,7 @@ app.directive('listpatientConsultation', function(consultationServices, $modal, 
                     maxSize: 5,
                     Filter: [{
                         Patient: {
-                            UID:$stateParams.UIDPatient
+                            UID: $stateParams.UIDPatient
                         }
                     }],
                     Order: [{
@@ -39,7 +39,7 @@ app.directive('listpatientConsultation', function(consultationServices, $modal, 
                     console.log(response)
                     scope.consultation = response.rows;
                     scope.CountRow = response.count;
-                },function(err){
+                }, function(err) {
                     o.loadingPage(false);
                     toastr.error('fail');
                 });

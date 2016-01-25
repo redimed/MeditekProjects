@@ -216,7 +216,10 @@ angular.module("app.common.CommonService", [])
             var result = api.one("module/GetModulesForUser");
             return result.get();
         }
-
+        commonService.formatDate = function(data){
+            var dataFormat = moment(data,"DD/MM/YYYY HH:mm:ss Z").format("YYYY-MM-DD hh:mm:ss Z");
+            return dataFormat
+        }
         commonService.RegExpMobilePhone = function(MobilePhone) {
             var auMobilePhone = new RegExp(/^(\+61|0061|0)?4[0-9]{8}$/);
             if (!auMobilePhone.test(MobilePhone)) {

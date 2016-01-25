@@ -345,7 +345,7 @@
                                     <div class="row">
                                         <div class="col-md-2 col-sm-2">
                                             <label class="radio-inline bold">
-                                                <input type="checkbox" ng-model="requestOther.RECOMMENDATIONSUS" ng-click="CheckBox('Consultation__Details.Appointment.RECOMMENDATIONS.US')"> US
+                                                <input type="checkbox" ng-model="requestOther.RECOMMENDATIONSUS" ng-click="CheckBox('Consultation__Details.Appointment.RECOMMENDATIONS.US','RECOMMENDATIONSUS')"> US
                                             </label>
                                         </div>
                                         <div ng-show="requestOther.RECOMMENDATIONSUS == true">
@@ -389,7 +389,7 @@
                                     <div class="row">
                                         <div class="col-md-2 col-sm-2">
                                             <label class="radio-inline bold">
-                                                <input type="checkbox" ng-model="requestOther.RECOMMENDATIONSCT"> CT
+                                                <input type="checkbox" ng-model="requestOther.RECOMMENDATIONSCT" ng-click="CheckBox('Consultation__Details.Appointment.RECOMMENDATIONS.CT','RECOMMENDATIONSCT')"> CT
                                             </label>
                                         </div>
                                         <div ng-show="requestOther.RECOMMENDATIONSCT == true">
@@ -433,7 +433,7 @@
                                     <div class="row">
                                         <div class="col-md-2 col-sm-2">
                                             <label class="radio-inline bold">
-                                                <input type="checkbox" ng-model="requestOther.RECOMMENDATIONSMRI"> MRI
+                                                <input type="checkbox" ng-model="requestOther.RECOMMENDATIONSMRI" ng-click="CheckBox('Consultation__Details.Appointment.RECOMMENDATIONS.MRI','RECOMMENDATIONSMRI')"> MRI
                                             </label>
                                         </div>
                                         <div ng-show="requestOther.RECOMMENDATIONSMRI == true">
@@ -477,7 +477,7 @@
                                     <div class="row">
                                         <div class="col-md-2 col-sm-2">
                                             <label class="radio-inline bold">
-                                                <input type="checkbox" ng-model="requestOther.RECOMMENDATIONSPetScan"> Pet Scan
+                                                <input type="checkbox" ng-model="requestOther.RECOMMENDATIONSPetScan" ng-click="CheckBox('Consultation__Details.Appointment.RECOMMENDATIONS.PetScan','RECOMMENDATIONSPetScan')"> Pet Scan
                                             </label>
                                         </div>
                                         <div ng-show="requestOther.RECOMMENDATIONSPetScan == true">

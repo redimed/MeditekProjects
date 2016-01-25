@@ -31,35 +31,40 @@ module.exports = function(objCheckOverlap) {
                 }
             })
             .then(function(arrRoster) {
-                if (!_.isEmpty(arrRoster) &&
-                    _.isArray(arrRoster)) {
-                    _.forEach(objCheckOverlap.data, function(valueRosterCheck, indexRosterCheck) {
-                        _.forEach(arrRoster, function(valueRosterUser, indexRosterUser) {
-                            var fromTimeCheck = moment(valueRosterCheck.FromTime).format('YYYY-MM-DD HH:mm:ss');
-                            var toTimeCheck = moment(valueRosterCheck.ToTime).format('YYYY-MM-DD HH:mm:ss');
-                            var fromTimeUser = moment(valueRosterUser.FromTime).format('YYYY-MM-DD HH:mm:ss');
-                            var toTimeUser = moment(valueRosterUser.ToTime).format('YYYY-MM-DD HH:mm:ss');
-                            var rangeRosterCheck = moment.range(fromTimeCheck, toTimeCheck);
-                            var rangeRosterUser = moment.range(fromTimeUser, toTimeUser);
-                            if (rangeRosterCheck.overlaps(rangeRosterUser) === true) {
-                                arrayRosterOverlap.push(valueRosterCheck);
-                            }
+                    if (!_.isEmpty(arrRoster) &&
+                        _.isArray(arrRoster)) {
+                        _.forEach(objCheckOverlap.data, function(valueRosterCheck, indexRosterCheck) {
+                            _.forEach(arrRoster, function(valueRosterUser, indexRosterUser) {
+                                var fromTimeCheck = moment(valueRosterCheck.FromTime).format('YYYY-MM-DD HH:mm:ss');
+                                var toTimeCheck = moment(valueRosterCheck.ToTime).format('YYYY-MM-DD HH:mm:ss');
+                                var fromTimeUser = moment(valueRosterUser.FromTime).format('YYYY-MM-DD HH:mm:ss');
+                                var toTimeUser = moment(valueRosterUser.ToTime).format('YYYY-MM-DD HH:mm:ss');
+                                var rangeRosterCheck = moment.range(fromTimeCheck, toTimeCheck);
+                                var rangeRosterUser = moment.range(fromTimeUser, toTimeUser);
+                                if (rangeRosterCheck.overlaps(rangeRosterUser) === true) {
+                                    arrayRosterOverlap.push(valueRosterCheck);
+                                }
+                            });
                         });
-                    });
-                    if (!_.isEmpty(arrayRosterOverlap)) {
-                        arrayRosterOverlap = _.uniq(arrayRosterOverlap, 'UID');
-                        defer.reject(arrayRosterOverlap);
+                        if (!_.isEmpty(arrayRosterOverlap) &&
+                            arrayRosterOverlap.length !== 1) {
+                            arrayRosterOverlap = _.uniq(arrayRosterOverlap, 'UID');
+                            defer.reject({
+                                status: 'overlaps',
+                                dataOverlap: arrayRosterOverlap
+                            });
+                        } else {
+                            defer.resolve(arrayRosterOverlap);
+                        }
                     } else {
-                        defer.resolve(arrayRosterOverlap);
+                        defer.resolve({
+                            status: 'success'
+                        });
                     }
-                } else {
-                    defer.resolve({
-                        status: 'success'
-                    });
-                }
-            }, function(err) {
-                defer.reject(err);
-            })
+                },
+                function(err) {
+                    defer.reject(err);
+                })
     } else {
         var error = new Error('objCheckOverlap.data.not.exist');
         defer.reject(error);

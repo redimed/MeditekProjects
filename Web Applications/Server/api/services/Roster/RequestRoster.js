@@ -189,10 +189,19 @@ module.exports = function(data, userInfo) {
                                     });
                                 });
                         }, function(err) {
-                            defer.reject({
-                                transaction: t,
-                                data: err
-                            });
+                            if (!_.isEmpty(err) &&
+                                !_.isEmpty(err.dataOverlap) &&
+                                err.status === 'overlaps') {
+                                defer.reject({
+                                    transaction: t,
+                                    dataOverlap: err.dataOverlap
+                                });
+                            } else {
+                                defer.reject({
+                                    transaction: t,
+                                    error: err
+                                });
+                            }
                         });
                 } else {
                     var error = new Error('RosterRepeat.not.exist');

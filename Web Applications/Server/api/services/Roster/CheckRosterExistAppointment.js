@@ -78,7 +78,10 @@ module.exports = function(objCheck) {
                     });
                     if (!_.isEmpty(arrRosterOverlap)) {
                         arrRosterOverlap = _.uniq(arrRosterOverlap, 'UID');
-                        defer.reject(arrRosterOverlap);
+                        defer.reject({
+                            status: 'existAppt',
+                            dataExistAppt: arrRosterOverlap
+                        });
                     } else {
                         defer.resolve({
                             status: 'success'

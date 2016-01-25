@@ -19,6 +19,20 @@ module.exports = function(data, userInfo) {
                     };
                     return Services.CheckRosterExistAppointment(objectCheckExistAppt)
                         .then(function(checkExistApptOk) {
+                            var rosterRepeat = Services.GetDataRoster.GetRosterRepeat(data.Roster, userInfo);
+                            var objectCheckOverlap = {
+                                data: rosterRepeat,
+                                transaction: t,
+                                userAccount: data.UserAccount
+                            };
+                            return Services.CheckOverlap(objectCheckOverlap);
+                        }, function(err) {
+                            defer.reject({
+                                transaction: t,
+                                dataExistAppt: err
+                            });
+                        })
+                        .then(function(checkOverlapOk) {
                             var objectUpdateRoster = {
                                 data: [data.Roster],
                                 transaction: t
@@ -273,8 +287,8 @@ module.exports = function(data, userInfo) {
                                 });
                         }, function(err) {
                             defer.reject({
-                                error: err,
-                                transaction: t
+                                transaction: t,
+                                dataOverlap: err
                             });
                         });
                 },

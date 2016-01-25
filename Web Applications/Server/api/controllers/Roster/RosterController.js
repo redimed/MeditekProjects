@@ -20,7 +20,7 @@ module.exports = {
                         !_.isEmpty(err.data)) {
                         res.serverError({
                             error: 'overlaps',
-                            data: err.data
+                            data: err.dataOverlap
                         });
                     } else {
                         res.serverError(ErrorWrap(err.error || err));
@@ -45,7 +45,21 @@ module.exports = {
                         HelperService.CheckExistData(err.transaction)) {
                         err.transaction.rollback();
                     }
-                    res.serverError(ErrorWrap(err.error || err));
+                    if (!_.isEmpty(err) &&
+                        !_.isEmpty(err.dataExistAppt)) {
+                        res.serverError({
+                            error: 'existAppt',
+                            data: err.dataExistAppt
+                        });
+                    } else if (!_.isEmpty(err) &&
+                        !_.isEmpty(err.dataOverlap)) {
+                        res.serverError({
+                            error: 'overlaps',
+                            data: err.dataOverlap
+                        });
+                    } else {
+                        res.serverError(ErrorWrap(err.error || err));
+                    }
                 });
         }
     },
@@ -92,10 +106,11 @@ module.exports = {
                         HelperService.CheckExistData(err.transaction)) {
                         err.transaction.rollback();
                     }
-                    if (HelperService.CheckExistData(err.data)) {
+                    if (!_.isEmpty(err) &&
+                        !_.isEmpty(err.dataExistAppt)) {
                         res.serverError({
-                            error: ErrorWrap(err.error),
-                            data: err.data
+                            error: 'existAppt',
+                            data: err.dataExistAppt
                         });
                     } else {
                         res.serverError(ErrorWrap(err.error || err));

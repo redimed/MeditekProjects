@@ -6,24 +6,32 @@
 			<i class="glyphicon glyphicon-calendar"></i> {{selectedDate}}</h4>
 	</div>
 	<div class="modal-body">
-		<div class="form-group">
+		<div class="col-md-6 col-sm-6 form-group">
 			<label class="control-label">Service</label>
-			<select class="form-control" ng-model="formData.service">
-				<option value=""></option>
+			<select class="form-control"
+				ng-options="item.UID as item.ServiceName for item in listServices"
+				ng-model="formData.service">
 			</select>
 		</div>
-		<div class="form-group">
+		<div class="col-md-6 col-sm-6 form-group">
+			<label class="control-label">Site</label>
+			<select class="form-control"
+				ng-options="item.UID as item.SiteName for item in listSites"
+				ng-model="formData.site">
+			</select>
+		</div>
+		<div class="col-md-6 col-sm-6 form-group">
 			<label class="control-label">From Time</label>
 			<input type="text" class="form-control timepicker timepicker-24" data-default-time='' 
 				ng-model="formData.fromTime">
 		</div>
-		<div class="form-group">
+		<div class="col-md-6 col-sm-6 form-group">
 			<label class="control-label">To Time</label>
 			<input type="text" class="form-control timepicker timepicker-24" data-default-time=''
 				data-time-start-time="10:00"
 				ng-model="formData.toTime">
 		</div>
-		<div class="form-group">
+		<div class="col-md-12 form-group">
 			<!-- <label>Is Reoccurance</label> -->
 			<div class="radio-list">
 				<label>
@@ -32,20 +40,20 @@
 					ng-model="formData.isReoccurance"
 					ng-true-value="'Y'"
 					ng-false-value="'N'"
-					ng-change="checkReoccurance(formData.isReoccurance)"> Is Reoccurance
+					ng-change="checkReoccurance(formData.isReoccurance)"> Is Recurrance
 				</label>
 			</div>
 		</div>
-		<div class="form-group" ng-show="formData.isReoccurance == 'Y'">
-			<label class="control-label">Reoccurance Type</label>
+		<div class="col-md-6 col-sm-6 form-group" ng-show="formData.isReoccurance == 'Y'">
+			<label class="control-label">Recurrance Type</label>
 			<select class="form-control" ng-model="formData.reoccuranceType">
 				<option value=""></option>
 				<option value="daily">Daily</Dailyn>
 				<option value="weekly">Weekly</option>
 			</select>
 		</div>
-		<div class="form-group" ng-show="formData.isReoccurance == 'Y'">
-			<label class="control-label">End Reoccurance</label>
+		<div class="col-md-6 col-sm-6 form-group" ng-show="formData.isReoccurance == 'Y'">
+			<label class="control-label">End Recurrance</label>
 			<input type="text" class="form-control date-picker" readonly 
 				data-date-format="dd/mm/yyyy"
 				data-date-start-date="{{selectedDate}}" 
@@ -53,12 +61,10 @@
 				ng-model="formData.endReoccurance">
 		</div>
 	</div>
-	<div class="modal-footer">
-		<div class="form-actions right">
-			<button type="button" class="btn btn-lg dark" data-dismiss="modal" 
-				ng-click="cancel()">Cancel</button>
-			<button type="submit" class="btn btn-lg red">
-				<i class="glyphicon glyphicon-save"></i> Submit</button>
-		</div>
-	</div>
+	<center style="margin-bottom: 10px;">
+		<button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+			ng-click="cancel()">Cancel</button>
+		<button type="submit" class="btn btn-lg red">
+			<i class="glyphicon glyphicon-save"></i> Submit</button>
+	</center>
 </form>

@@ -4,21 +4,18 @@ var app = angular.module('app.authentication.roster.calendar.controller', [
     'app.authentication.roster.calendar.delete.controller',
 ]);
 
-app.controller('calendarCtrl', function(doctorService, $state, $scope, $compile, $filter, $timeout, uiCalendarConfig, $uibModal){
+app.controller('calendarCtrl', function($state, $stateParams, RosterService, $scope, $compile, $filter, $timeout, uiCalendarConfig, $uibModal){
     //Config
     var selectedColor = 'yellow';
 
-    $scope.events = [
-        {title: 'Event1', start: '2016-01-03T13:30:00'},
-        // {title: 'Event1', start: '2016-01-21T13:30:00', color:'brown', textColor: 'white'},
-        // {title: 'Event51', start: '2016-01-21T13:25:00', color:'pink', textColor: 'white'},
-        // {title: 'Event2', start: new Date(y,m,22,15,30,0), color:'green', allDay: false},
-        // {title: 'Event3', start: '2016-01-23T13:25:00', end: '2016-01-24T13:25:00', allDay: false},
-        // {title: 'Event4', start: new Date(y,m,24), end: new Date(y,m,26), allDay: false,},
-    ];
+    $scope.events = [];
     $scope.eventSources = [{ events: $scope.events }];
     $scope.data = {};
     $scope.selectedEvent = null;
+    $scope.calendarTemp = {
+        startDate: null,
+        endDate: null
+    }
 
     function formatDate(data){
         return moment(data).subtract(0,'days').format("DD/MM/YYYY");
@@ -28,100 +25,73 @@ app.controller('calendarCtrl', function(doctorService, $state, $scope, $compile,
     };
 
     $scope.eventRender = function(event, element, view){
-        if (event.allDay === 'true') {
             event.allDay = true;
-        } else {
-            event.allDay = false;
-        }
+            element.find('.fc-time').html(moment(event.start).format('hA').toLowerCase()+'-'+moment(event.end).format('hA').toLowerCase()+'<br/>');
+            element.find('.fc-title').append('<br/><small><i>'+event.textOccurance+'</i></small>');
     };
     $scope.eventResize = function(event){
     };
     $scope.eventClick = function(event){
-        console.log(event);
         $scope.selectedEvent = event;
-        event.color = 'red'; // mau de chon
-        $('#calendar').fullCalendar('updateEvent', event);
-        /*var modalInstance = $uibModal.open({
-            animation: true,
-            size: 'md',
-            templateUrl: 'modules/roster/views/calendarEdit.html',
-            controller: 'calendarEditCtrl',
-            resolve: {
-                event: function(){
-                    return event;
-                }
-            },
-        });
-        modalInstance.result
-            .then(function(result) {
-                
-                console.log(result);
-                $scope.events.push(result);
-            }, function(result) {
-                // dismiss
-            });*/
-
-        // console.log('eventClick',event);
-        // $scope.data = event;
-        // $scope.data.startDate = formatDate($scope.data.start);
-        // $scope.data.startTime = formatTime($scope.data.start);
-        // $scope.data.endDate = formatDate($scope.data.end);
-        // $scope.data.endTime = formatTime($scope.data.end);
-        // $('#calendar').fullCalendar('updateEvent', event);
     };
     $scope.eventAfterRender = function(event, element, view){
-        $(element).attr('id', 'event_id_'+event._id);
+        $(element).attr('id', 'event_id_'+event.UID);
         $.contextMenu({
-            selector: '#event_id_'+event._id,
+            selector: '#event_id_'+event.UID,
             items: {
                 edit: {
                     name: 'Edit', 
                     callback: function(key,opt){
-                        var modalInstance = $uibModal.open({
-                            animation: true,
-                            size: 'md',
-                            templateUrl: 'modules/roster/views/calendarEdit.html',
-                            controller: 'calendarEditCtrl',
-                            resolve: {
-                                event: function(){
-                                    return event;
-                                }
-                            },
-                        });
-                        modalInstance.result
-                            .then(function(result) {
-                                $scope.events.push(result);
-                            }, function(result) {
-                                // dismiss
-                            });
+                        var UID = opt.selector.split('_')[2];
+                        RosterService.GetDetailRoster({UID: UID})
+                        .then(function(response){
+                                var modalInstance = $uibModal.open({
+                                    animation: true,
+                                    size: 'md',
+                                    templateUrl: 'modules/roster/views/calendarEdit.html',
+                                    controller: 'calendarEditCtrl',
+                                    resolve: {
+                                        data: function(){
+                                            return response.data;
+                                        }
+                                    },
+                                });
+                                modalInstance.result
+                                .then(function(result) {
+                                        $scope.events.splice(0, $scope.events.length);
+                                        ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
+                                }, function() {});         
+                        }, function(error){})
                     },
                     icon: function(opt, $itemElement, itemKey, item){
-                        // Set the content to the menu trigger selector and add an bootstrap icon to the item.
                         $itemElement.html('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit');
-                        // Add the context-menu-icon-updated class to the item
                         return 'context-menu-icon-updated';
                     }
                 },
                 delete: {
                     name: 'Delete',
                     callback: function(key, opt){
-                        var modalInstance = $uibModal.open({
-                            animation: true,
-                            size: 'md',
-                            templateUrl: 'modules/roster/views/calendarDelete.html',
-                            controller: 'calendarDeleteCtrl',
-                            resolve: {
-                                event: function(){
-                                    return event;
-                                }
-                            },
-                        });
-                        modalInstance.result
-                            .then(function(result) {
-                                $scope.events.push(result);
-                            }, function(result) {
-                                // dismiss
-                            });
+                        var UID = opt.selector.split('_')[2];
+                        console.log(UID);
+                        RosterService.GetDetailRoster({UID: UID})
+                        .then(function(response){
+                                var modalInstance = $uibModal.open({
+                                    animation: true,
+                                    size: 'md',
+                                    templateUrl: 'modules/roster/views/calendarDelete.html',
+                                    controller: 'calendarDeleteCtrl',
+                                    resolve: {
+                                        data: function(){
+                                            return response.data;
+                                        }
+                                    },
+                                });
+                                modalInstance.result
+                                .then(function(result) {
+                                        $scope.events.splice(0, $scope.events.length);
+                                        ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
+                                }, function() {}); 
+                        }, function(error){})
                     },
                     icon: function(opt, $itemElement, itemKey, item){
                         // Set the content to the menu trigger selector and add an bootstrap icon to the item.
@@ -150,7 +120,8 @@ app.controller('calendarCtrl', function(doctorService, $state, $scope, $compile,
         });
         modalInstance.result
             .then(function(result) {
-                $scope.events.push(result);
+                    $scope.events.splice(0, $scope.events.length);
+                    ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
             }, function(result) {
                 // dismiss
             });
@@ -203,19 +174,25 @@ app.controller('calendarCtrl', function(doctorService, $state, $scope, $compile,
             }
         }
     };
+    $scope.viewRender = function(view, element){
+        $scope.calendarTemp.startDate = moment(view.start).format('YYYY-MM-DD Z');
+        $scope.calendarTemp.endDate = moment(view.end).format('YYYY-MM-DD Z');
+        ServerListCalendar($scope.calendarTemp.startDate, $scope.calendarTemp.endDate);
+    };
     $scope.calendarConfig = {
         calendar: {
             schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-            editable: true,
+            editable: false,
+            eventDurationEditable: false,
             selectable: true,
             // selectHelper: true,
             // weekMode: 'liquid',
             header: {
                 left: 'today prev,next',
                 center: 'title',
-                right: 'month agendaWeek agendaDay',//'month,agendaWeek,agendaDay'
+                right: '',//'month,agendaWeek,agendaDay'
             },
-            height: 450,
+            height: 900,
             // timeFormat: 'H(:mm)', // uppercase H for 24-hour clock
             eventRender: $scope.eventRender,
             eventAfterRender: $scope.eventAfterRender,
@@ -223,9 +200,52 @@ app.controller('calendarCtrl', function(doctorService, $state, $scope, $compile,
             eventResize: $scope.eventResize,
             eventClick: $scope.eventClick,
             eventRightclick: $scope.eventRightclick,
+            viewRender: $scope.viewRender,
             dayClick: $scope.dayClick,
             select: $scope.select,
         }
-    };  
-
+    }; 
+    function ServerListCalendar(startDate, endDate){
+            var postData = {
+                    Filter: [
+                            {
+                                UserAccount: {
+                                    UID: $stateParams.doctorId
+                                }
+                            },
+                            {
+                                Roster: {
+                                    Enable: 'Y'
+                                }
+                            }
+                    ],
+                    Range: [
+                            {
+                                Roster: {
+                                        FromTime: [startDate, endDate]
+                                }
+                            }
+                    ]
+            }
+            RosterService.PostListRoster(postData)
+            .then(function(response){
+                    _.forEach(response.data.rows, function(item, index){
+                            var color = (item.isRecurrence === 'Y')?'green':'green';
+                            var textColor = 'white';
+                            var textOccurance =  (item.isRecurrence === 'Y')?'Occur':'';
+                            $scope.events.push({
+                                    UID: item.UID,
+                                    title: item.Services[0].ServiceName,
+                                    start: new Date(item.FromTime),
+                                    end: new Date(item.ToTime),
+                                    textColor: textColor,
+                                    color: color,
+                                    textOccurance: textOccurance
+                            });
+                    })
+            }, function(error){
+                    
+            })
+            
+    }
 });

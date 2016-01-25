@@ -9,13 +9,29 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
 import com.redimed.telehealth.patient.WaitingActivity;
 import com.redimed.telehealth.patient.network.Config;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -37,14 +53,47 @@ public class SocketService extends Service {
         auth = uidTelehealth.getString("token", null);
         deviceId = uidTelehealth.getString("deviceId", null);
         try {
+            SSLContext sc = null;
+            try {
+                sc = SSLContext.getInstance("TLS");
+                sc.init(null, trustAllCerts, new SecureRandom());
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (KeyManagementException e) {
+                e.printStackTrace();
+            }
+            HttpsURLConnection.setDefaultHostnameVerifier(new RelaxedHostNameVerifier());
+            IO.setDefaultSSLContext(sc);
             IO.Options opts = new IO.Options();
+            opts.secure = true;
             opts.forceNew = true;
+            opts.sslContext = sc;
             opts.reconnection = true;
             opts.query = "__sails_io_sdk_version=0.11.0&Authorization=Bearer " + auth + "&DeviceID=" + deviceId + "&SystemType=Android";
             socket = IO.socket(Config.socketURL, opts);
             socket.connect();
         } catch (URISyntaxException e) {
             e.printStackTrace();
+        }
+    }
+
+    private TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+            return new java.security.cert.X509Certificate[] {};
+        }
+
+        public void checkClientTrusted(X509Certificate[] chain,
+                                       String authType) throws CertificateException {
+        }
+
+        public void checkServerTrusted(X509Certificate[] chain,
+                                       String authType) throws CertificateException {
+        }
+    } };
+
+    public static class RelaxedHostNameVerifier implements HostnameVerifier {
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
         }
     }
 

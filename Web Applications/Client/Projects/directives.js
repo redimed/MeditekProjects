@@ -128,7 +128,6 @@ app.directive('patientDetailDirective', function() {
                     };
                 }, function(error) {});
             };
-
         },
     };
 });

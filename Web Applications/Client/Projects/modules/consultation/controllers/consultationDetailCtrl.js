@@ -5,34 +5,6 @@ var app = angular.module("app.authentication.consultation.detail.controller", [
     'app.authentication.consultation.directives.consultNoteDirectives'
 ]);
 app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $http, consultationServices, WAAppointmentService, $stateParams, AdmissionService, $q, toastr) {
-    navigator.getUserMedia = (navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia);
-    if (navigator.getUserMedia) {
-        // Request the camera.
-        navigator.getUserMedia(
-            // Constraints
-            {
-                video: true
-            },
-
-            // Success Callback
-            function(localMediaStream) {
-                console.log("camera support");
-            },
-
-            // Error Callback
-            function(err) {
-                // Log the error to the console.
-                console.log('The following error occurred when trying to use getUserMedia: ' + err);
-            }
-        );
-
-    } else {
-        console.log("Aaaaaaaaaaaaaaaa");
-        alert('Sorry, your browser does not support getUserMedia');
-    }
     $scope.Params = $stateParams;
     console.log("$scope.Params", $scope.Params.UID);
     $scope.getTelehealthDetail = function(UID) {
@@ -48,20 +20,39 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
     var audio = new Audio('theme/assets/global/audio/ringtone.mp3');
     console.log(" $scope.userInfo", $scope.userInfo);
 
-    function OpentokSendCall(uidCall, uidUser) {
+    function OpentokSendCall(uidCall, uidUser, message) {
         console.log("uidCall", uidCall);
         console.log("uidUser", uidUser);
         io.socket.get('/api/telehealth/socket/messageTransfer', {
-            from: uidUser,
+            from: '16d78cca-33bf-4f59-bf95-8b98b21250a6',
             to: uidCall,
-            message: "call",
+            message: message,
             sessionId: $scope.Opentok.sessionId,
             fromName: $scope.userInfo.UserName
         }, function(data) {
             console.log("send call", data);
         });
     };
-
+    function EndCall() {
+        audio.pause();
+        swal.close();
+    }
+    io.socket.on('receiveMessage', function(msg) {
+        switch (msg.message) {
+            case 'decline':
+                EndCall();
+                break;
+            case 'answer':
+                EndCall();
+                window.open($state.href("blank.call", {
+                    apiKey: $scope.Opentok.apiKey,
+                    sessionId: $scope.Opentok.sessionId,
+                    token: $scope.Opentok.token,
+                    userName: $scope.opentokData.userName
+                }));
+                break;
+        }
+    });
     $scope.opentokData = {
             userName: null,
             userCall: null,
@@ -74,39 +65,25 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                     if (data.data[0].TeleUID != null) {
                         $scope.opentokData.userCall = data.data[0].TeleUID;
                         $scope.opentokData.userName = data.data[0].FirstName + " " + data.data[0].LastName;
-                        // swal({
-                        //     title: $scope.opentokData.userName,
-                        //     imageUrl: "theme/assets/global/images/E-call_33.png",
-                        //     timer: 10000,
-                        //     showConfirmButton: false,
-
-                        // }, function(isConfirm) {
-                        //     if (isConfirm) {
-                                
-                        //     } else {
-                        //         audio.pause();
-                        //         swal.close();
-                        //         console.log("1111111111111");
-                        //     };
-                        // });
-                        // audio.loop = true;
-                        // audio.play();
-                        
-                        // return
-
-                        // console.log(audio);
-
-                        OpentokSendCall($scope.opentokData.userCall, $scope.userInfo.UID);
-                        window.open($state.href("blank.call", {
-                            apiKey: $scope.Opentok.apiKey,
-                            sessionId: $scope.Opentok.sessionId,
-                            token: $scope.Opentok.token,
-                            userName: $scope.opentokData.userName
-                        }));
-                        console.log($scope.opentokData.userName);
-                        console.log($scope.opentokData.userCall);
+                        OpentokSendCall($scope.opentokData.userCall, $scope.userInfo.UID, "call");
+                        swal({
+                            title: $scope.opentokData.userName,
+                            imageUrl: "theme/assets/global/images/E-call_33.png",
+                            text: "<img src='theme/assets/global/img/loading.gif' />",
+                            timer: 30000,
+                            html: true,
+                            showCancelButton: false,
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtonText: "Cancel",
+                            closeOnConfirm: true
+                        }, function() {
+                            OpentokSendCall($scope.opentokData.userCall, $scope.userInfo.UID, "cancel");
+                            EndCall();
+                        });
+                        audio.loop = true;
+                        audio.play();
                     } else {
-
+                        toastr.error("Patient Is Not Exist", "error");
                     };
                 });
             }
@@ -192,16 +169,16 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
             };
         });
     /*==addmission end==*/
-    $scope.eForms = function(){
+    $scope.eForms = function() {
         $state.go("authentication.eForms.appointment");
     };
-    $scope.admission = function(){
+    $scope.admission = function() {
         $state.go("authentication.consultation.detail.admission.detail");
     };
-    $scope.consultNote = function(){
+    $scope.consultNote = function() {
         $state.go("authentication.consultation.detail.consultNote");
     };
-    $scope.telehealthDetail = function(){
+    $scope.telehealthDetail = function() {
         $state.go("authentication.consultation.detail.telehealth");
     };
 });

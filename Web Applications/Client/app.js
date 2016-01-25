@@ -6,7 +6,6 @@
 
 
  var app = express();
-
 //**SSL file and passphrase use for server
  var ssl_options = {
     pfx: fs.readFileSync('key/star_redimed_com_au.pfx'),
@@ -33,9 +32,9 @@ if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
 }
 
-// https.createServer(ssl_options,app).listen(app.get('port'),function(){
-// 	console.log('Express server listening on port ' + app.get('port'));
-// })
-http.createServer(app).listen(app.get('port'), function(){
-	console.log('Express server listening on port ' + app.get('port'));
-});
+ https.createServer(ssl_options,app).listen(app.get('port'),function(){
+ 	console.log('Express server listening on port ' + app.get('port'));
+})
+//http.createServer(app).listen(app.get('port'), function(){
+//	console.log('Express server listening on port ' + app.get('port'));
+//});

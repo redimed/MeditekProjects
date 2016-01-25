@@ -199,6 +199,7 @@ module.exports = {
         }
     },
     RequestActivationCode: function(req, res) {
+        console.log("RequestActivationCode", JSON.stringify(req.body));
         if (typeof req.body.data == 'undefined' || !HelperService.toJson(req.body.data)) {
             var err = new Error("Telehealth.RequestActivationCode.Error");
             err.pushError("Invalid Params");
@@ -240,20 +241,25 @@ module.exports = {
                                 message: 'Request Verification Code Successfully!'
                             });
                         }, function(error) {
+                            console.log("111111111111");
                             return res.serverError(ErrorWrap(error));
                         });
                     }).catch(function(err) {
+                        console.log("222222222");
                         res.serverError(err.getBody());
                     })
                 } else {
+                    console.log("3333333333");
                     var err = new Error("Telehealth.RequestActivationCode.Error");
                     err.pushError("User Is Not Exist");
                     res.serverError(ErrorWrap(err));
                 }
             }).catch(function(err) {
+                console.log("444444444444");
                 res.serverError(ErrorWrap(err));
             })
         } else {
+            console.log("555555555");
             var err = new Error("Telehealth.RequestActivationCode.Error");
             err.pushError("Invalid Params");
             res.serverError(ErrorWrap(err));

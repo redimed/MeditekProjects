@@ -25,7 +25,10 @@ module.exports = function(objCheckOverlap) {
                     where: whereClauseUserAccount,
                     required: true
                 }],
-                raw: true
+                raw: true,
+                where: {
+                    Enable: 'Y'
+                }
             })
             .then(function(arrRoster) {
                 if (!_.isEmpty(arrRoster) &&

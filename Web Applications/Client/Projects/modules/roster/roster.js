@@ -1,5 +1,6 @@
 var app = angular.module('app.authentication.roster',[
 	'app.authentication.roster.controller',
+	'app.authentication.roster.services'
 ]);
 
 app.config(function($stateProvider){

@@ -1,0 +1,17 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" 
+		aria-hidden="true" ng-click="cancel()"></button>
+	<h4 class="modal-title uppercase bold font-red">
+		<i class="glyphicon glyphicon-calendar"></i> Notification</h4>
+</div>
+<div class="modal-body">
+	<h3>List Roster Overlapped</h3>
+	<p style="color: red" ng-repeat="item in data">
+		{{item.FromTime}}-{{item.ToTime}}
+	</p>
+</div>
+<div class="modal-footer">
+	<div class="form-actions right">
+		<button type="button" class="btn btn-lg dark" data-dismiss="modal" ng-click="cancel()">Cancel</button>
+	</div>
+</div>

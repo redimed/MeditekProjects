@@ -65,7 +65,7 @@
 			</thead>
 			<tbody>
 			<tbody>
-				<tr ng-repeat="d in doctors" ng-click="clickOpen(d.UID,d.UserAccount.RelUserRoles[0].RoleId)">
+				<tr ng-repeat="d in doctors" ng-click="clickDoctor(d.UserAccount.UID)">
 					<td>{{d.stt}}</td>
 					<td ng-repeat="i in items" >{{i.field=='UserAccount'?d[i.field]['PhoneNumber']:d[i.field]}}</td>
 					<td>{{ d.UserAccount.RelUserRoles[0].Role.RoleName}}</td>

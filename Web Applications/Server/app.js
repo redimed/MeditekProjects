@@ -22,7 +22,7 @@
 // no matter where we actually lift from.
 process.chdir(__dirname);
 //phan quoc chien bo qua xac nhan ssl
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 // Ensure a "sails" can be located:
 (function() {
   var sails;

@@ -163,15 +163,17 @@ module.exports = {
         }
     },
     GenerateConferenceSession: function(req, res) {
+        console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
         opentok.createSession({
             mediaMode: "routed"
         }, function(err, session) {
             if (err) return res.serverError(ErrorWrap(err));
+            console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
             var sessionId = session.sessionId;
             var tokenOptions = {
                 role: 'moderator',
-                // expireTime : (new Date().getTime() / 1000)+(7 * 24 * 60 * 60),
-                // data :'name=Johnny'
+                expireTime : (new Date().getTime() / 1000)+(7 * 24 * 60 * 60),
+                data :'name=Johnny'
             };
             var token = opentok.generateToken(sessionId, tokenOptions);
             if (token != null && sessionId != null) res.ok({

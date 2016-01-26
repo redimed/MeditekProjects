@@ -13,6 +13,9 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
             console.log("$scope.wainformation", $scope.wainformation);
         }, function(error) {});
     };
+
+    console.log('opentok',$scope.Opentok);
+
     $scope.getTelehealthDetail($scope.Params.UID);
 
     /*=========opentok begin=========*/
@@ -24,7 +27,7 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         console.log("uidCall", uidCall);
         console.log("uidUser", uidUser);
         io.socket.get('/api/telehealth/socket/messageTransfer', {
-            from: '16d78cca-33bf-4f59-bf95-8b98b21250a6',
+            from: $scope.userInfo.TelehealthUser.UID,
             to: uidCall,
             message: message,
             sessionId: $scope.Opentok.sessionId,

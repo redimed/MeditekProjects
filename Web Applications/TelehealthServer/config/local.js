@@ -39,8 +39,8 @@ module.exports = {
      ***************************************************************************/
 
     ssl: {
-        key: require('fs').readFileSync(__dirname + '/ssl/key.pem'),
-        cert: require('fs').readFileSync(__dirname + '/ssl/cert.pem')
+        key: require('fs').readFileSync(__dirname + '/ssl/star_redimed_com_au.key'),
+        cert: require('fs').readFileSync(__dirname + '/ssl/star_redimed_com_au.pem')
     },
 
     /***************************************************************************
@@ -79,6 +79,6 @@ module.exports = {
      * 'development' environment.                                              *
      ***************************************************************************/
 
-    environment: process.env.NODE_ENV || 'development'
+    // environment: process.env.NODE_ENV || 'development'
 
 };

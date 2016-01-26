@@ -91,6 +91,9 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         name: 'Silver Savings Account'
     }];
 
+
+    console.log("=======================",$cookies.getObject('userInfo'));
+
     //phan quoc chien get detail open tok
     function OpentokCreateSession() {
         AuthenticationService.getDetailOpentok().then(function(data) {

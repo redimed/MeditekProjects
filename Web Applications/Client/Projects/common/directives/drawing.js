@@ -28,9 +28,9 @@ angular.module("app.common.drawing",[])
 
             scope.sizes=[
                 {'width':550,'height':500,desc:'Canvas 550x500'},
-                {'width':1000,'height':900,desc:'Canvas 1100x900'},
                 {'width':750,'height':650,desc:'Canvas 750x650'},
-                 {'width':900,'height':750,desc:'Canvas 900x750'},
+                {'width':900,'height':750,desc:'Canvas 900x750'},
+                {'width':1000,'height':900,desc:'Canvas 1100x900'},
             ];
             scope.size=scope.sizes[1];
 
@@ -41,7 +41,7 @@ angular.module("app.common.drawing",[])
                 {size:25,desc:'Font 25px'},
                 {size:30,desc:'Font 30px'},
             ]
-            scope.fontSize=scope.fontSizes[2];
+            scope.fontSize=scope.fontSizes[4];
 
             scope.lineWidth = attrs.linewidth;
             scope.treeArr = [];

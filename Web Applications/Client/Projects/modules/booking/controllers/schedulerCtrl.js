@@ -251,7 +251,7 @@ app.controller('schedulerCtrl', function($scope,$timeout, $uibModal){
         defaultView: 'agendaDay', // the hien trong ngay // 'agendaWeek' the hien trong tuan
         defaultDate: '2016-01-07',
         editable: true,
-        slotDuration: '00:30:00',//'00:5:00', // khoang cach thoi gian
+        slotDuration: '00:05:00',//'00:5:00', // khoang cach thoi gian
         selectable: true, //true, // ko cho select
         eventLimit: true, // allow "more" link when too many events
         scrollTime: moment(),

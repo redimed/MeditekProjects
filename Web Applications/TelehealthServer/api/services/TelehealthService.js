@@ -192,7 +192,8 @@ module.exports = {
             params: !info.params ? null : info.params,
             headers: !info.headers ? null : info.headers,
             dataType: 'json',
-            withCredentials: true
+            withCredentials: true,
+            rejectUnauthorized: false
         })
     },
     SendGCMPush: function(opts, tokens) {

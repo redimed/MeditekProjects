@@ -11,7 +11,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
             // Constraints
             {
                 video: true,
-                audio:true
+                audio: true
             },
 
             // Success Callback
@@ -25,9 +25,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
                 console.log('The following error occurred when trying to use getUserMedia: ' + err);
             }
         );
-
     } else {
-        console.log("Aaaaaaaaaaaaaaaa");
         alert('Sorry, your browser does not support getUserMedia');
     }
     var apiKey = $stateParams.apiKey;
@@ -39,14 +37,6 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
     console.log(apiKey);
     console.log(sessionId);
     console.log(token);
-
-    console.log("socket", io.socket);
-
-    // io.socket.on('receiveMessage', function onServerSentEvent(msg) {
-    //     console.log("=====================", msg);
-
-    // });
-
 
     //Connect to the session
     $scope.session.connect(token, function(error) {

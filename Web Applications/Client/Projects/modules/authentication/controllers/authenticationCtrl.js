@@ -90,6 +90,10 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }, {
         name: 'Silver Savings Account'
     }];
+
+
+    console.log("=======================",$cookies.getObject('userInfo'));
+
     //phan quoc chien get detail open tok
     function OpentokCreateSession() {
         AuthenticationService.getDetailOpentok().then(function(data) {
@@ -102,15 +106,17 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     };
 
     OpentokCreateSession();
-    
+
     //phan quoc chien join room
     function OpenTokJoinRoom() {
+        console.log('user UID', $cookies.getObject('userInfo').TelehealthUser.UID);
         io.socket.get('/api/telehealth/socket/joinRoom', {
-            uid: $cookies.getObject('userInfo').UID
+            uid: $cookies.getObject('userInfo').TelehealthUser.UID
         }, function(data) {
             console.log("JoinRoom", data);
         });
     };
-
-    OpenTokJoinRoom();
+    if ($cookies.getObject('userInfo').TelehealthUser != null) {
+        OpenTokJoinRoom();
+    };
 });

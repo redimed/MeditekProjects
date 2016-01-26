@@ -3,13 +3,24 @@ package com.redimed.telehealth.patient.network;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+
 import com.google.gson.JsonObject;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.squareup.okhttp.OkHttpClient;
+
 import java.io.IOException;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
+import java.security.cert.CertificateException;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -39,20 +50,59 @@ public class RESTClient {
         setupRestClient();
     }
 
+    public static OkHttpClient getUnsafeOkHttpClient() {
+        try {
+            // Create a trust manager that does not validate certificate chains
+            final TrustManager[] trustAllCerts = new TrustManager[]{
+                    new X509TrustManager() {
+                        @Override
+                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
+                                throws CertificateException {
+                        }
+
+                        @Override
+                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
+                                throws CertificateException {
+                        }
+
+                        @Override
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                            return null;
+                        }
+                    }
+            };
+
+            // Install the all-trusting trust manager
+            final SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+
+            // Create an ssl socket factory with our all-trusting manager
+            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+            OkHttpClient okHttpClient = new OkHttpClient();
+            okHttpClient.setSslSocketFactory(sslSocketFactory);
+            okHttpClient.setReadTimeout(30, TimeUnit.SECONDS);
+            okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
+            okHttpClient.setHostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            });
+            CookieManager cookieManager = new CookieManager();
+            cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+            okHttpClient.setCookieHandler(cookieManager);
+            return okHttpClient;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static void setupRestClient() {
-        okHttpClient = new OkHttpClient();
-        okHttpClient.setReadTimeout(30, TimeUnit.SECONDS);
-        okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
-
-        CookieManager cookieManager = new CookieManager();
-        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
-        okHttpClient.setCookieHandler(cookieManager);
-
         //3009
         restAdapter = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(Config.apiURL)
-                .setClient(new InterceptingOkClient(okHttpClient))
+                .setClient(new InterceptingOkClient(getUnsafeOkHttpClient()))
                 .setRequestInterceptor(new SessionRequestInterceptor())
                 .setErrorHandler(new RetrofitErrorHandler(context))
                 .build();
@@ -61,7 +111,7 @@ public class RESTClient {
         restAdapterCore = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(Config.apiURLCore)
-                .setClient(new InterceptingOkClient(okHttpClient))
+                .setClient(new InterceptingOkClient(getUnsafeOkHttpClient()))
                 .setRequestInterceptor(new SessionRequestInterceptor())
                 .setErrorHandler(new RetrofitErrorHandler(context))
                 .build();
@@ -70,7 +120,7 @@ public class RESTClient {
         restAdapterLogin = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(Config.apiURLLogin)
-                .setClient(new InterceptingOkClient(okHttpClient))
+                .setClient(new InterceptingOkClient(getUnsafeOkHttpClient()))
                 .setRequestInterceptor(new SessionRequestInterceptor())
                 .setErrorHandler(new RetrofitErrorHandler(context))
                 .build();
@@ -99,23 +149,21 @@ public class RESTClient {
         return restAdapterLogin.create(RegisterApi.class);
     }
 
-    public static class InterceptingOkClient extends OkClient
-    {
+    public static class InterceptingOkClient extends OkClient {
         public InterceptingOkClient(OkHttpClient client) {
             super(client);
         }
 
         @Override
-        public Response execute(Request request) throws IOException
-        {
+        public Response execute(Request request) throws IOException {
             Response response = super.execute(request);
             for (final Header header : response.getHeaders()) {
-                if (null!= header.getName() && header.getName().equals("set-cookie")) {
+                if (null != header.getName() && header.getName().equals("set-cookie")) {
                     editor = uidTelehealth.edit();
                     editor.putString("cookie", header.getValue());
                     editor.apply();
                 }
-                if (header.getName().equalsIgnoreCase("requireupdatetoken") && header.getValue().equalsIgnoreCase("true")){
+                if (header.getName().equalsIgnoreCase("requireupdatetoken") && header.getValue().equalsIgnoreCase("true")) {
                     dataRefresh = new JsonObject();
                     dataRefresh.addProperty("refreshCode", uidTelehealth.getString("refreshCode", null));
                     RESTClient.getRegisterApiLogin().getNewToken(dataRefresh, new Callback<JsonObject>() {
@@ -129,7 +177,7 @@ public class RESTClient {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            Log.d(TAG , "ERROR" + error.getLocalizedMessage());
+                            Log.d(TAG, "ERROR" + error.getLocalizedMessage());
                         }
                     });
                 }

@@ -5,11 +5,13 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-4 col-xs-6">
                             <div class="thumbnail" style="margin-bottom:3px; border-radius: 50% !important">
-                                <img src="theme/assets/global/images/no_person.jpg" class="profile-imge" width="100%" style="border-radius: 50% !important" />
+                                <img dimage dimage-uid="info.patientInfo" class="profile-imge" width="100%" style="border-radius: 50% !important" />
+                                <!-- <img src="theme/assets/global/images/no_person.jpg" class="profile-imge" width="100%" style="border-radius: 50% !important" /> -->
                             </div>
                         </div>
                         <div class="col-md-8 col-md-4 col-xs-6">
-                            <h3 class="bold">{{patientInfo.FirstName +" "+ patientInfo.LastName}}</h3>
+                            <h3 class="bold" ng-if="patientInfo">{{patientInfo.FirstName +" "+ patientInfo.LastName}}</h3>
+                            <h3 class="bold" ng-if="!patientInfo">N/A</h3>
                             <h5 class="bold uppercase">Patient</h5>
                         </div>
                     </div>
@@ -50,7 +52,8 @@
                 <tr>
                     <td>Mobile</td>
                     <td>
-                        N/A
+                        <span ng-if="patientInfo.UserAccount && patientInfo.UserAccount.PhoneNumber != null">{{patientInfo.UserAccount.PhoneNumber}}</span>
+                        <span ng-if="!patientInfo.UserAccount || patientInfo.UserAccount.PhoneNumber == null">N/A</span>
                     </td>
                 </tr>
                 <tr>

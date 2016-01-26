@@ -371,11 +371,6 @@ img.profile-imge {
     position: relative;
 }
 
-.my-skype .my-button {
-    opacity: .75;
-    width: 50px;
-}
-
 .my-skype .my-button:hover {
     opacity: 1;
 }

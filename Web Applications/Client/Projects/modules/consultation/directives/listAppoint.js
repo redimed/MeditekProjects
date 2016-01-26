@@ -20,7 +20,8 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                         Appointment: {
                             Status: null,
                             Enable: 'Y',
-                            CreatedDate: null
+                            CreatedDate: null,
+                            FromTime:null
                         }
                     }, {
                         Patient: {
@@ -49,7 +50,8 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
             };
             if ($stateParams.roleid == 'roleid') {
                 var today = new Date();
-                scope.info.data.Filter[0].Appointment.CreatedDate = moment(today).format('YYYY-MM-DD Z');
+                scope.info.data.Filter[0].Appointment.FromTime = moment(today).format('YYYY-MM-DD Z');
+                //console.log(moment().add(1,'days'));
             }
             scope.toggleFilter = function() {
                 scope.info.toggle = scope.info.toggle === false ? true : false;

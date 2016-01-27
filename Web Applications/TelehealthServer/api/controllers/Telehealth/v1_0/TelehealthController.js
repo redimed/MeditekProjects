@@ -211,6 +211,7 @@ module.exports = {
         var deviceId = req.headers.deviceid;
         var deviceType = req.headers.systemtype;
         var phoneRegex = /^\+[0-9]{9,15}$/;
+        console.log("====================================");
         if (phoneNumber && phoneNumber.match(phoneRegex) && deviceId && deviceType) {
             UserAccount.find({
                 where: {

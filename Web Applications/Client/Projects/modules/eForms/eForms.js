@@ -29,7 +29,7 @@ app.config(function($stateProvider){
 			controller: 'eFormsCreateCtrl',
 		})
 		.state('authentication.eForms.appointment',{
-			url: '/appointment',
+			url: '/appointment/:UID/:UIDPatient',
 			data: {pageTitle: 'E-Forms Appointment'},
 			templateUrl: 'modules/eForms/views/eFormsAppointment.html',
 			controller: 'eFormsAppoitmentCtrl',

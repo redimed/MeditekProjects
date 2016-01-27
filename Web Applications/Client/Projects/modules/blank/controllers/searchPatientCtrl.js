@@ -23,8 +23,8 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
         $scope.submitted = false;
     }
     $scope.next = function() {
+        $scope.submitted = true;
         if ($scope.step1.$valid) {
-            $scope.submitted = true;
             blankServices.searchPatient($scope.postData.data).then(function(response) {
                 if (response.data.length != 0) {
                     toastr.success('success');

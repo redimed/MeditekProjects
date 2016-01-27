@@ -1,0 +1,28 @@
+<div ng-show="editor==false" id="{{'form_view '+option.value1}}">
+</div>
+<div ng-show="editor==true" id="{{idform}}">
+	<div class="col-md-12">
+		<div class="col-md-3"><label>Title</label></div>
+		<div class="col-md-5">
+			<input type="text" ng-model="option.value1" />
+		</div>
+	</div>
+	<div class="col-md-12">&nbsp;</div>
+	<div class="col-md-12">
+		<div ng-form name="checkInForm" novalidate>
+			<div class="form-group">
+				<div id="viewIMG">
+					<canvas id="imageAvatarCanvas" class="thumbnail" ng-show="isChoseAvatar==true" ></canvas>
+					<img dimage dimage-uid="option.FileUID" dimage-size="'300'">
+				</div>
+				<div class="container">
+					<label for="imageAvatar" style="float:left; padding-right: 1%;"> 
+						<span class="btn green" style="width: 120px;">Select Image</span>
+					</label> 
+					<span class="btn red" style="width: 120px; float:left" ng-click="SaveImage()">Save Image</span>
+					<input type="file" id="imageAvatar" ng-click="setType('QuestionImage')" ng-model="option.value2" name="imageAvatar" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

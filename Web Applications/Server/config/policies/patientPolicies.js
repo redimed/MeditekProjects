@@ -6,7 +6,8 @@ module.exports={
 		'PatientController': ['isAuthenticated','isAdmin'],
 		'CheckPatient': true,
 		'SearchPatient':true,
-		'RegisterPatient':true
+		'RegisterPatient':true,
+		'GetPatient':true
 		
 	}
 }

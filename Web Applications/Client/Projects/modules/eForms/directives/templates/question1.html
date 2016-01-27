@@ -1,0 +1,18 @@
+<div ng-show="editor==false" id="{{'form_view '+option.value1}}">
+	<div class="row">
+		<div class="col-md-12"><label>{{option.value1}}</label></div>
+		<div class="col-md-12">&nbsp;</div>
+	</div>
+</div>
+<div ng-show="editor==true" id="{{idform}}">
+	<div class="col-md-12">
+		<label>Title</label>
+		<input type="text" ng-model="option.value1" />
+	</div>
+	<div class="col-md-12">
+		<label>Number of radio button : </label>
+		<input type="text" ng-model="option.value2" />
+		<button ng-click="generateLabel(option.value2)">Click</button>
+		{{option}}
+	</div>
+</div>

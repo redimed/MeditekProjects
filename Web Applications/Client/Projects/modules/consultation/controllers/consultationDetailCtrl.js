@@ -14,13 +14,12 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         }, function(error) {});
     };
 
-    console.log('opentok',$scope.Opentok);
+    console.log('opentok', $scope.Opentok);
 
     $scope.getTelehealthDetail($scope.Params.UID);
 
     /*=========opentok begin=========*/
     $scope.userInfo = $cookies.getObject('userInfo');
-    var audio = new Audio('theme/assets/global/audio/ringtone.mp3');
     console.log(" $scope.userInfo", $scope.userInfo);
 
     function OpentokSendCall(uidCall, uidUser, message) {
@@ -36,26 +35,12 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
             console.log("send call", data);
         });
     };
+
     function EndCall() {
         audio.pause();
         swal.close();
     }
-    io.socket.on('receiveMessage', function(msg) {
-        switch (msg.message) {
-            case 'decline':
-                EndCall();
-                break;
-            case 'answer':
-                EndCall();
-                window.open($state.href("blank.call", {
-                    apiKey: $scope.Opentok.apiKey,
-                    sessionId: $scope.Opentok.sessionId,
-                    token: $scope.Opentok.token,
-                    userName: $scope.opentokData.userName
-                }));
-                break;
-        }
-    });
+
     $scope.opentokData = {
             userName: null,
             userCall: null,
@@ -69,22 +54,12 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
                         $scope.opentokData.userCall = data.data[0].TeleUID;
                         $scope.opentokData.userName = data.data[0].FirstName + " " + data.data[0].LastName;
                         OpentokSendCall($scope.opentokData.userCall, $scope.userInfo.UID, "call");
-                        swal({
-                            title: $scope.opentokData.userName,
-                            imageUrl: "theme/assets/global/images/E-call_33.png",
-                            text: "<img src='theme/assets/global/img/loading.gif' />",
-                            timer: 30000,
-                            html: true,
-                            showCancelButton: false,
-                            confirmButtonColor: "#e74c3c",
-                            confirmButtonText: "Cancel",
-                            closeOnConfirm: true
-                        }, function() {
-                            OpentokSendCall($scope.opentokData.userCall, $scope.userInfo.UID, "cancel");
-                            EndCall();
-                        });
-                        audio.loop = true;
-                        audio.play();
+                        window.open($state.href("blank.call", {
+                            apiKey: $scope.Opentok.apiKey,
+                            sessionId: $scope.Opentok.sessionId,
+                            token: $scope.Opentok.token,
+                            userName: $scope.opentokData.userName
+                        }));
                     } else {
                         toastr.error("Patient Is Not Exist", "error");
                     };

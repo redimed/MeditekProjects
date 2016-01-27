@@ -15,7 +15,7 @@
 		
 	
     <ul  ng-if="node.nodes" class="sub-menu">
-        <li class="nav-item"  ng-repeat="(key,node) in node.nodes" ng-include="'nodes_renderer.html'">
+        <li class="nav-item"  ng-repeat="(key,node) in node.nodes" ng-include="'nodes_renderer.html'" finish-render>
         </li>
     </ul>
 </script>
@@ -38,9 +38,9 @@
 		<span class="arrow open"></span>
 		</a>
 	</li>
-    <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'">
+    <li class="nav-item" ng-repeat="(key,node) in menus"  ng-include="'nodes_renderer.html'" finish-render>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" >
     	<a href="javascript:;" ui-sref="authentication.user.profile" class="nav-link">
             <i class="icon-user"></i>
             <span class="title">User Profile</span>
@@ -54,5 +54,6 @@
 <button ng-click="test();">Test</button> -->
 
 <script>
+    
 	Layout.init(); // init current layout
 </script>

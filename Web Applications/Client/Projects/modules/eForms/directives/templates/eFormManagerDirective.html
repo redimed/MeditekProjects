@@ -1,0 +1,137 @@
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="authentication.eForms.home">E-Forms</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Appointment</b>
+        </li>
+    </ul>
+</div>
+<br>
+<div class="row">
+	<div class="col-md-4 col-sm-4" id="formList">
+		<div class="tabbable-custom nav-justified">
+            <ul class="nav nav-tabs nav-justified">
+                <li class="active">
+                    <a href="@#tab_view" data-toggle="tab"> View Existing E-Forms </a>
+                </li>
+                <li>
+                    <a href="@#tab_create" data-toggle="tab"> Create New E-Form </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_view">
+                    <div class="panel panel-default margin-top-30">
+                        <div class="table-scrollable">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th ng-click="aaaaa()">eForms</th>
+                                        <th>Created Date</th>
+                                    </tr>
+                                    <tr ng-hide="toggle">
+                                        <td><input type="text" ng-model="search1.Name" ng-keypress="search('Name', search1.Name,$event.which,1)" class="form-control" /></td>
+                                        <td><input type="text" ng-model="search1.CreatedDate" ng-click="RemoveData(1)" ng-change="search('CreatedDate', search1.CreatedDate,13,1)" class="form-control form-control-inline date-picker" size="16"data-date-format="dd/mm/yyyy"data-date-start-date="1/1/1900" data-date-end-date="0d" id="createdDate" readonly="true" /></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="t in listview" ng-click="viewEForm(apptuid, t.EFormTemplateID, t.UID)">
+                                        <td>{{t.Name}}</td>
+                                        <td>{{t.CreatedDate}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-5">
+                                    &nbsp;
+                                </div>
+                                <div class="col-md-7 col-sm-7" style="text-align:right">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+                                        <uib-pagination 
+                                        boundary-links="true" 
+                                        total-items="listView.count" 
+                                        ng-model="listView.currentPage" 
+                                        class="pagination-lg " 
+                                        previous-text="&lsaquo; " 
+                                        next-text="&rsaquo; " 
+                                        first-text="&laquo; " 
+                                        last-text="&raquo; " 
+                                        items-per-page="listView.limit" 
+                                        max-size="listView.maxSize"
+                                        ng-change="setPage(1)"></uib-pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_create">
+                	<div class="panel panel-default margin-top-30">
+                        <div class="table-scrollable">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Created Date</th>
+                                    </tr>
+                                    <tr ng-hide="toggle">
+                                        <td><input type="text" ng-model="search2.Name" ng-keypress="search('Name', search2.Name,$event.which,2)" class="form-control" /></td>
+                                        <td><input type="text" ng-model="search2.CreatedDate" ng-click="RemoveData(2)" ng-change="search('CreatedDate', search2.CreatedDate,13,2)" class="form-control form-control-inline date-picker" size="16"data-date-format="dd/mm/yyyy"data-date-start-date="1/1/1900" data-date-end-date="0d" id="createdDate2" readonly="true" /></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="t in listcreate" ng-click="createEForm(t.UID)">
+                                        <td>{{t.Name}}</td>
+                                        <td>{{t.CreatedDate}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-5">
+                                    &nbsp;
+                                </div>
+                                <div class="col-md-7 col-sm-7" style="text-align:right">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="sample_2_paginate">
+                                        <uib-pagination 
+                                        boundary-links="true" 
+                                        total-items="listCreate.count" 
+                                        ng-model="listCreate.currentPage" 
+                                        class="pagination-lg " 
+                                        previous-text="&lsaquo; " 
+                                        next-text="&rsaquo; " 
+                                        first-text="&laquo; " 
+                                        last-text="&raquo; " 
+                                        items-per-page="listCreate.limit" 
+                                        max-size="listCreate.maxSize"
+                                        ng-change="setPage(2)"></uib-pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <p ng-click=""><a class="btn btn-lg btn-block red-thunderbird" href="javascript:;"> Add</a></p> -->
+                </div>
+            </div>
+        </div>
+	</div>
+	<div ng-class="addClass" id="formBody" >
+		<div class="portlet box red-thunderbird">
+		    <div class="portlet-title">
+		        <!-- <div class="caption">
+		            <i class="glyphicon glyphicon-resize-full"></i>
+		            <span class="caption-subject bold uppercase">E-Forms Home</span>
+		            <span class="caption-helper">Sub title</span>
+		        </div> -->
+		        <div class="tools">
+                    <i ng-class="resize" ng-click="reSize()"></i>
+		            <!-- <a href="javascript:;" class="collapse"> </a>
+		            <a href="javascript:;" class="fullscreen"> </a> -->
+		        </div>
+		    </div>
+		    <div class="portlet-body" id="formView"></div>
+		</div>
+	</div>
+</div>

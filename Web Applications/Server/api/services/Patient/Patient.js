@@ -1020,6 +1020,22 @@ module.exports = {
                     model: Country,
                     attributes: ['ShortName'],
                     required: false
+                },
+                {
+                    model: PatientDVA,
+                    required: false
+                },
+                {
+                    model: PatientKin,
+                    required: false
+                },
+                {
+                    model: PatientMedicare,
+                    required: false
+                },
+                {
+                    model: PatientPension,
+                    required: false
                 }
             ]
         })

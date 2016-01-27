@@ -96,6 +96,7 @@ passport.use(new LocalStrategy({
             }
         ]
     }).then(function(user) {
+    	console.log(user);
         if (!user) {
             var err = new Error("User.notFound");
             return done(null, false, err);

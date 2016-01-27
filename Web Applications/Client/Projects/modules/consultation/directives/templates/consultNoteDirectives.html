@@ -172,10 +172,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="item in FileUploads track by $id($index)" ng-click="showImage(item.UID)">
+                                            <tr ng-repeat="item in FileUploads track by $id($index)">
                                                 <td>{{$index+1}}</td>
-                                                <td><strong>{{ item.FileName }}</strong></td>
-                                                <td >{{ item.FileType}}</td>
+                                                <td ng-click="showImage(item.UID)"><strong>{{ item.FileName }}</strong></td>
+                                                <td ng-click="showImage(item.UID)">{{ item.FileType}}</td>
+                                                <td><a class="btn red-thunderbird" ng-click="RemoveDrawing($index)">Remove</a></td>
                                             </tr>
                                         </tbody>
                                     </table>

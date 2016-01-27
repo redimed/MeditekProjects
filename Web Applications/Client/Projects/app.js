@@ -13,6 +13,7 @@ var app = angular.module('app', [
     'app.common.menuBar',
     'app.common.dimage',
     'app.common.drawing',
+    'app.common.finishRender',
     'app.common.CommonService',
     "app.unAuthentication",
     "app.authentication",

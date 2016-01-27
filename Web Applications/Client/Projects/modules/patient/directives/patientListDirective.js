@@ -138,7 +138,8 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 				scope.loadList(scope.searchObjectMap);
 			};
 
-			scope.selectPatient = function(patientUID,stt,Enable){
+			scope.selectPatient = function(patientUID,stt,Enable,FirstName,LastName){
+				console.log(FirstName);
 				if(Enable=='Y'){
 					if(!scope.appointment){
 						if(scope.uidReturn==patientUID){
@@ -167,7 +168,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 						function(isConfirm){   
 							if (isConfirm) {  
 								scope.uidReturn=patientUID;   
-								scope.appointment.runIfSuccess({UID:patientUID});
+								scope.appointment.runIfSuccess({UID:patientUID,FirstName:FirstName,LastName:LastName});
 							}else{
 								scope.uidReturn='';
 								scope.checked = false;

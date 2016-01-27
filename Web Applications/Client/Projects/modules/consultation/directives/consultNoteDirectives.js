@@ -339,6 +339,9 @@ app.directive('consultNote', function(consultationServices, $modal, $cookies, $s
             $scope.closeWindow = function(fileInfo) {
                 Window.close();
             }
+            $scope.RemoveDrawing = function(index){
+                $scope.FileUploads.splice(index,1);
+            }
             $scope.AddDrawing = function(data) {
                 if (typeof(Window) == 'undefined' || Window.closed) {
                     window.refreshCode = $rootScope.refreshCode;

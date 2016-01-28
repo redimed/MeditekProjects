@@ -107,5 +107,6 @@ module.exports = {
     GetListBooking: require('./Booking/GetListBooking'),
     RequestBooking: require('./Booking/RequestBooking'),
     UpdateRequestBooking: require('./Booking/UpdateRequestBooking'),
+    DestroyBooking: require('./Booking/DestroyBooking'),
     //begin Roster
 };

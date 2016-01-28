@@ -1,0 +1,42 @@
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 08:41:10 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T01:41:10.094Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T03:10:59.958Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T03:10:59.960Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T03:10:59.961Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T03:10:59.961Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T03:10:59.962Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T03:10:59.962Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T03:10:59.962Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T03:10:59.963Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T03:10:59.963Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T03:10:59.963Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T03:10:59.964Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T03:10:59.964Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T03:10:59.964Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T03:10:59.966Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T03:10:59.967Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T03:10:59.967Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T03:10:59.968Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 10:10:59 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T03:10:59.969Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T03:10:59.969Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T03:10:59.969Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T03:10:59.970Z"}

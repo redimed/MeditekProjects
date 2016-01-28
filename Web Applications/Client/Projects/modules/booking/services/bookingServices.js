@@ -9,5 +9,11 @@ angular.module("app.authentication.booking.services", [])
                 });
         }
 
+        services.LoadBooking = function(data){
+                return api.all("booking/list").post({
+                        data: data
+                })
+        }
+
         return services;
 });

@@ -24,7 +24,7 @@ app.controller('calendarCreateCtrl', function($scope, $stateParams, $uibModal, e
 		toTime: '',
 		IsReoccurance: 'N',
 		reoccuranceType: '',
-		endReoccurance: null,
+		endReoccurance: null
 	};
 
 	function getListService(){

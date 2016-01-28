@@ -31,6 +31,13 @@
 			<input type="text" class="form-control timepicker timepicker-24" data-default-time=''
 				ng-model="formData.toTime">
 		</div>
+		<div class="col-md-12 col-sm-12 form-group">
+			<label class="control-label">Appointment Type</label>
+			<select class="form-control"
+				ng-options="item.code as item.name for item in listTypes"
+				ng-model="formData.type">
+			</select>
+		</div>
 		<div class="col-md-6 col-sm-6">
 			<label class="control-label">Service</label>
 			<select class="form-control"

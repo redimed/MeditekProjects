@@ -7,7 +7,7 @@ module.exports = {
     UserActivation: require('./UserAccount/UserActivation'),
     UserToken: require('./UserAccount/UserToken'),
     RefreshToken: require('./UserAccount/RefreshToken'),
-    Paperless : require('./Paperless/Paperless'),
+    Paperless: require('./Paperless/Paperless'),
     //begin Appointment
     CreateTelehealthAppointment: require('./Appointment/CreateTelehealthAppointment'),
     GetDataAppointment: require('./Appointment/GetDataAppointment'),
@@ -107,6 +107,7 @@ module.exports = {
     GetListBooking: require('./Booking/GetListBooking'),
     RequestBooking: require('./Booking/RequestBooking'),
     UpdateRequestBooking: require('./Booking/UpdateRequestBooking'),
+    GetDetailBooking: require('./Booking/GetDetailBooking'),
     DestroyBooking: require('./Booking/DestroyBooking'),
     //begin Roster
 };

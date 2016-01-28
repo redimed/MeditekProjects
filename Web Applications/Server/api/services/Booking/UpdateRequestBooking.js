@@ -31,7 +31,8 @@ module.exports = function(data, userInfo) {
                             var dataAppt = {
                                 FromTime: data.Appointment.FromTime,
                                 ToTime: data.Appointment.ToTime,
-                                SiteID: data.Appointment.SiteID,
+                                Type: data.Appointment.Type,
+                                SiteID: siteRes.ID,
                                 ModifiedBy: userInfo.ID
                             };
                             return Appointment.update(dataAppt, {

@@ -62,6 +62,22 @@ module.exports = {
                 });
         }
     },
+    GetDetailBooking: function(req, res) {
+        var UID = req.param('UID');
+        Services.GetDetailBooking(UID, req.user)
+            .then(function(apptRes) {
+                res.ok(apptRes);
+            }, function(err) {
+                if (HelperService.CheckExistData(err) &&
+                    HelperService.CheckExistData(err.transaction) &&
+                    HelperService.CheckExistData(err.error)) {
+                    err.transaction.rollback();
+                    res.serverError(ErrorWrap(err.error));
+                } else {
+                    res.serverError(ErrorWrap(err));
+                }
+            });
+    },
     DestroyBooking: function(req, res) {
         var UID = req.param('UID');
         Services.DestroyBooking(UID, req.user)

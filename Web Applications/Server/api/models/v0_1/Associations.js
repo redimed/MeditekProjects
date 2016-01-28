@@ -378,5 +378,23 @@ module.exports = {
             through: 'RelEFormAppointment',
             foreignKey: 'EFormID'
         });
+
+        //association Service - Appointment
+        Appointment.belongsToMany(Service, {
+            through: 'RelAppointmentService',
+            foreignKey: 'AppointmentID'
+        });
+        Service.belongsToMany(Appointment, {
+            through: 'RelAppointmentService',
+            foreignKey: 'ServiceID'
+        });
+
+        //association Site - Appointment
+        Appointment.belongsTo(Site, {
+            foreignKey: 'SiteID'
+        });
+        Site.hasMany(Appointment, {
+            foreignKey: 'SiteID'
+        });
     }
 };

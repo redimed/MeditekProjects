@@ -62,6 +62,11 @@ var RosterRoutes = require('./routes/RosterRoutes');
 _.extend(routes, RosterRoutes);
 //end module Roster
 
+//begin module Booking
+var BookingRoster = require('./routes/BookingRoutes');
+_.extend(routes, BookingRoster);
+//end module Booking
+
 //begin module Paperless
 var PaperlessRoutes = require('./routes/PaperlessRoutes');
 _.extend(routes, PaperlessRoutes);

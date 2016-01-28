@@ -92,7 +92,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }];
 
 
-    console.log("=======================",$cookies.getObject('userInfo'));
+    console.log("=======================", $cookies.getObject('userInfo'));
 
     //phan quoc chien get detail open tok
     function OpentokCreateSession() {
@@ -119,4 +119,16 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     if ($cookies.getObject('userInfo').TelehealthUser != null) {
         OpenTokJoinRoom();
     };
+    io.socket.on('receiveMessage', function(msg) {
+        console.log("AAAAaaaaaaaaaaaaaaaaaaaaaaaaa",msg.message);
+        return
+        switch (msg.message) {
+            case 'decline':
+                window.close();
+                break;
+            case 'cancel':
+                window.close();
+                break;
+        }
+    });
 });

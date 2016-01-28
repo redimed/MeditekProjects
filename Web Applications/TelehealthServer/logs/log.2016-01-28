@@ -40,3 +40,300 @@
 {"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T03:10:59.969Z"}
 {"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T03:10:59.969Z"}
 {"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T03:10:59.970Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T03:32:28.714Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 10:32:28 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T03:32:28.730Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:13:42.023Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:13:42.112Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:13:42.115Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:13:42.116Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:13:42.117Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:13:42.344Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:13:42.346Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:15:50.224Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:15:50.249Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:15:50.304Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:15:50.305Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:15:50.309Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:15:50.523Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:15:50.546Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:20:34.111Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T04:20:34.111Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:20:34.111Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T04:20:34.111Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T04:20:34.111Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T04:20:34.111Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T04:20:34.111Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 11:20:34 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:20:34.127Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 11:21:30 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:21:30.467Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:23:28.177Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:23:28.208Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:23:28.255Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:23:28.264Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:23:28.295Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:23:28.444Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:23:29.046Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:24:56.898Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:24:56.914Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 11:24:56 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T04:24:56.929Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T04:24:56.929Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T04:24:56.929Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:24:56.929Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:25:22.290Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T04:25:22.292Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:25:22.296Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T04:25:22.297Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T04:25:22.297Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T04:25:22.297Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T04:25:22.298Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T04:25:22.298Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T04:25:22.298Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T04:25:22.299Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T04:25:22.299Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T04:25:22.299Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:25:22.300Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T04:25:22.300Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T04:25:22.301Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T04:25:22.301Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:25:22.302Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 11:25:22 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T04:25:22.303Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T04:25:22.303Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T04:25:22.303Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:25:22.304Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:27:43.173Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:30:33.039Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 11:30:33 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:30:33.055Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 11:32:16 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T04:32:16.260Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:32:16.276Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:32:16.811Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 11:34:45 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T04:34:45.691Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:34:45.707Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:34:47.550Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 11:38:23 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T04:38:23.523Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:39:33.343Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:43:03.623Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorType: 'connect ECONNREFUSED',\n  ErrorsList: undefined,\n  Stack: 'Error: connect ECONNREFUSED\\n    at exports._errnoException (util.js:746:11)\\n    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1010:19)' }","timestamp":"2016-01-28T04:50:12.188Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorType: 'connect ECONNREFUSED',\n  ErrorsList: undefined,\n  Stack: 'Error: connect ECONNREFUSED\\n    at exports._errnoException (util.js:746:11)\\n    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1010:19)' }","timestamp":"2016-01-28T04:50:13.437Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:50:30.424Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:51:15.817Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:52:49.430Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:54:09.552Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:56:54.128Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T04:59:04.945Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T05:00:01.770Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T05:00:01.772Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T05:00:01.772Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T05:00:01.773Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T05:00:01.773Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T05:00:01.773Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T05:00:01.773Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T05:00:01.774Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T05:00:01.774Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T05:00:01.774Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T05:00:01.775Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T05:00:01.775Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T05:00:01.775Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T05:00:01.775Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T05:00:01.777Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T05:00:01.777Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T05:00:01.777Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 12:00:01 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T05:00:01.779Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T05:00:01.779Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T05:00:01.779Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T05:00:01.780Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T05:00:45.410Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T05:02:59.405Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T05:54:49.449Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T05:56:50.809Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T05:58:39.114Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T06:00:13.053Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T06:01:27.023Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T06:02:23.022Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T06:04:03.715Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T06:43:41.547Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T06:43:41.563Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T06:43:41.563Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T06:43:41.563Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 13:43:41 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T06:43:41.563Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T06:43:41.563Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T06:43:41.563Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T06:43:41.563Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T06:47:03.958Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m               .-..-.","timestamp":"2016-01-28T06:47:03.960Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T06:47:03.961Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   Sails              <|    .-..-.","timestamp":"2016-01-28T06:47:03.961Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   v0.11.3             |\\","timestamp":"2016-01-28T06:47:03.962Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                      /|.\\","timestamp":"2016-01-28T06:47:03.962Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                     / || \\","timestamp":"2016-01-28T06:47:03.962Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                   ,'  |'  \\","timestamp":"2016-01-28T06:47:03.962Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                .-'.-==|/_--'","timestamp":"2016-01-28T06:47:03.963Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m                `--'-------' ","timestamp":"2016-01-28T06:47:03.963Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m   __---___--___---___--___---___--___","timestamp":"2016-01-28T06:47:03.963Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m ____---___--___---___--___---___--___-__","timestamp":"2016-01-28T06:47:03.964Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39m","timestamp":"2016-01-28T06:47:03.964Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mServer lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-28T06:47:03.964Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo see your app, visit \u001b[4mhttp://localhost:3009\u001b[24m","timestamp":"2016-01-28T06:47:03.965Z"}
+{"level":"info","message":"\u001b[32minfo: \u001b[39mTo shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-28T06:47:03.966Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T06:47:03.966Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m:: Thu Jan 28 2016 13:47:03 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-28T06:47:03.967Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mEnvironment : development","timestamp":"2016-01-28T06:47:03.968Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39mPort        : 3009","timestamp":"2016-01-28T06:47:03.968Z"}
+{"level":"debug","message":"\u001b[34mdebug: \u001b[39m\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-28T06:47:03.968Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T06:49:46.886Z"}
+{"level":"error","message":"\u001b[31merror: \u001b[39mSending 500 (\"Server Error\") response: \n { ErrorsList: undefined }","timestamp":"2016-01-28T06:49:48.998Z"}

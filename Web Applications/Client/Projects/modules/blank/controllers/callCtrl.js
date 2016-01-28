@@ -56,19 +56,14 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
     console.log(token);
 
     io.socket.on('receiveMessage', function(msg) {
+        console.log("AAAAaaaaaaaaaaaaaaaaaaaaaaaaa");
         switch (msg.message) {
             case 'decline':
                 window.close();
                 break;
-                // case 'answer':
-                //     EndCall();
-                //     window.open($state.href("blank.call", {
-                //         apiKey: $scope.Opentok.apiKey,
-                //         sessionId: $scope.Opentok.sessionId,
-                //         token: $scope.Opentok.token,
-                //         userName: $scope.opentokData.userName
-                //     }));
-                //     break;
+            case 'cancel':
+                window.close();
+                break;
         }
     });
     o.loadingPage(true);

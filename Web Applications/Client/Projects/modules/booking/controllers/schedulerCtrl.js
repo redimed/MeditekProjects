@@ -260,4 +260,3 @@ app.controller('schedulerCtrl', function($scope,$timeout, $uibModal, RosterServi
         },
     }); 
 });
-//

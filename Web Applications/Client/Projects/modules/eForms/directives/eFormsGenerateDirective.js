@@ -1,5 +1,5 @@
 angular.module('app.authentication.eForms.directive.generate', [])
-.directive('generateDirective', function(eFormService, PatientService, $uibModal, $state, toastr,$timeout, $compile, $injector) {
+.directive('generateDirective', function(eFormService, PatientService, $uibModal, $state, toastr,$timeout, $compile, $http) {
 
 	return {
 
@@ -23,6 +23,7 @@ angular.module('app.authentication.eForms.directive.generate', [])
 			// scope.patientuid  = "289fb0e4-1ad4-49b9-b1f8-fcd9feed4db0";//gan mac dinh
 			// scope.templateuid = "225dd82f-cde9-4ccc-a320-c28d8c3008aa";//gan mac dinh
 			// scope.datauid     = "b826e747-49fc-4e37-8099-9e0a68f2393c";//gan mac dinh
+			console.log(" --------------------------------------------ne ",scope.datauid)
 			if(scope.isUpdatedata == null || scope.isUpdatedata == "")
 				scope.isUpdatedata = false;
 			console.log(scope.isUpdatedata);
@@ -39,6 +40,7 @@ angular.module('app.authentication.eForms.directive.generate', [])
 			if(scope.datauid != undefined && scope.datauid != null && scope.datauid != ""){
 				eFormService.getData({UID:scope.datauid}).then(function(got_data){
 					scope.info = got_data.data;
+					console.log(scope.info);
 				},function(err){
 					console.log(err);
 				});
@@ -46,7 +48,9 @@ angular.module('app.authentication.eForms.directive.generate', [])
 			if(scope.patientuid != undefined && scope.patientuid != null && scope.patientuid != "") {
 				PatientService.detailPatient({UID:scope.patientuid}).then(function(result){
 					if(result != null && result != "" && result.length != 0){
-						scope.PatientDetails = result.data[0];
+						scope.PatientDetails ={};
+						scope.PatientDetails.patientInfo = {};
+						scope.PatientDetails.patientInfo = result.data[0];
 					}
 				},function(err){
 					console.log(err);
@@ -162,6 +166,12 @@ angular.module('app.authentication.eForms.directive.generate', [])
 							+"' ><question10 on-data='"+modelValue+"' on-option='"+detailName+"' is-update='true' on-update='"+updateValue+
 							"' on-editor='false' ></div>")(scope));
 				        break;
+				     case 12:
+				    	angular.element(document.getElementById(idElem))
+						.append($compile("<div class='col-md-12'>&nbsp;</div><div class='col-md-12' id='"+idElem+"."+QuestionName
+							+"' ><question12 on-data='"+modelValue+"' on-option='"+detailName+"' is-update='true' on-update='"+updateValue+
+							"' on-editor='false' ></div>")(scope));
+				        break;
 				    default:
 				        alert("abc");
 				}
@@ -171,9 +181,14 @@ angular.module('app.authentication.eForms.directive.generate', [])
 			scope.submit = function() {
 				var postData = {};
 				postData.EFormUID = scope.EFormUID;
-				postData.PatientDetails = scope.PatientDetails;
+				postData.patientUID = scope.patientuid;
 				postData.Name = scope.Name;
+				if(scope.apptuid != null && scope.apptuid != ""){
+					postData.apptuid = scope.apptuid;
+				}
 				postData.data = scope.info;
+				postData.PatientDetails = scope.PatientDetails;
+				console.log(scope.apptuid);
 				console.log(postData);
 				//scope.$broadcast('validate');
 				//console.log(scope.errorList);
@@ -277,8 +292,49 @@ angular.module('app.authentication.eForms.directive.generate', [])
 				return objectmerge;
 			};
 
+			scope.print =function() {
+				var data = {
+		                printMethod : "itext",
+		                templateUID : scope.templateuid,
+		                info        : scope.info
+		        };
+				eFormService.printData(data).then(function(result) {
+					console.log(result);
+					var blob = new Blob([result.data],{
+						type: 'application/pdf'
+					});
+					console.log(blob);
+					saveAs(blob,scope.datauid);
+				},function(err) {
+					console.log(err);
+				});
+				// $http({
+				// 	method: 'POST',
+				// 	url: 'http://192.168.1.100:8080/print',
+				// 	data: {
+				// 		// printMethod: "itext" or "jasper",
+				// 		printMethod: "itext",
+				// 	    TemplateUID: scope.templateuid,
+				// 	    data: [{name:"asdasd",value:"asjdiajsdi"}]
+				// 	},
+				// 	'Content-Type': 'application/json',
+				// 	responseType:'arraybuffer',
+				// }).then(function successCallback(response) {
+				// 	console.log("success");
+				// 	console.log(response);
+				// 	var blob = new Blob([response.data],{
+				// 		type: 'application/pdf'
+				// 	});
+				// 	console.log(blob);
+				// 	saveAs(blob,scope.datauid);
+				//   }, function errorCallback(response) {
+				//   	console.log(response);
+				//   });
+			};
+
 			var t0 = performance.now();
 			scope.init();
+			console.log(scope.info);
 			var t1 = performance.now();
 			console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.");
 

@@ -680,7 +680,7 @@ module.exports = {
                             }
                         }
                         else {
-                            console.log("vao day ahihi <<<<<<<<<<<");
+
                             t.commit();
                             return {
                                 result:result,
@@ -689,7 +689,7 @@ module.exports = {
                         }
                     }
                     else {
-                        console.log("vao day ahihi <<<<<<<<<<<");
+
                         t.commit();
                         return {
                             result:result,
@@ -747,7 +747,7 @@ module.exports = {
         output:update patient into table Patient
     */
     UpdatePatient : function(data, other, transaction) {
-        console.log(other);
+
         var isHaveRole = false;
         if(check.checkData(data)){
             data.ModifiedDate = new Date();
@@ -1130,7 +1130,7 @@ module.exports = {
                  is created or not created
     */
     CheckPatient : function(data, transaction) {
-        console.log(data, "------------------------------ data ne");
+
         var info = {};
         // return Services.Patient.validation(data,false)
         // .then(function(success){

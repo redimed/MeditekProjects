@@ -145,7 +145,7 @@ module.exports = {
 					}
 				})
 				.then(function(success){
-					console.log(success);
+
 					if(success!==undefined && success!==null && success!=='' && success.length!==0){
 						for(var i = 0;i < success.length; i++){
 							if(success[i].FileType =="ProfileImage")
@@ -170,7 +170,7 @@ module.exports = {
 			}
 		})
 		.catch(function(err){
-			console.log(err);
+
 			res.serverError({message:ErrorWrap(err)});
 		});
 	},
@@ -193,7 +193,7 @@ module.exports = {
 		.then(function(success){
 			res.ok(success);
 		},function(err){
-			console.log(err);
+
 			res.serverError(ErrorWrap(err));
 		});
 	},

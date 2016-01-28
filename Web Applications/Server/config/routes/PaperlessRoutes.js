@@ -24,9 +24,9 @@ module.exports = {
 		action: 'getData'
 	},
 
-	'post /api/paperless/get-data-from-pdf' :{
+	'post /api/paperless/print-pdf' :{
 		controller: 'Paperless/PaperlessController',
-		action: 'getDataFromPDF'
+		action: 'printData'
 	},
 
 	'post /api/paperless/loadlist-eformappt' : {

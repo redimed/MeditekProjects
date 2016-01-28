@@ -7,6 +7,7 @@ module.exports = {
     UserActivation: require('./UserAccount/UserActivation'),
     UserToken: require('./UserAccount/UserToken'),
     RefreshToken: require('./UserAccount/RefreshToken'),
+    Paperless : require('./Paperless/Paperless'),
     //begin Appointment
     CreateTelehealthAppointment: require('./Appointment/CreateTelehealthAppointment'),
     GetDataAppointment: require('./Appointment/GetDataAppointment'),

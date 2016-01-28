@@ -1,4 +1,5 @@
 var $q = require('q');
+var requestify = require('requestify');
 
 //moment
 var moment = require('moment');
@@ -135,6 +136,22 @@ module.exports = {
 		return array;
 	},
 	//end func
+
+	convert: function(obj,stringParse,array) {
+		if(typeof obj =='object'){
+			for(var key in obj){
+				stringParse = stringParse +"."+key;
+				Services.Paperless.convert(obj[key],stringParse, array);
+				var a = "."+key;
+				stringParse = stringParse.replace(a,'');
+			}
+		}
+		else {
+			array.push({name:stringParse,value:obj});
+			stringParse = "";
+		}
+		return array;
+	},
 
 	//get section and question
 	GetSectionAndQuestion : function(obj) {
@@ -479,7 +496,7 @@ module.exports = {
 		});
 	},
 
-	updateData : function(arrayValue, EFormID, transaction, size) {
+	updateData : function( arrayValue, EFormID, transaction, size) {
 		if(size == arrayValue.length) {
 			return {message:"success"};
 		}
@@ -509,6 +526,21 @@ module.exports = {
 				throw err;
 			});
 		}
-	}
+	},
 
+	CreateRequest: function(data) {
+        // delete data.headers['if-none-match'];
+        // delete data.headers['content-length'];
+        // data.headers['content-length'] = Buffer.byteLength(data.body);
+        return requestify.request(data.host + data.path, {
+            method: data.method,
+            body: !data.body ? null : data.body,
+            params: !data.params ? null : data.params,
+            headers: !data.headers ? null : data.headers,
+            dataType: 'json',
+            responseType:'arraybuffer',
+            withCredentials: true,
+            rejectUnauthorized: false
+        });
+    }
 };

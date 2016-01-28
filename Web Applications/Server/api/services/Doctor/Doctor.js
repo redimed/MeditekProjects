@@ -1004,7 +1004,7 @@ module.exports = {
 		var uid;
 		return sequelize.transaction()
 		.then(function(t){
-			console.log(data.info);
+
 			return Services.Doctor.validation(data.info)
 			.then(function(result){
 				if(result!=undefined && result!=null&& result!=''){
@@ -1270,7 +1270,7 @@ module.exports = {
 				Doctors = doctorObj;
 				return Doctors.addSpeciality(data.Speciality,{transaction:t});
 			},function(err){
-				console.log(err);
+
 				t.rollback();
 				throw err;
 			})
@@ -1302,7 +1302,7 @@ module.exports = {
 	},
 
 	UpdateSignature: function(data) {
-		console.log(data);
+
 		if(data!=null && data!=""){
 			return sequelize.transaction()
 			.then(function(t){

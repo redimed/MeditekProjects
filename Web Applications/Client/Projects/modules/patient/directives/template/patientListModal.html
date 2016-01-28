@@ -4,91 +4,112 @@
 		<h4 class="modal-title"><b><i class="icon-note"></i> Patient Details</b></h4>
 	</div>
 	<div class="modal-body" id="modalBody">
-		<div class="form">
-			<!-- form -->
-			<form class="form-horizontal" role="form">
-				<div class="form-body">
-					<div class="tab-content" id="tabContent1">
-						<div class="tabbable" id="tabBable">
-							<!-- header tab -->
-							<ul class="nav nav-tabs nav-tabs-lg" ng-if="isShowFull==true" >
-								<li class="active">
-									<a href="index.html#Personal_info" data-toggle="tab" aria-expanded="true">Personal Information </a>
-								</li>
-							</ul>
-							<!-- end header tab -->
-							<!-- content tab -->
-							<div class="tab-content" id="tabContent2">
-								<!-- Begin Tab Personal -->
-								<div class="tab-pane active" id="Personal_info">
-									<div style="margin:3em;">
-										<div class="row">
-											<div class="col-md-4" id="columm1" ng-if="listShow.columm1">
-												<!-- avatar -->
-												<div ng-form name="checkInForm" novalidate>
-													<div class="form-group">
-														<div id="viewIMG">
-															<canvas id="imageAvatarCanvas" class="thumbnail" ng-show="isChoseAvatar==true" ></canvas>
-															<img dimage dimage-uid="info.FileUID" dimage-size="'300'" ng-show="info.FileUID!=null && info.FileUID!=undefined && isChoseAvatar==false">
-															<img src="theme/assets/global/images/no_person.jpg" class="thumbnail" ng-show="(info.FileUID==null || info.FileUID==undefined) && isChoseAvatar==false" style="width:275px; height:300px; ">
-														</div>
-														<div class="container">
-															<label for="imageAvatar" style="float:left; padding-right: 1%;"> 
-																<span class="btn green" ng-if="isChoseAvatar==false" style="width: 120px;">Select Image</span>
-																<span class="btn green" ng-if="isChoseAvatar==true" style="width: 120px;">Change</span>
-															</label> 
-															<span class="btn red" ng-if="isChoseAvatar==true"style="width: 120px; float:left" ng-click="Remove('ProfileImage')">Remove</span>
-															<input type="file" id="imageAvatar" ng-click="setType('ProfileImage')" ng-model="aaa" name="imageAvatar" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
-														</div>
-													</div>
+		<form role="form" class="form">
+			<div class="form-body">
+				<div class="tab-content" id="tabContent1">
+					<div class="tabbable" id="tabBable">
+						<!-- header tab -->
+						<ul class="nav nav-tabs nav-tabs-lg" ng-if="isShowFull==true" >
+							<li class="active">
+								<a href="index.html#Personal_info" data-toggle="tab" aria-expanded="true">Personal Information </a>
+							</li>
+							<li>
+								<a href="index.html#tab_extraInfo" data-toggle="tab" aria-expanded="true">Extra Information</a>
+							</li>
+							<li>
+								<a href="index.html#tab_fund" data-toggle="tab" aria-expanded="true">Fund / Payment</a>
+							</li>
+							<li>
+								<a href="index.html#tab_kod" data-toggle="tab" aria-expanded="true">Kin / Guardian / Family Members</a>
+							</li>
+							<li>
+								<a href="index.html#tab_gp" data-toggle="tab" aria-expanded="true">GP / Clinical Information</a>
+							</li>
+						</ul>
+						<!-- end header tab -->
+						<!-- content tab -->
+						<div class="tab-content" id="tabContent2">
+							<div class="tab-pane active" id="Personal_info">
+								<div class="row margin-top-30">
+									<div class="col-md-3 col-sm-3" id="columm1" ng-if="listShow.columm1">
+										<!-- avatar -->
+										<div ng-form name="checkInForm" novalidate>
+											<div class="form-group">
+												<div id="viewIMG">
+													<canvas id="imageAvatarCanvas" class="thumbnail" ng-show="isChoseAvatar==true" ></canvas>
+													<img dimage dimage-uid="info.FileUID" dimage-size="'300'" ng-show="info.FileUID!=null && info.FileUID!=undefined && isChoseAvatar==false">
+													<img src="theme/assets/global/images/no_person.jpg" class="thumbnail" ng-show="(info.FileUID==null || info.FileUID==undefined) && isChoseAvatar==false" style="width:275px; height:300px; ">
 												</div>
-												<!-- end avatar -->
+												<div class="container">
+													<label for="imageAvatar" style="float:left; padding-right: 1%;"> 
+														<span class="btn green" ng-if="isChoseAvatar==false" style="width: 120px;">Select Image</span>
+														<span class="btn green" ng-if="isChoseAvatar==true" style="width: 120px;">Change</span>
+													</label> 
+													<span class="btn red" ng-if="isChoseAvatar==true"style="width: 120px; float:left" ng-click="Remove('ProfileImage')">Remove</span>
+													<input type="file" id="imageAvatar" ng-click="setType('ProfileImage')" ng-model="aaa" name="imageAvatar" nv-file-select uploader="uploader" style="color: transparent;  opacity: 0 !important; position: fixed;">
+												</div>
 											</div>
-											<div class="col-md-4" id="columm2" ng-if="listShow.columm2">
-												<h4 class="form-section bold">Person Information</h4>
+										</div>
+										<!-- end avatar -->
+									</div>
+									<div class="col-md-5 col-sm-5" id="columm2" ng-if="listShow.columm2">
+										<h4 class="form-section bold">Person Information</h4>
+										<div class="row">
+											<div class="col-md-4 col-sm-4">
 												<!-- begin title -->
 									            <div class="form-group">
-									            	<label class="control-label col-md-4">Title</label>
-									            	<div class="col-md-8">
-									            		<select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title" ng-style="er.Title" ng-change="ermsg.Title='';checkDataNull('Title')"> </select>
-									            		<span style="color:red;">{{ermsg.Title}}</span>
-									            	</div>
+									            	<label class="control-label">Title</label>
+								            		<select class="form-control" ng-options="t.id as t.name for t in titles" ng-model="info.Title" ng-style="er.Title" ng-change="ermsg.Title='';checkDataNull('Title')"> </select>
+								            		<span style="color:red;">{{ermsg.Title}}</span>
 									            </div>
 									            <!-- end title -->
+											</div>
+										</div>
+							            <div class="row">
+							            	<div class="col-md-4 col-sm-4">
 												<!-- First Name -->
 												<div class="form-group">
-													<label class="control-label col-md-4">First Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="First Name" ng-model="info.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName='';checkDataNull('FirstName')" ><span style="color:red;">{{ermsg.FirstName}}</span></div>
+													<label class="control-label">First Name</label>
+													<input type="text" class="form-control" ng-model="info.FirstName" ng-style="er.FirstName" ng-change="ermsg.FirstName='';checkDataNull('FirstName')" ><span style="color:red;">{{ermsg.FirstName}}</span>
 												</div>
 												<!-- end First Name -->
-												<!-- Sur Name -->
-												<div class="form-group">
-													<label class="control-label col-md-4">Sur Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Sur Name" ng-model="info.LastName" ng-style="er.LastName" ng-change="ermsg.LastName='';checkDataNull('LastName')" ><span style="color:red;">{{ermsg.LastName}}</span></div>
-												</div>
-												<!-- end Sur Name -->
+											</div>
+											<div class="col-md-4 col-sm-4">
 												<!-- Middle Name -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Middle Name</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Middle Name" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName='';;checkDataNull('MiddleName')" ><span style="color:red;">{{ermsg.MiddleName}}</span></div>
+													<label class="control-label">Middle Name</label>
+													<input type="text" class="form-control" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName='';;checkDataNull('MiddleName')" ><span style="color:red;">{{ermsg.MiddleName}}</span>
 												</div>
 												<!-- end Middle Name -->
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<!-- Sur Name -->
+												<div class="form-group">
+													<label class="control-label">Sur Name</label>
+													<input type="text" class="form-control" ng-model="info.LastName" ng-style="er.LastName" ng-change="ermsg.LastName='';checkDataNull('LastName')" ><span style="color:red;">{{ermsg.LastName}}</span>
+												</div>
+												<!-- end Sur Name -->
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6 col-sm-6">
 												<!-- Date of Birth -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Date of Birth</label>
-													<div class="col-md-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-calendar"></i>
-															<input class="form-control form-control-inline date-picker" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB=''" />
-															<span style="color:red;">{{ermsg.DOB}}</span>
-														</div>
+													<label class="control-label">Date of Birth</label>
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-calendar"></i>
+														<input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB=''" />
+														<span style="color:red;">{{ermsg.DOB}}</span>
 													</div>
 												</div>
 												<!-- end Date of Birth -->
+											</div>
+											<div class="col-md-6 col-sm-6">
 												<!-- Gender -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Gender</label>
-													<div class="col-md-8">
+													<label class="control-label">Gender</label>
+													<div class="input-icon">
+														<i class="fa fa-intersex"></i>
 														<select class="form-control" ng-model="info.Gender">
 															<option value="Male">Male</option>
 															<option value="Female">Female</option>
@@ -97,118 +118,174 @@
 													</div>
 												</div>
 												<!-- end Gender -->
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-8 col-sm-8">
 												<!-- Occupation -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Occupation</label>
-													<div class="col-md-8"><input type="text" class="form-control" placeholder="Occupation" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation='';checkDataNull('Occupation')"><span style="color:red;">{{ermsg.Occupation}}</span></div>
+													<label class="control-label">Occupation</label>
+													<div class="input-icon">
+														<i class="fa fa-odnoklassniki"></i>
+														<input type="text" class="form-control" ng-model="info.Occupation" ng-style="er.Occupation" ng-change="ermsg.Occupation='';checkDataNull('Occupation')"><span style="color:red;">{{ermsg.Occupation}}</span>
+													</div>
 												</div>
 												<!-- end Occupation -->
+											</div>
+											<div class="col-md-4 col-sm-4">
 												<!-- Enable User -->
 												<div class="form-group">
-													<label class="control-label col-md-4"><input type="checkbox" ng-model="activeUser" ng-true-value="'Y'" ng-false-value="'N'" ng-click="changeEnable(activeUser)" />Enable</label>
+													<label class="control-label">&nbsp;</label>
+													<div class="checkbox-list">
+														<label class="control-label"><input type="checkbox" ng-model="activeUser" ng-true-value="'Y'" ng-false-value="'N'" ng-click="changeEnable(activeUser)" />Enable</label>
+													</div>
 												</div>
 												<!-- end Enable User -->
 											</div>
-											<div class="col-md-4" id="columm3" ng-if="listShow.columm3">
-												<h4 class="form-section bold">Contact Information</b></h4>
+										</div>
+
+										<h4 class="form-section bold">Medicare Information</h4>
+										<div class="row">
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Ref No</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Medicare Number</label>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label class="control-label">Medicare Expire</label>
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-calendar"></i>
+														<input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" readonly>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4" id="columm3" ng-if="listShow.columm3">
+										<h4 class="form-section bold">Contact Information</b></h4>
+										<div class="row">
+											<div class="col-md-6 col-sm-6">
 												<!-- Email -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Email</label>
-													<div class="col-md-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-envelope"></i>
-															<input type="text" class="form-control" placeholder="Email" ng-disabled="true" ng-model="info.Email1">
-														</div>
+													<label class="control-label">Email</label>
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-envelope"></i>
+														<input type="text" class="form-control" ng-disabled="true" ng-model="info.Email1">
 													</div>
 												</div>
 												<!-- end Email -->
+											</div>
+											<div class="col-md-6 col-sm-6">
+												<div class="form-group">
+													<label class="control-label">Work Phone</label>
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-phone-alt"></i>
+														<input type="text" class="form-control">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6 col-sm-6">
 												<!-- Home Phone -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Home Phone</label>
-													<div class="col-md-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-phone-alt"></i>
-															<input type="text" class="form-control" placeholder="Home Phone" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')"><span style="color:red;">{{ermsg.HomePhoneNumber}}</span>
-														</div>
+													<label class="control-label">Home Phone</label>
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-phone-alt"></i>
+														<input type="text" class="form-control" ng-model="info.HomePhoneNumber" ng-style="er.HomePhoneNumber" ng-change="ermsg.HomePhoneNumber='';checkDataNull('HomePhoneNumber')"><span style="color:red;">{{ermsg.HomePhoneNumber}}</span>
 													</div>
 												</div>
 												<!-- end Home Phone -->
+											</div>
+											<div class="col-md-6 col-sm-6">
 												<!-- Mobile Phone -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Mobile Phone</label>
-													<div class="col-md-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-phone"></i>
-															<input type="text" class="form-control" placeholder="Mobile Phone" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber">
-														</div>
+													<label class="control-label">Mobile Phone</label>
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-phone"></i>
+														<input type="text" class="form-control" ng-disabled="true" ng-model="info.UserAccount.PhoneNumber">
 													</div>
 												</div>
 												<!-- end Mobile Phone -->
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12 col-sm-12">
 												<!-- Address1 -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Address1</label>
-													<div class="col-md-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-road"></i>
-															<input type="text" class="form-control" placeholder="Address1" ng-model="info.Address1" ng-style="er.Address1"ng-change="ermsg.Address1='';checkDataNull('Address1')" ><span style="color:red;">{{ermsg.Address1}}</span>
-														</div>
+													<label class="control-label">Address1</label>
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-road"></i>
+														<input type="text" class="form-control" ng-model="info.Address1" ng-style="er.Address1"ng-change="ermsg.Address1='';checkDataNull('Address1')" ><span style="color:red;">{{ermsg.Address1}}</span>
 													</div>
 												</div>
 												<!-- end Address1 -->
+											</div>
+											<div class="col-md-12 col-sm-12">
 												<!-- Address2 -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Address2</label>
-													<div class="col-md-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-road"></i>
-															<input type="text" class="form-control" placeholder="Address2" ng-model="info.Address2" ng-style="er.Address2"ng-change="ermsg.Address2='';checkDataNull('Address2')" ><span style="color:red;">{{ermsg.Address2}}</span>
-														</div>
+													<label class="control-label">Address2</label>
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-road"></i>
+														<input type="text" class="form-control" ng-model="info.Address2" ng-style="er.Address2"ng-change="ermsg.Address2='';checkDataNull('Address2')" ><span style="color:red;">{{ermsg.Address2}}</span>
 													</div>
 												</div>
 												<!-- end Address2 -->
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-8 col-sm-8">
 												<!-- Suburb -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Suburb</label>
-													<div class="col-md-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-tree-conifer"></i>
-															<input type="text" class="form-control" placeholder="Suburb" ng-model="info.Suburb" ng-style="er.Suburb"ng-change="ermsg.Suburb='';checkDataNull('Suburb')" ><span style="color:red;">{{ermsg.Suburb}}</span>
-														</div>
+													<label class="control-label">Suburb</label>
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-tree-conifer"></i>
+														<input type="text" class="form-control" ng-model="info.Suburb" ng-style="er.Suburb"ng-change="ermsg.Suburb='';checkDataNull('Suburb')" ><span style="color:red;">{{ermsg.Suburb}}</span>
 													</div>
 												</div>
 												<!-- end Surburb -->
+											</div>
+											<div class="col-md-4 col-sm-4">
 												<!-- Postcode -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Postcode</label>
-													<div class="col-md-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-map-marker"></i>
-															<input type="text" class="form-control" placeholder="Postcode" ng-model="info.Postcode" ng-style="er.Postcode"ng-change="ermsg.Postcode='';checkDataNull('Postcode')" ><span style="color:red;">{{ermsg.Postcode}}</span>
-														</div>
+													<label class="control-label">Postcode</label>
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-map-marker"></i>
+														<input type="text" class="form-control"  ng-model="info.Postcode" ng-style="er.Postcode"ng-change="ermsg.Postcode='';checkDataNull('Postcode')" ><span style="color:red;">{{ermsg.Postcode}}</span>
 													</div>
 												</div>
 												<!-- end Postcode -->
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6 col-sm-6">
 												<!-- State -->
 												<div class="form-group">
-													<label class="control-label col-md-4">State</label>
-													<div class="col-md-8">
-														<div class="input-icon">
-															<i class="glyphicon glyphicon-globe"></i>
-															<select class="form-control" ng-model="info.State"ng-options="s.code as s.name for s in state" ng-style="er.State" ng-change="ermsg.State=''" >
-															</select><span style="color:red;">{{ermsg.State}}</span>
-														</div>
+													<label class="control-label">State</label>
+													<div class="input-icon">
+														<i class="glyphicon glyphicon-globe"></i>
+														<select class="form-control" ng-model="info.State"ng-options="s.code as s.name for s in state" ng-style="er.State" ng-change="ermsg.State=''" >
+														</select><span style="color:red;">{{ermsg.State}}</span>
 													</div>
 												</div>
-												<!-- end Postcode -->
+												<!-- end state -->
+											</div>
+											<div class="col-md-6 col-sm-6">
 												<!-- Country -->
 												<div class="form-group">
-													<label class="control-label col-md-4">Country</label>
-													<div class="col-md-8">
-														<div class="input-icon">
-															<i class="fa fa-flag"></i>
-															<select class="form-control" ng-model="info.CountryID1" ng-options="c.ID as c.ShortName for c in countries">
-															</select>
-														</div>
+													<label class="control-label">Country</label>
+													<div class="input-icon">
+														<i class="fa fa-flag"></i>
+														<select class="form-control" ng-model="info.CountryID1" ng-options="c.ID as c.ShortName for c in countries">
+														</select>
 													</div>
 												</div>
 												<!-- end Country -->
@@ -216,17 +293,306 @@
 										</div>
 									</div>
 								</div>
-								<!-- End Tab Personal -->
 							</div>
-							<!-- end content tab -->
+							<div class="tab-pane" id="tab_extraInfo">
+								<div class="row margin-top-30">
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Marial Status</label>
+											<select class="form-control">
+												<option></option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Custom</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Culture</label>
+											<select class="form-control">
+												<option></option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Language</label>
+											<select class="form-control">
+												<option></option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Fee Type</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">&nbsp;</label>
+											<div class="checkbox-list">
+												<label><input type="checkbox"> Gradute</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Driver License</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane" id="tab_fund">
+								<div class="row margin-top-30">
+									<div class="col-md-6 col-sm-6">
+										<label class="control-label">Mineral Resources</label>
+										<select class="form-control">
+											<option value="">Mineral Resources (Manulife)</option>
+										</select>
+									</div>
+									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">Account Type</label>
+											<select class="form-control">
+												<option></option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-1 col-sm-1">
+										<div class="form-group">
+											<label class="control-label">&nbsp;</label>
+											<div class="checkbox-list">
+												<label><input type="checkbox"> SMS</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-1 col-sm-1">
+										<div class="form-group">
+											<label class="control-label">&nbsp;</label>
+											<div class="checkbox-list">
+												<label><input type="checkbox"> Is Lock</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">Account Seft</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">Private Fund</label>
+											<select class="form-control">
+												<option></option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">Membership Number</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">UPI</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">HCC Pension Number</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">Pension Expire</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">DVA Number</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">Balance</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">PaysGap Only</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">Is Enable</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-3">
+										<div class="form-group">
+											<label class="control-label">Passport</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-3">
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane" id="tab_kod">
+								<div class="row">
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Partner Name</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Partner DOB</label>
+											<input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy">
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Partner Occupation</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">NOK Emerge Contact</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">NOK Phone</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Clinic</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Alias First Name</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Alias Sur Name</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Specialty</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Usual Provider</label>
+											<select class="form-control">
+												<option></option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Referral Source</label>
+											<select class="form-control">
+												<option></option>
+											</select>
+
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">UR No</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">&nbsp;</label>
+											<div class="checkbox-list">
+												<label><input type="checkbox"> Diabetic</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">&nbsp;</label>
+											<div class="checkbox-list">
+												<label><input type="checkbox"> Inactive</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane" id="tab_gp">
+								<div class="row">
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">GP First Name</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">GP Sur Name</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-4">
+										<div class="form-group">
+											<label class="control-label">Memo</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
+						<!-- end content tab -->
 					</div>
 				</div>
-				<!-- <div class="form-actions">
-				</div> -->
-			</form>
-			<!-- end form -->
-		</div>
+			</div>
+			<!-- <div class="form-actions">
+			</div> -->
+		</form>
 	</div>
 	<div class="modal-footer" ng-if="isShowFull==true">
 		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="onCancel()"><i class="icon-action-undo"></i> Close</button>

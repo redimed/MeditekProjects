@@ -40,4 +40,4 @@ angular.module("app.authentication.roster.services", [])
         }
 
         return services;
-    });
+});

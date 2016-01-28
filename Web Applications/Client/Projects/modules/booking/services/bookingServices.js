@@ -9,10 +9,24 @@ angular.module("app.authentication.booking.services", [])
                 });
         }
 
+        services.UpdateBooking = function(data){
+                return api.all("booking/update").post({
+                        data: data
+                });
+        }
+
+        services.DestroyBooking = function(data){
+            return api.one("booking/destroy/"+data.UID).get();
+        }
+
         services.LoadBooking = function(data){
                 return api.all("booking/list").post({
                         data: data
                 })
+        }
+
+        services.GetDetailBooking = function(data){
+                return api.one("booking/detail/"+data.UID).get();
         }
 
         return services;

@@ -1,202 +1,173 @@
-var app = angular.module('app.authentication.booking.scheduler.controller',[
+var app = angular.module('app.authentication.booking.scheduler.controller', [
     'app.authentication.booking.scheduler.create.controller',
     'app.authentication.booking.scheduler.edit.controller',
     'app.authentication.booking.scheduler.delete.controller',
 ]);
-app.controller('schedulerCtrl', function($scope,$timeout, $uibModal, RosterService, BookingService){
-        var currentEvent = {id: ''};
-        var oldEvent = {id: ''};
-        function ServerListBooking(startDate){
-            var postData = {
-                    Filter: [
-                            {
-                                Roster: {
-                                    Enable: 'Y',
-                                    FromTime: startDate
-                                }
-                            }
-                    ]
-            }
-            RosterService.PostListRoster(postData)
-            .then(function(response){
-                    var events = [];
-                    _.forEach(response.data.rows, function(roster, index){
-                            var doctor = roster.UserAccounts[0].Doctor;
-                            var FromTime = moment(roster.FromTime).format('YYYY-MM-DDTHH:mm:ss');
-                            var EndTime = moment(roster.ToTime).format('YYYY-MM-DDTHH:mm:ss');
-                            var event = {
-                                    id: roster.UID,
-                                    resourceId: doctor.UID,
-                                    start: FromTime,
-                                    end: EndTime,
-                                    color: roster.Services[0].Colour,
-                                    rendering: 'background',
-                                    Services: roster.Services,
-                                    Sites: roster.Sites,
-                                    UserAccounts: roster.UserAccounts
-                            };
-                            $('#calendar').fullCalendar('addResource', {
-                                    id: doctor.UID, title: doctor.FirstName+' '+doctor.LastName
-                            });
-                            events.push(event);
+app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, RosterService, BookingService) {
+    var currentEvent = {
+        id: ''
+    };
+    var oldEvent = {
+        id: ''
+    };
+
+    function ServerListBooking(startDate) {
+        var postData = {
+            Filter: [{
+                Roster: {
+                    Enable: 'Y',
+                    FromTime: startDate
+                }
+            }]
+        }
+        $('#calendar').fullCalendar('removeEvents');
+        var resources = $('#calendar').fullCalendar('getResources');
+        _.forEach(resources, function(resource, index){
+            $('#calendar').fullCalendar('removeResource', resource);
+        })
+        RosterService.PostListRoster(postData)
+            .then(function(response) {
+                var events = [];
+                _.forEach(response.data.rows, function(roster, index) {
+                    var doctor = roster.UserAccounts[0].Doctor;
+                    var FromTime = moment(roster.FromTime).format('YYYY-MM-DDTHH:mm:ss');
+                    var EndTime = moment(roster.ToTime).format('YYYY-MM-DDTHH:mm:ss');
+                    var event = {
+                        id: roster.UID,
+                        resourceId: doctor.UID,
+                        start: FromTime,
+                        end: EndTime,
+                        color: roster.Services[0].Colour,
+                        rendering: 'background',
+                        Services: roster.Services,
+                        Sites: roster.Sites,
+                        UserAccounts: roster.UserAccounts
+                    };
+                    $('#calendar').fullCalendar('addResource', {
+                        id: doctor.UID,
+                        title: doctor.FirstName + ' ' + doctor.LastName
                     });
-                    $('#calendar').fullCalendar('addEventSource',events);
+                    events.push(event);
+                });
+                $('#calendar').fullCalendar('addEventSource', events);
 
-                    var bookingData = {
-                            Filter: [
-                                    {
-                                        Appointment: {
-                                            Enable: 'Y',
-                                            FromTime: startDate
-                                        }
-                                    }
-                            ]
-                    }
-                    var bookingEvents = [];
-                    BookingService.LoadBooking(bookingData)
-                    .then(function(response){
-                            console.log(response.data);
-                            _.forEach(response.data.rows, function(appointment, index){
-                                        var doctor = appointment.Doctors[0];
-                                        var patient = appointment.Patients[0];
-                                        var service = appointment.Services[0];
-                                        var FromTime = moment(appointment.FromTime).format('YYYY-MM-DDTHH:mm:ss');
-                                        var EndTime = moment(appointment.ToTime).format('YYYY-MM-DDTHH:mm:ss');
-                                        var event = {
-                                                id: appointment.UID,
-                                                resourceId: doctor.UID,
-                                                start: FromTime,
-                                                end: EndTime,
-                                                color: appointment.Services[0].Colour,
-                                                Patient: patient,
-                                                Service: service
-                                        };
-                                        bookingEvents.push(event);
-                            });
-                            $('#calendar').fullCalendar('addEventSource',bookingEvents);
-                    })
-            }, function(error){
-                    
-            })
-            
-        }
-
-    function formatDate(data){
-        return moment(data).subtract(0,'days').format("DD/MM/YYYY");
-    };
-    function formatTime(data){
-        return moment(data).subtract(0,'time').format("hh:mm:ss a");
-    };
-    $scope.eventRender = function(event, element, view) {
-    };
-
-     $scope.viewRender = function(view, element){
-            var date = $('#calendar').fullCalendar('getDate');
-            var zone = moment().format('Z');
-            var today = moment(date).format('YYYY-MM-DD'+' '+zone);
-            ServerListBooking(today);
-    };
-
-    $scope.eventAfterRender = function(event, element, view){
-        if(typeof event.Patient !== 'undefined'){
-                element.find('.fc-content').html(moment(event.start).format('HH:mm').toLowerCase()+'-'+moment(event.end).format('HH:mm').toLowerCase());
-                element.find('.fc-content').append(' <b>'+event.Patient.FirstName+' '+event.Patient.LastName+'</b>');
-        }
-
-        $(element).attr('id', 'event_id_'+event._id);
-        $.contextMenu({
-            selector: '#event_id_'+event._id,
-            items: {
-                edit: {
-                    name: 'Edit', 
-                    callback: function(key,opt){
-                        var modalInstance = $uibModal.open({
-                            animation: true,
-                            size: 'md',
-                            templateUrl: 'modules/booking/views/schedulerEdit.html',
-                            controller: 'schedulerEditCtrl',
-                            resolve: {
-                                event: function(){
-                                    return event;
-                                }
-                            },
+                var bookingData = {
+                    Filter: [{
+                        Appointment: {
+                            Enable: 'Y',
+                            FromTime: startDate
+                        }
+                    }]
+                }
+                var bookingEvents = [];
+                BookingService.LoadBooking(bookingData)
+                    .then(function(response) {
+                        _.forEach(response.data.rows, function(appointment, index) {
+                            var doctor = appointment.Doctors[0];
+                            var patient = appointment.Patients[0];
+                            var service = appointment.Services[0];
+                            var FromTime = moment(appointment.FromTime).format('YYYY-MM-DDTHH:mm:ss');
+                            var EndTime = moment(appointment.ToTime).format('YYYY-MM-DDTHH:mm:ss');
+                            var event = {
+                                id: appointment.UID,
+                                resourceId: doctor.UID,
+                                start: FromTime,
+                                end: EndTime,
+                                color: appointment.Services[0].Colour,
+                                Patient: patient,
+                                Service: service
+                            };
+                            bookingEvents.push(event);
                         });
-                        modalInstance.result
-                            .then(function(result) {
-                                var dataEvent = {
-                                    resourceId: resource.id,
-                                    title: result.service,
-                                    start: start,
-                                    end: end,
-                                    allDay: allDay,
-                                    isReoccurance: result.isReoccurance,
-                                    reoccuranceType: result.reoccuranceType,
-                                    endReoccurance: result.endReoccurance,
-                                };
-                                $scope.events.push(result);
-                                $scope.scheduler.fullCalendar('renderEvent', dataEvent, true);
-                                $scope.scheduler.fullCalendar('unselect');
-                            }, function(result) {
-                                // dismiss
-                            });
-                            modalInstance.result
-                                .then(function(result) {
-                                    var dataEvent = {
-                                        resourceId: resource.id,
-                                        title: result.service,
-                                        start: start,
-                                        end: end,
-                                        allDay: allDay,
-                                        isReoccurance: result.isReoccurance,
-                                        reoccuranceType: result.reoccuranceType,
-                                        endReoccurance: result.endReoccurance,
-                                    };
-                                    $scope.events.push(result);
-                                    $scope.scheduler.fullCalendar('renderEvent', dataEvent, true);
-                                    $scope.scheduler.fullCalendar('unselect');
-                                }, function(result) {
-                                    // dismiss
-                                });
+                        $('#calendar').fullCalendar('addEventSource', bookingEvents);
+                    })
+            }, function(error) {
+                
+            })
+
+    }
+
+    function formatDate(data) {
+        return moment(data).subtract(0, 'days').format("DD/MM/YYYY");
+    };
+
+    function formatTime(data) {
+        return moment(data).subtract(0, 'time').format("hh:mm:ss a");
+    };
+    $scope.eventRender = function(event, element, view) {};
+
+    function getDateCalendar(){
+        var date = $('#calendar').fullCalendar('getDate');
+        var zone = moment().format('Z');
+        var today = moment(date).format('YYYY-MM-DD' + ' ' + zone);
+        return today;    
+    }
+
+    $scope.viewRender = function(view, element) {
+        var today = getDateCalendar();
+        ServerListBooking(today);
+    };
+
+    $scope.eventAfterRender = function(event, element, view) {
+        if (typeof event.Patient !== 'undefined') {
+            element.find('.fc-content').html(moment(event.start).format('HH:mm').toLowerCase() + '-' + moment(event.end).format('HH:mm').toLowerCase());
+            element.find('.fc-content').append(' <b>' + event.Patient.FirstName + ' ' + event.Patient.LastName + '</b>');
+        }
+
+        if(event.rendering !== 'background'){
+            $(element).attr('id', 'event_id_' + event.id);
+            $.contextMenu({
+                selector: '#event_id_'+event.id,
+                items: {
+                    edit: {
+                        name: 'Edit', 
+                        callback: function(key,opt){
+                            var UID = opt.selector.split('_')[2];
+                            BookingService.GetDetailBooking({UID: UID})
+                            .then(function(response){
+                                    var modalInstance = $uibModal.open({
+                                        animation: true,
+                                        size: 'md',
+                                        templateUrl: 'modules/booking/views/schedulerEdit.html',
+                                        controller: 'schedulerEditCtrl',
+                                        resolve: {
+                                            data: function(){
+                                                return response.data;
+                                            }
+                                        },
+                                    });
+                                    modalInstance.result
+                                    .then(function(result) {
+                                            var today = getDateCalendar();
+                                            ServerListBooking(today);
+                                    }, function() {});         
+                            }, function(error){})
                         },
                         icon: function(opt, $itemElement, itemKey, item){
-                            // Set the content to the menu trigger selector and add an bootstrap icon to the item.
                             $itemElement.html('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit');
-                            // Add the context-menu-icon-updated class to the item
                             return 'context-menu-icon-updated';
                         }
                     },
                     delete: {
                         name: 'Delete',
                         callback: function(key, opt){
+                            var UID = opt.selector.split('_')[2];
                             var modalInstance = $uibModal.open({
-                                animation: true,
-                                size: 'md',
-                                templateUrl: 'modules/booking/views/schedulerDelete.html',
-                                controller: 'schedulerDeleteCtrl',
-                                resolve: {
-                                    event: function(){
-                                        return event;
-                                    }
-                                },
-                            });
-                            modalInstance.result
-                                .then(function(result) {
-                                    var dataEvent = {
-                                        resourceId: resource.id,
-                                        title: result.service,
-                                        start: start,
-                                        end: end,
-                                        allDay: allDay,
-                                        isReoccurance: result.isReoccurance,
-                                        reoccuranceType: result.reoccuranceType,
-                                        endReoccurance: result.endReoccurance,
-                                    };
-                                    $scope.events.push(result);
-                                    $scope.scheduler.fullCalendar('renderEvent', dataEvent, true);
-                                    $scope.scheduler.fullCalendar('unselect');
-                                }, function(result) {
-                                    // dismiss
-                                });
+                                        animation: true,
+                                        size: 'md',
+                                        templateUrl: 'modules/booking/views/schedulerDelete.html',
+                                        controller: 'schedulerDeleteCtrl',
+                                        resolve: {
+                                            UID: function(){
+                                                return UID;
+                                            }
+                                        },
+                                    });
+                                    modalInstance.result
+                                    .then(function(result) {
+                                             var today = getDateCalendar();
+                                            ServerListBooking(today);
+                                    }, function() {}); 
                         },
                         icon: function(opt, $itemElement, itemKey, item){
                             // Set the content to the menu trigger selector and add an bootstrap icon to the item.
@@ -206,45 +177,47 @@ app.controller('schedulerCtrl', function($scope,$timeout, $uibModal, RosterServi
                         }
                     }
                 },
-            });
+
+            })
         }
     };
 
     // create new event
-    $scope.select = function(start, end, jsEvent, view, resource, event, allDay ) {
+    $scope.select = function(start, end, jsEvent, view, resource, event, allDay) {
 
-            if(oldEvent.id !== currentEvent.id){
-                    var modalInstance = $uibModal.open({
-                                animation: true,
-                                size: 'md',
-                                templateUrl: 'modules/booking/views/schedulerCreate.html',
-                                controller: 'schedulerCreateCtrl',
-                                resolve: {
-                                        event: function(){
-                                                return currentEvent;
-                                        },
-                                        start: function(){
-                                                return start;
-                                        },
-                                        end: function(){
-                                                return end;
-                                        }
-                                }
-                    });
-                    modalInstance.result
-                    .then(function(result) {
-                            //$scope.events.splice(0, $scope.events.length);
-                            //ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
-                    }, function() {});
-                    currentEvent = {id: ''};
-            }
+        if (oldEvent.id !== currentEvent.id) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'md',
+                templateUrl: 'modules/booking/views/schedulerCreate.html',
+                controller: 'schedulerCreateCtrl',
+                resolve: {
+                    event: function() {
+                        return currentEvent;
+                    },
+                    start: function() {
+                        return start;
+                    },
+                    end: function() {
+                        return end;
+                    }
+                }
+            });
+            modalInstance.result
+                .then(function(result) {
+                    var today = getDateCalendar();
+                    ServerListBooking(today);
+                }, function() {});
+            currentEvent = {
+                id: ''
+            };
+        }
     };
-    $scope.selectOverlap = function(event){
+    $scope.selectOverlap = function(event) {
             currentEvent = event;
             return true;
-    },
-    $scope.eventClick = function(event, jsEvent, view, start, end, element){
-    };
+        },
+        $scope.eventClick = function(event, jsEvent, view, start, end, element) {};
 
     // move a event
     $scope.eventDrop = function(event) {
@@ -252,7 +225,7 @@ app.controller('schedulerCtrl', function($scope,$timeout, $uibModal, RosterServi
     };
     // scale a event
     $scope.eventResize = function(event, jsEvent, ui, view) {
-    	$scope.events[event.id] = event;
+        $scope.events[event.id] = event;
     };
 
     var todayNotTZ = moment().format('YYYY-MM-DD');
@@ -264,7 +237,7 @@ app.controller('schedulerCtrl', function($scope,$timeout, $uibModal, RosterServi
         ignoreTimezone: false,
         defaultDate: todayNotTZ,
         editable: false,
-        slotDuration: '00:05:00',//'00:5:00', // khoang cach thoi gian
+        slotDuration: '00:05:00', //'00:5:00', // khoang cach thoi gian
         selectable: true, //true, // ko cho select
         eventLimit: true, // allow "more" link when too many events
         scrollTime: moment(),
@@ -273,7 +246,7 @@ app.controller('schedulerCtrl', function($scope,$timeout, $uibModal, RosterServi
         header: {
             left: 'today prev,next ',
             center: 'title',
-            right: 'agendaDay,agendaTwoDay, agendaWeek',// right: 'agendaDay,agendaTwoDay,agendaWeek,month'
+            right: 'agendaDay,agendaTwoDay, agendaWeek', // right: 'agendaDay,agendaTwoDay,agendaWeek,month'
         },
         views: {
             agendaTwoDay: {
@@ -304,10 +277,8 @@ app.controller('schedulerCtrl', function($scope,$timeout, $uibModal, RosterServi
         selectOverlap: $scope.selectOverlap,
         eventDrop: $scope.eventDrop,
         eventResize: $scope.eventResize,
-        eventMouseover: function(data, event, view){
-        },
-        eventMouseout: function(calEvent,jsEvent) {
-        },
-    }); 
+        eventMouseover: function(data, event, view) {},
+        eventMouseout: function(calEvent, jsEvent) {},
+    });
 });
 ////

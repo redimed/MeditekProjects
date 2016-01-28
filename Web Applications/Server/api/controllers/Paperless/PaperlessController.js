@@ -1,3 +1,4 @@
+var https = require('http');
 module.exports = {
 
     postData: function(req, res) {
@@ -59,6 +60,8 @@ module.exports = {
 
     insertData : function(req, res) {
         var data = req.body.data;
+        console.log("--------------------------------- ",data.PatientDetails);
+        var EFormID;
         var tempstring="";
         var modelName =[];
         Services.Paperless.Check(data.data,tempstring,modelName);
@@ -69,9 +72,10 @@ module.exports = {
                 EFormTemplateID: data.EFormUID,
                 Name : data.Name,
                 // Name: chua co
-                CreatedBy : data.PatientDetails.ID
+                CreatedBy : data.PatientDetails.patientInfo.ID
             },{transaction:t})
             .then(function(created_EForm){
+                EFormID = created_EForm.ID;
                 for(var i = 0; i < modelName.length; i++) {
                     modelName[i].Name = modelName[i].Name.substr(1,modelName[i].Name.length);
                     modelName[i].UID = UUIDService.Create();
@@ -83,9 +87,63 @@ module.exports = {
                 return res.serverError(ErrorWrap(err));
             })
             .then(function(success){
-                t.commit();
-                return res.ok({message:"success"});
+               if(data.apptuid != undefined && data.apptuid != null && data.apptuid != ""){
+                    return Appointment.findOne({
+                        where:{
+                            UID : data.apptuid
+                        },
+                        transaction : t
+                    });
+               }
+                // t.commit();
+                else{
+                    return success;
+                }
             },function(err) {
+                t.rollback();
+                return res.serverError(ErrorWrap(err));
+            })
+            .then(function(select_Appt){
+                if(data.apptuid != undefined && data.apptuid != null && data.apptuid != ""){
+                    if(select_Appt == null || select_Appt == "" || select_Appt.length == 0){
+                        var err = new Error("insertData.Error");
+                        err.pushError("notFound.Appointment");
+                        t.rollback();
+                        return res.serverError(ErrorWrap(err));
+                    }
+                    else {
+                        console.log(select_Appt);
+                        return RelEFormAppointment.create({
+                            EFormID       : EFormID,
+                            AppointmentID : select_Appt.ID
+                        },{transaction:t});
+                    }
+                }
+                else {
+                    return select_Appt;
+                }
+            },function(err){
+                t.rollback();
+                return res.serverError(ErrorWrap(err));
+            })
+            .then(function(finish){
+                if(data.apptuid != undefined && data.apptuid != null && data.apptuid != ""){
+                    if(finish != null && finish != "" && finish.length != 0){
+                        t.commit();
+                        return res.ok({message:"success"});
+                    }
+                    else {
+                        t.rollback();
+                        var err = new Error("insertData.Error");
+                        err.pushError("insertData.RelEFormAppointment.queryError");
+                        return res.serverError(ErrorWrap(err));
+                    }
+                }
+                else {
+                    t.commit();
+                    return res.ok({message:"success"});
+                }
+            },function(err){
                 t.rollback();
                 return res.serverError(ErrorWrap(err));
             });
@@ -270,12 +328,44 @@ module.exports = {
         },function(err){
             return res.serverError(ErrorWrap(err));
         });
-    }
+    },
 
-    //func : nhan du lieu duoc gui len tu client sau do goi APIs
-    //tu server report de truyen du lieu do ra in report
-    // getDataFromPDF : function(req, res) {
-       
-    // }
+    printData : function(req, res) {
+        var data = req.body.data;
+        var string="";
+        var dataArray =[];
+        Services.Paperless.convert(data.info,string,dataArray);
+        console.log(dataArray);
+        for(var i = 0; i < dataArray.length; i++) {
+            dataArray[i].name = dataArray[i].name.substr(1,dataArray[i].name.length);
+        }
+        console.log(dataArray);
+        var printOption = {
+            host     : 'http://192.168.1.100:8080',
+            path         : '/print',
+            method       : 'POST',
+            body : {
+                printMethod : data.printMethod,
+                templateUID : data.templateUID,
+                data        : {sadkjopasd:"asdasd"}
+            }
+        };
+
+        Services.Paperless.CreateRequest(printOption)
+        .then(function(response) {
+            if(response != null && response != "") {
+                res.ok({message:"success",data:response.body});
+            }
+            else {
+                var err = new Error("printData.Error");
+                err.pushError("callServerPrint.Error");
+                res.serverError(ErrorWrap(err));
+            }
+        })
+        .catch(function(err) {
+            console.log(err);
+            res.serverError(ErrorWrap(err));
+        });
+    }
 
 };

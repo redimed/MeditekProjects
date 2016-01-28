@@ -35,7 +35,7 @@ angular.module('app.authentication.eForms.directive.question6', [])
 			};
 
 			if(scope.info != null && scope.info != "" && scope.info != undefined && _.isEmpty(scope.info) == false)
-				scope.info.Age = parseInt(scope.currentYear - scope.info.DOB.substr(scope.info.DOB.length - 4));
+				scope.info.patientInfo.Age = parseInt(scope.currentYear - scope.info.patientInfo.DOB.substr(scope.info.patientInfo.DOB.length - 4));
 
 			$timeout(function(){
 				App.initAjax();

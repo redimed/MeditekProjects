@@ -6,12 +6,14 @@ angular.module('app.authentication.eForms.directive.manager', [])
 		restrict: 'EA',
 		templateUrl: 'modules/eForms/directives/templates/eFormManagerDirective.html',
 		scope:{
-			apptuid:'=onAppt'
+			apptuid:'=onAppt',
+			patientuid:'=onPatient'
 		},
 		controller: function($scope) {
 			// App.initAjax();
 		},
 		link: function(scope, ele, attr) {
+			console.log("34u3r0uwq09ruwe90ur09wu09r   ----- ",scope.patientuid);
 			scope.resize = "glyphicon glyphicon-resize-full";
 			scope.abc ="gaga";
 			console.log(scope.apptuid);
@@ -123,8 +125,8 @@ angular.module('app.authentication.eForms.directive.manager', [])
 							if(result.data != undefined && result.data != null && result.data.length != 0){
 								scope.TemplateUID = result.data[0].UID;
 								angular.element(document.getElementById('formView'))
-								.append($compile("<generate-directive on-templateuid='TemplateUID' on-apptuid='appointmentUID' "+
-												 " on-datauid='EFormDataUID' on-update='true' ></generate-directive>")(scope));
+								.append($compile("<generate-directive on-templateuid='TemplateUID' on-apptuid='apptuid' "+
+												 " on-datauid='EFormDataUID' on-update='true' on-patientuid='patientuid' ></generate-directive>")(scope));
 							}
 							else {
 								toastr.error("Fail","Error");
@@ -143,8 +145,8 @@ angular.module('app.authentication.eForms.directive.manager', [])
 						if(result.data != undefined && result.data != null && result.data.length != 0){
 							scope.TemplateUID = result.data[0].UID;
 							angular.element(document.getElementById('formView'))
-							.append($compile("<generate-directive on-templateuid='TemplateUID' on-apptuid='appointmentUID' "+
-											 " on-datauid='EFormDataUID' on-update='true' ></generate-directive>")(scope));
+							.append($compile("<generate-directive on-templateuid='TemplateUID' on-apptuid='apptuid' "+
+											 " on-datauid='EFormDataUID' on-update='true' on-patientuid='patientuid' ></generate-directive>")(scope));
 						}
 						else {
 							toastr.error("Fail","Error");
@@ -155,25 +157,29 @@ angular.module('app.authentication.eForms.directive.manager', [])
 				}
 			};
 
-			scope.aaaaa =function() {
-				$http({
-					method: 'POST',
-					url: 'http://192.168.1.98:8080/itextprint',
-					data: [{name:"asdasd", value:"whatthehel"}],
-					'Content-Type': 'application/json',
-					responseType:'arraybuffer',
-				}).then(function successCallback(response) {
-					console.log("success");
-					console.log(response);
-					var blob = new Blob([response.data],{
-						type: 'application/pdf'
-					});
-					console.log(blob);
-					saveAs(blob,"hahahaha");
-				  }, function errorCallback(response) {
-				  	console.log(response);
-				  });
-			};
+			// scope.aaaaa =function() {
+			// 	$http({
+			// 		method: 'POST',
+			// 		url: 'http://192.168.1.98:8080/itextprint',
+			// 		data: {
+			// 			printMethod: "itext" or "jasper",
+			// 		    dataUID: "uid-of-form-template",
+			// 		    data: [arrayofformdata]
+			// 		},
+			// 		'Content-Type': 'application/json',
+			// 		responseType:'arraybuffer',
+			// 	}).then(function successCallback(response) {
+			// 		console.log("success");
+			// 		console.log(response);
+			// 		var blob = new Blob([response.data],{
+			// 			type: 'application/pdf'
+			// 		});
+			// 		console.log(blob);
+			// 		saveAs(blob,"hahahaha");
+			// 	  }, function errorCallback(response) {
+			// 	  	console.log(response);
+			// 	  });
+			// };
 
 			scope.cleanBody = function(id,fn) {
 				$(id).html('');
@@ -186,14 +192,14 @@ angular.module('app.authentication.eForms.directive.manager', [])
 						scope.template = TemplateUID;
 						scope.cleanBody("#formView",function(){
 							angular.element(document.getElementById('formView'))
-							.append($compile("<generate-directive on-templateuid='template' ></generate-directive>")(scope));
+							.append($compile("<generate-directive on-templateuid='template' on-apptuid='apptuid' on-templateuid='TemplateUID' on-patientuid='patientuid' ></generate-directive>")(scope));
 						});
 					}
 				}
 				else {
 					scope.template = TemplateUID;
 					angular.element(document.getElementById('formView'))
-					.append($compile("<generate-directive on-templateuid='template' ></generate-directive>")(scope));
+					.append($compile("<generate-directive on-templateuid='template' on-templateuid='TemplateUID' on-apptuid='apptuid' on-patientuid='patientuid' ></generate-directive>")(scope));
 				}
 				
 			};

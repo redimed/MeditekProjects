@@ -122,7 +122,7 @@ angular.module('app.authentication.eForms.directive.question4', [])
 							scope.isHaveTitle = false;
 						}
 						for(var i = 1; i <= scope.option.value2; i++){
-								scope.info["value"+i] = "";
+								// scope.info["value"+i] = "";
 								angular.element(document.getElementById('form_view '+scope.option.value1))
 								.append($compile("<div class='col-md-4 col-sm-4'><div class='form-group'>"+
 					    			"<label class='control-label'>{{option.value"+(i+2)+"}}</label>"+

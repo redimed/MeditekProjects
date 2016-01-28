@@ -24,7 +24,8 @@ angular.module('app.authentication.eForms.directive.createtemplate', [])
 				{id:8,name:"Medical Assessment"},
 				{id:9,name:"2 checkbox + 1 comment textbox"},
 				{id:10,name:"1 checkbox + 1 comment textbox"},
-				{id:11,name:"1 picture + 2 comment textbox + score + rating"}
+				{id:11,name:"1 picture + 2 comment textbox + score + rating"},
+				{id:12,name:"1 textbox + 2 checkbox choose"}
 			];
 
 			for(var i = 0; i < scope.listDirective.length; i++) {
@@ -109,6 +110,11 @@ angular.module('app.authentication.eForms.directive.createtemplate', [])
 					        angular.element(document.getElementById(idSection))
 							.append($compile("<div class='col-md-12'>&nbsp;</div><div class='col-md-12' id='"+idSection+"."+questionName+
 								"' ><question11 on-option='"+modelValue+"' on-getname='vari' on-editor='true' on-questionimg='ObjectMap.listimg' ></div>")(scope));
+					        break;
+					    case 12:
+					        angular.element(document.getElementById(idSection))
+							.append($compile("<div class='col-md-12'>&nbsp;</div><div class='col-md-12' id='"+idSection+"."+questionName+
+								"' ><question12 on-option='"+modelValue+"' on-editor='true'></div>")(scope));
 					        break;
 					    default:
 					        alert("Error");

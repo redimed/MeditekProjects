@@ -46,7 +46,11 @@ angular.module('app.authentication.eForms.services',[])
 	paperlessService.updateData = function(data) {
 		var updateData = api.all("paperless/update-data");
 		return updateData.post({data:data});
-	}
+	};
+	paperlessService.printData = function(data) {
+		var printData = api.all("paperless/print-pdf");
+		return printData.post({data:data});
+	};
 
 	return paperlessService;
 })

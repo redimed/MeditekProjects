@@ -110,6 +110,22 @@ module.exports = {
             foreignKey: 'PatientID'
         });
 
+        //association Patient - PatientPension
+        Patient.hasOne(PatientPension, {
+            foreignKey: 'PatientID'
+        });
+        PatientPension.belongsTo(Patient, {
+            foreignKey: 'PatientID'
+        });
+
+        //association Patient - PatientDVA
+        Patient.hasOne(PatientDVA, {
+            foreignKey: 'PatientID'
+        });
+        PatientDVA.belongsTo(Patient, {
+            foreignKey: 'PatientID'
+        });
+
         //association Patient - PatientMedicare
         Patient.hasOne(PatientMedicare, {
             foreignKey: 'PatientID'
@@ -346,14 +362,21 @@ module.exports = {
             foreignKey: 'SiteID'
         });
 
-        //association Appointment - Service
-        Appointment.belongsToMany(Service, {
-            through: 'RelAppointmentService',
+        //association EForm - EFormData
+        EForm.hasOne(EFormData, {
+            foreignKey: 'EFormID'
+        });
+        EFormData.belongsTo(EForm, {
+            foreignKey: 'EFormID'
+        });
+
+        Appointment.belongsToMany(EForm, {
+            through: 'RelEFormAppointment',
             foreignKey: 'AppointmentID'
         });
-        Service.belongsToMany(Appointment, {
-            through: 'RelAppointmentService',
-            foreignKey: 'ServiceID'
+        EForm.belongsToMany(Appointment, {
+            through: 'RelEFormAppointment',
+            foreignKey: 'EFormID'
         });
     }
 };

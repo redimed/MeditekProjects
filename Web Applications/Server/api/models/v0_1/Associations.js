@@ -345,5 +345,15 @@ module.exports = {
             through: 'RelRosterSite',
             foreignKey: 'SiteID'
         });
+
+        //association Appointment - Service
+        Appointment.belongsToMany(Service, {
+            through: 'RelAppointmentService',
+            foreignKey: 'AppointmentID'
+        });
+        Service.belongsToMany(Appointment, {
+            through: 'RelAppointmentService',
+            foreignKey: 'ServiceID'
+        });
     }
 };

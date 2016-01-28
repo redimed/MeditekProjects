@@ -17,7 +17,7 @@ module.exports = {
                         err.transaction.rollback();
                     }
                     if (!_.isEmpty(err) &&
-                        !_.isEmpty(err.data)) {
+                        !_.isEmpty(err.dataOverlap)) {
                         res.serverError({
                             error: 'overlaps',
                             data: err.dataOverlap

@@ -61,4 +61,9 @@ _.extend(routes, AdmissionRoutes);
 var RosterRoutes = require('./routes/RosterRoutes');
 _.extend(routes, RosterRoutes);
 //end module Roster
+
+//begin module Booking
+var BookingRoutes = require('./routes/BookingRoutes');
+_.extend(routes, BookingRoutes);
+//end module Booking
 module.exports.routes = routes;

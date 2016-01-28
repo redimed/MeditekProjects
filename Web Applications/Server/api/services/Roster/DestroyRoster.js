@@ -21,8 +21,6 @@ module.exports = function(data, userInfo) {
                         })
                         .then(function(rosterRes) {
                             if (!_.isEmpty(rosterRes)) {
-                                rosterRes.IsRecurrence = rosterRes.isRecurrence;
-                                delete rosterRes['isRecurrence'];
                                 rosterRes.FromTime = moment(rosterRes.FromTime).format('YYYY-MM-DD HH:mm:ss Z');
                                 rosterRes.ToTime = moment(rosterRes.ToTime).format('YYYY-MM-DD HH:mm:ss Z');
                                 rosterRes.EndRecurrence = moment(rosterRes.EndRecurrence).format('YYYY-MM-DD HH:mm:ss Z');

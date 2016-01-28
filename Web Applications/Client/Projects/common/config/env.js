@@ -1,5 +1,4 @@
 var env='local'; //local,meditekServer,testApp,app
-
 var configRestBaseUrl={
 	// 'local':'http://192.168.1.97:3000',
 	'local':'http://localhost:3005',

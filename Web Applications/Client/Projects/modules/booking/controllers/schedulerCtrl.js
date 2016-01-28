@@ -3,7 +3,7 @@ var app = angular.module('app.authentication.booking.scheduler.controller',[
     'app.authentication.booking.scheduler.edit.controller',
     'app.authentication.booking.scheduler.delete.controller',
 ]);
-app.controller('schedulerCtrl', function($scope,$timeout, $uibModal, RosterService){
+app.controller('schedulerCtrl', function($scope,$timeout, $uibModal, RosterService, BookingService){
         var currentEvent = {id: ''};
         var oldEvent = {id: ''};
         function ServerListBooking(startDate){
@@ -41,6 +41,40 @@ app.controller('schedulerCtrl', function($scope,$timeout, $uibModal, RosterServi
                             events.push(event);
                     });
                     $('#calendar').fullCalendar('addEventSource',events);
+
+                    var bookingData = {
+                            Filter: [
+                                    {
+                                        Appointment: {
+                                            Enable: 'Y',
+                                            FromTime: startDate
+                                        }
+                                    }
+                            ]
+                    }
+                    var bookingEvents = [];
+                    BookingService.LoadBooking(bookingData)
+                    .then(function(response){
+                            console.log(response.data);
+                            _.forEach(response.data.rows, function(appointment, index){
+                                        var doctor = appointment.Doctors[0];
+                                        var patient = appointment.Patients[0];
+                                        var service = appointment.Services[0];
+                                        var FromTime = moment(appointment.FromTime).format('YYYY-MM-DDTHH:mm:ss');
+                                        var EndTime = moment(appointment.ToTime).format('YYYY-MM-DDTHH:mm:ss');
+                                        var event = {
+                                                id: appointment.UID,
+                                                resourceId: doctor.UID,
+                                                start: FromTime,
+                                                end: EndTime,
+                                                color: appointment.Services[0].Colour,
+                                                Patient: patient,
+                                                Service: service
+                                        };
+                                        bookingEvents.push(event);
+                            });
+                            $('#calendar').fullCalendar('addEventSource',bookingEvents);
+                    })
             }, function(error){
                     
             })
@@ -54,15 +88,9 @@ app.controller('schedulerCtrl', function($scope,$timeout, $uibModal, RosterServi
         return moment(data).subtract(0,'time').format("hh:mm:ss a");
     };
     $scope.eventRender = function(event, element, view) {
-        element.attr('title', 
-            event.title
-            +'\n'+formatDate(event.start)
-            +'\n'+formatTime(event.start) + ' - ' + formatTime(event.end)
-        );
     };
 
      $scope.viewRender = function(view, element){
-            //INIT
             var date = $('#calendar').fullCalendar('getDate');
             var zone = moment().format('Z');
             var today = moment(date).format('YYYY-MM-DD'+' '+zone);
@@ -70,24 +98,46 @@ app.controller('schedulerCtrl', function($scope,$timeout, $uibModal, RosterServi
     };
 
     $scope.eventAfterRender = function(event, element, view){
-        if (event.rendering != 'background') {
-            $(element).attr('id', 'event_id_'+event._id);
-            $.contextMenu({
-                selector: '#event_id_'+event._id,
-                items: {
-                    edit: {
-                        name: 'Edit', 
-                        callback: function(key,opt){
-                            var modalInstance = $uibModal.open({
-                                animation: true,
-                                size: 'md',
-                                templateUrl: 'modules/booking/views/schedulerEdit.html',
-                                controller: 'schedulerEditCtrl',
-                                resolve: {
-                                    event: function(){
-                                        return event;
-                                    }
-                                },
+        if(typeof event.Patient !== 'undefined'){
+                element.find('.fc-content').html(moment(event.start).format('HH:mm').toLowerCase()+'-'+moment(event.end).format('HH:mm').toLowerCase());
+                element.find('.fc-content').append(' <b>'+event.Patient.FirstName+' '+event.Patient.LastName+'</b>');
+        }
+
+        $(element).attr('id', 'event_id_'+event._id);
+        $.contextMenu({
+            selector: '#event_id_'+event._id,
+            items: {
+                edit: {
+                    name: 'Edit', 
+                    callback: function(key,opt){
+                        var modalInstance = $uibModal.open({
+                            animation: true,
+                            size: 'md',
+                            templateUrl: 'modules/booking/views/schedulerEdit.html',
+                            controller: 'schedulerEditCtrl',
+                            resolve: {
+                                event: function(){
+                                    return event;
+                                }
+                            },
+                        });
+                        modalInstance.result
+                            .then(function(result) {
+                                var dataEvent = {
+                                    resourceId: resource.id,
+                                    title: result.service,
+                                    start: start,
+                                    end: end,
+                                    allDay: allDay,
+                                    isReoccurance: result.isReoccurance,
+                                    reoccuranceType: result.reoccuranceType,
+                                    endReoccurance: result.endReoccurance,
+                                };
+                                $scope.events.push(result);
+                                $scope.scheduler.fullCalendar('renderEvent', dataEvent, true);
+                                $scope.scheduler.fullCalendar('unselect');
+                            }, function(result) {
+                                // dismiss
                             });
                             modalInstance.result
                                 .then(function(result) {

@@ -1,7 +1,6 @@
 var app = angular.module('app.authentication.booking.scheduler.create.controller',[]);
 
 app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterService, event, start, end, PatientService, $modal, $uibModal, $timeout, $modalInstance, toastr){
-	
 	$modalInstance.rendered.then(function(){
 		App.initAjax();
 		ComponentsDateTimePickers.init();
@@ -54,6 +53,10 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
 		})
 	}
 
+	$scope.listTypes = [
+		{code: 'Onsite', name: 'Onsite'},
+		{code: 'Telehealth', name: 'Telehealth'}
+	];
 	$scope.formData = {
 		service: event.Services[0],
 		site: event.Sites[0],
@@ -63,7 +66,8 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
 		Doctor: event.UserAccounts[0].Doctor,
 		Patient: {
 			UID: ''
-		}
+		},
+		type: 'Onsite'
 	};
 	$scope.cancel = function(){
 		$modalInstance.dismiss('cancel');
@@ -73,11 +77,51 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
 		return (time < 10)?'0'+time:time;
 	}
 
-	$scope.submit = function(){
-
+	function appendFullCalendarDateTime(date, time){
+		var split_time = time.split(':');
+		var hour = appendTime(split_time[0]);
+		var minute = split_time[1];
 		var zone = moment().format('Z');
-		var fromDate = moment(start).format('YYYY-MM-DD')+" "+appendTime($scope.formData.fromTime)+" "+zone;
-		console.log(fromDate);
+		return moment(date).format('YYYY-MM-DD')+' '+hour+':'+minute+':00 '+zone;
+	}
+
+	$scope.submit = function(){
+		var fromTime = appendFullCalendarDateTime(start, $scope.formData.fromTime);
+		var toTime = appendFullCalendarDateTime(start, $scope.formData.toTime);
+		var type = $scope.formData.type;
+		var requestDate = moment(start).format('YYYY-MM-DD HH:mm:ss Z');
+		var serviceUID = event.Services[0].UID;
+		var siteUID = event.Sites[0].UID;
+		var DoctorUID = event.UserAccounts[0].Doctor.UID;
+		var PatientUID = $scope.formData.Patient.UID;
+
+		var postData = {
+			Appointment: {
+				FromTime: fromTime,
+				ToTime: toTime,
+				Type: type,
+				RequestDate: requestDate
+			},
+			Service: {
+				UID: serviceUID
+			},
+			Site: {
+				UID: siteUID
+			},
+			Doctor: {
+				UID: DoctorUID
+			},
+			Patient: {
+				UID: PatientUID
+			}
+		}
+
+		BookingService.CreateBooking(postData)
+		.then(function(response){
+			console.log(response);
+		}, function(error){
+
+		})
 
 	};
 

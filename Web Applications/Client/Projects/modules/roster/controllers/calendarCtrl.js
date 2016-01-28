@@ -27,7 +27,7 @@ app.controller('calendarCtrl', function($state, $stateParams, RosterService, $sc
     $scope.eventRender = function(event, element, view){
             event.allDay = true;
             element.find('.fc-time').html(moment(event.start).format('hA').toLowerCase()+'-'+moment(event.end).format('hA').toLowerCase()+'<br/>');
-            element.find('.fc-title').append('<br/><small><i>'+event.textOccurance+'</i></small>');
+            element.find('.fc-title').html('<h4><b>'+event.title+'</b></h4><small><i>'+event.textOccurance+'</i></small>');
     };
     $scope.eventResize = function(event){
     };
@@ -72,7 +72,6 @@ app.controller('calendarCtrl', function($state, $stateParams, RosterService, $sc
                     name: 'Delete',
                     callback: function(key, opt){
                         var UID = opt.selector.split('_')[2];
-                        console.log(UID);
                         RosterService.GetDetailRoster({UID: UID})
                         .then(function(response){
                                 var modalInstance = $uibModal.open({
@@ -190,9 +189,9 @@ app.controller('calendarCtrl', function($state, $stateParams, RosterService, $sc
             header: {
                 left: 'today prev,next',
                 center: 'title',
-                right: '',//'month,agendaWeek,agendaDay'
+                right: 'month,agendaWeek,agendaDay',//'month,agendaWeek,agendaDay'
             },
-            height: 900,
+            height: 1600,
             // timeFormat: 'H(:mm)', // uppercase H for 24-hour clock
             eventRender: $scope.eventRender,
             eventAfterRender: $scope.eventAfterRender,
@@ -230,16 +229,18 @@ app.controller('calendarCtrl', function($state, $stateParams, RosterService, $sc
             RosterService.PostListRoster(postData)
             .then(function(response){
                     _.forEach(response.data.rows, function(item, index){
-                            var color = (item.isRecurrence === 'Y')?'green':'green';
+                            var Service = item.Services[0];
+
+                            var color = (item.IsRecurrence === 'Y')?'green':'green';
                             var textColor = 'white';
-                            var textOccurance =  (item.isRecurrence === 'Y')?'Occur':'';
+                            var textOccurance =  (item.IsRecurrence === 'Y')?'Occur':'';
                             $scope.events.push({
                                     UID: item.UID,
-                                    title: item.Services[0].ServiceName,
+                                    title: Service.ServiceName,
                                     start: new Date(item.FromTime),
                                     end: new Date(item.ToTime),
                                     textColor: textColor,
-                                    color: color,
+                                    color: Service.Colour,
                                     textOccurance: textOccurance
                             });
                     })

@@ -11,7 +11,6 @@ output variables
 
 app.controller('calendarDeleteCtrl', function($scope, $stateParams, RosterService, data, $timeout, $uibModal, $modalInstance, toastr){
 	$scope.data = data;
-	console.log(data);
 	$scope.case = {
 		isOccurance: 'N'
 	}

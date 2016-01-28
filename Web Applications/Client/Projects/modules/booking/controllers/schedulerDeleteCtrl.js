@@ -9,7 +9,7 @@ output variables
 	}
 */
 
-app.controller('schedulerDeleteCtrl', function($scope, event, $timeout, $uibModal, $modalInstance, toastr){
+app.controller('schedulerDeleteCtrl', function($scope, UID, BookingService, $timeout, $uibModal, $modalInstance, toastr){
 	$modalInstance.rendered.then(function(){
 		App.initAjax();
 		ComponentsDateTimePickers.init();
@@ -18,6 +18,12 @@ app.controller('schedulerDeleteCtrl', function($scope, event, $timeout, $uibModa
 		$modalInstance.dismiss('cancel');
 	};
 	$scope.submit = function(){
-		
+		BookingService.DestroyBooking({UID: UID})
+		.then(function(response){
+			toastr.success('Delete Booking Successfully');
+			$modalInstance.close();
+		}, function(error){
+
+		})
 	};
 });

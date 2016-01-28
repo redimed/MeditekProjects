@@ -36,6 +36,7 @@ module.exports = function(data, userInfo) {
                                 RequestDate: data.Appointment.RequestDate,
                                 Type: data.Appointment.Type,
                                 Enable: 'Y',
+                                Status: 'Received',
                                 SiteID: siteRes.ID,
                                 CreatedBy: userInfo.ID
                             };

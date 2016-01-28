@@ -42,6 +42,9 @@ module.exports = function(data, userInfo) {
                         .then(function(teleApptCreated) {
                             if (!_.isEmpty(teleApptCreated)) {
                                 var dataPatientAppt = data.PatientAppointment;
+                                if (_.isString(dataPatientAppt)) {
+                                    dataPatientAppt = JSON.parse(dataPatientAppt);
+                                }
                                 dataPatientAppt.UID = UUIDService.Create();
                                 if (!_.isEmpty(userInfo)) {
                                     dataPatientAppt.CreatedBy = userInfo.ID;
@@ -79,8 +82,10 @@ module.exports = function(data, userInfo) {
                         })
                         .then(function(onsiteApptCreated) {
                             if (!_.isEmpty(data.FileUploads) &&
-                                _.isArray(data.FileUploads) &&
                                 !_.isEmpty(appointmentObject)) {
+                                if (_.isString(data.FileUploads)) {
+                                    data.FileUploads = JSON.parse(data.FileUploads);
+                                }
                                 var arrayFileUploadsUnique = _.map(_.groupBy(data.FileUploads, function(FU) {
                                     return FU.UID;
                                 }), function(subGrouped) {

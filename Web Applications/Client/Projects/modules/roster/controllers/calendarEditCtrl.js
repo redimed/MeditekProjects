@@ -22,7 +22,7 @@ app.controller('calendarEditCtrl', function($scope, $stateParams, data, $timeout
 		site: null,
 		fromTime: moment(data.FromTime).format('HH:mm'),
 		toTime: moment(data.ToTime).format('HH:mm'),
-		isReoccurance: data.isRecurrence,
+		IsReoccurance: data.IsRecurrence,
 		reoccuranceType: data.RecurrenceType,
 		endReoccurance: endOccurance
 	};
@@ -35,8 +35,8 @@ app.controller('calendarEditCtrl', function($scope, $stateParams, data, $timeout
 		$scope.formData.reoccuranceType = '';
 		$scope.formData.endReoccurance = null;
 	};
-	$scope.checkReoccurance = function(isReoccurance){
-		if(isReoccurance === false){
+	$scope.checkReoccurance = function(IsReoccurance){
+		if(IsReoccurance === false){
 			resetReoccurance();
 		}
 	};
@@ -63,7 +63,7 @@ app.controller('calendarEditCtrl', function($scope, $stateParams, data, $timeout
 	$scope.submit = function(){
 		var service = $scope.formData.service;
 		var site = $scope.formData.site;
-		var isReoccurance = $scope.formData.isReoccurance;
+		var IsReoccurance = $scope.formData.IsReoccurance;
 		var reoccuranceType = $scope.formData.reoccuranceType;
 		var reoccuranceDate = $scope.formData.endReoccurance;
 		var accept = true;
@@ -91,17 +91,18 @@ app.controller('calendarEditCtrl', function($scope, $stateParams, data, $timeout
 				toastr.error('From Time must be smaller than To Time !!!');
 				accept = false;
 			}else{
-				var service = $scope.formData.service;
+				var service = $scope.formData.service.UID;
 				var site = $scope.formData.site;
 				var fromTimeNoTz = moment(data.FromTime).format('YYYY-MM-DD')+' '+appendTime($scope.formData.fromTime);
 				var toTimeNoTz = moment(data.FromTime).format('YYYY-MM-DD')+' '+appendTime($scope.formData.toTime);
 				var fromTime = moment(fromTimeNoTz).format('YYYY-MM-DD HH:mm:ss Z');
 				var toTime = moment(toTimeNoTz).format('YYYY-MM-DD HH:mm:ss Z');
-				var IsRecurrence = $scope.formData.isReoccurance;
+				var IsRecurrence = $scope.formData.IsReoccurance;
 				var UserUID = $stateParams.doctorId;
 				var endRecurrence = $scope.formData.endReoccurance;
 				var recurrenceType = $scope.formData.reoccuranceType;
-				if($scope.formData.isReoccurance === 'Y'){
+				var bookable = $scope.formData.service.Bookable;
+				if($scope.formData.IsReoccurance === 'Y'){
 					if(endRecurrence === null){
 						toastr.error('Please choose End Recurrence');
 						accept = false;
@@ -127,7 +128,8 @@ app.controller('calendarEditCtrl', function($scope, $stateParams, data, $timeout
 						UID: UserUID
 					},
 					Service: {
-						UID: service
+						UID: service,
+						Bookable: bookable
 					},
 					Site: {
 						UID: site
@@ -176,7 +178,8 @@ app.controller('calendarEditCtrl', function($scope, $stateParams, data, $timeout
 		RosterService.GetListService()
 		.then(function(response){
 			$scope.listServices = response.data;
-			$scope.formData.service = data.Services[0].UID;
+			console.log(data.Services[0]);
+			$scope.formData.service = data.Services[0];
 		}, function(error){
 
 		})

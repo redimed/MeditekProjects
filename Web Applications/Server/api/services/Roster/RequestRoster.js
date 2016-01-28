@@ -15,7 +15,8 @@ module.exports = function(data, userInfo) {
                     var objectCheckOverlap = {
                         data: rosterRepeat,
                         transaction: t,
-                        userAccount: data.UserAccount
+                        userAccount: data.UserAccount,
+                        Bookable: data.Service.Bookable
                     };
                     return Services.CheckOverlap(objectCheckOverlap)
                         .then(function(checkOk) {
@@ -208,10 +209,7 @@ module.exports = function(data, userInfo) {
                     defer.reject(error);
                 }
             }, function(err) {
-                defer.reject({
-                    error: err,
-                    transaction: t
-                });
+                defer.reject(err);
             });
     } else {
         var error = new Error('Roster.not.exist');

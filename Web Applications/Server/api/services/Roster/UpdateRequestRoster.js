@@ -20,12 +20,15 @@ module.exports = function(data, userInfo) {
                     return Services.CheckRosterExistAppointment(objectCheckExistAppt)
                         .then(function(checkExistApptOk) {
                             var rosterRepeat = Services.GetDataRoster.GetRosterRepeat(data.Roster, userInfo);
-                            var objectCheckOverlap = {
-                                data: rosterRepeat,
-                                transaction: t,
-                                userAccount: data.UserAccount
-                            };
-                            return Services.CheckOverlap(objectCheckOverlap);
+                            if (!_.isEmpty(rosterRepeat)) {
+                                var objectCheckOverlap = {
+                                    data: rosterRepeat,
+                                    transaction: t,
+                                    userAccount: data.UserAccount,
+                                    Bookable: data.Service.Bookable
+                                };
+                                return Services.CheckOverlap(objectCheckOverlap);
+                            }
                         }, function(err) {
                             if (!_.isEmpty(err) &&
                                 !_.isEmpty(err.dataExistAppt) &&

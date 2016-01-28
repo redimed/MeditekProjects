@@ -103,5 +103,8 @@ module.exports = {
     UpdateRelRosterService: require('./Roster/UpdateRelRosterService'),
     GetListSite: require('./Roster/GetListSite'),
     UpdateRelRosterSite: require('./Roster/UpdateRelRosterSite'),
+    GetListBooking: require('./Booking/GetListBooking'),
+    RequestBooking: require('./Booking/RequestBooking'),
+    UpdateRequestBooking: require('./Booking/UpdateRequestBooking'),
     //begin Roster
 };

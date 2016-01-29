@@ -138,10 +138,7 @@ app.controller('calendarEditCtrl', function($scope, $stateParams, data, $timeout
 				if(accept){
 					RosterService.UpdateRoster(returnData)
 					.then(function(response){
-						toastr.success('Update Booking Successfully');
-						$modalInstance.close();
-					}, function(error){
-						if(error.data.error === 'overlaps'){
+						if(response.status === 'overlaps'){
 							var modalInstance = $uibModal.open({
 					                                    animation: true,
 					                                    size: 'md',
@@ -158,7 +155,7 @@ app.controller('calendarEditCtrl', function($scope, $stateParams, data, $timeout
 					                                    },
 					                                    resolve: {
 					                                    	data: function(){
-					                                    		return error.data.data;
+					                                    		return response.data;
 					                                    	}
 					                                    }
 					                           });
@@ -167,7 +164,11 @@ app.controller('calendarEditCtrl', function($scope, $stateParams, data, $timeout
 					                                        $scope.events.splice(0, $scope.events.length);
 					                                        ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
 					                                }, function() {}); 
+						}else{
+							toastr.success('Update Booking Successfully');
+							$modalInstance.close();
 						}
+					}, function(error){
 					})
 				}
 			}

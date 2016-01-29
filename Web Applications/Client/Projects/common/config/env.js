@@ -3,17 +3,16 @@ var env='meditekServer'; //local,meditekServer,testApp,app
 
 
 var configRestBaseUrl={
-	// 'local':'http://192.168.1.97:3000',
-	// 'local':'http://localhost:3005',
-	'local':'https://localhost:3005',
+	'local':'https://192.168.1.235:3005',
+	//'local':'https://localhost:3005',
 	'meditekServer':'https://telehealthvietnam.com.vn:3005',
 	'testApp':'https://testapp.redimed.com.au:3005',
 	'app':'https://apps.redimed.com.au:3005',
 };
 
 var configAuthBaseUrl={
-	// 'local':'http://localhost:3006',
-	'local':'https://localhost:3006',
+	 'local':'https://192.168.1.235:3006',
+	//'local':'https://localhost:3006',
 	'meditekServer':'https://telehealthvietnam.com.vn:3006',
 	'testApp':'https://testapp.redimed.com.au:3006',
 	'app':'https://apps.redimed.com.au:3006',

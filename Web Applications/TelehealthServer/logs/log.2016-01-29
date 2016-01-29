@@ -1,0 +1,34 @@
+{"level":"error","message":"** Grunt :: An error occurred. **","timestamp":"2016-01-29T03:09:28.484Z"}
+{"level":"info","message":"","timestamp":"2016-01-29T03:09:41.047Z"}
+{"level":"info","message":"               .-..-.","timestamp":"2016-01-29T03:09:41.047Z"}
+{"level":"info","message":"","timestamp":"2016-01-29T03:09:41.047Z"}
+{"level":"info","message":"   Sails              <|    .-..-.","timestamp":"2016-01-29T03:09:41.047Z"}
+{"level":"info","message":"   v0.11.3             |\\","timestamp":"2016-01-29T03:09:41.047Z"}
+{"level":"info","message":"                      /|.\\","timestamp":"2016-01-29T03:09:41.047Z"}
+{"level":"info","message":"                     / || \\","timestamp":"2016-01-29T03:09:41.047Z"}
+{"level":"info","message":"                   ,'  |'  \\","timestamp":"2016-01-29T03:09:41.047Z"}
+{"level":"info","message":"                .-'.-==|/_--'","timestamp":"2016-01-29T03:09:41.047Z"}
+{"level":"info","message":"                `--'-------' ","timestamp":"2016-01-29T03:09:41.047Z"}
+{"level":"info","message":"   __---___--___---___--___---___--___","timestamp":"2016-01-29T03:09:41.047Z"}
+{"level":"info","message":" ____---___--___---___--___---___--___-__","timestamp":"2016-01-29T03:09:41.063Z"}
+{"level":"info","message":"","timestamp":"2016-01-29T03:09:41.063Z"}
+{"level":"info","message":"Server lifted in `D:\\MeditekProjects\\Web Applications\\TelehealthServer`","timestamp":"2016-01-29T03:09:41.063Z"}
+{"level":"info","message":"To see your app, visit \u001b[4mhttps://localhost:3009\u001b[24m","timestamp":"2016-01-29T03:09:41.063Z"}
+{"level":"info","message":"To shut down Sails, press <CTRL> + C at any time.","timestamp":"2016-01-29T03:09:41.063Z"}
+{"level":"debug","message":"\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-29T03:09:41.063Z"}
+{"level":"debug","message":"\u001b[90m:: Fri Jan 29 2016 10:09:41 GMT+0700 (SE Asia Standard Time)\u001b[39m","timestamp":"2016-01-29T03:09:41.063Z"}
+{"level":"debug","message":"Environment : production","timestamp":"2016-01-29T03:09:41.063Z"}
+{"level":"debug","message":"Port        : 3009","timestamp":"2016-01-29T03:09:41.063Z"}
+{"level":"debug","message":"\u001b[90m--------------------------------------------------------\u001b[39m","timestamp":"2016-01-29T03:09:41.063Z"}
+{"level":"debug","message":"Socket MessageTransfer: {\"from\":\"99f5fdf3-2d0d-4e9e-8042-c5436f19d67c\",\"to\":\"714c45cc-6b58-4e9d-829f-8275b2891ec0\",\"message\":\"call\",\"sessionId\":\"1_MX40NTM2NDM4Mn5-MTQ1NDAzODYwNTkwNH5Dd1VkZTl3R25tbGFHMkQvb0xHa0xJTnV-fg\",\"fromName\":\"admin_lam\"}","timestamp":"2016-01-29T03:36:49.045Z"}
+{"level":"debug","message":"Socket MessageTransfer: {\"message\":\"answer\",\"from\":\"99f5fdf3-2d0d-4e9e-8042-c5436f19d67c\",\"to\":\"714c45cc-6b58-4e9d-829f-8275b2891ec0\"}","timestamp":"2016-01-29T03:36:52.381Z"}
+{"level":"debug","message":"Socket MessageTransfer: {\"from\":\"99f5fdf3-2d0d-4e9e-8042-c5436f19d67c\",\"to\":\"714c45cc-6b58-4e9d-829f-8275b2891ec0\",\"message\":\"call\",\"sessionId\":\"1_MX40NTM2NDM4Mn5-MTQ1NDAzODYwNTkwNH5Dd1VkZTl3R25tbGFHMkQvb0xHa0xJTnV-fg\",\"fromName\":\"admin_lam\"}","timestamp":"2016-01-29T03:37:07.556Z"}
+{"level":"debug","message":"Socket MessageTransfer: {\"message\":\"answer\",\"from\":\"99f5fdf3-2d0d-4e9e-8042-c5436f19d67c\",\"to\":\"714c45cc-6b58-4e9d-829f-8275b2891ec0\"}","timestamp":"2016-01-29T03:37:09.829Z"}
+{"level":"debug","message":"Socket MessageTransfer: {\"from\":\"99f5fdf3-2d0d-4e9e-8042-c5436f19d67c\",\"to\":\"714c45cc-6b58-4e9d-829f-8275b2891ec0\",\"message\":\"call\",\"sessionId\":\"1_MX40NTM2NDM4Mn5-MTQ1NDAzODYwNTkwNH5Dd1VkZTl3R25tbGFHMkQvb0xHa0xJTnV-fg\",\"fromName\":\"admin_lam\"}","timestamp":"2016-01-29T03:43:04.029Z"}
+{"level":"debug","message":"Socket MessageTransfer: {\"message\":\"decline\",\"from\":\"714c45cc-6b58-4e9d-829f-8275b2891ec0\",\"to\":\"99f5fdf3-2d0d-4e9e-8042-c5436f19d67c\"}","timestamp":"2016-01-29T03:43:20.304Z"}
+{"level":"debug","message":"Socket MessageTransfer: {\"message\":\"decline\",\"from\":\"714c45cc-6b58-4e9d-829f-8275b2891ec0\",\"to\":\"99f5fdf3-2d0d-4e9e-8042-c5436f19d67c\"}","timestamp":"2016-01-29T03:43:26.711Z"}
+{"level":"debug","message":"Socket MessageTransfer: {\"from\":\"99f5fdf3-2d0d-4e9e-8042-c5436f19d67c\",\"to\":\"714c45cc-6b58-4e9d-829f-8275b2891ec0\",\"message\":\"call\",\"sessionId\":\"1_MX40NTM2NDM4Mn5-MTQ1NDAzODYwNTkwNH5Dd1VkZTl3R25tbGFHMkQvb0xHa0xJTnV-fg\",\"fromName\":\"admin_lam\"}","timestamp":"2016-01-29T03:43:34.523Z"}
+{"level":"debug","message":"Socket MessageTransfer: {\"message\":\"answer\",\"from\":\"99f5fdf3-2d0d-4e9e-8042-c5436f19d67c\",\"to\":\"714c45cc-6b58-4e9d-829f-8275b2891ec0\"}","timestamp":"2016-01-29T03:44:06.909Z"}
+{"level":"debug","message":"Socket MessageTransfer: {\"from\":\"99f5fdf3-2d0d-4e9e-8042-c5436f19d67c\",\"to\":\"714c45cc-6b58-4e9d-829f-8275b2891ec0\",\"message\":\"call\",\"sessionId\":\"2_MX40NTM2NDM4Mn5-MTQ1NDAzOTQyMjI0N35Hcm1la1EyY2FmR3puUnJab0FpZUlML3p-fg\",\"fromName\":\"admin_lam\"}","timestamp":"2016-01-29T03:50:25.615Z"}
+{"level":"debug","message":"Socket MessageTransfer: {\"message\":\"answer\",\"from\":\"99f5fdf3-2d0d-4e9e-8042-c5436f19d67c\",\"to\":\"714c45cc-6b58-4e9d-829f-8275b2891ec0\"}","timestamp":"2016-01-29T03:50:28.341Z"}
+{"level":"debug","message":"Socket MessageTransfer: {\"message\":\"decline\",\"from\":\"714c45cc-6b58-4e9d-829f-8275b2891ec0\",\"to\":\"99f5fdf3-2d0d-4e9e-8042-c5436f19d67c\"}","timestamp":"2016-01-29T03:52:41.430Z"}

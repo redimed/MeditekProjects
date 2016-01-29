@@ -45,6 +45,9 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
     // });
     // audio.loop = true;
     // audio.play();
+    $scope.$on('end',function(data){
+        console.log("roi neeeeeeeeeeeeeeeeeee",data);
+    })
     var apiKey = $stateParams.apiKey;
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;

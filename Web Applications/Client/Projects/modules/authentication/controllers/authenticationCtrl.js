@@ -120,15 +120,7 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
         OpenTokJoinRoom();
     };
     io.socket.on('receiveMessage', function(msg) {
-        console.log("AAAAaaaaaaaaaaaaaaaaaaaaaaaaa",msg.message);
-        return
-        switch (msg.message) {
-            case 'decline':
-                window.close();
-                break;
-            case 'cancel':
-                window.close();
-                break;
-        }
+        console.log("===================================",msg.message);
+        $scope.$broadcast("end",{a:"asdasd"});
     });
 });

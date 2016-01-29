@@ -21,7 +21,7 @@ module.exports.session = {
   * of your users, forcing them to log in again.                             *
   *                                                                          *
   ***************************************************************************/
-  secret: '5f80950e87484dd180cd0164dd60f7c9',
+  secret: 'fbdf5684062d54ff5ac7c3151dcc00cf',
 
 
   /***************************************************************************
@@ -41,7 +41,7 @@ module.exports.session = {
   * session store that can be shared across multiple Sails.js servers        *
   ***************************************************************************/
 
-  // adapter: 'redis',
+  adapter: 'redis',
 
   /***************************************************************************
   *                                                                          *
@@ -52,12 +52,18 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-  // host: 'localhost',
-  // port: 6379,
-  // ttl: <redis session TTL in seconds>,
-  // db: 0,
+  host: 'redis',
+  port: 6379,
+  // ttl (seconds) : thời hạn (expiration) của 1 session (1 key ) trong redis
+  // nếu khoảng cách thời gian giữa 2 request lớn hơn ttl thì session (key) sẽ được remove khỏi redis
+  //  
+  // ttl:  12*60*60,
+  //disableTTL: nếu disable ttl thì session sẽ sống mãi cho đến khi nó bị remove hoặc redis restart lại
+  //disables setting TTL, keys will stay in redis until evicted by other means (overides ttl)
+  disableTTL :true,
+  db: 0,
   // pass: <redis auth password>,
-  // prefix: 'sess:',
+  prefix: 'sess:',
 
 
   /***************************************************************************

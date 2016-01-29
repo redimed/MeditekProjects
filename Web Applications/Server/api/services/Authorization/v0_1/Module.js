@@ -106,6 +106,28 @@ var modules=[
 			'ASSISTANT'
 		]
 	},
+	{
+		uid:'14',
+		state:'authentication.booking.scheduler',
+		name:'Booking',
+		parent:'root',
+		order:'9',
+		roles:[
+			'ADMIN',
+			'INTERNAL_PRACTITIONER',
+		]
+	},
+	{
+		uid:'15',
+		state:'authentication.roster.home',
+		name:'Roster',
+		parent:'root',
+		order:'10',
+		roles:[
+			'ADMIN',
+			'INTERNAL_PRACTITIONER',
+		]
+	},
 	
 
 ]

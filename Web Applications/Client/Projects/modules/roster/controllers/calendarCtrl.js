@@ -4,7 +4,11 @@ var app = angular.module('app.authentication.roster.calendar.controller', [
     'app.authentication.roster.calendar.delete.controller',
 ]);
 
-app.controller('calendarCtrl', function($state, $stateParams, RosterService, $scope, $compile, $filter, $timeout, uiCalendarConfig, $uibModal){
+app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterService, $scope, $compile, $filter, $timeout, uiCalendarConfig, $uibModal){
+    var userRole = 0;
+    if(typeof $cookies.getObject('userInfo')){
+        userRole = $cookies.getObject('userInfo').roles[0].ID;
+    }
     //Config
     var selectedColor = 'yellow';
 
@@ -35,95 +39,96 @@ app.controller('calendarCtrl', function($state, $stateParams, RosterService, $sc
         $scope.selectedEvent = event;
     };
     $scope.eventAfterRender = function(event, element, view){
-        $(element).attr('id', 'event_id_'+event.UID);
-        $.contextMenu({
-            selector: '#event_id_'+event.UID,
-            items: {
-                edit: {
-                    name: 'Edit', 
-                    callback: function(key,opt){
-                        var UID = opt.selector.split('_')[2];
-                        RosterService.GetDetailRoster({UID: UID})
-                        .then(function(response){
-                                var modalInstance = $uibModal.open({
-                                    animation: true,
-                                    size: 'md',
-                                    templateUrl: 'modules/roster/views/calendarEdit.html',
-                                    controller: 'calendarEditCtrl',
-                                    resolve: {
-                                        data: function(){
-                                            return response.data;
-                                        }
-                                    },
-                                });
-                                modalInstance.result
-                                .then(function(result) {
-                                        $scope.events.splice(0, $scope.events.length);
-                                        ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
-                                }, function() {});         
-                        }, function(error){})
+        if(userRole === 1){
+            $(element).attr('id', 'event_id_'+event.UID);
+            $.contextMenu({
+                selector: '#event_id_'+event.UID,
+                items: {
+                    edit: {
+                        name: 'Edit', 
+                        callback: function(key,opt){
+                            var UID = opt.selector.split('_')[2];
+                            RosterService.GetDetailRoster({UID: UID})
+                            .then(function(response){
+                                    var modalInstance = $uibModal.open({
+                                        animation: true,
+                                        size: 'md',
+                                        templateUrl: 'modules/roster/views/calendarEdit.html',
+                                        controller: 'calendarEditCtrl',
+                                        resolve: {
+                                            data: function(){
+                                                return response.data;
+                                            }
+                                        },
+                                    });
+                                    modalInstance.result
+                                    .then(function(result) {
+                                            $scope.events.splice(0, $scope.events.length);
+                                            ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
+                                    }, function() {});         
+                            }, function(error){})
+                        },
+                        icon: function(opt, $itemElement, itemKey, item){
+                            $itemElement.html('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit');
+                            return 'context-menu-icon-updated';
+                        }
                     },
-                    icon: function(opt, $itemElement, itemKey, item){
-                        $itemElement.html('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit');
-                        return 'context-menu-icon-updated';
+                    delete: {
+                        name: 'Delete',
+                        callback: function(key, opt){
+                            var UID = opt.selector.split('_')[2];
+                            RosterService.GetDetailRoster({UID: UID})
+                            .then(function(response){
+                                    var modalInstance = $uibModal.open({
+                                        animation: true,
+                                        size: 'md',
+                                        templateUrl: 'modules/roster/views/calendarDelete.html',
+                                        controller: 'calendarDeleteCtrl',
+                                        resolve: {
+                                            data: function(){
+                                                return response.data;
+                                            }
+                                        },
+                                    });
+                                    modalInstance.result
+                                    .then(function(result) {
+                                            $scope.events.splice(0, $scope.events.length);
+                                            ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
+                                    }, function() {}); 
+                            }, function(error){})
+                        },
+                        icon: function(opt, $itemElement, itemKey, item){
+                            // Set the content to the menu trigger selector and add an bootstrap icon to the item.
+                            $itemElement.html('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete');
+                            // Add the context-menu-icon-updated class to the item
+                            return 'context-menu-icon-updated';
+                        }
                     }
                 },
-                delete: {
-                    name: 'Delete',
-                    callback: function(key, opt){
-                        var UID = opt.selector.split('_')[2];
-                        RosterService.GetDetailRoster({UID: UID})
-                        .then(function(response){
-                                var modalInstance = $uibModal.open({
-                                    animation: true,
-                                    size: 'md',
-                                    templateUrl: 'modules/roster/views/calendarDelete.html',
-                                    controller: 'calendarDeleteCtrl',
-                                    resolve: {
-                                        data: function(){
-                                            return response.data;
-                                        }
-                                    },
-                                });
-                                modalInstance.result
-                                .then(function(result) {
-                                        $scope.events.splice(0, $scope.events.length);
-                                        ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
-                                }, function() {}); 
-                        }, function(error){})
-                    },
-                    icon: function(opt, $itemElement, itemKey, item){
-                        // Set the content to the menu trigger selector and add an bootstrap icon to the item.
-                        $itemElement.html('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete');
-                        // Add the context-menu-icon-updated class to the item
-                        return 'context-menu-icon-updated';
-                    }
-                }
-            },
-
-        })
-
+            })
+        }
     };
     $scope.select = function(event){
-
-        var modalInstance = $uibModal.open({
-            animation: true,
-            size: 'md',
-            templateUrl: 'modules/roster/views/calendarCreate.html',
-            controller: 'calendarCreateCtrl',
-            resolve: {
-                event: function(){
-                    return event;
-                }
-            },
-        });
-        modalInstance.result
-            .then(function(result) {
-                    $scope.events.splice(0, $scope.events.length);
-                    ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
-            }, function(result) {
-                // dismiss
+        if(userRole === 1){
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'md',
+                templateUrl: 'modules/roster/views/calendarCreate.html',
+                controller: 'calendarCreateCtrl',
+                resolve: {
+                    event: function(){
+                        return event;
+                    }
+                },
             });
+            modalInstance.result
+                .then(function(result) {
+                        $scope.events.splice(0, $scope.events.length);
+                        ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
+                }, function(result) {
+                    // dismiss
+                });
+        }
     };
     $scope.dayClick = function(event){  
     };
@@ -176,6 +181,7 @@ app.controller('calendarCtrl', function($state, $stateParams, RosterService, $sc
     $scope.viewRender = function(view, element){
         $scope.calendarTemp.startDate = moment(view.start).format('YYYY-MM-DD Z');
         $scope.calendarTemp.endDate = moment(view.end).format('YYYY-MM-DD Z');
+        $scope.events.splice(0, $scope.events.length);
         ServerListCalendar($scope.calendarTemp.startDate, $scope.calendarTemp.endDate);
     };
     $scope.calendarConfig = {

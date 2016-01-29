@@ -350,8 +350,7 @@ angular.module('app.authentication.doctor.directive.create', [])
 							scope.uploader.queue!=='' && scope.uploader.queue.length!==0){
 							console.log(success);
 							for(var i = 0; i < scope.uploader.queue.length; i++){
-								
-scope.uploader.queue[i].formData[0].userUID = success.userUID;
+								scope.uploader.queue[i].formData[0].userUID = success.userUID;
 							}
 							console.log(scope.uploader.queue);
 							scope.uploader.uploadAll();
@@ -414,22 +413,19 @@ scope.uploader.queue[i].formData[0].userUID = success.userUID;
 				scope.typeFile=value;
 				if(value=="ProfileImage"){
 					var imageAvatar = document.getElementById('imageAvatar');
-					    imageAvatar.addEventListener('change', handleImage, false);
-					var canvas = document.getElementById('imageAvatarCanvas');
-					var ctx = canvas.getContext('2d');
-
-					function handleImage(e){
-						scope.buildImg(imageAvatar, canvas, ctx,e);
-					}
+					    imageAvatar.addEventListener('change', function(e){
+					    	var canvas = document.getElementById('imageAvatarCanvas');
+							var ctx = canvas.getContext('2d');
+							scope.buildImg(imageAvatar, canvas, ctx,e);
+					    }, false);
 				}
 				else if(value =="Signature") {
 					var imageSignature = document.getElementById('imageSignature');
-			    		imageSignature.addEventListener('change', handleImage2, false);
-					var canvas1 = document.getElementById('imageSignatureCanvas');
-					var ctx1 = canvas1.getContext('2d');
-					function handleImage2(e){
-						scope.buildImg(imageSignature, canvas1, ctx1,e);    
-					}
+			    		imageSignature.addEventListener('change', function(e){
+			    			var canvas1 = document.getElementById('imageSignatureCanvas');
+							var ctx1 = canvas1.getContext('2d');
+							scope.buildImg(imageSignature, canvas1, ctx1,e);
+			    		}, false);
 				}
 			};
 

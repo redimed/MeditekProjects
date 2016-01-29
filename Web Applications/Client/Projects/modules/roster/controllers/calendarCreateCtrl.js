@@ -154,10 +154,7 @@ app.controller('calendarCreateCtrl', function($scope, $stateParams, $uibModal, e
 				if(accept){
 					RosterService.CreateRoster(returnData)
 					.then(function(response){
-						toastr.success('Create Booking Successfully');
-						$modalInstance.close();
-					}, function(error){
-						if(error.data.error === 'overlaps'){
+						if(response.status === 'overlaps'){
 							var modalInstance = $uibModal.open({
 					                                    animation: true,
 					                                    size: 'md',
@@ -174,7 +171,7 @@ app.controller('calendarCreateCtrl', function($scope, $stateParams, $uibModal, e
 					                                    },
 					                                    resolve: {
 					                                    	data: function(){
-					                                    		return error.data.data;
+					                                    		return response.data;
 					                                    	}
 					                                    }
 					                           });
@@ -183,7 +180,12 @@ app.controller('calendarCreateCtrl', function($scope, $stateParams, $uibModal, e
 					                                        $scope.events.splice(0, $scope.events.length);
 					                                        ServerListCalendar($scope.calendarTemp.startDate,$scope.calendarTemp.endDate);
 					                                }, function() {}); 
+						}else{
+							toastr.success('Create Booking Successfully');
+							$modalInstance.close();
 						}
+					}, function(error){
+						
 					})
 				}
 			}

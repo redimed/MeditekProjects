@@ -45,7 +45,6 @@ module.exports = function(data, userInfo, objRequired) {
         !role.isAssistant) {
         pagination.limit = 0;
     }
-    console.log('pagination', pagination)
     Appointment.findAndCountAll({
             attributes: Services.AttributesAppt.Appointment(),
             include: [{

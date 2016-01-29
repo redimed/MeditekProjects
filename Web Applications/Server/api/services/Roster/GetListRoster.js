@@ -24,11 +24,11 @@ module.exports = function(data, userInfo) {
                 model: Site,
                 required: true
             }],
-            order: pagination.order,
             limit: pagination.limit,
             offset: pagination.offset,
             where: pagination.Roster,
-            subQuery: false
+            subQuery: false,
+            order: pagination.order
         })
         .then(function(listRosterRes) {
             defer.resolve({

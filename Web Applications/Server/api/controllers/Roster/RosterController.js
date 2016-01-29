@@ -18,8 +18,8 @@ module.exports = {
                     }
                     if (!_.isEmpty(err) &&
                         !_.isEmpty(err.dataOverlap)) {
-                        res.serverError({
-                            error: 'overlaps',
+                        res.ok({
+                            status: 'overlaps',
                             data: err.dataOverlap
                         });
                     } else {
@@ -47,14 +47,14 @@ module.exports = {
                     }
                     if (!_.isEmpty(err) &&
                         !_.isEmpty(err.dataExistAppt)) {
-                        res.serverError({
-                            error: 'existAppt',
+                        res.ok({
+                            status: 'existAppt',
                             data: err.dataExistAppt
                         });
                     } else if (!_.isEmpty(err) &&
                         !_.isEmpty(err.dataOverlap)) {
-                        res.serverError({
-                            error: 'overlaps',
+                        res.ok({
+                            status: 'overlaps',
                             data: err.dataOverlap
                         });
                     } else {
@@ -108,8 +108,8 @@ module.exports = {
                     }
                     if (!_.isEmpty(err) &&
                         !_.isEmpty(err.dataExistAppt)) {
-                        res.serverError({
-                            error: 'existAppt',
+                        res.ok({
+                            status: 'existAppt',
                             data: err.dataExistAppt
                         });
                     } else {

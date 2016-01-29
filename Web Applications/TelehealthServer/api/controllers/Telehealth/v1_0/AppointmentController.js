@@ -68,8 +68,6 @@ module.exports = {
                             }
                         }
                     }
-
-
                     return res.ok({count: data.count, data: TelehealthService.CheckOnlineUser(appts)});
                 }).catch(function(err) {
                     res.serverError(ErrorWrap(err));
@@ -82,6 +80,8 @@ module.exports = {
     RequestAppointmentPatient: function(req, res) {
         var headers = req.headers;
         var body = req.body;
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",headers);
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",body);
         TelehealthService.RequestAppointmentPatient(headers, body)
         .then(function(response){
             if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
@@ -89,6 +89,7 @@ module.exports = {
                 status: 'success'
             });
         }, function(err){
+            console.log("00000000000000000000000000000000000000",err);
             res.serverError(ErrorWrap(err.error || err));
         });
     }

@@ -45,6 +45,9 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
     // });
     // audio.loop = true;
     // audio.play();
+    $scope.$on('end',function(data){
+        console.log("roi neeeeeeeeeeeeeeeeeee",data);
+    })
     var apiKey = $stateParams.apiKey;
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;
@@ -54,18 +57,6 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
     console.log(apiKey);
     console.log(sessionId);
     console.log(token);
-
-    io.socket.on('receiveMessage', function(msg) {
-        console.log("AAAAaaaaaaaaaaaaaaaaaaaaaaaaa");
-        switch (msg.message) {
-            case 'decline':
-                window.close();
-                break;
-            case 'cancel':
-                window.close();
-                break;
-        }
-    });
     o.loadingPage(true);
     //Connect to the session
     $scope.session.connect(token, function(error) {

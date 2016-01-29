@@ -1,0 +1,601 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install' ]
+2 info using npm@2.11.3
+3 info using node@v0.12.7
+4 verbose readDependencies loading dependencies from D:\MeditekProjects\Web Applications\Client\package.json
+5 warn package.json Redimed@4.5.0 No repository field.
+6 warn package.json Redimed@4.5.0 No README data
+7 warn package.json Dependency 'gulp' exists in both dependencies and devDependencies, using 'gulp@^3.9.0' from dependencies
+8 verbose install where, deps [ 'D:\\MeditekProjects\\Web Applications\\Client',
+8 verbose install   [ 'appdynamics',
+8 verbose install     'gulp',
+8 verbose install     'gulp-concat',
+8 verbose install     'gulp-ng-annotate',
+8 verbose install     'gulp-prettify',
+8 verbose install     'gulp-ignore',
+8 verbose install     'gulp-minify-css',
+8 verbose install     'gulp-rename',
+8 verbose install     'gulp-rtlcss',
+8 verbose install     'gulp-sass',
+8 verbose install     'gulp-sourcemaps',
+8 verbose install     'gulp-uglify',
+8 verbose install     'express',
+8 verbose install     'fs-extra' ] ]
+9 verbose install where, peers [ 'D:\\MeditekProjects\\Web Applications\\Client', [] ]
+10 verbose installManyTop reading for lifecycle D:\MeditekProjects\Web Applications\Client\package.json
+11 info preinstall Redimed@4.5.0
+12 verbose installManyTop reading scoped package data from D:\MeditekProjects\Web Applications\Client\node_modules\express\package.json
+13 verbose installManyTop reading scoped package data from D:\MeditekProjects\Web Applications\Client\node_modules\fs-extra\package.json
+14 verbose installManyTop reading scoped package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp\package.json
+15 verbose installManyTop reading scoped package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-concat\package.json
+16 verbose installManyTop reading scoped package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-ignore\package.json
+17 verbose installManyTop reading scoped package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-minify-css\package.json
+18 verbose installManyTop reading scoped package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-ng-annotate\package.json
+19 verbose installManyTop reading scoped package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-prettify\package.json
+20 verbose installManyTop reading scoped package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-rename\package.json
+21 verbose installManyTop reading scoped package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-rtlcss\package.json
+22 verbose installManyTop reading scoped package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-sass\package.json
+23 verbose installManyTop reading scoped package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-sourcemaps\package.json
+24 verbose installManyTop reading scoped package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-uglify\package.json
+25 info package.json gulp-rename@1.2.2 No license field.
+26 info package.json gulp-prettify@0.3.0 No license field.
+27 info package.json gulp-minify-css@1.2.3 No repository field.
+28 verbose readDependencies loading dependencies from D:\MeditekProjects\Web Applications\Client\package.json
+29 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\express\package.json
+30 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\fs-extra\package.json
+31 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp\package.json
+32 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-concat\package.json
+33 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-ignore\package.json
+34 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-minify-css\package.json
+35 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-ng-annotate\package.json
+36 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-prettify\package.json
+37 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-rename\package.json
+38 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-rtlcss\package.json
+39 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-sass\package.json
+40 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-sourcemaps\package.json
+41 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\gulp-uglify\package.json
+42 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\.bin\express\package.json
+43 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\.bin\express.cmd\package.json
+44 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\.bin\gulp\package.json
+45 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\.bin\gulp.cmd\package.json
+46 verbose already installed skipping fs-extra@^0.24.0 D:\MeditekProjects\Web Applications\Client
+47 silly cache add args [ 'appdynamics@^4.1.7', null ]
+48 verbose cache add spec appdynamics@^4.1.7
+49 silly cache add parsed spec { raw: 'appdynamics@^4.1.7',
+49 silly cache add   scope: null,
+49 silly cache add   name: 'appdynamics',
+49 silly cache add   rawSpec: '^4.1.7',
+49 silly cache add   spec: '>=4.1.7 <5.0.0',
+49 silly cache add   type: 'range' }
+50 silly addNamed appdynamics@>=4.1.7 <5.0.0
+51 verbose addNamed ">=4.1.7 <5.0.0" is a valid semver range for appdynamics
+52 silly addNameRange { name: 'appdynamics', range: '>=4.1.7 <5.0.0', hasData: false }
+53 silly mapToRegistry name appdynamics
+54 silly mapToRegistry using default registry
+55 silly mapToRegistry registry https://registry.npmjs.org/
+56 silly mapToRegistry uri https://registry.npmjs.org/appdynamics
+57 verbose addNameRange registry:https://registry.npmjs.org/appdynamics not in flight; fetching
+58 verbose already installed skipping gulp@^3.9.0 D:\MeditekProjects\Web Applications\Client
+59 verbose already installed skipping gulp-concat@^2.6.0 D:\MeditekProjects\Web Applications\Client
+60 verbose already installed skipping gulp-ng-annotate@^1.1.0 D:\MeditekProjects\Web Applications\Client
+61 verbose already installed skipping gulp-prettify@^0.3.0 D:\MeditekProjects\Web Applications\Client
+62 verbose already installed skipping gulp-ignore@^2.0.1 D:\MeditekProjects\Web Applications\Client
+63 verbose already installed skipping gulp-minify-css@^1.2.1 D:\MeditekProjects\Web Applications\Client
+64 verbose already installed skipping gulp-rename@^1.2.2 D:\MeditekProjects\Web Applications\Client
+65 verbose already installed skipping gulp-rtlcss@^0.1.4 D:\MeditekProjects\Web Applications\Client
+66 verbose already installed skipping gulp-sass@^2.0.4 D:\MeditekProjects\Web Applications\Client
+67 verbose already installed skipping gulp-sourcemaps@^1.5.2 D:\MeditekProjects\Web Applications\Client
+68 verbose already installed skipping gulp-uglify@^1.4.2 D:\MeditekProjects\Web Applications\Client
+69 verbose already installed skipping express@^3.4.8 D:\MeditekProjects\Web Applications\Client
+70 verbose request uri https://registry.npmjs.org/appdynamics
+71 verbose request no auth needed
+72 info attempt registry request try #1 at 10:33:18 AM
+73 verbose request id d05cdff939268ba7
+74 verbose etag "15KSI8JCQCUISCXR3XFPUZUOL"
+75 http request GET https://registry.npmjs.org/appdynamics
+76 http 304 https://registry.npmjs.org/appdynamics
+77 silly get cb [ 304,
+77 silly get   { date: 'Thu, 28 Jan 2016 03:33:22 GMT',
+77 silly get     via: '1.1 varnish',
+77 silly get     'cache-control': 'max-age=300',
+77 silly get     etag: '"15KSI8JCQCUISCXR3XFPUZUOL"',
+77 silly get     age: '0',
+77 silly get     connection: 'keep-alive',
+77 silly get     'x-served-by': 'cache-sin6922-SIN',
+77 silly get     'x-cache': 'MISS',
+77 silly get     'x-cache-hits': '0',
+77 silly get     'x-timer': 'S1453952002.019873,VS0,VE1493',
+77 silly get     vary: 'Accept' } ]
+78 verbose etag https://registry.npmjs.org/appdynamics from cache
+79 verbose get saving appdynamics to C:\Users\phanq\AppData\Roaming\npm-cache\registry.npmjs.org\appdynamics\.cache.json
+80 silly addNameRange number 2 { name: 'appdynamics', range: '>=4.1.7 <5.0.0', hasData: true }
+81 silly addNameRange versions [ 'appdynamics',
+81 silly addNameRange   [ '0.1.0',
+81 silly addNameRange     '0.1.1',
+81 silly addNameRange     '0.1.2',
+81 silly addNameRange     '0.1.3',
+81 silly addNameRange     '0.1.4',
+81 silly addNameRange     '3.9.0',
+81 silly addNameRange     '3.9.1',
+81 silly addNameRange     '3.9.2',
+81 silly addNameRange     '4.1.2',
+81 silly addNameRange     '4.1.3',
+81 silly addNameRange     '4.1.4',
+81 silly addNameRange     '4.1.5',
+81 silly addNameRange     '4.1.6',
+81 silly addNameRange     '4.1.7',
+81 silly addNameRange     '4.1.8',
+81 silly addNameRange     '4.2.0' ] ]
+82 silly addNamed appdynamics@4.1.8
+83 verbose addNamed "4.1.8" is a plain semver version for appdynamics
+84 silly cache afterAdd appdynamics@4.1.8
+85 verbose afterAdd C:\Users\phanq\AppData\Roaming\npm-cache\appdynamics\4.1.8\package\package.json not in flight; writing
+86 verbose afterAdd C:\Users\phanq\AppData\Roaming\npm-cache\appdynamics\4.1.8\package\package.json written
+87 silly install resolved [ { name: 'appdynamics',
+87 silly install resolved     version: '4.1.8',
+87 silly install resolved     description: 'Performance Profiler and Monitor',
+87 silly install resolved     author: { name: 'AppDynamics, Inc.' },
+87 silly install resolved     homepage: 'http://appdynamics.com',
+87 silly install resolved     keywords:
+87 silly install resolved      [ 'profiler',
+87 silly install resolved        'profiling',
+87 silly install resolved        'tracing',
+87 silly install resolved        'cpu',
+87 silly install resolved        'heap',
+87 silly install resolved        'performance',
+87 silly install resolved        'instrumentation',
+87 silly install resolved        'response time',
+87 silly install resolved        'performance',
+87 silly install resolved        'bottlenecks',
+87 silly install resolved        'monitoring',
+87 silly install resolved        'analytics',
+87 silly install resolved        'metrics',
+87 silly install resolved        'alerts',
+87 silly install resolved        'dtrace' ],
+87 silly install resolved     contributors: [],
+87 silly install resolved     main: './index.js',
+87 silly install resolved     directories: { lib: './lib' },
+87 silly install resolved     dependencies:
+87 silly install resolved      { 'appdynamics-zmq': 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz',
+87 silly install resolved        'appdynamics-protobuf': 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz',
+87 silly install resolved        'appdynamics-jre': 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz',
+87 silly install resolved        'appdynamics-proxy': 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz',
+87 silly install resolved        'appdynamics-native': 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz',
+87 silly install resolved        'node-uuid': '*',
+87 silly install resolved        'set-immediate': '*' },
+87 silly install resolved     devDependencies: { 'jasmine-node': '^1.14.2', istanbul: '^0.2.7' },
+87 silly install resolved     engines: { node: '>=0.8.0 <=0.12.9' },
+87 silly install resolved     engineStrict: true,
+87 silly install resolved     licenses: [ [Object] ],
+87 silly install resolved     bundleDependencies: [ 'node-uuid', 'set-immediate' ],
+87 silly install resolved     _id: 'appdynamics@4.1.8',
+87 silly install resolved     _shasum: '7b0e82478ef9a8ab6effd6e3fe3def8661707bc4',
+87 silly install resolved     _resolved: 'https://registry.npmjs.org/appdynamics/-/appdynamics-4.1.8.tgz',
+87 silly install resolved     _from: 'appdynamics@>=4.1.7 <5.0.0',
+87 silly install resolved     scripts: {},
+87 silly install resolved     _npmVersion: '2.14.9',
+87 silly install resolved     _nodeVersion: '0.12.9',
+87 silly install resolved     _npmUser: { name: 'appdynamics', email: 'nodejs@appdynamics.com' },
+87 silly install resolved     dist:
+87 silly install resolved      { shasum: '7b0e82478ef9a8ab6effd6e3fe3def8661707bc4',
+87 silly install resolved        tarball: 'http://registry.npmjs.org/appdynamics/-/appdynamics-4.1.8.tgz' },
+87 silly install resolved     maintainers: [ [Object] ],
+87 silly install resolved     readme: 'ERROR: No README data found!' } ]
+88 info install appdynamics@4.1.8 into D:\MeditekProjects\Web Applications\Client
+89 info installOne appdynamics@4.1.8
+90 verbose installOne of appdynamics to D:\MeditekProjects\Web Applications\Client not in flight; installing
+91 verbose lock using C:\Users\phanq\AppData\Roaming\npm-cache\_locks\appdynamics-c2f6f85ba0fda807.lock for D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics
+92 silly install write writing appdynamics 4.1.8 to D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics
+93 verbose unbuild node_modules\appdynamics
+94 silly gentlyRm D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics is being purged from base D:\MeditekProjects\Web Applications\Client
+95 verbose gentlyRm don't care about contents; nuking D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics
+96 verbose tar unpack C:\Users\phanq\AppData\Roaming\npm-cache\appdynamics\4.1.8\package.tgz
+97 verbose tar unpacking to D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics
+98 silly gentlyRm D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics is being purged
+99 verbose gentlyRm don't care about contents; nuking D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics
+100 silly gunzTarPerm modes [ '777', '666' ]
+101 silly gunzTarPerm extractEntry
+102 silly gunzTarPerm modified mode [ '', 493, 511 ]
+103 silly gunzTarPerm extractEntry index.js
+104 silly gunzTarPerm modified mode [ 'index.js', 420, 438 ]
+105 silly gunzTarPerm extractEntry appdynamics_version.json
+106 silly gunzTarPerm modified mode [ 'appdynamics_version.json', 420, 438 ]
+107 silly gunzTarPerm extractEntry node_modules/
+108 silly gunzTarPerm modified mode [ 'node_modules/', 493, 511 ]
+109 silly gunzTarPerm extractEntry node_modules/set-immediate/
+110 silly gunzTarPerm modified mode [ 'node_modules/set-immediate/', 493, 511 ]
+111 silly gunzTarPerm extractEntry node_modules/set-immediate/tests/
+112 silly gunzTarPerm modified mode [ 'node_modules/set-immediate/tests/', 493, 511 ]
+113 silly gunzTarPerm extractEntry node_modules/set-immediate/tests/test.js
+114 silly gunzTarPerm modified mode [ 'node_modules/set-immediate/tests/test.js', 420, 438 ]
+115 silly gunzTarPerm extractEntry node_modules/set-immediate/tests/test.html
+116 silly gunzTarPerm modified mode [ 'node_modules/set-immediate/tests/test.html', 420, 438 ]
+117 silly gunzTarPerm extractEntry node_modules/set-immediate/README.md
+118 silly gunzTarPerm modified mode [ 'node_modules/set-immediate/README.md', 420, 438 ]
+119 silly gunzTarPerm extractEntry node_modules/set-immediate/package.json
+120 silly gunzTarPerm modified mode [ 'node_modules/set-immediate/package.json', 420, 438 ]
+121 silly gunzTarPerm extractEntry node_modules/set-immediate/setImmediate.js
+122 silly gunzTarPerm modified mode [ 'node_modules/set-immediate/setImmediate.js', 420, 438 ]
+123 silly gunzTarPerm extractEntry node_modules/node-uuid/
+124 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/', 493, 511 ]
+125 silly gunzTarPerm extractEntry node_modules/node-uuid/test/
+126 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/test/', 493, 511 ]
+127 silly gunzTarPerm extractEntry node_modules/node-uuid/test/compare_v1.js
+128 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/test/compare_v1.js', 420, 438 ]
+129 silly gunzTarPerm extractEntry node_modules/node-uuid/test/test.js
+130 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/test/test.js', 420, 438 ]
+131 silly gunzTarPerm extractEntry node_modules/node-uuid/test/test.html
+132 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/test/test.html', 420, 438 ]
+133 silly gunzTarPerm extractEntry node_modules/node-uuid/benchmark/
+134 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/benchmark/', 493, 511 ]
+135 silly gunzTarPerm extractEntry node_modules/node-uuid/benchmark/bench.sh
+136 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/benchmark/bench.sh', 493, 511 ]
+137 silly gunzTarPerm extractEntry node_modules/node-uuid/benchmark/benchmark.js
+138 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/benchmark/benchmark.js', 420, 438 ]
+139 silly gunzTarPerm extractEntry node_modules/node-uuid/benchmark/benchmark-native.c
+140 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/benchmark/benchmark-native.c',
+140 silly gunzTarPerm   420,
+140 silly gunzTarPerm   438 ]
+141 silly gunzTarPerm extractEntry node_modules/node-uuid/benchmark/README.md
+142 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/benchmark/README.md', 420, 438 ]
+143 silly gunzTarPerm extractEntry node_modules/node-uuid/benchmark/bench.gnu
+144 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/benchmark/bench.gnu', 420, 438 ]
+145 silly gunzTarPerm extractEntry node_modules/node-uuid/LICENSE.md
+146 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/LICENSE.md', 420, 438 ]
+147 silly gunzTarPerm extractEntry node_modules/node-uuid/README.md
+148 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/README.md', 420, 438 ]
+149 silly gunzTarPerm extractEntry node_modules/node-uuid/package.json
+150 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/package.json', 420, 438 ]
+151 silly gunzTarPerm extractEntry node_modules/node-uuid/uuid.js
+152 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/uuid.js', 420, 438 ]
+153 silly gunzTarPerm extractEntry node_modules/node-uuid/component.json
+154 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/component.json', 420, 438 ]
+155 silly gunzTarPerm extractEntry node_modules/node-uuid/.npmignore
+156 silly gunzTarPerm modified mode [ 'node_modules/node-uuid/.npmignore', 420, 438 ]
+157 silly gunzTarPerm extractEntry lib/
+158 silly gunzTarPerm modified mode [ 'lib/', 493, 511 ]
+159 silly gunzTarPerm extractEntry lib/proxy/
+160 silly gunzTarPerm modified mode [ 'lib/proxy/', 493, 511 ]
+161 silly gunzTarPerm extractEntry lib/proxy/backend-config.js
+162 silly gunzTarPerm modified mode [ 'lib/proxy/backend-config.js', 420, 438 ]
+163 silly gunzTarPerm extractEntry lib/proxy/string-matcher.js
+164 silly gunzTarPerm modified mode [ 'lib/proxy/string-matcher.js', 420, 438 ]
+165 silly gunzTarPerm extractEntry lib/proxy/proxy-transport.js
+166 silly gunzTarPerm modified mode [ 'lib/proxy/proxy-transport.js', 420, 438 ]
+167 silly gunzTarPerm extractEntry lib/proxy/expression-evaluator.js
+168 silly gunzTarPerm modified mode [ 'lib/proxy/expression-evaluator.js', 420, 438 ]
+169 silly gunzTarPerm extractEntry lib/proxy/proxy-launcher.js
+170 silly gunzTarPerm modified mode [ 'lib/proxy/proxy-launcher.js', 420, 438 ]
+171 silly gunzTarPerm extractEntry lib/proxy/protobuf-model.js
+172 silly gunzTarPerm modified mode [ 'lib/proxy/protobuf-model.js', 420, 438 ]
+173 silly gunzTarPerm extractEntry lib/process/
+174 silly gunzTarPerm modified mode [ 'lib/process/', 493, 511 ]
+175 silly gunzTarPerm extractEntry lib/process/process-scanner.js
+176 silly gunzTarPerm modified mode [ 'lib/process/process-scanner.js', 420, 438 ]
+177 silly gunzTarPerm extractEntry lib/process/process-info.js
+178 silly gunzTarPerm modified mode [ 'lib/process/process-info.js', 420, 438 ]
+179 silly gunzTarPerm extractEntry lib/process/process-stats.js
+180 silly gunzTarPerm modified mode [ 'lib/process/process-stats.js', 420, 438 ]
+181 silly gunzTarPerm extractEntry lib/process/instance-tracker.js
+182 silly gunzTarPerm modified mode [ 'lib/process/instance-tracker.js', 420, 438 ]
+183 silly gunzTarPerm extractEntry lib/metrics/
+184 silly gunzTarPerm modified mode [ 'lib/metrics/', 493, 511 ]
+185 silly gunzTarPerm extractEntry lib/metrics/metric.js
+186 silly gunzTarPerm modified mode [ 'lib/metrics/metric.js', 420, 438 ]
+187 silly gunzTarPerm extractEntry lib/metrics/metrics-manager.js
+188 silly gunzTarPerm modified mode [ 'lib/metrics/metrics-manager.js', 420, 438 ]
+189 silly gunzTarPerm extractEntry lib/metrics/eventloop.js
+190 silly gunzTarPerm modified mode [ 'lib/metrics/eventloop.js', 420, 438 ]
+191 silly gunzTarPerm extractEntry lib/core/
+192 silly gunzTarPerm modified mode [ 'lib/core/', 493, 511 ]
+193 silly gunzTarPerm extractEntry lib/core/proxy.js
+194 silly gunzTarPerm modified mode [ 'lib/core/proxy.js', 420, 438 ]
+195 silly gunzTarPerm extractEntry lib/core/thread.js
+196 silly gunzTarPerm modified mode [ 'lib/core/thread.js', 420, 438 ]
+197 silly gunzTarPerm extractEntry lib/core/logger.js
+198 silly gunzTarPerm modified mode [ 'lib/core/logger.js', 420, 438 ]
+199 silly gunzTarPerm extractEntry lib/core/time.js
+200 silly gunzTarPerm modified mode [ 'lib/core/time.js', 420, 438 ]
+201 silly gunzTarPerm extractEntry lib/core/timers.js
+202 silly gunzTarPerm modified mode [ 'lib/core/timers.js', 420, 438 ]
+203 silly gunzTarPerm extractEntry lib/core/agent.js
+204 silly gunzTarPerm modified mode [ 'lib/core/agent.js', 420, 438 ]
+205 silly gunzTarPerm extractEntry lib/core/proxy-funcs.js
+206 silly gunzTarPerm modified mode [ 'lib/core/proxy-funcs.js', 420, 438 ]
+207 silly gunzTarPerm extractEntry lib/core/utils.js
+208 silly gunzTarPerm modified mode [ 'lib/core/utils.js', 420, 438 ]
+209 silly gunzTarPerm extractEntry lib/core/system.js
+210 silly gunzTarPerm modified mode [ 'lib/core/system.js', 420, 438 ]
+211 silly gunzTarPerm extractEntry lib/transactions/
+212 silly gunzTarPerm modified mode [ 'lib/transactions/', 493, 511 ]
+213 silly gunzTarPerm extractEntry lib/transactions/correlation-header.js
+214 silly gunzTarPerm modified mode [ 'lib/transactions/correlation-header.js', 420, 438 ]
+215 silly gunzTarPerm extractEntry lib/transactions/data-collectors.js
+216 silly gunzTarPerm modified mode [ 'lib/transactions/data-collectors.js', 420, 438 ]
+217 silly gunzTarPerm extractEntry lib/transactions/eum.js
+218 silly gunzTarPerm modified mode [ 'lib/transactions/eum.js', 420, 438 ]
+219 silly gunzTarPerm extractEntry lib/transactions/cookie-util.js
+220 silly gunzTarPerm modified mode [ 'lib/transactions/cookie-util.js', 420, 438 ]
+221 silly gunzTarPerm extractEntry lib/transactions/correlation.js
+222 silly gunzTarPerm modified mode [ 'lib/transactions/correlation.js', 420, 438 ]
+223 silly gunzTarPerm extractEntry lib/transactions/config-manager.js
+224 silly gunzTarPerm modified mode [ 'lib/transactions/config-manager.js', 420, 438 ]
+225 silly gunzTarPerm extractEntry lib/transactions/transaction-rules.js
+226 silly gunzTarPerm modified mode [ 'lib/transactions/transaction-rules.js', 420, 438 ]
+227 silly gunzTarPerm extractEntry lib/transactions/transaction-naming.js
+228 silly gunzTarPerm modified mode [ 'lib/transactions/transaction-naming.js', 420, 438 ]
+229 silly gunzTarPerm extractEntry lib/transactions/transaction-registry.js
+230 silly gunzTarPerm modified mode [ 'lib/transactions/transaction-registry.js', 420, 438 ]
+231 silly gunzTarPerm extractEntry lib/transactions/transaction.js
+232 silly gunzTarPerm modified mode [ 'lib/transactions/transaction.js', 420, 438 ]
+233 silly gunzTarPerm extractEntry lib/transactions/exit-call.js
+234 silly gunzTarPerm modified mode [ 'lib/transactions/exit-call.js', 420, 438 ]
+235 silly gunzTarPerm extractEntry lib/transactions/transaction-reporter.js
+236 silly gunzTarPerm modified mode [ 'lib/transactions/transaction-reporter.js', 420, 438 ]
+237 silly gunzTarPerm extractEntry lib/transactions/eum-cookie.js
+238 silly gunzTarPerm modified mode [ 'lib/transactions/eum-cookie.js', 420, 438 ]
+239 silly gunzTarPerm extractEntry lib/profiler/
+240 silly gunzTarPerm modified mode [ 'lib/profiler/', 493, 511 ]
+241 silly gunzTarPerm extractEntry lib/profiler/custom-transaction.js
+242 silly gunzTarPerm modified mode [ 'lib/profiler/custom-transaction.js', 420, 438 ]
+243 silly gunzTarPerm extractEntry lib/profiler/named-transactions.js
+244 silly gunzTarPerm modified mode [ 'lib/profiler/named-transactions.js', 420, 438 ]
+245 silly gunzTarPerm extractEntry lib/profiler/profiler.js
+246 silly gunzTarPerm modified mode [ 'lib/profiler/profiler.js', 420, 438 ]
+247 silly gunzTarPerm extractEntry lib/profiler/time-promise.js
+248 silly gunzTarPerm modified mode [ 'lib/profiler/time-promise.js', 420, 438 ]
+249 silly gunzTarPerm extractEntry lib/v8/
+250 silly gunzTarPerm modified mode [ 'lib/v8/', 493, 511 ]
+251 silly gunzTarPerm extractEntry lib/v8/gc-stats.js
+252 silly gunzTarPerm modified mode [ 'lib/v8/gc-stats.js', 420, 438 ]
+253 silly gunzTarPerm extractEntry lib/v8/cpu-profiler.js
+254 silly gunzTarPerm modified mode [ 'lib/v8/cpu-profiler.js', 420, 438 ]
+255 silly gunzTarPerm extractEntry lib/probes/
+256 silly gunzTarPerm modified mode [ 'lib/probes/', 493, 511 ]
+257 silly gunzTarPerm extractEntry lib/probes/mongodb-probe.js
+258 silly gunzTarPerm modified mode [ 'lib/probes/mongodb-probe.js', 420, 438 ]
+259 silly gunzTarPerm extractEntry lib/probes/http-probe.js
+260 silly gunzTarPerm modified mode [ 'lib/probes/http-probe.js', 420, 438 ]
+261 silly gunzTarPerm extractEntry lib/probes/memcached-probe.js
+262 silly gunzTarPerm modified mode [ 'lib/probes/memcached-probe.js', 420, 438 ]
+263 silly gunzTarPerm extractEntry lib/probes/process-probe.js
+264 silly gunzTarPerm modified mode [ 'lib/probes/process-probe.js', 420, 438 ]
+265 silly gunzTarPerm extractEntry lib/probes/socket.io-probe.js
+266 silly gunzTarPerm modified mode [ 'lib/probes/socket.io-probe.js', 420, 438 ]
+267 silly gunzTarPerm extractEntry lib/probes/disk-probe.js
+268 silly gunzTarPerm modified mode [ 'lib/probes/disk-probe.js', 420, 438 ]
+269 silly gunzTarPerm extractEntry lib/probes/cluster-probe.js
+270 silly gunzTarPerm modified mode [ 'lib/probes/cluster-probe.js', 420, 438 ]
+271 silly gunzTarPerm extractEntry lib/probes/net-probe.js
+272 silly gunzTarPerm modified mode [ 'lib/probes/net-probe.js', 420, 438 ]
+273 silly gunzTarPerm extractEntry lib/probes/redis-probe.js
+274 silly gunzTarPerm modified mode [ 'lib/probes/redis-probe.js', 420, 438 ]
+275 silly gunzTarPerm extractEntry lib/probes/global-probe.js
+276 silly gunzTarPerm modified mode [ 'lib/probes/global-probe.js', 420, 438 ]
+277 silly gunzTarPerm extractEntry lib/probes/pg-probe.js
+278 silly gunzTarPerm modified mode [ 'lib/probes/pg-probe.js', 420, 438 ]
+279 silly gunzTarPerm extractEntry lib/probes/mysql-probe.js
+280 silly gunzTarPerm modified mode [ 'lib/probes/mysql-probe.js', 420, 438 ]
+281 silly gunzTarPerm extractEntry README.md
+282 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+283 silly gunzTarPerm extractEntry package.json
+284 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+285 silly gunzTarPerm extractEntry LICENSE.txt
+286 silly gunzTarPerm modified mode [ 'LICENSE.txt', 420, 438 ]
+287 silly gunzTarPerm extractEntry .npmignore
+288 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
+289 silly gunzTarPerm extractEntry conf/
+290 silly gunzTarPerm modified mode [ 'conf/', 493, 511 ]
+291 silly gunzTarPerm extractEntry conf/protobuf.desc
+292 silly gunzTarPerm modified mode [ 'conf/protobuf.desc', 420, 438 ]
+293 verbose write writing to D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics\package.json
+294 info preinstall appdynamics@4.1.8
+295 verbose readDependencies loading dependencies from D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics\package.json
+296 silly prepareForInstallMany adding appdynamics-zmq@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz from appdynamics dependencies
+297 silly prepareForInstallMany adding appdynamics-protobuf@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz from appdynamics dependencies
+298 silly prepareForInstallMany adding appdynamics-jre@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz from appdynamics dependencies
+299 silly prepareForInstallMany adding appdynamics-proxy@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz from appdynamics dependencies
+300 silly prepareForInstallMany adding appdynamics-native@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz from appdynamics dependencies
+301 verbose readDependencies loading dependencies from D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics\package.json
+302 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics\node_modules\node-uuid\package.json
+303 verbose targetResolver reading package data from D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics\node_modules\set-immediate\package.json
+304 info package.json set-immediate@0.1.1 No license field.
+305 info package.json node-uuid@1.4.1 No license field.
+306 silly cache add args [ 'appdynamics-zmq@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz',
+306 silly cache add   null ]
+307 verbose cache add spec appdynamics-zmq@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz
+308 silly cache add args [ 'appdynamics-protobuf@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz',
+308 silly cache add   null ]
+309 verbose cache add spec appdynamics-protobuf@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz
+310 silly cache add args [ 'appdynamics-jre@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz',
+310 silly cache add   null ]
+311 verbose cache add spec appdynamics-jre@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz
+312 silly cache add args [ 'appdynamics-proxy@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz',
+312 silly cache add   null ]
+313 verbose cache add spec appdynamics-proxy@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz
+314 silly cache add parsed spec { raw: 'appdynamics-zmq@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz',
+314 silly cache add   scope: null,
+314 silly cache add   name: 'appdynamics-zmq',
+314 silly cache add   rawSpec: 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz',
+314 silly cache add   spec: 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz',
+314 silly cache add   type: 'remote' }
+315 silly mapToRegistry name appdynamics-zmq@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz
+316 silly mapToRegistry using default registry
+317 silly mapToRegistry registry https://registry.npmjs.org/
+318 silly mapToRegistry uri https://registry.npmjs.org/appdynamics-zmq@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz
+319 verbose addRemoteTarball http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz not in flight; adding
+320 verbose addRemoteTarball [ 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz',
+320 verbose addRemoteTarball   null ]
+321 silly cache add parsed spec { raw: 'appdynamics-protobuf@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz',
+321 silly cache add   scope: null,
+321 silly cache add   name: 'appdynamics-protobuf',
+321 silly cache add   rawSpec: 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz',
+321 silly cache add   spec: 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz',
+321 silly cache add   type: 'remote' }
+322 silly mapToRegistry name appdynamics-protobuf@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz
+323 silly mapToRegistry using default registry
+324 silly mapToRegistry registry https://registry.npmjs.org/
+325 silly mapToRegistry uri https://registry.npmjs.org/appdynamics-protobuf@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz
+326 verbose addRemoteTarball http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz not in flight; adding
+327 verbose addRemoteTarball [ 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz',
+327 verbose addRemoteTarball   null ]
+328 silly cache add parsed spec { raw: 'appdynamics-jre@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz',
+328 silly cache add   scope: null,
+328 silly cache add   name: 'appdynamics-jre',
+328 silly cache add   rawSpec: 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz',
+328 silly cache add   spec: 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz',
+328 silly cache add   type: 'remote' }
+329 silly mapToRegistry name appdynamics-jre@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz
+330 silly mapToRegistry using default registry
+331 silly mapToRegistry registry https://registry.npmjs.org/
+332 silly mapToRegistry uri https://registry.npmjs.org/appdynamics-jre@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz
+333 verbose addRemoteTarball http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz not in flight; adding
+334 verbose addRemoteTarball [ 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz',
+334 verbose addRemoteTarball   null ]
+335 silly cache add args [ 'appdynamics-native@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz',
+335 silly cache add   null ]
+336 verbose cache add spec appdynamics-native@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz
+337 silly cache add parsed spec { raw: 'appdynamics-proxy@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz',
+337 silly cache add   scope: null,
+337 silly cache add   name: 'appdynamics-proxy',
+337 silly cache add   rawSpec: 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz',
+337 silly cache add   spec: 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz',
+337 silly cache add   type: 'remote' }
+338 silly mapToRegistry name appdynamics-proxy@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz
+339 silly mapToRegistry using default registry
+340 silly mapToRegistry registry https://registry.npmjs.org/
+341 silly mapToRegistry uri https://registry.npmjs.org/appdynamics-proxy@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz
+342 verbose addRemoteTarball http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz not in flight; adding
+343 verbose addRemoteTarball [ 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz',
+343 verbose addRemoteTarball   null ]
+344 silly cache add parsed spec { raw: 'appdynamics-native@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz',
+344 silly cache add   scope: null,
+344 silly cache add   name: 'appdynamics-native',
+344 silly cache add   rawSpec: 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz',
+344 silly cache add   spec: 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz',
+344 silly cache add   type: 'remote' }
+345 silly mapToRegistry name appdynamics-native@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz
+346 silly mapToRegistry using default registry
+347 silly mapToRegistry registry https://registry.npmjs.org/
+348 silly mapToRegistry uri https://registry.npmjs.org/appdynamics-native@http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz
+349 verbose addRemoteTarball http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz not in flight; adding
+350 verbose addRemoteTarball [ 'http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz',
+350 verbose addRemoteTarball   null ]
+351 info retry fetch attempt 1 at 10:33:21 AM
+352 info attempt registry request try #1 at 10:33:21 AM
+353 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz
+354 info retry fetch attempt 1 at 10:33:21 AM
+355 info attempt registry request try #1 at 10:33:21 AM
+356 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz
+357 info retry fetch attempt 1 at 10:33:21 AM
+358 info attempt registry request try #1 at 10:33:21 AM
+359 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz
+360 info retry fetch attempt 1 at 10:33:21 AM
+361 info attempt registry request try #1 at 10:33:21 AM
+362 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz
+363 info retry fetch attempt 1 at 10:33:21 AM
+364 info attempt registry request try #1 at 10:33:21 AM
+365 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz
+366 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz
+367 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz
+368 warn retry will retry, error on last attempt: Error: fetch failed with status code 403
+369 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz
+370 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz
+371 warn retry will retry, error on last attempt: Error: fetch failed with status code 403
+372 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz
+373 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz
+374 warn retry will retry, error on last attempt: Error: fetch failed with status code 403
+375 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz
+376 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz
+377 warn retry will retry, error on last attempt: Error: fetch failed with status code 403
+378 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz
+379 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz
+380 warn retry will retry, error on last attempt: Error: fetch failed with status code 403
+381 info retry fetch attempt 2 at 10:33:31 AM
+382 info attempt registry request try #1 at 10:33:31 AM
+383 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz
+384 info retry fetch attempt 2 at 10:33:32 AM
+385 info attempt registry request try #1 at 10:33:32 AM
+386 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz
+387 info retry fetch attempt 2 at 10:33:32 AM
+388 info attempt registry request try #1 at 10:33:32 AM
+389 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz
+390 info retry fetch attempt 2 at 10:33:32 AM
+391 info attempt registry request try #1 at 10:33:32 AM
+392 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz
+393 info retry fetch attempt 2 at 10:33:32 AM
+394 info attempt registry request try #1 at 10:33:32 AM
+395 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz
+396 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz
+397 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz
+398 warn retry will retry, error on last attempt: Error: fetch failed with status code 403
+399 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz
+400 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz
+401 warn retry will retry, error on last attempt: Error: fetch failed with status code 403
+402 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz
+403 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz
+404 warn retry will retry, error on last attempt: Error: fetch failed with status code 403
+405 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz
+406 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz
+407 warn retry will retry, error on last attempt: Error: fetch failed with status code 403
+408 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz
+409 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz
+410 warn retry will retry, error on last attempt: Error: fetch failed with status code 403
+411 info retry fetch attempt 3 at 10:34:33 AM
+412 info attempt registry request try #1 at 10:34:33 AM
+413 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz
+414 info retry fetch attempt 3 at 10:34:33 AM
+415 info attempt registry request try #1 at 10:34:33 AM
+416 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz
+417 info retry fetch attempt 3 at 10:34:33 AM
+418 info attempt registry request try #1 at 10:34:33 AM
+419 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz
+420 info retry fetch attempt 3 at 10:34:33 AM
+421 info attempt registry request try #1 at 10:34:33 AM
+422 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz
+423 info retry fetch attempt 3 at 10:34:33 AM
+424 info attempt registry request try #1 at 10:34:33 AM
+425 http fetch GET http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz
+426 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz
+427 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-protobuf.tgz
+428 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz
+429 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-native.tgz
+430 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz
+431 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-proxy.tgz
+432 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz
+433 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-zmq.tgz
+434 http fetch 403 http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz
+435 error fetch failed http://packages.appdynamics.com/npm/4.1.8.0/appdynamics-jre.tgz
+436 verbose about to build D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics
+437 verbose unlock done using C:\Users\phanq\AppData\Roaming\npm-cache\_locks\appdynamics-c2f6f85ba0fda807.lock for D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics
+438 verbose stack Error: fetch failed with status code 403
+438 verbose stack     at Request.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\fetch.js:51:14)
+438 verbose stack     at Request.emit (events.js:107:17)
+438 verbose stack     at Request.onRequestResponse (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:1142:10)
+438 verbose stack     at ClientRequest.emit (events.js:107:17)
+438 verbose stack     at HTTPParser.parserOnIncomingClient (_http_client.js:426:21)
+438 verbose stack     at HTTPParser.parserOnHeadersComplete (_http_common.js:111:23)
+438 verbose stack     at TLSSocket.socketOnData (_http_client.js:317:20)
+438 verbose stack     at TLSSocket.emit (events.js:107:17)
+438 verbose stack     at readableAddChunk (_stream_readable.js:163:16)
+438 verbose stack     at TLSSocket.Readable.push (_stream_readable.js:126:10)
+439 verbose cwd D:\MeditekProjects\Web Applications\Client
+440 error Windows_NT 6.3.9600
+441 error argv "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install"
+442 error node v0.12.7
+443 error npm  v2.11.3
+444 error fetch failed with status code 403
+445 error If you need help, you may report this error at:
+445 error     <https://github.com/npm/npm/issues>
+446 verbose exit [ 1, true ]
+447 verbose unbuild node_modules\appdynamics
+448 info preuninstall appdynamics@4.1.8
+449 info uninstall appdynamics@4.1.8
+450 verbose unbuild rmStuff appdynamics@4.1.8 from D:\MeditekProjects\Web Applications\Client\node_modules
+451 info postuninstall appdynamics@4.1.8
+452 silly gentlyRm D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics is being purged from base D:\MeditekProjects\Web Applications\Client
+453 verbose gentlyRm don't care about contents; nuking D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics
+454 silly vacuum-fs purging D:\MeditekProjects\Web Applications\Client\node_modules\appdynamics
+455 silly vacuum-fs quitting because other entries in D:\MeditekProjects\Web Applications\Client\node_modules

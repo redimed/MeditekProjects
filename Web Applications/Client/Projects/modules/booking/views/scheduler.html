@@ -34,10 +34,26 @@
                 </div>
             </div>
             <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 form-group">
+                        <label class="control-label">Search Site</label>
+                        <select class="form-control"
+                            ng-change="searchSite(search.site)"
+                            ng-options="item.UID as item.SiteName for item in listSites"
+                            ng-model="search.site">
+                            <option value="">All Sites</option>
+                        </select>
+                    </div>
+                </div>
                 <div id='calendar'></div>
             </div>
         </div>
     </div>
 </div>
 
+<style type="text/css">
+    .fc td .fc-widget-content{
+        background-color: #EEEEEE;
+    }
+</style>
 

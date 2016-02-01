@@ -35,14 +35,14 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
         });
     }
 
-    function getListService() {
+    /*function getListService() {
         RosterService.GetListService()
             .then(function(response) {
                 $scope.listServices = response.data;
             }, function(error) {
 
             })
-    }
+    }*/
 
     function getListSite() {
         RosterService.GetListSite()
@@ -158,5 +158,5 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
 
     //INIT
     getListSite();
-    getListService();
+    //getListService();
 });

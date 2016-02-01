@@ -29,7 +29,7 @@ module.exports = {
         }
         TelehealthService.FindByUID(uid).then(function(teleUser) {
             if (teleUser) {
-                teleUser.getUserAccount().then(function(user) {
+               return teleUser.getUserAccount().then(function(user) {
                     if (user) {
                         TelehealthService.GetPatientDetails(user.UID, headers).then(function(response) {
                             if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
@@ -96,23 +96,20 @@ module.exports = {
         })
     },
     GetUserAppointments: function(req, res) {
-        var params = req.params.all();
-        if (!params.uid) {
-            var err = new Error("Telehealth.GetUserDetails.Error");
-            err.pushError("Invalid Params");
-            return res.serverError(ErrorWrap(err));
-        }
-        var patientUID = params.uid;
-        var limit = params.limit;
-        var type = params.type;
+        var body = req.body;
         var headers = req.headers;
-        TelehealthService.GetAppointmentsByPatient(patientUID, limit, type, headers).then(function(response) {
-            // console.log("===================================",response.getBody());
-            if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
-            return res.ok(response.getBody());
-        }, function(err) {
-            res.json(err.getCode(), err.getBody());
-        })
+        if (!_.isEmpty(body) &&
+            !_.isEmpty(body.data)) {
+            TelehealthService.GetAppointmentsByPatient(headers, body).then(function(response) {
+                if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+                return res.ok(response.getBody());
+            }, function(err) {
+                res.json(err.getCode(), err.getBody());
+            });
+        } else {
+            var error = new Error('GetUserAppointments.data.not.exist');
+            res.serverError(ErrorWrap(error));
+        }
     },
     GetTelehealthAppointmentDetails: function(req, res) {
         var params = req.params.all();
@@ -169,7 +166,7 @@ module.exports = {
         var deviceToken = info.token || null;
         var uid = info.uid;
         if (uid && deviceType && deviceId) {
-            TelehealthService.FindByUID(uid).then(function(teleUser) {
+            return TelehealthService.FindByUID(uid).then(function(teleUser) {
                 TelehealthDevice.findOrCreate({
                     where: {
                         TelehealthUserID: teleUser.ID,

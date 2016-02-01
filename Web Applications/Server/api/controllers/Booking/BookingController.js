@@ -95,5 +95,28 @@ module.exports = {
                     res.serverError(ErrorWrap(err));
                 }
             });
+    },
+    UpdateStatusBooking: function(req, res) {
+        var data = HelperService.CheckPostRequest(req);
+        if (data === false) {
+            res.serverError('data failed');
+        } else {
+            Services.UpdateStatusBooking(data, req.user)
+                .then(function(success) {
+                    if (!_.isEmpty(success) &&
+                        !_.isEmpty(success.transaction)) {
+                        success.transaction.commit();
+                    }
+                    res.ok({
+                        status: 'success'
+                    });
+                }, function(err) {
+                    if (HelperService.CheckExistData(err) &&
+                        HelperService.CheckExistData(err.transaction)) {
+                        err.transaction.rollback();
+                    }
+                    res.serverError(ErrorWrap(err.error || err));
+                });
+        }
     }
 };

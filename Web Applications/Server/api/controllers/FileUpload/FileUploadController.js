@@ -36,7 +36,7 @@ module.exports = {
                     if (data) {
                         var fileUID = UUIDService.Create();
                         var fileName = decodeURIComponent(uploadedFiles[0].filename);
-                        var fileExt = uploadedFiles[0].filename.split('.')[1].toLowerCase();
+                        var fileExt = uploadedFiles[0].filename.split('.')[uploadedFiles[0].filename.split('.').length - 1].toLowerCase();
                         var fileType = params.fileType;
                         if (!_.contains(constImgExt, fileExt)) fileType = constFileType.document;
                         if (_.contains(constImgExt, fileExt) && fileType == constFileType.document) fileType = constFileType.image;
@@ -67,7 +67,8 @@ module.exports = {
                                         transaction: t
                                     })
                                 }
-                                var fileInfo=null;
+                                var fileInfo = null;
+
                                 function startTransaction() {
                                     return FileUpload.create({
                                         UID: fileUID,
@@ -81,7 +82,7 @@ module.exports = {
                                     }, {
                                         transaction: t
                                     }).then(function(file) {
-                                        fileInfo=file;
+                                        fileInfo = file;
                                         if (fileType == constFileType.image) return medicalImageCheck(!params.bodyPart ? null : params.bodyPart, file.ID);
                                         else if (fileType == constFileType.document) return documentCheck(!params.docType ? null : params.docType, file.ID);
                                     })
@@ -127,7 +128,7 @@ module.exports = {
             fileUID: params.fileUID,
             size: params.size
         }, function(err, output, fileName) {
-            res.set('filename',fileName);
+            res.set('filename', fileName);
             // res.set('testtesttesttest',true);
             res.header('Access-Control-Expose-Headers', HelperService.const.exposeHeaders);
             // console.log("====Response====: ",res);
@@ -173,15 +174,19 @@ module.exports = {
     DisableAllFile: function(req, res) {
         var data = req.body.data;
         Services.FileUpload.DisableAllFile(data)
-        .then(function(result) {
-            if(result != null && result != "" && result.length != 0)
-                res.ok({mesage:"success"});
-            else
-                res.ok({mesage:"DisableAllFile.Error.NotFoundUserAccountID"});
-        })
-        .catch(function(err) {
-            // console.log(err);
-            res.serverError(ErrorWrap(err));
-        });
+            .then(function(result) {
+                if (result != null && result != "" && result.length != 0)
+                    res.ok({
+                        mesage: "success"
+                    });
+                else
+                    res.ok({
+                        mesage: "DisableAllFile.Error.NotFoundUserAccountID"
+                    });
+            })
+            .catch(function(err) {
+                // console.log(err);
+                res.serverError(ErrorWrap(err));
+            });
     }
 }

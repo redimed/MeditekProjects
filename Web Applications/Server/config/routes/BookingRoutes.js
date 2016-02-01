@@ -18,5 +18,9 @@ module.exports = {
     'get /api/booking/destroy/:UID': {
         controller: 'Booking/BookingController',
         action: 'DestroyBooking'
+    },
+    'post /api/booking/update/status': {
+        controller: 'Booking/BookingController',
+        action: 'UpdateStatusBooking'
     }
 };

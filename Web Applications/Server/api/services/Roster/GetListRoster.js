@@ -22,7 +22,8 @@ module.exports = function(data, userInfo) {
             }, {
                 attributes: Services.AttributesRoster.Site(),
                 model: Site,
-                required: true
+                required: true,
+                where: pagination.Site
             }],
             limit: pagination.limit,
             offset: pagination.offset,

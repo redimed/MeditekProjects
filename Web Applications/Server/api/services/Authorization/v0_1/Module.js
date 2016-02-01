@@ -60,7 +60,9 @@ var modules=[
 		parent:'root',
 		order:'6',
 		roles:[
-			'ADMIN','INTERNAL_PRACTITIONER'
+			'ADMIN',
+			'INTERNAL_PRACTITIONER',
+			'PATIENT'
 		]
 	},
 	// {

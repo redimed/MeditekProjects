@@ -1,0 +1,268 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.redimed.telehealth.patient.fragment.InformationFragment">
+
+    <include layout="@layout/custom_toolbar" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ScrollView
+            android:id="@+id/scrollViewInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:isScrollContainer="false"
+            android:orientation="vertical"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/infoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/lightBackground"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/layoutProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:background="@color/profileBackground"
+                    android:gravity="center_vertical">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/layoutAvatar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        card_view:cardCornerRadius="5dp"
+                        android:background="@color/lightBackground">
+
+                        <ImageView
+                            android:id="@+id/avatarPatient"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY" />
+
+                    </android.support.v7.widget.CardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="35dp"
+                        android:layout_marginStart="35dp"
+                        android:layout_toEndOf="@+id/layoutAvatar"
+                        android:layout_toRightOf="@+id/layoutAvatar"
+                        android:orientation="vertical">
+
+                        <com.redimed.telehealth.patient.font.RobotoTextView
+                            android:id="@+id/lblNamePatient"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_title"
+                            android:textColor="@color/blueFont"
+                            android:textSize="25sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal">
+
+                            <com.redimed.telehealth.patient.font.RobotoTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:text="@string/profile_dob"
+                                android:textColor="@color/lightFont"
+                                android:textStyle="bold" />
+
+                            <com.redimed.telehealth.patient.font.RobotoTextView
+                                android:id="@+id/lblDOB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:inputType="text"
+                                android:text="@string/none"
+                                android:textColor="@color/lightFont" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <com.redimed.telehealth.patient.font.RobotoTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:text="@string/profile_email"
+                                android:textColor="@color/lightFont"
+                                android:textStyle="bold" />
+
+                            <com.redimed.telehealth.patient.font.RobotoTextView
+                                android:id="@+id/lblEmail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:inputType="text"
+                                android:text="@string/none"
+                                android:textColor="@color/lightFont" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorLine" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:divider="@drawable/custom_empty_tall_divider"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@string/profile_home_phone"
+                        android:textColor="@color/greyFont" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblHomePhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@string/none"
+                        android:textColor="@color/darkFont" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="bottom"
+                        android:background="@color/colorLine" />
+
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@string/profile_address"
+                        android:textColor="@color/greyFont" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@string/none"
+                        android:textColor="@color/darkFont" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="bottom"
+                        android:background="@color/colorLine" />
+
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@string/profile_suburb"
+                        android:textColor="@color/greyFont" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblSuburb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@string/none"
+                        android:textColor="@color/darkFont" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="bottom"
+                        android:background="@color/colorLine" />
+
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@string/profile_post_code"
+                        android:textColor="@color/greyFont" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblPostCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@string/none"
+                        android:textColor="@color/darkFont" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="bottom"
+                        android:background="@color/colorLine" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@string/profile_country"
+                        android:textColor="@color/greyFont" />
+
+                    <com.redimed.telehealth.patient.font.RobotoTextView
+                        android:id="@+id/lblCountry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@string/none"
+                        android:textColor="@color/darkFont" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="bottom"
+                        android:background="@color/colorLine" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>
+
+
+

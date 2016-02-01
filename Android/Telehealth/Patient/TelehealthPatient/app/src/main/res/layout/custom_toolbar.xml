@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolBar"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:elevation="0dp"
+    android:background="@drawable/toolbar_bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:background="@drawable/icon_back"
+            android:layout_height="30dp"
+            android:layout_width="30dp"
+            android:textAllCaps="false"
+            android:textColor="@color/lightFont"
+            android:gravity="right"
+            android:layout_centerVertical="true"/>
+
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:id="@+id/lblTitle"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Title"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/lightFont"
+            android:textSize="@dimen/size_title"
+            android:textStyle="bold"
+           android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>

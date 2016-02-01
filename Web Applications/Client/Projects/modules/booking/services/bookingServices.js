@@ -19,6 +19,12 @@ angular.module("app.authentication.booking.services", [])
             return api.one("booking/destroy/"+data.UID).get();
         }
 
+         services.ChangeStatusBooking = function(data){
+            return api.all("booking/update/status").post({
+                data: data
+            });
+        }
+
         services.LoadBooking = function(data){
                 return api.all("booking/list").post({
                         data: data

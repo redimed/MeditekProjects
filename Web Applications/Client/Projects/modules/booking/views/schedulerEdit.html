@@ -19,7 +19,10 @@
 		</div>
 		<div class="col-md-4 col-sm-4 form-group">
 			<label class="control-label">Selection Date</label>
-			<b>{{formData.date}}</b>
+			<input type="text" class="form-control date-picker" readonly 
+				data-date-format="dd/mm/yyyy"
+				data-date-start-date="" 
+				ng-model="formData.date">
 		</div>
 		<div class="col-md-4 col-sm-4 form-group">
 			<label class="control-label">From Time</label>

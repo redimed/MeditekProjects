@@ -32,30 +32,13 @@ angular.module('app.authentication.eForms.directive.generate', [])
 			scope.info = {};
 			scope.updatedata = {};
 			scope.errorList = [];
+			scope.template;
 
 			//vi du
 			scope.exem = "shgush";
 			// scope.demo();
 			// end vi du
-			if(scope.datauid != undefined && scope.datauid != null && scope.datauid != ""){
-				eFormService.getData({UID:scope.datauid}).then(function(got_data){
-					scope.info = got_data.data;
-					console.log(scope.info);
-				},function(err){
-					console.log(err);
-				});
-			}
-			if(scope.patientuid != undefined && scope.patientuid != null && scope.patientuid != "") {
-				PatientService.detailPatient({UID:scope.patientuid}).then(function(result){
-					if(result != null && result != "" && result.length != 0){
-						scope.PatientDetails ={};
-						scope.PatientDetails.patientInfo = {};
-						scope.PatientDetails.patientInfo = result.data[0];
-					}
-				},function(err){
-					console.log(err);
-				});
-			}
+			
 
 			//function count property in obj
 			scope.countProperty = function(obj) {
@@ -79,16 +62,16 @@ angular.module('app.authentication.eForms.directive.generate', [])
 			};
 			//end function
 
-			scope.createSection = function(id, elem) {
+			scope.createSection = function(id, Name, elem) {
 				elem.append($compile("<div class='row' name='"+id+"'><div class='col-md-12 col-sm-12'>"
                         +"<div class='portlet light bordered'><div class='portlet-title'>"
                         +"<div class='caption font-blue'><i class='glyphicon glyphicon-list font-blue'></i>"
-                        +"<span class='caption-subject bold uppercase'>"+id+"</span>"
+                        +"<span class='caption-subject bold uppercase'>"+Name+"</span>"
                         +"<span class='caption-helper'>"+id+"</span></div>"
                         +"<div class='tools'><a href='javascript:;' class='collapse'> </a>"
                         +"<a href='javascript:;' class='fullscreen'> </a></div>"
                         +"</div><div class='portlet-body form'><div class='form-body'><div class='row'>"
-                        +"<div class='col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2' id='"+id+"'></div></div></div></div></div></div></div>")(scope));
+                        +"<div class='col-md-12 col-sm-12' id='"+id+"'></div></div></div></div></div></div></div>")(scope));
 			};
 
 			//function generate div section
@@ -214,29 +197,85 @@ angular.module('app.authentication.eForms.directive.generate', [])
 				});
 			};
 
-			scope.init = function() {
-				return eFormService.getTemplate({UID:scope.templateuid})
-				.then(function(result){
-					scope.EFormUID = result.data.EFormUID;
-					scope.Name = result.data.Name;
-					console.log(scope.Name);
-					scope.list = result.data.ListQuestion;
-					scope.detail = result.data.DetailTemplate;
-					var SectionName = [];
-					var elem = angular.element(document.getElementById('form'));
-					for(var i = 0; i < scope.list.length; i++) {
-						var temp = SectionName.filter(function(attr){
-							return attr.Section == scope.list[i].SectionName;
-						});
-						if(temp.length == 0) {
-							SectionName.push({Section:scope.list[i].SectionName});
-						}
-					}
-					for(var i = 0; i < SectionName.length; i++) {
+			//comment
+			// scope.init = function() {
+			// 	return eFormService.getTemplate({UID:scope.templateuid})
+			// 	.then(function(result){
+			// 		console.log(result.data);
+			// 		scope.EFormUID = result.data.EFormUID;
+			// 		scope.Name = result.data.Name;
+			// 		scope.list = result.data.ListQuestion;
+			// 		scope.detail = result.data.DetailTemplate;
+			// 		if(scope.datauid != undefined && scope.datauid != null && scope.datauid != ""){
+			// 			eFormService.getData({UID:scope.datauid}).then(function(got_data){
+			// 				scope.info = got_data.data;
+			// 				console.log(scope.info);
+			// 			},function(err){
+			// 				console.log(err);
+			// 			});
+			// 		}
+			// 		if(scope.patientuid != undefined && scope.patientuid != null && scope.patientuid != "") {
+			// 			PatientService.detailPatient({UID:scope.patientuid}).then(function(result){
+			// 				if(result != null && result != "" && result.length != 0){
+			// 					scope.PatientDetails ={};
+			// 					scope.PatientDetails.patientInfo = {};
+			// 					scope.PatientDetails.patientInfo = result.data[0];
+			// 				}
+			// 			},function(err){
+			// 				console.log(err);
+			// 			});
+			// 		}
+			// 		var SectionName = [];
+			// 		var elem = angular.element(document.getElementById('form'));
+			// 		for(var i = 0; i < scope.list.length; i++) {
+			// 			var temp = SectionName.filter(function(attr){
+			// 				return attr.Section == scope.list[i].SectionName;
+			// 			});
+			// 			if(temp.length == 0) {
+			// 				SectionName.push({Section:scope.list[i].SectionName});
+			// 			}
+			// 		}
+			// 		for(var i = 0; i < SectionName.length; i++) {
+			// 			if(scope.datauid == null)
+			// 				scope.info[SectionName[i].Section] = {};
+			// 				scope.updatedata[SectionName[i].Section] = {};
+			// 			scope.createSection(SectionName[i].Section, result.data.sectionNames['sectionName'+(i+1)], elem);
+			// 			var QuestionName = scope.list.filter(function(attr){
+			// 				return attr.SectionName == SectionName[i].Section;
+			// 			});
+			// 			var sectionDiv = angular.element(document.getElementById(SectionName[i].Section));
+			// 			for(var j = 0; j < QuestionName.length; j++) {
+			// 				scope.generateDiv(QuestionName[j].Name,sectionDiv);
+			// 				var aa = scope.list.filter(function(attr){
+			// 					return attr.SectionName == SectionName[i].Section && attr.Name == QuestionName[j].Name;
+			// 				});
+			// 				var modelName  = "info."+SectionName[i].Section+"."+QuestionName[j].Name;
+			// 				var updateName = "updatedata."+SectionName[i].Section+"."+QuestionName[j].Name;
+			// 				scope.updatedata[SectionName[i].Section][QuestionName[j].Name] = {};
+			// 				if(scope.datauid == null){
+			// 					scope.info[SectionName[i].Section][QuestionName[j].Name] = {};
+			// 					if(aa[0].QuestionTypeID == 6) {
+			// 						scope.info[SectionName[i].Section][QuestionName[j].Name] = scope.PatientDetails;
+			// 					}
+			// 				}
+			// 				var detailName = "detail."+SectionName[i].Section+"."+QuestionName[j].Name;
+			// 				var dataDetailName = scope.detail[SectionName[i].Section][QuestionName[j].Name];
+			// 				scope.ChooseQuestion(aa[0].QuestionTypeID,aa[0].Name,modelName, updateName, detailName, QuestionName[j].Name, dataDetailName);
+			// 			}
+			// 		}
+			// 	},function(err){
+			// 		console.log(err);
+			// 	});
+			// }
+			//end comment
+
+			scope.Gender = function(SectionName, result) {
+				var elem = angular.element(document.getElementById('form'));
+				for(var i = 0; i < SectionName.length; i++) {
 						if(scope.datauid == null)
 							scope.info[SectionName[i].Section] = {};
 							scope.updatedata[SectionName[i].Section] = {};
-						scope.createSection(SectionName[i].Section,elem);
+						scope.createSection(SectionName[i].Section, result.data.sectionNames['sectionName'+(i+1)], elem);
 						var QuestionName = scope.list.filter(function(attr){
 							return attr.SectionName == SectionName[i].Section;
 						});
@@ -260,6 +299,65 @@ angular.module('app.authentication.eForms.directive.generate', [])
 							scope.ChooseQuestion(aa[0].QuestionTypeID,aa[0].Name,modelName, updateName, detailName, QuestionName[j].Name, dataDetailName);
 						}
 					}
+			};
+
+			scope.init = function() {
+				return eFormService.getTemplate({UID:scope.templateuid})
+				.then(function(result){
+					console.log(result.data);
+					scope.template = result;
+					scope.EFormUID = result.data.EFormUID;
+					scope.Name = result.data.Name;
+					scope.list = result.data.ListQuestion;
+					scope.detail = result.data.DetailTemplate;
+					if(scope.datauid != undefined && scope.datauid != null && scope.datauid != ""){
+						return eFormService.getData({UID:scope.datauid});
+					}
+					else {
+						return null;
+					}
+				},function(err) {
+					console.log(err);
+				})
+				.then(function(got_data){
+					if(got_data == null) {
+						if(scope.patientuid != undefined && scope.patientuid != null && scope.patientuid != ""){
+							return PatientService.detailPatient({UID:scope.patientuid});
+						}
+						else {
+							return null;
+						}
+					}
+					else {
+						scope.info = got_data.data;
+						console.log(scope.info);
+						if(scope.patientuid != undefined && scope.patientuid != null && scope.patientuid != ""){
+							return PatientService.detailPatient({UID:scope.patientuid});
+						}
+						else {
+							return null;
+						}
+					}
+				},function(err) {
+					console.log(err);
+				})
+				.then(function(got_patient){
+					if(got_patient != null && got_patient != "" && got_patient.length != 0){
+						scope.PatientDetails ={};
+						scope.PatientDetails.patientInfo = {};
+						scope.PatientDetails.patientInfo = got_patient.data[0];
+					}
+					var SectionName = [];
+					var elem = angular.element(document.getElementById('form'));
+					for(var i = 0; i < scope.list.length; i++) {
+						var temp = SectionName.filter(function(attr){
+							return attr.Section == scope.list[i].SectionName;
+						});
+						if(temp.length == 0) {
+							SectionName.push({Section:scope.list[i].SectionName});
+						}
+					}
+					scope.Gender(SectionName, scope.template);
 				},function(err){
 					console.log(err);
 				});

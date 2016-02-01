@@ -1,10 +1,10 @@
-angular.module('app.authentication.eForms.directive.question4', [])
-.directive('question4', function($uibModal, $state, toastr,$timeout, $compile, $injector) {
+angular.module('app.authentication.eForms.directive.question13', [])
+.directive('question13', function($uibModal, $state, toastr,$timeout, $compile, $injector) {
 
 	return {
 
 		restrict: 'E',
-		templateUrl: 'modules/eForms/directives/templates/question4.html',
+		templateUrl: 'modules/eForms/directives/templates/question13.html',
 		scope:{
 			info:'=onData',
 			option:'=onOption',
@@ -25,6 +25,11 @@ angular.module('app.authentication.eForms.directive.question4', [])
 			scope.isHaveTitle = true;
 			scope.textboxList;
 			scope.temp = [];
+			scope.list = [
+				{id : 1,name : 'Text'},
+				{id : 2,name : 'Date'},
+				{id : 3,name : 'Checkbox'}
+			];
 			// scope.labelName = {};
 			scope.editor = scope.isEditor?scope.isEditor:false;
 			// scope.data = scope.info;
@@ -53,7 +58,10 @@ angular.module('app.authentication.eForms.directive.question4', [])
 								"<div class='col-md-2'><label>Question Name: </label></div>"+
 								"<div class='col-md-2'><input type='text' class='form-control'  ng-model='option.value"+(i+2)+
 								"' /></div><div class='col-md-2'>Regex</div><div class='col-md-2'>"+
-								"<input type='text' class='form-control' ng-model='option.regex"+(i+2)+"' /></div></div>")(scope));
+								"<input type='text' class='form-control' ng-model='option.regex"+(i+2)+"' /></div>"+
+								"<div class='col-md-2'>Select type</div>"+
+								"<div class='col-md-2'><select ng-model='option.type"+(i+2)+
+								"' ng-options='t.id as t.name for t in list' ></select></div></div>")(scope));
 						}
 						scope.option.value2 = value;
 					}
@@ -126,7 +134,7 @@ angular.module('app.authentication.eForms.directive.question4', [])
 								// scope.info["value"+i] = "";
 								angular.element(document.getElementById('form_view '+scope.option.value1))
 								.append($compile("<div class='col-md-4 col-sm-4'><div class='form-group'>"+
-					    			"<label style='white-space: nowrap;' >{{option.value"+(i+2)+"}}</label>"+
+					    			"<label class='control-label'>{{option.value"+(i+2)+"}}</label>"+
 					    			"<input type='text' ng-change='changeValue("+i+")' ng-model='info.value"+i+"' class='form-control'></div></div>")(scope));
 									
 							}

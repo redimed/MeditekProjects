@@ -56,35 +56,14 @@ module.exports = {
         }
         return appts;
     },
-    GetAppointmentsByPatient: function(patientUID, limit, type, headers) {
+    GetAppointmentsByPatient: function(headers, body) {
+        headers['content-type'] = "application/json";
         var typeArr = ['WAA', 'TEL'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-list',
             method: 'POST',
-            body: {
-                data: {
-                    Order: [{
-                        Appointment: {
-                            FromTime: 'DESC'
-                        }
-                    }],
-                    Filter: [{
-                        Appointment: {
-                            Enable: "Y"
-                        }
-                    }, {
-                        Patient: {
-                            UID: patientUID
-                        }
-                    }, {
-                        TelehealthAppointment: {
-                            Type: type && _.contains(typeArr, type) ? type : null
-                        }
-                    }],
-                    Limit: !limit ? null : limit
-                }
-            },
+            body: body,
             headers: headers
         })
     },
@@ -130,18 +109,6 @@ module.exports = {
     },
     RequestAppointmentPatient: function(headers, body) {
         headers['content-type'] = 'application/json';
-        if(!_.isEmpty(body) &&
-            !_.isEmpty(body.data) &&
-            !_.isEmpty(body.data.FileUploads) &&
-            _.isArray(body.data.FileUploads)) {
-            var arrTemp = [];
-        _.forEach(body.data.FileUploads, function(valueFileUpload, indexFileUpload){
-            if(HelperService.CheckExistData(valueFileUpload)) {
-                arrTemp.push({UID: valueFileUpload});
-            }
-        });
-        body.data.FileUploads = arrTemp;
-        }
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-wa-request/patient',

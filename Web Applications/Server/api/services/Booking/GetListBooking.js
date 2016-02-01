@@ -18,6 +18,11 @@ module.exports = function(data, userInfo) {
                 attributes: Services.AttributesAppt.Patient(),
                 model: Patient,
                 required: true
+            }, {
+                attributes: Services.AttributesRoster.Site(),
+                model: Site,
+                required: true,
+                where: pagination.Site
             }],
             where: pagination.Appointment
         })

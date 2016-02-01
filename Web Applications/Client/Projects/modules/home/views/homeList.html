@@ -12,7 +12,7 @@
     </div> -->
     <div class="portlet-body">
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30">
+            <!--<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30">
                 <div class="dashboard-stat purple" ng-click="eForms()">
                     <div class="visual">
                         <i class="fa fa-file-text-o"></i>
@@ -37,8 +37,8 @@
                         View  <i class="m-icon-swapright m-icon-white"></i>
                     </a>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30">
+            </div> -->
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30"  ng-show="!checkRole">
                 <div class="dashboard-stat red">
                     <div class="visual">
                         <i class="fa fa-gear"></i>
@@ -46,7 +46,33 @@
                     <div class="details">
                         <div class="number">Today's Consultation List</div>
                     </div>
-                    <a class="more" href="javascript:;" ng-click="ListTodayConsultation()">
+                    <a class="more" href="javascript:;" ng-click="ListTodayConsultation('todaylist')">
+                        Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30" ng-show="checkRole">
+                <div class="dashboard-stat green">
+                    <div class="visual">
+                        <i class="fa fa-gear"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">Consultation List History</div>
+                    </div>
+                    <a class="more" href="javascript:;" ng-click="ListTodayConsultation('list')">
+                        Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 padding-buttom-30" ng-show="checkRole">
+                <div class="dashboard-stat purple">
+                    <div class="visual">
+                        <i class="fa fa-gear"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">Today's Consultation</div>
+                    </div>
+                    <a class="more" href="javascript:;" ng-click="ListTodayConsultation('today')">
                         Open And Edit  <i class="m-icon-swapright m-icon-white"></i>
                     </a>
                 </div>
@@ -54,4 +80,3 @@
         </div>
     </div>
 </div>
-

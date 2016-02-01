@@ -95,8 +95,6 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
                 } else {
                     toastr.error('Please link Patients');
                 };
-
-
             };
 
             scope.LoadData = function() {

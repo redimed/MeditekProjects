@@ -107,7 +107,7 @@ module.exports = {
         var type = params.type;
         var headers = req.headers;
         TelehealthService.GetAppointmentsByPatient(patientUID, limit, type, headers).then(function(response) {
-            console.log("===================================",response.getBody());
+            // console.log("===================================",response.getBody());
             if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
             return res.ok(response.getBody());
         }, function(err) {

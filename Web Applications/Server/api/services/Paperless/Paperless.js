@@ -219,6 +219,7 @@ module.exports = {
         		for(var i = 0; i < temp.section.length; i++) {
         			temp.section[i].UID = UUIDService.Create();
         			temp.section[i].EFormTemplateID = created_EFormTemplate.ID;
+        			temp.section[i].Description = data.sectionNames['sectionName'+(i+1)];
         		}
         		return EFormSectionTemplate.bulkCreate(temp.section,{transaction:t,individualHooks:true});
         	},function(err){
@@ -385,6 +386,201 @@ module.exports = {
 			});
 		}
 		
+	},
+
+	updateTemplate : function(data) {
+		var deleteData = {};
+		var tempstring = "";
+        var DetailTemplate = [];
+        Services.Paperless.Check(data.listquestion, tempstring, DetailTemplate);
+        for(var i = 0; i < DetailTemplate.length; i++) {
+            DetailTemplate[i].Name = DetailTemplate[i].Name.substr(1,DetailTemplate[i].Name.length);
+        }
+        for(var i = 0; i < data.listTemplate.length; i++) {
+            for(var j = 0; j < DetailTemplate.length; j++) {
+                if(DetailTemplate[j].Name.indexOf(data.listTemplate[i].Name) != -1 &&
+                   DetailTemplate[j].Name.indexOf(data.listTemplate[i].SectionName) != -1 ){
+                    DetailTemplate[j].QuestionName = data.listTemplate[i].Name;
+                    DetailTemplate[j].UID          = UUIDService.Create();
+                }
+            }
+        }
+        for(var i = 0; i < data.listTemplate.length; i++) {
+            data.listTemplate[i].UID = UUIDService.Create();
+        }
+        var temp = Services.Paperless.GetSectionAndQuestion(data.listquestion);
+
+        for(var i = 0; i < temp.section.length; i++) {
+        	temp.section[i].UID = UUIDService.Create();
+        	temp.section[i].EFormTemplateID = data.EFormID;
+        	temp.section[i].Description = data.sectionNames['sectionName'+(i+1)];
+        }
+
+        return sequelize.transaction()
+        .then(function(t){
+        	return EFormSectionTemplate.findAll({
+        		where :{
+        			EFormTemplateID : data.EFormID
+        		},
+        		transaction : t
+        	})
+        	.then(function(got_EFormSectionTemplate){
+        		if(got_EFormSectionTemplate == null || got_EFormSectionTemplate == "" || got_EFormSectionTemplate.length == 0){
+        			t.rollback();
+        			var err = new Error("updateTemplate.Error");
+        			err.pushError("notfound.Section");
+        			throw err;
+        		}
+        		else {
+        			var arraytemp = [];
+        			for(var j = 0; j < got_EFormSectionTemplate.length; j++) {
+        				arraytemp[j] = got_EFormSectionTemplate[j].ID;
+        			}
+        			deleteData.section = arraytemp;
+        			return EFormQuestionTemplate.findAll({
+        				where : {
+        					EFormSectionTemplateID : {
+        						$in : arraytemp
+        					}
+        				},
+        				transaction : t
+        			});
+        		}
+        	},function(err) {
+        		t.rollback();
+        		throw err;
+        	})
+        	.then(function(got_EFormQuestionTemplate){
+        		if(got_EFormQuestionTemplate == null || got_EFormQuestionTemplate == "" || got_EFormQuestionTemplate.length == 0){
+        			t.rollback();
+        			var err = new Error("updateTemplate.Error");
+        			err.pushError("notfound.Question");
+        			throw err;
+        		}
+        		else {
+        			var arraytemp = [];
+        			for(var j = 0; j < got_EFormQuestionTemplate.length; j++) {
+        				arraytemp[j] = got_EFormQuestionTemplate[j].ID;
+        			}
+        			deleteData.question = arraytemp;
+        			console.log(deleteData);
+        			return EFormLineTemplate.destroy({
+        				where : {
+        					EFormQuestionTemplateID : {
+        						$in : deleteData.question
+        					}
+        				},
+        				transaction : t
+        			});
+        		}
+        	},function(err){
+        		t.rollback();
+        		throw err;
+        	})
+        	.then(function(deleted_line) {
+        		console.log(deleted_line);
+        		if(deleted_line == null || deleted_line == "") {
+        			t.rollback();
+        			var err = new Error("updateTemplate.Error");
+        			err.pushError("deleteLine.Error");
+        			throw err;
+        		}
+        		else {
+        			return EFormQuestionTemplate.destroy({
+        				where : {
+        					EFormSectionTemplateID : {
+        						$in : deleteData.section
+        					}
+        				},
+        				transaction : t
+        			});
+        		}
+        	},function(err){
+        		t.rollback();
+        		throw err;
+        	})
+        	.then(function(deleted_question){
+        		console.log(deleted_question);
+        		if(deleted_question == null || deleted_question == "") {
+        			t.rollback();
+        			var err = new Error("updateTemplate.Error");
+        			err.pushError("deleteQuestion.Error");
+        			throw err;
+        		}
+        		else {
+        			return EFormSectionTemplate.destroy({
+        				where : {
+        					EFormTemplateID : data.EFormID
+        				},
+        				transaction : t
+        			});
+        		}
+        	},function(err){
+        		t.rollback();
+        		throw err;
+        	})
+        	.then(function(deleted_section){
+        		if(deleted_section == null || deleted_section == "") {
+        			t.rollback();
+        			var err = new Error("updateTemplate.Error");
+        			err.pushError("deleteSection.Error");
+        			throw err;
+        		}
+        		else {
+        			for(var i = 0; i < temp.section.length; i++) {
+	        			temp.section[i].UID = UUIDService.Create();
+	        			temp.section[i].EFormTemplateID = data.EFormID;
+	        			temp.section[i].Description = data.sectionNames['sectionName'+(i+1)];
+	        		}
+	        		return EFormSectionTemplate.bulkCreate(temp.section,{transaction:t,individualHooks:true});
+	        	}
+        	},function(err){
+        		t.rollback();
+        		throw err;
+        	})
+        	.then(function(created_EFormSectionTemplate){
+        		//get sectionID to insert table Question
+        		for(var i = 0; i < temp.question.length; i++) {
+        			temp.question[i].UID = UUIDService.Create();
+        			for(var j = 0; j < created_EFormSectionTemplate.length; j++) {
+        				if(temp.question[i].SectionName == created_EFormSectionTemplate[j].Name)
+        					temp.question[i].EFormSectionTemplateID = created_EFormSectionTemplate[j].ID;
+        			}
+        			for(var n = 0; n < data.listTemplate.length; n++) {
+        				if(data.listTemplate[n].Name == temp.question[i].Name)
+        					temp.question[i].QuestionTypeID = data.listTemplate[n].QuestionTypeID;
+        			}
+        		}
+        		// end
+        		return EFormQuestionTemplate.bulkCreate(temp.question,{transaction:t,individualHooks:true});
+        	},function(err){
+        		t.rollback();
+        		throw err;
+        	})
+			.then(function(created_EFormQuestionTemplate){
+				console.log(DetailTemplate);
+				for(var i = 0; i < DetailTemplate.length; i++) {
+					for(var j = 0; j < created_EFormQuestionTemplate.length; j++) {
+        				if(DetailTemplate[i].QuestionName == created_EFormQuestionTemplate[j].Name)
+        					DetailTemplate[i].EFormQuestionTemplateID = created_EFormQuestionTemplate[j].ID;
+        			}
+				}
+				return EFormLineTemplate.bulkCreate(DetailTemplate,{transaction:t,individualHooks:true});
+			},function(err){
+				t.rollback();
+				throw err;
+			})
+			.then(function(success){
+				t.commit();
+				return success;
+			},function(err){
+				t.rollback();
+				throw err;
+			})
+        },function(err){
+        	throw err;
+        });
+  
 	},
 
 	listEFormsAppointment : function(data) {

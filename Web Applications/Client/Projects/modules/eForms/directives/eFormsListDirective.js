@@ -12,6 +12,7 @@ var app = angular.module('app.authentication.eForms.directive',[
 	'app.authentication.eForms.directive.question10',
 	'app.authentication.eForms.directive.question11',
 	'app.authentication.eForms.directive.question12',
+	'app.authentication.eForms.directive.question13',
 	'app.authentication.eForms.directive.loadtemplate',
 	'app.authentication.eForms.directive.createtemplate',
 	'app.authentication.eForms.directive.manager'

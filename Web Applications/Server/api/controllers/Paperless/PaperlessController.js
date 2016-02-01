@@ -36,6 +36,10 @@ module.exports = {
         .then(function(result){
             // res.ok(result);
             var objparse = {};
+            var sectionNames = {};
+            for(var i = 0; i < result.EFormSectionTemplate.length; i++) {
+                objparse[result.EFormSectionTemplate[i].Name] = {};
+            }
             for(var i = 0; i < result.EFormLineTemplate.length; i++) {
                 objparse = Services.Paperless.parseObj(objparse,result.EFormLineTemplate[i].Name, result.EFormLineTemplate[i].Value);
             }
@@ -45,12 +49,20 @@ module.exports = {
                         result.EFormQuestionTemplate[i].dataValues.SectionName = result.EFormSectionTemplate[j].Name;
                 }
             }
+            for(var i = 0; i < result.EFormSectionTemplate.length; i++) {
+                var lastChar = result.EFormSectionTemplate[i].Name.substr(result.EFormSectionTemplate[i].Name.length - 1);
+                sectionNames['sectionName'+lastChar] = result.EFormSectionTemplate[i].Description;
+            }
+            console.log("------------------------------- day ne ",sectionNames);
             // res.ok({data:result.EFormQuestionTemplate});
             res.ok({data:{
                 Name           : result.EFormTemplate[0].Name,
-                EFormUID       : result.EFormID,
+                EFormID        : result.EFormID,
                 DetailTemplate : objparse,
-                ListQuestion   : result.EFormQuestionTemplate
+                ListQuestion   : result.EFormQuestionTemplate,
+                sectionNames   : sectionNames,
+                section        : result.EFormSectionTemplate.length,
+                question       : result.EFormQuestionTemplate.length
             },message:"success"});
         })
         .catch(function(err){
@@ -364,6 +376,17 @@ module.exports = {
         })
         .catch(function(err) {
             console.log(err);
+            res.serverError(ErrorWrap(err));
+        });
+    },
+
+    updateTemplate : function(req, res) {
+        var data = req.body.data;
+        Services.Paperless.updateTemplate(data)
+        .then(function(success){
+            res.ok({message:"success"});
+        })
+        .catch(function(err){
             res.serverError(ErrorWrap(err));
         });
     }

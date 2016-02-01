@@ -64,7 +64,8 @@
         </div>
      	<div class="form-actions right">
             <button class="btn btn-lg dark"><i class="glyphicon glyphicon-arrow-left "></i> Cancel</button>
-            <button class="btn btn-lg btn-primary" ng-click='save()'><i class="glyphicon glyphicon-save"></i> Submit</button>
+            <button class="btn btn-lg btn-primary" ng-click='update()' ng-show="isupdate==true"><i class="glyphicon glyphicon-save"></i> Update</button>
+            <button class="btn btn-lg btn-primary" ng-click='save()' ng-hide="isupdate==true"><i class="glyphicon glyphicon-save"></i> Submit</button>
         </div>
     </div>
 </div>

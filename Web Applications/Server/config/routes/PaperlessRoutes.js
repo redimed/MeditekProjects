@@ -47,5 +47,10 @@ module.exports = {
 	'post /api/paperless/update-data' : {
 		controller: 'Paperless/PaperlessController',
 		action : 'updateData'
+	},
+
+	'post /api/paperless/update-template' : {
+		controller: 'Paperless/PaperlessController',
+		action: 'updateTemplate'
 	}
 }

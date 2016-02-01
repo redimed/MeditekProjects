@@ -1,6 +1,6 @@
 var app = angular.module('app.authentication.home.list.controller', []);
 
-app.controller('homeListCtrl', function($scope, $cookies, $state, WAAppointmentService) {
+app.controller('homeListCtrl', function($scope, $cookies, $state, WAAppointmentService,toastr) {
     $scope.UserRole = $cookies.getObject('userInfo').roles[0].RoleCode;
     $scope.checkRole = false;
     if ($scope.UserRole == 'PATIENT') {
@@ -32,14 +32,20 @@ app.controller('homeListCtrl', function($scope, $cookies, $state, WAAppointmentS
             });
         } else if (data == 'today') {
             WAAppointmentService.loadListWAAppointment($scope.info.data).then(function(response) {
-                var dataPost = {
-                    UID: response.rows[0].UID,
-                    UIDPatient: response.rows[0].Patients[0].UID
-                };
-                $state.go("authentication.consultation.detail", {
-                    UID: dataPost.UID,
-                    UIDPatient: dataPost.UIDPatient
-                });
+                console.log(response);
+                if (response.rows.length != 0) {
+                    var dataPost = {
+                        UID: response.rows[0].UID,
+                        UIDPatient: response.rows[0].Patients[0].UID
+                    };
+                    $state.go("authentication.consultation.detail", {
+                        UID: dataPost.UID,
+                        UIDPatient: dataPost.UIDPatient
+                    });
+                } else {
+                    toastr.success('There is no consultation today!');
+                }
+
             });
         } else {
             $state.go("authentication.consultation.list");

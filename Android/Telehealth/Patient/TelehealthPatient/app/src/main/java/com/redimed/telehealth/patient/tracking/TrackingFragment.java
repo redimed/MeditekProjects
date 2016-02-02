@@ -2,6 +2,7 @@ package com.redimed.telehealth.patient.tracking;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +39,9 @@ import butterknife.ButterKnife;
  */
 public class TrackingFragment extends Fragment implements ITrackingView {
 
+    private int offset = 0;
     private Context context;
+    protected Handler handler;
     private String TAG = "TRACKING";
     private ITrackingPresenter iTrackingPresenter;
 
@@ -59,7 +62,8 @@ public class TrackingFragment extends Fragment implements ITrackingView {
     @Bind(R.id.btnBack)
     Button btnBack;
 
-    public TrackingFragment() {}
+    public TrackingFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,9 +76,10 @@ public class TrackingFragment extends Fragment implements ITrackingView {
     }
 
     private void getListAppointment() {
+        handler = new Handler();
         iTrackingPresenter = new TrackingPresenter(context, this, getActivity());
         iTrackingPresenter.setProgressBarVisibility(View.VISIBLE);
-        iTrackingPresenter.getListAppointment();
+        iTrackingPresenter.getListAppointment(offset);
     }
 
     @Override
@@ -103,7 +108,7 @@ public class TrackingFragment extends Fragment implements ITrackingView {
         swipeInfo.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                iTrackingPresenter.getListAppointment();
+                iTrackingPresenter.getListAppointment(offset);
             }
         });
 
@@ -114,34 +119,46 @@ public class TrackingFragment extends Fragment implements ITrackingView {
     }
 
     @Override
-    public void onLoadListAppt(List<Appointment> data) {
+    public void onLoadListAppt(final List<Appointment> data) {
         lblNoData.setVisibility(View.GONE);
         iTrackingPresenter.setProgressBarVisibility(View.GONE);
 
-        int TYPE_APPOINTMENT = 1;
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        AdapterAppointment adapterAppointment = new AdapterAppointment(context, TYPE_APPOINTMENT, getActivity());
+        final AdapterAppointment adapterAppointment = new AdapterAppointment(context, data, getActivity(), rvListAppointment);
+//        adapterAppointment.setOnLoadMoreListener(new EndlessRecyclerOnScrollListener() {
+//            @Override
+//            public void onLoadMore() {
+//                //add null , so the adapter will check view_type and show progress bar at bottom
+//                data.add(null);
+//                adapterAppointment.notifyItemRemoved(data.size() - 1);
+//
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        // remove progress item
+//                        data.remove(data.size() - 1);
+//                        adapterAppointment.notifyItemRemoved(data.size());
+//
+//                        //  add items one by one
+//                        int start = data.size();
+//                        int end = start + 1;
+//
+//                        Log.d(TAG, start + "======" + end);
+//
+//                        iTrackingPresenter.getListAppointment(end);
+//                        adapterAppointment.notifyItemInserted(data.size());
+//                        adapterAppointment.setLoaded();
+//                    }
+//                }, 2000);
+//
+//            }
+//        });
 
         rvListAppointment.setHasFixedSize(true);
         rvListAppointment.setLayoutManager(linearLayoutManager);
         rvListAppointment.setAdapter(adapterAppointment);
-//        rvListAppointment.setOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                swipeInfo.setEnabled(linearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0);
-//            }
-//        });
-        rvListAppointment.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int current_page) {
-                Log.d(TAG, current_page + "");
-            }
-
+        rvListAppointment.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -152,8 +169,6 @@ public class TrackingFragment extends Fragment implements ITrackingView {
                 swipeInfo.setEnabled(linearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0);
             }
         });
-
-        adapterAppointment.swapDataAppointment(data);
         swipeInfo.setRefreshing(false);
     }
 
@@ -165,6 +180,7 @@ public class TrackingFragment extends Fragment implements ITrackingView {
             new DialogAlert(context, DialogAlert.State.Warning, getResources().getString(R.string.token_expired)).show();
         } else {
             lblNoData.setVisibility(View.VISIBLE);
+            iTrackingPresenter.setProgressBarVisibility(View.GONE);
             new DialogAlert(context, DialogAlert.State.Error, msg).show();
         }
         swipeInfo.setRefreshing(false);

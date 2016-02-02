@@ -101,7 +101,7 @@ public class RESTClient {
     private static void setupRestClient() {
         //3009
         restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(Config.apiURL)
                 .setClient(new InterceptingOkClient(getUnsafeOkHttpClient()))
                 .setRequestInterceptor(new SessionRequestInterceptor())
@@ -110,7 +110,7 @@ public class RESTClient {
 
         //3005
         restAdapterCore = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(Config.apiURLCore)
                 .setClient(new InterceptingOkClient(getUnsafeOkHttpClient()))
                 .setRequestInterceptor(new SessionRequestInterceptor())

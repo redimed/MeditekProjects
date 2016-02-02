@@ -89,8 +89,7 @@ public class RequestFragment extends Fragment implements IRequestView, View.OnCl
     @Bind(R.id.btnBack)
     Button btnBack;
 
-    public RequestFragment() {
-    }
+    public RequestFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

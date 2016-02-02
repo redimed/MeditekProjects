@@ -1,0 +1,1196 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		001C6D041BF9BF5000877F4B /* Medi_Infomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001C6D021BF9BF5000877F4B /* Medi_Infomation.swift */; };
+		001C6D051BF9BF5000877F4B /* Medi_Infomation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 001C6D031BF9BF5000877F4B /* Medi_Infomation.xib */; };
+		002908231BC228B700FED16E /* OpenTok.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002908221BC228B700FED16E /* OpenTok.framework */; };
+		0029086E1BC2552A00FED16E /* CALayer+DTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908611BC2552A00FED16E /* CALayer+DTI.swift */; };
+		0029086F1BC2552A00FED16E /* DTIActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908631BC2552A00FED16E /* DTIActivityIndicatorView.swift */; };
+		002908701BC2552A00FED16E /* DTIAnimChasingDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908641BC2552A00FED16E /* DTIAnimChasingDots.swift */; };
+		002908711BC2552A00FED16E /* DTIAnimDoubleBounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908651BC2552A00FED16E /* DTIAnimDoubleBounce.swift */; };
+		002908721BC2552A00FED16E /* DTIAnimProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908661BC2552A00FED16E /* DTIAnimProtocol.swift */; };
+		002908731BC2552A00FED16E /* DTIAnimPulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908671BC2552A00FED16E /* DTIAnimPulse.swift */; };
+		002908741BC2552A00FED16E /* DTIAnimRotatingPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908681BC2552A00FED16E /* DTIAnimRotatingPlane.swift */; };
+		002908751BC2552A00FED16E /* DTIAnimSpotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002908691BC2552A00FED16E /* DTIAnimSpotify.swift */; };
+		002908761BC2552A00FED16E /* DTIAnimWanderingCubes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0029086A1BC2552A00FED16E /* DTIAnimWanderingCubes.swift */; };
+		002908771BC2552A00FED16E /* DTIAnimWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0029086B1BC2552A00FED16E /* DTIAnimWave.swift */; };
+		002908781BC2552A00FED16E /* DTIAnimWp8.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0029086C1BC2552A00FED16E /* DTIAnimWp8.swift */; };
+		002908791BC2552A00FED16E /* DTIIndicatorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0029086D1BC2552A00FED16E /* DTIIndicatorStyle.swift */; };
+		002C6F9E1BBD1403006F4FA6 /* SingletonClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002C6F9D1BBD1403006F4FA6 /* SingletonClass.swift */; };
+		00352AA91BD4A79C0049C576 /* PatientTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00352AA81BD4A79C0049C576 /* PatientTabVC.swift */; };
+		00352AAB1BD4A7D90049C576 /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00352AAA1BD4A7D90049C576 /* Patient.swift */; };
+		003A7F511BD28FF6009B1738 /* Appointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003A7F501BD28FF6009B1738 /* Appointment.swift */; };
+		003A7F531BD290E2009B1738 /* ClinicalMedical.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003A7F521BD290E2009B1738 /* ClinicalMedical.swift */; };
+		003A7F571BD29434009B1738 /* MedicalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003A7F561BD29434009B1738 /* MedicalImage.swift */; };
+		003A7F591BD29444009B1738 /* PresentComplain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003A7F581BD29444009B1738 /* PresentComplain.swift */; };
+		004565061BF02EC9005ABA28 /* Kin_Guardian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004565041BF02EC9005ABA28 /* Kin_Guardian.swift */; };
+		004565071BF02EC9005ABA28 /* Kin_Guardian.xib in Resources */ = {isa = PBXBuildFile; fileRef = 004565051BF02EC9005ABA28 /* Kin_Guardian.xib */; };
+		0045650C1BF03196005ABA28 /* Referral InformationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0045650A1BF03196005ABA28 /* Referral InformationVC.swift */; };
+		0045650D1BF03196005ABA28 /* Referral InformationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0045650B1BF03196005ABA28 /* Referral InformationVC.xib */; };
+		004565111BF03505005ABA28 /* ReasonforPresentingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0045650F1BF03505005ABA28 /* ReasonforPresentingVC.swift */; };
+		004565121BF03505005ABA28 /* ReasonforPresentingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 004565101BF03505005ABA28 /* ReasonforPresentingVC.xib */; };
+		0045A2DE1BCF88BC00AC4028 /* DetailAppointmentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0045A2DD1BCF88BC00AC4028 /* DetailAppointmentVC.swift */; };
+		0045A2E01BCF8C5700AC4028 /* Appointment.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0045A2DF1BCF8C5700AC4028 /* Appointment.xib */; };
+		0045A2E21BCF8F9100AC4028 /* ClinicalMedical.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0045A2E11BCF8F9100AC4028 /* ClinicalMedical.xib */; };
+		0045A2E41BCF8FB200AC4028 /* PresentComplain.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0045A2E31BCF8FB200AC4028 /* PresentComplain.xib */; };
+		0045A2E61BCF8FC900AC4028 /* MedicalImage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0045A2E51BCF8FC900AC4028 /* MedicalImage.xib */; };
+		0045A2E81BCF8FD100AC4028 /* PatientTabVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0045A2E71BCF8FD100AC4028 /* PatientTabVC.xib */; };
+		004CCA991C0FF5980079282D /* ringtone.wav in Resources */ = {isa = PBXBuildFile; fileRef = 004CCA981C0FF5980079282D /* ringtone.wav */; };
+		004F6D191BB9A02200242CE9 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004F6D181BB9A02200242CE9 /* CustomViewController.swift */; };
+		00525A661C05970C007A56D5 /* ModalFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00525A651C05970C007A56D5 /* ModalFilterVC.swift */; };
+		005BE58C1BF03DEA00134D84 /* HistorySkinHandVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005BE58A1BF03DEA00134D84 /* HistorySkinHandVC.swift */; };
+		005BE58D1BF03DEA00134D84 /* HistorySkinHandVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 005BE58B1BF03DEA00134D84 /* HistorySkinHandVC.xib */; };
+		005BE5921BF0426B00134D84 /* Relevant_Allergy_CurrentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005BE5901BF0426B00134D84 /* Relevant_Allergy_CurrentVC.swift */; };
+		005BE5931BF0426B00134D84 /* Relevant_Allergy_CurrentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 005BE5911BF0426B00134D84 /* Relevant_Allergy_CurrentVC.xib */; };
+		005BE5981BF042A700134D84 /* PathologyProviderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005BE5961BF042A700134D84 /* PathologyProviderVC.swift */; };
+		005BE5991BF042A700134D84 /* PathologyProviderVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 005BE5971BF042A700134D84 /* PathologyProviderVC.xib */; };
+		0061A4441BD7773100617B25 /* MedicalImageCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0061A4421BD7773100617B25 /* MedicalImageCVC.swift */; };
+		0061A4451BD7773100617B25 /* MedicalImageCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0061A4431BD7773100617B25 /* MedicalImageCVC.xib */; };
+		007AE7CF1C06AE17005364FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 007AE7CE1C06AE17005364FE /* Assets.xcassets */; };
+		008FB2351BB93E3A00684968 /* TOPVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008FB2341BB93E3A00684968 /* TOPVCViewController.swift */; };
+		008FB2371BB93F4500684968 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2361BB93F4500684968 /* AudioToolbox.framework */; };
+		008FB2391BB93F4B00684968 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2381BB93F4B00684968 /* AVFoundation.framework */; };
+		008FB23B1BB93F5300684968 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB23A1BB93F5300684968 /* CoreGraphics.framework */; };
+		008FB23D1BB93F5B00684968 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB23C1BB93F5B00684968 /* CoreMedia.framework */; };
+		008FB23F1BB93F6700684968 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB23E1BB93F6700684968 /* CoreTelephony.framework */; };
+		008FB2411BB93FC800684968 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2401BB93FC800684968 /* CoreVideo.framework */; };
+		008FB2431BB93FD100684968 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2421BB93FD100684968 /* Foundation.framework */; };
+		008FB2451BB93FD700684968 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2441BB93FD700684968 /* GLKit.framework */; };
+		008FB2471BB93FE700684968 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2461BB93FE700684968 /* libc++.tbd */; };
+		008FB2491BB93FF000684968 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2481BB93FF000684968 /* libsqlite3.tbd */; };
+		008FB24B1BB93FF800684968 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB24A1BB93FF800684968 /* OpenGLES.framework */; };
+		008FB24D1BB9400000684968 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB24C1BB9400000684968 /* QuartzCore.framework */; };
+		008FB24F1BB9400800684968 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB24E1BB9400800684968 /* SystemConfiguration.framework */; };
+		008FB2511BB9401000684968 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2501BB9401000684968 /* UIKit.framework */; };
+		008FB2531BB9401900684968 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008FB2521BB9401900684968 /* VideoToolbox.framework */; };
+		00A9E5B81BC3720A0055A594 /* AppointmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A9E5B71BC3720A0055A594 /* AppointmentTableViewCell.swift */; };
+		00B0AFAC1BDA2B5600871786 /* DetailImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B0AFAA1BDA2B5600871786 /* DetailImageVC.swift */; };
+		00B0AFAD1BDA2B5600871786 /* DetailImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00B0AFAB1BDA2B5600871786 /* DetailImageVC.xib */; };
+		00B9917F1BC2E3AD0025EA7F /* OnlineUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B9917E1BC2E3AD0025EA7F /* OnlineUsers.swift */; };
+		00D512791BB4E63E0068942D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D512781BB4E63E0068942D /* HomeViewController.swift */; };
+		00D5127B1BB4E6560068942D /* MakeCallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D5127A1BB4E6560068942D /* MakeCallController.swift */; };
+		00D5127D1BB4E7610068942D /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D5127C1BB4E7610068942D /* GlobalConstants.swift */; };
+		00F56F9F1BECBA670052F201 /* BasicInfoWAPatient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F56F9D1BECBA670052F201 /* BasicInfoWAPatient.swift */; };
+		00F56FA01BECBA670052F201 /* BasicInfoWAPatient.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00F56F9E1BECBA670052F201 /* BasicInfoWAPatient.xib */; };
+		00F56FA31BECBEC10052F201 /* ContactInfoWAPatient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F56FA11BECBEC10052F201 /* ContactInfoWAPatient.swift */; };
+		00F56FA41BECBEC10052F201 /* ContactInfoWAPatient.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00F56FA21BECBEC10052F201 /* ContactInfoWAPatient.xib */; };
+		60350A33EBFF3BA69C0DDD73 /* Pods_Telehealth_Doctor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1F17DC5B312EB9B2723910E /* Pods_Telehealth_Doctor.framework */; };
+		AFF21D7D1BB12D8B006A190E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D7C1BB12D8B006A190E /* AppDelegate.swift */; };
+		AFF21D7F1BB12D8B006A190E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D7E1BB12D8B006A190E /* LoginViewController.swift */; };
+		AFF21D821BB12D8B006A190E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFF21D801BB12D8B006A190E /* Main.storyboard */; };
+		AFF21D851BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D831BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld */; };
+		AFF21D8A1BB12D8B006A190E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFF21D881BB12D8B006A190E /* LaunchScreen.storyboard */; };
+		AFF21D951BB12D8B006A190E /* Telehealth_DoctorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D941BB12D8B006A190E /* Telehealth_DoctorTests.swift */; };
+		AFF21DA01BB12D8B006A190E /* Telehealth_DoctorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21D9F1BB12D8B006A190E /* Telehealth_DoctorUITests.swift */; };
+		AFF21DEA1BB145B1006A190E /* AppointmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF21DE91BB145B1006A190E /* AppointmentListViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AFF21D911BB12D8B006A190E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFF21D711BB12D8B006A190E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AFF21D781BB12D8B006A190E;
+			remoteInfo = "Telehealth Doctor";
+		};
+		AFF21D9C1BB12D8B006A190E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFF21D711BB12D8B006A190E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AFF21D781BB12D8B006A190E;
+			remoteInfo = "Telehealth Doctor";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		001C6D021BF9BF5000877F4B /* Medi_Infomation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medi_Infomation.swift; sourceTree = "<group>"; };
+		001C6D031BF9BF5000877F4B /* Medi_Infomation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Medi_Infomation.xib; sourceTree = "<group>"; };
+		002908221BC228B700FED16E /* OpenTok.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenTok.framework; path = Pods/OpenTok/OpenTok.framework; sourceTree = "<group>"; };
+		002908611BC2552A00FED16E /* CALayer+DTI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+DTI.swift"; sourceTree = "<group>"; };
+		002908621BC2552A00FED16E /* DTIActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTIActivityIndicator.h; sourceTree = "<group>"; };
+		002908631BC2552A00FED16E /* DTIActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIActivityIndicatorView.swift; sourceTree = "<group>"; };
+		002908641BC2552A00FED16E /* DTIAnimChasingDots.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimChasingDots.swift; sourceTree = "<group>"; };
+		002908651BC2552A00FED16E /* DTIAnimDoubleBounce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimDoubleBounce.swift; sourceTree = "<group>"; };
+		002908661BC2552A00FED16E /* DTIAnimProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimProtocol.swift; sourceTree = "<group>"; };
+		002908671BC2552A00FED16E /* DTIAnimPulse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimPulse.swift; sourceTree = "<group>"; };
+		002908681BC2552A00FED16E /* DTIAnimRotatingPlane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimRotatingPlane.swift; sourceTree = "<group>"; };
+		002908691BC2552A00FED16E /* DTIAnimSpotify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimSpotify.swift; sourceTree = "<group>"; };
+		0029086A1BC2552A00FED16E /* DTIAnimWanderingCubes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimWanderingCubes.swift; sourceTree = "<group>"; };
+		0029086B1BC2552A00FED16E /* DTIAnimWave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimWave.swift; sourceTree = "<group>"; };
+		0029086C1BC2552A00FED16E /* DTIAnimWp8.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIAnimWp8.swift; sourceTree = "<group>"; };
+		0029086D1BC2552A00FED16E /* DTIIndicatorStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTIIndicatorStyle.swift; sourceTree = "<group>"; };
+		002C6F9D1BBD1403006F4FA6 /* SingletonClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingletonClass.swift; sourceTree = "<group>"; };
+		00352AA81BD4A79C0049C576 /* PatientTabVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientTabVC.swift; sourceTree = "<group>"; };
+		00352AAA1BD4A7D90049C576 /* Patient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
+		003A7F501BD28FF6009B1738 /* Appointment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appointment.swift; sourceTree = "<group>"; };
+		003A7F521BD290E2009B1738 /* ClinicalMedical.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClinicalMedical.swift; sourceTree = "<group>"; };
+		003A7F561BD29434009B1738 /* MedicalImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicalImage.swift; sourceTree = "<group>"; };
+		003A7F581BD29444009B1738 /* PresentComplain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentComplain.swift; sourceTree = "<group>"; };
+		004565041BF02EC9005ABA28 /* Kin_Guardian.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kin_Guardian.swift; sourceTree = "<group>"; };
+		004565051BF02EC9005ABA28 /* Kin_Guardian.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Kin_Guardian.xib; sourceTree = "<group>"; };
+		0045650A1BF03196005ABA28 /* Referral InformationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Referral InformationVC.swift"; sourceTree = "<group>"; };
+		0045650B1BF03196005ABA28 /* Referral InformationVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Referral InformationVC.xib"; sourceTree = "<group>"; };
+		0045650F1BF03505005ABA28 /* ReasonforPresentingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReasonforPresentingVC.swift; sourceTree = "<group>"; };
+		004565101BF03505005ABA28 /* ReasonforPresentingVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReasonforPresentingVC.xib; sourceTree = "<group>"; };
+		0045A2DD1BCF88BC00AC4028 /* DetailAppointmentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailAppointmentVC.swift; sourceTree = "<group>"; };
+		0045A2DF1BCF8C5700AC4028 /* Appointment.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Appointment.xib; sourceTree = "<group>"; };
+		0045A2E11BCF8F9100AC4028 /* ClinicalMedical.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClinicalMedical.xib; sourceTree = "<group>"; };
+		0045A2E31BCF8FB200AC4028 /* PresentComplain.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresentComplain.xib; sourceTree = "<group>"; };
+		0045A2E51BCF8FC900AC4028 /* MedicalImage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MedicalImage.xib; sourceTree = "<group>"; };
+		0045A2E71BCF8FD100AC4028 /* PatientTabVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PatientTabVC.xib; sourceTree = "<group>"; };
+		004CCA981C0FF5980079282D /* ringtone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringtone.wav; sourceTree = "<group>"; };
+		004F6D181BB9A02200242CE9 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
+		00525A651C05970C007A56D5 /* ModalFilterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalFilterVC.swift; sourceTree = "<group>"; };
+		005BE58A1BF03DEA00134D84 /* HistorySkinHandVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistorySkinHandVC.swift; sourceTree = "<group>"; };
+		005BE58B1BF03DEA00134D84 /* HistorySkinHandVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistorySkinHandVC.xib; sourceTree = "<group>"; };
+		005BE5901BF0426B00134D84 /* Relevant_Allergy_CurrentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Relevant_Allergy_CurrentVC.swift; sourceTree = "<group>"; };
+		005BE5911BF0426B00134D84 /* Relevant_Allergy_CurrentVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Relevant_Allergy_CurrentVC.xib; sourceTree = "<group>"; };
+		005BE5961BF042A700134D84 /* PathologyProviderVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathologyProviderVC.swift; sourceTree = "<group>"; };
+		005BE5971BF042A700134D84 /* PathologyProviderVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PathologyProviderVC.xib; sourceTree = "<group>"; };
+		0061A4421BD7773100617B25 /* MedicalImageCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicalImageCVC.swift; sourceTree = "<group>"; };
+		0061A4431BD7773100617B25 /* MedicalImageCVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MedicalImageCVC.xib; sourceTree = "<group>"; };
+		007AE7CE1C06AE17005364FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		008FB2341BB93E3A00684968 /* TOPVCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOPVCViewController.swift; sourceTree = "<group>"; };
+		008FB2361BB93F4500684968 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		008FB2381BB93F4B00684968 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		008FB23A1BB93F5300684968 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		008FB23C1BB93F5B00684968 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		008FB23E1BB93F6700684968 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		008FB2401BB93FC800684968 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		008FB2421BB93FD100684968 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		008FB2441BB93FD700684968 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		008FB2461BB93FE700684968 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		008FB2481BB93FF000684968 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		008FB24A1BB93FF800684968 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		008FB24C1BB9400000684968 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		008FB24E1BB9400800684968 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		008FB2501BB9401000684968 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		008FB2521BB9401900684968 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		009398E41BBA9384005481E2 /* Telehealth Doctor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Telehealth Doctor-Bridging-Header.h"; sourceTree = "<group>"; };
+		00A9E5B71BC3720A0055A594 /* AppointmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentTableViewCell.swift; sourceTree = "<group>"; };
+		00B0AFAA1BDA2B5600871786 /* DetailImageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailImageVC.swift; sourceTree = "<group>"; };
+		00B0AFAB1BDA2B5600871786 /* DetailImageVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailImageVC.xib; sourceTree = "<group>"; };
+		00B9917E1BC2E3AD0025EA7F /* OnlineUsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineUsers.swift; sourceTree = "<group>"; };
+		00D512781BB4E63E0068942D /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		00D5127A1BB4E6560068942D /* MakeCallController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakeCallController.swift; sourceTree = "<group>"; };
+		00D5127C1BB4E7610068942D /* GlobalConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
+		00F56F9D1BECBA670052F201 /* BasicInfoWAPatient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicInfoWAPatient.swift; sourceTree = "<group>"; };
+		00F56F9E1BECBA670052F201 /* BasicInfoWAPatient.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BasicInfoWAPatient.xib; sourceTree = "<group>"; };
+		00F56FA11BECBEC10052F201 /* ContactInfoWAPatient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactInfoWAPatient.swift; sourceTree = "<group>"; };
+		00F56FA21BECBEC10052F201 /* ContactInfoWAPatient.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactInfoWAPatient.xib; sourceTree = "<group>"; };
+		7EC46F2286C519B19F81976E /* Pods-Telehealth Doctor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth Doctor.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth Doctor/Pods-Telehealth Doctor.debug.xcconfig"; sourceTree = "<group>"; };
+		AFF21D791BB12D8B006A190E /* Telehealth Doctor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Telehealth Doctor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFF21D7C1BB12D8B006A190E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AFF21D7E1BB12D8B006A190E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		AFF21D811BB12D8B006A190E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AFF21D841BB12D8B006A190E /* Telehealth_Doctor.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Telehealth_Doctor.xcdatamodel; sourceTree = "<group>"; };
+		AFF21D891BB12D8B006A190E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AFF21D8B1BB12D8B006A190E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFF21D901BB12D8B006A190E /* Telehealth Doctor.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Telehealth Doctor.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFF21D941BB12D8B006A190E /* Telehealth_DoctorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Telehealth_DoctorTests.swift; sourceTree = "<group>"; };
+		AFF21D961BB12D8B006A190E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFF21D9B1BB12D8B006A190E /* Telehealth Doctor.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Telehealth Doctor.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFF21D9F1BB12D8B006A190E /* Telehealth_DoctorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Telehealth_DoctorUITests.swift; sourceTree = "<group>"; };
+		AFF21DA11BB12D8B006A190E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFF21DE91BB145B1006A190E /* AppointmentListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListViewController.swift; sourceTree = "<group>"; };
+		C1F17DC5B312EB9B2723910E /* Pods_Telehealth_Doctor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Telehealth_Doctor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5C98F90639AD6152CB17AAF /* Pods-Telehealth Doctor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Telehealth Doctor.release.xcconfig"; path = "Pods/Target Support Files/Pods-Telehealth Doctor/Pods-Telehealth Doctor.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AFF21D761BB12D8B006A190E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				008FB2531BB9401900684968 /* VideoToolbox.framework in Frameworks */,
+				008FB2511BB9401000684968 /* UIKit.framework in Frameworks */,
+				008FB24F1BB9400800684968 /* SystemConfiguration.framework in Frameworks */,
+				008FB24D1BB9400000684968 /* QuartzCore.framework in Frameworks */,
+				008FB24B1BB93FF800684968 /* OpenGLES.framework in Frameworks */,
+				008FB2491BB93FF000684968 /* libsqlite3.tbd in Frameworks */,
+				008FB2471BB93FE700684968 /* libc++.tbd in Frameworks */,
+				008FB2451BB93FD700684968 /* GLKit.framework in Frameworks */,
+				008FB2431BB93FD100684968 /* Foundation.framework in Frameworks */,
+				008FB2411BB93FC800684968 /* CoreVideo.framework in Frameworks */,
+				002908231BC228B700FED16E /* OpenTok.framework in Frameworks */,
+				008FB23F1BB93F6700684968 /* CoreTelephony.framework in Frameworks */,
+				008FB23D1BB93F5B00684968 /* CoreMedia.framework in Frameworks */,
+				008FB23B1BB93F5300684968 /* CoreGraphics.framework in Frameworks */,
+				008FB2391BB93F4B00684968 /* AVFoundation.framework in Frameworks */,
+				008FB2371BB93F4500684968 /* AudioToolbox.framework in Frameworks */,
+				60350A33EBFF3BA69C0DDD73 /* Pods_Telehealth_Doctor.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFF21D8D1BB12D8B006A190E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFF21D981BB12D8B006A190E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		002908601BC2552A00FED16E /* DTIActivityIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				002908611BC2552A00FED16E /* CALayer+DTI.swift */,
+				002908621BC2552A00FED16E /* DTIActivityIndicator.h */,
+				002908631BC2552A00FED16E /* DTIActivityIndicatorView.swift */,
+				002908641BC2552A00FED16E /* DTIAnimChasingDots.swift */,
+				002908651BC2552A00FED16E /* DTIAnimDoubleBounce.swift */,
+				002908661BC2552A00FED16E /* DTIAnimProtocol.swift */,
+				002908671BC2552A00FED16E /* DTIAnimPulse.swift */,
+				002908681BC2552A00FED16E /* DTIAnimRotatingPlane.swift */,
+				002908691BC2552A00FED16E /* DTIAnimSpotify.swift */,
+				0029086A1BC2552A00FED16E /* DTIAnimWanderingCubes.swift */,
+				0029086B1BC2552A00FED16E /* DTIAnimWave.swift */,
+				0029086C1BC2552A00FED16E /* DTIAnimWp8.swift */,
+				0029086D1BC2552A00FED16E /* DTIIndicatorStyle.swift */,
+			);
+			name = DTIActivityIndicator;
+			path = Pods/DTIActivityIndicator;
+			sourceTree = "<group>";
+		};
+		003A7F5B1BD29474009B1738 /* PresentComplain */ = {
+			isa = PBXGroup;
+			children = (
+				0045A2E31BCF8FB200AC4028 /* PresentComplain.xib */,
+				003A7F581BD29444009B1738 /* PresentComplain.swift */,
+			);
+			name = PresentComplain;
+			sourceTree = "<group>";
+		};
+		003A7F5C1BD2947E009B1738 /* MedicalImage */ = {
+			isa = PBXGroup;
+			children = (
+				003A7F561BD29434009B1738 /* MedicalImage.swift */,
+				0045A2E51BCF8FC900AC4028 /* MedicalImage.xib */,
+				0061A4421BD7773100617B25 /* MedicalImageCVC.swift */,
+				0061A4431BD7773100617B25 /* MedicalImageCVC.xib */,
+				00B0AFAA1BDA2B5600871786 /* DetailImageVC.swift */,
+				00B0AFAB1BDA2B5600871786 /* DetailImageVC.xib */,
+			);
+			name = MedicalImage;
+			sourceTree = "<group>";
+		};
+		003A7F5D1BD29485009B1738 /* Patient */ = {
+			isa = PBXGroup;
+			children = (
+				00F56F981BECB98B0052F201 /* WAPatient */,
+				00F56F971BECB9800052F201 /* TelePatient */,
+			);
+			name = Patient;
+			sourceTree = "<group>";
+		};
+		003A7F5E1BD2948D009B1738 /* ClinicalMedical */ = {
+			isa = PBXGroup;
+			children = (
+				005BE58F1BF0423C00134D84 /* WAClinical */,
+				005BE58E1BF0422F00134D84 /* TeleClinical */,
+			);
+			name = ClinicalMedical;
+			sourceTree = "<group>";
+		};
+		003A7F5F1BD29495009B1738 /* Appointment */ = {
+			isa = PBXGroup;
+			children = (
+				0045A2DF1BCF8C5700AC4028 /* Appointment.xib */,
+				003A7F501BD28FF6009B1738 /* Appointment.swift */,
+			);
+			name = Appointment;
+			sourceTree = "<group>";
+		};
+		004565081BF03136005ABA28 /* WAReferral */ = {
+			isa = PBXGroup;
+			children = (
+				005BE5891BF03DB300134D84 /* HistorySkin/Hand */,
+				0045650E1BF034C3005ABA28 /* Reason for referral/ Presenting problem */,
+				004565091BF03166005ABA28 /* Referral Information  */,
+			);
+			name = WAReferral;
+			sourceTree = "<group>";
+		};
+		004565091BF03166005ABA28 /* Referral Information  */ = {
+			isa = PBXGroup;
+			children = (
+				0045650A1BF03196005ABA28 /* Referral InformationVC.swift */,
+				0045650B1BF03196005ABA28 /* Referral InformationVC.xib */,
+			);
+			name = "Referral Information ";
+			sourceTree = "<group>";
+		};
+		0045650E1BF034C3005ABA28 /* Reason for referral/ Presenting problem */ = {
+			isa = PBXGroup;
+			children = (
+				0045650F1BF03505005ABA28 /* ReasonforPresentingVC.swift */,
+				004565101BF03505005ABA28 /* ReasonforPresentingVC.xib */,
+			);
+			name = "Reason for referral/ Presenting problem";
+			sourceTree = "<group>";
+		};
+		0045A2D81BCF881200AC4028 /* Appointment List */ = {
+			isa = PBXGroup;
+			children = (
+				AFF21DE91BB145B1006A190E /* AppointmentListViewController.swift */,
+				00A9E5B71BC3720A0055A594 /* AppointmentTableViewCell.swift */,
+				00525A651C05970C007A56D5 /* ModalFilterVC.swift */,
+			);
+			name = "Appointment List";
+			sourceTree = "<group>";
+		};
+		0045A2D91BCF883700AC4028 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				AFF21D7E1BB12D8B006A190E /* LoginViewController.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		0045A2DA1BCF884900AC4028 /* Make Call */ = {
+			isa = PBXGroup;
+			children = (
+				00D5127A1BB4E6560068942D /* MakeCallController.swift */,
+			);
+			name = "Make Call";
+			sourceTree = "<group>";
+		};
+		0045A2DB1BCF886900AC4028 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				00D512781BB4E63E0068942D /* HomeViewController.swift */,
+				008FB2341BB93E3A00684968 /* TOPVCViewController.swift */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		0045A2DC1BCF887C00AC4028 /* Detail Appointment */ = {
+			isa = PBXGroup;
+			children = (
+				0045A2DD1BCF88BC00AC4028 /* DetailAppointmentVC.swift */,
+				004565081BF03136005ABA28 /* WAReferral */,
+				003A7F5B1BD29474009B1738 /* PresentComplain */,
+				003A7F5C1BD2947E009B1738 /* MedicalImage */,
+				003A7F5D1BD29485009B1738 /* Patient */,
+				003A7F5E1BD2948D009B1738 /* ClinicalMedical */,
+				003A7F5F1BD29495009B1738 /* Appointment */,
+			);
+			name = "Detail Appointment";
+			sourceTree = "<group>";
+		};
+		004F6D171BB99FE300242CE9 /* CustomUI */ = {
+			isa = PBXGroup;
+			children = (
+				004F6D181BB9A02200242CE9 /* CustomViewController.swift */,
+			);
+			name = CustomUI;
+			sourceTree = "<group>";
+		};
+		005BE5891BF03DB300134D84 /* HistorySkin/Hand */ = {
+			isa = PBXGroup;
+			children = (
+				005BE58A1BF03DEA00134D84 /* HistorySkinHandVC.swift */,
+				005BE58B1BF03DEA00134D84 /* HistorySkinHandVC.xib */,
+			);
+			name = HistorySkin/Hand;
+			sourceTree = "<group>";
+		};
+		005BE58E1BF0422F00134D84 /* TeleClinical */ = {
+			isa = PBXGroup;
+			children = (
+				0045A2E11BCF8F9100AC4028 /* ClinicalMedical.xib */,
+				003A7F521BD290E2009B1738 /* ClinicalMedical.swift */,
+			);
+			name = TeleClinical;
+			sourceTree = "<group>";
+		};
+		005BE58F1BF0423C00134D84 /* WAClinical */ = {
+			isa = PBXGroup;
+			children = (
+				005BE5951BF0428B00134D84 /* Pathology */,
+				005BE5941BF0427400134D84 /* Relevant_Allergy_Current */,
+			);
+			name = WAClinical;
+			sourceTree = "<group>";
+		};
+		005BE5941BF0427400134D84 /* Relevant_Allergy_Current */ = {
+			isa = PBXGroup;
+			children = (
+				005BE5901BF0426B00134D84 /* Relevant_Allergy_CurrentVC.swift */,
+				005BE5911BF0426B00134D84 /* Relevant_Allergy_CurrentVC.xib */,
+			);
+			name = Relevant_Allergy_Current;
+			sourceTree = "<group>";
+		};
+		005BE5951BF0428B00134D84 /* Pathology */ = {
+			isa = PBXGroup;
+			children = (
+				005BE5961BF042A700134D84 /* PathologyProviderVC.swift */,
+				005BE5971BF042A700134D84 /* PathologyProviderVC.xib */,
+			);
+			name = Pathology;
+			sourceTree = "<group>";
+		};
+		00D5127E1BB4E7810068942D /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				AFF21D7C1BB12D8B006A190E /* AppDelegate.swift */,
+			);
+			name = Delegate;
+			sourceTree = "<group>";
+		};
+		00D5127F1BB4E8150068942D /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				002C6F9D1BBD1403006F4FA6 /* SingletonClass.swift */,
+				00D5127C1BB4E7610068942D /* GlobalConstants.swift */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
+		00D512801BB4E82F0068942D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AFF21D881BB12D8B006A190E /* LaunchScreen.storyboard */,
+				AFF21D8B1BB12D8B006A190E /* Info.plist */,
+				AFF21D831BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld */,
+				009398E41BBA9384005481E2 /* Telehealth Doctor-Bridging-Header.h */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		00F56F971BECB9800052F201 /* TelePatient */ = {
+			isa = PBXGroup;
+			children = (
+				0045A2E71BCF8FD100AC4028 /* PatientTabVC.xib */,
+				00352AA81BD4A79C0049C576 /* PatientTabVC.swift */,
+			);
+			name = TelePatient;
+			sourceTree = "<group>";
+		};
+		00F56F981BECB98B0052F201 /* WAPatient */ = {
+			isa = PBXGroup;
+			children = (
+				00F56F9C1BECB9F90052F201 /* Medicare Information */,
+				00F56F9B1BECB9E90052F201 /* Kin/Guardian */,
+				00F56F9A1BECB9E00052F201 /* ContactInfo */,
+				00F56F991BECB9D40052F201 /* BasicInfo */,
+			);
+			name = WAPatient;
+			sourceTree = "<group>";
+		};
+		00F56F991BECB9D40052F201 /* BasicInfo */ = {
+			isa = PBXGroup;
+			children = (
+				00F56F9D1BECBA670052F201 /* BasicInfoWAPatient.swift */,
+				00F56F9E1BECBA670052F201 /* BasicInfoWAPatient.xib */,
+			);
+			name = BasicInfo;
+			sourceTree = "<group>";
+		};
+		00F56F9A1BECB9E00052F201 /* ContactInfo */ = {
+			isa = PBXGroup;
+			children = (
+				00F56FA11BECBEC10052F201 /* ContactInfoWAPatient.swift */,
+				00F56FA21BECBEC10052F201 /* ContactInfoWAPatient.xib */,
+			);
+			name = ContactInfo;
+			sourceTree = "<group>";
+		};
+		00F56F9B1BECB9E90052F201 /* Kin/Guardian */ = {
+			isa = PBXGroup;
+			children = (
+				004565041BF02EC9005ABA28 /* Kin_Guardian.swift */,
+				004565051BF02EC9005ABA28 /* Kin_Guardian.xib */,
+			);
+			name = Kin/Guardian;
+			sourceTree = "<group>";
+		};
+		00F56F9C1BECB9F90052F201 /* Medicare Information */ = {
+			isa = PBXGroup;
+			children = (
+				001C6D021BF9BF5000877F4B /* Medi_Infomation.swift */,
+				001C6D031BF9BF5000877F4B /* Medi_Infomation.xib */,
+			);
+			name = "Medicare Information";
+			sourceTree = "<group>";
+		};
+		815AB998E3077CB4DFDF1600 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7EC46F2286C519B19F81976E /* Pods-Telehealth Doctor.debug.xcconfig */,
+				F5C98F90639AD6152CB17AAF /* Pods-Telehealth Doctor.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		854898B15C0460C15C6AB91F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				002908601BC2552A00FED16E /* DTIActivityIndicator */,
+				002908221BC228B700FED16E /* OpenTok.framework */,
+				008FB2521BB9401900684968 /* VideoToolbox.framework */,
+				008FB2501BB9401000684968 /* UIKit.framework */,
+				008FB24E1BB9400800684968 /* SystemConfiguration.framework */,
+				008FB24C1BB9400000684968 /* QuartzCore.framework */,
+				008FB24A1BB93FF800684968 /* OpenGLES.framework */,
+				008FB2481BB93FF000684968 /* libsqlite3.tbd */,
+				008FB2461BB93FE700684968 /* libc++.tbd */,
+				008FB2441BB93FD700684968 /* GLKit.framework */,
+				008FB2421BB93FD100684968 /* Foundation.framework */,
+				008FB2401BB93FC800684968 /* CoreVideo.framework */,
+				008FB23E1BB93F6700684968 /* CoreTelephony.framework */,
+				008FB23C1BB93F5B00684968 /* CoreMedia.framework */,
+				008FB23A1BB93F5300684968 /* CoreGraphics.framework */,
+				008FB2381BB93F4B00684968 /* AVFoundation.framework */,
+				008FB2361BB93F4500684968 /* AudioToolbox.framework */,
+				C1F17DC5B312EB9B2723910E /* Pods_Telehealth_Doctor.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AFF10DF51BB279FE005E9838 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0045A2DC1BCF887C00AC4028 /* Detail Appointment */,
+				0045A2DB1BCF886900AC4028 /* Home */,
+				0045A2DA1BCF884900AC4028 /* Make Call */,
+				0045A2D91BCF883700AC4028 /* Login */,
+				004F6D171BB99FE300242CE9 /* CustomUI */,
+				0045A2D81BCF881200AC4028 /* Appointment List */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		AFF10DF81BB27A39005E9838 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				004CCA981C0FF5980079282D /* ringtone.wav */,
+			);
+			name = Resource;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		AFF10E011BB286E1005E9838 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				00B9917E1BC2E3AD0025EA7F /* OnlineUsers.swift */,
+				00352AAA1BD4A7D90049C576 /* Patient.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		AFF21D701BB12D8B006A190E = {
+			isa = PBXGroup;
+			children = (
+				AFF21D7B1BB12D8B006A190E /* Telehealth Doctor */,
+				AFF21D931BB12D8B006A190E /* Telehealth DoctorTests */,
+				AFF21D9E1BB12D8B006A190E /* Telehealth DoctorUITests */,
+				AFF21D7A1BB12D8B006A190E /* Products */,
+				815AB998E3077CB4DFDF1600 /* Pods */,
+				854898B15C0460C15C6AB91F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		AFF21D7A1BB12D8B006A190E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AFF21D791BB12D8B006A190E /* Telehealth Doctor.app */,
+				AFF21D901BB12D8B006A190E /* Telehealth Doctor.xctest */,
+				AFF21D9B1BB12D8B006A190E /* Telehealth Doctor.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AFF21D7B1BB12D8B006A190E /* Telehealth Doctor */ = {
+			isa = PBXGroup;
+			children = (
+				00D5127E1BB4E7810068942D /* Delegate */,
+				AFF10DF81BB27A39005E9838 /* Resource */,
+				00D5127F1BB4E8150068942D /* Constants */,
+				AFF10DF51BB279FE005E9838 /* View Controllers */,
+				AFF10E011BB286E1005E9838 /* Model */,
+				AFF21D801BB12D8B006A190E /* Main.storyboard */,
+				007AE7CE1C06AE17005364FE /* Assets.xcassets */,
+				00D512801BB4E82F0068942D /* Supporting Files */,
+			);
+			path = "Telehealth Doctor";
+			sourceTree = "<group>";
+		};
+		AFF21D931BB12D8B006A190E /* Telehealth DoctorTests */ = {
+			isa = PBXGroup;
+			children = (
+				AFF21D941BB12D8B006A190E /* Telehealth_DoctorTests.swift */,
+				AFF21D961BB12D8B006A190E /* Info.plist */,
+			);
+			path = "Telehealth DoctorTests";
+			sourceTree = "<group>";
+		};
+		AFF21D9E1BB12D8B006A190E /* Telehealth DoctorUITests */ = {
+			isa = PBXGroup;
+			children = (
+				AFF21D9F1BB12D8B006A190E /* Telehealth_DoctorUITests.swift */,
+				AFF21DA11BB12D8B006A190E /* Info.plist */,
+			);
+			path = "Telehealth DoctorUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AFF21D781BB12D8B006A190E /* Telehealth Doctor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFF21DA41BB12D8B006A190E /* Build configuration list for PBXNativeTarget "Telehealth Doctor" */;
+			buildPhases = (
+				973B25D18A7CF760214B4246 /* Check Pods Manifest.lock */,
+				AFF21D751BB12D8B006A190E /* Sources */,
+				AFF21D761BB12D8B006A190E /* Frameworks */,
+				AFF21D771BB12D8B006A190E /* Resources */,
+				BD2E320F7F006BE6D4D8CB9F /* Embed Pods Frameworks */,
+				8963F1BCBAC8402C51D5661A /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Telehealth Doctor";
+			productName = "Telehealth Doctor";
+			productReference = AFF21D791BB12D8B006A190E /* Telehealth Doctor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AFF21D8F1BB12D8B006A190E /* Telehealth DoctorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFF21DA71BB12D8B006A190E /* Build configuration list for PBXNativeTarget "Telehealth DoctorTests" */;
+			buildPhases = (
+				AFF21D8C1BB12D8B006A190E /* Sources */,
+				AFF21D8D1BB12D8B006A190E /* Frameworks */,
+				AFF21D8E1BB12D8B006A190E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AFF21D921BB12D8B006A190E /* PBXTargetDependency */,
+			);
+			name = "Telehealth DoctorTests";
+			productName = "Telehealth DoctorTests";
+			productReference = AFF21D901BB12D8B006A190E /* Telehealth Doctor.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AFF21D9A1BB12D8B006A190E /* Telehealth DoctorUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFF21DAA1BB12D8B006A190E /* Build configuration list for PBXNativeTarget "Telehealth DoctorUITests" */;
+			buildPhases = (
+				AFF21D971BB12D8B006A190E /* Sources */,
+				AFF21D981BB12D8B006A190E /* Frameworks */,
+				AFF21D991BB12D8B006A190E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AFF21D9D1BB12D8B006A190E /* PBXTargetDependency */,
+			);
+			name = "Telehealth DoctorUITests";
+			productName = "Telehealth DoctorUITests";
+			productReference = AFF21D9B1BB12D8B006A190E /* Telehealth Doctor.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AFF21D711BB12D8B006A190E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Giap Vo Duc";
+				TargetAttributes = {
+					AFF21D781BB12D8B006A190E = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = UA7AB584U5;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 0;
+							};
+						};
+					};
+					AFF21D8F1BB12D8B006A190E = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = AFF21D781BB12D8B006A190E;
+					};
+					AFF21D9A1BB12D8B006A190E = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = AFF21D781BB12D8B006A190E;
+					};
+				};
+			};
+			buildConfigurationList = AFF21D741BB12D8B006A190E /* Build configuration list for PBXProject "Telehealth Doctor" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AFF21D701BB12D8B006A190E;
+			productRefGroup = AFF21D7A1BB12D8B006A190E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AFF21D781BB12D8B006A190E /* Telehealth Doctor */,
+				AFF21D8F1BB12D8B006A190E /* Telehealth DoctorTests */,
+				AFF21D9A1BB12D8B006A190E /* Telehealth DoctorUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AFF21D771BB12D8B006A190E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				004565121BF03505005ABA28 /* ReasonforPresentingVC.xib in Resources */,
+				0045A2E21BCF8F9100AC4028 /* ClinicalMedical.xib in Resources */,
+				001C6D051BF9BF5000877F4B /* Medi_Infomation.xib in Resources */,
+				AFF21D8A1BB12D8B006A190E /* LaunchScreen.storyboard in Resources */,
+				007AE7CF1C06AE17005364FE /* Assets.xcassets in Resources */,
+				004565071BF02EC9005ABA28 /* Kin_Guardian.xib in Resources */,
+				0045A2E41BCF8FB200AC4028 /* PresentComplain.xib in Resources */,
+				004CCA991C0FF5980079282D /* ringtone.wav in Resources */,
+				0045A2E61BCF8FC900AC4028 /* MedicalImage.xib in Resources */,
+				00B0AFAD1BDA2B5600871786 /* DetailImageVC.xib in Resources */,
+				005BE5931BF0426B00134D84 /* Relevant_Allergy_CurrentVC.xib in Resources */,
+				0045A2E81BCF8FD100AC4028 /* PatientTabVC.xib in Resources */,
+				AFF21D821BB12D8B006A190E /* Main.storyboard in Resources */,
+				0061A4451BD7773100617B25 /* MedicalImageCVC.xib in Resources */,
+				0045A2E01BCF8C5700AC4028 /* Appointment.xib in Resources */,
+				005BE5991BF042A700134D84 /* PathologyProviderVC.xib in Resources */,
+				0045650D1BF03196005ABA28 /* Referral InformationVC.xib in Resources */,
+				005BE58D1BF03DEA00134D84 /* HistorySkinHandVC.xib in Resources */,
+				00F56FA41BECBEC10052F201 /* ContactInfoWAPatient.xib in Resources */,
+				00F56FA01BECBA670052F201 /* BasicInfoWAPatient.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFF21D8E1BB12D8B006A190E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFF21D991BB12D8B006A190E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8963F1BCBAC8402C51D5661A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Telehealth Doctor/Pods-Telehealth Doctor-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		973B25D18A7CF760214B4246 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BD2E320F7F006BE6D4D8CB9F /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Telehealth Doctor/Pods-Telehealth Doctor-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AFF21D751BB12D8B006A190E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				002908731BC2552A00FED16E /* DTIAnimPulse.swift in Sources */,
+				00F56F9F1BECBA670052F201 /* BasicInfoWAPatient.swift in Sources */,
+				AFF21DEA1BB145B1006A190E /* AppointmentListViewController.swift in Sources */,
+				0061A4441BD7773100617B25 /* MedicalImageCVC.swift in Sources */,
+				00D5127D1BB4E7610068942D /* GlobalConstants.swift in Sources */,
+				AFF21D7F1BB12D8B006A190E /* LoginViewController.swift in Sources */,
+				005BE5981BF042A700134D84 /* PathologyProviderVC.swift in Sources */,
+				002908781BC2552A00FED16E /* DTIAnimWp8.swift in Sources */,
+				004F6D191BB9A02200242CE9 /* CustomViewController.swift in Sources */,
+				AFF21D851BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld in Sources */,
+				00B9917F1BC2E3AD0025EA7F /* OnlineUsers.swift in Sources */,
+				002908751BC2552A00FED16E /* DTIAnimSpotify.swift in Sources */,
+				003A7F511BD28FF6009B1738 /* Appointment.swift in Sources */,
+				002908701BC2552A00FED16E /* DTIAnimChasingDots.swift in Sources */,
+				00352AA91BD4A79C0049C576 /* PatientTabVC.swift in Sources */,
+				002908721BC2552A00FED16E /* DTIAnimProtocol.swift in Sources */,
+				001C6D041BF9BF5000877F4B /* Medi_Infomation.swift in Sources */,
+				00F56FA31BECBEC10052F201 /* ContactInfoWAPatient.swift in Sources */,
+				002908761BC2552A00FED16E /* DTIAnimWanderingCubes.swift in Sources */,
+				002C6F9E1BBD1403006F4FA6 /* SingletonClass.swift in Sources */,
+				002908791BC2552A00FED16E /* DTIIndicatorStyle.swift in Sources */,
+				00352AAB1BD4A7D90049C576 /* Patient.swift in Sources */,
+				00D512791BB4E63E0068942D /* HomeViewController.swift in Sources */,
+				002908771BC2552A00FED16E /* DTIAnimWave.swift in Sources */,
+				008FB2351BB93E3A00684968 /* TOPVCViewController.swift in Sources */,
+				00525A661C05970C007A56D5 /* ModalFilterVC.swift in Sources */,
+				0045A2DE1BCF88BC00AC4028 /* DetailAppointmentVC.swift in Sources */,
+				005BE58C1BF03DEA00134D84 /* HistorySkinHandVC.swift in Sources */,
+				00D5127B1BB4E6560068942D /* MakeCallController.swift in Sources */,
+				00B0AFAC1BDA2B5600871786 /* DetailImageVC.swift in Sources */,
+				0029086E1BC2552A00FED16E /* CALayer+DTI.swift in Sources */,
+				004565111BF03505005ABA28 /* ReasonforPresentingVC.swift in Sources */,
+				00A9E5B81BC3720A0055A594 /* AppointmentTableViewCell.swift in Sources */,
+				0045650C1BF03196005ABA28 /* Referral InformationVC.swift in Sources */,
+				003A7F591BD29444009B1738 /* PresentComplain.swift in Sources */,
+				002908711BC2552A00FED16E /* DTIAnimDoubleBounce.swift in Sources */,
+				AFF21D7D1BB12D8B006A190E /* AppDelegate.swift in Sources */,
+				002908741BC2552A00FED16E /* DTIAnimRotatingPlane.swift in Sources */,
+				003A7F531BD290E2009B1738 /* ClinicalMedical.swift in Sources */,
+				005BE5921BF0426B00134D84 /* Relevant_Allergy_CurrentVC.swift in Sources */,
+				0029086F1BC2552A00FED16E /* DTIActivityIndicatorView.swift in Sources */,
+				003A7F571BD29434009B1738 /* MedicalImage.swift in Sources */,
+				004565061BF02EC9005ABA28 /* Kin_Guardian.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFF21D8C1BB12D8B006A190E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFF21D951BB12D8B006A190E /* Telehealth_DoctorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFF21D971BB12D8B006A190E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFF21DA01BB12D8B006A190E /* Telehealth_DoctorUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AFF21D921BB12D8B006A190E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AFF21D781BB12D8B006A190E /* Telehealth Doctor */;
+			targetProxy = AFF21D911BB12D8B006A190E /* PBXContainerItemProxy */;
+		};
+		AFF21D9D1BB12D8B006A190E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AFF21D781BB12D8B006A190E /* Telehealth Doctor */;
+			targetProxy = AFF21D9C1BB12D8B006A190E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AFF21D801BB12D8B006A190E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AFF21D811BB12D8B006A190E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		AFF21D881BB12D8B006A190E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AFF21D891BB12D8B006A190E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AFF21DA21BB12D8B006A190E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 2;
+				VALID_ARCHS = "arm6 armv7 armv7s";
+			};
+			name = Debug;
+		};
+		AFF21DA31BB12D8B006A190E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm6 armv7 armv7s";
+			};
+			name = Release;
+		};
+		AFF21DA51BB12D8B006A190E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EC46F2286C519B19F81976E /* Pods-Telehealth Doctor.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Pods/OpenTok";
+				INFOPLIST_FILE = "Telehealth Doctor/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = au.redimed.com.teleDoctor;
+				PRODUCT_NAME = "Telehealth Doctor";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Telehealth Doctor/Telehealth Doctor-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VALID_ARCHS = "armv7 arm64 armv7s";
+			};
+			name = Debug;
+		};
+		AFF21DA61BB12D8B006A190E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5C98F90639AD6152CB17AAF /* Pods-Telehealth Doctor.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Pods/OpenTok";
+				INFOPLIST_FILE = "Telehealth Doctor/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = au.redimed.com.teleDoctor;
+				PRODUCT_NAME = "Telehealth Doctor";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Telehealth Doctor/Telehealth Doctor-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
+				VALID_ARCHS = "armv7 arm64 armv7s";
+			};
+			name = Release;
+		};
+		AFF21DA81BB12D8B006A190E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EC46F2286C519B19F81976E /* Pods-Telehealth Doctor.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Telehealth DoctorTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kreatived.Telehealth-DoctorTests";
+				PRODUCT_NAME = "Telehealth Doctor";
+				TEST_HOST = "";
+			};
+			name = Debug;
+		};
+		AFF21DA91BB12D8B006A190E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5C98F90639AD6152CB17AAF /* Pods-Telehealth Doctor.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Telehealth DoctorTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kreatived.Telehealth-DoctorTests";
+				PRODUCT_NAME = "Telehealth Doctor";
+				TEST_HOST = "";
+			};
+			name = Release;
+		};
+		AFF21DAB1BB12D8B006A190E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EC46F2286C519B19F81976E /* Pods-Telehealth Doctor.debug.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = "Telehealth DoctorUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kreatived.Telehealth-DoctorUITests";
+				PRODUCT_NAME = "Telehealth Doctor";
+				TEST_TARGET_NAME = "Telehealth Doctor";
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		AFF21DAC1BB12D8B006A190E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5C98F90639AD6152CB17AAF /* Pods-Telehealth Doctor.release.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = "Telehealth DoctorUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kreatived.Telehealth-DoctorUITests";
+				PRODUCT_NAME = "Telehealth Doctor";
+				TEST_TARGET_NAME = "Telehealth Doctor";
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AFF21D741BB12D8B006A190E /* Build configuration list for PBXProject "Telehealth Doctor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFF21DA21BB12D8B006A190E /* Debug */,
+				AFF21DA31BB12D8B006A190E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFF21DA41BB12D8B006A190E /* Build configuration list for PBXNativeTarget "Telehealth Doctor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFF21DA51BB12D8B006A190E /* Debug */,
+				AFF21DA61BB12D8B006A190E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFF21DA71BB12D8B006A190E /* Build configuration list for PBXNativeTarget "Telehealth DoctorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFF21DA81BB12D8B006A190E /* Debug */,
+				AFF21DA91BB12D8B006A190E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFF21DAA1BB12D8B006A190E /* Build configuration list for PBXNativeTarget "Telehealth DoctorUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFF21DAB1BB12D8B006A190E /* Debug */,
+				AFF21DAC1BB12D8B006A190E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AFF21D831BB12D8B006A190E /* Telehealth_Doctor.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AFF21D841BB12D8B006A190E /* Telehealth_Doctor.xcdatamodel */,
+			);
+			currentVersion = AFF21D841BB12D8B006A190E /* Telehealth_Doctor.xcdatamodel */;
+			path = Telehealth_Doctor.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = AFF21D711BB12D8B006A190E /* Project object */;
+}

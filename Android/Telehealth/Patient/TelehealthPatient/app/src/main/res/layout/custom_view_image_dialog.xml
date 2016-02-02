@@ -20,7 +20,7 @@
         android:layout_centerInParent="true"
         android:background="@null">
 
-        <com.redimed.telehealth.patient.utils.TouchImageView
+        <com.redimed.telehealth.patient.utlis.TouchImageView
             android:id="@+id/imgView"
             android:layout_width="500dp"
             android:layout_height="500dp"
@@ -57,7 +57,7 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/icon_close_dialog"
             android:visibility="gone"
-            android:alpha="0.25"/>
+            android:alpha="0.40"/>
 
     </RelativeLayout>
 

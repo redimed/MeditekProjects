@@ -9,15 +9,28 @@ output variables
 	}
 */
 
-app.controller('calendarDeleteCtrl', function($scope, event, $timeout, $uibModal, $modalInstance, toastr){
-	$modalInstance.rendered.then(function(){
-		App.initAjax();
-		ComponentsDateTimePickers.init();
-	});
+app.controller('calendarDeleteCtrl', function($scope, $stateParams, RosterService, data, $timeout, $uibModal, $modalInstance, toastr){
+	$scope.data = data;
+	$scope.case = {
+		isOccurance: 'N'
+	}
 	$scope.cancel = function(){
 		$modalInstance.dismiss('cancel');
 	};
 	$scope.submit = function(){
-		
+		RosterService.DestroyRoster({
+			Roster: {
+				UID: data.UID,
+				CaseOccurance: $scope.case.isOccurance
+			},
+			UserAccount: {
+				UID:  $stateParams.doctorId
+			}
+		})
+		.then(function(response){
+			$modalInstance.close();
+		}, function(error){
+
+		})
 	};
 });

@@ -34,6 +34,9 @@ module.exports = {
     */
     GetListTelehealthAppointment: function(req, res) {
         var data = HelperService.CheckPostRequest(req);
+        if (!_.isObject(data)) {
+            data = JSON.parse(data);
+        }
         if (data === false) {
             res.serverError('data failed');
         } else {

@@ -109,7 +109,7 @@ app.controller('rosterHomeCtrl', function($scope, $state, doctorService) {
         $scope.loadList($scope.searchObjectMap);
     };
 
-    $scope.clickOpen = function(uid) {
+    $scope.clickDoctor = function(uid) {
         var data = {
             uid: uid
         };

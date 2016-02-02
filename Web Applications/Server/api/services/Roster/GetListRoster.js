@@ -6,6 +6,12 @@ module.exports = function(data, userInfo) {
             attributes: Services.AttributesRoster.Roster(),
             include: [{
                 attributes: Services.AttributesRoster.UserAccount(),
+                include: [{
+                    attributes: Services.AttributesAppt.Doctor(),
+                    model: Doctor,
+                    required: true,
+                    where: pagination.Doctor
+                }],
                 model: UserAccount,
                 required: true,
                 where: pagination.UserAccount
@@ -13,12 +19,17 @@ module.exports = function(data, userInfo) {
                 attributes: Services.AttributesRoster.Service(),
                 model: Service,
                 required: true
+            }, {
+                attributes: Services.AttributesRoster.Site(),
+                model: Site,
+                required: true,
+                where: pagination.Site
             }],
-            order: pagination.order,
             limit: pagination.limit,
             offset: pagination.offset,
             where: pagination.Roster,
-            subQuery: false
+            subQuery: false,
+            order: pagination.order
         })
         .then(function(listRosterRes) {
             defer.resolve({

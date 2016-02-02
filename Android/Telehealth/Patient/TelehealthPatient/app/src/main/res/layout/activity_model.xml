@@ -6,10 +6,12 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="?android:actionBarSize"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="20dp" />
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/logo_redimed"
+        android:contentDescription="@string/welcome" />
 
     <ImageView
         android:id="@+id/imgUpload"

@@ -21,7 +21,7 @@ module.exports = function(appointmentUID, userInfo) {
     if (role.isInternalPractitioner) {
         var filterRoleTemp = {
             '$and': {
-                ID: userInfo.ID
+                UserAccountID: userInfo.ID
             }
         };
         filter.InternalPractitioner.push(filterRoleTemp);

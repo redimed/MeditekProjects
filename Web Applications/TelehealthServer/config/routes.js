@@ -20,19 +20,19 @@ module.exports.routes = {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetPatientDetails'
     },
-    'GET /api/telehealth/user/appointments/:uid/:type?/:limit?': {
+    'POST /api/telehealth/user/appointments': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetUserAppointments'
     },
-    'GET /api/telehealth/user/telehealthAppointmentDetails/:uid':{
+    'GET /api/telehealth/user/telehealthAppointmentDetails/:uid': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetTelehealthAppointmentDetails'
     },
-    'GET /api/telehealth/user/WAAppointmentDetails/:uid':{
+    'GET /api/telehealth/user/WAAppointmentDetails/:uid': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'GetWAAppointmentDetails'
     },
-    'POST /api/telehealth/user/pushNotification':{
+    'POST /api/telehealth/user/pushNotification': {
         controller: 'Telehealth/v1_0/TelehealthController',
         action: 'PushNotification'
     },
@@ -50,25 +50,26 @@ module.exports.routes = {
         action: 'GenerateConferenceSession'
     },
     //=================Telehealth Appointment============================
-    'POST /api/telehealth/appointment/updateFile':{
+    'POST /api/telehealth/appointment/updateFile': {
         controller: 'Telehealth/v1_0/AppointmentController',
         action: 'UpdateFile'
     },
-    'POST /api/telehealth/appointment/list':{
+    'POST /api/telehealth/appointment/list': {
         controller: 'Telehealth/v1_0/AppointmentController',
         action: 'ListAppointment'
     },
-    'POST /api/telehealth/appointment/request':{
+    'POST /api/telehealth/appointment/request': {
         controller: 'Telehealth/v1_0/AppointmentController',
         action: 'RequestAppointmentPatient'
     },
     //=================Test Push Notification=============================
-    'GET /api/testPushAPN/:badge':{
+    'GET /api/testPushAPN/:badge': {
         controller: 'Telehealth/v1_0/TelehealthController',
-        action:'TestPushAPN'
+        action: 'TestPushAPN'
     },
-    'GET /api/testPushGCM':{
+    'GET /api/testPushGCM': {
         controller: 'Telehealth/v1_0/TelehealthController',
-        action:'TestPushGCM'
+        action: 'TestPushGCM'
     }
 };
+

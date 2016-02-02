@@ -306,13 +306,11 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 				scope.typeFile=value;
 				if(value=="ProfileImage"){
 					var imageAvatar = document.getElementById('imageAvatar');
-					    imageAvatar.addEventListener('change', handleImage, false);
-					var canvas = document.getElementById('imageAvatarCanvas');
-					var ctx = canvas.getContext('2d');
-
-					function handleImage(e){
-						scope.buildImg(imageAvatar, canvas, ctx,e,350,350);
-					}
+					    imageAvatar.addEventListener('change', function(e){
+					    	var canvas = document.getElementById('imageAvatarCanvas');
+							var ctx = canvas.getContext('2d');
+							scope.buildImg(imageAvatar, canvas, ctx,e,350,350);
+					    }, false);
 				}
 			};
 

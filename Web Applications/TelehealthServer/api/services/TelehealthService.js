@@ -56,35 +56,14 @@ module.exports = {
         }
         return appts;
     },
-    GetAppointmentsByPatient: function(patientUID, limit, type, headers) {
+    GetAppointmentsByPatient: function(headers, body) {
+        headers['content-type'] = "application/json";
         var typeArr = ['WAA', 'TEL'];
         if (headers.systemtype && HelperService.const.systemType[headers.systemtype.toLowerCase()] != undefined) headers.systemtype = HelperService.const.systemType[headers.systemtype.toLowerCase()];
         return TelehealthService.MakeRequest({
             path: '/api/appointment-telehealth-list',
             method: 'POST',
-            body: {
-                data: {
-                    Order: [{
-                        Appointment: {
-                            FromTime: 'DESC'
-                        }
-                    }],
-                    Filter: [{
-                        Appointment: {
-                            Enable: "Y"
-                        }
-                    }, {
-                        Patient: {
-                            UID: patientUID
-                        }
-                    }, {
-                        TelehealthAppointment: {
-                            Type: type && _.contains(typeArr, type) ? type : null
-                        }
-                    }],
-                    Limit: !limit ? null : limit
-                }
-            },
+            body: body,
             headers: headers
         })
     },
@@ -180,7 +159,8 @@ module.exports = {
             params: !info.params ? null : info.params,
             headers: !info.headers ? null : info.headers,
             dataType: 'json',
-            withCredentials: true
+            withCredentials: true,
+            rejectUnauthorized: false
         })
     },
     SendGCMPush: function(opts, tokens) {

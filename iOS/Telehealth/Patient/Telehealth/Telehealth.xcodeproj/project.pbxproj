@@ -52,6 +52,7 @@
 		AFA6F6FE1C0FF52F007737DF /* ABOUT US.html in Resources */ = {isa = PBXBuildFile; fileRef = AFA6F6FD1C0FF52F007737DF /* ABOUT US.html */; };
 		AFB2FEEB1C4F2E1200B41BDA /* TelehealthContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB2FEEA1C4F2E1200B41BDA /* TelehealthContainer.swift */; };
 		AFB2FEED1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB2FEEC1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift */; };
+		AFC603D01C4FEBB800DEFD2C /* TelehealthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC603CF1C4FEBB800DEFD2C /* TelehealthAPI.swift */; };
 		AFE642291C463EB9001F0524 /* PatientContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE642281C463EB9001F0524 /* PatientContainer.swift */; };
 		AFE6422B1C46444E001F0524 /* PatientAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6422A1C46444E001F0524 /* PatientAPI.swift */; };
 		AFE6422D1C46467F001F0524 /* TokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6422C1C46467F001F0524 /* TokenAPI.swift */; };
@@ -181,6 +182,7 @@
 		AFA6F6FF1C0FFFC9007737DF /* UTM Avo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UTM Avo.ttf"; sourceTree = "<group>"; };
 		AFB2FEEA1C4F2E1200B41BDA /* TelehealthContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelehealthContainer.swift; sourceTree = "<group>"; };
 		AFB2FEEC1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmRequestTelehealthViewController.swift; sourceTree = "<group>"; };
+		AFC603CF1C4FEBB800DEFD2C /* TelehealthAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelehealthAPI.swift; sourceTree = "<group>"; };
 		AFE642281C463EB9001F0524 /* PatientContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientContainer.swift; sourceTree = "<group>"; };
 		AFE6422A1C46444E001F0524 /* PatientAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientAPI.swift; sourceTree = "<group>"; };
 		AFE6422C1C46467F001F0524 /* TokenAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenAPI.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				AFE6422C1C46467F001F0524 /* TokenAPI.swift */,
 				AFE6422E1C4650EC001F0524 /* VerifyPhoneAPI.swift */,
 				AFE642301C465214001F0524 /* AppointmentAPI.swift */,
+				AFC603CF1C4FEBB800DEFD2C /* TelehealthAPI.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -844,6 +847,7 @@
 				AFE642371C4733FC001F0524 /* VerifyService.swift in Sources */,
 				AFEE35331BB0415D00471592 /* KeyboardLayoutConstraint.swift in Sources */,
 				AF00C3FF1BDA13A20001A7F4 /* BodyUploadViewController.swift in Sources */,
+				AFC603D01C4FEBB800DEFD2C /* TelehealthAPI.swift in Sources */,
 				AFB2FEED1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift in Sources */,
 				AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */,
 				AF00515A1BCF575300370B14 /* AppointmentListTableViewCell.swift in Sources */,

@@ -43,6 +43,7 @@ function pushAPNNotification(info, devices) {
 };
 module.exports = {
     JoinConferenceRoom: function(req, res) {
+        console.log("aaaaaaa", req.param('uid'), req.isSocket);
         if (!req.isSocket) {
             var err = new Error("Socket.JoinConferenceRoom.Error");
             err.pushError("Socket Request Only!");
@@ -55,6 +56,7 @@ module.exports = {
                 if (teleUser) {
                     sails.sockets.join(req.socket, uid);
                     sails.sockets.leave(req.socket, req.socket.id);
+                    console.log("JoinConferenceRoom Successfully", uid);
                     if (_.some(arrTemp, {
                             to: uid
                         })) {
@@ -140,12 +142,20 @@ module.exports = {
             var index = _.findIndex(arrTemp, {
                 to: to
             });
+            // console.log("1111111111111111111111111111111111111111111111111111111111");
+            // console.log(data);
             if (message.toLowerCase() == 'call' && index == -1) arrTemp.push(data);
             else arrTemp.splice(index, 1);
+            // console.log("8888888888888888888888888888",_.contains(roomList, to));
+            // console.log(roomList);
+            // console.log(to);
             if (_.contains(roomList, to)) {
+                // console.log("222222222222222222222222222222222");
                 sails.sockets.broadcast(to, 'receiveMessage', data);
             }
+            // console.log("8888888888888888888888888888",sails.sockets.subscribers(from).length);
             if (sails.sockets.subscribers(from).length > 1 && message.toLowerCase() != 'call') {
+                // console.log("333333333333333333333333333333333");
                 data.message = 'decline';
                 data.to = from;
                 sails.sockets.broadcast(from, 'receiveMessage', data, req.socket);
@@ -153,15 +163,17 @@ module.exports = {
         }
     },
     GenerateConferenceSession: function(req, res) {
+        console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
         opentok.createSession({
             mediaMode: "routed"
         }, function(err, session) {
             if (err) return res.serverError(ErrorWrap(err));
+            console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
             var sessionId = session.sessionId;
             var tokenOptions = {
                 role: 'moderator',
-                // expireTime : (new Date().getTime() / 1000)+(7 * 24 * 60 * 60),
-                // data :'name=Johnny'
+                expireTime : (new Date().getTime() / 1000)+(7 * 24 * 60 * 60),
+                data :'name=Johnny'
             };
             var token = opentok.generateToken(sessionId, tokenOptions);
             if (token != null && sessionId != null) res.ok({

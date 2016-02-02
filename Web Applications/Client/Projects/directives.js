@@ -121,10 +121,13 @@ app.directive('patientDetailDirective', function() {
         },
         templateUrl: 'common/views/patientDetailDirective.html',
         controller: function($scope, WAAppointmentService) {
-            WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
-                $scope.patientInfo = data.data.Patients[0];
-            }, function(error) {});
-
+            if ($scope.apptuid) {
+                WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
+                    if (data.data != null) {
+                        $scope.patientInfo = data.data.Patients[0];
+                    };
+                }, function(error) {});
+            };
         },
     };
 });
@@ -146,16 +149,19 @@ app.directive('appointmentDetailDirective', function() {
         },
         templateUrl: 'common/views/appointmentDetailDirective.html',
         controller: function($scope, WAAppointmentService) {
-            $scope.onclick = function (){
+            $scope.onclick = function() {
                 if ($scope.opentok) {
                     $scope.opentok.call();
                 };
             }
             WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
-                $scope.appointmentInfo = data.data;
-                $scope.apptDate = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).utc().format('DD/MM/YYYY') : 'N/A';
-                $scope.apptTime = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).utc().format('HH:mm') : 'N/A';
+                if (data.data != null) {
+                    $scope.appointmentInfo = data.data;
+                    $scope.apptDate = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).utc().format('DD/MM/YYYY') : 'N/A';
+                    $scope.apptTime = ($scope.appointmentInfo.FromTime != null) ? moment($scope.appointmentInfo.FromTime).utc().format('HH:mm') : 'N/A';
+                };
             }, function(error) {});
+
         },
     };
 });

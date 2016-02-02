@@ -280,22 +280,19 @@ angular.module('app.authentication.doctor.directive.detail', [])
 				scope.typeFile=value;
 				if(value=="ProfileImage"){
 					var imageAvatar = document.getElementById('imageAvatar');
-					    imageAvatar.addEventListener('change', handleImage, false);
-					var canvas = document.getElementById('imageAvatarCanvas');
-					var ctx = canvas.getContext('2d');
-
-					function handleImage(e){
-						scope.buildImg(imageAvatar, canvas, ctx,e,275,300);
-					}
+					    imageAvatar.addEventListener('change', function(e){
+					    	var canvas = document.getElementById('imageAvatarCanvas');
+							var ctx = canvas.getContext('2d');
+							scope.buildImg(imageAvatar, canvas, ctx,e,275,300);
+					    }, false);
 				}
 				else if(value =="Signature") {
 					var imageSignature = document.getElementById('imageSignature');
-			    		imageSignature.addEventListener('change', handleImage2, false);
-					var canvas1 = document.getElementById('imageSignatureCanvas');
-					var ctx1 = canvas1.getContext('2d');
-					function handleImage2(e){
-						scope.buildImg(imageSignature, canvas1, ctx1,e,550,280);    
-					}
+			    		imageSignature.addEventListener('change', function(e){
+			    			var canvas1 = document.getElementById('imageSignatureCanvas');
+							var ctx1 = canvas1.getContext('2d');
+							scope.buildImg(imageSignature, canvas1, ctx1,e,550,280);
+			    		}, false);
 				}
 			};
 

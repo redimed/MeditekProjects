@@ -33,9 +33,10 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+import com.redimed.telehealth.patient.activation.presenter.IActivationPresenter;
+import com.redimed.telehealth.patient.main.MainActivity;
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.R;
-import com.redimed.telehealth.patient.WaitingActivity;
 import com.redimed.telehealth.patient.receiver.BootReceiver;
 import com.redimed.telehealth.patient.receiver.GcmBroadcastReceiver;
 import com.redimed.telehealth.patient.network.Config;
@@ -65,6 +66,7 @@ public class RegistrationIntentService extends IntentService {
         try {
             InstanceID instanceID = InstanceID.getInstance(this);
             String token = instanceID.getToken(Config.GCMSenderID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+
             String serialNumber = Build.SERIAL + Build.DEVICE;
             String deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID) + serialNumber;
 
@@ -101,7 +103,7 @@ public class RegistrationIntentService extends IntentService {
         try {
             JSONObject msg = new JSONObject(message);
             if (msg.get("message").toString().equalsIgnoreCase("call")) {
-                intent = new Intent(this, WaitingActivity.class);
+                intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("apiKey", msg.get("apiKey").toString());
                 intent.putExtra("sessionId", msg.get("sessionId").toString());
@@ -138,9 +140,6 @@ public class RegistrationIntentService extends IntentService {
                         | PowerManager.ON_AFTER_RELEASE
                         | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "INFO");
                 wakeLock.acquire();
-                if (!MyApplication.getInstance().IsMyServiceRunning(SocketService.class)) {
-                    startService(new Intent(this, SocketService.class));
-                }
             }
             if (msg.get("message").toString().equalsIgnoreCase("cancel")){
                 notificationManager.cancel(0);

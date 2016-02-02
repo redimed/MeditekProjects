@@ -9,9 +9,10 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+
 import com.redimed.telehealth.patient.MyApplication;
 import com.redimed.telehealth.patient.service.SocketService;
-import com.redimed.telehealth.patient.utils.CustomPhoneStateListener;
+import com.redimed.telehealth.patient.utlis.CustomPhoneStateListener;
 
 import java.util.HashMap;
 import java.util.List;

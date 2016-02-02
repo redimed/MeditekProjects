@@ -24,7 +24,7 @@ var modules=[
 	{
 		uid:'8',
 		state:'authentication.WAAppointment.list',
-		name:'Telehealth Appointment List',
+		name:'Appointment List',
 		parent:'3',
 		order:'3',
 		roles:[
@@ -60,7 +60,9 @@ var modules=[
 		parent:'root',
 		order:'6',
 		roles:[
-			'ADMIN','INTERNAL_PRACTITIONER'
+			'ADMIN',
+			'INTERNAL_PRACTITIONER',
+			'PATIENT'
 		]
 	},
 	// {
@@ -104,6 +106,28 @@ var modules=[
 		roles:[
 			'ADMIN',
 			'ASSISTANT'
+		]
+	},
+	{
+		uid:'14',
+		state:'authentication.booking.scheduler',
+		name:'Booking',
+		parent:'root',
+		order:'9',
+		roles:[
+			'ADMIN',
+			'INTERNAL_PRACTITIONER',
+		]
+	},
+	{
+		uid:'15',
+		state:'authentication.roster.home',
+		name:'Roster',
+		parent:'root',
+		order:'10',
+		roles:[
+			'ADMIN',
+			'INTERNAL_PRACTITIONER',
 		]
 	},
 	

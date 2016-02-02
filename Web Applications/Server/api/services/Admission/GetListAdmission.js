@@ -1,6 +1,6 @@
 module.exports = function(data, userInfo) {
     var pagination = PaginationService(data, Admission);
-    //add roles
+    // //add roles
     var role = HelperService.GetRole(userInfo.roles);
     if (role.isInternalPractitioner) {
         var filterRoleTemp = {

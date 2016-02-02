@@ -31,9 +31,14 @@ struct UrlInformationPatient  {
     static let logOut : String = "/api/logout"
 }
 
+struct UrlTelehealth {
+    static let requestTelehealth : String = "/api/telehealth/appointment/request"
+}
+
 struct httpUrl{
     static let httpTestApp :String = "http://testapp.redimed.com.au"
     static let httpTelehealth :String = "http://telehealthvietnam.com.vn"
+    static let httpThanh : String = "http://192.168.1.235"
 }
 
 //Giap: API Socket

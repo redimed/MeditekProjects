@@ -13,7 +13,7 @@ module.exports = {
         // var PatientMedicare = req.body.PatientMedicare?req.body.PatientMedicare:{};
         Services.Patient.CreatePatient(data, otherData)
             .then(function(patient) {
-                console.log(patient," >>>>>>>>>>>>>>>>.phai day k");
+
                 if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {
                     var info = {
                         UID: patient.result.UID,
@@ -55,7 +55,7 @@ module.exports = {
         // var PatientMedicare = req.body.PatientMedicare?req.body.PatientMedicare:{};
         Services.Patient.CreatePatient(data, otherData)
             .then(function(patient) {
-                console.log(patient," >>>>>>>>>>>>>>>>.phai day k");
+
                 if (patient !== undefined && patient !== null && patient !== '' && patient.length !== 0) {
                     var info = {
                         UID: patient.result.UID,
@@ -161,7 +161,7 @@ module.exports = {
         var otherData = req.body.otherData?req.body.otherData:{};
         Services.Patient.UpdatePatient(data, otherData)
             .then(function(result) {
-                console.log(result);
+
                 if (result!=undefined && result!=null && result!="" && result=="success")
                     res.ok({
                         status: 200,
@@ -192,7 +192,7 @@ module.exports = {
         var data = req.body.data;
         Services.Patient.GetPatient(data)
             .then(function(info) {
-                console.log(info);
+
                 if (info != null && info != undefined && info != '') {
                     info[0].dataValues.FileUID = info[0].dataValues.UserAccount.FileUploads[0]?info[0].dataValues.UserAccount.FileUploads[0].UID:null;
                     info[0].dataValues.PhoneNumber = info[0].dataValues.UserAccount.PhoneNumber;

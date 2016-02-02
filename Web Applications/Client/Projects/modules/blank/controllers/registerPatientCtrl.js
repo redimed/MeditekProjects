@@ -1,5 +1,5 @@
 var app = angular.module('app.blank.registerPatient.controller', []);
-app.controller('registerPatientCtrl', function($scope, blankServices, AuthenticationService, toastr, $state, $cookies, $rootScope) {
+app.controller('registerPatientCtrl', function($scope, blankServices, AuthenticationService, toastr, $state, $cookies, $rootScope, CommonService) {
     ComponentsDropdowns.init();
     $scope.number = 1;
     $scope.submitted = false;
@@ -10,59 +10,6 @@ app.controller('registerPatientCtrl', function($scope, blankServices, Authentica
         UserUID: "",
         PinNumber: ""
     }
-    // $scope.postData = {
-    //     "data": {
-    //         "Title": "Ms",
-    //         "FirstName": "aaa",
-    //         "MiddleName": "aaa",
-    //         "LastName": "123123",
-    //         "DOB": "23/12/2015",
-    //         "Gender": "Female",
-    //         "Occupation": "Occupation",
-    //         "Address1": "Occupation",
-    //         "HomePhoneNumber": "0411223344",
-    //         "PhoneNumber": "04011011010",
-    //         "WorkPhoneNumber": "0411223344",
-    //         "Suburb": "123123",
-    //         "Postcode": "1233",
-    //         "State": "WA",
-    //         "CountryID1": 5,
-    //         "Email1": "test@yahoo.com",
-    //         "Address2": "Occupation"
-    //     },
-    //     "otherData": {
-    //         "PatientKin": {
-    //             "FirstName": "maria",
-    //             "MiddleName": "ama",
-    //             "LastName": "ozawa",
-    //             "HomePhoneNumber": "0411223344",
-    //             "MobilePhoneNumber": "0411111111",
-    //             "Address1": "Address",
-    //             "Suburb": "Suburb",
-    //             "Postcode": "1234",
-    //             "State": "WA",
-    //             "CountryID": "1"
-    //         },
-    //         "PatientMedicare": {
-    //             "MedicareNumber": "1",
-    //             "MedicareReferenceNumber": "1",
-    //             "ExpiryDate": "01/12/2015"
-    //         },
-    //         "Fund": {
-    //             "MembershipNumber": "1",
-    //             "UPI": "1",
-    //             "PrivateFund": "ACA"
-    //         },
-    //         "PatientDVA": {
-    //             "DVANumber": "1",
-    //             "DVADisability": "1"
-    //         },
-    //         "PatientPension": {
-    //             "ExpiryDate": "01/12/2015",
-    //             "HCCPensionNumber": "HCC/Pension No"
-    //         }
-    //     }
-    // }
     $scope.loadListContry = function() {
         AuthenticationService.getListCountry().then(function(response) {
             $scope.ListContry = response.data;
@@ -100,9 +47,31 @@ app.controller('registerPatientCtrl', function($scope, blankServices, Authentica
             $scope.number--;
         }
     };
+    $scope.FormatDate = function() {
+        if ($scope.postData.otherData.PatientPension !== undefined) {
+            if ($scope.postData.otherData.PatientPension.ExpiryDate !== undefined) {
+                if ($scope.postData.otherData.PatientPension.ExpiryDate !== '') {
+                    $scope.postData.otherData.PatientPension.ExpiryDate = CommonService.formatDate($scope.postData.otherData.PatientPension.ExpiryDate);
+                } else {
+                    $scope.postData.otherData.PatientPension.ExpiryDate = null;
+                };
+            };
+        }
+        if ($scope.postData.otherData.PatientMedicare !== undefined) {
+            if ($scope.postData.otherData.PatientMedicare.ExpiryDate !== undefined) {
+                if ($scope.postData.otherData.PatientMedicare.ExpiryDate !== '') {
+                    $scope.postData.otherData.PatientMedicare.ExpiryDate = CommonService.formatDate($scope.postData.otherData.PatientMedicare.ExpiryDate);
+                } else {
+                    $scope.postData.otherData.PatientMedicare.ExpiryDate = null;
+                };
+            };
+        }
+    }
     $scope.Submit = function() {
         $scope.submitted = true;
         if ($scope.step3.$valid) {
+            $scope.FormatDate();
+            console.log($scope.postData)
             blankServices.registerPatient($scope.postData).then(function(response) {
                 if (response.data.status = 200) {
                     $scope.logInData.UserUID = response.data.UserAccountUID;

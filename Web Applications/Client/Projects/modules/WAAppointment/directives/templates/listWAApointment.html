@@ -8,7 +8,7 @@
             </li>
             <li>
                 <i class="fa fa-angle-right"></i>
-                <b>Telehealth Appointment</b>
+                <b>Appointment</b>
             </li>
         </ul>
     </div>
@@ -63,8 +63,8 @@
                             <input type="text" class="form-control" ng-model="info.data.Search[1].Doctor.FullName" ng-enter="reloadData()">
                         </td>
                         <td class="form-inline">
-                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="reloadData()" data-date-end-date="toCreateDate"> to
-                            <input type="text" class="form-control date-picker input-small" data-date-start-date="fromCreateDate" style="width: 40% !important" data-date-format="dd/mm/yyyy" ng-model="toCreateDate" ng-change="reloadData()">
+                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" ng-model="fromCreateDate" ng-change="reloadData()"> to
+                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" ng-model="toCreateDate" ng-change="reloadData()">
                         </td>
                         <td width="131px">
                             {{info.data.Filter.Appointment.Status}}
@@ -73,8 +73,8 @@
                             </select>
                         </td>
                         <td class="form-inline">
-                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" data-date-end-date="endFromTime" ng-model="starFromTime" ng-change="reloadData()"> to
-                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" data-date-end-date="starFromTime" ng-model="endFromTime" ng-change="reloadData()">
+                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" ng-model="starFromTime" ng-change="reloadData()"> to
+                            <input type="text" class="form-control date-picker input-small" style="width: 40% !important" data-date-format="dd/mm/yyyy" ng-model="endFromTime" ng-change="reloadData()">
                         </td>
                         <td>
                         </td>

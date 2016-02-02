@@ -9,13 +9,29 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import com.redimed.telehealth.patient.WaitingActivity;
+
 import com.redimed.telehealth.patient.network.Config;
+import com.redimed.telehealth.patient.waiting.WaitingActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import javax.security.cert.X509Certificate;
+
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -25,26 +41,56 @@ import io.socket.emitter.Emitter;
  */
 public class SocketService extends Service {
 
-    private Intent i;
     private static Socket socket;
-    private String auth, deviceId;
     private static String TAG = "SocketService";
     private static SharedPreferences uidTelehealth;
-    private LocalBroadcastManager localBroadcastManager;
 
     private void initializeSocket() {
         uidTelehealth = getSharedPreferences("TelehealthUser", MODE_PRIVATE);
-        auth = uidTelehealth.getString("token", null);
-        deviceId = uidTelehealth.getString("deviceId", null);
+        String auth = uidTelehealth.getString("token", null);
+        String deviceId = uidTelehealth.getString("deviceId", null);
         try {
+            SSLContext sc = null;
+            sc = SSLContext.getInstance("TLS");
+            sc.init(null, trustAllCerts, new SecureRandom());
+
+            HttpsURLConnection.setDefaultHostnameVerifier(new RelaxedHostNameVerifier());
+
+            IO.setDefaultSSLContext(sc);
             IO.Options opts = new IO.Options();
+            opts.secure = true;
             opts.forceNew = true;
+            opts.sslContext = sc;
             opts.reconnection = true;
             opts.query = "__sails_io_sdk_version=0.11.0&Authorization=Bearer " + auth + "&DeviceID=" + deviceId + "&SystemType=Android";
             socket = IO.socket(Config.socketURL, opts);
             socket.connect();
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
+        }
+    }
+
+    private TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+        @Override
+        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
+                throws CertificateException {
+
+        }
+
+        @Override
+        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
+                throws CertificateException {
+
+        }
+
+        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+            return new java.security.cert.X509Certificate[]{};
+        }
+    }};
+
+    public static class RelaxedHostNameVerifier implements HostnameVerifier {
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
         }
     }
 
@@ -153,7 +199,7 @@ public class SocketService extends Service {
             try {
                 String message = data.get("message").toString();
                 if (message.equalsIgnoreCase("call")) {
-                    i = new Intent(getApplicationContext(), WaitingActivity.class);
+                    Intent i = new Intent(getApplicationContext(), WaitingActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     i.putExtra("apiKey", data.get("apiKey").toString());
                     i.putExtra("sessionId", data.get("sessionId").toString());
@@ -165,7 +211,7 @@ public class SocketService extends Service {
                     startActivity(i);
                 }
                 if (message.equalsIgnoreCase("cancel") || message.equalsIgnoreCase("decline")) {
-                    localBroadcastManager = LocalBroadcastManager.getInstance(SocketService.this);
+                    LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(SocketService.this);
                     localBroadcastManager.sendBroadcast(new Intent("call.action.finish"));
                     notificationManager.cancel(0);
                 }

@@ -24,8 +24,7 @@ public class FileUpload {
         this.UID = uid;
     }
 
-    public FileUpload() {
-    }
+    public FileUpload() {}
 
     public int getID() {
         return ID;

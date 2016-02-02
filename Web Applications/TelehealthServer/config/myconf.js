@@ -20,6 +20,8 @@ module.exports.myconf = {
     //============ URL ===============================
     // CoreAPI: 'http://testapp.redimed.com.au:3005',
     // AuthAPI: 'http://testapp.redimed.com.au:3006',
-    CoreAPI: 'http://telehealthvietnam.com.vn:3005',
-    AuthAPI: 'http://telehealthvietnam.com.vn:3006'
+    // CoreAPI: 'http://telehealthvietnam.com.vn:3005',
+    CoreAPI: 'https://localhost:3005',
+    // AuthAPI: 'http://telehealthvietnam.com.vn:3006'
+    AuthAPI: 'https://localhost:3006'
 };

@@ -1,5 +1,7 @@
 var app = angular.module('app.authentication.eForms',[
 	'app.authentication.eForms.controller',
+	'app.authentication.eForms.directive',
+	'app.authentication.eForms.services'
 ]);
 
 app.config(function($stateProvider){
@@ -28,8 +30,14 @@ app.config(function($stateProvider){
 			templateUrl: 'modules/eForms/views/eFormsCreate.html',
 			controller: 'eFormsCreateCtrl',
 		})
+		.state('authentication.eForms.detail',{
+			url: '/detail',
+			data: {pageTitle: 'E-Forms Detail'},
+			templateUrl: 'modules/eForms/views/eFormsDetail.html',
+			controller: 'eFormsDetailCtrl',
+		})
 		.state('authentication.eForms.appointment',{
-			url: '/appointment',
+			url: '/appointment/:UID/:UIDPatient',
 			data: {pageTitle: 'E-Forms Appointment'},
 			templateUrl: 'modules/eForms/views/eFormsAppointment.html',
 			controller: 'eFormsAppoitmentCtrl',

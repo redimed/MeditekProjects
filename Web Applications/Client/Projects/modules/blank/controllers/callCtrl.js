@@ -11,7 +11,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
             // Constraints
             {
                 video: true,
-                audio:true
+                audio: true
             },
 
             // Success Callback
@@ -25,11 +25,29 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
                 console.log('The following error occurred when trying to use getUserMedia: ' + err);
             }
         );
-
     } else {
-        console.log("Aaaaaaaaaaaaaaaa");
         alert('Sorry, your browser does not support getUserMedia');
     }
+    // var audio = new Audio('theme/assets/global/audio/ringtone.mp3');
+    // swal({
+    //     title: $scope.opentokData.userName,
+    //     imageUrl: "theme/assets/global/images/E-call_33.png",
+    //     text: "<img src='theme/assets/global/img/loading.gif' />",
+    //     timer: 30000,
+    //     html: true,
+    //     showCancelButton: false,
+    //     confirmButtonColor: "#e74c3c",
+    //     confirmButtonText: "Cancel",
+    //     closeOnConfirm: true
+    // }, function() {
+    //     OpentokSendCall($scope.opentokData.userCall, $scope.userInfo.UID, "cancel");
+    //     EndCall();
+    // });
+    // audio.loop = true;
+    // audio.play();
+    $scope.$on('end',function(data){
+        console.log("roi neeeeeeeeeeeeeeeeeee",data);
+    })
     var apiKey = $stateParams.apiKey;
     var sessionId = $stateParams.sessionId;
     var token = $stateParams.token;
@@ -39,15 +57,7 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
     console.log(apiKey);
     console.log(sessionId);
     console.log(token);
-
-    console.log("socket", io.socket);
-
-    // io.socket.on('receiveMessage', function onServerSentEvent(msg) {
-    //     console.log("=====================", msg);
-
-    // });
-
-
+    o.loadingPage(true);
     //Connect to the session
     $scope.session.connect(token, function(error) {
         // If the connection is successful, initialize a publisher and publish to the session
@@ -70,6 +80,8 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
 
     // Subscribe to a newly created stream
     $scope.session.on('streamCreated', function(event) {
+        o.loadingPage(false);
+        // audio.close();
         $scope.subscriber = $scope.session.subscribe(event.stream, 'subscriber', {
             insertMode: 'append',
             width: '100%',
@@ -77,9 +89,8 @@ app.controller('callCtrl', function($scope, $stateParams, $timeout) {
             subscribeToAudio: true,
             subscribeToVideo: true,
             audioVolume: 100
-
         });
-        console.log("streamCreated", $scope.session);
+        console.log("streamCreated", $scope.subscriber);
         var mytimeout = $timeout($scope.onTimeout, 1000);
     });
 

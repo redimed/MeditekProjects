@@ -21,7 +21,8 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     AuthenticationService.getListCountry().then(function(result) {
         $rootScope.countries = result.data;
     }, function(err) {
-        toastr.error("error data country", "ERROR");
+        // toastr.error("error data country", "ERROR");
+        console.log(err);
     });
     var data = {
         UID: $cookies.getObject('userInfo').UID
@@ -89,6 +90,10 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     }, {
         name: 'Silver Savings Account'
     }];
+
+
+    console.log("=======================", $cookies.getObject('userInfo'));
+
     //phan quoc chien get detail open tok
     function OpentokCreateSession() {
         AuthenticationService.getDetailOpentok().then(function(data) {
@@ -101,15 +106,21 @@ app.controller('authenticationCtrl', function($rootScope, $scope, $state, $cooki
     };
 
     OpentokCreateSession();
-    
+
     //phan quoc chien join room
     function OpenTokJoinRoom() {
+        console.log('user UID', $cookies.getObject('userInfo').TelehealthUser.UID);
         io.socket.get('/api/telehealth/socket/joinRoom', {
-            uid: $cookies.getObject('userInfo').UID
+            uid: $cookies.getObject('userInfo').TelehealthUser.UID
         }, function(data) {
             console.log("JoinRoom", data);
         });
     };
-
-    OpenTokJoinRoom();
+    if ($cookies.getObject('userInfo').TelehealthUser != null) {
+        OpenTokJoinRoom();
+    };
+    io.socket.on('receiveMessage', function(msg) {
+        console.log("===================================",msg.message);
+        $scope.$broadcast("end",{a:"asdasd"});
+    });
 });

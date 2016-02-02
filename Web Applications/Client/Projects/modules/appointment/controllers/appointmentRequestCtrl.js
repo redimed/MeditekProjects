@@ -188,7 +188,7 @@ app.controller('appointmentRequestCtrl', function($scope, $rootScope, $cookies, 
         };
     };
     uploader.onCompleteAll = function() {
-        $scope.sendRequestAppointment();
+        // $scope.sendRequestAppointment();
     };
 
     $scope.ModalBodyPart = function() {

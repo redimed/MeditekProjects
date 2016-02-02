@@ -446,7 +446,7 @@
 											</label>
 											<div class="col-md-8 col-sm-8">
 												<select class="bs-select form-control" data-show-subtext="true" ng-model="postData.otherData.PatientDVA.DVACardColour">
-													<option data-content="">Select color</option>
+													<option value=""  data-content="">Select color</option>
 													<option value="blue" data-content="<div class='bg-blue'>&nbsp;</div>"></option>
                                                     <option value="green" data-content="<div class='bg-green-jungle'>&nbsp;</div>"></option>
 													<option value="yellow" data-content="<div class='bg-yellow-lemon'>&nbsp;</div>" ></option>
@@ -496,7 +496,7 @@
 									PIN number <span class="required">*</span>
 								</label>
 								<div class="col-md-4 col-sm-4">
-									<input type="text" class="form-control" name="PinNumber" ng-model="postData.data.PinNumber" ng-pattern="/^[0-9]{4,6}$/" required>
+									<input type="number" class="form-control" name="PinNumber" ng-model="postData.data.PinNumber" ng-pattern="/^[0-9]{1,6}$/" required>
 									<p class="help-block required-text" ng-if="submitted && step3.PinNumber.$error.required">This field is required.</p>
 									<p ng-show="submitted && step3.PinNumber.$error.pattern" class="help-block required-text">PIN Number must be at least 4 no more than 6 character</p>
 								</div>

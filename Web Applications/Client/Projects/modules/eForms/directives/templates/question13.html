@@ -1,0 +1,15 @@
+<div ng-show="editor==false" id="{{'form_view '+option.value1}}">
+	<div class="row"><h4 class="uppercase col-md-12 col-sm-12" ng-if="isHaveTitle==true"><label>{{option.value1}}</label></h4></div>
+</div>
+<div ng-show="editor==true" id="{{idform}}">
+	<div class="col-md-12">
+		<label>Title</label>
+		<input type="text" ng-model="option.value1" />
+	</div>
+	<div class="col-md-12">
+		<label>Number of box : </label>
+		<input type="text" ng-model="numberItem" />
+		<button ng-click="generateTextbox(numberItem)">Click</button>
+		{{option}}
+	</div>
+</div>

@@ -1,0 +1,277 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.redimed.telehealth.patient.request.RequestFragment">
+
+    <include layout="@layout/custom_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/res_please" />
+
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/res_sub_title"
+            android:textColor="@color/greyFont" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollViewSportInjury"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:isScrollContainer="false"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        android:background="@color/lightBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:id="@+id/tblRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/lightBackground"
+                android:shrinkColumns="1">
+
+                <TableRow
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp">
+
+                    <EditText
+                        android:id="@+id/txtFirstName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:layout_marginLeft="-15dp"
+                        android:layout_marginStart="-15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_border_table"
+                        android:hint="@string/res_first_name"
+                        android:padding="15dp"
+                        android:maxLines="1"
+                        android:maxLength="50"
+                        android:singleLine="true"
+                        android:inputType="textCapSentences"
+                        android:textColorHint="@color/hintFont" />
+
+                    <EditText
+                        android:id="@+id/txtLastName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_border_table"
+                        android:hint="@string/res_last_name"
+                        android:padding="15dp"
+                        android:maxLines="1"
+                        android:maxLength="50"
+                        android:singleLine="true"
+                        android:inputType="textCapSentences"
+                        android:textColorHint="@color/hintFont" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp">
+
+                    <EditText
+                        android:id="@+id/txtMobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:layout_marginLeft="-15dp"
+                        android:layout_marginStart="-15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_border_table"
+                        android:hint="@string/res_mobile"
+                        android:padding="15dp"
+                        android:maxLines="1"
+                        android:maxLength="13"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:textColorHint="@color/hintFont" />
+
+                    <EditText
+                        android:id="@+id/txtHome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:layout_weight="1"
+                        android:width="180dp"
+                        android:background="@drawable/custom_border_table"
+                        android:hint="@string/res_home"
+                        android:padding="15dp"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColorHint="@color/hintFont" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteSuburb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:layout_marginLeft="-15dp"
+                        android:layout_marginStart="-15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_border_table"
+                        android:hint="@string/res_suburb"
+                        android:padding="15dp"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColorHint="@color/hintFont" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp">
+
+                    <EditText
+                        android:id="@+id/txtDOB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:layout_marginLeft="-15dp"
+                        android:layout_marginStart="-15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_border_table"
+                        android:hint="@string/res_dob"
+                        android:padding="15dp"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColorHint="@color/hintFont" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp">
+
+                    <EditText
+                        android:id="@+id/txtEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:layout_marginLeft="-15dp"
+                        android:layout_marginStart="-15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_border_table"
+                        android:hint="@string/res_email"
+                        android:inputType="textEmailAddress"
+                        android:padding="15dp"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColorHint="@color/hintFont" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="5dp"
+                    android:background="#F2F2F2">
+
+                    <EditText
+                        android:id="@+id/txtDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:layout_column="1"
+                        android:layout_weight="1"
+                        android:imeOptions="actionDone"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
+                        android:hint="@string/res_des"
+                        android:gravity="start|end"
+                        android:textColorHint="@color/hintFont"
+                        android:background="@android:color/transparent"
+                        android:maxLines="5"
+                        android:scrollbars="vertical"
+                        android:inputType="textMultiLine|textCapSentences" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutUpload"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@color/hintFont"
+                android:visibility="gone">
+
+                <com.redimed.telehealth.patient.font.RobotoTextView
+                    android:id="@+id/lblImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/no_image_result"
+                    android:visibility="gone" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvRequestImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:scrollbarStyle="insideOverlay" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                <com.redimed.telehealth.patient.font.RobotoTextView
+                    android:id="@+id/lblUpload"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/custom_border_radius_view"
+                    android:padding="15dp"
+                    android:text="@string/btn_upload"
+                    android:textColor="@color/blueFont"
+                    android:visibility="gone"/>
+
+                <com.redimed.telehealth.patient.font.RobotoTextView
+                    android:id="@+id/lblSubmit"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/greyFont"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:text="@string/btn_submit"
+                    android:textColor="@color/lightFont" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

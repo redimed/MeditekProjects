@@ -151,7 +151,15 @@ module.exports = {
         });
         UserAccount.hasMany(UserActivation, {
             foreignKey: 'UserAccountID'
-        })
+        });
+
+        //TelehealthUser
+        UserAccount.hasOne(TelehealthUser, {
+            foreignKey: 'UserAccountID'
+        });
+        TelehealthUser.belongsTo(UserAccount, {
+            foreignKey: 'UserAccountID'
+        });
 
         //Patient - UserAccount
         UserAccount.hasOne(Patient, {

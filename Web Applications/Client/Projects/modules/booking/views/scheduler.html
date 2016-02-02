@@ -1,13 +1,14 @@
 <!-- BEGIN PAGE BAR -->
 <div class="page-bar">
     <ul class="page-breadcrumb">
+        <!-- <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="authentication.booking.home">Booking</a>
+        </li> -->
         <li>
-            <i class="fa fa-calendar-check-o"></i>
-            <a ui-sref="authentication.appointment.list">Appointment</a>
-        </li>
-        <li>
-            <i class="fa fa-angle-right"></i>
-            <label class="text-primary">Scheduler</label>
+            <!-- <i class="fa fa-angle-right"></i> -->
+            <i class="fa fa-home"></i>
+            <b>Scheduler</b>
         </li>
     </ul>
 </div>
@@ -19,20 +20,40 @@
     <div class="col-md-12 col-sm-12">
         <div class="portlet portlet-fit light bordered">
             <div class="portlet-title">
-                <div class="caption font-red-sunglo">
-                    <i class="fa fa-calendar-plus-o font-red-sunglo"></i>
+                <div class="caption font-red-thunderbird">
+                    <i class="fa fa-calendar-plus-o font-red-thunderbird"></i>
                     <span class="caption-subject bold uppercase">Scheduler</span>
                     <span class="caption-helper"></span>
                 </div>
                 <div class="actions">
-                    <a href="javascript:;" class="btn red" ng-click="addResource()">Add resource</a>
+                    <!-- <a href="javascript:;" class="btn red" ng-click="addResource()">Add resource</a> -->
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                    <a href="javascript:;" class="fullscreen"> </a>
                 </div>
             </div>
             <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 form-group">
+                        <label class="control-label">Search Site</label>
+                        <select class="form-control"
+                            ng-change="searchSite(search.site)"
+                            ng-options="item.UID as item.SiteName for item in listSites"
+                            ng-model="search.site">
+                            <option value="">All Sites</option>
+                        </select>
+                    </div>
+                </div>
                 <div id='calendar'></div>
             </div>
         </div>
     </div>
 </div>
 
+<style type="text/css">
+    .fc td .fc-widget-content{
+        background-color: #EEEEEE;
+    }
+</style>
 

@@ -1,0 +1,221 @@
+.checkbox-list, .radio-list {
+    margin-left: 4em;
+}
+.checkbox-inline, .radio-inline {
+    margin-top: 5px;
+    margin-right: 2em;
+}
+/* 
+===========================================================================================================
+title: regular-radio, regular-checkbox 
+edit by : DQT
+date: 2016/01/25
+===========================================================================================================
+*/
+
+    /*Checkbox----------------------------------------------------------------------------------------*/
+    .regular-checkbox {
+        -webkit-appearance: none;
+
+        /*background-color: #fafafa;*/
+        border: 2px solid #cacece;/*border: 1px solid #cacece;*/
+        /*box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);*/
+        margin-left: 20px;
+        padding: 9px !important;
+        /*border-radius: 3px;*/
+        display: inline-block;
+        position: relative !important;
+        bottom: 3px;
+        vertical-align: middle;
+
+    }
+    .regular-checkbox:disabled {
+        border: 2px solid gray;
+        background-color: #dedede;
+    }
+    .regular-checkbox:focus {
+        display: none;
+    }
+
+    .regular-checkbox:active, 
+    .regular-checkbox:checked:active {
+        /*box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);*/
+        vertical-align: middle;
+    }
+
+    .regular-checkbox:checked {
+        /*background-color: #e9ecee;*/
+        border: 2px solid gray;/*border: 1px solid #adb8c0;*/
+        /*box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);*/
+        color: #99a1a7;
+        vertical-align: middle;
+    }
+
+    .regular-checkbox:checked:after {
+        content: '\2714';
+        font-size: 20px;/*font-size: 14px;*/
+        font-weight: bolder;
+        position: absolute;
+        top: -5px;/*top: 0;*/
+        left: 1px;/*left: 3px;*/
+        color: #99a1a7;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .big-checkbox {
+        padding: 18px !important;
+    }
+
+    .big-checkbox:checked:after {
+        font-size: 28px !important;
+        left: 6px;
+    }
+    /*Radio----------------------------------------------------------------------------------------*/
+    .regular-radio {
+        -webkit-appearance: none;
+        background-color: #fafafa;
+        border: 2px solid #cacece;/*border: 1px solid #cacece;*/
+        /*box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);*/
+        padding: 9px !important;
+        border-radius: 50px !important;
+        display: inline-block;
+        position: relative !important;
+        bottom: 2px;
+        vertical-align: middle;
+    }
+
+    .regular-radio:disabled{
+        border: 2px solid gray;
+        background-color: #dedede;
+    }
+
+    .regular-radio:focus {
+        display: none;
+    }
+
+    .regular-radio:checked:after {
+        content: ' ';
+        width: 12px;
+        height: 12px;
+        border-radius: 50px;
+        position: absolute;
+        top: 3px;
+        background: #99a1a7;
+        box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3);
+        text-shadow: 0px;
+        left: 3px;
+        font-size: 32px;
+        vertical-align: middle;
+    }
+
+    .regular-radio:checked {
+        /*background-color: #e9ecee;*/
+        color: #99a1a7;
+        border: 2px solid gray;/*border: 1px solid #adb8c0;*/
+        /*box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1), inset 0px 0px 10px rgba(0,0,0,0.1);*/
+        vertical-align: middle;
+    }
+
+    .regular-radio:active, .regular-radio:checked:active {
+        /*box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);*/
+        vertical-align: middle;
+    }
+
+    .big-radio {
+        padding: 16px;
+    }
+
+    .big-radio:checked:after {
+        width: 24px;
+        height: 24px;
+        left: 4px;
+        top: 4px;
+    }
+
+/*
+===============================================================================
+title: .form-style-4;
+edit by: DQT;
+date: 2016/01/25;
+===============================================================================
+*/
+
+    .form-style-4 {
+        width: 100%;
+        font-size: 16px;
+        /*background: #495C70;*/
+        padding: 30px 30px 15px 30px;
+        border: 5px solid #53687E;
+    }
+
+    .form-style-4 input[type=submit],
+    .form-style-4 input[type=button],
+    .form-style-4 input[type=text],
+    .form-style-4 input[type=email],
+    .form-style-4 textarea,
+    .form-style-4 label {
+        font-family: Georgia, "Times New Roman", Times, serif;
+        font-size: 16px;
+        color: black; /*color: #fff;*/
+    }
+
+    .form-style-4 label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .form-style-4 label > span {
+        display: inline-block;
+        float: left;
+        width: 150px;
+    }
+
+    .form-style-4 input[type=text],
+    .form-style-4 input[type=email] {
+        background: transparent;
+        border: none;
+        border-bottom: 1px dashed #83A4C5;/*border-bottom: 1px dashed #83A4C5;*/
+        width: 275px;
+        outline: none;
+        padding: 0px 0px 0px 0px;
+        font-style: italic;
+    }
+
+    .form-style-4 textarea {
+        font-style: italic;
+        padding: 0px 0px 0px 0px;
+        background: transparent;
+        outline: none;
+        border: none;
+        border-bottom: 1px dashed #83A4C5;
+        width: 275px;
+        overflow: hidden;
+        resize: none;
+        height: 20px;
+    }
+
+    .form-style-4 textarea:focus,
+    .form-style-4 input[type=text]:focus,
+    .form-style-4 input[type=email]:focus,
+    .form-style-4 input[type=email]:focus {
+        border-bottom: 1px dashed #83A4C9;/*border-bottom: 1px dashed #D9FFA9;*/
+    }
+
+    .form-style-4 input[type=submit],
+    .form-style-4 input[type=button] {
+        background: #576E86;
+        border: none;
+        padding: 8px 10px 8px 10px;
+        border-radius: 5px;
+        color: #A8BACE;
+    }
+
+    .form-style-4 input[type=submit]:hover,
+    .form-style-4 input[type=button]:hover {
+        background: #394D61;
+    }
+/*
+===============================================================================
+===============================================================================
+*/

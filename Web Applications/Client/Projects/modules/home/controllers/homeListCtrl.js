@@ -1,54 +1,55 @@
-var app = angular.module('app.authentication.home.list.controller',[]);
+var app = angular.module('app.authentication.home.list.controller', []);
 
-app.controller('homeListCtrl', function($scope, MovieRetriever, $state){
-	$scope.movies = MovieRetriever.getmovies("...");
-	$scope.movies.then(function(data){
-		$scope.movies = data;
-	});
+app.controller('homeListCtrl', function($scope, $cookies, $state, WAAppointmentService,toastr) {
+    $scope.UserRole = $cookies.getObject('userInfo').roles[0].RoleCode;
+    $scope.checkRole = false;
+    if ($scope.UserRole == 'PATIENT') {
+        $scope.checkRole = true;
+    };
+    $scope.info = {
+        data: {
+            Limit: 1,
+            Offset: 0,
+            Filter: [{
+                Appointment: {
+                    Enable: 'Y',
+                    FromTime: null
+                }
+            }],
+            Order: [{
+                Appointment: {
+                    CreatedDate: 'DESC'
+                }
+            }]
+        }
+    };
+    var today = new Date();
+    $scope.info.data.Filter[0].Appointment.FromTime = moment(today).format('YYYY-MM-DD Z');
+    $scope.ListTodayConsultation = function(data) {
+        if (data == 'todaylist') {
+            $state.go("authentication.consultation.list", {
+                roleid: 'roleid'
+            });
+        } else if (data == 'today') {
+            WAAppointmentService.loadListWAAppointment($scope.info.data).then(function(response) {
+                console.log(response);
+                if (response.rows.length != 0) {
+                    var dataPost = {
+                        UID: response.rows[0].UID,
+                        UIDPatient: response.rows[0].Patients[0].UID
+                    };
+                    $state.go("authentication.consultation.detail", {
+                        UID: dataPost.UID,
+                        UIDPatient: dataPost.UIDPatient
+                    });
+                } else {
+                    toastr.success('There is no consultation today!');
+                }
 
-	$scope.getmovies = function(){
-		return $scope.movies;
-	}
+            });
+        } else {
+            $state.go("authentication.consultation.list");
+        };
 
-	$scope.doSomething = function(typedthings){
-		console.log("Do something like reload data with this: " + typedthings );
-		$scope.newmovies = MovieRetriever.getmovies(typedthings);
-		$scope.newmovies.then(function(data){
-			$scope.movies = data;
-		});
-	}
-
-	$scope.doSomethingElse = function(suggestion){
-		console.log("Suggestion selected: " + suggestion );
-	}
-
-	$scope.movies=[];
-
-
-	//Test Drawing Begin
-	$scope.drawingData={
-		userUID:'6a316ebf-0ea8-4365-ac95-8b9ab340f2cf',
-		fileType:'MedicalDrawing'
-	};
-	$scope.drawingAction=function(fileUID)
-	{
-		alert("file "+fileUID);
-	}
-	//Test Drawing End
-
-    // gives another movie array on change
-    // $scope.updateMovies = function(typed){
-    //     // MovieRetriever could be some service returning a promise
-    //     $scope.newmovies = MovieRetriever.getmovies(typed);
-    //     $scope.newmovies.then(function(data){
-    //       $scope.movies = data;
-    //     });
-    // };
-
+    }
 });
-
-
-
-
-
-

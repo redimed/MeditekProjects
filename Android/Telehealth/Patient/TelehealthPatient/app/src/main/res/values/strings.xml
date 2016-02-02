@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Telehealth Patient</string>
+    <string name="app_name">Telehealth Patient MVP</string>
 
     <!-- Launcher-->
     <string name="welcome">Welcome to REDiMED</string>
@@ -8,7 +8,6 @@
     <string name="confirm_exit">Press Back button again to exit</string>
     <string name="title_activity_call">CallActivity</string>
     <string name="title_activity_contact">ContactActivity</string>
-    <string name="btn_submit">Submit</string>
 
     <!-- Main-->
     <string name="unregistered">Unregistered</string>
@@ -16,6 +15,7 @@
 
     <!-- Activation-->
     <string name="text_contains">Enter your phone number and click continue</string>
+    <string name="phone_code">+61</string>
     <string name="hint_phone">Phone Number</string>
     <string name="hint_code">Verify Code</string>
     <string name="btn_requestCode">Continue</string>
@@ -30,6 +30,7 @@
     <string name="alert_wrong_phone">Phone Number Invalid</string>
     <string name="empty_email">Please Input Your Email</string>
     <string name="error_email">Email Invalid</string>
+    <string name="token_expired">Sorry for inconvenience, please refresh application</string>
 
     <!-- Connection Dialog-->
     <string name="btn_primary">Settings</string>
@@ -91,25 +92,28 @@
 
     <!-- Home Layout-->
     <string name="home_title">Home</string>
-    <string name="green_btn">Profile</string>
+    <string name="green_btn">Request Telehealth</string>
     <string name="blue_btn">Tracking Referrals</string>
-    <string name="red_btn">Call Us 8AM-5PM</string>
+    <string name="red_btn">Setting</string>
     <string name="phone_call">0892300900</string>
-    <string name="orange_btn">FAQs</string>
+    <string name="orange_btn">Other Services</string>
     <string name="urgent_btn">ABOUT US</string>
+    <string name="faqs_btn">FAQs</string>
     <string name="contain_bottom1">Personalised + Customised,</string>
     <string name="contain_HEALTH">HEALTH</string>
     <string name="contain_CARE">CARE</string>
     <string name="contain_bottom2">anywhere</string>
+    <string name="time_available">08:00AM - 05:00PM</string>
+    <string name="call_btn">Call Us</string>
 
     <!-- Appointment Layout-->
-    <string name="appt_title">APPOINTMENT</string>
+    <string name="appt_title">Appointment</string>
+    <string name="appt_sub_title">APPOINTMENT INFORMATION</string>
     <string name="lbl_date">Date</string>
     <string name="lbl_time">Time</string>
     <string name="lbl_doctor">Doctor</string>
     <string name="lbl_status">Status</string>
     <string name="lbl_image">Image</string>
-    <string name="btn_upload">Upload</string>
 
     <!--Dialog Appointment-->
     <string name="title_dialog_appt">Alert!</string>
@@ -119,14 +123,24 @@
     <string name="title_activity_model">ModelActivity</string>
 
     <!-- List Appointment-->
-    <string name="list_appt_title">TRACKING REFERRAL</string>
+    <string name="list_appt_title">Tracking Referral</string>
     <string name="no_data_result">No Data Result</string>
+    <string name="no_image_result">No Image</string>
     <string name="ref_no">Referral No</string>
     <string name="ref_pra">Referring Practitioner</string>
     <string name="pre_pra">Preferred Practitioner</string>
 
+    <!-- Setting Layout-->
+    <string name="setting_title">Setting</string>
+    <string name="setting_account">ACCOUNT</string>
+    <string name="setting_profile">PATIENT PROFILE</string>
+    <string name="complete_profile">Incomplete Profile</string>
+    <string name="add_new">Add New Profile</string>
+    <string name="about">About Redimed</string>
+    <string name="logout">Log Out</string>
+
     <!-- Profile Layout-->
-    <string name="profile_title">PROFILE</string>
+    <string name="profile_title">Patient Profile</string>
     <string name="profile_logout">Unregistered</string>
     <string name="profile_dob">DOB:</string>
     <string name="profile_email">Email:</string>
@@ -149,13 +163,37 @@
     <string name="sub_tracking_finish">Finish</string>
     <string name="sub_appointment">Appointment</string>
 
+    <!--Request Layout-->
+    <string name="res_title">Request Telehealth</string>
+    <string name="res_please">Please provide the following information.</string>
+    <string name="res_sub_title">CONTACT INFORMATION</string>
+    <string name="res_first_name">First Name *</string>
+    <string name="res_last_name">Last Name *</string>
+    <string name="res_mobile">Mobile Number *</string>
+    <string name="res_home">Homephone</string>
+    <string name="res_suburb">Suburb *</string>
+    <string name="res_dob">DOB *</string>
+    <string name="res_email">Email *</string>
+    <string name="res_des">Description of Injury</string>
+    <string name="field_empty">This field cannot be empty.</string>
+    <string name="phone_format">Mobile Number wrong formatted</string>
+    <string name="email_valid">Email address not valid</string>
+
     <!-- Mix-->
     <string name="none">NONE</string>
     <string name="back">Back</string>
+    <string name="btn_submit">Submit</string>
+    <string name="btn_upload">Upload Photos</string>
+    <string name="fileName">suburb.json</string>
 
     <!-- Notification-->
     <string name="not_title">Telehealth</string>
 
     <!-- Maps -->
     <string name="title_activity_maps">Map</string>
+
+    <!--Gallery -->
+    <string name="title_activity_gallery">GalleryActivity</string>
+    <string name="title_gallery">Gallery</string>
+
 </resources>

@@ -7,6 +7,7 @@ module.exports = {
     UserActivation: require('./UserAccount/UserActivation'),
     UserToken: require('./UserAccount/UserToken'),
     RefreshToken: require('./UserAccount/RefreshToken'),
+    Paperless: require('./Paperless/Paperless'),
     //begin Appointment
     CreateTelehealthAppointment: require('./Appointment/CreateTelehealthAppointment'),
     GetDataAppointment: require('./Appointment/GetDataAppointment'),
@@ -90,7 +91,7 @@ module.exports = {
     UpdateRequestRoster: require('./Roster/UpdateRequestRoster'),
     GetDetailRoster: require('./Roster/GetDetailRoster'),
     DestroyRoster: require('./Roster/DestroyRoster'),
-    CheckOverlab: require('./Roster/CheckOverlab'),
+    CheckOverlap: require('./Roster/CheckOverlap'),
     BulkCreateRoster: require('./Roster/BulkCreateRoster'),
     CreateRoster: require('./Roster/CreateRoster'),
     GetDataRoster: require('./Roster/GetDataRoster'),
@@ -98,5 +99,16 @@ module.exports = {
     CheckRosterExistAppointment: require('./Roster/CheckRosterExistAppointment'),
     GetListRoster: require('./Roster/GetListRoster'),
     GetListService: require('./Roster/GetListService'),
+    BulkUpdateRoster: require('./Roster/BulkUpdateRoster'),
+    UpdateRoster: require('./Roster/UpdateRoster'),
+    UpdateRelRosterService: require('./Roster/UpdateRelRosterService'),
+    GetListSite: require('./Roster/GetListSite'),
+    UpdateRelRosterSite: require('./Roster/UpdateRelRosterSite'),
+    GetListBooking: require('./Booking/GetListBooking'),
+    RequestBooking: require('./Booking/RequestBooking'),
+    UpdateRequestBooking: require('./Booking/UpdateRequestBooking'),
+    GetDetailBooking: require('./Booking/GetDetailBooking'),
+    DestroyBooking: require('./Booking/DestroyBooking'),
+    UpdateStatusBooking: require('./Booking/UpdateStatusBooking'),
     //begin Roster
 };

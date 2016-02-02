@@ -110,6 +110,22 @@ module.exports = {
             foreignKey: 'PatientID'
         });
 
+        //association Patient - PatientPension
+        Patient.hasOne(PatientPension, {
+            foreignKey: 'PatientID'
+        });
+        PatientPension.belongsTo(Patient, {
+            foreignKey: 'PatientID'
+        });
+
+        //association Patient - PatientDVA
+        Patient.hasOne(PatientDVA, {
+            foreignKey: 'PatientID'
+        });
+        PatientDVA.belongsTo(Patient, {
+            foreignKey: 'PatientID'
+        });
+
         //association Patient - PatientMedicare
         Patient.hasOne(PatientMedicare, {
             foreignKey: 'PatientID'
@@ -335,6 +351,50 @@ module.exports = {
         });
         OnsiteAppointment.belongsTo(Appointment, {
             foreignKey: 'AppointmentID'
+        });
+        //association Roster - Site
+        Roster.belongsToMany(Site, {
+            through: 'RelRosterSite',
+            foreignKey: 'RosterID'
+        });
+        Site.belongsToMany(Roster, {
+            through: 'RelRosterSite',
+            foreignKey: 'SiteID'
+        });
+
+        //association EForm - EFormData
+        EForm.hasOne(EFormData, {
+            foreignKey: 'EFormID'
+        });
+        EFormData.belongsTo(EForm, {
+            foreignKey: 'EFormID'
+        });
+
+        Appointment.belongsToMany(EForm, {
+            through: 'RelEFormAppointment',
+            foreignKey: 'AppointmentID'
+        });
+        EForm.belongsToMany(Appointment, {
+            through: 'RelEFormAppointment',
+            foreignKey: 'EFormID'
+        });
+
+        //association Service - Appointment
+        Appointment.belongsToMany(Service, {
+            through: 'RelAppointmentService',
+            foreignKey: 'AppointmentID'
+        });
+        Service.belongsToMany(Appointment, {
+            through: 'RelAppointmentService',
+            foreignKey: 'ServiceID'
+        });
+
+        //association Site - Appointment
+        Appointment.belongsTo(Site, {
+            foreignKey: 'SiteID'
+        });
+        Site.hasMany(Appointment, {
+            foreignKey: 'SiteID'
         });
     }
 };

@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context="com.redimed.telehealth.patient.fragment.HomeFragment">
 
     <RelativeLayout
@@ -13,101 +14,221 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <com.redimed.telehealth.patient.font.RobotoTextView
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textColor="@color/blueFont"
+            android:textStyle="bold"
+            android:layout_alignBottom="@+id/logo"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:visibility="visible"/>
+
         <ImageView
             android:id="@+id/logo"
             android:layout_width="180dp"
-            android:layout_height="?android:actionBarSize"
-            android:layout_centerHorizontal="true"/>
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/logo_redimed" />
+
+        <com.redimed.telehealth.patient.utlis.CirclePageIndicator
+            android:id="@+id/circleIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/logo"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="260dp"
-            android:layout_alignParentBottom="true"
-            android:background="#aaffffff">
+            android:layout_alignParentBottom="true">
 
-            <com.redimed.telehealth.patient.utils.CirclePageIndicator
-                android:id="@+id/circleIndicator"
+            <ViewFlipper
+                android:id="@+id/vfHome"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp" />
+                android:layout_height="220dp"
+                android:layout_centerInParent="true"
+                android:background="#aaffffff">
+
+                <LinearLayout
+                    android:id="@+id/layoutNonPatient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <Button
+                        android:id="@+id/btnRequestNon"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/home_profile_btn"
+                        android:drawableTop="@drawable/home_request_icon"
+                        android:paddingTop="15dp"
+                        android:text="@string/green_btn"
+                        android:textAllCaps="false"
+                        android:textColor="@color/lightFont"
+                        android:textSize="@dimen/home_text_size" />
+
+                    <Button
+                        android:id="@+id/btnServiceNon"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:background="@drawable/home_faq_btn"
+                        android:drawableTop="@drawable/home_services_icon"
+                        android:paddingTop="10dp"
+                        android:text="@string/orange_btn"
+                        android:textAllCaps="false"
+                        android:textColor="@color/lightFont"
+                        android:textSize="@dimen/home_text_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutPatient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <Button
+                        android:id="@+id/btnRequest"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/home_profile_btn"
+                        android:drawableTop="@drawable/home_request_icon"
+                        android:paddingTop="10dp"
+                        android:text="@string/green_btn"
+                        android:textAllCaps="false"
+                        android:textColor="@color/lightFont"
+                        android:textSize="@dimen/home_text_size" />
+
+                    <Button
+                        android:id="@+id/btnTracking"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/home_appt_btn"
+                        android:drawableTop="@drawable/home_appt_icon"
+                        android:paddingTop="12dp"
+                        android:text="@string/blue_btn"
+                        android:textAllCaps="false"
+                        android:textColor="@color/lightFont"
+                        android:textSize="@dimen/home_text_size" />
+
+                    <Button
+                        android:id="@+id/btnSetting"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/home_call_btn"
+                        android:drawableTop="@drawable/home_setting_icon"
+                        android:paddingTop="10dp"
+                        android:text="@string/red_btn"
+                        android:textAllCaps="false"
+                        android:textColor="@color/lightFont"
+                        android:textSize="@dimen/home_text_size" />
+
+                    <Button
+                        android:id="@+id/btnService"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:background="@drawable/home_faq_btn"
+                        android:drawableTop="@drawable/home_services_icon"
+                        android:paddingTop="10dp"
+                        android:text="@string/orange_btn"
+                        android:textAllCaps="false"
+                        android:textColor="@color/lightFont"
+                        android:textSize="@dimen/home_text_size" />
+
+                </LinearLayout>
+
+            </ViewFlipper>
 
             <LinearLayout
-                android:id="@+id/layoutHome"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnInformation"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/home_profile_btn"
-                    android:drawableTop="@drawable/home_profile_icon"
-                    android:paddingTop="15dp"
-                    android:text="@string/green_btn"
-                    android:textAllCaps="false"
-                    android:textColor="@color/lightFont"
-                    android:textSize="@dimen/home_text_size" />
-
-                <Button
-                    android:id="@+id/btnTelehealth"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/home_appt_btn"
-                    android:drawableTop="@drawable/home_appt_icon"
-                    android:paddingTop="15dp"
-                    android:text="@string/blue_btn"
-                    android:textAllCaps="false"
-                    android:textColor="@color/lightFont"
-                    android:textSize="@dimen/home_text_size" />
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/btnContact"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/home_call_btn"
-                    android:drawableTop="@drawable/home_call_icon"
-                    android:paddingTop="8dp"
-                    android:text="@string/red_btn"
-                    android:textAllCaps="false"
-                    android:textColor="@color/lightFont"
-                    android:textSize="@dimen/home_text_size" />
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:background="@color/lightFont"
+                    android:drawableLeft="@drawable/home_call_icon"
+                    android:drawableStart="@drawable/home_call_icon"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:paddingStart="15dp"
+                    android:paddingRight="20dp"
+                    android:paddingEnd="20dp"
+                    android:text="@string/call_btn"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btnFAQ"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:background="@drawable/home_faq_btn"
-                    android:drawableTop="@drawable/home_faq_icon"
-                    android:paddingTop="10dp"
-                    android:text="@string/orange_btn"
-                    android:textAllCaps="false"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:gravity="center"
+                    android:text="@string/time_available"
                     android:textColor="@color/lightFont"
-                    android:textSize="@dimen/home_text_size" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnUrgentCare"
-                android:layout_width="150dp"
-                android:layout_height="30dp"
-                android:layout_below="@+id/layoutHome"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
-                android:background="@android:color/white"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/urgent_btn"
-                android:textColor="@color/redFont" />
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="45dp">
+
+                <Button
+                    android:id="@+id/btnUrgentCare"
+                    android:layout_width="150dp"
+                    android:layout_height="30dp"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:text="@string/urgent_btn"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:textColor="@color/redFont" />
+
+                <Button
+                    android:id="@+id/btnFAQ"
+                    android:layout_width="150dp"
+                    android:layout_height="30dp"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:text="@string/faqs_btn"
+                    android:textColor="@color/blueFont" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,6 +242,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:text="@string/contain_bottom1" />
 
                 <com.redimed.telehealth.patient.font.RobotoTextView
@@ -139,6 +261,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:text="@string/contain_bottom2" />
 
             </LinearLayout>

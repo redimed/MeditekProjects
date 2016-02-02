@@ -7,6 +7,10 @@ module.exports = function(rosterUID) {
                 attributes: Services.AttributesRoster.Service(),
                 model: Service,
                 required: true
+            }, {
+                attributes: Services.AttributesRoster.Site(),
+                model: Site,
+                required: true
             }],
             where: {
                 UID: rosterUID,

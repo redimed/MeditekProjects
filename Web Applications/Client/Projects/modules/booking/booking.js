@@ -1,5 +1,6 @@
 var app = angular.module('app.authentication.booking',[
 	'app.authentication.booking.controller',
+	'app.authentication.booking.services'
 ]);
 
 app.config(function($stateProvider){

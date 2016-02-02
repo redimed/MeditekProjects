@@ -43,6 +43,9 @@ public class Patient {
     @SerializedName("Email1")
     private String Email;
 
+    @SerializedName("PhoneNumber")
+    private String PhoneNumber;
+
     @SerializedName("HomePhoneNumber")
     private String HomePhoneNumber;
 
@@ -150,6 +153,14 @@ public class Patient {
 
     public void setEmail(String email) {
         Email = email;
+    }
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        PhoneNumber = phoneNumber;
     }
 
     public String getHomePhoneNumber() {

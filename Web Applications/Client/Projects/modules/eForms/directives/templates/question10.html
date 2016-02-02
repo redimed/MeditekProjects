@@ -1,0 +1,41 @@
+<div ng-show="editor==false" id="{{'form_view '+option.value1}}">
+	<div class='col-md-12'>{{option.value1}}</div>
+	<div class="col-md-12">&nbsp;</div>
+	<div class='col-md-12'>
+		<div class='col-md-4'>
+			{{option.value2}}<input type='checkbox' ng-model='info.value1' class="form-control" ng-change="changeValue('value1')" ng-true-value="0" ng-false-value="1" />
+		</div>
+		<div class='col-md-4'>
+			{{option.value3}}<input type='text' ng-model='info.value2' ng-change="changeValue('value2')" class="form-control" />
+		</div>
+	</div>
+</div>
+<div ng-show="editor==true" id="{{idform}}">
+	<div class="col-md-12">
+		<div class="col-md-3">
+			<label>Title</label>
+		</div>
+		<div class="col-md-5">
+			<input type="text" ng-model="option.value1" />
+		</div>
+	</div>
+	<div class="col-md-12">&nbsp;</div>
+	<div class="col-md-12">
+		<div class="col-md-3">
+			<label>Checkbox1</label>
+		</div>
+		<div class="col-md-5">
+			<input type="text" ng-model="option.value2" />
+		</div>
+	</div>
+	<div class="col-md-12">&nbsp;</div>
+	<div class="col-md-12">
+		<div class="col-md-3">
+			<label>Textbox</label>
+		</div>
+		<div class="col-md-5">
+			<input type="text" ng-model="option.value3" />
+		</div>
+	</div>
+	<div class="col-md-12">&nbsp;</div>
+</div>

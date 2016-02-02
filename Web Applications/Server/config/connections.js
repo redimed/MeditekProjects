@@ -6,13 +6,16 @@ module.exports.connections = {
         adapter: 'sails-mysql',
         port: 3306,
         user: 'meditek_db',
+        // user: 'root',
         password: 'meditekdb123456',
+        // password: 'root',
         // password: 'tz!@9\8$3a?=G].T',
         database: 'Redimed',
         charset: 'utf8',
         collation: 'utf8-general_ci',
         options: {
-            host: 'localhost'
+            host: '192.168.1.2'
+            // host: 'localhost'
         }
     },
 };

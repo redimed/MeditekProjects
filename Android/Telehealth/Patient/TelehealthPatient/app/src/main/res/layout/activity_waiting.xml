@@ -13,10 +13,12 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="match_parent"
-            android:layout_height="?android:actionBarSize"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_width="320dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:background="@drawable/logo_redimed"
+            android:contentDescription="@string/welcome" />
 
         <RelativeLayout
             android:id="@+id/waitCallLayout"
@@ -32,7 +34,7 @@
                 android:gravity="center"
                 android:text="Doctor Name"
                 android:textColor="@color/lightFont"
-                android:textSize="30dp" />
+                android:textSize="30sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,22 +43,24 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center_horizontal">
 
-                <android.support.design.widget.FloatingActionButton
+                <Button
                     android:id="@+id/btnDecline"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/call_end_icon"
                     android:layout_marginRight="80dp"
-                    android:stateListAnimator="@null"
-                    app:backgroundTint="@color/declineFone" />
+                    android:background="@drawable/custom_circle_end_call"
+                    android:drawableLeft="@drawable/call_end_icon"
+                    android:enabled="true"
+                    android:paddingLeft="11dp" />
 
-                <android.support.design.widget.FloatingActionButton
+                <Button
                     android:id="@+id/btnAnswer"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:shadowColor="@android:color/transparent"
-                    android:src="@drawable/call_receive_icon"
-                    app:backgroundTint="@color/answerFone" />
+                    android:background="@drawable/custom_circle_answer_call"
+                    android:drawableLeft="@drawable/call_receive_icon"
+                    android:enabled="true"
+                    android:paddingLeft="12dp" />
 
             </LinearLayout>
 
@@ -70,7 +74,7 @@
                 android:padding="4dp"
                 android:text="Calling..."
                 android:textColor="@color/lightFont"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
         </RelativeLayout>
 

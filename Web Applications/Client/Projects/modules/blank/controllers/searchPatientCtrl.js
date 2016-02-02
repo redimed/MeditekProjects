@@ -10,11 +10,11 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
     }
     // $scope.postData = {
     //     "data": {
-    //         "FirstName": "aaa",
-    //         "LastName": "123123",
+    //         "FirstName": "maria",
+    //         "LastName": "ozawa",
     //         "DOB": "23/12/2015",
     //         "Gender": "Female",
-    //         "PhoneNumber": "0401101101",
+    //         "PhoneNumber": "0401101109",
     //         "Email1": "test@yahoo.com",
     //     }
     // }
@@ -23,8 +23,8 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
         $scope.submitted = false;
     }
     $scope.next = function() {
+        $scope.submitted = true;
         if ($scope.step1.$valid) {
-            $scope.submitted = true;
             blankServices.searchPatient($scope.postData.data).then(function(response) {
                 if (response.data.length != 0) {
                     toastr.success('success');
@@ -54,7 +54,7 @@ app.controller('searchPatientCtrl', function($scope, blankServices, toastr, Unau
                 $cookies.putObject("userInfo", response.user);
                 $cookies.put("token", response.token);
                 $rootScope.refreshCode = response.refreshCode;
-                $state.go("authentication.patient.home")
+                $state.go("authentication.home.list")
             }, function(err) {
                 toastr.error('Patient Login Fail');
             })

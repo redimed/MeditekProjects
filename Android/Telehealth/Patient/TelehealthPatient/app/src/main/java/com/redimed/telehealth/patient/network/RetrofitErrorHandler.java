@@ -31,8 +31,7 @@ public class RetrofitErrorHandler implements ErrorHandler {
 
         if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
             if (cause.getCause() instanceof SocketTimeoutException
-                    || cause.getCause() instanceof InterruptedIOException
-                    || cause.getCause() instanceof ConnectException) {
+                    || cause.getCause() instanceof InterruptedIOException) {
                 errorDescription = "Network Timeout";
             } else {
                 errorDescription = "Network Error";

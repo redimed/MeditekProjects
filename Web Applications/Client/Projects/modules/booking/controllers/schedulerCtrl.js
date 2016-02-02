@@ -156,6 +156,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
                     });
                     events.push(event);
                 });
+                console.log(events);
                 $('#calendar').fullCalendar('addEventSource', events);
 
                 var bookingData = {
@@ -212,13 +213,13 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
         return moment(data).subtract(0, 'time').format("hh:mm:ss a");
     };
     $scope.eventRender = function(event, element, view) {
-
+        angular.element('.fc-other-month').css('background', '#eee');
     };
 
     function getDateCalendar(){
         var date = $('#calendar').fullCalendar('getDate');
         var zone = moment().format('Z');
-        var today = moment(date).format('YYYY-MM-DD' + ' ' + zone);
+        var today = moment(date).format('YYYY-MM-DD +00:00');
         return today;    
     }
 
@@ -401,8 +402,8 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
         selectable: true, //true, // ko cho select
         eventLimit: true, // allow "more" link when too many events
         scrollTime: moment(),
-        minTime: "07:00:00",
-        maxTime: "18:00:00",
+        minTime: "00:00:00",
+        maxTime: "23:00:00",
         header: {
             left: 'today prev,next ',
             center: 'title',

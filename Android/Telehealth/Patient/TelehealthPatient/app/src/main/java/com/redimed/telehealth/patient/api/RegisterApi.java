@@ -43,17 +43,16 @@ public interface RegisterApi {
 
     /* 3009 */
     @POST("/api/telehealth/user/requestActivationCode")
-    void activation(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
+    void activation(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
     @POST("/api/telehealth/user/verifyActivationCode")
-    void verify(@Body JsonObject telehealthPatient, Callback<JsonObject> callback);
+    void verify(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
     @GET("/api/telehealth/user/details/{teleUID}")
     void getDetailsPatient(@Path("teleUID") String teleUID, Callback<JsonObject> callback);
 
-    @GET("/api/telehealth/user/appointments/{patientUID}")
-    void getAppointmentPatients(@Path("patientUID") String patientUID,
-                                Callback<JsonObject> callback);
+    @POST("/api/telehealth/user/appointments")
+    void getTrackingReferrals(@Body JsonObject jsonObject, Callback<JsonObject> callback);
 
     @GET("/api/telehealth/user/WAAppointmentDetails/{apptUID}")
     void getAppointmentDetails(@Path("apptUID") String apptUID, Callback<JsonObject> callback);

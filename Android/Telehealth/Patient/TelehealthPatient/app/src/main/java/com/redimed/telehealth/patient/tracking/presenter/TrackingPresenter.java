@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.redimed.telehealth.patient.api.RegisterApi;
 import com.redimed.telehealth.patient.main.presenter.IMainPresenter;
 import com.redimed.telehealth.patient.main.presenter.MainPresenter;
@@ -31,27 +34,40 @@ public class TrackingPresenter implements ITrackingPresenter {
     private RegisterApi registerApi;
     private ITrackingView iTrackingView;
     private IMainPresenter iMainPresenter;
-    private FragmentActivity fragmentActivity;
     private List<Appointment> listAppointment;
     private SharedPreferences telehealthPatient;
+    private String TAG = "TRACKING_PRESENTER";
 
     public TrackingPresenter(Context context, ITrackingView iTrackingView, FragmentActivity activity) {
         this.context = context;
-        this.fragmentActivity = activity;
         this.iTrackingView = iTrackingView;
 
         gson = new Gson();
         iTrackingView.onLoadToolbar();
         registerApi = RESTClient.getRegisterApi();
         listAppointment = new ArrayList<Appointment>();
-        iMainPresenter = new MainPresenter(context, fragmentActivity);
+        iMainPresenter = new MainPresenter(context, activity);
         telehealthPatient = context.getSharedPreferences("TelehealthUser", Context.MODE_PRIVATE);
     }
 
     @Override
-    public void getListAppointment() {
-        listAppointment.clear();
-        registerApi.getAppointmentPatients(telehealthPatient.getString("patientUID", ""), new Callback<JsonObject>() {
+    public void getListAppointment(int offset) {
+        if (offset == 0)
+            listAppointment.clear();
+
+        String strData = "{" +
+                "\"Order\": [{\"Appointment\": {\"FromTime\": \"DESC\"}}], " +
+                "\"Filter\": [" +
+                "{\"Appointment\": {\"Enable\": \"Y\"}}," +
+                "{\"Patient\": {\"UID\": \"" + telehealthPatient.getString("patientUID", "") + "\"}}," +
+                "{\"TelehealthAppointment\": {\"Type\": \"\"}}]," +
+                "\"Limit\": null, " + "\"Offset\": " + offset +
+                "}";
+
+        JsonObject jData = new JsonObject();
+        jData.addProperty("data", gson.toJson(strData));
+
+        registerApi.getTrackingReferrals(jData, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 String data = jsonObject.get("rows").toString();
@@ -73,7 +89,7 @@ public class TrackingPresenter implements ITrackingPresenter {
 
     @Override
     public void changeFragment(Fragment fragment) {
-        if (fragment != null){
+        if (fragment != null) {
             iMainPresenter.replaceFragment(fragment);
         }
     }

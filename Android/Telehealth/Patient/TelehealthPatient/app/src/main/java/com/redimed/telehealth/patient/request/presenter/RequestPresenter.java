@@ -273,8 +273,7 @@ public class RequestPresenter implements IRequestPresenter {
 
         JsonObject dataRequest = new JsonObject();
         dataRequest.addProperty("data", gson.toJson(jsonObject));
-
-        Log.d(TAG, dataRequest + "");
+        Log.d(TAG, jsonObject + "");
         registerApi.requestTelehealth(dataRequest, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {

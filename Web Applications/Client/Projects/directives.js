@@ -125,6 +125,7 @@ app.directive('patientDetailDirective', function() {
                 WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
                     if (data.data != null) {
                         $scope.patientInfo = data.data.Patients[0];
+                        console.log('$scope.patientInfo', $scope.patientInfo);
                     };
                 }, function(error) {});
             };
@@ -133,10 +134,20 @@ app.directive('patientDetailDirective', function() {
 });
 app.directive('medicareDirective', function() {
     return {
+        scope: {
+            apptuid: "="
+        },
         restrict: 'E',
         templateUrl: 'common/views/medicareDirective.html',
-        link: function(scope) {
-
+        controller: function($scope, WAAppointmentService) {
+            if ($scope.apptuid) {
+                WAAppointmentService.getDetailWAAppointmentByUid($scope.apptuid).then(function(data) {
+                    if (data.data != null) {
+                        $scope.patientTelehealth = data.data.TelehealthAppointment.PatientAppointment;
+                        console.log('$scope.patientTelehealth', $scope.patientTelehealth);
+                    };
+                }, function(error) {});
+            }
         },
     };
 });

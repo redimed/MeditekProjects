@@ -102,6 +102,7 @@ module.exports = {
             !_.isEmpty(body.data)) {
             TelehealthService.GetAppointmentsByPatient(headers, body).then(function(response) {
                 if (response.getHeaders().requireupdatetoken) res.set("requireupdatetoken", response.getHeaders().requireupdatetoken);
+                console.log("response.getBody()");
                 return res.ok(response.getBody());
             }, function(err) {
                 res.json(err.getCode(), err.getBody());

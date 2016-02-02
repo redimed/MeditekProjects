@@ -5,8 +5,8 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-4 col-xs-6">
                             <div class="thumbnail" style="margin-bottom:3px; border-radius: 50% !important">
-                                <img dimage dimage-uid="info.patientInfo" class="profile-imge" width="100%" style="border-radius: 50% !important" />
-                                <!-- <img src="theme/assets/global/images/no_person.jpg" class="profile-imge" width="100%" style="border-radius: 50% !important" /> -->
+                                <img dimage dimage-uid="patientInfo.UserAccount.FileUploads[0].UID" class="profile-imge" width="100%" style="border-radius: 50% !important" ng-if="patientInfo.UserAccount.FileUploads[0].UID"/>
+                                <img src="theme/assets/global/images/no_person.jpg" class="profile-imge" width="100%" style="border-radius: 50% !important" ng-if="!patientInfo.UserAccount.FileUploads[0].UID"/>
                             </div>
                         </div>
                         <div class="col-md-8 col-md-4 col-xs-6">

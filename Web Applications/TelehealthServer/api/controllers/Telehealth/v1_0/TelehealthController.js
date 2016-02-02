@@ -71,7 +71,7 @@ module.exports = {
             }
         }).then(function(user) {
             if (user) {
-                TelehealthUser.findOrCreate({
+                return TelehealthUser.findOrCreate({
                     where: {
                         UserAccountID: user.ID
                     },
@@ -168,7 +168,7 @@ module.exports = {
         var uid = info.uid;
         if (uid && deviceType && deviceId) {
             return TelehealthService.FindByUID(uid).then(function(teleUser) {
-                TelehealthDevice.findOrCreate({
+                return TelehealthDevice.findOrCreate({
                     where: {
                         TelehealthUserID: teleUser.ID,
                         DeviceID: deviceId,
@@ -179,7 +179,7 @@ module.exports = {
                         DeviceToken: deviceToken
                     }
                 }).spread(function(device, created) {
-                    device.update({
+                    return device.update({
                         DeviceToken: !created ? deviceToken : device.DeviceToken
                     }).then(function() {
                         res.ok({
@@ -218,7 +218,7 @@ module.exports = {
                 }
             }).then(function(user) {
                 if (user) {
-                    TelehealthService.MakeRequest({
+                    return TelehealthService.MakeRequest({
                         host: config.AuthAPI,
                         path: '/api/user-activation/create-user-activation',
                         method: 'POST',
@@ -285,7 +285,7 @@ module.exports = {
                 }
             }).then(function(user) {
                 if (user) {
-                    user.getPatient().then(function(patient) {
+                    return user.getPatient().then(function(patient) {
                         if (patient) {
                             TelehealthService.MakeRequest({
                                 host: config.AuthAPI,

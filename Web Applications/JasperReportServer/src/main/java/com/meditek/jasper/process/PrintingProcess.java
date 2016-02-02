@@ -36,6 +36,7 @@ public class PrintingProcess {
     public ByteArrayOutputStream iTextPrinting(Dictionary data, String templateUID){
         try {
             String pdfTemplateFile = "/com/meditek/itexttemplate/"+templateUID+".pdf";
+//            String pdfTemplateFile = "/com/meditek/itexttemplate/Workcover WA - FINAL.pdf";
             PdfReader pdfTemplate = new PdfReader(pdfTemplateFile);
             
             ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -45,8 +46,10 @@ public class PrintingProcess {
             for (Enumeration d = data.keys(); d.hasMoreElements();){
                 String key = ((String)d.nextElement());
                 String lowerKey = key.toLowerCase();
+                System.out.println("Key: "+lowerKey+", value: "+data.get(key));
                 stamper.getAcroFields().setField(lowerKey, data.get(key).toString());
             }
+//            stamper.getAcroFields().setField("section1.question1.patientinfo.address1", "must see this");
             stamper.close();
             pdfTemplate.close();        
 //            Return the output streamoutput

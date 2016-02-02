@@ -47,6 +47,7 @@ public class JasperReportController {
             System.out.println(requestData.getTemplateUID());
             System.out.println(requestData.getPrintMethod());
             List<FormDataModel> formData = requestData.getData();
+//            for(FormDataModel d : formData) System.out.println("Key: " + d.getName() + ", value: "+ d.getValue());;
             for(FormDataModel d : formData) DataDic.put(d.getName(), d.getValue());
             //Filling pdf file
             ByteArrayOutputStream baos;

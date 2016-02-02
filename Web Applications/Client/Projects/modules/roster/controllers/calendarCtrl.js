@@ -30,6 +30,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
 
     $scope.eventRender = function(event, element, view){
             event.allDay = true;
+            angular.element('.fc-other-month').css('background-color', '#eee');
             element.find('.fc-time').html(moment(event.start).format('hA').toLowerCase()+'-'+moment(event.end).format('hA').toLowerCase()+'<br/>');
             element.find('.fc-title').html('<h4><b>'+event.title+'</b></h4><small><i>'+event.textOccurance+'</i></small>');
     };

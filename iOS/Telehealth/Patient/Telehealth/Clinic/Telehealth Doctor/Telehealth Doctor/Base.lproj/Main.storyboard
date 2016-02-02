@@ -1,0 +1,1028 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15C50" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="ywc-iV-Sg1">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--LoginViewController-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="LoginView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" userLabel="LoginViewController" customClass="LoginViewController" customModule="Telehealth_Doctor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" fixedFrame="YES" image="BG-Login" translatesAutoresizingMaskIntoConstraints="NO" id="WAK-5p-YKx" userLabel="background">
+                                <rect key="frame" x="-1" y="102" width="1027" height="666"/>
+                                <animations/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkS-uA-exf">
+                                <rect key="frame" x="0.0" y="740" width="1024" height="18"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S8v-cu-aN7">
+                                <rect key="frame" x="0.0" y="20" width="1024" height="86"/>
+                                <subviews>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="4dU-Ts-L5E" userLabel="logo">
+                                        <rect key="frame" x="352" y="10" width="320" height="66"/>
+                                        <animations/>
+                                    </imageView>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RaU-Tl-T9c" customClass="DesignableView" customModule="Spring">
+                                <rect key="frame" x="352" y="155" width="320" height="337"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5G-2c-O6y">
+                                        <rect key="frame" x="34" y="30" width="246" height="27"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aaa-RG-xS6">
+                                        <rect key="frame" x="34" y="115" width="246" height="24"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QtL-Xa-BYj" userLabel="password" customClass="DesignableTextField" customModule="Spring">
+                                        <rect key="frame" x="34" y="59" width="252" height="40"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.91351712478184988" green="0.91351712478184988" blue="0.91351712478184988" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.31878544938917963" green="0.31878544938917963" blue="0.31878544938917963" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="textFieldEditingChange:" destination="BYZ-38-t0r" eventType="editingChanged" id="V7D-yy-hFk"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="on5-Ag-t1r"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" alpha="0.65000000000000002" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Szc-10-oir" userLabel="buttonLogin">
+                                        <rect key="frame" x="34" y="247" width="90" height="40"/>
+                                        <animations/>
+                                        <state key="normal" title="Login">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="LoginButtonAction:" destination="BYZ-38-t0r" eventType="touchDown" id="jdE-IC-8sA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QVN-gV-Exw">
+                                        <rect key="frame" x="132" y="257" width="155" height="30"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <state key="normal" title="Forgot your Password">
+                                            <color key="titleColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uJD-dY-J58">
+                                        <rect key="frame" x="0.0" y="190" width="320" height="49"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" red="1" green="0.11764705882352941" blue="0.11372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Required" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WvS-AA-pDy" userLabel="username" customClass="DesignableTextField" customModule="Spring">
+                                        <rect key="frame" x="34" y="142" width="252" height="40"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.91351712478184988" green="0.91351712478184988" blue="0.91351712478184988" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.31878544938917963" green="0.31878544938917963" blue="0.31878544938917963" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="textFieldEditingChange:" destination="BYZ-38-t0r" eventType="editingChanged" id="EFx-Rh-1Jd"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="YNk-VH-fP5"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="buttonLogin" destination="Szc-10-oir" id="TK7-MA-iMY"/>
+                        <outlet property="errorLoginLabel" destination="uJD-dY-J58" id="tzL-UH-HU9"/>
+                        <outlet property="passwordTextField" destination="WvS-AA-pDy" id="Ogj-vM-0Ui"/>
+                        <outlet property="usernameTextField" destination="QtL-Xa-BYj" id="lJl-fL-1bj"/>
+                        <outlet property="versionLabel" destination="bkS-uA-exf" id="RYi-Bc-2mF"/>
+                        <outlet property="viewModal" destination="RaU-Tl-T9c" id="a70-eR-f9R"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2068" y="-821"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="sUe-BP-rwX">
+            <objects>
+                <navigationController storyboardIdentifier="navigation" id="ywc-iV-Sg1" customClass="TOPVCViewController" customModule="Telehealth_Doctor" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="d81-fk-aUn"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <navigationBar key="navigationBar" multipleTouchEnabled="YES" contentMode="scaleToFill" translucent="NO" id="Yla-GW-rAV">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                        <connections>
+                            <outlet property="delegate" destination="ywc-iV-Sg1" id="bus-a6-ems"/>
+                        </connections>
+                    </navigationBar>
+                    <connections>
+                        <outlet property="navigation" destination="Yla-GW-rAV" id="hwS-t6-uUK"/>
+                        <segue destination="2c3-mA-TQx" kind="relationship" relationship="rootViewController" id="9cq-ld-RVx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QXe-ik-cnF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1608.96" y="267.94666666666666"/>
+        </scene>
+        <!--HomeViewController-->
+        <scene sceneID="jVF-M2-65d">
+            <objects>
+                <viewController storyboardIdentifier="HomeView" id="2c3-mA-TQx" userLabel="HomeViewController" customClass="HomeViewController" customModule="Telehealth_Doctor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="h6P-7E-nvd"/>
+                        <viewControllerLayoutGuide type="bottom" id="DXd-Xh-6ax"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hER-FX-EJk">
+                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="SD4-2x-QUy" userLabel="logo-icon">
+                                <rect key="frame" x="170" y="151" width="342" height="67"/>
+                                <animations/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="line-icon" translatesAutoresizingMaskIntoConstraints="NO" id="B8r-H5-azW" userLabel="line-icon">
+                                <rect key="frame" x="74" y="249" width="520" height="36"/>
+                                <animations/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Wellcome to REDIMED Clinic App" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hY-3F-fqw">
+                                <rect key="frame" x="74" y="302" width="551" height="36"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="35"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This is dashboard and you can go to Appointment list with button below" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZC-mO-DhZ">
+                                <rect key="frame" x="74" y="346" width="494" height="51"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
+                                <color key="textColor" red="0.31878544939999998" green="0.31878544939999998" blue="0.31878544939999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="koL-Iy-3ul">
+                                <rect key="frame" x="74" y="433" width="245" height="43"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.15686274509803921" green="0.40784313725490196" blue="0.80784313725490198" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="17"/>
+                                <state key="normal" title="TELEHEALTH APPOINTMENT">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="FvW-KE-v8N" kind="push" identifier="TeleListAppointment" id="bfW-65-SPx"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="BG-Home" translatesAutoresizingMaskIntoConstraints="NO" id="XvC-lW-5kh" userLabel="logo-icon">
+                                <rect key="frame" x="587" y="50" width="437" height="654"/>
+                                <animations/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4g5-i7-uwg">
+                                <rect key="frame" x="206" y="433" width="230" height="43"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.15686274509803921" green="0.40784313725490196" blue="0.80784313725490198" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="17"/>
+                                <state key="normal" title="TELEHEALTH APPOINTMENT">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="FvW-KE-v8N" kind="push" identifier="WAListAppointment" id="LuX-r6-YJ8"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Home" id="4W2-2t-1Ug"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="WAButtonAppointment" destination="4g5-i7-uwg" id="aRB-WL-5O5"/>
+                        <outlet property="buttonAppointment" destination="koL-Iy-3ul" id="3OZ-aK-6PG"/>
+                        <outlet property="imageListIcon" destination="SD4-2x-QUy" id="jbe-IU-qCu"/>
+                        <outletCollection property="labelDashboard" destination="1hY-3F-fqw" collectionClass="NSMutableArray" id="dBJ-ch-7yn"/>
+                        <outletCollection property="labelDashboard" destination="jZC-mO-DhZ" collectionClass="NSMutableArray" id="f9B-ji-wj0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0pG-eJ-OgC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3015" y="288"/>
+        </scene>
+        <!--Modal FilterVC-->
+        <scene sceneID="ati-yQ-0q6">
+            <objects>
+                <viewController modalPresentationStyle="pageSheet" id="3iv-2Q-EkE" customClass="ModalFilterVC" customModule="Telehealth_Doctor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="td3-Hd-nHa"/>
+                        <viewControllerLayoutGuide type="bottom" id="R8N-9G-Yqq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bkU-Ao-rfR">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="350"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UBe-s9-mgt" customClass="DesignableTextField" customModule="Spring">
+                                <rect key="frame" x="133" y="64" width="347" height="40"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="0.41150323275862066" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="textFieldEditing:" destination="3iv-2Q-EkE" eventType="editingDidBegin" id="021-cs-f69"/>
+                                    <action selector="textFieldEndEditing:" destination="3iv-2Q-EkE" eventType="editingDidEnd" id="gLA-wN-WMN"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="From:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zKf-i0-78e">
+                                <rect key="frame" x="63" y="72" width="55" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Appointment date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yLM-i7-mjL">
+                                <rect key="frame" x="20" y="28" width="138" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="To:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cTp-hN-ChM">
+                                <rect key="frame" x="84" y="134" width="34" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mDZ-lc-Knh" customClass="DesignableTextField" customModule="Spring">
+                                <rect key="frame" x="133" y="188" width="347" height="40"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="0.41150323275862066" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" tag="101" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oOu-QM-tra" customClass="DesignableTextField" customModule="Spring">
+                                <rect key="frame" x="133" y="126" width="347" height="40"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="0.41150323275862066" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="textFieldEditing:" destination="3iv-2Q-EkE" eventType="editingDidBegin" id="Z97-is-bqL"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lVA-dC-FW6">
+                                <rect key="frame" x="327" y="257" width="153" height="58"/>
+                                <animations/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                <state key="normal" title="Filter"/>
+                                <connections>
+                                    <action selector="backToList:" destination="3iv-2Q-EkE" eventType="touchDown" id="VQy-pg-4EN"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cer-Ee-jeu">
+                                <rect key="frame" x="57" y="197" width="61" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="500" height="350"/>
+                    <connections>
+                        <outlet property="aptFrom" destination="UBe-s9-mgt" id="FsE-Rh-AVP"/>
+                        <outlet property="aptTo" destination="oOu-QM-tra" id="rB1-FY-Mc2"/>
+                        <outlet property="statusAptTextField" destination="mDZ-lc-Knh" id="HyY-2B-8Jy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Fc-iG-a5D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5551" y="-423"/>
+        </scene>
+        <!--AppointmentListController-->
+        <scene sceneID="xyE-mP-KEl">
+            <objects>
+                <viewController storyboardIdentifier="appointmentList" id="FvW-KE-v8N" userLabel="AppointmentListController" customClass="AppointmentListViewController" customModule="Telehealth_Doctor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XqT-oR-xg9"/>
+                        <viewControllerLayoutGuide type="bottom" id="LKR-lo-2W4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TlW-6A-USf">
+                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Patient" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7a4-Wb-wyY">
+                                <rect key="frame" x="0.0" y="20" width="201" height="45"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.18431372549019609" green="0.75686274509803919" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Treating Practitioner" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJt-Rf-CQ5">
+                                <rect key="frame" x="201" y="20" width="171" height="45"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.18431372549019609" green="0.75686274509803919" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Submit Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Les-cg-R27">
+                                <rect key="frame" x="372" y="20" width="171" height="45"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.18431372549019609" green="0.75686274509803919" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Appointment Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="crN-dK-T0i">
+                                <rect key="frame" x="543" y="20" width="211" height="45"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.18431372549019609" green="0.75686274509803919" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Action" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkS-SF-Tds">
+                                <rect key="frame" x="865" y="20" width="159" height="45"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.18431372549019609" green="0.75686274509803919" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ypy-qW-qB3" userLabel="Navigation Button">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="20"/>
+                                <subviews>
+                                    <button opaque="NO" tag="50" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ayj-wA-5gj" userLabel="view1">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="20"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.42352941176470588" green="0.42745098039215684" blue="0.42745098039215684" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Buton">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="Wu1-HF-m0u" kind="unwind" unwindAction="unwindToViewController:" id="2U0-XI-AMQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="51" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uSq-bK-5zb" userLabel="view2">
+                                        <rect key="frame" x="200" y="0.0" width="200" height="20"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.64196362537020668" green="0.64894149086336106" blue="0.64894149086336106" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Buton">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" red="0.85490196078431369" green="0.85490196078431369" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XWg-Mu-CCl">
+                                <rect key="frame" x="0.0" y="65" width="1024" height="639"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell" rowHeight="80" id="rR7-1j-GiJ" customClass="AppointmentTableViewCell" customModule="Telehealth_Doctor" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="1024" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rR7-1j-GiJ" id="leD-Ue-lCy">
+                                            <rect key="frame" x="0.0" y="0.0" width="1024" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="no" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lsa-kV-hgz">
+                                                    <rect key="frame" x="8" y="8" width="38" height="60"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="KAb-Dn-QXx"/>
+                                                        <constraint firstAttribute="width" constant="38" id="wC0-id-bW2"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="submit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQQ-UI-CNK">
+                                                    <rect key="frame" x="372" y="8" width="171" height="60"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="171" id="U1q-9B-Ptj"/>
+                                                        <constraint firstAttribute="height" constant="60" id="Xmw-B7-PTC"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="appointment" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Meo-h1-tvd">
+                                                    <rect key="frame" x="543" y="8" width="211" height="60"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="211" id="WkB-HS-QWX"/>
+                                                        <constraint firstAttribute="height" constant="60" id="vj0-5T-E4N"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="patient" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jlu-VQ-HUc">
+                                                    <rect key="frame" x="54" y="8" width="139" height="60"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="139" id="aFE-NE-F6K"/>
+                                                        <constraint firstAttribute="height" constant="60" id="rX7-yp-kAr"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYX-V9-nql">
+                                                    <rect key="frame" x="958" y="25" width="50" height="24"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="3vc-sc-raR"/>
+                                                        <constraint firstAttribute="width" constant="50" id="Aya-KZ-MCR"/>
+                                                    </constraints>
+                                                    <state key="normal" image="call"/>
+                                                    <connections>
+                                                        <segue destination="3t3-LS-PAl" kind="push" identifier="callAction" id="TeP-02-v0U"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYN-lb-3er" userLabel="teleAppointment">
+                                                    <rect key="frame" x="890" y="13" width="30" height="41"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="eYu-DL-iB5"/>
+                                                        <constraint firstAttribute="height" constant="41" id="iT6-4y-FaB"/>
+                                                    </constraints>
+                                                    <state key="normal" image="detail">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="WJh-Re-2WR" kind="push" identifier="TeleAppointment" id="W5o-7j-agP"/>
+                                                    </connections>
+                                                </button>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle-online-status" translatesAutoresizingMaskIntoConstraints="NO" id="PeV-v3-vPo">
+                                                    <rect key="frame" x="46" y="25" width="30" height="30"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="2N9-De-UXj"/>
+                                                        <constraint firstAttribute="width" constant="30" id="fip-ym-dCt"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhg-Mx-QXB" userLabel="waAppointment">
+                                                    <rect key="frame" x="890" y="13" width="30" height="41"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="G1f-97-tqo"/>
+                                                        <constraint firstAttribute="width" constant="30" id="mMO-W3-8KV"/>
+                                                    </constraints>
+                                                    <state key="normal" image="detail">
+                                                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="WJh-Re-2WR" kind="push" identifier="WAAppointment" id="Stq-IU-sub"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="doctor" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oRg-gg-Kdq">
+                                                    <rect key="frame" x="193" y="8" width="190" height="60"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="190" id="VrY-6M-zjI"/>
+                                                        <constraint firstAttribute="height" constant="60" id="jC4-Tm-vpx"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cq8-jv-Dv6">
+                                                    <rect key="frame" x="754" y="8" width="112" height="60"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="112" id="dds-Na-PbN"/>
+                                                        <constraint firstAttribute="height" constant="60" id="mMh-wO-8vo"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="zhg-Mx-QXB" firstAttribute="top" secondItem="leD-Ue-lCy" secondAttribute="topMargin" constant="5" id="1UB-A0-hh5"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="YYN-lb-3er" secondAttribute="bottom" constant="18" id="1YO-43-l1X"/>
+                                                <constraint firstItem="YYN-lb-3er" firstAttribute="leading" secondItem="cq8-jv-Dv6" secondAttribute="trailing" constant="24" id="1hb-sV-JeX"/>
+                                                <constraint firstItem="oRg-gg-Kdq" firstAttribute="top" secondItem="leD-Ue-lCy" secondAttribute="topMargin" id="2fg-Wx-RJs"/>
+                                                <constraint firstItem="Lsa-kV-hgz" firstAttribute="leading" secondItem="leD-Ue-lCy" secondAttribute="leadingMargin" id="4jf-KS-qAu"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="PeV-v3-vPo" secondAttribute="bottom" constant="17" id="6qs-if-i6W"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="AYX-V9-nql" secondAttribute="bottom" constant="23" id="7Wj-an-O0b"/>
+                                                <constraint firstItem="fQQ-UI-CNK" firstAttribute="top" secondItem="leD-Ue-lCy" secondAttribute="topMargin" id="81B-b3-MfR"/>
+                                                <constraint firstItem="cq8-jv-Dv6" firstAttribute="top" secondItem="leD-Ue-lCy" secondAttribute="topMargin" id="9kI-Xn-WQA"/>
+                                                <constraint firstItem="YYN-lb-3er" firstAttribute="top" secondItem="leD-Ue-lCy" secondAttribute="topMargin" constant="5" id="Clu-cU-4UB"/>
+                                                <constraint firstItem="zhg-Mx-QXB" firstAttribute="leading" secondItem="cq8-jv-Dv6" secondAttribute="trailing" constant="24" id="DFc-WB-W2E"/>
+                                                <constraint firstItem="AYX-V9-nql" firstAttribute="top" secondItem="leD-Ue-lCy" secondAttribute="topMargin" constant="17" id="GAA-8C-RnA"/>
+                                                <constraint firstItem="PeV-v3-vPo" firstAttribute="leading" secondItem="Lsa-kV-hgz" secondAttribute="trailing" id="HMT-gz-HWT"/>
+                                                <constraint firstItem="Meo-h1-tvd" firstAttribute="top" secondItem="leD-Ue-lCy" secondAttribute="topMargin" id="JE2-Kp-fl9"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="AYX-V9-nql" secondAttribute="trailing" constant="8" id="JKe-IN-xVD"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="zhg-Mx-QXB" secondAttribute="bottom" constant="18" id="JR7-gJ-Nk5"/>
+                                                <constraint firstItem="cq8-jv-Dv6" firstAttribute="leading" secondItem="Meo-h1-tvd" secondAttribute="trailing" id="LZ8-pm-gab"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Lsa-kV-hgz" secondAttribute="bottom" constant="4" id="S3c-gM-PPQ"/>
+                                                <constraint firstItem="oRg-gg-Kdq" firstAttribute="leading" secondItem="Jlu-VQ-HUc" secondAttribute="trailing" id="Vy4-i6-oPF"/>
+                                                <constraint firstItem="AYX-V9-nql" firstAttribute="leading" secondItem="YYN-lb-3er" secondAttribute="trailing" constant="38" id="Wkt-Mz-LV3"/>
+                                                <constraint firstItem="fQQ-UI-CNK" firstAttribute="leading" secondItem="Jlu-VQ-HUc" secondAttribute="trailing" constant="179" id="XD6-W8-1wv"/>
+                                                <constraint firstItem="AYX-V9-nql" firstAttribute="leading" secondItem="zhg-Mx-QXB" secondAttribute="trailing" constant="38" id="Ykv-hS-f8N"/>
+                                                <constraint firstItem="Jlu-VQ-HUc" firstAttribute="top" secondItem="leD-Ue-lCy" secondAttribute="topMargin" id="b6k-KF-47Y"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Jlu-VQ-HUc" secondAttribute="bottom" constant="4" id="bLq-Rq-fou"/>
+                                                <constraint firstItem="Lsa-kV-hgz" firstAttribute="top" secondItem="leD-Ue-lCy" secondAttribute="topMargin" id="ds1-8M-PZR"/>
+                                                <constraint firstItem="Meo-h1-tvd" firstAttribute="leading" secondItem="fQQ-UI-CNK" secondAttribute="trailing" id="esf-aw-Qvg"/>
+                                                <constraint firstItem="oRg-gg-Kdq" firstAttribute="leading" secondItem="PeV-v3-vPo" secondAttribute="trailing" constant="117" id="mWq-8Q-buG"/>
+                                                <constraint firstItem="Jlu-VQ-HUc" firstAttribute="leading" secondItem="Lsa-kV-hgz" secondAttribute="trailing" constant="8" id="uTV-tt-2i5"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="oRg-gg-Kdq" secondAttribute="bottom" constant="4" id="ufk-qx-JFZ"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="fQQ-UI-CNK" secondAttribute="bottom" constant="4" id="vf1-jh-5K1"/>
+                                                <constraint firstItem="PeV-v3-vPo" firstAttribute="top" secondItem="leD-Ue-lCy" secondAttribute="topMargin" constant="17" id="wgI-fW-LmH"/>
+                                                <constraint firstItem="Meo-h1-tvd" firstAttribute="leading" secondItem="oRg-gg-Kdq" secondAttribute="trailing" constant="160" id="xVx-ca-UfR"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Meo-h1-tvd" secondAttribute="bottom" constant="4" id="yEG-mo-fTk"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="cq8-jv-Dv6" secondAttribute="bottom" constant="4" id="yss-00-EP6"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="appoinmentDate" destination="Meo-h1-tvd" id="zqm-gY-T3Q"/>
+                                            <outlet property="callButton" destination="AYX-V9-nql" id="Aus-JF-6J8"/>
+                                            <outlet property="doctorName" destination="oRg-gg-Kdq" id="GyW-TL-cqz"/>
+                                            <outlet property="noRows" destination="Lsa-kV-hgz" id="N89-l4-z0m"/>
+                                            <outlet property="patientName" destination="Jlu-VQ-HUc" id="oP9-KA-bYY"/>
+                                            <outlet property="statusApt" destination="cq8-jv-Dv6" id="g6k-8C-Olt"/>
+                                            <outlet property="statusImageView" destination="PeV-v3-vPo" id="m8p-iQ-lgE"/>
+                                            <outlet property="submitDate" destination="fQQ-UI-CNK" id="NCV-mG-nRj"/>
+                                            <outlet property="teleAppointment" destination="YYN-lb-3er" id="23v-vx-FTM"/>
+                                            <outlet property="waAppointment" destination="zhg-Mx-QXB" id="klz-gJ-pXI"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="FvW-KE-v8N" id="387-ZT-bH3"/>
+                                    <outlet property="delegate" destination="FvW-KE-v8N" id="R4p-LT-NXR"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f0u-bh-poK">
+                                <rect key="frame" x="20" y="25" width="35" height="35"/>
+                                <animations/>
+                                <state key="normal" image="Filter Filled-100"/>
+                                <connections>
+                                    <segue destination="3iv-2Q-EkE" kind="modal" identifier="" modalPresentationStyle="formSheet" id="Uo6-ze-KS1"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="grC-Hj-Yey">
+                                <rect key="frame" x="754" y="20" width="112" height="45"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.1843137255" green="0.75686274509999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="iJW-Xg-s1n"/>
+                    <connections>
+                        <outlet property="tableView" destination="XWg-Mu-CCl" id="MW4-iF-1fM"/>
+                        <outletCollection property="navigaButton" destination="uSq-bK-5zb" collectionClass="NSMutableArray" id="7H8-Rx-bf7"/>
+                        <outletCollection property="navigaButton" destination="Ayj-wA-5gj" collectionClass="NSMutableArray" id="Jqg-0b-92R"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RmO-vh-1IC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Wu1-HF-m0u" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="4474" y="288"/>
+        </scene>
+        <!--MakeCallViewController-->
+        <scene sceneID="3Q4-Ja-Uo5">
+            <objects>
+                <viewController id="3t3-LS-PAl" userLabel="MakeCallViewController" customClass="MakeCallViewController" customModule="Telehealth_Doctor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tJG-Mi-CWB"/>
+                        <viewControllerLayoutGuide type="bottom" id="M4T-Tj-PUs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bkR-c0-uNK">
+                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button hidden="YES" opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ecs-h4-ksF" userLabel="endcall">
+                                <rect key="frame" x="474" y="638" width="70" height="70"/>
+                                <animations/>
+                                <color key="backgroundColor" red="1" green="0.11764705882352941" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="end-call"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="35"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionControllerButton:" destination="3t3-LS-PAl" eventType="touchDown" id="weZ-J9-XtJ"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cox-7j-fH5" userLabel="micro">
+                                <rect key="frame" x="367" y="638" width="70" height="70"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.72941176470588232" green="0.72549019607843135" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="mic-off"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="35"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionControllerButton:" destination="3t3-LS-PAl" eventType="touchDown" id="Gcg-g4-hnW"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ing-UJ-91K" userLabel="camera">
+                                <rect key="frame" x="588" y="638" width="70" height="70"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="camera-off"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="35"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionControllerButton:" destination="3t3-LS-PAl" eventType="touchDown" id="8NT-Hy-Oc6"/>
+                                </connections>
+                            </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uN5-Z4-dEX">
+                                <rect key="frame" x="20" y="94" width="984" height="76"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="45"/>
+                                <color key="textColor" red="0.98857717803030298" green="0.98857717803030298" blue="0.98857717803030298" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pb3-HB-6hU" userLabel="callback">
+                                <rect key="frame" x="405" y="638" width="70" height="70"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.23529411764705882" green="0.84705882352941175" blue="0.29803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="call-back"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="35"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionControllerButton:" destination="3t3-LS-PAl" eventType="touchDown" id="7TM-fO-WAm"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q02-hi-EB8" userLabel="cancel">
+                                <rect key="frame" x="545" y="638" width="70" height="70"/>
+                                <animations/>
+                                <state key="normal" image="cancel"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="35"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionControllerButton:" destination="3t3-LS-PAl" eventType="touchDown" id="ydu-U8-Vyu"/>
+                                </connections>
+                            </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calling to..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWs-ze-mmq">
+                                <rect key="frame" x="20" y="55" width="984" height="45"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="25"/>
+                                <color key="textColor" red="0.98857717803030298" green="0.98857717803030298" blue="0.98857717803030298" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="no-camera-100" translatesAutoresizingMaskIntoConstraints="NO" id="ICh-OM-Xhc">
+                                <rect key="frame" x="462" y="226" width="100" height="100"/>
+                                <animations/>
+                            </imageView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ouA-JP-9Yc"/>
+                    <connections>
+                        <outlet property="imageNoCameraSubscriber" destination="ICh-OM-Xhc" id="gak-Nd-eq3"/>
+                        <outlet property="nameLabelCall" destination="uN5-Z4-dEX" id="OOD-oe-FxV"/>
+                        <outlet property="titleLabelCall" destination="iWs-ze-mmq" id="nvE-bl-Raj"/>
+                        <outletCollection property="controllerButtonCall" destination="cox-7j-fH5" collectionClass="NSMutableArray" id="Io9-oj-Uoa"/>
+                        <outletCollection property="controllerButtonCall" destination="Ecs-h4-ksF" collectionClass="NSMutableArray" id="Ssk-u8-Uek"/>
+                        <outletCollection property="controllerButtonCall" destination="Ing-UJ-91K" collectionClass="NSMutableArray" id="bW3-3i-wia"/>
+                        <outletCollection property="controllerButtonCall" destination="q02-hi-EB8" collectionClass="NSMutableArray" id="iqt-Fr-aZD"/>
+                        <outletCollection property="controllerButtonCall" destination="Pb3-HB-6hU" collectionClass="NSMutableArray" id="mQ7-tD-GR6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1ok-YA-SsX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6068" y="288"/>
+        </scene>
+        <!--Detail AppointmentVC-->
+        <scene sceneID="Wew-aK-ckY">
+            <objects>
+                <viewController id="WJh-Re-2WR" customClass="DetailAppointmentVC" customModule="Telehealth_Doctor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DWZ-DT-jod"/>
+                        <viewControllerLayoutGuide type="bottom" id="CKi-gO-CIQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="f1q-6i-50p">
+                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ye-98-Yfs">
+                                <rect key="frame" x="290" y="20" width="734" height="684"/>
+                                <animations/>
+                            </containerView>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="114" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iR8-dy-GSC">
+                                <rect key="frame" x="0.0" y="20" width="290" height="684"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="114" id="hOV-F2-GdV">
+                                        <rect key="frame" x="0.0" y="28" width="290" height="114"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hOV-F2-GdV" id="Sll-Rv-5Nc">
+                                            <rect key="frame" x="0.0" y="0.0" width="290" height="114"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="WJh-Re-2WR" id="bTA-Au-xea"/>
+                                    <outlet property="delegate" destination="WJh-Re-2WR" id="0mQ-tN-kWP"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="78n-Ue-50c" userLabel="Navigation Button">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="20"/>
+                                <subviews>
+                                    <button opaque="NO" tag="50" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bcd-PN-uf9" userLabel="view1">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="20"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.42352941179999998" green="0.42745098040000001" blue="0.42745098040000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Buton">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="WMD-k8-7Ia" kind="unwind" unwindAction="unwindToViewController:" id="DQc-HG-peQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="51" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JN0-ZB-pNA" userLabel="view2">
+                                        <rect key="frame" x="200" y="0.0" width="200" height="20"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.64196362539999996" green="0.64894149089999997" blue="0.64894149089999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Buton">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" red="0.85882352941176465" green="0.85882352941176465" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Djy-nH-ito"/>
+                                </constraints>
+                            </view>
+                            <view hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="jOB-iL-ctH" userLabel="View Button">
+                                <rect key="frame" x="0.0" y="20" width="290" height="684"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="BG-DetailApt" translatesAutoresizingMaskIntoConstraints="NO" id="ZiX-tS-7K3">
+                                        <rect key="frame" x="0.0" y="0.0" width="290" height="684"/>
+                                        <animations/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="owd-ak-y1L" userLabel="appointment">
+                                        <rect key="frame" x="0.0" y="0.0" width="290" height="137"/>
+                                        <animations/>
+                                        <connections>
+                                            <action selector="viewOption:" destination="WJh-Re-2WR" eventType="touchDown" id="14K-UG-gQZ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aV2-qR-zjo" userLabel="clinicalMedical">
+                                        <rect key="frame" x="0.0" y="136" width="290" height="137"/>
+                                        <animations/>
+                                        <connections>
+                                            <action selector="viewOption:" destination="WJh-Re-2WR" eventType="touchDown" id="hPe-ut-7Xu"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eiO-rz-c1R" userLabel="presentComplain">
+                                        <rect key="frame" x="0.0" y="273" width="290" height="137"/>
+                                        <animations/>
+                                        <connections>
+                                            <action selector="viewOption:" destination="WJh-Re-2WR" eventType="touchDown" id="xvP-S7-acY"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Xo-Jw-U3T" userLabel="medicalImage">
+                                        <rect key="frame" x="0.0" y="410" width="290" height="137"/>
+                                        <animations/>
+                                        <connections>
+                                            <action selector="viewOption:" destination="WJh-Re-2WR" eventType="touchDown" id="2BP-ut-hP2"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0S-do-z9Q" userLabel="patient">
+                                        <rect key="frame" x="0.0" y="547" width="290" height="137"/>
+                                        <animations/>
+                                        <connections>
+                                            <action selector="viewOption:" destination="WJh-Re-2WR" eventType="touchDown" id="lcW-Xx-f9T"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Appointment" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="phn-IT-kHZ">
+                                        <rect key="frame" x="74" y="40" width="189" height="58"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <color key="textColor" red="0.988577178" green="0.988577178" blue="0.988577178" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Clinical Detail &amp; Relevant Medical History" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dn6-Cl-uxO">
+                                        <rect key="frame" x="69" y="169" width="194" height="70"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <color key="textColor" red="0.988577178" green="0.988577178" blue="0.988577178" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Present Complain &amp; Allergy" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwC-Xc-vJC">
+                                        <rect key="frame" x="74" y="312" width="189" height="58"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <color key="textColor" red="0.988577178" green="0.988577178" blue="0.988577178" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Medical Image" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O4k-Gq-j7q">
+                                        <rect key="frame" x="74" y="449" width="189" height="58"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <color key="textColor" red="0.988577178" green="0.988577178" blue="0.988577178" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Patient" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbh-VX-qWg">
+                                        <rect key="frame" x="74" y="587" width="189" height="58"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <color key="textColor" red="0.988577178" green="0.988577178" blue="0.988577178" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="basic-info" translatesAutoresizingMaskIntoConstraints="NO" id="pEK-ZK-QOn">
+                                        <rect key="frame" x="8" y="43" width="50" height="50"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="clinical-detail" translatesAutoresizingMaskIntoConstraints="NO" id="ZB7-2A-a9D">
+                                        <rect key="frame" x="8" y="180" width="50" height="50"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="present-complain" translatesAutoresizingMaskIntoConstraints="NO" id="quB-5j-smI">
+                                        <rect key="frame" x="8" y="317" width="50" height="50"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="medical-image" translatesAutoresizingMaskIntoConstraints="NO" id="YwZ-WI-PdE">
+                                        <rect key="frame" x="8" y="454" width="50" height="50"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="patient" translatesAutoresizingMaskIntoConstraints="NO" id="sa0-oc-BLE">
+                                        <rect key="frame" x="8" y="590" width="50" height="50"/>
+                                        <animations/>
+                                    </imageView>
+                                </subviews>
+                                <animations/>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="78n-Ue-50c" firstAttribute="trailing" secondItem="3ye-98-Yfs" secondAttribute="trailing" id="1jO-EZ-ZOo"/>
+                            <constraint firstItem="78n-Ue-50c" firstAttribute="leading" secondItem="iR8-dy-GSC" secondAttribute="leading" id="88e-oX-QTc"/>
+                            <constraint firstItem="78n-Ue-50c" firstAttribute="top" secondItem="DWZ-DT-jod" secondAttribute="bottom" id="AKg-WX-6Jx"/>
+                            <constraint firstItem="iR8-dy-GSC" firstAttribute="trailing" secondItem="jOB-iL-ctH" secondAttribute="trailing" id="AYx-VF-Tef"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="top" secondItem="jOB-iL-ctH" secondAttribute="top" id="Bvo-um-jOH"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="bottom" secondItem="jOB-iL-ctH" secondAttribute="bottom" id="GH8-8H-AWw"/>
+                            <constraint firstItem="jOB-iL-ctH" firstAttribute="top" secondItem="78n-Ue-50c" secondAttribute="bottom" id="LbR-Kt-LYJ"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="bottom" secondItem="CKi-gO-CIQ" secondAttribute="top" id="W7V-yn-yz6"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="leading" secondItem="f1q-6i-50p" secondAttribute="leading" constant="290" id="YO1-9o-yfP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="78n-Ue-50c" secondAttribute="trailing" constant="-20" id="ZuN-ON-TC4"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="top" secondItem="iR8-dy-GSC" secondAttribute="top" id="bXy-10-uwL"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="leading" secondItem="jOB-iL-ctH" secondAttribute="trailing" id="fcS-qb-Rq8"/>
+                            <constraint firstItem="78n-Ue-50c" firstAttribute="leading" secondItem="f1q-6i-50p" secondAttribute="leadingMargin" constant="-20" id="opt-iG-CrJ"/>
+                            <constraint firstItem="3ye-98-Yfs" firstAttribute="bottom" secondItem="iR8-dy-GSC" secondAttribute="bottom" id="rpX-ot-PsQ"/>
+                            <constraint firstItem="78n-Ue-50c" firstAttribute="leading" secondItem="jOB-iL-ctH" secondAttribute="leading" id="yFM-qU-uQK"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="YJ0-la-XK9"/>
+                    <connections>
+                        <outlet property="containerView" destination="3ye-98-Yfs" id="khw-bI-JDW"/>
+                        <outlet property="tableView" destination="iR8-dy-GSC" id="Qsx-9p-OKd"/>
+                        <outlet property="viewButton" destination="jOB-iL-ctH" id="xZg-AO-jBd"/>
+                        <outletCollection property="btnCollectMenu" destination="owd-ak-y1L" collectionClass="NSMutableArray" id="4Ls-dE-qij"/>
+                        <outletCollection property="btnCollectMenu" destination="aV2-qR-zjo" collectionClass="NSMutableArray" id="fee-65-GS1"/>
+                        <outletCollection property="btnCollectMenu" destination="eiO-rz-c1R" collectionClass="NSMutableArray" id="CqJ-Lu-QGo"/>
+                        <outletCollection property="btnCollectMenu" destination="9Xo-Jw-U3T" collectionClass="NSMutableArray" id="53g-51-KG6"/>
+                        <outletCollection property="btnCollectMenu" destination="s0S-do-z9Q" collectionClass="NSMutableArray" id="3hb-LL-j0J"/>
+                        <outletCollection property="navigaButton" destination="bcd-PN-uf9" collectionClass="NSMutableArray" id="gu5-2X-Gt0"/>
+                        <outletCollection property="navigaButton" destination="JN0-ZB-pNA" collectionClass="NSMutableArray" id="WBf-es-mPf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IgS-zC-odK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="WMD-k8-7Ia" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="5259" y="1324"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="BG-DetailApt" width="1018" height="2567"/>
+        <image name="BG-Home" width="2201" height="3294"/>
+        <image name="BG-Login" width="4167" height="2567"/>
+        <image name="Filter Filled-100" width="100" height="100"/>
+        <image name="basic-info" width="100" height="100"/>
+        <image name="call" width="413" height="199"/>
+        <image name="call-back" width="32" height="32"/>
+        <image name="camera-off" width="32" height="32"/>
+        <image name="cancel" width="100" height="100"/>
+        <image name="circle-online-status" width="100" height="100"/>
+        <image name="clinical-detail" width="100" height="100"/>
+        <image name="detail" width="376" height="512"/>
+        <image name="end-call" width="32" height="32"/>
+        <image name="line-icon" width="322" height="13"/>
+        <image name="logo" width="320" height="62"/>
+        <image name="medical-image" width="100" height="100"/>
+        <image name="mic-off" width="32" height="32"/>
+        <image name="no-camera-100" width="100" height="100"/>
+        <image name="patient" width="100" height="100"/>
+        <image name="present-complain" width="100" height="100"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="bfW-65-SPx"/>
+        <segue reference="W5o-7j-agP"/>
+    </inferredMetricsTieBreakers>
+</document>

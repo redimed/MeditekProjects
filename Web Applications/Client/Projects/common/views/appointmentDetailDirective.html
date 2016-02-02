@@ -14,19 +14,24 @@
                 <tr>
                     <td>Date</td>
                     <td>
-                        {{apptDate}}
+                        <span ng-if="apptDate && apptDate != null">{{apptDate}}</span>
+                        <span ng-if="!apptDate || apptDate == null">N/A</span>
                     </td>
                 </tr>
                 <tr>
                     <td>Time</td>
                     <td>
-                        {{apptTime}}
+                        <span ng-if="apptTime && apptTime != null">{{apptTime}}</span>
+                        <span ng-if="!apptTime || apptTime == null">N/A</span>
+                        
                     </td>
                 </tr>
                 <tr>
                     <td>Status</td>
                     <td>
-                        {{appointmentInfo.Status}}
+                        <span ng-if="appointmentInfo.Status && appointmentInfo.Status != null">{{appointmentInfo.Status}}</span>
+                        <span ng-if="!appointmentInfo.Status || appointmentInfo.Status == null">N/A</span>
+                        
                     </td>
                 </tr>
                 <tr>
@@ -36,7 +41,8 @@
                 <tr>
                     <td>Treating Practitioner</td>
                     <td>
-                        {{appointmentInfo.Doctors[0].FirstName +" "+ appointmentInfo.Doctors[0].LastName}}
+                        <span ng-if="appointmentInfo.Doctors[0].FirstName != null || appointmentInfo.Doctors[0].LastName != null">{{appointmentInfo.Doctors[0].FirstName +" "+ appointmentInfo.Doctors[0].LastName}}</span>
+                        <span ng-if="appointmentInfo.Doctors[0].FirstName == null && appointmentInfo.Doctors[0].LastName == null">N/A</span>
                     </td>
                 </tr>
                 <tr>
@@ -44,7 +50,7 @@
                     <td>
                         <a class="btn btn-sm btn-info" href="javascript:;" ng-click="onclick()">
                             Call &nbsp;&nbsp;<i class="glyphicon glyphicon-earphone"></i></a>
-                        <a class="btn btn-sm btn-danger">Chat &nbsp;&nbsp;<i class="glyphicon glyphicon-comment"></i></a>
+                        <!-- <a class="btn btn-sm btn-danger">Chat &nbsp;&nbsp;<i class="glyphicon glyphicon-comment"></i></a> -->
                     </td>
                 </tr>
             </table>

@@ -53,7 +53,7 @@ module.exports = function(appointmentUID, userInfo) {
             include: [{
                 model: TelehealthAppointment,
                 attributes: Services.AttributesAppt.TelehealthAppointment(),
-                required: true,
+                required: false,
                 include: [{
                     model: WAAppointment,
                     attributes: Services.AttributesAppt.WAAppointment(),
@@ -61,7 +61,7 @@ module.exports = function(appointmentUID, userInfo) {
                 }, {
                     model: PatientAppointment,
                     attributes: Services.AttributesAppt.PatientAppointment(),
-                    required: true,
+                    required: false,
                 }, {
                     model: PreferredPractitioner,
                     attributes: Services.AttributesAppt.PreferredPractitioner(),
@@ -124,6 +124,15 @@ module.exports = function(appointmentUID, userInfo) {
                 required: !_.isEmpty(filter.UserAccount),
                 include: [{
                     model: UserAccount,
+                    include: [{
+                        attributes: Services.AttributesAppt.FileUpload(),
+                        model: FileUpload,
+                        required: false,
+                        where: {
+                            Enable: 'Y',
+                            FileType: 'ProfileImage'
+                        }
+                    }],
                     attributes: Services.AttributesAppt.UserAccount(),
                     required: !_.isEmpty(filter.UserAccount),
                     where: filter.UserAccount

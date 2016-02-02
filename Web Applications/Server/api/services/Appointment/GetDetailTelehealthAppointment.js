@@ -53,11 +53,11 @@ module.exports = function(appointmentUID, userInfo) {
             include: [{
                 model: TelehealthAppointment,
                 attributes: Services.AttributesAppt.TelehealthAppointment(),
-                required: true,
+                required: false,
                 include: [{
                     model: PatientAppointment,
                     attributes: Services.AttributesAppt.PatientAppointment(),
-                    required: true,
+                    required: false,
                 }, {
                     model: ExaminationRequired,
                     attributes: Services.AttributesAppt.ExaminationRequired(),

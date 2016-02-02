@@ -28,12 +28,11 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'Projects')));
 app.use('/Projects', express.static(__dirname + '/Projects'));
 
-console.log(process.argv.indexOf("--prod"));
 // development only
 if (process.argv.indexOf("--prod") >= 0) {
     console.log("============================== production");
     https.createServer(ssl_options, app).listen(app.get('port'), function() {
-        console.log('Express server listening on port https' + app.get('port'));
+        console.log('Express server listening on port https ' + app.get('port'));
     });
 } else {
     console.log("============================== development");

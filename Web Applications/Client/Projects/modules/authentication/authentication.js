@@ -10,7 +10,7 @@ var app = angular.module('app.authentication', [
 	'app.authentication.user',
 	'app.authentication.WAAppointment',
 	'app.authentication.consultation',
-	'app.authentication.eForms',
+	'app.authentication.eForm',
 	'app.authentication.sandbox',
 	'app.authentication.admission',
 	'app.authentication.roster',

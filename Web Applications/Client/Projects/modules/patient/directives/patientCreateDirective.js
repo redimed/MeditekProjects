@@ -185,7 +185,7 @@ app.directive('patientCreate',function(toastr, PatientService, $state, $timeout,
 								scope.data.Suburb= verifyData.Suburb;
 								scope.data.Postcode= verifyData.Postcode;
 								scope.data.State = verifyData.State;
-								scope.data.HomePhoneNumber = verifyData.HomePhoneNumber;
+								scope.data.HomePhoneNumber = verifyData.HomePhoneNumber==""||verifyData.HomePhoneNumber==null?null:verifyData.HomePhoneNumber;
 								// scope.data.DOB = new Date('1/1/1990');
 							}
 							else{

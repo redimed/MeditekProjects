@@ -50,7 +50,7 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
             };
             if ($stateParams.roleid == 'roleid') {
                 var today = new Date();
-                scope.info.data.Filter[0].Appointment.FromTime = moment(today).format('YYYY-MM-DD Z');
+                scope.info.data.Filter[0].Appointment.FromTime = moment(today).format('YYYY-MM-DD 00:00:00 Z');
                 //console.log(moment().add(1,'days'));
             }
             scope.toggleFilter = function() {
@@ -98,6 +98,7 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
             };
 
             scope.LoadData = function() {
+                console.log(scope.info.data);
                 WAAppointmentService.loadListWAAppointment(scope.info.data).then(function(data) {
                     console.log(data);
                     scope.info.listWaapointment = data;
@@ -107,7 +108,7 @@ app.directive('listAppoint', function(WAAppointmentService, $modal, $cookies, to
             scope.reloadData = function() {
                 scope.info.data.Offset = (scope.info.paging.currentPage - 1) * scope.info.paging.itemsPerPage;
                 (scope.info.data.Search[0].Patient.FullName !== "") ? scope.info.data.Search[0].Patient.FullName: scope.info.data.Search[0].Patient.FullName = null;
-                (scope.fromCreateDate && scope.fromCreateDate !== null) ? scope.info.data.Filter[0].Appointment.CreatedDate = moment(scope.fromCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD Z'): scope.info.data.Filter[0].Appointment.CreatedDate = null;
+                (scope.fromCreateDate && scope.fromCreateDate !== null) ? scope.info.data.Filter[0].Appointment.CreatedDate = moment(scope.fromCreateDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss Z'): scope.info.data.Filter[0].Appointment.CreatedDate = null;
                 console.log('scope.info.data', scope.info.data);
                 scope.LoadData();
             }

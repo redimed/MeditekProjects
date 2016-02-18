@@ -24,7 +24,7 @@ app.controller('homeListCtrl', function($scope, $cookies, $state, WAAppointmentS
         }
     };
     var today = new Date();
-    $scope.info.data.Filter[0].Appointment.FromTime = moment(today).format('YYYY-MM-DD Z');
+    $scope.info.data.Filter[0].Appointment.FromTime = moment(today).format('YYYY-MM-DD HH:mm:ss Z');
     $scope.ListTodayConsultation = function(data) {
         if (data == 'todaylist') {
             $state.go("authentication.consultation.list", {
@@ -32,7 +32,7 @@ app.controller('homeListCtrl', function($scope, $cookies, $state, WAAppointmentS
             });
         } else if (data == 'today') {
             WAAppointmentService.loadListWAAppointment($scope.info.data).then(function(response) {
-                console.log(response);
+                console.log("response data",response);
                 if (response.rows.length != 0) {
                     var dataPost = {
                         UID: response.rows[0].UID,

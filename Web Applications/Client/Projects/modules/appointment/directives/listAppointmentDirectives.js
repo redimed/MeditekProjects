@@ -71,16 +71,16 @@ app.directive('listAppointment', function(AppointmentService, $modal, $cookies) 
             };
             scope.parseTime = function(data) {
                 if (data.Range[0].Appointment.CreatedDate[0] !== null && data.Range[0].Appointment.CreatedDate[0] !== undefined) {
-                    data.Range[0].Appointment.CreatedDate[0] = moment(data.Range[0].Appointment.CreatedDate[0]).format('YYYY-MM-DD Z');
+                    data.Range[0].Appointment.CreatedDate[0] = moment(data.Range[0].Appointment.CreatedDate[0]).format('YYYY-MM-DD HH:mm:ss Z');
                 }
                 if (data.Range[0].Appointment.CreatedDate[1] !== null && data.Range[0].Appointment.CreatedDate[1] !== undefined) {
-                    data.Range[0].Appointment.CreatedDate[1] = moment(data.Range[0].Appointment.CreatedDate[1]).format('YYYY-MM-DD Z');
+                    data.Range[0].Appointment.CreatedDate[1] = moment(data.Range[0].Appointment.CreatedDate[1]).format('YYYY-MM-DD HH:mm:ss Z');
                 }
                 if (data.Range[0].Appointment.FromTime[0] !== null && data.Range[0].Appointment.FromTime[0] !== undefined) {
-                    data.Range[0].Appointment.FromTime[0] = moment(data.Range[0].Appointment.FromTime[0]).format('YYYY-MM-DD Z');
+                    data.Range[0].Appointment.FromTime[0] = moment(data.Range[0].Appointment.FromTime[0]).format('YYYY-MM-DD HH:mm:ss Z');
                 }
                 if (data.Range[0].Appointment.FromTime[1] !== null && data.Range[0].Appointment.FromTime[1] !== undefined) {
-                    data.Range[0].Appointment.FromTime[1] = moment(data.Range[0].Appointment.FromTime[1]).format('YYYY-MM-DD Z');
+                    data.Range[0].Appointment.FromTime[1] = moment(data.Range[0].Appointment.FromTime[1]).format('YYYY-MM-DD HH:mm:ss Z');
                 }
             }
 

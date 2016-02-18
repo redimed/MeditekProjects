@@ -1,5 +1,4 @@
 var env='meditekServer'; //local,meditekServer,testApp,app
-<<<<<<< 12e0a174c2750a8b403a1595d942da9cc9d67b17
 
 
 var configRestBaseUrl={

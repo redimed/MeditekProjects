@@ -19,7 +19,7 @@ module.exports = function(objCheckOverlap) {
                 }
             });
             Roster.findAll({
-                    attributes: ['FromTime', 'ToTime'],
+                    attributes: ['UID', 'FromTime', 'ToTime'],
                     include: [{
                         attributes: ['ID'],
                         model: UserAccount,
@@ -45,7 +45,9 @@ module.exports = function(objCheckOverlap) {
                                         var toTimeUser = moment(valueRosterUser.ToTime).format('YYYY-MM-DD HH:mm:ss');
                                         var rangeRosterCheck = moment.range(fromTimeCheck, toTimeCheck);
                                         var rangeRosterUser = moment.range(fromTimeUser, toTimeUser);
-                                        if (rangeRosterCheck.overlaps(rangeRosterUser) === true) {
+                                        if (rangeRosterCheck.overlaps(rangeRosterUser) === true &&
+                                            valueRosterCheck.UID !== valueRosterUser.UID &&
+                                            valueRosterUser.UID !== null) {
                                             arrayRosterOverlap.push(valueRosterCheck);
                                         }
                                     }

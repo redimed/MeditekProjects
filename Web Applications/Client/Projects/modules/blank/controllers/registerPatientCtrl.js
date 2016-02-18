@@ -80,7 +80,7 @@ app.controller('registerPatientCtrl', function($scope, blankServices, Authentica
                         $cookies.putObject("userInfo", response.user);
                         $cookies.put("token", response.token);
                         $rootScope.refreshCode = response.refreshCode;
-                        $state.go("authentication.patient.home")
+                        $state.go("authentication.home.list")
                     }, function(err) {
                         toastr.error('Patient login fail');
                     })

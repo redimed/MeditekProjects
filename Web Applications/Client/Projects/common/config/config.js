@@ -38,7 +38,9 @@ var o = {
         
         telehealthBaseURL:_telehealthBaseURL,
 
-        configStateBlank:_configStateBlank
+        configStateBlank:_configStateBlank,
+
+        eFormBaseUrl: _eFormBaseURL
     },
 
     checkData: function(value) {

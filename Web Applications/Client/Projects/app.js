@@ -165,6 +165,7 @@ app
         });
     })
     .run(function($rootScope, $cookies, $window, $state, Restangular, toastr, settings) {
+        $('#loading').css("display","none");
         // RESTANGULAR ERROR HANDLING
         // Restangular.setErrorInterceptor(function (response) {
         //     if (response.status == 401) {

@@ -220,7 +220,7 @@ app.controller('schedulerCtrl', function($scope, $timeout, $uibModal, $cookies, 
         var date = $('#calendar').fullCalendar('getDate');
         var zone = moment().format('Z');
         var today = moment(date).format('YYYY-MM-DD')+' 00:00:00 '+zone;
-        return today;    
+        return today;
     }
 
     $scope.viewRender = function(view, element) {

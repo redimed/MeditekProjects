@@ -29,10 +29,6 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
     };
 
     $scope.eventRender = function(event, element, view){
-            event.allDay = true;
-            angular.element('.fc-other-month').css('background-color', '#eee');
-            element.find('.fc-time').html(moment(event.start).format('hA').toLowerCase()+'-'+moment(event.end).format('hA').toLowerCase()+'<br/>');
-            element.find('.fc-title').html('<h4><b>'+event.title+'</b></h4><small><i>'+event.textOccurance+'</i></small>');
     };
     $scope.eventResize = function(event){
     };
@@ -40,6 +36,9 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
         $scope.selectedEvent = event;
     };
     $scope.eventAfterRender = function(event, element, view){
+        angular.element('.fc-other-month').css('background-color', '#eee');
+        element.find('.fc-time').html(moment(event.start).format('hh:mm').toLowerCase()+'-'+moment(event.enddate).format('hh:mm').toLowerCase()+'<br/>');
+        element.find('.fc-title').html('<h4><b>'+event.title+'</b></h4><small><i>'+event.textOccurance+'</i></small>');
         if(userRole === 1){
             $(element).attr('id', 'event_id_'+event.UID);
             $.contextMenu({
@@ -180,8 +179,9 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
         }
     };
     $scope.viewRender = function(view, element){
-        $scope.calendarTemp.startDate = moment(view.start).format('YYYY-MM-DD Z');
-        $scope.calendarTemp.endDate = moment(view.end).format('YYYY-MM-DD Z');
+        var zone = moment().format('Z');
+        $scope.calendarTemp.startDate = moment(view.start).format('YYYY-MM-DD') +" 00:00:00 "+zone;
+        $scope.calendarTemp.endDate = moment(view.end).format('YYYY-MM-DD')+" 00:00:00 "+zone;
         $scope.events.splice(0, $scope.events.length);
         ServerListCalendar($scope.calendarTemp.startDate, $scope.calendarTemp.endDate);
     };
@@ -237,6 +237,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
             .then(function(response){
                     _.forEach(response.data.rows, function(item, index){
                             var Service = item.Services[0];
+                            $scope.doctorName = item.UserAccounts[0].Doctor.FirstName+" "+item.UserAccounts[0].Doctor.LastName;
 
                             var color = (item.IsRecurrence === 'Y')?'green':'green';
                             var textColor = 'white';
@@ -245,7 +246,7 @@ app.controller('calendarCtrl', function($state,  $cookies, $stateParams, RosterS
                                     UID: item.UID,
                                     title: Service.ServiceName,
                                     start: new Date(item.FromTime),
-                                    end: new Date(item.ToTime),
+                                    enddate: new Date(item.ToTime),
                                     textColor: textColor,
                                     color: Service.Colour,
                                     textOccurance: textOccurance

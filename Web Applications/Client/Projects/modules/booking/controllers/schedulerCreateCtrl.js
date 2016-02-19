@@ -115,7 +115,8 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
             var fromTime = appendFullCalendarDateTime(start, $scope.formData.fromTime);
             var toTime = appendFullCalendarDateTime(start, $scope.formData.toTime);
             var type = $scope.formData.type;
-            var requestDate = moment(start).format('YYYY-MM-DD HH:mm:ss Z');
+            var zone = moment('Z');
+            var requestDate = moment(start).format('YYYY-MM-DD HH:mm:ss') + ' '+zone;
             var serviceUID = $scope.formData.service.UID;
             var siteUID = $scope.formData.site.UID;
             var DoctorUID = event.UserAccounts[0].Doctor.UID;

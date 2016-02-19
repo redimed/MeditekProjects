@@ -12,6 +12,15 @@ var ssl_options = {
     cert: fs.readFileSync('key/star_redimed_com_au.pem')
 };
 
+var compress = require('compression');
+app.use(compress({
+    threshold : 0, // or whatever you want the lower threshold to be
+     filter    : function(req, res) {
+        var ct = res.get('content-type');
+        return true;
+     }
+}));
+
 // all environments
 // app.set('env', 'development');
 app.use(express.favicon());

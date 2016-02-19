@@ -4,34 +4,22 @@ var env='meditekServer'; //local,meditekServer,testApp,app
 var configRestBaseUrl={
 	'local':'https://192.168.1.235:3005',
 	// 'local':'http://192.168.1.235:3005',
-	'meditekServer':'https://192.168.1.235:3005',
+	'meditekServer':'https://telehealthvietnam:3005',
 	'testApp':'https://testapp.redimed.com.au:3005',
 	'app':'https://apps.redimed.com.au:3005'
 };
 
 var configAuthBaseUrl={
-<<<<<<< 1982176f5fb08afda8fe0ebf96acc4ff60a2cfca
 	'local':'https://192.168.1.235:3006',
 	// 'local':'https://192.168.1.215:3006',
 	'meditekServer':'http://telehealthvietnam.com.vn:3006',
-=======
-	 'local':'http://192.168.1.235:3006',
-	//'local':'https://localhost:3006',
-	'meditekServer':'https://192.168.1.235:3006',
->>>>>>> add appointment type
 	'testApp':'https://testapp.redimed.com.au:3006',
 	'app':'https://apps.redimed.com.au:3006',
 };
 
 var configTelehealthBaseUrl = {
-<<<<<<< 1982176f5fb08afda8fe0ebf96acc4ff60a2cfca
 	'local':'https://192.168.1.235:3009',
 	'meditekServer':'http://telehealthvietnam.com.vn:3009',
-=======
-	'local':'http://localhost:3009',
-	// 'local':'http://localhost:3009',
-	'meditekServer':'https://192.168.1.235:3009',
->>>>>>> add appointment type
 	'testApp':'https://testapp.redimed.com.au:3009',
 	'app':'https://apps.redimed.com.au:3009',
 };

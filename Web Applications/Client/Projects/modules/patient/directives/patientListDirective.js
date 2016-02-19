@@ -78,7 +78,7 @@ app.directive('patientList', function(PatientService, $uibModal, toastr,$cookies
 	            scope.loadList(scope.searchObjectMap);
 	        };
 
-			scope.toggle = true;
+			scope.toggle = false;
 			scope.toggleFilter = function(){
 				scope.toggle = scope.toggle === false ? true : false;
 			};

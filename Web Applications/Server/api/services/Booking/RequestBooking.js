@@ -59,23 +59,50 @@ module.exports = function(data, userInfo) {
                     .then(function(apptCreated) {
                         if (!_.isEmpty(apptCreated)) {
                             objAppt = apptCreated;
-                            var whereClauseDoctor = {};
-                            _.forEach(data.Doctor, function(valueKey, indexKey) {
-                                if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
-                                    moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
-                                    whereClauseDoctor[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
-                                } else if (!_.isArray(valueKey) &&
-                                    !_.isObject(valueKey)) {
-                                    whereClauseDoctor[indexKey] = valueKey;
-                                }
-                            });
-                            return Doctor.findOne({
-                                attributes: ['ID'],
-                                where: whereClauseDoctor,
-                                transaction: t,
-                                raw: true
-                            });
+                            if (data.Appointment.Type === 'Onsite') {
+                                var objCreateOnsiteAppt = {
+                                    data: {
+                                        Description: data.Appointment.Description
+                                    },
+                                    transaction: t,
+                                    appointmentObject: objAppt
+                                };
+                                return Services.CreateOnsiteAppointment(objCreateOnsiteAppt);
+                            } else if (data.Appointment.Type === 'Telehealth') {
+                                var objCreateTelehealthAppt = {
+                                    data: {
+                                        UID: UUIDService.Create(),
+                                        CreatedBy: userInfo.ID
+                                    },
+                                    transaction: t,
+                                    appointmentObject: objAppt
+                                };
+                                return Services.CreateTelehealthAppointment(objCreateTelehealthAppt);
+                            }
                         }
+                    }, function(err) {
+                        defer.reject({
+                            transaction: t,
+                            error: err
+                        });
+                    })
+                    .then(function(onsiteAppointmentorTelehealthCreated) {
+                        var whereClauseDoctor = {};
+                        _.forEach(data.Doctor, function(valueKey, indexKey) {
+                            if (moment(valueKey, 'YYYY-MM-DD Z', true).isValid() ||
+                                moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z', true).isValid()) {
+                                whereClauseDoctor[indexKey] = moment(valueKey, 'YYYY-MM-DD HH:mm:ss Z').toDate();
+                            } else if (!_.isArray(valueKey) &&
+                                !_.isObject(valueKey)) {
+                                whereClauseDoctor[indexKey] = valueKey;
+                            }
+                        });
+                        return Doctor.findOne({
+                            attributes: ['ID'],
+                            where: whereClauseDoctor,
+                            transaction: t,
+                            raw: true
+                        });
                     }, function(err) {
                         defer.reject({
                             transaction: t,

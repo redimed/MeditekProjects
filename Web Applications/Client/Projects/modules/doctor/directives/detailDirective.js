@@ -73,10 +73,8 @@ angular.module('app.authentication.doctor.directive.detail', [])
 		        // console.info('onSuccessItem', fileItem, response, status, headers);
 		    };
 		    uploader.onBeforeUploadItem = function(item) {
-		    	item.headers={
-		    		Authorization:'Bearer '+$cookies.get("token"),
-		    		systemtype:'WEB',
-		    	},
+		    	item.headers.Authorization = 'Bearer '+$cookies.get("token");
+		    	item.headers.systemtype = 'WEB';
 		        console.info('onBeforeUploadItem', item);
 		    };
 		    uploader.onCompleteItem = function (fileItem, response, status, headers) {
@@ -227,6 +225,8 @@ angular.module('app.authentication.doctor.directive.detail', [])
 								postData.FileType = [];
 							   	for(var i = 0; i < scope.uploader.queue.length; i++) {
 							   		scope.uploader.queue[i].formData[0].userUID = scope.info.UserAccount.UID;
+							   		scope.uploader.queue[i].headers.userUID = scope.info.UserAccount.UID;
+							   		scope.uploader.queue[i].headers.fileType = scope.uploader.queue[i].formData[0].fileType;
 							   		postData.FileType.push(scope.uploader.queue[i].formData[0].fileType);
 							   	}
 							   	doctorService.changeStatusFile(postData)

@@ -116,7 +116,7 @@ app.controller('appointmentRequestCtrl', function($scope, $rootScope, $cookies, 
     };
 
     $scope.SendRequestUploadFile = function() {
-        console.log('uploader',uploader);
+        console.log('uploader', uploader);
         uploader.uploadAll();
     }
 
@@ -147,10 +147,10 @@ app.controller('appointmentRequestCtrl', function($scope, $rootScope, $cookies, 
         console.info('onAfterAddingAll', addedFileItems);
     };
     uploader.onBeforeUploadItem = function(item) {
-        item.headers = {
-            Authorization: ('Bearer ' + $cookies.get("token")),
-            systemtype: 'WEB'
-        };
+        item.headers.systemtype = 'WEB';
+        item.headers.Authorization = ('Bearer ' + $cookies.get("token"));
+        item.headers.userUID = $cookies.getObject('userInfo').UID;
+        item.headers.fileType = 'MedicalImage';
         item.formData[0] = {};
         item.formData[0].userUID = $cookies.getObject('userInfo').UID;
         item.formData[0].fileType = 'MedicalImage';
@@ -167,8 +167,7 @@ app.controller('appointmentRequestCtrl', function($scope, $rootScope, $cookies, 
     };
     uploader.onErrorItem = function(fileItem, response, status, headers) {
         console.info('onErrorItem', fileItem, response, status, headers);
-        if(Boolean(headers.requireupdatetoken)===true)
-        {
+        if (Boolean(headers.requireupdatetoken) === true) {
             $rootScope.getNewToken();
         }
     };
@@ -177,8 +176,7 @@ app.controller('appointmentRequestCtrl', function($scope, $rootScope, $cookies, 
     };
     uploader.onCompleteItem = function(fileItem, response, status, headers) {
         console.info('onCompleteItem', fileItem, response, status, headers);
-        if(Boolean(headers.requireupdatetoken)===true)
-        {
+        if (Boolean(headers.requireupdatetoken) === true) {
             $rootScope.getNewToken();
         }
         if (response.status == 'success') {

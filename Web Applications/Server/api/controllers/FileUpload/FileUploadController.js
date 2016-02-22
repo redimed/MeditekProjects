@@ -11,6 +11,10 @@ module.exports = {
         mkdirp(uploadDir, function(err) {
             if (err) return res.serverError(ErrorWrap(err));
             var params = req.params.all();
+            if (!params.userUID || !params.fileType) {
+                params.userUID = req.headers.useruid;
+                params.fileType = req.headers.filetype;
+            };
             var maxFileSize = 15 * 1000 * 1000; //in MB
             req.file('uploadFile').upload({
                 maxBytes: maxFileSize,

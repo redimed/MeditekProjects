@@ -156,6 +156,8 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
         for (var i = 0; i < uploader.queue.length; i++) {
             var item = uploader.queue[i];
             item.formData[0]["userUID"] = $cookies.getObject('userInfo').UID;
+            item.headers.userUID = $cookies.getObject('userInfo').UID;
+            item.headers.fileType = 'MedicalImage';
             item.formData[0]["fileType"] = 'MedicalImage';
         };
         uploader.uploadAll();
@@ -205,12 +207,9 @@ app.controller('WAAppointmentGPCtrl', function(WAAppointmentService, $scope, $ro
         console.info('onAfterAddingAll', addedFileItems);
     };
     uploader.onBeforeUploadItem = function(item) {
-        //item.headers.Authorization = ('Bearer ' + $cookies.get("token"));
-        item.headers = {
-                Authorization: 'Bearer ' + $cookies.get("token"),
-                systemtype: 'WEB',
-            },
-            console.info('onBeforeUploadItem', item.headers);
+        item.headers.Authorization = 'Bearer ' + $cookies.get("token");
+        item.headers.systemtype = 'WEB';
+        console.info('onBeforeUploadItem', item.headers);
     };
     uploader.onProgressItem = function(fileItem, progress) {
         console.info('onProgressItem', fileItem, progress);

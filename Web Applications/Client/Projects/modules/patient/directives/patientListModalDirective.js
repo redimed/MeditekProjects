@@ -73,10 +73,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    	console.log(uploader.queue);
 		    };
 		    uploader.onBeforeUploadItem = function(item) {
-		    	item.headers={
-		    		Authorization:'Bearer '+$cookies.get("token"),
-		    		systemtype:'WEB',
-		    	},
+		    	item.headers.Authorization = 'Bearer ' + $cookies.get("token");
+                item.headers.systemtype = 'WEB';
 		        console.info('onBeforeUploadItem', item);
 		    };
 		    // uploader.onSuccessItem = function (fileItem, response, status, headers) {
@@ -218,6 +216,8 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 							   	for(var i = 0; i < scope.uploader.queue.length; i++) {
 							   		scope.uploader.queue[i].formData[0].userUID = scope.info.UserAccount.UID;
 							   		postData.FileType.push(scope.uploader.queue[i].formData[0].fileType);
+							   		scope.uploader.queue[i].headers.userUID = scope.info.UserAccount.UID;
+							   		scope.uploader.queue[i].headers.fileType = scope.uploader.queue[i].formData[0].fileType;
 							   	}
 							   	PatientService.changeStatusFile(postData)
 							   	.then(function(result){

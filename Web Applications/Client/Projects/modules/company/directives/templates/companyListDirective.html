@@ -1,0 +1,69 @@
+<!-- content page -->
+<div class="portlet box green">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="icon-list"></i>
+			<span class="caption-subject bold uppercase">Company list</span>
+		</div>
+		<div class="actions">
+			<a href="javascript:;" class="btn red btn-sm" ng-click="toggleFilter()"><i class="fa fa-filter"></i> Filter</a>
+			<a  href="javascript:;" class="btn blue" ng-click="create()">
+			<i class="glyphicon glyphicon-plus"></i> Create</a>
+		</div>
+	</div>
+	<div class="portlet-body">
+		<div class="table-scrollable">
+			<table class="table table-bordered table-hover table-striped">
+				<thead>
+					<tr style="width:100%;">
+						<th width="1">#</th>
+						<th>Name</th>
+	 					<th width="15%">Status</th>
+					</tr>
+					<tr ng-if="toggle">
+						<td>&nbsp;</td>
+						<td><input type="text" class="form-control"></td>
+						<td>
+							<select class="form-control">
+								<option value="active">Active</option>
+								<option value="inActive">In Active</option>
+							</select>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="c in companys" ng-click="detail()">
+						<td>{{$index+1}}</td>
+						<td>{{c.name}}</td>
+						<td class="text-center">
+							<i class="glyphicon glyphicon-ok font-green" ng-if="c.active=='Y'"></i>
+							<i class="glyphicon glyphicon-remove font-red" ng-if="c.active=='N'"></i>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="row">
+			<div class="col-md-5 col-sm-12">
+				&nbsp;
+			</div>
+			<div class="col-md-7 col-sm-12" style="text-align:right">
+				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
+					<uib-pagination 
+					boundary-links="true" 
+					total-items="count" 
+					ng-model="searchObjectMap.currentPage" 
+					class="pagination-lg " 
+					previous-text="&lsaquo; " 
+					next-text="&rsaquo; " 
+					first-text="&laquo; " 
+					last-text="&raquo; " 
+					items-per-page="searchObjectMap.limit" 
+					max-size="searchObjectMap.maxSize"
+					ng-change="setPage()"></uib-pagination>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end content page -->

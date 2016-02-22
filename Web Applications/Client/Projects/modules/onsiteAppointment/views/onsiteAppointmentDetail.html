@@ -1,0 +1,65 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="authentication.onsiteAppointment.home">Onsite Appointment</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <a ui-sref="authentication.onsiteAppointment.list">List</a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Detail</b>
+        </li>
+    </ul>
+</div>
+<br>
+<!-- END PAGE HEADER-->
+
+<!-- content page -->
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-list"></i>
+            <span class="caption-subject bold uppercase">Onsite Appointment Detail</span>
+        </div>
+        <!-- <div class="tools hidden-xs">
+            <a href="javascript:;" class="collapse"></a>
+            <a href="javascript:;" class="fullscreen"> </a>
+        </div> -->
+        <ul class="nav nav-tabs">
+            <li>
+                <a href="index.html#tab_3" data-toggle="tab"> Staff List </a>
+            </li>
+            <li>
+                <a href="index.html#tab_2" data-toggle="tab"> Insurer List </a>
+            </li>
+            <li class="active">
+                <a href="index.html#tab_1" data-toggle="tab"> Basic Information </a>
+            </li>
+        </ul>
+    </div>
+    <div class="portlet-body form">
+        <form class="form">
+            <div class="form-body" style="margin-left:1em; margin-right:1em;">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                    </div>
+                    <div class="tab-pane" id="tab_2">
+                    </div>
+                    <div class="tab-pane" id="tab_3">
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions right">
+                <button type="reset" class="btn btn-lg dark">
+                    <i class="glyphicon glyphicon-refresh"></i> Reset</button>
+                <button type="submit" class="btn btn-lg green">
+                    Submit <i class="glyphicon glyphicon-save"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end content page -->

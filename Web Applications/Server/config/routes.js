@@ -1,6 +1,11 @@
 var routes = {};
 var _ = require('lodash');
 
+//Begin Module User Company 
+var CompanyRoutes = require('./routes/CompanyRoutes');
+_.extend(routes, CompanyRoutes);
+//End Module User Company
+
 //Begin Module User Account 
 var userAccountRoutes = require('./routes/userAccountRoutes');
 _.extend(routes, userAccountRoutes);

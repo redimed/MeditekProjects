@@ -144,9 +144,11 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $s
     $scope.FileUploadImage = []
     $scope.FileUploads = function() {
         $scope.FileUploadImage = angular.copy($scope.wainformation.FileUploads)
-        for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
-            $scope.FileUploadImage = $scope.FileUploadImage.concat($scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads)
-        }
+        if ($scope.wainformation.TelehealthAppointment !== null) {
+            for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
+                $scope.FileUploadImage = $scope.FileUploadImage.concat($scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads)
+            }
+        };
     }
     $scope.FileUploads()
     $scope.tab_body_part = 'all';
@@ -189,18 +191,28 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $s
 
     }
     $scope.loadFuntion();
-    $scope.info = {
-        apptStatus: WAConstant.apptStatus,
-        listDoctorTreatingPractitioner: null,
-        patientInfomation: ($scope.wainformation.Patients.length != 0) ? $scope.wainformation.Patients : $scope.wainformation.TelehealthAppointment.PatientAppointment,
-        appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('DD/MM/YYYY') : null,
-        appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('HH:mm') : null,
-        ExpiryDate: ($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate != null) ? moment($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate).format('DD/MM/YYYY') : null,
-        listDoctorTreatingPractitioner: null,
-        selectRadioGender: function() {
-            $scope.wainformation.TelehealthAppointment.PatientAppointment.Gender = "";
+    if ($scope.wainformation.TelehealthAppointment !== null) {
+        $scope.info = {
+            apptStatus: WAConstant.apptStatus,
+            listDoctorTreatingPractitioner: null,
+            patientInfomation: ($scope.wainformation.Patients.length != 0) ? $scope.wainformation.Patients : $scope.wainformation.TelehealthAppointment.PatientAppointment,
+            appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).format('DD/MM/YYYY') : null,
+            appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).format('HH:mm') : null,
+            ExpiryDate: ($scope.wainformation.TelehealthAppointment.PatientAppointment && $scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate != null) ? moment($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate).format('DD/MM/YYYY') : null,
+            listDoctorTreatingPractitioner: null,
+            selectRadioGender: function() {
+                $scope.wainformation.TelehealthAppointment.PatientAppointment.Gender = "";
+            }
         }
-    }
+    }else{
+         $scope.info = {
+            apptStatus: WAConstant.apptStatus,
+            listDoctorTreatingPractitioner: null,
+            appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).format('DD/MM/YYYY') : null,
+            appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).format('HH:mm') : null,
+            listDoctorTreatingPractitioner: null,
+        }
+    };
 
     $scope.loadAllDoctor = function() {
         WAAppointmentService.ListDoctor().then(function(data) {
@@ -298,7 +310,7 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $s
         });
     }
     $scope.ValidateData = function() {
-        if (!$scope.wainformation.TelehealthAppointment.PatientAppointment && !$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible) {
+        if (!$scope.wainformation.TelehealthAppointment && !$scope.wainformation.TelehealthAppointment.PatientAppointment && !$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible) {
             if ($scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible == 'N') {
                 $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber = null;
                 $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber = null;
@@ -306,7 +318,7 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $s
                 $scope.wainformation.TelehealthAppointment.PatientAppointment.DVANumber = null;
             };
         };
-        if ($scope.wainformation.TelehealthAppointment.WAAppointment !== null) {
+        if ($scope.wainformation.TelehealthAppointment.WAAppointment !== null && !$scope.wainformation.TelehealthAppointment) {
             if (!$scope.wainformation.TelehealthAppointment.WAAppointment.IsUsualGP) {
                 if ($scope.wainformation.TelehealthAppointment.WAAppointment.IsUsualGP == 'Y') {
                     $scope.wainformation.TelehealthAppointment.WAAppointment.UsualGPName = null;
@@ -318,7 +330,7 @@ app.controller('WAAppointmentListDetailCtrl', function(AuthenticationService, $s
         if ($scope.info.appointmentDate != null && $scope.info.appointmentDate != '') {
             var Time = moment($scope.info.appointmentTime, ["HH:mm:ss A"]).format("HH:mm:ss");
             var appointmentDateTime = $scope.info.appointmentDate + ' ' + Time + ' Z';
-            $scope.wainformation.FromTime = moment(appointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").utc().format('YYYY-MM-DD HH:mm:ss Z');
+            $scope.wainformation.FromTime = moment(appointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").format('YYYY-MM-DD HH:mm:ss Z');
         } else {
             $scope.wainformation.FromTime = null;
         };

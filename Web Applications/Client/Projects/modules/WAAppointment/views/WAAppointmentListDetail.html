@@ -1,12 +1,30 @@
 <div class="portlet box green" style="margin-bottom:0px;">
+    <div class="page-bar ">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="javascript:;" ui-sref="authentication.home.list">
+                    Home</a>
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+                <a href="javascript:;" ui-sref="authentication.WAAppointment.list">
+                    Appointment List</a>
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+                <b>Appointment Detail</b>
+            </li>
+        </ul>
+    </div>
     <div class="portlet-title bold uppercase" style="padding:10px;">
         <div class="caption">
             <i class="glyphicon glyphicon-th-list"></i>
             <span class="caption-subject">Telehealth Appointment</span>
         </div>
-        <div class="tools">
+        <!-- <div class="tools">
             <a class="remove" ng-click="close()"></a>
-        </div>
+        </div> -->
     </div>
     <div class="portlet-body form">
         <fieldset ng-disabled="checkRoleUpdate">

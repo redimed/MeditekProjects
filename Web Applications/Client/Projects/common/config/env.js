@@ -11,7 +11,7 @@ var configRestBaseUrl={
 
 var configAuthBaseUrl={
 	'local':'http://localhost:3006',
-	// 'local':'https://192.168.1.215:3006',
+	'localthanh':'https://192.168.1.235:3006',
 	'meditekServer':'https://telehealthvietnam.com.vn:3006',
 	'testApp':'https://testapp.redimed.com.au:3006',
 	'app':'https://apps.redimed.com.au:3006',
@@ -19,6 +19,7 @@ var configAuthBaseUrl={
 
 var configTelehealthBaseUrl = {
 	'local':'http://localhost:3009',
+	'localthanh':'http://192.168.1.235:3009',
 	'meditekServer':'https://telehealthvietnam.com.vn:3009',
 	'testApp':'https://testapp.redimed.com.au:3009',
 	'app':'https://apps.redimed.com.au:3009',

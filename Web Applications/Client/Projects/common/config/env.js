@@ -32,7 +32,6 @@ var configEFormUrl={
 	'app':'https://apps.redimed.com.au:3005'
 };
 
-
 if(env == "local")
 {
 	var _restBaseURL=configRestBaseUrl.local;

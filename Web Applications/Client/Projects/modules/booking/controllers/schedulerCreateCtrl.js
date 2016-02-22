@@ -115,12 +115,14 @@ app.controller('schedulerCreateCtrl', function($scope, BookingService, RosterSer
             var fromTime = appendFullCalendarDateTime(start, $scope.formData.fromTime);
             var toTime = appendFullCalendarDateTime(start, $scope.formData.toTime);
             var type = $scope.formData.type;
-            var zone = moment('Z');
-            var requestDate = moment(start).format('YYYY-MM-DD HH:mm:ss') + ' '+zone;
+            var zone = moment().format('Z');
+            var requestDate = moment(start).format('YYYY-MM-DD HH:mm:ss') + " " + zone;
             var serviceUID = $scope.formData.service.UID;
             var siteUID = $scope.formData.site.UID;
             var DoctorUID = event.UserAccounts[0].Doctor.UID;
             var PatientUID = $scope.formData.Patient.UID;
+
+            console.log('saassa'+requestDate);
 
             if (PatientUID === '')
                 toastr.error('You must choose Patient');

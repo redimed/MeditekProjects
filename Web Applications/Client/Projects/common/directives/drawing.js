@@ -104,7 +104,9 @@ angular.module("app.common.drawing",[])
                            },
                            headers:{
                                 Authorization: ('Bearer ' + $cookies.get("token")),
-                                systemtype: 'WEB'
+                                systemtype: 'WEB',
+                                userUID: scope.data.userUID,
+                                fileType: scope.data.fileType
                            },
                            type: "POST",
                            data: formdata,

@@ -62,64 +62,45 @@
                                 </div>
                             </div>
                         </div>
-                        <h3 class="form-section bold">Site info</h3>
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                                <div class="form-group">
-                                    <label class="control-label">Site Name</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">Address1</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">Address2</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-8 col-sm-8">
-                                        <div class="form-group">
-                                            <label class="control-label">Suburb</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label class="control-label">Postcode</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Country</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">State</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-8 col-sm-8">
-                                        <div class="form-group">
-                                            <label class="control-label">Contact Name</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <label class="control-label">Contact Number</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <h3 class="form-section bold">Site info
+                            <a href="javascript:;" class="btn btn-lg green pull-right" ng-click="site('add',-1)">
+                                <i class="glyphicon glyphicon-plus"></i> Add</a>
+                        </h3>
+                        <div class="table-scrollable margin-top-30">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr style="width:100%;">
+                                        <th width="1">#</th>
+                                        <th>Site Name</th>
+                                        <th>Address</th>
+                                        <th>Contact Name</th>
+                                        <th>Contact Number</th>
+                                        <th width="1"></th>
+                                        <th width="1"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="s in companys.sites">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{s.site_name}}</td>
+                                        <td>{{s.address1}}</td>
+                                        <td>{{s.contact_name}}</td>
+                                        <td>{{s.contact_number}}</td>
+                                        <td>
+                                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only blue" 
+                                                ng-click="site('update',$index)">
+                                                <i class="glyphicon glyphicon-pencil"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only red"
+                                                ng-click="site('delete',$index)">
+                                                <i class="glyphicon glyphicon-remove"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="tab-pane" id="tab_2">
@@ -200,7 +181,7 @@
                     <div class="tab-pane" id="tab_4">
                         <h3 class="form-section bold">
                             User Account
-                            <a class="btn btn-lg green pull-right">
+                            <a class="btn btn-lg green pull-right" ng-click="userAccount('add',-1)">
                                 <i class="glyphicon glyphicon-plus"></i> Add
                             </a>
                         </h3>
@@ -217,15 +198,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="s in companys.staffs">
+                                    <tr ng-repeat="u in companys.userAccounts">
                                         <td>{{$index+1}}</td>
-                                        <td>{{s.name}}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{u.name}}</td>
+                                        <td>{{u.dob}}</td>
+                                        <td>{{u.gender}}</td>
+                                        <td>{{u.mobile}}</td>
                                         <td>
                                             <a href="javascript:;" class="btn btn-circle btn-only-icon btn-icon-only red"
-                                                ng-click="staff('delete',$index)">
+                                                ng-click="userAccount('delete',$index)">
                                                 <i class="glyphicon glyphicon-remove"></i>
                                             </a>
                                         </td>

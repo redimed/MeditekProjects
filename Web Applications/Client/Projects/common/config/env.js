@@ -18,13 +18,8 @@ var configAuthBaseUrl={
 };
 
 var configTelehealthBaseUrl = {
-<<<<<<< HEAD
 	'local':'http://localhost:3009',
 	'meditekServer':'https://telehealthvietnam.com.vn:3009',
-=======
-	'local':'https://localhost:3009',
-	'meditekServer':'http://telehealthvietnam.com.vn:3009',
->>>>>>> e4816febd38d23d908d5ca3167ce1c81ab0d95b2
 	'testApp':'https://testapp.redimed.com.au:3009',
 	'app':'https://apps.redimed.com.au:3009',
 };

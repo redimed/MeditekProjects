@@ -468,6 +468,7 @@ angular.module('app.authentication.patient.services',[])
 	};
 
 	PatientService.getDatatoDirective = function(){
+		var returnData = {};
 		var info = {
 			FirstName:postData.FirstName,
 			MiddleName:postData.MiddleName,
@@ -484,7 +485,14 @@ angular.module('app.authentication.patient.services',[])
 			Suburb:postData.Suburb,
 			Postcode:postData.Postcode
 		};
-		return info;
+		returnData.data = info;
+		if(postData.hasOwnProperty('PatientDVA')== true) returnData.PatientDVA = postData.PatientDVA;
+		if(postData.hasOwnProperty('PatientMedicare')== true) returnData.PatientMedicare = postData.PatientMedicare;
+		if(postData.hasOwnProperty('PatientPension')== true) returnData.PatientPension = postData.PatientPension;
+		if(postData.hasOwnProperty('PatientFund')== true) returnData.PatientFund = postData.PatientFund;
+		if(postData.hasOwnProperty('PatientKin')== true) returnData.PatientKin = postData.PatientKin;
+		if(postData.hasOwnProperty('PatientGP')== true) returnData.PatientGP = postData.PatientGP;
+		return returnData;
 	}
 
 	PatientService.detailPatient = function(data){

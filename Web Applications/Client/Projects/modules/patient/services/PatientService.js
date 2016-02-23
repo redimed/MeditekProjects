@@ -461,9 +461,10 @@ angular.module('app.authentication.patient.services',[])
 	};
 
 	PatientService.postDatatoDirective = function(info) {
+		console.log(info)
 		postData = angular.copy(info);
-		if(postData.Gender !=null && postData.Gender !=='Male' && postData.Gender !=='Female'){
-			postData.Gender = 'Other';
+		if(postData.data.Gender !=null && postData.data.Gender !=='Male' && postData.data.Gender !=='Female'){
+			postData.data.Gender = 'Other';
 		}
 	};
 

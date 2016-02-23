@@ -7,7 +7,7 @@ app.directive('telehealthDetail', function() {
         },
         templateUrl: "modules/consultation/directives/templates/consultationTelehealthDetailDirectives.html",
         controller: function(AuthenticationService, $state, $cookies, $scope, WAAppointmentService, toastr, $modal, PatientService, CommonService) {
-            $scope.loadListContry = function() {
+          $scope.loadListContry = function() {
                 AuthenticationService.getListCountry().then(function(response) {
                     $scope.ListContry = response.data;
                 })
@@ -33,13 +33,15 @@ app.directive('telehealthDetail', function() {
                         console.log(er);
                     })
             }
-            console.log("telehealthDetail", $scope.wainformation);
+            console.log("data---->", $scope.wainformation)
             $scope.FileUploadImage = []
             $scope.FileUploads = function() {
                 $scope.FileUploadImage = angular.copy($scope.wainformation.FileUploads)
-                for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
-                    $scope.FileUploadImage = $scope.FileUploadImage.concat($scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads)
-                }
+                if ($scope.wainformation.TelehealthAppointment !== null) {
+                    for (var key in $scope.wainformation.TelehealthAppointment.ClinicalDetails) {
+                        $scope.FileUploadImage = $scope.FileUploadImage.concat($scope.wainformation.TelehealthAppointment.ClinicalDetails[key].FileUploads)
+                    }
+                };
             }
             $scope.FileUploads()
             $scope.tab_body_part = 'all';
@@ -82,18 +84,28 @@ app.directive('telehealthDetail', function() {
 
             }
             $scope.loadFuntion();
-            $scope.info = {
-                apptStatus: WAConstant.apptStatus,
-                listDoctorTreatingPractitioner: null,
-                patientInfomation: ($scope.wainformation.Patients.length != 0) ? $scope.wainformation.Patients : $scope.wainformation.TelehealthAppointment.PatientAppointment,
-                appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('DD/MM/YYYY') : null,
-                appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).utc().format('HH:mm') : null,
-                ExpiryDate: ($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate != null) ? moment($scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate).format('DD/MM/YYYY') : null,
-                listDoctorTreatingPractitioner: null,
-                selectRadioGender: function() {
-                    $scope.wainformation.TelehealthAppointment.PatientAppointment.Gender = "";
+            if ($scope.wainformation.TelehealthAppointment !== null) {
+                $scope.info = {
+                    apptStatus: WAConstant.apptStatus,
+                    listDoctorTreatingPractitioner: null,
+                    patientInfomation: ($scope.wainformation.Patients.length != 0) ? $scope.wainformation.Patients : $scope.wainformation.TelehealthAppointment.PatientAppointment,
+                    appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).format('DD/MM/YYYY') : null,
+                    appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).format('HH:mm') : null,
+                    MedicareExpiryDate: ($scope.wainformation.TelehealthAppointment.PatientAppointment && $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate != null) ? moment($scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate).format('DD/MM/YYYY') : null,
+                    listDoctorTreatingPractitioner: null,
+                    selectRadioGender: function() {
+                        $scope.wainformation.TelehealthAppointment.PatientAppointment.Gender = "";
+                    }
                 }
-            }
+            } else {
+                $scope.info = {
+                    apptStatus: WAConstant.apptStatus,
+                    listDoctorTreatingPractitioner: null,
+                    appointmentDate: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).format('DD/MM/YYYY') : null,
+                    appointmentTime: ($scope.wainformation.FromTime != null) ? moment($scope.wainformation.FromTime).format('HH:mm') : null,
+                    listDoctorTreatingPractitioner: null,
+                }
+            };
 
             $scope.loadAllDoctor = function() {
                 WAAppointmentService.ListDoctor().then(function(data) {
@@ -177,29 +189,32 @@ app.directive('telehealthDetail', function() {
                 WAAppointmentService.updateWaAppointment($scope.wainformation).then(function(data) {
                     console.log('saveWaAppointment', data);
                     toastr.success("Update appointment successfully !");
-                    // $modalInstance.close('success');
                     swal.close();
+                    $state.go("authentication.WAAppointment.detail", {}, {
+                        reload: true
+                    });
                 }, function(err) {
                     if (err.status == 401) {
-                        // $modalInstance.close('err');
                         swal.close();
                     } else {
-                        // $modalInstance.close('err');
                         swal.close();
                         toastr.error('Update Appointment Failed');
+                        $state.go("authentication.WAAppointment.detail", {}, {
+                            reload: true
+                        });
                     }
                 });
             }
             $scope.ValidateData = function() {
-                if (!$scope.wainformation.TelehealthAppointment.PatientAppointment && !$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible) {
+                if (!$scope.wainformation.TelehealthAppointment && !$scope.wainformation.TelehealthAppointment.PatientAppointment && !$scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible) {
                     if ($scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible == 'N') {
                         $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber = null;
                         $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber = null;
-                        $scope.info.ExpiryDate = null;
+                        $scope.info.MedicareExpiryDate = null;
                         $scope.wainformation.TelehealthAppointment.PatientAppointment.DVANumber = null;
                     };
                 };
-                if ($scope.wainformation.TelehealthAppointment.WAAppointment !== null) {
+                if ($scope.wainformation.TelehealthAppointment.WAAppointment !== null && !$scope.wainformation.TelehealthAppointment) {
                     if (!$scope.wainformation.TelehealthAppointment.WAAppointment.IsUsualGP) {
                         if ($scope.wainformation.TelehealthAppointment.WAAppointment.IsUsualGP == 'Y') {
                             $scope.wainformation.TelehealthAppointment.WAAppointment.UsualGPName = null;
@@ -211,14 +226,18 @@ app.directive('telehealthDetail', function() {
                 if ($scope.info.appointmentDate != null && $scope.info.appointmentDate != '') {
                     var Time = moment($scope.info.appointmentTime, ["HH:mm:ss A"]).format("HH:mm:ss");
                     var appointmentDateTime = $scope.info.appointmentDate + ' ' + Time + ' Z';
-                    $scope.wainformation.FromTime = moment(appointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").utc().format('YYYY-MM-DD HH:mm:ss Z');
+                    $scope.wainformation.FromTime = moment(appointmentDateTime, "DD/MM/YYYY HH:mm:ss Z").format('YYYY-MM-DD HH:mm:ss Z');
                 } else {
                     $scope.wainformation.FromTime = null;
                 };
-                if ($scope.info.ExpiryDate != null && $scope.info.ExpiryDate != '') {
-                    $scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate = moment($scope.info.ExpiryDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z');
+                console.log($scope.wainformation.TelehealthAppointment.PatientAppointment)
+                if ($scope.info.MedicareExpiryDate != null && $scope.info.MedicareExpiryDate != '') {
+                    $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate = moment($scope.info.MedicareExpiryDate, "DD/MM/YYYY").format('YYYY-MM-DD HH:mm:ss Z');
                 } else {
-                    $scope.wainformation.TelehealthAppointment.PatientAppointment.ExpiryDate = null;
+                    if($scope.wainformation.TelehealthAppointment.PatientAppointment == null){
+                        $scope.wainformation.TelehealthAppointment.PatientAppointment = {}
+                    };
+                    $scope.wainformation.TelehealthAppointment.PatientAppointment.MedicareExpiryDate = null
                 };
                 if ($scope.wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'N') {
                     $scope.wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage = null;
@@ -248,8 +267,7 @@ app.directive('telehealthDetail', function() {
             $scope.close = function() {
                 $modalInstance.close();
             };
-            $scope.showImage = function(Link, UID) {
-                o.loadingPage(true);
+            $scope.showImage = function(UID) {
                 var LinkUID = UID;
                 var modalInstance = $modal.open({
                     templateUrl: 'showImageTemplate',
@@ -264,9 +282,101 @@ app.directive('telehealthDetail', function() {
                 modalInstance.result.then(function(data) {
                     $modalInstance.close('err');
                 });
-            }; 
+            };
 
             $scope.selectPatient = function() {
+
+                var PatientAppointment = angular.copy($scope.wainformation.TelehealthAppointment.PatientAppointment)
+                // var postData = {
+                //     "data": {
+                //         "Title": PatientAppointment.Title,
+                //         "FirstName": PatientAppointment.FirstName,
+                //         "MiddleName": PatientAppointment.MiddleName,
+                //         "LastName": PatientAppointment.LastName,
+                //         "DOB": PatientAppointment.DOB,
+                //         "Gender": PatientAppointment.Gender,
+                //         "Address1": PatientAppointment.Address1,
+                //         "HomePhoneNumber": PatientAppointment.HomePhoneNumber,
+                //         "PhoneNumber": PatientAppointment.PhoneNumber,
+                //         "WorkPhoneNumber": PatientAppointment.WorkPhoneNumber,
+                //         "Suburb": PatientAppointment.Suburb,
+                //         "Postcode": PatientAppointment.Postcode,
+                //         "State": PatientAppointment.State,
+                //         "Email1": PatientAppointment.Email1,
+                //         "Email2": PatientAppointment.Email2,
+                //         "Address2": PatientAppointment.Address2,
+                //         "FaxNumber": PatientAppointment.FaxNumber,
+                //         "Indigenous": PatientAppointment.Indigenous,
+                //         "InterpreterLanguage": PatientAppointment.InterpreterLanguage,
+                //         "InterpreterRequired": PatientAppointment.InterpreterRequired,
+                //         "MaritalStatus": PatientAppointment.MaritalStatus,
+                //         "OtherSpecialNeed": PatientAppointment.OtherSpecialNeed,
+                //         "PreferredName": PatientAppointment.PreferredName,
+                //         "PreviousName": PatientAppointment.PreviousName,
+                //         "CountryID2": PatientAppointment.CountryOfBirth
+                //     },
+                //     "otherData": {
+                //         "PatientKin": {
+                //             "FirstName": PatientAppointment.FirstName,
+                //             "LastName": PatientAppointment.LastName,
+                //             "Relationship": PatientAppointment.PatientKinRelationship
+                //         },
+                //         "PatientMedicare": {
+                //             "MedicareEligible": PatientAppointment.MedicareEligible,
+                //             "MedicareNumber": PatientAppointment.MedicareNumber,
+                //             "MedicareReferenceNumber": PatientAppointment.MedicareReferenceNumber,
+                //             "MedicareExpiryDate": PatientAppointment.MedicareExpiryDate
+                //         },
+                //         "PatientDVA": {
+                //             "DVANumber": PatientAppointment.DVANumber
+                //         }
+                //     }
+                // }
+                var postData = {
+                    "data": {
+                        "Title": 1,
+                        "FirstName": 1,
+                        "MiddleName": 1,
+                        "LastName": 1,
+                        "DOB": 1,
+                        "Gender": 'Y',
+                        "Address1": "PatientAppointment.Address1",
+                        "HomePhoneNumber": 04123123123,
+                        "PhoneNumber": 04123123123,
+                        "WorkPhoneNumber": 04123123123,
+                        "Suburb": 1,
+                        "Postcode": 1,
+                        "State": 1,
+                        "Email1":"test@gmail.com",
+                        "Email2": "test@gmail.com",
+                        "Address2": "PatientAppointment.Address2",
+                        "FaxNumber": 04123123123,
+                        "Indigenous": 1,
+                        "InterpreterLanguage": 1,
+                        "InterpreterRequired": 'Y',
+                        "MaritalStatus": "PatientAppointment.MaritalStatus",
+                        "OtherSpecialNeed": 1,
+                        "PreferredName":" PatientAppointment.PreferredName",
+                        "PreviousName": null,
+                        "CountryID2": null
+                    },
+                    "otherData": {
+                        "PatientKin": {
+                            "FirstName": "PatientAppointment.FirstName",
+                            "LastName": "PatientAppointment.LastName",
+                            "Relationship": null
+                        },
+                        "PatientMedicare": {
+                            "MedicareEligible": "MedicareEligible",
+                            "MedicareNumber": null,
+                            "MedicareReferenceNumber": null,
+                            "MedicareExpiryDate": null
+                        },
+                        "PatientDVA": {
+                            "DVANumber":123
+                        }
+                    }
+                }
                 var modalInstance = $modal.open({
                     animation: true,
                     templateUrl: '../modules/appointment/views/appointmentSelectPatientModal.html',
@@ -286,7 +396,7 @@ app.directive('telehealthDetail', function() {
                     windowClass: 'app-modal-window',
                     resolve: {
                         patientInfo: function() {
-                            PatientService.postDatatoDirective($scope.wainformation.TelehealthAppointment.PatientAppointment);
+                            PatientService.postDatatoDirective(postData);
                         }
                     }
 

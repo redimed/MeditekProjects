@@ -1,6 +1,9 @@
 var app = angular.module('app.authentication.WAAppointment.directives.listWAAppoint', []);
-app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookies, toastr,$state) {
+app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookies, toastr, $state) {
     return {
+        scope:{
+            data:"="
+        },
         restrict: 'E',
         templateUrl: "modules/WAAppointment/directives/templates/listWAApointment.html",
         link: function(scope) {
@@ -18,7 +21,7 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
                         Appointment: {
                             Status: null,
                             Enable: 'Y',
-                            Type:null
+                            Type: null
                         }
                     }],
                     Search: [{
@@ -48,47 +51,21 @@ app.directive('listWaapointment', function(WAAppointmentService, $modal, $cookie
             scope.toggleFilter = function() {
                 scope.info.toggle = scope.info.toggle === false ? true : false;
             };
-            scope.WAAppointmentDetail = function(UID,AppointmentType) {
+            scope.WAAppointmentDetail = function(UID, AppointmentType) {
                 if (AppointmentType == 'Onsite') {
-                     
-                }else{
-                    $state.go("authentication.WAAppointment.detail",{AppUID:UID})
+                    $state.go("authentication.onsiteAppointment.detail", { AppUID: UID })
+                } else {
+                    if (scope.data) {
+                        scope.data.getDetailWAAppointmentByUid(UID);
+                    };
                 };
-                
-                //o.loadingPage(true);
-                // WAAppointmentService.getDetailWAAppointmentByUid(UID).then(function(data) {
-                //     console.log('responseData', data);
-                //     o.loadingPage(false);
-                //     if (data.data !== null) {
-                //         $modal.open({
-                //                 templateUrl: 'modules/WAAppointment/views/WAAppointmentListDetail.html',
-                //                 controller: 'WAAppointmentListDetailCtrl',
-                //                 windowClass: 'app-modal-window',
-                //                 resolve: {
-                //                     data: function() {
-                //                         return data.data;
-                //                     }
-                //                 }
-                //             })
-                //             .result.then(function(responseData) {
-                //                 if (responseData == 'success') {
-                //                     scope.LoadData();
-                //                 };
-                //             }, function(data) {
-
-                //             })
-                //     } else {
-                //         console.log('data null');
-                //     };
-                // }, function(error) {
-                //     o.loadingPage(false);
-                //     toastr.error("Select error!", "error");
-                // })
 
             };
             scope.LoadData = function() {
+                o.loadingPage(true);
                 WAAppointmentService.loadListWAAppointment(scope.info.data).then(function(data) {
                     scope.info.listWaapointment = data;
+                    o.loadingPage(false);
                 });
             };
             scope.LoadData();

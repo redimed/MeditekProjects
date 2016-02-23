@@ -2,7 +2,7 @@
     <div class="portlet-title bold uppercase" style="padding:10px;">
         <div class="caption">
             <i class="glyphicon glyphicon-th-list"></i>
-            <span class="caption-subject">Consultation List</span>
+            <span class="caption-subject">Appointment Detail</span>
         </div>
         <div class="tools">
             <a class="remove" ng-click="close()"></a>
@@ -125,7 +125,19 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12 col-sm-12">
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <div class="form-group form-md-line-input">
+                                                            <select class="form-control" ng-model="wainformation.TelehealthAppointment.FundType">
+                                                                <option value="">------Select Fund Type-----</option>
+                                                                <option value='WC'>WC</option>
+                                                                <option value='Private'>Private</option>
+                                                                <option value='Public'>Public</option>
+                                                            </select>
+                                                            <label class="control-label">Fund Type</label>
+                                                            <div class="form-control-focus"> </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6">
                                                         <div class="form-group form-md-line-input">
                                                             <select class="form-control" ng-model="wainformation.TelehealthAppointment.Fund">
                                                                 <option value="">------Select Fund-----</option>

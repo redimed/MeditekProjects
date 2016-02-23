@@ -396,5 +396,21 @@ module.exports = {
         Site.hasMany(Appointment, {
             foreignKey: 'SiteID'
         });
+
+        //association Patient - PatientGP
+        Patient.hasOne(PatientGP, {
+            foreignKey: 'PatientID'
+        });
+        PatientGP.belongsTo(Patient, {
+            foreignKey: 'PatientID'
+        });
+
+        //association Patient - PatientFund
+        Patient.hasOne(PatientFund, {
+            foreignKey: 'PatientID'
+        });
+        PatientFund.belongsTo(Patient, {
+            foreignKey: 'PatientID'
+        });
     }
 };

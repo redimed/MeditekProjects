@@ -78,7 +78,7 @@
 												<!-- Middle Name -->
 												<div class="form-group">
 													<label class="control-label">Middle Name</label>
-													<input type="text" class="form-control" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName='';;checkDataNull('MiddleName')" ><span style="color:red;">{{ermsg.MiddleName}}</span>
+													<input type="text" class="form-control" ng-model="info.MiddleName" ng-style="er.MiddleName" ng-change="ermsg.MiddleName='';checkDataNull('MiddleName')" ><span style="color:red;">{{ermsg.MiddleName}}</span>
 												</div>
 												<!-- end Middle Name -->
 											</div>
@@ -98,7 +98,7 @@
 													<label class="control-label">Date of Birth</label>
 													<div class="input-icon">
 														<i class="glyphicon glyphicon-calendar"></i>
-														<input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB=''" />
+														<input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" data-date-end-date="0d" ng-model="info.DOB" id="DOB" ng-style="er.DOB" ng-change="ermsg.DOB='';checkDataNull('DOB')" />
 														<span style="color:red;">{{ermsg.DOB}}</span>
 													</div>
 												</div>
@@ -110,7 +110,7 @@
 													<label class="control-label">Gender</label>
 													<div class="input-icon">
 														<i class="fa fa-intersex"></i>
-														<select class="form-control" ng-model="info.Gender">
+														<select class="form-control" ng-model="info.Gender" ng-change="checkDataNull('Gender')" >
 															<option value="Male">Male</option>
 															<option value="Female">Female</option>
 															<option value="Other">Other</option>
@@ -149,13 +149,13 @@
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
 													<label class="control-label">Ref No</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" ng-model="info.PatientMedicare.MedicareReferenceNumber" ng-change="checkDataNull('PatientMedicare.MedicareReferenceNumber')" />
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-4">
 												<div class="form-group">
 													<label class="control-label">Medicare Number</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" ng-model="info.PatientMedicare.MedicareNumber" ng-change="checkDataNull('PatientMedicare.MedicareNumber')" />
 												</div>
 											</div>
 											<div class="col-md-4 col-sm-4">
@@ -163,7 +163,7 @@
 													<label class="control-label">Medicare Expire</label>
 													<div class="input-icon">
 														<i class="glyphicon glyphicon-calendar"></i>
-														<input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" readonly>
+														<input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" readonly ng-model="info.PatientMedicare.ExpiryDate" ng-change="checkDataNull('PatientMedicare.ExpiryDate')" />
 													</div>
 												</div>
 											</div>
@@ -284,7 +284,7 @@
 													<label class="control-label">Country</label>
 													<div class="input-icon">
 														<i class="fa fa-flag"></i>
-														<select class="form-control" ng-model="info.CountryID1" ng-options="c.ID as c.ShortName for c in countries">
+														<select class="form-control" ng-model="info.CountryID1" ng-options="c.ID as c.ShortName for c in countries" ng-change="ermsg.CountryID1='';checkDataNull('CountryID1')">
 														</select>
 													</div>
 												</div>
@@ -298,22 +298,21 @@
 								<div class="row margin-top-30">
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
-											<label class="control-label">Marial Status</label>
-											<select class="form-control">
-												<option></option>
+											<label class="control-label">Marital Status</label>
+											<select class="form-control" ng-model="info.MaritalStatus" ng-options="m.id as m.name for m in MarialList" ng-change="checkDataNull('MaritalStatus')">
 											</select>
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Custom</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.Custom" ng-change="checkDataNull('Custom')" />
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Culture</label>
-											<select class="form-control">
+											<select class="form-control" ng-model="info.Culture" ng-options="c.ID as c.ShortName for c in countries" ng-change="checkDataNull('Culture')">
 												<option></option>
 											</select>
 										</div>
@@ -321,7 +320,7 @@
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Language</label>
-											<select class="form-control">
+											<select class="form-control" ng-model="info.InterperterLanguage" ng-options="c.ID as c.ShortName for c in countries" ng-change="checkDataNull('InterperterLanguage')">
 												<option></option>
 											</select>
 										</div>
@@ -329,15 +328,13 @@
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Fee Type</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.FeeType" ng-change="checkDataNull('FeeType')" />
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
-											<label class="control-label">&nbsp;</label>
-											<div class="checkbox-list">
-												<label><input type="checkbox"> Gradute</label>
-											</div>
+											<label class="control-label">Gradute</label>
+											<input type="text" class="form-control" ng-model="info.Education" ng-change="checkDataNull('Education')" />
 										</div>
 									</div>
 								</div>
@@ -345,7 +342,7 @@
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Driver License</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.DriverLicense" ng-change="checkDataNull('DriverLicense')" />
 										</div>
 									</div>
 								</div>
@@ -361,9 +358,7 @@
 									<div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">Account Type</label>
-											<select class="form-control">
-												<option></option>
-											</select>
+											<input type="text" class="form-control" ng-model="info.PatientFund.AccountType" ng-change="checkDataNull('PatientFund.AccountType')" />
 										</div>
 									</div>
 									<div class="col-md-1 col-sm-1">
@@ -393,9 +388,7 @@
 									<div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">Private Fund</label>
-											<select class="form-control">
-												<option></option>
-											</select>
+											<input type="text" class="form-control" ng-model="info.PatientFund.PrivateFund" ng-change="checkDataNull('PatientFund.PrivateFund')" />
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3">
@@ -407,7 +400,7 @@
 									<div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">UPI</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.PatientFund.UPI" ng-change="checkDataNull('PatientFund.UPI')" />
 										</div>
 									</div>
 								</div>
@@ -415,19 +408,19 @@
 									<div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">HCC Pension Number</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.PatientPension.HCCPensionNumber" ng-change="checkDataNull('PatientPension.HCCPensionNumber')" />
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">Pension Expire</label>
-											<input type="text" class="form-control">
+											<input class="form-control form-control-inline date-picker" placeholder="dd/mm/yyyy" size="16" type="text" data-date-format="dd/mm/yyyy" date-start-date="1/1/1900" ng-model="info.PatientPension.ExpiryDate" id="ExpiryDate" ng-change="checkDataNull('PatientPension.ExpiryDate')" />
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3">
 										<div class="form-group">
 											<label class="control-label">DVA Number</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.PatientDVA.DVANumber" ng-change="checkDataNull('PatientDVA.DVANumber')" />
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-3">
@@ -465,19 +458,19 @@
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Partner Name</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.PartnerName" />
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Partner DOB</label>
-											<input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy">
+											<input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.PartnerDOB" />
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Partner Occupation</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.PartnerOccupation" />
 										</div>
 									</div>
 								</div>
@@ -485,19 +478,19 @@
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">NOK Emerge Contact</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.NOKEmergeContact" />
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">NOK Phone</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.NOKPhone" />
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Clinic</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.Clinic">
 										</div>
 									</div>
 								</div>
@@ -505,19 +498,19 @@
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Alias First Name</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.AliasFirstName" />
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Alias Sur Name</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.AliasSurName" />
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Specialty</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.Specialty" />
 										</div>
 									</div>
 								</div>
@@ -525,31 +518,26 @@
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Usual Provider</label>
-											<select class="form-control">
-												<option></option>
-											</select>
+											<input type="text" class="form-control" ng-model="info.UsualProvider" />
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Referral Source</label>
-											<select class="form-control">
-												<option></option>
-											</select>
-
+											<input type="text" class="form-control" ng-model="info.UsualProvider" />
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">UR No</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.URNo" />
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">&nbsp;</label>
 											<div class="checkbox-list">
-												<label><input type="checkbox"> Diabetic</label>
+												<label><input type="checkbox" ng-model="info.Diabetic" /> Diabetic</label>
 											</div>
 										</div>
 									</div>
@@ -557,7 +545,7 @@
 										<div class="form-group">
 											<label class="control-label">&nbsp;</label>
 											<div class="checkbox-list">
-												<label><input type="checkbox"> Inactive</label>
+												<label><input type="checkbox" ng-model="info.Inactive" /> Inactive</label>
 											</div>
 										</div>
 									</div>
@@ -568,19 +556,19 @@
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">GP First Name</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.PatientGP.GPFirstName" ng-change="checkDataNull('PatientGP.GPFirstName')" />
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">GP Sur Name</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.PatientGP.GPLastName" ng-change="checkDataNull('PatientGP.GPLastName')" />
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-4">
 										<div class="form-group">
 											<label class="control-label">Memo</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" ng-model="info.PatientGP.Memo" ng-change="checkDataNull('PatientGP.Memo')" />
 										</div>
 									</div>
 								</div>

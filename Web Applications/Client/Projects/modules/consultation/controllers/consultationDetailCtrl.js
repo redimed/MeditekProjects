@@ -148,7 +148,6 @@ app.controller('consultationDetailCtrl', function($scope, $cookies, $state, $htt
         });
     /*==addmission end==*/
     $scope.eForms = function() {
-        console.log($stateParams.UID)
         $state.go("authentication.eForm.appointment",{UID:$stateParams.UID,UIDPatient:$stateParams.UIDPatient});
     };
     $scope.admission = function() {

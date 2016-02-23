@@ -1,0 +1,27 @@
+{
+  "name": "reactes6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "body-parser": "^1.14.2",
+    "compression": "^1.6.1",
+    "cors": "^2.7.1",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "jsx-loader": "^0.13.2",
+    "knex": "^0.10.0",
+    "sequelize": "^3.19.3",
+    "serve-favicon": "^2.3.0",
+    "webpack": "^1.4.15"
+  },
+  "dependencies": {
+    "mysql": "^2.10.2"
+  }
+}

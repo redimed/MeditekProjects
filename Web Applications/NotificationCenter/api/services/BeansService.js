@@ -6,8 +6,9 @@
 
 var $q=require('q');
 var fivebeans=require('fivebeans');
+var config=sails.config.myconf;
 
-var client = new fivebeans.client('192.168.232.139', 11300);
+var client = new fivebeans.client(config.beanstalkd.host, config.beanstalkd.port);
 client
     .on('connect', function()
     {

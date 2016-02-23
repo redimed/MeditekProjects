@@ -1,11 +1,11 @@
 var emailHandlers=require('./handlers/EmailHandlers');
 var EmailWorker = require('fivebeans').worker;
-
+var config=sails.config.myconf;
 var options =
 {
     id: 'email_worker',
-    host: '192.168.232.139',
-    port: 11300,
+    host: config.beanstalkd.host,
+    port: config.beanstalkd.port,
     handlers:
     {
         sendmail: emailHandlers.sendmail()

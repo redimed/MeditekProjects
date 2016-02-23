@@ -16,7 +16,7 @@ var app = angular.module('app.authentication', [
 	'app.authentication.roster',
 	'app.authentication.booking',
 	'app.authentication.company',
-	'app.authentication.onsiteAppointment',
+	'app.authentication.onsite',
 ]);
 
 app.config(function($stateProvider){

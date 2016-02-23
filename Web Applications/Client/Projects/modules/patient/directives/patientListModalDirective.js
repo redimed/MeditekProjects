@@ -102,6 +102,7 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 			console.log(scope.activeUser);
 			scope.isChoseAvatar = false;
 			var data = {};
+			scope.updatedata = {};
         	scope.info = {};
 			data.UID = scope.uid;
 			data.FileType = 'ProfileImage';
@@ -110,7 +111,21 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 					scope.info = response.data[0];
 					scope.info.DOB = /^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/.test(scope.info.DOB)?scope.info.DOB:null;
 					scope.info.img = scope.info.FileUID?scope.info.FileUID:null;
+					scope.info.InterperterLanguage = parseInt(scope.info.InterperterLanguage);
 					scope.info.img_change = null;
+					// scope.info.PatientMedicare.ExpiryDate = moment(scope.info.PatientMedicare.ExpiryDate,'YYYY-MM-DD').format('DD/MM/YYYY');
+					if(scope.info.PatientMedicare != null){
+						if(scope.info.PatientMedicare != null && scope.info.PatientMedicare != ""){
+							var date = new Date(scope.info.PatientMedicare.ExpiryDate);
+							scope.info.PatientMedicare.ExpiryDate = moment(date).format('DD/MM/YYYY');
+						}
+					}
+					if(scope.info.PatientPension != null){
+						if(scope.info.PatientPension.ExpiryDate != null && scope.info.PatientPension.ExpiryDate != ""){
+							var date = new Date(scope.info.PatientPension.ExpiryDate);
+							scope.info.PatientPension.ExpiryDate = moment(date).format('DD/MM/YYYY');
+						}
+					}
 					console.log(scope.info);
 					oriInfo = angular.copy(scope.info);
 				}
@@ -189,9 +204,90 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    },50);
 
 		    scope.checkDataNull = function(name){
-		    	if(scope.info[name].length==0)
-		    		scope.info[name] = null;
+		    	scope.parseObj(scope.updatedata,name,scope.info);
 		    };
+
+		    scope.stringCut = function(string, begin, end) {
+				return string.substr(begin,end);
+			};
+
+		    scope.getIndex = function(string, charset) {
+				return string.indexOf(charset);
+			};
+
+		    scope.parseObj = function(obj, charset, value) {
+				var array = scope.ParsePropertyName(charset);
+				var flag ="";
+				obj = scope.addProperty(array,obj,flag, value);
+				return obj;
+				
+			};
+
+			//func parse string A.B.C to array ['A','B','C']
+			scope.ParsePropertyName = function(charset) {
+				var arrayBuild = [];
+				while(1){
+					var index = scope.getIndex(charset,".");
+					var prop = index!=-1?scope.stringCut(charset,0,index):charset;
+					charset = scope.stringCut(charset,index+1,charset.length);
+					arrayBuild.push(prop);
+					if(index == -1){
+						break;
+					}
+				}
+				return arrayBuild;
+			};
+			//end func
+
+			//func convert array ['A','B','C'] to object A{B{C{}}}
+			scope.addProperty = function(array, objectmerge, flag, value) {
+				while(1) {
+					if(array.length > 0){
+						if(typeof objectmerge =='object'){
+							if(objectmerge.hasOwnProperty(array[0])==true){
+								if(array.length == 1) {
+									objectmerge[array[0]] = {};
+									// objectmerge[array[0]] == value[array[0]]!=null&&value[array[0]]!=""?value[array[0]]:null;
+									if(value[array[0]] == null || value[array[0]] == "")
+										delete objectmerge[array[0]];
+									else
+										objectmerge[array[0]] = value[array[0]];
+									array.splice(0,1);
+									scope.addProperty(array,objectmerge[key], flag, value[key]);
+								}
+								else {
+									var key = array[0];
+									flag = array[0];
+									array.splice(0,1);
+									scope.addProperty(array,objectmerge[key], flag, value[key]);
+								}
+							}
+							else{
+								objectmerge[array[0]] = {};
+								if(array.length == 1){
+									if(value.length == 0){
+										objectmerge[array[0]] = null;
+									}
+									else{
+										objectmerge[array[0]] = value[array[0]];
+									}
+								}
+								flag = array[0];
+								array.splice(0,1);
+								scope.addProperty(array,objectmerge[flag], flag, value[flag]);
+							}
+						}
+						else {
+							break;
+						}	
+					}
+					else {
+						break;
+					}
+				}
+				return objectmerge;
+			};
+			//end func
 
 		    scope.changeEnable = function(Enable) {
 		    	scope.info.EnableUser = Enable;
@@ -199,13 +295,28 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 		    };
 
 		    scope.savechange = function(){
-
-				PatientService.validate(scope.info)
+		    	scope.updatedata.ID            = scope.info.ID;
+		    	scope.updatedata.Title         = scope.info.Title;
+		    	scope.updatedata.Gender        = scope.info.Gender;
+		    	scope.updatedata.FirstName     = scope.info.FirstName;
+		    	scope.updatedata.LastName      = scope.info.LastName;
+		    	scope.updatedata.DOB           = scope.info.DOB;
+		    	scope.updatedata.Address1      = scope.info.Address1;
+		    	scope.updatedata.Suburb        = scope.info.Suburb;
+		    	scope.updatedata.Postcode      = scope.info.Postcode;
+		    	scope.updatedata.Occupation    = scope.info.Occupation;
+		    	scope.updatedata.State         = scope.info.State;
+		    	scope.updatedata.CountryID1    = scope.info.CountryID1;
+		    	scope.updatedata.UserAccountID = scope.info.UserAccountID;
+				scope.updatedata.UID           = scope.info.UID;
+		    	console.log(scope.updatedata);
+				PatientService.validate(scope.updatedata)
 					.then(function(result){
 						scope.er ='';
 						scope.ermsg ='';
-						scope.info.RoleId = scope.info.UserAccount.RelUserRoles.length!=0?null:3;
-						PatientService.updatePatient(scope.info).then(function(response){
+						scope.updatedata.RoleId = scope.info.UserAccount.RelUserRoles.length!=0?null:3;
+						scope.updatedata.timezone = new Date().toString().match(/([\+-][0-9]+)/)[1];
+						PatientService.updatePatient(scope.updatedata).then(function(response){
 							if(scope.uploader.queue[0]!=undefined && scope.uploader.queue[0]!=null &&
 							   scope.uploader.queue[0]!='' && scope.uploader.queue[0].length!=0){
 								//viet lai phan disable file
@@ -304,6 +415,15 @@ app.directive('patientListmodal', function(PatientService, $state, toastr, Authe
 				{'id':'Ms', 'name':'Ms'},
 				{'id':'Dr', 'name':'Dr'}
 			];
+
+			scope.MarialList = [
+				{'id':'Married','name':"Married"},
+				{'id':'Never Married','name':"Never Married"},
+				{'id':'Widowed','name':"Widowed"},
+				{'id':'Divorced','name':"Divorced"},
+				{'id':'Separated','name':"Separated"}
+			];
+			// scope.MarialList = ['a','b','c'];
 
 			scope.state = [
 				{'code':'VIC', 'name':'Victoria'},

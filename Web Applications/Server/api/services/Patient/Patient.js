@@ -35,7 +35,8 @@ var defaultAtrributes = [
     'FaxNumber',
     'InterpreterRequired',
     'InterperterLanguage',
-    'OtherSpecialNeed'
+    'OtherSpecialNeed',
+    'Education'
 ];
 
 //generator Password
@@ -755,23 +756,26 @@ module.exports = {
             data.DOB = data.DOB?data.DOB:null;
             //get data not required
             var patientInfo={
-                ID              : data.ID,
-                Title           : data.Title,
-                FirstName       : data.FirstName,
-                MiddleName      : data.MiddleName,
-                LastName        : data.LastName,
-                DOB             : data.DOB,
-                Gender          : data.Gender,
-                Address1        : data.Address1,
-                Address2        : data.Address2,
-                Enable          : data.Enable,
-                Suburb          : data.Suburb,
-                Postcode        : data.Postcode,
-                State           : data.State,
-                Email1          : data.Email1,
-                Occupation      : data.Occupation,
-                HomePhoneNumber : data.HomePhoneNumber,
-                WorkPhoneNumber : data.WorkPhoneNumber
+                ID                  : data.ID,
+                Title               : data.Title,
+                FirstName           : data.FirstName,
+                MiddleName          : data.MiddleName,
+                LastName            : data.LastName,
+                DOB                 : data.DOB,
+                Gender              : data.Gender,
+                Address1            : data.Address1,
+                Address2            : data.Address2,
+                Enable              : data.Enable,
+                Suburb              : data.Suburb,
+                Postcode            : data.Postcode,
+                State               : data.State,
+                Email1              : data.Email1,
+                Occupation          : data.Occupation,
+                HomePhoneNumber     : data.HomePhoneNumber,
+                WorkPhoneNumber     : data.WorkPhoneNumber,
+                InterperterLanguage : data.InterperterLanguage,
+                MaritalStatus       : data.MaritalStatus,
+                Education           : data.Education
             };
 
             //get data required ( if data has values, get it)
@@ -824,7 +828,7 @@ module.exports = {
                     t.rollback();
                     throw err;
                 })
-                .then(function(PatientPension){
+                .then(function(updatedPatientPension){
                     if(other.hasOwnProperty('PatientMedicare')==true) {
                         return PatientMedicare.update(other.PatientMedicare,{
                             where:{
@@ -837,7 +841,7 @@ module.exports = {
                     t.rollback();
                     throw err;
                 })
-                .then(function(PatientMedicare){
+                .then(function(updatedPatientMedicare){
                     if(other.hasOwnProperty('PatientDVA')==true) {
                         return PatientDVA.update(other.PatientDVA,{
                             where:{
@@ -850,7 +854,7 @@ module.exports = {
                     t.rollback();
                     throw err;
                 })
-                .then(function(PatientDVA){
+                .then(function(updatedPatientDVA){
                     if(other.hasOwnProperty('PatientKin')==true) {
                         return PatientKin.update(other.PatientKin,{
                             where:{
@@ -863,6 +867,183 @@ module.exports = {
                     t.rollback();
                     throw err;
                 })
+
+                //add data into patientGP table
+                .then(function(updatedPatientKin){
+                    if(data.hasOwnProperty('PatientGP')==true) {
+                        return PatientGP.findAll({
+                            where:{
+                                PatientID : patientInfo.ID
+                            },
+                            transaction : t
+                        })
+                        .then(function(has_patientGP){
+                            if(has_patientGP == null || has_patientGP == ""){
+                                data.GP.PatientID = patientInfo.ID;
+                                data.GP.UID       = UUIDService.Create();
+                                return PatientGP.create(data.PatientGP,{transaction:t});
+                            }
+                            else {
+                                return PatientGP.update(data.PatientGP,{
+                                    where:{
+                                        PatientID : patientInfo.ID
+                                    },
+                                    transaction:t
+                                });
+                            }
+                        },function(err){
+                            t.rollback();
+                            throw err;
+                        });
+                    }
+                },function(err){
+                    t.rollback();
+                    throw err;
+                })
+                .then(function(updatedPatientGP){
+                    if(data.hasOwnProperty('PatientMedicare')==true) {
+                        return PatientMedicare.findAll({
+                            where:{
+                                PatientID : patientInfo.ID
+                            },
+                            transaction : t
+                        })
+                        .then(function(has_PatientMedicare){
+                            if(has_PatientMedicare == null || has_PatientMedicare == ""){
+                                data.PatientMedicare.PatientID  = patientInfo.ID;
+                                data.PatientMedicare.UID        = UUIDService.Create();
+                                data.PatientMedicare.ExpiryDate = new Date(moment(data.PatientMedicare.ExpiryDate+data.timezone,'YYYY-MM-DD').format('YYYY-MM-DD'));
+                                return PatientMedicare.create(data.PatientMedicare,{transaction:t});
+                            }
+                            else {
+                                if(data.PatientMedicare.hasOwnProperty('ExpiryDate')==true){
+                                    // console.log('truoc khi convert >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ',data.PatientMedicare.ExpiryDate,' ',data.timezone);
+                                    var parts = data.PatientMedicare.ExpiryDate.split('/');
+                                    var date = parts[2].toString()+'-'+(parts[1]).toString()+'-'+parts[0].toString()+' +0700';
+                                    // console.log("chuoi ~~~~~~~~~~~~~~~~~~~~~~~~~~~` ",date);
+                                    data.PatientMedicare.ExpiryDate = moment(date).toDate();
+                                    // console.log('sau khi convert ---------------------------- ',data.PatientMedicare.ExpiryDate);
+                                }
+                                return PatientMedicare.update(data.PatientMedicare,{
+                                    where:{
+                                        PatientID : patientInfo.ID
+                                    },
+                                    transaction:t
+                                });
+                            }
+                        },function(err){
+                            t.rollback();
+                            throw err;
+                        });
+                    }
+                },function(err){
+                    t.rollback();
+                    throw err;
+                })
+                .then(function(updatedPatientMedicare){
+                    if(data.hasOwnProperty('PatientPension')==true) {
+                        return PatientPension.findAll({
+                            where:{
+                                PatientID : patientInfo.ID
+                            },
+                            transaction : t
+                        })
+                        .then(function(has_PatientPension){
+                            if(has_PatientPension == null || has_PatientPension == ""){
+                                data.PatientPension.PatientID  = patientInfo.ID;
+                                data.PatientPension.UID        = UUIDService.Create();
+                                data.PatientPension.ExpiryDate = new Date(moment(data.PatientPension.ExpiryDate+data.timezone,'YYYY-MM-DD').format('YYYY-MM-DD'));
+                                return PatientPension.create(data.PatientPension,{transaction:t});
+                            }
+                            else {
+                                // console.log('truoc khi convert >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ',data.PatientMedicare.ExpiryDate,' ',data.timezone);
+                                if(data.PatientPension.hasOwnProperty('ExpiryDate')==true){
+                                    var parts = data.PatientPension.ExpiryDate.split('/');
+                                    var date = parts[2].toString()+'-'+(parts[1]).toString()+'-'+parts[0].toString()+' +0700';
+                                    // console.log("chuoi ~~~~~~~~~~~~~~~~~~~~~~~~~~~` ",date);
+                                    data.PatientPension.ExpiryDate = moment(date).toDate();
+                                    // console.log('sau khi convert ---------------------------- ',data.PatientMedicare.ExpiryDate);
+                                }
+                                return PatientPension.update(data.PatientPension,{
+                                    where:{
+                                        PatientID : patientInfo.ID
+                                    },
+                                    transaction:t
+                                });
+                            }
+                        },function(err){
+                            t.rollback();
+                            throw err;
+                        });
+                    }
+                },function(err){
+                    t.rollback();
+                    throw err;
+                })
+                .then(function(updatedPatientPension){
+                    if(data.hasOwnProperty('PatientFund')==true) {
+                        return PatientFund.findAll({
+                            where:{
+                                PatientID : patientInfo.ID
+                            },
+                            transaction : t
+                        })
+                        .then(function(has_PatientFund){
+                            if(has_PatientFund == null || has_PatientFund == ""){
+                                data.PatientFund.PatientID = patientInfo.ID;
+                                data.PatientFund.UID       = UUIDService.Create();
+                                return PatientFund.create(data.PatientFund,{transaction:t});
+                            }
+                            else {
+                                return PatientFund.update(data.PatientFund,{
+                                    where:{
+                                        PatientID : patientInfo.ID
+                                    },
+                                    transaction:t
+                                });
+                            }
+                        },function(err){
+                            t.rollback();
+                            throw err;
+                        });
+                    }
+                },function(err){
+                    t.rollback();
+                    throw err;
+                })
+                .then(function(updatedPatientFund){
+                    if(data.hasOwnProperty('PatientDVA')==true) {
+                        return PatientDVA.findAll({
+                            where:{
+                                PatientID : patientInfo.ID
+                            },
+                            transaction : t
+                        })
+                        .then(function(has_PatientDVA){
+                            if(has_PatientDVA == null || has_PatientDVA == ""){
+                                data.PatientDVA.PatientID = patientInfo.ID;
+                                data.PatientDVA.UID       = UUIDService.Create();
+                                return PatientDVA.create(data.PatientDVA,{transaction:t});
+                            }
+                            else {
+                                return PatientDVA.update(data.PatientDVA,{
+                                    where:{
+                                        PatientID : patientInfo.ID
+                                    },
+                                    transaction:t
+                                });
+                            }
+                        },function(err){
+                            t.rollback();
+                            throw err;
+                        });
+                    }
+                },function(err){
+                    t.rollback();
+                    throw err;
+                })
+                //end add
+
                 //ket thuc update 4 bang
                 .then(function(result){
                     if(data.RoleId!=undefined && data.RoleId!=null 
@@ -1035,6 +1216,14 @@ module.exports = {
                 },
                 {
                     model: PatientPension,
+                    required: false
+                },
+                {
+                    model: PatientGP,
+                    required: false
+                },
+                {
+                    model: PatientFund,
                     required: false
                 }
             ]

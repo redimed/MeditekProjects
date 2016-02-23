@@ -15,7 +15,6 @@ extension String
 {
     func toDateTimeZone(time:String,format:String) -> String
     {
-        
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = time//this your string date format
         dateFormatter.timeZone = NSTimeZone(name: "UTC")
@@ -218,29 +217,29 @@ extension ConfigurationSystem {
         
     }
     
-//    func invalidSertificate(){
-//        manager.delegate.sessionDidReceiveChallenge = { session, challenge in
-//            var disposition: NSURLSessionAuthChallengeDisposition = .PerformDefaultHandling
-//            var credential: NSURLCredential?
-//            
-//            if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
-//                disposition = NSURLSessionAuthChallengeDisposition.UseCredential
-//                credential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!)
-//            } else {
-//                if challenge.previousFailureCount > 0 {
-//                    disposition = .CancelAuthenticationChallenge
-//                } else {
-//                    credential = manager.session.configuration.URLCredentialStorage?.defaultCredentialForProtectionSpace(challenge.protectionSpace)
-//                    
-//                    if credential != nil {
-//                        disposition = .UseCredential
-//                    }
-//                }
-//            }
-//            
-//            return (disposition, credential)
-//        }
-//    }
+    func invalidSertificate(){
+        manager.delegate.sessionDidReceiveChallenge = { session, challenge in
+            var disposition: NSURLSessionAuthChallengeDisposition = .PerformDefaultHandling
+            var credential: NSURLCredential?
+            
+            if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+                disposition = NSURLSessionAuthChallengeDisposition.UseCredential
+                credential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!)
+            } else {
+                if challenge.previousFailureCount > 0 {
+                    disposition = .CancelAuthenticationChallenge
+                } else {
+                    credential = manager.session.configuration.URLCredentialStorage?.defaultCredentialForProtectionSpace(challenge.protectionSpace)
+                    
+                    if credential != nil {
+                        disposition = .UseCredential
+                    }
+                }
+            }
+            
+            return (disposition, credential)
+        }
+    }
     
   
     

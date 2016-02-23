@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
     var requestTelehealthService = RequestTelehealthService()
     var telehealthContainer = TelehealthContainer?()
@@ -29,7 +30,7 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
     @IBOutlet weak var collectionView: UICollectionView!
     
     var allFields=[UITextField]()
-
+    var assets: [DKAsset]?
     
     var picker:UIImagePickerController?=UIImagePickerController()
     var popover:UIPopoverController?=nil
@@ -80,8 +81,49 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
         
     }
     
+    func showImagePickerWithAssetType(
+        assetType: DKImagePickerControllerAssetType,
+        allowMultipleType: Bool,
+        sourceType: DKImagePickerControllerSourceType = [.Camera, .Photo],
+        allowsLandscape: Bool,
+        singleSelect: Bool) {
+            let pickerController = DKImagePickerController()
+            pickerController.assetType = assetType
+            pickerController.allowsLandscape = allowsLandscape
+            pickerController.allowMultipleTypes = allowMultipleType
+            pickerController.sourceType = sourceType
+            pickerController.singleSelect = singleSelect
+            			pickerController.showsCancelButton = true
+            			pickerController.showsEmptyAlbums = false
+//            			pickerController.defaultAssetGroup = PHAssetCollectionSubtype.SmartAlbumFavorites
+            
+            // Clear all the selected assets if you used the picker controller as a single instance.
+            //			pickerController.defaultSelectedAssets = nil
+            pickerController.defaultSelectedAssets = self.assets
+            
+            pickerController.didSelectAssets = { [unowned self] (assets: [DKAsset]) in
+                print("didSelectAssets")
+                self.assets = assets
+                self.collectionView?.reloadData()
+                
+                for i in assets {
+                    i.fetchFullScreenImage(true, completeBlock: {
+                        image, info in
+                        self.ArrayImageUID.append((image)!)
+                    })
+                }
+               
+            }
+
+            
+            self.presentViewController(pickerController, animated: true) {}
+    }
+    
+
+
+    
     @IBAction func suburbSearchAction(sender: AnyObject) {
-        print(autocompleteUrls.count)
+       
         searchAutocompleteEntriesWithSubstring(suburbTextField.text!)
         if suburbTextField.text == "" || autocompleteUrls.count == 0 {
             self.viewSuburb.alpha = 0
@@ -368,16 +410,14 @@ class RequestTelehealthViewController: UIViewController ,UITextFieldDelegate{
         }
     }
     
-   
-    
-    
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ConfirmRequestSegue"{
             let confirm = segue.destinationViewController as! ConfirmRequestTelehealthViewController
             confirm.telehealthData = telehealthContainer
         }
     }
+    
+  
     
 }
 
@@ -388,15 +428,21 @@ extension RequestTelehealthViewController : UICollectionViewDataSource, UICollec
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ArrayImageUID.count
+        return self.assets?.count ?? 0
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let asset = self.assets![indexPath.row]
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("RequestTelehealthCVCell", forIndexPath: indexPath) as! AppointmentImageCollectionViewCell
-        let data = ArrayImageUID[indexPath.row]
-        cell.imageView.image = data
-        cell.imageView.layer.shadowRadius = 4
-        cell.imageView.layer.shadowOpacity = 0.5
-        cell.imageView.layer.shadowOffset = CGSize.zero
+        
+        asset.fetchImageWithSize(cell.imageView.frame.size, completeBlock: { image, info in
+            cell.imageView.image = image
+            cell.imageView.layer.shadowRadius = 4
+            cell.imageView.layer.shadowOpacity = 0.5
+            cell.imageView.layer.shadowOffset = CGSize.zero
+        })
+//        let data = ArrayImageUID[indexPath.row]
+//        cell.imageView.image = data
+
 
         return cell
     }
@@ -502,54 +548,40 @@ extension RequestTelehealthViewController : UIViewControllerTransitioningDelegat
     
     func openCamera()
     {
-        if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
-        {
-            picker!.sourceType = UIImagePickerControllerSourceType.Camera
-            self.presentViewController(picker!, animated: true, completion: nil)
-        }
-        else
-        {
-            openGallery()
-        }
+
+        let assetType = DKOption.types[1]
+        let allowMultipleType = true
+        let sourceType: DKImagePickerControllerSourceType = DKImagePickerControllerSourceType.Camera
+        let allowsLandscape = false
+        let singleSelect = false
+        showImagePickerWithAssetType(
+            assetType,
+            allowMultipleType: allowMultipleType,
+            sourceType: sourceType,
+            allowsLandscape: allowsLandscape,
+            singleSelect: singleSelect
+        )
     }
     
     func openGallery()
     {
-        picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        self.presentViewController(picker!, animated: true, completion: nil)
-        
-    }
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
-    {
-        picker .dismissViewControllerAnimated(true, completion: nil)
-        imageDetails = info[UIImagePickerControllerOriginalImage] as? UIImage
-        
-        //Check capture and save image to Gallery
-        if(picker.sourceType == UIImagePickerControllerSourceType.Camera)
-        {
-            // Access the uncropped image from info dictionary
-            let imageToSave: UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage //same but with different way
-            UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil)
-//            alertView.alertMessage("Saved!", message:MessageString.savedPictureMessage)
 
-        }
-        //change to view BodyUpload
-        reloadCollectionView()
-    }
-    
-    func reloadCollectionView() {
         
-        ArrayImageUID.append(imageDetails)
-        insertDataToCollectionView()
+        let assetType = DKOption.types[1]
+        let allowMultipleType = true
+        let sourceType: DKImagePickerControllerSourceType = DKImagePickerControllerSourceType.Photo
+        let allowsLandscape = false
+        let singleSelect = false
+
+        showImagePickerWithAssetType(
+            assetType,
+            allowMultipleType: allowMultipleType,
+            sourceType: sourceType,
+            allowsLandscape: allowsLandscape,
+            singleSelect: singleSelect
+        )
         
         
-    }
-    //add an image to collection view
-    func insertDataToCollectionView(){
-        let newRowIndex = ArrayImageUID.count
-        let indexPath = NSIndexPath(forRow: newRowIndex - 1 , inSection: 0)
-        collectionView.insertItemsAtIndexPaths([indexPath])
     }
     
 }

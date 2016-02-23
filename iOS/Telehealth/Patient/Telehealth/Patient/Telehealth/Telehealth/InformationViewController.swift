@@ -24,6 +24,7 @@ class InformationViewController: UIViewController {
     @IBOutlet weak var homePhoneLabel: UILabel!
     @IBOutlet weak var avarta: UIImageView!
     
+    @IBOutlet weak var phoneNumberLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,7 @@ class InformationViewController: UIViewController {
             self.addressLabel.text = patientInformation!.Address1
             self.emailLabel.text = patientInformation!.Email1
             self.homePhoneLabel.text = patientInformation!.HomePhoneNumber
+            self.phoneNumberLabel.text = patientInformation.PhoneNumber
             self.patientService.getImage((patientInformation?.ImageUID)!, completionHandler: { image in
                 self.avarta.image = image
             })

@@ -120,7 +120,7 @@ extension AppointmentListsViewController:UITableViewDataSource,UITableViewDelega
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("AppointmentCell", forIndexPath: indexPath) as! AppointmentListTableViewCell
-        
+    
         let data = Appointment[indexPath.row]
         cell.configAppointment(data,indexPath: indexPath.row)
         return cell

@@ -190,7 +190,7 @@ class AppointmentDetailsViewController: UIViewController, UIViewControllerTransi
             let imageToSave: UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage //same but with different way
             UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil)
             alertView.alertMessage("Saved!", message:MessageString.savedPictureMessage)
-            self.dismissViewControllerAnimated(true, completion: nil)
+
         }
         //change to view BodyUpload
         performSegueWithIdentifier("BodyUploadSegue", sender: self)

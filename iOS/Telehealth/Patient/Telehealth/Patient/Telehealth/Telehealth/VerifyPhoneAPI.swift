@@ -18,9 +18,6 @@ class VerifyPhoneAPI:TokenAPI {
     func SendVerifyPhoneNumber (var phoneNumber:String,completionHandler:(JSON) -> Void){
         config.setHeader()
         //Split number 0
-       
-        
-        
         phoneNumber.removeAtIndex(phoneNumber.startIndex)
         var phoneConfig : String!
         if ConfigurationSystem.http == httpUrl.httpTestApp {
@@ -37,11 +34,8 @@ class VerifyPhoneAPI:TokenAPI {
       
         Alamofire.request(.POST, ConfigurationSystem.Http_3009 + UrlAPICheckPhoneNumber.SendVerifyCodePhoneNumber ,headers:config.headers, parameters: parameters).responseJSON{
              response  in
-            print("check---",response)
-         
             switch response.result {
             case .Success(let JSONData):
-                print("----",JSONData)
                 if let cookie : String = response.response!.allHeaderFields["Set-Cookie"] as? String  {
                     let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setValue(cookie, forKey: "Set-Cookie")
@@ -196,6 +190,5 @@ class VerifyPhoneAPI:TokenAPI {
                 
             }
         }
-        
     }
 }

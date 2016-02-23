@@ -79,6 +79,7 @@ class ConfirmRequestTelehealthViewController: UIViewController {
                     self.countImage++
                     self.uploadImageReq(self.UserUID)
                     if self.countImage >= self.telehealthData.imageTelehealth.count{
+                        self.view.hideLoading()
                         self.requestTelehealth()
                     }
                 }else {

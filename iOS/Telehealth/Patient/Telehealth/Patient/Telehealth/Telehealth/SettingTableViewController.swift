@@ -67,7 +67,7 @@ class SettingTableViewController: UITableViewController {
     }
     
     func setDataToForm(){
-        emailLabel.text = patientInformation.Email1
+        emailLabel.text = patientInformation.PhoneNumber
         userNameLabel.text = "\(patientInformation.FirstName ) \(patientInformation.LastName)"
     }
     

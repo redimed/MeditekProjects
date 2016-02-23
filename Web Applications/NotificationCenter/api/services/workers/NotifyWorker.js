@@ -1,11 +1,11 @@
 var notifyHandlers=require('./handlers/NotifyHandlers');
 var NotifyWorker = require('fivebeans').worker;
-
+var config=sails.config.myconf;
 var options =
 {
     id: 'notify_worker',
-    host: '192.168.232.139',
-    port: 11300,
+    host: config.beanstalkd.host,
+    port: config.beanstalkd.port,
     handlers:
     {
         sendnotify: notifyHandlers.sendnotify()

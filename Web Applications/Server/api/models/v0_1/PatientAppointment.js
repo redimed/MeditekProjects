@@ -316,7 +316,7 @@ module.exports = {
                 }
             }
         },
-        ExpiryDate: {
+        MedicareExpiryDate: {
             type: Sequelize.DATE,
             allowNull: true,
             validate: {
@@ -346,7 +346,27 @@ module.exports = {
                 }
             }
         },
-        PatientKinName: {
+        PatientKinFirstName: {
+            type: Sequelize.STRING(45),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 45],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        PatientKinMiddleName: {
+            type: Sequelize.STRING(100),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 100],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        PatientKinMiddleName: {
             type: Sequelize.STRING(45),
             allowNull: true,
             validate: {
@@ -366,7 +386,27 @@ module.exports = {
                 }
             }
         },
-        PatientKinContactNumber: {
+        PatientKinMobilePhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        PatientKinHomePhoneNumber: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            validate: {
+                len: {
+                    args: [0, 20],
+                    msg: 'Too long!'
+                }
+            }
+        },
+        PatientKinWorkPhoneNumber: {
             type: Sequelize.STRING(20),
             allowNull: true,
             validate: {

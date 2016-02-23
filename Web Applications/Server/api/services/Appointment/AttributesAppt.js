@@ -5,7 +5,7 @@ module.exports = {
         ];
     },
     TelehealthAppointment: function() {
-        return ['UID', 'Fund', 'Correspondence', 'Description', 'RefName',
+        return ['UID', 'Fund', 'FundType', 'Correspondence', 'Description', 'RefName',
             'RefHealthLink', 'RefAddress', 'RefTelePhone',
             'RefPostCode', 'RefSignature', 'RefDate', 'RefProviderNumber',
             'RefDurationOfReferral', 'PresentComplain', 'Allergy', 'Type'
@@ -18,8 +18,9 @@ module.exports = {
             'Email2', 'PhoneNumber', 'HomePhoneNumber', 'WorkPhoneNumber',
             'FaxNumber', 'InterpreterRequired', 'InterpreterLanguage',
             'OtherSpecialNeed', 'MedicareEligible', 'MedicareNumber',
-            'MedicareReferenceNumber', 'ExpiryDate', 'DVANumber',
-            'PatientKinName', 'PatientKinRelationship', 'PatientKinContactNumber'
+            'MedicareReferenceNumber', 'MedicareExpiryDate', 'DVANumber',
+            'PatientKinFirstName', 'PatientKinMiddleName', 'PatientKinLastName', 'PatientKinRelationship', 'PatientKinMobilePhoneNumber',
+            'PatientKinHomePhoneNumber', 'PatientKinWorkPhoneNumber'
         ];
     },
     ExaminationRequired: function() {

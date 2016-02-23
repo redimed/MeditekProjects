@@ -1,0 +1,97 @@
+<form name="form" novalidate ng-submit="submit()">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" 
+            aria-hidden="true" ng-click="cancel()"></button>
+        <h4 class="modal-title uppercase bold font-red-thunderbird">
+            <i class="icon-settings"></i> {{title}}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-body" ng-if="title != 'delete'">
+            <div class="form-group" 
+                ng-class="{true: 'has-error'}[submitted && form.site_name.$invalid]">
+                <label class="control-label">Site Name</label>
+                <input type="text" name="site_name" class="form-control" ng-model="data.site_name" required>
+                <span class="help-block" ng-if="submitted && form.site_name.$error.required">Required</span>
+            </div>
+            <div class="form-group" 
+                ng-class="{true: 'has-error'}[submitted && form.address1.$invalid]">
+                <label class="control-label">Address1</label>
+                <input type="text" name="address1" class="form-control" ng-model="data.address1" required>
+                <span class="help-block" ng-if="submitted && form.address1.$error.required">Required</span>
+            </div>
+            <div class="form-group" 
+                ng-class="{true: 'has-error'}[submitted && form.address2.$invalid]">
+                <label class="control-label">address2</label>
+                <input type="text" name="address2" class="form-control" ng-model="data.address2" required>
+                <span class="help-block" ng-if="submitted && form.address2.$error.required">Required</span>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-sm-8">
+                    <div class="form-group" 
+                        ng-class="{true: 'has-error'}[submitted && form.suburb.$invalid]">
+                        <label class="control-label">suburb</label>
+                        <input type="text" name="suburb" class="form-control" ng-model="data.suburb" required>
+                        <span class="help-block" ng-if="submitted && form.suburb.$error.required">Required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group" 
+                        ng-class="{true: 'has-error'}[submitted && form.postcode.$invalid]">
+                        <label class="control-label">postcode</label>
+                        <input type="text" name="postcode" class="form-control" ng-model="data.postcode" required>
+                        <span class="help-block" ng-if="submitted && form.postcode.$error.required">Required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group" 
+                        ng-class="{true: 'has-error'}[submitted && form.state.$invalid]">
+                        <label class="control-label">State</label>
+                        <input type="text" name="state" class="form-control" ng-model="data.state" required>
+                        <span class="help-block" ng-if="submitted && form.state.$error.required">Required</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group" 
+                        ng-class="{true: 'has-error'}[submitted && form.country.$invalid]">
+                        <label class="control-label">Country</label>
+                        <input type="text" name="country" class="form-control" ng-model="data.country" required>
+                        <span class="help-block" ng-if="submitted && form.country.$error.required">Required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-sm-8">
+                    <div class="form-group" 
+                        ng-class="{true: 'has-error'}[submitted && form.contact_name.$invalid]">
+                        <label class="control-label">Contact Name</label>
+                        <input type="text" name="contact_name" class="form-control" ng-model="data.contact_name" required>
+                        <span class="help-block" ng-if="submitted && form.contact_name.$error.required">Required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group" 
+                        ng-class="{true: 'has-error'}[submitted && form.contact_number.$invalid]">
+                        <label class="control-label">Contact Number</label>
+                        <input type="text" name="contact_number" class="form-control" ng-model="data.contact_number" required>
+                        <span class="help-block" ng-if="submitted && form.contact_number.$error.required">Required</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-body" ng-if="title == 'delete'">
+            <p>
+                Do you want to delete <b class="font-red-thunderbird">{{data.site_name}}</b> ?
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer" style="background: #f5f5f5">
+        <div class="form-actions right">
+            <button type="button" class="btn btn-lg dark" data-dismiss="modal" 
+                ng-click="cancel()"><i class="glyphicon glyphicon-arrow-left"></i> Cancel</button>
+            <button type="submit" class="btn btn-lg red-thunderbird">
+                Submit <i class="glyphicon glyphicon-save"></i></button>
+        </div>
+    </div>
+</form>

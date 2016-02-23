@@ -59,6 +59,7 @@ module.exports = {
             RefDurationOfReferral: data.RefDurationOfReferral,
             Correspondence: data.Correspondence,
             Fund: data.Fund,
+            FundType: data.FundType,
             Allergy: data.Allergy,
             PresentComplain: data.PresentComplain
         };
@@ -97,11 +98,15 @@ module.exports = {
             OtherSpecialNeed: data.OtherSpecialNeed,
             MedicareNumber: data.MedicareNumber,
             MedicareReferenceNumber: data.MedicareReferenceNumber,
-            ExpiryDate: data.ExpiryDate,
+            MedicareExpiryDate: data.MedicareExpiryDate,
             DVANumber: data.DVANumber,
-            PatientKinName: data.PatientKinName,
+            PatientKinFirstName: data.PatientKinFirstName,
+            PatientKinMiddleName: data.PatientKinMiddleName,
+            PatientKinLastName: data.PatientKinLastName,
             PatientKinRelationship: data.PatientKinRelationship,
-            PatientKinContactNumber: data.PatientKinContactNumber
+            PatientKinMobilePhoneNumber: data.PatientKinMobilePhoneNumber,
+            PatientKinHomePhoneNumber: data.PatientKinHomePhoneNumber,
+            PatientKinWorkPhoneNumber: data.PatientKinWorkPhoneNumber
         };
     },
     /*
@@ -139,11 +144,15 @@ module.exports = {
             MedicareEligible: data.MedicareEligible,
             MedicareNumber: data.MedicareNumber,
             MedicareReferenceNumber: data.MedicareReferenceNumber,
-            ExpiryDate: data.ExpiryDate,
+            MedicareExpiryDate: data.MedicareExpiryDate,
             DVANumber: data.DVANumber,
-            PatientKinName: data.PatientKinName,
+            PatientKinFirstName: data.PatientKinFirstName,
+            PatientKinMiddleName: data.PatientKinMiddleName,
+            PatientKinLastName: data.PatientKinLastName,
             PatientKinRelationship: data.PatientKinRelationship,
-            PatientKinContactNumber: data.PatientKinContactNumber
+            PatientKinMobilePhoneNumber: data.PatientKinMobilePhoneNumber,
+            PatientKinHomePhoneNumber: data.PatientKinHomePhoneNumber,
+            PatientKinWorkPhoneNumber: data.PatientKinWorkPhoneNumber
         };
     },
     /*

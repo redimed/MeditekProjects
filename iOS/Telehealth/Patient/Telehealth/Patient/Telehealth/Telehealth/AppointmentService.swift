@@ -110,10 +110,10 @@ class AppointmentService {
     
     
     func uploadImage(image:UIImage,userUID:String,compailer:(JSON) -> Void){
-        let ima = UIImage(data: (image.lowestQualityJPEGNSData))
-        let data = UIImageJPEGRepresentation(ima!, 1)
-        _ = data?.length
-        api.uploadImage(ima!,userUID: userUID){
+//        let ima = UIImage(data: (image.lowestQualityJPEGNSData))
+//        let data = UIImageJPEGRepresentation(ima!, 1)
+//        _ = data?.length
+        api.uploadImage(image,userUID: userUID){
             response in
             print("aaa--",response)
            
@@ -122,8 +122,13 @@ class AppointmentService {
                 compailer(["message":"success","data":fileUID])
             }else {
                 print("error",response["ErrorType"])
-                let error = response["ErrorType"].string
-                compailer(["message":"error","ErrorType":error!])
+                
+                if let error = response["ErrorType"].string {
+                    compailer(["message":"error","ErrorType":error])
+                }else {
+                    compailer(["message":"error","ErrorType":"Can't upload Image"])
+                }
+                
             }
             
         }

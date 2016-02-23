@@ -24,6 +24,21 @@
 		AF4498AE1BDF1238005A905E /* CallContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4498AD1BDF1238005A905E /* CallContainer.swift */; };
 		AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */; };
 		AF5AD22E1BCB97290054B4C3 /* ExtensionHandleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */; };
+		AF73C8471C7BF9030015A625 /* DKCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8341C7BF9030015A625 /* DKCamera.swift */; };
+		AF73C8481C7BF9030015A625 /* DKCameraResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AF73C8351C7BF9030015A625 /* DKCameraResource.bundle */; };
+		AF73C8491C7BF9030015A625 /* DKGroupDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8381C7BF9030015A625 /* DKGroupDataManager.swift */; };
+		AF73C84A1C7BF9030015A625 /* DKAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C83A1C7BF9030015A625 /* DKAsset.swift */; };
+		AF73C84B1C7BF9030015A625 /* DKAssetGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C83B1C7BF9030015A625 /* DKAssetGroup.swift */; };
+		AF73C84C1C7BF9030015A625 /* DKImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C83C1C7BF9030015A625 /* DKImageManager.swift */; };
+		AF73C84D1C7BF9030015A625 /* DKImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AF73C83E1C7BF9030015A625 /* DKImagePickerController.bundle */; };
+		AF73C84E1C7BF9030015A625 /* DKImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C83F1C7BF9030015A625 /* DKImagePickerController.swift */; };
+		AF73C84F1C7BF9030015A625 /* DKImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8401C7BF9030015A625 /* DKImageResource.swift */; };
+		AF73C8501C7BF9030015A625 /* DKPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8411C7BF9030015A625 /* DKPopoverViewController.swift */; };
+		AF73C8511C7BF9030015A625 /* DKAssetGroupDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8431C7BF9030015A625 /* DKAssetGroupDetailVC.swift */; };
+		AF73C8521C7BF9030015A625 /* DKAssetGroupGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8441C7BF9030015A625 /* DKAssetGroupGridLayout.swift */; };
+		AF73C8531C7BF9030015A625 /* DKAssetGroupListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8451C7BF9030015A625 /* DKAssetGroupListVC.swift */; };
+		AF73C8541C7BF9030015A625 /* DKPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF73C8461C7BF9030015A625 /* DKPermissionView.swift */; };
+		AF73C8561C7BF9A30015A625 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF73C8551C7BF9A30015A625 /* Photos.framework */; };
 		AF7B5F441BE74D6D0043B14D /* AppointmentListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7B5F431BE74D6D0043B14D /* AppointmentListsViewController.swift */; };
 		AF840FF11BCCA39900F69EF8 /* FAQsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */; };
 		AF899DF41C1838BD00C85186 /* ringtone.wav in Resources */ = {isa = PBXBuildFile; fileRef = AF899DF31C1838BD00C85186 /* ringtone.wav */; };
@@ -153,6 +168,21 @@
 		AF4498AD1BDF1238005A905E /* CallContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallContainer.swift; sourceTree = "<group>"; };
 		AF5AD22B1BCB6BFD0054B4C3 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
 		AF5AD22D1BCB97290054B4C3 /* ExtensionHandleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionHandleData.swift; sourceTree = "<group>"; };
+		AF73C8341C7BF9030015A625 /* DKCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKCamera.swift; sourceTree = "<group>"; };
+		AF73C8351C7BF9030015A625 /* DKCameraResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DKCameraResource.bundle; sourceTree = "<group>"; };
+		AF73C8381C7BF9030015A625 /* DKGroupDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKGroupDataManager.swift; sourceTree = "<group>"; };
+		AF73C83A1C7BF9030015A625 /* DKAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAsset.swift; sourceTree = "<group>"; };
+		AF73C83B1C7BF9030015A625 /* DKAssetGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAssetGroup.swift; sourceTree = "<group>"; };
+		AF73C83C1C7BF9030015A625 /* DKImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKImageManager.swift; sourceTree = "<group>"; };
+		AF73C83E1C7BF9030015A625 /* DKImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DKImagePickerController.bundle; sourceTree = "<group>"; };
+		AF73C83F1C7BF9030015A625 /* DKImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKImagePickerController.swift; sourceTree = "<group>"; };
+		AF73C8401C7BF9030015A625 /* DKImageResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKImageResource.swift; sourceTree = "<group>"; };
+		AF73C8411C7BF9030015A625 /* DKPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKPopoverViewController.swift; sourceTree = "<group>"; };
+		AF73C8431C7BF9030015A625 /* DKAssetGroupDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAssetGroupDetailVC.swift; sourceTree = "<group>"; };
+		AF73C8441C7BF9030015A625 /* DKAssetGroupGridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAssetGroupGridLayout.swift; sourceTree = "<group>"; };
+		AF73C8451C7BF9030015A625 /* DKAssetGroupListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKAssetGroupListVC.swift; sourceTree = "<group>"; };
+		AF73C8461C7BF9030015A625 /* DKPermissionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKPermissionView.swift; sourceTree = "<group>"; };
+		AF73C8551C7BF9A30015A625 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		AF7B5F431BE74D6D0043B14D /* AppointmentListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentListsViewController.swift; sourceTree = "<group>"; };
 		AF840FF01BCCA39900F69EF8 /* FAQsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQsViewController.swift; sourceTree = "<group>"; };
 		AF899DF31C1838BD00C85186 /* ringtone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringtone.wav; sourceTree = "<group>"; };
@@ -266,6 +296,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF73C8561C7BF9A30015A625 /* Photos.framework in Frameworks */,
 				AFF18ADB1BC22CC4006F2590 /* CoreLocation.framework in Frameworks */,
 				AF94400F1BBA6472003F3B07 /* VideoToolbox.framework in Frameworks */,
 				AF94400D1BBA6468003F3B07 /* UIKit.framework in Frameworks */,
@@ -317,6 +348,7 @@
 		9C8F9A3844FDFD23E44C015B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AF73C8551C7BF9A30015A625 /* Photos.framework */,
 				AFF18ADA1BC22CC4006F2590 /* CoreLocation.framework */,
 				AF94400E1BBA6472003F3B07 /* VideoToolbox.framework */,
 				AF94400C1BBA6468003F3B07 /* UIKit.framework */,
@@ -366,6 +398,65 @@
 				AFEE34E21BB0413600471592 /* LaunchScreen.storyboard */,
 			);
 			name = Layout;
+			sourceTree = "<group>";
+		};
+		AF73C8331C7BF9030015A625 /* DKCamera */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C8341C7BF9030015A625 /* DKCamera.swift */,
+				AF73C8351C7BF9030015A625 /* DKCameraResource.bundle */,
+			);
+			path = DKCamera;
+			sourceTree = "<group>";
+		};
+		AF73C8361C7BF9030015A625 /* DKImageManager */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C8371C7BF9030015A625 /* Data */,
+				AF73C83C1C7BF9030015A625 /* DKImageManager.swift */,
+			);
+			path = DKImageManager;
+			sourceTree = "<group>";
+		};
+		AF73C8371C7BF9030015A625 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C8381C7BF9030015A625 /* DKGroupDataManager.swift */,
+				AF73C8391C7BF9030015A625 /* Model */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		AF73C8391C7BF9030015A625 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C83A1C7BF9030015A625 /* DKAsset.swift */,
+				AF73C83B1C7BF9030015A625 /* DKAssetGroup.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AF73C83D1C7BF9030015A625 /* DKImagePickerController */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C83E1C7BF9030015A625 /* DKImagePickerController.bundle */,
+				AF73C83F1C7BF9030015A625 /* DKImagePickerController.swift */,
+				AF73C8401C7BF9030015A625 /* DKImageResource.swift */,
+				AF73C8411C7BF9030015A625 /* DKPopoverViewController.swift */,
+				AF73C8421C7BF9030015A625 /* View */,
+			);
+			path = DKImagePickerController;
+			sourceTree = "<group>";
+		};
+		AF73C8421C7BF9030015A625 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AF73C8431C7BF9030015A625 /* DKAssetGroupDetailVC.swift */,
+				AF73C8441C7BF9030015A625 /* DKAssetGroupGridLayout.swift */,
+				AF73C8451C7BF9030015A625 /* DKAssetGroupListVC.swift */,
+				AF73C8461C7BF9030015A625 /* DKPermissionView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		AF78A2F61BC36807003E4E98 /* Resources */ = {
@@ -577,6 +668,9 @@
 		AFF27DF91BB39C5500B325E8 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				AF73C8331C7BF9030015A625 /* DKCamera */,
+				AF73C8361C7BF9030015A625 /* DKImageManager */,
+				AF73C83D1C7BF9030015A625 /* DKImagePickerController */,
 				AF9440161BBA6972003F3B07 /* OpenTok.framework */,
 				AFF10DE81BB24414005E9838 /* TPKeyboardAvoiding */,
 				AFEE35071BB0415D00471592 /* Spring */,
@@ -713,9 +807,11 @@
 				AF5AD22C1BCB6C5B0054B4C3 /* FontAwesome.otf in Resources */,
 				AFA6F6FE1C0FF52F007737DF /* ABOUT US.html in Resources */,
 				AF1BCE4E1C4E16DC002CA9A5 /* Suburb.json in Resources */,
+				AF73C8481C7BF9030015A625 /* DKCameraResource.bundle in Resources */,
 				AFEE35321BB0415D00471592 /* Info.plist in Resources */,
 				AFEE34E41BB0413600471592 /* LaunchScreen.storyboard in Resources */,
 				AF899DF41C1838BD00C85186 /* ringtone.wav in Resources */,
+				AF73C84D1C7BF9030015A625 /* DKImagePickerController.bundle in Resources */,
 				AFEBD1E21BD5E112005FE581 /* MyPopupViewController.xib in Resources */,
 				AFEE34E11BB0413600471592 /* Assets.xcassets in Resources */,
 				AF3902F61BCDE8DD00173A58 /* FAQs.html in Resources */,
@@ -795,6 +891,7 @@
 			files = (
 				AFEE352C1BB0415D00471592 /* DesignableLabel.swift in Sources */,
 				AFEE353B1BB0415D00471592 /* SpringImageView.swift in Sources */,
+				AF73C8511C7BF9030015A625 /* DKAssetGroupDetailVC.swift in Sources */,
 				AFEE35281BB0415D00471592 /* AutoTextView.swift in Sources */,
 				AF00C3F91BD9C8700001A7F4 /* AppointmentImageCollectionViewCell.swift in Sources */,
 				AF0A3E9B1BE70799007F0C67 /* ContentViewController.swift in Sources */,
@@ -802,6 +899,7 @@
 				AF99A5C71C4C82C2006DA3E2 /* SettingTableViewController.swift in Sources */,
 				AFEE35361BB0415D00471592 /* Misc.swift in Sources */,
 				AFEE35291BB0415D00471592 /* BlurView.swift in Sources */,
+				AF73C84B1C7BF9030015A625 /* DKAssetGroup.swift in Sources */,
 				AFEE35421BB0415D00471592 /* UnwindSegue.swift in Sources */,
 				AFEE35341BB0415D00471592 /* LoadingView.swift in Sources */,
 				AFE642331C465700001F0524 /* AppointmentContainer.swift in Sources */,
@@ -819,6 +917,7 @@
 				AFF10DF31BB24414005E9838 /* TPKeyboardAvoidingTableView.m in Sources */,
 				AFEE35301BB0415D00471592 /* DesignableView.swift in Sources */,
 				AFEE352D1BB0415D00471592 /* DesignableTabBarController.swift in Sources */,
+				AF73C8531C7BF9030015A625 /* DKAssetGroupListVC.swift in Sources */,
 				AFEE352A1BB0415D00471592 /* DesignableButton.swift in Sources */,
 				AFEE34D91BB0413600471592 /* ViewController.swift in Sources */,
 				AFEE35411BB0415D00471592 /* TransitionZoom.swift in Sources */,
@@ -829,8 +928,11 @@
 				AFEBD1DD1BD5E0FA005FE581 /* UIVViewController-SLPopup.swift in Sources */,
 				AF9F48FE1BB509850044D72F /* ConfigurationAPI.swift in Sources */,
 				AFF10DF11BB24414005E9838 /* TPKeyboardAvoidingCollectionView.m in Sources */,
+				AF73C8491C7BF9030015A625 /* DKGroupDataManager.swift in Sources */,
 				AFEE353C1BB0415D00471592 /* SpringLabel.swift in Sources */,
 				AFEE35261BB0415D00471592 /* AsyncButton.swift in Sources */,
+				AF73C8471C7BF9030015A625 /* DKCamera.swift in Sources */,
+				AF73C84F1C7BF9030015A625 /* DKImageResource.swift in Sources */,
 				AFEE35441BB0577A00471592 /* VerifyViewController.swift in Sources */,
 				AF7B5F441BE74D6D0043B14D /* AppointmentListsViewController.swift in Sources */,
 				AFEE35271BB0415D00471592 /* AsyncImageView.swift in Sources */,
@@ -838,6 +940,7 @@
 				AF840FF11BCCA39900F69EF8 /* FAQsViewController.swift in Sources */,
 				AF4498AE1BDF1238005A905E /* CallContainer.swift in Sources */,
 				AFEDCB201BBA392C007D584D /* NavigationLoginViewController.swift in Sources */,
+				AF73C84A1C7BF9030015A625 /* DKAsset.swift in Sources */,
 				AFE642311C465214001F0524 /* AppointmentAPI.swift in Sources */,
 				AFEE352F1BB0415D00471592 /* DesignableTextView.swift in Sources */,
 				AF00C3FB1BD9CF9B0001A7F4 /* AppointmentDetailsViewController.swift in Sources */,
@@ -849,6 +952,8 @@
 				AFE642371C4733FC001F0524 /* VerifyService.swift in Sources */,
 				AFEE35331BB0415D00471592 /* KeyboardLayoutConstraint.swift in Sources */,
 				AF00C3FF1BDA13A20001A7F4 /* BodyUploadViewController.swift in Sources */,
+				AF73C84E1C7BF9030015A625 /* DKImagePickerController.swift in Sources */,
+				AF73C84C1C7BF9030015A625 /* DKImageManager.swift in Sources */,
 				AFC603D01C4FEBB800DEFD2C /* TelehealthAPI.swift in Sources */,
 				AFB2FEED1C4F342F00B41BDA /* ConfirmRequestTelehealthViewController.swift in Sources */,
 				AFF21D301BB1068A006A190E /* HomeViewController.swift in Sources */,
@@ -860,6 +965,7 @@
 				AFE6422F1C4650EC001F0524 /* VerifyPhoneAPI.swift in Sources */,
 				AFED98241BBE71400042B613 /* Singleton_SocketManager.swift in Sources */,
 				AFE642391C474113001F0524 /* SocketService.swift in Sources */,
+				AF73C8541C7BF9030015A625 /* DKPermissionView.swift in Sources */,
 				AFB2FEEB1C4F2E1200B41BDA /* TelehealthContainer.swift in Sources */,
 				AFA33C971C4CD4C6001E2F7E /* RequestTelehealthViewController.swift in Sources */,
 				AFEE352B1BB0415D00471592 /* DesignableImageView.swift in Sources */,
@@ -867,8 +973,10 @@
 				AFEE34D71BB0413600471592 /* AppDelegate.swift in Sources */,
 				AFF10DB21BB241DA005E9838 /* InformationViewController.swift in Sources */,
 				AFE6422B1C46444E001F0524 /* PatientAPI.swift in Sources */,
+				AF73C8501C7BF9030015A625 /* DKPopoverViewController.swift in Sources */,
 				AFF27E081BB3E5D000B325E8 /* ConfigurationSystem.swift in Sources */,
 				AFE642351C473305001F0524 /* CallService.swift in Sources */,
+				AF73C8521C7BF9030015A625 /* DKAssetGroupGridLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1037,7 +1145,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

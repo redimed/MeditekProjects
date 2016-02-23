@@ -38,7 +38,7 @@ struct UrlTelehealth {
 struct httpUrl{
     static let httpTestApp :String = "https://testapp.redimed.com.au"
     static let httpTelehealth :String = "http://telehealthvietnam.com.vn"
-    static let httpChien : String = "http://192.168.1.235"
+    static let httpChien : String = "http://192.168.1.216"
 }
 
 //Giap: API Socket
@@ -76,7 +76,7 @@ struct FAIcon {
 }
 struct formatTime {
     static let dateTime : String = "yyyy-MM-dd HH:mm:ss"
-    static let dateTimeZone : String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    static let dateTimeZone : String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     static let formatDate : String = "dd/MM/yyyy"
     static let formatDateTime : String = "dd/MM/yyyy HH:mm"
     static let formatTime : String = "HH:mm"
@@ -99,6 +99,9 @@ struct Regex{
     static let PhoneNumber = "[0-9]{6,10}$"
     static let MobileNumber = "^(\\+61|0061|0)?4[0-9]{8}$"
     static let Email = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+}
+struct DKOption {
+    static let types: [DKImagePickerControllerAssetType] = [.AllAssets, .AllPhotos, .AllVideos, .AllAssets]
 }
 
 

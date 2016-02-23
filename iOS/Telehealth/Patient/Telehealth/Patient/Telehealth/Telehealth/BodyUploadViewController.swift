@@ -74,6 +74,7 @@ class BodyUploadViewController: UIViewController {
                 self.view.hideLoading()
                 if self.delegate != nil {
                     self.delegate?.reloadCollectionView(self, sender: self.image.image!)
+                    
                 }
                 self.dismissViewControllerAnimated(true, completion: nil)
             }else {

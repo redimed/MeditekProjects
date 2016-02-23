@@ -53,7 +53,7 @@ class AppointmentAPI:TokenAPI {
                         self.getNewToken()
                     }
                 }
-                                print("----bbb",JSONData)
+                        
                 completionHandler(JSON(JSONData))
             case .Failure(let error):
                 print("Request failed with error: \(error)")
@@ -68,36 +68,35 @@ class AppointmentAPI:TokenAPI {
     //GIap:Upload Image
     func uploadImage(image:UIImage,userUID:String,completionHandler:(JSON) -> Void)
     {
+        config.invalidSertificate()
         print(image)
         print(userUID)
         config.setHeader()
-        let imageData = UIImagePNGRepresentation(image)
+        config.headers["fileType"] = "MedicalImage"
+        config.headers["useruid"] = userUID
+        let imageData = UIImageJPEGRepresentation(image,1.0)
+    
         
-        let fileType = "MedicalImage"
         Alamofire.upload(
             .POST,
             ConfigurationSystem.Http_3005 + UrlInformationPatient.uploadImage,headers:config.headers,
             multipartFormData: { multipartFormData in
                 
-                multipartFormData.appendBodyPart(
-                    data: fileType.dataUsingEncoding(NSUTF8StringEncoding)!,
-                    name: "fileType"
-                )
-                multipartFormData.appendBodyPart(
-                    data: userUID.dataUsingEncoding(NSUTF8StringEncoding)!,
-                    name: "userUID"
-                )
+                multipartFormData.appendBodyPart(data: "MedicalImage".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "fileType")
+                multipartFormData.appendBodyPart(data: userUID.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: "userUID")
+               
+               
                 multipartFormData.appendBodyPart(
                     data: imageData!,
                     name: "uploadFile",
                     fileName: "AppointmentImg_\(image.hash).png",
                     mimeType: "image/png"
                 )
+         
             },
             encodingCompletion: { encodingResult in
                 switch encodingResult {
                 case .Success(let upload, _, _):
-                    
                     upload.responseJSON { response in
                         if let requireupdatetoken = response.response!.allHeaderFields["requireupdatetoken"] {
                             if requireupdatetoken as! String == "true" {
@@ -105,10 +104,12 @@ class AppointmentAPI:TokenAPI {
                                 self.getNewToken()
                             }
                         }
-                        
-                        print(response)
-                        
-                        completionHandler(JSON(response.result.value!))
+                        if (response.response?.statusCode)!  == 200 {
+                            completionHandler(JSON(response.result.value!))
+                            print("result:",response.result.value)
+                        }else {
+                            print("result:",response.result.debugDescription)
+                        }
                     }
                 case .Failure(let encodingError):
                     print("error11",encodingError)
@@ -146,17 +147,13 @@ class AppointmentAPI:TokenAPI {
                 completionHandler(JSON(["TimeOut":ErrorMessage.TimeOut]))
                 
             }
-            
         }
-        
     }
     //Get appointment Details
     func getAppointmentDetails(appointmentUID:String,type:String,completionHandler:(JSON) -> Void){
         config.setHeader()
         Alamofire.request(.GET, ConfigurationSystem.Http_3009 + UrlInformationPatient.getWAADetails + appointmentUID,headers:config.headers).responseJSON{
             response in
-            print("Reponse getAppointmentDetails WAA",response)
-            
             switch response.result {
             case .Success(let JSONData):
                 if let requireupdatetoken = response.response?.allHeaderFields["requireupdatetoken"] {
@@ -166,7 +163,6 @@ class AppointmentAPI:TokenAPI {
                     }
                 }
                 let data : JSON = JSON(JSONData)
-                
                 completionHandler(data)
             case .Failure( let error):
                 print("Request failed with error: \(error)")

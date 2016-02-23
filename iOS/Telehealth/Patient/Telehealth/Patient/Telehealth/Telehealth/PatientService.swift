@@ -17,6 +17,7 @@ class PatientService{
         
         patientAPI.getInformationPatientByUUID(UUID){
             response in
+            print(response)
             let jsonInformation = response["data"][0] != nil ? response["data"][0] : ""
             if response["TimeOut"] == "Request Time Out" {
                 let errorJSON = JSON(["message":"error","ErrorType":response["TimeOut"]])
@@ -27,7 +28,7 @@ class PatientService{
                 let Title = jsonInformation["Title"].string ?? ""
                 let WorkPhoneNumber = jsonInformation["WorkPhoneNumber"].string ?? ""
                 let Enable =  jsonInformation["Enable"].string ?? ""
-                let PhoneNumber = jsonInformation["UserAccount"]["PhoneNumber"].string ?? ""
+                let PhoneNumber = jsonInformation["PhoneNumber"].string ?? ""
                 let Occupation = jsonInformation["Occupation"].string ?? ""
                 let LastName = jsonInformation["LastName"].string ?? ""
                 let Postcode = jsonInformation["Postcode"].string ?? ""

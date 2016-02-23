@@ -1,0 +1,797 @@
+/* here you can put your own css to customize and override the theme */
+
+.login {
+    background-color: #ccc !important;
+}
+
+.content {
+    /*border: 1px solid #ccc;*/
+    /*width: 380px !important;*/
+}
+
+.register-form {
+    display: block !important;
+}
+
+.contentPatient {
+    vertical-align: middle;
+    padding-top: 6em;
+}
+
+.my-form-body-padding {
+    padding-left: 2em !important;
+    padding-right: 2em !important;
+}
+
+.page-header {
+    background-color: white;
+}
+
+.page-header.navbar {
+    background-color: white;
+    box-shadow: 0px 0px 30px 0px #ddd;
+    height: 60px;
+}
+
+.page-header.navbar .search-form {
+    background-color: #f1f4f7 !important;
+    border-radius: 20px;
+    margin: 7px 0px;
+}
+
+.page-header.navbar .search-form .input-group .form-control {
+    color: #959fad;
+}
+
+.page-header.navbar .page-logo {
+    width: 300px;
+    margin: 7px 0px;
+}
+
+.page-header.navbar .top-menu ul {
+    margin: 7px 0;
+}
+
+.page-header.navbar .top-menu .navbar-nav>li.dropdown:last-child a:hover {
+    background-color: #f1f4f7;
+}
+
+.my-page-title {
+    background-color: #454d58;
+    color: white;
+    display: block;
+    margin: -6px 0px 10px -20px;
+    padding: 12px 20px;
+    /*font-weight: bold;*/
+    font-family: sans-serif;
+}
+
+.page-container-bg-solid .page-bar,
+.page-content-white .page-bar {
+    margin: 0px -20px 0 !important;
+}
+
+.my-modal-body {
+    padding: 0em 2em 2em 2em;
+}
+
+.page-sidebar .page-sidebar-menu,
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu {
+    margin-top: 77px;
+}
+
+.progress-bar-purple {
+    background-color: purple;
+}
+
+
+/*fix sitebar*/
+
+@media (min-width: 992px) {}
+
+.page-sidebar {
+    width: 300px;
+}
+
+@media (min-width: 992px) {}
+
+.page-content-wrapper .page-content {
+    margin-left: 300px;
+    margin-top: -10px;
+}
+
+
+/*fix label input_md*/
+
+.form-group.form-md-line-input .form-control~label {
+    font-size: 16px;
+}
+
+
+/* fix font panel*/
+
+.panel-body {
+    font-size: 14px !important;
+}
+
+.page-header.navbar .page-logo .logo-default {
+    margin: 0px 0 0 0;
+    width: 200px;
+    height: 46px;
+}
+
+table:hover {
+    cursor: pointer;
+}
+
+@media (min-width: 1368px) {
+    .app-modal-window .modal-dialog {
+        width: 75%;
+    }
+}
+
+@media (max-width: 1367px) {
+    .app-modal-window .modal-dialog {
+        width: 90%;
+    }
+}
+
+ul.my-ul {
+    list-style-type: none;
+}
+
+.my-modal-header {
+    background-color: #36c6d3;
+    color: #fff;
+}
+
+.portlet-body .my-portlet-body {
+    margin: 1em 1em;
+}
+
+.bootstrap-select.btn-group .dropdown-menu {
+    z-index: 99999999 !important;
+}
+
+.my-step-number {
+    background-color: #dde3ec;
+    display: inline-block;
+    text-align: center !important;
+    font-size: 16px;
+    font-weight: 300;
+    padding: 14px 15px 13px 15px;
+    margin-right: 10px;
+    height: 45px;
+    width: 45px;
+    -webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
+    border-radius: 50% !important;
+}
+
+.tableSort {
+    float: right;
+}
+
+.sortDataTable {
+    float: right;
+}
+
+#recaptcha_widget_div {
+    display: none;
+}
+
+
+/*modal*/
+
+.page-header.navbar.navbar-fixed-top,
+.page-header.navbar.navbar-static-top {
+    z-index: 995 !important;
+}
+
+
+/*portfilo*/
+
+.mix-grid .mix .mix-details {
+    background-color: rgba(126, 126, 126, 0.5) !important;
+}
+
+.mix-grid .mix a.mix-link,
+.mix-grid .mix a.mix-preview {
+    background: #ccc;
+}
+
+.nav-tabs>li>a {
+    background: #ddd;
+}
+
+
+/*begin custom left sitebar*/
+
+.tabs-left.nav-tabs>li>i {
+    width: 37px;
+    height: 37px;
+    display: inline-block;
+    color: #b9cbd5;
+    font-size: 15px;
+    padding: 12px 10px 10px 8px;
+    margin: 0 8px 0 0;
+    text-align: center;
+    background: #e0eaf0!important;
+}
+
+.tabs-left.nav-tabs>li>a {
+    color: #557386;
+    font-size: 1.25em;
+    background-color: #f0f6fa;
+    border-left: solid 5px #c4d5df;
+}
+
+.tabs-left.nav-tabs>li>a {
+    font: 1.5em !important;
+    padding: 1em 15px;
+}
+
+.tabs-left.nav-tabs>li>a:focus,
+.tabs-left.nav-tabs>li>a:hover {
+    border: none;
+    border-left: 5px solid #99a8b1!important;
+    background-color: #c4d5df;
+}
+
+.tabs-left.nav-tabs>li.active>a,
+.tabs-left.nav-tabs>li.active>a:hover>li.active>a:focus {
+    border: none;
+    color: white;
+    background-color: #169ef4;
+    border-left: solid 5px #0c91e5 !important;
+}
+
+
+/*end custom left sitebar*/
+
+
+/*.nav-tabs>li>a {
+    background-color: #eee;
+}*/
+
+
+/*custom time picker*/
+
+.bootstrap-timepicker-widget.dropdown-menu.open {
+    z-index: 1050 !important;
+}
+
+.my-fileinput {
+    border: 1px solid #ccc;
+}
+
+img.profile-imge {
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+
+/*consultation>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+.my-skype {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    background: white;
+    margin: 0 auto;
+}
+
+.my-skype .thumbnail {
+    height: 78vh;
+    border: none;
+}
+
+.my-skype .img {
+    max-width: 100%;
+    max-height: 100%;
+    height: inherit !important;
+    position: relative;
+}
+
+.my-skype .my-button {
+    opacity: .75;
+    width: 70px;
+    height: 70px;
+}
+
+.my-skype .my-button:hover {
+    opacity: 1;
+}
+
+.my-skype .left-info {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    width: 25%;
+    height: 40%;
+    padding: 4% 2%;
+    background-color: rgba(196, 213, 213, 0.45);
+    border-top-left-radius: 25% !important;
+    border-bottom-right-radius: 100% !important;
+}
+
+.my-skype .right-info {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+.my-skype .right-info #publisher {
+    width: 300px;
+    height: 300px;
+    background-color: rgba(125, 125, 125, .25);
+}
+
+.my-skype .actions {
+    width: 100%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    bottom: -3%;
+}
+
+.my-skype .calling {
+    width: 100%;
+    position: absolute;
+    bottom: 20%;
+}
+
+.my-skype .calling span {
+    font-size: 18px;
+}
+
+.my-skype .my-header {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
+.my-skype .my-header .pull-left {
+    height: 250px;
+    background-color: rgba(196, 213, 213, 0.45);
+    border-top-left-radius: 25% !important;
+    border-bottom-right-radius: 100% !important;
+    width: 250px;
+    padding-top: 40px;
+    padding-left: 40px;
+}
+
+.my-skype .img {
+    max-width: 100%;
+    max-height: 100%;
+    height: inherit !important;
+    position: relative;
+}
+
+.my-skype .my-button:hover {
+    opacity: 1;
+}
+
+.my-skype .right-info #publisher {
+    width: 300px;
+    height: 300px;
+    background-color: rgba(125, 125, 125, .25);
+}
+
+.my-skype .actions {
+    width: 100%;
+    position: absolute;
+    bottom: 5%;
+    display: table;
+    z-index: 1;
+}
+
+.my-skype .actions .row {
+    margin-right: 0px;
+    margin-left: 0px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.my-skype .calling {
+    margin-right: 0px;
+    position: absolute;
+    margin-left: 0px;
+    width: 100%;
+    bottom: 20%;
+    z-index: 1;
+}
+
+.my-skype .calling .row {
+    margin-left: 0px;
+    margin-right: 0px;
+    text-align: center;
+}
+
+.my-skype .calling span {
+    font-size: 18px;
+}
+
+.my-skype .actions .call-plus {
+    position: relative;
+}
+
+.my-skype .actions .call-plus .skype-listUser {
+    position: absolute;
+    width: 400px;
+    left: 0;
+    bottom: 200%;
+    color: white;
+    background-color: rgba(52, 73, 94, 0.75);
+    border: 1px solid #eee;
+}
+
+.my-skype .actions .call-plus .skype-listUser .header {
+    border-bottom: 1px solid white;
+    padding-bottom: 5px;
+    margin-bottom: 1.5em;
+}
+
+.my-skype .actions .call-plus .skype-listUser .header form.horizontal {
+    font-size: 2em;
+}
+
+.my-skype .actions .call-plus .skype-listUser .header form.horizontal .form-group .control-label {
+    font-family: fantasy;
+}
+
+.my-skype .actions .call-plus .skype-listUser .header form.horizontal .form-group input {
+    background-color: transparent;
+    color: white;
+}
+
+.my-skype .actions .call-plus .skype-listUser .content {}
+
+.my-skype .actions .call-plus .skype-listUser .content .avatar {
+    border-radius: 50% !important;
+    border: 2px solid white;
+    width: 60px;
+    height: 60px;
+}
+
+.my-skype .actions .call-plus .skype-listUser .content .icon {
+    position: relative;
+    border-radius: 50% !important;
+    border: 2px solid white;
+    left: 45px;
+    bottom: 25px;
+    height: 20px;
+    width: 20px;
+}
+
+.my-skype .actions .call-plus .skype-listUser .arrow-down {
+    position: absolute;
+    left: 2%;
+    bottom: -19%;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid rgba(52, 73, 94, 0.5);
+}
+
+.my-skype .actions .call-plus .skype-listUser .content .title {
+    margin-left: 1.25em;
+    font-size: 15px;
+    font-family: sans-serif;
+}
+
+.my-skype .actions .call-plus .skype-listUser .content .name {
+    position: relative;
+    top: 15px;
+    color: white;
+}
+
+.my-skype .actions .call-plus .skype-listUser .content .name:hover {
+    color: #32C5D2;
+}
+
+.my-skype .actions .call-plus .skype-listUser .footer {
+    border-top: 1px solid white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+
+/*end consultation<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+
+.welcome {
+/*    position: relative;
+    margin: 0 auto;*/
+
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-image: url(../../../global/images/patient.jpg);
+    background-size: 100%;
+
+}
+.welcome > img{
+
+}
+
+
+
+
+/*Big Monitor*/
+
+@media (min-width: 1367px) {
+    .welcome .logo {
+        position: absolute;
+        top: 5%;
+        left: 5%;
+        width: 20%;
+    }
+    .welcome .content {
+        position: absolute;
+        bottom: 5%;
+        left: 5%;
+        width: 35%;
+        height: 65%;
+        background-color: rgba(84, 167, 250, 0.25);
+        border-top-right-radius: 100% !important;
+        border-bottom-left-radius: 30% !important;
+    }
+    .welcome .content .my-button-group {
+        position: absolute;
+        bottom: 15%;
+        left: 12%;
+        width: 60%;
+    }
+    .welcome .content .my-button-group h1 {
+        color: white;
+        font-family: sans-serif;
+        margin-bottom: 75px;
+    }
+    .welcome .content .my-button-group .my-button {
+        display: block;
+        color: white;
+        text-transform: uppercase;
+        font-size: 1.5em;
+        font-weight: bold;
+        padding: 15px 0px 15px 3.2em;
+        margin: 2em 0;
+        opacity: .75;
+        outline: 15px solid rgba(114, 159, 191, 0.26);
+    }
+    .welcome .content .my-button-group .my-button:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+    .welcome .content .my-button-group .my-button.registration {
+        background: #f37b21;
+        border-top: 2px solid #f19b5b;
+        border-left: 3px solid #f19b5b;
+        border-bottom: 3px solid #b46940;
+        border-right: 1px solid #b46940;
+        background-image: url('../../../global/images/icon-edit.png');
+        background-repeat: no-repeat;
+        background-position: 15px 10px;
+        background-size: 40px;
+    }
+    .welcome .content .my-button-group .my-button.registration a {
+        color: white;
+    }
+    .welcome .content .my-button-group .my-button.registration a:hover {
+        text-decoration: none;
+    }
+    .welcome .content .my-button-group .my-button.registration:before {
+        /*content: "\270E"; */
+    }
+    .welcome .content .my-button-group .my-button.existing-patient {
+        background-color: #288e44;
+        border-top: 2px solid #4d9752;
+        border-left: 3px solid #4d9752;
+        border-bottom: 3px solid #055d29;
+        border-right: 1px solid #055d29;
+        background-image: url('../../../global/images/icon-patient.png');
+        background-repeat: no-repeat;
+        background-position: 15px 10px;
+        background-size: 40px;
+    }
+    .welcome .content .my-button-group .my-button.existing-patient a {
+        color: white;
+    }
+    .welcome .content .my-button-group .my-button.existing-patient a:hover {
+        text-decoration: none;
+    }
+    .welcome .content .my-button-group .my-button.existing-patient:before {
+        /*content: "\270E";   */
+    }
+}
+
+
+/*Small Monitor*/
+
+@media (max-width: 1366px) {
+    .welcome .logo {
+        position: absolute;
+        top: 5%;
+        left: 5%;
+        width: 20%;
+    }
+    .welcome .content {
+        position: absolute;
+        bottom: 5%;
+        left: 5%;
+        width: 40%;
+        height: 70%;
+        background-color: rgba(84, 167, 250, 0.25);
+        border-top-right-radius: 100% !important;
+        border-bottom-left-radius: 30% !important;
+    }
+    .welcome .content .my-button-group {
+        position: absolute;
+        bottom: 10%;
+        left: 15%;
+        width: 50%;
+    }
+    .welcome .content .my-button-group h1 {
+        color: white;
+        font-family: sans-serif;
+        font-size: 25px;
+        margin-bottom: 45px;
+    }
+    .welcome .content .my-button-group .my-button {
+        display: block;
+        color: white;
+        text-transform: uppercase;
+        font-size: 1.5em;
+        font-weight: bold;
+        padding: 10px 0px 10px 3.2em;
+        margin: 1.75em 0;
+        opacity: .75;
+        outline: 10px solid rgba(114, 159, 191, 0.26);
+    }
+    .welcome .content .my-button-group .my-button:hover {
+        opacity: 1;
+    }
+    .welcome .content .my-button-group .my-button.registration {
+        background: #f37b21;
+        border-top: 2px solid #f19b5b;
+        border-left: 3px solid #f19b5b;
+        border-bottom: 3px solid #b46940;
+        border-right: 2px solid #b46940;
+        background-image: url('../../../global/images/icon-edit.png');
+        background-repeat: no-repeat;
+        background-position: 15px 10px;
+        background-size: 35px;
+    }
+    .welcome .content .my-button-group .my-button.registration a {
+        color: white;
+    }
+    .welcome .content .my-button-group .my-button.registration a:hover {
+        text-decoration: none;
+    }
+    .welcome .content .my-button-group .my-button.registration i {}
+    .welcome .content .my-button-group .my-button.registration:before {
+        /*content: "\270E"; */
+    }
+    .welcome .content .my-button-group .my-button.existing-patient a {
+        color: white;
+    }
+    .welcome .content .my-button-group .my-button.existing-patient a:hover {
+        text-decoration: none;
+    }
+    .welcome .content .my-button-group .my-button.existing-patient {
+        background-color: #288e44;
+        border-top: 2px solid #4d9752;
+        border-left: 2px solid #4d9752;
+        border-bottom: 3px solid #055d29;
+        border-right: 2px solid #055d29;
+        background-image: url('../../../global/images/icon-patient.png');
+        background-repeat: no-repeat;
+        background-position: 15px 10px;
+        background-size: 35px;
+    }
+    .welcome .content .my-button-group .my-button.existing-patient:before {
+        /*content: "\270E";   */
+    }
+}
+
+.welcome .content .footer {
+    position: absolute;
+    bottom: -4%;
+    right: 0;
+}
+
+.dashboard-stat:hover{
+    cursor: pointer;
+}
+/*phan quoc chien================================================================================*/
+
+.margin-left-right-0 {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.padding-10 {
+    padding: 10px;
+}
+
+.padding-0 {
+    padding: 0px;
+}
+
+.padding-buttom-30{
+    padding-bottom: 30px;
+}
+
+.btn-call {
+    width: 100px;
+    margin-left: 50px;
+}
+
+.sweet-alert .sa-icon {
+    border-radius: 50% !important;
+}
+
+.sweet-alert .sa-icon.sa-success .sa-placeholder {
+    border-radius: 50% !important;
+}
+
+.help-block-error {
+    color: #e73d4a;
+}
+
+.c_radio_custom {
+    padding-left: 10px;
+}
+
+.c_radio_custom .radio {
+    padding-top: 2px;
+}
+
+.loading-page {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    background: url(../img/big-f0f0f0.gif) center no-repeat;
+    display: none;
+}
+
+.required-text {
+    font-size: 12px
+}
+
+
+/*giang===========================================================================================*/
+
+.is-Choose {
+    background-color: #CCFFFF !important;
+}
+
+.is-Selected {
+    color: #31b0d5;
+}
+
+.is-notSelected {
+    color: red;
+}
+
+span.glyphicon:hover {
+    color: #00BFFF;
+}
+
+.sort {
+    color: #00BFFF !important;
+}

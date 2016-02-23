@@ -2,9 +2,9 @@ var env='local'; //local,meditekServer,testApp,app
 
 
 var configRestBaseUrl={
-	'local':'http://localhost:3005',
-	// 'local':'http://192.168.1.235:3005',
-	'meditekServer':'https://telehealthvietnam:3005',
+	'local':'https://localhost:3005',
+	//'local':'https://localhost:3005',
+	'meditekServer':'http://telehealthvietnam.com.vn:3005',
 	'testApp':'https://testapp.redimed.com.au:3005',
 	'app':'https://apps.redimed.com.au:3005'
 };
@@ -19,9 +19,16 @@ var configAuthBaseUrl={
 
 var configTelehealthBaseUrl = {
 	'local':'https://localhost:3009',
-	'meditekServer':'https://telehealthvietnam.com.vn:3009',
+	'meditekServer':'http://telehealthvietnam.com.vn:3009',
 	'testApp':'https://testapp.redimed.com.au:3009',
 	'app':'https://apps.redimed.com.au:3009',
+};
+
+var configNcBaseUrl={
+	'local':'https://localhost:1337',
+	'meditekServer':'http://telehealthvietnam.com.vn:1337',
+	'testApp':'https://testapp.redimed.com.au:1337',
+	'app':'https://apps.redimed.com.au:1337',
 };
 
 var configEFormUrl={
@@ -39,6 +46,7 @@ if(env == "local")
 	var _authBaseURL=configAuthBaseUrl.local;
 	var _telehealthBaseURL=configTelehealthBaseUrl.local;
 	var _eFormBaseURL=configEFormUrl.local;
+	var _ncBaseURL=configNcBaseUrl.local;
 }
 else if(env == 'meditekServer')
 {
@@ -47,6 +55,7 @@ else if(env == 'meditekServer')
 	var _authBaseURL=configAuthBaseUrl.meditekServer;
 	var _telehealthBaseURL=configTelehealthBaseUrl.meditekServer;
 	var _eFormBaseURL=configEFormUrl.meditekServer;
+	var _ncBaseURL=configNcBaseUrl.meditekServer;
 }
 else if(env == 'testApp')
 {
@@ -55,6 +64,7 @@ else if(env == 'testApp')
 	var _authBaseURL=configAuthBaseUrl.testApp;
 	var _telehealthBaseURL=configTelehealthBaseUrl.testApp;
 	var _eFormBaseURL=configEFormUrl.testApp;
+	var _ncBaseURL=configNcBaseUrl.testApp;
 }
 else if (env == 'testAppLocal')
 {
@@ -63,6 +73,7 @@ else if (env == 'testAppLocal')
 	var _authBaseURL=configAuthBaseUrl.local;
 	var _telehealthBaseURL=configTelehealthBaseUrl.local;
 	var _eFormBaseURL=configEFormUrl.local;
+	var _ncBaseURL=configNcBaseUrl.local;
 }
 else if(env =='app')
 {
@@ -70,6 +81,7 @@ else if(env =='app')
 	var _fileBaseURL=configRestBaseUrl.app;
 	var _authBaseURL=configAuthBaseUrl.app;
 	var _telehealthBaseURL=configTelehealthBaseUrl.app;
+	var _ncBaseURL=configNcBaseUrl.app;
 }
 
 

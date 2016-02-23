@@ -11,6 +11,13 @@ app.controller('loginCtrl', function($scope,$rootScope, $state, $cookies, Unauth
             toastr.error("Please Input Your Username And Password!", "Error");
         } else {
             UnauthenticatedService.login($scope.user).then(function(data) {
+                //-----------------------------------------------------
+                //Make room for user
+                socketAuth.get('/api/socket/makeUserOwnRoom',{UID:data.user.UID},function(data,jwres){
+                    console.log('=============Socket makeUserOwnRoom===============');
+                    console.log(data);
+                });
+                //-----------------------------------------------------
                 if(data.user.Activated == 'Y'){
                     $cookies.putObject("userInfo", data.user);
                     $cookies.put("token", data.token);

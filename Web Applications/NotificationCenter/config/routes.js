@@ -32,29 +32,32 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
-  },
-
-  'get /Test1':{
-    controller:'DemoController',
-    action:'Test1',
-  },
-
-  'get /putJob':{
-    controller:'BeansController',
-    action:'putJob'
-  },
-
-  'post /CreateQueueJob':{
+  'post /CreateEmailJob':{
     controller:'QueueJobController',
-    action:'CreateQueueJob'
+    action:'CreateEmailJob'
   },
 
   'post /CreateSMSJob':{
     controller:'QueueJobController',
     action:'CreateSMSJob'
   },
+
+  'post /CreateNotifyJob':{
+    controller:'QueueJobController',
+    action:'CreateNotifyJob'
+  },
+
+  'post /FinishQueueJob':{
+    controller:'QueueJobController',
+    action:'FinishQueueJob'
+  },
+
+  'post /BuryQueueJob':{
+    controller:'QueueJobController',
+    action:'BuryQueueJob'
+  },
+
+  
 
   /***************************************************************************
   *                                                                          *

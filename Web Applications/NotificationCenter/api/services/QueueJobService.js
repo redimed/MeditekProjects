@@ -14,7 +14,7 @@ module.exports={
 					ReceiverType:true,
 					ReceiverUID:true,
 					Queue:true,
-					HandlerCode:true,
+					EventName:true,
 					MsgContent:true,
 					Subject:true,
 					MsgContentType:true,
@@ -31,7 +31,7 @@ module.exports={
 					ReceiverUID:true,
 					Queue:true,
 					MsgContent:true,
-					HandlerCode:true,
+					EventName:true,
 					SendFromServer:true,
 					SenderType:true,
 					SenderUID:true,
@@ -141,7 +141,7 @@ module.exports={
 	FinishQueueJob:function(queueJob)
 	{
 		var error=new Error("FinishQueueJob.Error");
-		return queueJob.updateAttributes({
+		/*return queueJob.updateAttributes({
 			Status:'HANDLED',
 			LastedSentAt:new Date(),
 		})
@@ -153,7 +153,43 @@ module.exports={
 			error.pushError('update.error');
 			this.BuryQueueJob(queueJob,error);
 			throw error;
-		})
+		})*/
+
+		console.log('FinishQueueJob>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',queueJob);
+		function updateStatus(qj)
+		{
+			return qj.updateAttributes({
+				Status:'HANDLED',
+				LastedSentAt:new Date(),
+			})
+			.then(function(qj){
+				QueueJobLogService.AddLog(qj.ID,'Handled');
+				return qj;
+			},function(err){
+				console.log(err);
+				error.pushError("update.error");
+				QueueJobLogService.AddLog(qj.ID,error);
+				throw error;
+			})
+		}
+
+		if(_.isObject(queueJob))
+		{
+			return updateStatus(queueJob);
+		}
+		else
+		{
+			var queueJobID=queueJob;
+			return this.GetQueueJob(queueJobID)
+			.then(function(qj){
+				return updateStatus(qj);
+			},function(err){
+				console.log(err);
+				error.pushError("query.error");
+				QueueJobLogService.AddLog(queueJobID,error);
+				throw error;
+			})
+		}
 	},
 
 	BuryQueueJob:function(queueJob,log)
@@ -192,6 +228,5 @@ module.exports={
 				throw error;
 			})
 		}
-		
 	}
 }

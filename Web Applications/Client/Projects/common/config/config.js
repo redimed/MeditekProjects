@@ -40,7 +40,9 @@ var o = {
 
         configStateBlank:_configStateBlank,
 
-        eFormBaseUrl: _eFormBaseURL
+        eFormBaseUrl: _eFormBaseURL,
+
+        ncBaseUrl:_ncBaseURL,
     },
 
     checkData: function(value) {

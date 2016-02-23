@@ -119,12 +119,7 @@ module.exports = {
                     else
                     {
                         //---------------------------------------------
-                        /*if(req.headers.systemtype==o.const.systemType.website)
-                        {
-                            var connectInfo=_.cloneDeep(userAccess);
-                            connectInfo.sid=req.sessionID;
-                            RedisService.pushUserConnect(connectInfo);
-                        }*/
+                        //Push session vào Redis
                         var connectInfo=_.cloneDeep(userAccess);
                         connectInfo.sid=req.sessionID;
                         RedisService.pushUserConnect(connectInfo);
@@ -157,6 +152,17 @@ module.exports = {
                 res.serverError(ErrorWrap(err));
             })
         })(req, res);
+    },
+
+    makeUserOwnRoom:function(req,res)
+    {
+        //---------------------------------------------
+        //Socket join room
+        console.log("makeUserOwnRoom+++++++++++++++++++++++");
+        console.log(req.body);
+        sails.sockets.join(req.socket,req.body.UID);
+        return res.ok({msg:'user make own room on auth server successfully'});
+        //---------------------------------------------
     },
 
     /**

@@ -39,15 +39,10 @@ module.exports.sockets = {
     //
     // -OR-
     //
-    // adapter: 'redis',
-    // host: 'localhost',
-    // port: 6379,
-    // // ttl: <redis session TTL in seconds>,
-    // // ttl: 4,
-    // disableTTL :true,
-    // db: 0,
-    // // pass: <redis auth password>,
-    // prefix: 'sess:',
+    adapter: 'socket.io-redis',
+    host: 'redis',
+    port: 6379,
+    db: 'sails',
     /***************************************************************************
      *                                                                          *
      * Whether to expose a 'get /__getcookie' route with CORS support that sets *

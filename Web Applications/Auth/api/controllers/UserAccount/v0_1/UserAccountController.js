@@ -3,6 +3,61 @@ var underscore=require('underscore');
 var moment=require('moment');
 var o=require("../../../services/HelperService");
 module.exports = {
+
+	TestSocket:function(req,res){
+		sails.sockets.broadcast(req.user.UID,'testmessage',{name:'tan'});
+		res.ok({status:'auth test socket success'}) ;
+	},
+
+	TestPushNotify:function(req,res)
+	{
+		NcService.pushNotify(req.body)
+		.then(function(data){
+			res.ok(data);
+		},function(err){
+			res.serverError(ErrorWrap(err));
+		})
+	},
+
+	TestPushEmail:function(req,res)
+	{
+		NcService.pushEmail(req.body)
+		.then(function(data){
+			res.ok(data);
+		},function(err){
+			res.serverError(ErrorWrap(err));
+		})
+	},
+
+	TestPushSMS:function(req,res)
+	{
+		NcService.pushSMS(req.body)
+		.then(function(data){
+			res.ok(data);
+		},function(err){
+			res.serverError(ErrorWrap(err));
+		})
+	},
+
+	TestPushFinishJob:function(req,res){
+		NcService.pushFinishJob(req.body.queueJobID)
+		.then(function(data){
+			res.ok(data);
+		},function(err){
+			res.serverError(ErrorWrap(err));
+		})
+	},
+
+	TestPushBuryJob:function(req,res)
+	{
+		NcService.pushBuryJob(req.body.queueJobID,req.body.log)
+		.then(function(data){
+			res.ok(data);
+		},function(err){
+			res.serverError(ErrorWrap(err));
+		})
+	},
+	
 	Test:function(req,res)
 	{
 		// console.log(req.headers.cookie);

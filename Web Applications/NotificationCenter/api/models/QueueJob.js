@@ -34,7 +34,7 @@ module.exports={
         	type:Sequelize.STRING(20),
         },
 
-        HandlerCode:{
+        EventName:{
         	type:Sequelize.STRING(255),
         },
 

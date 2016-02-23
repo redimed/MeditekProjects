@@ -11,6 +11,12 @@ module.exports={
 	    'RemoveIdentifierImage':['isAuthenticated','isAdmin'],
       'CheckExistUser':true,
       'forceChangePass':true,
+      'TestSocket':['isAuthenticated'],
+      'TestPushNotify':true,
+      'TestPushEmail':true,
+      'TestPushSMS':true,
+      'TestPushFinishJob':true,
+      'TestPushBuryJob':true,
   	},
 
   	'UserAccount/v0_1/UserActivationController':{
@@ -19,7 +25,8 @@ module.exports={
 
   	'UserAccount/v0_1/AuthController':{
   		'login':true,
-  		'logout':'isAuthenticated',
+      'makeUserOwnRoom':true,
+      'logout':'isAuthenticated',
   	},
 
   	'UserAccount/v0_1/UserActivationController':{

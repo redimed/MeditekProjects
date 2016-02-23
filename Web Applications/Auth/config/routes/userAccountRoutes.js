@@ -1,5 +1,31 @@
 
 module.exports={
+	'get /TestSocket':{
+		controller:'UserAccount/v0_1/UserAccountController',
+		action:'TestSocket',
+	},
+	
+	'post /TestPushNotify':{
+		controller:'UserAccount/v0_1/UserAccountController',
+		action:'TestPushNotify',
+	},
+	'post /TestPushEmail':{
+		controller:'UserAccount/v0_1/UserAccountController',
+		action:'TestPushEmail',
+	},
+	'post /TestPushSMS':{
+		controller:'UserAccount/v0_1/UserAccountController',
+		action:'TestPushSMS',
+	},
+	'post /TestPushFinishJob':{
+		controller:'UserAccount/v0_1/UserAccountController',
+		action:'TestPushFinishJob',
+	},
+	'post /TestPushBuryJob':{
+		controller:'UserAccount/v0_1/UserAccountController',
+		action:'TestPushBuryJob',
+	},
+
 	'get /api/user-account/test':{
 		controller:'UserAccount/v0_1/UserAccountController',
 		action:'Test',
@@ -82,6 +108,11 @@ module.exports={
 	'post /api/login':{
 		controller:'UserAccount/v0_1/AuthController',
     	action:'login'
+	},
+
+	'get /api/socket/makeUserOwnRoom':{
+		controller:'UserAccount/v0_1/AuthController',
+    	action:'makeUserOwnRoom'
 	},
 
 	'get /api/logout':{

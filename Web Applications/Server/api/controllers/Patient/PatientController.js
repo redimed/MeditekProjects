@@ -196,6 +196,7 @@ module.exports = {
                 if (info != null && info != undefined && info != '') {
                     info[0].dataValues.FileUID = info[0].dataValues.UserAccount.FileUploads[0]?info[0].dataValues.UserAccount.FileUploads[0].UID:null;
                     info[0].dataValues.PhoneNumber = info[0].dataValues.UserAccount.PhoneNumber;
+                    info[0].dataValues.Email = info[0].dataValues.UserAccount.Email;
                     info[0].dataValues.CountryName = info[0].dataValues.Country.ShortName;
                     delete info[0].dataValues['UserAccount'];
                     delete info[0].dataValues['Country'];

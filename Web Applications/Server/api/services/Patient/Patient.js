@@ -1142,7 +1142,7 @@ module.exports = {
                     include: [
                          {
                             model: UserAccount,
-                            attributes: ['PhoneNumber'],
+                            attributes: ['PhoneNumber','Email','ID','UID','Enable'],
                             required: true,
                             include: [
                                 {

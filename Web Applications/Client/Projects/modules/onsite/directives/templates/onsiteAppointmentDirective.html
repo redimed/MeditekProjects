@@ -282,7 +282,7 @@
                                     <div class="col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label class="control-label">Name</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinName">
+                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinName" ng-disabled="ShowData.isLinkPatient">
                                         </div>
                                     </div>
                                 </div>
@@ -290,13 +290,13 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Relationship</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinRelationship">
+                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinRelationship" ng-disabled="ShowData.isLinkPatient">
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Contact Number</label>
-                                            <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinContactNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" name="TelehealthAppointment_PatientAppointment_PatientKinContactNumber">
+                                            <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinContactNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" name="TelehealthAppointment_PatientAppointment_PatientKinContactNumber" ng-disabled="ShowData.isLinkPatient">
                                         </div>
                                     </div>
                                 </div>
@@ -309,10 +309,10 @@
                                             <div class="radio-list">
                                                 <label class="radio-inline">Medicare Eligible</label>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="MedicareEligible" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible"> Yes
+                                                    <input type="radio" name="MedicareEligible" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible" ng-disabled="ShowData.isLinkPatient"> Yes
                                                 </label>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="MedicareEligible" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible"> No
+                                                    <input type="radio" name="MedicareEligible" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible" ng-disabled="ShowData.isLinkPatient"> No
                                                 </label>
                                             </div>
                                         </div>
@@ -322,13 +322,13 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Medicare Number</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber">
+                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber" ng-disabled="ShowData.isLinkPatient">
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Medicare Reference Number</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber">
+                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber" ng-disabled="ShowData.isLinkPatient">
                                         </div>
                                     </div>
                                 </div>
@@ -336,13 +336,13 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Expiry Date</label>
-                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="info.ExpiryDate">
+                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="info.ExpiryDate" ng-disabled="ShowData.isLinkPatient">
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">DVA Number</label>
-                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.DVANumber">
+                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.DVANumber" ng-disabled="ShowData.isLinkPatient">
                                         </div>
                                     </div>
                                 </div>
@@ -425,8 +425,9 @@
                 </div>
             </div>
             <div class="form-actions right">
-                <button type="submit" class="btn btn-lg green">
-                    Submit <i class="glyphicon glyphicon-save"></i></button>
+                <button type="submit" class="btn green" ng-click="submitUpdate()">
+                                <i class="glyphicon glyphicon-save"></i> Save change
+                            </button>
             </div>
         </form>
     </div>

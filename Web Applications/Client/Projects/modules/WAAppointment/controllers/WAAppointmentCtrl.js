@@ -10,4 +10,5 @@ app.controller('WAAppointmentCtrl', function($scope){
     	// initialize core components
     	App.initAjax();
     });
+    $scope.ObjectWa = {};
 });

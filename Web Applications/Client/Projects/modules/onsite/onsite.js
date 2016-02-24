@@ -19,7 +19,7 @@ app.config(function($stateProvider){
 			controller: 'onsiteHomeCtrl',
 		})
 		.state('authentication.onsite.appointment',{
-			url: '/appointment',
+			url: '/appointment/:UID',
 			data: {pageTitle: 'Onsite Appointment'},
 			templateUrl: 'modules/onsite/views/onsiteAppointment.html',
 			controller: 'onsiteAppointmentCtrl',

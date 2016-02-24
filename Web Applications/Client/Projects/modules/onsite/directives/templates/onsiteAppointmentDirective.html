@@ -1,69 +1,435 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar ">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="authentication.onsite.home">Onsite </a>
+        </li>
+        <li>
+            <i class="fa fa-angle-right"></i>
+            <b>Appointment</b>
+        </li>
+    </ul>
+</div>
+<br>
+<!-- END PAGE HEADER-->
 <!-- content page -->
 <div class="portlet box green">
-	<div class="portlet-title">
-		<div class="caption">
-			<i class="icon-list"></i>
-			<span class="caption-subject bold uppercase">Onsite Appointment List</span>
-		</div>
-		<div class="actions">
-			<a href="javascript:;" class="btn red btn-sm" ng-click="toggleFilter()"><i class="fa fa-filter"></i> Filter</a>
-			<a  href="javascript:;" class="btn blue" ui-sref="authentication.onsiteAppointment.create">
-			<i class="glyphicon glyphicon-plus"></i> Create</a>
-		</div>
-	</div>
-	<div class="portlet-body">
-		<div class="table-scrollable">
-			<table class="table table-bordered table-hover table-striped">
-				<thead>
-					<tr style="width:100%;">
-						<th width="1">#</th>
-						<th>Name</th>
-	 					<th width="15%">Status</th>
-					</tr>
-					<tr ng-if="toggle">
-						<td>&nbsp;</td>
-						<td><input type="text" class="form-control"></td>
-						<td>
-							<select class="form-control">
-								<option value="active">Active</option>
-								<option value="inActive">In Active</option>
-							</select>
-						</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="c in companys" ng-click="detail()">
-						<td>{{$index+1}}</td>
-						<td>{{c.name}}</td>
-						<td class="text-center">
-							<i class="glyphicon glyphicon-ok font-green" ng-if="c.active=='Y'"></i>
-							<i class="glyphicon glyphicon-remove font-red" ng-if="c.active=='N'"></i>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="row">
-			<div class="col-md-5 col-sm-12">
-				&nbsp;
-			</div>
-			<div class="col-md-7 col-sm-12" style="text-align:right">
-				<div class="dataTables_paginate paging_simple_numbers" id="sample_1_paginate">
-					<uib-pagination 
-					boundary-links="true" 
-					total-items="count" 
-					ng-model="searchObjectMap.currentPage" 
-					class="pagination-lg " 
-					previous-text="&lsaquo; " 
-					next-text="&rsaquo; " 
-					first-text="&laquo; " 
-					last-text="&raquo; " 
-					items-per-page="searchObjectMap.limit" 
-					max-size="searchObjectMap.maxSize"
-					ng-change="setPage()"></uib-pagination>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-calendar"></i>
+            <span class="caption-subject bold uppercase">Onsite Appointment</span>
+        </div>
+        <!-- <div class="tools hidden-xs">
+            <a href="javascript:;" class="collapse"></a>
+            <a href="javascript:;" class="fullscreen"> </a>
+        </div> -->
+        <ul class="nav nav-tabs">
+            <li>
+                <a href="index.html#tab_4" data-toggle="tab"> Medical Images</a>
+            </li>
+            <li>
+                <a href="index.html#tab_3" data-toggle="tab"> Treating Practitioner</a>
+            </li>
+            <li>
+                <a href="index.html#tab_2" data-toggle="tab"> Patient</a>
+            </li>
+            <li class="active">
+                <a href="index.html#tab_1" data-toggle="tab"> Basic Information</a>
+            </li>
+        </ul>
+    </div>
+    <div class="portlet-body form">
+        <form class="form">
+            <div class="form-body" style="margin-left:1em; margin-right:1em;">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <h3 class="form-section bold">Basic Information</h3>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Appointment Date</label>
+                                    <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyy" ng-model="info.appointmentDate" data-date-start-date="0d">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Appointment Time</label>
+                                    <input type="text" class="form-control timepicker timepicker-24" ng-model="info.appointmentTime" data-default-time="" data-format="HH:mm">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Patient Name</label>
+                                    <div class="form-control">{{ShowData.patient.FirstName}} {{ShowData.patient.LastName}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_2">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-md-offset-1 col-sm-offset-1">
+                                <h3 class="form-section bold">Basic Information</h3>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Title</label>
+                                            <select class="form-control" ng-model="ShowData.patient.Title" ng-disabled="ShowData.isLinkPatient">
+                                                <option value="">Select Title</option>
+                                                <option value="Mr">Mr</option>
+                                                <option value="Mrs">Mrs</option>
+                                                <option value="Ms">Ms</option>
+                                                <option value="Dr">Dr</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Firstname</label>
+                                            <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.FirstName" name="FirstName" required ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Middlename</label>
+                                            <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.MiddleName" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Lastname</label>
+                                            <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.LastName" name="LastName" required ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">DOB</label>
+                                            <input type="text" class="form-control date-picker edited" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="ShowData.patient.DOB" data-date-end-date="0d" name="DOB" required ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Country of Birth</label>
+                                            <select size="1" class="form-control" ng-model="ShowData.patient.CountryOfBirth" ng-disabled="ShowData.isLinkPatient">
+                                                <option ng-repeat="item in ListContry">{{item.ShortName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Marital Status</label>
+                                            <select class="form-control" ng-model="ShowData.patient.MaritalStatus" ng-disabled="ShowData.isLinkPatient">
+                                                <option value=""></option>
+                                                <option value="Married">Married</option>
+                                                <option value="Never married">Never married</option>
+                                                <option value="Widowed">Widowed</option>
+                                                <option value="Divorced">Divorced</option>
+                                                <option value="Separated">Separated</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Gender</label>
+                                            <div class="radio-list">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="radioTest12" value="Male" ng-model="ShowData.patient.Gender" ng-disabled="ShowData.isLinkPatient"> Male
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="radioTest12" value="Female" ng-model="ShowData.patient.Gender" ng-disabled="ShowData.isLinkPatient"> Female
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Indigenrous Status</label>
+                                            <div class="radio-list">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="Indigenous" value="Aboriginal" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> Aboriginal
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="Indigenous" value="Torres Strait Islander" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> Torres Strait Islander
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="Indigenous" value="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.Indigenous" ng-disabled="ShowData.isLinkPatient"> None
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-5">
+                                        <div class="form-group">
+                                            <label class="control-label">Interpreter required ?</label>
+                                            <div class="radio-list">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="InterpreterRequired" id="Yes" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> Yes
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="InterpreterRequired" id="No" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired" ng-disabled="ShowData.isLinkPatient"> No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7 col-sm-7">
+                                        <div class="form-group" ng-show="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'">
+                                            <label class="control-label">If yes, language/dialect</label>
+                                            <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.InterpreterLanguage" name="InterpreterLanguage" ng-required="wainformation.TelehealthAppointment.PatientAppointment.InterpreterRequired == 'Y'" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Other special needs ?</label>
+                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.OtherSpecialNeed" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-sm-5 col-md-offset-1 col-sm-offset-1">
+                                <h3 class="form-section bold">Contact Information</h3>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Contact Number (M)</label>
+                                            <input type="text" class="form-control edited" name="TelehealthAppointment_PatientAppointment_PhoneNumber" placeholder="" ng-model="ShowData.patient.PhoneNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" required ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Contact Number (H)</label>
+                                            <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.HomePhoneNumber" name="TelehealthAppointment_PatientAppointment_HomePhoneNumber" ng-pattern="/^[0-9]{6,10}$/" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-8">
+                                        <div class="form-group">
+                                            <label class="control-label">Email</label>
+                                            <input type="email" class="form-control edited" placeholder="" ng-model="ShowData.patient.Email1" name="TelehealthAppointment_PatientAppointment_Email1" ng-pattern="/^\w+([a-zA-Z0-9\.-]?\w+)*@\w+([a-z][\.-]?\w+)*([a-z]\.\w{2,4})+$/" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Fax Number</label>
+                                            <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.FaxNumber" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Address1</label>
+                                            <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Address1" name="Address1" required ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Address2</label>
+                                            <input type="text" class="form-control" placeholder="" ng-model="ShowData.patient.Address2" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-8">
+                                        <div class="form-group">
+                                            <label class="control-label">Suburb</label>
+                                            <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Suburb" name="Suburb" required ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Postcode</label>
+                                            <input type="text" class="form-control edited" placeholder="" ng-model="ShowData.patient.Postcode" name="Postcode" required ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">State</label>
+                                            <select class="form-control edited" ng-model="ShowData.patient.State" required name="State" ng-disabled="ShowData.isLinkPatient">
+                                                <option value=""></option>
+                                                <option value="WA">Western Australia</option>
+                                                <option value="VIC">Victoria</option>
+                                                <option value="TAS">Tasmania</option>
+                                                <option value="QLD">Queensland</option>
+                                                <option value="NSW">New South Wales</option>
+                                                <option value="NT">Northern Territory</option>
+                                                <option value="ACT">Australian Capital Territory</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-md-offset-1 col-sm-offset-1">
+                                <h3 class="form-section bold">Next of Kin/Guardian</h3>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Name</label>
+                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinName" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Relationship</label>
+                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinRelationship" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Contact Number</label>
+                                            <input type="text" class="form-control edited" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.PatientKinContactNumber" ng-pattern="/^(\+61|0061|0)?4[0-9]{8}$/" name="TelehealthAppointment_PatientAppointment_PatientKinContactNumber" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-sm-5 col-md-offset-1 col-sm-offset-1">
+                                <h3 class="form-section bold">Medicare Information</h3>
+                                <div class="row">
+                                    <div class="col-md-12 -col-sm-12">
+                                        <div class="form-group">
+                                            <div class="radio-list">
+                                                <label class="radio-inline">Medicare Eligible</label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="MedicareEligible" value="Y" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible" ng-disabled="ShowData.isLinkPatient"> Yes
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="MedicareEligible" value="N" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareEligible" ng-disabled="ShowData.isLinkPatient"> No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Medicare Number</label>
+                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareNumber" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Medicare Reference Number</label>
+                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.MedicareReferenceNumber" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Expiry Date</label>
+                                            <input type="text" class="form-control date-picker" data-date-format="dd/mm/yyyy" placeholder="dd-mm-yyyy" ng-model="info.ExpiryDate" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">DVA Number</label>
+                                            <input type="text" class="form-control" placeholder="" ng-model="wainformation.TelehealthAppointment.PatientAppointment.DVANumber" ng-disabled="ShowData.isLinkPatient">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_3">
+                        <h3 class="form-section bold">Treating Practitioner</h3>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-md-offset-1 col-sm-offset-1">
+                                <div class="form-group">
+                                    <label class="control-label">Doctor Type</label>
+                                    <select size="1" class="form-control" ng-model="doctorType">
+                                        <option value="">All</option>
+                                        <option value="PlasticSurgeon">Plastic Surgeon</option>
+                                        <option value="OrthopaedicSurgeon">Orthopaedic Surgeon</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Doctor List</label>
+                                    <select size="10" class="form-control">
+                                        <option ng-repeat="item in info.listDoctorTreatingPractitioner | filter:doctorType" ng-click="selectTreatingPractitioner(item.UID)">{{((item.Title !=null)?item.Title:"")+" "+((item.FirstName != null)?item.FirstName:"") +" "+((item.LastName != null)?item.LastName:"")}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-sm-5 col-md-offset-1 col-sm-offset-1">
+                                <div class="form-group">
+                                    <label class="control-label">Firstname</label>
+                                    <div class="form-control">{{wainformation.Doctors[0].FirstName}}</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Middlename</label>
+                                    <div class="form-control">{{wainformation.Doctors[0].MiddleName}}</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Lastname</label>
+                                    <div class="form-control">{{wainformation.Doctors[0].LastName}}</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Contact Number</label>
+                                    <div class="form-control">{{wainformation.Doctors[0].HomePhoneNumber}}</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Department</label>
+                                    <div class="form-control">{{wainformation.Doctors[0].Department.DepartmentName}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_4">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3">
+                                <!-- <ul class="ver-inline-menu tabbable margin-bottom-10"> -->
+                                <ul class="nav nav-tabs tabs-left">
+                                    <li class="filter active" data-filter="Arm Foot Head Body" ng-click="tab_body_part='all';">
+                                        <a>All </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-9 col-sm-9">
+                                <div class="row mix-grid" style="">
+                                    <div class="col-md-3 col-sm-3 mix Arm Foot Head Body mix_all" style=" display: block; opacity: 1;" ng-repeat="p in FileUploadImage" ng-if="p.FileType == 'MedicalImage'">
+                                        <div class="mix-inner">
+                                            <img class="img-responsive" dimage dimage-uid="p.UID" dimage-size="'200'" style="height:200px;">
+                                            <div class="mix-details">
+                                                <h4>Cascusamus et iusto odio</h4>
+                                                <a class="mix-link">
+                                                    <i class="fa fa-link"></i>
+                                                </a>
+                                                <a class="mix-preview" ng-click="showImage(p.UID)" title="Project Name" data-rel="fancybox-button">
+                                                    <i class="fa fa-search"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions right">
+                <button type="submit" class="btn green" ng-click="submitUpdate()">
+                                <i class="glyphicon glyphicon-save"></i> Save change
+                            </button>
+            </div>
+        </form>
+    </div>
 </div>
 <!-- end content page -->

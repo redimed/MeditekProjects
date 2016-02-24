@@ -462,28 +462,28 @@ angular.module('app.authentication.patient.services',[])
 
 	PatientService.postDatatoDirective = function(info) {
 		postData = angular.copy(info);
-		if(postData.Gender !=null && postData.Gender !=='Male' && postData.Gender !=='Female'){
-			postData.Gender = 'Other';
+		if(postData.data.Gender !=null && postData.data.Gender !=='Male' && postData.data.Gender !=='Female'){
+			postData.data.Gender = 'Other';
 		}
 	};
 
 	PatientService.getDatatoDirective = function(){
 		var returnData = {};
 		var info = {
-			FirstName:postData.FirstName,
-			MiddleName:postData.MiddleName,
-			Title:postData.Title,
-			LastName:postData.LastName,
-			PhoneNumber:postData.PhoneNumber,
-			DOB:postData.DOB,
-			Address1:postData.Address1,
-			Address2:postData.Address2,
-			State:postData.State,
-			Email1:postData.Email1,
-			HomePhoneNumber:postData.HomePhoneNumber,
-			Gender:postData.Gender,
-			Suburb:postData.Suburb,
-			Postcode:postData.Postcode
+			FirstName:postData.data.FirstName,
+			MiddleName:postData.data.MiddleName,
+			Title:postData.data.Title,
+			LastName:postData.data.LastName,
+			PhoneNumber:postData.data.PhoneNumber,
+			DOB:postData.data.DOB,
+			Address1:postData.data.Address1,
+			Address2:postData.data.Address2,
+			State:postData.data.State,
+			Email1:postData.data.Email1,
+			HomePhoneNumber:postData.data.HomePhoneNumber,
+			Gender:postData.data.Gender,
+			Suburb:postData.data.Suburb,
+			Postcode:postData.data.Postcode
 		};
 		returnData.data = info;
 		if(postData.hasOwnProperty('PatientDVA')== true) returnData.PatientDVA = postData.PatientDVA;

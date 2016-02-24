@@ -30,7 +30,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             },
         })
         .state('authentication.WAAppointment.detail', {
-            url: '/detail',
+            url: '/detail/:UID',
             data: {
                 title: 'Appointment Detail',
                 pageTitle: 'Appointment Detail'
